@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export default function Home() {
 
-  useEffect(() => {
+  /* useEffect(() => {
 
     const handleShout = (payload: any) => {
       console.log(payload)
@@ -22,7 +22,7 @@ export default function Home() {
     suscribe()
 
   }, [])
-
+ */
 
   const sendShout = async () => {
     const supabase = await createSupabaseClient()
