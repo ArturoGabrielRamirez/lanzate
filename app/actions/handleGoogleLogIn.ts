@@ -45,8 +45,8 @@ export async function handleGoogleLogIn() {
         if (user) {
             const { id, email, created_at } = user
             console.log(id, email, created_at)
-            revalidatePath('/', 'layout')
-            redirect('/')
+            revalidatePath('/account', 'layout')
+            redirect('/account')
         }
     }
 }
