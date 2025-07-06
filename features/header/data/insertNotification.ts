@@ -14,7 +14,7 @@ export async function insertNotification(message: string) {
                 message: "Cuchaaaa",
                 title: "Nueva notificacion nenita!",
                 type: "notification",
-                user_id: 2
+                user_id: 1
             }
         })
 
