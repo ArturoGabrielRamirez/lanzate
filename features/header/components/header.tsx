@@ -1,6 +1,7 @@
 import { NotificationsIcon } from "@/features/header/components"
 import { createClient } from "@/utils/supabase/server-props"
 import Link from "next/link"
+import ThemeToggle from "./theme-toggle"
 
 type Props = {}
 
@@ -15,6 +16,7 @@ async function Header({ }: Props) {
                 <h1>Lanzate</h1>
             </Link>
             <nav className="flex items-center gap-4">
+                <ThemeToggle />
 
                 {!user && <Link href='/login' className='p-2 hover:underline '>Log In</Link>}
                 {!user && <Link href='/signup' className='p-2 hover:underline '>Sign Up</Link>}

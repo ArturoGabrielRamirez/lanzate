@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { type User } from '@supabase/supabase-js'
 import Divider from '../Visuals/Divider'
-import Title from '../Tiltle/Title'
+import Title from '../../features/layout/components/title'
 
 
 export default function NavBar({ user }: { user: User | null }) {
