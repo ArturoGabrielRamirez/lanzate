@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/Nav/NavBar";
 import { createClient } from "@/utils/supabase/server-props";
+import { Header } from "@/features/header/components";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default async function RootLayout({
       >
         <main className='flex flex-col min-h-dvh overflow-y-hidden overflow-x-hidden'>
           <NavBar user={user} />
+          <Header />
           {children}
         </main>
       </body>

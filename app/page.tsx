@@ -1,11 +1,15 @@
-
-
+"use client"
+import { sendNotification } from "@/features/header/actions/sendNotification"
 export default function Home() {
 
-  return (
-    <div className='grow bg-gray-800'>
-  
+  const handleSendNotification = async () => {
+    const res = await sendNotification()
+    console.log("🚀 ~ handleSendNotification ~ res:", res)
+  }
 
+  return (
+    <div>
+      <button onClick={handleSendNotification}>Send Shout</button>
     </div>
   );
 }
