@@ -18,7 +18,7 @@ export const getNotifications = async () => {
         }
 
     } catch (error) {
-        return formatErrorResponse("Error fetching notifications", error)
+        return formatErrorResponse("Error fetching notifications", error, [])
     }
 
 }

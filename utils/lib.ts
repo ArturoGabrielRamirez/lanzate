@@ -1,7 +1,7 @@
-export const formatErrorResponse = (baseMessage: string, error: any) => {
+export const formatErrorResponse = (baseMessage: string, error: any, payload?: any) => {
     const errorResponse = {
         message: baseMessage,
-        payload: null,
+        payload: payload || null,
         error: true
     }
 
