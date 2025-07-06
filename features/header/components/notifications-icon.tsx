@@ -20,7 +20,8 @@ function NotificationsIcon({ }: Props) {
             channel.on("postgres_changes", {
                 event: "INSERT",
                 schema: "public",
-                table: "notifications"
+                table: "notifications",
+                filter: `user_id=eq.${1}`
             }, handleShout).subscribe()
         }
 

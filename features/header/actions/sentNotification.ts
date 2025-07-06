@@ -1,19 +1,13 @@
 "use server"
 
-import { createSupabaseClient } from "@/utils/supabase/server"
+import { insertNotification } from "../data/insertNotification"
 
 export async function sentNotification() {
     try {
-        const supabase = await createSupabaseClient()
-        const { data, error } = await supabase.from("notifications").insert({
-            message: "Hello, world!",
-        })
 
-        if (error) {
-            throw new Error(error.message)
-        }
+        const query = await insertNotification("Cuchaaaaa")
 
-        return data
+        return query
 
     } catch (error) {
         console.error(error)
