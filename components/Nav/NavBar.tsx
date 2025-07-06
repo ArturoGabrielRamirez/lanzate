@@ -14,16 +14,16 @@ export default function NavBar({ user }: { user: User | null }) {
             <>
                 {!user ? (
                     <div className='flex flex-row justify-between gap-4'>
-                        <Link href='/login' className='p-2 hover:underline animate-slide-in-down'>Log In</Link>
-                        <Divider className='animate-slide-in-down' />
-                        <Link href='/signup' className='p-2 hover:underline animate-slide-in-down'>Sign Up</Link>
+                        <Link href='/login' className='p-2 hover:underline '>Log In</Link>
+                        <Divider />
+                        <Link href='/signup' className='p-2 hover:underline '>Sign Up</Link>
                     </div>
                 ) : (
                     <div className='flex flex-row justify-between gap-4'>
-                        <Link href='/account' className='p-2 hover:underline animate-slide-in-down'>Account</Link>
-                        <Divider className='animate-slide-in-down' />
-                        <form action='/auth/signout' method='post' className='animate-slide-in-down p-2'>
-                            <button className=' hover:underline ' type='submit'>
+                        <Link href='/account' className='p-2 hover:underline '>Account</Link>
+                        <Divider />
+                        <form action='/auth/signout' method='post' className=' p-2'>
+                            <button className=' hover:underline hover:cursor-pointer ' type='submit'>
                                 Sign out
                             </button>
                         </form>

@@ -1,28 +1,54 @@
-import { NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server-props'
+import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url)
-  const code = searchParams.get('code')
+  const url = new URL(request.url)
+  const code = url.searchParams.get('code')
+  const next = url.searchParams.get('next') ?? '/'
 
-  const next = searchParams.get('next') ?? '/'
-  if (code) {
-    const supabase = await createClient()
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
-    console.log(error)
-    if (!error) {
-      const forwardedHost = request.headers.get('x-forwarded-host')
-      const isLocalEnv = process.env.NODE_ENV === 'development'
+  if (!code) {
+    return NextResponse.redirect(`${url.origin}/auth/auth-code-error`)
+  }
 
-      if (isLocalEnv) {
-        return NextResponse.redirect(`${origin}${next}/account`)
-      } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${next}/account`)
-      } else {
-        return NextResponse.redirect(`${origin}${next}/account`)
-      }
+  const supabase = await createClient()
+  
+  const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
+  if (exchangeError) {
+    console.error('Error exchanging code for session:', exchangeError)
+    return NextResponse.redirect(`${url.origin}/auth/auth-code-error`)
+  }
+
+  
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+  if (userError || !user) {
+    console.error('Error getting user:', userError)
+    return NextResponse.redirect(`${url.origin}/auth/auth-code-error`)
+  }
+
+  const { data: existingUser, error: selectError } = await supabase
+    .from('users')
+    .select('id')
+    .eq('email', user.email)
+    .maybeSingle()
+
+  if (selectError) {
+    console.error('Error selecting user:', selectError)
+    return NextResponse.redirect(`${url.origin}/auth/auth-code-error`)
+  }
+
+  if (!existingUser) {
+    const { error: insertError } = await supabase.from('users').insert({
+      email: user.email,
+      password: "google",
+      updated_at: new Date(),
+      id: 5,
+    })
+
+    if (insertError) {
+      console.error('Error inserting user into users:', insertError)
+      return NextResponse.redirect(`${url.origin}/auth/auth-code-error`)
     }
   }
 
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`)
+  return NextResponse.redirect(`${url.origin}${next}/account`)
 }
