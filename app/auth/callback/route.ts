@@ -1,3 +1,5 @@
+import { insertUser } from '@/features/auth/data/insertUser'
+import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
 import { createClient } from '@/utils/supabase/server-props'
 import { NextResponse } from 'next/server'
 
@@ -25,24 +27,11 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${url.origin}/auth/auth-code-error`)
   }
 
-  const { data: existingUser, error: selectError } = await supabase
-    .from('users')
-    .select('id')
-    .eq('email', user.email)
-    .maybeSingle()
+  const { payload: existingUser } = await getUserByEmail(user.email ?? "")
 
-  if (selectError) {
-    console.error('Error selecting user:', selectError)
-    return NextResponse.redirect(`${url.origin}/auth/auth-code-error`)
-  }
 
   if (!existingUser) {
-    const { error: insertError } = await supabase.from('users').insert({
-      email: user.email,
-      password: "google",
-      updated_at: new Date(),
-      id: 5,
-    })
+    const { error: insertError } = await insertUser(user.email ?? "", "email")
 
     if (insertError) {
       console.error('Error inserting user into users:', insertError)
