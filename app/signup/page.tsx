@@ -3,7 +3,7 @@ import Input from '@/components/Form/Input'
 import Label from '@/components/Form/Label'
 import Title from '@/components/Tiltle/Title'
 import GridForms from '@/components/Visuals/GridFroms'
-import { handleSignup } from '../../features/auth/handleSignUp'
+import { handleSignup } from '../../features/auth/actions/handleSignUp'
 import Divider from '@/components/Visuals/Divider'
 
 

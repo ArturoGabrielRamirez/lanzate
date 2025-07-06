@@ -11,14 +11,14 @@ export async function GET(request: Request) {
   }
 
   const supabase = await createClient()
-  
+
   const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
   if (exchangeError) {
     console.error('Error exchanging code for session:', exchangeError)
     return NextResponse.redirect(`${url.origin}/auth/auth-code-error`)
   }
 
-  
+
   const { data: { user }, error: userError } = await supabase.auth.getUser()
   if (userError || !user) {
     console.error('Error getting user:', userError)
