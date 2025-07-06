@@ -3440,6 +3440,8 @@ export namespace Prisma {
     address: string | null
     phone: string | null
     email: string | null
+    slug: string | null
+    subdomain: string | null
     created_at: Date | null
     updated_at: Date | null
     user_id: number | null
@@ -3454,6 +3456,8 @@ export namespace Prisma {
     address: string | null
     phone: string | null
     email: string | null
+    slug: string | null
+    subdomain: string | null
     created_at: Date | null
     updated_at: Date | null
     user_id: number | null
@@ -3468,6 +3472,8 @@ export namespace Prisma {
     address: number
     phone: number
     email: number
+    slug: number
+    subdomain: number
     created_at: number
     updated_at: number
     user_id: number
@@ -3494,6 +3500,8 @@ export namespace Prisma {
     address?: true
     phone?: true
     email?: true
+    slug?: true
+    subdomain?: true
     created_at?: true
     updated_at?: true
     user_id?: true
@@ -3508,6 +3516,8 @@ export namespace Prisma {
     address?: true
     phone?: true
     email?: true
+    slug?: true
+    subdomain?: true
     created_at?: true
     updated_at?: true
     user_id?: true
@@ -3522,6 +3532,8 @@ export namespace Prisma {
     address?: true
     phone?: true
     email?: true
+    slug?: true
+    subdomain?: true
     created_at?: true
     updated_at?: true
     user_id?: true
@@ -3623,6 +3635,8 @@ export namespace Prisma {
     address: string | null
     phone: string | null
     email: string | null
+    slug: string
+    subdomain: string
     created_at: Date
     updated_at: Date
     user_id: number
@@ -3656,6 +3670,8 @@ export namespace Prisma {
     address?: boolean
     phone?: boolean
     email?: boolean
+    slug?: boolean
+    subdomain?: boolean
     created_at?: boolean
     updated_at?: boolean
     user_id?: boolean
@@ -3671,6 +3687,8 @@ export namespace Prisma {
     address?: boolean
     phone?: boolean
     email?: boolean
+    slug?: boolean
+    subdomain?: boolean
     created_at?: boolean
     updated_at?: boolean
     user_id?: boolean
@@ -3686,6 +3704,8 @@ export namespace Prisma {
     address?: boolean
     phone?: boolean
     email?: boolean
+    slug?: boolean
+    subdomain?: boolean
     created_at?: boolean
     updated_at?: boolean
     user_id?: boolean
@@ -3701,12 +3721,14 @@ export namespace Prisma {
     address?: boolean
     phone?: boolean
     email?: boolean
+    slug?: boolean
+    subdomain?: boolean
     created_at?: boolean
     updated_at?: boolean
     user_id?: boolean
   }
 
-  export type StoreOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "logo" | "slogan" | "address" | "phone" | "email" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["store"]>
+  export type StoreOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "logo" | "slogan" | "address" | "phone" | "email" | "slug" | "subdomain" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["store"]>
   export type StoreInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -3731,6 +3753,8 @@ export namespace Prisma {
       address: string | null
       phone: string | null
       email: string | null
+      slug: string
+      subdomain: string
       created_at: Date
       updated_at: Date
       user_id: number
@@ -4166,6 +4190,8 @@ export namespace Prisma {
     readonly address: FieldRef<"Store", 'String'>
     readonly phone: FieldRef<"Store", 'String'>
     readonly email: FieldRef<"Store", 'String'>
+    readonly slug: FieldRef<"Store", 'String'>
+    readonly subdomain: FieldRef<"Store", 'String'>
     readonly created_at: FieldRef<"Store", 'DateTime'>
     readonly updated_at: FieldRef<"Store", 'DateTime'>
     readonly user_id: FieldRef<"Store", 'Int'>
@@ -4635,6 +4661,8 @@ export namespace Prisma {
     address: 'address',
     phone: 'phone',
     email: 'email',
+    slug: 'slug',
+    subdomain: 'subdomain',
     created_at: 'created_at',
     updated_at: 'updated_at',
     user_id: 'user_id'
@@ -4902,6 +4930,8 @@ export namespace Prisma {
     address?: StringNullableFilter<"Store"> | string | null
     phone?: StringNullableFilter<"Store"> | string | null
     email?: StringNullableFilter<"Store"> | string | null
+    slug?: StringFilter<"Store"> | string
+    subdomain?: StringFilter<"Store"> | string
     created_at?: DateTimeFilter<"Store"> | Date | string
     updated_at?: DateTimeFilter<"Store"> | Date | string
     user_id?: IntFilter<"Store"> | number
@@ -4917,6 +4947,8 @@ export namespace Prisma {
     address?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
+    slug?: SortOrder
+    subdomain?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     user_id?: SortOrder
@@ -4925,6 +4957,8 @@ export namespace Prisma {
 
   export type StoreWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    slug?: string
+    subdomain?: string
     AND?: StoreWhereInput | StoreWhereInput[]
     OR?: StoreWhereInput[]
     NOT?: StoreWhereInput | StoreWhereInput[]
@@ -4939,7 +4973,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Store"> | Date | string
     user_id?: IntFilter<"Store"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "slug" | "subdomain">
 
   export type StoreOrderByWithAggregationInput = {
     id?: SortOrder
@@ -4950,6 +4984,8 @@ export namespace Prisma {
     address?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
+    slug?: SortOrder
+    subdomain?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     user_id?: SortOrder
@@ -4972,6 +5008,8 @@ export namespace Prisma {
     address?: StringNullableWithAggregatesFilter<"Store"> | string | null
     phone?: StringNullableWithAggregatesFilter<"Store"> | string | null
     email?: StringNullableWithAggregatesFilter<"Store"> | string | null
+    slug?: StringWithAggregatesFilter<"Store"> | string
+    subdomain?: StringWithAggregatesFilter<"Store"> | string
     created_at?: DateTimeWithAggregatesFilter<"Store"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Store"> | Date | string
     user_id?: IntWithAggregatesFilter<"Store"> | number
@@ -5147,6 +5185,8 @@ export namespace Prisma {
     address?: string | null
     phone?: string | null
     email?: string | null
+    slug: string
+    subdomain: string
     created_at?: Date | string
     updated_at?: Date | string
     user: UserCreateNestedOneWithoutStoreInput
@@ -5161,6 +5201,8 @@ export namespace Prisma {
     address?: string | null
     phone?: string | null
     email?: string | null
+    slug: string
+    subdomain: string
     created_at?: Date | string
     updated_at?: Date | string
     user_id: number
@@ -5174,6 +5216,8 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutStoreNestedInput
@@ -5188,6 +5232,8 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
@@ -5202,6 +5248,8 @@ export namespace Prisma {
     address?: string | null
     phone?: string | null
     email?: string | null
+    slug: string
+    subdomain: string
     created_at?: Date | string
     updated_at?: Date | string
     user_id: number
@@ -5215,6 +5263,8 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5228,6 +5278,8 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
@@ -5490,6 +5542,8 @@ export namespace Prisma {
     address?: SortOrder
     phone?: SortOrder
     email?: SortOrder
+    slug?: SortOrder
+    subdomain?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     user_id?: SortOrder
@@ -5509,6 +5563,8 @@ export namespace Prisma {
     address?: SortOrder
     phone?: SortOrder
     email?: SortOrder
+    slug?: SortOrder
+    subdomain?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     user_id?: SortOrder
@@ -5523,6 +5579,8 @@ export namespace Prisma {
     address?: SortOrder
     phone?: SortOrder
     email?: SortOrder
+    slug?: SortOrder
+    subdomain?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     user_id?: SortOrder
@@ -5857,6 +5915,8 @@ export namespace Prisma {
     address?: string | null
     phone?: string | null
     email?: string | null
+    slug: string
+    subdomain: string
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -5870,6 +5930,8 @@ export namespace Prisma {
     address?: string | null
     phone?: string | null
     email?: string | null
+    slug: string
+    subdomain: string
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -5943,6 +6005,8 @@ export namespace Prisma {
     address?: StringNullableFilter<"Store"> | string | null
     phone?: StringNullableFilter<"Store"> | string | null
     email?: StringNullableFilter<"Store"> | string | null
+    slug?: StringFilter<"Store"> | string
+    subdomain?: StringFilter<"Store"> | string
     created_at?: DateTimeFilter<"Store"> | Date | string
     updated_at?: DateTimeFilter<"Store"> | Date | string
     user_id?: IntFilter<"Store"> | number
@@ -6092,6 +6156,8 @@ export namespace Prisma {
     address?: string | null
     phone?: string | null
     email?: string | null
+    slug: string
+    subdomain: string
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -6136,6 +6202,8 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6149,6 +6217,8 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6162,6 +6232,8 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }

@@ -2,6 +2,7 @@
 
 import { PrismaClient, Store } from "@/prisma/generated/prisma"
 import { formatErrorResponse } from "@/utils/lib"
+import randomstring from "randomstring"
 
 type InsertStoreReturn = {
     message: string
@@ -18,6 +19,8 @@ export async function insertStore(name: string, userId: number): Promise<InsertS
         const store = await client.store.create({
             data: {
                 name,
+                slug: randomstring.generate(8),
+                subdomain: randomstring.generate(5),
                 user_id: userId
             }
         })

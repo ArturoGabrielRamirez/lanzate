@@ -2,7 +2,7 @@ import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import Title from "@/features/layout/components/title"
 import { getStoresFromUser } from "@/features/stores/actions/getStoresFromUser"
 import CreateStoreButton from "@/features/stores/components/create-store-button"
-
+import StoreCard from "@/features/stores/components/store-card"
 type Props = {}
 async function StoresPage({ }: Props) {
 
@@ -28,9 +28,7 @@ async function StoresPage({ }: Props) {
                         <CreateStoreButton userId={user.id} />
                     </article>
                     {stores.map((store) => (
-                        <article key={store.id} className="border-2 border-secondary rounded-md p-4 hover:scale-105 transition-all bg-accent text-accent-foreground">
-                            <h2 className="text-2xl font-bold">{store.name}</h2>
-                        </article>
+                        <StoreCard key={store.id} store={store} />
                     ))}
                 </section>
             ) : (
