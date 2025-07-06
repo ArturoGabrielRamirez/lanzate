@@ -24,6 +24,38 @@ export async function updateSession(request: NextRequest) {
       },
     }
   )
-  await supabase.auth.getUser()
+
+  console.log("Middleware")
+  console.log(request.nextUrl.pathname)
+  console.log("🚀 ~ updateSession ~ request.nextUrl.pathname:", request.nextUrl.pathname)
+  console.log("🚀 ~ updateSession ~ request.nextUrl.pathname.startsWith('/'):", request.nextUrl.pathname.startsWith('/'))
+
+  const { data: { user } } = await supabase.auth.getUser()
+
+
+  if (
+    !user &&
+    (
+      request.nextUrl.pathname == "/account" ||
+      request.nextUrl.pathname.includes("/stores")
+    )
+  ) {
+
+    // no user, potentially respond by redirecting the user to the login page
+    const url = request.nextUrl.clone()
+    url.pathname = '/login'
+    return NextResponse.redirect(url)
+  }
+
+  if (
+    user &&
+    (request.nextUrl.pathname.includes('login') || request.nextUrl.pathname.includes('signup'))
+  ) {
+    // user is logged in, potentially respond by redirecting the user to the home page
+    const url = request.nextUrl.clone()
+    url.pathname = '/account'
+    return NextResponse.redirect(url)
+  }
+
   return supabaseResponse
 }
