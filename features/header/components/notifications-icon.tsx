@@ -10,6 +10,7 @@ import { Bell, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 
 type Props = {}
 
@@ -20,13 +21,19 @@ function NotificationsIcon({ }: Props) {
     useEffect(() => {
         const suscribe = async () => {
             const supabase = await createSupabaseClient()
+            const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+
+            if (userError) {
+                return console.error(userMessage)
+            }
+
             const channel = supabase.channel("schema-db-changes")
 
             channel.on("postgres_changes", {
                 event: "INSERT",
                 schema: "public",
                 table: "notifications",
-                filter: `user_id=eq.${1}`
+                filter: `user_id=eq.${user.id}`
             }, handleShout).subscribe()
         }
 

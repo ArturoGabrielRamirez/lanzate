@@ -10,10 +10,10 @@ type GetStoresFromUserReturn = {
     error: boolean
 }
 
-export async function getStoresFromUser(): Promise<GetStoresFromUserReturn> {
+export async function getStoresFromUser(userId: number): Promise<GetStoresFromUserReturn> {
     try {
 
-        const { payload, error, message } = await getStoresFromUserDb(1)
+        const { payload, error, message } = await getStoresFromUserDb(userId)
 
         if (error) throw new Error(message)
 

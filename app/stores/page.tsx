@@ -1,3 +1,4 @@
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import Title from "@/features/layout/components/title"
 import { getStoresFromUser } from "@/features/stores/actions/getStoresFromUser"
 import CreateStoreButton from "@/features/stores/components/create-store-button"
@@ -5,18 +6,25 @@ import CreateStoreButton from "@/features/stores/components/create-store-button"
 type Props = {}
 async function StoresPage({ }: Props) {
 
-    const { payload, error, message } = await getStoresFromUser()
+    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
-    if (error) {
-        console.error(message)
+    if (userError) {
+        return console.error(userMessage)
     }
+
+    const { payload: stores, error: storesError, message: storesMessage } = await getStoresFromUser(user.id)
+
+    if (storesError) {
+        return console.error(storesMessage)
+    }
+
 
     return (
         <div className="p-4">
             <Title title="Stores" />
-            {payload.length > 0 ? (
+            {stores.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {payload.map((store) => (
+                    {stores.map((store) => (
                         <div key={store.id}>
                             <h2>{store.name}</h2>
                         </div>
