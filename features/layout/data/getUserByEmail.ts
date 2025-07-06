@@ -1,16 +1,23 @@
 "use server"
 
-import { PrismaClient } from "@/prisma/generated/prisma"
+import { PrismaClient, User } from "@/prisma/generated/prisma"
 import { formatErrorResponse } from "@/utils/lib"
 
 
-export async function getUserByEmail(email: string) {
+export async function getUserByEmail(email: string): Promise<{
+    payload: User | null,
+    error: Error | null,
+    message: string
+}> {
     try {
 
         const prisma = new PrismaClient()
         const user = await prisma.user.findUnique({
             where: {
                 email: email
+            },
+            include: {
+                Account: true
             }
         })
 

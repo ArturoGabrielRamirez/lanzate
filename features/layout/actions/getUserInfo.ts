@@ -3,8 +3,13 @@
 import { createSupabaseClient } from "@/utils/supabase/server"
 import { getUserByEmail } from "../data/getUserByEmail"
 import { formatErrorResponse } from "@/utils/lib"
+import { Account, User } from "@/prisma/generated/prisma"
 
-export async function getUserInfo() {
+export async function getUserInfo(): Promise<{
+    payload: User & { Account: Account[] } | null,
+    error: Error | null,
+    message: string
+}> {
     try {
         const supabase = await createSupabaseClient()
         const { data, error } = await supabase.auth.getUser()
