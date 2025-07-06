@@ -28,7 +28,7 @@ async function StoresPage({ }: Props) {
                         <CreateStoreButton userId={user.id} />
                     </article>
                     {stores.map((store) => (
-                        <article key={store.id} className="border-2 border-secondary rounded-md p-4">
+                        <article key={store.id} className="border-2 border-secondary rounded-md p-4 hover:scale-105 transition-all bg-accent text-accent-foreground">
                             <h2 className="text-2xl font-bold">{store.name}</h2>
                         </article>
                     ))}
