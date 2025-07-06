@@ -10,14 +10,30 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique
-  first_name String?
-  last_name  String?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  avatar     String?
-  password   String
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  first_name   String?
+  last_name    String?
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @updatedAt
+  avatar       String?
+  password     String
+  Notification Notification[]
 
   @@map("users")
+}
+
+model Notification {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id])
+  type       String
+  read       Boolean  @default(false)
+  title      String
+  message    String
+  link       String?
+
+  @@map("notifications")
 }
