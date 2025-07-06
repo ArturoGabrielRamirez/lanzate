@@ -12,5 +12,4 @@ export default async function AccountPage() {
             <Title title="Account"/>
         </div>
     );
-
 }

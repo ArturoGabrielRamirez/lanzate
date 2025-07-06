@@ -7,7 +7,8 @@ import Divider from '@/components/Visuals/Divider'
 import Form from '@/components/Form/Form'
 import Label from '@/components/Form/Label'
 import Input from '@/components/Form/Input'
-import { handleLogIn } from '../actions/handleLogIn'
+import { handleLogIn } from '../../features/auth/actions/handleLogIn'
+import ResetPasswordLink from '@/features/auth/components/ResetPasswordLink'
 
 export default async function LoginPage() {
     const pageLayoutClasses = `px-10 grow flex items-center`
@@ -19,14 +20,15 @@ export default async function LoginPage() {
         <GridForms className={pageLayoutClasses}>
             <Title title='Log In' className={titleClasses} />
             <Form formAction={handleLogIn} contentButton='Log In' className={formPasswordClasses}  >
-                <Label htmlFor='email' text='Email:' className='pl-2'  />
-                <Input required={true} htmlFor='email'  />
-                <Label htmlFor='password' text='Password:' className='pl-2'  />
-                <Input required={true} htmlFor='password'  />
+                <Label htmlFor='email' text='Email:' className='pl-2' />
+                <Input required={true} htmlFor='email' />
+                <Label htmlFor='password' text='Password:' className='pl-2' />
+                <Input required={true} htmlFor='password' />
             </Form>
+            <ResetPasswordLink />
             <Divider className='h-2/3' />
             <Form formAction={handleGoogleLogIn} className={formOtherClasses} contentButton='Log In with Google'>
-                <Label htmlFor='email' text='Or login with:' className='pl-2'  />
+                <Label htmlFor='email' text='Or login with:' className='pl-2' />
             </Form>
         </GridForms>
     )

@@ -1,0 +1,18 @@
+import Link from "next/link";
+
+export default function ResetPasswordLink() {
+    return (
+           <div className="flex flex-col items-center justify-center w-full p-4">
+            <h3 className="text-sm text-gray-600 dark:text-gray-400">
+                Forgot your password?{" "}
+            </h3>
+            <Link
+                href="/reset-password"
+                className="text-sm text-blue-500 hover:underline"
+            >
+                Reset Password
+            </Link>
+
+        </div>
+    );
+}
