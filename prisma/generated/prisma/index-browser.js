@@ -159,6 +159,14 @@ exports.Prisma.StoreScalarFieldEnum = {
   user_id: 'user_id'
 };
 
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id',
+  type: 'type'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -173,12 +181,17 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.AccountType = exports.$Enums.AccountType = {
+  FREE: 'FREE',
+  PRO: 'PRO',
+  ENTERPRISE: 'ENTERPRISE'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
   Notification: 'Notification',
-  Store: 'Store'
+  Store: 'Store',
+  Account: 'Account'
 };
 
 /**

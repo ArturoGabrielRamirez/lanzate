@@ -20,6 +20,7 @@ model User {
   password     String
   Notification Notification[]
   Store        Store[]
+  Account      Account[]
 
   @@map("users")
 }
@@ -59,4 +60,23 @@ model Store {
   user       User     @relation(fields: [user_id], references: [id])
 
   @@map("stores")
+}
+
+model Account {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
+
+  type AccountType @default(FREE)
+
+  @@map("accounts")
+}
+
+enum AccountType {
+  FREE
+  PRO
+  ENTERPRISE
 }

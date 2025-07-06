@@ -25,11 +25,6 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  console.log("Middleware")
-  console.log(request.nextUrl.pathname)
-  console.log("🚀 ~ updateSession ~ request.nextUrl.pathname:", request.nextUrl.pathname)
-  console.log("🚀 ~ updateSession ~ request.nextUrl.pathname.startsWith('/'):", request.nextUrl.pathname.startsWith('/'))
-
   const { data: { user } } = await supabase.auth.getUser()
 
 
