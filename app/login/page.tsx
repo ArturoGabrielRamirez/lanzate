@@ -1,7 +1,7 @@
 'use server'
 
 import { handleGoogleLogIn } from '../actions/handleGoogleLogIn'
-import Title from '@/components/Tiltle/Title'
+import Title from '@/features/layout/components/title'
 import GridForms from '@/components/Visuals/GridFroms'
 import Divider from '@/components/Visuals/Divider'
 import Form from '@/components/Form/Form'

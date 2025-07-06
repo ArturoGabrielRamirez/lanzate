@@ -1,6 +1,4 @@
-import GridForms from "@/components/Visuals/GridFroms";
-import Title from "@/components/Tiltle/Title";
-import { handleGoogleLogIn } from "../actions/handleGoogleLogIn"
+import Title from "@/features/layout/components/title";
 import { createClient } from "@/utils/supabase/server-props";
 
 export default async function AccountPage() {
@@ -10,10 +8,8 @@ export default async function AccountPage() {
     } = await supabase.auth.getUser()
 
     return (
-        <div className="grow bg-gray-800">
-            <GridForms className='grid grid-rows-[30px_1fr_1fr] grid-cols-[1fr] sm:grid-rows-[40px_1fr] sm:grid-cols-[1fr_1px_1fr] grow items-center justify-center bg-white dark:bg-gray-800 sm:gap-x-20 sm:p-8'>
-                <Title title="Account" />
-            </GridForms>
+        <div className="p-4">
+            <Title title="Account"/>
         </div>
     );
 

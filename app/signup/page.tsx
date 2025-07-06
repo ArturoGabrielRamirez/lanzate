@@ -1,7 +1,7 @@
 import Form from '@/components/Form/Form'
 import Input from '@/components/Form/Input'
 import Label from '@/components/Form/Label'
-import Title from '@/components/Tiltle/Title'
+import Title from '@/features/layout/components/title'
 import GridForms from '@/components/Visuals/GridFroms'
 import { handleSignup } from '../actions/handleSignUp'
 import Divider from '@/components/Visuals/Divider'
