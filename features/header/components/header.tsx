@@ -12,7 +12,7 @@ async function Header({ }: Props) {
     const { data: { user } } = await supabase.auth.getUser()
 
     return (
-        <header className="flex items-center justify-between w-full bg-secondary p-4">
+        <header className="flex items-center justify-between w-full bg-accent text-accent-foreground p-4">
             <Link href="/" className="text-2xl font-bold">
                 <h1>Lanzate</h1>
             </Link>

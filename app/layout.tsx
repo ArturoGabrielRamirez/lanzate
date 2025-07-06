@@ -1,18 +1,9 @@
 import type { Metadata } from "next";
-/* import { Geist, Geist_Mono } from "next/font/google"; */
-import "./globals.css";
 import { Header } from "@/features/header/components";
 import { NextThemeProvider } from "@/features/layout/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner"
+import "./globals.css";
 
-/* const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-}); */
 
 export const metadata: Metadata = {
   title: 'Lanzate',
@@ -32,7 +23,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`min-h-dvh min-w-[270px]`}
+        className="min-h-dvh flex flex-col"
       >
         <NextThemeProvider
           attribute="class"
@@ -40,10 +31,11 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className='flex flex-col min-h-dvh overflow-y-hidden overflow-x-hidden'>
-            <Header />
+          <Header />
+          <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow'>
             {children}
           </main>
+          <Toaster />
         </NextThemeProvider>
       </body>
     </html>

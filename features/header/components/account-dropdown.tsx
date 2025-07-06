@@ -1,26 +1,36 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { User } from "lucide-react"
 import Link from "next/link"
+import { useState } from "react"
 
 type Props = {}
 function AccountDropdown({ }: Props) {
+
+    const [open, setOpen] = useState(false)
+
+    const handleClick = () => {
+        setOpen(!open)
+    }
+
     return (
-        <DropdownMenu>
+        <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger asChild>
-                <Button size="icon" variant={"outline"}>
+                <Button size="icon" variant={"outline"} onClick={handleClick}>
                     <User />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-                <DropdownMenuItem>
+            <DropdownMenuContent side="bottom" align="end">
+                <DropdownMenuItem onClick={handleClick}>
                     <Link href="/account">Account</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={handleClick}>
                     <Link href="/stores">Stores</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={handleClick}>
                     <form action='/auth/signout' method='post' className="w-full">
                         <Button type='submit' className="p-0 h-5 hover:!bg-transparent w-full justify-start" variant={"ghost"}>
                             Sign out
