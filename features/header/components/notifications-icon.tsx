@@ -1,11 +1,15 @@
 "use client"
 
+import { PrismaClient } from "@/prisma/generated/prisma"
 import { createSupabaseClient } from "@/utils/supabase/client"
 import { useEffect } from "react"
+import { getNotifications } from "../actions/getNotifications"
 
 type Props = {}
 
 function NotificationsIcon({ }: Props) {
+
+    
 
     useEffect(() => {
 
@@ -27,6 +31,10 @@ function NotificationsIcon({ }: Props) {
 
 
         suscribe()
+        getNotifications()
+            .then((res) => {
+                console.log("🚀 ~ suscribe ~ res:", res)
+            })
 
     }, [])
 

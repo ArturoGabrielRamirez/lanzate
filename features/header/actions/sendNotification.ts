@@ -1,5 +1,6 @@
 "use server"
 
+import { formatErrorResponse } from "@/utils/lib"
 import { insertNotification } from "../data/insertNotification"
 
 export async function sendNotification() {
@@ -16,19 +17,6 @@ export async function sendNotification() {
         }
 
     } catch (error) {
-        const errorResponse = {
-            message: "Error sending notification",
-            payload: null,
-            error: true
-        }
-
-        if (error instanceof Error) {
-            return {
-                ...errorResponse,
-                message: errorResponse.message + " : " + error.message
-            }
-        }
-
-        return errorResponse
+        return formatErrorResponse("Error sending notification", error)
     }
 }
