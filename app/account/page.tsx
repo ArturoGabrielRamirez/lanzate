@@ -1,6 +1,6 @@
 import GridForms from "@/components/Visuals/GridFroms";
 import Title from "@/components/Tiltle/Title";
-import { handleGoogleLogIn } from "../actions/handleGoogleLogIn"
+import { handleGoogleLogIn } from "../../features/auth/handleGoogleLogIn"
 import { createClient } from "@/utils/supabase/server-props";
 
 export default async function AccountPage() {

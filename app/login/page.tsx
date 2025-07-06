@@ -1,13 +1,13 @@
 'use server'
 
-import { handleGoogleLogIn } from '../actions/handleGoogleLogIn'
+import { handleGoogleLogIn } from '../../features/auth/handleGoogleLogIn'
 import Title from '@/components/Tiltle/Title'
 import GridForms from '@/components/Visuals/GridFroms'
 import Divider from '@/components/Visuals/Divider'
 import Form from '@/components/Form/Form'
 import Label from '@/components/Form/Label'
 import Input from '@/components/Form/Input'
-import { handleLogIn } from '../actions/handleLogIn'
+import { handleLogIn } from '../../features/auth/handleLogIn'
 
 export default async function LoginPage() {
     const pageLayoutClasses = `px-10 grow flex items-center`
