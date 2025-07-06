@@ -4,6 +4,7 @@ import { Notification } from "@/prisma/generated/prisma"
 import { createSupabaseClient } from "@/utils/supabase/client"
 import { useEffect, useState } from "react"
 import { getNotifications } from "../actions/getNotifications"
+import { markNotificationAsRead } from "../actions/markNotificationAsRead"
 
 type Props = {}
 
@@ -43,9 +44,17 @@ function NotificationsIcon({ }: Props) {
         setIsOpen(!isOpen)
     }
 
+    const handleViewNotification = async (id: number) => {
+        const { error, message, payload } = await markNotificationAsRead(id)
 
+        if (error) {
+            return console.log(error)
+        }
 
-
+        setNotifications(notifications => {
+            return notifications.filter(notification => notification.id !== id)
+        })
+    }
 
 
     return (
@@ -56,8 +65,11 @@ function NotificationsIcon({ }: Props) {
             {isOpen && (
                 <div>
                     {notifications.map((notification) => (
-                        <div key={notification.id}>
-                            {notification.message}
+                        <div key={notification.id} className="flex items-center gap-2">
+                            <p>{notification.message}</p>
+                            <button onClick={() => handleViewNotification(notification.id)}>
+                                👁️
+                            </button>
                         </div>
                     ))}
                 </div>

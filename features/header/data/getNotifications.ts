@@ -11,7 +11,8 @@ export const getNotifications = async (userId: number) => {
 
         const notifications = await client.notification.findMany({
             where: {
-                user_id: userId
+                user_id: userId,
+                read: false
             }
         })
 
