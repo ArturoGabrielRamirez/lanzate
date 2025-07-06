@@ -16,6 +16,9 @@ function AccountDropdown({ }: Props) {
                 <DropdownMenuItem>
                     <Link href="/account">Account</Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <Link href="/stores">Stores</Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                     <form action='/auth/signout' method='post' className="w-full">
