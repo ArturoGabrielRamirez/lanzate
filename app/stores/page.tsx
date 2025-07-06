@@ -23,17 +23,17 @@ async function StoresPage({ }: Props) {
         <div className="p-4">
             <Title title="Stores" />
             {stores.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {stores.map((store) => (
-                        <div key={store.id}>
+                        <article key={store.id} className="border-2 border-secondary rounded-md p-4">
                             <h2>{store.name}</h2>
-                        </div>
+                        </article>
                     ))}
-                </div>
+                </section>
             ) : (
                 <div className="flex flex-col justify-center items-center h-full border-dashed border-2 border-secondary rounded-md p-6 gap-4">
                     <p className="text-xl font-bold">No stores found</p>
-                    <CreateStoreButton />
+                    <CreateStoreButton userId={user.id} />
                 </div>
             )}
         </div>
