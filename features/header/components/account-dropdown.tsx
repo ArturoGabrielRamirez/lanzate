@@ -12,7 +12,7 @@ function AccountDropdown({ }: Props) {
                     <User />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent side="bottom" align="end">
                 <DropdownMenuItem>
                     <Link href="/account">Account</Link>
                 </DropdownMenuItem>

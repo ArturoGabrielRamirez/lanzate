@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
 import Title from "@/features/layout/components/title"
 import { getStoresFromUser } from "@/features/stores/actions/getStoresFromUser"
+import CreateStoreButton from "@/features/stores/components/create-store-button"
 
 type Props = {}
 async function StoresPage({ }: Props) {
@@ -25,7 +25,7 @@ async function StoresPage({ }: Props) {
             ) : (
                 <div className="flex flex-col justify-center items-center h-full border-dashed border-2 border-secondary rounded-md p-6 gap-4">
                     <p className="text-xl font-bold">No stores found</p>
-                    <Button>Create Store</Button>
+                    <CreateStoreButton />
                 </div>
             )}
         </div>

@@ -69,7 +69,7 @@ function NotificationsIcon({ }: Props) {
                     )}
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent side="bottom" align="end">
                 {notifications.map((notification) => (
                     <DropdownMenuItem key={notification.id} className="flex justify-between">
                         <p>{notification.message}</p>
