@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+/* import { Geist, Geist_Mono } from "next/font/google"; */
 import "./globals.css";
-import NavBar from "@/components/Nav/NavBar";
-import { createClient } from "@/utils/supabase/server-props";
 import { Header } from "@/features/header/components";
-import { NextThemeProvider, ThemeProvider } from "@/features/layout/components/theme-provider";
+import { NextThemeProvider } from "@/features/layout/components/theme-provider";
 
-const geistSans = Geist({
+/* const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
@@ -14,7 +12,7 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
+}); */
 
 export const metadata: Metadata = {
   title: 'Lanzate',
@@ -31,10 +29,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
   return (
     <html lang="en">
       <body
@@ -47,7 +41,6 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <main className='flex flex-col min-h-dvh overflow-y-hidden overflow-x-hidden'>
-            <NavBar user={user} />
             <Header />
             {children}
           </main>
