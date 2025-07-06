@@ -19,6 +19,7 @@ model User {
   avatar       String?
   password     String
   Notification Notification[]
+  Store        Store[]
 
   @@map("users")
 }
@@ -36,4 +37,23 @@ model Notification {
   link       String?
 
   @@map("notifications")
+}
+
+model Store {
+  id Int @id @default(autoincrement())
+
+  name        String
+  description String?
+  logo        String?
+  slogan      String?
+  address     String?
+  phone       String?
+  email       String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id])
+
+  @@map("stores")
 }

@@ -143,6 +143,20 @@ exports.Prisma.NotificationScalarFieldEnum = {
   link: 'link'
 };
 
+exports.Prisma.StoreScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  logo: 'logo',
+  slogan: 'slogan',
+  address: 'address',
+  phone: 'phone',
+  email: 'email',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -161,7 +175,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  Store: 'Store'
 };
 
 /**
