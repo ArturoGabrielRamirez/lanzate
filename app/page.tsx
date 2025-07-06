@@ -1,13 +1,14 @@
 "use client"
-import { sentNotification } from "@/features/header/actions/sentNotification"
+import { sendNotification } from "@/features/header/actions/sendNotification"
 export default function Home() {
 
   const handleSendNotification = async () => {
-    await sentNotification()
+    const res = await sendNotification()
+    console.log("🚀 ~ handleSendNotification ~ res:", res)
   }
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div>
       <button onClick={handleSendNotification}>Send Shout</button>
     </div>
   );
