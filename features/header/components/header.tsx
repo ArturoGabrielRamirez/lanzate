@@ -2,6 +2,7 @@ import { NotificationsIcon } from "@/features/header/components"
 import { createClient } from "@/utils/supabase/server-props"
 import Link from "next/link"
 import ThemeToggle from "./theme-toggle"
+import AccountDropdown from "./account-dropdown"
 
 type Props = {}
 
@@ -22,14 +23,7 @@ async function Header({ }: Props) {
                 {!user && <Link href='/signup' className='p-2 hover:underline '>Sign Up</Link>}
 
                 {user && <NotificationsIcon />}
-                {user && <Link href='/account' className='p-2 hover:underline '>Account</Link>}
-                {user && (
-                    <form action='/auth/signout' method='post' className=' p-2'>
-                        <button className=' hover:underline hover:cursor-pointer ' type='submit'>
-                            Sign out
-                        </button>
-                    </form>
-                )}
+                {user && <AccountDropdown />}
             </nav>
         </header>
     )
