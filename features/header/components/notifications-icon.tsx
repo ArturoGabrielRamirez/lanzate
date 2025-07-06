@@ -5,13 +5,17 @@ import { createSupabaseClient } from "@/utils/supabase/client"
 import { useEffect, useState } from "react"
 import { getNotifications } from "../actions/getNotifications"
 import { markNotificationAsRead } from "../actions/markNotificationAsRead"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Bell, Eye } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 
 type Props = {}
 
 function NotificationsIcon({ }: Props) {
 
     const [notifications, setNotifications] = useState<Notification[]>([])
-    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
         const suscribe = async () => {
@@ -40,12 +44,8 @@ function NotificationsIcon({ }: Props) {
         })
     }
 
-    const handleOpenNotifications = () => {
-        setIsOpen(!isOpen)
-    }
-
     const handleViewNotification = async (id: number) => {
-        const { error, message, payload } = await markNotificationAsRead(id)
+        const { error } = await markNotificationAsRead(id)
 
         if (error) {
             return console.log(error)
@@ -58,23 +58,32 @@ function NotificationsIcon({ }: Props) {
 
 
     return (
-        <>
-            <button onClick={handleOpenNotifications}>
-                🔔{notifications.length}
-            </button>
-            {isOpen && (
-                <div>
-                    {notifications.map((notification) => (
-                        <div key={notification.id} className="flex items-center gap-2">
-                            <p>{notification.message}</p>
-                            <button onClick={() => handleViewNotification(notification.id)}>
-                                👁️
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            )}
-        </>
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button size="icon" variant={"outline"} className={cn(notifications.length > 0 && "!bg-red-500 relative")}>
+                    <Bell />
+                    {notifications.length > 0 && (
+                        <Badge className="absolute -top-2 -right-2">
+                            {notifications.length}
+                        </Badge>
+                    )}
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+                {notifications.map((notification) => (
+                    <DropdownMenuItem key={notification.id} className="flex justify-between">
+                        <p>{notification.message}</p>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleViewNotification(notification.id)} >
+                            <Eye />
+                        </Button>
+                        <DropdownMenuSeparator />
+                    </DropdownMenuItem>
+                ))}
+            </DropdownMenuContent>
+        </DropdownMenu>
     )
 }
 export default NotificationsIcon
