@@ -30,7 +30,7 @@ export default async function AccountPage() {
                         {user.Account[0].type === "FREE" && (
                             <Button asChild size="sm">
                                 <Link href="/upgrade">
-                                    Upgrade to PRO
+                                    Upgrade Plan
                                 </Link>
                             </Button>
                         )}

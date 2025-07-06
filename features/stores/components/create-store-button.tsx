@@ -30,7 +30,9 @@ function CreateStoreButton({ userId }: Props) {
                 if (data.error) throw new Error(data.message)
                 return "Store created successfully!"
             },
-            error: "Error creating store",
+            error: (error) => {
+                return error.message
+            },
             finally: () => {
                 setOpen(false)
             }

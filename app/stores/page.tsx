@@ -8,7 +8,7 @@ async function StoresPage({ }: Props) {
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
-    if (userError) {
+    if (userError || !user) {
         return console.error(userMessage)
     }
 
