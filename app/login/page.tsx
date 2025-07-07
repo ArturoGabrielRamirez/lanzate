@@ -1,13 +1,13 @@
 'use server'
 
-import Title from '@/features/layout/components/title'
-import GridForms from '@/components/Visuals/GridFroms'
+import { Label } from '@/components/ui/label'
 import Divider from '@/components/Visuals/Divider'
-import Form from '@/components/Form/Form'
-import Label from '@/components/Form/Label'
-import Input from '@/components/Form/Input'
+import Form from '@/features/layout/components/form'
+import GridForms from '@/components/Visuals/GridFroms'
+import Title from '@/features/layout/components/title'
+import InputField from '@/features/layout/components/input'
 import { handleLogIn } from '../../features/auth/actions/handleLogIn'
-import ResetPasswordLink from '@/features/auth/components/ResetPasswordLink'
+import ResetPasswordLink from '@/features/auth/components/reset-password-link'
 import { handleGoogleLogIn } from '../../features/auth/actions/handleGoogleLogIn'
 
 export default async function LoginPage() {
@@ -19,16 +19,19 @@ export default async function LoginPage() {
     return (
         <GridForms className={pageLayoutClasses}>
             <Title title='Log In' className={titleClasses} />
-            <Form formAction={handleLogIn} contentButton='Log In' className={formPasswordClasses}  >
-                <Label htmlFor='email' text='Email:' className='pl-2' />
-                <Input required={true} htmlFor='email' />
-                <Label htmlFor='password' text='Password:' className='pl-2' />
-                <Input required={true} htmlFor='password' />
+            <Form
+                formAction={handleLogIn}
+                contentButton='Log In'
+                successMessage='Logged in successfully!'
+                loadingMessage='Logging in...'
+                className={formPasswordClasses}  >
+                <InputField name='email' label='Email:' type='email' />
+                <InputField name='password' label='Password:' type='password' />
             </Form>
             <ResetPasswordLink />
             <Divider className='h-2/3' />
-            <Form formAction={handleGoogleLogIn} className={formOtherClasses} contentButton='Log In with Google'>
-                <Label htmlFor='email' text='Or login with:' className='pl-2' />
+            <Form formAction={handleGoogleLogIn} className={formOtherClasses} contentButton='Google'>
+                <Label htmlFor='google' className='pl-2'>Or login with:</Label>
             </Form>
         </GridForms>
     )

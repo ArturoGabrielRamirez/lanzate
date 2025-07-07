@@ -1,10 +1,10 @@
 'use server'
 
 import { createClient } from '@/utils/supabase/server-props'
-import { redirect } from 'next/navigation'
 
-export const handleSignup = async (formData: FormData): Promise<void> => {
+export const handleSignup = async (formData: FormData) => {
     const supabase = await createClient()
+
     const email = formData.get('email')?.toString() || ''
     const password = formData.get('password')?.toString() || ''
 
@@ -14,14 +14,14 @@ export const handleSignup = async (formData: FormData): Promise<void> => {
     })
 
     if (signUpError) {
-        console.log(signUpError)
-        redirect('/error')
+        console.error(signUpError)
+        throw new Error('Failed to sign up')
     }
 
     const user = signUpData?.user
     if (!user) {
         console.warn('No user returned')
-        redirect('/error')
+        throw new Error('No user returned from sign up')
     }
 
     const { data: existingUser, error: selectError } = await supabase
@@ -31,23 +31,22 @@ export const handleSignup = async (formData: FormData): Promise<void> => {
         .maybeSingle()
 
     if (selectError) {
-        console.error('Error selecting user:', selectError)
-        redirect('/error')
+        console.error('Error fetching user:', selectError)
+        throw new Error('Error fetching user')
     }
 
     if (!existingUser) {
         const { error: insertError } = await supabase.from('users').insert({
             email: user.email,
-            password: "email",
+            password: 'email',
             updated_at: new Date(),
-            id: 3,
         })
 
         if (insertError) {
-            console.error('Error inserting user into users:', insertError)
-            redirect('/error')
+            console.error('Error inserting user:', insertError)
+            throw new Error('Error inserting user')
         }
     }
 
-    redirect('/check-email')
+    return { success: true }
 }

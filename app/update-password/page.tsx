@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server-props'
-import UpdatePasswordForm from '@/features/auth/components/UpdatePasswordForm'
+import UpdatePasswordForm from '@/features/auth/components/update-password-form'
 
 
 export default async function UpdatePasswordPage() {
