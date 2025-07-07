@@ -2,11 +2,11 @@
 
 import { formatErrorResponse } from "@/utils/lib"
 import { selectStoreBySlug } from "../data/selectStoreBySlug"
-import { Store } from "@/prisma/generated/prisma"
+import { Branch, Store } from "@/prisma/generated/prisma"
 
 type GetStoresFromSlugReturn = {
     message: string
-    payload: Store | null
+    payload: Store & { branches: Branch[] } | null
     error: boolean
 }
 

@@ -1,11 +1,11 @@
 "use server"
 
-import { PrismaClient, Store } from "@/prisma/generated/prisma"
+import { PrismaClient, Store, Branch } from "@/prisma/generated/prisma"
 import { formatErrorResponse } from "@/utils/lib"
 
 type SelectStoreBySlugReturn = {
     message: string
-    payload: Store | null
+    payload: Store & { branches: Branch[] } | null
     error: boolean
 }
 
@@ -17,6 +17,9 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
         const store = await client.store.findUnique({
             where: {
                 slug: slug
+            },
+            include : {
+                branches : true
             }
         })
 

@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import CreateProductButton from "@/features/products/components/create-product-button"
 import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
 import Title from "@/features/layout/components/title"
+import { House } from "lucide-react"
 
 type Props = {
     params: Promise<{ slug: string }>
@@ -68,14 +69,6 @@ async function StoreDetailsPage({ params }: Props) {
                                     <p className="font-light text-sm">Description</p>
                                     <p className="font-medium">{store.description || "No description available"}</p>
                                 </div>
-                                <div className="flex flex-col">
-                                    <p className="font-light text-sm">Email</p>
-                                    <p className="font-medium">{store.email || "No email available"}</p>
-                                </div>
-                                <div className="flex flex-col">
-                                    <p className="font-light text-sm">Phone</p>
-                                    <p className="font-medium">{store.phone || "No phone available"}</p>
-                                </div>
                             </CardContent>
                         </Card>
                     </TabsContent>
@@ -105,7 +98,14 @@ async function StoreDetailsPage({ params }: Props) {
                                 <CardTitle>Branches</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                Currently not available
+                                {store.branches.map((branch) => (
+                                    <article key={branch.id} className="border border-border p-4 rounded-md">
+                                        <p className="flex items-center gap-2">
+                                            <House />
+                                            {branch.name}
+                                        </p>
+                                    </article>
+                                ))}
                             </CardContent>
                         </Card>
                     </TabsContent>

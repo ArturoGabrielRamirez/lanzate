@@ -149,9 +149,6 @@ exports.Prisma.StoreScalarFieldEnum = {
   description: 'description',
   logo: 'logo',
   slogan: 'slogan',
-  address: 'address',
-  phone: 'phone',
-  email: 'email',
   slug: 'slug',
   subdomain: 'subdomain',
   created_at: 'created_at',
@@ -165,6 +162,36 @@ exports.Prisma.AccountScalarFieldEnum = {
   updated_at: 'updated_at',
   user_id: 'user_id',
   type: 'type'
+};
+
+exports.Prisma.ProductScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  price: 'price',
+  stock: 'stock',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.BranchScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  address: 'address',
+  phone: 'phone',
+  email: 'email',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  store_id: 'store_id'
+};
+
+exports.Prisma.ProductStockScalarFieldEnum = {
+  quantity: 'quantity',
+  product_id: 'product_id',
+  branch_id: 'branch_id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -191,7 +218,10 @@ exports.Prisma.ModelName = {
   User: 'User',
   Notification: 'Notification',
   Store: 'Store',
-  Account: 'Account'
+  Account: 'Account',
+  Product: 'Product',
+  Branch: 'Branch',
+  ProductStock: 'ProductStock'
 };
 
 /**
