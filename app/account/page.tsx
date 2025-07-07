@@ -17,26 +17,31 @@ export default async function AccountPage() {
         <div className="p-4 grow flex flex-col">
             <Title title="Account" />
             <section className="flex items-center gap-4">
-                <img
-                    src={`https://api.dicebear.com/9.x/initials/svg?seed=${user.email}`}
-                    alt="User avatar"
-                    className="size-24 rounded-full"
-                />
-                <div className="flex flex-col gap-2">
-                    <p className="text-xl font-bold">{user.email}</p>
-                    <div>
-                        <p className="capitalize">
-                            {user.Account[0].type.toLowerCase()} account
-                        </p>
-                        {user.Account[0].type === "FREE" && (
-                            <Button asChild size="sm">
-                                <Link href="/upgrade">
-                                    Upgrade Plan
-                                </Link>
-                            </Button>
-                        )}
-                    </div>
-                </div>
+                <Card className="w-full">
+                    <CardContent className="flex items-center gap-4 w-full">
+                        <img
+                            src={`https://api.dicebear.com/9.x/initials/svg?seed=${user.email}`}
+                            alt="User avatar"
+                            className="size-24 rounded-full"
+                        />
+                        <div className="flex flex-col gap-2">
+                            <p className="text-xl font-bold">{user.email}</p>
+                            <div>
+                                <p className="capitalize">
+                                    {user.Account[0].type.toLowerCase()} account
+                                </p>
+                                {user.Account[0].type === "FREE" && (
+                                    <Button asChild size="sm">
+                                        <Link href="/upgrade">
+                                            Upgrade Plan
+                                        </Link>
+                                    </Button>
+                                )}
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
             </section>
             <section className="py-4 grow flex">
                 <Tabs defaultValue="account" className="grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4">
