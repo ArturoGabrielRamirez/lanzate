@@ -8,12 +8,7 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import LoadingSubmitButton from './loading-submit-button'
 
-type FormValues = {
-    email: string
-    password: string
-}
-
-type FormProps = {
+type FormProps<T extends Record<string, any>> = {
     children?: React.ReactNode
     className?: string
     contentButton: string
@@ -24,7 +19,7 @@ type FormProps = {
     loadingMessage?: string
 }
 
-const Form = ({
+function Form<T extends Record<string, any>>({
     children,
     resolverSchema,
     formAction,
@@ -32,9 +27,9 @@ const Form = ({
     contentButton,
     successRedirect = '/account',
     successMessage = '',
-    loadingMessage = 'Loading...'
-}: FormProps) => {
-    const methods = useForm<FormValues>({
+    loadingMessage = 'Loading...',
+}: FormProps<T>) {
+    const methods = useForm<T>({
         resolver: resolverSchema ? yupResolver(resolverSchema) : undefined,
         mode: 'onSubmit',
     })
@@ -42,23 +37,25 @@ const Form = ({
     const router = useRouter()
     const { handleSubmit } = methods
 
-    const onSubmit = async (data: FormValues) => {
+    const onSubmit = async (data: T) => {
         if (!formAction) return
 
         const toastId = toast.loading(loadingMessage)
 
         try {
             const formData = new FormData()
-            formData.append('email', data.email)
-            formData.append('password', data.password)
+
             for (const [key, value] of Object.entries(data)) {
-                if (key !== 'email' && key !== 'password') {
-                    formData.append(key, value as string)
+                if (typeof value === 'string' || value instanceof Blob) {
+                    formData.append(key, value)
+                } else if (typeof value === 'number' || typeof value === 'boolean') {
+                    formData.append(key, value.toString())
+                } else if (value != null) {
+                    console.warn(`Unsupported field type for "${key}":`, value)
                 }
             }
 
             const result = await formAction(formData)
-
             toast.dismiss(toastId)
 
             if ((result as { success: boolean })?.success) {

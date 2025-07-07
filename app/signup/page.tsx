@@ -1,10 +1,12 @@
-import Form from '@/components/Form/Form'
+
 import Input from '@/components/Form/Input'
 import Label from '@/components/Form/Label'
 import Title from '@/features/layout/components/title'
 import GridForms from '@/components/Visuals/GridFroms'
 import { handleSignup } from '../../features/auth/actions/handleSignUp'
 import Divider from '@/components/Visuals/Divider'
+import Form from '@/features/layout/components/form'
+import InputField from '@/features/layout/components/input'
 
 
 export default async function SignupPage() {
@@ -14,11 +16,13 @@ export default async function SignupPage() {
     return (
         <GridForms className={pageLayoutClasses}>
             <Title title='Sign Up' />
-            <Form formAction={handleSignup} contentButton='Sign Up' className={formPasswordClasses}>
-                <Label htmlFor='email' text='Email:' className='pl-2' />
-                <Input required={true} htmlFor='email' />
-                <Label htmlFor='password' text='Password:' className='pl-2' />
-                <Input required={true} htmlFor='password' />
+            <Form formAction={handleSignup}
+                contentButton='Sign Up'
+                successMessage='Signed up successfully!'
+                loadingMessage='Signing up...'
+                className={formPasswordClasses}>
+                <InputField name='email' label='Email:' type='email' />
+                <InputField name='password' label='Password:' type='password' />
             </Form>
             <Divider className='h-2/3' />
         </GridForms>
