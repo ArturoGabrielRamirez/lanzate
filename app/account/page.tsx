@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getUserInfo } from "@/features/layout/actions/getUserInfo";
 import Title from "@/features/layout/components/title";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link";
 
 export default async function AccountPage() {
@@ -13,7 +15,7 @@ export default async function AccountPage() {
     }
 
     return (
-        <div className="p-4">
+        <div className="p-4 grow flex flex-col">
             <Title title="Account" />
             <section className="flex items-center gap-4">
                 <img
@@ -36,6 +38,42 @@ export default async function AccountPage() {
                         )}
                     </div>
                 </div>
+            </section>
+            <section className="py-4 grow flex">
+                <Tabs defaultValue="account" className="grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4">
+                    <TabsList className="w-full h-full items-start">
+                        <div className="flex md:block w-full">
+                            <TabsTrigger value="account" className="w-full h-fit">Account Details</TabsTrigger>
+                            <TabsTrigger value="password" className="w-full h-fit">Membership</TabsTrigger>
+                        </div>
+                    </TabsList>
+                    <TabsContent value="account">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Account Details</CardTitle>
+                            </CardHeader>
+                            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-12 w-fit">
+                                <div className="flex flex-col">
+                                    <p className="font-light text-sm">First Name</p>
+                                    <p className="font-medium">{user.first_name || "No set"}</p>
+                                </div>
+                                <div className="flex flex-col">
+                                    <p className="font-light text-sm">Last Name</p>
+                                    <p className="font-medium">{user.last_name || "No set"}</p>
+                                </div>
+                                <div className="flex flex-col">
+                                    <p className="font-light text-sm">Email</p>
+                                    <p className="font-medium">{user.email}</p>
+                                </div>
+                                <div className="flex flex-col">
+                                    <p className="font-light text-sm">Password</p>
+                                    <Link href="/account/password" className="font-medium">Change Password</Link>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                    <TabsContent value="password">Change your password here.</TabsContent>
+                </Tabs>
             </section>
 
         </div>
