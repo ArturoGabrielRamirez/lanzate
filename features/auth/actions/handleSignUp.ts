@@ -2,11 +2,11 @@
 
 import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
 import { createClient } from '@/utils/supabase/server-props'
-import { redirect } from 'next/navigation'
 import { insertUser } from '../data/insertUser'
 
-export const handleSignup = async (formData: FormData): Promise<void> => {
+export const handleSignup = async (formData: FormData) => {
     const supabase = await createClient()
+
     const email = formData.get('email')?.toString() || ''
     const password = formData.get('password')?.toString() || ''
 
@@ -16,14 +16,15 @@ export const handleSignup = async (formData: FormData): Promise<void> => {
     })
 
     if (signUpError) {
-        redirect('/error')
+        console.error(signUpError)
+        throw new Error('Failed to sign up')
     }
 
     const user = signUpData?.user
 
 
     if (!user) {
-        redirect('/error')
+        throw new Error('No user returned')
     }
 
     const { payload: existingUser } = await getUserByEmail(user.email ?? "")
@@ -33,10 +34,11 @@ export const handleSignup = async (formData: FormData): Promise<void> => {
         const { error: insertError } = await insertUser(user.email ?? "", "email")
 
         if (insertError) {
-            console.error('Error inserting user into users:', insertError)
-            redirect('/error')
+            console.error('Error inserting user:', insertError)
+            throw new Error('Error inserting user')
         }
     }
 
-    redirect('/check-email')
+
+    return { success: true }
 }
