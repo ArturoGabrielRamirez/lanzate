@@ -8,7 +8,6 @@ import Link from "next/link";
 export default async function AccountPage() {
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
-    console.log("🚀 ~ AccountPage ~ user:", user)
 
     if (userError || !user) {
         return console.error(userMessage)
@@ -19,7 +18,7 @@ export default async function AccountPage() {
             <Title title="Account" />
             <section className="flex items-center gap-4">
                 <img
-                    src="https://api.dicebear.com/9.x/initials/svg?seed=Felix"
+                    src={`https://api.dicebear.com/9.x/initials/svg?seed=${user.email}`}
                     alt="User avatar"
                     className="size-24 rounded-full"
                 />
@@ -43,8 +42,8 @@ export default async function AccountPage() {
                 <Tabs defaultValue="account" className="grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4">
                     <TabsList className="w-full h-full items-start">
                         <div className="flex md:block w-full">
-                            <TabsTrigger value="account" className="w-full h-fit">Account Details</TabsTrigger>
-                            <TabsTrigger value="password" className="w-full h-fit">Membership</TabsTrigger>
+                            <TabsTrigger value="account" className="w-full h-fit cursor-pointer py-3">Account Details</TabsTrigger>
+                            <TabsTrigger value="password" className="w-full h-fit cursor-pointer py-3">Membership</TabsTrigger>
                         </div>
                     </TabsList>
                     <TabsContent value="account">
@@ -72,7 +71,16 @@ export default async function AccountPage() {
                             </CardContent>
                         </Card>
                     </TabsContent>
-                    <TabsContent value="password">Change your password here.</TabsContent>
+                    <TabsContent value="password">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Membership</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                Currently not available
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
                 </Tabs>
             </section>
 
