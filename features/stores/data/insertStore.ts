@@ -21,7 +21,13 @@ export async function insertStore(name: string, userId: number): Promise<InsertS
                 name,
                 slug: randomstring.generate(8),
                 subdomain: randomstring.generate(5),
-                user_id: userId
+                user_id: userId,
+                branches : {
+                    create : {
+                        name : "Main Branch",
+                        description : "Main starter branch"
+                    }
+                }
             }
         })
 

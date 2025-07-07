@@ -20,6 +20,7 @@ model User {
   password     String
   Notification Notification[]
   Store        Store[]
+  Account      Account[]
 
   @@map("users")
 }
@@ -46,17 +47,85 @@ model Store {
   description String?
   logo        String?
   slogan      String?
-  address     String?
-  phone       String?
-  email       String?
 
   slug      String @unique
   subdomain String @unique
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  user_id    Int
-  user       User     @relation(fields: [user_id], references: [id])
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
+
+  branches Branch[]
 
   @@map("stores")
+}
+
+model Account {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
+
+  type AccountType @default(FREE)
+
+  @@map("accounts")
+}
+
+enum AccountType {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+model Product {
+  id            Int            @id @default(autoincrement())
+  name          String
+  description   String?
+  price         Float
+  stock         Int
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+  stock_entries ProductStock[]
+
+  @@map("products")
+}
+
+model Branch {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+
+  address String?
+  phone   String?
+  email   String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  store_id Int
+  store    Store @relation(fields: [store_id], references: [id])
+
+  stock ProductStock[]
+
+  @@map("branches")
+}
+
+model ProductStock {
+  quantity Int
+
+  product_id Int
+  product    Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+
+  branch_id Int
+  branch    Branch @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([product_id, branch_id])
+  @@map("product_stocks")
 }

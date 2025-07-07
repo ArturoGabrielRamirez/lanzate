@@ -1,7 +1,9 @@
 'use server'
 
+import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
 import { createClient } from '@/utils/supabase/server-props'
 import { redirect } from 'next/navigation'
+import { insertUser } from '../data/insertUser'
 
 export const handleSignup = async (formData: FormData): Promise<void> => {
     const supabase = await createClient()
@@ -14,34 +16,21 @@ export const handleSignup = async (formData: FormData): Promise<void> => {
     })
 
     if (signUpError) {
-        console.log(signUpError)
         redirect('/error')
     }
 
     const user = signUpData?.user
+
+
     if (!user) {
-        console.warn('No user returned')
         redirect('/error')
     }
 
-    const { data: existingUser, error: selectError } = await supabase
-        .from('users')
-        .select('id')
-        .eq('email', user.email)
-        .maybeSingle()
-
-    if (selectError) {
-        console.error('Error selecting user:', selectError)
-        redirect('/error')
-    }
+    const { payload: existingUser } = await getUserByEmail(user.email ?? "")
 
     if (!existingUser) {
-        const { error: insertError } = await supabase.from('users').insert({
-            email: user.email,
-            password: "email",
-            updated_at: new Date(),
-            id: 3,
-        })
+
+        const { error: insertError } = await insertUser(user.email ?? "", "email")
 
         if (insertError) {
             console.error('Error inserting user into users:', insertError)

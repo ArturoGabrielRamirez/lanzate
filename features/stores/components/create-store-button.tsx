@@ -1,63 +1,41 @@
 "use client"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { createStore } from "../actions/createStore"
-import { toast } from "sonner"
-import { useState } from "react"
-import LoadingSubmitButton from "@/features/layout/components/loading-submit-button"
+import ButtonWithPopup from "@/features/layout/components/button-with-popup"
+import { formatErrorResponse } from "@/utils/lib"
 
 type Props = {
     userId: number
+    canCreate?: boolean
 }
 
-function CreateStoreButton({ userId }: Props) {
+function CreateStoreButton({ userId, canCreate = true }: Props) {
 
-    const [open, setOpen] = useState(false)
-
-    const handleCreateStore = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const formData = new FormData(e.target as HTMLFormElement)
-        const name = formData.get("name")
-
-        if (!name) return console.error("Name is required")
-        if (!userId) return console.error("User ID is required")
-
-        toast.promise(createStore(name as string, userId), {
-            loading: "Creating store...",
-            success: (data) => {
-                if (data.error) throw new Error(data.message)
-                return "Store created successfully!"
-            },
-            error: "Error creating store",
-            finally: () => {
-                setOpen(false)
-            }
-        })
+    const handleCreateStore = async (payload: any) => {
+        if (!payload.name) return formatErrorResponse("Name is required", null, null)
+        if (!userId) return formatErrorResponse("User ID is required", null, null)
+        return createStore(payload.name, userId)
     }
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <Button>Create Store</Button>
-            </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>Create new store</DialogTitle>
-                    <DialogDescription>
-                        Create a new store to start selling your products! Choose a name for your store and click on the button below, you can continue to add more details of the store once it's created.
-                    </DialogDescription>
-                </DialogHeader>
-                <form className="flex flex-col gap-2" onSubmit={handleCreateStore}>
-                    <div className="flex flex-col gap-2">
-                        <Label>Name</Label>
-                        <Input type="text" name="name" />
-                    </div>
-                    <LoadingSubmitButton text="Create" />
-                </form>
-            </DialogContent>
-        </Dialog>
+        <ButtonWithPopup
+            text="New store"
+            title="Create new store"
+            disabled={!canCreate}
+            description="Create a new store to start selling your products! Choose a name for your store and click on the button below, you can continue to add more details of the store once it's created."
+            action={handleCreateStore}
+            messages={{
+                success: "Store created successfully!",
+                error: "Failed to create store",
+                loading: "Creating store..."
+            }}
+        >
+            <div className="flex flex-col gap-2">
+                <Label>Name</Label>
+                <Input type="text" name="name" />
+            </div>
+        </ButtonWithPopup>
     )
 }
 export default CreateStoreButton
