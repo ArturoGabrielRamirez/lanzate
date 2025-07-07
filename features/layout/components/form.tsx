@@ -41,7 +41,7 @@ export default function Form<T extends FieldValues>({
     const { handleSubmit } = methods
 
     const onSubmit: SubmitHandler<T> = async (data) => {
-        const toastId = toast.loading('Enviando...')
+        const toastId = toast.loading('Sending...')
         try {
             const formData = new FormData()
             Object.entries(data).forEach(([key, value]) => {
