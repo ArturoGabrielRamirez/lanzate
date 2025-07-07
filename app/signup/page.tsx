@@ -7,12 +7,12 @@ import InputField from '@/features/layout/components/input'
 /* import { signupSchema } from '@/features/auth/schemas/signupSchema' */
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import FormClient from '@/features/layout/components/form-client'
+import SignupForm from '@/features/auth/components/form-signup'
 
 
 export default function SignupPage() {
     return (
-        <FormClient />
+        <SignupForm />
         /*  <Form
            formAction={handleSignup}
            resolver={yupResolver(signupSchema)}

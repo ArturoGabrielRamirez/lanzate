@@ -1,30 +1,24 @@
 'use client'
 
-import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import Form from './form'
+import Form from '../../layout/components/form'
 import { handleSignup } from '@/features/auth/actions/handleSignUp'
-import InputField from './input'
+import InputField from '../../layout/components/input'
+import { schema } from '@/features/auth/schemas/log-user-schema'
 
-
-const schema = yup.object({
-    email: yup.string().email().required(),
-    password: yup.string().min(6).required(),
-})
-
-export default function FormClient() {
+export default function SignupForm() {
     return (
         <Form
             resolver={yupResolver(schema)}
             formAction={handleSignup}
             contentButton="Sign up"
             successRedirect="/check-email"
-            successMessage="¡Registrado correctamente!"
-            className="flex flex-col gap-4"
+            successMessage="You have been registered!"
+            loadingMessage="Signing up..."
+            className="flex flex-col p-8 gap-4"
         >
             <InputField name="email" label="Email" type="email" />
             <InputField name="password" label="Password" type="password" />
         </Form>
     )
 }
-

@@ -18,6 +18,7 @@ type FormProps<T extends FieldValues> = {
     formAction: (formData: FormData) => Promise<unknown>
     successRedirect?: string
     successMessage?: string
+    loadingMessage?: string
     className?: string
 }
 
@@ -28,6 +29,7 @@ export default function Form<T extends FieldValues>({
     formAction,
     successRedirect = '/account',
     successMessage = 'Success!',
+    loadingMessage = 'Loading...',
     className,
 }: FormProps<T>) {
     const methods = useForm<T>({
@@ -45,17 +47,20 @@ export default function Form<T extends FieldValues>({
             Object.entries(data).forEach(([key, value]) => {
                 formData.append(key, value)
             })
+            if (loadingMessage) {
+                toast.loading(loadingMessage, { id: toastId })
+            }
             const result = await formAction(formData)
             toast.dismiss(toastId)
             if ((result as { success: boolean })?.success) {
                 toast.success(successMessage)
                 router.push(successRedirect)
             } else {
-                throw new Error('Error al enviar')
+                throw new Error('Error in form submission')
             }
         } catch (err) {
             toast.dismiss(toastId)
-            toast.error('Ocurrió un error.')
+            toast.error('An error occurred.')
             console.error(err)
         }
     }
