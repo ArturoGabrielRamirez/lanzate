@@ -1,87 +1,71 @@
 'use client'
 
-import { useForm, FormProvider } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import type { AnyObjectSchema } from 'yup'
+import {
+    FormProvider,
+    useForm,
+    type Resolver,
+    type SubmitHandler,
+} from 'react-hook-form'
 import { Button } from '@/components/ui/button'
-import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import LoadingSubmitButton from './loading-submit-button'
+import { toast } from 'sonner'
+import { FieldValues } from 'react-hook-form'
 
-type FormProps<T extends Record<string, any>> = {
-    children?: React.ReactNode
-    className?: string
+type FormProps<T extends FieldValues> = {
+    children: React.ReactNode
+    resolver?: Resolver<T>
     contentButton: string
-    formAction?: (formData: FormData) => Promise<unknown>
-    resolverSchema?: AnyObjectSchema
+    formAction: (formData: FormData) => Promise<unknown>
     successRedirect?: string
     successMessage?: string
-    loadingMessage?: string
+    className?: string
 }
 
-function Form<T extends Record<string, any>>({
+export default function Form<T extends FieldValues>({
     children,
-    resolverSchema,
-    formAction,
-    className,
+    resolver,
     contentButton,
+    formAction,
     successRedirect = '/account',
-    successMessage = '',
-    loadingMessage = 'Loading...',
+    successMessage = 'Success!',
+    className,
 }: FormProps<T>) {
     const methods = useForm<T>({
-        resolver: resolverSchema ? yupResolver(resolverSchema) : undefined,
+        resolver,
         mode: 'onSubmit',
     })
 
     const router = useRouter()
     const { handleSubmit } = methods
 
-    const onSubmit = async (data: T) => {
-        if (!formAction) return
-
-        const toastId = toast.loading(loadingMessage)
-
+    const onSubmit: SubmitHandler<T> = async (data) => {
+        const toastId = toast.loading('Enviando...')
         try {
             const formData = new FormData()
-
-            for (const [key, value] of Object.entries(data)) {
-                if (typeof value === 'string' || value instanceof Blob) {
-                    formData.append(key, value)
-                } else if (typeof value === 'number' || typeof value === 'boolean') {
-                    formData.append(key, value.toString())
-                } else if (value != null) {
-                    console.warn(`Unsupported field type for "${key}":`, value)
-                }
-            }
-
+            Object.entries(data).forEach(([key, value]) => {
+                formData.append(key, value)
+            })
             const result = await formAction(formData)
             toast.dismiss(toastId)
-
             if ((result as { success: boolean })?.success) {
                 toast.success(successMessage)
                 router.push(successRedirect)
             } else {
-                throw new Error('Form submission failed')
+                throw new Error('Error al enviar')
             }
         } catch (err) {
             toast.dismiss(toastId)
-            toast.error('Invalid credentials or server error.')
-            console.error('Form submission error:', err)
+            toast.error('Ocurrió un error.')
+            console.error(err)
         }
     }
 
     return (
         <FormProvider {...methods}>
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className={`flex flex-col gap-4 md:pt-2 ${className}`}
-            >
+            <form onSubmit={handleSubmit(onSubmit)} className={className}>
                 {children}
-                <LoadingSubmitButton text={contentButton} />
+                <Button type="submit">{contentButton}</Button>
             </form>
         </FormProvider>
     )
 }
-
-export default Form
