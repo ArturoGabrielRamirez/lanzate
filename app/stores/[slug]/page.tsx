@@ -1,9 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import ButtonWithPopup from "@/features/layout/components/button-with-popup"
-import Title from "@/features/layout/components/title"
 import CreateProductButton from "@/features/products/components/create-product-button"
 import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
+import Title from "@/features/layout/components/title"
 
 type Props = {
     params: Promise<{ slug: string }>
@@ -47,6 +46,8 @@ async function StoreDetailsPage({ params }: Props) {
                     <TabsList className="w-full h-full items-start">
                         <div className="flex md:block w-full">
                             <TabsTrigger value="account" className="w-full h-fit cursor-pointer py-3">Store Details</TabsTrigger>
+                            <TabsTrigger value="branches" className="w-full h-fit cursor-pointer py-3">Branches</TabsTrigger>
+                            <TabsTrigger value="employees" className="w-full h-fit cursor-pointer py-3">Employees</TabsTrigger>
                             <TabsTrigger value="products" className="w-full h-fit cursor-pointer py-3">Products</TabsTrigger>
                             <TabsTrigger value="orders" className="w-full h-fit cursor-pointer py-3">Orders</TabsTrigger>
                             <TabsTrigger value="settings" className="w-full h-fit cursor-pointer py-3">Settings</TabsTrigger>
@@ -85,6 +86,26 @@ async function StoreDetailsPage({ params }: Props) {
                             </CardHeader>
                             <CardContent>
                                 <CreateProductButton />
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                    <TabsContent value="employees">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Employees</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                Currently not available
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                    <TabsContent value="branches">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Branches</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                Currently not available
                             </CardContent>
                         </Card>
                     </TabsContent>

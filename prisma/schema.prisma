@@ -56,8 +56,11 @@ model Store {
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  
   user_id    Int
   user       User     @relation(fields: [user_id], references: [id])
+
+  products Product[]
 
   @@map("stores")
 }
@@ -79,4 +82,18 @@ enum AccountType {
   FREE
   PRO
   ENTERPRISE
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  stock       Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  store_id    Int
+  store       Store    @relation(fields: [store_id], references: [id])
+
+  @@map("products")
 }
