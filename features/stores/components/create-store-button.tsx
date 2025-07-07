@@ -10,9 +10,10 @@ import LoadingSubmitButton from "@/features/layout/components/loading-submit-but
 
 type Props = {
     userId: number
+    canCreate?: boolean
 }
 
-function CreateStoreButton({ userId }: Props) {
+function CreateStoreButton({ userId, canCreate = true }: Props) {
 
     const [open, setOpen] = useState(false)
 
@@ -42,7 +43,7 @@ function CreateStoreButton({ userId }: Props) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>Create Store</Button>
+                <Button disabled={!canCreate}>Create Store</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
