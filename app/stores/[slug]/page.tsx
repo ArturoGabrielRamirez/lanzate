@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import ButtonWithPopup from "@/features/layout/components/button-with-popup"
 import Title from "@/features/layout/components/title"
+import CreateProductButton from "@/features/products/components/create-product-button"
 import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
 
 type Props = {
@@ -82,7 +84,7 @@ async function StoreDetailsPage({ params }: Props) {
                                 <CardTitle>Products</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                Currently not available
+                                <CreateProductButton />
                             </CardContent>
                         </Card>
                     </TabsContent>
