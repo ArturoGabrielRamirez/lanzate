@@ -1,18 +1,40 @@
 import { Button } from "@/components/ui/button"
+import Link from "next/link";
 
 export default function Home() {
 
   return (
     <>
       <section>
-        <div className="container mx-auto flex flex-col items-center px-4 py-16 text-center md:py-32 md:px-10 lg:px-32 xl:max-w-3xl">
-          <h1 className="text-4xl font-bold leading-none sm:text-5xl">Quisquam necessita vel
-            <span className="text-primary">laborum doloribus</span>delectus
+        <div className="container mx-auto flex flex-col items-center px-4 py-16 text-center md:py-32 md:px-10 lg:px-32 xl:max-w-7xl">
+          {/* <h1 className="text-4xl font-bold leading-none sm:text-5xl">
+            Tu emprendimiento &nbsp;
+            <span className="text-primary">despega</span> cuando usas &nbsp;
+            <span className="text-primary">Lanzate</span>
+          </h1> */}
+          {/* <h1 className="text-4xl font-bold leading-none sm:text-5xl xl:max-w-xl">
+            El &nbsp;
+            <span className="text-primary">impulso</span> que necesitas para que tus ventas&nbsp;
+            <span className="text-primary">despeguen.</span>
+          </h1> */}
+          <h1 className="text-4xl font-bold leading-none sm:text-5xl xl:max-w-xl">
+            The &nbsp;
+            <span className="text-primary">boost</span> you need for your sales to&nbsp;
+            <span className="text-primary">take off.</span>
           </h1>
-          <p className="px-8 mt-8 mb-12 text-lg">Cupiditate minima voluptate temporibus quia? Architecto beatae esse ab amet vero eaque explicabo!</p>
+          {/* <p className="px-8 mt-8 mb-12 text-lg text-balance">Con Lánzate, gestionar tu emprendimiento online es más simple que nunca. Dedica tu tiempo a crecer, nosotros te damos el control total: administra tus productos, centraliza tu inventario, procesa ventas y coordina envíos desde un solo lugar. ¡Es hora de simplificar tu gestión y ver tu negocio alcanzar nuevas alturas!</p> */}
+          <p className="px-8 mt-8 mb-12 text-lg text-balance">With Lánzate, managing your online business is simpler than ever. Spend your time growing while we give you full control: manage your products, centralize your inventory, process sales, and coordinate shipping all from one place. It's time to simplify your management and watch your business reach new heights!</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button>Get started</Button>
-            <Button variant="outline">Learn more</Button>
+            <Button asChild>
+              <Link href="/login">
+                Get started
+              </Link>
+            </Button>
+            <Button variant="outline">
+              <Link href="/about">
+                Learn more
+              </Link>
+            </Button>
           </div>
         </div>
       </section>

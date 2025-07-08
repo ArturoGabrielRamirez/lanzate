@@ -15,7 +15,7 @@ async function Header({ }: Props) {
     return (
         <header className="flex items-center justify-between w-full bg-accent text-accent-foreground p-4">
             <Link href="/" className="text-2xl font-bold flex items-center gap-2">
-                <Rocket />
+                <Rocket className="text-primary"/>
                 <h1>Lanzate</h1>
             </Link>
             <nav className="flex items-center gap-4">
