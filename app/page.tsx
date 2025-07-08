@@ -1,42 +1,64 @@
 import { Button } from "@/components/ui/button"
+import Link from "next/link";
 
 export default function Home() {
 
   return (
     <>
       <section>
-        <div className="container mx-auto flex flex-col items-center px-4 py-16 text-center md:py-32 md:px-10 lg:px-32 xl:max-w-3xl">
-          <h1 className="text-4xl font-bold leading-none sm:text-5xl">Quisquam necessita vel
-            <span className="text-violet-600">laborum doloribus</span>delectus
+        <div className="container mx-auto flex flex-col items-center px-4 py-16 text-center md:py-32 md:px-10 lg:px-32 xl:max-w-7xl">
+          {/* <h1 className="text-4xl font-bold leading-none sm:text-5xl">
+            Tu emprendimiento &nbsp;
+            <span className="text-primary">despega</span> cuando usas &nbsp;
+            <span className="text-primary">Lanzate</span>
+          </h1> */}
+          {/* <h1 className="text-4xl font-bold leading-none sm:text-5xl xl:max-w-xl">
+            El &nbsp;
+            <span className="text-primary">impulso</span> que necesitas para que tus ventas&nbsp;
+            <span className="text-primary">despeguen.</span>
+          </h1> */}
+          <h1 className="text-4xl font-bold leading-none sm:text-5xl xl:max-w-xl">
+            The &nbsp;
+            <span className="text-primary">boost</span> you need for your sales to&nbsp;
+            <span className="text-primary">take off.</span>
           </h1>
-          <p className="px-8 mt-8 mb-12 text-lg">Cupiditate minima voluptate temporibus quia? Architecto beatae esse ab amet vero eaque explicabo!</p>
+          {/* <p className="px-8 mt-8 mb-12 text-lg text-balance">Con Lánzate, gestionar tu emprendimiento online es más simple que nunca. Dedica tu tiempo a crecer, nosotros te damos el control total: administra tus productos, centraliza tu inventario, procesa ventas y coordina envíos desde un solo lugar. ¡Es hora de simplificar tu gestión y ver tu negocio alcanzar nuevas alturas!</p> */}
+          <p className="px-8 mt-8 mb-12 text-lg text-balance">With Lánzate, managing your online business is simpler than ever. Spend your time growing while we give you full control: manage your products, centralize your inventory, process sales, and coordinate shipping all from one place. It's time to simplify your management and watch your business reach new heights!</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button>Get started</Button>
-            <Button variant="outline">Learn more</Button>
+            <Button asChild>
+              <Link href="/login">
+                Get started
+              </Link>
+            </Button>
+            <Button variant="outline">
+              <Link href="/about">
+                Learn more
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
       <section className="p-6">
         <div className="container mx-auto">
-          <span className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-violet-600">How it works</span>
-          <h2 className="text-5xl font-bold text-center">Building with Mamba is simple</h2>
+          <span className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-accent">How it works</span>
+          <h2 className="text-5xl font-bold text-center">How Lánzate Empowers Your Business</h2>
           <div className="grid gap-6 my-16 lg:grid-cols-3">
-            <div className="flex flex-col p-8 space-y-4 rounded-md bg-secondary">
-              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full dark:bg-violet-600 dark:text-gray-50">1</div>
+            <div className="flex flex-col p-8 space-y-4 rounded-md bg-primary text-primary-foreground">
+              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent ">1</div>
               <p className="text-2xl font-semibold">
-                <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
+                <b>Centralize.</b> Manage all your products and inventory from one intuitive dashboard.
               </p>
             </div>
-            <div className="flex flex-col p-8 space-y-4 rounded-md bg-secondary">
-              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full dark:bg-violet-600 dark:text-gray-50">2</div>
+            <div className="flex flex-col p-8 space-y-4 rounded-md bg-primary text-primary-foreground">
+              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent ">2</div>
               <p className="text-2xl font-semibold">
-                <b>Accusantium.</b>Vitae saepe atque neque sunt eius dolor veniam alias debitis?
+                <b>Sell &amp; Grow.</b> Process sales and track your growth with real-time analytics.
               </p>
             </div>
-            <div className="flex flex-col p-8 space-y-4 rounded-md bg-secondary">
-              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full dark:bg-violet-600 dark:text-gray-50">3</div>
+            <div className="flex flex-col p-8 space-y-4 rounded-md bg-primary text-primary-foreground">
+              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent ">3</div>
               <p className="text-2xl font-semibold">
-                <b>Maxime.</b>Expedita temporibus culpa reprehenderit doloribus consectetur odio!
+                <b>Ship Easily.</b> Coordinate shipping and order fulfillment without the hassle.
               </p>
             </div>
           </div>
@@ -44,8 +66,8 @@ export default function Home() {
       </section>
       <section className="p-6 my-6 ">
         <div className="container grid grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-4">
-          <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent">
-            <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-violet-400 dark:bg-violet-600">
+          <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent text-primary-foreground">
+            <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-primary">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" className="h-9 w-9 text-gray-800 dark:text-gray-100">
                 <polygon points="160 96.039 160 128.039 464 128.039 464 191.384 428.5 304.039 149.932 304.039 109.932 16 16 16 16 48 82.068 48 122.068 336.039 451.968 336.039 496 196.306 496 96.039 160 96.039"></polygon>
                 <path d="M176.984,368.344a64.073,64.073,0,0,0-64,64h0a64,64,0,0,0,128,0h0A64.072,64.072,0,0,0,176.984,368.344Zm0,96a32,32,0,1,1,32-32A32.038,32.038,0,0,1,176.984,464.344Z"></path>
@@ -57,8 +79,8 @@ export default function Home() {
               <p className="capitalize">Orders</p>
             </div>
           </div>
-          <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent">
-            <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-violet-400 dark:bg-violet-600">
+          <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent text-primary-foreground">
+            <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-primary">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" className="h-9 w-9 text-gray-800 dark:text-gray-100">
                 <path d="M256,16C123.452,16,16,123.452,16,256S123.452,496,256,496,496,388.548,496,256,388.548,16,256,16ZM403.078,403.078a207.253,207.253,0,1,1,44.589-66.125A207.332,207.332,0,0,1,403.078,403.078Z"></path>
                 <path d="M256,384A104,104,0,0,0,360,280H152A104,104,0,0,0,256,384Z"></path>
@@ -71,8 +93,8 @@ export default function Home() {
               <p className="capitalize">New customers</p>
             </div>
           </div>
-          <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent">
-            <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-violet-400 dark:bg-violet-600">
+          <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent text-primary-foreground">
+            <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-primary">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" className="h-9 w-9 text-gray-800 dark:text-gray-100">
                 <path d="M425.706,142.294A240,240,0,0,0,16,312v88H160V368H48V312c0-114.691,93.309-208,208-208s208,93.309,208,208v56H352v32H496V312A238.432,238.432,0,0,0,425.706,142.294Z"></path>
                 <rect width="32" height="32" x="80" y="264"></rect>
@@ -87,8 +109,8 @@ export default function Home() {
               <p className="capitalize">Growth</p>
             </div>
           </div>
-          <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent">
-            <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-violet-400 dark:bg-violet-600">
+          <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent text-primary-foreground">
+            <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-primary">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" className="h-9 w-9 text-gray-800 dark:text-gray-100">
                 <path d="M454.423,278.957,328,243.839v-8.185a116,116,0,1,0-104,0V312H199.582l-18.494-22.6a90.414,90.414,0,0,0-126.43-13.367,20.862,20.862,0,0,0-8.026,33.47L215.084,496H472V302.08A24.067,24.067,0,0,0,454.423,278.957ZM192,132a84,84,0,1,1,136,65.9V132a52,52,0,0,0-104,0v65.9A83.866,83.866,0,0,1,192,132ZM440,464H229.3L79.141,297.75a58.438,58.438,0,0,1,77.181,11.91l28.1,34.34H256V132a20,20,0,0,1,40,0V268.161l144,40Z"></path>
               </svg>
@@ -104,113 +126,150 @@ export default function Home() {
         <div className="container mx-auto p-4 sm:p-10">
           <div className="mb-16 space-y-4 text-center">
             <h1 className="text-4xl font-semibold leading-tight">Pricing</h1>
-            <p className="px-4 sm:px-8 lg:px-24">Sunt suscipit eaque qui iure unde labore numquam iusto alias explicabo, pariatur ipsam, cupiditate aliquid modi?</p>
+            <p className="px-4 sm:px-8 lg:px-24">Choose the plan that fits your business and start simplifying your online management with Lánzate. Scale as you grow, with all the tools you need in one place.</p>
             <div>
-              <button className="px-4 py-1 font-semibold border rounded-l-lg dark:bg-violet-600 dark:border-violet-600 dark:text-gray-50">Monthly</button>
-              <button className="px-4 py-1 border rounded-r-lg dark:border-violet-600">Annually</button>
+              <button className="px-4 py-1 font-semibold border rounded-l-lg bg-primary border-primary">Monthly</button>
+              <button className="px-4 py-1 border rounded-r-lg border-primary">Annually</button>
             </div>
           </div>
           <div className="grid max-w-md grid-cols-1 gap-6 mx-auto auto-rows-fr lg:max-w-full lg:gap-2 xl:gap-6 lg:grid-cols-3">
             <div className="relative z-0 flex flex-col items-center p-8 border rounded-md">
-              <span className="absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg dark:bg-violet-600 dark:text-gray-50">Personal</span>
-              <p className="my-6 text-4xl font-bold dark:text-violet-600">FREE</p>
-              <ul className="flex-1 space-y-2">
+              <span className="absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg bg-primary ">Personal</span>
+              <p className="my-6 text-4xl font-bold dark:text-accent">FREE</p>
+              <ul className="flex-1 space-y-2 mb-12">
                 <li className="flex items-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-violet-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Lumet consectetur adipisicing</span>
+                  <span>Up to 1 free store and branch</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-violet-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Lumet consectetur adipisicing</span>
+                  <span>All-in-one product and inventory management</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-violet-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Lumet consectetur adipisicing</span>
+                  <span>Up to 200 product listings</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-violet-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Lumet consectetur adipisicing</span>
+                  <span>Basic analytics dashboard</span>
                 </li>
+                <li className="flex items-center space-x-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                  </svg>
+                  <span>Community support</span>
+                </li>
+
               </ul>
-              <button className="px-4 py-2 mt-4 font-semibold uppercase border rounded-lg md:mt-12 sm:py-3 sm:px-8 dark:border-violet-600">Subscribe</button>
+              <Button>SUBSCRIBE</Button>
             </div>
-            <div className="relative flex flex-col items-center p-8 border-2 rounded-md dark:border-violet-600 bg-secondary">
-              <span className="absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg dark:bg-violet-600 dark:text-gray-50">Professional</span>
+            <div className="relative flex flex-col items-center p-8 border-2 rounded-md border-primary bg-secondary">
+              <span className="absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg bg-primary ">Professional</span>
               <p className="flex items-center justify-center my-6 space-x-2 font-bold">
-                <span className="text-lg line-through dark:text-gray-700">&nbsp;32€&nbsp;</span>
-                <span className="pb-2 text-4xl">19€</span>
+                <span className="text-lg line-through dark:text-gray-700">&nbsp;$12&nbsp;</span>
+                <span className="pb-2 text-4xl">$10</span>
                 <span className="text-lg">/mo</span>
               </p>
               <ul className="flex-1 space-y-2">
                 <li className="flex items-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-violet-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Consectetur</span>
+                  <span>All features in FREE plan</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-violet-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Adipisicing</span>
+                  <span>Up to 3 stores and 3 branches each store</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-violet-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Aliquam</span>
+                  <span>Advanced sales analytics</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-violet-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Lumet consectetur facilis</span>
+                  <span>Up to 1000 product listings</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                  </svg>
+                  <span>Priority customer support</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                  </svg>
+                  <span>Real-time delivery tracking and payment</span>
                 </li>
               </ul>
-              <button className="px-8 py-3 mt-12 text-lg font-semibold uppercase rounded dark:bg-violet-600 dark:text-gray-50">Subscribe</button>
+              <Button>SUBSCRIBE</Button>
             </div>
             <div className="relative z-0 flex flex-col items-center p-8 border rounded-md ">
-              <span className="absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg dark:bg-violet-600 dark:text-gray-50">Enterprise</span>
+              <span className="absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg bg-primary ">Enterprise</span>
               <p className="flex items-center justify-center my-6 space-x-2 font-bold">
-                <span className="text-lg line-through dark:text-gray-700">&nbsp;49€&nbsp;</span>
-                <span className="pb-2 text-4xl">37€</span>
+                <span className="text-lg line-through dark:text-gray-700">&nbsp;$40&nbsp;</span>
+                <span className="pb-2 text-4xl">$30</span>
                 <span className="text-lg">/mo</span>
               </p>
               <ul className="flex-1 space-y-2">
                 <li className="flex items-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-violet-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Lumet consectetur adipisicing</span>
+                  <span>All features in PROFESSIONAL plan</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-violet-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Lumet consectetur adipisicing</span>
+                  <span>AI inventory assistant</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-violet-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Lumet consectetur adipisicing</span>
+                  <span>Up to 10 stores and 10 branches each store</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-violet-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Lumet consectetur adipisicing</span>
+                  <span>Enterprise-level analytics</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                  </svg>
+                  <span>Dedicated account manager</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                  </svg>
+                  <span>Personalized onboarding</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                  </svg>
+                  <span>Unlimited product listings</span>
                 </li>
               </ul>
-              <button className="px-8 py-3 mt-12 text-lg font-semibold uppercase border rounded dark:border-violet-600">Subscribe</button>
+              <Button>SUBSCRIBE</Button>
             </div>
           </div>
         </div>
@@ -264,7 +323,7 @@ export default function Home() {
           </div>
         </div>
         <div className="flex items-center justify-center px-6 pt-12 text-sm">
-          <span className="dark:text-gray-600">© Copyright 1986. All Rights Reserved.</span>
+          <span className="dark:text-gray-600">© Copyright 2025. All Rights Reserved.</span>
         </div>
       </footer>
     </>

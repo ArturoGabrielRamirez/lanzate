@@ -18,8 +18,8 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
             where: {
                 slug: slug
             },
-            include : {
-                branches : true
+            include: {
+                branches: true
             }
         })
 

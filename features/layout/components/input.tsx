@@ -8,9 +8,10 @@ type InputFieldProps = {
   name: string
   label: string
   type?: string
+  defaultValue?: string
 }
 
-const InputField = ({ name, label, type = 'text' }: InputFieldProps) => {
+const InputField = ({ name, label, type = 'text', defaultValue }: InputFieldProps) => {
   const {
     register,
     formState: { errors },
@@ -21,7 +22,7 @@ const InputField = ({ name, label, type = 'text' }: InputFieldProps) => {
   return (
     <div className="flex flex-col gap-1">
       <Label htmlFor={name}>{label}</Label>
-      <Input id={name} type={type} {...register(name)} />
+      <Input id={name} type={type} {...register(name)} defaultValue={defaultValue} />
       {error && <p className="text-sm text-red-500">{error}</p>}
     </div>
   )

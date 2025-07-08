@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server-props'
 import UpdatePasswordForm from '@/features/auth/components/update-password-form'
+import Title from '@/features/layout/components/title'
 
 
 export default async function UpdatePasswordPage() {
@@ -11,5 +12,12 @@ export default async function UpdatePasswordPage() {
         redirect('/error')
     }
 
-    return <UpdatePasswordForm />
+    return (
+        <div className='p-4 grow flex flex-col'>
+            <Title title='Update Password' />
+            <section className='grow flex justify-center items-center w-full flex-col'>
+                <UpdatePasswordForm />
+            </section>
+        </div>
+    )
 }

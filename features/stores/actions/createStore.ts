@@ -8,7 +8,6 @@ import { canCreateStore } from "../access/canCreateStore"
 export async function createStore(name: string, userId: number) {
     try {
 
-
         const canCreate = await canCreateStore(userId)
 
         if (!canCreate) throw new Error("Free plan limit reached")

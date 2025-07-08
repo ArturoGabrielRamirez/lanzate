@@ -1,75 +1,61 @@
 'use client'
 
-import {
-    FormProvider,
-    useForm,
-    type Resolver,
-    type SubmitHandler,
-} from 'react-hook-form'
-import { Button } from '@/components/ui/button'
+import { FormProvider, useForm, UseFormProps, type SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { FieldValues } from 'react-hook-form'
-
-type FormProps<T extends FieldValues> = {
-    children: React.ReactNode
-    resolver?: Resolver<T>
-    contentButton: string
-    formAction: (formData: FormData) => Promise<unknown>
-    successRedirect?: string
-    successMessage?: string
-    loadingMessage?: string
-    className?: string
-}
+import { FormPropsType } from '../types/form-type'
+import { ResponseType } from '../types/response-type'
+import LoadingSubmitButtonContext from './loading-submit-button-context'
+import { cn } from '@/lib/utils'
 
 export default function Form<T extends FieldValues>({
     children,
     resolver,
     contentButton,
     formAction,
-    successRedirect = '/account',
+    successRedirect,
     successMessage = 'Success!',
     loadingMessage = 'Loading...',
     className,
-}: FormProps<T>) {
-    const methods = useForm<T>({
-        resolver,
-        mode: 'onSubmit',
-    })
+    onComplete,
+}: FormPropsType<T>) {
+
+    const config: UseFormProps<T> = { mode: 'onChange' }
+
+    if (resolver) config.resolver = resolver
 
     const router = useRouter()
+    const methods = useForm<T>(config)
+
     const { handleSubmit } = methods
 
     const onSubmit: SubmitHandler<T> = async (data) => {
-        const toastId = toast.loading('Sending...')
-        try {
-            const formData = new FormData()
-            Object.entries(data).forEach(([key, value]) => {
-                formData.append(key, value)
+        return new Promise(async (resolve, reject) => {
+            toast.promise(formAction(data), {
+                loading: loadingMessage,
+                success: (data: ResponseType<T>) => {
+                    if (data && data.error) throw new Error(data.message)
+                    successRedirect && router.push(successRedirect)
+                    return successMessage
+                },
+                error: (error) => {
+                    reject(error)
+                    return error.message
+                },
+                finally: () => {
+                    resolve(true)
+                    onComplete && typeof onComplete === 'function' && onComplete()
+                }
             })
-            if (loadingMessage) {
-                toast.loading(loadingMessage, { id: toastId })
-            }
-            const result = await formAction(formData)
-            toast.dismiss(toastId)
-            if ((result as { success: boolean })?.success) {
-                toast.success(successMessage)
-                router.push(successRedirect)
-            } else {
-                throw new Error('Error in form submission')
-            }
-        } catch (err) {
-            toast.dismiss(toastId)
-            toast.error('An error occurred.')
-            console.error(err)
-        }
+        })
     }
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className={className}>
+            <form onSubmit={handleSubmit(onSubmit)} className={cn("flex flex-col gap-4", className)}>
                 {children}
-                <Button type="submit">{contentButton}</Button>
+                <LoadingSubmitButtonContext text={contentButton} />
             </form>
         </FormProvider>
     )
