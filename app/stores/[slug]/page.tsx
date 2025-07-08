@@ -3,7 +3,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import CreateProductButton from "@/features/products/components/create-product-button"
 import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
 import Title from "@/features/layout/components/title"
-import { House } from "lucide-react"
+import { House, Trash2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import ButtonWithPopup from "@/features/layout/components/button-with-popup"
 
 type Props = {
     params: Promise<{ slug: string }>
@@ -60,15 +62,37 @@ async function StoreDetailsPage({ params }: Props) {
                             <CardHeader>
                                 <CardTitle>Account Details</CardTitle>
                             </CardHeader>
-                            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-12 w-fit">
-                                <div className="flex flex-col">
-                                    <p className="font-light text-sm">Name</p>
-                                    <p className="font-medium">{store.name}</p>
-                                </div>
-                                <div className="flex flex-col">
-                                    <p className="font-light text-sm">Description</p>
-                                    <p className="font-medium">{store.description || "No description available"}</p>
-                                </div>
+                            <CardContent className="gap-4 flex flex-col">
+                                <section className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-12 w-fit">
+                                    <div className="flex flex-col">
+                                        <p className="font-light text-sm">Name</p>
+                                        <p className="font-medium">{store.name}</p>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <p className="font-light text-sm">Description</p>
+                                        <p className="font-medium">{store.description || "No description available"}</p>
+                                    </div>
+                                </section>
+                                <section className="p-4 bg-destructive/10 border-destructive border rounded-md">
+                                    <h2 className="text-lg font-medium mb-4">Danger zone</h2>
+                                    <p className="text-sm text-destructive-foreground">You can delete your store by clicking the button below.</p>
+                                    <p className="text-sm text-destructive-foreground mb-4">Keep in mind that this action is irreversible and it will delete all the data associated with your store.</p>
+                                    <ButtonWithPopup
+                                        title="Delete Store"
+                                        description="You can delete your store by clicking the button below. Keep in mind that this action is irreversible and it will delete all the data associated with your store."
+                                        text={(
+                                            <>
+                                                <Trash2 />
+                                                Delete Store
+                                            </>
+                                        )}
+                                        messages={{
+                                            success: "Store deleted successfully",
+                                            error: "Error deleting store",
+                                            loading: "Deleting store..."
+                                        }}
+                                    />
+                                </section>
                             </CardContent>
                         </Card>
                     </TabsContent>

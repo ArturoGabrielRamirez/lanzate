@@ -9,7 +9,7 @@ import { ButtonWithPopupPropsType } from "../types/button-with-popup-type"
 
 function ButtonWithPopup<T>({
     text,
-    children = "No content set",
+    children,
     title = "Popup title",
     description = "Popup description",
     action,
@@ -39,7 +39,7 @@ function ButtonWithPopup<T>({
                 <Form
                     resolver={yupResolver(schema)}
                     formAction={action}
-                    contentButton="Create"
+                    contentButton={text}
                     successMessage={messages.success}
                     loadingMessage={messages.loading}
                     onComplete={handleComplete}
