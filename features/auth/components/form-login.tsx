@@ -7,7 +7,7 @@ import InputField from '../../layout/components/input'
 import { schema } from '@/features/auth/schemas/log-user-schema'
 
 export default function LoginForm() {
-   const formPasswordClasses = `flex flex-col gap-3 sm:row-start-2 sm:col-start-1 sm:min-w-full sm:justify-center`
+    const formPasswordClasses = `flex flex-col gap-3 sm:row-start-2 sm:col-start-1 sm:min-w-full sm:justify-center`
     return (
         <Form
             resolver={yupResolver(schema)}

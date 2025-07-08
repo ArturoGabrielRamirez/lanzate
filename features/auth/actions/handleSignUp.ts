@@ -3,42 +3,52 @@
 import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
 import { createClient } from '@/utils/supabase/server-props'
 import { insertUser } from '../data/insertUser'
+import { ResponseType } from '@/features/layout/types/response-type'
+import { formatErrorResponse } from '@/utils/lib'
 
-export const handleSignup = async (formData: FormData) => {
-    const supabase = await createClient()
+export const handleSignup = async (payload: any): Promise<ResponseType<any>> => {
+    try {
 
-    const email = formData.get('email')?.toString() || ''
-    const password = formData.get('password')?.toString() || ''
+        const supabase = await createClient()
 
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-    })
+        const email = payload.email?.toString() || ''
+        const password = payload.password?.toString() || ''
 
-    if (signUpError) {
-        console.error(signUpError)
-        throw new Error('Failed to sign up')
-    }
+        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+            email,
+            password,
+        })
 
-    const user = signUpData?.user
-
-
-    if (!user) {
-        throw new Error('No user returned')
-    }
-
-    const { payload: existingUser } = await getUserByEmail(user.email ?? "")
-
-    if (!existingUser) {
-
-        const { error: insertError } = await insertUser(user.email ?? "", "email")
-
-        if (insertError) {
-            console.error('Error inserting user:', insertError)
-            throw new Error('Error inserting user')
+        if (signUpError) {
+            throw new Error(signUpError.message)
         }
+
+        const user = signUpData?.user
+
+
+        if (!user) {
+            throw new Error('No user returned')
+        }
+
+        const { payload: existingUser } = await getUserByEmail(user.email ?? "")
+
+        if (!existingUser) {
+
+            const { error: insertError } = await insertUser(user.email ?? "", "email")
+
+            if (insertError) {
+                console.error('Error inserting user:', insertError)
+                throw new Error('Error inserting user')
+            }
+        }
+
+        return {
+            error: false,
+            message: "User created successfully",
+            payload: user
+        }
+
+    } catch (error) {
+        return formatErrorResponse("Error creating user", error, null)
     }
-
-
-    return { success: true }
 }

@@ -7,6 +7,7 @@ import { FieldValues } from 'react-hook-form'
 import { FormPropsType } from '../types/form-type'
 import { ResponseType } from '../types/response-type'
 import LoadingSubmitButtonContext from './loading-submit-button-context'
+import { cn } from '@/lib/utils'
 
 export default function Form<T extends FieldValues>({
     children,
@@ -31,6 +32,7 @@ export default function Form<T extends FieldValues>({
                 loading: loadingMessage,
                 success: (data: ResponseType<T>) => {
                     if (data && data.error) throw new Error(data.message)
+                    successRedirect && router.push(successRedirect)
                     return successMessage
                 },
                 error: (error) => {
@@ -39,7 +41,6 @@ export default function Form<T extends FieldValues>({
                 },
                 finally: () => {
                     resolve(true)
-                    successRedirect && router.push(successRedirect)
                     onComplete && typeof onComplete === 'function' && onComplete()
                 }
             })
@@ -49,7 +50,7 @@ export default function Form<T extends FieldValues>({
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className={className}>
+            <form onSubmit={handleSubmit(onSubmit)} className={cn("flex flex-col gap-4", className)}>
                 {children}
                 <LoadingSubmitButtonContext text={contentButton} />
             </form>
