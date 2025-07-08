@@ -2,37 +2,39 @@
 import { updateStore } from "../actions/updateStore"
 import ButtonWithPopup from "@/features/layout/components/button-with-popup"
 import { formatErrorResponse } from "@/utils/lib"
-import { schema } from "../schemas/store-schema"
+import { editSchema } from "../schemas/store-schema"
 import InputField from "@/features/layout/components/input"
+import { Store } from "@/prisma/generated/prisma"
 
 type Props = {
     userId: number
-    canCreate?: boolean
+    slug: string
+    store: Store
 }
 
-function EditStoreButton({ userId, canCreate = true }: Props) {
+function EditStoreButton({ userId, slug, store }: Props) {
 
-    const handleCreateStore = async (payload: any) => {
+    const handleEditStore = async (payload: any) => {
         if (!payload.name) return formatErrorResponse("Name is required", null, null)
         if (!userId) return formatErrorResponse("User ID is required", null, null)
-        return updateStore(payload.name, userId)
+        return updateStore(slug, payload, userId)
     }
 
     return (
         <ButtonWithPopup
-            text="New store"
-            title="Create new store"
-            disabled={!canCreate}
-            schema={schema}
-            description="Create a new store to start selling your products! Choose a name for your store and click on the button below, you can continue to add more details of the store once it's created."
-            action={handleCreateStore}
+            text="Edit store"
+            title="Edit store"
+            schema={editSchema}
+            description="Edit the details of your store"
+            action={handleEditStore}
             messages={{
-                success: "Store created successfully!",
-                error: "Failed to create store",
-                loading: "Creating store..."
+                success: "Store updated successfully!",
+                error: "Failed to update store",
+                loading: "Updating store..."
             }}
         >
-            <InputField name="name" label="Name" type="text" />
+            <InputField name="name" label="Name" type="text" defaultValue={store.name} />
+            <InputField name="description" label="Description" type="text" defaultValue={store.description} />
         </ButtonWithPopup>
     )
 }

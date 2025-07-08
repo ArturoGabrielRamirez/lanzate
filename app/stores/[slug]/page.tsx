@@ -7,6 +7,7 @@ import { House, Pencil, Trash2 } from "lucide-react"
 import ButtonWithPopup from "@/features/layout/components/button-with-popup"
 import DeleteStoreButton from "@/features/stores/components/delete-store-button"
 import { Button } from "@/components/ui/button"
+import EditStoreButton from "@/features/stores/components/edit-store-button"
 
 type Props = {
     params: Promise<{ slug: string }>
@@ -74,10 +75,11 @@ async function StoreDetailsPage({ params }: Props) {
                                         <p className="font-medium">{store.description || "No description available"}</p>
                                     </div>
                                     <div>
-                                        <Button>
-                                            <Pencil />
-                                            Edit
-                                        </Button>
+                                        <EditStoreButton
+                                            userId={store.user_id}
+                                            slug={store.slug}
+                                            store={store}
+                                        />
                                     </div>
                                 </section>
                                 <section className="p-4 bg-destructive/10 border-destructive border rounded-md">
