@@ -4,6 +4,8 @@ import { Label } from "@/components/ui/label"
 import { createStore } from "../actions/createStore"
 import ButtonWithPopup from "@/features/layout/components/button-with-popup"
 import { formatErrorResponse } from "@/utils/lib"
+import { schema } from "../schemas/store-schema"
+import InputField from "@/features/layout/components/input"
 
 type Props = {
     userId: number
@@ -23,6 +25,7 @@ function CreateStoreButton({ userId, canCreate = true }: Props) {
             text="New store"
             title="Create new store"
             disabled={!canCreate}
+            schema={schema}
             description="Create a new store to start selling your products! Choose a name for your store and click on the button below, you can continue to add more details of the store once it's created."
             action={handleCreateStore}
             messages={{
@@ -31,10 +34,7 @@ function CreateStoreButton({ userId, canCreate = true }: Props) {
                 loading: "Creating store..."
             }}
         >
-            <div className="flex flex-col gap-2">
-                <Label>Name</Label>
-                <Input type="text" name="name" />
-            </div>
+            <InputField name="name" label="Name" type="text" />
         </ButtonWithPopup>
     )
 }
