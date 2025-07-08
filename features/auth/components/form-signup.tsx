@@ -15,7 +15,7 @@ export default function SignupForm() {
             successRedirect="/check-email"
             successMessage="You have been registered!"
             loadingMessage="Signing up..."
-            className="flex flex-col p-8 gap-4"
+            className="flex flex-col p-8 gap-4 w-full max-w-xl"
         >
             <InputField name="email" label="Email" type="email" />
             <InputField name="password" label="Password" type="password" />
