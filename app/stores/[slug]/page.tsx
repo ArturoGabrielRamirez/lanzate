@@ -3,9 +3,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import CreateProductButton from "@/features/products/components/create-product-button"
 import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
 import Title from "@/features/layout/components/title"
-import { House, Trash2 } from "lucide-react"
+import { House, Pencil, Trash2 } from "lucide-react"
 import ButtonWithPopup from "@/features/layout/components/button-with-popup"
 import DeleteStoreButton from "@/features/stores/components/delete-store-button"
+import { Button } from "@/components/ui/button"
 
 type Props = {
     params: Promise<{ slug: string }>
@@ -71,6 +72,12 @@ async function StoreDetailsPage({ params }: Props) {
                                     <div className="flex flex-col">
                                         <p className="font-light text-sm">Description</p>
                                         <p className="font-medium">{store.description || "No description available"}</p>
+                                    </div>
+                                    <div>
+                                        <Button>
+                                            <Pencil />
+                                            Edit
+                                        </Button>
                                     </div>
                                 </section>
                                 <section className="p-4 bg-destructive/10 border-destructive border rounded-md">

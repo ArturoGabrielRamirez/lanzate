@@ -28,7 +28,7 @@ function StoreCard({ store }: Props) {
             </CardContent>
             <CardFooter className="justify-between">
                 <p className="text-sm text-muted-foreground">
-                    created at: {store.created_at.toLocaleString()}
+                    created at: {store.created_at.toLocaleDateString()}
                 </p>
                 <p className="text-sm text-muted-foreground">
                     0 products

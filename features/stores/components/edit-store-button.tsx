@@ -1,5 +1,5 @@
 "use client"
-import { createStore } from "../actions/createStore"
+import { updateStore } from "../actions/updateStore"
 import ButtonWithPopup from "@/features/layout/components/button-with-popup"
 import { formatErrorResponse } from "@/utils/lib"
 import { schema } from "../schemas/store-schema"
@@ -10,12 +10,12 @@ type Props = {
     canCreate?: boolean
 }
 
-function CreateStoreButton({ userId, canCreate = true }: Props) {
+function EditStoreButton({ userId, canCreate = true }: Props) {
 
     const handleCreateStore = async (payload: any) => {
         if (!payload.name) return formatErrorResponse("Name is required", null, null)
         if (!userId) return formatErrorResponse("User ID is required", null, null)
-        return createStore(payload.name, userId)
+        return updateStore(payload.name, userId)
     }
 
     return (
@@ -36,4 +36,4 @@ function CreateStoreButton({ userId, canCreate = true }: Props) {
         </ButtonWithPopup>
     )
 }
-export default CreateStoreButton
+export default EditStoreButton
