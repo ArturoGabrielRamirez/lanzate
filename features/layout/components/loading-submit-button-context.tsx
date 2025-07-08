@@ -9,7 +9,6 @@ import { LoadingSubmitButtonType } from "../types/loading-submit-button-type"
 function LoadingSubmitButtonContext({ text = "Submit" }: LoadingSubmitButtonType) {
 
     const { formState: { isSubmitting } } = useFormContext()
-    console.log("🚀 ~ LoadingSubmitButtonContext ~ isSubmitting:", isSubmitting)
 
     return (
         <Button type="submit" disabled={isSubmitting}>
