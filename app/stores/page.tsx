@@ -28,7 +28,7 @@ async function StoresPage({ }: Props) {
             <Title title="Stores" />
             {stores.length > 0 ? (
                 <section className="grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4">
-                    <article className="border-2 border-secondary/50 rounded-md p-4 border-dashed grid place-content-center">
+                    <article className="border-2 border-secondary rounded-md p-4 border-dashed grid place-content-center">
                         {!canCreate && (
                             <p className="text-red-500/50 mb-2">Free plan limit reached</p>
                         )}

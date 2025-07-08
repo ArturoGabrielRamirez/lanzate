@@ -17,7 +17,7 @@ export async function canCreateStore(userId: number) {
             return false
         }
 
-        if (stores.length >= 10 && user.Account[0].type === "FREE") {
+        if (stores.length >= 2 && user.Account[0].type === "FREE") {
             return false
         }
 
