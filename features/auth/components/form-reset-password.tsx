@@ -15,7 +15,7 @@ export default function ResetPassword() {
       contentButton="Send Reset Link"
       successMessage="Reset link sent!"
       loadingMessage="Sending reset link..."
-      className="flex flex-col p-8 gap-4 sm:gap-6"
+      className="flex flex-col p-8 gap-4 sm:gap-6 w-full max-w-xl"
     >
       <InputField name="email" label="Email:" type="email" />
     </Form>
