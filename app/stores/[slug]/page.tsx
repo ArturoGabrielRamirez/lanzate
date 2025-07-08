@@ -1,12 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import CreateProductButton from "@/features/products/components/create-product-button"
 import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
 import Title from "@/features/layout/components/title"
-import { House, Pencil, Trash2 } from "lucide-react"
-import ButtonWithPopup from "@/features/layout/components/button-with-popup"
+import { House } from "lucide-react"
 import DeleteStoreButton from "@/features/stores/components/delete-store-button"
-import { Button } from "@/components/ui/button"
 import EditStoreButton from "@/features/stores/components/edit-store-button"
 
 type Props = {
@@ -96,8 +94,32 @@ async function StoreDetailsPage({ params }: Props) {
                             <CardHeader>
                                 <CardTitle>Products</CardTitle>
                             </CardHeader>
-                            <CardContent>
-                                <CreateProductButton />
+                            <CardContent className="flex flex-col gap-4 items-start">
+
+                                <div className="grid grid-cols-1 lg:grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-4 w-full">
+                                    <Card className="border-dashed">
+                                        <CardHeader>
+                                            <CardTitle>New Product</CardTitle>
+                                        </CardHeader>
+                                        <CardContent className="flex justify-center items-center grow">
+                                            <CreateProductButton storeId={store.id} />
+                                        </CardContent>
+                                    </Card>
+                                    {store.products.map((product) => (
+                                        <Card key={product.id}>
+                                            <CardHeader>
+                                                <CardTitle>{product.name}</CardTitle>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <p>{product.description}</p>
+                                            </CardContent>
+                                            <CardFooter className="flex justify-between">
+                                                <p>{product.stock} {product.stock > 1 ? "items" : "item"} left</p>
+                                                <p>${product.price}</p>
+                                            </CardFooter>
+                                        </Card>
+                                    ))}
+                                </div>
                             </CardContent>
                         </Card>
                     </TabsContent>

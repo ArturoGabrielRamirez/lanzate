@@ -1,11 +1,11 @@
 "use server"
 
-import { PrismaClient, Store, Branch } from "@/prisma/generated/prisma"
+import { PrismaClient, Store, Branch, Product } from "@/prisma/generated/prisma"
 import { formatErrorResponse } from "@/utils/lib"
 
 type SelectStoreBySlugReturn = {
     message: string
-    payload: Store & { branches: Branch[] } | null
+    payload: Store & { branches: Branch[], products: Product[] } | null
     error: boolean
 }
 
@@ -19,7 +19,8 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
                 slug: slug
             },
             include: {
-                branches: true
+                branches: true,
+                products: true
             }
         })
 
