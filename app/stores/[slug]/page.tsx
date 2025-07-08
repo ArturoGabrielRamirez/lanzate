@@ -4,8 +4,8 @@ import CreateProductButton from "@/features/products/components/create-product-b
 import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
 import Title from "@/features/layout/components/title"
 import { House, Trash2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import ButtonWithPopup from "@/features/layout/components/button-with-popup"
+import DeleteStoreButton from "@/features/stores/components/delete-store-button"
 
 type Props = {
     params: Promise<{ slug: string }>
@@ -77,21 +77,7 @@ async function StoreDetailsPage({ params }: Props) {
                                     <h2 className="text-lg font-medium mb-4">Danger zone</h2>
                                     <p className="text-sm text-destructive-foreground">You can delete your store by clicking the button below.</p>
                                     <p className="text-sm text-destructive-foreground mb-4">Keep in mind that this action is irreversible and it will delete all the data associated with your store.</p>
-                                    <ButtonWithPopup
-                                        title="Delete Store"
-                                        description="You can delete your store by clicking the button below. Keep in mind that this action is irreversible and it will delete all the data associated with your store."
-                                        text={(
-                                            <>
-                                                <Trash2 />
-                                                Delete Store
-                                            </>
-                                        )}
-                                        messages={{
-                                            success: "Store deleted successfully",
-                                            error: "Error deleting store",
-                                            loading: "Deleting store..."
-                                        }}
-                                    />
+                                    <DeleteStoreButton storeId={store.id} />
                                 </section>
                             </CardContent>
                         </Card>

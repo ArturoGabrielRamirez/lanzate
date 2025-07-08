@@ -15,14 +15,18 @@ function ButtonWithPopup<T>({
     action,
     messages,
     disabled = false,
-    schema
+    schema,
+    onComplete
 }: ButtonWithPopupPropsType<T>) {
 
     const [open, setOpen] = useState(false)
 
     const handleComplete = async () => {
         setOpen(false)
+        onComplete && typeof onComplete === "function" && onComplete()
     }
+
+    const resolverConfig = schema ? { resolver: yupResolver(schema) } : {}
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -37,7 +41,7 @@ function ButtonWithPopup<T>({
                     </DialogDescription>
                 </DialogHeader>
                 <Form
-                    resolver={yupResolver(schema)}
+                    resolver={resolverConfig.resolver}
                     formAction={action}
                     contentButton={text}
                     successMessage={messages.success}
