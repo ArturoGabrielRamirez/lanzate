@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 
 const getURL = () => {
     let url =
-        process?.env?.AUTH_URL ??
+        process?.env?.NEXTAUTH_URL ??
         process?.env?.NEXT_PUBLIC_VERCEL_URL ??
         'http://localhost:3000/'
 
