@@ -1,4 +1,4 @@
-import { NextThemeProvider } from "@/features/layout/components/theme-provider";
+import { NextThemeProvider } from "@/features/layout/components";
 import { Header } from "@/features/header/components";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Toaster } from "@/components/ui/sonner"

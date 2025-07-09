@@ -1,8 +1,7 @@
-import { redirect } from 'next/navigation'
+import { UpdatePasswordForm } from '@/features/auth/components'
 import { createClient } from '@/utils/supabase/server-props'
-import UpdatePasswordForm from '@/features/auth/components/update-password-form'
-import Title from '@/features/layout/components/title'
-
+import { Title } from '@/features/layout/components'
+import { redirect } from 'next/navigation'
 
 export default async function UpdatePasswordPage() {
     const supabase = await createClient()

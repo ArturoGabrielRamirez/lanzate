@@ -1,11 +1,10 @@
 "use client"
-import ButtonWithPopup from "@/features/layout/components/button-with-popup"
+import { ButtonWithPopup, InputField } from "@/features/layout/components"
+import { editSchema } from "../schemas/product-schema"
+import { editProduct } from "../actions/editProduct"
+import { Product } from "@/prisma/generated/prisma"
 import { formatErrorResponse } from "@/utils/lib"
 import { Pencil } from "lucide-react"
-import { editProduct } from "../actions/editProduct"
-import { editSchema } from "../schemas/product-schema"
-import InputField from "@/features/layout/components/input"
-import { Product } from "@/prisma/generated/prisma"
 
 type Props = {
     product: Product

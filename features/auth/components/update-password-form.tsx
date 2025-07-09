@@ -1,12 +1,10 @@
 'use client'
 
-
-import Form from '@/features/layout/components/form'
-import InputField from '@/features/layout/components/input'
+import { Form, InputField } from '@/features/layout/components'
 import { formatErrorResponse } from '@/utils/lib'
 import { useState } from 'react'
 
-export default function UpdatePasswordPage() {
+export default function UpdatePasswordForm() {
     const [done, setDone] = useState(false)
 
     const handleSubmit = async (payload: any) => {

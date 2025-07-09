@@ -1,9 +1,9 @@
 "use client"
-import ButtonWithPopup from "@/features/layout/components/button-with-popup"
-import { formatErrorResponse } from "@/utils/lib"
-import { Trash2 } from "lucide-react"
+import { ButtonWithPopup } from "@/features/layout/components"
 import { deleteStore } from "../actions/deleteStore"
+import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
+import { Trash2 } from "lucide-react"
 
 type Props = {
     storeId: number

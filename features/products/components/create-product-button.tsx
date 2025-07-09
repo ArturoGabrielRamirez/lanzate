@@ -1,11 +1,10 @@
 "use client"
-import ButtonWithPopup from "@/features/layout/components/button-with-popup"
-import { Plus } from "lucide-react"
+
+import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { createProduct } from "../actions/createProduct"
-import InputField from "@/features/layout/components/input"
-import { formatErrorResponse } from "@/utils/lib"
-import { yupResolver } from "@hookform/resolvers/yup"
 import { schema } from "../schemas/product-schema"
+import { formatErrorResponse } from "@/utils/lib"
+import { Plus } from "lucide-react"
 
 type Props = {
     storeId: number

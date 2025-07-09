@@ -1,6 +1,5 @@
 import { getStoresFromSlug } from "../../actions/getStoresFromSlug"
-import DeleteStoreButton from "../delete-store-button"
-import EditStoreButton from "../edit-store-button"
+import { DeleteStoreButton, EditStoreButton } from "@/features/stores/components"
 
 type Props = {
     slug: string

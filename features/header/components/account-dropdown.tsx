@@ -1,13 +1,12 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
 import { User } from "lucide-react"
-import Link from "next/link"
 import { useState } from "react"
+import Link from "next/link"
 
-type Props = {}
-function AccountDropdown({ }: Props) {
+function AccountDropdown() {
 
     const [open, setOpen] = useState(false)
 

@@ -1,15 +1,16 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import Title from "@/features/layout/components/title"
-import { canCreateStore } from "@/features/stores/access/canCreateStore"
 import { getStoresFromUser } from "@/features/stores/actions/getStoresFromUser"
-import CreateStoreButton from "@/features/stores/components/create-store-button"
-import StoreCard from "@/features/stores/components/store-card"
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+
+import { canCreateStore } from "@/features/stores/access/canCreateStore"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { CreateStoreButton, StoreCard } from "@/features/stores/components"
+import { Title } from "@/features/layout/components"
+
 import { Plus } from "lucide-react"
 
-type Props = {}
 
-async function StoresPage({ }: Props) {
+async function StoresPage() {
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
