@@ -7,12 +7,12 @@ type Props = {
 
 async function TabPage({ params }: Props) {
 
-    const { tab } = await params
+    const { tab, slug } = await params
     const LazyComponent = lazy(() => import(`@/features/stores/components/tabs/${tab}`))
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <LazyComponent />
+            <LazyComponent slug={slug} />
         </Suspense>
     )
 }

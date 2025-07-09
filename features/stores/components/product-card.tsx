@@ -3,22 +3,24 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Product } from "@/prisma/generated/prisma"
 import { Box } from "lucide-react"
-import { useQueryState } from "nuqs"
+import { useRouter } from "next/navigation"
 
 type Props = {
     product: Product
+    slug: string
 }
 
-function ProductCard({ product }: Props) {
+function ProductCard({ product, slug }: Props) {
 
-    const [_, setProduct] = useQueryState('product_id')
+
+    const router = useRouter()
 
     const handleClick = () => {
-        setProduct(product.id.toString())
+        router.push(`/stores/${slug}/products/${product.id}`)
     }
 
     return (
-        <Card key={product.id} onClick={handleClick}>
+        <Card key={product.id} onClick={handleClick} className="cursor-pointer hover:bg-primary hover:scale-105 transition-all duration-300">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     <Box className="size-4" />
