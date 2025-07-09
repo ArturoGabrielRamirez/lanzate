@@ -3,6 +3,7 @@ import ButtonWithPopup from "@/features/layout/components/button-with-popup"
 import { getProductDetails } from "@/features/stores/actions/getProductDetails"
 import { Trash2 } from "lucide-react"
 import DeleteProductButton from "@/features/products/components/delete-product-button"
+import EditProductButton from "@/features/products/components/edit-product-button"
 
 type Props = {
     params: Promise<{ slug: string, id: string }>
@@ -33,6 +34,7 @@ async function ProductDetailPage({ params }: Props) {
                         <p className="text-muted-foreground text-lg">${product.price}</p>
                         <p>{product.description || "No description available"}</p>
                         <DeleteProductButton productId={product.id} slug={slug} />
+                        <EditProductButton product={product} slug={slug} />
                     </div>
                 </div>
             </CardContent>
