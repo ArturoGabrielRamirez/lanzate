@@ -1,10 +1,9 @@
 'use client'
 
-import { yupResolver } from '@hookform/resolvers/yup'
-import Form from '../../layout/components/form'
 import { handleSignup } from '@/features/auth/actions/handleSignUp'
-import InputField from '../../layout/components/input'
 import { schema } from '@/features/auth/schemas/log-user-schema'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Form, InputField } from '@/features/layout/components'
 
 export default function SignupForm() {
     return (

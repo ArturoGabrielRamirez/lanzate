@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getUserInfo } from "@/features/layout/actions/getUserInfo";
-import Title from "@/features/layout/components/title";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { getUserInfo } from "@/features/layout/actions/getUserInfo";
+import { Title } from "@/features/layout/components";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default async function AccountPage() {

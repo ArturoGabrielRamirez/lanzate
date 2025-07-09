@@ -1,23 +1,13 @@
 "use client"
-import ButtonWithPopup from "@/features/layout/components/button-with-popup"
-import { formatErrorResponse } from "@/utils/lib"
-import { Trash2 } from "lucide-react"
+import { ButtonWithPopup } from "@/features/layout/components"
 import { deleteProduct } from "../actions/deleteProduct"
+import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
+import { Trash2 } from "lucide-react"
 
-/**
- * Props for DeleteProductButton
- */
-type Props = {
-    productId: number
-    slug: string
-    onComplete?: () => void
-}
+import { DeleteProductButtonProps } from "@/features/products/type"
 
-/**
- * DeleteProductButton component for deleting a product.
- */
-function DeleteProductButton({ productId, slug, onComplete }: Props) {
+function DeleteProductButton({ productId, slug, onComplete }: DeleteProductButtonProps) {
     const handleDeleteProduct = async () => {
         try {
             const { error, message, payload } = await deleteProduct(productId, slug)

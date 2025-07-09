@@ -1,8 +1,9 @@
-import { NextThemeProvider } from "@/features/layout/components/theme-provider";
+import { NextThemeProvider } from "@/features/layout/components";
 import { Header } from "@/features/header/components";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Toaster } from "@/components/ui/sonner"
 import type { Metadata } from "next";
+import { LayoutProps } from "@/features/layout/types";
 import "./globals.css";
 
 
@@ -15,11 +16,7 @@ export const metadata: Metadata = {
   ],
 };
 
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function RootLayout({ children }: LayoutProps) {
 
   return (
     <html lang="en">

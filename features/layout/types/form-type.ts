@@ -1,5 +1,5 @@
 import { Resolver } from "react-hook-form"
-import { ResponseType } from "./response-type"
+import { ResponseType } from "./"
 import { FieldValues } from "react-hook-form"
 
 export type FormPropsType<T extends FieldValues> = {

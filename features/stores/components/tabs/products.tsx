@@ -1,14 +1,14 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getStoresFromSlug } from "../../actions/getStoresFromSlug"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { CreateProductButton } from "@/features/products/components"
+import { ProductCard } from "@/features/stores/components"
+
 import { Plus } from "lucide-react"
-import CreateProductButton from "@/features/products/components/create-product-button"
-import ProductCard from "../product-card"
 
-type Props = {
-    slug: string
-}
+import { ProductsTabProps } from "@/features/stores/types"
 
-async function ProductsTab({ slug }: Props) {
+async function ProductsTab({ slug }: ProductsTabProps) {
 
     const { payload: store, error } = await getStoresFromSlug(slug)
 

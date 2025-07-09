@@ -1,3 +1,3 @@
-export type LoadingSubmitButtonType = {
+export type Props = {
     text?: string
 }

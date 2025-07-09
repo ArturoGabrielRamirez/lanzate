@@ -1,11 +1,7 @@
+import { TabPageProps } from "@/features/stores/types"
 import { lazy, Suspense } from "react"
 
-type Props = {
-    params: Promise<{ slug: string, tab: string }>
-}
-
-
-async function TabPage({ params }: Props) {
+async function TabPage({ params }: TabPageProps) {
 
     const { tab, slug } = await params
     const LazyComponent = lazy(() => import(`@/features/stores/components/tabs/${tab}`))

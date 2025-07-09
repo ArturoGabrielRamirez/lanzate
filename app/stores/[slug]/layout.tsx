@@ -1,18 +1,14 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsList } from "@/components/ui/tabs"
 import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
-import Title from "@/features/layout/components/title"
-import TabTriggerLink from "@/features/stores/components/tab-trigger-link"
-import TabsClientContainer from "@/features/stores/components/tabs-client-container"
+
+import { TabTriggerLink, TabsClientContainer } from "@/features/stores/components"
+import { Card, CardContent } from "@/components/ui/card"
+import { Title } from "@/features/layout/components"
+import { TabsList } from "@/components/ui/tabs"
+
+import { StoreDetailsLayoutProps } from "@/features/stores/types"
 
 
-type Props = {
-    children: React.ReactNode
-    params: Promise<{ slug: string }>
-}
-
-
-async function StoreDetailsLayout({ children, params }: Props) {
+async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps) {
 
     const { slug } = await params
 

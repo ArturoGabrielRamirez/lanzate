@@ -1,13 +1,9 @@
-import { NotificationsIcon } from "@/features/header/components"
 import { createServerSideClient } from "@/utils/supabase/server"
+import { AccountDropdown, NotificationsIcon, ThemeToggle } from "@/features/header/components"
 import Link from "next/link"
-import ThemeToggle from "./theme-toggle"
-import AccountDropdown from "./account-dropdown"
 import { Rocket } from "lucide-react"
 
-type Props = {}
-
-async function Header({ }: Props) {
+async function Header() {
 
     const supabase = await createServerSideClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -22,7 +18,7 @@ async function Header({ }: Props) {
 
                 {!user && <Link href='/login' className='p-2 hover:underline hover:!text-primary'>Log In</Link>}
                 {!user && <Link href='/signup' className='p-2 hover:underline hover:text-primary'>Sign Up</Link>}
-                
+                {user && <Link href='/stores' className='p-2 hover:underline hover:!text-primary'>Stores</Link>}
                 <ThemeToggle />
 
                 {user && <NotificationsIcon />}

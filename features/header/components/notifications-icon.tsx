@@ -12,9 +12,7 @@ import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 
-type Props = {}
-
-function NotificationsIcon({ }: Props) {
+function NotificationsIcon() {
 
     const [notifications, setNotifications] = useState<Notification[]>([])
 

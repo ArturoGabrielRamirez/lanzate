@@ -1,5 +1,4 @@
-type Props = {}
-function SettingsTab({ }: Props) {
+function SettingsTab() {
     return (
         <div>Site not available yet</div>
     )

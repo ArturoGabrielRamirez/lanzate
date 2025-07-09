@@ -1,10 +1,9 @@
 'use client'
 
-import { yupResolver } from '@hookform/resolvers/yup'
-import Form from '../../layout/components/form'
-import InputField from '../../layout/components/input'
-import { schema } from '@/features/auth/schemas/email-schema'
 import { handleResetPassword } from '@/features/auth/actions/handleResetPassword'
+import { schema } from '@/features/auth/schemas/email-schema'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Form, InputField } from '@/features/layout/components'
 
 export default function ResetPassword() {
   return (

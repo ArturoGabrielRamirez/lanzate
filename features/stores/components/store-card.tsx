@@ -1,15 +1,12 @@
 "use client"
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Store } from "@/prisma/generated/prisma"
 import { Calendar, StoreIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 
-type Props = {
-    store: Store
-}
+import { StoreCardProps } from "@/features/stores/types"
 
-function StoreCard({ store }: Props) {
+function StoreCard({ store }: StoreCardProps) {
 
     const router = useRouter()
 

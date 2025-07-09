@@ -1,8 +1,4 @@
-type Props = {
-    productId: string
-}
-
-async function ProductDetail({ productId }: Props) {
+async function ProductDetail() {
 
     await new Promise(resolve => setTimeout(resolve, 2000))
 

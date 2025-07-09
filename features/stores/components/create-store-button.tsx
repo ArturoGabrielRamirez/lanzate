@@ -1,22 +1,18 @@
 "use client"
 
-import ButtonWithPopup from "@/features/layout/components/button-with-popup"
-import InputField from "@/features/layout/components/input"
+import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { createStore } from "../actions/createStore"
 import { formatErrorResponse } from "@/utils/lib"
 import { schema } from "../schemas/store-schema"
+import { generate } from "random-words"
 import { Plus } from "lucide-react"
 import { useState } from "react"
-import { generate } from "random-words"
 
-type Props = {
-    userId: number
-    canCreate?: boolean
-}
+import { CreateStoreButtonProps } from "@/features/stores/types"
 
-function CreateStoreButton({ userId, canCreate = true }: Props) {
+function CreateStoreButton({ userId, canCreate = true }: CreateStoreButtonProps) {
 
-    const [subdomain, setSubdomain] = useState(generate({ exactly: 1, minLength: 7 , join: ""}))
+    const [subdomain, setSubdomain] = useState(generate({ exactly: 1, minLength: 7, join: "" }))
 
     const handleCreateStore = async (payload: any) => {
         if (!payload.name) return formatErrorResponse("Name is required", null, null)

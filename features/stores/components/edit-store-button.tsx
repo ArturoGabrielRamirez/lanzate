@@ -1,20 +1,14 @@
 "use client"
+import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { updateStore } from "../actions/updateStore"
-import ButtonWithPopup from "@/features/layout/components/button-with-popup"
-import { formatErrorResponse } from "@/utils/lib"
 import { editSchema } from "../schemas/store-schema"
-import InputField from "@/features/layout/components/input"
-import { Store } from "@/prisma/generated/prisma"
+import { formatErrorResponse } from "@/utils/lib"
 import { Pencil } from "lucide-react"
 import { useState } from "react"
 
-type Props = {
-    userId: number
-    slug: string
-    store: Store
-}
+import { EditStoreButtonProps } from "@/features/stores/types"
 
-function EditStoreButton({ userId, slug, store }: Props) {
+function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
 
     const [subdomain, setSubdomain] = useState(store.subdomain)
 

@@ -1,15 +1,14 @@
-import DeleteProductButton from "@/features/products/components/delete-product-button"
-import EditProductButton from "@/features/products/components/edit-product-button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getProductDetails } from "@/features/stores/actions/getProductDetails"
+
+import { DeleteProductButton, EditProductButton } from "@/features/products/components"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+
+import { ProductDetailPageProps } from "@/features/products/type"
+
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 
-type Props = {
-    params: Promise<{ slug: string, id: string }>
-}
-
-async function ProductDetailPage({ params }: Props) {
+async function ProductDetailPage({ params }: ProductDetailPageProps) {
 
     const { slug, id } = await params
     const { payload: product, error } = await getProductDetails(id)

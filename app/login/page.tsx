@@ -1,9 +1,7 @@
-import { Label } from '@/components/ui/label'
-import Form from '@/features/layout/components/form'
-import Title from '@/features/layout/components/title'
-import ResetPasswordLink from '@/features/auth/components/reset-password-link'
 import { handleGoogleLogIn } from '../../features/auth/actions/handleGoogleLogIn'
-import LoginForm from '@/features/auth/components/form-login'
+import { LoginForm, ResetPasswordLink } from '@/features/auth/components'
+import { Form, Title } from '@/features/layout/components'
+import { Label } from '@/components/ui/label'
 
 export default async function LoginPage() {
 
