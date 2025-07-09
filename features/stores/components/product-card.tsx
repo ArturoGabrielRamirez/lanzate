@@ -24,15 +24,15 @@ function ProductCard({ product, slug }: Props) {
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     <Box className="size-4" />
-                    <h3 className="font-bold text-sm">{product.name}</h3>
+                    <h3 className="font-bold text-base line-clamp-1">{product.name}</h3>
                 </CardTitle>
             </CardHeader>
-            <CardContent>
-                <p>{product.description}</p>
+            <CardContent className="grow">
+                <p className="text-muted-foreground text-sm line-clamp-2">{product.description || "No description available"}</p>
             </CardContent>
             <CardFooter className="flex justify-between">
-                <p>{product.stock} {product.stock > 1 ? "items" : "item"} left</p>
-                <p>${product.price}</p>
+                <p className="text-muted-foreground text-sm">{product.stock} {product.stock > 1 ? "items" : "item"} left</p>
+                <p className="font-bold">${product.price}</p>
             </CardFooter>
         </Card>
     )
