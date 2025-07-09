@@ -5,14 +5,14 @@ import { insertStore } from "../data/insertStore"
 import { formatErrorResponse } from "@/utils/lib"
 import { canCreateStore } from "../access/canCreateStore"
 
-export async function createStore(name: string, userId: number) {
+export async function createStore(payload: any, userId: number) {
     try {
 
         const canCreate = await canCreateStore(userId)
 
         if (!canCreate) throw new Error("Free plan limit reached")
 
-        const { payload, error, message } = await insertStore(name, userId)
+        const { payload : newStore, error, message } = await insertStore(payload, userId)
 
         if (error) throw new Error(message)
 
@@ -20,7 +20,7 @@ export async function createStore(name: string, userId: number) {
 
         return {
             message: "Store created successfully",
-            payload: payload,
+            payload: newStore,
             error: false
         }
 

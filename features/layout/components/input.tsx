@@ -9,9 +9,12 @@ type InputFieldProps = {
   label: string
   type?: string
   defaultValue?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  value?: string
+  className?: string
 }
 
-const InputField = ({ name, label, type = 'text', defaultValue }: InputFieldProps) => {
+const InputField = ({ name, label, type = 'text', defaultValue, onChange, value, className }: InputFieldProps) => {
   const {
     register,
     formState: { errors },
@@ -22,7 +25,7 @@ const InputField = ({ name, label, type = 'text', defaultValue }: InputFieldProp
   return (
     <div className="flex flex-col gap-1">
       <Label htmlFor={name}>{label}</Label>
-      <Input id={name} type={type} {...register(name)} defaultValue={defaultValue} />
+      <Input id={name} type={type} {...register(name)} defaultValue={defaultValue} onChange={onChange} value={value} className={className} />
       {error && <p className="text-sm text-red-500">{error}</p>}
     </div>
   )

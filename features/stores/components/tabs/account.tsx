@@ -6,7 +6,7 @@ type Props = {
     slug: string
 }
 async function AccountTab({ slug }: Props) {
-    
+
     const { payload: store, error } = await getStoresFromSlug(slug)
 
     if (error || !store) {
@@ -23,6 +23,14 @@ async function AccountTab({ slug }: Props) {
                 <div className="flex flex-col">
                     <p className="font-light text-sm">Description</p>
                     <p className="font-medium">{store.description || "No description available"}</p>
+                </div>
+                <div className="flex flex-col">
+                    <p className="font-light text-sm">Website</p>
+                    <a href={`https://${store.subdomain}.lanzate.com`} className="font-medium text-blue-500 hover:underline">
+                        {`https://${store.subdomain}.lanzate.com`}
+                    </a>
+                </div>
+                <div className="flex flex-col">
                 </div>
                 <div>
                     <EditStoreButton
