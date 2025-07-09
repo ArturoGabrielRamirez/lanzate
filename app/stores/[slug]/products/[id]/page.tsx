@@ -1,6 +1,11 @@
-type Props = {}
+type Props = {
+    params: Promise<{ slug: string, id: string }>
+}
 
-function ProductDetailPage({ }: Props) {
+async function ProductDetailPage({ params }: Props) {
+
+    const { slug, id } = await params
+
     return (
         <div>ProductDetailPage</div>
     )
