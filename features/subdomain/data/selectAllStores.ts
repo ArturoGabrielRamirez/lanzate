@@ -1,16 +1,12 @@
-import { createSupabaseClient } from "@/utils/supabase/client";
-import { SubdomainData } from "../types/types";
-import { formatErrorResponse } from "@/utils/lib";
+"use server"
 
-type SelectAllStoresReturn = {
-    message: string;
-    payload: SubdomainData[];
-    error: boolean;
-};
+import { createServerSideClient } from "@/utils/supabase/server";
+import { formatErrorResponse } from "@/utils/lib";
+import { SelectAllStoresReturn } from "../types/types";
 
 export async function selectAllStores(): Promise<SelectAllStoresReturn> {
     try {
-        const { data, error } = await (await createSupabaseClient())
+        const { data, error } = await createServerSideClient()
             .from('stores')
             .select('*')
             .order('created_at', { ascending: false });

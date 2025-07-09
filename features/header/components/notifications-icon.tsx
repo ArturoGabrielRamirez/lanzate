@@ -1,7 +1,7 @@
 "use client"
 
 import { Notification } from "@/prisma/generated/prisma"
-import { createSupabaseClient } from "@/utils/supabase/client"
+import { createClient } from "@/utils/supabase/client"
 import { useEffect, useState } from "react"
 import { getNotifications } from "../actions/getNotifications"
 import { markNotificationAsRead } from "../actions/markNotificationAsRead"
@@ -20,7 +20,7 @@ function NotificationsIcon({ }: Props) {
 
     useEffect(() => {
         const suscribe = async () => {
-            const supabase = await createSupabaseClient()
+            const supabase = createClient()
             const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
             if (userError) {

@@ -1,6 +1,6 @@
 "use server"
 
-import { createSupabaseClient } from "@/utils/supabase/server"
+import { createServerSideClient } from "@/utils/supabase/server"
 import { getUserByEmail } from "../data/getUserByEmail"
 import { formatErrorResponse } from "@/utils/lib"
 import { Account, User } from "@/prisma/generated/prisma"
@@ -11,7 +11,7 @@ export async function getUserInfo(): Promise<{
     message: string
 }> {
     try {
-        const supabase = await createSupabaseClient()
+        const supabase = await createServerSideClient()
         const { data, error } = await supabase.auth.getUser()
 
         if (error) {

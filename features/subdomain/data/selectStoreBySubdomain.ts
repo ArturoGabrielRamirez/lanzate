@@ -1,18 +1,14 @@
-import { createSupabaseClient } from "@/utils/supabase/client";
-import { SubdomainData } from "../types/types";
-import { formatErrorResponse } from "@/utils/lib";
+"use server"
 
-type SelectStoreBySubdomainReturn = {
-    message: string;
-    payload: SubdomainData | null;
-    error: boolean;
-};
+import { createServerSideClient } from "@/utils/supabase/server";
+import { formatErrorResponse } from "@/utils/lib";
+import { SelectStoreBySubdomainReturn } from "../types/types";
 
 export async function selectStoreBySubdomain(subdomain: string): Promise<SelectStoreBySubdomainReturn> {
     try {
         const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
         
-        const { data, error } = await (await createSupabaseClient())
+        const { data, error } = await (await createServerSideClient())
             .from('stores')
             .select('*')
             .eq('subdomain', sanitizedSubdomain)

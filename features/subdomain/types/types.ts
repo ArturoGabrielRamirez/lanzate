@@ -41,3 +41,27 @@ export type ValidateSubdomainReturn = {
     payload: boolean;
     error: boolean;
 };
+
+export type CheckSubdomainExistsReturn = {
+    message: string;
+    payload: boolean;
+    error: boolean;
+};
+
+export type SelectAllStoresReturn = {
+    message: string;
+    payload: SubdomainData[];
+    error: boolean;
+};
+
+export type SelectStoreBySubdomainReturn = {
+    message: string;
+    payload: SubdomainData | null;
+    error: boolean;
+};
+
+export type SelectStoreWithProductsReturn = {
+    message: string;
+    payload: StoreWithProducts | null;
+    error: boolean;
+};

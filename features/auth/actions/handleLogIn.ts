@@ -1,9 +1,9 @@
 'use server'
 
-import { createClient } from '@/utils/supabase/server-props'
+import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function handleLogIn(formData: FormData) {
-  const supabase = await createClient()
+  const supabase = await createServerSideClient()
   const data = {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
