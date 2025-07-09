@@ -1,10 +1,13 @@
 "use client"
-import { createStore } from "../actions/createStore"
+
 import ButtonWithPopup from "@/features/layout/components/button-with-popup"
+import InputField from "@/features/layout/components/input"
+import { createStore } from "../actions/createStore"
 import { formatErrorResponse } from "@/utils/lib"
 import { schema } from "../schemas/store-schema"
-import InputField from "@/features/layout/components/input"
 import { Plus } from "lucide-react"
+import { useState } from "react"
+import { generate } from "random-words"
 
 type Props = {
     userId: number
@@ -13,10 +16,16 @@ type Props = {
 
 function CreateStoreButton({ userId, canCreate = true }: Props) {
 
+    const [subdomain, setSubdomain] = useState(generate({ exactly: 1, minLength: 7 , join: ""}))
+
     const handleCreateStore = async (payload: any) => {
         if (!payload.name) return formatErrorResponse("Name is required", null, null)
         if (!userId) return formatErrorResponse("User ID is required", null, null)
-        return createStore(payload.name, userId)
+        return createStore({ ...payload, subdomain }, userId)
+    }
+
+    const handleSubdomainChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSubdomain(e.target.value.replace(/[^a-zA-Z0-9-]/g, ""))
     }
 
     return (
@@ -39,6 +48,19 @@ function CreateStoreButton({ userId, canCreate = true }: Props) {
             }}
         >
             <InputField name="name" label="Name" type="text" />
+            <InputField name="description" label="Description" type="text" />
+            <div className="relative grid grid-cols-[1fr_auto] gap-2 items-end">
+                <InputField
+                    name="subdomain"
+                    label="Subdomain"
+                    type="text"
+                    onChange={handleSubdomainChange}
+                    value={subdomain}
+                />
+                <span className="text-muted-foreground pointer-events-none select-none">
+                    .lanzate.com
+                </span>
+            </div>
         </ButtonWithPopup>
     )
 }

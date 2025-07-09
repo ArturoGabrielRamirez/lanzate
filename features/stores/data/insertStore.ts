@@ -10,7 +10,7 @@ type InsertStoreReturn = {
     error: boolean
 }
 
-export async function insertStore(name: string, userId: number): Promise<InsertStoreReturn> {
+export async function insertStore(payload: any, userId: number): Promise<InsertStoreReturn> {
 
     try {
 
@@ -18,9 +18,10 @@ export async function insertStore(name: string, userId: number): Promise<InsertS
 
         const store = await client.store.create({
             data: {
-                name,
+                name: payload.name,
                 slug: randomstring.generate(8),
-                subdomain: randomstring.generate(5),
+                subdomain: payload.subdomain,
+                description: payload.description,
                 user_id: userId,
                 branches : {
                     create : {
