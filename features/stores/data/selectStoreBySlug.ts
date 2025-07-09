@@ -19,9 +19,24 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
                 slug: slug
             },
             include: {
-                branches: true
+                branches: true,
+                products: true
             }
         })
+
+        const aggregate = await client.productStock.groupBy({
+            by: ["branch_id"],
+            _sum: {
+                quantity: true
+            },
+            where: {
+                product_id: {
+                    in: store?.products.map((product) => product.id)
+                }
+            },
+        })
+
+        console.log(aggregate)
 
         return {
             message: "Store fetched successfully from db",

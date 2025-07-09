@@ -37,6 +37,7 @@ function DeleteStoreButton({ storeId }: Props) {
             description="You can delete your store by clicking the button below. Keep in mind that this action is irreversible and it will delete all the data associated with your store."
             action={handleDeleteStore}
             onComplete={handleComplete}
+            variant="destructive"
             text={(
                 <>
                     <Trash2 />

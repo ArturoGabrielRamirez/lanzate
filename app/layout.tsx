@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
-import { Header } from "@/features/header/components";
 import { NextThemeProvider } from "@/features/layout/components/theme-provider";
+import { Header } from "@/features/header/components";
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Toaster } from "@/components/ui/sonner"
+import type { Metadata } from "next";
 import "./globals.css";
 
 
@@ -31,11 +32,13 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow'>
-            {children}
-          </main>
-          <Toaster />
+          <NuqsAdapter>
+            <Header />
+            <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow'>
+              {children}
+            </main>
+            <Toaster />
+          </NuqsAdapter>
         </NextThemeProvider>
       </body>
     </html>

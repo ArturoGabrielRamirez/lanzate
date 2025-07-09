@@ -1483,10 +1483,12 @@ export namespace Prisma {
 
   export type StoreCountOutputType = {
     branches: number
+    products: number
   }
 
   export type StoreCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     branches?: boolean | StoreCountOutputTypeCountBranchesArgs
+    products?: boolean | StoreCountOutputTypeCountProductsArgs
   }
 
   // Custom InputTypes
@@ -1505,6 +1507,13 @@ export namespace Prisma {
    */
   export type StoreCountOutputTypeCountBranchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BranchWhereInput
+  }
+
+  /**
+   * StoreCountOutputType without action
+   */
+  export type StoreCountOutputTypeCountProductsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductWhereInput
   }
 
 
@@ -4165,6 +4174,7 @@ export namespace Prisma {
     user_id?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     branches?: boolean | Store$branchesArgs<ExtArgs>
+    products?: boolean | Store$productsArgs<ExtArgs>
     _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["store"]>
 
@@ -4213,6 +4223,7 @@ export namespace Prisma {
   export type StoreInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     branches?: boolean | Store$branchesArgs<ExtArgs>
+    products?: boolean | Store$productsArgs<ExtArgs>
     _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StoreIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4227,6 +4238,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       branches: Prisma.$BranchPayload<ExtArgs>[]
+      products: Prisma.$ProductPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4635,6 +4647,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     branches<T extends Store$branchesArgs<ExtArgs> = {}>(args?: Subset<T, Store$branchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    products<T extends Store$productsArgs<ExtArgs> = {}>(args?: Subset<T, Store$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5091,6 +5104,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BranchScalarFieldEnum | BranchScalarFieldEnum[]
+  }
+
+  /**
+   * Store.products
+   */
+  export type Store$productsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Product
+     */
+    select?: ProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Product
+     */
+    omit?: ProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductInclude<ExtArgs> | null
+    where?: ProductWhereInput
+    orderBy?: ProductOrderByWithRelationInput | ProductOrderByWithRelationInput[]
+    cursor?: ProductWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProductScalarFieldEnum | ProductScalarFieldEnum[]
   }
 
   /**
@@ -6224,12 +6261,14 @@ export namespace Prisma {
     id: number | null
     price: number | null
     stock: number | null
+    store_id: number | null
   }
 
   export type ProductSumAggregateOutputType = {
     id: number | null
     price: number | null
     stock: number | null
+    store_id: number | null
   }
 
   export type ProductMinAggregateOutputType = {
@@ -6240,6 +6279,7 @@ export namespace Prisma {
     stock: number | null
     created_at: Date | null
     updated_at: Date | null
+    store_id: number | null
   }
 
   export type ProductMaxAggregateOutputType = {
@@ -6250,6 +6290,7 @@ export namespace Prisma {
     stock: number | null
     created_at: Date | null
     updated_at: Date | null
+    store_id: number | null
   }
 
   export type ProductCountAggregateOutputType = {
@@ -6260,6 +6301,7 @@ export namespace Prisma {
     stock: number
     created_at: number
     updated_at: number
+    store_id: number
     _all: number
   }
 
@@ -6268,12 +6310,14 @@ export namespace Prisma {
     id?: true
     price?: true
     stock?: true
+    store_id?: true
   }
 
   export type ProductSumAggregateInputType = {
     id?: true
     price?: true
     stock?: true
+    store_id?: true
   }
 
   export type ProductMinAggregateInputType = {
@@ -6284,6 +6328,7 @@ export namespace Prisma {
     stock?: true
     created_at?: true
     updated_at?: true
+    store_id?: true
   }
 
   export type ProductMaxAggregateInputType = {
@@ -6294,6 +6339,7 @@ export namespace Prisma {
     stock?: true
     created_at?: true
     updated_at?: true
+    store_id?: true
   }
 
   export type ProductCountAggregateInputType = {
@@ -6304,6 +6350,7 @@ export namespace Prisma {
     stock?: true
     created_at?: true
     updated_at?: true
+    store_id?: true
     _all?: true
   }
 
@@ -6401,6 +6448,7 @@ export namespace Prisma {
     stock: number
     created_at: Date
     updated_at: Date
+    store_id: number
     _count: ProductCountAggregateOutputType | null
     _avg: ProductAvgAggregateOutputType | null
     _sum: ProductSumAggregateOutputType | null
@@ -6430,7 +6478,9 @@ export namespace Prisma {
     stock?: boolean
     created_at?: boolean
     updated_at?: boolean
+    store_id?: boolean
     stock_entries?: boolean | Product$stock_entriesArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
@@ -6442,6 +6492,8 @@ export namespace Prisma {
     stock?: boolean
     created_at?: boolean
     updated_at?: boolean
+    store_id?: boolean
+    store?: boolean | StoreDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
   export type ProductSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6452,6 +6504,8 @@ export namespace Prisma {
     stock?: boolean
     created_at?: boolean
     updated_at?: boolean
+    store_id?: boolean
+    store?: boolean | StoreDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
   export type ProductSelectScalar = {
@@ -6462,20 +6516,27 @@ export namespace Prisma {
     stock?: boolean
     created_at?: boolean
     updated_at?: boolean
+    store_id?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "stock" | "created_at" | "updated_at", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "stock" | "created_at" | "updated_at" | "store_id", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     stock_entries?: boolean | Product$stock_entriesArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ProductIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ProductIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ProductIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }
+  export type ProductIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }
 
   export type $ProductPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Product"
     objects: {
       stock_entries: Prisma.$ProductStockPayload<ExtArgs>[]
+      store: Prisma.$StorePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6485,6 +6546,7 @@ export namespace Prisma {
       stock: number
       created_at: Date
       updated_at: Date
+      store_id: number
     }, ExtArgs["result"]["product"]>
     composites: {}
   }
@@ -6880,6 +6942,7 @@ export namespace Prisma {
   export interface Prisma__ProductClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     stock_entries<T extends Product$stock_entriesArgs<ExtArgs> = {}>(args?: Subset<T, Product$stock_entriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductStockPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6916,6 +6979,7 @@ export namespace Prisma {
     readonly stock: FieldRef<"Product", 'Int'>
     readonly created_at: FieldRef<"Product", 'DateTime'>
     readonly updated_at: FieldRef<"Product", 'DateTime'>
+    readonly store_id: FieldRef<"Product", 'Int'>
   }
     
 
@@ -7165,6 +7229,10 @@ export namespace Prisma {
      */
     data: ProductCreateManyInput | ProductCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -7235,6 +7303,10 @@ export namespace Prisma {
      * Limit how many Products to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -9709,7 +9781,8 @@ export namespace Prisma {
     price: 'price',
     stock: 'stock',
     created_at: 'created_at',
-    updated_at: 'updated_at'
+    updated_at: 'updated_at',
+    store_id: 'store_id'
   };
 
   export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
@@ -10021,6 +10094,7 @@ export namespace Prisma {
     user_id?: IntFilter<"Store"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     branches?: BranchListRelationFilter
+    products?: ProductListRelationFilter
   }
 
   export type StoreOrderByWithRelationInput = {
@@ -10036,6 +10110,7 @@ export namespace Prisma {
     user_id?: SortOrder
     user?: UserOrderByWithRelationInput
     branches?: BranchOrderByRelationAggregateInput
+    products?: ProductOrderByRelationAggregateInput
   }
 
   export type StoreWhereUniqueInput = Prisma.AtLeast<{
@@ -10054,6 +10129,7 @@ export namespace Prisma {
     user_id?: IntFilter<"Store"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     branches?: BranchListRelationFilter
+    products?: ProductListRelationFilter
   }, "id" | "slug" | "subdomain">
 
   export type StoreOrderByWithAggregationInput = {
@@ -10158,7 +10234,9 @@ export namespace Prisma {
     stock?: IntFilter<"Product"> | number
     created_at?: DateTimeFilter<"Product"> | Date | string
     updated_at?: DateTimeFilter<"Product"> | Date | string
+    store_id?: IntFilter<"Product"> | number
     stock_entries?: ProductStockListRelationFilter
+    store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
   }
 
   export type ProductOrderByWithRelationInput = {
@@ -10169,7 +10247,9 @@ export namespace Prisma {
     stock?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    store_id?: SortOrder
     stock_entries?: ProductStockOrderByRelationAggregateInput
+    store?: StoreOrderByWithRelationInput
   }
 
   export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -10183,7 +10263,9 @@ export namespace Prisma {
     stock?: IntFilter<"Product"> | number
     created_at?: DateTimeFilter<"Product"> | Date | string
     updated_at?: DateTimeFilter<"Product"> | Date | string
+    store_id?: IntFilter<"Product"> | number
     stock_entries?: ProductStockListRelationFilter
+    store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
   }, "id">
 
   export type ProductOrderByWithAggregationInput = {
@@ -10194,6 +10276,7 @@ export namespace Prisma {
     stock?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    store_id?: SortOrder
     _count?: ProductCountOrderByAggregateInput
     _avg?: ProductAvgOrderByAggregateInput
     _max?: ProductMaxOrderByAggregateInput
@@ -10212,6 +10295,7 @@ export namespace Prisma {
     stock?: IntWithAggregatesFilter<"Product"> | number
     created_at?: DateTimeWithAggregatesFilter<"Product"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Product"> | Date | string
+    store_id?: IntWithAggregatesFilter<"Product"> | number
   }
 
   export type BranchWhereInput = {
@@ -10532,6 +10616,7 @@ export namespace Prisma {
     updated_at?: Date | string
     user: UserCreateNestedOneWithoutStoreInput
     branches?: BranchCreateNestedManyWithoutStoreInput
+    products?: ProductCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateInput = {
@@ -10546,6 +10631,7 @@ export namespace Prisma {
     updated_at?: Date | string
     user_id: number
     branches?: BranchUncheckedCreateNestedManyWithoutStoreInput
+    products?: ProductUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUpdateInput = {
@@ -10559,6 +10645,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutStoreNestedInput
     branches?: BranchUpdateManyWithoutStoreNestedInput
+    products?: ProductUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateInput = {
@@ -10573,6 +10660,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
     branches?: BranchUncheckedUpdateManyWithoutStoreNestedInput
+    products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreCreateManyInput = {
@@ -10672,6 +10760,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     stock_entries?: ProductStockCreateNestedManyWithoutProductInput
+    store: StoreCreateNestedOneWithoutProductsInput
   }
 
   export type ProductUncheckedCreateInput = {
@@ -10682,6 +10771,7 @@ export namespace Prisma {
     stock: number
     created_at?: Date | string
     updated_at?: Date | string
+    store_id: number
     stock_entries?: ProductStockUncheckedCreateNestedManyWithoutProductInput
   }
 
@@ -10693,6 +10783,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     stock_entries?: ProductStockUpdateManyWithoutProductNestedInput
+    store?: StoreUpdateOneRequiredWithoutProductsNestedInput
   }
 
   export type ProductUncheckedUpdateInput = {
@@ -10703,6 +10794,7 @@ export namespace Prisma {
     stock?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    store_id?: IntFieldUpdateOperationsInput | number
     stock_entries?: ProductStockUncheckedUpdateManyWithoutProductNestedInput
   }
 
@@ -10714,6 +10806,7 @@ export namespace Prisma {
     stock: number
     created_at?: Date | string
     updated_at?: Date | string
+    store_id: number
   }
 
   export type ProductUpdateManyMutationInput = {
@@ -10733,6 +10826,7 @@ export namespace Prisma {
     stock?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    store_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type BranchCreateInput = {
@@ -11137,7 +11231,17 @@ export namespace Prisma {
     none?: BranchWhereInput
   }
 
+  export type ProductListRelationFilter = {
+    every?: ProductWhereInput
+    some?: ProductWhereInput
+    none?: ProductWhereInput
+  }
+
   export type BranchOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProductOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -11258,6 +11362,11 @@ export namespace Prisma {
     none?: ProductStockWhereInput
   }
 
+  export type StoreScalarRelationFilter = {
+    is?: StoreWhereInput
+    isNot?: StoreWhereInput
+  }
+
   export type ProductStockOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -11270,12 +11379,14 @@ export namespace Prisma {
     stock?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    store_id?: SortOrder
   }
 
   export type ProductAvgOrderByAggregateInput = {
     id?: SortOrder
     price?: SortOrder
     stock?: SortOrder
+    store_id?: SortOrder
   }
 
   export type ProductMaxOrderByAggregateInput = {
@@ -11286,6 +11397,7 @@ export namespace Prisma {
     stock?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    store_id?: SortOrder
   }
 
   export type ProductMinOrderByAggregateInput = {
@@ -11296,12 +11408,14 @@ export namespace Prisma {
     stock?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    store_id?: SortOrder
   }
 
   export type ProductSumOrderByAggregateInput = {
     id?: SortOrder
     price?: SortOrder
     stock?: SortOrder
+    store_id?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -11318,11 +11432,6 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type StoreScalarRelationFilter = {
-    is?: StoreWhereInput
-    isNot?: StoreWhereInput
   }
 
   export type BranchCountOrderByAggregateInput = {
@@ -11599,11 +11708,25 @@ export namespace Prisma {
     connect?: BranchWhereUniqueInput | BranchWhereUniqueInput[]
   }
 
+  export type ProductCreateNestedManyWithoutStoreInput = {
+    create?: XOR<ProductCreateWithoutStoreInput, ProductUncheckedCreateWithoutStoreInput> | ProductCreateWithoutStoreInput[] | ProductUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: ProductCreateOrConnectWithoutStoreInput | ProductCreateOrConnectWithoutStoreInput[]
+    createMany?: ProductCreateManyStoreInputEnvelope
+    connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+  }
+
   export type BranchUncheckedCreateNestedManyWithoutStoreInput = {
     create?: XOR<BranchCreateWithoutStoreInput, BranchUncheckedCreateWithoutStoreInput> | BranchCreateWithoutStoreInput[] | BranchUncheckedCreateWithoutStoreInput[]
     connectOrCreate?: BranchCreateOrConnectWithoutStoreInput | BranchCreateOrConnectWithoutStoreInput[]
     createMany?: BranchCreateManyStoreInputEnvelope
     connect?: BranchWhereUniqueInput | BranchWhereUniqueInput[]
+  }
+
+  export type ProductUncheckedCreateNestedManyWithoutStoreInput = {
+    create?: XOR<ProductCreateWithoutStoreInput, ProductUncheckedCreateWithoutStoreInput> | ProductCreateWithoutStoreInput[] | ProductUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: ProductCreateOrConnectWithoutStoreInput | ProductCreateOrConnectWithoutStoreInput[]
+    createMany?: ProductCreateManyStoreInputEnvelope
+    connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
   }
 
   export type UserUpdateOneRequiredWithoutStoreNestedInput = {
@@ -11628,6 +11751,20 @@ export namespace Prisma {
     deleteMany?: BranchScalarWhereInput | BranchScalarWhereInput[]
   }
 
+  export type ProductUpdateManyWithoutStoreNestedInput = {
+    create?: XOR<ProductCreateWithoutStoreInput, ProductUncheckedCreateWithoutStoreInput> | ProductCreateWithoutStoreInput[] | ProductUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: ProductCreateOrConnectWithoutStoreInput | ProductCreateOrConnectWithoutStoreInput[]
+    upsert?: ProductUpsertWithWhereUniqueWithoutStoreInput | ProductUpsertWithWhereUniqueWithoutStoreInput[]
+    createMany?: ProductCreateManyStoreInputEnvelope
+    set?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+    disconnect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+    delete?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+    connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+    update?: ProductUpdateWithWhereUniqueWithoutStoreInput | ProductUpdateWithWhereUniqueWithoutStoreInput[]
+    updateMany?: ProductUpdateManyWithWhereWithoutStoreInput | ProductUpdateManyWithWhereWithoutStoreInput[]
+    deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
+  }
+
   export type BranchUncheckedUpdateManyWithoutStoreNestedInput = {
     create?: XOR<BranchCreateWithoutStoreInput, BranchUncheckedCreateWithoutStoreInput> | BranchCreateWithoutStoreInput[] | BranchUncheckedCreateWithoutStoreInput[]
     connectOrCreate?: BranchCreateOrConnectWithoutStoreInput | BranchCreateOrConnectWithoutStoreInput[]
@@ -11640,6 +11777,20 @@ export namespace Prisma {
     update?: BranchUpdateWithWhereUniqueWithoutStoreInput | BranchUpdateWithWhereUniqueWithoutStoreInput[]
     updateMany?: BranchUpdateManyWithWhereWithoutStoreInput | BranchUpdateManyWithWhereWithoutStoreInput[]
     deleteMany?: BranchScalarWhereInput | BranchScalarWhereInput[]
+  }
+
+  export type ProductUncheckedUpdateManyWithoutStoreNestedInput = {
+    create?: XOR<ProductCreateWithoutStoreInput, ProductUncheckedCreateWithoutStoreInput> | ProductCreateWithoutStoreInput[] | ProductUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: ProductCreateOrConnectWithoutStoreInput | ProductCreateOrConnectWithoutStoreInput[]
+    upsert?: ProductUpsertWithWhereUniqueWithoutStoreInput | ProductUpsertWithWhereUniqueWithoutStoreInput[]
+    createMany?: ProductCreateManyStoreInputEnvelope
+    set?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+    disconnect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+    delete?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+    connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+    update?: ProductUpdateWithWhereUniqueWithoutStoreInput | ProductUpdateWithWhereUniqueWithoutStoreInput[]
+    updateMany?: ProductUpdateManyWithWhereWithoutStoreInput | ProductUpdateManyWithWhereWithoutStoreInput[]
+    deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountInput = {
@@ -11665,6 +11816,12 @@ export namespace Prisma {
     connectOrCreate?: ProductStockCreateOrConnectWithoutProductInput | ProductStockCreateOrConnectWithoutProductInput[]
     createMany?: ProductStockCreateManyProductInputEnvelope
     connect?: ProductStockWhereUniqueInput | ProductStockWhereUniqueInput[]
+  }
+
+  export type StoreCreateNestedOneWithoutProductsInput = {
+    create?: XOR<StoreCreateWithoutProductsInput, StoreUncheckedCreateWithoutProductsInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutProductsInput
+    connect?: StoreWhereUniqueInput
   }
 
   export type ProductStockUncheckedCreateNestedManyWithoutProductInput = {
@@ -11694,6 +11851,14 @@ export namespace Prisma {
     update?: ProductStockUpdateWithWhereUniqueWithoutProductInput | ProductStockUpdateWithWhereUniqueWithoutProductInput[]
     updateMany?: ProductStockUpdateManyWithWhereWithoutProductInput | ProductStockUpdateManyWithWhereWithoutProductInput[]
     deleteMany?: ProductStockScalarWhereInput | ProductStockScalarWhereInput[]
+  }
+
+  export type StoreUpdateOneRequiredWithoutProductsNestedInput = {
+    create?: XOR<StoreCreateWithoutProductsInput, StoreUncheckedCreateWithoutProductsInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutProductsInput
+    upsert?: StoreUpsertWithoutProductsInput
+    connect?: StoreWhereUniqueInput
+    update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutProductsInput, StoreUpdateWithoutProductsInput>, StoreUncheckedUpdateWithoutProductsInput>
   }
 
   export type ProductStockUncheckedUpdateManyWithoutProductNestedInput = {
@@ -12017,6 +12182,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     branches?: BranchCreateNestedManyWithoutStoreInput
+    products?: ProductCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutUserInput = {
@@ -12030,6 +12196,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     branches?: BranchUncheckedCreateNestedManyWithoutStoreInput
+    products?: ProductUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutUserInput = {
@@ -12284,6 +12451,37 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ProductCreateWithoutStoreInput = {
+    name: string
+    description?: string | null
+    price: number
+    stock: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    stock_entries?: ProductStockCreateNestedManyWithoutProductInput
+  }
+
+  export type ProductUncheckedCreateWithoutStoreInput = {
+    id?: number
+    name: string
+    description?: string | null
+    price: number
+    stock: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    stock_entries?: ProductStockUncheckedCreateNestedManyWithoutProductInput
+  }
+
+  export type ProductCreateOrConnectWithoutStoreInput = {
+    where: ProductWhereUniqueInput
+    create: XOR<ProductCreateWithoutStoreInput, ProductUncheckedCreateWithoutStoreInput>
+  }
+
+  export type ProductCreateManyStoreInputEnvelope = {
+    data: ProductCreateManyStoreInput | ProductCreateManyStoreInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutStoreInput = {
     update: XOR<UserUpdateWithoutStoreInput, UserUncheckedUpdateWithoutStoreInput>
     create: XOR<UserCreateWithoutStoreInput, UserUncheckedCreateWithoutStoreInput>
@@ -12349,6 +12547,36 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Branch"> | Date | string
     updated_at?: DateTimeFilter<"Branch"> | Date | string
     store_id?: IntFilter<"Branch"> | number
+  }
+
+  export type ProductUpsertWithWhereUniqueWithoutStoreInput = {
+    where: ProductWhereUniqueInput
+    update: XOR<ProductUpdateWithoutStoreInput, ProductUncheckedUpdateWithoutStoreInput>
+    create: XOR<ProductCreateWithoutStoreInput, ProductUncheckedCreateWithoutStoreInput>
+  }
+
+  export type ProductUpdateWithWhereUniqueWithoutStoreInput = {
+    where: ProductWhereUniqueInput
+    data: XOR<ProductUpdateWithoutStoreInput, ProductUncheckedUpdateWithoutStoreInput>
+  }
+
+  export type ProductUpdateManyWithWhereWithoutStoreInput = {
+    where: ProductScalarWhereInput
+    data: XOR<ProductUpdateManyMutationInput, ProductUncheckedUpdateManyWithoutStoreInput>
+  }
+
+  export type ProductScalarWhereInput = {
+    AND?: ProductScalarWhereInput | ProductScalarWhereInput[]
+    OR?: ProductScalarWhereInput[]
+    NOT?: ProductScalarWhereInput | ProductScalarWhereInput[]
+    id?: IntFilter<"Product"> | number
+    name?: StringFilter<"Product"> | string
+    description?: StringNullableFilter<"Product"> | string | null
+    price?: FloatFilter<"Product"> | number
+    stock?: IntFilter<"Product"> | number
+    created_at?: DateTimeFilter<"Product"> | Date | string
+    updated_at?: DateTimeFilter<"Product"> | Date | string
+    store_id?: IntFilter<"Product"> | number
   }
 
   export type UserCreateWithoutAccountInput = {
@@ -12441,6 +12669,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StoreCreateWithoutProductsInput = {
+    name: string
+    description?: string | null
+    logo?: string | null
+    slogan?: string | null
+    slug: string
+    subdomain: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutStoreInput
+    branches?: BranchCreateNestedManyWithoutStoreInput
+  }
+
+  export type StoreUncheckedCreateWithoutProductsInput = {
+    id?: number
+    name: string
+    description?: string | null
+    logo?: string | null
+    slogan?: string | null
+    slug: string
+    subdomain: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    user_id: number
+    branches?: BranchUncheckedCreateNestedManyWithoutStoreInput
+  }
+
+  export type StoreCreateOrConnectWithoutProductsInput = {
+    where: StoreWhereUniqueInput
+    create: XOR<StoreCreateWithoutProductsInput, StoreUncheckedCreateWithoutProductsInput>
+  }
+
   export type ProductStockUpsertWithWhereUniqueWithoutProductInput = {
     where: ProductStockWhereUniqueInput
     update: XOR<ProductStockUpdateWithoutProductInput, ProductStockUncheckedUpdateWithoutProductInput>
@@ -12468,6 +12728,44 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"ProductStock"> | Date | string
   }
 
+  export type StoreUpsertWithoutProductsInput = {
+    update: XOR<StoreUpdateWithoutProductsInput, StoreUncheckedUpdateWithoutProductsInput>
+    create: XOR<StoreCreateWithoutProductsInput, StoreUncheckedCreateWithoutProductsInput>
+    where?: StoreWhereInput
+  }
+
+  export type StoreUpdateToOneWithWhereWithoutProductsInput = {
+    where?: StoreWhereInput
+    data: XOR<StoreUpdateWithoutProductsInput, StoreUncheckedUpdateWithoutProductsInput>
+  }
+
+  export type StoreUpdateWithoutProductsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutStoreNestedInput
+    branches?: BranchUpdateManyWithoutStoreNestedInput
+  }
+
+  export type StoreUncheckedUpdateWithoutProductsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user_id?: IntFieldUpdateOperationsInput | number
+    branches?: BranchUncheckedUpdateManyWithoutStoreNestedInput
+  }
+
   export type StoreCreateWithoutBranchesInput = {
     name: string
     description?: string | null
@@ -12478,6 +12776,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     user: UserCreateNestedOneWithoutStoreInput
+    products?: ProductCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutBranchesInput = {
@@ -12491,6 +12790,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     user_id: number
+    products?: ProductUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutBranchesInput = {
@@ -12543,6 +12843,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutStoreNestedInput
+    products?: ProductUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutBranchesInput = {
@@ -12556,6 +12857,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
+    products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type ProductStockUpsertWithWhereUniqueWithoutBranchInput = {
@@ -12581,6 +12883,7 @@ export namespace Prisma {
     stock: number
     created_at?: Date | string
     updated_at?: Date | string
+    store: StoreCreateNestedOneWithoutProductsInput
   }
 
   export type ProductUncheckedCreateWithoutStock_entriesInput = {
@@ -12591,6 +12894,7 @@ export namespace Prisma {
     stock: number
     created_at?: Date | string
     updated_at?: Date | string
+    store_id: number
   }
 
   export type ProductCreateOrConnectWithoutStock_entriesInput = {
@@ -12644,6 +12948,7 @@ export namespace Prisma {
     stock?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    store?: StoreUpdateOneRequiredWithoutProductsNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutStock_entriesInput = {
@@ -12654,6 +12959,7 @@ export namespace Prisma {
     stock?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    store_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type BranchUpsertWithoutStockInput = {
@@ -12762,6 +13068,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     branches?: BranchUpdateManyWithoutStoreNestedInput
+    products?: ProductUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutUserInput = {
@@ -12775,6 +13082,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     branches?: BranchUncheckedUpdateManyWithoutStoreNestedInput
+    products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateManyWithoutUserInput = {
@@ -12820,6 +13128,16 @@ export namespace Prisma {
     updated_at?: Date | string
   }
 
+  export type ProductCreateManyStoreInput = {
+    id?: number
+    name: string
+    description?: string | null
+    price: number
+    stock: number
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
   export type BranchUpdateWithoutStoreInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12850,6 +13168,37 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProductUpdateWithoutStoreInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    stock?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    stock_entries?: ProductStockUpdateManyWithoutProductNestedInput
+  }
+
+  export type ProductUncheckedUpdateWithoutStoreInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    stock?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    stock_entries?: ProductStockUncheckedUpdateManyWithoutProductNestedInput
+  }
+
+  export type ProductUncheckedUpdateManyWithoutStoreInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    stock?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }

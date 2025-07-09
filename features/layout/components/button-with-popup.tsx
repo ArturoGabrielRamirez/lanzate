@@ -16,7 +16,8 @@ function ButtonWithPopup<T>({
     messages,
     disabled = false,
     schema,
-    onComplete
+    onComplete,
+    variant = "default"
 }: ButtonWithPopupPropsType<T>) {
 
     const [open, setOpen] = useState(false)
@@ -31,7 +32,7 @@ function ButtonWithPopup<T>({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button disabled={disabled}>{text}</Button>
+                <Button disabled={disabled} variant={variant}>{text}</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

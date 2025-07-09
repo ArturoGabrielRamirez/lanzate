@@ -171,7 +171,8 @@ exports.Prisma.ProductScalarFieldEnum = {
   price: 'price',
   stock: 'stock',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  store_id: 'store_id'
 };
 
 exports.Prisma.BranchScalarFieldEnum = {

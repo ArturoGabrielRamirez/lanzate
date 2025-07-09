@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Store } from "@/prisma/generated/prisma"
+import { Calendar, StoreIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 type Props = {
@@ -13,13 +14,14 @@ function StoreCard({ store }: Props) {
     const router = useRouter()
 
     const handleClick = () => {
-        router.push(`/stores/${store.slug}`)
+        router.push(`/stores/${store.slug}/account`)
     }
 
     return (
         <Card className="hover:scale-105 transition-all cursor-pointer hover:bg-primary hover:text-primary-foreground" onClick={handleClick}>
             <CardHeader>
-                <CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                    <StoreIcon className="size-6" />
                     <h2 className="text-2xl font-bold">{store.name}</h2>
                 </CardTitle>
             </CardHeader>
@@ -27,8 +29,9 @@ function StoreCard({ store }: Props) {
                 <p className="text-sm text-muted-foreground">{store.description || "No description"}</p>
             </CardContent>
             <CardFooter className="justify-between">
-                <p className="text-sm text-muted-foreground">
-                    created at: {store.created_at.toLocaleDateString()}
+                <p className="text-sm text-muted-foreground flex items-center gap-2">
+                    <Calendar className="size-4" />
+                    {store.created_at.toLocaleDateString()}
                 </p>
                 <p className="text-sm text-muted-foreground">
                     0 products
