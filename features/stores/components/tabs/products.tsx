@@ -6,11 +6,9 @@ import { ProductCard } from "@/features/stores/components"
 
 import { Plus } from "lucide-react"
 
-type Props = {
-    slug: string
-}
+import { ProductsTabProps } from "@/features/stores/types"
 
-async function ProductsTab({ slug }: Props) {
+async function ProductsTab({ slug }: ProductsTabProps) {
 
     const { payload: store, error } = await getStoresFromSlug(slug)
 

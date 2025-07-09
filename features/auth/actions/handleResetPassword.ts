@@ -1,7 +1,7 @@
 'use server'
 
 import { formatErrorResponse } from '@/utils/lib'
-import { ResponseType } from '@/features/layout/types/response-type'
+import { ResponseType } from '@/features/layout/types'
 import { createClient } from '@/utils/supabase/server-props'
 
 export async function handleResetPassword(payload: any): Promise<ResponseType<any>> {

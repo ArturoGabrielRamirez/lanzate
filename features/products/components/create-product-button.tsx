@@ -6,11 +6,9 @@ import { schema } from "../schemas/product-schema"
 import { formatErrorResponse } from "@/utils/lib"
 import { Plus } from "lucide-react"
 
-type Props = {
-    storeId: number
-}
+import { CreateProductButtonProps } from "@/features/products/type"
 
-function CreateProductButton({ storeId }: Props) {
+function CreateProductButton({ storeId }: CreateProductButtonProps) {
 
     const handleCreateProduct = async (payload: any) => {
         try {

@@ -4,11 +4,9 @@ import { Button } from "@/components/ui/button"
 import { useFormStatus } from "react-dom"
 import { Loader } from "lucide-react"
 
+import { LoadingSubmitButtonProps } from "@/features/layout/types"
 
-type Props = {
-    text?: string
-}
-function LoadingSubmitButton({ text = "Submit" }: Props) {
+function LoadingSubmitButton({ text = "Submit" }: LoadingSubmitButtonProps) {
 
     const { pending } = useFormStatus()
 

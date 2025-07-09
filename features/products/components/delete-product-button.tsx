@@ -5,13 +5,9 @@ import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
 import { Trash2 } from "lucide-react"
 
-type Props = {
-    productId: number
-    slug: string
-    onComplete?: () => void
-}
+import { DeleteProductButtonProps } from "@/features/products/type"
 
-function DeleteProductButton({ productId, slug, onComplete }: Props) {
+function DeleteProductButton({ productId, slug, onComplete }: DeleteProductButtonProps) {
     const handleDeleteProduct = async () => {
         try {
             const { error, message, payload } = await deleteProduct(productId, slug)

@@ -1,10 +1,12 @@
 "use client"
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { ButtonWithPopupPropsType } from "../types/button-with-popup-type"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useState } from "react"
+
+import { ButtonWithPopupPropsType } from "@/features/layout/types"
+
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Form } from "@/features/layout/components"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
 
 function ButtonWithPopup<T>({
     text,

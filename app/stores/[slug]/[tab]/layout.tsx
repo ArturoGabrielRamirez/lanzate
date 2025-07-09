@@ -1,12 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { TabsContent } from "@/components/ui/tabs"
 
-type Props = {
-    children: React.ReactNode
-    params: Promise<{ tab: string }>
-}
+import { TabLayoutProps } from "@/features/stores/types"
 
-async function TabLayou({ children, params }: Props) {
+async function TabLayout({ children, params }: TabLayoutProps) {
 
     const { tab } = await params
 
@@ -33,4 +30,4 @@ async function TabLayou({ children, params }: Props) {
         </TabsContent>
     )
 }
-export default TabLayou
+export default TabLayout

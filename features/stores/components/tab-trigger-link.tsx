@@ -3,13 +3,9 @@
 import { TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 
-type Props = {
-    value: string
-    text: string
-    slug: string
-}
+import { TabTriggerLinkProps } from "@/features/stores/types"
 
-function TabTriggerLink({ value, text, slug }: Props) {
+function TabTriggerLink({ value, text, slug }: TabTriggerLinkProps) {
 
     return (
         <TabsTrigger value={value} className="w-full h-fit cursor-pointer py-3" asChild>

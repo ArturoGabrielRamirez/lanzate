@@ -1,5 +1,4 @@
-type Props = {}
-function OrdersTab({ }: Props) {
+function OrdersTab() {
     return (
         <div>Site not available yet</div>
     )

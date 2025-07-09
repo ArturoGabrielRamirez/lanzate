@@ -3,7 +3,7 @@
 import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
 import { createClient } from '@/utils/supabase/server-props'
 import { insertUser } from '../data/insertUser'
-import { ResponseType } from '@/features/layout/types/response-type'
+import { ResponseType } from '@/features/layout/types'
 import { formatErrorResponse } from '@/utils/lib'
 
 export const handleSignup = async (payload: any): Promise<ResponseType<any>> => {

@@ -3,10 +3,9 @@
 import { Tabs } from "@/components/ui/tabs"
 import { usePathname } from "next/navigation"
 
-type Props = {
-    children: React.ReactNode
-}
-function TabsClientContainer({ children }: Props) {
+import { TabClientContainerProps } from "@/features/stores/types"
+
+function TabsClientContainer({ children }: TabClientContainerProps) {
 
     const pathname = usePathname()
     const tab = pathname.split("/").pop()

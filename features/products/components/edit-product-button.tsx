@@ -2,17 +2,12 @@
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { editSchema } from "../schemas/product-schema"
 import { editProduct } from "../actions/editProduct"
-import { Product } from "@/prisma/generated/prisma"
 import { formatErrorResponse } from "@/utils/lib"
 import { Pencil } from "lucide-react"
 
-type Props = {
-    product: Product
-    slug: string
-    onComplete?: () => void
-}
+import { EditProductButtonProps } from "@/features/products/type"
 
-function EditProductButton({ product, slug, onComplete }: Props) {
+function EditProductButton({ product, slug, onComplete }: EditProductButtonProps) {
     const handleEditProduct = async (payload: any) => {
         if (!payload.name) return formatErrorResponse("Name is required", null, null)
         if (payload.price == null) return formatErrorResponse("Price is required", null, null)

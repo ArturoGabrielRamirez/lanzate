@@ -8,12 +8,9 @@ import { generate } from "random-words"
 import { Plus } from "lucide-react"
 import { useState } from "react"
 
-type Props = {
-    userId: number
-    canCreate?: boolean
-}
+import { CreateStoreButtonProps } from "@/features/stores/types"
 
-function CreateStoreButton({ userId, canCreate = true }: Props) {
+function CreateStoreButton({ userId, canCreate = true }: CreateStoreButtonProps) {
 
     const [subdomain, setSubdomain] = useState(generate({ exactly: 1, minLength: 7, join: "" }))
 

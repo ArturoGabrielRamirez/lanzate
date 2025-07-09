@@ -5,13 +5,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Title } from "@/features/layout/components"
 import { TabsList } from "@/components/ui/tabs"
 
-type Props = {
-    children: React.ReactNode
-    params: Promise<{ slug: string }>
-}
+import { StoreDetailsLayoutProps } from "@/features/stores/types"
 
 
-async function StoreDetailsLayout({ children, params }: Props) {
+async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps) {
 
     const { slug } = await params
 

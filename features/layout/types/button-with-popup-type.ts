@@ -1,5 +1,5 @@
 import * as Yup from "yup"
-import { ResponseType } from "./response-type"
+import { ResponseType } from "./"
 
 export type ButtonWithPopupPropsType<T> = {
     text: string | React.ReactNode

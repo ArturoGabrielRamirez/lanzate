@@ -1,16 +1,12 @@
 "use client"
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Product } from "@/prisma/generated/prisma"
 import { Box } from "lucide-react"
 import { useRouter } from "next/navigation"
 
-type Props = {
-    product: Product
-    slug: string
-}
+import { ProductCardProps } from "@/features/products/type"
 
-function ProductCard({ product, slug }: Props) {
+function ProductCard({ product, slug }: ProductCardProps) {
 
 
     const router = useRouter()

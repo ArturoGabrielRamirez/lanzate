@@ -5,7 +5,6 @@ import { Loader } from "lucide-react"
 import { useFormContext } from "react-hook-form"
 import { LoadingSubmitButtonType } from "../types/loading-submit-button-type"
 
-
 function LoadingSubmitButtonContext({ text = "Submit" }: LoadingSubmitButtonType) {
 
     const { formState: { isSubmitting } } = useFormContext()

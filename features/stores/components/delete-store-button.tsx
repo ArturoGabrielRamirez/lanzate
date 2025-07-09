@@ -5,10 +5,9 @@ import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
 import { Trash2 } from "lucide-react"
 
-type Props = {
-    storeId: number
-}
-function DeleteStoreButton({ storeId }: Props) {
+import { DeleteStoreButtonProps } from "@/features/stores/types"
+
+function DeleteStoreButton({ storeId }: DeleteStoreButtonProps) {
 
     const handleDeleteStore = async () => {
         try {

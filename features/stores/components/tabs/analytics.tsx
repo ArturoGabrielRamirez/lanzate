@@ -1,5 +1,4 @@
-type Props = {}
-function AnalyticsTab({ }: Props) {
+function AnalyticsTab() {
     return (
         <div>Site not available yet</div>
     )

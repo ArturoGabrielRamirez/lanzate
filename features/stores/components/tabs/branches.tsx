@@ -1,11 +1,9 @@
 import { House } from "lucide-react"
 import { getStoresFromSlug } from "../../actions/getStoresFromSlug"
 
-type Props = {
-    slug: string
-}
+import { BranchesTabProps } from "@/features/stores/types"
 
-async function BranchesTab({ slug }: Props) {
+async function BranchesTab({ slug }: BranchesTabProps) {
 
     const { payload: store, error } = await getStoresFromSlug(slug)
 
