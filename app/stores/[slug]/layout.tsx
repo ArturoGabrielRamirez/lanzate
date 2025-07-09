@@ -1,29 +1,20 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import CreateProductButton from "@/features/products/components/create-product-button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Tabs, TabsList } from "@/components/ui/tabs"
 import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
 import Title from "@/features/layout/components/title"
-import { Box, House, Plus } from "lucide-react"
-import DeleteStoreButton from "@/features/stores/components/delete-store-button"
-import EditStoreButton from "@/features/stores/components/edit-store-button"
 import TabTriggerLink from "@/features/stores/components/tab-trigger-link"
-import { loadTabParams } from "@/features/stores/utils/load-tabs-params"
-import type { SearchParams } from 'nuqs/server'
-import ProductListDetail from "@/features/stores/components/product-list-detail"
-import ProductDetail from "@/features/stores/components/product-detail"
+import TabsClientContainer from "@/features/stores/components/tabs-client-container"
 
 
 type Props = {
     children: React.ReactNode
     params: Promise<{ slug: string }>
-    searchParams: Promise<SearchParams>
 }
 
 
-async function StoreDetailsLayout({ children, params, searchParams }: Props) {
+async function StoreDetailsLayout({ children, params }: Props) {
 
     const { slug } = await params
-    const { tab } = await loadTabParams(searchParams)
 
     const { payload: store, error } = await getStoresFromSlug(slug)
 
@@ -52,10 +43,9 @@ async function StoreDetailsLayout({ children, params, searchParams }: Props) {
                         </div>
                     </CardContent>
                 </Card>
-
             </section>
             <section className="py-4 grow flex">
-                <Tabs defaultValue={tab} className="grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4">
+                <TabsClientContainer>
                     <TabsList className="w-full h-full items-start">
                         <div className="flex md:block w-full">
                             <TabTriggerLink value="account" text="Store Details" slug={slug} />
@@ -68,22 +58,7 @@ async function StoreDetailsLayout({ children, params, searchParams }: Props) {
                         </div>
                     </TabsList>
                     {children}
-                    {/* 
-                    <TabsContent value="products">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Products</CardTitle>
-                            </CardHeader>
-                            <CardContent className="flex flex-col gap-4 items-start">
-                                <ProductListDetail
-                                    products={store.products}
-                                    storeId={store.id}
-                                />
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
-                     */}
-                </Tabs>
+                </TabsClientContainer>
             </section>
         </div>
     )
