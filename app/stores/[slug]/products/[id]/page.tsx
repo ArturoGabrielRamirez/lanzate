@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import ButtonWithPopup from "@/features/layout/components/button-with-popup"
 import { getProductDetails } from "@/features/stores/actions/getProductDetails"
+import { Trash2 } from "lucide-react"
 
 type Props = {
     params: Promise<{ slug: string, id: string }>
@@ -29,6 +31,21 @@ async function ProductDetailPage({ params }: Props) {
                         <h3 className="text-4xl font-bold">{product.name}</h3>
                         <p className="text-muted-foreground text-lg">${product.price}</p>
                         <p>{product.description || "No description available"}</p>
+                        <ButtonWithPopup
+                            text={(
+                                <>
+                                    <Trash2 />
+                                    Delete Product
+                                </>
+                            )}
+                            title="Delete Product"
+                            description="Are you sure you want to delete this product?"
+                            messages={{
+                                success: "Product deleted successfully",
+                                error: "Failed to delete product",
+                                loading: "Deleting product..."
+                            }}
+                        />
                     </div>
                 </div>
             </CardContent>
