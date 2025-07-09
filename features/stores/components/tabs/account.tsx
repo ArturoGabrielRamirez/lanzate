@@ -6,7 +6,7 @@ type Props = {
     slug: string
 }
 async function AccountTab({ slug }: Props) {
-    
+
     const { payload: store, error } = await getStoresFromSlug(slug)
 
     if (error || !store) {

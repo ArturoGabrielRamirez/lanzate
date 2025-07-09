@@ -1,9 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import ButtonWithPopup from "@/features/layout/components/button-with-popup"
-import { getProductDetails } from "@/features/stores/actions/getProductDetails"
-import { ArrowBigDown, ArrowLeft, Home, Trash2 } from "lucide-react"
 import DeleteProductButton from "@/features/products/components/delete-product-button"
 import EditProductButton from "@/features/products/components/edit-product-button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { getProductDetails } from "@/features/stores/actions/getProductDetails"
+import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 
 type Props = {
