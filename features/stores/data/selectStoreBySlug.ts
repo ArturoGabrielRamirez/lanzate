@@ -1,11 +1,11 @@
 "use server"
 
-import { PrismaClient, Store, Branch, Product } from "@/prisma/generated/prisma"
+import { PrismaClient, Store, Branch } from "@/prisma/generated/prisma"
 import { formatErrorResponse } from "@/utils/lib"
 
 type SelectStoreBySlugReturn = {
     message: string
-    payload: Store & { branches: Branch[], products: Product[] } | null
+    payload: Store & { branches: Branch[] } | null
     error: boolean
 }
 
@@ -23,6 +23,20 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
                 products: true
             }
         })
+
+        const aggregate = await client.productStock.groupBy({
+            by: ["branch_id"],
+            _sum: {
+                quantity: true
+            },
+            where: {
+                product_id: {
+                    in: store?.products.map((product) => product.id)
+                }
+            },
+        })
+
+        console.log(aggregate)
 
         return {
             message: "Store fetched successfully from db",

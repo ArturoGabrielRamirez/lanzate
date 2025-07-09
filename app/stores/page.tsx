@@ -5,6 +5,7 @@ import { canCreateStore } from "@/features/stores/access/canCreateStore"
 import { getStoresFromUser } from "@/features/stores/actions/getStoresFromUser"
 import CreateStoreButton from "@/features/stores/components/create-store-button"
 import StoreCard from "@/features/stores/components/store-card"
+import { Plus } from "lucide-react"
 
 type Props = {}
 
@@ -31,7 +32,10 @@ async function StoresPage({ }: Props) {
                 <section className="grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4">
                     <Card className="border-dashed">
                         <CardHeader>
-                            <CardTitle>New Store</CardTitle>
+                            <CardTitle className="flex items-center gap-2">
+                                <Plus />
+                                <h2 className="text-2xl font-bold">New store</h2>
+                            </CardTitle>
                         </CardHeader>
                         <CardContent className="flex justify-center items-center grow">
                             <CreateStoreButton userId={user.id} canCreate={canCreate} />

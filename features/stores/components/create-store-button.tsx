@@ -4,6 +4,7 @@ import ButtonWithPopup from "@/features/layout/components/button-with-popup"
 import { formatErrorResponse } from "@/utils/lib"
 import { schema } from "../schemas/store-schema"
 import InputField from "@/features/layout/components/input"
+import { Plus } from "lucide-react"
 
 type Props = {
     userId: number
@@ -20,7 +21,12 @@ function CreateStoreButton({ userId, canCreate = true }: Props) {
 
     return (
         <ButtonWithPopup
-            text="New store"
+            text={(
+                <>
+                    <Plus />
+                    New store
+                </>
+            )}
             title="Create new store"
             disabled={!canCreate}
             schema={schema}

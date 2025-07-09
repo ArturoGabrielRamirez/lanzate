@@ -5,7 +5,7 @@ import { formatErrorResponse } from "@/utils/lib"
 import { editSchema } from "../schemas/store-schema"
 import InputField from "@/features/layout/components/input"
 import { Store } from "@/prisma/generated/prisma"
-
+import { Pencil } from "lucide-react"
 type Props = {
     userId: number
     slug: string
@@ -22,7 +22,12 @@ function EditStoreButton({ userId, slug, store }: Props) {
 
     return (
         <ButtonWithPopup
-            text="Edit store"
+            text={(
+                <>
+                    <Pencil />
+                    Edit store
+                </>
+            )}
             title="Edit store"
             schema={editSchema}
             description="Edit the details of your store"

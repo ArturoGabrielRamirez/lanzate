@@ -15,4 +15,5 @@ export type ButtonWithPopupPropsType<T> = {
     }
     schema?: Yup.ObjectSchema<any>
     onComplete?: () => void
+    variant?: "default" | "destructive"
 }
