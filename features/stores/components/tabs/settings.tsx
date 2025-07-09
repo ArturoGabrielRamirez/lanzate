@@ -1,7 +1,7 @@
 type Props = {}
 function SettingsTab({ }: Props) {
     return (
-        <div>SettingsTab</div>
+        <div>Site not available yet</div>
     )
 }
 export default SettingsTab

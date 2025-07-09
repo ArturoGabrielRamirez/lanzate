@@ -1,3 +1,6 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { getProductDetails } from "@/features/stores/actions/getProductDetails"
+
 type Props = {
     params: Promise<{ slug: string, id: string }>
 }
@@ -5,9 +8,31 @@ type Props = {
 async function ProductDetailPage({ params }: Props) {
 
     const { slug, id } = await params
+    const { payload: product, error } = await getProductDetails(id)
+    console.log("🚀 ~ ProductDetailPage ~ product:", product)
+
+    if (error || !product) {
+        return console.log(error)
+    }
 
     return (
-        <div>ProductDetailPage</div>
+        <Card>
+            <CardHeader>
+                <CardTitle>
+                    Product Details
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-[max-content_1fr] gap-4">
+                    <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="lg:max-w-xs md:max-h-full w-full" />
+                    <div>
+                        <h3 className="text-4xl font-bold">{product.name}</h3>
+                        <p className="text-muted-foreground text-lg">${product.price}</p>
+                        <p>{product.description || "No description available"}</p>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
     )
 }
 export default ProductDetailPage

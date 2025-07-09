@@ -1,7 +1,7 @@
 type Props = {}
 function OrdersTab({ }: Props) {
     return (
-        <div>OrdersTab</div>
+        <div>Site not available yet</div>
     )
 }
 export default OrdersTab

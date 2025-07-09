@@ -1,7 +1,7 @@
 type Props = {}
 function AnalyticsTab({ }: Props) {
     return (
-        <div>AnalyticsTab</div>
+        <div>Site not available yet</div>
     )
 }
 export default AnalyticsTab
