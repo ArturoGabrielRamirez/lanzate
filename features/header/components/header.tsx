@@ -1,5 +1,5 @@
 import { NotificationsIcon } from "@/features/header/components"
-import { createClient } from "@/utils/supabase/server-props"
+import { createServerSideClient } from "@/utils/supabase/server"
 import Link from "next/link"
 import ThemeToggle from "./theme-toggle"
 import AccountDropdown from "./account-dropdown"
@@ -9,7 +9,7 @@ type Props = {}
 
 async function Header({ }: Props) {
 
-    const supabase = await createClient()
+    const supabase = await createServerSideClient()
     const { data: { user } } = await supabase.auth.getUser()
 
     return (

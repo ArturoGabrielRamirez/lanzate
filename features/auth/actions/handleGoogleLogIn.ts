@@ -1,12 +1,12 @@
 'use server'
 
-import { createClient } from '@/utils/supabase/server-props'
+import { createServerSideClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 const getURL = () => {
     let url =
-        process?.env?.AUTH_URL ??
+        process?.env?.NEXTAUTH_URL ??
         process?.env?.NEXT_PUBLIC_VERCEL_URL ??
         'http://localhost:3000/'
 
@@ -17,7 +17,7 @@ const getURL = () => {
 }
 
 export async function handleGoogleLogIn() {
-    const supabase = await createClient()
+    const supabase = await createServerSideClient()
     const redirectUrl = `${getURL()}auth/callback`;
 
     const { data, error } = await supabase.auth.signInWithOAuth({

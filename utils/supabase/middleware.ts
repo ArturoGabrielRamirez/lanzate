@@ -1,56 +1,65 @@
-import { createServerClient } from '@supabase/ssr'
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server';
+import { extractSubdomain } from '@/features/subdomain/middleware/middleware';
+import { validateSubdomain } from '@/features/subdomain/actions/validateSubdomain';
+import { createMiddlewareSupabaseClient } from './middleware-client';
+
+
 export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request,
-  })
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
-          supabaseResponse = NextResponse.next({
-            request,
-          })
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          )
-        },
-      },
+  const response = NextResponse.next();
+
+  const supabase = createMiddlewareSupabaseClient(request, response);
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost';
+  const subdomain = extractSubdomain(request);
+  const { pathname } = request.nextUrl;
+
+  if (subdomain) {
+    if (pathname.startsWith('/s/')) return response;
+
+    const { payload: exists } = await validateSubdomain(subdomain);
+
+    if (!exists) {
+      const url = new URL(request.url);
+      url.hostname = rootDomain;
+      url.pathname = '/404';
+      return NextResponse.redirect(url);
     }
-  )
 
-  const { data: { user } } = await supabase.auth.getUser()
+    if (pathname.startsWith('/admin')) {
+      return NextResponse.rewrite(new URL('/404', request.url));
+    }
 
+    if (pathname.startsWith('/dashboard') && !user) {
+      const url = new URL(request.url);
+      url.hostname = rootDomain;
+      url.pathname = '/login';
+      url.searchParams.set('redirect', request.url);
+      return NextResponse.redirect(url);
+    }
 
-  if (
-    !user &&
-    (
-      request.nextUrl.pathname == "/account" ||
-      request.nextUrl.pathname.includes("/stores")
-    )
-  ) {
+    if (pathname === '/') {
+      return NextResponse.rewrite(new URL(`/s/${subdomain}`, request.url));
+    }
 
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.redirect(url)
+    return response;
   }
 
-  if (
-    user &&
-    (request.nextUrl.pathname.includes('login') || request.nextUrl.pathname.includes('signup'))
-  ) {
-    // user is logged in, potentially respond by redirecting the user to the home page
-    const url = request.nextUrl.clone()
-    url.pathname = '/account'
-    return NextResponse.redirect(url)
+  // Dominio raíz
+  if (!user && (pathname === '/account' || pathname.includes('/dashboard'))) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/login';
+    return NextResponse.redirect(url);
   }
 
-  return supabaseResponse
+  if (user && (pathname.includes('/login') || pathname.includes('/signup'))) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/account';
+    return NextResponse.redirect(url);
+  }
+
+  return response;
 }

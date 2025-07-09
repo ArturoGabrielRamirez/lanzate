@@ -1,7 +1,7 @@
 import { type EmailOtpType } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/utils/supabase/server-props'
+import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     redirectTo.pathname = next
 
     if (token_hash && type) {
-        const supabase = await createClient()
+        const supabase = await createServerSideClient()
 
         const { error } = await supabase.auth.verifyOtp({
             type,

@@ -1,6 +1,6 @@
 import { insertUser } from '@/features/auth/data/insertUser'
 import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
-import { createClient } from '@/utils/supabase/server-props'
+import { createServerSideClient } from '@/utils/supabase/server'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${url.origin}/auth/auth-code-error`)
   }
 
-  const supabase = await createClient()
+  const supabase = await createServerSideClient()
 
   const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
   if (exchangeError) {

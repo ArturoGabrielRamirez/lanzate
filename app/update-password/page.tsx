@@ -1,11 +1,11 @@
 import { redirect } from 'next/navigation'
-import { createClient } from '@/utils/supabase/server-props'
+import { createServerSideClient } from '@/utils/supabase/server'
 import UpdatePasswordForm from '@/features/auth/components/update-password-form'
 import Title from '@/features/layout/components/title'
 
 
 export default async function UpdatePasswordPage() {
-    const supabase = await createClient()
+    const supabase = await createServerSideClient()
     const { data: { session } } = await supabase.auth.getSession()
 
     if (!session?.user) {

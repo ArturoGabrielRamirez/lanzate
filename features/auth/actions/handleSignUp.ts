@@ -1,7 +1,7 @@
 'use server'
 
 import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
-import { createClient } from '@/utils/supabase/server-props'
+import { createServerSideClient } from '@/utils/supabase/server'
 import { insertUser } from '../data/insertUser'
 import { ResponseType } from '@/features/layout/types/response-type'
 import { formatErrorResponse } from '@/utils/lib'
@@ -9,7 +9,7 @@ import { formatErrorResponse } from '@/utils/lib'
 export const handleSignup = async (payload: any): Promise<ResponseType<any>> => {
     try {
 
-        const supabase = await createClient()
+        const supabase = await createServerSideClient()
 
         const email = payload.email?.toString() || ''
         const password = payload.password?.toString() || ''
