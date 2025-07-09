@@ -28,13 +28,13 @@ export async function insertProduct(payload: any, storeId: number) {
         const product = await prisma.product.create({
             data: {
                 name: payload.name,
-                price: 10,
-                stock: 10,
+                price: payload.price,
+                stock: payload.stock,
                 store_id: store.id,
                 stock_entries: {
                     create: {
                         branch_id: mainBranch.id,
-                        quantity: 10,
+                        quantity: payload.stock,
                     }
                 }
             }

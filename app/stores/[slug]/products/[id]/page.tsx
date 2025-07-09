@@ -13,8 +13,6 @@ async function ProductDetailPage({ params }: Props) {
 
     const { slug, id } = await params
     const { payload: product, error } = await getProductDetails(id)
-    console.log("🚀 ~ ProductDetailPage ~ product:", product)
-
     if (error || !product) {
         return console.log(error)
     }
@@ -26,15 +24,19 @@ async function ProductDetailPage({ params }: Props) {
                     Product Details
                 </CardTitle>
             </CardHeader>
-            <CardContent>
-                <div className="grid grid-cols-1 lg:grid-cols-[max-content_1fr] gap-4">
-                    <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="lg:max-w-xs md:max-h-full w-full" />
-                    <div>
+            <CardContent className="grow flex">
+                <div className="grid grid-cols-1 lg:grid-cols-[max-content_1fr] grid-rows-[auto_1fr] lg:grid-rows-1 gap-4 w-full">
+                    <div className="w-full h-35 lg:h-full lg:w-60 xl:w-80">
+                        <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="object-cover h-full w-full bg-center" />
+                    </div>
+                    <div className="flex flex-col gap-4">
                         <h3 className="text-4xl font-bold">{product.name}</h3>
                         <p className="text-muted-foreground text-lg">${product.price}</p>
                         <p>{product.description || "No description available"}</p>
-                        <DeleteProductButton productId={product.id} slug={slug} />
-                        <EditProductButton product={product} slug={slug} />
+                        <div className="flex gap-4 mt-auto justify-end">
+                            <DeleteProductButton productId={product.id} slug={slug} />
+                            <EditProductButton product={product} slug={slug} />
+                        </div>
                     </div>
                 </div>
             </CardContent>
