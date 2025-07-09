@@ -17,7 +17,7 @@ const getURL = () => {
 }
 
 export async function handleGoogleLogIn() {
-    const supabase = await createServerSideClient()
+    const supabase = createServerSideClient()
     const redirectUrl = `${getURL()}auth/callback`;
 
     const { data, error } = await supabase.auth.signInWithOAuth({
