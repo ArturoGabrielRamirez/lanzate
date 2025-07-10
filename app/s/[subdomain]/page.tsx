@@ -3,9 +3,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Title } from "@/features/layout/components";
+import CategorySelect from "@/features/store-landing/components/category-select-";
 import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
 import { Search, ShoppingCart } from "lucide-react";
-
 
 type Props = {
     params: Promise<{ subdomain: string }>
@@ -56,6 +56,16 @@ export default async function StorePage({ params }: Props) {
                                         <SelectItem value="created-desc">Newest</SelectItem>
                                     </SelectContent>
                                 </Select>
+                            </div>
+                        </CardContent>
+                    </Card>
+                    <Card className="w-full">
+                        <CardHeader>
+                            <CardTitle>Category</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="flex gap-2">
+                                <CategorySelect />
                             </div>
                         </CardContent>
                     </Card>
