@@ -19,7 +19,7 @@ export default async function StorePage({ params }: Props) {
     return (
         <section className="grid grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-4 p-4">
             {storeData.products.map((product) => (
-                <Card key={product.id} className="aspect-9/12 bg-accent ">
+                <Card key={product.id} className="aspect-9/12 bg-accent hover:scale-105 transition-all cursor-pointer">
                     <CardHeader>
                         <CardTitle>{product.name}</CardTitle>
                         <CardDescription className="line-clamp-2">{product.description || "No description available for this product"}</CardDescription>
