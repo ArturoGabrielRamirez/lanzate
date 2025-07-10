@@ -1,8 +1,13 @@
 import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
 
 
-export default async function StorePage({ params }: { params: { subdomain: string } }) {
-    const { payload: storeData, error } = await getStoreWithProducts(params.subdomain);
+type Props = {
+    params: Promise<{ subdomain: string }>
+}
+
+export default async function StorePage({ params }: Props) {
+    const { subdomain } = await params
+    const { payload: storeData, error } = await getStoreWithProducts(subdomain);
 
     if (error || !storeData) {
         return <div>Tienda no encontrada</div>;
