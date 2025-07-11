@@ -10,6 +10,7 @@ type Props = {
 function SubdomainProvider({ adminLayout, userLayout }: Props) {
 
     const [hasSubdomain, setHasSubdomain] = useState(false)
+    console.log("🚀 ~ SubdomainProvider ~ hasSubdomain:", hasSubdomain)
 
     useEffect(() => {
         const subdomain = getSubdomainRegex(window.location.href)
@@ -17,8 +18,17 @@ function SubdomainProvider({ adminLayout, userLayout }: Props) {
     }, [])
 
     function getSubdomainRegex(url: string) {
-        const match = url.match(/^(?:https?:\/\/)?(?:www\.)?([^\.]+)\./);
-        return match ? match[1] : null;
+        try {
+            const { hostname } = new URL(url);
+            const parts = hostname.split('.');
+            // Si hay al menos 3 partes, hay subdominio (ej: sub.localhost.com)
+            if (parts.length >= 3) {
+                return parts[0];
+            }
+            return null;
+        } catch {
+            return null;
+        }
     }
 
     return (
