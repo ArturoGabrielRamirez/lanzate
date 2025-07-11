@@ -19,10 +19,10 @@ async function Header({ title }: Props) {
                 <Rocket className="text-primary" />
                 <h1>{title}</h1>
             </Link>
-            <div>
+            <div className="flex items-center gap-2">
                 {!user && <Link href='/login' className='p-2 hover:underline hover:!text-primary'>Log In</Link>}
                 {!user && <Link href='/signup' className='p-2 hover:underline hover:text-primary'>Sign Up</Link>}
-                <Button variant="outline" asChild>
+                <Button variant="outline" asChild size="icon">
                     <Link href="/cart">
                         <ShoppingCart />
                     </Link>

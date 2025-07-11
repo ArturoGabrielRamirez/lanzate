@@ -24,7 +24,7 @@ async function AccountTab({ slug }: AccountTabProps) {
                 </div>
                 <div className="flex flex-col">
                     <p className="font-light text-sm">Website</p>
-                    <a href={`http://${store.subdomain}.localhost.com:3000`} className="font-medium text-blue-500 hover:underline">
+                    <a href={`http://${store.subdomain}.localhost.com:3000`} className="font-medium text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">
                         {`https://${store.subdomain}.lanzate.com`}
                     </a>
                 </div>

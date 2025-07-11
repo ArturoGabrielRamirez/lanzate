@@ -40,11 +40,7 @@ export default async function RootLayout({ children }: LayoutProps) {
                   <Toaster />
                 </>
               )}
-              userLayout={(
-                <>
-                  {children}
-                </>
-              )}
+              userLayout={children}
             />
           </NuqsAdapter>
         </NextThemeProvider>
