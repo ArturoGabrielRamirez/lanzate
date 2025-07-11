@@ -8,7 +8,7 @@ const getURL = () => {
     let url =
         process?.env?.NEXTAUTH_URL ??
         process?.env?.NEXT_PUBLIC_VERCEL_URL ??
-        'http://localhost:3000/'
+        'http://localhost.com:3000/'
 
     url = url.startsWith('http') ? url : `https://${url}`
 

@@ -41,7 +41,8 @@ export function createClient() {
             let cookieString = `${name}=${value}`;
             
             if (cookieOptions.domain) {
-              cookieString += `; Domain=${cookieOptions.domain}`;
+              //cookieString += `; Domain=${cookieOptions.domain}`;
+              cookieString += `; Domain=localhost.com`;
             }
             
             if (cookieOptions.path) {
@@ -53,7 +54,8 @@ export function createClient() {
             }
             
             if (cookieOptions.sameSite) {
-              cookieString += `; SameSite=${cookieOptions.sameSite}`;
+              //cookieString += `; SameSite=${cookieOptions.sameSite}`;
+              cookieString += `; SameSite=Lax`;
             }
             
             if (cookieOptions.maxAge) {

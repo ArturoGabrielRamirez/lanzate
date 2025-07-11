@@ -4,8 +4,8 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Toaster } from "@/components/ui/sonner"
 import type { Metadata } from "next";
 import { LayoutProps } from "@/features/layout/types";
+import SubdomainProvider from "@/features/layout/components/subdomain-provider";
 import "./globals.css";
-
 
 export const metadata: Metadata = {
   title: 'Lanzate',
@@ -30,11 +30,18 @@ export default async function RootLayout({ children }: LayoutProps) {
           disableTransitionOnChange
         >
           <NuqsAdapter>
-            <Header />
-            <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow'>
-              {children}
-            </main>
-            <Toaster />
+            <SubdomainProvider
+              adminLayout={(
+                <>
+                  <Header />
+                  <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow'>
+                    {children}
+                  </main>
+                  <Toaster />
+                </>
+              )}
+              userLayout={children}
+            />
           </NuqsAdapter>
         </NextThemeProvider>
       </body>
