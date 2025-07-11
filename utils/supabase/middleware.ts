@@ -55,6 +55,11 @@ export async function updateSession(request: NextRequest) {
       return NextResponse.rewrite(new URL(`/s/${subdomain}/cart`, request.url));
     }
 
+    if (pathname.startsWith('/item/')) {
+      return NextResponse.rewrite(new URL(`/s/${subdomain}/item/${pathname.split('/item/')[1]}`, request.url));
+    }
+
+
 
     return response;
   }

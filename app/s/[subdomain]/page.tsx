@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Title } from "@/features/layout/components";
 import CategorySelect from "@/features/store-landing/components/category-select-";
+import ProductCard from "@/features/store-landing/components/product-card";
 import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight, Grid, Grid2X2, List, Search, ShoppingCart } from "lucide-react";
@@ -112,21 +113,7 @@ export default async function StorePage({ params }: Props) {
                     </div>
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-4">
                         {storeData.products.map((product) => (
-                            <Card key={product.id} className="aspect-9/12 bg-accent hover:scale-105 transition-all cursor-pointer">
-                                <CardHeader>
-                                    <CardTitle>{product.name}</CardTitle>
-                                    <CardDescription className="line-clamp-2">{product.description || "No description available for this product"}</CardDescription>
-                                </CardHeader>
-                                <CardContent className="grow">
-                                    <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="rounded-md" />
-                                </CardContent>
-                                <CardFooter className="flex justify-between items-center">
-                                    <p>${product.price}</p>
-                                    <Button variant="outline" size="icon">
-                                        <ShoppingCart />
-                                    </Button>
-                                </CardFooter>
-                            </Card>
+                            <ProductCard key={product.id} product={product} />
                         ))}
                     </div>
                     <div className="flex justify-center gap-1 absolute bottom-4 left-0 right-0">

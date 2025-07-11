@@ -1,10 +1,6 @@
-export type Product = {
-    id: string;
-    name: string;
-    price: number;
-    description: string;
-    created_at: string;
-};
+import { Product as PrismaProduct } from "@/prisma/generated/prisma";
+
+export type Product = PrismaProduct;
 
 export type SubdomainData = {
     id: string;
