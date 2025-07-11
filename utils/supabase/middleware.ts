@@ -2,18 +2,20 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { extractSubdomain } from '@/features/subdomain/middleware/middleware';
 import { validateSubdomain } from '@/features/subdomain/actions/validateSubdomain';
 import { createMiddlewareSupabaseClient } from './middleware-client';
+import { createServerSideClient } from './server';
 
 
 export async function updateSession(request: NextRequest) {
   const response = NextResponse.next();
 
-  const supabase = createMiddlewareSupabaseClient(request, response);
+  //const supabase = createMiddlewareSupabaseClient(request, response);
+  const supabase = createServerSideClient()
 
   const {
     data: { user }
   } = await supabase.auth.getUser();
 
-  const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost';
+  const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost.com';
   const subdomain = extractSubdomain(request);
   const { pathname } = request.nextUrl;
 
@@ -36,7 +38,7 @@ export async function updateSession(request: NextRequest) {
     if (pathname.startsWith('/dashboard') && !user) {
       const url = new URL(request.url);
       url.hostname = rootDomain;
-      url.pathname = '/login';
+      url.pathname = '/test1';
       url.searchParams.set('redirect', request.url);
       return NextResponse.redirect(url);
     }
@@ -51,12 +53,14 @@ export async function updateSession(request: NextRequest) {
   // Dominio raíz
   if (!user && (pathname === '/account' || pathname.includes('/dashboard'))) {
     const url = request.nextUrl.clone();
-    url.pathname = '/login';
+    url.hostname = "localhost.com";
+    url.pathname = '/account';
     return NextResponse.redirect(url);
   }
 
   if (user && (pathname.includes('/login') || pathname.includes('/signup'))) {
     const url = request.nextUrl.clone();
+    url.hostname = "localhost.com";
     url.pathname = '/account';
     return NextResponse.redirect(url);
   }

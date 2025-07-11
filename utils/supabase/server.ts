@@ -18,7 +18,8 @@ export function createServerSideClient() {
               const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost';
               const cookieOptions = {
                 ...options,
-                domain: rootDomain.includes('localhost') ? 'localhost' : `.${rootDomain}`,
+                //domain: rootDomain.includes('localhost') ? 'localhost' : `.${rootDomain}`,
+                domain: 'localhost.com',
                 path: '/',
                 secure: !rootDomain.includes('localhost'),
                 sameSite: 'lax' as const,
