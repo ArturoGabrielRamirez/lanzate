@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { useCart } from "@/features/cart/components/cart-provider"
 import { Product } from "@/prisma/generated/prisma"
 import { ShoppingCart } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -13,10 +14,22 @@ type Props = {
 function ProductCard({ product }: Props) {
 
     const router = useRouter()
+    const { addToCart } = useCart()
 
     const handleClick = () => {
         router.push(`/item/${product.id}`)
     }
+
+    const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation()
+        addToCart({
+            id: product.id.toString(),
+            name: product.name,
+            price: product.price,
+            quantity: 1
+        })
+    }
+
 
     return (
         <Card key={product.id} className="aspect-9/12 bg-accent hover:scale-105 transition-all cursor-pointer" onClick={handleClick}>
@@ -29,7 +42,7 @@ function ProductCard({ product }: Props) {
             </CardContent>
             <CardFooter className="flex justify-between items-center">
                 <p>${product.price}</p>
-                <Button variant="outline" size="icon">
+                <Button variant="outline" size="icon" onClick={handleAddToCart}>
                     <ShoppingCart />
                 </Button>
             </CardFooter>
