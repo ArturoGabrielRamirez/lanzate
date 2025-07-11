@@ -6,9 +6,8 @@ import { ShoppingCart } from "lucide-react"
 import Link from "next/link"
 import { useCart } from "./cart-provider"
 
-type Props = {}
 
-function CartIcon({ }: Props) {
+function CartIcon() {
 
     const { quantity } = useCart()
 
