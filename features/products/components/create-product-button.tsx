@@ -2,7 +2,7 @@
 
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { createProduct } from "../actions/createProduct"
-import { schema } from "../schemas/product-schema"
+import { productCreateSchema } from "../schemas/product-schema"
 import { formatErrorResponse } from "@/utils/lib"
 import { Plus } from "lucide-react"
 
@@ -33,7 +33,7 @@ function CreateProductButton({ storeId }: CreateProductButtonProps) {
                     Create Product
                 </>
             )}
-            schema={schema}
+            schema={productCreateSchema}
             title="Create new product"
             description="Create a new product to start selling your products! Choose a name for your product and click on the button below, you can continue to add more details of the product once it's created."
             action={handleCreateProduct}
@@ -44,8 +44,9 @@ function CreateProductButton({ storeId }: CreateProductButtonProps) {
             }}
         >
             <InputField name="name" label="Name" type="text" />
-            <InputField name="price" label="Price" type="number" />
-            <InputField name="stock" label="Stock" type="number" />
+            <InputField name="price" label="Price" type="number" defaultValue="0" />
+            <InputField name="stock" label="Stock" type="number" defaultValue="0" />
+            <InputField name="description" label="Description" type="text" />
         </ButtonWithPopup>
     )
 }

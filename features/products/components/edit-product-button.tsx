@@ -1,6 +1,6 @@
 "use client"
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
-import { editSchema } from "../schemas/product-schema"
+import { productUpdateSchema } from "../schemas/product-schema"
 import { editProduct } from "../actions/editProduct"
 import { formatErrorResponse } from "@/utils/lib"
 import { Pencil } from "lucide-react"
@@ -24,7 +24,7 @@ function EditProductButton({ product, slug, onComplete }: EditProductButtonProps
                 </>
             )}
             title="Edit product"
-            schema={editSchema}
+            schema={productUpdateSchema}
             description="Edit the details of your product"
             action={handleEditProduct}
             onComplete={onComplete}
