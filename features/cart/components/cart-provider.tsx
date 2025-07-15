@@ -35,32 +35,52 @@ export const useCart = () => useContext(CartContext)
 
 function CartProvider({ children }: Props) {
 
-    const [cart, setCart] = useState<CartItem[]>([])
-    const [total, setTotal] = useState(0)
-    const [quantity, setQuantity] = useState(0)
+    const [cart, setCart] = useState<CartItem[]>(JSON.parse(localStorage.getItem("cart") || "[]"))
+    const [total, setTotal] = useState(JSON.parse(localStorage.getItem("total") || "0"))
+    const [quantity, setQuantity] = useState(JSON.parse(localStorage.getItem("quantity") || "0"))
 
     const addToCart = (product: CartItem) => {
-        // check if the product is already in the cart
         const existingProduct = cart.find(item => item.id === product.id)
+        let newCart = []
+        let newTotal = 0
+        let newQuantity = 0
+
         if (existingProduct) {
-            setCart(prev => prev.map(item => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item))
+            newCart = cart.map(item => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item)
+            newTotal = total + product.price
+            newQuantity = quantity + 1
         } else {
-            setCart(prev => [...prev, product])
+            newCart = [...cart, product]
+            newTotal = total + product.price
+            newQuantity = quantity + 1
         }
-        setTotal(prev => prev + product.price)
-        setQuantity(prev => prev + 1)
+        setCart(newCart)
+        setTotal(newTotal)
+        setQuantity(newQuantity)
+        localStorage.setItem("cart", JSON.stringify(newCart))
+        localStorage.setItem("total", JSON.stringify(newTotal))
+        localStorage.setItem("quantity", JSON.stringify(newQuantity))
     }
 
     const removeFromCart = (productId: string) => {
-        setCart(prev => prev.filter(item => item.id !== productId))
-        setTotal(prev => prev - (cart.find(item => item.id === productId)?.price || 0))
-        setQuantity(prev => prev - 1)
+        let newCart = cart.filter(item => item.id !== productId)
+        let newTotal = total - (cart.find(item => item.id === productId)?.price || 0)
+        let newQuantity = quantity - 1
+        setCart(newCart)
+        setTotal(newTotal)
+        setQuantity(newQuantity)
+        localStorage.setItem("cart", JSON.stringify(newCart))
+        localStorage.setItem("total", JSON.stringify(newTotal))
+        localStorage.setItem("quantity", JSON.stringify(newQuantity))
     }
 
     const clearCart = () => {
         setCart([])
         setTotal(0)
         setQuantity(0)
+        localStorage.removeItem("cart")
+        localStorage.removeItem("total")
+        localStorage.removeItem("quantity")
     }
 
     return (
