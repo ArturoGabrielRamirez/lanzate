@@ -1,22 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState } from "react"
-
-type CartItem = {
-    id: string
-    name: string
-    price: number
-    quantity: number
-}
-
-type CartContextType = {
-    cart: CartItem[]
-    addToCart: (product: CartItem) => void
-    removeFromCart: (productId: string) => void
-    clearCart: () => void
-    total: number
-    quantity: number
-}
+import { CartContextType, CartItemType } from "../types"
 
 const CartContext = createContext<CartContextType>({
     cart: [],
@@ -35,11 +20,11 @@ export const useCart = () => useContext(CartContext)
 
 function CartProvider({ children }: Props) {
 
-    const [cart, setCart] = useState<CartItem[]>(JSON.parse(localStorage.getItem("cart") || "[]"))
+    const [cart, setCart] = useState<CartItemType[]>(JSON.parse(localStorage.getItem("cart") || "[]"))
     const [total, setTotal] = useState(JSON.parse(localStorage.getItem("total") || "0"))
     const [quantity, setQuantity] = useState(JSON.parse(localStorage.getItem("quantity") || "0"))
 
-    const addToCart = (product: CartItem) => {
+    const addToCart = (product: CartItemType) => {
         const existingProduct = cart.find(item => item.id === product.id)
         let newCart = []
         let newTotal = 0

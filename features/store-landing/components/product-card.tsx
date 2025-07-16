@@ -31,6 +31,7 @@ function ProductCard({ product }: Props) {
             quantity: 1
         })
         setTimeout(() => {
+            toast.dismiss()
             toast.success("Added to cart!")
         }, 1000)
     }
