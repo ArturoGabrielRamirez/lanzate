@@ -31,6 +31,7 @@ export async function insertProduct(payload: any, storeId: number) {
                 price: payload.price,
                 stock: payload.stock,
                 store_id: store.id,
+                description: payload.description,
                 stock_entries: {
                     create: {
                         branch_id: mainBranch.id,

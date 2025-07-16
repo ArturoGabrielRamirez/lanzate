@@ -9,9 +9,10 @@ const animatedComponents = makeAnimated();
 
 type CategorySelectProps = {
     onChange?: (value: any) => void
+    defaultValue?: any
 }
 
-function CategorySelect({ onChange }: CategorySelectProps) {
+function CategorySelect({ onChange, defaultValue }: CategorySelectProps) {
 
     const [categories, setCategories] = useState<{ label: string, value: number }[]>([])
 
@@ -45,6 +46,7 @@ function CategorySelect({ onChange }: CategorySelectProps) {
                 options={categories}
                 components={animatedComponents}
                 onChange={handleChange}
+                defaultValue={defaultValue}
             />
         </div>
     )

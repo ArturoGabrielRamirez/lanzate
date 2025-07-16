@@ -1,7 +1,7 @@
-import { Product } from "@/prisma/generated/prisma"
+import { Product, Category } from "@/prisma/generated/prisma"
 
 export type Props = {
-    product: Product
+    product: Product & { categories: Category[] }
     slug: string
     onComplete?: () => void
 }
