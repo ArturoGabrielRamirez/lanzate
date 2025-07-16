@@ -11,9 +11,11 @@ function CartList() {
 
     return (
         <div className="flex-1">
-            {cart.map((item) => (
-                <CartItem key={item.id} item={item} />
-            ))}
+            <div className="flex flex-col gap-3">
+                {cart.map((item) => (
+                    <CartItem key={item.id} item={item} />
+                ))}
+            </div>
             {cart.length > 0 && (
                 <div className="flex gap-2 justify-end mt-4">
                     <Button variant="outline" onClick={clearCart}   >
