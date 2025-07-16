@@ -7,7 +7,7 @@ import { ProductDetailPageProps } from "@/features/products/type"
 
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-
+import { Badge } from "@/components/ui/badge"
 async function ProductDetailPage({ params }: ProductDetailPageProps) {
 
     const { slug, id } = await params
@@ -33,6 +33,14 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
                     </div>
                     <div className="flex flex-col gap-4">
                         <h3 className="text-4xl font-bold">{product.name}</h3>
+                        <div className="flex gap-2">
+                            {product.categories.length === 0 && (
+                                <Badge variant="outline">No categories</Badge>
+                            )}
+                            {product.categories.map((category: any) => (
+                                <Badge key={category.id} variant="outline">{category.name}</Badge>
+                            ))}
+                        </div>
                         <p className="text-muted-foreground text-lg">${product.price}</p>
                         <p>{product.description || "No description available"}</p>
                         <div className="flex gap-4 mt-auto justify-end">

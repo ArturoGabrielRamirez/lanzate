@@ -11,6 +11,9 @@ export async function selectProductById(id: number) {
         const product = await prisma.product.findUnique({
             where: {
                 id: id
+            },
+            include: {
+                categories: true
             }
         })
 
