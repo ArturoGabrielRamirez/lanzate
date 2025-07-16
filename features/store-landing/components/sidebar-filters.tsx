@@ -49,7 +49,7 @@ function SidebarFilters() {
                 </CardHeader>
                 <CardContent>
                     <div className="flex gap-2">
-                        <CategorySelect />
+                        <CategorySelect withLabel={false} />
                     </div>
                 </CardContent>
             </Card>

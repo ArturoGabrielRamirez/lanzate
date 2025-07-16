@@ -10,9 +10,10 @@ const animatedComponents = makeAnimated();
 type CategorySelectProps = {
     onChange?: (value: any) => void
     defaultValue?: any
+    withLabel?: boolean
 }
 
-function CategorySelect({ onChange, defaultValue }: CategorySelectProps) {
+function CategorySelect({ onChange, defaultValue, withLabel = true }: CategorySelectProps) {
 
     const [categories, setCategories] = useState<{ label: string, value: number }[]>([])
 
@@ -31,8 +32,8 @@ function CategorySelect({ onChange, defaultValue }: CategorySelectProps) {
     }
 
     return (
-        <div className="flex flex-col gap-1">
-            <Label htmlFor="category">Category</Label>
+        <div className="flex flex-col gap-1 w-full">
+            {withLabel && <Label htmlFor="category">Category</Label>}
             <CreatableSelect
                 className="w-full"
                 classNames={{
