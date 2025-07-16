@@ -6,7 +6,6 @@ import { useCart } from "@/features/cart/components/cart-provider"
 import { Product } from "@/prisma/generated/prisma"
 import { ShoppingCart } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { toast } from "sonner"
 
 type Props = {
     product: Product
@@ -23,17 +22,12 @@ function ProductCard({ product }: Props) {
 
     const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()
-        toast.loading("Adding to cart...")
         addToCart({
             id: product.id.toString(),
             name: product.name,
             price: product.price,
             quantity: 1
         })
-        setTimeout(() => {
-            toast.dismiss()
-            toast.success("Added to cart!")
-        }, 1000)
     }
 
 

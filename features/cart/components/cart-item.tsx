@@ -19,13 +19,13 @@ function CartItem({ item }: CartItemProps) {
     }
 
     return (
-        <Card key={item.id} className="rounded-none border-t-0 border-x-0 border-b-2 border-border pb-2 shadow-none">
+        <Card key={item.id} className="rounded-none border-t-0 border-x-0 border-b-2 border-border pb-2 shadow-none gap-1">
             <CardHeader className="pl-0">
                 <CardTitle>
                     <h3>{item.name}</h3>
                 </CardTitle>
             </CardHeader>
-            <CardFooter className="flex justify-between items-center pl-0">
+            <CardFooter className="flex justify-between items-center px-0">
                 <p className="text-sm text-muted-foreground">
                     ${item.price} x {item.quantity} {item.quantity > 1 ? "items" : "item"}
                 </p>
