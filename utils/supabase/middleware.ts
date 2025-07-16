@@ -1,7 +1,7 @@
+"use server"
 import { NextResponse, type NextRequest } from 'next/server';
 import { extractSubdomain } from '@/features/subdomain/middleware/middleware';
 import { validateSubdomain } from '@/features/subdomain/actions/validateSubdomain';
-import { createMiddlewareSupabaseClient } from './middleware-client';
 import { createServerSideClient } from './server';
 
 
@@ -19,11 +19,11 @@ export async function updateSession(request: NextRequest) {
 
   const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost.com';
   const subdomain = extractSubdomain(request);
-  console.log("🚀 ~ updateSession ~ subdomain:", subdomain)
+  console.log("🚀 ~ updateSession 1~ subdomain:", subdomain)
   const { pathname } = request.nextUrl;
 
   if (subdomain) {
-    console.log("🚀 ~ updateSession ~ subdomain:", subdomain)
+    console.log("🚀 ~ updateSession 2~ subdomain:", subdomain)
     if (pathname.startsWith('/s/')) return response;
 
     const { payload: exists } = await validateSubdomain(subdomain);
