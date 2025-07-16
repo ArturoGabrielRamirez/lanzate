@@ -4,7 +4,7 @@ import { useCart } from "./cart-provider"
 import { Button } from "@/components/ui/button"
 import { Trash2 } from "lucide-react"
 import { CartItemType } from "../types"
-
+import Image from "next/image"
 type CartItemProps = {
     item: CartItemType
 }
@@ -19,7 +19,18 @@ function CartItem({ item }: CartItemProps) {
 
     return (
         <div className="grid grid-cols-[max-content_1fr] gap-2 border-b border-b-muted-foreground/20 pb-2">
-            <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 scale-y-95 scale-x-93 rounded-md max-w-20" />
+            <div className="relative aspect-square">
+                {item.image ? (
+                    <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="rounded-md"
+                    />
+                ) : (
+                    <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 scale-y-95 scale-x-93 rounded-md max-w-20" />
+                )}
+            </div>
             <div className="flex justify-between items-start">
                 <div>
                     <h3 className="text-lg font-bold">{item.name}</h3>

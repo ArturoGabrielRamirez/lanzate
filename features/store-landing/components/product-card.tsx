@@ -27,7 +27,8 @@ function ProductCard({ product }: Props) {
             id: product.id.toString(),
             name: product.name,
             price: product.price,
-            quantity: 1
+            quantity: 1,
+            image: product.image || ""
         })
     }
 
