@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useCart } from "@/features/cart/components/cart-provider"
 import { Product } from "@/prisma/generated/prisma"
 import { ShoppingCart } from "lucide-react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 
 type Props = {
@@ -38,7 +39,19 @@ function ProductCard({ product }: Props) {
                 <CardDescription className="line-clamp-2">{product.description || "No description available for this product"}</CardDescription>
             </CardHeader>
             <CardContent className="grow">
-                <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="rounded-md" />
+                <div className="relative aspect-square">
+                    {product.image ? (
+                        <Image
+                            src={product.image}
+                            alt={product.name}
+                            fill
+                            className="rounded-md"
+                        />
+                    ) : (
+                        <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="rounded-md" />
+
+                    )}
+                </div>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
                 <p>${product.price}</p>
