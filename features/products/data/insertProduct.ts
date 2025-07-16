@@ -1,12 +1,27 @@
 "use server"
 
+import { getUserByEmail } from "@/features/layout/data/getUserByEmail"
 import { PrismaClient } from "@/prisma/generated/prisma"
 import { formatErrorResponse } from "@/utils/lib"
+import { createServerSideClient } from "@/utils/supabase/server"
+import randomstring from "randomstring"
 
 export async function insertProduct(payload: any, storeId: number) {
+    console.log("🚀 ~ insertProduct ~ payload:", payload)
     try {
 
         const prisma = new PrismaClient()
+
+        const supabase = createServerSideClient()
+        const { data: { user: authUser } } = await supabase.auth.getUser()
+
+        if (!authUser) throw new Error("User not found")
+
+        const { error, message, payload: user } = await getUserByEmail(authUser?.email ?? "")
+
+        if (error) throw new Error(message)
+
+        if (!user) throw new Error("User not found")
 
         const store = await prisma.store.findUnique({
             where: {
@@ -42,9 +57,30 @@ export async function insertProduct(payload: any, storeId: number) {
                     connect: [
                         ...payload.categories.map((category: any) => ({ id: category.value }))
                     ]
-                }
+                },
+                owner_id: user?.id,
+                slug: randomstring.generate(8),
+                sku: randomstring.generate(8),
             }
         })
+
+        if (payload.image) {
+            const { data, error } = await supabase.storage.from("product-images").upload(payload.image.name, payload.image)
+
+            if (error) throw new Error(error.message)
+
+            const { data: { publicUrl } } = supabase.storage.from("product-images").getPublicUrl(data.path)
+
+            await prisma.product.update({
+                where: {
+                    id: product.id
+                },
+                data: {
+                    image: publicUrl
+                }
+            })
+
+        }
 
         return {
             error: false,

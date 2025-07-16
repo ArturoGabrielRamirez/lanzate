@@ -173,7 +173,13 @@ exports.Prisma.ProductScalarFieldEnum = {
   created_at: 'created_at',
   updated_at: 'updated_at',
   store_id: 'store_id',
-  tags: 'tags'
+  tags: 'tags',
+  image: 'image',
+  video: 'video',
+  owner_id: 'owner_id',
+  slug: 'slug',
+  sku: 'sku',
+  barcode: 'barcode'
 };
 
 exports.Prisma.BranchScalarFieldEnum = {

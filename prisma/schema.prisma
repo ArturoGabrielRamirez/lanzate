@@ -21,6 +21,7 @@ model User {
   Notification Notification[]
   Store        Store[]
   Account      Account[]
+  Product      Product[]
 
   @@map("users")
 }
@@ -100,6 +101,16 @@ model Product {
   categories Category[]
   tags       String[]
 
+  image String?
+  video String?
+
+  owner_id Int
+  owner    User @relation(fields: [owner_id], references: [id])
+
+  slug    String  @unique
+  sku     String  @unique
+  barcode String?
+
   @@map("products")
 }
 
@@ -145,7 +156,7 @@ model Category {
 
   description String?
   image       String?
-  slug        String @unique
+  slug        String  @unique
 
   products Product[]
 
