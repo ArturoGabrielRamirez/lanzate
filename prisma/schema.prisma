@@ -98,6 +98,7 @@ model Product {
   store         Store          @relation(fields: [store_id], references: [id])
 
   categories Category[]
+  tags       String[]
 
   @@map("products")
 }
@@ -141,6 +142,12 @@ model ProductStock {
 model Category {
   id   Int    @id @default(autoincrement())
   name String
+
+  description String?
+  image       String?
+  slug        String @unique
+
+  products Product[]
 
   @@map("categories")
 }
