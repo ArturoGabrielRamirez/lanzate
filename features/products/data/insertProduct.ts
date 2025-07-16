@@ -36,6 +36,11 @@ export async function insertProduct(payload: any, storeId: number) {
                         branch_id: mainBranch.id,
                         quantity: payload.stock,
                     }
+                },
+                categories: {
+                    connect: [
+                        ...payload.categories.map((category: any) => ({ id: category.value }))
+                    ]
                 }
             }
         })
