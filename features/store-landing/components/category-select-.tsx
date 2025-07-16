@@ -13,7 +13,15 @@ const categories = [
     { label: "Automotive", value: "automotive" },
 ]
 
-function CategorySelect() {
+type CategorySelectProps = {
+    onChange?: (value: any) => void
+}
+
+function CategorySelect({ onChange }: CategorySelectProps) {
+
+    const handleChange = (value: any) => {
+        if (onChange && typeof onChange === "function") onChange(value)
+    }
 
     return (
         <CreatableSelect
@@ -28,6 +36,7 @@ function CategorySelect() {
             isMulti
             options={categories}
             components={animatedComponents}
+            onChange={handleChange}
         />
     )
 }

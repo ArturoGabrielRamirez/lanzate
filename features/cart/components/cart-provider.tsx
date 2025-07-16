@@ -49,8 +49,8 @@ function CartProvider({ children }: Props) {
 
     const removeFromCart = (productId: string) => {
         let newCart = cart.filter(item => item.id !== productId)
-        let newTotal = total - (cart.find(item => item.id === productId)?.price || 0)
-        let newQuantity = quantity - 1
+        let newTotal = total - (cart.find(item => item.id === productId)?.price || 0) * (cart.find(item => item.id === productId)?.quantity || 0)
+        let newQuantity = quantity - (cart.find(item => item.id === productId)?.quantity || 0)
         setCart(newCart)
         setTotal(newTotal)
         setQuantity(newQuantity)
