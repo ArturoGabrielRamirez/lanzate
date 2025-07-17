@@ -19,11 +19,9 @@ export async function updateSession(request: NextRequest) {
 
   const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost.com';
   const subdomain = extractSubdomain(request);
-  console.log("🚀 ~ updateSession 1~ subdomain:", subdomain)
   const { pathname } = request.nextUrl;
 
   if (subdomain) {
-    console.log("🚀 ~ updateSession 2~ subdomain:", subdomain)
     if (pathname.startsWith('/s/')) return response;
 
     const { payload: exists } = await validateSubdomain(subdomain);
@@ -48,7 +46,9 @@ export async function updateSession(request: NextRequest) {
     }
 
     if (pathname === '/') {
-      return NextResponse.rewrite(new URL(`/s/${subdomain}`, request.url));
+      const url = new URL(`/s/${subdomain}`, request.url)
+      url.search = request.nextUrl.search;
+      return NextResponse.rewrite(url);
     }
 
     if (pathname === '/cart') {
@@ -66,7 +66,6 @@ export async function updateSession(request: NextRequest) {
 
   // Dominio raíz
   if (!user && (pathname === '/account' || pathname.includes('/dashboard'))) {
-    console.log("🚀 ~ updateSession ~ pathname:", "First condition")
     const url = request.nextUrl.clone();
     url.hostname = "localhost.com";
     url.pathname = '/account';
@@ -74,7 +73,6 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (user && (pathname.includes('/login') || pathname.includes('/signup'))) {
-    console.log("🚀 ~ updateSession ~ pathname:", "Second condition")
     const url = request.nextUrl.clone();
     url.hostname = "localhost.com";
     url.pathname = '/account';

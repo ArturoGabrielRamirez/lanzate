@@ -7,7 +7,6 @@ import { createServerSideClient } from "@/utils/supabase/server"
 import randomstring from "randomstring"
 
 export async function insertProduct(payload: any, storeId: number) {
-    console.log("🚀 ~ insertProduct ~ payload:", payload)
     try {
 
         const prisma = new PrismaClient()

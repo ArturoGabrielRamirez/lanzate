@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import CategorySelect from "@/features/store-landing/components/category-select-";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
+import SidebarCategorySelect from "./sidebar-category-select";
 
 function SidebarFilters() {
     return (
@@ -49,7 +49,7 @@ function SidebarFilters() {
                 </CardHeader>
                 <CardContent>
                     <div className="flex gap-2">
-                        <CategorySelect withLabel={false} />
+                        <SidebarCategorySelect />
                     </div>
                 </CardContent>
             </Card>

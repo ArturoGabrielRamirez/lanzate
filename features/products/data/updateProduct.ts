@@ -29,16 +29,11 @@ export async function updateProduct(productId: number, data: any) {
 
                 const { data: payload, error } = await supabase.storage.from("product-images").upload(data.image.name, data.image)
 
-                console.log("🚀 ~ updateProduct ~ payload:", payload)
-                console.log("🚀 ~ updateProduct ~ error:", error)
-
                 if (error && error.statusCode != 409) throw new Error(error.message)
 
                 if (error && error.statusCode == 409) {
 
                     const { data: { publicUrl } } = supabase.storage.from("product-images").getPublicUrl(data.image.name)
-
-                    console.log("🚀 ~ updateProduct ~ publicUrl:", publicUrl)
 
                     await prisma.product.update({
                         where: { id: updatedProduct.id },

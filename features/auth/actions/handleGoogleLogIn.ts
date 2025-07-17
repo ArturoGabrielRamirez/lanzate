@@ -44,7 +44,6 @@ export async function handleGoogleLogIn() {
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
             const { id, email, created_at } = user
-            console.log(id, email, created_at)
             revalidatePath('/account', 'layout')
             redirect('/account')
         }

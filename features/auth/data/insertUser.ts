@@ -32,7 +32,6 @@ export async function insertUser(email: string, password: string) {
         }
 
     } catch (error) {
-        console.log("🚀 ~ insertUser ~ error:", error)
         return formatErrorResponse("Error creating user", error)
     }
 }

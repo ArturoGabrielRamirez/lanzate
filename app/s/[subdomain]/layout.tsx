@@ -14,7 +14,7 @@ export default async function Layout({ children, params }: { children: React.Rea
 
     return (
         <CartProvider>
-            <Header title={storeData.store.name} />
+            <Header title={storeData.name} />
             <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow'>
                 {children}
             </main>

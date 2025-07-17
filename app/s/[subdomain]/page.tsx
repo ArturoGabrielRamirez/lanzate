@@ -1,19 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { Title } from "@/features/layout/components";
-import ProductCard from "@/features/store-landing/components/product-card";
+/* import ProductCard from "@/features/store-landing/components/product-card"; */
+import ProductList from "@/features/store-landing/components/product-list";
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters";
+import { loadFilterParams } from "@/features/store-landing/utils/load-filter-params";
 import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
-import { cn } from "@/lib/utils";
+/* import { cn } from "@/lib/utils"; */
 import { ChevronLeft, ChevronRight, Grid, Grid2X2, List, Search, ShoppingCart } from "lucide-react";
+import { SearchParams } from "nuqs";
+import { Suspense } from "react";
 
 type Props = {
     params: Promise<{ subdomain: string }>
+    searchParams: Promise<SearchParams>
 }
 
-export default async function StorePage({ params }: Props) {
+export default async function StorePage({ params, searchParams }: Props) {
     const { subdomain } = await params
     const { payload: storeData, error } = await getStoreWithProducts(subdomain);
-
+    const { category, price, sort, search } = await loadFilterParams(searchParams)
+    
     if (error || !storeData) {
         return <div>Tienda no encontrada</div>;
     }
@@ -51,7 +57,10 @@ export default async function StorePage({ params }: Props) {
                     <div className="flex gap-2">
                         <p>Showing {paginationMaxAmount} of {storeData.products.length} products</p>
                     </div>
-                    {storeData.products.length > 0 && (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <ProductList subdomain={subdomain} category={category} />
+                    </Suspense>
+                    {/* {storeData.products.length > 0 && (
                         <div className="grid grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-4">
                             {storeData.products.map((product) => (
                                 <ProductCard key={product.id} product={product} />
@@ -77,7 +86,7 @@ export default async function StorePage({ params }: Props) {
                         <Button variant="outline" size="icon">
                             <ChevronRight />
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>
