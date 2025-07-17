@@ -34,19 +34,19 @@ function ProductCard({ product }: Props) {
 
 
     return (
-        <Card key={product.id} className="aspect-9/12 bg-accent hover:scale-105 transition-all cursor-pointer" onClick={handleClick}>
+        <Card key={product.id} className="aspect-9/12 bg-accent hover:scale-105 transition-all cursor-pointer object-cover h-full w-full max-h-90 gap-2" onClick={handleClick}>
             <CardHeader>
                 <CardTitle>{product.name}</CardTitle>
-                <CardDescription className="line-clamp-2">{product.description || "No description available for this product"}</CardDescription>
+                <CardDescription className="line-clamp-2 h-11">{product.description || "No description available for this product"}</CardDescription>
             </CardHeader>
             <CardContent className="grow">
-                <div className="relative aspect-square">
+                <div className="relative h-full">
                     {product.image ? (
                         <Image
                             src={product.image}
                             alt={product.name}
                             fill
-                            className="rounded-md"
+                            className="rounded-md object-cover"
                         />
                     ) : (
                         <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="rounded-md" />

@@ -12,7 +12,6 @@ type Props = {
 
 async function ProductList({ subdomain, category }: Props) {
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     const { payload: storeData, error } = await getStoreWithProducts(subdomain, category);
 
     if (error || !storeData) {
@@ -27,7 +26,7 @@ async function ProductList({ subdomain, category }: Props) {
     return (
         <>
             {storeData.products.length > 0 && (
-                <div className="grid grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-4">
+                <div className="grid grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-4 grow">
                     {storeData.products.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
