@@ -4,7 +4,9 @@ import { SelectStoreWithProductsReturn } from "../types/types";
 import { formatErrorResponse } from "@/utils/lib";
 import { PrismaClient } from "@/prisma/generated/prisma";
 
-export async function selectStoreWithProducts(subdomain: string, category: string | undefined, sort: string | undefined, search: string | undefined, min: string | undefined, max: string | undefined, limit: number): Promise<SelectStoreWithProductsReturn> {
+export async function selectStoreWithProducts(subdomain: string, category: string | undefined, sort: string | undefined, search: string | undefined, min: string | undefined, max: string | undefined, limit: number = 10, page: number = 1): Promise<SelectStoreWithProductsReturn> {
+    console.log("🚀 ~ selectStoreWithProducts ~ limit:", limit)
+    console.log("🚀 ~ selectStoreWithProducts ~ page:", page)
     try {
 
         const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
@@ -105,10 +107,12 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
                             price: priceRange
                         },
                     orderBy: orderBy,
-                    take: limit
+                    take: limit,
+                    skip: limit * (page - 1)
                 }
             },
         })
+        console.log("🚀 ~ selectStoreWithProducts ~ limit * (page - 1):", limit * (page - 1))
 
         return {
             message: "Store with products fetched successfully from db",

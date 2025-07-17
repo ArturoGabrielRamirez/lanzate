@@ -4,7 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useStore } from "./store-provider"
 import { useQueryState, parseAsInteger } from "nuqs"
 
-function ProductAmountDisplay() {
+function ProductAmountDisplay({ amount }: { amount: number }) {
     const { } = useStore()
     const [limit, setLimit] = useQueryState("limit", { shallow: false, clearOnDefault: true })
 
@@ -14,9 +14,13 @@ function ProductAmountDisplay() {
 
     return (
         <Select value={limit?.toString() || "10"} onValueChange={handleLimitChange}>
-            <SelectTrigger>
-                <SelectValue placeholder="10 prod." />
-            </SelectTrigger>
+            <div className="flex items-center gap-2">
+                <span>Showing</span>
+                <SelectTrigger>
+                    <SelectValue placeholder="10" />
+                </SelectTrigger>
+                <span>of {amount} products</span>
+            </div>
             <SelectContent>
                 <SelectItem value="5">5</SelectItem>
                 <SelectItem value="10">10</SelectItem>

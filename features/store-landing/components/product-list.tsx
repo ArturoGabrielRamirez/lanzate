@@ -1,8 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
 import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
-import { ChevronLeft } from "lucide-react";
-import { cn } from "@/lib/utils";
 import ProductCard from "./product-card";
 import ProductListContainer from "./product-list-container";
 
@@ -14,20 +10,16 @@ type Props = {
     min: string | undefined
     max: string | undefined
     limit: number
+    page: number
 }
 
-async function ProductList({ subdomain, category, sort, search, min, max, limit }: Props) {
+async function ProductList({ subdomain, category, sort, search, min, max, limit, page }: Props) {
 
-    const { payload: storeData, error } = await getStoreWithProducts(subdomain, category, sort, search, min, max, limit);
+    const { payload: storeData, error } = await getStoreWithProducts(subdomain, category, sort, search, min, max, limit, page);
 
     if (error || !storeData) {
         return <div>Tienda no encontrada</div>;
     }
-
-    const paginationMaxAmount = 10;
-    const paginationCurrentPage = 1;
-    const paginationTotalPages = Math.ceil(storeData.products.length / paginationMaxAmount);
-
 
     return (
         <>
@@ -43,21 +35,6 @@ async function ProductList({ subdomain, category, sort, search, min, max, limit 
                     <p className="text-center text-muted-foreground">No products found</p>
                 </div>
             )}
-            <div className="flex justify-center gap-1 absolute bottom-4 left-0 right-0">
-                <Button variant="outline" size="icon">
-                    <ChevronLeft />
-                </Button>
-                <div className="flex gap-2">
-                    {Array.from({ length: paginationTotalPages }).map((_, index) => (
-                        <Button key={index} variant="outline" size="icon" className={cn(paginationCurrentPage === index + 1 && "bg-primary text-primary-foreground")}>
-                            {index + 1}
-                        </Button>
-                    ))}
-                </div>
-                <Button variant="outline" size="icon">
-                    <ChevronRight />
-                </Button>
-            </div>
         </>
     )
 }
