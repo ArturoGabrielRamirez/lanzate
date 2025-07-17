@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Title } from "@/features/layout/components";
+import ProductCardSkeleton from "@/features/store-landing/components/product-card-skeleton";
 import ProductList from "@/features/store-landing/components/product-list";
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters";
 import { loadFilterParams } from "@/features/store-landing/utils/load-filter-params";
@@ -55,7 +56,17 @@ export default async function StorePage({ params, searchParams }: Props) {
                     <div className="flex gap-2">
                         <p>Showing {paginationMaxAmount} of {storeData.products.length} products</p>
                     </div>
-                    <Suspense fallback={<div>Loading...</div>} key={category}>
+                    <Suspense fallback={(
+                        <div className="grid grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-4 grow">
+                            <ProductCardSkeleton />
+                            <ProductCardSkeleton />
+                            <ProductCardSkeleton />
+                            <ProductCardSkeleton />
+                            <ProductCardSkeleton />
+                            <ProductCardSkeleton />
+                            <ProductCardSkeleton />
+                        </div>
+                    )} key={category}>
                         <ProductList subdomain={subdomain} category={category} />
                     </Suspense>
                 </div>
