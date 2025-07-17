@@ -13,11 +13,12 @@ type Props = {
     search: string | undefined
     min: string | undefined
     max: string | undefined
+    limit: number
 }
 
-async function ProductList({ subdomain, category, sort, search, min, max }: Props) {
+async function ProductList({ subdomain, category, sort, search, min, max, limit }: Props) {
 
-    const { payload: storeData, error } = await getStoreWithProducts(subdomain, category, sort, search, min, max);
+    const { payload: storeData, error } = await getStoreWithProducts(subdomain, category, sort, search, min, max, limit);
 
     if (error || !storeData) {
         return <div>Tienda no encontrada</div>;

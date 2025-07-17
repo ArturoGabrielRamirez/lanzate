@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Title } from "@/features/layout/components";
+import ProductAmountDisplay from "@/features/store-landing/components/product-amount-display";
 import ProductCardSkeleton from "@/features/store-landing/components/product-card-skeleton";
 import ProductList from "@/features/store-landing/components/product-list";
 import ProductListDisplay from "@/features/store-landing/components/product-list-display";
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters";
 import { loadFilterParams } from "@/features/store-landing/utils/load-filter-params";
 import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
-import { ChevronLeft, ChevronRight, Grid2X2, List } from "lucide-react";
 import { SearchParams } from "nuqs";
 import { Suspense } from "react";
 
@@ -17,8 +17,9 @@ type Props = {
 
 export default async function StorePage({ params, searchParams }: Props) {
     const { subdomain } = await params
-    const { payload: storeData, error } = await getStoreWithProducts(subdomain);
-    const { category, sort, search, min, max } = await loadFilterParams(searchParams)
+    const { category, sort, search, min, max, page, limit, offset } = await loadFilterParams(searchParams)
+    console.log("🚀 ~ StorePage ~ limit:", limit)
+    const { payload: storeData, error } = await getStoreWithProducts(subdomain, category, sort, search, min, max, limit);
 
     if (error || !storeData) {
         return <div>Tienda no encontrada</div>;
@@ -37,7 +38,8 @@ export default async function StorePage({ params, searchParams }: Props) {
                 <div className="flex flex-col gap-4 relative">
                     <div className="flex gap-2 justify-between">
                         <ProductListDisplay />
-                        <div className="flex gap-2 items-center">
+                        <ProductAmountDisplay />
+                        {/* <div className="flex gap-2 items-center">
                             <Button variant="outline">
                                 <ChevronLeft />
                             </Button>
@@ -45,7 +47,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                             <Button variant="outline">
                                 <ChevronRight />
                             </Button>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="flex gap-2">
                         <p>Showing {paginationMaxAmount} of {storeData.products.length} products</p>
@@ -66,7 +68,9 @@ export default async function StorePage({ params, searchParams }: Props) {
                             category={category}
                             sort={sort}
                             search={search}
-                            min={min} max={max}
+                            min={min}
+                            max={max}
+                            limit={limit}
                         />
                     </Suspense>
                 </div>

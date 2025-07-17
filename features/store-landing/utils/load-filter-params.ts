@@ -1,4 +1,4 @@
-import { parseAsString, createLoader } from 'nuqs/server'
+import { parseAsString, createLoader, parseAsInteger } from 'nuqs/server'
 
 export const filterSearchParams = {
     category: parseAsString.withDefault(""),
@@ -6,7 +6,10 @@ export const filterSearchParams = {
     sort: parseAsString.withDefault(""),
     search: parseAsString.withDefault(""),
     min: parseAsString.withDefault(""),
-    max: parseAsString.withDefault("")
+    max: parseAsString.withDefault(""),
+    page: parseAsInteger.withDefault(1),
+    limit: parseAsInteger.withDefault(10),
+    offset: parseAsInteger.withDefault(0),
 }
 
 export const loadFilterParams = createLoader(filterSearchParams)

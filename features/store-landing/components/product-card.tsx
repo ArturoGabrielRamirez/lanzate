@@ -34,7 +34,6 @@ function ProductCard({ product }: Props) {
         })
     }
 
-    console.log("🚀 ~ ProductCard ~ displayType:", displayType)
     if (displayType === "list") {
         return (
             <Card className="flex flex-row gap-2" onClick={handleClick}>

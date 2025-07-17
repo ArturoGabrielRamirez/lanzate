@@ -15,10 +15,30 @@ type Props = {
 export const useStore = () => useContext(StoreContext)
 
 function StoreProvider({ children }: Props) {
+
     const [displayType, setDisplayType] = useState<"grid" | "list">("grid")
+    const [amount, setAmount] = useState(10)
+    const [page, setPage] = useState(1)
+    const [offset, setOffset] = useState(0)
+    const [limit, setLimit] = useState(10)
+
+    const contextValue = {
+        displayType,
+        setDisplayType,
+        amount,
+        setAmount,
+        page,
+        setPage,
+        offset,
+        setOffset,
+        limit,
+        setLimit
+    }
 
     return (
-        <StoreContext.Provider value={{ displayType, setDisplayType }}>{children}</StoreContext.Provider>
+        <StoreContext.Provider value={contextValue}>
+            {children}
+        </StoreContext.Provider>
     )
 }
 
