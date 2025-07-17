@@ -4,6 +4,7 @@ import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithP
 import { ChevronLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ProductCard from "./product-card";
+import ProductListContainer from "./product-list-container";
 
 type Props = {
     subdomain: string
@@ -30,11 +31,11 @@ async function ProductList({ subdomain, category, sort, search, min, max }: Prop
     return (
         <>
             {storeData.products.length > 0 && (
-                <div className="grid grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-4 grow">
+                <ProductListContainer>
                     {storeData.products.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
-                </div>
+                </ProductListContainer>
             )}
             {storeData.products.length === 0 && (
                 <div className="border-muted-foreground/50 border-2 rounded-md p-4 border-dashed">

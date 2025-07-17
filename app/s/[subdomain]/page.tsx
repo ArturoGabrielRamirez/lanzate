@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Title } from "@/features/layout/components";
 import ProductCardSkeleton from "@/features/store-landing/components/product-card-skeleton";
 import ProductList from "@/features/store-landing/components/product-list";
+import ProductListDisplay from "@/features/store-landing/components/product-list-display";
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters";
 import { loadFilterParams } from "@/features/store-landing/utils/load-filter-params";
 import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
@@ -35,14 +36,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                 <SidebarFilters />
                 <div className="flex flex-col gap-4 relative">
                     <div className="flex gap-2 justify-between">
-                        <div className="flex gap-2">
-                            <Button variant="outline">
-                                <Grid2X2 />
-                            </Button>
-                            <Button variant="outline">
-                                <List />
-                            </Button>
-                        </div>
+                        <ProductListDisplay />
                         <div className="flex gap-2 items-center">
                             <Button variant="outline">
                                 <ChevronLeft />
@@ -67,7 +61,13 @@ export default async function StorePage({ params, searchParams }: Props) {
                             <ProductCardSkeleton />
                         </div>
                     )} key={category}>
-                        <ProductList subdomain={subdomain} category={category} sort={sort} search={search} min={min} max={max} />
+                        <ProductList
+                            subdomain={subdomain}
+                            category={category}
+                            sort={sort}
+                            search={search}
+                            min={min} max={max}
+                        />
                     </Suspense>
                 </div>
             </div>
