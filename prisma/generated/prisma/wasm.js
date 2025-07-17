@@ -224,6 +224,56 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+
+exports.Prisma.UserOrderByRelevanceFieldEnum = {
+  email: 'email',
+  first_name: 'first_name',
+  last_name: 'last_name',
+  avatar: 'avatar',
+  password: 'password'
+};
+
+exports.Prisma.NotificationOrderByRelevanceFieldEnum = {
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  link: 'link'
+};
+
+exports.Prisma.StoreOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  logo: 'logo',
+  slogan: 'slogan',
+  slug: 'slug',
+  subdomain: 'subdomain'
+};
+
+exports.Prisma.ProductOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  tags: 'tags',
+  image: 'image',
+  video: 'video',
+  slug: 'slug',
+  sku: 'sku',
+  barcode: 'barcode'
+};
+
+exports.Prisma.BranchOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  address: 'address',
+  phone: 'phone',
+  email: 'email'
+};
+
+exports.Prisma.CategoryOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  image: 'image',
+  slug: 'slug'
+};
 exports.AccountType = exports.$Enums.AccountType = {
   FREE: 'FREE',
   PRO: 'PRO',

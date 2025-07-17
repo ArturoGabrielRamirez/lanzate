@@ -11255,6 +11255,74 @@ export namespace Prisma {
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
+  export const UserOrderByRelevanceFieldEnum: {
+    email: 'email',
+    first_name: 'first_name',
+    last_name: 'last_name',
+    avatar: 'avatar',
+    password: 'password'
+  };
+
+  export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
+
+
+  export const NotificationOrderByRelevanceFieldEnum: {
+    type: 'type',
+    title: 'title',
+    message: 'message',
+    link: 'link'
+  };
+
+  export type NotificationOrderByRelevanceFieldEnum = (typeof NotificationOrderByRelevanceFieldEnum)[keyof typeof NotificationOrderByRelevanceFieldEnum]
+
+
+  export const StoreOrderByRelevanceFieldEnum: {
+    name: 'name',
+    description: 'description',
+    logo: 'logo',
+    slogan: 'slogan',
+    slug: 'slug',
+    subdomain: 'subdomain'
+  };
+
+  export type StoreOrderByRelevanceFieldEnum = (typeof StoreOrderByRelevanceFieldEnum)[keyof typeof StoreOrderByRelevanceFieldEnum]
+
+
+  export const ProductOrderByRelevanceFieldEnum: {
+    name: 'name',
+    description: 'description',
+    tags: 'tags',
+    image: 'image',
+    video: 'video',
+    slug: 'slug',
+    sku: 'sku',
+    barcode: 'barcode'
+  };
+
+  export type ProductOrderByRelevanceFieldEnum = (typeof ProductOrderByRelevanceFieldEnum)[keyof typeof ProductOrderByRelevanceFieldEnum]
+
+
+  export const BranchOrderByRelevanceFieldEnum: {
+    name: 'name',
+    description: 'description',
+    address: 'address',
+    phone: 'phone',
+    email: 'email'
+  };
+
+  export type BranchOrderByRelevanceFieldEnum = (typeof BranchOrderByRelevanceFieldEnum)[keyof typeof BranchOrderByRelevanceFieldEnum]
+
+
+  export const CategoryOrderByRelevanceFieldEnum: {
+    name: 'name',
+    description: 'description',
+    image: 'image',
+    slug: 'slug'
+  };
+
+  export type CategoryOrderByRelevanceFieldEnum = (typeof CategoryOrderByRelevanceFieldEnum)[keyof typeof CategoryOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references
    */
@@ -11371,6 +11439,7 @@ export namespace Prisma {
     Store?: StoreOrderByRelationAggregateInput
     Account?: AccountOrderByRelationAggregateInput
     Product?: ProductOrderByRelationAggregateInput
+    _relevance?: UserOrderByRelevanceInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -11448,6 +11517,7 @@ export namespace Prisma {
     message?: SortOrder
     link?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
+    _relevance?: NotificationOrderByRelevanceInput
   }
 
   export type NotificationWhereUniqueInput = Prisma.AtLeast<{
@@ -11531,6 +11601,7 @@ export namespace Prisma {
     user?: UserOrderByWithRelationInput
     branches?: BranchOrderByRelationAggregateInput
     products?: ProductOrderByRelationAggregateInput
+    _relevance?: StoreOrderByRelevanceInput
   }
 
   export type StoreWhereUniqueInput = Prisma.AtLeast<{
@@ -11688,6 +11759,7 @@ export namespace Prisma {
     store?: StoreOrderByWithRelationInput
     categories?: CategoryOrderByRelationAggregateInput
     owner?: UserOrderByWithRelationInput
+    _relevance?: ProductOrderByRelevanceInput
   }
 
   export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -11788,6 +11860,7 @@ export namespace Prisma {
     store_id?: SortOrder
     store?: StoreOrderByWithRelationInput
     stock?: ProductStockOrderByRelationAggregateInput
+    _relevance?: BranchOrderByRelevanceInput
   }
 
   export type BranchWhereUniqueInput = Prisma.AtLeast<{
@@ -11919,6 +11992,7 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     slug?: SortOrder
     products?: ProductOrderByRelationAggregateInput
+    _relevance?: CategoryOrderByRelevanceInput
   }
 
   export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -12620,6 +12694,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
   }
@@ -12635,6 +12710,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
@@ -12693,6 +12769,12 @@ export namespace Prisma {
 
   export type ProductOrderByRelationAggregateInput = {
     _count?: SortOrder
+  }
+
+  export type UserOrderByRelevanceInput = {
+    fields: UserOrderByRelevanceFieldEnum | UserOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -12763,6 +12845,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     mode?: QueryMode
     not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
     _count?: NestedIntFilter<$PrismaModel>
@@ -12781,6 +12864,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     mode?: QueryMode
     not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
     _count?: NestedIntNullableFilter<$PrismaModel>
@@ -12810,6 +12894,12 @@ export namespace Prisma {
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type NotificationOrderByRelevanceInput = {
+    fields: NotificationOrderByRelevanceFieldEnum | NotificationOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type NotificationCountOrderByAggregateInput = {
@@ -12874,6 +12964,12 @@ export namespace Prisma {
 
   export type BranchOrderByRelationAggregateInput = {
     _count?: SortOrder
+  }
+
+  export type StoreOrderByRelevanceInput = {
+    fields: StoreOrderByRelevanceFieldEnum | StoreOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type StoreCountOrderByAggregateInput = {
@@ -13020,6 +13116,12 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type ProductOrderByRelevanceInput = {
+    fields: ProductOrderByRelevanceFieldEnum | ProductOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
   export type ProductCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -13102,6 +13204,12 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type BranchOrderByRelevanceInput = {
+    fields: BranchOrderByRelevanceFieldEnum | BranchOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type BranchCountOrderByAggregateInput = {
@@ -13199,6 +13307,12 @@ export namespace Prisma {
     quantity?: SortOrder
     product_id?: SortOrder
     branch_id?: SortOrder
+  }
+
+  export type CategoryOrderByRelevanceInput = {
+    fields: CategoryOrderByRelevanceFieldEnum | CategoryOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type CategoryCountOrderByAggregateInput = {
@@ -13824,6 +13938,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
@@ -13838,6 +13953,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
@@ -13890,6 +14006,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
@@ -13907,6 +14024,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>

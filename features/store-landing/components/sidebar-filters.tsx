@@ -1,9 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
 import SidebarCategorySelect from "./sidebar-category-select";
 import SidebarOrderBySelect from "./sidebar-price-select";
+import SidebarSearchInput from "./sidebar-search-input";
 
 function SidebarFilters() {
     return (
@@ -13,12 +12,7 @@ function SidebarFilters() {
                     <CardTitle>Search</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="flex gap-2">
-                        <Input placeholder="Search" />
-                        <Button variant="outline">
-                            <Search />
-                        </Button>
-                    </div>
+                    <SidebarSearchInput />
                 </CardContent>
             </Card>
             <Card className="w-full">

@@ -197,6 +197,56 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+
+exports.Prisma.UserOrderByRelevanceFieldEnum = {
+  email: 'email',
+  first_name: 'first_name',
+  last_name: 'last_name',
+  avatar: 'avatar',
+  password: 'password'
+};
+
+exports.Prisma.NotificationOrderByRelevanceFieldEnum = {
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  link: 'link'
+};
+
+exports.Prisma.StoreOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  logo: 'logo',
+  slogan: 'slogan',
+  slug: 'slug',
+  subdomain: 'subdomain'
+};
+
+exports.Prisma.ProductOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  tags: 'tags',
+  image: 'image',
+  video: 'video',
+  slug: 'slug',
+  sku: 'sku',
+  barcode: 'barcode'
+};
+
+exports.Prisma.BranchOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  address: 'address',
+  phone: 'phone',
+  email: 'email'
+};
+
+exports.Prisma.CategoryOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  image: 'image',
+  slug: 'slug'
+};
 exports.AccountType = exports.$Enums.AccountType = {
   FREE: 'FREE',
   PRO: 'PRO',
@@ -237,7 +287,9 @@ const config = {
         "native": true
       }
     ],
-    "previewFeatures": [],
+    "previewFeatures": [
+      "fullTextSearchPostgres"
+    ],
     "sourceFilePath": "E:\\personal-dev\\lanzate\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
@@ -261,8 +313,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/prisma\"\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"PRISMA_DATABASE_URL\")\n  directUrl = env(\"PRISMA_DIRECT_URL\")\n}\n\nmodel User {\n  id           Int            @id @default(autoincrement())\n  email        String         @unique\n  first_name   String?\n  last_name    String?\n  created_at   DateTime       @default(now())\n  updated_at   DateTime       @updatedAt\n  avatar       String?\n  password     String\n  Notification Notification[]\n  Store        Store[]\n  Account      Account[]\n  Product      Product[]\n\n  @@map(\"users\")\n}\n\nmodel Notification {\n  id         Int      @id @default(autoincrement())\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n  user_id    Int\n  user       User     @relation(fields: [user_id], references: [id])\n  type       String\n  read       Boolean  @default(false)\n  title      String\n  message    String\n  link       String?\n\n  @@map(\"notifications\")\n}\n\nmodel Store {\n  id Int @id @default(autoincrement())\n\n  name        String\n  description String?\n  logo        String?\n  slogan      String?\n\n  slug      String @unique\n  subdomain String @unique\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  user_id Int\n  user    User @relation(fields: [user_id], references: [id])\n\n  branches Branch[]\n  products Product[]\n\n  @@map(\"stores\")\n}\n\nmodel Account {\n  id         Int      @id @default(autoincrement())\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  user_id Int\n  user    User @relation(fields: [user_id], references: [id])\n\n  type AccountType @default(FREE)\n\n  @@map(\"accounts\")\n}\n\nenum AccountType {\n  FREE\n  PRO\n  ENTERPRISE\n}\n\nmodel Product {\n  id          Int     @id @default(autoincrement())\n  name        String\n  description String?\n\n  price Float\n  stock Int\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  stock_entries ProductStock[]\n  store_id      Int\n  store         Store          @relation(fields: [store_id], references: [id])\n\n  categories Category[]\n  tags       String[]\n\n  image String?\n  video String?\n\n  owner_id Int\n  owner    User @relation(fields: [owner_id], references: [id])\n\n  slug    String  @unique\n  sku     String  @unique\n  barcode String?\n\n  @@map(\"products\")\n}\n\nmodel Branch {\n  id          Int     @id @default(autoincrement())\n  name        String\n  description String?\n\n  address String?\n  phone   String?\n  email   String?\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  store_id Int\n  store    Store @relation(fields: [store_id], references: [id])\n\n  stock ProductStock[]\n\n  @@map(\"branches\")\n}\n\nmodel ProductStock {\n  quantity Int\n\n  product_id Int\n  product    Product @relation(fields: [product_id], references: [id], onDelete: Cascade)\n\n  branch_id Int\n  branch    Branch @relation(fields: [branch_id], references: [id], onDelete: Cascade)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@id([product_id, branch_id])\n  @@map(\"product_stocks\")\n}\n\nmodel Category {\n  id   Int    @id @default(autoincrement())\n  name String\n\n  description String?\n  image       String?\n  slug        String  @unique\n\n  products Product[]\n\n  @@map(\"categories\")\n}\n",
-  "inlineSchemaHash": "90cb90172a002538893645f303879f686f3414cfdf427f549a9239d0ffee6be2",
+  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"./generated/prisma\"\n  previewFeatures = [\"fullTextSearchPostgres\"]\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"PRISMA_DATABASE_URL\")\n  directUrl = env(\"PRISMA_DIRECT_URL\")\n}\n\nmodel User {\n  id           Int            @id @default(autoincrement())\n  email        String         @unique\n  first_name   String?\n  last_name    String?\n  created_at   DateTime       @default(now())\n  updated_at   DateTime       @updatedAt\n  avatar       String?\n  password     String\n  Notification Notification[]\n  Store        Store[]\n  Account      Account[]\n  Product      Product[]\n\n  @@map(\"users\")\n}\n\nmodel Notification {\n  id         Int      @id @default(autoincrement())\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n  user_id    Int\n  user       User     @relation(fields: [user_id], references: [id])\n  type       String\n  read       Boolean  @default(false)\n  title      String\n  message    String\n  link       String?\n\n  @@map(\"notifications\")\n}\n\nmodel Store {\n  id Int @id @default(autoincrement())\n\n  name        String\n  description String?\n  logo        String?\n  slogan      String?\n\n  slug      String @unique\n  subdomain String @unique\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  user_id Int\n  user    User @relation(fields: [user_id], references: [id])\n\n  branches Branch[]\n  products Product[]\n\n  @@map(\"stores\")\n}\n\nmodel Account {\n  id         Int      @id @default(autoincrement())\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  user_id Int\n  user    User @relation(fields: [user_id], references: [id])\n\n  type AccountType @default(FREE)\n\n  @@map(\"accounts\")\n}\n\nenum AccountType {\n  FREE\n  PRO\n  ENTERPRISE\n}\n\nmodel Product {\n  id          Int     @id @default(autoincrement())\n  name        String\n  description String?\n\n  price Float\n  stock Int\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  stock_entries ProductStock[]\n  store_id      Int\n  store         Store          @relation(fields: [store_id], references: [id])\n\n  categories Category[]\n  tags       String[]\n\n  image String?\n  video String?\n\n  owner_id Int\n  owner    User @relation(fields: [owner_id], references: [id])\n\n  slug    String  @unique\n  sku     String  @unique\n  barcode String?\n\n  @@map(\"products\")\n}\n\nmodel Branch {\n  id          Int     @id @default(autoincrement())\n  name        String\n  description String?\n\n  address String?\n  phone   String?\n  email   String?\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  store_id Int\n  store    Store @relation(fields: [store_id], references: [id])\n\n  stock ProductStock[]\n\n  @@map(\"branches\")\n}\n\nmodel ProductStock {\n  quantity Int\n\n  product_id Int\n  product    Product @relation(fields: [product_id], references: [id], onDelete: Cascade)\n\n  branch_id Int\n  branch    Branch @relation(fields: [branch_id], references: [id], onDelete: Cascade)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@id([product_id, branch_id])\n  @@map(\"product_stocks\")\n}\n\nmodel Category {\n  id   Int    @id @default(autoincrement())\n  name String\n\n  description String?\n  image       String?\n  slug        String  @unique\n\n  products Product[]\n\n  @@map(\"categories\")\n}\n",
+  "inlineSchemaHash": "ae60071f2341d9241461839938301d42ee5eb1ad5bd4e2895fd3ce3b7d137502",
   "copyEngine": true
 }
 

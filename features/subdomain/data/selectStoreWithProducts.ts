@@ -4,7 +4,7 @@ import { SelectStoreWithProductsReturn } from "../types/types";
 import { formatErrorResponse } from "@/utils/lib";
 import { PrismaClient } from "@/prisma/generated/prisma";
 
-export async function selectStoreWithProducts(subdomain: string, category: string | undefined, sort: string | undefined): Promise<SelectStoreWithProductsReturn> {
+export async function selectStoreWithProducts(subdomain: string, category: string | undefined, sort: string | undefined, search: string | undefined): Promise<SelectStoreWithProductsReturn> {
     try {
 
         const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
@@ -42,10 +42,57 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
                                         in: categoryIds.map(Number)
                                     }
                                 }
-                            }
+                            },
+                            OR: [
+                                {
+                                    name: {
+                                        search: search
+                                    }
+                                },
+                                {
+                                    name: {
+                                        contains: search,
+                                        mode: "insensitive"
+                                    }
+                                },
+                                {
+                                    description: {
+                                        search: search
+                                    }
+                                },
+                                {
+                                    description: {
+                                        contains: search, mode: "insensitive"
+                                    }
+                                }
+                            ]
                         }
-                        : {},
-                    orderBy: orderBy
+                        : {
+                            OR: [
+                                {
+                                    name: {
+                                        search: search
+                                    }
+                                },
+                                {
+                                    name: {
+                                        contains: search,
+                                        mode: "insensitive"
+                                    }
+                                },
+                                {
+                                    description: {
+                                        search: search
+                                    }
+                                },
+                                {
+                                    description: {
+                                        contains: search, mode: "insensitive"
+                                    }
+                                }
+                            ]
+                        },
+                    orderBy: orderBy,
                 }
             },
         })

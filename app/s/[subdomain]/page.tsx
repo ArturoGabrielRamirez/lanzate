@@ -17,7 +17,7 @@ type Props = {
 export default async function StorePage({ params, searchParams }: Props) {
     const { subdomain } = await params
     const { payload: storeData, error } = await getStoreWithProducts(subdomain);
-    const { category, price, sort, search } = await loadFilterParams(searchParams)
+    const { category, sort, search } = await loadFilterParams(searchParams)
 
     if (error || !storeData) {
         return <div>Tienda no encontrada</div>;
@@ -67,7 +67,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                             <ProductCardSkeleton />
                         </div>
                     )} key={category}>
-                        <ProductList subdomain={subdomain} category={category} sort={sort} />
+                        <ProductList subdomain={subdomain} category={category} sort={sort} search={search} />
                     </Suspense>
                 </div>
             </div>
