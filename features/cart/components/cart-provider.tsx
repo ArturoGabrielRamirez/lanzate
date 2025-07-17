@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { CartContextType, CartItemType } from "../types"
 
 const CartContext = createContext<CartContextType>({
@@ -20,9 +20,28 @@ export const useCart = () => useContext(CartContext)
 
 function CartProvider({ children }: Props) {
 
-    const [cart, setCart] = useState<CartItemType[]>(JSON.parse(localStorage.getItem("cart") || "[]"))
-    const [total, setTotal] = useState(JSON.parse(localStorage.getItem("total") || "0"))
-    const [quantity, setQuantity] = useState(JSON.parse(localStorage.getItem("quantity") || "0"))
+    const [cart, setCart] = useState<CartItemType[]>([])
+    const [total, setTotal] = useState(0)
+    const [quantity, setQuantity] = useState(0)
+
+    useEffect(() => {
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]")
+        const total = JSON.parse(localStorage.getItem("total") || "0")
+        const quantity = JSON.parse(localStorage.getItem("quantity") || "0")
+
+        if (cart.length > 0) {
+            setCart(cart)
+        }
+
+        if (total > 0) {
+            setTotal(total)
+        }
+
+        if (quantity > 0) {
+            setQuantity(quantity)
+        }
+
+    }, [])
 
     const addToCart = (product: CartItemType) => {
         const existingProduct = cart.find(item => item.id === product.id)

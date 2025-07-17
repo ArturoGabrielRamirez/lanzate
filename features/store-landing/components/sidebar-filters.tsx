@@ -35,7 +35,7 @@ function SidebarFilters() {
                     </div>
                 </CardContent>
             </Card>
-            <Card className="w-full">
+            {/* <Card className="w-full">
                 <CardHeader>
                     <CardTitle>Price Range</CardTitle>
                 </CardHeader>
@@ -45,7 +45,7 @@ function SidebarFilters() {
                         <Input placeholder="Max $" />
                     </div>
                 </CardContent>
-            </Card>
+            </Card> */}
         </div>
     )
 }
