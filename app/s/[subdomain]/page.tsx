@@ -67,7 +67,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                             <ProductCardSkeleton />
                         </div>
                     )} key={category}>
-                        <ProductList subdomain={subdomain} category={category} />
+                        <ProductList subdomain={subdomain} category={category} sort={sort} />
                     </Suspense>
                 </div>
             </div>

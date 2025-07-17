@@ -8,11 +8,12 @@ import ProductCard from "./product-card";
 type Props = {
     subdomain: string
     category: string | undefined
+    sort: string | undefined
 }
 
-async function ProductList({ subdomain, category }: Props) {
+async function ProductList({ subdomain, category, sort }: Props) {
 
-    const { payload: storeData, error } = await getStoreWithProducts(subdomain, category);
+    const { payload: storeData, error } = await getStoreWithProducts(subdomain, category, sort);
 
     if (error || !storeData) {
         return <div>Tienda no encontrada</div>;

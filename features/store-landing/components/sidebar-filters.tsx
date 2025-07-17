@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import SidebarCategorySelect from "./sidebar-category-select";
+import SidebarOrderBySelect from "./sidebar-price-select";
 
 function SidebarFilters() {
     return (
@@ -27,19 +27,7 @@ function SidebarFilters() {
                 </CardHeader>
                 <CardContent>
                     <div className="flex gap-2">
-                        <Select defaultValue="price-asc">
-                            <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Select a product" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="name-asc">Name (A-Z)</SelectItem>
-                                <SelectItem value="name-desc">Name (Z-A)</SelectItem>
-                                <SelectItem value="price-asc">Price (Low-High)</SelectItem>
-                                <SelectItem value="price-desc">Price (High-Low)</SelectItem>
-                                <SelectItem value="created-asc">Oldest</SelectItem>
-                                <SelectItem value="created-desc">Newest</SelectItem>
-                            </SelectContent>
-                        </Select>
+                        <SidebarOrderBySelect />
                     </div>
                 </CardContent>
             </Card>

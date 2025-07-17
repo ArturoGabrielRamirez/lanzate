@@ -4,7 +4,7 @@ import { SelectStoreWithProductsReturn } from "../types/types";
 import { formatErrorResponse } from "@/utils/lib";
 import { PrismaClient } from "@/prisma/generated/prisma";
 
-export async function selectStoreWithProducts(subdomain: string, category: string | undefined): Promise<SelectStoreWithProductsReturn> {
+export async function selectStoreWithProducts(subdomain: string, category: string | undefined, sort: string | undefined): Promise<SelectStoreWithProductsReturn> {
     try {
 
         const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
@@ -14,9 +14,23 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
             ? category.split(',').map(id => id.trim())
             : undefined;
 
+        const orderBy: { name?: 'asc' | 'desc', price?: 'asc' | 'desc', created_at?: 'asc' | 'desc' } = {}
+
+        if (sort?.includes('name')) {
+            orderBy.name = sort.includes('-desc') ? 'desc' : 'asc'
+        }
+
+        if (sort?.includes('price')) {
+            orderBy.price = sort.includes('-desc') ? 'desc' : 'asc'
+        }
+
+        if (sort?.includes('created')) {
+            orderBy.created_at = sort.includes('-desc') ? 'desc' : 'asc'
+        }
+
         const result = await prisma.store.findUnique({
             where: {
-                subdomain: sanitizedSubdomain
+                subdomain: sanitizedSubdomain,
             },
             include: {
                 products: {
@@ -30,9 +44,10 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
                                 }
                             }
                         }
-                        : {}
+                        : {},
+                    orderBy: orderBy
                 }
-            }
+            },
         })
 
         return {

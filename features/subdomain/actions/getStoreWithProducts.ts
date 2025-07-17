@@ -5,9 +5,9 @@ import { selectStoreWithProducts } from "../data/selectStoreWithProducts";
 import { GetStoreWithProductsReturn } from "../types/types";
 
 
-export async function getStoreWithProducts(subdomain: string, category: string | undefined = undefined): Promise<GetStoreWithProductsReturn> {
+export async function getStoreWithProducts(subdomain: string, category: string | undefined = undefined, sort: string | undefined = undefined): Promise<GetStoreWithProductsReturn> {
     try {
-        const { payload: storeData, error, message } = await selectStoreWithProducts(subdomain, category);
+        const { payload: storeData, error, message } = await selectStoreWithProducts(subdomain, category, sort);
 
         if (error) throw new Error(message);
 

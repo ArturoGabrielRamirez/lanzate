@@ -16,7 +16,6 @@ function SidebarCategorySelect() {
 
     const defaultValue = category ? category.split(",").map(v => ({ label: v, value: v })) : []
 
-    
     return (
         <CategorySelect withLabel={false} onChange={handleChange} defaultValue={defaultValue} />
     )
