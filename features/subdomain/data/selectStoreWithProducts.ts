@@ -4,7 +4,7 @@ import { SelectStoreWithProductsReturn } from "../types/types";
 import { formatErrorResponse } from "@/utils/lib";
 import { PrismaClient } from "@/prisma/generated/prisma";
 
-export async function selectStoreWithProducts(subdomain: string, category: string | undefined, sort: string | undefined, search: string | undefined): Promise<SelectStoreWithProductsReturn> {
+export async function selectStoreWithProducts(subdomain: string, category: string | undefined, sort: string | undefined, search: string | undefined, min: string | undefined, max: string | undefined): Promise<SelectStoreWithProductsReturn> {
     try {
 
         const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
@@ -26,6 +26,16 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
 
         if (sort?.includes('created')) {
             orderBy.created_at = sort.includes('-desc') ? 'desc' : 'asc'
+        }
+
+        const priceRange: { gte?: number, lte?: number } = {}
+
+        if (min) {
+            priceRange.gte = parseFloat(min)
+        }
+
+        if (max) {
+            priceRange.lte = parseFloat(max)
         }
 
         const result = await prisma.store.findUnique({
@@ -64,8 +74,9 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
                                     description: {
                                         contains: search, mode: "insensitive"
                                     }
-                                }
-                            ]
+                                },
+                            ],
+                            price: priceRange
                         }
                         : {
                             OR: [
@@ -89,8 +100,9 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
                                     description: {
                                         contains: search, mode: "insensitive"
                                     }
-                                }
-                            ]
+                                },
+                            ],
+                            price: priceRange
                         },
                     orderBy: orderBy,
                 }

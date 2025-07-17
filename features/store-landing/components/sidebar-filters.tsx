@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import SidebarCategorySelect from "./sidebar-category-select";
 import SidebarOrderBySelect from "./sidebar-price-select";
 import SidebarSearchInput from "./sidebar-search-input";
+import SidebarPriceRange from "./sidebar-price-range";
 
 function SidebarFilters() {
     return (
@@ -35,17 +36,14 @@ function SidebarFilters() {
                     </div>
                 </CardContent>
             </Card>
-            {/* <Card className="w-full">
+            <Card className="w-full">
                 <CardHeader>
                     <CardTitle>Price Range</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="flex gap-2">
-                        <Input placeholder="Min $" />
-                        <Input placeholder="Max $" />
-                    </div>
+                    <SidebarPriceRange />
                 </CardContent>
-            </Card> */}
+            </Card>
         </div>
     )
 }
