@@ -9,8 +9,7 @@ import { formatErrorResponse } from '@/utils/lib'
 export const handleSignup = async (payload: any): Promise<ResponseType<any>> => {
     try {
 
-        const supabase = await createServerSideClient()
-
+        const supabase = createServerSideClient()
         const email = payload.email?.toString() || ''
         const password = payload.password?.toString() || ''
 
@@ -19,16 +18,11 @@ export const handleSignup = async (payload: any): Promise<ResponseType<any>> => 
             password,
         })
 
-        if (signUpError) {
-            throw new Error(signUpError.message)
-        }
+        if (signUpError) throw new Error(signUpError.message)
 
         const user = signUpData?.user
 
-
-        if (!user) {
-            throw new Error('No user returned')
-        }
+        if (!user) throw new Error('No user returned')
 
         const { payload: existingUser } = await getUserByEmail(user.email ?? "")
 

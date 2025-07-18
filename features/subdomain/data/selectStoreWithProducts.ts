@@ -1,40 +1,122 @@
 "use server"
 
-import { createServerSideClient } from "@/utils/supabase/server";
 import { SelectStoreWithProductsReturn } from "../types/types";
 import { formatErrorResponse } from "@/utils/lib";
+import { PrismaClient } from "@/prisma/generated/prisma";
 
-export async function selectStoreWithProducts(subdomain: string): Promise<SelectStoreWithProductsReturn> {
+export async function selectStoreWithProducts(subdomain: string, category: string | undefined, sort: string | undefined, search: string | undefined, min: string | undefined, max: string | undefined, limit: number = 10, page: number = 1): Promise<SelectStoreWithProductsReturn> {
+    console.log("🚀 ~ selectStoreWithProducts ~ limit:", limit)
+    console.log("🚀 ~ selectStoreWithProducts ~ page:", page)
     try {
 
         const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
-        const client = createServerSideClient();
+        const prisma = new PrismaClient()
 
-        const { data: store, error: storeError } = await client
-            .from('stores')
-            .select('id, name, subdomain, created_at')
-            .eq('subdomain', sanitizedSubdomain)
-            .single();
+        const categoryIds = category
+            ? category.split(',').map(id => id.trim())
+            : undefined;
 
-        if (storeError || !store) {
-            throw new Error(`Store not found: ${storeError?.message || 'Unknown error'}`);
+        const orderBy: { name?: 'asc' | 'desc', price?: 'asc' | 'desc', created_at?: 'asc' | 'desc' } = {}
+
+        if (sort?.includes('name')) {
+            orderBy.name = sort.includes('-desc') ? 'desc' : 'asc'
         }
 
-        const { data: products, error: productsError } = await client
-            .from('products')
-            .select('*')
-            .eq('store_id', store.id);
-
-        if (productsError) {
-            throw new Error(`Products not found: ${productsError.message}`);
+        if (sort?.includes('price')) {
+            orderBy.price = sort.includes('-desc') ? 'desc' : 'asc'
         }
+
+        if (sort?.includes('created')) {
+            orderBy.created_at = sort.includes('-desc') ? 'desc' : 'asc'
+        }
+
+        const priceRange: { gte?: number, lte?: number } = {}
+
+        if (min) {
+            priceRange.gte = parseFloat(min)
+        }
+
+        if (max) {
+            priceRange.lte = parseFloat(max)
+        }
+
+        const result = await prisma.store.findUnique({
+            where: {
+                subdomain: sanitizedSubdomain,
+            },
+            include: {
+                products: {
+                    where: categoryIds
+                        ? {
+                            categories: {
+                                some: {
+                                    id: {
+                                        in: categoryIds.map(Number)
+                                    }
+                                }
+                            },
+                            OR: [
+                                {
+                                    name: {
+                                        search: search
+                                    }
+                                },
+                                {
+                                    name: {
+                                        contains: search,
+                                        mode: "insensitive"
+                                    }
+                                },
+                                {
+                                    description: {
+                                        search: search
+                                    }
+                                },
+                                {
+                                    description: {
+                                        contains: search, mode: "insensitive"
+                                    }
+                                },
+                            ],
+                            price: priceRange
+                        }
+                        : {
+                            OR: [
+                                {
+                                    name: {
+                                        search: search
+                                    }
+                                },
+                                {
+                                    name: {
+                                        contains: search,
+                                        mode: "insensitive"
+                                    }
+                                },
+                                {
+                                    description: {
+                                        search: search
+                                    }
+                                },
+                                {
+                                    description: {
+                                        contains: search, mode: "insensitive"
+                                    }
+                                },
+                            ],
+                            price: priceRange
+                        },
+                    orderBy: orderBy,
+                    take: limit,
+                    skip: limit * (page - 1)
+                }
+            },
+        })
+        console.log("🚀 ~ selectStoreWithProducts ~ limit * (page - 1):", limit * (page - 1))
 
         return {
             message: "Store with products fetched successfully from db",
-            payload: {
-                store,
-                products: products || []
-            },
+            payload: result,
             error: false
         };
 

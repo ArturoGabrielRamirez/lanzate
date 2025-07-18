@@ -1,7 +1,7 @@
+"use server"
 import { NextResponse, type NextRequest } from 'next/server';
 import { extractSubdomain } from '@/features/subdomain/middleware/middleware';
 import { validateSubdomain } from '@/features/subdomain/actions/validateSubdomain';
-import { createMiddlewareSupabaseClient } from './middleware-client';
 import { createServerSideClient } from './server';
 
 
@@ -19,11 +19,9 @@ export async function updateSession(request: NextRequest) {
 
   const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost.com';
   const subdomain = extractSubdomain(request);
-  console.log("🚀 ~ updateSession ~ subdomain:", subdomain)
   const { pathname } = request.nextUrl;
 
   if (subdomain) {
-    console.log("🚀 ~ updateSession ~ subdomain:", subdomain)
     if (pathname.startsWith('/s/')) return response;
 
     const { payload: exists } = await validateSubdomain(subdomain);
@@ -48,11 +46,17 @@ export async function updateSession(request: NextRequest) {
     }
 
     if (pathname === '/') {
-      return NextResponse.rewrite(new URL(`/s/${subdomain}`, request.url));
+      const url = new URL(`/s/${subdomain}`, request.url)
+      url.search = request.nextUrl.search;
+      return NextResponse.rewrite(url);
     }
 
     if (pathname === '/cart') {
       return NextResponse.rewrite(new URL(`/s/${subdomain}/cart`, request.url));
+    }
+
+    if (pathname === '/checkout') {
+      return NextResponse.rewrite(new URL(`/s/${subdomain}/checkout`, request.url));
     }
 
     if (pathname.startsWith('/item/')) {
@@ -66,7 +70,6 @@ export async function updateSession(request: NextRequest) {
 
   // Dominio raíz
   if (!user && (pathname === '/account' || pathname.includes('/dashboard'))) {
-    console.log("🚀 ~ updateSession ~ pathname:", "First condition")
     const url = request.nextUrl.clone();
     url.hostname = "localhost.com";
     url.pathname = '/account';
@@ -74,7 +77,6 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (user && (pathname.includes('/login') || pathname.includes('/signup'))) {
-    console.log("🚀 ~ updateSession ~ pathname:", "Second condition")
     const url = request.nextUrl.clone();
     url.hostname = "localhost.com";
     url.pathname = '/account';

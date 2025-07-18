@@ -21,9 +21,14 @@ const Title = ({ title, breadcrumbs, className }: TitleProps) => {
                     </Link>
                     <span className="text-xl">/</span>
                     {breadcrumbs.map((breadcrumb, index) => (
-                        <Link key={index} href={breadcrumb.href} className="capitalize hover:text-primary">
-                            {breadcrumb.label}
-                        </Link>
+                        <>
+                            <Link key={index} href={breadcrumb.href} className="capitalize hover:text-primary">
+                                {breadcrumb.label}
+                            </Link>
+                            {index !== breadcrumbs.length - 1 && (
+                                <span className="text-xl">/</span>
+                            )}
+                        </>
                     ))}
                 </div>
             )}

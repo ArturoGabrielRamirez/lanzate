@@ -1,4 +1,4 @@
-import { Product as PrismaProduct } from "@/prisma/generated/prisma";
+import { Product as PrismaProduct, Store } from "@/prisma/generated/prisma";
 
 export type Product = PrismaProduct;
 
@@ -9,10 +9,9 @@ export type SubdomainData = {
     name: string;
 };
 
-export type StoreWithProducts = {
-    store: SubdomainData;
-    products: Product[];
-};
+export type StoreWithProducts = Store & {
+    products: Product[]
+}
 
 export type GetStoreWithProductsReturn = {
     message: string;
@@ -28,7 +27,7 @@ export type GetAllStoresReturn = {
 
 export type GetStoreBySubdomainReturn = {
     message: string;
-    payload: SubdomainData | null;
+    payload: SubdomainData | Store | null;
     error: boolean;
 };
 

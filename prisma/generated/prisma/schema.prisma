@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "./generated/prisma"
+  provider        = "prisma-client-js"
+  output          = "./generated/prisma"
+  previewFeatures = ["fullTextSearchPostgres"]
 }
 
 datasource db {
@@ -21,6 +22,8 @@ model User {
   Notification Notification[]
   Store        Store[]
   Account      Account[]
+  Product      Product[]
+  Order        Order[]
 
   @@map("users")
 }
@@ -59,6 +62,7 @@ model Store {
 
   branches Branch[]
   products Product[]
+  orders   Order[]
 
   @@map("stores")
 }
@@ -97,6 +101,25 @@ model Product {
   store_id      Int
   store         Store          @relation(fields: [store_id], references: [id])
 
+  categories Category[]
+  tags       String[]
+
+  image String?
+  video String?
+
+  owner_id Int
+  owner    User @relation(fields: [owner_id], references: [id])
+
+  slug    String  @unique
+  sku     String  @unique
+  barcode String?
+
+  is_active    Boolean @default(true)
+  is_featured  Boolean @default(false)
+  is_published Boolean @default(false)
+
+  order_items OrderItem[]
+
   @@map("products")
 }
 
@@ -117,6 +140,8 @@ model Branch {
 
   stock ProductStock[]
 
+  orders Order[]
+
   @@map("branches")
 }
 
@@ -134,4 +159,85 @@ model ProductStock {
 
   @@id([product_id, branch_id])
   @@map("product_stocks")
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  description String?
+  image       String?
+  slug        String  @unique
+
+  products Product[]
+
+  @@map("categories")
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
+
+  store_id Int
+  store    Store @relation(fields: [store_id], references: [id])
+
+  branch_id Int
+  branch    Branch @relation(fields: [branch_id], references: [id])
+
+  items OrderItem[]
+
+  total_price    Float
+  total_quantity Int
+
+  shipping_method String      @default("pickup")
+  status          OrderStatus @default(PENDING)
+
+  payment OrderPayment?
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id Int @id @default(autoincrement())
+
+  order_id Int
+  order    Order @relation(fields: [order_id], references: [id])
+
+  product_id Int
+  product    Product @relation(fields: [product_id], references: [id])
+
+  quantity Int
+  price    Float
+
+  @@map("order_items")
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  READY
+  SHIPPED
+  DELIVERED
+}
+
+model OrderPayment {
+  id Int @id @default(autoincrement())
+
+  order_id Int   @unique
+  order    Order @relation(fields: [order_id], references: [id])
+
+  amount Float
+  status OrderPaymentStatus @default(PENDING)
+
+  @@map("order_payments")
+}
+
+enum OrderPaymentStatus {
+  PENDING
+  PAID
 }
