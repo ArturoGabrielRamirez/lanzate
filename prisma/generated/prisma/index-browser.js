@@ -179,7 +179,10 @@ exports.Prisma.ProductScalarFieldEnum = {
   owner_id: 'owner_id',
   slug: 'slug',
   sku: 'sku',
-  barcode: 'barcode'
+  barcode: 'barcode',
+  is_active: 'is_active',
+  is_featured: 'is_featured',
+  is_published: 'is_published'
 };
 
 exports.Prisma.BranchScalarFieldEnum = {
@@ -208,6 +211,34 @@ exports.Prisma.CategoryScalarFieldEnum = {
   description: 'description',
   image: 'image',
   slug: 'slug'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id',
+  store_id: 'store_id',
+  branch_id: 'branch_id',
+  total_price: 'total_price',
+  total_quantity: 'total_quantity',
+  shipping_method: 'shipping_method',
+  status: 'status'
+};
+
+exports.Prisma.OrderItemScalarFieldEnum = {
+  id: 'id',
+  order_id: 'order_id',
+  product_id: 'product_id',
+  quantity: 'quantity',
+  price: 'price'
+};
+
+exports.Prisma.OrderPaymentScalarFieldEnum = {
+  id: 'id',
+  order_id: 'order_id',
+  amount: 'amount',
+  status: 'status'
 };
 
 exports.Prisma.SortOrder = {
@@ -274,10 +305,27 @@ exports.Prisma.CategoryOrderByRelevanceFieldEnum = {
   image: 'image',
   slug: 'slug'
 };
+
+exports.Prisma.OrderOrderByRelevanceFieldEnum = {
+  shipping_method: 'shipping_method'
+};
 exports.AccountType = exports.$Enums.AccountType = {
   FREE: 'FREE',
   PRO: 'PRO',
   ENTERPRISE: 'ENTERPRISE'
+};
+
+exports.OrderStatus = exports.$Enums.OrderStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  READY: 'READY',
+  SHIPPED: 'SHIPPED',
+  DELIVERED: 'DELIVERED'
+};
+
+exports.OrderPaymentStatus = exports.$Enums.OrderPaymentStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID'
 };
 
 exports.Prisma.ModelName = {
@@ -288,7 +336,10 @@ exports.Prisma.ModelName = {
   Product: 'Product',
   Branch: 'Branch',
   ProductStock: 'ProductStock',
-  Category: 'Category'
+  Category: 'Category',
+  Order: 'Order',
+  OrderItem: 'OrderItem',
+  OrderPayment: 'OrderPayment'
 };
 
 /**

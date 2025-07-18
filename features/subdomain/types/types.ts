@@ -27,7 +27,7 @@ export type GetAllStoresReturn = {
 
 export type GetStoreBySubdomainReturn = {
     message: string;
-    payload: SubdomainData | null;
+    payload: SubdomainData | Store | null;
     error: boolean;
 };
 

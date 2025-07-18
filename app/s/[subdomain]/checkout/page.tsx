@@ -14,7 +14,10 @@ async function CheckoutPage({ params }: { params: Promise<{ subdomain: string }>
 
     return (
         <section className="p-4 grow flex flex-col">
-            <Title title="Checkout" breadcrumbs={[{ label: "checkout", href: "/checkout" }]} />
+            <Title title="Checkout" breadcrumbs={[
+                { label: "cart", href: "/cart" },
+                { label: "checkout", href: "/checkout" }
+            ]} />
             <div className="flex flex-col gap-4 lg:flex-row">
                 <CheckoutForm subdomain={subdomain} userId={user.id} />
                 <CartResume />

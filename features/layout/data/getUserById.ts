@@ -6,7 +6,7 @@ import { formatErrorResponse } from "@/utils/lib"
 
 export async function getUserById(id: number): Promise<{
     payload: User & { Account: Account[] } | null,
-    error: any,
+    error: Boolean ,
     message: string
 }> {
     try {
