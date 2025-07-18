@@ -223,6 +223,7 @@ enum OrderStatus {
   READY
   SHIPPED
   DELIVERED
+  CANCELLED
 }
 
 model OrderPayment {

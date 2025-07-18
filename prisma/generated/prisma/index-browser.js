@@ -320,7 +320,8 @@ exports.OrderStatus = exports.$Enums.OrderStatus = {
   PROCESSING: 'PROCESSING',
   READY: 'READY',
   SHIPPED: 'SHIPPED',
-  DELIVERED: 'DELIVERED'
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
 };
 
 exports.OrderPaymentStatus = exports.$Enums.OrderPaymentStatus = {

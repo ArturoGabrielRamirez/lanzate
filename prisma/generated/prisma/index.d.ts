@@ -87,7 +87,8 @@ export const OrderStatus: {
   PROCESSING: 'PROCESSING',
   READY: 'READY',
   SHIPPED: 'SHIPPED',
-  DELIVERED: 'DELIVERED'
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
 };
 
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]

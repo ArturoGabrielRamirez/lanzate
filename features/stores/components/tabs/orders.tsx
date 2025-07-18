@@ -1,5 +1,5 @@
 import { getOrdersFromStore } from "../../actions/getOrdersFromStore"
-
+import OrdersTable from "../orders-table"
 type Props = {
     slug: string
 }
@@ -7,6 +7,7 @@ type Props = {
 async function OrdersTab({ slug }: Props) {
 
     const { payload: orders, error, message } = await getOrdersFromStore(slug)
+    console.log("🚀 ~ OrdersTab ~ orders:", orders)
 
     if (error || !orders) {
         return console.log(message)
@@ -14,9 +15,7 @@ async function OrdersTab({ slug }: Props) {
 
     return (
         <div>
-            {orders.map((order) => (
-                <div key={order.id}>{order.id}</div>
-            ))}
+            <OrdersTable data={orders} />
         </div>
     )
 }
