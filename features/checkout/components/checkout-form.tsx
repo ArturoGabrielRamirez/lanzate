@@ -11,11 +11,10 @@ import { Button } from "@/components/ui/button"
 import { deliveryOrderSchema, pickupOrderSchema } from "../schemas/order-schema"
 import { yupResolver } from "@hookform/resolvers/yup"
 
-
 function CheckoutForm({ subdomain, userId }: { subdomain: string, userId: string }) {
 
     const [shippingMethod, setShippingMethod] = useState<"delivery" | "pickup">("delivery")
-    const { cart } = useCart()
+    const { cart, clearCart } = useCart()
 
     const handleShippingMethodChange = (e: React.MouseEvent<HTMLButtonElement>) => {
         const target = e.target as HTMLButtonElement
@@ -26,7 +25,8 @@ function CheckoutForm({ subdomain, userId }: { subdomain: string, userId: string
     }
 
     const handleSubmit = async (formData: any) => {
-        return await createNewOrder(formData, cart, shippingMethod, subdomain, userId)
+        await createNewOrder(formData, cart, shippingMethod, subdomain, userId)
+        clearCart()
     }
 
     return (

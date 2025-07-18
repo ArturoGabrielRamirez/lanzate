@@ -159,7 +159,6 @@ export async function insertNewOrder(formData: any, cart: any[], shippingMethod:
         }
 
     } catch (error) {
-        console.log("🚀 ~ awaitclient.$transaction ~ error:", error)
         return formatErrorResponse("Error inserting new order", error)
     }
 }
