@@ -8,9 +8,11 @@ import { useState } from "react"
 import { createNewOrder } from "../actions/createNewOrder"
 import { useCart } from "@/features/cart/components/cart-provider"
 import { Button } from "@/components/ui/button"
+import { deliveryOrderSchema, pickupOrderSchema } from "../schemas/order-schema"
+import { yupResolver } from "@hookform/resolvers/yup"
 
 
-function CheckoutForm() {
+function CheckoutForm({ subdomain, userId }: { subdomain: string, userId: string }) {
 
     const [shippingMethod, setShippingMethod] = useState<"delivery" | "pickup">("delivery")
     const { cart } = useCart()
@@ -24,7 +26,7 @@ function CheckoutForm() {
     }
 
     const handleSubmit = async (formData: any) => {
-        return await createNewOrder(formData, cart, shippingMethod)
+        return await createNewOrder(formData, cart, shippingMethod, subdomain, userId)
     }
 
     return (
@@ -32,6 +34,7 @@ function CheckoutForm() {
             className="flex-1"
             contentButton="Continue"
             formAction={handleSubmit}
+            resolver={yupResolver(shippingMethod === "delivery" ? deliveryOrderSchema : pickupOrderSchema)}
         >
             <h3 className="text-xl font-bold">Personal Information</h3>
             <div className="grid grid-cols-2 gap-4">
@@ -73,16 +76,20 @@ function CheckoutForm() {
                     </Card>
                 </Button>
             </div>
-            <div className="w-full h-px bg-muted-foreground/20"></div>
-            <h3 className="text-xl font-bold">Address Information</h3>
-            <div className="grid grid-cols-2 gap-4">
-                <InputField name="address" label="Address" />
-                <InputField name="city" label="City" />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-                <InputField name="state" label="State" />
-                <InputField name="country" label="Country" />
-            </div>
+            {shippingMethod === "delivery" && (
+                <>
+                    <div className="w-full h-px bg-muted-foreground/20"></div>
+                    <h3 className="text-xl font-bold">Address Information</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                        <InputField name="address" label="Address" />
+                        <InputField name="city" label="City" />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <InputField name="state" label="State" />
+                        <InputField name="country" label="Country" />
+                    </div>
+                </>
+            )}
         </Form>
     )
 }
