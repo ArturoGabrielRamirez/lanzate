@@ -7,6 +7,7 @@ import { ProductCard } from "@/features/stores/components"
 import { Plus } from "lucide-react"
 
 import { ProductsTabProps } from "@/features/stores/types"
+import ProductsTable from "../products-table"
 
 async function ProductsTab({ slug }: ProductsTabProps) {
 
@@ -17,8 +18,8 @@ async function ProductsTab({ slug }: ProductsTabProps) {
     }
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-4 w-full">
-            <Card className="border-dashed">
+        <div /* className="grid grid-cols-1 lg:grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-4 w-full" */>
+            {/* <Card className="border-dashed">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Plus className="size-4" />
@@ -28,10 +29,11 @@ async function ProductsTab({ slug }: ProductsTabProps) {
                 <CardContent className="flex justify-center items-center grow">
                     <CreateProductButton storeId={store.id} />
                 </CardContent>
-            </Card>
-            {store.products.map((product) => (
+            </Card> */}
+            {/* {store.products.map((product) => (
                 <ProductCard key={product.id} product={product} slug={slug} />
-            ))}
+            ))} */}
+            <ProductsTable data={store.products} />
         </div>
     )
 }
