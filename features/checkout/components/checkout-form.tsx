@@ -8,10 +8,9 @@ import { useState } from "react"
 import { createNewOrder } from "../actions/createNewOrder"
 import { useCart } from "@/features/cart/components/cart-provider"
 import { Button } from "@/components/ui/button"
-type Props = {
-}
 
-function CheckoutForm({ }: Props) {
+
+function CheckoutForm() {
 
     const [shippingMethod, setShippingMethod] = useState<"delivery" | "pickup">("delivery")
     const { cart } = useCart()
@@ -44,26 +43,32 @@ function CheckoutForm({ }: Props) {
             </div>
             <div className="w-full h-px bg-muted-foreground/20"></div>
             <h3 className="text-xl font-bold">Shipping Information</h3>
-            <div className="flex gap-4">
+            <div className="grid grid-cols-2 gap-4">
                 <Button onClick={handleShippingMethodChange} asChild data-type="delivery">
-                    <Card className={cn("grow cursor-pointer py-6 bg-muted-foreground/10 transition-all duration-300 h-fit", shippingMethod === "delivery" && "bg-primary")}>
+                    <Card className={cn("grow cursor-pointer py-6 bg-muted-foreground/10 transition-all duration-300 h-full", shippingMethod === "delivery" && "bg-primary")}>
                         <CardHeader>
-                            <CardTitle>Delivery</CardTitle>
+                            <CardTitle className="flex gap-2 flex-col items-center">
+                                <Truck className="size-8" />
+                                Delivery
+                            </CardTitle>
                         </CardHeader>
-                        <CardContent className="flex gap-2 justify-between">
-                            <p>Delivery to your address takes 2-3 business days</p>
-                            <Truck className="w-10 h-10" />
+                        <CardContent >
+                            <p className="text-center text-balance">Orders with delivery take up 30 min to 2 hours to be ready.</p>
+                            <p className="text-center text-balance">You will receive a notification when your order is ready for pickup or you can message us at any time.</p>
                         </CardContent>
                     </Card>
                 </Button>
                 <Button onClick={handleShippingMethodChange} asChild data-type="pickup">
-                    <Card  className={cn("grow cursor-pointer py-6 bg-muted-foreground/10 transition-all duration-300 h-fit", shippingMethod === "pickup" && "bg-primary")}>
+                    <Card className={cn("grow cursor-pointer py-6 bg-muted-foreground/10 transition-all duration-300 h-fit", shippingMethod === "pickup" && "bg-primary")}>
                         <CardHeader>
-                            <CardTitle>Pickup</CardTitle>
+                            <CardTitle className="flex gap-2 flex-col items-center">
+                                <MapPin className="size-8" />
+                                Pickup
+                            </CardTitle>
                         </CardHeader>
-                        <CardContent className="flex gap-2 justify-between">
-                            <p>Pickup from our store takes 2-3 business days</p>
-                            <MapPin className="w-10 h-10" />
+                        <CardContent>
+                            <p className="text-center text-balance">Orders with pickup option usually take 5-10 minutes to be ready. </p>
+                            <p className="text-center text-balance">You will receive a notification when your order is ready for pickup or you can message us at any time.</p>
                         </CardContent>
                     </Card>
                 </Button>
