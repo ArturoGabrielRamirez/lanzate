@@ -7,7 +7,7 @@ function CartResume() {
     const { quantity, total } = useCart()
 
     return (
-        <Card className="flex-1 max-w-sm xl:max-w-md bg-accent text-accent-foreground">
+        <Card className="flex-1 max-w-sm xl:max-w-md bg-accent text-accent-foreground w-full grow">
             <CardHeader>
                 <CardTitle className="text-lg font-bold">Cart Resume</CardTitle>
             </CardHeader>
