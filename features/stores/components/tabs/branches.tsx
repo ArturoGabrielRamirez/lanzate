@@ -15,14 +15,6 @@ async function BranchesTab({ slug }: BranchesTabProps) {
             <div className="flex justify-end mb-4">
                 <CreateBranchButton storeId={store.id} />
             </div>
-            {/* {store.branches.map((branch) => (
-                <article key={branch.id} className="border border-border p-4 rounded-md">
-                    <p className="flex items-center gap-2">
-                        <House />
-                        {branch.name}
-                    </p>
-                </article>
-            ))} */}
             <BranchTable branches={store.branches} />
         </>
     )
