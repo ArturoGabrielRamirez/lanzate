@@ -1,3 +1,4 @@
+import CreateBranchButton from "@/features/branches/components/create-branch-button"
 import { getStoresFromSlug } from "../../actions/getStoresFromSlug"
 import BranchTable from "../branch-table"
 import { BranchesTabProps } from "@/features/stores/types"
@@ -11,6 +12,9 @@ async function BranchesTab({ slug }: BranchesTabProps) {
     }
     return (
         <>
+            <div className="flex justify-end mb-4">
+                <CreateBranchButton storeId={store.id} />
+            </div>
             {/* {store.branches.map((branch) => (
                 <article key={branch.id} className="border border-border p-4 rounded-md">
                     <p className="flex items-center gap-2">
