@@ -1,7 +1,6 @@
 "use client"
 import { Badge } from "@/components/ui/badge"
 import { DataTable } from "@/features/layout/components/data-table"
-import { cn } from "@/lib/utils"
 import { Product, Category } from "@/prisma/generated/prisma"
 import { ColumnDef } from "@tanstack/react-table"
 

@@ -12,12 +12,12 @@ async function ProductsTab({ slug }: ProductsTabProps) {
     }
 
     return (
-        <div>
+        <>
             <div className="flex justify-end mb-4">
                 <CreateProductButton storeId={store.id} />
             </div>
             <ProductsTable data={store.products} />
-        </div>
+        </>
     )
 }
 export default ProductsTab

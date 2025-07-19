@@ -18,12 +18,12 @@ async function TabLayout({ children, params }: TabLayoutProps) {
     }
 
     return (
-        <TabsContent value={tab}>
-            <Card>
+        <TabsContent value={tab} className="flex flex-col">
+            <Card className="grow">
                 <CardHeader>
                     <CardTitle>{titles[tab as keyof typeof titles]}</CardTitle>
                 </CardHeader>
-                <CardContent className="gap-4 flex flex-col">
+                <CardContent className="gap-4 flex flex-col grow">
                     {children}
                 </CardContent>
             </Card>
