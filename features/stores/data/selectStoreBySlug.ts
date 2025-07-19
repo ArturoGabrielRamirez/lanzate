@@ -21,9 +21,9 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
             include: {
                 branches: true,
                 products: {
-                    include : {
-                        categories : true,
-                        stock_entries : true
+                    include: {
+                        categories: true,
+                        stock_entries: true
                     }
                 }
             }
