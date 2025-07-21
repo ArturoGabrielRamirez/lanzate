@@ -28,12 +28,11 @@ import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { insertUser } from '../data/insertUser'
 import { ResponseType } from '@/features/layout/types'
-import { formatErrorResponse } from '@/utils/lib'
+import { actionWrapper } from '@/utils/lib'
 import { insertLogEntry } from '@/features/layout/data/insertLogEntry'
 
 export const handleSignup = async (payload: any): Promise<ResponseType<any>> => {
-    try {
-
+    return actionWrapper(async () => {
         const supabase = createServerSideClient()
         const email = payload.email?.toString() || ''
         const password = payload.password?.toString() || ''
@@ -72,15 +71,12 @@ export const handleSignup = async (payload: any): Promise<ResponseType<any>> => 
             details: "User signed up using sign up form"
         })
 
-        if (logError) throw new Error("The action went through but there was an error creating a log entry for this action")
+        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
 
         return {
             error: false,
             message: "User created successfully",
             payload: signUpData.user
         }
-
-    } catch (error) {
-        return formatErrorResponse("Error creating user", error, null)
-    }
+    })
 }
