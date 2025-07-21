@@ -1,10 +1,10 @@
 "use server"
 
 import { PrismaClient } from "@/prisma/generated/prisma"
-import { formatErrorResponse } from "@/utils/lib"
+import { actionWrapper } from "@/utils/lib"
 
 export async function deleteStore(storeId: number) {
-    try {
+    return actionWrapper(async () => {
 
         const client = new PrismaClient()
 
@@ -16,12 +16,6 @@ export async function deleteStore(storeId: number) {
 
         if (!store) throw new Error("Store not found")
 
-        /* await client.branch.deleteMany({
-            where: {
-                store_id: store.id
-            }
-        })
- */
         await client.store.delete({
             where: {
                 id: store.id
@@ -31,7 +25,7 @@ export async function deleteStore(storeId: number) {
                 balance: true,
                 transactions: true,
                 orders: true,
-                products : true,
+                products: true,
             }
         })
 
@@ -40,8 +34,6 @@ export async function deleteStore(storeId: number) {
             payload: store,
             error: false
         }
+    })
 
-    } catch (error) {
-        return formatErrorResponse("Error deleting store", error, null)
-    }
 }
