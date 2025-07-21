@@ -139,7 +139,7 @@ model Branch {
   updated_at DateTime @updatedAt
 
   store_id Int
-  store    Store @relation(fields: [store_id], references: [id])
+  store    Store @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
   stock ProductStock[]
 

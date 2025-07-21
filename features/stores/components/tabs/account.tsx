@@ -3,7 +3,7 @@ import { DeleteStoreButton, EditStoreButton } from "@/features/stores/components
 
 import { AccountTabProps } from "@/features/stores/types"
 
-async function AccountTab({ slug }: AccountTabProps) {
+async function AccountTab({ slug, userId }: AccountTabProps) {
 
     const { payload: store, error } = await getStoresFromSlug(slug)
 
@@ -32,7 +32,7 @@ async function AccountTab({ slug }: AccountTabProps) {
                 </div>
                 <div>
                     <EditStoreButton
-                        userId={store.user_id}
+                        userId={userId}
                         slug={store.slug}
                         store={store}
                     />
@@ -42,7 +42,7 @@ async function AccountTab({ slug }: AccountTabProps) {
                 <h2 className="text-lg font-medium mb-4">Danger zone</h2>
                 <p className="text-sm text-destructive-foreground">You can delete your store by clicking the button below.</p>
                 <p className="text-sm text-destructive-foreground mb-4">Keep in mind that this action is irreversible and it will delete all the data associated with your store.</p>
-                <DeleteStoreButton storeId={store.id} />
+                <DeleteStoreButton storeId={store.id} userId={userId}/>
             </section>
         </>
     )

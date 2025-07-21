@@ -7,11 +7,11 @@ import { Trash2 } from "lucide-react"
 
 import { DeleteStoreButtonProps } from "@/features/stores/types"
 
-function DeleteStoreButton({ storeId }: DeleteStoreButtonProps) {
+function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
 
     const handleDeleteStore = async () => {
         try {
-            const { error, message, payload } = await deleteStore(storeId)
+            const { error, message, payload } = await deleteStore(storeId,userId)
 
             if (error) throw new Error(message)
 

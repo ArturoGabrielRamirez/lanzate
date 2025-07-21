@@ -1,14 +1,20 @@
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { TabPageProps } from "@/features/stores/types"
 import { lazy, Suspense } from "react"
 
 async function TabPage({ params }: TabPageProps) {
 
+    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+
+    if (userError || !user) {
+        return console.error(userMessage)
+    }
     const { tab, slug } = await params
     const LazyComponent = lazy(() => import(`@/features/stores/components/tabs/${tab}`))
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <LazyComponent slug={slug} />
+            <LazyComponent slug={slug} userId={user.id}/>
         </Suspense>
     )
 }

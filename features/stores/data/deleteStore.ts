@@ -16,15 +16,22 @@ export async function deleteStore(storeId: number) {
 
         if (!store) throw new Error("Store not found")
 
-        await client.branch.deleteMany({
+        /* await client.branch.deleteMany({
             where: {
                 store_id: store.id
             }
         })
-
+ */
         await client.store.delete({
             where: {
                 id: store.id
+            },
+            include: {
+                branches: true,
+                balance: true,
+                transactions: true,
+                orders: true,
+                products : true,
             }
         })
 
