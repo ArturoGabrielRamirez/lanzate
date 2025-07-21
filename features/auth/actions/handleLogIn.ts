@@ -39,7 +39,7 @@ export async function handleLogIn(formData: HandleLoginAction) {
 
     if (signInError || !authUser) throw new Error('Invalid credentials')
 
-    const { error, message, payload: user } = await getUserByEmail(authUser.email || "")
+    const { error, payload: user } = await getUserByEmail(authUser.email || "")
 
     if (error || !user) throw new Error("There was an error after logging in")
 
