@@ -25,7 +25,8 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
                         categories: true,
                         stock_entries: true
                     }
-                }
+                },
+                balance : true,
             }
         })
 
