@@ -223,7 +223,9 @@ exports.Prisma.OrderScalarFieldEnum = {
   total_price: 'total_price',
   total_quantity: 'total_quantity',
   shipping_method: 'shipping_method',
-  status: 'status'
+  status: 'status',
+  is_paid: 'is_paid',
+  payment_date: 'payment_date'
 };
 
 exports.Prisma.OrderItemScalarFieldEnum = {
@@ -239,6 +241,31 @@ exports.Prisma.OrderPaymentScalarFieldEnum = {
   order_id: 'order_id',
   amount: 'amount',
   status: 'status'
+};
+
+exports.Prisma.StoreBalanceScalarFieldEnum = {
+  id: 'id',
+  store_id: 'store_id',
+  current_balance: 'current_balance',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.TransactionScalarFieldEnum = {
+  id: 'id',
+  store_id: 'store_id',
+  type: 'type',
+  amount: 'amount',
+  balance_before: 'balance_before',
+  balance_after: 'balance_after',
+  description: 'description',
+  reference_type: 'reference_type',
+  reference_id: 'reference_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  notes: 'notes',
+  created_by: 'created_by',
+  branch_id: 'branch_id'
 };
 
 exports.Prisma.SortOrder = {
@@ -309,6 +336,12 @@ exports.Prisma.CategoryOrderByRelevanceFieldEnum = {
 exports.Prisma.OrderOrderByRelevanceFieldEnum = {
   shipping_method: 'shipping_method'
 };
+
+exports.Prisma.TransactionOrderByRelevanceFieldEnum = {
+  description: 'description',
+  reference_type: 'reference_type',
+  notes: 'notes'
+};
 exports.AccountType = exports.$Enums.AccountType = {
   FREE: 'FREE',
   PRO: 'PRO',
@@ -329,6 +362,18 @@ exports.OrderPaymentStatus = exports.$Enums.OrderPaymentStatus = {
   PAID: 'PAID'
 };
 
+exports.TransactionType = exports.$Enums.TransactionType = {
+  SALE: 'SALE',
+  REFUND: 'REFUND',
+  MANUAL_INCOME: 'MANUAL_INCOME',
+  MANUAL_EXPENSE: 'MANUAL_EXPENSE',
+  SERVICE_INCOME: 'SERVICE_INCOME',
+  SERVICE_REFUND: 'SERVICE_REFUND',
+  ADJUSTMENT: 'ADJUSTMENT',
+  WITHDRAWAL: 'WITHDRAWAL',
+  DEPOSIT: 'DEPOSIT'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Notification: 'Notification',
@@ -340,7 +385,9 @@ exports.Prisma.ModelName = {
   Category: 'Category',
   Order: 'Order',
   OrderItem: 'OrderItem',
-  OrderPayment: 'OrderPayment'
+  OrderPayment: 'OrderPayment',
+  StoreBalance: 'StoreBalance',
+  Transaction: 'Transaction'
 };
 
 /**
