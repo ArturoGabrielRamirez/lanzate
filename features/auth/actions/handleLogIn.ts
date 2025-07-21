@@ -1,11 +1,5 @@
 'use server'
 
-import { actionWrapper, formatErrorResponse } from '@/utils/lib'
-import { createServerSideClient } from '@/utils/supabase/server'
-import { HandleLoginAction } from '../types'
-import { insertLogEntry } from '@/features/layout/data/insertLogEntry'
-import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
-
 /* 
 
 ### 1.2 Login de Usuario
@@ -26,6 +20,13 @@ import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
 - Usuario inactivo → Error 403
 
 */
+
+import { actionWrapper } from '@/utils/lib'
+import { createServerSideClient } from '@/utils/supabase/server'
+import { HandleLoginAction } from '../types'
+import { insertLogEntry } from '@/features/layout/data/insertLogEntry'
+import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
+
 
 export async function handleLogIn(formData: HandleLoginAction) {
   return actionWrapper(async () => {

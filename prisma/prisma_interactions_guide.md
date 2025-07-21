@@ -1,6 +1,6 @@
 # Guía de Interacciones de Base de Datos - Aplicación E-commerce
 
-## 1. GESTIÓN DE USUARIOS
+## 1. GESTIÓN DE USUARIOS - DONE
 
 ### 1.1 Registro de Usuario
 **Pasos:**
@@ -24,7 +24,7 @@
 
 ---
 
-### 1.2 Login de Usuario
+### 1.2 Login de Usuario - DONE
 **Pasos:**
 1. Find user by email
 2. Verify password hash
