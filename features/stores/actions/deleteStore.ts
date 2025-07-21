@@ -32,11 +32,15 @@ import { actionWrapper } from "@/utils/lib"
 import { deleteStore as deleteStoreFromDb } from "../data/deleteStore"
 import { revalidatePath } from "next/cache"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
-
+import { canDeleteStore } from "../access/canDeleteStore"
 export async function deleteStore(storeId: number, userId: number) {
     return actionWrapper(async () => {
 
         //Check user owns store
+        const canDelete = await canDeleteStore(storeId, userId)
+
+        if (!canDelete) throw new Error("User does not own store")
+
         //Check for pending orders
         //Archive all products
         //Cancel pending orders
