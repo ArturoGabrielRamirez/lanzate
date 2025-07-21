@@ -145,7 +145,7 @@ export async function insertNewOrder(formData: any, cart: any[], shippingMethod:
                 })
             }
             //update store balance
-            const updatedStore = await client.store.update({
+            const updatedStore = await tx.store.update({
                 where: {
                     id: Number(store.id)
                 },
@@ -165,7 +165,7 @@ export async function insertNewOrder(formData: any, cart: any[], shippingMethod:
 
 
             //create transaction
-            await client.transaction.create({
+            await tx.transaction.create({
                 data: {
                     amount: totalPrice,
                     type: "SALE",
