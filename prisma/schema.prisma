@@ -24,6 +24,7 @@ model User {
   Account      Account[]
   Product      Product[]
   Order        Order[]
+  ActionLog    ActionLog[]
 
   @@map("users")
 }
@@ -60,10 +61,10 @@ model Store {
   user_id Int
   user    User @relation(fields: [user_id], references: [id])
 
-  branches Branch[]
-  products Product[]
-  orders   Order[]
-  balance  StoreBalance?
+  branches     Branch[]
+  products     Product[]
+  orders       Order[]
+  balance      StoreBalance?
   transactions Transaction[]
 
   @@map("stores")
@@ -202,7 +203,7 @@ model Order {
   payment OrderPayment?
 
   // Campos adicionales para el sistema de balance
-  is_paid Boolean @default(false)
+  is_paid      Boolean   @default(false)
   payment_date DateTime?
 
   @@map("orders")
@@ -254,11 +255,11 @@ enum OrderPaymentStatus {
 model StoreBalance {
   id Int @id @default(autoincrement())
 
-  store_id Int @unique
+  store_id Int   @unique
   store    Store @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
   current_balance Float @default(0)
-  
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -271,34 +272,74 @@ model Transaction {
   store_id Int
   store    Store @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
-  type TransactionType
-  amount Float
+  type           TransactionType
+  amount         Float
   balance_before Float
-  balance_after Float
+  balance_after  Float
 
-  description String
+  description    String
   reference_type String? // "order", "refund", "manual", "service", etc.
-  reference_id Int? // ID de la orden, reembolso, etc.
+  reference_id   Int? // ID de la orden, reembolso, etc.
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
   // Campos adicionales para más contexto
-  notes String?
+  notes      String?
   created_by Int? // user_id que creó la transacción
-  branch_id Int? // si la transacción está relacionada a una sucursal específica
+  branch_id  Int? // si la transacción está relacionada a una sucursal específica
 
   @@map("transactions")
 }
 
 enum TransactionType {
-  SALE           // Venta de producto
-  REFUND         // Reembolso/Devolución
-  MANUAL_INCOME  // Ingreso manual a caja
+  SALE // Venta de producto
+  REFUND // Reembolso/Devolución
+  MANUAL_INCOME // Ingreso manual a caja
   MANUAL_EXPENSE // Egreso manual de caja
   SERVICE_INCOME // Ingreso por servicio
   SERVICE_REFUND // Reembolso de servicio
-  ADJUSTMENT     // Ajuste de balance
-  WITHDRAWAL     // Extracción de caja
-  DEPOSIT        // Depósito a caja
+  ADJUSTMENT // Ajuste de balance
+  WITHDRAWAL // Extracción de caja
+  DEPOSIT // Depósito a caja
+}
+
+model ActionLog {
+  id Int @id @default(autoincrement())
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user_id Int?
+  user    User? @relation(fields: [user_id], references: [id])
+
+  action           ActionType
+  entity_type      EntityType
+  entity_id        Int
+  details          String?
+  action_initiator String?
+
+  @@map("action_logs")
+}
+
+enum ActionType {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+}
+
+enum EntityType {
+  USER
+  STORE
+  PRODUCT
+  ORDER
+  BRANCH
+  CATEGORY
+  TAG
+  STOCK
+  TRANSACTION
+  EMPLOYEE
+  SETTINGS
 }

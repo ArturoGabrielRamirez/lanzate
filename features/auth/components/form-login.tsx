@@ -1,15 +1,15 @@
 'use client'
 
-import { handleSignup } from '@/features/auth/actions/handleSignUp'
 import { schema } from '@/features/auth/schemas/log-user-schema'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Form, InputField } from '@/features/layout/components'
+import { handleLogIn } from '../actions/handleLogIn'
 
 export default function LoginForm() {
     return (
         <Form
             resolver={yupResolver(schema)}
-            formAction={handleSignup}
+            formAction={handleLogIn}
             contentButton="Log in"
             successRedirect="/account"
             successMessage="You have been logged in!"

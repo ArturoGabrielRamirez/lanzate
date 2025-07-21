@@ -268,6 +268,18 @@ exports.Prisma.TransactionScalarFieldEnum = {
   branch_id: 'branch_id'
 };
 
+exports.Prisma.ActionLogScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id',
+  action: 'action',
+  entity_type: 'entity_type',
+  entity_id: 'entity_id',
+  details: 'details',
+  action_initiator: 'action_initiator'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -342,6 +354,11 @@ exports.Prisma.TransactionOrderByRelevanceFieldEnum = {
   reference_type: 'reference_type',
   notes: 'notes'
 };
+
+exports.Prisma.ActionLogOrderByRelevanceFieldEnum = {
+  details: 'details',
+  action_initiator: 'action_initiator'
+};
 exports.AccountType = exports.$Enums.AccountType = {
   FREE: 'FREE',
   PRO: 'PRO',
@@ -374,6 +391,28 @@ exports.TransactionType = exports.$Enums.TransactionType = {
   DEPOSIT: 'DEPOSIT'
 };
 
+exports.ActionType = exports.$Enums.ActionType = {
+  CREATE: 'CREATE',
+  UPDATE: 'UPDATE',
+  DELETE: 'DELETE',
+  LOGIN: 'LOGIN',
+  LOGOUT: 'LOGOUT'
+};
+
+exports.EntityType = exports.$Enums.EntityType = {
+  USER: 'USER',
+  STORE: 'STORE',
+  PRODUCT: 'PRODUCT',
+  ORDER: 'ORDER',
+  BRANCH: 'BRANCH',
+  CATEGORY: 'CATEGORY',
+  TAG: 'TAG',
+  STOCK: 'STOCK',
+  TRANSACTION: 'TRANSACTION',
+  EMPLOYEE: 'EMPLOYEE',
+  SETTINGS: 'SETTINGS'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Notification: 'Notification',
@@ -387,7 +426,8 @@ exports.Prisma.ModelName = {
   OrderItem: 'OrderItem',
   OrderPayment: 'OrderPayment',
   StoreBalance: 'StoreBalance',
-  Transaction: 'Transaction'
+  Transaction: 'Transaction',
+  ActionLog: 'ActionLog'
 };
 
 /**
