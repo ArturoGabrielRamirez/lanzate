@@ -40,12 +40,6 @@ import { createServerSideClient } from "@/utils/supabase/server"
 
 */
 export async function insertNewOrder(formData: any, cart: any[], shippingMethod: "delivery" | "pickup", subdomain: string, userId: string) {
-    console.log("🚀 ~ insertNewOrder ~ formData:", formData)
-    console.log("🚀 ~ insertNewOrder ~ cart:", cart)
-    console.log("🚀 ~ insertNewOrder ~ shippingMethod:", shippingMethod)
-    console.log("🚀 ~ insertNewOrder ~ subdomain:", subdomain)
-    console.log("🚀 ~ insertNewOrder ~ userId:", userId)
-
     try {
 
         const client = new PrismaClient()
@@ -150,7 +144,45 @@ export async function insertNewOrder(formData: any, cart: any[], shippingMethod:
                     }
                 })
             }
+            //update store balance
+            const updatedStore = await tx.store.update({
+                where: {
+                    id: Number(store.id)
+                },
+                data: {
+                    balance: {
+                        update: {
+                            current_balance: {
+                                increment: totalPrice
+                            }
+                        }
+                    }
+                },
+                include: {
+                    balance: true
+                }
+            })
+
+
+            //create transaction
+            await tx.transaction.create({
+                data: {
+                    amount: totalPrice,
+                    type: "SALE",
+                    balance_before: store.balance?.current_balance || 0,
+                    balance_after: updatedStore.balance?.current_balance || 0,
+                    description: `Order ${order.id} created`,
+                    store_id: Number(store.id),
+                    created_by: user.id,
+                    notes: `Order ${order.id} created`,
+                    reference_id: order.id,
+                    reference_type: "order",
+                    //branch_id : ??
+                }
+            })
         })
+
+
 
         return {
             error: false,

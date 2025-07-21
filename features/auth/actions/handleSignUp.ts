@@ -1,48 +1,82 @@
 'use server'
 
+/* 
+
+### 1.1 Registro de Usuario
+**Pasos:**
+1. Check if email already exists
+2. Hash password
+3. Create user record
+4. Create default account (FREE)
+5. Send welcome notification
+6. Crear registro en action_logs ("register_user")
+
+**Tablas involucradas:**
+- `users` (CREATE)
+- `accounts` (CREATE)
+- `notifications` (CREATE)
+- `action_logs` (CREATE)
+
+**Manejo de errores:**
+- Email duplicado → Rollback completo
+- Error en hash → No crear usuario
+- Error en account → Rollback user creation
+
+*/
+
 import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { insertUser } from '../data/insertUser'
 import { ResponseType } from '@/features/layout/types'
-import { formatErrorResponse } from '@/utils/lib'
+import { actionWrapper } from '@/utils/lib'
+import { insertLogEntry } from '@/features/layout/data/insertLogEntry'
 
 export const handleSignup = async (payload: any): Promise<ResponseType<any>> => {
-    try {
-
+    return actionWrapper(async () => {
         const supabase = createServerSideClient()
         const email = payload.email?.toString() || ''
         const password = payload.password?.toString() || ''
 
+        // Check if user already exists
+        const { payload: existingUser } = await getUserByEmail(email)
+
+        // If user already exists, throw error
+        if (existingUser) throw new Error('User already exists')
+
+        // Create user in Auth table
         const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
             email,
             password,
         })
 
+        // If there is an error, throw error
         if (signUpError) throw new Error(signUpError.message)
 
-        const user = signUpData?.user
+        // If no user is returned, throw error
+        if (!signUpData.user) throw new Error('No user returned')
 
-        if (!user) throw new Error('No user returned')
+        // Insert user in database and create default FREE account
+        const { error: insertError, payload: user } = await insertUser(email, "email")
 
-        const { payload: existingUser } = await getUserByEmail(user.email ?? "")
+        // If there is an error, throw error
+        if (insertError) throw new Error('Error inserting user')
 
-        if (!existingUser) {
+        // Create action log
+        const { error: logError } = await insertLogEntry({
+            action: "CREATE",
+            entity_type: "USER",
+            entity_id: user.id,
+            user_id: user.id,
+            action_initiator: "Signup form",
+            details: "User signed up using sign up form"
+        })
 
-            const { error: insertError } = await insertUser(user.email ?? "", "email")
-
-            if (insertError) {
-                console.error('Error inserting user:', insertError)
-                throw new Error('Error inserting user')
-            }
-        }
+        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
 
         return {
             error: false,
             message: "User created successfully",
-            payload: user
+            payload: signUpData.user
         }
-
-    } catch (error) {
-        return formatErrorResponse("Error creating user", error, null)
-    }
+    })
 }

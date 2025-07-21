@@ -223,7 +223,9 @@ exports.Prisma.OrderScalarFieldEnum = {
   total_price: 'total_price',
   total_quantity: 'total_quantity',
   shipping_method: 'shipping_method',
-  status: 'status'
+  status: 'status',
+  is_paid: 'is_paid',
+  payment_date: 'payment_date'
 };
 
 exports.Prisma.OrderItemScalarFieldEnum = {
@@ -239,6 +241,43 @@ exports.Prisma.OrderPaymentScalarFieldEnum = {
   order_id: 'order_id',
   amount: 'amount',
   status: 'status'
+};
+
+exports.Prisma.StoreBalanceScalarFieldEnum = {
+  id: 'id',
+  store_id: 'store_id',
+  current_balance: 'current_balance',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.TransactionScalarFieldEnum = {
+  id: 'id',
+  store_id: 'store_id',
+  type: 'type',
+  amount: 'amount',
+  balance_before: 'balance_before',
+  balance_after: 'balance_after',
+  description: 'description',
+  reference_type: 'reference_type',
+  reference_id: 'reference_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  notes: 'notes',
+  created_by: 'created_by',
+  branch_id: 'branch_id'
+};
+
+exports.Prisma.ActionLogScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id',
+  action: 'action',
+  entity_type: 'entity_type',
+  entity_id: 'entity_id',
+  details: 'details',
+  action_initiator: 'action_initiator'
 };
 
 exports.Prisma.SortOrder = {
@@ -309,6 +348,17 @@ exports.Prisma.CategoryOrderByRelevanceFieldEnum = {
 exports.Prisma.OrderOrderByRelevanceFieldEnum = {
   shipping_method: 'shipping_method'
 };
+
+exports.Prisma.TransactionOrderByRelevanceFieldEnum = {
+  description: 'description',
+  reference_type: 'reference_type',
+  notes: 'notes'
+};
+
+exports.Prisma.ActionLogOrderByRelevanceFieldEnum = {
+  details: 'details',
+  action_initiator: 'action_initiator'
+};
 exports.AccountType = exports.$Enums.AccountType = {
   FREE: 'FREE',
   PRO: 'PRO',
@@ -320,12 +370,47 @@ exports.OrderStatus = exports.$Enums.OrderStatus = {
   PROCESSING: 'PROCESSING',
   READY: 'READY',
   SHIPPED: 'SHIPPED',
-  DELIVERED: 'DELIVERED'
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
 };
 
 exports.OrderPaymentStatus = exports.$Enums.OrderPaymentStatus = {
   PENDING: 'PENDING',
   PAID: 'PAID'
+};
+
+exports.TransactionType = exports.$Enums.TransactionType = {
+  SALE: 'SALE',
+  REFUND: 'REFUND',
+  MANUAL_INCOME: 'MANUAL_INCOME',
+  MANUAL_EXPENSE: 'MANUAL_EXPENSE',
+  SERVICE_INCOME: 'SERVICE_INCOME',
+  SERVICE_REFUND: 'SERVICE_REFUND',
+  ADJUSTMENT: 'ADJUSTMENT',
+  WITHDRAWAL: 'WITHDRAWAL',
+  DEPOSIT: 'DEPOSIT'
+};
+
+exports.ActionType = exports.$Enums.ActionType = {
+  CREATE: 'CREATE',
+  UPDATE: 'UPDATE',
+  DELETE: 'DELETE',
+  LOGIN: 'LOGIN',
+  LOGOUT: 'LOGOUT'
+};
+
+exports.EntityType = exports.$Enums.EntityType = {
+  USER: 'USER',
+  STORE: 'STORE',
+  PRODUCT: 'PRODUCT',
+  ORDER: 'ORDER',
+  BRANCH: 'BRANCH',
+  CATEGORY: 'CATEGORY',
+  TAG: 'TAG',
+  STOCK: 'STOCK',
+  TRANSACTION: 'TRANSACTION',
+  EMPLOYEE: 'EMPLOYEE',
+  SETTINGS: 'SETTINGS'
 };
 
 exports.Prisma.ModelName = {
@@ -339,7 +424,10 @@ exports.Prisma.ModelName = {
   Category: 'Category',
   Order: 'Order',
   OrderItem: 'OrderItem',
-  OrderPayment: 'OrderPayment'
+  OrderPayment: 'OrderPayment',
+  StoreBalance: 'StoreBalance',
+  Transaction: 'Transaction',
+  ActionLog: 'ActionLog'
 };
 
 /**

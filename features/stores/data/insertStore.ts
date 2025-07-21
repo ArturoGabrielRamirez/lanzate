@@ -23,11 +23,14 @@ export async function insertStore(payload: any, userId: number): Promise<InsertS
                 subdomain: payload.subdomain,
                 description: payload.description,
                 user_id: userId,
-                branches : {
-                    create : {
-                        name : "Main Branch",
-                        description : "Main starter branch"
+                branches: {
+                    create: {
+                        name: "Main Branch",
+                        description: "Main starter branch"
                     }
+                },
+                balance: {
+                    create: true
                 }
             }
         })

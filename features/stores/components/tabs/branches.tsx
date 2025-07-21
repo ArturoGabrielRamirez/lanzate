@@ -1,6 +1,6 @@
-import { House } from "lucide-react"
+import CreateBranchButton from "@/features/branches/components/create-branch-button"
 import { getStoresFromSlug } from "../../actions/getStoresFromSlug"
-
+import BranchTable from "../branch-table"
 import { BranchesTabProps } from "@/features/stores/types"
 
 async function BranchesTab({ slug }: BranchesTabProps) {
@@ -11,16 +11,12 @@ async function BranchesTab({ slug }: BranchesTabProps) {
         return console.log(error)
     }
     return (
-        <div>
-            {store.branches.map((branch) => (
-                <article key={branch.id} className="border border-border p-4 rounded-md">
-                    <p className="flex items-center gap-2">
-                        <House />
-                        {branch.name}
-                    </p>
-                </article>
-            ))}
-        </div>
+        <>
+            <div className="flex justify-end mb-4">
+                <CreateBranchButton storeId={store.id} />
+            </div>
+            <BranchTable branches={store.branches} />
+        </>
     )
 }
 export default BranchesTab
