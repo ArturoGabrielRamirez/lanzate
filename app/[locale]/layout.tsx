@@ -6,7 +6,8 @@ import type { Metadata } from "next";
 import { LayoutProps } from "@/features/layout/types";
 import SubdomainProvider from "@/features/layout/components/subdomain-provider";
 import "../globals.css";
-import { I18nProviderClient } from "@/locales/cliet";
+import { NextIntlClientProvider, Locale, hasLocale } from 'next-intl';
+import { I18nProviderClient } from "@/locales/client";
 import { ReactNode } from "react";
 
 export const metadata: Metadata = {
@@ -18,15 +19,15 @@ export const metadata: Metadata = {
   ],
 };
 
-type Props = {
+type RootLayoutProps = {
   children: ReactNode;
   params: {
     locale: string;
   };
 };
 
-export default async function RootLayout({ children, params: { locale } }: Props) {
-
+export default function RootLayout({ children, params }: RootLayoutProps) {
+  const { locale } = params;
   return (
     <html lang={locale}>
       <body

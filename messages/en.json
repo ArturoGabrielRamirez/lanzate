@@ -1,0 +1,21 @@
+{
+    "home": {
+        "slogan": {
+            "1": "You",
+            "2": "dream it. ",
+            "3": "Lanzate makes it",
+            "4": "happen."
+        },
+        "description": {
+            "slogan": "With Lanzate, managing your online business is simpler than ever. Focus on growth while we give you full control: manage products, centralize inventory, process sales, coordinate shipping and organize your team, all from your phone or computer. No need to invest in expensive infrastructure to start your business. Simplify your operations and watch your business take off.",
+            "how-work": "How it works",
+            "how-work-description": "How Lanzate empowers your business?"
+        },
+        "buttons": {
+            "login": "Login",
+            "sign-up": "Sign up",
+            "get-started": "Get started.",
+            "learn-more": "Learn more."
+        }
+    }
+}

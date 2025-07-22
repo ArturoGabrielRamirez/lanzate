@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 
 export default function Home() {
+  
+  const t = useTranslations('home');
 
   return (
     <>
@@ -18,21 +21,21 @@ export default function Home() {
             <span className="text-primary">despeguen.</span>
           </h1> */}
           <h1 className="text-4xl font-bold leading-none sm:text-5xl xl:max-w-xl">
-            The &nbsp;
-            <span className="text-primary">boost</span> you need for your sales to&nbsp;
-            <span className="text-primary">take off.</span>
+             {t('slogan.1')}&nbsp;
+            <span className="text-primary">{t('slogan.2')}</span>{t('slogan.3')}&nbsp;
+            <span className="text-primary">{t('slogan.4')}</span>
           </h1>
           {/* <p className="px-8 mt-8 mb-12 text-lg text-balance">Con Lánzate, gestionar tu emprendimiento online es más simple que nunca. Dedica tu tiempo a crecer, nosotros te damos el control total: administra tus productos, centraliza tu inventario, procesa ventas y coordina envíos desde un solo lugar. ¡Es hora de simplificar tu gestión y ver tu negocio alcanzar nuevas alturas!</p> */}
-          <p className="px-8 mt-8 mb-12 text-lg text-balance">With Lánzate, managing your online business is simpler than ever. Spend your time growing while we give you full control: manage your products, centralize your inventory, process sales, and coordinate shipping all from one place. It's time to simplify your management and watch your business reach new heights!</p>
+          <p className="px-8 mt-8 mb-12 text-lg text-balance">{t('description.slogan')}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button asChild>
               <Link href="/login">
-                Get started
+                {t('buttons.get-started')}
               </Link>
             </Button>
             <Button variant="outline">
               <Link href="/about">
-                Learn more
+                {t('buttons.learn-more')}
               </Link>
             </Button>
           </div>
@@ -40,8 +43,8 @@ export default function Home() {
       </section>
       <section className="p-6">
         <div className="container mx-auto">
-          <span className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-accent">How it works</span>
-          <h2 className="text-5xl font-bold text-center">How Lánzate Empowers Your Business</h2>
+          <span className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-accent">{t('description.how-work')}</span>
+          <h2 className="text-5xl font-bold text-center">{}{t('description.how-work-description')}</h2>
           <div className="grid gap-6 my-16 lg:grid-cols-3">
             <div className="flex flex-col p-8 space-y-4 rounded-md bg-primary text-primary-foreground">
               <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent ">1</div>

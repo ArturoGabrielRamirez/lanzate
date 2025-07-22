@@ -1,0 +1,21 @@
+{
+    "home": {
+        "slogan": {
+            "1": "Vos",
+            "2": "soñá, ",
+            "3": "Lanzate lo hace",
+            "4": "posible."
+        },
+        "description": {
+            "slogan": "Con Lanzate, administrar tu negocio online es más simple que nunca. Enfocate en crecer mientras te damos el control total: gestioná productos, centralizá tu stock, procesá ventas, coordiná envíos y organizá a tu equipo de trabajo, todo desde tu celular o computadora. No necesitás invertir en infraestructura costosa para empezar a emprender. Simplificá tu gestión y mirá cómo tu negocio despega.",
+            "how-work": "Cómo funciona",
+            "how-work-description": "¿Cómo Lanzate hace crecer tu negocio?"
+        },
+        "buttons": {
+            "login": "Iniciar sesión",
+            "sign-up": "Registrarse",
+            "get-started": "Empezar.",
+            "learn-more": "Conocer más."
+        }
+    }
+}
