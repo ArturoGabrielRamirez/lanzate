@@ -9,8 +9,10 @@ import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
+
 async function ProductDetailPage({ params }: ProductDetailPageProps) {
 
+    console.log("first")
     const { slug, id } = await params
     const { payload: product, error } = await getProductDetails(id)
     if (error || !product) {

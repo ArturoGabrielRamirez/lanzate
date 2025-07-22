@@ -44,7 +44,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
         <ButtonWithPopup
             text={(
                 <>
-                    <Pencil />
+                    <Pencil className="text-muted-foreground size-4" />
                     Edit Product
                 </>
             )}

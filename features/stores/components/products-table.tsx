@@ -9,13 +9,15 @@ import { Eye } from "lucide-react"
 import { Product, Category } from "@/prisma/generated/prisma"
 import { ColumnDef } from "@tanstack/react-table"
 import { DeleteProductButton, EditProductButton } from "@/features/products/components"
+import Link from "next/link"
 
 type Props = {
     data: (Product & { categories: Category[] })[]
     userId: number
+    slug: string
 }
 
-function ProductsTable({ data, userId }: Props) {
+function ProductsTable({ data, userId, slug }: Props) {
 
     const columns: ColumnDef<Product>[] = [
         {
@@ -76,19 +78,25 @@ function ProductsTable({ data, userId }: Props) {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="flex flex-col">
                             <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">Actions</DropdownMenuLabel>
-                            <DropdownMenuItem><Eye className="w-4 h-4" />View details</DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Button variant="ghost" className="w-full justify-start cursor-pointer hover:!bg-primary" asChild>
+                                    <Link href={`/stores/${slug}/products/${row.original.id}`} >
+                                        <Eye className="w-4 h-4" />View details
+                                    </Link>
+                                </Button>
+                            </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem asChild>
                                 <EditProductButton
                                     product={row.original}
-                                    slug={row.original.slug}
+                                    slug={slug}
                                     userId={userId}
                                 />
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
                                 <DeleteProductButton
                                     productId={row.original.id}
-                                    slug={row.original.slug}
+                                    slug={slug}
                                     userId={userId}
                                 />
                             </DropdownMenuItem>

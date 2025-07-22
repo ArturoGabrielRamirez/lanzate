@@ -35,7 +35,7 @@ function DeleteProductButton({ productId, slug, onComplete, userId }: DeleteProd
             onComplete={handleComplete}
             text={(
                 <>
-                    <Trash2 />
+                    <Trash2 className="text-muted-foreground size-4" />
                     Delete Product
                 </>
             )}

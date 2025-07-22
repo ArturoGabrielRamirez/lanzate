@@ -16,7 +16,7 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
             <div className="flex justify-end mb-4">
                 <CreateProductButton storeId={store.id} userId={userId} />
             </div>
-            <ProductsTable data={store.products} userId={userId} />
+            <ProductsTable data={store.products} userId={userId} slug={slug} />
         </>
     )
 }
