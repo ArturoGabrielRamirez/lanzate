@@ -9,12 +9,20 @@ import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 
 async function ProductDetailPage({ params }: ProductDetailPageProps) {
 
-    console.log("first")
     const { slug, id } = await params
+
+    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+
+    if (userError || !user) {
+        return console.error(userMessage)
+    }
+
     const { payload: product, error } = await getProductDetails(id)
+
     if (error || !product) {
         return console.log(error)
     }
@@ -33,7 +41,7 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
                 <div className="grid grid-cols-1 lg:grid-cols-[max-content_1fr] grid-rows-[auto_1fr] lg:grid-rows-1 gap-4 w-full">
                     <div className="w-full h-35 lg:h-full lg:w-60 xl:w-80 overflow-hidden rounded-md group bg-secondary relative">
                         {product.image ? (
-                            <Image 
+                            <Image
                                 src={product.image}
                                 alt={`${product.name} image`}
                                 fill
@@ -55,9 +63,11 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
                         </div>
                         <p className="text-muted-foreground text-lg">${product.price}</p>
                         <p>{product.description || "No description available"}</p>
-                        <div className="flex gap-4 mt-auto justify-end">
-                            <DeleteProductButton productId={product.id} slug={slug} />
-                            <EditProductButton product={product} slug={slug} />
+                        <div className="flex justify-end mt-auto">
+                            <div className="grid grid-cols-2 gap-4 mt-auto justify-end max-w-xs">
+                                <DeleteProductButton productId={product.id} slug={slug} userId={user.id} />
+                                <EditProductButton product={product} slug={slug} userId={user.id} />
+                            </div>
                         </div>
                     </div>
                 </div>
