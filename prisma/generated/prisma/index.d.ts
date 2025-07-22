@@ -83,6 +83,11 @@ export type Transaction = $Result.DefaultSelection<Prisma.$TransactionPayload>
  * 
  */
 export type ActionLog = $Result.DefaultSelection<Prisma.$ActionLogPayload>
+/**
+ * Model Employee
+ * 
+ */
+export type Employee = $Result.DefaultSelection<Prisma.$EmployeePayload>
 
 /**
  * Enums
@@ -159,6 +164,19 @@ export const EntityType: {
 
 export type EntityType = (typeof EntityType)[keyof typeof EntityType]
 
+
+export const EmployeeRole: {
+  OWNER: 'OWNER',
+  MANAGER: 'MANAGER',
+  SUPERVISOR: 'SUPERVISOR',
+  EMPLOYEE: 'EMPLOYEE',
+  CASHIER: 'CASHIER',
+  STOCKIST: 'STOCKIST',
+  SALES: 'SALES'
+};
+
+export type EmployeeRole = (typeof EmployeeRole)[keyof typeof EmployeeRole]
+
 }
 
 export type AccountType = $Enums.AccountType
@@ -184,6 +202,10 @@ export const ActionType: typeof $Enums.ActionType
 export type EntityType = $Enums.EntityType
 
 export const EntityType: typeof $Enums.EntityType
+
+export type EmployeeRole = $Enums.EmployeeRole
+
+export const EmployeeRole: typeof $Enums.EmployeeRole
 
 /**
  * ##  Prisma Client ʲˢ
@@ -449,6 +471,16 @@ export class PrismaClient<
     * ```
     */
   get actionLog(): Prisma.ActionLogDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.employee`: Exposes CRUD operations for the **Employee** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Employees
+    * const employees = await prisma.employee.findMany()
+    * ```
+    */
+  get employee(): Prisma.EmployeeDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -902,7 +934,8 @@ export namespace Prisma {
     OrderPayment: 'OrderPayment',
     StoreBalance: 'StoreBalance',
     Transaction: 'Transaction',
-    ActionLog: 'ActionLog'
+    ActionLog: 'ActionLog',
+    Employee: 'Employee'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -921,7 +954,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "notification" | "store" | "account" | "product" | "branch" | "productStock" | "category" | "order" | "orderItem" | "orderPayment" | "storeBalance" | "transaction" | "actionLog"
+      modelProps: "user" | "notification" | "store" | "account" | "product" | "branch" | "productStock" | "category" | "order" | "orderItem" | "orderPayment" | "storeBalance" | "transaction" | "actionLog" | "employee"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1961,6 +1994,80 @@ export namespace Prisma {
           }
         }
       }
+      Employee: {
+        payload: Prisma.$EmployeePayload<ExtArgs>
+        fields: Prisma.EmployeeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EmployeeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmployeePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EmployeeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>
+          }
+          findFirst: {
+            args: Prisma.EmployeeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmployeePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EmployeeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>
+          }
+          findMany: {
+            args: Prisma.EmployeeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>[]
+          }
+          create: {
+            args: Prisma.EmployeeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>
+          }
+          createMany: {
+            args: Prisma.EmployeeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.EmployeeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>[]
+          }
+          delete: {
+            args: Prisma.EmployeeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>
+          }
+          update: {
+            args: Prisma.EmployeeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>
+          }
+          deleteMany: {
+            args: Prisma.EmployeeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EmployeeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.EmployeeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>[]
+          }
+          upsert: {
+            args: Prisma.EmployeeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmployeePayload>
+          }
+          aggregate: {
+            args: Prisma.EmployeeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEmployee>
+          }
+          groupBy: {
+            args: Prisma.EmployeeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EmployeeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EmployeeCountArgs<ExtArgs>
+            result: $Utils.Optional<EmployeeCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2059,6 +2166,7 @@ export namespace Prisma {
     storeBalance?: StoreBalanceOmit
     transaction?: TransactionOmit
     actionLog?: ActionLogOmit
+    employee?: EmployeeOmit
   }
 
   /* Types for Logging */
@@ -2159,6 +2267,7 @@ export namespace Prisma {
     Product: number
     Order: number
     ActionLog: number
+    Employee: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2168,6 +2277,7 @@ export namespace Prisma {
     Product?: boolean | UserCountOutputTypeCountProductArgs
     Order?: boolean | UserCountOutputTypeCountOrderArgs
     ActionLog?: boolean | UserCountOutputTypeCountActionLogArgs
+    Employee?: boolean | UserCountOutputTypeCountEmployeeArgs
   }
 
   // Custom InputTypes
@@ -2223,6 +2333,13 @@ export namespace Prisma {
     where?: ActionLogWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountEmployeeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EmployeeWhereInput
+  }
+
 
   /**
    * Count Type StoreCountOutputType
@@ -2233,6 +2350,7 @@ export namespace Prisma {
     products: number
     orders: number
     transactions: number
+    employees: number
   }
 
   export type StoreCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2240,6 +2358,7 @@ export namespace Prisma {
     products?: boolean | StoreCountOutputTypeCountProductsArgs
     orders?: boolean | StoreCountOutputTypeCountOrdersArgs
     transactions?: boolean | StoreCountOutputTypeCountTransactionsArgs
+    employees?: boolean | StoreCountOutputTypeCountEmployeesArgs
   }
 
   // Custom InputTypes
@@ -2279,6 +2398,13 @@ export namespace Prisma {
    */
   export type StoreCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransactionWhereInput
+  }
+
+  /**
+   * StoreCountOutputType without action
+   */
+  export type StoreCountOutputTypeCountEmployeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EmployeeWhereInput
   }
 
 
@@ -2430,6 +2556,64 @@ export namespace Prisma {
    */
   export type OrderCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OrderItemWhereInput
+  }
+
+
+  /**
+   * Count Type EmployeeCountOutputType
+   */
+
+  export type EmployeeCountOutputType = {
+    orders_created: number
+    orders_updated: number
+    transactions: number
+    action_logs: number
+  }
+
+  export type EmployeeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    orders_created?: boolean | EmployeeCountOutputTypeCountOrders_createdArgs
+    orders_updated?: boolean | EmployeeCountOutputTypeCountOrders_updatedArgs
+    transactions?: boolean | EmployeeCountOutputTypeCountTransactionsArgs
+    action_logs?: boolean | EmployeeCountOutputTypeCountAction_logsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * EmployeeCountOutputType without action
+   */
+  export type EmployeeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmployeeCountOutputType
+     */
+    select?: EmployeeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * EmployeeCountOutputType without action
+   */
+  export type EmployeeCountOutputTypeCountOrders_createdArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderWhereInput
+  }
+
+  /**
+   * EmployeeCountOutputType without action
+   */
+  export type EmployeeCountOutputTypeCountOrders_updatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderWhereInput
+  }
+
+  /**
+   * EmployeeCountOutputType without action
+   */
+  export type EmployeeCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TransactionWhereInput
+  }
+
+  /**
+   * EmployeeCountOutputType without action
+   */
+  export type EmployeeCountOutputTypeCountAction_logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActionLogWhereInput
   }
 
 
@@ -2665,6 +2849,7 @@ export namespace Prisma {
     Product?: boolean | User$ProductArgs<ExtArgs>
     Order?: boolean | User$OrderArgs<ExtArgs>
     ActionLog?: boolean | User$ActionLogArgs<ExtArgs>
+    Employee?: boolean | User$EmployeeArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2709,6 +2894,7 @@ export namespace Prisma {
     Product?: boolean | User$ProductArgs<ExtArgs>
     Order?: boolean | User$OrderArgs<ExtArgs>
     ActionLog?: boolean | User$ActionLogArgs<ExtArgs>
+    Employee?: boolean | User$EmployeeArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2723,6 +2909,7 @@ export namespace Prisma {
       Product: Prisma.$ProductPayload<ExtArgs>[]
       Order: Prisma.$OrderPayload<ExtArgs>[]
       ActionLog: Prisma.$ActionLogPayload<ExtArgs>[]
+      Employee: Prisma.$EmployeePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3133,6 +3320,7 @@ export namespace Prisma {
     Product<T extends User$ProductArgs<ExtArgs> = {}>(args?: Subset<T, User$ProductArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Order<T extends User$OrderArgs<ExtArgs> = {}>(args?: Subset<T, User$OrderArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ActionLog<T extends User$ActionLogArgs<ExtArgs> = {}>(args?: Subset<T, User$ActionLogArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActionLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Employee<T extends User$EmployeeArgs<ExtArgs> = {}>(args?: Subset<T, User$EmployeeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3699,6 +3887,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ActionLogScalarFieldEnum | ActionLogScalarFieldEnum[]
+  }
+
+  /**
+   * User.Employee
+   */
+  export type User$EmployeeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    where?: EmployeeWhereInput
+    orderBy?: EmployeeOrderByWithRelationInput | EmployeeOrderByWithRelationInput[]
+    cursor?: EmployeeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EmployeeScalarFieldEnum | EmployeeScalarFieldEnum[]
   }
 
   /**
@@ -5116,6 +5328,7 @@ export namespace Prisma {
     orders?: boolean | Store$ordersArgs<ExtArgs>
     balance?: boolean | Store$balanceArgs<ExtArgs>
     transactions?: boolean | Store$transactionsArgs<ExtArgs>
+    employees?: boolean | Store$employeesArgs<ExtArgs>
     _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["store"]>
 
@@ -5168,6 +5381,7 @@ export namespace Prisma {
     orders?: boolean | Store$ordersArgs<ExtArgs>
     balance?: boolean | Store$balanceArgs<ExtArgs>
     transactions?: boolean | Store$transactionsArgs<ExtArgs>
+    employees?: boolean | Store$employeesArgs<ExtArgs>
     _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StoreIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5186,6 +5400,7 @@ export namespace Prisma {
       orders: Prisma.$OrderPayload<ExtArgs>[]
       balance: Prisma.$StoreBalancePayload<ExtArgs> | null
       transactions: Prisma.$TransactionPayload<ExtArgs>[]
+      employees: Prisma.$EmployeePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5598,6 +5813,7 @@ export namespace Prisma {
     orders<T extends Store$ordersArgs<ExtArgs> = {}>(args?: Subset<T, Store$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     balance<T extends Store$balanceArgs<ExtArgs> = {}>(args?: Subset<T, Store$balanceArgs<ExtArgs>>): Prisma__StoreBalanceClient<$Result.GetResult<Prisma.$StoreBalancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     transactions<T extends Store$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Store$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    employees<T extends Store$employeesArgs<ExtArgs> = {}>(args?: Subset<T, Store$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6145,6 +6361,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
+  }
+
+  /**
+   * Store.employees
+   */
+  export type Store$employeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    where?: EmployeeWhereInput
+    orderBy?: EmployeeOrderByWithRelationInput | EmployeeOrderByWithRelationInput[]
+    cursor?: EmployeeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EmployeeScalarFieldEnum | EmployeeScalarFieldEnum[]
   }
 
   /**
@@ -12066,6 +12306,8 @@ export namespace Prisma {
     branch_id: number | null
     total_price: number | null
     total_quantity: number | null
+    created_by_employee_id: number | null
+    updated_by_employee_id: number | null
   }
 
   export type OrderSumAggregateOutputType = {
@@ -12075,6 +12317,8 @@ export namespace Prisma {
     branch_id: number | null
     total_price: number | null
     total_quantity: number | null
+    created_by_employee_id: number | null
+    updated_by_employee_id: number | null
   }
 
   export type OrderMinAggregateOutputType = {
@@ -12090,6 +12334,8 @@ export namespace Prisma {
     status: $Enums.OrderStatus | null
     is_paid: boolean | null
     payment_date: Date | null
+    created_by_employee_id: number | null
+    updated_by_employee_id: number | null
   }
 
   export type OrderMaxAggregateOutputType = {
@@ -12105,6 +12351,8 @@ export namespace Prisma {
     status: $Enums.OrderStatus | null
     is_paid: boolean | null
     payment_date: Date | null
+    created_by_employee_id: number | null
+    updated_by_employee_id: number | null
   }
 
   export type OrderCountAggregateOutputType = {
@@ -12120,6 +12368,8 @@ export namespace Prisma {
     status: number
     is_paid: number
     payment_date: number
+    created_by_employee_id: number
+    updated_by_employee_id: number
     _all: number
   }
 
@@ -12131,6 +12381,8 @@ export namespace Prisma {
     branch_id?: true
     total_price?: true
     total_quantity?: true
+    created_by_employee_id?: true
+    updated_by_employee_id?: true
   }
 
   export type OrderSumAggregateInputType = {
@@ -12140,6 +12392,8 @@ export namespace Prisma {
     branch_id?: true
     total_price?: true
     total_quantity?: true
+    created_by_employee_id?: true
+    updated_by_employee_id?: true
   }
 
   export type OrderMinAggregateInputType = {
@@ -12155,6 +12409,8 @@ export namespace Prisma {
     status?: true
     is_paid?: true
     payment_date?: true
+    created_by_employee_id?: true
+    updated_by_employee_id?: true
   }
 
   export type OrderMaxAggregateInputType = {
@@ -12170,6 +12426,8 @@ export namespace Prisma {
     status?: true
     is_paid?: true
     payment_date?: true
+    created_by_employee_id?: true
+    updated_by_employee_id?: true
   }
 
   export type OrderCountAggregateInputType = {
@@ -12185,6 +12443,8 @@ export namespace Prisma {
     status?: true
     is_paid?: true
     payment_date?: true
+    created_by_employee_id?: true
+    updated_by_employee_id?: true
     _all?: true
   }
 
@@ -12287,6 +12547,8 @@ export namespace Prisma {
     status: $Enums.OrderStatus
     is_paid: boolean
     payment_date: Date | null
+    created_by_employee_id: number | null
+    updated_by_employee_id: number | null
     _count: OrderCountAggregateOutputType | null
     _avg: OrderAvgAggregateOutputType | null
     _sum: OrderSumAggregateOutputType | null
@@ -12321,11 +12583,15 @@ export namespace Prisma {
     status?: boolean
     is_paid?: boolean
     payment_date?: boolean
+    created_by_employee_id?: boolean
+    updated_by_employee_id?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
     branch?: boolean | BranchDefaultArgs<ExtArgs>
     items?: boolean | Order$itemsArgs<ExtArgs>
     payment?: boolean | Order$paymentArgs<ExtArgs>
+    created_by_employee?: boolean | Order$created_by_employeeArgs<ExtArgs>
+    updated_by_employee?: boolean | Order$updated_by_employeeArgs<ExtArgs>
     _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
 
@@ -12342,9 +12608,13 @@ export namespace Prisma {
     status?: boolean
     is_paid?: boolean
     payment_date?: boolean
+    created_by_employee_id?: boolean
+    updated_by_employee_id?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
     branch?: boolean | BranchDefaultArgs<ExtArgs>
+    created_by_employee?: boolean | Order$created_by_employeeArgs<ExtArgs>
+    updated_by_employee?: boolean | Order$updated_by_employeeArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
 
   export type OrderSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -12360,9 +12630,13 @@ export namespace Prisma {
     status?: boolean
     is_paid?: boolean
     payment_date?: boolean
+    created_by_employee_id?: boolean
+    updated_by_employee_id?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
     branch?: boolean | BranchDefaultArgs<ExtArgs>
+    created_by_employee?: boolean | Order$created_by_employeeArgs<ExtArgs>
+    updated_by_employee?: boolean | Order$updated_by_employeeArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
 
   export type OrderSelectScalar = {
@@ -12378,26 +12652,34 @@ export namespace Prisma {
     status?: boolean
     is_paid?: boolean
     payment_date?: boolean
+    created_by_employee_id?: boolean
+    updated_by_employee_id?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "updated_at" | "user_id" | "store_id" | "branch_id" | "total_price" | "total_quantity" | "shipping_method" | "status" | "is_paid" | "payment_date", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "updated_at" | "user_id" | "store_id" | "branch_id" | "total_price" | "total_quantity" | "shipping_method" | "status" | "is_paid" | "payment_date" | "created_by_employee_id" | "updated_by_employee_id", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
     branch?: boolean | BranchDefaultArgs<ExtArgs>
     items?: boolean | Order$itemsArgs<ExtArgs>
     payment?: boolean | Order$paymentArgs<ExtArgs>
+    created_by_employee?: boolean | Order$created_by_employeeArgs<ExtArgs>
+    updated_by_employee?: boolean | Order$updated_by_employeeArgs<ExtArgs>
     _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OrderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
     branch?: boolean | BranchDefaultArgs<ExtArgs>
+    created_by_employee?: boolean | Order$created_by_employeeArgs<ExtArgs>
+    updated_by_employee?: boolean | Order$updated_by_employeeArgs<ExtArgs>
   }
   export type OrderIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
     branch?: boolean | BranchDefaultArgs<ExtArgs>
+    created_by_employee?: boolean | Order$created_by_employeeArgs<ExtArgs>
+    updated_by_employee?: boolean | Order$updated_by_employeeArgs<ExtArgs>
   }
 
   export type $OrderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12408,6 +12690,8 @@ export namespace Prisma {
       branch: Prisma.$BranchPayload<ExtArgs>
       items: Prisma.$OrderItemPayload<ExtArgs>[]
       payment: Prisma.$OrderPaymentPayload<ExtArgs> | null
+      created_by_employee: Prisma.$EmployeePayload<ExtArgs> | null
+      updated_by_employee: Prisma.$EmployeePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -12422,6 +12706,8 @@ export namespace Prisma {
       status: $Enums.OrderStatus
       is_paid: boolean
       payment_date: Date | null
+      created_by_employee_id: number | null
+      updated_by_employee_id: number | null
     }, ExtArgs["result"]["order"]>
     composites: {}
   }
@@ -12821,6 +13107,8 @@ export namespace Prisma {
     branch<T extends BranchDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BranchDefaultArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     items<T extends Order$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     payment<T extends Order$paymentArgs<ExtArgs> = {}>(args?: Subset<T, Order$paymentArgs<ExtArgs>>): Prisma__OrderPaymentClient<$Result.GetResult<Prisma.$OrderPaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    created_by_employee<T extends Order$created_by_employeeArgs<ExtArgs> = {}>(args?: Subset<T, Order$created_by_employeeArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    updated_by_employee<T extends Order$updated_by_employeeArgs<ExtArgs> = {}>(args?: Subset<T, Order$updated_by_employeeArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12862,6 +13150,8 @@ export namespace Prisma {
     readonly status: FieldRef<"Order", 'OrderStatus'>
     readonly is_paid: FieldRef<"Order", 'Boolean'>
     readonly payment_date: FieldRef<"Order", 'DateTime'>
+    readonly created_by_employee_id: FieldRef<"Order", 'Int'>
+    readonly updated_by_employee_id: FieldRef<"Order", 'Int'>
   }
     
 
@@ -13298,6 +13588,44 @@ export namespace Prisma {
      */
     include?: OrderPaymentInclude<ExtArgs> | null
     where?: OrderPaymentWhereInput
+  }
+
+  /**
+   * Order.created_by_employee
+   */
+  export type Order$created_by_employeeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    where?: EmployeeWhereInput
+  }
+
+  /**
+   * Order.updated_by_employee
+   */
+  export type Order$updated_by_employeeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    where?: EmployeeWhereInput
   }
 
   /**
@@ -16643,6 +16971,7 @@ export namespace Prisma {
     reference_id: number | null
     created_by: number | null
     branch_id: number | null
+    created_by_employee_id: number | null
   }
 
   export type TransactionSumAggregateOutputType = {
@@ -16654,6 +16983,7 @@ export namespace Prisma {
     reference_id: number | null
     created_by: number | null
     branch_id: number | null
+    created_by_employee_id: number | null
   }
 
   export type TransactionMinAggregateOutputType = {
@@ -16671,6 +17001,7 @@ export namespace Prisma {
     notes: string | null
     created_by: number | null
     branch_id: number | null
+    created_by_employee_id: number | null
   }
 
   export type TransactionMaxAggregateOutputType = {
@@ -16688,6 +17019,7 @@ export namespace Prisma {
     notes: string | null
     created_by: number | null
     branch_id: number | null
+    created_by_employee_id: number | null
   }
 
   export type TransactionCountAggregateOutputType = {
@@ -16705,6 +17037,7 @@ export namespace Prisma {
     notes: number
     created_by: number
     branch_id: number
+    created_by_employee_id: number
     _all: number
   }
 
@@ -16718,6 +17051,7 @@ export namespace Prisma {
     reference_id?: true
     created_by?: true
     branch_id?: true
+    created_by_employee_id?: true
   }
 
   export type TransactionSumAggregateInputType = {
@@ -16729,6 +17063,7 @@ export namespace Prisma {
     reference_id?: true
     created_by?: true
     branch_id?: true
+    created_by_employee_id?: true
   }
 
   export type TransactionMinAggregateInputType = {
@@ -16746,6 +17081,7 @@ export namespace Prisma {
     notes?: true
     created_by?: true
     branch_id?: true
+    created_by_employee_id?: true
   }
 
   export type TransactionMaxAggregateInputType = {
@@ -16763,6 +17099,7 @@ export namespace Prisma {
     notes?: true
     created_by?: true
     branch_id?: true
+    created_by_employee_id?: true
   }
 
   export type TransactionCountAggregateInputType = {
@@ -16780,6 +17117,7 @@ export namespace Prisma {
     notes?: true
     created_by?: true
     branch_id?: true
+    created_by_employee_id?: true
     _all?: true
   }
 
@@ -16884,6 +17222,7 @@ export namespace Prisma {
     notes: string | null
     created_by: number | null
     branch_id: number | null
+    created_by_employee_id: number | null
     _count: TransactionCountAggregateOutputType | null
     _avg: TransactionAvgAggregateOutputType | null
     _sum: TransactionSumAggregateOutputType | null
@@ -16920,7 +17259,9 @@ export namespace Prisma {
     notes?: boolean
     created_by?: boolean
     branch_id?: boolean
+    created_by_employee_id?: boolean
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    created_by_employee?: boolean | Transaction$created_by_employeeArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -16938,7 +17279,9 @@ export namespace Prisma {
     notes?: boolean
     created_by?: boolean
     branch_id?: boolean
+    created_by_employee_id?: boolean
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    created_by_employee?: boolean | Transaction$created_by_employeeArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -16956,7 +17299,9 @@ export namespace Prisma {
     notes?: boolean
     created_by?: boolean
     branch_id?: boolean
+    created_by_employee_id?: boolean
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    created_by_employee?: boolean | Transaction$created_by_employeeArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectScalar = {
@@ -16974,23 +17319,28 @@ export namespace Prisma {
     notes?: boolean
     created_by?: boolean
     branch_id?: boolean
+    created_by_employee_id?: boolean
   }
 
-  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "store_id" | "type" | "amount" | "balance_before" | "balance_after" | "description" | "reference_type" | "reference_id" | "created_at" | "updated_at" | "notes" | "created_by" | "branch_id", ExtArgs["result"]["transaction"]>
+  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "store_id" | "type" | "amount" | "balance_before" | "balance_after" | "description" | "reference_type" | "reference_id" | "created_at" | "updated_at" | "notes" | "created_by" | "branch_id" | "created_by_employee_id", ExtArgs["result"]["transaction"]>
   export type TransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    created_by_employee?: boolean | Transaction$created_by_employeeArgs<ExtArgs>
   }
   export type TransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    created_by_employee?: boolean | Transaction$created_by_employeeArgs<ExtArgs>
   }
   export type TransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     store?: boolean | StoreDefaultArgs<ExtArgs>
+    created_by_employee?: boolean | Transaction$created_by_employeeArgs<ExtArgs>
   }
 
   export type $TransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Transaction"
     objects: {
       store: Prisma.$StorePayload<ExtArgs>
+      created_by_employee: Prisma.$EmployeePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -17007,6 +17357,7 @@ export namespace Prisma {
       notes: string | null
       created_by: number | null
       branch_id: number | null
+      created_by_employee_id: number | null
     }, ExtArgs["result"]["transaction"]>
     composites: {}
   }
@@ -17402,6 +17753,7 @@ export namespace Prisma {
   export interface Prisma__TransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    created_by_employee<T extends Transaction$created_by_employeeArgs<ExtArgs> = {}>(args?: Subset<T, Transaction$created_by_employeeArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17445,6 +17797,7 @@ export namespace Prisma {
     readonly notes: FieldRef<"Transaction", 'String'>
     readonly created_by: FieldRef<"Transaction", 'Int'>
     readonly branch_id: FieldRef<"Transaction", 'Int'>
+    readonly created_by_employee_id: FieldRef<"Transaction", 'Int'>
   }
     
 
@@ -17841,6 +18194,25 @@ export namespace Prisma {
   }
 
   /**
+   * Transaction.created_by_employee
+   */
+  export type Transaction$created_by_employeeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    where?: EmployeeWhereInput
+  }
+
+  /**
    * Transaction without action
    */
   export type TransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -17875,12 +18247,14 @@ export namespace Prisma {
     id: number | null
     user_id: number | null
     entity_id: number | null
+    employee_id: number | null
   }
 
   export type ActionLogSumAggregateOutputType = {
     id: number | null
     user_id: number | null
     entity_id: number | null
+    employee_id: number | null
   }
 
   export type ActionLogMinAggregateOutputType = {
@@ -17893,6 +18267,7 @@ export namespace Prisma {
     entity_id: number | null
     details: string | null
     action_initiator: string | null
+    employee_id: number | null
   }
 
   export type ActionLogMaxAggregateOutputType = {
@@ -17905,6 +18280,7 @@ export namespace Prisma {
     entity_id: number | null
     details: string | null
     action_initiator: string | null
+    employee_id: number | null
   }
 
   export type ActionLogCountAggregateOutputType = {
@@ -17917,6 +18293,7 @@ export namespace Prisma {
     entity_id: number
     details: number
     action_initiator: number
+    employee_id: number
     _all: number
   }
 
@@ -17925,12 +18302,14 @@ export namespace Prisma {
     id?: true
     user_id?: true
     entity_id?: true
+    employee_id?: true
   }
 
   export type ActionLogSumAggregateInputType = {
     id?: true
     user_id?: true
     entity_id?: true
+    employee_id?: true
   }
 
   export type ActionLogMinAggregateInputType = {
@@ -17943,6 +18322,7 @@ export namespace Prisma {
     entity_id?: true
     details?: true
     action_initiator?: true
+    employee_id?: true
   }
 
   export type ActionLogMaxAggregateInputType = {
@@ -17955,6 +18335,7 @@ export namespace Prisma {
     entity_id?: true
     details?: true
     action_initiator?: true
+    employee_id?: true
   }
 
   export type ActionLogCountAggregateInputType = {
@@ -17967,6 +18348,7 @@ export namespace Prisma {
     entity_id?: true
     details?: true
     action_initiator?: true
+    employee_id?: true
     _all?: true
   }
 
@@ -18066,6 +18448,7 @@ export namespace Prisma {
     entity_id: number
     details: string | null
     action_initiator: string | null
+    employee_id: number | null
     _count: ActionLogCountAggregateOutputType | null
     _avg: ActionLogAvgAggregateOutputType | null
     _sum: ActionLogSumAggregateOutputType | null
@@ -18097,7 +18480,9 @@ export namespace Prisma {
     entity_id?: boolean
     details?: boolean
     action_initiator?: boolean
+    employee_id?: boolean
     user?: boolean | ActionLog$userArgs<ExtArgs>
+    employee?: boolean | ActionLog$employeeArgs<ExtArgs>
   }, ExtArgs["result"]["actionLog"]>
 
   export type ActionLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -18110,7 +18495,9 @@ export namespace Prisma {
     entity_id?: boolean
     details?: boolean
     action_initiator?: boolean
+    employee_id?: boolean
     user?: boolean | ActionLog$userArgs<ExtArgs>
+    employee?: boolean | ActionLog$employeeArgs<ExtArgs>
   }, ExtArgs["result"]["actionLog"]>
 
   export type ActionLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -18123,7 +18510,9 @@ export namespace Prisma {
     entity_id?: boolean
     details?: boolean
     action_initiator?: boolean
+    employee_id?: boolean
     user?: boolean | ActionLog$userArgs<ExtArgs>
+    employee?: boolean | ActionLog$employeeArgs<ExtArgs>
   }, ExtArgs["result"]["actionLog"]>
 
   export type ActionLogSelectScalar = {
@@ -18136,23 +18525,28 @@ export namespace Prisma {
     entity_id?: boolean
     details?: boolean
     action_initiator?: boolean
+    employee_id?: boolean
   }
 
-  export type ActionLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "updated_at" | "user_id" | "action" | "entity_type" | "entity_id" | "details" | "action_initiator", ExtArgs["result"]["actionLog"]>
+  export type ActionLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "updated_at" | "user_id" | "action" | "entity_type" | "entity_id" | "details" | "action_initiator" | "employee_id", ExtArgs["result"]["actionLog"]>
   export type ActionLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | ActionLog$userArgs<ExtArgs>
+    employee?: boolean | ActionLog$employeeArgs<ExtArgs>
   }
   export type ActionLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | ActionLog$userArgs<ExtArgs>
+    employee?: boolean | ActionLog$employeeArgs<ExtArgs>
   }
   export type ActionLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | ActionLog$userArgs<ExtArgs>
+    employee?: boolean | ActionLog$employeeArgs<ExtArgs>
   }
 
   export type $ActionLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ActionLog"
     objects: {
       user: Prisma.$UserPayload<ExtArgs> | null
+      employee: Prisma.$EmployeePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -18164,6 +18558,7 @@ export namespace Prisma {
       entity_id: number
       details: string | null
       action_initiator: string | null
+      employee_id: number | null
     }, ExtArgs["result"]["actionLog"]>
     composites: {}
   }
@@ -18559,6 +18954,7 @@ export namespace Prisma {
   export interface Prisma__ActionLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends ActionLog$userArgs<ExtArgs> = {}>(args?: Subset<T, ActionLog$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    employee<T extends ActionLog$employeeArgs<ExtArgs> = {}>(args?: Subset<T, ActionLog$employeeArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -18597,6 +18993,7 @@ export namespace Prisma {
     readonly entity_id: FieldRef<"ActionLog", 'Int'>
     readonly details: FieldRef<"ActionLog", 'String'>
     readonly action_initiator: FieldRef<"ActionLog", 'String'>
+    readonly employee_id: FieldRef<"ActionLog", 'Int'>
   }
     
 
@@ -19012,6 +19409,25 @@ export namespace Prisma {
   }
 
   /**
+   * ActionLog.employee
+   */
+  export type ActionLog$employeeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    where?: EmployeeWhereInput
+  }
+
+  /**
    * ActionLog without action
    */
   export type ActionLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -19027,6 +19443,1453 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ActionLogInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Employee
+   */
+
+  export type AggregateEmployee = {
+    _count: EmployeeCountAggregateOutputType | null
+    _avg: EmployeeAvgAggregateOutputType | null
+    _sum: EmployeeSumAggregateOutputType | null
+    _min: EmployeeMinAggregateOutputType | null
+    _max: EmployeeMaxAggregateOutputType | null
+  }
+
+  export type EmployeeAvgAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    store_id: number | null
+    salary: number | null
+  }
+
+  export type EmployeeSumAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    store_id: number | null
+    salary: number | null
+  }
+
+  export type EmployeeMinAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    store_id: number | null
+    role: $Enums.EmployeeRole | null
+    can_create_orders: boolean | null
+    can_update_orders: boolean | null
+    can_create_products: boolean | null
+    can_update_products: boolean | null
+    can_manage_stock: boolean | null
+    can_process_refunds: boolean | null
+    can_view_reports: boolean | null
+    can_manage_employees: boolean | null
+    can_manage_store: boolean | null
+    is_active: boolean | null
+    hired_at: Date | null
+    fired_at: Date | null
+    position: string | null
+    department: string | null
+    salary: number | null
+    notes: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type EmployeeMaxAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    store_id: number | null
+    role: $Enums.EmployeeRole | null
+    can_create_orders: boolean | null
+    can_update_orders: boolean | null
+    can_create_products: boolean | null
+    can_update_products: boolean | null
+    can_manage_stock: boolean | null
+    can_process_refunds: boolean | null
+    can_view_reports: boolean | null
+    can_manage_employees: boolean | null
+    can_manage_store: boolean | null
+    is_active: boolean | null
+    hired_at: Date | null
+    fired_at: Date | null
+    position: string | null
+    department: string | null
+    salary: number | null
+    notes: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type EmployeeCountAggregateOutputType = {
+    id: number
+    user_id: number
+    store_id: number
+    role: number
+    can_create_orders: number
+    can_update_orders: number
+    can_create_products: number
+    can_update_products: number
+    can_manage_stock: number
+    can_process_refunds: number
+    can_view_reports: number
+    can_manage_employees: number
+    can_manage_store: number
+    is_active: number
+    hired_at: number
+    fired_at: number
+    position: number
+    department: number
+    salary: number
+    notes: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type EmployeeAvgAggregateInputType = {
+    id?: true
+    user_id?: true
+    store_id?: true
+    salary?: true
+  }
+
+  export type EmployeeSumAggregateInputType = {
+    id?: true
+    user_id?: true
+    store_id?: true
+    salary?: true
+  }
+
+  export type EmployeeMinAggregateInputType = {
+    id?: true
+    user_id?: true
+    store_id?: true
+    role?: true
+    can_create_orders?: true
+    can_update_orders?: true
+    can_create_products?: true
+    can_update_products?: true
+    can_manage_stock?: true
+    can_process_refunds?: true
+    can_view_reports?: true
+    can_manage_employees?: true
+    can_manage_store?: true
+    is_active?: true
+    hired_at?: true
+    fired_at?: true
+    position?: true
+    department?: true
+    salary?: true
+    notes?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type EmployeeMaxAggregateInputType = {
+    id?: true
+    user_id?: true
+    store_id?: true
+    role?: true
+    can_create_orders?: true
+    can_update_orders?: true
+    can_create_products?: true
+    can_update_products?: true
+    can_manage_stock?: true
+    can_process_refunds?: true
+    can_view_reports?: true
+    can_manage_employees?: true
+    can_manage_store?: true
+    is_active?: true
+    hired_at?: true
+    fired_at?: true
+    position?: true
+    department?: true
+    salary?: true
+    notes?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type EmployeeCountAggregateInputType = {
+    id?: true
+    user_id?: true
+    store_id?: true
+    role?: true
+    can_create_orders?: true
+    can_update_orders?: true
+    can_create_products?: true
+    can_update_products?: true
+    can_manage_stock?: true
+    can_process_refunds?: true
+    can_view_reports?: true
+    can_manage_employees?: true
+    can_manage_store?: true
+    is_active?: true
+    hired_at?: true
+    fired_at?: true
+    position?: true
+    department?: true
+    salary?: true
+    notes?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type EmployeeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Employee to aggregate.
+     */
+    where?: EmployeeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Employees to fetch.
+     */
+    orderBy?: EmployeeOrderByWithRelationInput | EmployeeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EmployeeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Employees from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Employees.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Employees
+    **/
+    _count?: true | EmployeeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EmployeeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EmployeeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EmployeeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EmployeeMaxAggregateInputType
+  }
+
+  export type GetEmployeeAggregateType<T extends EmployeeAggregateArgs> = {
+        [P in keyof T & keyof AggregateEmployee]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEmployee[P]>
+      : GetScalarType<T[P], AggregateEmployee[P]>
+  }
+
+
+
+
+  export type EmployeeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EmployeeWhereInput
+    orderBy?: EmployeeOrderByWithAggregationInput | EmployeeOrderByWithAggregationInput[]
+    by: EmployeeScalarFieldEnum[] | EmployeeScalarFieldEnum
+    having?: EmployeeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EmployeeCountAggregateInputType | true
+    _avg?: EmployeeAvgAggregateInputType
+    _sum?: EmployeeSumAggregateInputType
+    _min?: EmployeeMinAggregateInputType
+    _max?: EmployeeMaxAggregateInputType
+  }
+
+  export type EmployeeGroupByOutputType = {
+    id: number
+    user_id: number
+    store_id: number
+    role: $Enums.EmployeeRole
+    can_create_orders: boolean
+    can_update_orders: boolean
+    can_create_products: boolean
+    can_update_products: boolean
+    can_manage_stock: boolean
+    can_process_refunds: boolean
+    can_view_reports: boolean
+    can_manage_employees: boolean
+    can_manage_store: boolean
+    is_active: boolean
+    hired_at: Date
+    fired_at: Date | null
+    position: string | null
+    department: string | null
+    salary: number | null
+    notes: string | null
+    created_at: Date
+    updated_at: Date
+    _count: EmployeeCountAggregateOutputType | null
+    _avg: EmployeeAvgAggregateOutputType | null
+    _sum: EmployeeSumAggregateOutputType | null
+    _min: EmployeeMinAggregateOutputType | null
+    _max: EmployeeMaxAggregateOutputType | null
+  }
+
+  type GetEmployeeGroupByPayload<T extends EmployeeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EmployeeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EmployeeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EmployeeGroupByOutputType[P]>
+            : GetScalarType<T[P], EmployeeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EmployeeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    store_id?: boolean
+    role?: boolean
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: boolean
+    fired_at?: boolean
+    position?: boolean
+    department?: boolean
+    salary?: boolean
+    notes?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+    orders_created?: boolean | Employee$orders_createdArgs<ExtArgs>
+    orders_updated?: boolean | Employee$orders_updatedArgs<ExtArgs>
+    transactions?: boolean | Employee$transactionsArgs<ExtArgs>
+    action_logs?: boolean | Employee$action_logsArgs<ExtArgs>
+    _count?: boolean | EmployeeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["employee"]>
+
+  export type EmployeeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    store_id?: boolean
+    role?: boolean
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: boolean
+    fired_at?: boolean
+    position?: boolean
+    department?: boolean
+    salary?: boolean
+    notes?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["employee"]>
+
+  export type EmployeeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    store_id?: boolean
+    role?: boolean
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: boolean
+    fired_at?: boolean
+    position?: boolean
+    department?: boolean
+    salary?: boolean
+    notes?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["employee"]>
+
+  export type EmployeeSelectScalar = {
+    id?: boolean
+    user_id?: boolean
+    store_id?: boolean
+    role?: boolean
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: boolean
+    fired_at?: boolean
+    position?: boolean
+    department?: boolean
+    salary?: boolean
+    notes?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type EmployeeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "store_id" | "role" | "can_create_orders" | "can_update_orders" | "can_create_products" | "can_update_products" | "can_manage_stock" | "can_process_refunds" | "can_view_reports" | "can_manage_employees" | "can_manage_store" | "is_active" | "hired_at" | "fired_at" | "position" | "department" | "salary" | "notes" | "created_at" | "updated_at", ExtArgs["result"]["employee"]>
+  export type EmployeeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+    orders_created?: boolean | Employee$orders_createdArgs<ExtArgs>
+    orders_updated?: boolean | Employee$orders_updatedArgs<ExtArgs>
+    transactions?: boolean | Employee$transactionsArgs<ExtArgs>
+    action_logs?: boolean | Employee$action_logsArgs<ExtArgs>
+    _count?: boolean | EmployeeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type EmployeeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }
+  export type EmployeeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }
+
+  export type $EmployeePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Employee"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      store: Prisma.$StorePayload<ExtArgs>
+      orders_created: Prisma.$OrderPayload<ExtArgs>[]
+      orders_updated: Prisma.$OrderPayload<ExtArgs>[]
+      transactions: Prisma.$TransactionPayload<ExtArgs>[]
+      action_logs: Prisma.$ActionLogPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      user_id: number
+      store_id: number
+      role: $Enums.EmployeeRole
+      can_create_orders: boolean
+      can_update_orders: boolean
+      can_create_products: boolean
+      can_update_products: boolean
+      can_manage_stock: boolean
+      can_process_refunds: boolean
+      can_view_reports: boolean
+      can_manage_employees: boolean
+      can_manage_store: boolean
+      is_active: boolean
+      hired_at: Date
+      fired_at: Date | null
+      position: string | null
+      department: string | null
+      salary: number | null
+      notes: string | null
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["employee"]>
+    composites: {}
+  }
+
+  type EmployeeGetPayload<S extends boolean | null | undefined | EmployeeDefaultArgs> = $Result.GetResult<Prisma.$EmployeePayload, S>
+
+  type EmployeeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<EmployeeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EmployeeCountAggregateInputType | true
+    }
+
+  export interface EmployeeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Employee'], meta: { name: 'Employee' } }
+    /**
+     * Find zero or one Employee that matches the filter.
+     * @param {EmployeeFindUniqueArgs} args - Arguments to find a Employee
+     * @example
+     * // Get one Employee
+     * const employee = await prisma.employee.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EmployeeFindUniqueArgs>(args: SelectSubset<T, EmployeeFindUniqueArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Employee that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EmployeeFindUniqueOrThrowArgs} args - Arguments to find a Employee
+     * @example
+     * // Get one Employee
+     * const employee = await prisma.employee.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EmployeeFindUniqueOrThrowArgs>(args: SelectSubset<T, EmployeeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Employee that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmployeeFindFirstArgs} args - Arguments to find a Employee
+     * @example
+     * // Get one Employee
+     * const employee = await prisma.employee.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EmployeeFindFirstArgs>(args?: SelectSubset<T, EmployeeFindFirstArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Employee that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmployeeFindFirstOrThrowArgs} args - Arguments to find a Employee
+     * @example
+     * // Get one Employee
+     * const employee = await prisma.employee.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EmployeeFindFirstOrThrowArgs>(args?: SelectSubset<T, EmployeeFindFirstOrThrowArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Employees that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmployeeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Employees
+     * const employees = await prisma.employee.findMany()
+     * 
+     * // Get first 10 Employees
+     * const employees = await prisma.employee.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const employeeWithIdOnly = await prisma.employee.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends EmployeeFindManyArgs>(args?: SelectSubset<T, EmployeeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Employee.
+     * @param {EmployeeCreateArgs} args - Arguments to create a Employee.
+     * @example
+     * // Create one Employee
+     * const Employee = await prisma.employee.create({
+     *   data: {
+     *     // ... data to create a Employee
+     *   }
+     * })
+     * 
+     */
+    create<T extends EmployeeCreateArgs>(args: SelectSubset<T, EmployeeCreateArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Employees.
+     * @param {EmployeeCreateManyArgs} args - Arguments to create many Employees.
+     * @example
+     * // Create many Employees
+     * const employee = await prisma.employee.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EmployeeCreateManyArgs>(args?: SelectSubset<T, EmployeeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Employees and returns the data saved in the database.
+     * @param {EmployeeCreateManyAndReturnArgs} args - Arguments to create many Employees.
+     * @example
+     * // Create many Employees
+     * const employee = await prisma.employee.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Employees and only return the `id`
+     * const employeeWithIdOnly = await prisma.employee.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends EmployeeCreateManyAndReturnArgs>(args?: SelectSubset<T, EmployeeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Employee.
+     * @param {EmployeeDeleteArgs} args - Arguments to delete one Employee.
+     * @example
+     * // Delete one Employee
+     * const Employee = await prisma.employee.delete({
+     *   where: {
+     *     // ... filter to delete one Employee
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EmployeeDeleteArgs>(args: SelectSubset<T, EmployeeDeleteArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Employee.
+     * @param {EmployeeUpdateArgs} args - Arguments to update one Employee.
+     * @example
+     * // Update one Employee
+     * const employee = await prisma.employee.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EmployeeUpdateArgs>(args: SelectSubset<T, EmployeeUpdateArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Employees.
+     * @param {EmployeeDeleteManyArgs} args - Arguments to filter Employees to delete.
+     * @example
+     * // Delete a few Employees
+     * const { count } = await prisma.employee.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EmployeeDeleteManyArgs>(args?: SelectSubset<T, EmployeeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Employees.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmployeeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Employees
+     * const employee = await prisma.employee.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EmployeeUpdateManyArgs>(args: SelectSubset<T, EmployeeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Employees and returns the data updated in the database.
+     * @param {EmployeeUpdateManyAndReturnArgs} args - Arguments to update many Employees.
+     * @example
+     * // Update many Employees
+     * const employee = await prisma.employee.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Employees and only return the `id`
+     * const employeeWithIdOnly = await prisma.employee.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends EmployeeUpdateManyAndReturnArgs>(args: SelectSubset<T, EmployeeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Employee.
+     * @param {EmployeeUpsertArgs} args - Arguments to update or create a Employee.
+     * @example
+     * // Update or create a Employee
+     * const employee = await prisma.employee.upsert({
+     *   create: {
+     *     // ... data to create a Employee
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Employee we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EmployeeUpsertArgs>(args: SelectSubset<T, EmployeeUpsertArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Employees.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmployeeCountArgs} args - Arguments to filter Employees to count.
+     * @example
+     * // Count the number of Employees
+     * const count = await prisma.employee.count({
+     *   where: {
+     *     // ... the filter for the Employees we want to count
+     *   }
+     * })
+    **/
+    count<T extends EmployeeCountArgs>(
+      args?: Subset<T, EmployeeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EmployeeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Employee.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmployeeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EmployeeAggregateArgs>(args: Subset<T, EmployeeAggregateArgs>): Prisma.PrismaPromise<GetEmployeeAggregateType<T>>
+
+    /**
+     * Group by Employee.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmployeeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EmployeeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EmployeeGroupByArgs['orderBy'] }
+        : { orderBy?: EmployeeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EmployeeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEmployeeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Employee model
+   */
+  readonly fields: EmployeeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Employee.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EmployeeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    orders_created<T extends Employee$orders_createdArgs<ExtArgs> = {}>(args?: Subset<T, Employee$orders_createdArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    orders_updated<T extends Employee$orders_updatedArgs<ExtArgs> = {}>(args?: Subset<T, Employee$orders_updatedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    transactions<T extends Employee$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Employee$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    action_logs<T extends Employee$action_logsArgs<ExtArgs> = {}>(args?: Subset<T, Employee$action_logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActionLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Employee model
+   */
+  interface EmployeeFieldRefs {
+    readonly id: FieldRef<"Employee", 'Int'>
+    readonly user_id: FieldRef<"Employee", 'Int'>
+    readonly store_id: FieldRef<"Employee", 'Int'>
+    readonly role: FieldRef<"Employee", 'EmployeeRole'>
+    readonly can_create_orders: FieldRef<"Employee", 'Boolean'>
+    readonly can_update_orders: FieldRef<"Employee", 'Boolean'>
+    readonly can_create_products: FieldRef<"Employee", 'Boolean'>
+    readonly can_update_products: FieldRef<"Employee", 'Boolean'>
+    readonly can_manage_stock: FieldRef<"Employee", 'Boolean'>
+    readonly can_process_refunds: FieldRef<"Employee", 'Boolean'>
+    readonly can_view_reports: FieldRef<"Employee", 'Boolean'>
+    readonly can_manage_employees: FieldRef<"Employee", 'Boolean'>
+    readonly can_manage_store: FieldRef<"Employee", 'Boolean'>
+    readonly is_active: FieldRef<"Employee", 'Boolean'>
+    readonly hired_at: FieldRef<"Employee", 'DateTime'>
+    readonly fired_at: FieldRef<"Employee", 'DateTime'>
+    readonly position: FieldRef<"Employee", 'String'>
+    readonly department: FieldRef<"Employee", 'String'>
+    readonly salary: FieldRef<"Employee", 'Float'>
+    readonly notes: FieldRef<"Employee", 'String'>
+    readonly created_at: FieldRef<"Employee", 'DateTime'>
+    readonly updated_at: FieldRef<"Employee", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Employee findUnique
+   */
+  export type EmployeeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    /**
+     * Filter, which Employee to fetch.
+     */
+    where: EmployeeWhereUniqueInput
+  }
+
+  /**
+   * Employee findUniqueOrThrow
+   */
+  export type EmployeeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    /**
+     * Filter, which Employee to fetch.
+     */
+    where: EmployeeWhereUniqueInput
+  }
+
+  /**
+   * Employee findFirst
+   */
+  export type EmployeeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    /**
+     * Filter, which Employee to fetch.
+     */
+    where?: EmployeeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Employees to fetch.
+     */
+    orderBy?: EmployeeOrderByWithRelationInput | EmployeeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Employees.
+     */
+    cursor?: EmployeeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Employees from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Employees.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Employees.
+     */
+    distinct?: EmployeeScalarFieldEnum | EmployeeScalarFieldEnum[]
+  }
+
+  /**
+   * Employee findFirstOrThrow
+   */
+  export type EmployeeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    /**
+     * Filter, which Employee to fetch.
+     */
+    where?: EmployeeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Employees to fetch.
+     */
+    orderBy?: EmployeeOrderByWithRelationInput | EmployeeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Employees.
+     */
+    cursor?: EmployeeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Employees from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Employees.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Employees.
+     */
+    distinct?: EmployeeScalarFieldEnum | EmployeeScalarFieldEnum[]
+  }
+
+  /**
+   * Employee findMany
+   */
+  export type EmployeeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    /**
+     * Filter, which Employees to fetch.
+     */
+    where?: EmployeeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Employees to fetch.
+     */
+    orderBy?: EmployeeOrderByWithRelationInput | EmployeeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Employees.
+     */
+    cursor?: EmployeeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Employees from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Employees.
+     */
+    skip?: number
+    distinct?: EmployeeScalarFieldEnum | EmployeeScalarFieldEnum[]
+  }
+
+  /**
+   * Employee create
+   */
+  export type EmployeeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Employee.
+     */
+    data: XOR<EmployeeCreateInput, EmployeeUncheckedCreateInput>
+  }
+
+  /**
+   * Employee createMany
+   */
+  export type EmployeeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Employees.
+     */
+    data: EmployeeCreateManyInput | EmployeeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Employee createManyAndReturn
+   */
+  export type EmployeeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * The data used to create many Employees.
+     */
+    data: EmployeeCreateManyInput | EmployeeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Employee update
+   */
+  export type EmployeeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Employee.
+     */
+    data: XOR<EmployeeUpdateInput, EmployeeUncheckedUpdateInput>
+    /**
+     * Choose, which Employee to update.
+     */
+    where: EmployeeWhereUniqueInput
+  }
+
+  /**
+   * Employee updateMany
+   */
+  export type EmployeeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Employees.
+     */
+    data: XOR<EmployeeUpdateManyMutationInput, EmployeeUncheckedUpdateManyInput>
+    /**
+     * Filter which Employees to update
+     */
+    where?: EmployeeWhereInput
+    /**
+     * Limit how many Employees to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Employee updateManyAndReturn
+   */
+  export type EmployeeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * The data used to update Employees.
+     */
+    data: XOR<EmployeeUpdateManyMutationInput, EmployeeUncheckedUpdateManyInput>
+    /**
+     * Filter which Employees to update
+     */
+    where?: EmployeeWhereInput
+    /**
+     * Limit how many Employees to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Employee upsert
+   */
+  export type EmployeeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Employee to update in case it exists.
+     */
+    where: EmployeeWhereUniqueInput
+    /**
+     * In case the Employee found by the `where` argument doesn't exist, create a new Employee with this data.
+     */
+    create: XOR<EmployeeCreateInput, EmployeeUncheckedCreateInput>
+    /**
+     * In case the Employee was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EmployeeUpdateInput, EmployeeUncheckedUpdateInput>
+  }
+
+  /**
+   * Employee delete
+   */
+  export type EmployeeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    /**
+     * Filter which Employee to delete.
+     */
+    where: EmployeeWhereUniqueInput
+  }
+
+  /**
+   * Employee deleteMany
+   */
+  export type EmployeeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Employees to delete
+     */
+    where?: EmployeeWhereInput
+    /**
+     * Limit how many Employees to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Employee.orders_created
+   */
+  export type Employee$orders_createdArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    where?: OrderWhereInput
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[]
+    cursor?: OrderWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[]
+  }
+
+  /**
+   * Employee.orders_updated
+   */
+  export type Employee$orders_updatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    where?: OrderWhereInput
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[]
+    cursor?: OrderWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[]
+  }
+
+  /**
+   * Employee.transactions
+   */
+  export type Employee$transactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transaction
+     */
+    select?: TransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transaction
+     */
+    omit?: TransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionInclude<ExtArgs> | null
+    where?: TransactionWhereInput
+    orderBy?: TransactionOrderByWithRelationInput | TransactionOrderByWithRelationInput[]
+    cursor?: TransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
+  }
+
+  /**
+   * Employee.action_logs
+   */
+  export type Employee$action_logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActionLog
+     */
+    select?: ActionLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActionLog
+     */
+    omit?: ActionLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActionLogInclude<ExtArgs> | null
+    where?: ActionLogWhereInput
+    orderBy?: ActionLogOrderByWithRelationInput | ActionLogOrderByWithRelationInput[]
+    cursor?: ActionLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ActionLogScalarFieldEnum | ActionLogScalarFieldEnum[]
+  }
+
+  /**
+   * Employee without action
+   */
+  export type EmployeeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
   }
 
 
@@ -19173,7 +21036,9 @@ export namespace Prisma {
     shipping_method: 'shipping_method',
     status: 'status',
     is_paid: 'is_paid',
-    payment_date: 'payment_date'
+    payment_date: 'payment_date',
+    created_by_employee_id: 'created_by_employee_id',
+    updated_by_employee_id: 'updated_by_employee_id'
   };
 
   export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -19225,7 +21090,8 @@ export namespace Prisma {
     updated_at: 'updated_at',
     notes: 'notes',
     created_by: 'created_by',
-    branch_id: 'branch_id'
+    branch_id: 'branch_id',
+    created_by_employee_id: 'created_by_employee_id'
   };
 
   export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
@@ -19240,10 +21106,39 @@ export namespace Prisma {
     entity_type: 'entity_type',
     entity_id: 'entity_id',
     details: 'details',
-    action_initiator: 'action_initiator'
+    action_initiator: 'action_initiator',
+    employee_id: 'employee_id'
   };
 
   export type ActionLogScalarFieldEnum = (typeof ActionLogScalarFieldEnum)[keyof typeof ActionLogScalarFieldEnum]
+
+
+  export const EmployeeScalarFieldEnum: {
+    id: 'id',
+    user_id: 'user_id',
+    store_id: 'store_id',
+    role: 'role',
+    can_create_orders: 'can_create_orders',
+    can_update_orders: 'can_update_orders',
+    can_create_products: 'can_create_products',
+    can_update_products: 'can_update_products',
+    can_manage_stock: 'can_manage_stock',
+    can_process_refunds: 'can_process_refunds',
+    can_view_reports: 'can_view_reports',
+    can_manage_employees: 'can_manage_employees',
+    can_manage_store: 'can_manage_store',
+    is_active: 'is_active',
+    hired_at: 'hired_at',
+    fired_at: 'fired_at',
+    position: 'position',
+    department: 'department',
+    salary: 'salary',
+    notes: 'notes',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -19360,6 +21255,15 @@ export namespace Prisma {
   };
 
   export type ActionLogOrderByRelevanceFieldEnum = (typeof ActionLogOrderByRelevanceFieldEnum)[keyof typeof ActionLogOrderByRelevanceFieldEnum]
+
+
+  export const EmployeeOrderByRelevanceFieldEnum: {
+    position: 'position',
+    department: 'department',
+    notes: 'notes'
+  };
+
+  export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevanceFieldEnum)[keyof typeof EmployeeOrderByRelevanceFieldEnum]
 
 
   /**
@@ -19512,6 +21416,20 @@ export namespace Prisma {
    */
   export type ListEnumEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EntityType[]'>
     
+
+
+  /**
+   * Reference to a field of type 'EmployeeRole'
+   */
+  export type EnumEmployeeRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmployeeRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'EmployeeRole[]'
+   */
+  export type ListEnumEmployeeRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmployeeRole[]'>
+    
   /**
    * Deep Input Types
    */
@@ -19535,6 +21453,7 @@ export namespace Prisma {
     Product?: ProductListRelationFilter
     Order?: OrderListRelationFilter
     ActionLog?: ActionLogListRelationFilter
+    Employee?: EmployeeListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -19552,6 +21471,7 @@ export namespace Prisma {
     Product?: ProductOrderByRelationAggregateInput
     Order?: OrderOrderByRelationAggregateInput
     ActionLog?: ActionLogOrderByRelationAggregateInput
+    Employee?: EmployeeOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -19573,6 +21493,7 @@ export namespace Prisma {
     Product?: ProductListRelationFilter
     Order?: OrderListRelationFilter
     ActionLog?: ActionLogListRelationFilter
+    Employee?: EmployeeListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -19703,6 +21624,7 @@ export namespace Prisma {
     orders?: OrderListRelationFilter
     balance?: XOR<StoreBalanceNullableScalarRelationFilter, StoreBalanceWhereInput> | null
     transactions?: TransactionListRelationFilter
+    employees?: EmployeeListRelationFilter
   }
 
   export type StoreOrderByWithRelationInput = {
@@ -19722,6 +21644,7 @@ export namespace Prisma {
     orders?: OrderOrderByRelationAggregateInput
     balance?: StoreBalanceOrderByWithRelationInput
     transactions?: TransactionOrderByRelationAggregateInput
+    employees?: EmployeeOrderByRelationAggregateInput
     _relevance?: StoreOrderByRelevanceInput
   }
 
@@ -19745,6 +21668,7 @@ export namespace Prisma {
     orders?: OrderListRelationFilter
     balance?: XOR<StoreBalanceNullableScalarRelationFilter, StoreBalanceWhereInput> | null
     transactions?: TransactionListRelationFilter
+    employees?: EmployeeListRelationFilter
   }, "id" | "slug" | "subdomain">
 
   export type StoreOrderByWithAggregationInput = {
@@ -20192,11 +22116,15 @@ export namespace Prisma {
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
     is_paid?: BoolFilter<"Order"> | boolean
     payment_date?: DateTimeNullableFilter<"Order"> | Date | string | null
+    created_by_employee_id?: IntNullableFilter<"Order"> | number | null
+    updated_by_employee_id?: IntNullableFilter<"Order"> | number | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
     branch?: XOR<BranchScalarRelationFilter, BranchWhereInput>
     items?: OrderItemListRelationFilter
     payment?: XOR<OrderPaymentNullableScalarRelationFilter, OrderPaymentWhereInput> | null
+    created_by_employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
+    updated_by_employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
   }
 
   export type OrderOrderByWithRelationInput = {
@@ -20212,11 +22140,15 @@ export namespace Prisma {
     status?: SortOrder
     is_paid?: SortOrder
     payment_date?: SortOrderInput | SortOrder
+    created_by_employee_id?: SortOrderInput | SortOrder
+    updated_by_employee_id?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     store?: StoreOrderByWithRelationInput
     branch?: BranchOrderByWithRelationInput
     items?: OrderItemOrderByRelationAggregateInput
     payment?: OrderPaymentOrderByWithRelationInput
+    created_by_employee?: EmployeeOrderByWithRelationInput
+    updated_by_employee?: EmployeeOrderByWithRelationInput
     _relevance?: OrderOrderByRelevanceInput
   }
 
@@ -20236,11 +22168,15 @@ export namespace Prisma {
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
     is_paid?: BoolFilter<"Order"> | boolean
     payment_date?: DateTimeNullableFilter<"Order"> | Date | string | null
+    created_by_employee_id?: IntNullableFilter<"Order"> | number | null
+    updated_by_employee_id?: IntNullableFilter<"Order"> | number | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
     branch?: XOR<BranchScalarRelationFilter, BranchWhereInput>
     items?: OrderItemListRelationFilter
     payment?: XOR<OrderPaymentNullableScalarRelationFilter, OrderPaymentWhereInput> | null
+    created_by_employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
+    updated_by_employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
   }, "id">
 
   export type OrderOrderByWithAggregationInput = {
@@ -20256,6 +22192,8 @@ export namespace Prisma {
     status?: SortOrder
     is_paid?: SortOrder
     payment_date?: SortOrderInput | SortOrder
+    created_by_employee_id?: SortOrderInput | SortOrder
+    updated_by_employee_id?: SortOrderInput | SortOrder
     _count?: OrderCountOrderByAggregateInput
     _avg?: OrderAvgOrderByAggregateInput
     _max?: OrderMaxOrderByAggregateInput
@@ -20279,6 +22217,8 @@ export namespace Prisma {
     status?: EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
     is_paid?: BoolWithAggregatesFilter<"Order"> | boolean
     payment_date?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+    created_by_employee_id?: IntNullableWithAggregatesFilter<"Order"> | number | null
+    updated_by_employee_id?: IntNullableWithAggregatesFilter<"Order"> | number | null
   }
 
   export type OrderItemWhereInput = {
@@ -20468,7 +22408,9 @@ export namespace Prisma {
     notes?: StringNullableFilter<"Transaction"> | string | null
     created_by?: IntNullableFilter<"Transaction"> | number | null
     branch_id?: IntNullableFilter<"Transaction"> | number | null
+    created_by_employee_id?: IntNullableFilter<"Transaction"> | number | null
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    created_by_employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
   }
 
   export type TransactionOrderByWithRelationInput = {
@@ -20486,7 +22428,9 @@ export namespace Prisma {
     notes?: SortOrderInput | SortOrder
     created_by?: SortOrderInput | SortOrder
     branch_id?: SortOrderInput | SortOrder
+    created_by_employee_id?: SortOrderInput | SortOrder
     store?: StoreOrderByWithRelationInput
+    created_by_employee?: EmployeeOrderByWithRelationInput
     _relevance?: TransactionOrderByRelevanceInput
   }
 
@@ -20508,7 +22452,9 @@ export namespace Prisma {
     notes?: StringNullableFilter<"Transaction"> | string | null
     created_by?: IntNullableFilter<"Transaction"> | number | null
     branch_id?: IntNullableFilter<"Transaction"> | number | null
+    created_by_employee_id?: IntNullableFilter<"Transaction"> | number | null
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    created_by_employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
   }, "id">
 
   export type TransactionOrderByWithAggregationInput = {
@@ -20526,6 +22472,7 @@ export namespace Prisma {
     notes?: SortOrderInput | SortOrder
     created_by?: SortOrderInput | SortOrder
     branch_id?: SortOrderInput | SortOrder
+    created_by_employee_id?: SortOrderInput | SortOrder
     _count?: TransactionCountOrderByAggregateInput
     _avg?: TransactionAvgOrderByAggregateInput
     _max?: TransactionMaxOrderByAggregateInput
@@ -20551,6 +22498,7 @@ export namespace Prisma {
     notes?: StringNullableWithAggregatesFilter<"Transaction"> | string | null
     created_by?: IntNullableWithAggregatesFilter<"Transaction"> | number | null
     branch_id?: IntNullableWithAggregatesFilter<"Transaction"> | number | null
+    created_by_employee_id?: IntNullableWithAggregatesFilter<"Transaction"> | number | null
   }
 
   export type ActionLogWhereInput = {
@@ -20566,7 +22514,9 @@ export namespace Prisma {
     entity_id?: IntFilter<"ActionLog"> | number
     details?: StringNullableFilter<"ActionLog"> | string | null
     action_initiator?: StringNullableFilter<"ActionLog"> | string | null
+    employee_id?: IntNullableFilter<"ActionLog"> | number | null
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
   }
 
   export type ActionLogOrderByWithRelationInput = {
@@ -20579,7 +22529,9 @@ export namespace Prisma {
     entity_id?: SortOrder
     details?: SortOrderInput | SortOrder
     action_initiator?: SortOrderInput | SortOrder
+    employee_id?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
+    employee?: EmployeeOrderByWithRelationInput
     _relevance?: ActionLogOrderByRelevanceInput
   }
 
@@ -20596,7 +22548,9 @@ export namespace Prisma {
     entity_id?: IntFilter<"ActionLog"> | number
     details?: StringNullableFilter<"ActionLog"> | string | null
     action_initiator?: StringNullableFilter<"ActionLog"> | string | null
+    employee_id?: IntNullableFilter<"ActionLog"> | number | null
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
   }, "id">
 
   export type ActionLogOrderByWithAggregationInput = {
@@ -20609,6 +22563,7 @@ export namespace Prisma {
     entity_id?: SortOrder
     details?: SortOrderInput | SortOrder
     action_initiator?: SortOrderInput | SortOrder
+    employee_id?: SortOrderInput | SortOrder
     _count?: ActionLogCountOrderByAggregateInput
     _avg?: ActionLogAvgOrderByAggregateInput
     _max?: ActionLogMaxOrderByAggregateInput
@@ -20629,6 +22584,166 @@ export namespace Prisma {
     entity_id?: IntWithAggregatesFilter<"ActionLog"> | number
     details?: StringNullableWithAggregatesFilter<"ActionLog"> | string | null
     action_initiator?: StringNullableWithAggregatesFilter<"ActionLog"> | string | null
+    employee_id?: IntNullableWithAggregatesFilter<"ActionLog"> | number | null
+  }
+
+  export type EmployeeWhereInput = {
+    AND?: EmployeeWhereInput | EmployeeWhereInput[]
+    OR?: EmployeeWhereInput[]
+    NOT?: EmployeeWhereInput | EmployeeWhereInput[]
+    id?: IntFilter<"Employee"> | number
+    user_id?: IntFilter<"Employee"> | number
+    store_id?: IntFilter<"Employee"> | number
+    role?: EnumEmployeeRoleFilter<"Employee"> | $Enums.EmployeeRole
+    can_create_orders?: BoolFilter<"Employee"> | boolean
+    can_update_orders?: BoolFilter<"Employee"> | boolean
+    can_create_products?: BoolFilter<"Employee"> | boolean
+    can_update_products?: BoolFilter<"Employee"> | boolean
+    can_manage_stock?: BoolFilter<"Employee"> | boolean
+    can_process_refunds?: BoolFilter<"Employee"> | boolean
+    can_view_reports?: BoolFilter<"Employee"> | boolean
+    can_manage_employees?: BoolFilter<"Employee"> | boolean
+    can_manage_store?: BoolFilter<"Employee"> | boolean
+    is_active?: BoolFilter<"Employee"> | boolean
+    hired_at?: DateTimeFilter<"Employee"> | Date | string
+    fired_at?: DateTimeNullableFilter<"Employee"> | Date | string | null
+    position?: StringNullableFilter<"Employee"> | string | null
+    department?: StringNullableFilter<"Employee"> | string | null
+    salary?: FloatNullableFilter<"Employee"> | number | null
+    notes?: StringNullableFilter<"Employee"> | string | null
+    created_at?: DateTimeFilter<"Employee"> | Date | string
+    updated_at?: DateTimeFilter<"Employee"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    orders_created?: OrderListRelationFilter
+    orders_updated?: OrderListRelationFilter
+    transactions?: TransactionListRelationFilter
+    action_logs?: ActionLogListRelationFilter
+  }
+
+  export type EmployeeOrderByWithRelationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    store_id?: SortOrder
+    role?: SortOrder
+    can_create_orders?: SortOrder
+    can_update_orders?: SortOrder
+    can_create_products?: SortOrder
+    can_update_products?: SortOrder
+    can_manage_stock?: SortOrder
+    can_process_refunds?: SortOrder
+    can_view_reports?: SortOrder
+    can_manage_employees?: SortOrder
+    can_manage_store?: SortOrder
+    is_active?: SortOrder
+    hired_at?: SortOrder
+    fired_at?: SortOrderInput | SortOrder
+    position?: SortOrderInput | SortOrder
+    department?: SortOrderInput | SortOrder
+    salary?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    user?: UserOrderByWithRelationInput
+    store?: StoreOrderByWithRelationInput
+    orders_created?: OrderOrderByRelationAggregateInput
+    orders_updated?: OrderOrderByRelationAggregateInput
+    transactions?: TransactionOrderByRelationAggregateInput
+    action_logs?: ActionLogOrderByRelationAggregateInput
+    _relevance?: EmployeeOrderByRelevanceInput
+  }
+
+  export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    user_id_store_id?: EmployeeUser_idStore_idCompoundUniqueInput
+    AND?: EmployeeWhereInput | EmployeeWhereInput[]
+    OR?: EmployeeWhereInput[]
+    NOT?: EmployeeWhereInput | EmployeeWhereInput[]
+    user_id?: IntFilter<"Employee"> | number
+    store_id?: IntFilter<"Employee"> | number
+    role?: EnumEmployeeRoleFilter<"Employee"> | $Enums.EmployeeRole
+    can_create_orders?: BoolFilter<"Employee"> | boolean
+    can_update_orders?: BoolFilter<"Employee"> | boolean
+    can_create_products?: BoolFilter<"Employee"> | boolean
+    can_update_products?: BoolFilter<"Employee"> | boolean
+    can_manage_stock?: BoolFilter<"Employee"> | boolean
+    can_process_refunds?: BoolFilter<"Employee"> | boolean
+    can_view_reports?: BoolFilter<"Employee"> | boolean
+    can_manage_employees?: BoolFilter<"Employee"> | boolean
+    can_manage_store?: BoolFilter<"Employee"> | boolean
+    is_active?: BoolFilter<"Employee"> | boolean
+    hired_at?: DateTimeFilter<"Employee"> | Date | string
+    fired_at?: DateTimeNullableFilter<"Employee"> | Date | string | null
+    position?: StringNullableFilter<"Employee"> | string | null
+    department?: StringNullableFilter<"Employee"> | string | null
+    salary?: FloatNullableFilter<"Employee"> | number | null
+    notes?: StringNullableFilter<"Employee"> | string | null
+    created_at?: DateTimeFilter<"Employee"> | Date | string
+    updated_at?: DateTimeFilter<"Employee"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    orders_created?: OrderListRelationFilter
+    orders_updated?: OrderListRelationFilter
+    transactions?: TransactionListRelationFilter
+    action_logs?: ActionLogListRelationFilter
+  }, "id" | "user_id_store_id">
+
+  export type EmployeeOrderByWithAggregationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    store_id?: SortOrder
+    role?: SortOrder
+    can_create_orders?: SortOrder
+    can_update_orders?: SortOrder
+    can_create_products?: SortOrder
+    can_update_products?: SortOrder
+    can_manage_stock?: SortOrder
+    can_process_refunds?: SortOrder
+    can_view_reports?: SortOrder
+    can_manage_employees?: SortOrder
+    can_manage_store?: SortOrder
+    is_active?: SortOrder
+    hired_at?: SortOrder
+    fired_at?: SortOrderInput | SortOrder
+    position?: SortOrderInput | SortOrder
+    department?: SortOrderInput | SortOrder
+    salary?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: EmployeeCountOrderByAggregateInput
+    _avg?: EmployeeAvgOrderByAggregateInput
+    _max?: EmployeeMaxOrderByAggregateInput
+    _min?: EmployeeMinOrderByAggregateInput
+    _sum?: EmployeeSumOrderByAggregateInput
+  }
+
+  export type EmployeeScalarWhereWithAggregatesInput = {
+    AND?: EmployeeScalarWhereWithAggregatesInput | EmployeeScalarWhereWithAggregatesInput[]
+    OR?: EmployeeScalarWhereWithAggregatesInput[]
+    NOT?: EmployeeScalarWhereWithAggregatesInput | EmployeeScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Employee"> | number
+    user_id?: IntWithAggregatesFilter<"Employee"> | number
+    store_id?: IntWithAggregatesFilter<"Employee"> | number
+    role?: EnumEmployeeRoleWithAggregatesFilter<"Employee"> | $Enums.EmployeeRole
+    can_create_orders?: BoolWithAggregatesFilter<"Employee"> | boolean
+    can_update_orders?: BoolWithAggregatesFilter<"Employee"> | boolean
+    can_create_products?: BoolWithAggregatesFilter<"Employee"> | boolean
+    can_update_products?: BoolWithAggregatesFilter<"Employee"> | boolean
+    can_manage_stock?: BoolWithAggregatesFilter<"Employee"> | boolean
+    can_process_refunds?: BoolWithAggregatesFilter<"Employee"> | boolean
+    can_view_reports?: BoolWithAggregatesFilter<"Employee"> | boolean
+    can_manage_employees?: BoolWithAggregatesFilter<"Employee"> | boolean
+    can_manage_store?: BoolWithAggregatesFilter<"Employee"> | boolean
+    is_active?: BoolWithAggregatesFilter<"Employee"> | boolean
+    hired_at?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
+    fired_at?: DateTimeNullableWithAggregatesFilter<"Employee"> | Date | string | null
+    position?: StringNullableWithAggregatesFilter<"Employee"> | string | null
+    department?: StringNullableWithAggregatesFilter<"Employee"> | string | null
+    salary?: FloatNullableWithAggregatesFilter<"Employee"> | number | null
+    notes?: StringNullableWithAggregatesFilter<"Employee"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -20645,6 +22760,7 @@ export namespace Prisma {
     Product?: ProductCreateNestedManyWithoutOwnerInput
     Order?: OrderCreateNestedManyWithoutUserInput
     ActionLog?: ActionLogCreateNestedManyWithoutUserInput
+    Employee?: EmployeeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -20662,6 +22778,7 @@ export namespace Prisma {
     Product?: ProductUncheckedCreateNestedManyWithoutOwnerInput
     Order?: OrderUncheckedCreateNestedManyWithoutUserInput
     ActionLog?: ActionLogUncheckedCreateNestedManyWithoutUserInput
+    Employee?: EmployeeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -20678,6 +22795,7 @@ export namespace Prisma {
     Product?: ProductUpdateManyWithoutOwnerNestedInput
     Order?: OrderUpdateManyWithoutUserNestedInput
     ActionLog?: ActionLogUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -20695,6 +22813,7 @@ export namespace Prisma {
     Product?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
     Order?: OrderUncheckedUpdateManyWithoutUserNestedInput
     ActionLog?: ActionLogUncheckedUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -20824,6 +22943,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
+    employees?: EmployeeCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateInput = {
@@ -20842,6 +22962,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
+    employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUpdateInput = {
@@ -20859,6 +22980,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateInput = {
@@ -20877,6 +22999,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreCreateManyInput = {
@@ -21335,6 +23458,8 @@ export namespace Prisma {
     branch: BranchCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentCreateNestedOneWithoutOrderInput
+    created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
+    updated_by_employee?: EmployeeCreateNestedOneWithoutOrders_updatedInput
   }
 
   export type OrderUncheckedCreateInput = {
@@ -21350,6 +23475,8 @@ export namespace Prisma {
     status?: $Enums.OrderStatus
     is_paid?: boolean
     payment_date?: Date | string | null
+    created_by_employee_id?: number | null
+    updated_by_employee_id?: number | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentUncheckedCreateNestedOneWithoutOrderInput
   }
@@ -21368,6 +23495,8 @@ export namespace Prisma {
     branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
+    created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
+    updated_by_employee?: EmployeeUpdateOneWithoutOrders_updatedNestedInput
   }
 
   export type OrderUncheckedUpdateInput = {
@@ -21383,6 +23512,8 @@ export namespace Prisma {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     is_paid?: BoolFieldUpdateOperationsInput | boolean
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    updated_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUncheckedUpdateOneWithoutOrderNestedInput
   }
@@ -21400,6 +23531,8 @@ export namespace Prisma {
     status?: $Enums.OrderStatus
     is_paid?: boolean
     payment_date?: Date | string | null
+    created_by_employee_id?: number | null
+    updated_by_employee_id?: number | null
   }
 
   export type OrderUpdateManyMutationInput = {
@@ -21426,6 +23559,8 @@ export namespace Prisma {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     is_paid?: BoolFieldUpdateOperationsInput | boolean
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    updated_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type OrderItemCreateInput = {
@@ -21590,6 +23725,7 @@ export namespace Prisma {
     created_by?: number | null
     branch_id?: number | null
     store: StoreCreateNestedOneWithoutTransactionsInput
+    created_by_employee?: EmployeeCreateNestedOneWithoutTransactionsInput
   }
 
   export type TransactionUncheckedCreateInput = {
@@ -21607,6 +23743,7 @@ export namespace Prisma {
     notes?: string | null
     created_by?: number | null
     branch_id?: number | null
+    created_by_employee_id?: number | null
   }
 
   export type TransactionUpdateInput = {
@@ -21623,6 +23760,7 @@ export namespace Prisma {
     created_by?: NullableIntFieldUpdateOperationsInput | number | null
     branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     store?: StoreUpdateOneRequiredWithoutTransactionsNestedInput
+    created_by_employee?: EmployeeUpdateOneWithoutTransactionsNestedInput
   }
 
   export type TransactionUncheckedUpdateInput = {
@@ -21640,6 +23778,7 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     created_by?: NullableIntFieldUpdateOperationsInput | number | null
     branch_id?: NullableIntFieldUpdateOperationsInput | number | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TransactionCreateManyInput = {
@@ -21657,6 +23796,7 @@ export namespace Prisma {
     notes?: string | null
     created_by?: number | null
     branch_id?: number | null
+    created_by_employee_id?: number | null
   }
 
   export type TransactionUpdateManyMutationInput = {
@@ -21689,6 +23829,7 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     created_by?: NullableIntFieldUpdateOperationsInput | number | null
     branch_id?: NullableIntFieldUpdateOperationsInput | number | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ActionLogCreateInput = {
@@ -21700,6 +23841,7 @@ export namespace Prisma {
     details?: string | null
     action_initiator?: string | null
     user?: UserCreateNestedOneWithoutActionLogInput
+    employee?: EmployeeCreateNestedOneWithoutAction_logsInput
   }
 
   export type ActionLogUncheckedCreateInput = {
@@ -21712,6 +23854,7 @@ export namespace Prisma {
     entity_id: number
     details?: string | null
     action_initiator?: string | null
+    employee_id?: number | null
   }
 
   export type ActionLogUpdateInput = {
@@ -21723,6 +23866,7 @@ export namespace Prisma {
     details?: NullableStringFieldUpdateOperationsInput | string | null
     action_initiator?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneWithoutActionLogNestedInput
+    employee?: EmployeeUpdateOneWithoutAction_logsNestedInput
   }
 
   export type ActionLogUncheckedUpdateInput = {
@@ -21735,6 +23879,7 @@ export namespace Prisma {
     entity_id?: IntFieldUpdateOperationsInput | number
     details?: NullableStringFieldUpdateOperationsInput | string | null
     action_initiator?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ActionLogCreateManyInput = {
@@ -21747,6 +23892,7 @@ export namespace Prisma {
     entity_id: number
     details?: string | null
     action_initiator?: string | null
+    employee_id?: number | null
   }
 
   export type ActionLogUpdateManyMutationInput = {
@@ -21769,6 +23915,193 @@ export namespace Prisma {
     entity_id?: IntFieldUpdateOperationsInput | number
     details?: NullableStringFieldUpdateOperationsInput | string | null
     action_initiator?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type EmployeeCreateInput = {
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutEmployeeInput
+    store: StoreCreateNestedOneWithoutEmployeesInput
+    orders_created?: OrderCreateNestedManyWithoutCreated_by_employeeInput
+    orders_updated?: OrderCreateNestedManyWithoutUpdated_by_employeeInput
+    transactions?: TransactionCreateNestedManyWithoutCreated_by_employeeInput
+    action_logs?: ActionLogCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeUncheckedCreateInput = {
+    id?: number
+    user_id: number
+    store_id: number
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    orders_created?: OrderUncheckedCreateNestedManyWithoutCreated_by_employeeInput
+    orders_updated?: OrderUncheckedCreateNestedManyWithoutUpdated_by_employeeInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutCreated_by_employeeInput
+    action_logs?: ActionLogUncheckedCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeUpdateInput = {
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
+    store?: StoreUpdateOneRequiredWithoutEmployeesNestedInput
+    orders_created?: OrderUpdateManyWithoutCreated_by_employeeNestedInput
+    orders_updated?: OrderUpdateManyWithoutUpdated_by_employeeNestedInput
+    transactions?: TransactionUpdateManyWithoutCreated_by_employeeNestedInput
+    action_logs?: ActionLogUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type EmployeeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders_created?: OrderUncheckedUpdateManyWithoutCreated_by_employeeNestedInput
+    orders_updated?: OrderUncheckedUpdateManyWithoutUpdated_by_employeeNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutCreated_by_employeeNestedInput
+    action_logs?: ActionLogUncheckedUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type EmployeeCreateManyInput = {
+    id?: number
+    user_id: number
+    store_id: number
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type EmployeeUpdateManyMutationInput = {
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmployeeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -21861,6 +24194,12 @@ export namespace Prisma {
     none?: ActionLogWhereInput
   }
 
+  export type EmployeeListRelationFilter = {
+    every?: EmployeeWhereInput
+    some?: EmployeeWhereInput
+    none?: EmployeeWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -21887,6 +24226,10 @@ export namespace Prisma {
   }
 
   export type ActionLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EmployeeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -22518,9 +24861,25 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type OrderPaymentNullableScalarRelationFilter = {
     is?: OrderPaymentWhereInput | null
     isNot?: OrderPaymentWhereInput | null
+  }
+
+  export type EmployeeNullableScalarRelationFilter = {
+    is?: EmployeeWhereInput | null
+    isNot?: EmployeeWhereInput | null
   }
 
   export type OrderOrderByRelevanceInput = {
@@ -22542,6 +24901,8 @@ export namespace Prisma {
     status?: SortOrder
     is_paid?: SortOrder
     payment_date?: SortOrder
+    created_by_employee_id?: SortOrder
+    updated_by_employee_id?: SortOrder
   }
 
   export type OrderAvgOrderByAggregateInput = {
@@ -22551,6 +24912,8 @@ export namespace Prisma {
     branch_id?: SortOrder
     total_price?: SortOrder
     total_quantity?: SortOrder
+    created_by_employee_id?: SortOrder
+    updated_by_employee_id?: SortOrder
   }
 
   export type OrderMaxOrderByAggregateInput = {
@@ -22566,6 +24929,8 @@ export namespace Prisma {
     status?: SortOrder
     is_paid?: SortOrder
     payment_date?: SortOrder
+    created_by_employee_id?: SortOrder
+    updated_by_employee_id?: SortOrder
   }
 
   export type OrderMinOrderByAggregateInput = {
@@ -22581,6 +24946,8 @@ export namespace Prisma {
     status?: SortOrder
     is_paid?: SortOrder
     payment_date?: SortOrder
+    created_by_employee_id?: SortOrder
+    updated_by_employee_id?: SortOrder
   }
 
   export type OrderSumOrderByAggregateInput = {
@@ -22590,6 +24957,8 @@ export namespace Prisma {
     branch_id?: SortOrder
     total_price?: SortOrder
     total_quantity?: SortOrder
+    created_by_employee_id?: SortOrder
+    updated_by_employee_id?: SortOrder
   }
 
   export type EnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -22614,6 +24983,22 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type OrderScalarRelationFilter = {
@@ -22754,17 +25139,6 @@ export namespace Prisma {
     not?: NestedEnumTransactionTypeFilter<$PrismaModel> | $Enums.TransactionType
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type TransactionOrderByRelevanceInput = {
     fields: TransactionOrderByRelevanceFieldEnum | TransactionOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -22786,6 +25160,7 @@ export namespace Prisma {
     notes?: SortOrder
     created_by?: SortOrder
     branch_id?: SortOrder
+    created_by_employee_id?: SortOrder
   }
 
   export type TransactionAvgOrderByAggregateInput = {
@@ -22797,6 +25172,7 @@ export namespace Prisma {
     reference_id?: SortOrder
     created_by?: SortOrder
     branch_id?: SortOrder
+    created_by_employee_id?: SortOrder
   }
 
   export type TransactionMaxOrderByAggregateInput = {
@@ -22814,6 +25190,7 @@ export namespace Prisma {
     notes?: SortOrder
     created_by?: SortOrder
     branch_id?: SortOrder
+    created_by_employee_id?: SortOrder
   }
 
   export type TransactionMinOrderByAggregateInput = {
@@ -22831,6 +25208,7 @@ export namespace Prisma {
     notes?: SortOrder
     created_by?: SortOrder
     branch_id?: SortOrder
+    created_by_employee_id?: SortOrder
   }
 
   export type TransactionSumOrderByAggregateInput = {
@@ -22842,6 +25220,7 @@ export namespace Prisma {
     reference_id?: SortOrder
     created_by?: SortOrder
     branch_id?: SortOrder
+    created_by_employee_id?: SortOrder
   }
 
   export type EnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -22852,22 +25231,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTransactionTypeFilter<$PrismaModel>
     _max?: NestedEnumTransactionTypeFilter<$PrismaModel>
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type EnumActionTypeFilter<$PrismaModel = never> = {
@@ -22905,12 +25268,14 @@ export namespace Prisma {
     entity_id?: SortOrder
     details?: SortOrder
     action_initiator?: SortOrder
+    employee_id?: SortOrder
   }
 
   export type ActionLogAvgOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
     entity_id?: SortOrder
+    employee_id?: SortOrder
   }
 
   export type ActionLogMaxOrderByAggregateInput = {
@@ -22923,6 +25288,7 @@ export namespace Prisma {
     entity_id?: SortOrder
     details?: SortOrder
     action_initiator?: SortOrder
+    employee_id?: SortOrder
   }
 
   export type ActionLogMinOrderByAggregateInput = {
@@ -22935,12 +25301,14 @@ export namespace Prisma {
     entity_id?: SortOrder
     details?: SortOrder
     action_initiator?: SortOrder
+    employee_id?: SortOrder
   }
 
   export type ActionLogSumOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
     entity_id?: SortOrder
+    employee_id?: SortOrder
   }
 
   export type EnumActionTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -22961,6 +25329,150 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumEntityTypeFilter<$PrismaModel>
     _max?: NestedEnumEntityTypeFilter<$PrismaModel>
+  }
+
+  export type EnumEmployeeRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.EmployeeRole | EnumEmployeeRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.EmployeeRole[] | ListEnumEmployeeRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EmployeeRole[] | ListEnumEmployeeRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumEmployeeRoleFilter<$PrismaModel> | $Enums.EmployeeRole
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type EmployeeOrderByRelevanceInput = {
+    fields: EmployeeOrderByRelevanceFieldEnum | EmployeeOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type EmployeeUser_idStore_idCompoundUniqueInput = {
+    user_id: number
+    store_id: number
+  }
+
+  export type EmployeeCountOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    store_id?: SortOrder
+    role?: SortOrder
+    can_create_orders?: SortOrder
+    can_update_orders?: SortOrder
+    can_create_products?: SortOrder
+    can_update_products?: SortOrder
+    can_manage_stock?: SortOrder
+    can_process_refunds?: SortOrder
+    can_view_reports?: SortOrder
+    can_manage_employees?: SortOrder
+    can_manage_store?: SortOrder
+    is_active?: SortOrder
+    hired_at?: SortOrder
+    fired_at?: SortOrder
+    position?: SortOrder
+    department?: SortOrder
+    salary?: SortOrder
+    notes?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type EmployeeAvgOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    store_id?: SortOrder
+    salary?: SortOrder
+  }
+
+  export type EmployeeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    store_id?: SortOrder
+    role?: SortOrder
+    can_create_orders?: SortOrder
+    can_update_orders?: SortOrder
+    can_create_products?: SortOrder
+    can_update_products?: SortOrder
+    can_manage_stock?: SortOrder
+    can_process_refunds?: SortOrder
+    can_view_reports?: SortOrder
+    can_manage_employees?: SortOrder
+    can_manage_store?: SortOrder
+    is_active?: SortOrder
+    hired_at?: SortOrder
+    fired_at?: SortOrder
+    position?: SortOrder
+    department?: SortOrder
+    salary?: SortOrder
+    notes?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type EmployeeMinOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    store_id?: SortOrder
+    role?: SortOrder
+    can_create_orders?: SortOrder
+    can_update_orders?: SortOrder
+    can_create_products?: SortOrder
+    can_update_products?: SortOrder
+    can_manage_stock?: SortOrder
+    can_process_refunds?: SortOrder
+    can_view_reports?: SortOrder
+    can_manage_employees?: SortOrder
+    can_manage_store?: SortOrder
+    is_active?: SortOrder
+    hired_at?: SortOrder
+    fired_at?: SortOrder
+    position?: SortOrder
+    department?: SortOrder
+    salary?: SortOrder
+    notes?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type EmployeeSumOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    store_id?: SortOrder
+    salary?: SortOrder
+  }
+
+  export type EnumEmployeeRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EmployeeRole | EnumEmployeeRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.EmployeeRole[] | ListEnumEmployeeRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EmployeeRole[] | ListEnumEmployeeRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumEmployeeRoleWithAggregatesFilter<$PrismaModel> | $Enums.EmployeeRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEmployeeRoleFilter<$PrismaModel>
+    _max?: NestedEnumEmployeeRoleFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type NotificationCreateNestedManyWithoutUserInput = {
@@ -23005,6 +25517,13 @@ export namespace Prisma {
     connect?: ActionLogWhereUniqueInput | ActionLogWhereUniqueInput[]
   }
 
+  export type EmployeeCreateNestedManyWithoutUserInput = {
+    create?: XOR<EmployeeCreateWithoutUserInput, EmployeeUncheckedCreateWithoutUserInput> | EmployeeCreateWithoutUserInput[] | EmployeeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: EmployeeCreateOrConnectWithoutUserInput | EmployeeCreateOrConnectWithoutUserInput[]
+    createMany?: EmployeeCreateManyUserInputEnvelope
+    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+  }
+
   export type NotificationUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
@@ -23045,6 +25564,13 @@ export namespace Prisma {
     connectOrCreate?: ActionLogCreateOrConnectWithoutUserInput | ActionLogCreateOrConnectWithoutUserInput[]
     createMany?: ActionLogCreateManyUserInputEnvelope
     connect?: ActionLogWhereUniqueInput | ActionLogWhereUniqueInput[]
+  }
+
+  export type EmployeeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<EmployeeCreateWithoutUserInput, EmployeeUncheckedCreateWithoutUserInput> | EmployeeCreateWithoutUserInput[] | EmployeeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: EmployeeCreateOrConnectWithoutUserInput | EmployeeCreateOrConnectWithoutUserInput[]
+    createMany?: EmployeeCreateManyUserInputEnvelope
+    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -23143,6 +25669,20 @@ export namespace Prisma {
     deleteMany?: ActionLogScalarWhereInput | ActionLogScalarWhereInput[]
   }
 
+  export type EmployeeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<EmployeeCreateWithoutUserInput, EmployeeUncheckedCreateWithoutUserInput> | EmployeeCreateWithoutUserInput[] | EmployeeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: EmployeeCreateOrConnectWithoutUserInput | EmployeeCreateOrConnectWithoutUserInput[]
+    upsert?: EmployeeUpsertWithWhereUniqueWithoutUserInput | EmployeeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: EmployeeCreateManyUserInputEnvelope
+    set?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    disconnect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    delete?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    update?: EmployeeUpdateWithWhereUniqueWithoutUserInput | EmployeeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: EmployeeUpdateManyWithWhereWithoutUserInput | EmployeeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -23235,6 +25775,20 @@ export namespace Prisma {
     deleteMany?: ActionLogScalarWhereInput | ActionLogScalarWhereInput[]
   }
 
+  export type EmployeeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<EmployeeCreateWithoutUserInput, EmployeeUncheckedCreateWithoutUserInput> | EmployeeCreateWithoutUserInput[] | EmployeeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: EmployeeCreateOrConnectWithoutUserInput | EmployeeCreateOrConnectWithoutUserInput[]
+    upsert?: EmployeeUpsertWithWhereUniqueWithoutUserInput | EmployeeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: EmployeeCreateManyUserInputEnvelope
+    set?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    disconnect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    delete?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    update?: EmployeeUpdateWithWhereUniqueWithoutUserInput | EmployeeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: EmployeeUpdateManyWithWhereWithoutUserInput | EmployeeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutNotificationInput = {
     create?: XOR<UserCreateWithoutNotificationInput, UserUncheckedCreateWithoutNotificationInput>
     connectOrCreate?: UserCreateOrConnectWithoutNotificationInput
@@ -23293,6 +25847,13 @@ export namespace Prisma {
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
   }
 
+  export type EmployeeCreateNestedManyWithoutStoreInput = {
+    create?: XOR<EmployeeCreateWithoutStoreInput, EmployeeUncheckedCreateWithoutStoreInput> | EmployeeCreateWithoutStoreInput[] | EmployeeUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: EmployeeCreateOrConnectWithoutStoreInput | EmployeeCreateOrConnectWithoutStoreInput[]
+    createMany?: EmployeeCreateManyStoreInputEnvelope
+    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+  }
+
   export type BranchUncheckedCreateNestedManyWithoutStoreInput = {
     create?: XOR<BranchCreateWithoutStoreInput, BranchUncheckedCreateWithoutStoreInput> | BranchCreateWithoutStoreInput[] | BranchUncheckedCreateWithoutStoreInput[]
     connectOrCreate?: BranchCreateOrConnectWithoutStoreInput | BranchCreateOrConnectWithoutStoreInput[]
@@ -23325,6 +25886,13 @@ export namespace Prisma {
     connectOrCreate?: TransactionCreateOrConnectWithoutStoreInput | TransactionCreateOrConnectWithoutStoreInput[]
     createMany?: TransactionCreateManyStoreInputEnvelope
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type EmployeeUncheckedCreateNestedManyWithoutStoreInput = {
+    create?: XOR<EmployeeCreateWithoutStoreInput, EmployeeUncheckedCreateWithoutStoreInput> | EmployeeCreateWithoutStoreInput[] | EmployeeUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: EmployeeCreateOrConnectWithoutStoreInput | EmployeeCreateOrConnectWithoutStoreInput[]
+    createMany?: EmployeeCreateManyStoreInputEnvelope
+    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
   }
 
   export type UserUpdateOneRequiredWithoutStoreNestedInput = {
@@ -23401,6 +25969,20 @@ export namespace Prisma {
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
+  export type EmployeeUpdateManyWithoutStoreNestedInput = {
+    create?: XOR<EmployeeCreateWithoutStoreInput, EmployeeUncheckedCreateWithoutStoreInput> | EmployeeCreateWithoutStoreInput[] | EmployeeUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: EmployeeCreateOrConnectWithoutStoreInput | EmployeeCreateOrConnectWithoutStoreInput[]
+    upsert?: EmployeeUpsertWithWhereUniqueWithoutStoreInput | EmployeeUpsertWithWhereUniqueWithoutStoreInput[]
+    createMany?: EmployeeCreateManyStoreInputEnvelope
+    set?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    disconnect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    delete?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    update?: EmployeeUpdateWithWhereUniqueWithoutStoreInput | EmployeeUpdateWithWhereUniqueWithoutStoreInput[]
+    updateMany?: EmployeeUpdateManyWithWhereWithoutStoreInput | EmployeeUpdateManyWithWhereWithoutStoreInput[]
+    deleteMany?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
+  }
+
   export type BranchUncheckedUpdateManyWithoutStoreNestedInput = {
     create?: XOR<BranchCreateWithoutStoreInput, BranchUncheckedCreateWithoutStoreInput> | BranchCreateWithoutStoreInput[] | BranchUncheckedCreateWithoutStoreInput[]
     connectOrCreate?: BranchCreateOrConnectWithoutStoreInput | BranchCreateOrConnectWithoutStoreInput[]
@@ -23465,6 +26047,20 @@ export namespace Prisma {
     update?: TransactionUpdateWithWhereUniqueWithoutStoreInput | TransactionUpdateWithWhereUniqueWithoutStoreInput[]
     updateMany?: TransactionUpdateManyWithWhereWithoutStoreInput | TransactionUpdateManyWithWhereWithoutStoreInput[]
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type EmployeeUncheckedUpdateManyWithoutStoreNestedInput = {
+    create?: XOR<EmployeeCreateWithoutStoreInput, EmployeeUncheckedCreateWithoutStoreInput> | EmployeeCreateWithoutStoreInput[] | EmployeeUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: EmployeeCreateOrConnectWithoutStoreInput | EmployeeCreateOrConnectWithoutStoreInput[]
+    upsert?: EmployeeUpsertWithWhereUniqueWithoutStoreInput | EmployeeUpsertWithWhereUniqueWithoutStoreInput[]
+    createMany?: EmployeeCreateManyStoreInputEnvelope
+    set?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    disconnect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    delete?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+    update?: EmployeeUpdateWithWhereUniqueWithoutStoreInput | EmployeeUpdateWithWhereUniqueWithoutStoreInput[]
+    updateMany?: EmployeeUpdateManyWithWhereWithoutStoreInput | EmployeeUpdateManyWithWhereWithoutStoreInput[]
+    deleteMany?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountInput = {
@@ -23847,6 +26443,18 @@ export namespace Prisma {
     connect?: OrderPaymentWhereUniqueInput
   }
 
+  export type EmployeeCreateNestedOneWithoutOrders_createdInput = {
+    create?: XOR<EmployeeCreateWithoutOrders_createdInput, EmployeeUncheckedCreateWithoutOrders_createdInput>
+    connectOrCreate?: EmployeeCreateOrConnectWithoutOrders_createdInput
+    connect?: EmployeeWhereUniqueInput
+  }
+
+  export type EmployeeCreateNestedOneWithoutOrders_updatedInput = {
+    create?: XOR<EmployeeCreateWithoutOrders_updatedInput, EmployeeUncheckedCreateWithoutOrders_updatedInput>
+    connectOrCreate?: EmployeeCreateOrConnectWithoutOrders_updatedInput
+    connect?: EmployeeWhereUniqueInput
+  }
+
   export type OrderItemUncheckedCreateNestedManyWithoutOrderInput = {
     create?: XOR<OrderItemCreateWithoutOrderInput, OrderItemUncheckedCreateWithoutOrderInput> | OrderItemCreateWithoutOrderInput[] | OrderItemUncheckedCreateWithoutOrderInput[]
     connectOrCreate?: OrderItemCreateOrConnectWithoutOrderInput | OrderItemCreateOrConnectWithoutOrderInput[]
@@ -23914,6 +26522,34 @@ export namespace Prisma {
     delete?: OrderPaymentWhereInput | boolean
     connect?: OrderPaymentWhereUniqueInput
     update?: XOR<XOR<OrderPaymentUpdateToOneWithWhereWithoutOrderInput, OrderPaymentUpdateWithoutOrderInput>, OrderPaymentUncheckedUpdateWithoutOrderInput>
+  }
+
+  export type EmployeeUpdateOneWithoutOrders_createdNestedInput = {
+    create?: XOR<EmployeeCreateWithoutOrders_createdInput, EmployeeUncheckedCreateWithoutOrders_createdInput>
+    connectOrCreate?: EmployeeCreateOrConnectWithoutOrders_createdInput
+    upsert?: EmployeeUpsertWithoutOrders_createdInput
+    disconnect?: EmployeeWhereInput | boolean
+    delete?: EmployeeWhereInput | boolean
+    connect?: EmployeeWhereUniqueInput
+    update?: XOR<XOR<EmployeeUpdateToOneWithWhereWithoutOrders_createdInput, EmployeeUpdateWithoutOrders_createdInput>, EmployeeUncheckedUpdateWithoutOrders_createdInput>
+  }
+
+  export type EmployeeUpdateOneWithoutOrders_updatedNestedInput = {
+    create?: XOR<EmployeeCreateWithoutOrders_updatedInput, EmployeeUncheckedCreateWithoutOrders_updatedInput>
+    connectOrCreate?: EmployeeCreateOrConnectWithoutOrders_updatedInput
+    upsert?: EmployeeUpsertWithoutOrders_updatedInput
+    disconnect?: EmployeeWhereInput | boolean
+    delete?: EmployeeWhereInput | boolean
+    connect?: EmployeeWhereUniqueInput
+    update?: XOR<XOR<EmployeeUpdateToOneWithWhereWithoutOrders_updatedInput, EmployeeUpdateWithoutOrders_updatedInput>, EmployeeUncheckedUpdateWithoutOrders_updatedInput>
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type OrderItemUncheckedUpdateManyWithoutOrderNestedInput = {
@@ -24006,16 +26642,14 @@ export namespace Prisma {
     connect?: StoreWhereUniqueInput
   }
 
-  export type EnumTransactionTypeFieldUpdateOperationsInput = {
-    set?: $Enums.TransactionType
+  export type EmployeeCreateNestedOneWithoutTransactionsInput = {
+    create?: XOR<EmployeeCreateWithoutTransactionsInput, EmployeeUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: EmployeeCreateOrConnectWithoutTransactionsInput
+    connect?: EmployeeWhereUniqueInput
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type EnumTransactionTypeFieldUpdateOperationsInput = {
+    set?: $Enums.TransactionType
   }
 
   export type StoreUpdateOneRequiredWithoutTransactionsNestedInput = {
@@ -24026,10 +26660,26 @@ export namespace Prisma {
     update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutTransactionsInput, StoreUpdateWithoutTransactionsInput>, StoreUncheckedUpdateWithoutTransactionsInput>
   }
 
+  export type EmployeeUpdateOneWithoutTransactionsNestedInput = {
+    create?: XOR<EmployeeCreateWithoutTransactionsInput, EmployeeUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: EmployeeCreateOrConnectWithoutTransactionsInput
+    upsert?: EmployeeUpsertWithoutTransactionsInput
+    disconnect?: EmployeeWhereInput | boolean
+    delete?: EmployeeWhereInput | boolean
+    connect?: EmployeeWhereUniqueInput
+    update?: XOR<XOR<EmployeeUpdateToOneWithWhereWithoutTransactionsInput, EmployeeUpdateWithoutTransactionsInput>, EmployeeUncheckedUpdateWithoutTransactionsInput>
+  }
+
   export type UserCreateNestedOneWithoutActionLogInput = {
     create?: XOR<UserCreateWithoutActionLogInput, UserUncheckedCreateWithoutActionLogInput>
     connectOrCreate?: UserCreateOrConnectWithoutActionLogInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type EmployeeCreateNestedOneWithoutAction_logsInput = {
+    create?: XOR<EmployeeCreateWithoutAction_logsInput, EmployeeUncheckedCreateWithoutAction_logsInput>
+    connectOrCreate?: EmployeeCreateOrConnectWithoutAction_logsInput
+    connect?: EmployeeWhereUniqueInput
   }
 
   export type EnumActionTypeFieldUpdateOperationsInput = {
@@ -24048,6 +26698,224 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutActionLogInput, UserUpdateWithoutActionLogInput>, UserUncheckedUpdateWithoutActionLogInput>
+  }
+
+  export type EmployeeUpdateOneWithoutAction_logsNestedInput = {
+    create?: XOR<EmployeeCreateWithoutAction_logsInput, EmployeeUncheckedCreateWithoutAction_logsInput>
+    connectOrCreate?: EmployeeCreateOrConnectWithoutAction_logsInput
+    upsert?: EmployeeUpsertWithoutAction_logsInput
+    disconnect?: EmployeeWhereInput | boolean
+    delete?: EmployeeWhereInput | boolean
+    connect?: EmployeeWhereUniqueInput
+    update?: XOR<XOR<EmployeeUpdateToOneWithWhereWithoutAction_logsInput, EmployeeUpdateWithoutAction_logsInput>, EmployeeUncheckedUpdateWithoutAction_logsInput>
+  }
+
+  export type UserCreateNestedOneWithoutEmployeeInput = {
+    create?: XOR<UserCreateWithoutEmployeeInput, UserUncheckedCreateWithoutEmployeeInput>
+    connectOrCreate?: UserCreateOrConnectWithoutEmployeeInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type StoreCreateNestedOneWithoutEmployeesInput = {
+    create?: XOR<StoreCreateWithoutEmployeesInput, StoreUncheckedCreateWithoutEmployeesInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutEmployeesInput
+    connect?: StoreWhereUniqueInput
+  }
+
+  export type OrderCreateNestedManyWithoutCreated_by_employeeInput = {
+    create?: XOR<OrderCreateWithoutCreated_by_employeeInput, OrderUncheckedCreateWithoutCreated_by_employeeInput> | OrderCreateWithoutCreated_by_employeeInput[] | OrderUncheckedCreateWithoutCreated_by_employeeInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutCreated_by_employeeInput | OrderCreateOrConnectWithoutCreated_by_employeeInput[]
+    createMany?: OrderCreateManyCreated_by_employeeInputEnvelope
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+  }
+
+  export type OrderCreateNestedManyWithoutUpdated_by_employeeInput = {
+    create?: XOR<OrderCreateWithoutUpdated_by_employeeInput, OrderUncheckedCreateWithoutUpdated_by_employeeInput> | OrderCreateWithoutUpdated_by_employeeInput[] | OrderUncheckedCreateWithoutUpdated_by_employeeInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutUpdated_by_employeeInput | OrderCreateOrConnectWithoutUpdated_by_employeeInput[]
+    createMany?: OrderCreateManyUpdated_by_employeeInputEnvelope
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+  }
+
+  export type TransactionCreateNestedManyWithoutCreated_by_employeeInput = {
+    create?: XOR<TransactionCreateWithoutCreated_by_employeeInput, TransactionUncheckedCreateWithoutCreated_by_employeeInput> | TransactionCreateWithoutCreated_by_employeeInput[] | TransactionUncheckedCreateWithoutCreated_by_employeeInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutCreated_by_employeeInput | TransactionCreateOrConnectWithoutCreated_by_employeeInput[]
+    createMany?: TransactionCreateManyCreated_by_employeeInputEnvelope
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type ActionLogCreateNestedManyWithoutEmployeeInput = {
+    create?: XOR<ActionLogCreateWithoutEmployeeInput, ActionLogUncheckedCreateWithoutEmployeeInput> | ActionLogCreateWithoutEmployeeInput[] | ActionLogUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: ActionLogCreateOrConnectWithoutEmployeeInput | ActionLogCreateOrConnectWithoutEmployeeInput[]
+    createMany?: ActionLogCreateManyEmployeeInputEnvelope
+    connect?: ActionLogWhereUniqueInput | ActionLogWhereUniqueInput[]
+  }
+
+  export type OrderUncheckedCreateNestedManyWithoutCreated_by_employeeInput = {
+    create?: XOR<OrderCreateWithoutCreated_by_employeeInput, OrderUncheckedCreateWithoutCreated_by_employeeInput> | OrderCreateWithoutCreated_by_employeeInput[] | OrderUncheckedCreateWithoutCreated_by_employeeInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutCreated_by_employeeInput | OrderCreateOrConnectWithoutCreated_by_employeeInput[]
+    createMany?: OrderCreateManyCreated_by_employeeInputEnvelope
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+  }
+
+  export type OrderUncheckedCreateNestedManyWithoutUpdated_by_employeeInput = {
+    create?: XOR<OrderCreateWithoutUpdated_by_employeeInput, OrderUncheckedCreateWithoutUpdated_by_employeeInput> | OrderCreateWithoutUpdated_by_employeeInput[] | OrderUncheckedCreateWithoutUpdated_by_employeeInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutUpdated_by_employeeInput | OrderCreateOrConnectWithoutUpdated_by_employeeInput[]
+    createMany?: OrderCreateManyUpdated_by_employeeInputEnvelope
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+  }
+
+  export type TransactionUncheckedCreateNestedManyWithoutCreated_by_employeeInput = {
+    create?: XOR<TransactionCreateWithoutCreated_by_employeeInput, TransactionUncheckedCreateWithoutCreated_by_employeeInput> | TransactionCreateWithoutCreated_by_employeeInput[] | TransactionUncheckedCreateWithoutCreated_by_employeeInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutCreated_by_employeeInput | TransactionCreateOrConnectWithoutCreated_by_employeeInput[]
+    createMany?: TransactionCreateManyCreated_by_employeeInputEnvelope
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type ActionLogUncheckedCreateNestedManyWithoutEmployeeInput = {
+    create?: XOR<ActionLogCreateWithoutEmployeeInput, ActionLogUncheckedCreateWithoutEmployeeInput> | ActionLogCreateWithoutEmployeeInput[] | ActionLogUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: ActionLogCreateOrConnectWithoutEmployeeInput | ActionLogCreateOrConnectWithoutEmployeeInput[]
+    createMany?: ActionLogCreateManyEmployeeInputEnvelope
+    connect?: ActionLogWhereUniqueInput | ActionLogWhereUniqueInput[]
+  }
+
+  export type EnumEmployeeRoleFieldUpdateOperationsInput = {
+    set?: $Enums.EmployeeRole
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutEmployeeNestedInput = {
+    create?: XOR<UserCreateWithoutEmployeeInput, UserUncheckedCreateWithoutEmployeeInput>
+    connectOrCreate?: UserCreateOrConnectWithoutEmployeeInput
+    upsert?: UserUpsertWithoutEmployeeInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEmployeeInput, UserUpdateWithoutEmployeeInput>, UserUncheckedUpdateWithoutEmployeeInput>
+  }
+
+  export type StoreUpdateOneRequiredWithoutEmployeesNestedInput = {
+    create?: XOR<StoreCreateWithoutEmployeesInput, StoreUncheckedCreateWithoutEmployeesInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutEmployeesInput
+    upsert?: StoreUpsertWithoutEmployeesInput
+    connect?: StoreWhereUniqueInput
+    update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutEmployeesInput, StoreUpdateWithoutEmployeesInput>, StoreUncheckedUpdateWithoutEmployeesInput>
+  }
+
+  export type OrderUpdateManyWithoutCreated_by_employeeNestedInput = {
+    create?: XOR<OrderCreateWithoutCreated_by_employeeInput, OrderUncheckedCreateWithoutCreated_by_employeeInput> | OrderCreateWithoutCreated_by_employeeInput[] | OrderUncheckedCreateWithoutCreated_by_employeeInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutCreated_by_employeeInput | OrderCreateOrConnectWithoutCreated_by_employeeInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutCreated_by_employeeInput | OrderUpsertWithWhereUniqueWithoutCreated_by_employeeInput[]
+    createMany?: OrderCreateManyCreated_by_employeeInputEnvelope
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutCreated_by_employeeInput | OrderUpdateWithWhereUniqueWithoutCreated_by_employeeInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutCreated_by_employeeInput | OrderUpdateManyWithWhereWithoutCreated_by_employeeInput[]
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
+  export type OrderUpdateManyWithoutUpdated_by_employeeNestedInput = {
+    create?: XOR<OrderCreateWithoutUpdated_by_employeeInput, OrderUncheckedCreateWithoutUpdated_by_employeeInput> | OrderCreateWithoutUpdated_by_employeeInput[] | OrderUncheckedCreateWithoutUpdated_by_employeeInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutUpdated_by_employeeInput | OrderCreateOrConnectWithoutUpdated_by_employeeInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutUpdated_by_employeeInput | OrderUpsertWithWhereUniqueWithoutUpdated_by_employeeInput[]
+    createMany?: OrderCreateManyUpdated_by_employeeInputEnvelope
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutUpdated_by_employeeInput | OrderUpdateWithWhereUniqueWithoutUpdated_by_employeeInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutUpdated_by_employeeInput | OrderUpdateManyWithWhereWithoutUpdated_by_employeeInput[]
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
+  export type TransactionUpdateManyWithoutCreated_by_employeeNestedInput = {
+    create?: XOR<TransactionCreateWithoutCreated_by_employeeInput, TransactionUncheckedCreateWithoutCreated_by_employeeInput> | TransactionCreateWithoutCreated_by_employeeInput[] | TransactionUncheckedCreateWithoutCreated_by_employeeInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutCreated_by_employeeInput | TransactionCreateOrConnectWithoutCreated_by_employeeInput[]
+    upsert?: TransactionUpsertWithWhereUniqueWithoutCreated_by_employeeInput | TransactionUpsertWithWhereUniqueWithoutCreated_by_employeeInput[]
+    createMany?: TransactionCreateManyCreated_by_employeeInputEnvelope
+    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    update?: TransactionUpdateWithWhereUniqueWithoutCreated_by_employeeInput | TransactionUpdateWithWhereUniqueWithoutCreated_by_employeeInput[]
+    updateMany?: TransactionUpdateManyWithWhereWithoutCreated_by_employeeInput | TransactionUpdateManyWithWhereWithoutCreated_by_employeeInput[]
+    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type ActionLogUpdateManyWithoutEmployeeNestedInput = {
+    create?: XOR<ActionLogCreateWithoutEmployeeInput, ActionLogUncheckedCreateWithoutEmployeeInput> | ActionLogCreateWithoutEmployeeInput[] | ActionLogUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: ActionLogCreateOrConnectWithoutEmployeeInput | ActionLogCreateOrConnectWithoutEmployeeInput[]
+    upsert?: ActionLogUpsertWithWhereUniqueWithoutEmployeeInput | ActionLogUpsertWithWhereUniqueWithoutEmployeeInput[]
+    createMany?: ActionLogCreateManyEmployeeInputEnvelope
+    set?: ActionLogWhereUniqueInput | ActionLogWhereUniqueInput[]
+    disconnect?: ActionLogWhereUniqueInput | ActionLogWhereUniqueInput[]
+    delete?: ActionLogWhereUniqueInput | ActionLogWhereUniqueInput[]
+    connect?: ActionLogWhereUniqueInput | ActionLogWhereUniqueInput[]
+    update?: ActionLogUpdateWithWhereUniqueWithoutEmployeeInput | ActionLogUpdateWithWhereUniqueWithoutEmployeeInput[]
+    updateMany?: ActionLogUpdateManyWithWhereWithoutEmployeeInput | ActionLogUpdateManyWithWhereWithoutEmployeeInput[]
+    deleteMany?: ActionLogScalarWhereInput | ActionLogScalarWhereInput[]
+  }
+
+  export type OrderUncheckedUpdateManyWithoutCreated_by_employeeNestedInput = {
+    create?: XOR<OrderCreateWithoutCreated_by_employeeInput, OrderUncheckedCreateWithoutCreated_by_employeeInput> | OrderCreateWithoutCreated_by_employeeInput[] | OrderUncheckedCreateWithoutCreated_by_employeeInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutCreated_by_employeeInput | OrderCreateOrConnectWithoutCreated_by_employeeInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutCreated_by_employeeInput | OrderUpsertWithWhereUniqueWithoutCreated_by_employeeInput[]
+    createMany?: OrderCreateManyCreated_by_employeeInputEnvelope
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutCreated_by_employeeInput | OrderUpdateWithWhereUniqueWithoutCreated_by_employeeInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutCreated_by_employeeInput | OrderUpdateManyWithWhereWithoutCreated_by_employeeInput[]
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
+  export type OrderUncheckedUpdateManyWithoutUpdated_by_employeeNestedInput = {
+    create?: XOR<OrderCreateWithoutUpdated_by_employeeInput, OrderUncheckedCreateWithoutUpdated_by_employeeInput> | OrderCreateWithoutUpdated_by_employeeInput[] | OrderUncheckedCreateWithoutUpdated_by_employeeInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutUpdated_by_employeeInput | OrderCreateOrConnectWithoutUpdated_by_employeeInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutUpdated_by_employeeInput | OrderUpsertWithWhereUniqueWithoutUpdated_by_employeeInput[]
+    createMany?: OrderCreateManyUpdated_by_employeeInputEnvelope
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutUpdated_by_employeeInput | OrderUpdateWithWhereUniqueWithoutUpdated_by_employeeInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutUpdated_by_employeeInput | OrderUpdateManyWithWhereWithoutUpdated_by_employeeInput[]
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
+  export type TransactionUncheckedUpdateManyWithoutCreated_by_employeeNestedInput = {
+    create?: XOR<TransactionCreateWithoutCreated_by_employeeInput, TransactionUncheckedCreateWithoutCreated_by_employeeInput> | TransactionCreateWithoutCreated_by_employeeInput[] | TransactionUncheckedCreateWithoutCreated_by_employeeInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutCreated_by_employeeInput | TransactionCreateOrConnectWithoutCreated_by_employeeInput[]
+    upsert?: TransactionUpsertWithWhereUniqueWithoutCreated_by_employeeInput | TransactionUpsertWithWhereUniqueWithoutCreated_by_employeeInput[]
+    createMany?: TransactionCreateManyCreated_by_employeeInputEnvelope
+    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    update?: TransactionUpdateWithWhereUniqueWithoutCreated_by_employeeInput | TransactionUpdateWithWhereUniqueWithoutCreated_by_employeeInput[]
+    updateMany?: TransactionUpdateManyWithWhereWithoutCreated_by_employeeInput | TransactionUpdateManyWithWhereWithoutCreated_by_employeeInput[]
+    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type ActionLogUncheckedUpdateManyWithoutEmployeeNestedInput = {
+    create?: XOR<ActionLogCreateWithoutEmployeeInput, ActionLogUncheckedCreateWithoutEmployeeInput> | ActionLogCreateWithoutEmployeeInput[] | ActionLogUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: ActionLogCreateOrConnectWithoutEmployeeInput | ActionLogCreateOrConnectWithoutEmployeeInput[]
+    upsert?: ActionLogUpsertWithWhereUniqueWithoutEmployeeInput | ActionLogUpsertWithWhereUniqueWithoutEmployeeInput[]
+    createMany?: ActionLogCreateManyEmployeeInputEnvelope
+    set?: ActionLogWhereUniqueInput | ActionLogWhereUniqueInput[]
+    disconnect?: ActionLogWhereUniqueInput | ActionLogWhereUniqueInput[]
+    delete?: ActionLogWhereUniqueInput | ActionLogWhereUniqueInput[]
+    connect?: ActionLogWhereUniqueInput | ActionLogWhereUniqueInput[]
+    update?: ActionLogUpdateWithWhereUniqueWithoutEmployeeInput | ActionLogUpdateWithWhereUniqueWithoutEmployeeInput[]
+    updateMany?: ActionLogUpdateManyWithWhereWithoutEmployeeInput | ActionLogUpdateManyWithWhereWithoutEmployeeInput[]
+    deleteMany?: ActionLogScalarWhereInput | ActionLogScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -24278,6 +27146,33 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedEnumOrderPaymentStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.OrderPaymentStatus | EnumOrderPaymentStatusFieldRefInput<$PrismaModel>
     in?: $Enums.OrderPaymentStatus[] | ListEnumOrderPaymentStatusFieldRefInput<$PrismaModel>
@@ -24312,33 +27207,6 @@ export namespace Prisma {
     _max?: NestedEnumTransactionTypeFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedEnumActionTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.ActionType | EnumActionTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ActionType[] | ListEnumActionTypeFieldRefInput<$PrismaModel>
@@ -24371,6 +27239,39 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumEntityTypeFilter<$PrismaModel>
     _max?: NestedEnumEntityTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumEmployeeRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.EmployeeRole | EnumEmployeeRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.EmployeeRole[] | ListEnumEmployeeRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EmployeeRole[] | ListEnumEmployeeRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumEmployeeRoleFilter<$PrismaModel> | $Enums.EmployeeRole
+  }
+
+  export type NestedEnumEmployeeRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EmployeeRole | EnumEmployeeRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.EmployeeRole[] | ListEnumEmployeeRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EmployeeRole[] | ListEnumEmployeeRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumEmployeeRoleWithAggregatesFilter<$PrismaModel> | $Enums.EmployeeRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEmployeeRoleFilter<$PrismaModel>
+    _max?: NestedEnumEmployeeRoleFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type NotificationCreateWithoutUserInput = {
@@ -24418,6 +27319,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
+    employees?: EmployeeCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutUserInput = {
@@ -24435,6 +27337,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
+    employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutUserInput = {
@@ -24538,6 +27441,8 @@ export namespace Prisma {
     branch: BranchCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentCreateNestedOneWithoutOrderInput
+    created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
+    updated_by_employee?: EmployeeCreateNestedOneWithoutOrders_updatedInput
   }
 
   export type OrderUncheckedCreateWithoutUserInput = {
@@ -24552,6 +27457,8 @@ export namespace Prisma {
     status?: $Enums.OrderStatus
     is_paid?: boolean
     payment_date?: Date | string | null
+    created_by_employee_id?: number | null
+    updated_by_employee_id?: number | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentUncheckedCreateNestedOneWithoutOrderInput
   }
@@ -24574,6 +27481,7 @@ export namespace Prisma {
     entity_id: number
     details?: string | null
     action_initiator?: string | null
+    employee?: EmployeeCreateNestedOneWithoutAction_logsInput
   }
 
   export type ActionLogUncheckedCreateWithoutUserInput = {
@@ -24585,6 +27493,7 @@ export namespace Prisma {
     entity_id: number
     details?: string | null
     action_initiator?: string | null
+    employee_id?: number | null
   }
 
   export type ActionLogCreateOrConnectWithoutUserInput = {
@@ -24594,6 +27503,71 @@ export namespace Prisma {
 
   export type ActionLogCreateManyUserInputEnvelope = {
     data: ActionLogCreateManyUserInput | ActionLogCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EmployeeCreateWithoutUserInput = {
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    store: StoreCreateNestedOneWithoutEmployeesInput
+    orders_created?: OrderCreateNestedManyWithoutCreated_by_employeeInput
+    orders_updated?: OrderCreateNestedManyWithoutUpdated_by_employeeInput
+    transactions?: TransactionCreateNestedManyWithoutCreated_by_employeeInput
+    action_logs?: ActionLogCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeUncheckedCreateWithoutUserInput = {
+    id?: number
+    store_id: number
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    orders_created?: OrderUncheckedCreateNestedManyWithoutCreated_by_employeeInput
+    orders_updated?: OrderUncheckedCreateNestedManyWithoutUpdated_by_employeeInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutCreated_by_employeeInput
+    action_logs?: ActionLogUncheckedCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeCreateOrConnectWithoutUserInput = {
+    where: EmployeeWhereUniqueInput
+    create: XOR<EmployeeCreateWithoutUserInput, EmployeeUncheckedCreateWithoutUserInput>
+  }
+
+  export type EmployeeCreateManyUserInputEnvelope = {
+    data: EmployeeCreateManyUserInput | EmployeeCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -24759,6 +27733,8 @@ export namespace Prisma {
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
     is_paid?: BoolFilter<"Order"> | boolean
     payment_date?: DateTimeNullableFilter<"Order"> | Date | string | null
+    created_by_employee_id?: IntNullableFilter<"Order"> | number | null
+    updated_by_employee_id?: IntNullableFilter<"Order"> | number | null
   }
 
   export type ActionLogUpsertWithWhereUniqueWithoutUserInput = {
@@ -24790,6 +27766,51 @@ export namespace Prisma {
     entity_id?: IntFilter<"ActionLog"> | number
     details?: StringNullableFilter<"ActionLog"> | string | null
     action_initiator?: StringNullableFilter<"ActionLog"> | string | null
+    employee_id?: IntNullableFilter<"ActionLog"> | number | null
+  }
+
+  export type EmployeeUpsertWithWhereUniqueWithoutUserInput = {
+    where: EmployeeWhereUniqueInput
+    update: XOR<EmployeeUpdateWithoutUserInput, EmployeeUncheckedUpdateWithoutUserInput>
+    create: XOR<EmployeeCreateWithoutUserInput, EmployeeUncheckedCreateWithoutUserInput>
+  }
+
+  export type EmployeeUpdateWithWhereUniqueWithoutUserInput = {
+    where: EmployeeWhereUniqueInput
+    data: XOR<EmployeeUpdateWithoutUserInput, EmployeeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type EmployeeUpdateManyWithWhereWithoutUserInput = {
+    where: EmployeeScalarWhereInput
+    data: XOR<EmployeeUpdateManyMutationInput, EmployeeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type EmployeeScalarWhereInput = {
+    AND?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
+    OR?: EmployeeScalarWhereInput[]
+    NOT?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
+    id?: IntFilter<"Employee"> | number
+    user_id?: IntFilter<"Employee"> | number
+    store_id?: IntFilter<"Employee"> | number
+    role?: EnumEmployeeRoleFilter<"Employee"> | $Enums.EmployeeRole
+    can_create_orders?: BoolFilter<"Employee"> | boolean
+    can_update_orders?: BoolFilter<"Employee"> | boolean
+    can_create_products?: BoolFilter<"Employee"> | boolean
+    can_update_products?: BoolFilter<"Employee"> | boolean
+    can_manage_stock?: BoolFilter<"Employee"> | boolean
+    can_process_refunds?: BoolFilter<"Employee"> | boolean
+    can_view_reports?: BoolFilter<"Employee"> | boolean
+    can_manage_employees?: BoolFilter<"Employee"> | boolean
+    can_manage_store?: BoolFilter<"Employee"> | boolean
+    is_active?: BoolFilter<"Employee"> | boolean
+    hired_at?: DateTimeFilter<"Employee"> | Date | string
+    fired_at?: DateTimeNullableFilter<"Employee"> | Date | string | null
+    position?: StringNullableFilter<"Employee"> | string | null
+    department?: StringNullableFilter<"Employee"> | string | null
+    salary?: FloatNullableFilter<"Employee"> | number | null
+    notes?: StringNullableFilter<"Employee"> | string | null
+    created_at?: DateTimeFilter<"Employee"> | Date | string
+    updated_at?: DateTimeFilter<"Employee"> | Date | string
   }
 
   export type UserCreateWithoutNotificationInput = {
@@ -24805,6 +27826,7 @@ export namespace Prisma {
     Product?: ProductCreateNestedManyWithoutOwnerInput
     Order?: OrderCreateNestedManyWithoutUserInput
     ActionLog?: ActionLogCreateNestedManyWithoutUserInput
+    Employee?: EmployeeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationInput = {
@@ -24821,6 +27843,7 @@ export namespace Prisma {
     Product?: ProductUncheckedCreateNestedManyWithoutOwnerInput
     Order?: OrderUncheckedCreateNestedManyWithoutUserInput
     ActionLog?: ActionLogUncheckedCreateNestedManyWithoutUserInput
+    Employee?: EmployeeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationInput = {
@@ -24852,6 +27875,7 @@ export namespace Prisma {
     Product?: ProductUpdateManyWithoutOwnerNestedInput
     Order?: OrderUpdateManyWithoutUserNestedInput
     ActionLog?: ActionLogUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationInput = {
@@ -24868,6 +27892,7 @@ export namespace Prisma {
     Product?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
     Order?: OrderUncheckedUpdateManyWithoutUserNestedInput
     ActionLog?: ActionLogUncheckedUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutStoreInput = {
@@ -24883,6 +27908,7 @@ export namespace Prisma {
     Product?: ProductCreateNestedManyWithoutOwnerInput
     Order?: OrderCreateNestedManyWithoutUserInput
     ActionLog?: ActionLogCreateNestedManyWithoutUserInput
+    Employee?: EmployeeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStoreInput = {
@@ -24899,6 +27925,7 @@ export namespace Prisma {
     Product?: ProductUncheckedCreateNestedManyWithoutOwnerInput
     Order?: OrderUncheckedCreateNestedManyWithoutUserInput
     ActionLog?: ActionLogUncheckedCreateNestedManyWithoutUserInput
+    Employee?: EmployeeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStoreInput = {
@@ -25009,6 +28036,8 @@ export namespace Prisma {
     branch: BranchCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentCreateNestedOneWithoutOrderInput
+    created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
+    updated_by_employee?: EmployeeCreateNestedOneWithoutOrders_updatedInput
   }
 
   export type OrderUncheckedCreateWithoutStoreInput = {
@@ -25023,6 +28052,8 @@ export namespace Prisma {
     status?: $Enums.OrderStatus
     is_paid?: boolean
     payment_date?: Date | string | null
+    created_by_employee_id?: number | null
+    updated_by_employee_id?: number | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentUncheckedCreateNestedOneWithoutOrderInput
   }
@@ -25068,6 +28099,7 @@ export namespace Prisma {
     notes?: string | null
     created_by?: number | null
     branch_id?: number | null
+    created_by_employee?: EmployeeCreateNestedOneWithoutTransactionsInput
   }
 
   export type TransactionUncheckedCreateWithoutStoreInput = {
@@ -25084,6 +28116,7 @@ export namespace Prisma {
     notes?: string | null
     created_by?: number | null
     branch_id?: number | null
+    created_by_employee_id?: number | null
   }
 
   export type TransactionCreateOrConnectWithoutStoreInput = {
@@ -25093,6 +28126,71 @@ export namespace Prisma {
 
   export type TransactionCreateManyStoreInputEnvelope = {
     data: TransactionCreateManyStoreInput | TransactionCreateManyStoreInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EmployeeCreateWithoutStoreInput = {
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutEmployeeInput
+    orders_created?: OrderCreateNestedManyWithoutCreated_by_employeeInput
+    orders_updated?: OrderCreateNestedManyWithoutUpdated_by_employeeInput
+    transactions?: TransactionCreateNestedManyWithoutCreated_by_employeeInput
+    action_logs?: ActionLogCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeUncheckedCreateWithoutStoreInput = {
+    id?: number
+    user_id: number
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    orders_created?: OrderUncheckedCreateNestedManyWithoutCreated_by_employeeInput
+    orders_updated?: OrderUncheckedCreateNestedManyWithoutUpdated_by_employeeInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutCreated_by_employeeInput
+    action_logs?: ActionLogUncheckedCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeCreateOrConnectWithoutStoreInput = {
+    where: EmployeeWhereUniqueInput
+    create: XOR<EmployeeCreateWithoutStoreInput, EmployeeUncheckedCreateWithoutStoreInput>
+  }
+
+  export type EmployeeCreateManyStoreInputEnvelope = {
+    data: EmployeeCreateManyStoreInput | EmployeeCreateManyStoreInput[]
     skipDuplicates?: boolean
   }
 
@@ -25120,6 +28218,7 @@ export namespace Prisma {
     Product?: ProductUpdateManyWithoutOwnerNestedInput
     Order?: OrderUpdateManyWithoutUserNestedInput
     ActionLog?: ActionLogUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStoreInput = {
@@ -25136,6 +28235,7 @@ export namespace Prisma {
     Product?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
     Order?: OrderUncheckedUpdateManyWithoutUserNestedInput
     ActionLog?: ActionLogUncheckedUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BranchUpsertWithWhereUniqueWithoutStoreInput = {
@@ -25259,6 +28359,23 @@ export namespace Prisma {
     notes?: StringNullableFilter<"Transaction"> | string | null
     created_by?: IntNullableFilter<"Transaction"> | number | null
     branch_id?: IntNullableFilter<"Transaction"> | number | null
+    created_by_employee_id?: IntNullableFilter<"Transaction"> | number | null
+  }
+
+  export type EmployeeUpsertWithWhereUniqueWithoutStoreInput = {
+    where: EmployeeWhereUniqueInput
+    update: XOR<EmployeeUpdateWithoutStoreInput, EmployeeUncheckedUpdateWithoutStoreInput>
+    create: XOR<EmployeeCreateWithoutStoreInput, EmployeeUncheckedCreateWithoutStoreInput>
+  }
+
+  export type EmployeeUpdateWithWhereUniqueWithoutStoreInput = {
+    where: EmployeeWhereUniqueInput
+    data: XOR<EmployeeUpdateWithoutStoreInput, EmployeeUncheckedUpdateWithoutStoreInput>
+  }
+
+  export type EmployeeUpdateManyWithWhereWithoutStoreInput = {
+    where: EmployeeScalarWhereInput
+    data: XOR<EmployeeUpdateManyMutationInput, EmployeeUncheckedUpdateManyWithoutStoreInput>
   }
 
   export type UserCreateWithoutAccountInput = {
@@ -25274,6 +28391,7 @@ export namespace Prisma {
     Product?: ProductCreateNestedManyWithoutOwnerInput
     Order?: OrderCreateNestedManyWithoutUserInput
     ActionLog?: ActionLogCreateNestedManyWithoutUserInput
+    Employee?: EmployeeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountInput = {
@@ -25290,6 +28408,7 @@ export namespace Prisma {
     Product?: ProductUncheckedCreateNestedManyWithoutOwnerInput
     Order?: OrderUncheckedCreateNestedManyWithoutUserInput
     ActionLog?: ActionLogUncheckedCreateNestedManyWithoutUserInput
+    Employee?: EmployeeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountInput = {
@@ -25321,6 +28440,7 @@ export namespace Prisma {
     Product?: ProductUpdateManyWithoutOwnerNestedInput
     Order?: OrderUpdateManyWithoutUserNestedInput
     ActionLog?: ActionLogUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountInput = {
@@ -25337,6 +28457,7 @@ export namespace Prisma {
     Product?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
     Order?: OrderUncheckedUpdateManyWithoutUserNestedInput
     ActionLog?: ActionLogUncheckedUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductStockCreateWithoutProductInput = {
@@ -25377,6 +28498,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
+    employees?: EmployeeCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutProductsInput = {
@@ -25394,6 +28516,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
+    employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutProductsInput = {
@@ -25434,6 +28557,7 @@ export namespace Prisma {
     Account?: AccountCreateNestedManyWithoutUserInput
     Order?: OrderCreateNestedManyWithoutUserInput
     ActionLog?: ActionLogCreateNestedManyWithoutUserInput
+    Employee?: EmployeeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProductInput = {
@@ -25450,6 +28574,7 @@ export namespace Prisma {
     Account?: AccountUncheckedCreateNestedManyWithoutUserInput
     Order?: OrderUncheckedCreateNestedManyWithoutUserInput
     ActionLog?: ActionLogUncheckedCreateNestedManyWithoutUserInput
+    Employee?: EmployeeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProductInput = {
@@ -25532,6 +28657,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutProductsInput = {
@@ -25549,6 +28675,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type CategoryUpsertWithWhereUniqueWithoutProductsInput = {
@@ -25602,6 +28729,7 @@ export namespace Prisma {
     Account?: AccountUpdateManyWithoutUserNestedInput
     Order?: OrderUpdateManyWithoutUserNestedInput
     ActionLog?: ActionLogUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProductInput = {
@@ -25618,6 +28746,7 @@ export namespace Prisma {
     Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Order?: OrderUncheckedUpdateManyWithoutUserNestedInput
     ActionLog?: ActionLogUncheckedUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrderItemUpsertWithWhereUniqueWithoutProductInput = {
@@ -25661,6 +28790,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
+    employees?: EmployeeCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutBranchesInput = {
@@ -25678,6 +28808,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
+    employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutBranchesInput = {
@@ -25722,6 +28853,8 @@ export namespace Prisma {
     store: StoreCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentCreateNestedOneWithoutOrderInput
+    created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
+    updated_by_employee?: EmployeeCreateNestedOneWithoutOrders_updatedInput
   }
 
   export type OrderUncheckedCreateWithoutBranchInput = {
@@ -25736,6 +28869,8 @@ export namespace Prisma {
     status?: $Enums.OrderStatus
     is_paid?: boolean
     payment_date?: Date | string | null
+    created_by_employee_id?: number | null
+    updated_by_employee_id?: number | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentUncheckedCreateNestedOneWithoutOrderInput
   }
@@ -25775,6 +28910,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutBranchesInput = {
@@ -25792,6 +28928,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type ProductStockUpsertWithWhereUniqueWithoutBranchInput = {
@@ -26077,6 +29214,7 @@ export namespace Prisma {
     Account?: AccountCreateNestedManyWithoutUserInput
     Product?: ProductCreateNestedManyWithoutOwnerInput
     ActionLog?: ActionLogCreateNestedManyWithoutUserInput
+    Employee?: EmployeeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOrderInput = {
@@ -26093,6 +29231,7 @@ export namespace Prisma {
     Account?: AccountUncheckedCreateNestedManyWithoutUserInput
     Product?: ProductUncheckedCreateNestedManyWithoutOwnerInput
     ActionLog?: ActionLogUncheckedCreateNestedManyWithoutUserInput
+    Employee?: EmployeeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutOrderInput = {
@@ -26114,6 +29253,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
+    employees?: EmployeeCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutOrdersInput = {
@@ -26131,6 +29271,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
+    employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutOrdersInput = {
@@ -26207,6 +29348,126 @@ export namespace Prisma {
     create: XOR<OrderPaymentCreateWithoutOrderInput, OrderPaymentUncheckedCreateWithoutOrderInput>
   }
 
+  export type EmployeeCreateWithoutOrders_createdInput = {
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutEmployeeInput
+    store: StoreCreateNestedOneWithoutEmployeesInput
+    orders_updated?: OrderCreateNestedManyWithoutUpdated_by_employeeInput
+    transactions?: TransactionCreateNestedManyWithoutCreated_by_employeeInput
+    action_logs?: ActionLogCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeUncheckedCreateWithoutOrders_createdInput = {
+    id?: number
+    user_id: number
+    store_id: number
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    orders_updated?: OrderUncheckedCreateNestedManyWithoutUpdated_by_employeeInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutCreated_by_employeeInput
+    action_logs?: ActionLogUncheckedCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeCreateOrConnectWithoutOrders_createdInput = {
+    where: EmployeeWhereUniqueInput
+    create: XOR<EmployeeCreateWithoutOrders_createdInput, EmployeeUncheckedCreateWithoutOrders_createdInput>
+  }
+
+  export type EmployeeCreateWithoutOrders_updatedInput = {
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutEmployeeInput
+    store: StoreCreateNestedOneWithoutEmployeesInput
+    orders_created?: OrderCreateNestedManyWithoutCreated_by_employeeInput
+    transactions?: TransactionCreateNestedManyWithoutCreated_by_employeeInput
+    action_logs?: ActionLogCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeUncheckedCreateWithoutOrders_updatedInput = {
+    id?: number
+    user_id: number
+    store_id: number
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    orders_created?: OrderUncheckedCreateNestedManyWithoutCreated_by_employeeInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutCreated_by_employeeInput
+    action_logs?: ActionLogUncheckedCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeCreateOrConnectWithoutOrders_updatedInput = {
+    where: EmployeeWhereUniqueInput
+    create: XOR<EmployeeCreateWithoutOrders_updatedInput, EmployeeUncheckedCreateWithoutOrders_updatedInput>
+  }
+
   export type UserUpsertWithoutOrderInput = {
     update: XOR<UserUpdateWithoutOrderInput, UserUncheckedUpdateWithoutOrderInput>
     create: XOR<UserCreateWithoutOrderInput, UserUncheckedCreateWithoutOrderInput>
@@ -26231,6 +29492,7 @@ export namespace Prisma {
     Account?: AccountUpdateManyWithoutUserNestedInput
     Product?: ProductUpdateManyWithoutOwnerNestedInput
     ActionLog?: ActionLogUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrderInput = {
@@ -26247,6 +29509,7 @@ export namespace Prisma {
     Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Product?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
     ActionLog?: ActionLogUncheckedUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type StoreUpsertWithoutOrdersInput = {
@@ -26274,6 +29537,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutOrdersInput = {
@@ -26291,6 +29555,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type BranchUpsertWithoutOrdersInput = {
@@ -26367,6 +29632,138 @@ export namespace Prisma {
     status?: EnumOrderPaymentStatusFieldUpdateOperationsInput | $Enums.OrderPaymentStatus
   }
 
+  export type EmployeeUpsertWithoutOrders_createdInput = {
+    update: XOR<EmployeeUpdateWithoutOrders_createdInput, EmployeeUncheckedUpdateWithoutOrders_createdInput>
+    create: XOR<EmployeeCreateWithoutOrders_createdInput, EmployeeUncheckedCreateWithoutOrders_createdInput>
+    where?: EmployeeWhereInput
+  }
+
+  export type EmployeeUpdateToOneWithWhereWithoutOrders_createdInput = {
+    where?: EmployeeWhereInput
+    data: XOR<EmployeeUpdateWithoutOrders_createdInput, EmployeeUncheckedUpdateWithoutOrders_createdInput>
+  }
+
+  export type EmployeeUpdateWithoutOrders_createdInput = {
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
+    store?: StoreUpdateOneRequiredWithoutEmployeesNestedInput
+    orders_updated?: OrderUpdateManyWithoutUpdated_by_employeeNestedInput
+    transactions?: TransactionUpdateManyWithoutCreated_by_employeeNestedInput
+    action_logs?: ActionLogUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type EmployeeUncheckedUpdateWithoutOrders_createdInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders_updated?: OrderUncheckedUpdateManyWithoutUpdated_by_employeeNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutCreated_by_employeeNestedInput
+    action_logs?: ActionLogUncheckedUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type EmployeeUpsertWithoutOrders_updatedInput = {
+    update: XOR<EmployeeUpdateWithoutOrders_updatedInput, EmployeeUncheckedUpdateWithoutOrders_updatedInput>
+    create: XOR<EmployeeCreateWithoutOrders_updatedInput, EmployeeUncheckedCreateWithoutOrders_updatedInput>
+    where?: EmployeeWhereInput
+  }
+
+  export type EmployeeUpdateToOneWithWhereWithoutOrders_updatedInput = {
+    where?: EmployeeWhereInput
+    data: XOR<EmployeeUpdateWithoutOrders_updatedInput, EmployeeUncheckedUpdateWithoutOrders_updatedInput>
+  }
+
+  export type EmployeeUpdateWithoutOrders_updatedInput = {
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
+    store?: StoreUpdateOneRequiredWithoutEmployeesNestedInput
+    orders_created?: OrderUpdateManyWithoutCreated_by_employeeNestedInput
+    transactions?: TransactionUpdateManyWithoutCreated_by_employeeNestedInput
+    action_logs?: ActionLogUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type EmployeeUncheckedUpdateWithoutOrders_updatedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders_created?: OrderUncheckedUpdateManyWithoutCreated_by_employeeNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutCreated_by_employeeNestedInput
+    action_logs?: ActionLogUncheckedUpdateManyWithoutEmployeeNestedInput
+  }
+
   export type OrderCreateWithoutItemsInput = {
     created_at?: Date | string
     updated_at?: Date | string
@@ -26380,6 +29777,8 @@ export namespace Prisma {
     store: StoreCreateNestedOneWithoutOrdersInput
     branch: BranchCreateNestedOneWithoutOrdersInput
     payment?: OrderPaymentCreateNestedOneWithoutOrderInput
+    created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
+    updated_by_employee?: EmployeeCreateNestedOneWithoutOrders_updatedInput
   }
 
   export type OrderUncheckedCreateWithoutItemsInput = {
@@ -26395,6 +29794,8 @@ export namespace Prisma {
     status?: $Enums.OrderStatus
     is_paid?: boolean
     payment_date?: Date | string | null
+    created_by_employee_id?: number | null
+    updated_by_employee_id?: number | null
     payment?: OrderPaymentUncheckedCreateNestedOneWithoutOrderInput
   }
 
@@ -26477,6 +29878,8 @@ export namespace Prisma {
     store?: StoreUpdateOneRequiredWithoutOrdersNestedInput
     branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
     payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
+    created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
+    updated_by_employee?: EmployeeUpdateOneWithoutOrders_updatedNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutItemsInput = {
@@ -26492,6 +29895,8 @@ export namespace Prisma {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     is_paid?: BoolFieldUpdateOperationsInput | boolean
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    updated_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
     payment?: OrderPaymentUncheckedUpdateOneWithoutOrderNestedInput
   }
 
@@ -26564,6 +29969,8 @@ export namespace Prisma {
     store: StoreCreateNestedOneWithoutOrdersInput
     branch: BranchCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
+    created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
+    updated_by_employee?: EmployeeCreateNestedOneWithoutOrders_updatedInput
   }
 
   export type OrderUncheckedCreateWithoutPaymentInput = {
@@ -26579,6 +29986,8 @@ export namespace Prisma {
     status?: $Enums.OrderStatus
     is_paid?: boolean
     payment_date?: Date | string | null
+    created_by_employee_id?: number | null
+    updated_by_employee_id?: number | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
   }
 
@@ -26611,6 +30020,8 @@ export namespace Prisma {
     store?: StoreUpdateOneRequiredWithoutOrdersNestedInput
     branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
+    created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
+    updated_by_employee?: EmployeeUpdateOneWithoutOrders_updatedNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutPaymentInput = {
@@ -26626,6 +30037,8 @@ export namespace Prisma {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     is_paid?: BoolFieldUpdateOperationsInput | boolean
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    updated_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   }
 
@@ -26643,6 +30056,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutStoreInput
     orders?: OrderCreateNestedManyWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
+    employees?: EmployeeCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutBalanceInput = {
@@ -26660,6 +30074,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutStoreInput
     orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
+    employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutBalanceInput = {
@@ -26692,6 +30107,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutStoreNestedInput
     orders?: OrderUpdateManyWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutBalanceInput = {
@@ -26709,6 +30125,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
     orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreCreateWithoutTransactionsInput = {
@@ -26725,6 +30142,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutStoreInput
     orders?: OrderCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
+    employees?: EmployeeCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutTransactionsInput = {
@@ -26742,11 +30160,72 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutStoreInput
     orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
+    employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutTransactionsInput = {
     where: StoreWhereUniqueInput
     create: XOR<StoreCreateWithoutTransactionsInput, StoreUncheckedCreateWithoutTransactionsInput>
+  }
+
+  export type EmployeeCreateWithoutTransactionsInput = {
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutEmployeeInput
+    store: StoreCreateNestedOneWithoutEmployeesInput
+    orders_created?: OrderCreateNestedManyWithoutCreated_by_employeeInput
+    orders_updated?: OrderCreateNestedManyWithoutUpdated_by_employeeInput
+    action_logs?: ActionLogCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeUncheckedCreateWithoutTransactionsInput = {
+    id?: number
+    user_id: number
+    store_id: number
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    orders_created?: OrderUncheckedCreateNestedManyWithoutCreated_by_employeeInput
+    orders_updated?: OrderUncheckedCreateNestedManyWithoutUpdated_by_employeeInput
+    action_logs?: ActionLogUncheckedCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeCreateOrConnectWithoutTransactionsInput = {
+    where: EmployeeWhereUniqueInput
+    create: XOR<EmployeeCreateWithoutTransactionsInput, EmployeeUncheckedCreateWithoutTransactionsInput>
   }
 
   export type StoreUpsertWithoutTransactionsInput = {
@@ -26774,6 +30253,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutStoreNestedInput
     orders?: OrderUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
+    employees?: EmployeeUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutTransactionsInput = {
@@ -26791,6 +30271,73 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
     orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
+    employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
+  }
+
+  export type EmployeeUpsertWithoutTransactionsInput = {
+    update: XOR<EmployeeUpdateWithoutTransactionsInput, EmployeeUncheckedUpdateWithoutTransactionsInput>
+    create: XOR<EmployeeCreateWithoutTransactionsInput, EmployeeUncheckedCreateWithoutTransactionsInput>
+    where?: EmployeeWhereInput
+  }
+
+  export type EmployeeUpdateToOneWithWhereWithoutTransactionsInput = {
+    where?: EmployeeWhereInput
+    data: XOR<EmployeeUpdateWithoutTransactionsInput, EmployeeUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type EmployeeUpdateWithoutTransactionsInput = {
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
+    store?: StoreUpdateOneRequiredWithoutEmployeesNestedInput
+    orders_created?: OrderUpdateManyWithoutCreated_by_employeeNestedInput
+    orders_updated?: OrderUpdateManyWithoutUpdated_by_employeeNestedInput
+    action_logs?: ActionLogUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type EmployeeUncheckedUpdateWithoutTransactionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders_created?: OrderUncheckedUpdateManyWithoutCreated_by_employeeNestedInput
+    orders_updated?: OrderUncheckedUpdateManyWithoutUpdated_by_employeeNestedInput
+    action_logs?: ActionLogUncheckedUpdateManyWithoutEmployeeNestedInput
   }
 
   export type UserCreateWithoutActionLogInput = {
@@ -26806,6 +30353,7 @@ export namespace Prisma {
     Account?: AccountCreateNestedManyWithoutUserInput
     Product?: ProductCreateNestedManyWithoutOwnerInput
     Order?: OrderCreateNestedManyWithoutUserInput
+    Employee?: EmployeeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActionLogInput = {
@@ -26822,11 +30370,72 @@ export namespace Prisma {
     Account?: AccountUncheckedCreateNestedManyWithoutUserInput
     Product?: ProductUncheckedCreateNestedManyWithoutOwnerInput
     Order?: OrderUncheckedCreateNestedManyWithoutUserInput
+    Employee?: EmployeeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActionLogInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutActionLogInput, UserUncheckedCreateWithoutActionLogInput>
+  }
+
+  export type EmployeeCreateWithoutAction_logsInput = {
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutEmployeeInput
+    store: StoreCreateNestedOneWithoutEmployeesInput
+    orders_created?: OrderCreateNestedManyWithoutCreated_by_employeeInput
+    orders_updated?: OrderCreateNestedManyWithoutUpdated_by_employeeInput
+    transactions?: TransactionCreateNestedManyWithoutCreated_by_employeeInput
+  }
+
+  export type EmployeeUncheckedCreateWithoutAction_logsInput = {
+    id?: number
+    user_id: number
+    store_id: number
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    orders_created?: OrderUncheckedCreateNestedManyWithoutCreated_by_employeeInput
+    orders_updated?: OrderUncheckedCreateNestedManyWithoutUpdated_by_employeeInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutCreated_by_employeeInput
+  }
+
+  export type EmployeeCreateOrConnectWithoutAction_logsInput = {
+    where: EmployeeWhereUniqueInput
+    create: XOR<EmployeeCreateWithoutAction_logsInput, EmployeeUncheckedCreateWithoutAction_logsInput>
   }
 
   export type UserUpsertWithoutActionLogInput = {
@@ -26853,6 +30462,7 @@ export namespace Prisma {
     Account?: AccountUpdateManyWithoutUserNestedInput
     Product?: ProductUpdateManyWithoutOwnerNestedInput
     Order?: OrderUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActionLogInput = {
@@ -26869,6 +30479,471 @@ export namespace Prisma {
     Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Product?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
     Order?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    Employee?: EmployeeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type EmployeeUpsertWithoutAction_logsInput = {
+    update: XOR<EmployeeUpdateWithoutAction_logsInput, EmployeeUncheckedUpdateWithoutAction_logsInput>
+    create: XOR<EmployeeCreateWithoutAction_logsInput, EmployeeUncheckedCreateWithoutAction_logsInput>
+    where?: EmployeeWhereInput
+  }
+
+  export type EmployeeUpdateToOneWithWhereWithoutAction_logsInput = {
+    where?: EmployeeWhereInput
+    data: XOR<EmployeeUpdateWithoutAction_logsInput, EmployeeUncheckedUpdateWithoutAction_logsInput>
+  }
+
+  export type EmployeeUpdateWithoutAction_logsInput = {
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
+    store?: StoreUpdateOneRequiredWithoutEmployeesNestedInput
+    orders_created?: OrderUpdateManyWithoutCreated_by_employeeNestedInput
+    orders_updated?: OrderUpdateManyWithoutUpdated_by_employeeNestedInput
+    transactions?: TransactionUpdateManyWithoutCreated_by_employeeNestedInput
+  }
+
+  export type EmployeeUncheckedUpdateWithoutAction_logsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders_created?: OrderUncheckedUpdateManyWithoutCreated_by_employeeNestedInput
+    orders_updated?: OrderUncheckedUpdateManyWithoutUpdated_by_employeeNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutCreated_by_employeeNestedInput
+  }
+
+  export type UserCreateWithoutEmployeeInput = {
+    email: string
+    first_name?: string | null
+    last_name?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    avatar?: string | null
+    password: string
+    Notification?: NotificationCreateNestedManyWithoutUserInput
+    Store?: StoreCreateNestedManyWithoutUserInput
+    Account?: AccountCreateNestedManyWithoutUserInput
+    Product?: ProductCreateNestedManyWithoutOwnerInput
+    Order?: OrderCreateNestedManyWithoutUserInput
+    ActionLog?: ActionLogCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutEmployeeInput = {
+    id?: number
+    email: string
+    first_name?: string | null
+    last_name?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    avatar?: string | null
+    password: string
+    Notification?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    Store?: StoreUncheckedCreateNestedManyWithoutUserInput
+    Account?: AccountUncheckedCreateNestedManyWithoutUserInput
+    Product?: ProductUncheckedCreateNestedManyWithoutOwnerInput
+    Order?: OrderUncheckedCreateNestedManyWithoutUserInput
+    ActionLog?: ActionLogUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutEmployeeInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutEmployeeInput, UserUncheckedCreateWithoutEmployeeInput>
+  }
+
+  export type StoreCreateWithoutEmployeesInput = {
+    name: string
+    description?: string | null
+    logo?: string | null
+    slogan?: string | null
+    slug: string
+    subdomain: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutStoreInput
+    branches?: BranchCreateNestedManyWithoutStoreInput
+    products?: ProductCreateNestedManyWithoutStoreInput
+    orders?: OrderCreateNestedManyWithoutStoreInput
+    balance?: StoreBalanceCreateNestedOneWithoutStoreInput
+    transactions?: TransactionCreateNestedManyWithoutStoreInput
+  }
+
+  export type StoreUncheckedCreateWithoutEmployeesInput = {
+    id?: number
+    name: string
+    description?: string | null
+    logo?: string | null
+    slogan?: string | null
+    slug: string
+    subdomain: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    user_id: number
+    branches?: BranchUncheckedCreateNestedManyWithoutStoreInput
+    products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+    orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+    balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
+  }
+
+  export type StoreCreateOrConnectWithoutEmployeesInput = {
+    where: StoreWhereUniqueInput
+    create: XOR<StoreCreateWithoutEmployeesInput, StoreUncheckedCreateWithoutEmployeesInput>
+  }
+
+  export type OrderCreateWithoutCreated_by_employeeInput = {
+    created_at?: Date | string
+    updated_at?: Date | string
+    total_price: number
+    total_quantity: number
+    shipping_method?: string
+    status?: $Enums.OrderStatus
+    is_paid?: boolean
+    payment_date?: Date | string | null
+    user: UserCreateNestedOneWithoutOrderInput
+    store: StoreCreateNestedOneWithoutOrdersInput
+    branch: BranchCreateNestedOneWithoutOrdersInput
+    items?: OrderItemCreateNestedManyWithoutOrderInput
+    payment?: OrderPaymentCreateNestedOneWithoutOrderInput
+    updated_by_employee?: EmployeeCreateNestedOneWithoutOrders_updatedInput
+  }
+
+  export type OrderUncheckedCreateWithoutCreated_by_employeeInput = {
+    id?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    user_id: number
+    store_id: number
+    branch_id: number
+    total_price: number
+    total_quantity: number
+    shipping_method?: string
+    status?: $Enums.OrderStatus
+    is_paid?: boolean
+    payment_date?: Date | string | null
+    updated_by_employee_id?: number | null
+    items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+    payment?: OrderPaymentUncheckedCreateNestedOneWithoutOrderInput
+  }
+
+  export type OrderCreateOrConnectWithoutCreated_by_employeeInput = {
+    where: OrderWhereUniqueInput
+    create: XOR<OrderCreateWithoutCreated_by_employeeInput, OrderUncheckedCreateWithoutCreated_by_employeeInput>
+  }
+
+  export type OrderCreateManyCreated_by_employeeInputEnvelope = {
+    data: OrderCreateManyCreated_by_employeeInput | OrderCreateManyCreated_by_employeeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OrderCreateWithoutUpdated_by_employeeInput = {
+    created_at?: Date | string
+    updated_at?: Date | string
+    total_price: number
+    total_quantity: number
+    shipping_method?: string
+    status?: $Enums.OrderStatus
+    is_paid?: boolean
+    payment_date?: Date | string | null
+    user: UserCreateNestedOneWithoutOrderInput
+    store: StoreCreateNestedOneWithoutOrdersInput
+    branch: BranchCreateNestedOneWithoutOrdersInput
+    items?: OrderItemCreateNestedManyWithoutOrderInput
+    payment?: OrderPaymentCreateNestedOneWithoutOrderInput
+    created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
+  }
+
+  export type OrderUncheckedCreateWithoutUpdated_by_employeeInput = {
+    id?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    user_id: number
+    store_id: number
+    branch_id: number
+    total_price: number
+    total_quantity: number
+    shipping_method?: string
+    status?: $Enums.OrderStatus
+    is_paid?: boolean
+    payment_date?: Date | string | null
+    created_by_employee_id?: number | null
+    items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+    payment?: OrderPaymentUncheckedCreateNestedOneWithoutOrderInput
+  }
+
+  export type OrderCreateOrConnectWithoutUpdated_by_employeeInput = {
+    where: OrderWhereUniqueInput
+    create: XOR<OrderCreateWithoutUpdated_by_employeeInput, OrderUncheckedCreateWithoutUpdated_by_employeeInput>
+  }
+
+  export type OrderCreateManyUpdated_by_employeeInputEnvelope = {
+    data: OrderCreateManyUpdated_by_employeeInput | OrderCreateManyUpdated_by_employeeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TransactionCreateWithoutCreated_by_employeeInput = {
+    type: $Enums.TransactionType
+    amount: number
+    balance_before: number
+    balance_after: number
+    description: string
+    reference_type?: string | null
+    reference_id?: number | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    notes?: string | null
+    created_by?: number | null
+    branch_id?: number | null
+    store: StoreCreateNestedOneWithoutTransactionsInput
+  }
+
+  export type TransactionUncheckedCreateWithoutCreated_by_employeeInput = {
+    id?: number
+    store_id: number
+    type: $Enums.TransactionType
+    amount: number
+    balance_before: number
+    balance_after: number
+    description: string
+    reference_type?: string | null
+    reference_id?: number | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    notes?: string | null
+    created_by?: number | null
+    branch_id?: number | null
+  }
+
+  export type TransactionCreateOrConnectWithoutCreated_by_employeeInput = {
+    where: TransactionWhereUniqueInput
+    create: XOR<TransactionCreateWithoutCreated_by_employeeInput, TransactionUncheckedCreateWithoutCreated_by_employeeInput>
+  }
+
+  export type TransactionCreateManyCreated_by_employeeInputEnvelope = {
+    data: TransactionCreateManyCreated_by_employeeInput | TransactionCreateManyCreated_by_employeeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ActionLogCreateWithoutEmployeeInput = {
+    created_at?: Date | string
+    updated_at?: Date | string
+    action: $Enums.ActionType
+    entity_type: $Enums.EntityType
+    entity_id: number
+    details?: string | null
+    action_initiator?: string | null
+    user?: UserCreateNestedOneWithoutActionLogInput
+  }
+
+  export type ActionLogUncheckedCreateWithoutEmployeeInput = {
+    id?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    user_id?: number | null
+    action: $Enums.ActionType
+    entity_type: $Enums.EntityType
+    entity_id: number
+    details?: string | null
+    action_initiator?: string | null
+  }
+
+  export type ActionLogCreateOrConnectWithoutEmployeeInput = {
+    where: ActionLogWhereUniqueInput
+    create: XOR<ActionLogCreateWithoutEmployeeInput, ActionLogUncheckedCreateWithoutEmployeeInput>
+  }
+
+  export type ActionLogCreateManyEmployeeInputEnvelope = {
+    data: ActionLogCreateManyEmployeeInput | ActionLogCreateManyEmployeeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutEmployeeInput = {
+    update: XOR<UserUpdateWithoutEmployeeInput, UserUncheckedUpdateWithoutEmployeeInput>
+    create: XOR<UserCreateWithoutEmployeeInput, UserUncheckedCreateWithoutEmployeeInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutEmployeeInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutEmployeeInput, UserUncheckedUpdateWithoutEmployeeInput>
+  }
+
+  export type UserUpdateWithoutEmployeeInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    Notification?: NotificationUpdateManyWithoutUserNestedInput
+    Store?: StoreUpdateManyWithoutUserNestedInput
+    Account?: AccountUpdateManyWithoutUserNestedInput
+    Product?: ProductUpdateManyWithoutOwnerNestedInput
+    Order?: OrderUpdateManyWithoutUserNestedInput
+    ActionLog?: ActionLogUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutEmployeeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    Notification?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    Store?: StoreUncheckedUpdateManyWithoutUserNestedInput
+    Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    Product?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
+    Order?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    ActionLog?: ActionLogUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type StoreUpsertWithoutEmployeesInput = {
+    update: XOR<StoreUpdateWithoutEmployeesInput, StoreUncheckedUpdateWithoutEmployeesInput>
+    create: XOR<StoreCreateWithoutEmployeesInput, StoreUncheckedCreateWithoutEmployeesInput>
+    where?: StoreWhereInput
+  }
+
+  export type StoreUpdateToOneWithWhereWithoutEmployeesInput = {
+    where?: StoreWhereInput
+    data: XOR<StoreUpdateWithoutEmployeesInput, StoreUncheckedUpdateWithoutEmployeesInput>
+  }
+
+  export type StoreUpdateWithoutEmployeesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutStoreNestedInput
+    branches?: BranchUpdateManyWithoutStoreNestedInput
+    products?: ProductUpdateManyWithoutStoreNestedInput
+    orders?: OrderUpdateManyWithoutStoreNestedInput
+    balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
+    transactions?: TransactionUpdateManyWithoutStoreNestedInput
+  }
+
+  export type StoreUncheckedUpdateWithoutEmployeesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user_id?: IntFieldUpdateOperationsInput | number
+    branches?: BranchUncheckedUpdateManyWithoutStoreNestedInput
+    products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+    balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
+  }
+
+  export type OrderUpsertWithWhereUniqueWithoutCreated_by_employeeInput = {
+    where: OrderWhereUniqueInput
+    update: XOR<OrderUpdateWithoutCreated_by_employeeInput, OrderUncheckedUpdateWithoutCreated_by_employeeInput>
+    create: XOR<OrderCreateWithoutCreated_by_employeeInput, OrderUncheckedCreateWithoutCreated_by_employeeInput>
+  }
+
+  export type OrderUpdateWithWhereUniqueWithoutCreated_by_employeeInput = {
+    where: OrderWhereUniqueInput
+    data: XOR<OrderUpdateWithoutCreated_by_employeeInput, OrderUncheckedUpdateWithoutCreated_by_employeeInput>
+  }
+
+  export type OrderUpdateManyWithWhereWithoutCreated_by_employeeInput = {
+    where: OrderScalarWhereInput
+    data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutCreated_by_employeeInput>
+  }
+
+  export type OrderUpsertWithWhereUniqueWithoutUpdated_by_employeeInput = {
+    where: OrderWhereUniqueInput
+    update: XOR<OrderUpdateWithoutUpdated_by_employeeInput, OrderUncheckedUpdateWithoutUpdated_by_employeeInput>
+    create: XOR<OrderCreateWithoutUpdated_by_employeeInput, OrderUncheckedCreateWithoutUpdated_by_employeeInput>
+  }
+
+  export type OrderUpdateWithWhereUniqueWithoutUpdated_by_employeeInput = {
+    where: OrderWhereUniqueInput
+    data: XOR<OrderUpdateWithoutUpdated_by_employeeInput, OrderUncheckedUpdateWithoutUpdated_by_employeeInput>
+  }
+
+  export type OrderUpdateManyWithWhereWithoutUpdated_by_employeeInput = {
+    where: OrderScalarWhereInput
+    data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutUpdated_by_employeeInput>
+  }
+
+  export type TransactionUpsertWithWhereUniqueWithoutCreated_by_employeeInput = {
+    where: TransactionWhereUniqueInput
+    update: XOR<TransactionUpdateWithoutCreated_by_employeeInput, TransactionUncheckedUpdateWithoutCreated_by_employeeInput>
+    create: XOR<TransactionCreateWithoutCreated_by_employeeInput, TransactionUncheckedCreateWithoutCreated_by_employeeInput>
+  }
+
+  export type TransactionUpdateWithWhereUniqueWithoutCreated_by_employeeInput = {
+    where: TransactionWhereUniqueInput
+    data: XOR<TransactionUpdateWithoutCreated_by_employeeInput, TransactionUncheckedUpdateWithoutCreated_by_employeeInput>
+  }
+
+  export type TransactionUpdateManyWithWhereWithoutCreated_by_employeeInput = {
+    where: TransactionScalarWhereInput
+    data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutCreated_by_employeeInput>
+  }
+
+  export type ActionLogUpsertWithWhereUniqueWithoutEmployeeInput = {
+    where: ActionLogWhereUniqueInput
+    update: XOR<ActionLogUpdateWithoutEmployeeInput, ActionLogUncheckedUpdateWithoutEmployeeInput>
+    create: XOR<ActionLogCreateWithoutEmployeeInput, ActionLogUncheckedCreateWithoutEmployeeInput>
+  }
+
+  export type ActionLogUpdateWithWhereUniqueWithoutEmployeeInput = {
+    where: ActionLogWhereUniqueInput
+    data: XOR<ActionLogUpdateWithoutEmployeeInput, ActionLogUncheckedUpdateWithoutEmployeeInput>
+  }
+
+  export type ActionLogUpdateManyWithWhereWithoutEmployeeInput = {
+    where: ActionLogScalarWhereInput
+    data: XOR<ActionLogUpdateManyMutationInput, ActionLogUncheckedUpdateManyWithoutEmployeeInput>
   }
 
   export type NotificationCreateManyUserInput = {
@@ -26933,6 +31008,8 @@ export namespace Prisma {
     status?: $Enums.OrderStatus
     is_paid?: boolean
     payment_date?: Date | string | null
+    created_by_employee_id?: number | null
+    updated_by_employee_id?: number | null
   }
 
   export type ActionLogCreateManyUserInput = {
@@ -26944,6 +31021,31 @@ export namespace Prisma {
     entity_id: number
     details?: string | null
     action_initiator?: string | null
+    employee_id?: number | null
+  }
+
+  export type EmployeeCreateManyUserInput = {
+    id?: number
+    store_id: number
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type NotificationUpdateWithoutUserInput = {
@@ -26992,6 +31094,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutUserInput = {
@@ -27009,6 +31112,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateManyWithoutUserInput = {
@@ -27121,6 +31225,8 @@ export namespace Prisma {
     branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
+    created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
+    updated_by_employee?: EmployeeUpdateOneWithoutOrders_updatedNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutUserInput = {
@@ -27135,6 +31241,8 @@ export namespace Prisma {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     is_paid?: BoolFieldUpdateOperationsInput | boolean
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    updated_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUncheckedUpdateOneWithoutOrderNestedInput
   }
@@ -27151,6 +31259,8 @@ export namespace Prisma {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     is_paid?: BoolFieldUpdateOperationsInput | boolean
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    updated_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ActionLogUpdateWithoutUserInput = {
@@ -27161,6 +31271,7 @@ export namespace Prisma {
     entity_id?: IntFieldUpdateOperationsInput | number
     details?: NullableStringFieldUpdateOperationsInput | string | null
     action_initiator?: NullableStringFieldUpdateOperationsInput | string | null
+    employee?: EmployeeUpdateOneWithoutAction_logsNestedInput
   }
 
   export type ActionLogUncheckedUpdateWithoutUserInput = {
@@ -27172,6 +31283,7 @@ export namespace Prisma {
     entity_id?: IntFieldUpdateOperationsInput | number
     details?: NullableStringFieldUpdateOperationsInput | string | null
     action_initiator?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ActionLogUncheckedUpdateManyWithoutUserInput = {
@@ -27183,6 +31295,86 @@ export namespace Prisma {
     entity_id?: IntFieldUpdateOperationsInput | number
     details?: NullableStringFieldUpdateOperationsInput | string | null
     action_initiator?: NullableStringFieldUpdateOperationsInput | string | null
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type EmployeeUpdateWithoutUserInput = {
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    store?: StoreUpdateOneRequiredWithoutEmployeesNestedInput
+    orders_created?: OrderUpdateManyWithoutCreated_by_employeeNestedInput
+    orders_updated?: OrderUpdateManyWithoutUpdated_by_employeeNestedInput
+    transactions?: TransactionUpdateManyWithoutCreated_by_employeeNestedInput
+    action_logs?: ActionLogUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type EmployeeUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders_created?: OrderUncheckedUpdateManyWithoutCreated_by_employeeNestedInput
+    orders_updated?: OrderUncheckedUpdateManyWithoutUpdated_by_employeeNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutCreated_by_employeeNestedInput
+    action_logs?: ActionLogUncheckedUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type EmployeeUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BranchCreateManyStoreInput = {
@@ -27228,6 +31420,8 @@ export namespace Prisma {
     status?: $Enums.OrderStatus
     is_paid?: boolean
     payment_date?: Date | string | null
+    created_by_employee_id?: number | null
+    updated_by_employee_id?: number | null
   }
 
   export type TransactionCreateManyStoreInput = {
@@ -27244,6 +31438,31 @@ export namespace Prisma {
     notes?: string | null
     created_by?: number | null
     branch_id?: number | null
+    created_by_employee_id?: number | null
+  }
+
+  export type EmployeeCreateManyStoreInput = {
+    id?: number
+    user_id: number
+    role?: $Enums.EmployeeRole
+    can_create_orders?: boolean
+    can_update_orders?: boolean
+    can_create_products?: boolean
+    can_update_products?: boolean
+    can_manage_stock?: boolean
+    can_process_refunds?: boolean
+    can_view_reports?: boolean
+    can_manage_employees?: boolean
+    can_manage_store?: boolean
+    is_active?: boolean
+    hired_at?: Date | string
+    fired_at?: Date | string | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type BranchUpdateWithoutStoreInput = {
@@ -27360,6 +31579,8 @@ export namespace Prisma {
     branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
+    created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
+    updated_by_employee?: EmployeeUpdateOneWithoutOrders_updatedNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutStoreInput = {
@@ -27374,6 +31595,8 @@ export namespace Prisma {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     is_paid?: BoolFieldUpdateOperationsInput | boolean
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    updated_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUncheckedUpdateOneWithoutOrderNestedInput
   }
@@ -27390,6 +31613,8 @@ export namespace Prisma {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     is_paid?: BoolFieldUpdateOperationsInput | boolean
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    updated_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TransactionUpdateWithoutStoreInput = {
@@ -27405,6 +31630,7 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     created_by?: NullableIntFieldUpdateOperationsInput | number | null
     branch_id?: NullableIntFieldUpdateOperationsInput | number | null
+    created_by_employee?: EmployeeUpdateOneWithoutTransactionsNestedInput
   }
 
   export type TransactionUncheckedUpdateWithoutStoreInput = {
@@ -27421,6 +31647,7 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     created_by?: NullableIntFieldUpdateOperationsInput | number | null
     branch_id?: NullableIntFieldUpdateOperationsInput | number | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TransactionUncheckedUpdateManyWithoutStoreInput = {
@@ -27437,6 +31664,86 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     created_by?: NullableIntFieldUpdateOperationsInput | number | null
     branch_id?: NullableIntFieldUpdateOperationsInput | number | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type EmployeeUpdateWithoutStoreInput = {
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
+    orders_created?: OrderUpdateManyWithoutCreated_by_employeeNestedInput
+    orders_updated?: OrderUpdateManyWithoutUpdated_by_employeeNestedInput
+    transactions?: TransactionUpdateManyWithoutCreated_by_employeeNestedInput
+    action_logs?: ActionLogUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type EmployeeUncheckedUpdateWithoutStoreInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders_created?: OrderUncheckedUpdateManyWithoutCreated_by_employeeNestedInput
+    orders_updated?: OrderUncheckedUpdateManyWithoutUpdated_by_employeeNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutCreated_by_employeeNestedInput
+    action_logs?: ActionLogUncheckedUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type EmployeeUncheckedUpdateManyWithoutStoreInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    role?: EnumEmployeeRoleFieldUpdateOperationsInput | $Enums.EmployeeRole
+    can_create_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_update_orders?: BoolFieldUpdateOperationsInput | boolean
+    can_create_products?: BoolFieldUpdateOperationsInput | boolean
+    can_update_products?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_stock?: BoolFieldUpdateOperationsInput | boolean
+    can_process_refunds?: BoolFieldUpdateOperationsInput | boolean
+    can_view_reports?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_employees?: BoolFieldUpdateOperationsInput | boolean
+    can_manage_store?: BoolFieldUpdateOperationsInput | boolean
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    hired_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fired_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    salary?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProductStockCreateManyProductInput = {
@@ -27536,6 +31843,8 @@ export namespace Prisma {
     status?: $Enums.OrderStatus
     is_paid?: boolean
     payment_date?: Date | string | null
+    created_by_employee_id?: number | null
+    updated_by_employee_id?: number | null
   }
 
   export type ProductStockUpdateWithoutBranchInput = {
@@ -27572,6 +31881,8 @@ export namespace Prisma {
     store?: StoreUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
+    created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
+    updated_by_employee?: EmployeeUpdateOneWithoutOrders_updatedNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutBranchInput = {
@@ -27586,6 +31897,8 @@ export namespace Prisma {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     is_paid?: BoolFieldUpdateOperationsInput | boolean
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    updated_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUncheckedUpdateOneWithoutOrderNestedInput
   }
@@ -27602,6 +31915,8 @@ export namespace Prisma {
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     is_paid?: BoolFieldUpdateOperationsInput | boolean
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    updated_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ProductUpdateWithoutCategoriesInput = {
@@ -27695,6 +32010,254 @@ export namespace Prisma {
     product_id?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     price?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type OrderCreateManyCreated_by_employeeInput = {
+    id?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    user_id: number
+    store_id: number
+    branch_id: number
+    total_price: number
+    total_quantity: number
+    shipping_method?: string
+    status?: $Enums.OrderStatus
+    is_paid?: boolean
+    payment_date?: Date | string | null
+    updated_by_employee_id?: number | null
+  }
+
+  export type OrderCreateManyUpdated_by_employeeInput = {
+    id?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    user_id: number
+    store_id: number
+    branch_id: number
+    total_price: number
+    total_quantity: number
+    shipping_method?: string
+    status?: $Enums.OrderStatus
+    is_paid?: boolean
+    payment_date?: Date | string | null
+    created_by_employee_id?: number | null
+  }
+
+  export type TransactionCreateManyCreated_by_employeeInput = {
+    id?: number
+    store_id: number
+    type: $Enums.TransactionType
+    amount: number
+    balance_before: number
+    balance_after: number
+    description: string
+    reference_type?: string | null
+    reference_id?: number | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    notes?: string | null
+    created_by?: number | null
+    branch_id?: number | null
+  }
+
+  export type ActionLogCreateManyEmployeeInput = {
+    id?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    user_id?: number | null
+    action: $Enums.ActionType
+    entity_type: $Enums.EntityType
+    entity_id: number
+    details?: string | null
+    action_initiator?: string | null
+  }
+
+  export type OrderUpdateWithoutCreated_by_employeeInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: FloatFieldUpdateOperationsInput | number
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    shipping_method?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    is_paid?: BoolFieldUpdateOperationsInput | boolean
+    payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutOrderNestedInput
+    store?: StoreUpdateOneRequiredWithoutOrdersNestedInput
+    branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
+    items?: OrderItemUpdateManyWithoutOrderNestedInput
+    payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
+    updated_by_employee?: EmployeeUpdateOneWithoutOrders_updatedNestedInput
+  }
+
+  export type OrderUncheckedUpdateWithoutCreated_by_employeeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user_id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: IntFieldUpdateOperationsInput | number
+    total_price?: FloatFieldUpdateOperationsInput | number
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    shipping_method?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    is_paid?: BoolFieldUpdateOperationsInput | boolean
+    payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+    payment?: OrderPaymentUncheckedUpdateOneWithoutOrderNestedInput
+  }
+
+  export type OrderUncheckedUpdateManyWithoutCreated_by_employeeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user_id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: IntFieldUpdateOperationsInput | number
+    total_price?: FloatFieldUpdateOperationsInput | number
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    shipping_method?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    is_paid?: BoolFieldUpdateOperationsInput | boolean
+    payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type OrderUpdateWithoutUpdated_by_employeeInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    total_price?: FloatFieldUpdateOperationsInput | number
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    shipping_method?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    is_paid?: BoolFieldUpdateOperationsInput | boolean
+    payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutOrderNestedInput
+    store?: StoreUpdateOneRequiredWithoutOrdersNestedInput
+    branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
+    items?: OrderItemUpdateManyWithoutOrderNestedInput
+    payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
+    created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
+  }
+
+  export type OrderUncheckedUpdateWithoutUpdated_by_employeeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user_id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: IntFieldUpdateOperationsInput | number
+    total_price?: FloatFieldUpdateOperationsInput | number
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    shipping_method?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    is_paid?: BoolFieldUpdateOperationsInput | boolean
+    payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+    payment?: OrderPaymentUncheckedUpdateOneWithoutOrderNestedInput
+  }
+
+  export type OrderUncheckedUpdateManyWithoutUpdated_by_employeeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user_id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: IntFieldUpdateOperationsInput | number
+    total_price?: FloatFieldUpdateOperationsInput | number
+    total_quantity?: IntFieldUpdateOperationsInput | number
+    shipping_method?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    is_paid?: BoolFieldUpdateOperationsInput | boolean
+    payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type TransactionUpdateWithoutCreated_by_employeeInput = {
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: FloatFieldUpdateOperationsInput | number
+    balance_before?: FloatFieldUpdateOperationsInput | number
+    balance_after?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    reference_type?: NullableStringFieldUpdateOperationsInput | string | null
+    reference_id?: NullableIntFieldUpdateOperationsInput | number | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by?: NullableIntFieldUpdateOperationsInput | number | null
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
+    store?: StoreUpdateOneRequiredWithoutTransactionsNestedInput
+  }
+
+  export type TransactionUncheckedUpdateWithoutCreated_by_employeeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: FloatFieldUpdateOperationsInput | number
+    balance_before?: FloatFieldUpdateOperationsInput | number
+    balance_after?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    reference_type?: NullableStringFieldUpdateOperationsInput | string | null
+    reference_id?: NullableIntFieldUpdateOperationsInput | number | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by?: NullableIntFieldUpdateOperationsInput | number | null
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type TransactionUncheckedUpdateManyWithoutCreated_by_employeeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: FloatFieldUpdateOperationsInput | number
+    balance_before?: FloatFieldUpdateOperationsInput | number
+    balance_after?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    reference_type?: NullableStringFieldUpdateOperationsInput | string | null
+    reference_id?: NullableIntFieldUpdateOperationsInput | number | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by?: NullableIntFieldUpdateOperationsInput | number | null
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ActionLogUpdateWithoutEmployeeInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    action?: EnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType
+    entity_type?: EnumEntityTypeFieldUpdateOperationsInput | $Enums.EntityType
+    entity_id?: IntFieldUpdateOperationsInput | number
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    action_initiator?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneWithoutActionLogNestedInput
+  }
+
+  export type ActionLogUncheckedUpdateWithoutEmployeeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user_id?: NullableIntFieldUpdateOperationsInput | number | null
+    action?: EnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType
+    entity_type?: EnumEntityTypeFieldUpdateOperationsInput | $Enums.EntityType
+    entity_id?: IntFieldUpdateOperationsInput | number
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    action_initiator?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ActionLogUncheckedUpdateManyWithoutEmployeeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user_id?: NullableIntFieldUpdateOperationsInput | number | null
+    action?: EnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType
+    entity_type?: EnumEntityTypeFieldUpdateOperationsInput | $Enums.EntityType
+    entity_id?: IntFieldUpdateOperationsInput | number
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    action_initiator?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

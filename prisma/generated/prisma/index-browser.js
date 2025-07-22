@@ -225,7 +225,9 @@ exports.Prisma.OrderScalarFieldEnum = {
   shipping_method: 'shipping_method',
   status: 'status',
   is_paid: 'is_paid',
-  payment_date: 'payment_date'
+  payment_date: 'payment_date',
+  created_by_employee_id: 'created_by_employee_id',
+  updated_by_employee_id: 'updated_by_employee_id'
 };
 
 exports.Prisma.OrderItemScalarFieldEnum = {
@@ -265,7 +267,8 @@ exports.Prisma.TransactionScalarFieldEnum = {
   updated_at: 'updated_at',
   notes: 'notes',
   created_by: 'created_by',
-  branch_id: 'branch_id'
+  branch_id: 'branch_id',
+  created_by_employee_id: 'created_by_employee_id'
 };
 
 exports.Prisma.ActionLogScalarFieldEnum = {
@@ -277,7 +280,33 @@ exports.Prisma.ActionLogScalarFieldEnum = {
   entity_type: 'entity_type',
   entity_id: 'entity_id',
   details: 'details',
-  action_initiator: 'action_initiator'
+  action_initiator: 'action_initiator',
+  employee_id: 'employee_id'
+};
+
+exports.Prisma.EmployeeScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  store_id: 'store_id',
+  role: 'role',
+  can_create_orders: 'can_create_orders',
+  can_update_orders: 'can_update_orders',
+  can_create_products: 'can_create_products',
+  can_update_products: 'can_update_products',
+  can_manage_stock: 'can_manage_stock',
+  can_process_refunds: 'can_process_refunds',
+  can_view_reports: 'can_view_reports',
+  can_manage_employees: 'can_manage_employees',
+  can_manage_store: 'can_manage_store',
+  is_active: 'is_active',
+  hired_at: 'hired_at',
+  fired_at: 'fired_at',
+  position: 'position',
+  department: 'department',
+  salary: 'salary',
+  notes: 'notes',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 };
 
 exports.Prisma.SortOrder = {
@@ -359,6 +388,12 @@ exports.Prisma.ActionLogOrderByRelevanceFieldEnum = {
   details: 'details',
   action_initiator: 'action_initiator'
 };
+
+exports.Prisma.EmployeeOrderByRelevanceFieldEnum = {
+  position: 'position',
+  department: 'department',
+  notes: 'notes'
+};
 exports.AccountType = exports.$Enums.AccountType = {
   FREE: 'FREE',
   PRO: 'PRO',
@@ -413,6 +448,16 @@ exports.EntityType = exports.$Enums.EntityType = {
   SETTINGS: 'SETTINGS'
 };
 
+exports.EmployeeRole = exports.$Enums.EmployeeRole = {
+  OWNER: 'OWNER',
+  MANAGER: 'MANAGER',
+  SUPERVISOR: 'SUPERVISOR',
+  EMPLOYEE: 'EMPLOYEE',
+  CASHIER: 'CASHIER',
+  STOCKIST: 'STOCKIST',
+  SALES: 'SALES'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Notification: 'Notification',
@@ -427,7 +472,8 @@ exports.Prisma.ModelName = {
   OrderPayment: 'OrderPayment',
   StoreBalance: 'StoreBalance',
   Transaction: 'Transaction',
-  ActionLog: 'ActionLog'
+  ActionLog: 'ActionLog',
+  Employee: 'Employee'
 };
 
 /**
