@@ -8,16 +8,17 @@ import { MoreHorizontal } from "lucide-react"
 import { Eye } from "lucide-react"
 import { Product, Category } from "@/prisma/generated/prisma"
 import { ColumnDef } from "@tanstack/react-table"
-import { DeleteProductButton, EditProductButton } from "@/features/products/components"
+import { CreateProductButton, DeleteProductButton, EditProductButton } from "@/features/products/components"
 import Link from "next/link"
 
 type Props = {
     data: (Product & { categories: Category[] })[]
     userId: number
     slug: string
+    storeId: number
 }
 
-function ProductsTable({ data, userId, slug }: Props) {
+function ProductsTable({ data, userId, slug, storeId }: Props) {
 
     const columns: ColumnDef<Product>[] = [
         {
@@ -111,6 +112,8 @@ function ProductsTable({ data, userId, slug }: Props) {
         <DataTable
             columns={columns}
             data={data}
+            filterKey="name"
+            topActions={<CreateProductButton storeId={storeId} userId={userId} />}
         />
     )
 }

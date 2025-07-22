@@ -50,6 +50,14 @@ function OrdersTable({ data }: Props) {
             }
         },
         {
+            header: "Customer",
+            accessorKey: "user",
+            cell: ({ row }) => {
+                console.log(row.original)
+                return <span>test@test.com</span>
+            }
+        },
+        {
             header: "Date",
             accessorKey: "created_at",
             cell: ({ row }) => {
@@ -103,6 +111,7 @@ function OrdersTable({ data }: Props) {
         <DataTable
             columns={columns}
             data={data}
+            filterKey="id"
         />
     )
 }

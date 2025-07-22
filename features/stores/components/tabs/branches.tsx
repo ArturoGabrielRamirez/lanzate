@@ -12,10 +12,10 @@ async function BranchesTab({ slug }: BranchesTabProps) {
     }
     return (
         <>
-            <div className="flex justify-end mb-4">
+            {/* <div className="flex justify-end mb-4">
                 <CreateBranchButton storeId={store.id} />
-            </div>
-            <BranchTable branches={store.branches} />
+            </div> */}
+            <BranchTable branches={store.branches} storeId={store.id} />
         </>
     )
 }

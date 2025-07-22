@@ -1,13 +1,15 @@
 "use client"
 
+import CreateBranchButton from "@/features/branches/components/create-branch-button"
 import { DataTable } from "@/features/layout/components/data-table"
 import { Branch } from "@/prisma/generated/prisma"
 import { ColumnDef } from "@tanstack/react-table"
 type Props = {
     branches: Branch[]
+    storeId: number
 }
 
-function BranchTable({ branches }: Props) {
+function BranchTable({ branches, storeId }: Props) {
 
     const columns: ColumnDef<Branch>[] = [
         {
@@ -48,6 +50,8 @@ function BranchTable({ branches }: Props) {
         <DataTable
             columns={columns}
             data={branches}
+            filterKey="name"
+            topActions={<CreateBranchButton storeId={storeId} />}
         />
     )
 }

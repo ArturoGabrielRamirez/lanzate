@@ -6,7 +6,9 @@ import {
     getCoreRowModel,
     useReactTable,
     getPaginationRowModel,
-    PaginationState
+    PaginationState,
+    ColumnFiltersState,
+    getFilteredRowModel
 } from "@tanstack/react-table"
 
 import {
@@ -22,15 +24,20 @@ import { ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    filterKey: string
+    topActions?: React.ReactNode
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    filterKey,
+    topActions
 }: DataTableProps<TData, TValue>) {
 
     const [pagination, setPagination] = useState<PaginationState>({
@@ -38,14 +45,19 @@ export function DataTable<TData, TValue>({
         pageSize: 10,
     })
 
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         onPaginationChange: setPagination,
-            state: {
+        onColumnFiltersChange: setColumnFilters,
+        getFilteredRowModel: getFilteredRowModel(),
+        state: {
             pagination,
+            columnFilters,
         },
     })
 
@@ -66,6 +78,17 @@ export function DataTable<TData, TValue>({
 
     return (
         <>
+            <div className="flex items-center py-4 justify-between">
+                <Input
+                    placeholder="Filter..."
+                    value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
+                    onChange={(event) =>
+                        table.getColumn(filterKey)?.setFilterValue(event.target.value)
+                    }
+                    className="max-w-sm"
+                />
+                {topActions}
+            </div>
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
