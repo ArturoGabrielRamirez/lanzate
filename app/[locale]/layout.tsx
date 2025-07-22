@@ -5,7 +5,9 @@ import { Toaster } from "@/components/ui/sonner"
 import type { Metadata } from "next";
 import { LayoutProps } from "@/features/layout/types";
 import SubdomainProvider from "@/features/layout/components/subdomain-provider";
-import "./globals.css";
+import "../globals.css";
+import { I18nProviderClient } from "@/locales/cliet";
+import { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: 'Lanzate',
@@ -16,10 +18,17 @@ export const metadata: Metadata = {
   ],
 };
 
-export default async function RootLayout({ children }: LayoutProps) {
+type Props = {
+  children: ReactNode;
+  params: {
+    locale: string;
+  };
+};
+
+export default async function RootLayout({ children, params: { locale } }: Props) {
 
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className="min-h-dvh flex flex-col"
       >
@@ -33,11 +42,13 @@ export default async function RootLayout({ children }: LayoutProps) {
             <SubdomainProvider
               adminLayout={(
                 <>
-                  <Header />
-                  <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow'>
-                    {children}
-                  </main>
-                  <Toaster />
+                  <I18nProviderClient locale={locale}>
+                    <Header />
+                    <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow'>
+                      {children}
+                    </main>
+                    <Toaster />
+                  </I18nProviderClient>
                 </>
               )}
               userLayout={children}
