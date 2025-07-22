@@ -344,24 +344,10 @@
 ### 6.1 Crear Sucursal
 **Pasos:**
 1. Check user owns store
-2. Create branch record
+2. ~~Create branch record~~
 3. Initialize stock for all store products
 4. Create branch notification
-5. Crear registro en action_logs ("create_branch")
-
-**Tablas involucradas:**
-- `branches` (CREATE)
-- `stores` (READ)
-- `products` (READ)
-- `product_stocks` (CREATE)
-- `notifications` (CREATE)
-- `action_logs` (CREATE)
-
-**Manejo de errores:**
-- Error en stock init → Rollback branch
-- Store no encontrado → Error 404
-
----
+5. ~~Crear registro en action_logs ("create_branch")~~
 
 ### 6.2 Actualizar Sucursal
 **Pasos:**
