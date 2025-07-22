@@ -1,26 +1,16 @@
 "use server"
 
-import { getUserByEmail } from "@/features/layout/data/getUserByEmail"
+
 import { PrismaClient } from "@/prisma/generated/prisma"
-import { formatErrorResponse } from "@/utils/lib"
+import { actionWrapper } from "@/utils/lib"
 import { createServerSideClient } from "@/utils/supabase/server"
 import randomstring from "randomstring"
 
-export async function insertProduct(payload: any, storeId: number) {
-    try {
+export async function insertProduct(payload: any, storeId: number, userId: number) {
+    return actionWrapper(async () => {
 
         const prisma = new PrismaClient()
-
         const supabase = createServerSideClient()
-        const { data: { user: authUser } } = await supabase.auth.getUser()
-
-        if (!authUser) throw new Error("User not found")
-
-        const { error, message, payload: user } = await getUserByEmail(authUser?.email ?? "")
-
-        if (error) throw new Error(message)
-
-        if (!user) throw new Error("User not found")
 
         const store = await prisma.store.findUnique({
             where: {
@@ -37,7 +27,6 @@ export async function insertProduct(payload: any, storeId: number) {
         })
 
         if (!mainBranch) throw new Error("Main branch not found")
-
 
         const product = await prisma.product.create({
             data: {
@@ -57,7 +46,7 @@ export async function insertProduct(payload: any, storeId: number) {
                         ...payload.categories.map((category: any) => ({ id: category.value }))
                     ]
                 },
-                owner_id: user?.id,
+                owner_id: userId,
                 slug: randomstring.generate(8),
                 sku: randomstring.generate(8),
             }
@@ -87,7 +76,5 @@ export async function insertProduct(payload: any, storeId: number) {
             payload: product
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error inserting product", error, null)
-    }
+    })
 }

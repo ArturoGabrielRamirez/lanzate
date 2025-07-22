@@ -12,7 +12,7 @@ import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, F
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 
-function CreateProductButton({ storeId }: CreateProductButtonProps) {
+function CreateProductButton({ storeId, userId }: CreateProductButtonProps) {
 
     const [categories, setCategories] = useState<string[]>([])
     const [files, setFiles] = useState<File[]>([])
@@ -36,7 +36,7 @@ function CreateProductButton({ storeId }: CreateProductButtonProps) {
                 image: files[0]
             }
 
-            const { error, message, payload: product } = await createProduct(data, storeId)
+            const { error, message, payload: product } = await createProduct(data, storeId, userId)
             if (error) throw new Error(message)
             return {
                 error: false,
