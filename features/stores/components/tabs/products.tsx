@@ -3,7 +3,7 @@ import { CreateProductButton } from "@/features/products/components"
 import { ProductsTabProps } from "@/features/stores/types"
 import ProductsTable from "../products-table"
 
-async function ProductsTab({ slug , userId }: ProductsTabProps) {
+async function ProductsTab({ slug, userId }: ProductsTabProps) {
 
     const { payload: store, error } = await getStoresFromSlug(slug)
 
@@ -16,7 +16,7 @@ async function ProductsTab({ slug , userId }: ProductsTabProps) {
             <div className="flex justify-end mb-4">
                 <CreateProductButton storeId={store.id} userId={userId} />
             </div>
-            <ProductsTable data={store.products} />
+            <ProductsTable data={store.products} userId={userId} />
         </>
     )
 }

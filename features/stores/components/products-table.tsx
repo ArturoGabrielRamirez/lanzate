@@ -1,14 +1,21 @@
 "use client"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DropdownMenu } from "@/components/ui/dropdown-menu"
 import { DataTable } from "@/features/layout/components/data-table"
+import { MoreHorizontal } from "lucide-react"
+import { Eye } from "lucide-react"
 import { Product, Category } from "@/prisma/generated/prisma"
 import { ColumnDef } from "@tanstack/react-table"
+import { DeleteProductButton, EditProductButton } from "@/features/products/components"
 
 type Props = {
     data: (Product & { categories: Category[] })[]
+    userId: number
 }
 
-function ProductsTable({ data }: Props) {
+function ProductsTable({ data, userId }: Props) {
 
     const columns: ColumnDef<Product>[] = [
         {
@@ -53,6 +60,41 @@ function ProductsTable({ data }: Props) {
             cell: ({ row }) => {
                 const isActive = row.original.is_published
                 return <Badge variant="outline">{isActive ? "Yes" : "No"}</Badge>
+            }
+        },
+        {
+            header: "Actions",
+            accessorKey: "actions",
+            cell: ({ row }) => {
+                return (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="flex flex-col">
+                            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">Actions</DropdownMenuLabel>
+                            <DropdownMenuItem><Eye className="w-4 h-4" />View details</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem asChild>
+                                <EditProductButton
+                                    product={row.original}
+                                    slug={row.original.slug}
+                                    userId={userId}
+                                />
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <DeleteProductButton
+                                    productId={row.original.id}
+                                    slug={row.original.slug}
+                                    userId={userId}
+                                />
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                )
             }
         }
     ]

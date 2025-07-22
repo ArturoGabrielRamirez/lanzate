@@ -49,6 +49,9 @@ export async function insertProduct(payload: any, storeId: number, userId: numbe
                 owner_id: userId,
                 slug: randomstring.generate(8),
                 sku: randomstring.generate(8),
+                is_active: true,
+                is_published: true,
+                is_featured: false,
             }
         })
 

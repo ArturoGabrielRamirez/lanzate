@@ -7,6 +7,7 @@ import { ButtonWithPopupPropsType } from "@/features/layout/types"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Form } from "@/features/layout/components"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 function ButtonWithPopup<T>({
     text,
@@ -18,7 +19,8 @@ function ButtonWithPopup<T>({
     disabled = false,
     schema,
     onComplete,
-    variant = "default"
+    variant = "default",
+    className
 }: ButtonWithPopupPropsType<T>) {
 
     const [open, setOpen] = useState(false)
@@ -33,7 +35,7 @@ function ButtonWithPopup<T>({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button disabled={disabled} variant={variant}>{text}</Button>
+                <Button disabled={disabled} variant={variant} type="button" className={cn(className)}>{text}</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

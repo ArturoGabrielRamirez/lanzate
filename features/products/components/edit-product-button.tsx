@@ -11,7 +11,7 @@ import { useCallback, useState } from "react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 
-function EditProductButton({ product, slug, onComplete }: EditProductButtonProps) {
+function EditProductButton({ product, slug, onComplete, userId }: EditProductButtonProps) {
 
     const [categories, setCategories] = useState<string[]>([])
     const [files, setFiles] = useState<File[]>([])
@@ -37,7 +37,7 @@ function EditProductButton({ product, slug, onComplete }: EditProductButtonProps
         if (!payload.name) return formatErrorResponse("Name is required", null, null)
         if (payload.price == null) return formatErrorResponse("Price is required", null, null)
         if (payload.stock == null) return formatErrorResponse("Stock is required", null, null)
-        return editProduct(product.id, data, slug)
+        return editProduct(product.id, data, slug, userId)
     }
 
     return (
@@ -58,6 +58,7 @@ function EditProductButton({ product, slug, onComplete }: EditProductButtonProps
                 error: "Failed to update product",
                 loading: "Updating product..."
             }}
+            className="bg-transparent w-full justify-start"
         >
             <FileUpload
                 maxFiles={1}

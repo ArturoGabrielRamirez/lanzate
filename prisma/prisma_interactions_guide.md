@@ -3,45 +3,24 @@
 ## 1. GESTIÓN DE USUARIOS - DONE
 
 ### 1.1 Registro de Usuario
+
 **Pasos:**
-1. Check if email already exists
-2. Hash password
-3. Create user record
-4. Create default account (FREE)
+
+1. ~~Check if email already exists~~  
+2. ~~Hash password~~  
+3. ~~Create user record~~  
+4. ~~Create default account (FREE)~~  
 5. Send welcome notification
-6. Crear registro en action_logs ("register_user")
-
-**Tablas involucradas:**
-- `users` (CREATE)
-- `accounts` (CREATE)
-- `notifications` (CREATE)
-- `action_logs` (CREATE)
-
-**Manejo de errores:**
-- Email duplicado → Rollback completo
-- Error en hash → No crear usuario
-- Error en account → Rollback user creation
-
----
+6. ~~Crear registro en action_logs ("register_user")~~
 
 ### 1.2 Login de Usuario - DONE
 **Pasos:**
-1. Find user by email
-2. Verify password hash
-3. Update last_login timestamp
-4. Generate session/token
-5. Crear registro en action_logs ("login_user")
+1. ~~Find user by email~~
+2. ~~Verify password hash~~
+3. ~~Update last_login timestamp~~
+4. ~~Generate session/token~~
+5. ~~Crear registro en action_logs ("login_user")~~
 
-**Tablas involucradas:**
-- `users` (READ, UPDATE)
-- `action_logs` (CREATE)
-
-**Manejo de errores:**
-- Usuario no encontrado → Error 404
-- Password incorrecto → Error 401
-- Usuario inactivo → Error 403
-
----
 
 ### 1.3 Actualizar Perfil de Usuario
 **Pasos:**
@@ -135,48 +114,31 @@
 
 ### 3.1 Crear Producto
 **Pasos:**
-1. Check user owns store
-2. Verify SKU uniqueness
-3. Generate slug from name
-4. Create product record
-5. Create initial stock entry for each branch
+1. Check user owns store or is employee
+2. ~~Verify SKU uniqueness~~
+3. ~~Generate slug from name~~
+4. ~~Create product record~~
+5. ~~Create initial stock entry for each branch~~
 6. Create product notification
-7. Crear registro en action_logs ("create_product")
+7. ~~Crear registro en action_logs ("create_product")~~
 
-**Tablas involucradas:**
-- `products` (CREATE)
-- `stores` (READ)
-- `branches` (READ)
-- `product_stocks` (CREATE)
-- `notifications` (CREATE)
-- `action_logs` (CREATE)
-
-**Manejo de errores:**
-- SKU duplicado → Error 409
-- Slug duplicado → Auto-generate variant
-- Error en stock creation → Rollback product
-
----
 
 ### 3.2 Actualizar Producto
 **Pasos:**
-1. Check user owns product
-2. Check SKU uniqueness if changed
-3. Update product fields
-4. Update image/video if provided
-5. Log product modification
-6. Crear registro en action_logs ("update_product")
+1. Check user owns product or is employee
+2. ~~Check SKU uniqueness if changed~~
+3. ~~Update product fields~~
+4. ~~Update image/video if provided
+5. ~~Crear registro en action_logs ("update_product")
 
-**Tablas involucradas:**
-- `products` (READ, UPDATE)
-- `users` (READ)
-- `action_logs` (CREATE)
 
-**Manejo de errores:**
-- Usuario no es owner → Error 403
-- SKU duplicado → Error 409
-
----
+### 3.2.1 Eliminar Producto
+**Pasos:**
+1. Check user owns product or is employee
+2. ~~Delete product record~~
+3. ~~Delete product stock entries~~
+4. Do something with the order_items (pending)
+5. ~~Crear registro en action_logs ("delete_product")~~
 
 ### 3.3 Gestionar Stock por Sucursal
 **Pasos:**
