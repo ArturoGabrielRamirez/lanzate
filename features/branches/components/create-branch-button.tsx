@@ -7,20 +7,20 @@ import { branchCreateSchema } from "../schemas/branch-schema"
 import { formatErrorResponse } from "@/utils/lib"
 import { createBranch } from "../actions/createBranch"
 
-function CreateBranchButton({ storeId }: CreateBranchButtonProps) {
+function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
 
     const handleCreateProduct = async (payload: any) => {
         try {
 
-            const { error, message, payload: product } = await createBranch(payload, storeId)
+            const { error, message, payload: branch } = await createBranch(payload, storeId, userId)
             if (error) throw new Error(message)
             return {
                 error: false,
-                message: "Product created successfully",
-                payload: product
+                message: "Branch created successfully",
+                payload: branch
             }
         } catch (error) {
-            return formatErrorResponse("Error creating product", error, null)
+            return formatErrorResponse("Error creating branch", error, null)
         }
     }
 
@@ -37,9 +37,9 @@ function CreateBranchButton({ storeId }: CreateBranchButtonProps) {
             description="Create a new branch to start selling your products! Choose a name for your branch and click on the button below, you can continue to add more details of the branch once it's created."
             action={handleCreateProduct}
             messages={{
-                success: "Product created successfully!",
-                error: "Failed to create product",
-                loading: "Creating product..."
+                success: "Branch created successfully!",
+                error: "Failed to create branch",
+                loading: "Creating branch..."
             }}
         >
             <InputField name="name" label="Name" type="text" />

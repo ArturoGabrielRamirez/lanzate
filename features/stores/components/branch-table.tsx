@@ -7,9 +7,10 @@ import { ColumnDef } from "@tanstack/react-table"
 type Props = {
     branches: Branch[]
     storeId: number
+    userId: number
 }
 
-function BranchTable({ branches, storeId }: Props) {
+function BranchTable({ branches, storeId, userId }: Props) {
 
     const columns: ColumnDef<Branch>[] = [
         {
@@ -51,7 +52,7 @@ function BranchTable({ branches, storeId }: Props) {
             columns={columns}
             data={branches}
             filterKey="name"
-            topActions={<CreateBranchButton storeId={storeId} />}
+            topActions={<CreateBranchButton storeId={storeId} userId={userId} />}
         />
     )
 }

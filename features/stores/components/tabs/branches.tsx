@@ -1,21 +1,18 @@
-import CreateBranchButton from "@/features/branches/components/create-branch-button"
 import { getStoresFromSlug } from "../../actions/getStoresFromSlug"
-import BranchTable from "../branch-table"
 import { BranchesTabProps } from "@/features/stores/types"
+import BranchTable from "../branch-table"
 
-async function BranchesTab({ slug }: BranchesTabProps) {
+async function BranchesTab({ slug, userId }: BranchesTabProps) {
 
     const { payload: store, error } = await getStoresFromSlug(slug)
 
     if (error || !store) {
         return console.log(error)
     }
+
     return (
         <>
-            {/* <div className="flex justify-end mb-4">
-                <CreateBranchButton storeId={store.id} />
-            </div> */}
-            <BranchTable branches={store.branches} storeId={store.id} />
+            <BranchTable branches={store.branches} storeId={store.id} userId={userId} />
         </>
     )
 }
