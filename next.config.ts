@@ -1,17 +1,21 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from 'next-intl/plugin';
+
 
 const nextConfig: NextConfig = {
   /* config options here */
-  images : {
-    remotePatterns : [
+  images: {
+    remotePatterns: [
       {
-        hostname : "api.dicebear.com"
+        hostname: "api.dicebear.com"
       },
       {
-        hostname : "ugsxvnqkbxihxjxchckw.supabase.co"
+        hostname: "ugsxvnqkbxihxjxchckw.supabase.co"
       }
     ]
   }
 };
 
-export default nextConfig;
+const withNextIntl = createNextIntlPlugin();
+
+export default withNextIntl(nextConfig);
