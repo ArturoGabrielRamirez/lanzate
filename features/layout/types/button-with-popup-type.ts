@@ -17,4 +17,5 @@ export type ButtonWithPopupPropsType<T> = {
     onComplete?: () => void
     variant?: "default" | "destructive"
     className?: string
+    formDisabled?: boolean
 }

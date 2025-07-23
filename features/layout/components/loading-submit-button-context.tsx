@@ -3,14 +3,14 @@
 import { Button } from "@/components/ui/button"
 import { Loader } from "lucide-react"
 import { useFormContext } from "react-hook-form"
-import { LoadingSubmitButtonType } from "../types/loading-submit-button-type"
+import { Props } from "../types/loading-submit-button-type"
 
-function LoadingSubmitButtonContext({ text = "Submit" }: LoadingSubmitButtonType) {
+function LoadingSubmitButtonContext({ text = "Submit", disabled = false }: Props) {
 
     const { formState: { isSubmitting } } = useFormContext()
 
     return (
-        <Button type="submit" disabled={isSubmitting}>
+        <Button type="submit" disabled={isSubmitting || disabled}>
             {isSubmitting && <Loader className="w-4 h-4 animate-spin" />}
             {isSubmitting ? "Loading..." : text}
         </Button>

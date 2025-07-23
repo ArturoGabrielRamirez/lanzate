@@ -20,7 +20,8 @@ function ButtonWithPopup<T>({
     schema,
     onComplete,
     variant = "default",
-    className
+    className,
+    formDisabled = false
 }: ButtonWithPopupPropsType<T>) {
 
     const [open, setOpen] = useState(false)
@@ -51,6 +52,7 @@ function ButtonWithPopup<T>({
                     successMessage={messages.success}
                     loadingMessage={messages.loading}
                     onComplete={handleComplete}
+                    disabled={formDisabled}
                 >
                     {children}
                 </Form>
