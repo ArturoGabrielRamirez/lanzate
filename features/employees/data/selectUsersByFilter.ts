@@ -3,9 +3,10 @@
 import { PrismaClient } from "@/prisma/generated/prisma"
 import { actionWrapper } from "@/utils/lib"
 
-export async function selectUsersByFilter(filter: string, storeId: number) {
+export async function selectUsersByFilter(filter: string, storeId: number, userId: number) {
+    console.log("🚀 ~ selectUsersByFilter ~ userId:", userId)
     return actionWrapper(async () => {
-        
+
         const client = new PrismaClient()
 
         const users = await client.user.findMany({
@@ -30,6 +31,11 @@ export async function selectUsersByFilter(filter: string, storeId: number) {
                         }
                     }
                 ],
+                Store: {
+                    none: {
+                        user_id: userId
+                    }
+                }
             },
             select: {
                 id: true,

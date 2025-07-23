@@ -66,7 +66,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
         if (!search.trim()) return
 
         try {
-            const { payload: users, error, message } = await getEmployeesByFilter(search, storeId)
+            const { payload: users, error, message } = await getEmployeesByFilter(search, storeId, userId)
             if (error) {
                 console.error("Error searching users:", message)
                 return
