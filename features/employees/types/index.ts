@@ -4,6 +4,27 @@ export type CreateEmployeeButtonProps = {
     userId: number
 }
 
+// Tipos para el botón de borrar empleado
+export type DeleteEmployeeButtonProps = {
+    employeeId: number
+    slug: string
+    userId: number
+    onComplete?: () => void
+}
+
+// Tipos para el botón de editar empleado
+export type EditEmployeeButtonProps = {
+    employee: Employee
+    slug: string
+    userId: number
+    onComplete?: () => void
+}
+
+// Tipos para la página de detalle del empleado
+export type EmployeeDetailPageProps = {
+    params: Promise<{ slug: string, id: string }>
+}
+
 // Tipos para la pestaña de empleados
 export type EmployeesTabProps = {
     slug: string
