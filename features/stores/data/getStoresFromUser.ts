@@ -16,7 +16,18 @@ export async function getStoresFromUser(userId: number): Promise<GetStoresFromUs
 
         const stores = await client.store.findMany({
             where: {
-                user_id: userId
+                OR: [
+                    {
+                        user_id: userId
+                    },
+                    {
+                        employees: {
+                            some: {
+                                user_id: userId
+                            }
+                        }
+                    }
+                ]
             }
         })
 
