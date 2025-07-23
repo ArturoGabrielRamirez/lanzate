@@ -8901,6 +8901,7 @@ export namespace Prisma {
     created_at: Date | null
     updated_at: Date | null
     store_id: number | null
+    is_main: boolean | null
   }
 
   export type BranchMaxAggregateOutputType = {
@@ -8913,6 +8914,7 @@ export namespace Prisma {
     created_at: Date | null
     updated_at: Date | null
     store_id: number | null
+    is_main: boolean | null
   }
 
   export type BranchCountAggregateOutputType = {
@@ -8925,6 +8927,7 @@ export namespace Prisma {
     created_at: number
     updated_at: number
     store_id: number
+    is_main: number
     _all: number
   }
 
@@ -8949,6 +8952,7 @@ export namespace Prisma {
     created_at?: true
     updated_at?: true
     store_id?: true
+    is_main?: true
   }
 
   export type BranchMaxAggregateInputType = {
@@ -8961,6 +8965,7 @@ export namespace Prisma {
     created_at?: true
     updated_at?: true
     store_id?: true
+    is_main?: true
   }
 
   export type BranchCountAggregateInputType = {
@@ -8973,6 +8978,7 @@ export namespace Prisma {
     created_at?: true
     updated_at?: true
     store_id?: true
+    is_main?: true
     _all?: true
   }
 
@@ -9072,6 +9078,7 @@ export namespace Prisma {
     created_at: Date
     updated_at: Date
     store_id: number
+    is_main: boolean
     _count: BranchCountAggregateOutputType | null
     _avg: BranchAvgAggregateOutputType | null
     _sum: BranchSumAggregateOutputType | null
@@ -9103,6 +9110,7 @@ export namespace Prisma {
     created_at?: boolean
     updated_at?: boolean
     store_id?: boolean
+    is_main?: boolean
     store?: boolean | StoreDefaultArgs<ExtArgs>
     stock?: boolean | Branch$stockArgs<ExtArgs>
     orders?: boolean | Branch$ordersArgs<ExtArgs>
@@ -9119,6 +9127,7 @@ export namespace Prisma {
     created_at?: boolean
     updated_at?: boolean
     store_id?: boolean
+    is_main?: boolean
     store?: boolean | StoreDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["branch"]>
 
@@ -9132,6 +9141,7 @@ export namespace Prisma {
     created_at?: boolean
     updated_at?: boolean
     store_id?: boolean
+    is_main?: boolean
     store?: boolean | StoreDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["branch"]>
 
@@ -9145,9 +9155,10 @@ export namespace Prisma {
     created_at?: boolean
     updated_at?: boolean
     store_id?: boolean
+    is_main?: boolean
   }
 
-  export type BranchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "address" | "phone" | "email" | "created_at" | "updated_at" | "store_id", ExtArgs["result"]["branch"]>
+  export type BranchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "address" | "phone" | "email" | "created_at" | "updated_at" | "store_id" | "is_main", ExtArgs["result"]["branch"]>
   export type BranchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     store?: boolean | StoreDefaultArgs<ExtArgs>
     stock?: boolean | Branch$stockArgs<ExtArgs>
@@ -9178,6 +9189,7 @@ export namespace Prisma {
       created_at: Date
       updated_at: Date
       store_id: number
+      is_main: boolean
     }, ExtArgs["result"]["branch"]>
     composites: {}
   }
@@ -9613,6 +9625,7 @@ export namespace Prisma {
     readonly created_at: FieldRef<"Branch", 'DateTime'>
     readonly updated_at: FieldRef<"Branch", 'DateTime'>
     readonly store_id: FieldRef<"Branch", 'Int'>
+    readonly is_main: FieldRef<"Branch", 'Boolean'>
   }
     
 
@@ -12540,7 +12553,7 @@ export namespace Prisma {
     updated_at: Date
     user_id: number
     store_id: number
-    branch_id: number
+    branch_id: number | null
     total_price: number
     total_quantity: number
     shipping_method: string
@@ -12587,7 +12600,7 @@ export namespace Prisma {
     updated_by_employee_id?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
-    branch?: boolean | BranchDefaultArgs<ExtArgs>
+    branch?: boolean | Order$branchArgs<ExtArgs>
     items?: boolean | Order$itemsArgs<ExtArgs>
     payment?: boolean | Order$paymentArgs<ExtArgs>
     created_by_employee?: boolean | Order$created_by_employeeArgs<ExtArgs>
@@ -12612,7 +12625,7 @@ export namespace Prisma {
     updated_by_employee_id?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
-    branch?: boolean | BranchDefaultArgs<ExtArgs>
+    branch?: boolean | Order$branchArgs<ExtArgs>
     created_by_employee?: boolean | Order$created_by_employeeArgs<ExtArgs>
     updated_by_employee?: boolean | Order$updated_by_employeeArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
@@ -12634,7 +12647,7 @@ export namespace Prisma {
     updated_by_employee_id?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
-    branch?: boolean | BranchDefaultArgs<ExtArgs>
+    branch?: boolean | Order$branchArgs<ExtArgs>
     created_by_employee?: boolean | Order$created_by_employeeArgs<ExtArgs>
     updated_by_employee?: boolean | Order$updated_by_employeeArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
@@ -12660,7 +12673,7 @@ export namespace Prisma {
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
-    branch?: boolean | BranchDefaultArgs<ExtArgs>
+    branch?: boolean | Order$branchArgs<ExtArgs>
     items?: boolean | Order$itemsArgs<ExtArgs>
     payment?: boolean | Order$paymentArgs<ExtArgs>
     created_by_employee?: boolean | Order$created_by_employeeArgs<ExtArgs>
@@ -12670,14 +12683,14 @@ export namespace Prisma {
   export type OrderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
-    branch?: boolean | BranchDefaultArgs<ExtArgs>
+    branch?: boolean | Order$branchArgs<ExtArgs>
     created_by_employee?: boolean | Order$created_by_employeeArgs<ExtArgs>
     updated_by_employee?: boolean | Order$updated_by_employeeArgs<ExtArgs>
   }
   export type OrderIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     store?: boolean | StoreDefaultArgs<ExtArgs>
-    branch?: boolean | BranchDefaultArgs<ExtArgs>
+    branch?: boolean | Order$branchArgs<ExtArgs>
     created_by_employee?: boolean | Order$created_by_employeeArgs<ExtArgs>
     updated_by_employee?: boolean | Order$updated_by_employeeArgs<ExtArgs>
   }
@@ -12687,7 +12700,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       store: Prisma.$StorePayload<ExtArgs>
-      branch: Prisma.$BranchPayload<ExtArgs>
+      branch: Prisma.$BranchPayload<ExtArgs> | null
       items: Prisma.$OrderItemPayload<ExtArgs>[]
       payment: Prisma.$OrderPaymentPayload<ExtArgs> | null
       created_by_employee: Prisma.$EmployeePayload<ExtArgs> | null
@@ -12699,7 +12712,7 @@ export namespace Prisma {
       updated_at: Date
       user_id: number
       store_id: number
-      branch_id: number
+      branch_id: number | null
       total_price: number
       total_quantity: number
       shipping_method: string
@@ -13104,7 +13117,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    branch<T extends BranchDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BranchDefaultArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    branch<T extends Order$branchArgs<ExtArgs> = {}>(args?: Subset<T, Order$branchArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     items<T extends Order$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     payment<T extends Order$paymentArgs<ExtArgs> = {}>(args?: Subset<T, Order$paymentArgs<ExtArgs>>): Prisma__OrderPaymentClient<$Result.GetResult<Prisma.$OrderPaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     created_by_employee<T extends Order$created_by_employeeArgs<ExtArgs> = {}>(args?: Subset<T, Order$created_by_employeeArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -13545,6 +13558,25 @@ export namespace Prisma {
      * Limit how many Orders to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Order.branch
+   */
+  export type Order$branchArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Branch
+     */
+    omit?: BranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchInclude<ExtArgs> | null
+    where?: BranchWhereInput
   }
 
   /**
@@ -20996,7 +21028,8 @@ export namespace Prisma {
     email: 'email',
     created_at: 'created_at',
     updated_at: 'updated_at',
-    store_id: 'store_id'
+    store_id: 'store_id',
+    is_main: 'is_main'
   };
 
   export type BranchScalarFieldEnum = (typeof BranchScalarFieldEnum)[keyof typeof BranchScalarFieldEnum]
@@ -21910,6 +21943,7 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Branch"> | Date | string
     updated_at?: DateTimeFilter<"Branch"> | Date | string
     store_id?: IntFilter<"Branch"> | number
+    is_main?: BoolFilter<"Branch"> | boolean
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
     stock?: ProductStockListRelationFilter
     orders?: OrderListRelationFilter
@@ -21925,6 +21959,7 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     store_id?: SortOrder
+    is_main?: SortOrder
     store?: StoreOrderByWithRelationInput
     stock?: ProductStockOrderByRelationAggregateInput
     orders?: OrderOrderByRelationAggregateInput
@@ -21944,6 +21979,7 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Branch"> | Date | string
     updated_at?: DateTimeFilter<"Branch"> | Date | string
     store_id?: IntFilter<"Branch"> | number
+    is_main?: BoolFilter<"Branch"> | boolean
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
     stock?: ProductStockListRelationFilter
     orders?: OrderListRelationFilter
@@ -21959,6 +21995,7 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     store_id?: SortOrder
+    is_main?: SortOrder
     _count?: BranchCountOrderByAggregateInput
     _avg?: BranchAvgOrderByAggregateInput
     _max?: BranchMaxOrderByAggregateInput
@@ -21979,6 +22016,7 @@ export namespace Prisma {
     created_at?: DateTimeWithAggregatesFilter<"Branch"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Branch"> | Date | string
     store_id?: IntWithAggregatesFilter<"Branch"> | number
+    is_main?: BoolWithAggregatesFilter<"Branch"> | boolean
   }
 
   export type ProductStockWhereInput = {
@@ -22109,7 +22147,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Order"> | Date | string
     user_id?: IntFilter<"Order"> | number
     store_id?: IntFilter<"Order"> | number
-    branch_id?: IntFilter<"Order"> | number
+    branch_id?: IntNullableFilter<"Order"> | number | null
     total_price?: FloatFilter<"Order"> | number
     total_quantity?: IntFilter<"Order"> | number
     shipping_method?: StringFilter<"Order"> | string
@@ -22120,7 +22158,7 @@ export namespace Prisma {
     updated_by_employee_id?: IntNullableFilter<"Order"> | number | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
-    branch?: XOR<BranchScalarRelationFilter, BranchWhereInput>
+    branch?: XOR<BranchNullableScalarRelationFilter, BranchWhereInput> | null
     items?: OrderItemListRelationFilter
     payment?: XOR<OrderPaymentNullableScalarRelationFilter, OrderPaymentWhereInput> | null
     created_by_employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
@@ -22133,7 +22171,7 @@ export namespace Prisma {
     updated_at?: SortOrder
     user_id?: SortOrder
     store_id?: SortOrder
-    branch_id?: SortOrder
+    branch_id?: SortOrderInput | SortOrder
     total_price?: SortOrder
     total_quantity?: SortOrder
     shipping_method?: SortOrder
@@ -22161,7 +22199,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Order"> | Date | string
     user_id?: IntFilter<"Order"> | number
     store_id?: IntFilter<"Order"> | number
-    branch_id?: IntFilter<"Order"> | number
+    branch_id?: IntNullableFilter<"Order"> | number | null
     total_price?: FloatFilter<"Order"> | number
     total_quantity?: IntFilter<"Order"> | number
     shipping_method?: StringFilter<"Order"> | string
@@ -22172,7 +22210,7 @@ export namespace Prisma {
     updated_by_employee_id?: IntNullableFilter<"Order"> | number | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
-    branch?: XOR<BranchScalarRelationFilter, BranchWhereInput>
+    branch?: XOR<BranchNullableScalarRelationFilter, BranchWhereInput> | null
     items?: OrderItemListRelationFilter
     payment?: XOR<OrderPaymentNullableScalarRelationFilter, OrderPaymentWhereInput> | null
     created_by_employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
@@ -22185,7 +22223,7 @@ export namespace Prisma {
     updated_at?: SortOrder
     user_id?: SortOrder
     store_id?: SortOrder
-    branch_id?: SortOrder
+    branch_id?: SortOrderInput | SortOrder
     total_price?: SortOrder
     total_quantity?: SortOrder
     shipping_method?: SortOrder
@@ -22210,7 +22248,7 @@ export namespace Prisma {
     updated_at?: DateTimeWithAggregatesFilter<"Order"> | Date | string
     user_id?: IntWithAggregatesFilter<"Order"> | number
     store_id?: IntWithAggregatesFilter<"Order"> | number
-    branch_id?: IntWithAggregatesFilter<"Order"> | number
+    branch_id?: IntNullableWithAggregatesFilter<"Order"> | number | null
     total_price?: FloatWithAggregatesFilter<"Order"> | number
     total_quantity?: IntWithAggregatesFilter<"Order"> | number
     shipping_method?: StringWithAggregatesFilter<"Order"> | string
@@ -23253,6 +23291,7 @@ export namespace Prisma {
     email?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    is_main?: boolean
     store: StoreCreateNestedOneWithoutBranchesInput
     stock?: ProductStockCreateNestedManyWithoutBranchInput
     orders?: OrderCreateNestedManyWithoutBranchInput
@@ -23268,6 +23307,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     store_id: number
+    is_main?: boolean
     stock?: ProductStockUncheckedCreateNestedManyWithoutBranchInput
     orders?: OrderUncheckedCreateNestedManyWithoutBranchInput
   }
@@ -23280,6 +23320,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_main?: BoolFieldUpdateOperationsInput | boolean
     store?: StoreUpdateOneRequiredWithoutBranchesNestedInput
     stock?: ProductStockUpdateManyWithoutBranchNestedInput
     orders?: OrderUpdateManyWithoutBranchNestedInput
@@ -23295,6 +23336,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     store_id?: IntFieldUpdateOperationsInput | number
+    is_main?: BoolFieldUpdateOperationsInput | boolean
     stock?: ProductStockUncheckedUpdateManyWithoutBranchNestedInput
     orders?: OrderUncheckedUpdateManyWithoutBranchNestedInput
   }
@@ -23309,6 +23351,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     store_id: number
+    is_main?: boolean
   }
 
   export type BranchUpdateManyMutationInput = {
@@ -23319,6 +23362,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_main?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type BranchUncheckedUpdateManyInput = {
@@ -23331,6 +23375,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     store_id?: IntFieldUpdateOperationsInput | number
+    is_main?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ProductStockCreateInput = {
@@ -23455,7 +23500,7 @@ export namespace Prisma {
     payment_date?: Date | string | null
     user: UserCreateNestedOneWithoutOrderInput
     store: StoreCreateNestedOneWithoutOrdersInput
-    branch: BranchCreateNestedOneWithoutOrdersInput
+    branch?: BranchCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentCreateNestedOneWithoutOrderInput
     created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
@@ -23468,7 +23513,7 @@ export namespace Prisma {
     updated_at?: Date | string
     user_id: number
     store_id: number
-    branch_id: number
+    branch_id?: number | null
     total_price: number
     total_quantity: number
     shipping_method?: string
@@ -23492,7 +23537,7 @@ export namespace Prisma {
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneRequiredWithoutOrderNestedInput
     store?: StoreUpdateOneRequiredWithoutOrdersNestedInput
-    branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
+    branch?: BranchUpdateOneWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
     created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
@@ -23505,7 +23550,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
     store_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     total_price?: FloatFieldUpdateOperationsInput | number
     total_quantity?: IntFieldUpdateOperationsInput | number
     shipping_method?: StringFieldUpdateOperationsInput | string
@@ -23524,7 +23569,7 @@ export namespace Prisma {
     updated_at?: Date | string
     user_id: number
     store_id: number
-    branch_id: number
+    branch_id?: number | null
     total_price: number
     total_quantity: number
     shipping_method?: string
@@ -23552,7 +23597,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
     store_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     total_price?: FloatFieldUpdateOperationsInput | number
     total_quantity?: IntFieldUpdateOperationsInput | number
     shipping_method?: StringFieldUpdateOperationsInput | string
@@ -24718,6 +24763,7 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     store_id?: SortOrder
+    is_main?: SortOrder
   }
 
   export type BranchAvgOrderByAggregateInput = {
@@ -24735,6 +24781,7 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     store_id?: SortOrder
+    is_main?: SortOrder
   }
 
   export type BranchMinOrderByAggregateInput = {
@@ -24747,6 +24794,7 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     store_id?: SortOrder
+    is_main?: SortOrder
   }
 
   export type BranchSumOrderByAggregateInput = {
@@ -24843,6 +24891,17 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type EnumOrderStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
     in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
@@ -24861,15 +24920,9 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  export type BranchNullableScalarRelationFilter = {
+    is?: BranchWhereInput | null
+    isNot?: BranchWhereInput | null
   }
 
   export type OrderPaymentNullableScalarRelationFilter = {
@@ -24961,6 +25014,22 @@ export namespace Prisma {
     updated_by_employee_id?: SortOrder
   }
 
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
   export type EnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
     in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
@@ -24983,22 +25052,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type OrderScalarRelationFilter = {
@@ -26492,10 +26545,12 @@ export namespace Prisma {
     update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutOrdersInput, StoreUpdateWithoutOrdersInput>, StoreUncheckedUpdateWithoutOrdersInput>
   }
 
-  export type BranchUpdateOneRequiredWithoutOrdersNestedInput = {
+  export type BranchUpdateOneWithoutOrdersNestedInput = {
     create?: XOR<BranchCreateWithoutOrdersInput, BranchUncheckedCreateWithoutOrdersInput>
     connectOrCreate?: BranchCreateOrConnectWithoutOrdersInput
     upsert?: BranchUpsertWithoutOrdersInput
+    disconnect?: BranchWhereInput | boolean
+    delete?: BranchWhereInput | boolean
     connect?: BranchWhereUniqueInput
     update?: XOR<XOR<BranchUpdateToOneWithWhereWithoutOrdersInput, BranchUpdateWithoutOrdersInput>, BranchUncheckedUpdateWithoutOrdersInput>
   }
@@ -27122,30 +27177,6 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumOrderStatusFilter<$PrismaModel>
-    _max?: NestedEnumOrderStatusFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -27171,6 +27202,30 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOrderStatusFilter<$PrismaModel>
+    _max?: NestedEnumOrderStatusFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumOrderPaymentStatusFilter<$PrismaModel = never> = {
@@ -27438,7 +27493,7 @@ export namespace Prisma {
     is_paid?: boolean
     payment_date?: Date | string | null
     store: StoreCreateNestedOneWithoutOrdersInput
-    branch: BranchCreateNestedOneWithoutOrdersInput
+    branch?: BranchCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentCreateNestedOneWithoutOrderInput
     created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
@@ -27450,7 +27505,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     store_id: number
-    branch_id: number
+    branch_id?: number | null
     total_price: number
     total_quantity: number
     shipping_method?: string
@@ -27726,7 +27781,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Order"> | Date | string
     user_id?: IntFilter<"Order"> | number
     store_id?: IntFilter<"Order"> | number
-    branch_id?: IntFilter<"Order"> | number
+    branch_id?: IntNullableFilter<"Order"> | number | null
     total_price?: FloatFilter<"Order"> | number
     total_quantity?: IntFilter<"Order"> | number
     shipping_method?: StringFilter<"Order"> | string
@@ -27941,6 +27996,7 @@ export namespace Prisma {
     email?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    is_main?: boolean
     stock?: ProductStockCreateNestedManyWithoutBranchInput
     orders?: OrderCreateNestedManyWithoutBranchInput
   }
@@ -27954,6 +28010,7 @@ export namespace Prisma {
     email?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    is_main?: boolean
     stock?: ProductStockUncheckedCreateNestedManyWithoutBranchInput
     orders?: OrderUncheckedCreateNestedManyWithoutBranchInput
   }
@@ -28033,7 +28090,7 @@ export namespace Prisma {
     is_paid?: boolean
     payment_date?: Date | string | null
     user: UserCreateNestedOneWithoutOrderInput
-    branch: BranchCreateNestedOneWithoutOrdersInput
+    branch?: BranchCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentCreateNestedOneWithoutOrderInput
     created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
@@ -28045,7 +28102,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     user_id: number
-    branch_id: number
+    branch_id?: number | null
     total_price: number
     total_quantity: number
     shipping_method?: string
@@ -28267,6 +28324,7 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Branch"> | Date | string
     updated_at?: DateTimeFilter<"Branch"> | Date | string
     store_id?: IntFilter<"Branch"> | number
+    is_main?: BoolFilter<"Branch"> | boolean
   }
 
   export type ProductUpsertWithWhereUniqueWithoutStoreInput = {
@@ -29021,6 +29079,7 @@ export namespace Prisma {
     email?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    is_main?: boolean
     store: StoreCreateNestedOneWithoutBranchesInput
     orders?: OrderCreateNestedManyWithoutBranchInput
   }
@@ -29035,6 +29094,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     store_id: number
+    is_main?: boolean
     orders?: OrderUncheckedCreateNestedManyWithoutBranchInput
   }
 
@@ -29118,6 +29178,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_main?: BoolFieldUpdateOperationsInput | boolean
     store?: StoreUpdateOneRequiredWithoutBranchesNestedInput
     orders?: OrderUpdateManyWithoutBranchNestedInput
   }
@@ -29132,6 +29193,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     store_id?: IntFieldUpdateOperationsInput | number
+    is_main?: BoolFieldUpdateOperationsInput | boolean
     orders?: OrderUncheckedUpdateManyWithoutBranchNestedInput
   }
 
@@ -29287,6 +29349,7 @@ export namespace Prisma {
     email?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    is_main?: boolean
     store: StoreCreateNestedOneWithoutBranchesInput
     stock?: ProductStockCreateNestedManyWithoutBranchInput
   }
@@ -29301,6 +29364,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     store_id: number
+    is_main?: boolean
     stock?: ProductStockUncheckedCreateNestedManyWithoutBranchInput
   }
 
@@ -29577,6 +29641,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_main?: BoolFieldUpdateOperationsInput | boolean
     store?: StoreUpdateOneRequiredWithoutBranchesNestedInput
     stock?: ProductStockUpdateManyWithoutBranchNestedInput
   }
@@ -29591,6 +29656,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     store_id?: IntFieldUpdateOperationsInput | number
+    is_main?: BoolFieldUpdateOperationsInput | boolean
     stock?: ProductStockUncheckedUpdateManyWithoutBranchNestedInput
   }
 
@@ -29775,7 +29841,7 @@ export namespace Prisma {
     payment_date?: Date | string | null
     user: UserCreateNestedOneWithoutOrderInput
     store: StoreCreateNestedOneWithoutOrdersInput
-    branch: BranchCreateNestedOneWithoutOrdersInput
+    branch?: BranchCreateNestedOneWithoutOrdersInput
     payment?: OrderPaymentCreateNestedOneWithoutOrderInput
     created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
     updated_by_employee?: EmployeeCreateNestedOneWithoutOrders_updatedInput
@@ -29787,7 +29853,7 @@ export namespace Prisma {
     updated_at?: Date | string
     user_id: number
     store_id: number
-    branch_id: number
+    branch_id?: number | null
     total_price: number
     total_quantity: number
     shipping_method?: string
@@ -29876,7 +29942,7 @@ export namespace Prisma {
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneRequiredWithoutOrderNestedInput
     store?: StoreUpdateOneRequiredWithoutOrdersNestedInput
-    branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
+    branch?: BranchUpdateOneWithoutOrdersNestedInput
     payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
     created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
     updated_by_employee?: EmployeeUpdateOneWithoutOrders_updatedNestedInput
@@ -29888,7 +29954,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
     store_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     total_price?: FloatFieldUpdateOperationsInput | number
     total_quantity?: IntFieldUpdateOperationsInput | number
     shipping_method?: StringFieldUpdateOperationsInput | string
@@ -29967,7 +30033,7 @@ export namespace Prisma {
     payment_date?: Date | string | null
     user: UserCreateNestedOneWithoutOrderInput
     store: StoreCreateNestedOneWithoutOrdersInput
-    branch: BranchCreateNestedOneWithoutOrdersInput
+    branch?: BranchCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
     updated_by_employee?: EmployeeCreateNestedOneWithoutOrders_updatedInput
@@ -29979,7 +30045,7 @@ export namespace Prisma {
     updated_at?: Date | string
     user_id: number
     store_id: number
-    branch_id: number
+    branch_id?: number | null
     total_price: number
     total_quantity: number
     shipping_method?: string
@@ -30018,7 +30084,7 @@ export namespace Prisma {
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneRequiredWithoutOrderNestedInput
     store?: StoreUpdateOneRequiredWithoutOrdersNestedInput
-    branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
+    branch?: BranchUpdateOneWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
     updated_by_employee?: EmployeeUpdateOneWithoutOrders_updatedNestedInput
@@ -30030,7 +30096,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
     store_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     total_price?: FloatFieldUpdateOperationsInput | number
     total_quantity?: IntFieldUpdateOperationsInput | number
     shipping_method?: StringFieldUpdateOperationsInput | string
@@ -30637,7 +30703,7 @@ export namespace Prisma {
     payment_date?: Date | string | null
     user: UserCreateNestedOneWithoutOrderInput
     store: StoreCreateNestedOneWithoutOrdersInput
-    branch: BranchCreateNestedOneWithoutOrdersInput
+    branch?: BranchCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentCreateNestedOneWithoutOrderInput
     updated_by_employee?: EmployeeCreateNestedOneWithoutOrders_updatedInput
@@ -30649,7 +30715,7 @@ export namespace Prisma {
     updated_at?: Date | string
     user_id: number
     store_id: number
-    branch_id: number
+    branch_id?: number | null
     total_price: number
     total_quantity: number
     shipping_method?: string
@@ -30682,7 +30748,7 @@ export namespace Prisma {
     payment_date?: Date | string | null
     user: UserCreateNestedOneWithoutOrderInput
     store: StoreCreateNestedOneWithoutOrdersInput
-    branch: BranchCreateNestedOneWithoutOrdersInput
+    branch?: BranchCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     payment?: OrderPaymentCreateNestedOneWithoutOrderInput
     created_by_employee?: EmployeeCreateNestedOneWithoutOrders_createdInput
@@ -30694,7 +30760,7 @@ export namespace Prisma {
     updated_at?: Date | string
     user_id: number
     store_id: number
-    branch_id: number
+    branch_id?: number | null
     total_price: number
     total_quantity: number
     shipping_method?: string
@@ -31001,7 +31067,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     store_id: number
-    branch_id: number
+    branch_id?: number | null
     total_price: number
     total_quantity: number
     shipping_method?: string
@@ -31222,7 +31288,7 @@ export namespace Prisma {
     is_paid?: BoolFieldUpdateOperationsInput | boolean
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     store?: StoreUpdateOneRequiredWithoutOrdersNestedInput
-    branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
+    branch?: BranchUpdateOneWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
     created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
@@ -31234,7 +31300,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     store_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     total_price?: FloatFieldUpdateOperationsInput | number
     total_quantity?: IntFieldUpdateOperationsInput | number
     shipping_method?: StringFieldUpdateOperationsInput | string
@@ -31252,7 +31318,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     store_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     total_price?: FloatFieldUpdateOperationsInput | number
     total_quantity?: IntFieldUpdateOperationsInput | number
     shipping_method?: StringFieldUpdateOperationsInput | string
@@ -31386,6 +31452,7 @@ export namespace Prisma {
     email?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    is_main?: boolean
   }
 
   export type ProductCreateManyStoreInput = {
@@ -31413,7 +31480,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     user_id: number
-    branch_id: number
+    branch_id?: number | null
     total_price: number
     total_quantity: number
     shipping_method?: string
@@ -31473,6 +31540,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_main?: BoolFieldUpdateOperationsInput | boolean
     stock?: ProductStockUpdateManyWithoutBranchNestedInput
     orders?: OrderUpdateManyWithoutBranchNestedInput
   }
@@ -31486,6 +31554,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_main?: BoolFieldUpdateOperationsInput | boolean
     stock?: ProductStockUncheckedUpdateManyWithoutBranchNestedInput
     orders?: OrderUncheckedUpdateManyWithoutBranchNestedInput
   }
@@ -31499,6 +31568,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_main?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ProductUpdateWithoutStoreInput = {
@@ -31576,7 +31646,7 @@ export namespace Prisma {
     is_paid?: BoolFieldUpdateOperationsInput | boolean
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneRequiredWithoutOrderNestedInput
-    branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
+    branch?: BranchUpdateOneWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
     created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
@@ -31588,7 +31658,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     total_price?: FloatFieldUpdateOperationsInput | number
     total_quantity?: IntFieldUpdateOperationsInput | number
     shipping_method?: StringFieldUpdateOperationsInput | string
@@ -31606,7 +31676,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     total_price?: FloatFieldUpdateOperationsInput | number
     total_quantity?: IntFieldUpdateOperationsInput | number
     shipping_method?: StringFieldUpdateOperationsInput | string
@@ -32018,7 +32088,7 @@ export namespace Prisma {
     updated_at?: Date | string
     user_id: number
     store_id: number
-    branch_id: number
+    branch_id?: number | null
     total_price: number
     total_quantity: number
     shipping_method?: string
@@ -32034,7 +32104,7 @@ export namespace Prisma {
     updated_at?: Date | string
     user_id: number
     store_id: number
-    branch_id: number
+    branch_id?: number | null
     total_price: number
     total_quantity: number
     shipping_method?: string
@@ -32084,7 +32154,7 @@ export namespace Prisma {
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneRequiredWithoutOrderNestedInput
     store?: StoreUpdateOneRequiredWithoutOrdersNestedInput
-    branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
+    branch?: BranchUpdateOneWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
     updated_by_employee?: EmployeeUpdateOneWithoutOrders_updatedNestedInput
@@ -32096,7 +32166,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
     store_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     total_price?: FloatFieldUpdateOperationsInput | number
     total_quantity?: IntFieldUpdateOperationsInput | number
     shipping_method?: StringFieldUpdateOperationsInput | string
@@ -32114,7 +32184,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
     store_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     total_price?: FloatFieldUpdateOperationsInput | number
     total_quantity?: IntFieldUpdateOperationsInput | number
     shipping_method?: StringFieldUpdateOperationsInput | string
@@ -32135,7 +32205,7 @@ export namespace Prisma {
     payment_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneRequiredWithoutOrderNestedInput
     store?: StoreUpdateOneRequiredWithoutOrdersNestedInput
-    branch?: BranchUpdateOneRequiredWithoutOrdersNestedInput
+    branch?: BranchUpdateOneWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     payment?: OrderPaymentUpdateOneWithoutOrderNestedInput
     created_by_employee?: EmployeeUpdateOneWithoutOrders_createdNestedInput
@@ -32147,7 +32217,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
     store_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     total_price?: FloatFieldUpdateOperationsInput | number
     total_quantity?: IntFieldUpdateOperationsInput | number
     shipping_method?: StringFieldUpdateOperationsInput | string
@@ -32165,7 +32235,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
     store_id?: IntFieldUpdateOperationsInput | number
-    branch_id?: IntFieldUpdateOperationsInput | number
+    branch_id?: NullableIntFieldUpdateOperationsInput | number | null
     total_price?: FloatFieldUpdateOperationsInput | number
     total_quantity?: IntFieldUpdateOperationsInput | number
     shipping_method?: StringFieldUpdateOperationsInput | string

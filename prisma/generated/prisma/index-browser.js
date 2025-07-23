@@ -194,7 +194,8 @@ exports.Prisma.BranchScalarFieldEnum = {
   email: 'email',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  store_id: 'store_id'
+  store_id: 'store_id',
+  is_main: 'is_main'
 };
 
 exports.Prisma.ProductStockScalarFieldEnum = {

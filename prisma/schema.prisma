@@ -147,6 +147,8 @@ model Branch {
 
   orders Order[]
 
+  is_main Boolean @default(false)
+
   @@map("branches")
 }
 
@@ -191,8 +193,8 @@ model Order {
   store_id Int
   store    Store @relation(fields: [store_id], references: [id])
 
-  branch_id Int
-  branch    Branch @relation(fields: [branch_id], references: [id])
+  branch_id Int?
+  branch    Branch? @relation(fields: [branch_id], references: [id], onDelete: SetNull)
 
   items OrderItem[]
 
