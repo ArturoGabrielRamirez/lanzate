@@ -8,13 +8,16 @@ import { Order } from "@/prisma/generated/prisma"
 import { ColumnDef } from "@tanstack/react-table"
 import { Edit, Eye, MapPin, MoreHorizontal, Trash2, Truck } from "lucide-react"
 import Link from "next/link"
+import ChangeOrderStatusButton from "./change-order-status-button"
+import CancelOrderButton from "./cancel-order-button"
 
 type Props = {
     data: Order[]
     slug: string
+    userId: number
 }
 
-function OrdersTable({ data, slug }: Props) {
+function OrdersTable({ data, slug, userId }: Props) {
 
     const columns: ColumnDef<Order>[] = [
         {
@@ -106,8 +109,20 @@ function OrdersTable({ data, slug }: Props) {
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem><Edit className="w-4 h-4" />Change status</DropdownMenuItem>
-                            <DropdownMenuItem><Trash2 className="w-4 h-4" />Cancel order</DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <ChangeOrderStatusButton 
+                                    order={order}
+                                    slug={slug}
+                                    userId={userId}
+                                />
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <CancelOrderButton
+                                    order={order}
+                                    slug={slug}
+                                    userId={userId}
+                                />
+                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )

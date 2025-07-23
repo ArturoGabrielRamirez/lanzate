@@ -11,6 +11,7 @@ import { Props as AccountTabProps } from "./account-tab-type";
 import { Props as BranchesTabProps } from "./branches-tab-type";
 import { Props as ProductsTabProps } from "./products-tab-type";
 import { OrderDetailPageProps } from "./order-detail-page-type";
+import { ChangeOrderStatusButtonProps, CancelOrderButtonProps, ChangeOrderStatusData } from "./change-order-status-type";
 
 export type {
     StoreDetailsLayoutProps,
@@ -25,5 +26,8 @@ export type {
     AccountTabProps,
     BranchesTabProps,
     ProductsTabProps,
-    OrderDetailPageProps
+    OrderDetailPageProps,
+    ChangeOrderStatusButtonProps,
+    CancelOrderButtonProps,
+    ChangeOrderStatusData
 }
