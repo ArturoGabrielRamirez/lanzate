@@ -1,10 +1,10 @@
 "use server"
 
-import { formatErrorResponse } from "@/utils/lib"
+import { actionWrapper } from "@/utils/lib"
 import { selectOrderById } from "../data/selectOrderById"
 
 export async function getOrderDetails(id: string) {
-    try {
+    return actionWrapper(async () => {
 
         const parsedId = parseInt(id)
 
@@ -20,7 +20,5 @@ export async function getOrderDetails(id: string) {
             message: "Order details fetched successfully"
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching order details", error)
-    }
+    })
 } 

@@ -1,10 +1,10 @@
 "use server"
 
-import { formatErrorResponse } from "@/utils/lib"
+import { actionWrapper } from "@/utils/lib"
 import { selectEmployeeById } from "../data/selectEmployeeById"
 
 export async function getEmployeeDetails(id: string) {
-    try {
+    return actionWrapper(async () => {
         const parsedId = parseInt(id)
 
         if (isNaN(parsedId)) throw new Error("Invalid employee id")
@@ -19,7 +19,5 @@ export async function getEmployeeDetails(id: string) {
             message: "Employee details fetched successfully"
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching employee details", error)
-    }
+    })
 } 

@@ -1,11 +1,11 @@
 "use server"
 
-import { formatErrorResponse } from "@/utils/lib";
+import { actionWrapper } from "@/utils/lib";
 import { checkSubdomainExists } from "../data/checkSubdomainExists";
 import { ValidateSubdomainReturn } from "../types/types";
 
 export async function validateSubdomain(subdomain: string): Promise<ValidateSubdomainReturn> {
-    try {
+    return actionWrapper(async () => {
         const { payload: exists, error, message } = await checkSubdomainExists(subdomain);
 
         if (error) throw new Error(message);
@@ -16,7 +16,5 @@ export async function validateSubdomain(subdomain: string): Promise<ValidateSubd
             error: false
         };
 
-    } catch (error) {
-        return formatErrorResponse("Error validating subdomain", error, false);
-    }
+    });
 }
