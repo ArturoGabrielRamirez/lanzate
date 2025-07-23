@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useTranslations } from 'next-intl';
 
 export default function Home() {
-  
+
   const t = useTranslations('home');
 
   return (
@@ -21,7 +21,7 @@ export default function Home() {
             <span className="text-primary">despeguen.</span>
           </h1> */}
           <h1 className="text-4xl font-bold leading-none sm:text-5xl xl:max-w-xl">
-             {t('slogan.1')}&nbsp;
+            {t('slogan.1')}&nbsp;
             <span className="text-primary">{t('slogan.2')}</span>{t('slogan.3')}&nbsp;
             <span className="text-primary">{t('slogan.4')}</span>
           </h1>
@@ -43,25 +43,25 @@ export default function Home() {
       </section>
       <section className="p-6">
         <div className="container mx-auto">
-          <span className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-accent">{t('description.how-work')}</span>
-          <h2 className="text-5xl font-bold text-center">{}{t('description.how-work-description')}</h2>
+          <span className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-accent">{t('description.how-it-work.title')}</span>
+          <h2 className="text-5xl font-bold text-center">{t('description.how-it-work.description')}</h2>
           <div className="grid gap-6 my-16 lg:grid-cols-3">
             <div className="flex flex-col p-8 space-y-4 rounded-md bg-primary text-primary-foreground">
               <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent ">1</div>
               <p className="text-2xl font-semibold">
-                <b>Centralize.</b> Manage all your products and inventory from one intuitive dashboard.
+                <b>{t('description.centralize.title')}</b> {t('description.centralize.description')}
               </p>
             </div>
             <div className="flex flex-col p-8 space-y-4 rounded-md bg-primary text-primary-foreground">
               <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent ">2</div>
               <p className="text-2xl font-semibold">
-                <b>Sell &amp; Grow.</b> Process sales and track your growth with real-time analytics.
+                <b>{t('description.sell.title')} &amp; {t('description.sell.title-2')}</b> {t('description.sell.description')}
               </p>
             </div>
             <div className="flex flex-col p-8 space-y-4 rounded-md bg-primary text-primary-foreground">
               <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent ">3</div>
               <p className="text-2xl font-semibold">
-                <b>Ship Easily.</b> Coordinate shipping and order fulfillment without the hassle.
+                <b>{t('description.ship-easily.title')}</b> {t('description.ship-easily.description')}
               </p>
             </div>
           </div>
@@ -79,7 +79,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col justify-center align-middle">
               <p className="text-3xl font-semibold leading-none">200</p>
-              <p className="capitalize">Orders</p>
+              <p className="capitalize">{t('description.analytics.orders')}</p>
             </div>
           </div>
           <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent text-primary-foreground">
@@ -93,7 +93,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col justify-center align-middle">
               <p className="text-3xl font-semibold leading-none">7500</p>
-              <p className="capitalize">New customers</p>
+              <p className="capitalize">{t('description.analytics.new-customers')}</p>
             </div>
           </div>
           <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent text-primary-foreground">
@@ -109,7 +109,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col justify-center align-middle">
               <p className="text-3xl font-semibold leading-none">172%</p>
-              <p className="capitalize">Growth</p>
+              <p className="capitalize">{t('description.analytics.growth')}</p>
             </div>
           </div>
           <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent text-primary-foreground">
@@ -120,7 +120,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col justify-center align-middle">
               <p className="text-3xl font-semibold leading-none">17%</p>
-              <p className="capitalize">Bounce rate</p>
+              <p className="capitalize">{t('description.analytics.bounce-rate')}</p>
             </div>
           </div>
         </div>
@@ -128,151 +128,151 @@ export default function Home() {
       <section className="py-6 ">
         <div className="container mx-auto p-4 sm:p-10">
           <div className="mb-16 space-y-4 text-center">
-            <h1 className="text-4xl font-semibold leading-tight">Pricing</h1>
-            <p className="px-4 sm:px-8 lg:px-24">Choose the plan that fits your business and start simplifying your online management with Lánzate. Scale as you grow, with all the tools you need in one place.</p>
+            <h1 className="text-4xl font-semibold leading-tight">{t('description.plan.title')}</h1>
+            <p className="px-4 sm:px-8 lg:px-24">{t('description.plan.description')}</p>
             <div>
-              <button className="px-4 py-1 font-semibold border rounded-l-lg bg-primary border-primary">Monthly</button>
-              <button className="px-4 py-1 border rounded-r-lg border-primary">Annually</button>
+              <button className="px-4 py-1 font-semibold border rounded-l-lg bg-primary border-primary">{t('buttons.monthly')}</button>
+              <button className="px-4 py-1 border rounded-r-lg border-primary">{t('buttons.annually')}</button>
             </div>
           </div>
           <div className="grid max-w-md grid-cols-1 gap-6 mx-auto auto-rows-fr lg:max-w-full lg:gap-2 xl:gap-6 lg:grid-cols-3">
             <div className="relative z-0 flex flex-col items-center p-8 border rounded-md">
-              <span className="absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg bg-primary ">Personal</span>
-              <p className="my-6 text-4xl font-bold dark:text-accent">FREE</p>
+              <span className="absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg bg-primary ">{t('description.plan.personal.title')}</span>
+              <p className="my-6 text-4xl font-bold dark:text-accent">{t('description.plan.personal.price')}</p>
               <ul className="flex-1 space-y-2 mb-12">
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Up to 1 free store and branch</span>
+                  <span>{t('description.plan.personal.benefits.1')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>All-in-one product and inventory management</span>
+                  <span>{t('description.plan.personal.benefits.2')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Up to 200 product listings</span>
+                  <span>{t('description.plan.personal.benefits.3')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Basic analytics dashboard</span>
+                  <span>{t('description.plan.personal.benefits.4')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Community support</span>
+                  <span>{t('description.plan.personal.benefits.5')}</span>
                 </li>
 
               </ul>
-              <Button>SUBSCRIBE</Button>
+              <Button>{t('buttons.subscribe')}</Button>
             </div>
             <div className="relative flex flex-col items-center p-8 border-2 rounded-md border-primary bg-secondary">
-              <span className="absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg bg-primary ">Professional</span>
+              <span className="absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg bg-primary ">{t('description.plan.professional.title')}</span>
               <p className="flex items-center justify-center my-6 space-x-2 font-bold">
                 <span className="text-lg line-through dark:text-gray-700">&nbsp;$12&nbsp;</span>
                 <span className="pb-2 text-4xl">$10</span>
-                <span className="text-lg">/mo</span>
+                <span className="text-lg">{t('description.plan.professional.price')}</span>
               </p>
               <ul className="flex-1 space-y-2">
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>All features in FREE plan</span>
+                  <span>{t('description.plan.professional.benefits.1')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Up to 3 stores and 3 branches each store</span>
+                  <span>{t('description.plan.professional.benefits.2')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Advanced sales analytics</span>
+                  <span>{t('description.plan.professional.benefits.3')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Up to 1000 product listings</span>
+                  <span>{t('description.plan.professional.benefits.4')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Priority customer support</span>
+                  <span>{t('description.plan.professional.benefits.5')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Real-time delivery tracking and payment</span>
+                  <span>{t('description.plan.professional.benefits.6')}</span>
                 </li>
               </ul>
-              <Button>SUBSCRIBE</Button>
+              <Button>{t('buttons.subscribe')}</Button>
             </div>
             <div className="relative z-0 flex flex-col items-center p-8 border rounded-md ">
-              <span className="absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg bg-primary ">Enterprise</span>
+              <span className="absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg bg-primary ">{t('description.plan.enterprise.title')}</span>
               <p className="flex items-center justify-center my-6 space-x-2 font-bold">
                 <span className="text-lg line-through dark:text-gray-700">&nbsp;$40&nbsp;</span>
                 <span className="pb-2 text-4xl">$30</span>
-                <span className="text-lg">/mo</span>
+                <span className="text-lg">{t('description.plan.enterprise.price')}</span>
               </p>
               <ul className="flex-1 space-y-2">
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>All features in PROFESSIONAL plan</span>
+                  <span>{t('description.plan.enterprise.benefits.1')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>AI inventory assistant</span>
+                  <span>{t('description.plan.enterprise.benefits.2')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Up to 10 stores and 10 branches each store</span>
+                  <span>{t('description.plan.enterprise.benefits.3')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Enterprise-level analytics</span>
+                  <span>{t('description.plan.enterprise.benefits.4')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Dedicated account manager</span>
+                  <span>{t('description.plan.enterprise.benefits.5')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Personalized onboarding</span>
+                  <span>{t('description.plan.enterprise.benefits.6')}</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-accent">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                   </svg>
-                  <span>Unlimited product listings</span>
+                  <span>{t('description.plan.enterprise.benefits.7')}</span>
                 </li>
               </ul>
-              <Button>SUBSCRIBE</Button>
+              <Button>{t('buttons.subscribe')}</Button>
             </div>
           </div>
         </div>
@@ -280,43 +280,43 @@ export default function Home() {
       <footer className="p-6">
         <div className="container grid grid-cols-2 mx-auto gap-x-3 gap-y-8 sm:grid-cols-3 md:grid-cols-4 justify-items-center text-center">
           <div className="flex flex-col space-y-4">
-            <h2 className="font-medium">Getting started</h2>
+            <h2 className="font-medium">{t('footer.getting-started.title')}</h2>
             <div className="flex flex-col space-y-2 text-sm dark:text-gray-600">
-              <a rel="noopener noreferrer" href="#">Installation</a>
-              <a rel="noopener noreferrer" href="#">Release Notes</a>
-              <a rel="noopener noreferrer" href="#">Upgrade Guide</a>
-              <a rel="noopener noreferrer" href="#">Using with Preprocessors</a>
-              <a rel="noopener noreferrer" href="#">Optimizing for Production</a>
-              <a rel="noopener noreferrer" href="#">Browser Support</a>
-              <a rel="noopener noreferrer" href="#">IntelliSense</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.getting-started.links.1')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.getting-started.links.2')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.getting-started.links.3')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.getting-started.links.4')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.getting-started.links.5')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.getting-started.links.6')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.getting-started.links.7')}</a>
             </div>
           </div>
           <div className="flex flex-col space-y-4">
-            <h2 className="font-medium">Core Concepts</h2>
+            <h2 className="font-medium">{t('footer.core-concepts.title')}</h2>
             <div className="flex flex-col space-y-2 text-sm dark:text-gray-600">
-              <a rel="noopener noreferrer" href="#">Utility-First</a>
-              <a rel="noopener noreferrer" href="#">Responsive Design</a>
-              <a rel="noopener noreferrer" href="#">Hover, Focus, &amp; Other States</a>
-              <a rel="noopener noreferrer" href="#">Dark Mode</a>
-              <a rel="noopener noreferrer" href="#">Adding Base Styles</a>
-              <a rel="noopener noreferrer" href="#">Extracting Components</a>
-              <a rel="noopener noreferrer" href="#">Adding New Utilities</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.core-concepts.links.1')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.core-concepts.links.2')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.core-concepts.links.3')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.core-concepts.links.4')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.core-concepts.links.5')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.core-concepts.links.6')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.core-concepts.links.7')}</a>
             </div>
           </div>
           <div className="flex flex-col space-y-4">
-            <h2 className="font-medium">Customization</h2>
+            <h2 className="font-medium">{t('footer.customization.title')}</h2>
             <div className="flex flex-col space-y-2 text-sm dark:text-gray-600">
-              <a rel="noopener noreferrer" href="#">Configuration</a>
-              <a rel="noopener noreferrer" href="#">Theme Configuration</a>
-              <a rel="noopener noreferrer" href="#">Breakpoints</a>
-              <a rel="noopener noreferrer" href="#">Customizing Colors</a>
-              <a rel="noopener noreferrer" href="#">Customizing Spacing</a>
-              <a rel="noopener noreferrer" href="#">Configuring Variants</a>
-              <a rel="noopener noreferrer" href="#">Plugins</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.customization.links.1')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.customization.links.2')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.customization.links.3')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.customization.links.4')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.customization.links.5')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.customization.links.6')}</a>
+              <a rel="noopener noreferrer" href="#">{t('footer.customization.links.7')}</a>
             </div>
           </div>
           <div className="flex flex-col space-y-4">
-            <h2 className="font-medium">Community</h2>
+            <h2 className="font-medium">{t('footer.community.title')}</h2>
             <div className="flex flex-col space-y-2 text-sm dark:text-gray-600">
               <a rel="noopener noreferrer" href="#">GitHub</a>
               <a rel="noopener noreferrer" href="#">Discord</a>
@@ -326,7 +326,7 @@ export default function Home() {
           </div>
         </div>
         <div className="flex items-center justify-center px-6 pt-12 text-sm">
-          <span className="dark:text-gray-600">© Copyright 2025. All Rights Reserved.</span>
+          <span className="dark:text-gray-600">{t('footer.copyright')}</span>
         </div>
       </footer>
     </>

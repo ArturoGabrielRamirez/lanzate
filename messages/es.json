@@ -8,14 +8,120 @@
         },
         "description": {
             "slogan": "Con Lanzate, administrar tu negocio online es más simple que nunca. Enfocate en crecer mientras te damos el control total: gestioná productos, centralizá tu stock, procesá ventas, coordiná envíos y organizá a tu equipo de trabajo, todo desde tu celular o computadora. No necesitás invertir en infraestructura costosa para empezar a emprender. Simplificá tu gestión y mirá cómo tu negocio despega.",
-            "how-work": "Cómo funciona",
-            "how-work-description": "¿Cómo Lanzate hace crecer tu negocio?"
+            "how-it-work": {
+                "title": "Cómo funciona",
+                "description": "¿Cómo Lanzate hace crecer tu negocio?"
+            },
+            "centralize": {
+                "title": "Centraliza",
+                "description": "Gestioná todos tus productos y stock desde un panel intuitivo."
+            },
+            "sell": {
+                "title": "Vendé",
+                "title-2": "Crecé.",
+                "description": "Procesá ventas y seguí tu crecimiento con análisis en tiempo real."
+            },
+            "ship-easily": {
+                "title": "Envíe fácilmente",
+                "description": "Coordiná envíos y rastreá tus entregas con una interfaz intuitiva y sencilla."
+            },
+            "analytics": {
+                "orders": "Pedidos",
+                "new-customers": "Nuevos clientes",
+                "growth": "Crecimiento",
+                "bounce-rate": "Entradas sin interacción"
+            },
+            "plan": {
+                "title": "Precios",
+                "description": "Elegí el plan que se adapte a tu negocio y empieza a simplificar tu gestión online con Lánzate. Escala como creces, con todas las herramientas que necesitas en un solo lugar.",
+                "personal": {
+                    "title": "Personal",
+                    "price": "GRATIS",
+                    "benefits": {
+                        "1": "Hasta 1 tienda y 1 sucursal gratis",
+                        "2": "Gestión completa de productos y stock en un solo panel",
+                        "3": "Hasta 200 productos",
+                        "4": "Panel de análisis básico",
+                        "5": "Soporte de la comunidad"
+                    }
+                },
+                "professional": {
+                    "title": "Profesional",
+                    "price": "/mes",
+                    "benefits": {
+                        "1": "Todas las funciones del plan GRATIS",
+                        "2": "Hasta 3 tiendas y 3 sucursales por tienda",
+                        "3": "Análisis avanzado de ventas",
+                        "4": "Hasta 1000 productos",
+                        "5": "Soporte prioritario al cliente",
+                        "6": "Seguimiento de entregas y pagos en tiempo real"
+                    }
+                },
+                "enterprise": {
+                    "title": "Empresarial",
+                    "price": "/mes",
+                    "benefits": {
+                        "1": "Todas las funciones del plan PROFESIONAL",
+                        "2": "Asistente de inventario con IA",
+                        "3": "Hasta 10 tiendas y 10 sucursales por tienda",
+                        "4": "Análisis empresarial avanzado",
+                        "5": "Gerente de cuenta dedicado",
+                        "6": "Onboarding personalizado",
+                        "7": "Listados de productos ilimitados"
+                    }
+                }
+            }
         },
         "buttons": {
             "login": "Iniciar sesión",
             "sign-up": "Registrarse",
-            "get-started": "Empezar.",
-            "learn-more": "Conocer más."
+            "get-started": "Empezar",
+            "learn-more": "Conocer más",
+            "monthly": "Mensual",
+            "annually": "Anual",
+            "subscribe": "Suscribirse"
+        },
+        "footer": {
+            "getting-started": {
+                "title": "Como empezar",
+                "links": {
+                    "1": "Instalación",
+                    "2": "Notas de la versión",
+                    "3": "Guía de actualización",
+                    "4": "Usar con preprocesadores",
+                    "5": "Optimizando para producción",
+                    "6": "Compatibilidad con navegadores",
+                    "7": "Inteligencia de símbolos"
+                }
+            },
+            "core-concepts": {
+                "title": "Conceptos básicos",
+                "links": {
+                    "1": "Utilitario-Primero",
+                    "2": "Diseño responsivo",
+                    "3": "Hover, Focus y Otros Estados",
+                    "4": "Modo oscuro",
+                    "5": "Agregar estilos base",
+                    "6": "Extraer componentes",
+                    "7": "Agregar nuevas utilidades"
+                }
+            },
+            "customization": {
+                "title": "Personalización",
+                "links": {
+                    "1": "Configuración",
+                    "2": "Configuración del tema",
+                    "3": "Breakpoints",
+                    "4": "Personalizando colores",
+                    "5": "Personalizando espaciado",
+                    "6": "Configurando variantes",
+                    "7": "Plugins"
+                }
+            },
+            "community": {
+                "title": "Comunidad"
+            },
+            "copyright": "© Copyright 2025. Todos los derechos reservados."
         }
     }
 }

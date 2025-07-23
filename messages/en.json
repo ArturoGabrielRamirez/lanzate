@@ -8,14 +8,120 @@
         },
         "description": {
             "slogan": "With Lanzate, managing your online business is simpler than ever. Focus on growth while we give you full control: manage products, centralize inventory, process sales, coordinate shipping and organize your team, all from your phone or computer. No need to invest in expensive infrastructure to start your business. Simplify your operations and watch your business take off.",
-            "how-work": "How it works",
-            "how-work-description": "How Lanzate empowers your business?"
+            "how-it-work": {
+                "title": "How it works",
+                "description": "How Lanzate empowers your business?"
+            },
+            "centralize": {
+                "title": "Centralize",
+                "description": "Manage all your products and inventory from one intuitive dashboard."
+            },
+            "sell": {
+                "title": "Sell",
+                "title-2": "Grow.",
+                "description": "Process sales and track your growth with real-time analytics."
+            },
+            "ship-easily": {
+                "title": "Ship Easily",
+                "description": "Coordinate shipping and track your deliveries with a simple and intuitive interface."
+            },
+            "analytics": {
+                "orders": "Orders",
+                "new-customers": "New customers",
+                "growth": "Growth",
+                "bounce-rate": "Bounce rate"
+            },
+            "plan": {
+                "title": "Pricing",
+                "description": "Choose the plan that fits your business and start simplifying your online management with Lánzate. Scale as you grow, with all the tools you need in one place.",
+                "personal": {
+                    "title": "Personal",
+                    "price": "FREE",
+                    "benefits": {
+                        "1": "Up to 1 free store and branch",
+                        "2": "All-in-one product and inventory management",
+                        "3": "Up to 200 product listings",
+                        "4": "Basic analytics dashboard",
+                        "5": "Community support"
+                    }
+                },
+                "professional": {
+                    "title": "Professional",
+                    "price": "/mo",
+                    "benefits": {
+                        "1": "All features in FREE plan",
+                        "2": "Up to 3 stores and 3 branches each store",
+                        "3": "Advanced sales analytics",
+                        "4": "Up to 1000 product listings",
+                        "5": "Priority customer support",
+                        "6": "Real-time delivery tracking and payment"
+                    }
+                },
+                "enterprise": {
+                    "title": "Enterprise",
+                    "price": "/mo",
+                    "benefits": {
+                        "1": "All features in PROFESSIONAL plan",
+                        "2": "AI inventory assistant",
+                        "3": "Up to 10 stores and 10 branches each store",
+                        "4": "Enterprise-level analytics",
+                        "5": "Dedicated account manager",
+                        "6": "Personalized onboarding",
+                        "7": "Unlimited product listings"
+                    }
+                }
+            }
         },
         "buttons": {
             "login": "Login",
             "sign-up": "Sign up",
-            "get-started": "Get started.",
-            "learn-more": "Learn more."
+            "get-started": "Get started",
+            "learn-more": "Learn more",
+            "monthly": "Monthly",
+            "annually": "Annually",
+            "subscribe": "Subscribe"
+        },
+        "footer": {
+            "getting-started": {
+                "title": "Getting started",
+                "links": {
+                    "1": "Installation",
+                    "2": "Release Notes",
+                    "3": "Update Guide",
+                    "4": "Using with Preprocessors",
+                    "5": "Optimizing for Production",
+                    "6": "Browser Support",
+                    "7": "IntelliSense"
+                }
+            },
+            "core-concepts": {
+                "title": "Core concepts",
+                "links": {
+                    "1": "Utility-First",
+                    "2": "Responsive Design",
+                    "3": "Hover, Focus, &amp; Other States",
+                    "4": "Dark Mode",
+                    "5": "Adding Base Styles",
+                    "6": "Extracting Components",
+                    "7": "Adding New Utilities"
+                }
+            },
+            "customization": {
+                "title": "Customization",
+                "links": {
+                    "1": "Configuration",
+                    "2": "Theme Configuration",
+                    "3": "Breakpoints",
+                    "4": "Customizing Colors",
+                    "5": "Customizing Spacing",
+                    "6": "Configuring Variants",
+                    "7": "Plugins"
+                }
+            },
+            "community": {
+                "title": "Community"
+            },
+            "copyright": "© Copyright 2025. All Rights Reserved."
         }
     }
 }
