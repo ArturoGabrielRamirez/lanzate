@@ -7,12 +7,14 @@ import { cn } from "@/lib/utils"
 import { Order } from "@/prisma/generated/prisma"
 import { ColumnDef } from "@tanstack/react-table"
 import { Edit, Eye, MapPin, MoreHorizontal, Trash2, Truck } from "lucide-react"
+import Link from "next/link"
 
 type Props = {
     data: Order[]
+    slug: string
 }
 
-function OrdersTable({ data }: Props) {
+function OrdersTable({ data, slug }: Props) {
 
     const columns: ColumnDef<Order>[] = [
         {
@@ -86,6 +88,7 @@ function OrdersTable({ data }: Props) {
             accessorKey: "actions",
             cell: ({ row }) => {
                 const order = row.original
+
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -96,7 +99,12 @@ function OrdersTable({ data }: Props) {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">Actions</DropdownMenuLabel>
-                            <DropdownMenuItem><Eye className="w-4 h-4" />View details</DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Link href={`/stores/${slug}/orders/${order.id}`} className="flex items-center gap-2">
+                                    <Eye className="w-4 h-4" />
+                                    View details
+                                </Link>
+                            </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem><Edit className="w-4 h-4" />Change status</DropdownMenuItem>
                             <DropdownMenuItem><Trash2 className="w-4 h-4" />Cancel order</DropdownMenuItem>

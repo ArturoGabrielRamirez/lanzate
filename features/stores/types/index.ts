@@ -10,6 +10,7 @@ import { Props as TabClientContainerProps } from "./tab-client-container-type";
 import { Props as AccountTabProps } from "./account-tab-type";
 import { Props as BranchesTabProps } from "./branches-tab-type";
 import { Props as ProductsTabProps } from "./products-tab-type";
+import { OrderDetailPageProps } from "./order-detail-page-type";
 
 export type {
     StoreDetailsLayoutProps,
@@ -23,5 +24,6 @@ export type {
     TabClientContainerProps,
     AccountTabProps,
     BranchesTabProps,
-    ProductsTabProps
+    ProductsTabProps,
+    OrderDetailPageProps
 }

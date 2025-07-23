@@ -14,7 +14,7 @@ async function OrdersTab({ slug }: Props) {
 
     return (
         <>
-            <OrdersTable data={orders} />
+            <OrdersTable data={orders} slug={slug} />
         </>
     )
 }
