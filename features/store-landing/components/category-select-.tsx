@@ -4,6 +4,7 @@ import makeAnimated from 'react-select/animated';
 import { useState, useEffect } from "react";
 import { getCategories } from "../actions/getCategories";
 import { Label } from "@/components/ui/label";
+import { useTranslations } from "next-intl";
 
 const animatedComponents = makeAnimated();
 
@@ -16,6 +17,8 @@ type CategorySelectProps = {
 function CategorySelect({ onChange, defaultValue, withLabel = true }: CategorySelectProps) {
 
     const [categories, setCategories] = useState<{ label: string, value: number }[]>([])
+
+    const t = useTranslations("subdomain.categories");
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -33,7 +36,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true }: CategorySe
 
     return (
         <div className="flex flex-col gap-1 w-full">
-            {withLabel && <Label htmlFor="category">Category</Label>}
+            {withLabel && <Label htmlFor="category">{t("category")}</Label>}
             <CreatableSelect
                 className="w-full"
                 classNames={{

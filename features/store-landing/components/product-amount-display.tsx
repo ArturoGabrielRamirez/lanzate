@@ -3,10 +3,12 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useStore } from "./store-provider"
 import { useQueryState, parseAsInteger } from "nuqs"
+import { useTranslations } from "next-intl"
 
 function ProductAmountDisplay({ amount }: { amount: number }) {
     const { } = useStore()
     const [limit, setLimit] = useQueryState("limit", { shallow: false, clearOnDefault: true })
+    const t = useTranslations("subdomain.sidebar.limit")
 
     const handleLimitChange = (value: string) => {
         setLimit(value)
@@ -15,11 +17,11 @@ function ProductAmountDisplay({ amount }: { amount: number }) {
     return (
         <Select value={limit?.toString() || "10"} onValueChange={handleLimitChange}>
             <div className="flex items-center gap-2">
-                <span>Showing</span>
+                <span>{t("1")}</span>
                 <SelectTrigger>
                     <SelectValue placeholder="10" />
                 </SelectTrigger>
-                <span>of {amount} products</span>
+                <span>{t("2")} {amount} {amount > 1 ? t("3") : t("4")}</span>
             </div>
             <SelectContent>
                 <SelectItem value="5">5</SelectItem>

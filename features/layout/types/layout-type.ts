@@ -1,3 +1,10 @@
 import { ReactNode } from "react"
 
-export type Props = Readonly<{ children: ReactNode }>
+type RootLayoutProps = {
+    children: ReactNode;
+    params: Promise<{
+        locale: string;
+    }>;
+};
+
+export type Props = Readonly<RootLayoutProps>

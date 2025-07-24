@@ -4,10 +4,13 @@ import { getUserInfo } from "@/features/layout/actions/getUserInfo";
 import { Title } from "@/features/layout/components";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 export default async function AccountPage() {
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+
+    const t = await getTranslations("account");
 
     if (userError || !user) {
         return console.error(userMessage)
@@ -15,7 +18,7 @@ export default async function AccountPage() {
 
     return (
         <div className="p-4 grow flex flex-col">
-            <Title title="Account" />
+            <Title title={t("title")} />
             <section className="flex items-center gap-4">
                 <Card className="w-full">
                     <CardContent className="flex items-center gap-4 w-full">
@@ -28,12 +31,12 @@ export default async function AccountPage() {
                             <p className="text-xl font-bold">{user.email}</p>
                             <div>
                                 <p className="capitalize">
-                                    {user.Account[0].type.toLowerCase()} account
+                                    {user.Account[0].type.toLowerCase()} {t("title")} {/* fijarse si este es necesario o va texto plano */}
                                 </p>
                                 {user.Account[0].type === "FREE" && (
                                     <Button asChild size="sm">
                                         <Link href="/upgrade">
-                                            Upgrade Plan
+                                            {t("description.upgrade-plan")}
                                         </Link>
                                     </Button>
                                 )}
@@ -47,31 +50,31 @@ export default async function AccountPage() {
                 <Tabs defaultValue="account" className="grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4">
                     <TabsList className="w-full h-full items-start">
                         <div className="flex md:block w-full">
-                            <TabsTrigger value="account" className="w-full h-fit cursor-pointer py-3">Account Details</TabsTrigger>
-                            <TabsTrigger value="password" className="w-full h-fit cursor-pointer py-3">Membership</TabsTrigger>
+                            <TabsTrigger value="account" className="w-full h-fit cursor-pointer py-3">{t("description.account-details")}</TabsTrigger>
+                            <TabsTrigger value="password" className="w-full h-fit cursor-pointer py-3">{t("description.membership")}</TabsTrigger>
                         </div>
                     </TabsList>
                     <TabsContent value="account">
                         <Card>
                             <CardHeader>
-                                <CardTitle>Account Details</CardTitle>
+                                <CardTitle>{t("description.account-details")}</CardTitle>
                             </CardHeader>
                             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-12 w-fit">
                                 <div className="flex flex-col">
-                                    <p className="font-light text-sm">First Name</p>
+                                    <p className="font-light text-sm">{t("description.first-name")}</p>
                                     <p className="font-medium">{user.first_name || "No set"}</p>
                                 </div>
                                 <div className="flex flex-col">
-                                    <p className="font-light text-sm">Last Name</p>
+                                    <p className="font-light text-sm">{t("description.last-name")}</p>
                                     <p className="font-medium">{user.last_name || "No set"}</p>
                                 </div>
                                 <div className="flex flex-col">
-                                    <p className="font-light text-sm">Email</p>
+                                    <p className="font-light text-sm">{t("description.email")}</p>
                                     <p className="font-medium">{user.email}</p>
                                 </div>
                                 <div className="flex flex-col">
-                                    <p className="font-light text-sm">Password</p>
-                                    <Link href="/account/password" className="font-medium">Change Password</Link>
+                                    <p className="font-light text-sm">{t("description.password")}</p>
+                                    <Link href="/account/password" className="font-medium">{t("description.change-password")}</Link>
                                 </div>
                             </CardContent>
                         </Card>
@@ -79,16 +82,15 @@ export default async function AccountPage() {
                     <TabsContent value="password">
                         <Card>
                             <CardHeader>
-                                <CardTitle>Membership</CardTitle>
+                                <CardTitle>{t("description.membership")}</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                Currently not available
+                                {t("description.currently-not-available")}
                             </CardContent>
                         </Card>
                     </TabsContent>
                 </Tabs>
             </section>
-
         </div>
     );
 }

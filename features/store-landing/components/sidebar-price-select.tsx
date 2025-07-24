@@ -1,8 +1,11 @@
 "use client"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 
 function SidebarOrderBySelect() {
+
+    const t = useTranslations("subdomain.sidebar.order-by");
 
     const [sort, setSort] = useQueryState("sort", { shallow: false, clearOnDefault: true })
 
@@ -13,15 +16,15 @@ function SidebarOrderBySelect() {
     return (
         <Select defaultValue={sort || "price-asc"} onValueChange={handleChange}>
             <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a product" />
+                <SelectValue placeholder={t("select-a-product")} />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="name-asc">Name (A-Z)</SelectItem>
-                <SelectItem value="name-desc">Name (Z-A)</SelectItem>
-                <SelectItem value="price-asc">Price (Low-High)</SelectItem>
-                <SelectItem value="price-desc">Price (High-Low)</SelectItem>
-                <SelectItem value="created-asc">Oldest</SelectItem>
-                <SelectItem value="created-desc">Newest</SelectItem>
+                <SelectItem value="name-asc">{t("name-ascending")}</SelectItem>
+                <SelectItem value="name-desc">{t("name-descending")}</SelectItem>
+                <SelectItem value="price-asc">{t("price-ascending")}</SelectItem>
+                <SelectItem value="price-desc">{t("price-descending")}</SelectItem>
+                <SelectItem value="created-asc">{t("oldest")}</SelectItem>
+                <SelectItem value="created-desc">{t("newest")}</SelectItem>
             </SelectContent>
         </Select>
     )

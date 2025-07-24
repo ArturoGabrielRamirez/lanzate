@@ -1,0 +1,244 @@
+{
+    "account": {
+        "title": "Cuenta",
+        "description": {
+            "upgrade-plan": "Actualizar Plan",
+            "account-details": "Detalles de la Cuenta",
+            "membership": "Membresía",
+            "first-name": "Nombre",
+            "last-name": "Apellido",
+            "email": "Correo electrónico",
+            "password": "Contraseña",
+            "change-password": "Cambiar contraseña",
+            "currently-not-available": "Actualmente no disponible"
+        }
+    },
+    "auth": {
+        "login": "Iniciar sesión",
+        "signup": "Registrarse",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "buttons": {
+            "login": "Iniciar sesión",
+            "sign-up": "Registrarse",
+            "send-reset-link": "Enviar enlace de recuperación"
+        },
+        "check-email": {
+            "message-1": "Ya casi estamos, revisá tu correo electrónico. Deberías recibir un enlace de confirmación.",
+            "message-2": "Con entrar al enlace desde tu correo, podrás completar tu registro y validar tu cuenta."
+        },
+        "description": {
+            "or-login-with": "O iniciar sesión con"
+        },
+        "toast-message": {
+            "success-logged-in": "Has iniciado sesión con éxito",
+            "success-registered": "Has sido registrado con éxito",
+            "success-reset-password": "¡Enlace de recuperación enviado!",
+            "signing-in": "Iniciando sesión...",
+            "signing-up": "Registrándose...",
+            "reset-password": "Enviando enlace de recuperación..."
+        },
+        "reset-password": {
+            "title": "Restablecer contraseña",
+            "description": {
+                "forgot-password": "¿Olvidaste tu contraseña?",
+                "reset-password": "Restablece tu contraseña haciendo clic acá"
+            }
+        }
+    },
+    "cart": {
+        "title": "Carrito",
+        "description": {
+            "products": "PRODUCTOS EN EL CARRITO",
+            "coming-soon": "Próximamente",
+            "no-items": "No hay artículos en el carrito"
+        },
+        "buttons": {
+            "remove": "Vaciar Carrito",
+            "checkout": "Pagar"
+        },
+        "resume": {
+            "title": "Resumen del Carrito",
+            "quantity": "Cantidad",
+            "sub-total": "Subtotal",
+            "shipping": "Envío",
+            "discount": "Descuento",
+            "total": "Total",
+            "item": "artículo",
+            "items": "artículos"
+        },
+        "item": {
+            "item": "unidad",
+            "items": "unidades"
+        }
+    },
+    "error": {
+        "oops": "Uuy...no hay nada que ver acá",
+        "something-went-wrong": "Algo salió mal",
+        "go-back": "Volver a la página de inicio"
+    },
+    "home": {
+        "slogan": {
+            "1": "Vos",
+            "2": "soñá, ",
+            "3": "Lanzate lo hace",
+            "4": "posible."
+        },
+        "description": {
+            "slogan": "Con Lanzate, administrar tu negocio online es más simple que nunca. Enfocate en crecer mientras te damos el control total: gestioná productos, centralizá tu stock, procesá ventas, coordiná envíos y organizá a tu equipo de trabajo, todo desde tu celular o computadora. No necesitás invertir en infraestructura costosa para empezar a emprender. Simplificá tu gestión y mirá cómo tu negocio despega.",
+            "how-it-work": {
+                "title": "Cómo funciona",
+                "description": "¿Cómo Lanzate hace crecer tu negocio?"
+            },
+            "centralize": {
+                "title": "Centraliza",
+                "description": "Gestioná todos tus productos y stock desde un panel intuitivo."
+            },
+            "sell": {
+                "title": "Vendé",
+                "title-2": "Crecé.",
+                "description": "Procesá ventas y seguí tu crecimiento con análisis en tiempo real."
+            },
+            "ship-easily": {
+                "title": "Envíe fácilmente",
+                "description": "Coordiná envíos y rastreá tus entregas con una interfaz intuitiva y sencilla."
+            },
+            "analytics": {
+                "orders": "Pedidos",
+                "new-customers": "Nuevos clientes",
+                "growth": "Crecimiento",
+                "bounce-rate": "Entradas sin interacción"
+            },
+            "plan": {
+                "title": "Precios",
+                "description": "Elegí el plan que se adapte a tu negocio y empieza a simplificar tu gestión online con Lánzate. Escala como creces, con todas las herramientas que necesitas en un solo lugar.",
+                "personal": {
+                    "title": "Personal",
+                    "price": "GRATIS",
+                    "benefits": {
+                        "1": "Hasta 1 tienda y 1 sucursal gratis",
+                        "2": "Gestión completa de productos y stock en un solo panel",
+                        "3": "Hasta 200 productos",
+                        "4": "Panel de análisis básico",
+                        "5": "Soporte de la comunidad"
+                    }
+                },
+                "professional": {
+                    "title": "Profesional",
+                    "price": "/mes",
+                    "benefits": {
+                        "1": "Todas las funciones del plan GRATIS",
+                        "2": "Hasta 3 tiendas y 3 sucursales por tienda",
+                        "3": "Análisis avanzado de ventas",
+                        "4": "Hasta 1000 productos",
+                        "5": "Soporte prioritario al cliente",
+                        "6": "Seguimiento de entregas y pagos en tiempo real"
+                    }
+                },
+                "enterprise": {
+                    "title": "Empresarial",
+                    "price": "/mes",
+                    "benefits": {
+                        "1": "Todas las funciones del plan PROFESIONAL",
+                        "2": "Asistente de inventario con IA",
+                        "3": "Hasta 10 tiendas y 10 sucursales por tienda",
+                        "4": "Análisis empresarial avanzado",
+                        "5": "Gerente de cuenta dedicado",
+                        "6": "Onboarding personalizado",
+                        "7": "Listados de productos ilimitados"
+                    }
+                }
+            }
+        },
+        "buttons": {
+            "login": "Iniciar sesión",
+            "sign-up": "Registrarse",
+            "get-started": "Empezar",
+            "learn-more": "Conocer más",
+            "monthly": "Mensual",
+            "annually": "Anual",
+            "subscribe": "Suscribirse"
+        },
+        "footer": {
+            "getting-started": {
+                "title": "Como empezar",
+                "links": {
+                    "1": "Instalación",
+                    "2": "Notas de la versión",
+                    "3": "Guía de actualización",
+                    "4": "Usar con preprocesadores",
+                    "5": "Optimizando para producción",
+                    "6": "Compatibilidad con navegadores",
+                    "7": "Inteligencia de símbolos"
+                }
+            },
+            "core-concepts": {
+                "title": "Conceptos básicos",
+                "links": {
+                    "1": "Utilitario-Primero",
+                    "2": "Diseño responsivo",
+                    "3": "Hover, Focus y Otros Estados",
+                    "4": "Modo oscuro",
+                    "5": "Agregar estilos base",
+                    "6": "Extraer componentes",
+                    "7": "Agregar nuevas utilidades"
+                }
+            },
+            "customization": {
+                "title": "Personalización",
+                "links": {
+                    "1": "Configuración",
+                    "2": "Configuración del tema",
+                    "3": "Breakpoints",
+                    "4": "Personalizando colores",
+                    "5": "Personalizando espaciado",
+                    "6": "Configurando variantes",
+                    "7": "Plugins"
+                }
+            },
+            "community": {
+                "title": "Comunidad"
+            },
+            "copyright": "© Copyright 2025. Todos los derechos reservados."
+        }
+    },
+    "layout": {
+        "title": "Inicio"
+    },
+    "store": {
+        "store-not-found": "Tienda no encontrada",
+        "product-not-found": "Producto no encontrado"
+    },
+    "subdomain": {
+        "title": "Mis Productos",
+        "sidebar": {
+            "placeholder": {
+                "search": "Buscar"
+            },
+            "filters": {
+                "search": "Buscar",
+                "sort-by": "Ordenar por",
+                "categories": "Categorías",
+                "price-range": "Rango de precios"
+            },
+            "order-by": {
+                "select-a-product": "Seleccionar un producto",
+                "name-ascending": "Nombre (A-Z)",
+                "name-descending": "Nombre (Z-A)",
+                "price-ascending": "Precio (menor a mayor)",
+                "price-descending": "Precio (mayor a menor)",
+                "oldest": "Más antiguo",
+                "newest": "Más reciente"
+            },
+            "categories": {
+                "category": "Categoría"
+            },
+            "limit": {
+                "1": "Mostrar",
+                "2": "de",
+                "3": "productos",
+                "4": "producto"
+            }
+        }
+    }
+}
