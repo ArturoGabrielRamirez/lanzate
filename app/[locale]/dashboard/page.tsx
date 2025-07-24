@@ -4,10 +4,9 @@ import { getDashboardStores } from "@/features/dashboard/actions/getDashboardSto
 import { CreateProductForStoreButton } from "@/features/dashboard/components"
 import { Title } from "@/features/layout/components"
 import { CreateStoreButton, StoreCard } from "@/features/stores/components"
-import { ArrowRight, ChevronRight, Hand, Settings, Share, Share2, ShoppingCart, Store, Plus } from "lucide-react"
+import { ArrowRight, Hand, Settings, Share2, ShoppingCart, Store, Plus } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { Separator } from "@radix-ui/react-select"
 
 async function DashboardPage() {
 
@@ -24,6 +23,7 @@ async function DashboardPage() {
     }
 
     const hasStores = dashboardData.storeCount > 0
+    const hasProducts = dashboardData.productCount > 0
     
     return (
         <section className="p-4 flex flex-col max-md:pt-24">
@@ -89,7 +89,7 @@ async function DashboardPage() {
                     {/* Step 2: Create Product */}
                     <Card className={cn(
                         "transition-all duration-200",
-                        hasStores 
+                        hasStores && !hasProducts
                             ? "border-primary/20 shadow-md" 
                             : "opacity-40 border-muted cursor-not-allowed"
                     )}>
@@ -97,13 +97,13 @@ async function DashboardPage() {
                             <div className="grid grid-cols-[100px_1fr] gap-4">
                                 <div className={cn(
                                     "rounded-md flex items-center justify-center aspect-square",
-                                    hasStores 
+                                    hasStores && !hasProducts
                                         ? "bg-primary/10" 
                                         : "bg-muted"
                                 )}>
                                     <ShoppingCart className={cn(
                                         "size-8",
-                                        hasStores 
+                                        hasStores && !hasProducts
                                             ? "text-primary" 
                                             : "text-muted-foreground"
                                     )} />
@@ -112,7 +112,8 @@ async function DashboardPage() {
                                     <CardTitle className="flex items-center gap-2">
                                         <ArrowRight className="size-4" />
                                         <h2 className="font-normal text-sm">Step 2</h2>
-                                        {hasStores && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">Available</span>}
+                                        {hasProducts && <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">✓ Complete</span>}
+                                        {hasStores && !hasProducts && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">Available</span>}
                                     </CardTitle>
                                     <CardDescription className="font-bold text-2xl text-accent-foreground">
                                         Create a product
@@ -121,7 +122,7 @@ async function DashboardPage() {
                             </div>
                         </CardHeader>
                         <CardContent className={cn(
-                            hasStores 
+                            hasStores && !hasProducts
                                 ? "text-muted-foreground/50" 
                                 : "text-muted-foreground/30"
                         )}>
@@ -131,8 +132,13 @@ async function DashboardPage() {
                                     Complete Step 1 first to unlock this feature
                                 </div>
                             )}
+                            {hasProducts && (
+                                <div className="mt-2 text-xs text-green-600 bg-green-50 p-2 rounded">
+                                    You have {dashboardData.productCount} product{dashboardData.productCount > 1 ? 's' : ''} created
+                                </div>
+                            )}
                         </CardContent>
-                        {hasStores && (
+                        {hasStores && !hasProducts && (
                             <CardFooter>
                                 <CreateProductForStoreButton 
                                     userId={user.id} 
@@ -145,17 +151,30 @@ async function DashboardPage() {
                     {/* Step 3: Set up account */}
                     <Card className={cn(
                         "transition-all duration-200",
-                        "opacity-40 border-muted cursor-not-allowed"
+                        hasProducts
+                            ? "border-primary/20 shadow-md"
+                            : "opacity-40 border-muted cursor-not-allowed"
                     )}>
                         <CardHeader>
                             <div className="grid grid-cols-[100px_1fr] gap-4">
-                                <div className="bg-muted rounded-md flex items-center justify-center aspect-square">
-                                    <Settings className="size-8 text-muted-foreground" />
+                                <div className={cn(
+                                    "rounded-md flex items-center justify-center aspect-square",
+                                    hasProducts
+                                        ? "bg-primary/10"
+                                        : "bg-muted"
+                                )}>
+                                    <Settings className={cn(
+                                        "size-8",
+                                        hasProducts
+                                            ? "text-primary"
+                                            : "text-muted-foreground"
+                                    )} />
                                 </div>
                                 <div>
                                     <CardTitle className="flex items-center gap-2">
                                         <ArrowRight className="size-4" />
                                         <h2 className="font-normal text-sm">Step 3</h2>
+                                        {hasProducts && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">Available</span>}
                                     </CardTitle>
                                     <CardDescription className="font-bold text-2xl text-accent-foreground">
                                         Set up your account
@@ -163,12 +182,25 @@ async function DashboardPage() {
                                 </div>
                             </div>
                         </CardHeader>
-                        <CardContent className="text-muted-foreground/30">
+                        <CardContent className={cn(
+                            hasProducts
+                                ? "text-muted-foreground/50"
+                                : "text-muted-foreground/30"
+                        )}>
                             To finish setting up your account, choose whether your store offers delivery, set your delivery fee, and your payment options.
-                            <div className="mt-2 text-xs text-amber-600 bg-amber-50 p-2 rounded">
-                                Complete previous steps to unlock this feature
-                            </div>
+                            {!hasProducts && (
+                                <div className="mt-2 text-xs text-amber-600 bg-amber-50 p-2 rounded">
+                                    Complete previous steps to unlock this feature
+                                </div>
+                            )}
                         </CardContent>
+                        {hasProducts && (
+                            <CardFooter>
+                                <div className="w-full text-center text-sm text-muted-foreground">
+                                    Settings configuration coming soon...
+                                </div>
+                            </CardFooter>
+                        )}
                     </Card>
 
                     {/* Step 4: Share store */}
