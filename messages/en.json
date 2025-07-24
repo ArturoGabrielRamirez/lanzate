@@ -1,6 +1,59 @@
 {
-    "layout": {
-        "title": "Home"
+    "account": {
+        "title": "Account",
+        "description": {
+            "upgrade-plan": "Upgrade Plan",
+            "account-details": "Account Details",
+            "membership": "Membership",
+            "first-name": "First Name",
+            "last-name": "Last Name",
+            "email": "Email",
+            "password": "Password",
+            "change-password": "Change Password",
+            "currently-not-available": "Currently not available"
+        }
+    },
+    "auth": {
+        "check-email": {
+            "message-1": "Almost there, please check your email. You should receive a confirmation link.",
+            "message-2": "By clicking the link from your email, you can complete your registration and validate your account."
+        },
+        "description": {
+            "or-login-with": "Or login with"
+        },
+        "toast-message": {
+            "success-registered": "You have been registered successfully",
+            "signing-up": "Signing up..."
+        },
+        "login": "Log In",
+        "signup": "Sign Up",
+        "email": "Email",
+        "password": "Password",
+        "reset-password": {
+            "title": "Reset Password"
+        }
+    },
+    "cart": {
+        "title": "Cart",
+        "description": {
+            "products": "FEATURED PRODUCTS",
+            "coming-soon": "Coming soon",
+            "no-items": "No items in cart"
+        },
+        "buttons": {
+            "remove": "Empty Cart",
+            "checkout": "Checkout"
+        },
+        "resume": {
+            "title": "Cart Resume",
+            "quantity": "Quantity",
+            "sub-total": "Sub-total",
+            "shipping": "Shipping",
+            "discount": "Discount",
+            "total": "Total",
+            "item": "item",
+            "items": "items"
+        }
     },
     "home": {
         "slogan": {
@@ -127,35 +180,12 @@
             "copyright": "© Copyright 2025. All Rights Reserved."
         }
     },
-    "cart": {
-        "title": "Cart",
-        "description": {
-            "products": "FEATURED PRODUCTS",
-            "coming-soon": "Coming soon",
-            "no-items": "No items in cart"
-        },
-        "buttons": {
-            "remove": "Empty Cart",
-            "checkout": "Checkout"
-        },
-        "resume": {
-            "title": "Cart Resume",
-            "quantity": "Quantity",
-            "sub-total": "Sub-total",
-            "shipping": "Shipping",
-            "discount": "Discount",
-            "total": "Total",
-            "item": "item",
-            "items": "items"
-        }
+    "layout": {
+        "title": "Home"
     },
     "store": {
         "store-not-found": "Store not found",
         "product-not-found": "Product not found"
-    },
-    "auth": {
-        "login": "Log In",
-        "signup": "Sign Up"
     },
     "subdomain": {
         "title": "My Products",

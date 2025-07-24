@@ -1,6 +1,63 @@
 {
-    "layout": {
-        "title": "Inicio"
+    "account": {
+        "title": "Cuenta",
+        "description": {
+            "upgrade-plan": "Actualizar Plan",
+            "account-details": "Detalles de la Cuenta",
+            "membership": "Membresía",
+            "first-name": "Nombre",
+            "last-name": "Apellido",
+            "email": "Correo electrónico",
+            "password": "Contraseña",
+            "change-password": "Cambiar contraseña",
+            "currently-not-available": "Actualmente no disponible"
+        }
+    },
+    "auth": {
+        "check-email": {
+            "message-1": "Ya casi estamos, revisá tu correo electrónico. Deberías recibir un enlace de confirmación.",
+            "message-2": "Con entrar al enlace desde tu correo, podrás completar tu registro y validar tu cuenta."
+        },
+        "description": {
+            "or-login-with": "O iniciar sesión con"
+        },
+        "toast-message": {
+            "success-registered": "Has sido registrado con éxito",
+            "signing-up": "Registrándose..."
+        },
+        "login": "Iniciar sesión",
+        "signup": "Registrarse",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "reset-password": {
+            "title": "Restablecer contraseña"
+        }
+    },
+    "cart": {
+        "title": "Carrito",
+        "description": {
+            "products": "PRODUCTOS EN EL CARRITO",
+            "coming-soon": "Próximamente",
+            "no-items": "No hay artículos en el carrito"
+        },
+        "buttons": {
+            "remove": "Vaciar Carrito",
+            "checkout": "Pagar"
+        },
+        "resume": {
+            "title": "Resumen del Carrito",
+            "quantity": "Cantidad",
+            "sub-total": "Subtotal",
+            "shipping": "Envío",
+            "discount": "Descuento",
+            "total": "Total",
+            "item": "artículo",
+            "items": "artículos"
+        },
+        "item": {
+            "item": "unidad",
+            "items": "unidades"
+        }
     },
     "home": {
         "slogan": {
@@ -127,36 +184,12 @@
             "copyright": "© Copyright 2025. Todos los derechos reservados."
         }
     },
-    "cart": {
-        "title": "Carrito",
-        "description": {
-            "products": "PRODUCTOS EN EL CARRITO",
-            "coming-soon": "Próximamente",
-            "no-items": "No hay artículos en el carrito"
-        },
-        "buttons": {
-            "remove": "Vaciar Carrito",
-            "checkout": "Pagar"
-        },
-        "resume": {
-            "title": "Resumen del Carrito",
-            "quantity": "Cantidad",
-            "sub-total": "Subtotal",
-            "shipping": "Envío",
-            "discount": "Descuento",
-            "total": "Total",
-            "item": "artículo",
-            "items": "artículos"
-        },
-        "item": {
-            "item": "unidad",
-            "items": "unidades"
-        }
+    "layout": {
+        "title": "Inicio"
     },
-    "store": {},
-    "auth": {
-        "login": "Iniciar sesión",
-        "signup": "Registrarse"
+    "store": {
+        "store-not-found": "Tienda no encontrada",
+        "product-not-found": "Producto no encontrado"
     },
     "subdomain": {
         "title": "Mis Productos",
