@@ -1,5 +1,6 @@
+"use server"
 import { createServerSideClient } from "@/utils/supabase/server"
-import { AccountDropdown, NotificationsIcon, ThemeToggle } from "@/features/header/components"
+import { AccountDropdown, NotificationsIcon, ThemeToggle, MobileMenu } from "@/features/header/components"
 import Link from "next/link"
 import { Rocket } from "lucide-react"
 
@@ -14,8 +15,9 @@ async function Header() {
                 <Rocket className="text-primary" />
                 <h1>Lanzate</h1>
             </Link>
-            <nav className="flex items-center gap-4">
-
+            
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-4">
                 {!user && <Link href='/login' className='p-2 hover:underline hover:!text-primary'>Log In</Link>}
                 {!user && <Link href='/signup' className='p-2 hover:underline hover:text-primary'>Sign Up</Link>}
                 {user && <Link href='/stores' className='p-2 hover:underline hover:!text-primary'>Stores</Link>}
@@ -24,6 +26,9 @@ async function Header() {
                 {user && <NotificationsIcon />}
                 {user && <AccountDropdown />}
             </nav>
+
+            {/* Mobile Navigation */}
+            <MobileMenu user={user} />
         </header>
     )
 }

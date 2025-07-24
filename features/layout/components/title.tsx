@@ -1,5 +1,6 @@
 import { Home, ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import React from "react"
 
 type TitleProps = {
     className?: string
@@ -29,14 +30,14 @@ const Title = ({ title, breadcrumbs, className, canGoBack }: TitleProps) => {
                     </Link>
                     <span className="text-xl">/</span>
                     {breadcrumbs.map((breadcrumb, index) => (
-                        <>
-                            <Link key={index} href={breadcrumb.href} className="capitalize hover:text-primary">
+                        <React.Fragment key={index}>
+                            <Link href={breadcrumb.href} className="capitalize hover:text-primary">
                                 {breadcrumb.label}
                             </Link>
                             {index !== breadcrumbs.length - 1 && (
                                 <span className="text-xl">/</span>
                             )}
-                        </>
+                        </React.Fragment>
                     ))}
                 </div>
             )}
