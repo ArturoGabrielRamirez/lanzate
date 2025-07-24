@@ -1,4 +1,4 @@
-import { Product as PrismaProduct, Store, StoreBalance } from "@/prisma/generated/prisma";
+import { Product as PrismaProduct, Store, StoreBalance, StoreCustomization } from "@/prisma/generated/prisma";
 
 export type Product = PrismaProduct;
 
@@ -11,6 +11,7 @@ export type SubdomainData = {
 
 export type StoreWithProducts = Store & {
     products: Product[]
+    customization: StoreCustomization
 }
 
 export type GetStoreWithProductsReturn = {

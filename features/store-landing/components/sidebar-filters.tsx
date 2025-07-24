@@ -8,7 +8,7 @@ import SidebarPriceRange from "./sidebar-price-range";
 function SidebarFilters() {
     return (
         <div className="flex flex-col gap-4">
-            <Card className="w-full">
+            <Card className="w-full bg-accent">
                 <CardHeader>
                     <CardTitle>Search</CardTitle>
                 </CardHeader>
@@ -16,7 +16,7 @@ function SidebarFilters() {
                     <SidebarSearchInput />
                 </CardContent>
             </Card>
-            <Card className="w-full">
+            <Card className="w-full bg-accent">
                 <CardHeader>
                     <CardTitle>Sort by</CardTitle>
                 </CardHeader>
@@ -26,7 +26,7 @@ function SidebarFilters() {
                     </div>
                 </CardContent>
             </Card>
-            <Card className="w-full">
+            <Card className="w-full bg-accent">
                 <CardHeader>
                     <CardTitle>Category</CardTitle>
                 </CardHeader>
@@ -36,7 +36,7 @@ function SidebarFilters() {
                     </div>
                 </CardContent>
             </Card>
-            <Card className="w-full">
+            <Card className="w-full bg-accent">
                 <CardHeader>
                     <CardTitle>Price Range</CardTitle>
                 </CardHeader>
