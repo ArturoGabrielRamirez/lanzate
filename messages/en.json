@@ -14,6 +14,15 @@
         }
     },
     "auth": {
+        "login": "Log In",
+        "signup": "Sign Up",
+        "email": "Email",
+        "password": "Password",
+        "buttons": {
+            "login": "Log In",
+            "sign-up": "Sign Up",
+            "send-reset-link": "Send Reset Link"
+        },
         "check-email": {
             "message-1": "Almost there, please check your email. You should receive a confirmation link.",
             "message-2": "By clicking the link from your email, you can complete your registration and validate your account."
@@ -22,15 +31,19 @@
             "or-login-with": "Or login with"
         },
         "toast-message": {
+            "success-logged-in": "You have been logged in successfully",
             "success-registered": "You have been registered successfully",
-            "signing-up": "Signing up..."
+            "success-reset-password": "Reset link sent!",
+            "signing-in": "Signing in...",
+            "signing-up": "Signing up...",
+            "reset-password": "Sending reset link..."
         },
-        "login": "Log In",
-        "signup": "Sign Up",
-        "email": "Email",
-        "password": "Password",
         "reset-password": {
-            "title": "Reset Password"
+            "title": "Reset Password",
+            "description": {
+                "forgot-password": "Forgot password?",
+                "reset-password": "Reset your password clicking here"
+            }
         }
     },
     "cart": {
@@ -54,6 +67,11 @@
             "item": "item",
             "items": "items"
         }
+    },
+    "error": {
+        "oops": "Oops...nothing to see here",
+        "something-went-wrong": "Something went wrong",
+        "go-back": "Go back to home"
     },
     "home": {
         "slogan": {

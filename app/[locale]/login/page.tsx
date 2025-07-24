@@ -10,7 +10,7 @@ export default async function LoginPage() {
     
     return (
         <div className="p-4 grow flex flex-col">
-            <Title title='Log In' />
+            <Title title={t("login")} />
             <div className='flex flex-col lg:flex-row gap-4 w-full max-w-4xl mx-auto grow items-center'>
                 <div className='w-full lg:pr-10'>
                     <LoginForm />

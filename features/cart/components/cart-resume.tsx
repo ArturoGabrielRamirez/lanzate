@@ -12,7 +12,7 @@ function CartResume() {
     return (
         <Card className="flex-1 max-w-sm xl:max-w-md bg-accent text-accent-foreground w-full grow">
             <CardHeader>
-                <CardTitle className="text-lg font-bold">{t("resume.title")}</CardTitle>
+                <CardTitle className="text-lg font-bold">{t("title")}</CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="flex flex-col gap-3">

@@ -14,6 +14,15 @@
         }
     },
     "auth": {
+        "login": "Iniciar sesión",
+        "signup": "Registrarse",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "buttons": {
+            "login": "Iniciar sesión",
+            "sign-up": "Registrarse",
+            "send-reset-link": "Enviar enlace de recuperación"
+        },
         "check-email": {
             "message-1": "Ya casi estamos, revisá tu correo electrónico. Deberías recibir un enlace de confirmación.",
             "message-2": "Con entrar al enlace desde tu correo, podrás completar tu registro y validar tu cuenta."
@@ -22,15 +31,19 @@
             "or-login-with": "O iniciar sesión con"
         },
         "toast-message": {
+            "success-logged-in": "Has iniciado sesión con éxito",
             "success-registered": "Has sido registrado con éxito",
-            "signing-up": "Registrándose..."
+            "success-reset-password": "¡Enlace de recuperación enviado!",
+            "signing-in": "Iniciando sesión...",
+            "signing-up": "Registrándose...",
+            "reset-password": "Enviando enlace de recuperación..."
         },
-        "login": "Iniciar sesión",
-        "signup": "Registrarse",
-        "email": "Correo electrónico",
-        "password": "Contraseña",
         "reset-password": {
-            "title": "Restablecer contraseña"
+            "title": "Restablecer contraseña",
+            "description": {
+                "forgot-password": "¿Olvidaste tu contraseña?",
+                "reset-password": "Restablece tu contraseña haciendo clic acá"
+            }
         }
     },
     "cart": {
@@ -58,6 +71,11 @@
             "item": "unidad",
             "items": "unidades"
         }
+    },
+    "error": {
+        "oops": "Uuy...no hay nada que ver acá",
+        "something-went-wrong": "Algo salió mal",
+        "go-back": "Volver a la página de inicio"
     },
     "home": {
         "slogan": {
