@@ -5,7 +5,7 @@ import React from "react"
 
 type TitleProps = {
     className?: string
-    title: string
+    title: string | React.ReactNode
     breadcrumbs?: {
         label: string
         href: string
@@ -18,6 +18,11 @@ const Title = ({ title, breadcrumbs, className, canGoBack }: TitleProps) => {
     const t = useTranslations("layout");
     return (
         <div className={`flex flex-col gap-0 mb-6 ${className}`}>
+            <p className="text-muted-foreground/50">
+                {Intl.DateTimeFormat("en-US", {
+                    dateStyle: "full",
+                }).format(new Date())}
+            </p>
             <h2 className='text-3xl dark:text-white font-bold flex items-center gap-2'>
                 {/* {canGoBack && (
                     <Link href="/" className="capitalize hover:text-primary">
