@@ -24,7 +24,9 @@ async function TabLayout({ children, params }: TabLayoutProps) {
         <TabsContent value={tab} className="flex flex-col">
             <Card className="grow">
                 <CardHeader>
-                    <CardTitle className="flex items-center gap-2">{titles[tab as keyof typeof titles]}</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                        {titles[tab as keyof typeof titles]}
+                    </CardTitle>
                 </CardHeader>
                 <CardContent className="gap-4 flex flex-col grow">
                     {children}
