@@ -8,6 +8,7 @@ async function TabLayout({ children, params }: TabLayoutProps) {
     const { tab } = await params
 
     const titles = {
+        overview: "Overview",
         account: "Account Details",
         branches: "Branches",
         employees: "Employees",
@@ -31,4 +32,5 @@ async function TabLayout({ children, params }: TabLayoutProps) {
         </TabsContent>
     )
 }
+
 export default TabLayout

@@ -14,6 +14,7 @@ import OrdersTab from "./tabs/orders";
 import ProductsTab from "./tabs/products";
 import SettingsTab from "./tabs/settings";
 import HistoryTab from "./tabs/history";
+import Overview from "./tabs/overview";
 import ChangeOrderStatusButton from "./change-order-status-button";
 import CancelOrderButton from "./cancel-order-button";
 import OrdersTable from "./orders-table";
@@ -36,6 +37,7 @@ export {
     ProductsTab,
     SettingsTab,
     HistoryTab,
+    Overview,
     ChangeOrderStatusButton,
     CancelOrderButton,
     OrdersTable,

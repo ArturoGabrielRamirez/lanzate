@@ -50,6 +50,7 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                 <TabsClientContainer>
                     <TabsList className="w-full h-full items-start">
                         <div className="flex md:block w-full">
+                            <TabTriggerLink value="overview" text="Overview" slug={slug} />
                             <TabTriggerLink value="account" text="Store Details" slug={slug} />
                             <TabTriggerLink value="branches" text="Branches" slug={slug} />
                             <TabTriggerLink value="employees" text="Employees" slug={slug} />
