@@ -57,6 +57,7 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                             <TabTriggerLink value="orders" text="Orders" slug={slug} />
                             <TabTriggerLink value="settings" text="Settings" slug={slug} />
                             <TabTriggerLink value="analytics" text="Analytics" slug={slug} />
+                            <TabTriggerLink value="history" text="History" slug={slug} />
                         </div>
                     </TabsList>
                     {children}

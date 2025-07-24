@@ -13,9 +13,11 @@ import EmployeesTab from "./tabs/employees";
 import OrdersTab from "./tabs/orders";
 import ProductsTab from "./tabs/products";
 import SettingsTab from "./tabs/settings";
+import HistoryTab from "./tabs/history";
 import ChangeOrderStatusButton from "./change-order-status-button";
 import CancelOrderButton from "./cancel-order-button";
 import OrdersTable from "./orders-table";
+import HistoryTable from "./history-table";
 
 export {
     CreateStoreButton,
@@ -33,7 +35,9 @@ export {
     OrdersTab,
     ProductsTab,
     SettingsTab,
+    HistoryTab,
     ChangeOrderStatusButton,
     CancelOrderButton,
-    OrdersTable
+    OrdersTable,
+    HistoryTable
 }

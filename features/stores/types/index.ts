@@ -10,7 +10,9 @@ import { Props as TabClientContainerProps } from "./tab-client-container-type";
 import { Props as AccountTabProps } from "./account-tab-type";
 import { Props as BranchesTabProps } from "./branches-tab-type";
 import { Props as ProductsTabProps } from "./products-tab-type";
+import { Props as HistoryTabProps } from "./history-tab-type";
 import { OrderDetailPageProps } from "./order-detail-page-type";
+import { LogDetailPageProps } from "./log-detail-page-type";
 import { ChangeOrderStatusButtonProps, CancelOrderButtonProps, ChangeOrderStatusData } from "./change-order-status-type";
 
 export type {
@@ -26,7 +28,9 @@ export type {
     AccountTabProps,
     BranchesTabProps,
     ProductsTabProps,
+    HistoryTabProps,
     OrderDetailPageProps,
+    LogDetailPageProps,
     ChangeOrderStatusButtonProps,
     CancelOrderButtonProps,
     ChangeOrderStatusData
