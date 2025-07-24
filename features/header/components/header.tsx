@@ -20,7 +20,7 @@ async function Header() {
             <nav className="hidden md:flex items-center gap-4">
                 {!user && <Link href='/login' className='p-2 hover:underline hover:!text-primary'>Log In</Link>}
                 {!user && <Link href='/signup' className='p-2 hover:underline hover:text-primary'>Sign Up</Link>}
-                {user && <Link href='/stores' className='p-2 hover:underline hover:!text-primary'>Stores</Link>}
+                {/* {user && <Link href='/stores' className='p-2 hover:underline hover:!text-primary'>Stores</Link>} */}
                 <ThemeToggle />
 
                 {user && <NotificationsIcon />}
