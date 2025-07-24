@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 import { getOverviewData } from "../actions/get-overview-data"
+import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
 import { OverviewTabProps } from "../types"
 import {
     SalesOverviewWidget,
@@ -12,13 +13,29 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 async function OverviewTab({ slug, userId }: OverviewTabProps) {
 
-    const { payload: data, error, message } = await getOverviewData(slug)
+    const [
+        { payload: data, error, message },
+        { payload: store, error: storeError }
+    ] = await Promise.all([
+        getOverviewData(slug),
+        getStoresFromSlug(slug)
+    ])
 
     if (error || !data) {
         return (
             <div className="text-center p-8">
                 <p className="text-muted-foreground">
                     {message || "Error al cargar datos del overview"}
+                </p>
+            </div>
+        )
+    }
+
+    if (storeError || !store) {
+        return (
+            <div className="text-center p-8">
+                <p className="text-muted-foreground">
+                    Error al cargar información de la tienda
                 </p>
             </div>
         )
@@ -31,7 +48,7 @@ async function OverviewTab({ slug, userId }: OverviewTabProps) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-6">
                     {/* Quick Actions Bar */}
-                    <QuickActionsBar slug={slug} />
+                    <QuickActionsBar slug={slug} storeId={store.id} userId={userId} />
                     <TopProductsWidget data={data.topProducts} />
                 </div>
                 <div className="lg:col-span-1">
