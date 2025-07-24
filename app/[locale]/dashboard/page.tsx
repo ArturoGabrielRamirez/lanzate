@@ -191,9 +191,9 @@ async function DashboardPage() {
                         </CardContent>
                     </Card>
                 </div>
-                <div className="h-px bg-muted-foreground/20 my-8" />
+                <div className="h-px bg-muted-foreground/20 my-4" />
                 {dashboardData.storeCount > 0 && (
-                    <div className="mt-8">
+                    <div className="">
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="text-2xl font-bold">Your Stores ({dashboardData.storeCount})</h2>
                             <Link
