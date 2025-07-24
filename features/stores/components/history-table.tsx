@@ -35,13 +35,13 @@ type Props = {
 function HistoryTable({ data, slug }: Props) {
 
     const formatDate = (dateString: string | Date) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
+        return Intl.DateTimeFormat('en-US', {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
             hour: '2-digit',
-            minute: '2-digit'
-        })
+            minute: '2-digit',
+        }).format(new Date(dateString))
     }
 
     const getActionColor = (action: string) => {
