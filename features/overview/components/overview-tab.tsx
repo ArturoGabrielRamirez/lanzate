@@ -26,26 +26,26 @@ async function OverviewTab({ slug, userId }: OverviewTabProps) {
 
     return (
         <div className="space-y-6">
-            {/* Quick Actions Bar */}
-            <QuickActionsBar slug={slug} />
+
+            {/* Second Row - Charts and Lists */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-6">
+                    {/* Quick Actions Bar */}
+                    <QuickActionsBar slug={slug} />
+                    <TopProductsWidget data={data.topProducts} />
+                </div>
+                <div className="lg:col-span-1">
+                    <Suspense fallback={<ChartSkeleton />}>
+                        <SalesByMonthWidget data={data.salesByMonth} />
+                    </Suspense>
+                </div>
+            </div>
             {/* Top Row - Main Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <SalesOverviewWidget data={data.salesOverview} />
                 <ProductStoreCountWidget data={data.productStoreCount} />
             </div>
 
-            {/* Second Row - Charts and Lists */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="lg:col-span-1">
-                    <Suspense fallback={<ChartSkeleton />}>
-                        <SalesByMonthWidget data={data.salesByMonth} />
-                    </Suspense>
-                </div>
-                
-                <div className="lg:col-span-1">
-                    <TopProductsWidget data={data.topProducts} />
-                </div>
-            </div>
 
         </div>
     )

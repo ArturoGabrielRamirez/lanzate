@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Plus, Package, ShoppingCart, Users, Settings } from "lucide-react"
 import Link from "next/link"
 
@@ -43,7 +43,13 @@ function QuickActionsBar({ slug }: Props) {
     ]
 
     return (
-        <Card>
+        <Card className="grow hover:bg-accent transition-colors duration-200">
+            <CardHeader>
+                <CardTitle className="font-bold text-2xl">Welcome!</CardTitle>
+                <CardDescription>
+                    Here you can find the most important actions for your store together with some quick links to get you started.
+                </CardDescription>
+            </CardHeader>
             <CardContent className="p-6">
                 <div className="flex flex-col space-y-4">
                     <h3 className="text-lg font-semibold">Acciones Rápidas</h3>

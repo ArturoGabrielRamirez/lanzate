@@ -17,7 +17,7 @@ function TopProductsWidget({ data }: Props) {
     }
 
     return (
-        <Card>
+        <Card className="grow hover:bg-accent transition-colors duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                     Productos Más Vendidos
