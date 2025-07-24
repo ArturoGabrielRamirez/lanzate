@@ -27,7 +27,7 @@ async function StoresPage() {
     const canCreate = await canCreateStore(user.id)
 
     return (
-        <div className="p-4">
+        <div className="p-4 max-md:pt-24 max-md:pb-12">
             <Title title="Stores" breadcrumbs={[
                 {
                     label: "Stores",
