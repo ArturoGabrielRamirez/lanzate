@@ -14,6 +14,7 @@ import { Props as HistoryTabProps } from "./history-tab-type";
 import { OrderDetailPageProps } from "./order-detail-page-type";
 import { LogDetailPageProps } from "./log-detail-page-type";
 import { ChangeOrderStatusButtonProps, CancelOrderButtonProps, ChangeOrderStatusData } from "./change-order-status-type";
+import { Props as SettingsTabProps } from "./settings-tab-type";
 
 export type {
     StoreDetailsLayoutProps,
@@ -33,5 +34,6 @@ export type {
     LogDetailPageProps,
     ChangeOrderStatusButtonProps,
     CancelOrderButtonProps,
-    ChangeOrderStatusData
+    ChangeOrderStatusData,
+    SettingsTabProps
 }

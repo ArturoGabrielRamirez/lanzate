@@ -14,6 +14,7 @@ export async function getStoresFromSlug(slug: string): Promise<GetStoresFromSlug
 
     try {
         const { payload: store, error, message } = await selectStoreBySlug(slug)
+        console.log("🚀 ~ getStoresFromSlug ~ message:", message)
 
         if (error) throw new Error(message)
 
