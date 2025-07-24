@@ -88,6 +88,21 @@ export type ActionLog = $Result.DefaultSelection<Prisma.$ActionLogPayload>
  * 
  */
 export type Employee = $Result.DefaultSelection<Prisma.$EmployeePayload>
+/**
+ * Model StoreCustomization
+ * 
+ */
+export type StoreCustomization = $Result.DefaultSelection<Prisma.$StoreCustomizationPayload>
+/**
+ * Model StoreSectionConfig
+ * 
+ */
+export type StoreSectionConfig = $Result.DefaultSelection<Prisma.$StoreSectionConfigPayload>
+/**
+ * Model StoreWidgetConfig
+ * 
+ */
+export type StoreWidgetConfig = $Result.DefaultSelection<Prisma.$StoreWidgetConfigPayload>
 
 /**
  * Enums
@@ -177,6 +192,103 @@ export const EmployeeRole: {
 
 export type EmployeeRole = (typeof EmployeeRole)[keyof typeof EmployeeRole]
 
+
+export const HeaderPosition: {
+  TOP: 'TOP',
+  FIXED_TOP: 'FIXED_TOP',
+  STICKY: 'STICKY'
+};
+
+export type HeaderPosition = (typeof HeaderPosition)[keyof typeof HeaderPosition]
+
+
+export const HeaderStyle: {
+  MODERN: 'MODERN',
+  CLASSIC: 'CLASSIC',
+  MINIMAL: 'MINIMAL',
+  BOLD: 'BOLD'
+};
+
+export type HeaderStyle = (typeof HeaderStyle)[keyof typeof HeaderStyle]
+
+
+export const LayoutStyle: {
+  MODERN: 'MODERN',
+  CLASSIC: 'CLASSIC',
+  MINIMAL: 'MINIMAL',
+  GRID: 'GRID',
+  MAGAZINE: 'MAGAZINE'
+};
+
+export type LayoutStyle = (typeof LayoutStyle)[keyof typeof LayoutStyle]
+
+
+export const ProductCardStyle: {
+  MODERN: 'MODERN',
+  CLASSIC: 'CLASSIC',
+  MINIMAL: 'MINIMAL',
+  DETAILED: 'DETAILED',
+  COMPACT: 'COMPACT'
+};
+
+export type ProductCardStyle = (typeof ProductCardStyle)[keyof typeof ProductCardStyle]
+
+
+export const SectionType: {
+  HERO: 'HERO',
+  FEATURED_PRODUCTS: 'FEATURED_PRODUCTS',
+  CATEGORIES: 'CATEGORIES',
+  ABOUT: 'ABOUT',
+  TESTIMONIALS: 'TESTIMONIALS',
+  NEWSLETTER: 'NEWSLETTER',
+  CONTACT: 'CONTACT',
+  CUSTOM_HTML: 'CUSTOM_HTML',
+  PRODUCT_GRID: 'PRODUCT_GRID',
+  BANNER: 'BANNER',
+  VIDEO: 'VIDEO',
+  GALLERY: 'GALLERY',
+  FAQ: 'FAQ',
+  BLOG_POSTS: 'BLOG_POSTS',
+  SOCIAL_FEED: 'SOCIAL_FEED'
+};
+
+export type SectionType = (typeof SectionType)[keyof typeof SectionType]
+
+
+export const WidgetType: {
+  FEATURED_PRODUCTS: 'FEATURED_PRODUCTS',
+  RECENT_PRODUCTS: 'RECENT_PRODUCTS',
+  POPULAR_PRODUCTS: 'POPULAR_PRODUCTS',
+  CATEGORIES: 'CATEGORIES',
+  SEARCH: 'SEARCH',
+  CART_SUMMARY: 'CART_SUMMARY',
+  USER_MENU: 'USER_MENU',
+  SOCIAL_LINKS: 'SOCIAL_LINKS',
+  CONTACT_INFO: 'CONTACT_INFO',
+  NEWSLETTER_SIGNUP: 'NEWSLETTER_SIGNUP',
+  RECENT_ORDERS: 'RECENT_ORDERS',
+  TESTIMONIALS: 'TESTIMONIALS',
+  CUSTOM_HTML: 'CUSTOM_HTML',
+  WEATHER: 'WEATHER',
+  CLOCK: 'CLOCK',
+  ANNOUNCEMENTS: 'ANNOUNCEMENTS'
+};
+
+export type WidgetType = (typeof WidgetType)[keyof typeof WidgetType]
+
+
+export const WidgetPosition: {
+  HEADER: 'HEADER',
+  SIDEBAR: 'SIDEBAR',
+  FOOTER: 'FOOTER',
+  FLOATING: 'FLOATING',
+  MODAL: 'MODAL',
+  BANNER_TOP: 'BANNER_TOP',
+  BANNER_BOTTOM: 'BANNER_BOTTOM'
+};
+
+export type WidgetPosition = (typeof WidgetPosition)[keyof typeof WidgetPosition]
+
 }
 
 export type AccountType = $Enums.AccountType
@@ -206,6 +318,34 @@ export const EntityType: typeof $Enums.EntityType
 export type EmployeeRole = $Enums.EmployeeRole
 
 export const EmployeeRole: typeof $Enums.EmployeeRole
+
+export type HeaderPosition = $Enums.HeaderPosition
+
+export const HeaderPosition: typeof $Enums.HeaderPosition
+
+export type HeaderStyle = $Enums.HeaderStyle
+
+export const HeaderStyle: typeof $Enums.HeaderStyle
+
+export type LayoutStyle = $Enums.LayoutStyle
+
+export const LayoutStyle: typeof $Enums.LayoutStyle
+
+export type ProductCardStyle = $Enums.ProductCardStyle
+
+export const ProductCardStyle: typeof $Enums.ProductCardStyle
+
+export type SectionType = $Enums.SectionType
+
+export const SectionType: typeof $Enums.SectionType
+
+export type WidgetType = $Enums.WidgetType
+
+export const WidgetType: typeof $Enums.WidgetType
+
+export type WidgetPosition = $Enums.WidgetPosition
+
+export const WidgetPosition: typeof $Enums.WidgetPosition
 
 /**
  * ##  Prisma Client ʲˢ
@@ -481,6 +621,36 @@ export class PrismaClient<
     * ```
     */
   get employee(): Prisma.EmployeeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.storeCustomization`: Exposes CRUD operations for the **StoreCustomization** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StoreCustomizations
+    * const storeCustomizations = await prisma.storeCustomization.findMany()
+    * ```
+    */
+  get storeCustomization(): Prisma.StoreCustomizationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.storeSectionConfig`: Exposes CRUD operations for the **StoreSectionConfig** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StoreSectionConfigs
+    * const storeSectionConfigs = await prisma.storeSectionConfig.findMany()
+    * ```
+    */
+  get storeSectionConfig(): Prisma.StoreSectionConfigDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.storeWidgetConfig`: Exposes CRUD operations for the **StoreWidgetConfig** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StoreWidgetConfigs
+    * const storeWidgetConfigs = await prisma.storeWidgetConfig.findMany()
+    * ```
+    */
+  get storeWidgetConfig(): Prisma.StoreWidgetConfigDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -935,7 +1105,10 @@ export namespace Prisma {
     StoreBalance: 'StoreBalance',
     Transaction: 'Transaction',
     ActionLog: 'ActionLog',
-    Employee: 'Employee'
+    Employee: 'Employee',
+    StoreCustomization: 'StoreCustomization',
+    StoreSectionConfig: 'StoreSectionConfig',
+    StoreWidgetConfig: 'StoreWidgetConfig'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -954,7 +1127,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "notification" | "store" | "account" | "product" | "branch" | "productStock" | "category" | "order" | "orderItem" | "orderPayment" | "storeBalance" | "transaction" | "actionLog" | "employee"
+      modelProps: "user" | "notification" | "store" | "account" | "product" | "branch" | "productStock" | "category" | "order" | "orderItem" | "orderPayment" | "storeBalance" | "transaction" | "actionLog" | "employee" | "storeCustomization" | "storeSectionConfig" | "storeWidgetConfig"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2068,6 +2241,228 @@ export namespace Prisma {
           }
         }
       }
+      StoreCustomization: {
+        payload: Prisma.$StoreCustomizationPayload<ExtArgs>
+        fields: Prisma.StoreCustomizationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StoreCustomizationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreCustomizationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StoreCustomizationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreCustomizationPayload>
+          }
+          findFirst: {
+            args: Prisma.StoreCustomizationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreCustomizationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StoreCustomizationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreCustomizationPayload>
+          }
+          findMany: {
+            args: Prisma.StoreCustomizationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreCustomizationPayload>[]
+          }
+          create: {
+            args: Prisma.StoreCustomizationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreCustomizationPayload>
+          }
+          createMany: {
+            args: Prisma.StoreCustomizationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StoreCustomizationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreCustomizationPayload>[]
+          }
+          delete: {
+            args: Prisma.StoreCustomizationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreCustomizationPayload>
+          }
+          update: {
+            args: Prisma.StoreCustomizationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreCustomizationPayload>
+          }
+          deleteMany: {
+            args: Prisma.StoreCustomizationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StoreCustomizationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StoreCustomizationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreCustomizationPayload>[]
+          }
+          upsert: {
+            args: Prisma.StoreCustomizationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreCustomizationPayload>
+          }
+          aggregate: {
+            args: Prisma.StoreCustomizationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStoreCustomization>
+          }
+          groupBy: {
+            args: Prisma.StoreCustomizationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StoreCustomizationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StoreCustomizationCountArgs<ExtArgs>
+            result: $Utils.Optional<StoreCustomizationCountAggregateOutputType> | number
+          }
+        }
+      }
+      StoreSectionConfig: {
+        payload: Prisma.$StoreSectionConfigPayload<ExtArgs>
+        fields: Prisma.StoreSectionConfigFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StoreSectionConfigFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreSectionConfigPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StoreSectionConfigFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreSectionConfigPayload>
+          }
+          findFirst: {
+            args: Prisma.StoreSectionConfigFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreSectionConfigPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StoreSectionConfigFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreSectionConfigPayload>
+          }
+          findMany: {
+            args: Prisma.StoreSectionConfigFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreSectionConfigPayload>[]
+          }
+          create: {
+            args: Prisma.StoreSectionConfigCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreSectionConfigPayload>
+          }
+          createMany: {
+            args: Prisma.StoreSectionConfigCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StoreSectionConfigCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreSectionConfigPayload>[]
+          }
+          delete: {
+            args: Prisma.StoreSectionConfigDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreSectionConfigPayload>
+          }
+          update: {
+            args: Prisma.StoreSectionConfigUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreSectionConfigPayload>
+          }
+          deleteMany: {
+            args: Prisma.StoreSectionConfigDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StoreSectionConfigUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StoreSectionConfigUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreSectionConfigPayload>[]
+          }
+          upsert: {
+            args: Prisma.StoreSectionConfigUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreSectionConfigPayload>
+          }
+          aggregate: {
+            args: Prisma.StoreSectionConfigAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStoreSectionConfig>
+          }
+          groupBy: {
+            args: Prisma.StoreSectionConfigGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StoreSectionConfigGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StoreSectionConfigCountArgs<ExtArgs>
+            result: $Utils.Optional<StoreSectionConfigCountAggregateOutputType> | number
+          }
+        }
+      }
+      StoreWidgetConfig: {
+        payload: Prisma.$StoreWidgetConfigPayload<ExtArgs>
+        fields: Prisma.StoreWidgetConfigFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StoreWidgetConfigFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreWidgetConfigPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StoreWidgetConfigFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreWidgetConfigPayload>
+          }
+          findFirst: {
+            args: Prisma.StoreWidgetConfigFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreWidgetConfigPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StoreWidgetConfigFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreWidgetConfigPayload>
+          }
+          findMany: {
+            args: Prisma.StoreWidgetConfigFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreWidgetConfigPayload>[]
+          }
+          create: {
+            args: Prisma.StoreWidgetConfigCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreWidgetConfigPayload>
+          }
+          createMany: {
+            args: Prisma.StoreWidgetConfigCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StoreWidgetConfigCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreWidgetConfigPayload>[]
+          }
+          delete: {
+            args: Prisma.StoreWidgetConfigDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreWidgetConfigPayload>
+          }
+          update: {
+            args: Prisma.StoreWidgetConfigUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreWidgetConfigPayload>
+          }
+          deleteMany: {
+            args: Prisma.StoreWidgetConfigDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StoreWidgetConfigUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StoreWidgetConfigUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreWidgetConfigPayload>[]
+          }
+          upsert: {
+            args: Prisma.StoreWidgetConfigUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreWidgetConfigPayload>
+          }
+          aggregate: {
+            args: Prisma.StoreWidgetConfigAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStoreWidgetConfig>
+          }
+          groupBy: {
+            args: Prisma.StoreWidgetConfigGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StoreWidgetConfigGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StoreWidgetConfigCountArgs<ExtArgs>
+            result: $Utils.Optional<StoreWidgetConfigCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2167,6 +2562,9 @@ export namespace Prisma {
     transaction?: TransactionOmit
     actionLog?: ActionLogOmit
     employee?: EmployeeOmit
+    storeCustomization?: StoreCustomizationOmit
+    storeSectionConfig?: StoreSectionConfigOmit
+    storeWidgetConfig?: StoreWidgetConfigOmit
   }
 
   /* Types for Logging */
@@ -2614,6 +3012,46 @@ export namespace Prisma {
    */
   export type EmployeeCountOutputTypeCountAction_logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ActionLogWhereInput
+  }
+
+
+  /**
+   * Count Type StoreCustomizationCountOutputType
+   */
+
+  export type StoreCustomizationCountOutputType = {
+    sections: number
+    widgets: number
+  }
+
+  export type StoreCustomizationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sections?: boolean | StoreCustomizationCountOutputTypeCountSectionsArgs
+    widgets?: boolean | StoreCustomizationCountOutputTypeCountWidgetsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * StoreCustomizationCountOutputType without action
+   */
+  export type StoreCustomizationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomizationCountOutputType
+     */
+    select?: StoreCustomizationCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * StoreCustomizationCountOutputType without action
+   */
+  export type StoreCustomizationCountOutputTypeCountSectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StoreSectionConfigWhereInput
+  }
+
+  /**
+   * StoreCustomizationCountOutputType without action
+   */
+  export type StoreCustomizationCountOutputTypeCountWidgetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StoreWidgetConfigWhereInput
   }
 
 
@@ -5329,6 +5767,7 @@ export namespace Prisma {
     balance?: boolean | Store$balanceArgs<ExtArgs>
     transactions?: boolean | Store$transactionsArgs<ExtArgs>
     employees?: boolean | Store$employeesArgs<ExtArgs>
+    customization?: boolean | Store$customizationArgs<ExtArgs>
     _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["store"]>
 
@@ -5382,6 +5821,7 @@ export namespace Prisma {
     balance?: boolean | Store$balanceArgs<ExtArgs>
     transactions?: boolean | Store$transactionsArgs<ExtArgs>
     employees?: boolean | Store$employeesArgs<ExtArgs>
+    customization?: boolean | Store$customizationArgs<ExtArgs>
     _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StoreIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5401,6 +5841,7 @@ export namespace Prisma {
       balance: Prisma.$StoreBalancePayload<ExtArgs> | null
       transactions: Prisma.$TransactionPayload<ExtArgs>[]
       employees: Prisma.$EmployeePayload<ExtArgs>[]
+      customization: Prisma.$StoreCustomizationPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5814,6 +6255,7 @@ export namespace Prisma {
     balance<T extends Store$balanceArgs<ExtArgs> = {}>(args?: Subset<T, Store$balanceArgs<ExtArgs>>): Prisma__StoreBalanceClient<$Result.GetResult<Prisma.$StoreBalancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     transactions<T extends Store$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Store$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     employees<T extends Store$employeesArgs<ExtArgs> = {}>(args?: Subset<T, Store$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    customization<T extends Store$customizationArgs<ExtArgs> = {}>(args?: Subset<T, Store$customizationArgs<ExtArgs>>): Prisma__StoreCustomizationClient<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6385,6 +6827,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EmployeeScalarFieldEnum | EmployeeScalarFieldEnum[]
+  }
+
+  /**
+   * Store.customization
+   */
+  export type Store$customizationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationInclude<ExtArgs> | null
+    where?: StoreCustomizationWhereInput
   }
 
   /**
@@ -20926,6 +21387,4459 @@ export namespace Prisma {
 
 
   /**
+   * Model StoreCustomization
+   */
+
+  export type AggregateStoreCustomization = {
+    _count: StoreCustomizationCountAggregateOutputType | null
+    _avg: StoreCustomizationAvgAggregateOutputType | null
+    _sum: StoreCustomizationSumAggregateOutputType | null
+    _min: StoreCustomizationMinAggregateOutputType | null
+    _max: StoreCustomizationMaxAggregateOutputType | null
+  }
+
+  export type StoreCustomizationAvgAggregateOutputType = {
+    id: number | null
+    store_id: number | null
+    products_per_page: number | null
+  }
+
+  export type StoreCustomizationSumAggregateOutputType = {
+    id: number | null
+    store_id: number | null
+    products_per_page: number | null
+  }
+
+  export type StoreCustomizationMinAggregateOutputType = {
+    id: number | null
+    store_id: number | null
+    primary_color: string | null
+    secondary_color: string | null
+    accent_color: string | null
+    background_color: string | null
+    text_color: string | null
+    secondary_text_color: string | null
+    border_color: string | null
+    success_color: string | null
+    warning_color: string | null
+    error_color: string | null
+    primary_font: string | null
+    secondary_font: string | null
+    font_size_base: string | null
+    show_header: boolean | null
+    show_logo: boolean | null
+    show_search_bar: boolean | null
+    show_navigation_menu: boolean | null
+    show_cart_icon: boolean | null
+    show_user_account: boolean | null
+    header_position: $Enums.HeaderPosition | null
+    header_style: $Enums.HeaderStyle | null
+    show_footer: boolean | null
+    footer_text: string | null
+    show_social_links: boolean | null
+    show_contact_info: boolean | null
+    show_store_info: boolean | null
+    layout_style: $Enums.LayoutStyle | null
+    container_max_width: string | null
+    border_radius: string | null
+    spacing_unit: string | null
+    show_hero_section: boolean | null
+    show_featured_products: boolean | null
+    show_categories: boolean | null
+    show_testimonials: boolean | null
+    show_about_section: boolean | null
+    products_per_page: number | null
+    product_card_style: $Enums.ProductCardStyle | null
+    show_product_rating: boolean | null
+    show_product_stock: boolean | null
+    show_add_to_cart_btn: boolean | null
+    custom_css: string | null
+    custom_js: string | null
+    favicon_url: string | null
+    meta_title: string | null
+    meta_description: string | null
+    google_analytics_id: string | null
+    facebook_pixel_id: string | null
+    google_tag_manager_id: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type StoreCustomizationMaxAggregateOutputType = {
+    id: number | null
+    store_id: number | null
+    primary_color: string | null
+    secondary_color: string | null
+    accent_color: string | null
+    background_color: string | null
+    text_color: string | null
+    secondary_text_color: string | null
+    border_color: string | null
+    success_color: string | null
+    warning_color: string | null
+    error_color: string | null
+    primary_font: string | null
+    secondary_font: string | null
+    font_size_base: string | null
+    show_header: boolean | null
+    show_logo: boolean | null
+    show_search_bar: boolean | null
+    show_navigation_menu: boolean | null
+    show_cart_icon: boolean | null
+    show_user_account: boolean | null
+    header_position: $Enums.HeaderPosition | null
+    header_style: $Enums.HeaderStyle | null
+    show_footer: boolean | null
+    footer_text: string | null
+    show_social_links: boolean | null
+    show_contact_info: boolean | null
+    show_store_info: boolean | null
+    layout_style: $Enums.LayoutStyle | null
+    container_max_width: string | null
+    border_radius: string | null
+    spacing_unit: string | null
+    show_hero_section: boolean | null
+    show_featured_products: boolean | null
+    show_categories: boolean | null
+    show_testimonials: boolean | null
+    show_about_section: boolean | null
+    products_per_page: number | null
+    product_card_style: $Enums.ProductCardStyle | null
+    show_product_rating: boolean | null
+    show_product_stock: boolean | null
+    show_add_to_cart_btn: boolean | null
+    custom_css: string | null
+    custom_js: string | null
+    favicon_url: string | null
+    meta_title: string | null
+    meta_description: string | null
+    google_analytics_id: string | null
+    facebook_pixel_id: string | null
+    google_tag_manager_id: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type StoreCustomizationCountAggregateOutputType = {
+    id: number
+    store_id: number
+    primary_color: number
+    secondary_color: number
+    accent_color: number
+    background_color: number
+    text_color: number
+    secondary_text_color: number
+    border_color: number
+    success_color: number
+    warning_color: number
+    error_color: number
+    primary_font: number
+    secondary_font: number
+    font_size_base: number
+    show_header: number
+    show_logo: number
+    show_search_bar: number
+    show_navigation_menu: number
+    show_cart_icon: number
+    show_user_account: number
+    header_position: number
+    header_style: number
+    show_footer: number
+    footer_text: number
+    show_social_links: number
+    show_contact_info: number
+    show_store_info: number
+    layout_style: number
+    container_max_width: number
+    border_radius: number
+    spacing_unit: number
+    show_hero_section: number
+    show_featured_products: number
+    show_categories: number
+    show_testimonials: number
+    show_about_section: number
+    products_per_page: number
+    product_card_style: number
+    show_product_rating: number
+    show_product_stock: number
+    show_add_to_cart_btn: number
+    custom_css: number
+    custom_js: number
+    favicon_url: number
+    meta_title: number
+    meta_description: number
+    google_analytics_id: number
+    facebook_pixel_id: number
+    google_tag_manager_id: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type StoreCustomizationAvgAggregateInputType = {
+    id?: true
+    store_id?: true
+    products_per_page?: true
+  }
+
+  export type StoreCustomizationSumAggregateInputType = {
+    id?: true
+    store_id?: true
+    products_per_page?: true
+  }
+
+  export type StoreCustomizationMinAggregateInputType = {
+    id?: true
+    store_id?: true
+    primary_color?: true
+    secondary_color?: true
+    accent_color?: true
+    background_color?: true
+    text_color?: true
+    secondary_text_color?: true
+    border_color?: true
+    success_color?: true
+    warning_color?: true
+    error_color?: true
+    primary_font?: true
+    secondary_font?: true
+    font_size_base?: true
+    show_header?: true
+    show_logo?: true
+    show_search_bar?: true
+    show_navigation_menu?: true
+    show_cart_icon?: true
+    show_user_account?: true
+    header_position?: true
+    header_style?: true
+    show_footer?: true
+    footer_text?: true
+    show_social_links?: true
+    show_contact_info?: true
+    show_store_info?: true
+    layout_style?: true
+    container_max_width?: true
+    border_radius?: true
+    spacing_unit?: true
+    show_hero_section?: true
+    show_featured_products?: true
+    show_categories?: true
+    show_testimonials?: true
+    show_about_section?: true
+    products_per_page?: true
+    product_card_style?: true
+    show_product_rating?: true
+    show_product_stock?: true
+    show_add_to_cart_btn?: true
+    custom_css?: true
+    custom_js?: true
+    favicon_url?: true
+    meta_title?: true
+    meta_description?: true
+    google_analytics_id?: true
+    facebook_pixel_id?: true
+    google_tag_manager_id?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type StoreCustomizationMaxAggregateInputType = {
+    id?: true
+    store_id?: true
+    primary_color?: true
+    secondary_color?: true
+    accent_color?: true
+    background_color?: true
+    text_color?: true
+    secondary_text_color?: true
+    border_color?: true
+    success_color?: true
+    warning_color?: true
+    error_color?: true
+    primary_font?: true
+    secondary_font?: true
+    font_size_base?: true
+    show_header?: true
+    show_logo?: true
+    show_search_bar?: true
+    show_navigation_menu?: true
+    show_cart_icon?: true
+    show_user_account?: true
+    header_position?: true
+    header_style?: true
+    show_footer?: true
+    footer_text?: true
+    show_social_links?: true
+    show_contact_info?: true
+    show_store_info?: true
+    layout_style?: true
+    container_max_width?: true
+    border_radius?: true
+    spacing_unit?: true
+    show_hero_section?: true
+    show_featured_products?: true
+    show_categories?: true
+    show_testimonials?: true
+    show_about_section?: true
+    products_per_page?: true
+    product_card_style?: true
+    show_product_rating?: true
+    show_product_stock?: true
+    show_add_to_cart_btn?: true
+    custom_css?: true
+    custom_js?: true
+    favicon_url?: true
+    meta_title?: true
+    meta_description?: true
+    google_analytics_id?: true
+    facebook_pixel_id?: true
+    google_tag_manager_id?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type StoreCustomizationCountAggregateInputType = {
+    id?: true
+    store_id?: true
+    primary_color?: true
+    secondary_color?: true
+    accent_color?: true
+    background_color?: true
+    text_color?: true
+    secondary_text_color?: true
+    border_color?: true
+    success_color?: true
+    warning_color?: true
+    error_color?: true
+    primary_font?: true
+    secondary_font?: true
+    font_size_base?: true
+    show_header?: true
+    show_logo?: true
+    show_search_bar?: true
+    show_navigation_menu?: true
+    show_cart_icon?: true
+    show_user_account?: true
+    header_position?: true
+    header_style?: true
+    show_footer?: true
+    footer_text?: true
+    show_social_links?: true
+    show_contact_info?: true
+    show_store_info?: true
+    layout_style?: true
+    container_max_width?: true
+    border_radius?: true
+    spacing_unit?: true
+    show_hero_section?: true
+    show_featured_products?: true
+    show_categories?: true
+    show_testimonials?: true
+    show_about_section?: true
+    products_per_page?: true
+    product_card_style?: true
+    show_product_rating?: true
+    show_product_stock?: true
+    show_add_to_cart_btn?: true
+    custom_css?: true
+    custom_js?: true
+    favicon_url?: true
+    meta_title?: true
+    meta_description?: true
+    google_analytics_id?: true
+    facebook_pixel_id?: true
+    google_tag_manager_id?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type StoreCustomizationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StoreCustomization to aggregate.
+     */
+    where?: StoreCustomizationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreCustomizations to fetch.
+     */
+    orderBy?: StoreCustomizationOrderByWithRelationInput | StoreCustomizationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StoreCustomizationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreCustomizations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreCustomizations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StoreCustomizations
+    **/
+    _count?: true | StoreCustomizationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: StoreCustomizationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StoreCustomizationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StoreCustomizationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StoreCustomizationMaxAggregateInputType
+  }
+
+  export type GetStoreCustomizationAggregateType<T extends StoreCustomizationAggregateArgs> = {
+        [P in keyof T & keyof AggregateStoreCustomization]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStoreCustomization[P]>
+      : GetScalarType<T[P], AggregateStoreCustomization[P]>
+  }
+
+
+
+
+  export type StoreCustomizationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StoreCustomizationWhereInput
+    orderBy?: StoreCustomizationOrderByWithAggregationInput | StoreCustomizationOrderByWithAggregationInput[]
+    by: StoreCustomizationScalarFieldEnum[] | StoreCustomizationScalarFieldEnum
+    having?: StoreCustomizationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StoreCustomizationCountAggregateInputType | true
+    _avg?: StoreCustomizationAvgAggregateInputType
+    _sum?: StoreCustomizationSumAggregateInputType
+    _min?: StoreCustomizationMinAggregateInputType
+    _max?: StoreCustomizationMaxAggregateInputType
+  }
+
+  export type StoreCustomizationGroupByOutputType = {
+    id: number
+    store_id: number
+    primary_color: string
+    secondary_color: string
+    accent_color: string
+    background_color: string
+    text_color: string
+    secondary_text_color: string
+    border_color: string
+    success_color: string
+    warning_color: string
+    error_color: string
+    primary_font: string
+    secondary_font: string
+    font_size_base: string
+    show_header: boolean
+    show_logo: boolean
+    show_search_bar: boolean
+    show_navigation_menu: boolean
+    show_cart_icon: boolean
+    show_user_account: boolean
+    header_position: $Enums.HeaderPosition
+    header_style: $Enums.HeaderStyle
+    show_footer: boolean
+    footer_text: string | null
+    show_social_links: boolean
+    show_contact_info: boolean
+    show_store_info: boolean
+    layout_style: $Enums.LayoutStyle
+    container_max_width: string
+    border_radius: string
+    spacing_unit: string
+    show_hero_section: boolean
+    show_featured_products: boolean
+    show_categories: boolean
+    show_testimonials: boolean
+    show_about_section: boolean
+    products_per_page: number
+    product_card_style: $Enums.ProductCardStyle
+    show_product_rating: boolean
+    show_product_stock: boolean
+    show_add_to_cart_btn: boolean
+    custom_css: string | null
+    custom_js: string | null
+    favicon_url: string | null
+    meta_title: string | null
+    meta_description: string | null
+    google_analytics_id: string | null
+    facebook_pixel_id: string | null
+    google_tag_manager_id: string | null
+    created_at: Date
+    updated_at: Date
+    _count: StoreCustomizationCountAggregateOutputType | null
+    _avg: StoreCustomizationAvgAggregateOutputType | null
+    _sum: StoreCustomizationSumAggregateOutputType | null
+    _min: StoreCustomizationMinAggregateOutputType | null
+    _max: StoreCustomizationMaxAggregateOutputType | null
+  }
+
+  type GetStoreCustomizationGroupByPayload<T extends StoreCustomizationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StoreCustomizationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StoreCustomizationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StoreCustomizationGroupByOutputType[P]>
+            : GetScalarType<T[P], StoreCustomizationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StoreCustomizationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    store_id?: boolean
+    primary_color?: boolean
+    secondary_color?: boolean
+    accent_color?: boolean
+    background_color?: boolean
+    text_color?: boolean
+    secondary_text_color?: boolean
+    border_color?: boolean
+    success_color?: boolean
+    warning_color?: boolean
+    error_color?: boolean
+    primary_font?: boolean
+    secondary_font?: boolean
+    font_size_base?: boolean
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: boolean
+    header_style?: boolean
+    show_footer?: boolean
+    footer_text?: boolean
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: boolean
+    container_max_width?: boolean
+    border_radius?: boolean
+    spacing_unit?: boolean
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: boolean
+    product_card_style?: boolean
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: boolean
+    custom_js?: boolean
+    favicon_url?: boolean
+    meta_title?: boolean
+    meta_description?: boolean
+    google_analytics_id?: boolean
+    facebook_pixel_id?: boolean
+    google_tag_manager_id?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+    sections?: boolean | StoreCustomization$sectionsArgs<ExtArgs>
+    widgets?: boolean | StoreCustomization$widgetsArgs<ExtArgs>
+    _count?: boolean | StoreCustomizationCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["storeCustomization"]>
+
+  export type StoreCustomizationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    store_id?: boolean
+    primary_color?: boolean
+    secondary_color?: boolean
+    accent_color?: boolean
+    background_color?: boolean
+    text_color?: boolean
+    secondary_text_color?: boolean
+    border_color?: boolean
+    success_color?: boolean
+    warning_color?: boolean
+    error_color?: boolean
+    primary_font?: boolean
+    secondary_font?: boolean
+    font_size_base?: boolean
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: boolean
+    header_style?: boolean
+    show_footer?: boolean
+    footer_text?: boolean
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: boolean
+    container_max_width?: boolean
+    border_radius?: boolean
+    spacing_unit?: boolean
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: boolean
+    product_card_style?: boolean
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: boolean
+    custom_js?: boolean
+    favicon_url?: boolean
+    meta_title?: boolean
+    meta_description?: boolean
+    google_analytics_id?: boolean
+    facebook_pixel_id?: boolean
+    google_tag_manager_id?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["storeCustomization"]>
+
+  export type StoreCustomizationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    store_id?: boolean
+    primary_color?: boolean
+    secondary_color?: boolean
+    accent_color?: boolean
+    background_color?: boolean
+    text_color?: boolean
+    secondary_text_color?: boolean
+    border_color?: boolean
+    success_color?: boolean
+    warning_color?: boolean
+    error_color?: boolean
+    primary_font?: boolean
+    secondary_font?: boolean
+    font_size_base?: boolean
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: boolean
+    header_style?: boolean
+    show_footer?: boolean
+    footer_text?: boolean
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: boolean
+    container_max_width?: boolean
+    border_radius?: boolean
+    spacing_unit?: boolean
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: boolean
+    product_card_style?: boolean
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: boolean
+    custom_js?: boolean
+    favicon_url?: boolean
+    meta_title?: boolean
+    meta_description?: boolean
+    google_analytics_id?: boolean
+    facebook_pixel_id?: boolean
+    google_tag_manager_id?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["storeCustomization"]>
+
+  export type StoreCustomizationSelectScalar = {
+    id?: boolean
+    store_id?: boolean
+    primary_color?: boolean
+    secondary_color?: boolean
+    accent_color?: boolean
+    background_color?: boolean
+    text_color?: boolean
+    secondary_text_color?: boolean
+    border_color?: boolean
+    success_color?: boolean
+    warning_color?: boolean
+    error_color?: boolean
+    primary_font?: boolean
+    secondary_font?: boolean
+    font_size_base?: boolean
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: boolean
+    header_style?: boolean
+    show_footer?: boolean
+    footer_text?: boolean
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: boolean
+    container_max_width?: boolean
+    border_radius?: boolean
+    spacing_unit?: boolean
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: boolean
+    product_card_style?: boolean
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: boolean
+    custom_js?: boolean
+    favicon_url?: boolean
+    meta_title?: boolean
+    meta_description?: boolean
+    google_analytics_id?: boolean
+    facebook_pixel_id?: boolean
+    google_tag_manager_id?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type StoreCustomizationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "store_id" | "primary_color" | "secondary_color" | "accent_color" | "background_color" | "text_color" | "secondary_text_color" | "border_color" | "success_color" | "warning_color" | "error_color" | "primary_font" | "secondary_font" | "font_size_base" | "show_header" | "show_logo" | "show_search_bar" | "show_navigation_menu" | "show_cart_icon" | "show_user_account" | "header_position" | "header_style" | "show_footer" | "footer_text" | "show_social_links" | "show_contact_info" | "show_store_info" | "layout_style" | "container_max_width" | "border_radius" | "spacing_unit" | "show_hero_section" | "show_featured_products" | "show_categories" | "show_testimonials" | "show_about_section" | "products_per_page" | "product_card_style" | "show_product_rating" | "show_product_stock" | "show_add_to_cart_btn" | "custom_css" | "custom_js" | "favicon_url" | "meta_title" | "meta_description" | "google_analytics_id" | "facebook_pixel_id" | "google_tag_manager_id" | "created_at" | "updated_at", ExtArgs["result"]["storeCustomization"]>
+  export type StoreCustomizationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+    sections?: boolean | StoreCustomization$sectionsArgs<ExtArgs>
+    widgets?: boolean | StoreCustomization$widgetsArgs<ExtArgs>
+    _count?: boolean | StoreCustomizationCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type StoreCustomizationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }
+  export type StoreCustomizationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }
+
+  export type $StoreCustomizationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StoreCustomization"
+    objects: {
+      store: Prisma.$StorePayload<ExtArgs>
+      sections: Prisma.$StoreSectionConfigPayload<ExtArgs>[]
+      widgets: Prisma.$StoreWidgetConfigPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      store_id: number
+      primary_color: string
+      secondary_color: string
+      accent_color: string
+      background_color: string
+      text_color: string
+      secondary_text_color: string
+      border_color: string
+      success_color: string
+      warning_color: string
+      error_color: string
+      primary_font: string
+      secondary_font: string
+      font_size_base: string
+      show_header: boolean
+      show_logo: boolean
+      show_search_bar: boolean
+      show_navigation_menu: boolean
+      show_cart_icon: boolean
+      show_user_account: boolean
+      header_position: $Enums.HeaderPosition
+      header_style: $Enums.HeaderStyle
+      show_footer: boolean
+      footer_text: string | null
+      show_social_links: boolean
+      show_contact_info: boolean
+      show_store_info: boolean
+      layout_style: $Enums.LayoutStyle
+      container_max_width: string
+      border_radius: string
+      spacing_unit: string
+      show_hero_section: boolean
+      show_featured_products: boolean
+      show_categories: boolean
+      show_testimonials: boolean
+      show_about_section: boolean
+      products_per_page: number
+      product_card_style: $Enums.ProductCardStyle
+      show_product_rating: boolean
+      show_product_stock: boolean
+      show_add_to_cart_btn: boolean
+      custom_css: string | null
+      custom_js: string | null
+      favicon_url: string | null
+      meta_title: string | null
+      meta_description: string | null
+      google_analytics_id: string | null
+      facebook_pixel_id: string | null
+      google_tag_manager_id: string | null
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["storeCustomization"]>
+    composites: {}
+  }
+
+  type StoreCustomizationGetPayload<S extends boolean | null | undefined | StoreCustomizationDefaultArgs> = $Result.GetResult<Prisma.$StoreCustomizationPayload, S>
+
+  type StoreCustomizationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StoreCustomizationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StoreCustomizationCountAggregateInputType | true
+    }
+
+  export interface StoreCustomizationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StoreCustomization'], meta: { name: 'StoreCustomization' } }
+    /**
+     * Find zero or one StoreCustomization that matches the filter.
+     * @param {StoreCustomizationFindUniqueArgs} args - Arguments to find a StoreCustomization
+     * @example
+     * // Get one StoreCustomization
+     * const storeCustomization = await prisma.storeCustomization.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StoreCustomizationFindUniqueArgs>(args: SelectSubset<T, StoreCustomizationFindUniqueArgs<ExtArgs>>): Prisma__StoreCustomizationClient<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StoreCustomization that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StoreCustomizationFindUniqueOrThrowArgs} args - Arguments to find a StoreCustomization
+     * @example
+     * // Get one StoreCustomization
+     * const storeCustomization = await prisma.storeCustomization.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StoreCustomizationFindUniqueOrThrowArgs>(args: SelectSubset<T, StoreCustomizationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StoreCustomizationClient<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StoreCustomization that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreCustomizationFindFirstArgs} args - Arguments to find a StoreCustomization
+     * @example
+     * // Get one StoreCustomization
+     * const storeCustomization = await prisma.storeCustomization.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StoreCustomizationFindFirstArgs>(args?: SelectSubset<T, StoreCustomizationFindFirstArgs<ExtArgs>>): Prisma__StoreCustomizationClient<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StoreCustomization that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreCustomizationFindFirstOrThrowArgs} args - Arguments to find a StoreCustomization
+     * @example
+     * // Get one StoreCustomization
+     * const storeCustomization = await prisma.storeCustomization.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StoreCustomizationFindFirstOrThrowArgs>(args?: SelectSubset<T, StoreCustomizationFindFirstOrThrowArgs<ExtArgs>>): Prisma__StoreCustomizationClient<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StoreCustomizations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreCustomizationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StoreCustomizations
+     * const storeCustomizations = await prisma.storeCustomization.findMany()
+     * 
+     * // Get first 10 StoreCustomizations
+     * const storeCustomizations = await prisma.storeCustomization.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const storeCustomizationWithIdOnly = await prisma.storeCustomization.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StoreCustomizationFindManyArgs>(args?: SelectSubset<T, StoreCustomizationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StoreCustomization.
+     * @param {StoreCustomizationCreateArgs} args - Arguments to create a StoreCustomization.
+     * @example
+     * // Create one StoreCustomization
+     * const StoreCustomization = await prisma.storeCustomization.create({
+     *   data: {
+     *     // ... data to create a StoreCustomization
+     *   }
+     * })
+     * 
+     */
+    create<T extends StoreCustomizationCreateArgs>(args: SelectSubset<T, StoreCustomizationCreateArgs<ExtArgs>>): Prisma__StoreCustomizationClient<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StoreCustomizations.
+     * @param {StoreCustomizationCreateManyArgs} args - Arguments to create many StoreCustomizations.
+     * @example
+     * // Create many StoreCustomizations
+     * const storeCustomization = await prisma.storeCustomization.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StoreCustomizationCreateManyArgs>(args?: SelectSubset<T, StoreCustomizationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many StoreCustomizations and returns the data saved in the database.
+     * @param {StoreCustomizationCreateManyAndReturnArgs} args - Arguments to create many StoreCustomizations.
+     * @example
+     * // Create many StoreCustomizations
+     * const storeCustomization = await prisma.storeCustomization.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many StoreCustomizations and only return the `id`
+     * const storeCustomizationWithIdOnly = await prisma.storeCustomization.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StoreCustomizationCreateManyAndReturnArgs>(args?: SelectSubset<T, StoreCustomizationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a StoreCustomization.
+     * @param {StoreCustomizationDeleteArgs} args - Arguments to delete one StoreCustomization.
+     * @example
+     * // Delete one StoreCustomization
+     * const StoreCustomization = await prisma.storeCustomization.delete({
+     *   where: {
+     *     // ... filter to delete one StoreCustomization
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StoreCustomizationDeleteArgs>(args: SelectSubset<T, StoreCustomizationDeleteArgs<ExtArgs>>): Prisma__StoreCustomizationClient<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StoreCustomization.
+     * @param {StoreCustomizationUpdateArgs} args - Arguments to update one StoreCustomization.
+     * @example
+     * // Update one StoreCustomization
+     * const storeCustomization = await prisma.storeCustomization.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StoreCustomizationUpdateArgs>(args: SelectSubset<T, StoreCustomizationUpdateArgs<ExtArgs>>): Prisma__StoreCustomizationClient<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StoreCustomizations.
+     * @param {StoreCustomizationDeleteManyArgs} args - Arguments to filter StoreCustomizations to delete.
+     * @example
+     * // Delete a few StoreCustomizations
+     * const { count } = await prisma.storeCustomization.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StoreCustomizationDeleteManyArgs>(args?: SelectSubset<T, StoreCustomizationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StoreCustomizations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreCustomizationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StoreCustomizations
+     * const storeCustomization = await prisma.storeCustomization.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StoreCustomizationUpdateManyArgs>(args: SelectSubset<T, StoreCustomizationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StoreCustomizations and returns the data updated in the database.
+     * @param {StoreCustomizationUpdateManyAndReturnArgs} args - Arguments to update many StoreCustomizations.
+     * @example
+     * // Update many StoreCustomizations
+     * const storeCustomization = await prisma.storeCustomization.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more StoreCustomizations and only return the `id`
+     * const storeCustomizationWithIdOnly = await prisma.storeCustomization.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StoreCustomizationUpdateManyAndReturnArgs>(args: SelectSubset<T, StoreCustomizationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one StoreCustomization.
+     * @param {StoreCustomizationUpsertArgs} args - Arguments to update or create a StoreCustomization.
+     * @example
+     * // Update or create a StoreCustomization
+     * const storeCustomization = await prisma.storeCustomization.upsert({
+     *   create: {
+     *     // ... data to create a StoreCustomization
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StoreCustomization we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StoreCustomizationUpsertArgs>(args: SelectSubset<T, StoreCustomizationUpsertArgs<ExtArgs>>): Prisma__StoreCustomizationClient<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StoreCustomizations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreCustomizationCountArgs} args - Arguments to filter StoreCustomizations to count.
+     * @example
+     * // Count the number of StoreCustomizations
+     * const count = await prisma.storeCustomization.count({
+     *   where: {
+     *     // ... the filter for the StoreCustomizations we want to count
+     *   }
+     * })
+    **/
+    count<T extends StoreCustomizationCountArgs>(
+      args?: Subset<T, StoreCustomizationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StoreCustomizationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StoreCustomization.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreCustomizationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StoreCustomizationAggregateArgs>(args: Subset<T, StoreCustomizationAggregateArgs>): Prisma.PrismaPromise<GetStoreCustomizationAggregateType<T>>
+
+    /**
+     * Group by StoreCustomization.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreCustomizationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StoreCustomizationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StoreCustomizationGroupByArgs['orderBy'] }
+        : { orderBy?: StoreCustomizationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StoreCustomizationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStoreCustomizationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StoreCustomization model
+   */
+  readonly fields: StoreCustomizationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StoreCustomization.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StoreCustomizationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sections<T extends StoreCustomization$sectionsArgs<ExtArgs> = {}>(args?: Subset<T, StoreCustomization$sectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreSectionConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    widgets<T extends StoreCustomization$widgetsArgs<ExtArgs> = {}>(args?: Subset<T, StoreCustomization$widgetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreWidgetConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StoreCustomization model
+   */
+  interface StoreCustomizationFieldRefs {
+    readonly id: FieldRef<"StoreCustomization", 'Int'>
+    readonly store_id: FieldRef<"StoreCustomization", 'Int'>
+    readonly primary_color: FieldRef<"StoreCustomization", 'String'>
+    readonly secondary_color: FieldRef<"StoreCustomization", 'String'>
+    readonly accent_color: FieldRef<"StoreCustomization", 'String'>
+    readonly background_color: FieldRef<"StoreCustomization", 'String'>
+    readonly text_color: FieldRef<"StoreCustomization", 'String'>
+    readonly secondary_text_color: FieldRef<"StoreCustomization", 'String'>
+    readonly border_color: FieldRef<"StoreCustomization", 'String'>
+    readonly success_color: FieldRef<"StoreCustomization", 'String'>
+    readonly warning_color: FieldRef<"StoreCustomization", 'String'>
+    readonly error_color: FieldRef<"StoreCustomization", 'String'>
+    readonly primary_font: FieldRef<"StoreCustomization", 'String'>
+    readonly secondary_font: FieldRef<"StoreCustomization", 'String'>
+    readonly font_size_base: FieldRef<"StoreCustomization", 'String'>
+    readonly show_header: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_logo: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_search_bar: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_navigation_menu: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_cart_icon: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_user_account: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly header_position: FieldRef<"StoreCustomization", 'HeaderPosition'>
+    readonly header_style: FieldRef<"StoreCustomization", 'HeaderStyle'>
+    readonly show_footer: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly footer_text: FieldRef<"StoreCustomization", 'String'>
+    readonly show_social_links: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_contact_info: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_store_info: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly layout_style: FieldRef<"StoreCustomization", 'LayoutStyle'>
+    readonly container_max_width: FieldRef<"StoreCustomization", 'String'>
+    readonly border_radius: FieldRef<"StoreCustomization", 'String'>
+    readonly spacing_unit: FieldRef<"StoreCustomization", 'String'>
+    readonly show_hero_section: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_featured_products: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_categories: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_testimonials: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_about_section: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly products_per_page: FieldRef<"StoreCustomization", 'Int'>
+    readonly product_card_style: FieldRef<"StoreCustomization", 'ProductCardStyle'>
+    readonly show_product_rating: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_product_stock: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly show_add_to_cart_btn: FieldRef<"StoreCustomization", 'Boolean'>
+    readonly custom_css: FieldRef<"StoreCustomization", 'String'>
+    readonly custom_js: FieldRef<"StoreCustomization", 'String'>
+    readonly favicon_url: FieldRef<"StoreCustomization", 'String'>
+    readonly meta_title: FieldRef<"StoreCustomization", 'String'>
+    readonly meta_description: FieldRef<"StoreCustomization", 'String'>
+    readonly google_analytics_id: FieldRef<"StoreCustomization", 'String'>
+    readonly facebook_pixel_id: FieldRef<"StoreCustomization", 'String'>
+    readonly google_tag_manager_id: FieldRef<"StoreCustomization", 'String'>
+    readonly created_at: FieldRef<"StoreCustomization", 'DateTime'>
+    readonly updated_at: FieldRef<"StoreCustomization", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StoreCustomization findUnique
+   */
+  export type StoreCustomizationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreCustomization to fetch.
+     */
+    where: StoreCustomizationWhereUniqueInput
+  }
+
+  /**
+   * StoreCustomization findUniqueOrThrow
+   */
+  export type StoreCustomizationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreCustomization to fetch.
+     */
+    where: StoreCustomizationWhereUniqueInput
+  }
+
+  /**
+   * StoreCustomization findFirst
+   */
+  export type StoreCustomizationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreCustomization to fetch.
+     */
+    where?: StoreCustomizationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreCustomizations to fetch.
+     */
+    orderBy?: StoreCustomizationOrderByWithRelationInput | StoreCustomizationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StoreCustomizations.
+     */
+    cursor?: StoreCustomizationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreCustomizations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreCustomizations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StoreCustomizations.
+     */
+    distinct?: StoreCustomizationScalarFieldEnum | StoreCustomizationScalarFieldEnum[]
+  }
+
+  /**
+   * StoreCustomization findFirstOrThrow
+   */
+  export type StoreCustomizationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreCustomization to fetch.
+     */
+    where?: StoreCustomizationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreCustomizations to fetch.
+     */
+    orderBy?: StoreCustomizationOrderByWithRelationInput | StoreCustomizationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StoreCustomizations.
+     */
+    cursor?: StoreCustomizationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreCustomizations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreCustomizations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StoreCustomizations.
+     */
+    distinct?: StoreCustomizationScalarFieldEnum | StoreCustomizationScalarFieldEnum[]
+  }
+
+  /**
+   * StoreCustomization findMany
+   */
+  export type StoreCustomizationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreCustomizations to fetch.
+     */
+    where?: StoreCustomizationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreCustomizations to fetch.
+     */
+    orderBy?: StoreCustomizationOrderByWithRelationInput | StoreCustomizationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StoreCustomizations.
+     */
+    cursor?: StoreCustomizationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreCustomizations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreCustomizations.
+     */
+    skip?: number
+    distinct?: StoreCustomizationScalarFieldEnum | StoreCustomizationScalarFieldEnum[]
+  }
+
+  /**
+   * StoreCustomization create
+   */
+  export type StoreCustomizationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a StoreCustomization.
+     */
+    data: XOR<StoreCustomizationCreateInput, StoreCustomizationUncheckedCreateInput>
+  }
+
+  /**
+   * StoreCustomization createMany
+   */
+  export type StoreCustomizationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StoreCustomizations.
+     */
+    data: StoreCustomizationCreateManyInput | StoreCustomizationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StoreCustomization createManyAndReturn
+   */
+  export type StoreCustomizationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * The data used to create many StoreCustomizations.
+     */
+    data: StoreCustomizationCreateManyInput | StoreCustomizationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StoreCustomization update
+   */
+  export type StoreCustomizationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a StoreCustomization.
+     */
+    data: XOR<StoreCustomizationUpdateInput, StoreCustomizationUncheckedUpdateInput>
+    /**
+     * Choose, which StoreCustomization to update.
+     */
+    where: StoreCustomizationWhereUniqueInput
+  }
+
+  /**
+   * StoreCustomization updateMany
+   */
+  export type StoreCustomizationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StoreCustomizations.
+     */
+    data: XOR<StoreCustomizationUpdateManyMutationInput, StoreCustomizationUncheckedUpdateManyInput>
+    /**
+     * Filter which StoreCustomizations to update
+     */
+    where?: StoreCustomizationWhereInput
+    /**
+     * Limit how many StoreCustomizations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StoreCustomization updateManyAndReturn
+   */
+  export type StoreCustomizationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * The data used to update StoreCustomizations.
+     */
+    data: XOR<StoreCustomizationUpdateManyMutationInput, StoreCustomizationUncheckedUpdateManyInput>
+    /**
+     * Filter which StoreCustomizations to update
+     */
+    where?: StoreCustomizationWhereInput
+    /**
+     * Limit how many StoreCustomizations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StoreCustomization upsert
+   */
+  export type StoreCustomizationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the StoreCustomization to update in case it exists.
+     */
+    where: StoreCustomizationWhereUniqueInput
+    /**
+     * In case the StoreCustomization found by the `where` argument doesn't exist, create a new StoreCustomization with this data.
+     */
+    create: XOR<StoreCustomizationCreateInput, StoreCustomizationUncheckedCreateInput>
+    /**
+     * In case the StoreCustomization was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StoreCustomizationUpdateInput, StoreCustomizationUncheckedUpdateInput>
+  }
+
+  /**
+   * StoreCustomization delete
+   */
+  export type StoreCustomizationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationInclude<ExtArgs> | null
+    /**
+     * Filter which StoreCustomization to delete.
+     */
+    where: StoreCustomizationWhereUniqueInput
+  }
+
+  /**
+   * StoreCustomization deleteMany
+   */
+  export type StoreCustomizationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StoreCustomizations to delete
+     */
+    where?: StoreCustomizationWhereInput
+    /**
+     * Limit how many StoreCustomizations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StoreCustomization.sections
+   */
+  export type StoreCustomization$sectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigInclude<ExtArgs> | null
+    where?: StoreSectionConfigWhereInput
+    orderBy?: StoreSectionConfigOrderByWithRelationInput | StoreSectionConfigOrderByWithRelationInput[]
+    cursor?: StoreSectionConfigWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StoreSectionConfigScalarFieldEnum | StoreSectionConfigScalarFieldEnum[]
+  }
+
+  /**
+   * StoreCustomization.widgets
+   */
+  export type StoreCustomization$widgetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigInclude<ExtArgs> | null
+    where?: StoreWidgetConfigWhereInput
+    orderBy?: StoreWidgetConfigOrderByWithRelationInput | StoreWidgetConfigOrderByWithRelationInput[]
+    cursor?: StoreWidgetConfigWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StoreWidgetConfigScalarFieldEnum | StoreWidgetConfigScalarFieldEnum[]
+  }
+
+  /**
+   * StoreCustomization without action
+   */
+  export type StoreCustomizationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreCustomization
+     */
+    select?: StoreCustomizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreCustomization
+     */
+    omit?: StoreCustomizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreCustomizationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model StoreSectionConfig
+   */
+
+  export type AggregateStoreSectionConfig = {
+    _count: StoreSectionConfigCountAggregateOutputType | null
+    _avg: StoreSectionConfigAvgAggregateOutputType | null
+    _sum: StoreSectionConfigSumAggregateOutputType | null
+    _min: StoreSectionConfigMinAggregateOutputType | null
+    _max: StoreSectionConfigMaxAggregateOutputType | null
+  }
+
+  export type StoreSectionConfigAvgAggregateOutputType = {
+    id: number | null
+    customization_id: number | null
+    sort_order: number | null
+    columns_count: number | null
+    items_per_row: number | null
+  }
+
+  export type StoreSectionConfigSumAggregateOutputType = {
+    id: number | null
+    customization_id: number | null
+    sort_order: number | null
+    columns_count: number | null
+    items_per_row: number | null
+  }
+
+  export type StoreSectionConfigMinAggregateOutputType = {
+    id: number | null
+    customization_id: number | null
+    section_type: $Enums.SectionType | null
+    section_name: string | null
+    is_visible: boolean | null
+    sort_order: number | null
+    background_color: string | null
+    text_color: string | null
+    padding: string | null
+    margin: string | null
+    title: string | null
+    subtitle: string | null
+    description: string | null
+    image_url: string | null
+    button_text: string | null
+    button_link: string | null
+    show_title: boolean | null
+    show_subtitle: boolean | null
+    show_description: boolean | null
+    columns_count: number | null
+    items_per_row: number | null
+    layout_style: string | null
+    config_json: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type StoreSectionConfigMaxAggregateOutputType = {
+    id: number | null
+    customization_id: number | null
+    section_type: $Enums.SectionType | null
+    section_name: string | null
+    is_visible: boolean | null
+    sort_order: number | null
+    background_color: string | null
+    text_color: string | null
+    padding: string | null
+    margin: string | null
+    title: string | null
+    subtitle: string | null
+    description: string | null
+    image_url: string | null
+    button_text: string | null
+    button_link: string | null
+    show_title: boolean | null
+    show_subtitle: boolean | null
+    show_description: boolean | null
+    columns_count: number | null
+    items_per_row: number | null
+    layout_style: string | null
+    config_json: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type StoreSectionConfigCountAggregateOutputType = {
+    id: number
+    customization_id: number
+    section_type: number
+    section_name: number
+    is_visible: number
+    sort_order: number
+    background_color: number
+    text_color: number
+    padding: number
+    margin: number
+    title: number
+    subtitle: number
+    description: number
+    image_url: number
+    button_text: number
+    button_link: number
+    show_title: number
+    show_subtitle: number
+    show_description: number
+    columns_count: number
+    items_per_row: number
+    layout_style: number
+    config_json: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type StoreSectionConfigAvgAggregateInputType = {
+    id?: true
+    customization_id?: true
+    sort_order?: true
+    columns_count?: true
+    items_per_row?: true
+  }
+
+  export type StoreSectionConfigSumAggregateInputType = {
+    id?: true
+    customization_id?: true
+    sort_order?: true
+    columns_count?: true
+    items_per_row?: true
+  }
+
+  export type StoreSectionConfigMinAggregateInputType = {
+    id?: true
+    customization_id?: true
+    section_type?: true
+    section_name?: true
+    is_visible?: true
+    sort_order?: true
+    background_color?: true
+    text_color?: true
+    padding?: true
+    margin?: true
+    title?: true
+    subtitle?: true
+    description?: true
+    image_url?: true
+    button_text?: true
+    button_link?: true
+    show_title?: true
+    show_subtitle?: true
+    show_description?: true
+    columns_count?: true
+    items_per_row?: true
+    layout_style?: true
+    config_json?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type StoreSectionConfigMaxAggregateInputType = {
+    id?: true
+    customization_id?: true
+    section_type?: true
+    section_name?: true
+    is_visible?: true
+    sort_order?: true
+    background_color?: true
+    text_color?: true
+    padding?: true
+    margin?: true
+    title?: true
+    subtitle?: true
+    description?: true
+    image_url?: true
+    button_text?: true
+    button_link?: true
+    show_title?: true
+    show_subtitle?: true
+    show_description?: true
+    columns_count?: true
+    items_per_row?: true
+    layout_style?: true
+    config_json?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type StoreSectionConfigCountAggregateInputType = {
+    id?: true
+    customization_id?: true
+    section_type?: true
+    section_name?: true
+    is_visible?: true
+    sort_order?: true
+    background_color?: true
+    text_color?: true
+    padding?: true
+    margin?: true
+    title?: true
+    subtitle?: true
+    description?: true
+    image_url?: true
+    button_text?: true
+    button_link?: true
+    show_title?: true
+    show_subtitle?: true
+    show_description?: true
+    columns_count?: true
+    items_per_row?: true
+    layout_style?: true
+    config_json?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type StoreSectionConfigAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StoreSectionConfig to aggregate.
+     */
+    where?: StoreSectionConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreSectionConfigs to fetch.
+     */
+    orderBy?: StoreSectionConfigOrderByWithRelationInput | StoreSectionConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StoreSectionConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreSectionConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreSectionConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StoreSectionConfigs
+    **/
+    _count?: true | StoreSectionConfigCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: StoreSectionConfigAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StoreSectionConfigSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StoreSectionConfigMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StoreSectionConfigMaxAggregateInputType
+  }
+
+  export type GetStoreSectionConfigAggregateType<T extends StoreSectionConfigAggregateArgs> = {
+        [P in keyof T & keyof AggregateStoreSectionConfig]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStoreSectionConfig[P]>
+      : GetScalarType<T[P], AggregateStoreSectionConfig[P]>
+  }
+
+
+
+
+  export type StoreSectionConfigGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StoreSectionConfigWhereInput
+    orderBy?: StoreSectionConfigOrderByWithAggregationInput | StoreSectionConfigOrderByWithAggregationInput[]
+    by: StoreSectionConfigScalarFieldEnum[] | StoreSectionConfigScalarFieldEnum
+    having?: StoreSectionConfigScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StoreSectionConfigCountAggregateInputType | true
+    _avg?: StoreSectionConfigAvgAggregateInputType
+    _sum?: StoreSectionConfigSumAggregateInputType
+    _min?: StoreSectionConfigMinAggregateInputType
+    _max?: StoreSectionConfigMaxAggregateInputType
+  }
+
+  export type StoreSectionConfigGroupByOutputType = {
+    id: number
+    customization_id: number
+    section_type: $Enums.SectionType
+    section_name: string
+    is_visible: boolean
+    sort_order: number
+    background_color: string | null
+    text_color: string | null
+    padding: string | null
+    margin: string | null
+    title: string | null
+    subtitle: string | null
+    description: string | null
+    image_url: string | null
+    button_text: string | null
+    button_link: string | null
+    show_title: boolean
+    show_subtitle: boolean
+    show_description: boolean
+    columns_count: number | null
+    items_per_row: number | null
+    layout_style: string | null
+    config_json: string | null
+    created_at: Date
+    updated_at: Date
+    _count: StoreSectionConfigCountAggregateOutputType | null
+    _avg: StoreSectionConfigAvgAggregateOutputType | null
+    _sum: StoreSectionConfigSumAggregateOutputType | null
+    _min: StoreSectionConfigMinAggregateOutputType | null
+    _max: StoreSectionConfigMaxAggregateOutputType | null
+  }
+
+  type GetStoreSectionConfigGroupByPayload<T extends StoreSectionConfigGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StoreSectionConfigGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StoreSectionConfigGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StoreSectionConfigGroupByOutputType[P]>
+            : GetScalarType<T[P], StoreSectionConfigGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StoreSectionConfigSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    customization_id?: boolean
+    section_type?: boolean
+    section_name?: boolean
+    is_visible?: boolean
+    sort_order?: boolean
+    background_color?: boolean
+    text_color?: boolean
+    padding?: boolean
+    margin?: boolean
+    title?: boolean
+    subtitle?: boolean
+    description?: boolean
+    image_url?: boolean
+    button_text?: boolean
+    button_link?: boolean
+    show_title?: boolean
+    show_subtitle?: boolean
+    show_description?: boolean
+    columns_count?: boolean
+    items_per_row?: boolean
+    layout_style?: boolean
+    config_json?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    customization?: boolean | StoreCustomizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["storeSectionConfig"]>
+
+  export type StoreSectionConfigSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    customization_id?: boolean
+    section_type?: boolean
+    section_name?: boolean
+    is_visible?: boolean
+    sort_order?: boolean
+    background_color?: boolean
+    text_color?: boolean
+    padding?: boolean
+    margin?: boolean
+    title?: boolean
+    subtitle?: boolean
+    description?: boolean
+    image_url?: boolean
+    button_text?: boolean
+    button_link?: boolean
+    show_title?: boolean
+    show_subtitle?: boolean
+    show_description?: boolean
+    columns_count?: boolean
+    items_per_row?: boolean
+    layout_style?: boolean
+    config_json?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    customization?: boolean | StoreCustomizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["storeSectionConfig"]>
+
+  export type StoreSectionConfigSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    customization_id?: boolean
+    section_type?: boolean
+    section_name?: boolean
+    is_visible?: boolean
+    sort_order?: boolean
+    background_color?: boolean
+    text_color?: boolean
+    padding?: boolean
+    margin?: boolean
+    title?: boolean
+    subtitle?: boolean
+    description?: boolean
+    image_url?: boolean
+    button_text?: boolean
+    button_link?: boolean
+    show_title?: boolean
+    show_subtitle?: boolean
+    show_description?: boolean
+    columns_count?: boolean
+    items_per_row?: boolean
+    layout_style?: boolean
+    config_json?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    customization?: boolean | StoreCustomizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["storeSectionConfig"]>
+
+  export type StoreSectionConfigSelectScalar = {
+    id?: boolean
+    customization_id?: boolean
+    section_type?: boolean
+    section_name?: boolean
+    is_visible?: boolean
+    sort_order?: boolean
+    background_color?: boolean
+    text_color?: boolean
+    padding?: boolean
+    margin?: boolean
+    title?: boolean
+    subtitle?: boolean
+    description?: boolean
+    image_url?: boolean
+    button_text?: boolean
+    button_link?: boolean
+    show_title?: boolean
+    show_subtitle?: boolean
+    show_description?: boolean
+    columns_count?: boolean
+    items_per_row?: boolean
+    layout_style?: boolean
+    config_json?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type StoreSectionConfigOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "customization_id" | "section_type" | "section_name" | "is_visible" | "sort_order" | "background_color" | "text_color" | "padding" | "margin" | "title" | "subtitle" | "description" | "image_url" | "button_text" | "button_link" | "show_title" | "show_subtitle" | "show_description" | "columns_count" | "items_per_row" | "layout_style" | "config_json" | "created_at" | "updated_at", ExtArgs["result"]["storeSectionConfig"]>
+  export type StoreSectionConfigInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    customization?: boolean | StoreCustomizationDefaultArgs<ExtArgs>
+  }
+  export type StoreSectionConfigIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    customization?: boolean | StoreCustomizationDefaultArgs<ExtArgs>
+  }
+  export type StoreSectionConfigIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    customization?: boolean | StoreCustomizationDefaultArgs<ExtArgs>
+  }
+
+  export type $StoreSectionConfigPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StoreSectionConfig"
+    objects: {
+      customization: Prisma.$StoreCustomizationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      customization_id: number
+      section_type: $Enums.SectionType
+      section_name: string
+      is_visible: boolean
+      sort_order: number
+      background_color: string | null
+      text_color: string | null
+      padding: string | null
+      margin: string | null
+      title: string | null
+      subtitle: string | null
+      description: string | null
+      image_url: string | null
+      button_text: string | null
+      button_link: string | null
+      show_title: boolean
+      show_subtitle: boolean
+      show_description: boolean
+      columns_count: number | null
+      items_per_row: number | null
+      layout_style: string | null
+      config_json: string | null
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["storeSectionConfig"]>
+    composites: {}
+  }
+
+  type StoreSectionConfigGetPayload<S extends boolean | null | undefined | StoreSectionConfigDefaultArgs> = $Result.GetResult<Prisma.$StoreSectionConfigPayload, S>
+
+  type StoreSectionConfigCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StoreSectionConfigFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StoreSectionConfigCountAggregateInputType | true
+    }
+
+  export interface StoreSectionConfigDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StoreSectionConfig'], meta: { name: 'StoreSectionConfig' } }
+    /**
+     * Find zero or one StoreSectionConfig that matches the filter.
+     * @param {StoreSectionConfigFindUniqueArgs} args - Arguments to find a StoreSectionConfig
+     * @example
+     * // Get one StoreSectionConfig
+     * const storeSectionConfig = await prisma.storeSectionConfig.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StoreSectionConfigFindUniqueArgs>(args: SelectSubset<T, StoreSectionConfigFindUniqueArgs<ExtArgs>>): Prisma__StoreSectionConfigClient<$Result.GetResult<Prisma.$StoreSectionConfigPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StoreSectionConfig that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StoreSectionConfigFindUniqueOrThrowArgs} args - Arguments to find a StoreSectionConfig
+     * @example
+     * // Get one StoreSectionConfig
+     * const storeSectionConfig = await prisma.storeSectionConfig.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StoreSectionConfigFindUniqueOrThrowArgs>(args: SelectSubset<T, StoreSectionConfigFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StoreSectionConfigClient<$Result.GetResult<Prisma.$StoreSectionConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StoreSectionConfig that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreSectionConfigFindFirstArgs} args - Arguments to find a StoreSectionConfig
+     * @example
+     * // Get one StoreSectionConfig
+     * const storeSectionConfig = await prisma.storeSectionConfig.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StoreSectionConfigFindFirstArgs>(args?: SelectSubset<T, StoreSectionConfigFindFirstArgs<ExtArgs>>): Prisma__StoreSectionConfigClient<$Result.GetResult<Prisma.$StoreSectionConfigPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StoreSectionConfig that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreSectionConfigFindFirstOrThrowArgs} args - Arguments to find a StoreSectionConfig
+     * @example
+     * // Get one StoreSectionConfig
+     * const storeSectionConfig = await prisma.storeSectionConfig.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StoreSectionConfigFindFirstOrThrowArgs>(args?: SelectSubset<T, StoreSectionConfigFindFirstOrThrowArgs<ExtArgs>>): Prisma__StoreSectionConfigClient<$Result.GetResult<Prisma.$StoreSectionConfigPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StoreSectionConfigs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreSectionConfigFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StoreSectionConfigs
+     * const storeSectionConfigs = await prisma.storeSectionConfig.findMany()
+     * 
+     * // Get first 10 StoreSectionConfigs
+     * const storeSectionConfigs = await prisma.storeSectionConfig.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const storeSectionConfigWithIdOnly = await prisma.storeSectionConfig.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StoreSectionConfigFindManyArgs>(args?: SelectSubset<T, StoreSectionConfigFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreSectionConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StoreSectionConfig.
+     * @param {StoreSectionConfigCreateArgs} args - Arguments to create a StoreSectionConfig.
+     * @example
+     * // Create one StoreSectionConfig
+     * const StoreSectionConfig = await prisma.storeSectionConfig.create({
+     *   data: {
+     *     // ... data to create a StoreSectionConfig
+     *   }
+     * })
+     * 
+     */
+    create<T extends StoreSectionConfigCreateArgs>(args: SelectSubset<T, StoreSectionConfigCreateArgs<ExtArgs>>): Prisma__StoreSectionConfigClient<$Result.GetResult<Prisma.$StoreSectionConfigPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StoreSectionConfigs.
+     * @param {StoreSectionConfigCreateManyArgs} args - Arguments to create many StoreSectionConfigs.
+     * @example
+     * // Create many StoreSectionConfigs
+     * const storeSectionConfig = await prisma.storeSectionConfig.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StoreSectionConfigCreateManyArgs>(args?: SelectSubset<T, StoreSectionConfigCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many StoreSectionConfigs and returns the data saved in the database.
+     * @param {StoreSectionConfigCreateManyAndReturnArgs} args - Arguments to create many StoreSectionConfigs.
+     * @example
+     * // Create many StoreSectionConfigs
+     * const storeSectionConfig = await prisma.storeSectionConfig.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many StoreSectionConfigs and only return the `id`
+     * const storeSectionConfigWithIdOnly = await prisma.storeSectionConfig.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StoreSectionConfigCreateManyAndReturnArgs>(args?: SelectSubset<T, StoreSectionConfigCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreSectionConfigPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a StoreSectionConfig.
+     * @param {StoreSectionConfigDeleteArgs} args - Arguments to delete one StoreSectionConfig.
+     * @example
+     * // Delete one StoreSectionConfig
+     * const StoreSectionConfig = await prisma.storeSectionConfig.delete({
+     *   where: {
+     *     // ... filter to delete one StoreSectionConfig
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StoreSectionConfigDeleteArgs>(args: SelectSubset<T, StoreSectionConfigDeleteArgs<ExtArgs>>): Prisma__StoreSectionConfigClient<$Result.GetResult<Prisma.$StoreSectionConfigPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StoreSectionConfig.
+     * @param {StoreSectionConfigUpdateArgs} args - Arguments to update one StoreSectionConfig.
+     * @example
+     * // Update one StoreSectionConfig
+     * const storeSectionConfig = await prisma.storeSectionConfig.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StoreSectionConfigUpdateArgs>(args: SelectSubset<T, StoreSectionConfigUpdateArgs<ExtArgs>>): Prisma__StoreSectionConfigClient<$Result.GetResult<Prisma.$StoreSectionConfigPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StoreSectionConfigs.
+     * @param {StoreSectionConfigDeleteManyArgs} args - Arguments to filter StoreSectionConfigs to delete.
+     * @example
+     * // Delete a few StoreSectionConfigs
+     * const { count } = await prisma.storeSectionConfig.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StoreSectionConfigDeleteManyArgs>(args?: SelectSubset<T, StoreSectionConfigDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StoreSectionConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreSectionConfigUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StoreSectionConfigs
+     * const storeSectionConfig = await prisma.storeSectionConfig.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StoreSectionConfigUpdateManyArgs>(args: SelectSubset<T, StoreSectionConfigUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StoreSectionConfigs and returns the data updated in the database.
+     * @param {StoreSectionConfigUpdateManyAndReturnArgs} args - Arguments to update many StoreSectionConfigs.
+     * @example
+     * // Update many StoreSectionConfigs
+     * const storeSectionConfig = await prisma.storeSectionConfig.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more StoreSectionConfigs and only return the `id`
+     * const storeSectionConfigWithIdOnly = await prisma.storeSectionConfig.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StoreSectionConfigUpdateManyAndReturnArgs>(args: SelectSubset<T, StoreSectionConfigUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreSectionConfigPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one StoreSectionConfig.
+     * @param {StoreSectionConfigUpsertArgs} args - Arguments to update or create a StoreSectionConfig.
+     * @example
+     * // Update or create a StoreSectionConfig
+     * const storeSectionConfig = await prisma.storeSectionConfig.upsert({
+     *   create: {
+     *     // ... data to create a StoreSectionConfig
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StoreSectionConfig we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StoreSectionConfigUpsertArgs>(args: SelectSubset<T, StoreSectionConfigUpsertArgs<ExtArgs>>): Prisma__StoreSectionConfigClient<$Result.GetResult<Prisma.$StoreSectionConfigPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StoreSectionConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreSectionConfigCountArgs} args - Arguments to filter StoreSectionConfigs to count.
+     * @example
+     * // Count the number of StoreSectionConfigs
+     * const count = await prisma.storeSectionConfig.count({
+     *   where: {
+     *     // ... the filter for the StoreSectionConfigs we want to count
+     *   }
+     * })
+    **/
+    count<T extends StoreSectionConfigCountArgs>(
+      args?: Subset<T, StoreSectionConfigCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StoreSectionConfigCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StoreSectionConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreSectionConfigAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StoreSectionConfigAggregateArgs>(args: Subset<T, StoreSectionConfigAggregateArgs>): Prisma.PrismaPromise<GetStoreSectionConfigAggregateType<T>>
+
+    /**
+     * Group by StoreSectionConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreSectionConfigGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StoreSectionConfigGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StoreSectionConfigGroupByArgs['orderBy'] }
+        : { orderBy?: StoreSectionConfigGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StoreSectionConfigGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStoreSectionConfigGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StoreSectionConfig model
+   */
+  readonly fields: StoreSectionConfigFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StoreSectionConfig.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StoreSectionConfigClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    customization<T extends StoreCustomizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreCustomizationDefaultArgs<ExtArgs>>): Prisma__StoreCustomizationClient<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StoreSectionConfig model
+   */
+  interface StoreSectionConfigFieldRefs {
+    readonly id: FieldRef<"StoreSectionConfig", 'Int'>
+    readonly customization_id: FieldRef<"StoreSectionConfig", 'Int'>
+    readonly section_type: FieldRef<"StoreSectionConfig", 'SectionType'>
+    readonly section_name: FieldRef<"StoreSectionConfig", 'String'>
+    readonly is_visible: FieldRef<"StoreSectionConfig", 'Boolean'>
+    readonly sort_order: FieldRef<"StoreSectionConfig", 'Int'>
+    readonly background_color: FieldRef<"StoreSectionConfig", 'String'>
+    readonly text_color: FieldRef<"StoreSectionConfig", 'String'>
+    readonly padding: FieldRef<"StoreSectionConfig", 'String'>
+    readonly margin: FieldRef<"StoreSectionConfig", 'String'>
+    readonly title: FieldRef<"StoreSectionConfig", 'String'>
+    readonly subtitle: FieldRef<"StoreSectionConfig", 'String'>
+    readonly description: FieldRef<"StoreSectionConfig", 'String'>
+    readonly image_url: FieldRef<"StoreSectionConfig", 'String'>
+    readonly button_text: FieldRef<"StoreSectionConfig", 'String'>
+    readonly button_link: FieldRef<"StoreSectionConfig", 'String'>
+    readonly show_title: FieldRef<"StoreSectionConfig", 'Boolean'>
+    readonly show_subtitle: FieldRef<"StoreSectionConfig", 'Boolean'>
+    readonly show_description: FieldRef<"StoreSectionConfig", 'Boolean'>
+    readonly columns_count: FieldRef<"StoreSectionConfig", 'Int'>
+    readonly items_per_row: FieldRef<"StoreSectionConfig", 'Int'>
+    readonly layout_style: FieldRef<"StoreSectionConfig", 'String'>
+    readonly config_json: FieldRef<"StoreSectionConfig", 'String'>
+    readonly created_at: FieldRef<"StoreSectionConfig", 'DateTime'>
+    readonly updated_at: FieldRef<"StoreSectionConfig", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StoreSectionConfig findUnique
+   */
+  export type StoreSectionConfigFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreSectionConfig to fetch.
+     */
+    where: StoreSectionConfigWhereUniqueInput
+  }
+
+  /**
+   * StoreSectionConfig findUniqueOrThrow
+   */
+  export type StoreSectionConfigFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreSectionConfig to fetch.
+     */
+    where: StoreSectionConfigWhereUniqueInput
+  }
+
+  /**
+   * StoreSectionConfig findFirst
+   */
+  export type StoreSectionConfigFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreSectionConfig to fetch.
+     */
+    where?: StoreSectionConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreSectionConfigs to fetch.
+     */
+    orderBy?: StoreSectionConfigOrderByWithRelationInput | StoreSectionConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StoreSectionConfigs.
+     */
+    cursor?: StoreSectionConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreSectionConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreSectionConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StoreSectionConfigs.
+     */
+    distinct?: StoreSectionConfigScalarFieldEnum | StoreSectionConfigScalarFieldEnum[]
+  }
+
+  /**
+   * StoreSectionConfig findFirstOrThrow
+   */
+  export type StoreSectionConfigFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreSectionConfig to fetch.
+     */
+    where?: StoreSectionConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreSectionConfigs to fetch.
+     */
+    orderBy?: StoreSectionConfigOrderByWithRelationInput | StoreSectionConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StoreSectionConfigs.
+     */
+    cursor?: StoreSectionConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreSectionConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreSectionConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StoreSectionConfigs.
+     */
+    distinct?: StoreSectionConfigScalarFieldEnum | StoreSectionConfigScalarFieldEnum[]
+  }
+
+  /**
+   * StoreSectionConfig findMany
+   */
+  export type StoreSectionConfigFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreSectionConfigs to fetch.
+     */
+    where?: StoreSectionConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreSectionConfigs to fetch.
+     */
+    orderBy?: StoreSectionConfigOrderByWithRelationInput | StoreSectionConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StoreSectionConfigs.
+     */
+    cursor?: StoreSectionConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreSectionConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreSectionConfigs.
+     */
+    skip?: number
+    distinct?: StoreSectionConfigScalarFieldEnum | StoreSectionConfigScalarFieldEnum[]
+  }
+
+  /**
+   * StoreSectionConfig create
+   */
+  export type StoreSectionConfigCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigInclude<ExtArgs> | null
+    /**
+     * The data needed to create a StoreSectionConfig.
+     */
+    data: XOR<StoreSectionConfigCreateInput, StoreSectionConfigUncheckedCreateInput>
+  }
+
+  /**
+   * StoreSectionConfig createMany
+   */
+  export type StoreSectionConfigCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StoreSectionConfigs.
+     */
+    data: StoreSectionConfigCreateManyInput | StoreSectionConfigCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StoreSectionConfig createManyAndReturn
+   */
+  export type StoreSectionConfigCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * The data used to create many StoreSectionConfigs.
+     */
+    data: StoreSectionConfigCreateManyInput | StoreSectionConfigCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StoreSectionConfig update
+   */
+  export type StoreSectionConfigUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigInclude<ExtArgs> | null
+    /**
+     * The data needed to update a StoreSectionConfig.
+     */
+    data: XOR<StoreSectionConfigUpdateInput, StoreSectionConfigUncheckedUpdateInput>
+    /**
+     * Choose, which StoreSectionConfig to update.
+     */
+    where: StoreSectionConfigWhereUniqueInput
+  }
+
+  /**
+   * StoreSectionConfig updateMany
+   */
+  export type StoreSectionConfigUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StoreSectionConfigs.
+     */
+    data: XOR<StoreSectionConfigUpdateManyMutationInput, StoreSectionConfigUncheckedUpdateManyInput>
+    /**
+     * Filter which StoreSectionConfigs to update
+     */
+    where?: StoreSectionConfigWhereInput
+    /**
+     * Limit how many StoreSectionConfigs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StoreSectionConfig updateManyAndReturn
+   */
+  export type StoreSectionConfigUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * The data used to update StoreSectionConfigs.
+     */
+    data: XOR<StoreSectionConfigUpdateManyMutationInput, StoreSectionConfigUncheckedUpdateManyInput>
+    /**
+     * Filter which StoreSectionConfigs to update
+     */
+    where?: StoreSectionConfigWhereInput
+    /**
+     * Limit how many StoreSectionConfigs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StoreSectionConfig upsert
+   */
+  export type StoreSectionConfigUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigInclude<ExtArgs> | null
+    /**
+     * The filter to search for the StoreSectionConfig to update in case it exists.
+     */
+    where: StoreSectionConfigWhereUniqueInput
+    /**
+     * In case the StoreSectionConfig found by the `where` argument doesn't exist, create a new StoreSectionConfig with this data.
+     */
+    create: XOR<StoreSectionConfigCreateInput, StoreSectionConfigUncheckedCreateInput>
+    /**
+     * In case the StoreSectionConfig was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StoreSectionConfigUpdateInput, StoreSectionConfigUncheckedUpdateInput>
+  }
+
+  /**
+   * StoreSectionConfig delete
+   */
+  export type StoreSectionConfigDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigInclude<ExtArgs> | null
+    /**
+     * Filter which StoreSectionConfig to delete.
+     */
+    where: StoreSectionConfigWhereUniqueInput
+  }
+
+  /**
+   * StoreSectionConfig deleteMany
+   */
+  export type StoreSectionConfigDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StoreSectionConfigs to delete
+     */
+    where?: StoreSectionConfigWhereInput
+    /**
+     * Limit how many StoreSectionConfigs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StoreSectionConfig without action
+   */
+  export type StoreSectionConfigDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreSectionConfig
+     */
+    select?: StoreSectionConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreSectionConfig
+     */
+    omit?: StoreSectionConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreSectionConfigInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model StoreWidgetConfig
+   */
+
+  export type AggregateStoreWidgetConfig = {
+    _count: StoreWidgetConfigCountAggregateOutputType | null
+    _avg: StoreWidgetConfigAvgAggregateOutputType | null
+    _sum: StoreWidgetConfigSumAggregateOutputType | null
+    _min: StoreWidgetConfigMinAggregateOutputType | null
+    _max: StoreWidgetConfigMaxAggregateOutputType | null
+  }
+
+  export type StoreWidgetConfigAvgAggregateOutputType = {
+    id: number | null
+    customization_id: number | null
+    sort_order: number | null
+    max_items: number | null
+    refresh_interval: number | null
+  }
+
+  export type StoreWidgetConfigSumAggregateOutputType = {
+    id: number | null
+    customization_id: number | null
+    sort_order: number | null
+    max_items: number | null
+    refresh_interval: number | null
+  }
+
+  export type StoreWidgetConfigMinAggregateOutputType = {
+    id: number | null
+    customization_id: number | null
+    widget_type: $Enums.WidgetType | null
+    widget_name: string | null
+    position: $Enums.WidgetPosition | null
+    sort_order: number | null
+    is_visible: boolean | null
+    background_color: string | null
+    text_color: string | null
+    border_color: string | null
+    padding: string | null
+    margin: string | null
+    border_radius: string | null
+    title: string | null
+    show_title: boolean | null
+    max_items: number | null
+    auto_refresh: boolean | null
+    refresh_interval: number | null
+    config_json: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type StoreWidgetConfigMaxAggregateOutputType = {
+    id: number | null
+    customization_id: number | null
+    widget_type: $Enums.WidgetType | null
+    widget_name: string | null
+    position: $Enums.WidgetPosition | null
+    sort_order: number | null
+    is_visible: boolean | null
+    background_color: string | null
+    text_color: string | null
+    border_color: string | null
+    padding: string | null
+    margin: string | null
+    border_radius: string | null
+    title: string | null
+    show_title: boolean | null
+    max_items: number | null
+    auto_refresh: boolean | null
+    refresh_interval: number | null
+    config_json: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type StoreWidgetConfigCountAggregateOutputType = {
+    id: number
+    customization_id: number
+    widget_type: number
+    widget_name: number
+    position: number
+    sort_order: number
+    is_visible: number
+    background_color: number
+    text_color: number
+    border_color: number
+    padding: number
+    margin: number
+    border_radius: number
+    title: number
+    show_title: number
+    max_items: number
+    auto_refresh: number
+    refresh_interval: number
+    config_json: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type StoreWidgetConfigAvgAggregateInputType = {
+    id?: true
+    customization_id?: true
+    sort_order?: true
+    max_items?: true
+    refresh_interval?: true
+  }
+
+  export type StoreWidgetConfigSumAggregateInputType = {
+    id?: true
+    customization_id?: true
+    sort_order?: true
+    max_items?: true
+    refresh_interval?: true
+  }
+
+  export type StoreWidgetConfigMinAggregateInputType = {
+    id?: true
+    customization_id?: true
+    widget_type?: true
+    widget_name?: true
+    position?: true
+    sort_order?: true
+    is_visible?: true
+    background_color?: true
+    text_color?: true
+    border_color?: true
+    padding?: true
+    margin?: true
+    border_radius?: true
+    title?: true
+    show_title?: true
+    max_items?: true
+    auto_refresh?: true
+    refresh_interval?: true
+    config_json?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type StoreWidgetConfigMaxAggregateInputType = {
+    id?: true
+    customization_id?: true
+    widget_type?: true
+    widget_name?: true
+    position?: true
+    sort_order?: true
+    is_visible?: true
+    background_color?: true
+    text_color?: true
+    border_color?: true
+    padding?: true
+    margin?: true
+    border_radius?: true
+    title?: true
+    show_title?: true
+    max_items?: true
+    auto_refresh?: true
+    refresh_interval?: true
+    config_json?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type StoreWidgetConfigCountAggregateInputType = {
+    id?: true
+    customization_id?: true
+    widget_type?: true
+    widget_name?: true
+    position?: true
+    sort_order?: true
+    is_visible?: true
+    background_color?: true
+    text_color?: true
+    border_color?: true
+    padding?: true
+    margin?: true
+    border_radius?: true
+    title?: true
+    show_title?: true
+    max_items?: true
+    auto_refresh?: true
+    refresh_interval?: true
+    config_json?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type StoreWidgetConfigAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StoreWidgetConfig to aggregate.
+     */
+    where?: StoreWidgetConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreWidgetConfigs to fetch.
+     */
+    orderBy?: StoreWidgetConfigOrderByWithRelationInput | StoreWidgetConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StoreWidgetConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreWidgetConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreWidgetConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StoreWidgetConfigs
+    **/
+    _count?: true | StoreWidgetConfigCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: StoreWidgetConfigAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StoreWidgetConfigSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StoreWidgetConfigMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StoreWidgetConfigMaxAggregateInputType
+  }
+
+  export type GetStoreWidgetConfigAggregateType<T extends StoreWidgetConfigAggregateArgs> = {
+        [P in keyof T & keyof AggregateStoreWidgetConfig]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStoreWidgetConfig[P]>
+      : GetScalarType<T[P], AggregateStoreWidgetConfig[P]>
+  }
+
+
+
+
+  export type StoreWidgetConfigGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StoreWidgetConfigWhereInput
+    orderBy?: StoreWidgetConfigOrderByWithAggregationInput | StoreWidgetConfigOrderByWithAggregationInput[]
+    by: StoreWidgetConfigScalarFieldEnum[] | StoreWidgetConfigScalarFieldEnum
+    having?: StoreWidgetConfigScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StoreWidgetConfigCountAggregateInputType | true
+    _avg?: StoreWidgetConfigAvgAggregateInputType
+    _sum?: StoreWidgetConfigSumAggregateInputType
+    _min?: StoreWidgetConfigMinAggregateInputType
+    _max?: StoreWidgetConfigMaxAggregateInputType
+  }
+
+  export type StoreWidgetConfigGroupByOutputType = {
+    id: number
+    customization_id: number
+    widget_type: $Enums.WidgetType
+    widget_name: string
+    position: $Enums.WidgetPosition
+    sort_order: number
+    is_visible: boolean
+    background_color: string | null
+    text_color: string | null
+    border_color: string | null
+    padding: string | null
+    margin: string | null
+    border_radius: string | null
+    title: string | null
+    show_title: boolean
+    max_items: number | null
+    auto_refresh: boolean
+    refresh_interval: number | null
+    config_json: string | null
+    created_at: Date
+    updated_at: Date
+    _count: StoreWidgetConfigCountAggregateOutputType | null
+    _avg: StoreWidgetConfigAvgAggregateOutputType | null
+    _sum: StoreWidgetConfigSumAggregateOutputType | null
+    _min: StoreWidgetConfigMinAggregateOutputType | null
+    _max: StoreWidgetConfigMaxAggregateOutputType | null
+  }
+
+  type GetStoreWidgetConfigGroupByPayload<T extends StoreWidgetConfigGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StoreWidgetConfigGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StoreWidgetConfigGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StoreWidgetConfigGroupByOutputType[P]>
+            : GetScalarType<T[P], StoreWidgetConfigGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StoreWidgetConfigSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    customization_id?: boolean
+    widget_type?: boolean
+    widget_name?: boolean
+    position?: boolean
+    sort_order?: boolean
+    is_visible?: boolean
+    background_color?: boolean
+    text_color?: boolean
+    border_color?: boolean
+    padding?: boolean
+    margin?: boolean
+    border_radius?: boolean
+    title?: boolean
+    show_title?: boolean
+    max_items?: boolean
+    auto_refresh?: boolean
+    refresh_interval?: boolean
+    config_json?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    customization?: boolean | StoreCustomizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["storeWidgetConfig"]>
+
+  export type StoreWidgetConfigSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    customization_id?: boolean
+    widget_type?: boolean
+    widget_name?: boolean
+    position?: boolean
+    sort_order?: boolean
+    is_visible?: boolean
+    background_color?: boolean
+    text_color?: boolean
+    border_color?: boolean
+    padding?: boolean
+    margin?: boolean
+    border_radius?: boolean
+    title?: boolean
+    show_title?: boolean
+    max_items?: boolean
+    auto_refresh?: boolean
+    refresh_interval?: boolean
+    config_json?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    customization?: boolean | StoreCustomizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["storeWidgetConfig"]>
+
+  export type StoreWidgetConfigSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    customization_id?: boolean
+    widget_type?: boolean
+    widget_name?: boolean
+    position?: boolean
+    sort_order?: boolean
+    is_visible?: boolean
+    background_color?: boolean
+    text_color?: boolean
+    border_color?: boolean
+    padding?: boolean
+    margin?: boolean
+    border_radius?: boolean
+    title?: boolean
+    show_title?: boolean
+    max_items?: boolean
+    auto_refresh?: boolean
+    refresh_interval?: boolean
+    config_json?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    customization?: boolean | StoreCustomizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["storeWidgetConfig"]>
+
+  export type StoreWidgetConfigSelectScalar = {
+    id?: boolean
+    customization_id?: boolean
+    widget_type?: boolean
+    widget_name?: boolean
+    position?: boolean
+    sort_order?: boolean
+    is_visible?: boolean
+    background_color?: boolean
+    text_color?: boolean
+    border_color?: boolean
+    padding?: boolean
+    margin?: boolean
+    border_radius?: boolean
+    title?: boolean
+    show_title?: boolean
+    max_items?: boolean
+    auto_refresh?: boolean
+    refresh_interval?: boolean
+    config_json?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type StoreWidgetConfigOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "customization_id" | "widget_type" | "widget_name" | "position" | "sort_order" | "is_visible" | "background_color" | "text_color" | "border_color" | "padding" | "margin" | "border_radius" | "title" | "show_title" | "max_items" | "auto_refresh" | "refresh_interval" | "config_json" | "created_at" | "updated_at", ExtArgs["result"]["storeWidgetConfig"]>
+  export type StoreWidgetConfigInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    customization?: boolean | StoreCustomizationDefaultArgs<ExtArgs>
+  }
+  export type StoreWidgetConfigIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    customization?: boolean | StoreCustomizationDefaultArgs<ExtArgs>
+  }
+  export type StoreWidgetConfigIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    customization?: boolean | StoreCustomizationDefaultArgs<ExtArgs>
+  }
+
+  export type $StoreWidgetConfigPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StoreWidgetConfig"
+    objects: {
+      customization: Prisma.$StoreCustomizationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      customization_id: number
+      widget_type: $Enums.WidgetType
+      widget_name: string
+      position: $Enums.WidgetPosition
+      sort_order: number
+      is_visible: boolean
+      background_color: string | null
+      text_color: string | null
+      border_color: string | null
+      padding: string | null
+      margin: string | null
+      border_radius: string | null
+      title: string | null
+      show_title: boolean
+      max_items: number | null
+      auto_refresh: boolean
+      refresh_interval: number | null
+      config_json: string | null
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["storeWidgetConfig"]>
+    composites: {}
+  }
+
+  type StoreWidgetConfigGetPayload<S extends boolean | null | undefined | StoreWidgetConfigDefaultArgs> = $Result.GetResult<Prisma.$StoreWidgetConfigPayload, S>
+
+  type StoreWidgetConfigCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StoreWidgetConfigFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StoreWidgetConfigCountAggregateInputType | true
+    }
+
+  export interface StoreWidgetConfigDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StoreWidgetConfig'], meta: { name: 'StoreWidgetConfig' } }
+    /**
+     * Find zero or one StoreWidgetConfig that matches the filter.
+     * @param {StoreWidgetConfigFindUniqueArgs} args - Arguments to find a StoreWidgetConfig
+     * @example
+     * // Get one StoreWidgetConfig
+     * const storeWidgetConfig = await prisma.storeWidgetConfig.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StoreWidgetConfigFindUniqueArgs>(args: SelectSubset<T, StoreWidgetConfigFindUniqueArgs<ExtArgs>>): Prisma__StoreWidgetConfigClient<$Result.GetResult<Prisma.$StoreWidgetConfigPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StoreWidgetConfig that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StoreWidgetConfigFindUniqueOrThrowArgs} args - Arguments to find a StoreWidgetConfig
+     * @example
+     * // Get one StoreWidgetConfig
+     * const storeWidgetConfig = await prisma.storeWidgetConfig.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StoreWidgetConfigFindUniqueOrThrowArgs>(args: SelectSubset<T, StoreWidgetConfigFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StoreWidgetConfigClient<$Result.GetResult<Prisma.$StoreWidgetConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StoreWidgetConfig that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreWidgetConfigFindFirstArgs} args - Arguments to find a StoreWidgetConfig
+     * @example
+     * // Get one StoreWidgetConfig
+     * const storeWidgetConfig = await prisma.storeWidgetConfig.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StoreWidgetConfigFindFirstArgs>(args?: SelectSubset<T, StoreWidgetConfigFindFirstArgs<ExtArgs>>): Prisma__StoreWidgetConfigClient<$Result.GetResult<Prisma.$StoreWidgetConfigPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StoreWidgetConfig that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreWidgetConfigFindFirstOrThrowArgs} args - Arguments to find a StoreWidgetConfig
+     * @example
+     * // Get one StoreWidgetConfig
+     * const storeWidgetConfig = await prisma.storeWidgetConfig.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StoreWidgetConfigFindFirstOrThrowArgs>(args?: SelectSubset<T, StoreWidgetConfigFindFirstOrThrowArgs<ExtArgs>>): Prisma__StoreWidgetConfigClient<$Result.GetResult<Prisma.$StoreWidgetConfigPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StoreWidgetConfigs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreWidgetConfigFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StoreWidgetConfigs
+     * const storeWidgetConfigs = await prisma.storeWidgetConfig.findMany()
+     * 
+     * // Get first 10 StoreWidgetConfigs
+     * const storeWidgetConfigs = await prisma.storeWidgetConfig.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const storeWidgetConfigWithIdOnly = await prisma.storeWidgetConfig.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StoreWidgetConfigFindManyArgs>(args?: SelectSubset<T, StoreWidgetConfigFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreWidgetConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StoreWidgetConfig.
+     * @param {StoreWidgetConfigCreateArgs} args - Arguments to create a StoreWidgetConfig.
+     * @example
+     * // Create one StoreWidgetConfig
+     * const StoreWidgetConfig = await prisma.storeWidgetConfig.create({
+     *   data: {
+     *     // ... data to create a StoreWidgetConfig
+     *   }
+     * })
+     * 
+     */
+    create<T extends StoreWidgetConfigCreateArgs>(args: SelectSubset<T, StoreWidgetConfigCreateArgs<ExtArgs>>): Prisma__StoreWidgetConfigClient<$Result.GetResult<Prisma.$StoreWidgetConfigPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StoreWidgetConfigs.
+     * @param {StoreWidgetConfigCreateManyArgs} args - Arguments to create many StoreWidgetConfigs.
+     * @example
+     * // Create many StoreWidgetConfigs
+     * const storeWidgetConfig = await prisma.storeWidgetConfig.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StoreWidgetConfigCreateManyArgs>(args?: SelectSubset<T, StoreWidgetConfigCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many StoreWidgetConfigs and returns the data saved in the database.
+     * @param {StoreWidgetConfigCreateManyAndReturnArgs} args - Arguments to create many StoreWidgetConfigs.
+     * @example
+     * // Create many StoreWidgetConfigs
+     * const storeWidgetConfig = await prisma.storeWidgetConfig.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many StoreWidgetConfigs and only return the `id`
+     * const storeWidgetConfigWithIdOnly = await prisma.storeWidgetConfig.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StoreWidgetConfigCreateManyAndReturnArgs>(args?: SelectSubset<T, StoreWidgetConfigCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreWidgetConfigPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a StoreWidgetConfig.
+     * @param {StoreWidgetConfigDeleteArgs} args - Arguments to delete one StoreWidgetConfig.
+     * @example
+     * // Delete one StoreWidgetConfig
+     * const StoreWidgetConfig = await prisma.storeWidgetConfig.delete({
+     *   where: {
+     *     // ... filter to delete one StoreWidgetConfig
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StoreWidgetConfigDeleteArgs>(args: SelectSubset<T, StoreWidgetConfigDeleteArgs<ExtArgs>>): Prisma__StoreWidgetConfigClient<$Result.GetResult<Prisma.$StoreWidgetConfigPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StoreWidgetConfig.
+     * @param {StoreWidgetConfigUpdateArgs} args - Arguments to update one StoreWidgetConfig.
+     * @example
+     * // Update one StoreWidgetConfig
+     * const storeWidgetConfig = await prisma.storeWidgetConfig.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StoreWidgetConfigUpdateArgs>(args: SelectSubset<T, StoreWidgetConfigUpdateArgs<ExtArgs>>): Prisma__StoreWidgetConfigClient<$Result.GetResult<Prisma.$StoreWidgetConfigPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StoreWidgetConfigs.
+     * @param {StoreWidgetConfigDeleteManyArgs} args - Arguments to filter StoreWidgetConfigs to delete.
+     * @example
+     * // Delete a few StoreWidgetConfigs
+     * const { count } = await prisma.storeWidgetConfig.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StoreWidgetConfigDeleteManyArgs>(args?: SelectSubset<T, StoreWidgetConfigDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StoreWidgetConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreWidgetConfigUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StoreWidgetConfigs
+     * const storeWidgetConfig = await prisma.storeWidgetConfig.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StoreWidgetConfigUpdateManyArgs>(args: SelectSubset<T, StoreWidgetConfigUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StoreWidgetConfigs and returns the data updated in the database.
+     * @param {StoreWidgetConfigUpdateManyAndReturnArgs} args - Arguments to update many StoreWidgetConfigs.
+     * @example
+     * // Update many StoreWidgetConfigs
+     * const storeWidgetConfig = await prisma.storeWidgetConfig.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more StoreWidgetConfigs and only return the `id`
+     * const storeWidgetConfigWithIdOnly = await prisma.storeWidgetConfig.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StoreWidgetConfigUpdateManyAndReturnArgs>(args: SelectSubset<T, StoreWidgetConfigUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreWidgetConfigPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one StoreWidgetConfig.
+     * @param {StoreWidgetConfigUpsertArgs} args - Arguments to update or create a StoreWidgetConfig.
+     * @example
+     * // Update or create a StoreWidgetConfig
+     * const storeWidgetConfig = await prisma.storeWidgetConfig.upsert({
+     *   create: {
+     *     // ... data to create a StoreWidgetConfig
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StoreWidgetConfig we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StoreWidgetConfigUpsertArgs>(args: SelectSubset<T, StoreWidgetConfigUpsertArgs<ExtArgs>>): Prisma__StoreWidgetConfigClient<$Result.GetResult<Prisma.$StoreWidgetConfigPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StoreWidgetConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreWidgetConfigCountArgs} args - Arguments to filter StoreWidgetConfigs to count.
+     * @example
+     * // Count the number of StoreWidgetConfigs
+     * const count = await prisma.storeWidgetConfig.count({
+     *   where: {
+     *     // ... the filter for the StoreWidgetConfigs we want to count
+     *   }
+     * })
+    **/
+    count<T extends StoreWidgetConfigCountArgs>(
+      args?: Subset<T, StoreWidgetConfigCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StoreWidgetConfigCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StoreWidgetConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreWidgetConfigAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StoreWidgetConfigAggregateArgs>(args: Subset<T, StoreWidgetConfigAggregateArgs>): Prisma.PrismaPromise<GetStoreWidgetConfigAggregateType<T>>
+
+    /**
+     * Group by StoreWidgetConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreWidgetConfigGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StoreWidgetConfigGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StoreWidgetConfigGroupByArgs['orderBy'] }
+        : { orderBy?: StoreWidgetConfigGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StoreWidgetConfigGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStoreWidgetConfigGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StoreWidgetConfig model
+   */
+  readonly fields: StoreWidgetConfigFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StoreWidgetConfig.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StoreWidgetConfigClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    customization<T extends StoreCustomizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreCustomizationDefaultArgs<ExtArgs>>): Prisma__StoreCustomizationClient<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StoreWidgetConfig model
+   */
+  interface StoreWidgetConfigFieldRefs {
+    readonly id: FieldRef<"StoreWidgetConfig", 'Int'>
+    readonly customization_id: FieldRef<"StoreWidgetConfig", 'Int'>
+    readonly widget_type: FieldRef<"StoreWidgetConfig", 'WidgetType'>
+    readonly widget_name: FieldRef<"StoreWidgetConfig", 'String'>
+    readonly position: FieldRef<"StoreWidgetConfig", 'WidgetPosition'>
+    readonly sort_order: FieldRef<"StoreWidgetConfig", 'Int'>
+    readonly is_visible: FieldRef<"StoreWidgetConfig", 'Boolean'>
+    readonly background_color: FieldRef<"StoreWidgetConfig", 'String'>
+    readonly text_color: FieldRef<"StoreWidgetConfig", 'String'>
+    readonly border_color: FieldRef<"StoreWidgetConfig", 'String'>
+    readonly padding: FieldRef<"StoreWidgetConfig", 'String'>
+    readonly margin: FieldRef<"StoreWidgetConfig", 'String'>
+    readonly border_radius: FieldRef<"StoreWidgetConfig", 'String'>
+    readonly title: FieldRef<"StoreWidgetConfig", 'String'>
+    readonly show_title: FieldRef<"StoreWidgetConfig", 'Boolean'>
+    readonly max_items: FieldRef<"StoreWidgetConfig", 'Int'>
+    readonly auto_refresh: FieldRef<"StoreWidgetConfig", 'Boolean'>
+    readonly refresh_interval: FieldRef<"StoreWidgetConfig", 'Int'>
+    readonly config_json: FieldRef<"StoreWidgetConfig", 'String'>
+    readonly created_at: FieldRef<"StoreWidgetConfig", 'DateTime'>
+    readonly updated_at: FieldRef<"StoreWidgetConfig", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StoreWidgetConfig findUnique
+   */
+  export type StoreWidgetConfigFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreWidgetConfig to fetch.
+     */
+    where: StoreWidgetConfigWhereUniqueInput
+  }
+
+  /**
+   * StoreWidgetConfig findUniqueOrThrow
+   */
+  export type StoreWidgetConfigFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreWidgetConfig to fetch.
+     */
+    where: StoreWidgetConfigWhereUniqueInput
+  }
+
+  /**
+   * StoreWidgetConfig findFirst
+   */
+  export type StoreWidgetConfigFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreWidgetConfig to fetch.
+     */
+    where?: StoreWidgetConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreWidgetConfigs to fetch.
+     */
+    orderBy?: StoreWidgetConfigOrderByWithRelationInput | StoreWidgetConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StoreWidgetConfigs.
+     */
+    cursor?: StoreWidgetConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreWidgetConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreWidgetConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StoreWidgetConfigs.
+     */
+    distinct?: StoreWidgetConfigScalarFieldEnum | StoreWidgetConfigScalarFieldEnum[]
+  }
+
+  /**
+   * StoreWidgetConfig findFirstOrThrow
+   */
+  export type StoreWidgetConfigFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreWidgetConfig to fetch.
+     */
+    where?: StoreWidgetConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreWidgetConfigs to fetch.
+     */
+    orderBy?: StoreWidgetConfigOrderByWithRelationInput | StoreWidgetConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StoreWidgetConfigs.
+     */
+    cursor?: StoreWidgetConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreWidgetConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreWidgetConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StoreWidgetConfigs.
+     */
+    distinct?: StoreWidgetConfigScalarFieldEnum | StoreWidgetConfigScalarFieldEnum[]
+  }
+
+  /**
+   * StoreWidgetConfig findMany
+   */
+  export type StoreWidgetConfigFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreWidgetConfigs to fetch.
+     */
+    where?: StoreWidgetConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreWidgetConfigs to fetch.
+     */
+    orderBy?: StoreWidgetConfigOrderByWithRelationInput | StoreWidgetConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StoreWidgetConfigs.
+     */
+    cursor?: StoreWidgetConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreWidgetConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreWidgetConfigs.
+     */
+    skip?: number
+    distinct?: StoreWidgetConfigScalarFieldEnum | StoreWidgetConfigScalarFieldEnum[]
+  }
+
+  /**
+   * StoreWidgetConfig create
+   */
+  export type StoreWidgetConfigCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigInclude<ExtArgs> | null
+    /**
+     * The data needed to create a StoreWidgetConfig.
+     */
+    data: XOR<StoreWidgetConfigCreateInput, StoreWidgetConfigUncheckedCreateInput>
+  }
+
+  /**
+   * StoreWidgetConfig createMany
+   */
+  export type StoreWidgetConfigCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StoreWidgetConfigs.
+     */
+    data: StoreWidgetConfigCreateManyInput | StoreWidgetConfigCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StoreWidgetConfig createManyAndReturn
+   */
+  export type StoreWidgetConfigCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * The data used to create many StoreWidgetConfigs.
+     */
+    data: StoreWidgetConfigCreateManyInput | StoreWidgetConfigCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StoreWidgetConfig update
+   */
+  export type StoreWidgetConfigUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigInclude<ExtArgs> | null
+    /**
+     * The data needed to update a StoreWidgetConfig.
+     */
+    data: XOR<StoreWidgetConfigUpdateInput, StoreWidgetConfigUncheckedUpdateInput>
+    /**
+     * Choose, which StoreWidgetConfig to update.
+     */
+    where: StoreWidgetConfigWhereUniqueInput
+  }
+
+  /**
+   * StoreWidgetConfig updateMany
+   */
+  export type StoreWidgetConfigUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StoreWidgetConfigs.
+     */
+    data: XOR<StoreWidgetConfigUpdateManyMutationInput, StoreWidgetConfigUncheckedUpdateManyInput>
+    /**
+     * Filter which StoreWidgetConfigs to update
+     */
+    where?: StoreWidgetConfigWhereInput
+    /**
+     * Limit how many StoreWidgetConfigs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StoreWidgetConfig updateManyAndReturn
+   */
+  export type StoreWidgetConfigUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * The data used to update StoreWidgetConfigs.
+     */
+    data: XOR<StoreWidgetConfigUpdateManyMutationInput, StoreWidgetConfigUncheckedUpdateManyInput>
+    /**
+     * Filter which StoreWidgetConfigs to update
+     */
+    where?: StoreWidgetConfigWhereInput
+    /**
+     * Limit how many StoreWidgetConfigs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StoreWidgetConfig upsert
+   */
+  export type StoreWidgetConfigUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigInclude<ExtArgs> | null
+    /**
+     * The filter to search for the StoreWidgetConfig to update in case it exists.
+     */
+    where: StoreWidgetConfigWhereUniqueInput
+    /**
+     * In case the StoreWidgetConfig found by the `where` argument doesn't exist, create a new StoreWidgetConfig with this data.
+     */
+    create: XOR<StoreWidgetConfigCreateInput, StoreWidgetConfigUncheckedCreateInput>
+    /**
+     * In case the StoreWidgetConfig was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StoreWidgetConfigUpdateInput, StoreWidgetConfigUncheckedUpdateInput>
+  }
+
+  /**
+   * StoreWidgetConfig delete
+   */
+  export type StoreWidgetConfigDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigInclude<ExtArgs> | null
+    /**
+     * Filter which StoreWidgetConfig to delete.
+     */
+    where: StoreWidgetConfigWhereUniqueInput
+  }
+
+  /**
+   * StoreWidgetConfig deleteMany
+   */
+  export type StoreWidgetConfigDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StoreWidgetConfigs to delete
+     */
+    where?: StoreWidgetConfigWhereInput
+    /**
+     * Limit how many StoreWidgetConfigs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StoreWidgetConfig without action
+   */
+  export type StoreWidgetConfigDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreWidgetConfig
+     */
+    select?: StoreWidgetConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreWidgetConfig
+     */
+    omit?: StoreWidgetConfigOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreWidgetConfigInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -21174,6 +26088,122 @@ export namespace Prisma {
   export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
 
 
+  export const StoreCustomizationScalarFieldEnum: {
+    id: 'id',
+    store_id: 'store_id',
+    primary_color: 'primary_color',
+    secondary_color: 'secondary_color',
+    accent_color: 'accent_color',
+    background_color: 'background_color',
+    text_color: 'text_color',
+    secondary_text_color: 'secondary_text_color',
+    border_color: 'border_color',
+    success_color: 'success_color',
+    warning_color: 'warning_color',
+    error_color: 'error_color',
+    primary_font: 'primary_font',
+    secondary_font: 'secondary_font',
+    font_size_base: 'font_size_base',
+    show_header: 'show_header',
+    show_logo: 'show_logo',
+    show_search_bar: 'show_search_bar',
+    show_navigation_menu: 'show_navigation_menu',
+    show_cart_icon: 'show_cart_icon',
+    show_user_account: 'show_user_account',
+    header_position: 'header_position',
+    header_style: 'header_style',
+    show_footer: 'show_footer',
+    footer_text: 'footer_text',
+    show_social_links: 'show_social_links',
+    show_contact_info: 'show_contact_info',
+    show_store_info: 'show_store_info',
+    layout_style: 'layout_style',
+    container_max_width: 'container_max_width',
+    border_radius: 'border_radius',
+    spacing_unit: 'spacing_unit',
+    show_hero_section: 'show_hero_section',
+    show_featured_products: 'show_featured_products',
+    show_categories: 'show_categories',
+    show_testimonials: 'show_testimonials',
+    show_about_section: 'show_about_section',
+    products_per_page: 'products_per_page',
+    product_card_style: 'product_card_style',
+    show_product_rating: 'show_product_rating',
+    show_product_stock: 'show_product_stock',
+    show_add_to_cart_btn: 'show_add_to_cart_btn',
+    custom_css: 'custom_css',
+    custom_js: 'custom_js',
+    favicon_url: 'favicon_url',
+    meta_title: 'meta_title',
+    meta_description: 'meta_description',
+    google_analytics_id: 'google_analytics_id',
+    facebook_pixel_id: 'facebook_pixel_id',
+    google_tag_manager_id: 'google_tag_manager_id',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type StoreCustomizationScalarFieldEnum = (typeof StoreCustomizationScalarFieldEnum)[keyof typeof StoreCustomizationScalarFieldEnum]
+
+
+  export const StoreSectionConfigScalarFieldEnum: {
+    id: 'id',
+    customization_id: 'customization_id',
+    section_type: 'section_type',
+    section_name: 'section_name',
+    is_visible: 'is_visible',
+    sort_order: 'sort_order',
+    background_color: 'background_color',
+    text_color: 'text_color',
+    padding: 'padding',
+    margin: 'margin',
+    title: 'title',
+    subtitle: 'subtitle',
+    description: 'description',
+    image_url: 'image_url',
+    button_text: 'button_text',
+    button_link: 'button_link',
+    show_title: 'show_title',
+    show_subtitle: 'show_subtitle',
+    show_description: 'show_description',
+    columns_count: 'columns_count',
+    items_per_row: 'items_per_row',
+    layout_style: 'layout_style',
+    config_json: 'config_json',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type StoreSectionConfigScalarFieldEnum = (typeof StoreSectionConfigScalarFieldEnum)[keyof typeof StoreSectionConfigScalarFieldEnum]
+
+
+  export const StoreWidgetConfigScalarFieldEnum: {
+    id: 'id',
+    customization_id: 'customization_id',
+    widget_type: 'widget_type',
+    widget_name: 'widget_name',
+    position: 'position',
+    sort_order: 'sort_order',
+    is_visible: 'is_visible',
+    background_color: 'background_color',
+    text_color: 'text_color',
+    border_color: 'border_color',
+    padding: 'padding',
+    margin: 'margin',
+    border_radius: 'border_radius',
+    title: 'title',
+    show_title: 'show_title',
+    max_items: 'max_items',
+    auto_refresh: 'auto_refresh',
+    refresh_interval: 'refresh_interval',
+    config_json: 'config_json',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type StoreWidgetConfigScalarFieldEnum = (typeof StoreWidgetConfigScalarFieldEnum)[keyof typeof StoreWidgetConfigScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -21297,6 +26327,71 @@ export namespace Prisma {
   };
 
   export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevanceFieldEnum)[keyof typeof EmployeeOrderByRelevanceFieldEnum]
+
+
+  export const StoreCustomizationOrderByRelevanceFieldEnum: {
+    primary_color: 'primary_color',
+    secondary_color: 'secondary_color',
+    accent_color: 'accent_color',
+    background_color: 'background_color',
+    text_color: 'text_color',
+    secondary_text_color: 'secondary_text_color',
+    border_color: 'border_color',
+    success_color: 'success_color',
+    warning_color: 'warning_color',
+    error_color: 'error_color',
+    primary_font: 'primary_font',
+    secondary_font: 'secondary_font',
+    font_size_base: 'font_size_base',
+    footer_text: 'footer_text',
+    container_max_width: 'container_max_width',
+    border_radius: 'border_radius',
+    spacing_unit: 'spacing_unit',
+    custom_css: 'custom_css',
+    custom_js: 'custom_js',
+    favicon_url: 'favicon_url',
+    meta_title: 'meta_title',
+    meta_description: 'meta_description',
+    google_analytics_id: 'google_analytics_id',
+    facebook_pixel_id: 'facebook_pixel_id',
+    google_tag_manager_id: 'google_tag_manager_id'
+  };
+
+  export type StoreCustomizationOrderByRelevanceFieldEnum = (typeof StoreCustomizationOrderByRelevanceFieldEnum)[keyof typeof StoreCustomizationOrderByRelevanceFieldEnum]
+
+
+  export const StoreSectionConfigOrderByRelevanceFieldEnum: {
+    section_name: 'section_name',
+    background_color: 'background_color',
+    text_color: 'text_color',
+    padding: 'padding',
+    margin: 'margin',
+    title: 'title',
+    subtitle: 'subtitle',
+    description: 'description',
+    image_url: 'image_url',
+    button_text: 'button_text',
+    button_link: 'button_link',
+    layout_style: 'layout_style',
+    config_json: 'config_json'
+  };
+
+  export type StoreSectionConfigOrderByRelevanceFieldEnum = (typeof StoreSectionConfigOrderByRelevanceFieldEnum)[keyof typeof StoreSectionConfigOrderByRelevanceFieldEnum]
+
+
+  export const StoreWidgetConfigOrderByRelevanceFieldEnum: {
+    widget_name: 'widget_name',
+    background_color: 'background_color',
+    text_color: 'text_color',
+    border_color: 'border_color',
+    padding: 'padding',
+    margin: 'margin',
+    border_radius: 'border_radius',
+    title: 'title',
+    config_json: 'config_json'
+  };
+
+  export type StoreWidgetConfigOrderByRelevanceFieldEnum = (typeof StoreWidgetConfigOrderByRelevanceFieldEnum)[keyof typeof StoreWidgetConfigOrderByRelevanceFieldEnum]
 
 
   /**
@@ -21462,6 +26557,104 @@ export namespace Prisma {
    * Reference to a field of type 'EmployeeRole[]'
    */
   export type ListEnumEmployeeRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmployeeRole[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'HeaderPosition'
+   */
+  export type EnumHeaderPositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HeaderPosition'>
+    
+
+
+  /**
+   * Reference to a field of type 'HeaderPosition[]'
+   */
+  export type ListEnumHeaderPositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HeaderPosition[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'HeaderStyle'
+   */
+  export type EnumHeaderStyleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HeaderStyle'>
+    
+
+
+  /**
+   * Reference to a field of type 'HeaderStyle[]'
+   */
+  export type ListEnumHeaderStyleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HeaderStyle[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'LayoutStyle'
+   */
+  export type EnumLayoutStyleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LayoutStyle'>
+    
+
+
+  /**
+   * Reference to a field of type 'LayoutStyle[]'
+   */
+  export type ListEnumLayoutStyleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LayoutStyle[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ProductCardStyle'
+   */
+  export type EnumProductCardStyleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProductCardStyle'>
+    
+
+
+  /**
+   * Reference to a field of type 'ProductCardStyle[]'
+   */
+  export type ListEnumProductCardStyleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProductCardStyle[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'SectionType'
+   */
+  export type EnumSectionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SectionType'>
+    
+
+
+  /**
+   * Reference to a field of type 'SectionType[]'
+   */
+  export type ListEnumSectionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SectionType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'WidgetType'
+   */
+  export type EnumWidgetTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WidgetType'>
+    
+
+
+  /**
+   * Reference to a field of type 'WidgetType[]'
+   */
+  export type ListEnumWidgetTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WidgetType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'WidgetPosition'
+   */
+  export type EnumWidgetPositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WidgetPosition'>
+    
+
+
+  /**
+   * Reference to a field of type 'WidgetPosition[]'
+   */
+  export type ListEnumWidgetPositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WidgetPosition[]'>
     
   /**
    * Deep Input Types
@@ -21658,6 +26851,7 @@ export namespace Prisma {
     balance?: XOR<StoreBalanceNullableScalarRelationFilter, StoreBalanceWhereInput> | null
     transactions?: TransactionListRelationFilter
     employees?: EmployeeListRelationFilter
+    customization?: XOR<StoreCustomizationNullableScalarRelationFilter, StoreCustomizationWhereInput> | null
   }
 
   export type StoreOrderByWithRelationInput = {
@@ -21678,6 +26872,7 @@ export namespace Prisma {
     balance?: StoreBalanceOrderByWithRelationInput
     transactions?: TransactionOrderByRelationAggregateInput
     employees?: EmployeeOrderByRelationAggregateInput
+    customization?: StoreCustomizationOrderByWithRelationInput
     _relevance?: StoreOrderByRelevanceInput
   }
 
@@ -21702,6 +26897,7 @@ export namespace Prisma {
     balance?: XOR<StoreBalanceNullableScalarRelationFilter, StoreBalanceWhereInput> | null
     transactions?: TransactionListRelationFilter
     employees?: EmployeeListRelationFilter
+    customization?: XOR<StoreCustomizationNullableScalarRelationFilter, StoreCustomizationWhereInput> | null
   }, "id" | "slug" | "subdomain">
 
   export type StoreOrderByWithAggregationInput = {
@@ -22784,6 +27980,602 @@ export namespace Prisma {
     updated_at?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
   }
 
+  export type StoreCustomizationWhereInput = {
+    AND?: StoreCustomizationWhereInput | StoreCustomizationWhereInput[]
+    OR?: StoreCustomizationWhereInput[]
+    NOT?: StoreCustomizationWhereInput | StoreCustomizationWhereInput[]
+    id?: IntFilter<"StoreCustomization"> | number
+    store_id?: IntFilter<"StoreCustomization"> | number
+    primary_color?: StringFilter<"StoreCustomization"> | string
+    secondary_color?: StringFilter<"StoreCustomization"> | string
+    accent_color?: StringFilter<"StoreCustomization"> | string
+    background_color?: StringFilter<"StoreCustomization"> | string
+    text_color?: StringFilter<"StoreCustomization"> | string
+    secondary_text_color?: StringFilter<"StoreCustomization"> | string
+    border_color?: StringFilter<"StoreCustomization"> | string
+    success_color?: StringFilter<"StoreCustomization"> | string
+    warning_color?: StringFilter<"StoreCustomization"> | string
+    error_color?: StringFilter<"StoreCustomization"> | string
+    primary_font?: StringFilter<"StoreCustomization"> | string
+    secondary_font?: StringFilter<"StoreCustomization"> | string
+    font_size_base?: StringFilter<"StoreCustomization"> | string
+    show_header?: BoolFilter<"StoreCustomization"> | boolean
+    show_logo?: BoolFilter<"StoreCustomization"> | boolean
+    show_search_bar?: BoolFilter<"StoreCustomization"> | boolean
+    show_navigation_menu?: BoolFilter<"StoreCustomization"> | boolean
+    show_cart_icon?: BoolFilter<"StoreCustomization"> | boolean
+    show_user_account?: BoolFilter<"StoreCustomization"> | boolean
+    header_position?: EnumHeaderPositionFilter<"StoreCustomization"> | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleFilter<"StoreCustomization"> | $Enums.HeaderStyle
+    show_footer?: BoolFilter<"StoreCustomization"> | boolean
+    footer_text?: StringNullableFilter<"StoreCustomization"> | string | null
+    show_social_links?: BoolFilter<"StoreCustomization"> | boolean
+    show_contact_info?: BoolFilter<"StoreCustomization"> | boolean
+    show_store_info?: BoolFilter<"StoreCustomization"> | boolean
+    layout_style?: EnumLayoutStyleFilter<"StoreCustomization"> | $Enums.LayoutStyle
+    container_max_width?: StringFilter<"StoreCustomization"> | string
+    border_radius?: StringFilter<"StoreCustomization"> | string
+    spacing_unit?: StringFilter<"StoreCustomization"> | string
+    show_hero_section?: BoolFilter<"StoreCustomization"> | boolean
+    show_featured_products?: BoolFilter<"StoreCustomization"> | boolean
+    show_categories?: BoolFilter<"StoreCustomization"> | boolean
+    show_testimonials?: BoolFilter<"StoreCustomization"> | boolean
+    show_about_section?: BoolFilter<"StoreCustomization"> | boolean
+    products_per_page?: IntFilter<"StoreCustomization"> | number
+    product_card_style?: EnumProductCardStyleFilter<"StoreCustomization"> | $Enums.ProductCardStyle
+    show_product_rating?: BoolFilter<"StoreCustomization"> | boolean
+    show_product_stock?: BoolFilter<"StoreCustomization"> | boolean
+    show_add_to_cart_btn?: BoolFilter<"StoreCustomization"> | boolean
+    custom_css?: StringNullableFilter<"StoreCustomization"> | string | null
+    custom_js?: StringNullableFilter<"StoreCustomization"> | string | null
+    favicon_url?: StringNullableFilter<"StoreCustomization"> | string | null
+    meta_title?: StringNullableFilter<"StoreCustomization"> | string | null
+    meta_description?: StringNullableFilter<"StoreCustomization"> | string | null
+    google_analytics_id?: StringNullableFilter<"StoreCustomization"> | string | null
+    facebook_pixel_id?: StringNullableFilter<"StoreCustomization"> | string | null
+    google_tag_manager_id?: StringNullableFilter<"StoreCustomization"> | string | null
+    created_at?: DateTimeFilter<"StoreCustomization"> | Date | string
+    updated_at?: DateTimeFilter<"StoreCustomization"> | Date | string
+    store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    sections?: StoreSectionConfigListRelationFilter
+    widgets?: StoreWidgetConfigListRelationFilter
+  }
+
+  export type StoreCustomizationOrderByWithRelationInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    primary_color?: SortOrder
+    secondary_color?: SortOrder
+    accent_color?: SortOrder
+    background_color?: SortOrder
+    text_color?: SortOrder
+    secondary_text_color?: SortOrder
+    border_color?: SortOrder
+    success_color?: SortOrder
+    warning_color?: SortOrder
+    error_color?: SortOrder
+    primary_font?: SortOrder
+    secondary_font?: SortOrder
+    font_size_base?: SortOrder
+    show_header?: SortOrder
+    show_logo?: SortOrder
+    show_search_bar?: SortOrder
+    show_navigation_menu?: SortOrder
+    show_cart_icon?: SortOrder
+    show_user_account?: SortOrder
+    header_position?: SortOrder
+    header_style?: SortOrder
+    show_footer?: SortOrder
+    footer_text?: SortOrderInput | SortOrder
+    show_social_links?: SortOrder
+    show_contact_info?: SortOrder
+    show_store_info?: SortOrder
+    layout_style?: SortOrder
+    container_max_width?: SortOrder
+    border_radius?: SortOrder
+    spacing_unit?: SortOrder
+    show_hero_section?: SortOrder
+    show_featured_products?: SortOrder
+    show_categories?: SortOrder
+    show_testimonials?: SortOrder
+    show_about_section?: SortOrder
+    products_per_page?: SortOrder
+    product_card_style?: SortOrder
+    show_product_rating?: SortOrder
+    show_product_stock?: SortOrder
+    show_add_to_cart_btn?: SortOrder
+    custom_css?: SortOrderInput | SortOrder
+    custom_js?: SortOrderInput | SortOrder
+    favicon_url?: SortOrderInput | SortOrder
+    meta_title?: SortOrderInput | SortOrder
+    meta_description?: SortOrderInput | SortOrder
+    google_analytics_id?: SortOrderInput | SortOrder
+    facebook_pixel_id?: SortOrderInput | SortOrder
+    google_tag_manager_id?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    store?: StoreOrderByWithRelationInput
+    sections?: StoreSectionConfigOrderByRelationAggregateInput
+    widgets?: StoreWidgetConfigOrderByRelationAggregateInput
+    _relevance?: StoreCustomizationOrderByRelevanceInput
+  }
+
+  export type StoreCustomizationWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    store_id?: number
+    AND?: StoreCustomizationWhereInput | StoreCustomizationWhereInput[]
+    OR?: StoreCustomizationWhereInput[]
+    NOT?: StoreCustomizationWhereInput | StoreCustomizationWhereInput[]
+    primary_color?: StringFilter<"StoreCustomization"> | string
+    secondary_color?: StringFilter<"StoreCustomization"> | string
+    accent_color?: StringFilter<"StoreCustomization"> | string
+    background_color?: StringFilter<"StoreCustomization"> | string
+    text_color?: StringFilter<"StoreCustomization"> | string
+    secondary_text_color?: StringFilter<"StoreCustomization"> | string
+    border_color?: StringFilter<"StoreCustomization"> | string
+    success_color?: StringFilter<"StoreCustomization"> | string
+    warning_color?: StringFilter<"StoreCustomization"> | string
+    error_color?: StringFilter<"StoreCustomization"> | string
+    primary_font?: StringFilter<"StoreCustomization"> | string
+    secondary_font?: StringFilter<"StoreCustomization"> | string
+    font_size_base?: StringFilter<"StoreCustomization"> | string
+    show_header?: BoolFilter<"StoreCustomization"> | boolean
+    show_logo?: BoolFilter<"StoreCustomization"> | boolean
+    show_search_bar?: BoolFilter<"StoreCustomization"> | boolean
+    show_navigation_menu?: BoolFilter<"StoreCustomization"> | boolean
+    show_cart_icon?: BoolFilter<"StoreCustomization"> | boolean
+    show_user_account?: BoolFilter<"StoreCustomization"> | boolean
+    header_position?: EnumHeaderPositionFilter<"StoreCustomization"> | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleFilter<"StoreCustomization"> | $Enums.HeaderStyle
+    show_footer?: BoolFilter<"StoreCustomization"> | boolean
+    footer_text?: StringNullableFilter<"StoreCustomization"> | string | null
+    show_social_links?: BoolFilter<"StoreCustomization"> | boolean
+    show_contact_info?: BoolFilter<"StoreCustomization"> | boolean
+    show_store_info?: BoolFilter<"StoreCustomization"> | boolean
+    layout_style?: EnumLayoutStyleFilter<"StoreCustomization"> | $Enums.LayoutStyle
+    container_max_width?: StringFilter<"StoreCustomization"> | string
+    border_radius?: StringFilter<"StoreCustomization"> | string
+    spacing_unit?: StringFilter<"StoreCustomization"> | string
+    show_hero_section?: BoolFilter<"StoreCustomization"> | boolean
+    show_featured_products?: BoolFilter<"StoreCustomization"> | boolean
+    show_categories?: BoolFilter<"StoreCustomization"> | boolean
+    show_testimonials?: BoolFilter<"StoreCustomization"> | boolean
+    show_about_section?: BoolFilter<"StoreCustomization"> | boolean
+    products_per_page?: IntFilter<"StoreCustomization"> | number
+    product_card_style?: EnumProductCardStyleFilter<"StoreCustomization"> | $Enums.ProductCardStyle
+    show_product_rating?: BoolFilter<"StoreCustomization"> | boolean
+    show_product_stock?: BoolFilter<"StoreCustomization"> | boolean
+    show_add_to_cart_btn?: BoolFilter<"StoreCustomization"> | boolean
+    custom_css?: StringNullableFilter<"StoreCustomization"> | string | null
+    custom_js?: StringNullableFilter<"StoreCustomization"> | string | null
+    favicon_url?: StringNullableFilter<"StoreCustomization"> | string | null
+    meta_title?: StringNullableFilter<"StoreCustomization"> | string | null
+    meta_description?: StringNullableFilter<"StoreCustomization"> | string | null
+    google_analytics_id?: StringNullableFilter<"StoreCustomization"> | string | null
+    facebook_pixel_id?: StringNullableFilter<"StoreCustomization"> | string | null
+    google_tag_manager_id?: StringNullableFilter<"StoreCustomization"> | string | null
+    created_at?: DateTimeFilter<"StoreCustomization"> | Date | string
+    updated_at?: DateTimeFilter<"StoreCustomization"> | Date | string
+    store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    sections?: StoreSectionConfigListRelationFilter
+    widgets?: StoreWidgetConfigListRelationFilter
+  }, "id" | "store_id">
+
+  export type StoreCustomizationOrderByWithAggregationInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    primary_color?: SortOrder
+    secondary_color?: SortOrder
+    accent_color?: SortOrder
+    background_color?: SortOrder
+    text_color?: SortOrder
+    secondary_text_color?: SortOrder
+    border_color?: SortOrder
+    success_color?: SortOrder
+    warning_color?: SortOrder
+    error_color?: SortOrder
+    primary_font?: SortOrder
+    secondary_font?: SortOrder
+    font_size_base?: SortOrder
+    show_header?: SortOrder
+    show_logo?: SortOrder
+    show_search_bar?: SortOrder
+    show_navigation_menu?: SortOrder
+    show_cart_icon?: SortOrder
+    show_user_account?: SortOrder
+    header_position?: SortOrder
+    header_style?: SortOrder
+    show_footer?: SortOrder
+    footer_text?: SortOrderInput | SortOrder
+    show_social_links?: SortOrder
+    show_contact_info?: SortOrder
+    show_store_info?: SortOrder
+    layout_style?: SortOrder
+    container_max_width?: SortOrder
+    border_radius?: SortOrder
+    spacing_unit?: SortOrder
+    show_hero_section?: SortOrder
+    show_featured_products?: SortOrder
+    show_categories?: SortOrder
+    show_testimonials?: SortOrder
+    show_about_section?: SortOrder
+    products_per_page?: SortOrder
+    product_card_style?: SortOrder
+    show_product_rating?: SortOrder
+    show_product_stock?: SortOrder
+    show_add_to_cart_btn?: SortOrder
+    custom_css?: SortOrderInput | SortOrder
+    custom_js?: SortOrderInput | SortOrder
+    favicon_url?: SortOrderInput | SortOrder
+    meta_title?: SortOrderInput | SortOrder
+    meta_description?: SortOrderInput | SortOrder
+    google_analytics_id?: SortOrderInput | SortOrder
+    facebook_pixel_id?: SortOrderInput | SortOrder
+    google_tag_manager_id?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: StoreCustomizationCountOrderByAggregateInput
+    _avg?: StoreCustomizationAvgOrderByAggregateInput
+    _max?: StoreCustomizationMaxOrderByAggregateInput
+    _min?: StoreCustomizationMinOrderByAggregateInput
+    _sum?: StoreCustomizationSumOrderByAggregateInput
+  }
+
+  export type StoreCustomizationScalarWhereWithAggregatesInput = {
+    AND?: StoreCustomizationScalarWhereWithAggregatesInput | StoreCustomizationScalarWhereWithAggregatesInput[]
+    OR?: StoreCustomizationScalarWhereWithAggregatesInput[]
+    NOT?: StoreCustomizationScalarWhereWithAggregatesInput | StoreCustomizationScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"StoreCustomization"> | number
+    store_id?: IntWithAggregatesFilter<"StoreCustomization"> | number
+    primary_color?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    secondary_color?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    accent_color?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    background_color?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    text_color?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    secondary_text_color?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    border_color?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    success_color?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    warning_color?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    error_color?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    primary_font?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    secondary_font?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    font_size_base?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    show_header?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_logo?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_search_bar?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_navigation_menu?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_cart_icon?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_user_account?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    header_position?: EnumHeaderPositionWithAggregatesFilter<"StoreCustomization"> | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleWithAggregatesFilter<"StoreCustomization"> | $Enums.HeaderStyle
+    show_footer?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    footer_text?: StringNullableWithAggregatesFilter<"StoreCustomization"> | string | null
+    show_social_links?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_contact_info?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_store_info?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    layout_style?: EnumLayoutStyleWithAggregatesFilter<"StoreCustomization"> | $Enums.LayoutStyle
+    container_max_width?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    border_radius?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    spacing_unit?: StringWithAggregatesFilter<"StoreCustomization"> | string
+    show_hero_section?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_featured_products?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_categories?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_testimonials?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_about_section?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    products_per_page?: IntWithAggregatesFilter<"StoreCustomization"> | number
+    product_card_style?: EnumProductCardStyleWithAggregatesFilter<"StoreCustomization"> | $Enums.ProductCardStyle
+    show_product_rating?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_product_stock?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    show_add_to_cart_btn?: BoolWithAggregatesFilter<"StoreCustomization"> | boolean
+    custom_css?: StringNullableWithAggregatesFilter<"StoreCustomization"> | string | null
+    custom_js?: StringNullableWithAggregatesFilter<"StoreCustomization"> | string | null
+    favicon_url?: StringNullableWithAggregatesFilter<"StoreCustomization"> | string | null
+    meta_title?: StringNullableWithAggregatesFilter<"StoreCustomization"> | string | null
+    meta_description?: StringNullableWithAggregatesFilter<"StoreCustomization"> | string | null
+    google_analytics_id?: StringNullableWithAggregatesFilter<"StoreCustomization"> | string | null
+    facebook_pixel_id?: StringNullableWithAggregatesFilter<"StoreCustomization"> | string | null
+    google_tag_manager_id?: StringNullableWithAggregatesFilter<"StoreCustomization"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"StoreCustomization"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"StoreCustomization"> | Date | string
+  }
+
+  export type StoreSectionConfigWhereInput = {
+    AND?: StoreSectionConfigWhereInput | StoreSectionConfigWhereInput[]
+    OR?: StoreSectionConfigWhereInput[]
+    NOT?: StoreSectionConfigWhereInput | StoreSectionConfigWhereInput[]
+    id?: IntFilter<"StoreSectionConfig"> | number
+    customization_id?: IntFilter<"StoreSectionConfig"> | number
+    section_type?: EnumSectionTypeFilter<"StoreSectionConfig"> | $Enums.SectionType
+    section_name?: StringFilter<"StoreSectionConfig"> | string
+    is_visible?: BoolFilter<"StoreSectionConfig"> | boolean
+    sort_order?: IntFilter<"StoreSectionConfig"> | number
+    background_color?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    text_color?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    padding?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    margin?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    title?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    subtitle?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    description?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    image_url?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    button_text?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    button_link?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    show_title?: BoolFilter<"StoreSectionConfig"> | boolean
+    show_subtitle?: BoolFilter<"StoreSectionConfig"> | boolean
+    show_description?: BoolFilter<"StoreSectionConfig"> | boolean
+    columns_count?: IntNullableFilter<"StoreSectionConfig"> | number | null
+    items_per_row?: IntNullableFilter<"StoreSectionConfig"> | number | null
+    layout_style?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    config_json?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    created_at?: DateTimeFilter<"StoreSectionConfig"> | Date | string
+    updated_at?: DateTimeFilter<"StoreSectionConfig"> | Date | string
+    customization?: XOR<StoreCustomizationScalarRelationFilter, StoreCustomizationWhereInput>
+  }
+
+  export type StoreSectionConfigOrderByWithRelationInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    section_type?: SortOrder
+    section_name?: SortOrder
+    is_visible?: SortOrder
+    sort_order?: SortOrder
+    background_color?: SortOrderInput | SortOrder
+    text_color?: SortOrderInput | SortOrder
+    padding?: SortOrderInput | SortOrder
+    margin?: SortOrderInput | SortOrder
+    title?: SortOrderInput | SortOrder
+    subtitle?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    image_url?: SortOrderInput | SortOrder
+    button_text?: SortOrderInput | SortOrder
+    button_link?: SortOrderInput | SortOrder
+    show_title?: SortOrder
+    show_subtitle?: SortOrder
+    show_description?: SortOrder
+    columns_count?: SortOrderInput | SortOrder
+    items_per_row?: SortOrderInput | SortOrder
+    layout_style?: SortOrderInput | SortOrder
+    config_json?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    customization?: StoreCustomizationOrderByWithRelationInput
+    _relevance?: StoreSectionConfigOrderByRelevanceInput
+  }
+
+  export type StoreSectionConfigWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    customization_id_section_type?: StoreSectionConfigCustomization_idSection_typeCompoundUniqueInput
+    AND?: StoreSectionConfigWhereInput | StoreSectionConfigWhereInput[]
+    OR?: StoreSectionConfigWhereInput[]
+    NOT?: StoreSectionConfigWhereInput | StoreSectionConfigWhereInput[]
+    customization_id?: IntFilter<"StoreSectionConfig"> | number
+    section_type?: EnumSectionTypeFilter<"StoreSectionConfig"> | $Enums.SectionType
+    section_name?: StringFilter<"StoreSectionConfig"> | string
+    is_visible?: BoolFilter<"StoreSectionConfig"> | boolean
+    sort_order?: IntFilter<"StoreSectionConfig"> | number
+    background_color?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    text_color?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    padding?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    margin?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    title?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    subtitle?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    description?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    image_url?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    button_text?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    button_link?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    show_title?: BoolFilter<"StoreSectionConfig"> | boolean
+    show_subtitle?: BoolFilter<"StoreSectionConfig"> | boolean
+    show_description?: BoolFilter<"StoreSectionConfig"> | boolean
+    columns_count?: IntNullableFilter<"StoreSectionConfig"> | number | null
+    items_per_row?: IntNullableFilter<"StoreSectionConfig"> | number | null
+    layout_style?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    config_json?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    created_at?: DateTimeFilter<"StoreSectionConfig"> | Date | string
+    updated_at?: DateTimeFilter<"StoreSectionConfig"> | Date | string
+    customization?: XOR<StoreCustomizationScalarRelationFilter, StoreCustomizationWhereInput>
+  }, "id" | "customization_id_section_type">
+
+  export type StoreSectionConfigOrderByWithAggregationInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    section_type?: SortOrder
+    section_name?: SortOrder
+    is_visible?: SortOrder
+    sort_order?: SortOrder
+    background_color?: SortOrderInput | SortOrder
+    text_color?: SortOrderInput | SortOrder
+    padding?: SortOrderInput | SortOrder
+    margin?: SortOrderInput | SortOrder
+    title?: SortOrderInput | SortOrder
+    subtitle?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    image_url?: SortOrderInput | SortOrder
+    button_text?: SortOrderInput | SortOrder
+    button_link?: SortOrderInput | SortOrder
+    show_title?: SortOrder
+    show_subtitle?: SortOrder
+    show_description?: SortOrder
+    columns_count?: SortOrderInput | SortOrder
+    items_per_row?: SortOrderInput | SortOrder
+    layout_style?: SortOrderInput | SortOrder
+    config_json?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: StoreSectionConfigCountOrderByAggregateInput
+    _avg?: StoreSectionConfigAvgOrderByAggregateInput
+    _max?: StoreSectionConfigMaxOrderByAggregateInput
+    _min?: StoreSectionConfigMinOrderByAggregateInput
+    _sum?: StoreSectionConfigSumOrderByAggregateInput
+  }
+
+  export type StoreSectionConfigScalarWhereWithAggregatesInput = {
+    AND?: StoreSectionConfigScalarWhereWithAggregatesInput | StoreSectionConfigScalarWhereWithAggregatesInput[]
+    OR?: StoreSectionConfigScalarWhereWithAggregatesInput[]
+    NOT?: StoreSectionConfigScalarWhereWithAggregatesInput | StoreSectionConfigScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"StoreSectionConfig"> | number
+    customization_id?: IntWithAggregatesFilter<"StoreSectionConfig"> | number
+    section_type?: EnumSectionTypeWithAggregatesFilter<"StoreSectionConfig"> | $Enums.SectionType
+    section_name?: StringWithAggregatesFilter<"StoreSectionConfig"> | string
+    is_visible?: BoolWithAggregatesFilter<"StoreSectionConfig"> | boolean
+    sort_order?: IntWithAggregatesFilter<"StoreSectionConfig"> | number
+    background_color?: StringNullableWithAggregatesFilter<"StoreSectionConfig"> | string | null
+    text_color?: StringNullableWithAggregatesFilter<"StoreSectionConfig"> | string | null
+    padding?: StringNullableWithAggregatesFilter<"StoreSectionConfig"> | string | null
+    margin?: StringNullableWithAggregatesFilter<"StoreSectionConfig"> | string | null
+    title?: StringNullableWithAggregatesFilter<"StoreSectionConfig"> | string | null
+    subtitle?: StringNullableWithAggregatesFilter<"StoreSectionConfig"> | string | null
+    description?: StringNullableWithAggregatesFilter<"StoreSectionConfig"> | string | null
+    image_url?: StringNullableWithAggregatesFilter<"StoreSectionConfig"> | string | null
+    button_text?: StringNullableWithAggregatesFilter<"StoreSectionConfig"> | string | null
+    button_link?: StringNullableWithAggregatesFilter<"StoreSectionConfig"> | string | null
+    show_title?: BoolWithAggregatesFilter<"StoreSectionConfig"> | boolean
+    show_subtitle?: BoolWithAggregatesFilter<"StoreSectionConfig"> | boolean
+    show_description?: BoolWithAggregatesFilter<"StoreSectionConfig"> | boolean
+    columns_count?: IntNullableWithAggregatesFilter<"StoreSectionConfig"> | number | null
+    items_per_row?: IntNullableWithAggregatesFilter<"StoreSectionConfig"> | number | null
+    layout_style?: StringNullableWithAggregatesFilter<"StoreSectionConfig"> | string | null
+    config_json?: StringNullableWithAggregatesFilter<"StoreSectionConfig"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"StoreSectionConfig"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"StoreSectionConfig"> | Date | string
+  }
+
+  export type StoreWidgetConfigWhereInput = {
+    AND?: StoreWidgetConfigWhereInput | StoreWidgetConfigWhereInput[]
+    OR?: StoreWidgetConfigWhereInput[]
+    NOT?: StoreWidgetConfigWhereInput | StoreWidgetConfigWhereInput[]
+    id?: IntFilter<"StoreWidgetConfig"> | number
+    customization_id?: IntFilter<"StoreWidgetConfig"> | number
+    widget_type?: EnumWidgetTypeFilter<"StoreWidgetConfig"> | $Enums.WidgetType
+    widget_name?: StringFilter<"StoreWidgetConfig"> | string
+    position?: EnumWidgetPositionFilter<"StoreWidgetConfig"> | $Enums.WidgetPosition
+    sort_order?: IntFilter<"StoreWidgetConfig"> | number
+    is_visible?: BoolFilter<"StoreWidgetConfig"> | boolean
+    background_color?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    text_color?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    border_color?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    padding?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    margin?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    border_radius?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    title?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    show_title?: BoolFilter<"StoreWidgetConfig"> | boolean
+    max_items?: IntNullableFilter<"StoreWidgetConfig"> | number | null
+    auto_refresh?: BoolFilter<"StoreWidgetConfig"> | boolean
+    refresh_interval?: IntNullableFilter<"StoreWidgetConfig"> | number | null
+    config_json?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    created_at?: DateTimeFilter<"StoreWidgetConfig"> | Date | string
+    updated_at?: DateTimeFilter<"StoreWidgetConfig"> | Date | string
+    customization?: XOR<StoreCustomizationScalarRelationFilter, StoreCustomizationWhereInput>
+  }
+
+  export type StoreWidgetConfigOrderByWithRelationInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    widget_type?: SortOrder
+    widget_name?: SortOrder
+    position?: SortOrder
+    sort_order?: SortOrder
+    is_visible?: SortOrder
+    background_color?: SortOrderInput | SortOrder
+    text_color?: SortOrderInput | SortOrder
+    border_color?: SortOrderInput | SortOrder
+    padding?: SortOrderInput | SortOrder
+    margin?: SortOrderInput | SortOrder
+    border_radius?: SortOrderInput | SortOrder
+    title?: SortOrderInput | SortOrder
+    show_title?: SortOrder
+    max_items?: SortOrderInput | SortOrder
+    auto_refresh?: SortOrder
+    refresh_interval?: SortOrderInput | SortOrder
+    config_json?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    customization?: StoreCustomizationOrderByWithRelationInput
+    _relevance?: StoreWidgetConfigOrderByRelevanceInput
+  }
+
+  export type StoreWidgetConfigWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: StoreWidgetConfigWhereInput | StoreWidgetConfigWhereInput[]
+    OR?: StoreWidgetConfigWhereInput[]
+    NOT?: StoreWidgetConfigWhereInput | StoreWidgetConfigWhereInput[]
+    customization_id?: IntFilter<"StoreWidgetConfig"> | number
+    widget_type?: EnumWidgetTypeFilter<"StoreWidgetConfig"> | $Enums.WidgetType
+    widget_name?: StringFilter<"StoreWidgetConfig"> | string
+    position?: EnumWidgetPositionFilter<"StoreWidgetConfig"> | $Enums.WidgetPosition
+    sort_order?: IntFilter<"StoreWidgetConfig"> | number
+    is_visible?: BoolFilter<"StoreWidgetConfig"> | boolean
+    background_color?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    text_color?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    border_color?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    padding?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    margin?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    border_radius?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    title?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    show_title?: BoolFilter<"StoreWidgetConfig"> | boolean
+    max_items?: IntNullableFilter<"StoreWidgetConfig"> | number | null
+    auto_refresh?: BoolFilter<"StoreWidgetConfig"> | boolean
+    refresh_interval?: IntNullableFilter<"StoreWidgetConfig"> | number | null
+    config_json?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    created_at?: DateTimeFilter<"StoreWidgetConfig"> | Date | string
+    updated_at?: DateTimeFilter<"StoreWidgetConfig"> | Date | string
+    customization?: XOR<StoreCustomizationScalarRelationFilter, StoreCustomizationWhereInput>
+  }, "id">
+
+  export type StoreWidgetConfigOrderByWithAggregationInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    widget_type?: SortOrder
+    widget_name?: SortOrder
+    position?: SortOrder
+    sort_order?: SortOrder
+    is_visible?: SortOrder
+    background_color?: SortOrderInput | SortOrder
+    text_color?: SortOrderInput | SortOrder
+    border_color?: SortOrderInput | SortOrder
+    padding?: SortOrderInput | SortOrder
+    margin?: SortOrderInput | SortOrder
+    border_radius?: SortOrderInput | SortOrder
+    title?: SortOrderInput | SortOrder
+    show_title?: SortOrder
+    max_items?: SortOrderInput | SortOrder
+    auto_refresh?: SortOrder
+    refresh_interval?: SortOrderInput | SortOrder
+    config_json?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: StoreWidgetConfigCountOrderByAggregateInput
+    _avg?: StoreWidgetConfigAvgOrderByAggregateInput
+    _max?: StoreWidgetConfigMaxOrderByAggregateInput
+    _min?: StoreWidgetConfigMinOrderByAggregateInput
+    _sum?: StoreWidgetConfigSumOrderByAggregateInput
+  }
+
+  export type StoreWidgetConfigScalarWhereWithAggregatesInput = {
+    AND?: StoreWidgetConfigScalarWhereWithAggregatesInput | StoreWidgetConfigScalarWhereWithAggregatesInput[]
+    OR?: StoreWidgetConfigScalarWhereWithAggregatesInput[]
+    NOT?: StoreWidgetConfigScalarWhereWithAggregatesInput | StoreWidgetConfigScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"StoreWidgetConfig"> | number
+    customization_id?: IntWithAggregatesFilter<"StoreWidgetConfig"> | number
+    widget_type?: EnumWidgetTypeWithAggregatesFilter<"StoreWidgetConfig"> | $Enums.WidgetType
+    widget_name?: StringWithAggregatesFilter<"StoreWidgetConfig"> | string
+    position?: EnumWidgetPositionWithAggregatesFilter<"StoreWidgetConfig"> | $Enums.WidgetPosition
+    sort_order?: IntWithAggregatesFilter<"StoreWidgetConfig"> | number
+    is_visible?: BoolWithAggregatesFilter<"StoreWidgetConfig"> | boolean
+    background_color?: StringNullableWithAggregatesFilter<"StoreWidgetConfig"> | string | null
+    text_color?: StringNullableWithAggregatesFilter<"StoreWidgetConfig"> | string | null
+    border_color?: StringNullableWithAggregatesFilter<"StoreWidgetConfig"> | string | null
+    padding?: StringNullableWithAggregatesFilter<"StoreWidgetConfig"> | string | null
+    margin?: StringNullableWithAggregatesFilter<"StoreWidgetConfig"> | string | null
+    border_radius?: StringNullableWithAggregatesFilter<"StoreWidgetConfig"> | string | null
+    title?: StringNullableWithAggregatesFilter<"StoreWidgetConfig"> | string | null
+    show_title?: BoolWithAggregatesFilter<"StoreWidgetConfig"> | boolean
+    max_items?: IntNullableWithAggregatesFilter<"StoreWidgetConfig"> | number | null
+    auto_refresh?: BoolWithAggregatesFilter<"StoreWidgetConfig"> | boolean
+    refresh_interval?: IntNullableWithAggregatesFilter<"StoreWidgetConfig"> | number | null
+    config_json?: StringNullableWithAggregatesFilter<"StoreWidgetConfig"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"StoreWidgetConfig"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"StoreWidgetConfig"> | Date | string
+  }
+
   export type UserCreateInput = {
     email: string
     first_name?: string | null
@@ -22982,6 +28774,7 @@ export namespace Prisma {
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateInput = {
@@ -23001,6 +28794,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUpdateInput = {
@@ -23019,6 +28813,7 @@ export namespace Prisma {
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateInput = {
@@ -23038,6 +28833,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreCreateManyInput = {
@@ -24149,6 +29945,751 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type StoreCustomizationCreateInput = {
+    primary_color?: string
+    secondary_color?: string
+    accent_color?: string
+    background_color?: string
+    text_color?: string
+    secondary_text_color?: string
+    border_color?: string
+    success_color?: string
+    warning_color?: string
+    error_color?: string
+    primary_font?: string
+    secondary_font?: string
+    font_size_base?: string
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: $Enums.HeaderPosition
+    header_style?: $Enums.HeaderStyle
+    show_footer?: boolean
+    footer_text?: string | null
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: $Enums.LayoutStyle
+    container_max_width?: string
+    border_radius?: string
+    spacing_unit?: string
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: number
+    product_card_style?: $Enums.ProductCardStyle
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: string | null
+    custom_js?: string | null
+    favicon_url?: string | null
+    meta_title?: string | null
+    meta_description?: string | null
+    google_analytics_id?: string | null
+    facebook_pixel_id?: string | null
+    google_tag_manager_id?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    store: StoreCreateNestedOneWithoutCustomizationInput
+    sections?: StoreSectionConfigCreateNestedManyWithoutCustomizationInput
+    widgets?: StoreWidgetConfigCreateNestedManyWithoutCustomizationInput
+  }
+
+  export type StoreCustomizationUncheckedCreateInput = {
+    id?: number
+    store_id: number
+    primary_color?: string
+    secondary_color?: string
+    accent_color?: string
+    background_color?: string
+    text_color?: string
+    secondary_text_color?: string
+    border_color?: string
+    success_color?: string
+    warning_color?: string
+    error_color?: string
+    primary_font?: string
+    secondary_font?: string
+    font_size_base?: string
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: $Enums.HeaderPosition
+    header_style?: $Enums.HeaderStyle
+    show_footer?: boolean
+    footer_text?: string | null
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: $Enums.LayoutStyle
+    container_max_width?: string
+    border_radius?: string
+    spacing_unit?: string
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: number
+    product_card_style?: $Enums.ProductCardStyle
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: string | null
+    custom_js?: string | null
+    favicon_url?: string | null
+    meta_title?: string | null
+    meta_description?: string | null
+    google_analytics_id?: string | null
+    facebook_pixel_id?: string | null
+    google_tag_manager_id?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    sections?: StoreSectionConfigUncheckedCreateNestedManyWithoutCustomizationInput
+    widgets?: StoreWidgetConfigUncheckedCreateNestedManyWithoutCustomizationInput
+  }
+
+  export type StoreCustomizationUpdateInput = {
+    primary_color?: StringFieldUpdateOperationsInput | string
+    secondary_color?: StringFieldUpdateOperationsInput | string
+    accent_color?: StringFieldUpdateOperationsInput | string
+    background_color?: StringFieldUpdateOperationsInput | string
+    text_color?: StringFieldUpdateOperationsInput | string
+    secondary_text_color?: StringFieldUpdateOperationsInput | string
+    border_color?: StringFieldUpdateOperationsInput | string
+    success_color?: StringFieldUpdateOperationsInput | string
+    warning_color?: StringFieldUpdateOperationsInput | string
+    error_color?: StringFieldUpdateOperationsInput | string
+    primary_font?: StringFieldUpdateOperationsInput | string
+    secondary_font?: StringFieldUpdateOperationsInput | string
+    font_size_base?: StringFieldUpdateOperationsInput | string
+    show_header?: BoolFieldUpdateOperationsInput | boolean
+    show_logo?: BoolFieldUpdateOperationsInput | boolean
+    show_search_bar?: BoolFieldUpdateOperationsInput | boolean
+    show_navigation_menu?: BoolFieldUpdateOperationsInput | boolean
+    show_cart_icon?: BoolFieldUpdateOperationsInput | boolean
+    show_user_account?: BoolFieldUpdateOperationsInput | boolean
+    header_position?: EnumHeaderPositionFieldUpdateOperationsInput | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleFieldUpdateOperationsInput | $Enums.HeaderStyle
+    show_footer?: BoolFieldUpdateOperationsInput | boolean
+    footer_text?: NullableStringFieldUpdateOperationsInput | string | null
+    show_social_links?: BoolFieldUpdateOperationsInput | boolean
+    show_contact_info?: BoolFieldUpdateOperationsInput | boolean
+    show_store_info?: BoolFieldUpdateOperationsInput | boolean
+    layout_style?: EnumLayoutStyleFieldUpdateOperationsInput | $Enums.LayoutStyle
+    container_max_width?: StringFieldUpdateOperationsInput | string
+    border_radius?: StringFieldUpdateOperationsInput | string
+    spacing_unit?: StringFieldUpdateOperationsInput | string
+    show_hero_section?: BoolFieldUpdateOperationsInput | boolean
+    show_featured_products?: BoolFieldUpdateOperationsInput | boolean
+    show_categories?: BoolFieldUpdateOperationsInput | boolean
+    show_testimonials?: BoolFieldUpdateOperationsInput | boolean
+    show_about_section?: BoolFieldUpdateOperationsInput | boolean
+    products_per_page?: IntFieldUpdateOperationsInput | number
+    product_card_style?: EnumProductCardStyleFieldUpdateOperationsInput | $Enums.ProductCardStyle
+    show_product_rating?: BoolFieldUpdateOperationsInput | boolean
+    show_product_stock?: BoolFieldUpdateOperationsInput | boolean
+    show_add_to_cart_btn?: BoolFieldUpdateOperationsInput | boolean
+    custom_css?: NullableStringFieldUpdateOperationsInput | string | null
+    custom_js?: NullableStringFieldUpdateOperationsInput | string | null
+    favicon_url?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_title?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
+    google_analytics_id?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook_pixel_id?: NullableStringFieldUpdateOperationsInput | string | null
+    google_tag_manager_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    store?: StoreUpdateOneRequiredWithoutCustomizationNestedInput
+    sections?: StoreSectionConfigUpdateManyWithoutCustomizationNestedInput
+    widgets?: StoreWidgetConfigUpdateManyWithoutCustomizationNestedInput
+  }
+
+  export type StoreCustomizationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    primary_color?: StringFieldUpdateOperationsInput | string
+    secondary_color?: StringFieldUpdateOperationsInput | string
+    accent_color?: StringFieldUpdateOperationsInput | string
+    background_color?: StringFieldUpdateOperationsInput | string
+    text_color?: StringFieldUpdateOperationsInput | string
+    secondary_text_color?: StringFieldUpdateOperationsInput | string
+    border_color?: StringFieldUpdateOperationsInput | string
+    success_color?: StringFieldUpdateOperationsInput | string
+    warning_color?: StringFieldUpdateOperationsInput | string
+    error_color?: StringFieldUpdateOperationsInput | string
+    primary_font?: StringFieldUpdateOperationsInput | string
+    secondary_font?: StringFieldUpdateOperationsInput | string
+    font_size_base?: StringFieldUpdateOperationsInput | string
+    show_header?: BoolFieldUpdateOperationsInput | boolean
+    show_logo?: BoolFieldUpdateOperationsInput | boolean
+    show_search_bar?: BoolFieldUpdateOperationsInput | boolean
+    show_navigation_menu?: BoolFieldUpdateOperationsInput | boolean
+    show_cart_icon?: BoolFieldUpdateOperationsInput | boolean
+    show_user_account?: BoolFieldUpdateOperationsInput | boolean
+    header_position?: EnumHeaderPositionFieldUpdateOperationsInput | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleFieldUpdateOperationsInput | $Enums.HeaderStyle
+    show_footer?: BoolFieldUpdateOperationsInput | boolean
+    footer_text?: NullableStringFieldUpdateOperationsInput | string | null
+    show_social_links?: BoolFieldUpdateOperationsInput | boolean
+    show_contact_info?: BoolFieldUpdateOperationsInput | boolean
+    show_store_info?: BoolFieldUpdateOperationsInput | boolean
+    layout_style?: EnumLayoutStyleFieldUpdateOperationsInput | $Enums.LayoutStyle
+    container_max_width?: StringFieldUpdateOperationsInput | string
+    border_radius?: StringFieldUpdateOperationsInput | string
+    spacing_unit?: StringFieldUpdateOperationsInput | string
+    show_hero_section?: BoolFieldUpdateOperationsInput | boolean
+    show_featured_products?: BoolFieldUpdateOperationsInput | boolean
+    show_categories?: BoolFieldUpdateOperationsInput | boolean
+    show_testimonials?: BoolFieldUpdateOperationsInput | boolean
+    show_about_section?: BoolFieldUpdateOperationsInput | boolean
+    products_per_page?: IntFieldUpdateOperationsInput | number
+    product_card_style?: EnumProductCardStyleFieldUpdateOperationsInput | $Enums.ProductCardStyle
+    show_product_rating?: BoolFieldUpdateOperationsInput | boolean
+    show_product_stock?: BoolFieldUpdateOperationsInput | boolean
+    show_add_to_cart_btn?: BoolFieldUpdateOperationsInput | boolean
+    custom_css?: NullableStringFieldUpdateOperationsInput | string | null
+    custom_js?: NullableStringFieldUpdateOperationsInput | string | null
+    favicon_url?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_title?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
+    google_analytics_id?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook_pixel_id?: NullableStringFieldUpdateOperationsInput | string | null
+    google_tag_manager_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    sections?: StoreSectionConfigUncheckedUpdateManyWithoutCustomizationNestedInput
+    widgets?: StoreWidgetConfigUncheckedUpdateManyWithoutCustomizationNestedInput
+  }
+
+  export type StoreCustomizationCreateManyInput = {
+    id?: number
+    store_id: number
+    primary_color?: string
+    secondary_color?: string
+    accent_color?: string
+    background_color?: string
+    text_color?: string
+    secondary_text_color?: string
+    border_color?: string
+    success_color?: string
+    warning_color?: string
+    error_color?: string
+    primary_font?: string
+    secondary_font?: string
+    font_size_base?: string
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: $Enums.HeaderPosition
+    header_style?: $Enums.HeaderStyle
+    show_footer?: boolean
+    footer_text?: string | null
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: $Enums.LayoutStyle
+    container_max_width?: string
+    border_radius?: string
+    spacing_unit?: string
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: number
+    product_card_style?: $Enums.ProductCardStyle
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: string | null
+    custom_js?: string | null
+    favicon_url?: string | null
+    meta_title?: string | null
+    meta_description?: string | null
+    google_analytics_id?: string | null
+    facebook_pixel_id?: string | null
+    google_tag_manager_id?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreCustomizationUpdateManyMutationInput = {
+    primary_color?: StringFieldUpdateOperationsInput | string
+    secondary_color?: StringFieldUpdateOperationsInput | string
+    accent_color?: StringFieldUpdateOperationsInput | string
+    background_color?: StringFieldUpdateOperationsInput | string
+    text_color?: StringFieldUpdateOperationsInput | string
+    secondary_text_color?: StringFieldUpdateOperationsInput | string
+    border_color?: StringFieldUpdateOperationsInput | string
+    success_color?: StringFieldUpdateOperationsInput | string
+    warning_color?: StringFieldUpdateOperationsInput | string
+    error_color?: StringFieldUpdateOperationsInput | string
+    primary_font?: StringFieldUpdateOperationsInput | string
+    secondary_font?: StringFieldUpdateOperationsInput | string
+    font_size_base?: StringFieldUpdateOperationsInput | string
+    show_header?: BoolFieldUpdateOperationsInput | boolean
+    show_logo?: BoolFieldUpdateOperationsInput | boolean
+    show_search_bar?: BoolFieldUpdateOperationsInput | boolean
+    show_navigation_menu?: BoolFieldUpdateOperationsInput | boolean
+    show_cart_icon?: BoolFieldUpdateOperationsInput | boolean
+    show_user_account?: BoolFieldUpdateOperationsInput | boolean
+    header_position?: EnumHeaderPositionFieldUpdateOperationsInput | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleFieldUpdateOperationsInput | $Enums.HeaderStyle
+    show_footer?: BoolFieldUpdateOperationsInput | boolean
+    footer_text?: NullableStringFieldUpdateOperationsInput | string | null
+    show_social_links?: BoolFieldUpdateOperationsInput | boolean
+    show_contact_info?: BoolFieldUpdateOperationsInput | boolean
+    show_store_info?: BoolFieldUpdateOperationsInput | boolean
+    layout_style?: EnumLayoutStyleFieldUpdateOperationsInput | $Enums.LayoutStyle
+    container_max_width?: StringFieldUpdateOperationsInput | string
+    border_radius?: StringFieldUpdateOperationsInput | string
+    spacing_unit?: StringFieldUpdateOperationsInput | string
+    show_hero_section?: BoolFieldUpdateOperationsInput | boolean
+    show_featured_products?: BoolFieldUpdateOperationsInput | boolean
+    show_categories?: BoolFieldUpdateOperationsInput | boolean
+    show_testimonials?: BoolFieldUpdateOperationsInput | boolean
+    show_about_section?: BoolFieldUpdateOperationsInput | boolean
+    products_per_page?: IntFieldUpdateOperationsInput | number
+    product_card_style?: EnumProductCardStyleFieldUpdateOperationsInput | $Enums.ProductCardStyle
+    show_product_rating?: BoolFieldUpdateOperationsInput | boolean
+    show_product_stock?: BoolFieldUpdateOperationsInput | boolean
+    show_add_to_cart_btn?: BoolFieldUpdateOperationsInput | boolean
+    custom_css?: NullableStringFieldUpdateOperationsInput | string | null
+    custom_js?: NullableStringFieldUpdateOperationsInput | string | null
+    favicon_url?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_title?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
+    google_analytics_id?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook_pixel_id?: NullableStringFieldUpdateOperationsInput | string | null
+    google_tag_manager_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreCustomizationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    primary_color?: StringFieldUpdateOperationsInput | string
+    secondary_color?: StringFieldUpdateOperationsInput | string
+    accent_color?: StringFieldUpdateOperationsInput | string
+    background_color?: StringFieldUpdateOperationsInput | string
+    text_color?: StringFieldUpdateOperationsInput | string
+    secondary_text_color?: StringFieldUpdateOperationsInput | string
+    border_color?: StringFieldUpdateOperationsInput | string
+    success_color?: StringFieldUpdateOperationsInput | string
+    warning_color?: StringFieldUpdateOperationsInput | string
+    error_color?: StringFieldUpdateOperationsInput | string
+    primary_font?: StringFieldUpdateOperationsInput | string
+    secondary_font?: StringFieldUpdateOperationsInput | string
+    font_size_base?: StringFieldUpdateOperationsInput | string
+    show_header?: BoolFieldUpdateOperationsInput | boolean
+    show_logo?: BoolFieldUpdateOperationsInput | boolean
+    show_search_bar?: BoolFieldUpdateOperationsInput | boolean
+    show_navigation_menu?: BoolFieldUpdateOperationsInput | boolean
+    show_cart_icon?: BoolFieldUpdateOperationsInput | boolean
+    show_user_account?: BoolFieldUpdateOperationsInput | boolean
+    header_position?: EnumHeaderPositionFieldUpdateOperationsInput | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleFieldUpdateOperationsInput | $Enums.HeaderStyle
+    show_footer?: BoolFieldUpdateOperationsInput | boolean
+    footer_text?: NullableStringFieldUpdateOperationsInput | string | null
+    show_social_links?: BoolFieldUpdateOperationsInput | boolean
+    show_contact_info?: BoolFieldUpdateOperationsInput | boolean
+    show_store_info?: BoolFieldUpdateOperationsInput | boolean
+    layout_style?: EnumLayoutStyleFieldUpdateOperationsInput | $Enums.LayoutStyle
+    container_max_width?: StringFieldUpdateOperationsInput | string
+    border_radius?: StringFieldUpdateOperationsInput | string
+    spacing_unit?: StringFieldUpdateOperationsInput | string
+    show_hero_section?: BoolFieldUpdateOperationsInput | boolean
+    show_featured_products?: BoolFieldUpdateOperationsInput | boolean
+    show_categories?: BoolFieldUpdateOperationsInput | boolean
+    show_testimonials?: BoolFieldUpdateOperationsInput | boolean
+    show_about_section?: BoolFieldUpdateOperationsInput | boolean
+    products_per_page?: IntFieldUpdateOperationsInput | number
+    product_card_style?: EnumProductCardStyleFieldUpdateOperationsInput | $Enums.ProductCardStyle
+    show_product_rating?: BoolFieldUpdateOperationsInput | boolean
+    show_product_stock?: BoolFieldUpdateOperationsInput | boolean
+    show_add_to_cart_btn?: BoolFieldUpdateOperationsInput | boolean
+    custom_css?: NullableStringFieldUpdateOperationsInput | string | null
+    custom_js?: NullableStringFieldUpdateOperationsInput | string | null
+    favicon_url?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_title?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
+    google_analytics_id?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook_pixel_id?: NullableStringFieldUpdateOperationsInput | string | null
+    google_tag_manager_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreSectionConfigCreateInput = {
+    section_type: $Enums.SectionType
+    section_name: string
+    is_visible?: boolean
+    sort_order?: number
+    background_color?: string | null
+    text_color?: string | null
+    padding?: string | null
+    margin?: string | null
+    title?: string | null
+    subtitle?: string | null
+    description?: string | null
+    image_url?: string | null
+    button_text?: string | null
+    button_link?: string | null
+    show_title?: boolean
+    show_subtitle?: boolean
+    show_description?: boolean
+    columns_count?: number | null
+    items_per_row?: number | null
+    layout_style?: string | null
+    config_json?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    customization: StoreCustomizationCreateNestedOneWithoutSectionsInput
+  }
+
+  export type StoreSectionConfigUncheckedCreateInput = {
+    id?: number
+    customization_id: number
+    section_type: $Enums.SectionType
+    section_name: string
+    is_visible?: boolean
+    sort_order?: number
+    background_color?: string | null
+    text_color?: string | null
+    padding?: string | null
+    margin?: string | null
+    title?: string | null
+    subtitle?: string | null
+    description?: string | null
+    image_url?: string | null
+    button_text?: string | null
+    button_link?: string | null
+    show_title?: boolean
+    show_subtitle?: boolean
+    show_description?: boolean
+    columns_count?: number | null
+    items_per_row?: number | null
+    layout_style?: string | null
+    config_json?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreSectionConfigUpdateInput = {
+    section_type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+    section_name?: StringFieldUpdateOperationsInput | string
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    subtitle?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    button_text?: NullableStringFieldUpdateOperationsInput | string | null
+    button_link?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    show_subtitle?: BoolFieldUpdateOperationsInput | boolean
+    show_description?: BoolFieldUpdateOperationsInput | boolean
+    columns_count?: NullableIntFieldUpdateOperationsInput | number | null
+    items_per_row?: NullableIntFieldUpdateOperationsInput | number | null
+    layout_style?: NullableStringFieldUpdateOperationsInput | string | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    customization?: StoreCustomizationUpdateOneRequiredWithoutSectionsNestedInput
+  }
+
+  export type StoreSectionConfigUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customization_id?: IntFieldUpdateOperationsInput | number
+    section_type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+    section_name?: StringFieldUpdateOperationsInput | string
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    subtitle?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    button_text?: NullableStringFieldUpdateOperationsInput | string | null
+    button_link?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    show_subtitle?: BoolFieldUpdateOperationsInput | boolean
+    show_description?: BoolFieldUpdateOperationsInput | boolean
+    columns_count?: NullableIntFieldUpdateOperationsInput | number | null
+    items_per_row?: NullableIntFieldUpdateOperationsInput | number | null
+    layout_style?: NullableStringFieldUpdateOperationsInput | string | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreSectionConfigCreateManyInput = {
+    id?: number
+    customization_id: number
+    section_type: $Enums.SectionType
+    section_name: string
+    is_visible?: boolean
+    sort_order?: number
+    background_color?: string | null
+    text_color?: string | null
+    padding?: string | null
+    margin?: string | null
+    title?: string | null
+    subtitle?: string | null
+    description?: string | null
+    image_url?: string | null
+    button_text?: string | null
+    button_link?: string | null
+    show_title?: boolean
+    show_subtitle?: boolean
+    show_description?: boolean
+    columns_count?: number | null
+    items_per_row?: number | null
+    layout_style?: string | null
+    config_json?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreSectionConfigUpdateManyMutationInput = {
+    section_type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+    section_name?: StringFieldUpdateOperationsInput | string
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    subtitle?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    button_text?: NullableStringFieldUpdateOperationsInput | string | null
+    button_link?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    show_subtitle?: BoolFieldUpdateOperationsInput | boolean
+    show_description?: BoolFieldUpdateOperationsInput | boolean
+    columns_count?: NullableIntFieldUpdateOperationsInput | number | null
+    items_per_row?: NullableIntFieldUpdateOperationsInput | number | null
+    layout_style?: NullableStringFieldUpdateOperationsInput | string | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreSectionConfigUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customization_id?: IntFieldUpdateOperationsInput | number
+    section_type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+    section_name?: StringFieldUpdateOperationsInput | string
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    subtitle?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    button_text?: NullableStringFieldUpdateOperationsInput | string | null
+    button_link?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    show_subtitle?: BoolFieldUpdateOperationsInput | boolean
+    show_description?: BoolFieldUpdateOperationsInput | boolean
+    columns_count?: NullableIntFieldUpdateOperationsInput | number | null
+    items_per_row?: NullableIntFieldUpdateOperationsInput | number | null
+    layout_style?: NullableStringFieldUpdateOperationsInput | string | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreWidgetConfigCreateInput = {
+    widget_type: $Enums.WidgetType
+    widget_name: string
+    position?: $Enums.WidgetPosition
+    sort_order?: number
+    is_visible?: boolean
+    background_color?: string | null
+    text_color?: string | null
+    border_color?: string | null
+    padding?: string | null
+    margin?: string | null
+    border_radius?: string | null
+    title?: string | null
+    show_title?: boolean
+    max_items?: number | null
+    auto_refresh?: boolean
+    refresh_interval?: number | null
+    config_json?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    customization: StoreCustomizationCreateNestedOneWithoutWidgetsInput
+  }
+
+  export type StoreWidgetConfigUncheckedCreateInput = {
+    id?: number
+    customization_id: number
+    widget_type: $Enums.WidgetType
+    widget_name: string
+    position?: $Enums.WidgetPosition
+    sort_order?: number
+    is_visible?: boolean
+    background_color?: string | null
+    text_color?: string | null
+    border_color?: string | null
+    padding?: string | null
+    margin?: string | null
+    border_radius?: string | null
+    title?: string | null
+    show_title?: boolean
+    max_items?: number | null
+    auto_refresh?: boolean
+    refresh_interval?: number | null
+    config_json?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreWidgetConfigUpdateInput = {
+    widget_type?: EnumWidgetTypeFieldUpdateOperationsInput | $Enums.WidgetType
+    widget_name?: StringFieldUpdateOperationsInput | string
+    position?: EnumWidgetPositionFieldUpdateOperationsInput | $Enums.WidgetPosition
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    border_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    border_radius?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    max_items?: NullableIntFieldUpdateOperationsInput | number | null
+    auto_refresh?: BoolFieldUpdateOperationsInput | boolean
+    refresh_interval?: NullableIntFieldUpdateOperationsInput | number | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    customization?: StoreCustomizationUpdateOneRequiredWithoutWidgetsNestedInput
+  }
+
+  export type StoreWidgetConfigUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customization_id?: IntFieldUpdateOperationsInput | number
+    widget_type?: EnumWidgetTypeFieldUpdateOperationsInput | $Enums.WidgetType
+    widget_name?: StringFieldUpdateOperationsInput | string
+    position?: EnumWidgetPositionFieldUpdateOperationsInput | $Enums.WidgetPosition
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    border_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    border_radius?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    max_items?: NullableIntFieldUpdateOperationsInput | number | null
+    auto_refresh?: BoolFieldUpdateOperationsInput | boolean
+    refresh_interval?: NullableIntFieldUpdateOperationsInput | number | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreWidgetConfigCreateManyInput = {
+    id?: number
+    customization_id: number
+    widget_type: $Enums.WidgetType
+    widget_name: string
+    position?: $Enums.WidgetPosition
+    sort_order?: number
+    is_visible?: boolean
+    background_color?: string | null
+    text_color?: string | null
+    border_color?: string | null
+    padding?: string | null
+    margin?: string | null
+    border_radius?: string | null
+    title?: string | null
+    show_title?: boolean
+    max_items?: number | null
+    auto_refresh?: boolean
+    refresh_interval?: number | null
+    config_json?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreWidgetConfigUpdateManyMutationInput = {
+    widget_type?: EnumWidgetTypeFieldUpdateOperationsInput | $Enums.WidgetType
+    widget_name?: StringFieldUpdateOperationsInput | string
+    position?: EnumWidgetPositionFieldUpdateOperationsInput | $Enums.WidgetPosition
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    border_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    border_radius?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    max_items?: NullableIntFieldUpdateOperationsInput | number | null
+    auto_refresh?: BoolFieldUpdateOperationsInput | boolean
+    refresh_interval?: NullableIntFieldUpdateOperationsInput | number | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreWidgetConfigUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customization_id?: IntFieldUpdateOperationsInput | number
+    widget_type?: EnumWidgetTypeFieldUpdateOperationsInput | $Enums.WidgetType
+    widget_name?: StringFieldUpdateOperationsInput | string
+    position?: EnumWidgetPositionFieldUpdateOperationsInput | $Enums.WidgetPosition
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    border_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    border_radius?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    max_items?: NullableIntFieldUpdateOperationsInput | number | null
+    auto_refresh?: BoolFieldUpdateOperationsInput | boolean
+    refresh_interval?: NullableIntFieldUpdateOperationsInput | number | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -24478,6 +31019,11 @@ export namespace Prisma {
     every?: TransactionWhereInput
     some?: TransactionWhereInput
     none?: TransactionWhereInput
+  }
+
+  export type StoreCustomizationNullableScalarRelationFilter = {
+    is?: StoreCustomizationWhereInput | null
+    isNot?: StoreCustomizationWhereInput | null
   }
 
   export type BranchOrderByRelationAggregateInput = {
@@ -25528,6 +32074,538 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
+  export type EnumHeaderPositionFilter<$PrismaModel = never> = {
+    equals?: $Enums.HeaderPosition | EnumHeaderPositionFieldRefInput<$PrismaModel>
+    in?: $Enums.HeaderPosition[] | ListEnumHeaderPositionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HeaderPosition[] | ListEnumHeaderPositionFieldRefInput<$PrismaModel>
+    not?: NestedEnumHeaderPositionFilter<$PrismaModel> | $Enums.HeaderPosition
+  }
+
+  export type EnumHeaderStyleFilter<$PrismaModel = never> = {
+    equals?: $Enums.HeaderStyle | EnumHeaderStyleFieldRefInput<$PrismaModel>
+    in?: $Enums.HeaderStyle[] | ListEnumHeaderStyleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HeaderStyle[] | ListEnumHeaderStyleFieldRefInput<$PrismaModel>
+    not?: NestedEnumHeaderStyleFilter<$PrismaModel> | $Enums.HeaderStyle
+  }
+
+  export type EnumLayoutStyleFilter<$PrismaModel = never> = {
+    equals?: $Enums.LayoutStyle | EnumLayoutStyleFieldRefInput<$PrismaModel>
+    in?: $Enums.LayoutStyle[] | ListEnumLayoutStyleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LayoutStyle[] | ListEnumLayoutStyleFieldRefInput<$PrismaModel>
+    not?: NestedEnumLayoutStyleFilter<$PrismaModel> | $Enums.LayoutStyle
+  }
+
+  export type EnumProductCardStyleFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProductCardStyle | EnumProductCardStyleFieldRefInput<$PrismaModel>
+    in?: $Enums.ProductCardStyle[] | ListEnumProductCardStyleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProductCardStyle[] | ListEnumProductCardStyleFieldRefInput<$PrismaModel>
+    not?: NestedEnumProductCardStyleFilter<$PrismaModel> | $Enums.ProductCardStyle
+  }
+
+  export type StoreSectionConfigListRelationFilter = {
+    every?: StoreSectionConfigWhereInput
+    some?: StoreSectionConfigWhereInput
+    none?: StoreSectionConfigWhereInput
+  }
+
+  export type StoreWidgetConfigListRelationFilter = {
+    every?: StoreWidgetConfigWhereInput
+    some?: StoreWidgetConfigWhereInput
+    none?: StoreWidgetConfigWhereInput
+  }
+
+  export type StoreSectionConfigOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type StoreWidgetConfigOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type StoreCustomizationOrderByRelevanceInput = {
+    fields: StoreCustomizationOrderByRelevanceFieldEnum | StoreCustomizationOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type StoreCustomizationCountOrderByAggregateInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    primary_color?: SortOrder
+    secondary_color?: SortOrder
+    accent_color?: SortOrder
+    background_color?: SortOrder
+    text_color?: SortOrder
+    secondary_text_color?: SortOrder
+    border_color?: SortOrder
+    success_color?: SortOrder
+    warning_color?: SortOrder
+    error_color?: SortOrder
+    primary_font?: SortOrder
+    secondary_font?: SortOrder
+    font_size_base?: SortOrder
+    show_header?: SortOrder
+    show_logo?: SortOrder
+    show_search_bar?: SortOrder
+    show_navigation_menu?: SortOrder
+    show_cart_icon?: SortOrder
+    show_user_account?: SortOrder
+    header_position?: SortOrder
+    header_style?: SortOrder
+    show_footer?: SortOrder
+    footer_text?: SortOrder
+    show_social_links?: SortOrder
+    show_contact_info?: SortOrder
+    show_store_info?: SortOrder
+    layout_style?: SortOrder
+    container_max_width?: SortOrder
+    border_radius?: SortOrder
+    spacing_unit?: SortOrder
+    show_hero_section?: SortOrder
+    show_featured_products?: SortOrder
+    show_categories?: SortOrder
+    show_testimonials?: SortOrder
+    show_about_section?: SortOrder
+    products_per_page?: SortOrder
+    product_card_style?: SortOrder
+    show_product_rating?: SortOrder
+    show_product_stock?: SortOrder
+    show_add_to_cart_btn?: SortOrder
+    custom_css?: SortOrder
+    custom_js?: SortOrder
+    favicon_url?: SortOrder
+    meta_title?: SortOrder
+    meta_description?: SortOrder
+    google_analytics_id?: SortOrder
+    facebook_pixel_id?: SortOrder
+    google_tag_manager_id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type StoreCustomizationAvgOrderByAggregateInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    products_per_page?: SortOrder
+  }
+
+  export type StoreCustomizationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    primary_color?: SortOrder
+    secondary_color?: SortOrder
+    accent_color?: SortOrder
+    background_color?: SortOrder
+    text_color?: SortOrder
+    secondary_text_color?: SortOrder
+    border_color?: SortOrder
+    success_color?: SortOrder
+    warning_color?: SortOrder
+    error_color?: SortOrder
+    primary_font?: SortOrder
+    secondary_font?: SortOrder
+    font_size_base?: SortOrder
+    show_header?: SortOrder
+    show_logo?: SortOrder
+    show_search_bar?: SortOrder
+    show_navigation_menu?: SortOrder
+    show_cart_icon?: SortOrder
+    show_user_account?: SortOrder
+    header_position?: SortOrder
+    header_style?: SortOrder
+    show_footer?: SortOrder
+    footer_text?: SortOrder
+    show_social_links?: SortOrder
+    show_contact_info?: SortOrder
+    show_store_info?: SortOrder
+    layout_style?: SortOrder
+    container_max_width?: SortOrder
+    border_radius?: SortOrder
+    spacing_unit?: SortOrder
+    show_hero_section?: SortOrder
+    show_featured_products?: SortOrder
+    show_categories?: SortOrder
+    show_testimonials?: SortOrder
+    show_about_section?: SortOrder
+    products_per_page?: SortOrder
+    product_card_style?: SortOrder
+    show_product_rating?: SortOrder
+    show_product_stock?: SortOrder
+    show_add_to_cart_btn?: SortOrder
+    custom_css?: SortOrder
+    custom_js?: SortOrder
+    favicon_url?: SortOrder
+    meta_title?: SortOrder
+    meta_description?: SortOrder
+    google_analytics_id?: SortOrder
+    facebook_pixel_id?: SortOrder
+    google_tag_manager_id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type StoreCustomizationMinOrderByAggregateInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    primary_color?: SortOrder
+    secondary_color?: SortOrder
+    accent_color?: SortOrder
+    background_color?: SortOrder
+    text_color?: SortOrder
+    secondary_text_color?: SortOrder
+    border_color?: SortOrder
+    success_color?: SortOrder
+    warning_color?: SortOrder
+    error_color?: SortOrder
+    primary_font?: SortOrder
+    secondary_font?: SortOrder
+    font_size_base?: SortOrder
+    show_header?: SortOrder
+    show_logo?: SortOrder
+    show_search_bar?: SortOrder
+    show_navigation_menu?: SortOrder
+    show_cart_icon?: SortOrder
+    show_user_account?: SortOrder
+    header_position?: SortOrder
+    header_style?: SortOrder
+    show_footer?: SortOrder
+    footer_text?: SortOrder
+    show_social_links?: SortOrder
+    show_contact_info?: SortOrder
+    show_store_info?: SortOrder
+    layout_style?: SortOrder
+    container_max_width?: SortOrder
+    border_radius?: SortOrder
+    spacing_unit?: SortOrder
+    show_hero_section?: SortOrder
+    show_featured_products?: SortOrder
+    show_categories?: SortOrder
+    show_testimonials?: SortOrder
+    show_about_section?: SortOrder
+    products_per_page?: SortOrder
+    product_card_style?: SortOrder
+    show_product_rating?: SortOrder
+    show_product_stock?: SortOrder
+    show_add_to_cart_btn?: SortOrder
+    custom_css?: SortOrder
+    custom_js?: SortOrder
+    favicon_url?: SortOrder
+    meta_title?: SortOrder
+    meta_description?: SortOrder
+    google_analytics_id?: SortOrder
+    facebook_pixel_id?: SortOrder
+    google_tag_manager_id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type StoreCustomizationSumOrderByAggregateInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    products_per_page?: SortOrder
+  }
+
+  export type EnumHeaderPositionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.HeaderPosition | EnumHeaderPositionFieldRefInput<$PrismaModel>
+    in?: $Enums.HeaderPosition[] | ListEnumHeaderPositionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HeaderPosition[] | ListEnumHeaderPositionFieldRefInput<$PrismaModel>
+    not?: NestedEnumHeaderPositionWithAggregatesFilter<$PrismaModel> | $Enums.HeaderPosition
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumHeaderPositionFilter<$PrismaModel>
+    _max?: NestedEnumHeaderPositionFilter<$PrismaModel>
+  }
+
+  export type EnumHeaderStyleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.HeaderStyle | EnumHeaderStyleFieldRefInput<$PrismaModel>
+    in?: $Enums.HeaderStyle[] | ListEnumHeaderStyleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HeaderStyle[] | ListEnumHeaderStyleFieldRefInput<$PrismaModel>
+    not?: NestedEnumHeaderStyleWithAggregatesFilter<$PrismaModel> | $Enums.HeaderStyle
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumHeaderStyleFilter<$PrismaModel>
+    _max?: NestedEnumHeaderStyleFilter<$PrismaModel>
+  }
+
+  export type EnumLayoutStyleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LayoutStyle | EnumLayoutStyleFieldRefInput<$PrismaModel>
+    in?: $Enums.LayoutStyle[] | ListEnumLayoutStyleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LayoutStyle[] | ListEnumLayoutStyleFieldRefInput<$PrismaModel>
+    not?: NestedEnumLayoutStyleWithAggregatesFilter<$PrismaModel> | $Enums.LayoutStyle
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLayoutStyleFilter<$PrismaModel>
+    _max?: NestedEnumLayoutStyleFilter<$PrismaModel>
+  }
+
+  export type EnumProductCardStyleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProductCardStyle | EnumProductCardStyleFieldRefInput<$PrismaModel>
+    in?: $Enums.ProductCardStyle[] | ListEnumProductCardStyleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProductCardStyle[] | ListEnumProductCardStyleFieldRefInput<$PrismaModel>
+    not?: NestedEnumProductCardStyleWithAggregatesFilter<$PrismaModel> | $Enums.ProductCardStyle
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumProductCardStyleFilter<$PrismaModel>
+    _max?: NestedEnumProductCardStyleFilter<$PrismaModel>
+  }
+
+  export type EnumSectionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.SectionType | EnumSectionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SectionType[] | ListEnumSectionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SectionType[] | ListEnumSectionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSectionTypeFilter<$PrismaModel> | $Enums.SectionType
+  }
+
+  export type StoreCustomizationScalarRelationFilter = {
+    is?: StoreCustomizationWhereInput
+    isNot?: StoreCustomizationWhereInput
+  }
+
+  export type StoreSectionConfigOrderByRelevanceInput = {
+    fields: StoreSectionConfigOrderByRelevanceFieldEnum | StoreSectionConfigOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type StoreSectionConfigCustomization_idSection_typeCompoundUniqueInput = {
+    customization_id: number
+    section_type: $Enums.SectionType
+  }
+
+  export type StoreSectionConfigCountOrderByAggregateInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    section_type?: SortOrder
+    section_name?: SortOrder
+    is_visible?: SortOrder
+    sort_order?: SortOrder
+    background_color?: SortOrder
+    text_color?: SortOrder
+    padding?: SortOrder
+    margin?: SortOrder
+    title?: SortOrder
+    subtitle?: SortOrder
+    description?: SortOrder
+    image_url?: SortOrder
+    button_text?: SortOrder
+    button_link?: SortOrder
+    show_title?: SortOrder
+    show_subtitle?: SortOrder
+    show_description?: SortOrder
+    columns_count?: SortOrder
+    items_per_row?: SortOrder
+    layout_style?: SortOrder
+    config_json?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type StoreSectionConfigAvgOrderByAggregateInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    sort_order?: SortOrder
+    columns_count?: SortOrder
+    items_per_row?: SortOrder
+  }
+
+  export type StoreSectionConfigMaxOrderByAggregateInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    section_type?: SortOrder
+    section_name?: SortOrder
+    is_visible?: SortOrder
+    sort_order?: SortOrder
+    background_color?: SortOrder
+    text_color?: SortOrder
+    padding?: SortOrder
+    margin?: SortOrder
+    title?: SortOrder
+    subtitle?: SortOrder
+    description?: SortOrder
+    image_url?: SortOrder
+    button_text?: SortOrder
+    button_link?: SortOrder
+    show_title?: SortOrder
+    show_subtitle?: SortOrder
+    show_description?: SortOrder
+    columns_count?: SortOrder
+    items_per_row?: SortOrder
+    layout_style?: SortOrder
+    config_json?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type StoreSectionConfigMinOrderByAggregateInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    section_type?: SortOrder
+    section_name?: SortOrder
+    is_visible?: SortOrder
+    sort_order?: SortOrder
+    background_color?: SortOrder
+    text_color?: SortOrder
+    padding?: SortOrder
+    margin?: SortOrder
+    title?: SortOrder
+    subtitle?: SortOrder
+    description?: SortOrder
+    image_url?: SortOrder
+    button_text?: SortOrder
+    button_link?: SortOrder
+    show_title?: SortOrder
+    show_subtitle?: SortOrder
+    show_description?: SortOrder
+    columns_count?: SortOrder
+    items_per_row?: SortOrder
+    layout_style?: SortOrder
+    config_json?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type StoreSectionConfigSumOrderByAggregateInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    sort_order?: SortOrder
+    columns_count?: SortOrder
+    items_per_row?: SortOrder
+  }
+
+  export type EnumSectionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SectionType | EnumSectionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SectionType[] | ListEnumSectionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SectionType[] | ListEnumSectionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSectionTypeWithAggregatesFilter<$PrismaModel> | $Enums.SectionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSectionTypeFilter<$PrismaModel>
+    _max?: NestedEnumSectionTypeFilter<$PrismaModel>
+  }
+
+  export type EnumWidgetTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.WidgetType | EnumWidgetTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.WidgetType[] | ListEnumWidgetTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WidgetType[] | ListEnumWidgetTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWidgetTypeFilter<$PrismaModel> | $Enums.WidgetType
+  }
+
+  export type EnumWidgetPositionFilter<$PrismaModel = never> = {
+    equals?: $Enums.WidgetPosition | EnumWidgetPositionFieldRefInput<$PrismaModel>
+    in?: $Enums.WidgetPosition[] | ListEnumWidgetPositionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WidgetPosition[] | ListEnumWidgetPositionFieldRefInput<$PrismaModel>
+    not?: NestedEnumWidgetPositionFilter<$PrismaModel> | $Enums.WidgetPosition
+  }
+
+  export type StoreWidgetConfigOrderByRelevanceInput = {
+    fields: StoreWidgetConfigOrderByRelevanceFieldEnum | StoreWidgetConfigOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type StoreWidgetConfigCountOrderByAggregateInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    widget_type?: SortOrder
+    widget_name?: SortOrder
+    position?: SortOrder
+    sort_order?: SortOrder
+    is_visible?: SortOrder
+    background_color?: SortOrder
+    text_color?: SortOrder
+    border_color?: SortOrder
+    padding?: SortOrder
+    margin?: SortOrder
+    border_radius?: SortOrder
+    title?: SortOrder
+    show_title?: SortOrder
+    max_items?: SortOrder
+    auto_refresh?: SortOrder
+    refresh_interval?: SortOrder
+    config_json?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type StoreWidgetConfigAvgOrderByAggregateInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    sort_order?: SortOrder
+    max_items?: SortOrder
+    refresh_interval?: SortOrder
+  }
+
+  export type StoreWidgetConfigMaxOrderByAggregateInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    widget_type?: SortOrder
+    widget_name?: SortOrder
+    position?: SortOrder
+    sort_order?: SortOrder
+    is_visible?: SortOrder
+    background_color?: SortOrder
+    text_color?: SortOrder
+    border_color?: SortOrder
+    padding?: SortOrder
+    margin?: SortOrder
+    border_radius?: SortOrder
+    title?: SortOrder
+    show_title?: SortOrder
+    max_items?: SortOrder
+    auto_refresh?: SortOrder
+    refresh_interval?: SortOrder
+    config_json?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type StoreWidgetConfigMinOrderByAggregateInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    widget_type?: SortOrder
+    widget_name?: SortOrder
+    position?: SortOrder
+    sort_order?: SortOrder
+    is_visible?: SortOrder
+    background_color?: SortOrder
+    text_color?: SortOrder
+    border_color?: SortOrder
+    padding?: SortOrder
+    margin?: SortOrder
+    border_radius?: SortOrder
+    title?: SortOrder
+    show_title?: SortOrder
+    max_items?: SortOrder
+    auto_refresh?: SortOrder
+    refresh_interval?: SortOrder
+    config_json?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type StoreWidgetConfigSumOrderByAggregateInput = {
+    id?: SortOrder
+    customization_id?: SortOrder
+    sort_order?: SortOrder
+    max_items?: SortOrder
+    refresh_interval?: SortOrder
+  }
+
+  export type EnumWidgetTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WidgetType | EnumWidgetTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.WidgetType[] | ListEnumWidgetTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WidgetType[] | ListEnumWidgetTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWidgetTypeWithAggregatesFilter<$PrismaModel> | $Enums.WidgetType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWidgetTypeFilter<$PrismaModel>
+    _max?: NestedEnumWidgetTypeFilter<$PrismaModel>
+  }
+
+  export type EnumWidgetPositionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WidgetPosition | EnumWidgetPositionFieldRefInput<$PrismaModel>
+    in?: $Enums.WidgetPosition[] | ListEnumWidgetPositionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WidgetPosition[] | ListEnumWidgetPositionFieldRefInput<$PrismaModel>
+    not?: NestedEnumWidgetPositionWithAggregatesFilter<$PrismaModel> | $Enums.WidgetPosition
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWidgetPositionFilter<$PrismaModel>
+    _max?: NestedEnumWidgetPositionFilter<$PrismaModel>
+  }
+
   export type NotificationCreateNestedManyWithoutUserInput = {
     create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
@@ -25907,6 +32985,12 @@ export namespace Prisma {
     connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
   }
 
+  export type StoreCustomizationCreateNestedOneWithoutStoreInput = {
+    create?: XOR<StoreCustomizationCreateWithoutStoreInput, StoreCustomizationUncheckedCreateWithoutStoreInput>
+    connectOrCreate?: StoreCustomizationCreateOrConnectWithoutStoreInput
+    connect?: StoreCustomizationWhereUniqueInput
+  }
+
   export type BranchUncheckedCreateNestedManyWithoutStoreInput = {
     create?: XOR<BranchCreateWithoutStoreInput, BranchUncheckedCreateWithoutStoreInput> | BranchCreateWithoutStoreInput[] | BranchUncheckedCreateWithoutStoreInput[]
     connectOrCreate?: BranchCreateOrConnectWithoutStoreInput | BranchCreateOrConnectWithoutStoreInput[]
@@ -25946,6 +33030,12 @@ export namespace Prisma {
     connectOrCreate?: EmployeeCreateOrConnectWithoutStoreInput | EmployeeCreateOrConnectWithoutStoreInput[]
     createMany?: EmployeeCreateManyStoreInputEnvelope
     connect?: EmployeeWhereUniqueInput | EmployeeWhereUniqueInput[]
+  }
+
+  export type StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput = {
+    create?: XOR<StoreCustomizationCreateWithoutStoreInput, StoreCustomizationUncheckedCreateWithoutStoreInput>
+    connectOrCreate?: StoreCustomizationCreateOrConnectWithoutStoreInput
+    connect?: StoreCustomizationWhereUniqueInput
   }
 
   export type UserUpdateOneRequiredWithoutStoreNestedInput = {
@@ -26036,6 +33126,16 @@ export namespace Prisma {
     deleteMany?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
   }
 
+  export type StoreCustomizationUpdateOneWithoutStoreNestedInput = {
+    create?: XOR<StoreCustomizationCreateWithoutStoreInput, StoreCustomizationUncheckedCreateWithoutStoreInput>
+    connectOrCreate?: StoreCustomizationCreateOrConnectWithoutStoreInput
+    upsert?: StoreCustomizationUpsertWithoutStoreInput
+    disconnect?: StoreCustomizationWhereInput | boolean
+    delete?: StoreCustomizationWhereInput | boolean
+    connect?: StoreCustomizationWhereUniqueInput
+    update?: XOR<XOR<StoreCustomizationUpdateToOneWithWhereWithoutStoreInput, StoreCustomizationUpdateWithoutStoreInput>, StoreCustomizationUncheckedUpdateWithoutStoreInput>
+  }
+
   export type BranchUncheckedUpdateManyWithoutStoreNestedInput = {
     create?: XOR<BranchCreateWithoutStoreInput, BranchUncheckedCreateWithoutStoreInput> | BranchCreateWithoutStoreInput[] | BranchUncheckedCreateWithoutStoreInput[]
     connectOrCreate?: BranchCreateOrConnectWithoutStoreInput | BranchCreateOrConnectWithoutStoreInput[]
@@ -26114,6 +33214,16 @@ export namespace Prisma {
     update?: EmployeeUpdateWithWhereUniqueWithoutStoreInput | EmployeeUpdateWithWhereUniqueWithoutStoreInput[]
     updateMany?: EmployeeUpdateManyWithWhereWithoutStoreInput | EmployeeUpdateManyWithWhereWithoutStoreInput[]
     deleteMany?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
+  }
+
+  export type StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput = {
+    create?: XOR<StoreCustomizationCreateWithoutStoreInput, StoreCustomizationUncheckedCreateWithoutStoreInput>
+    connectOrCreate?: StoreCustomizationCreateOrConnectWithoutStoreInput
+    upsert?: StoreCustomizationUpsertWithoutStoreInput
+    disconnect?: StoreCustomizationWhereInput | boolean
+    delete?: StoreCustomizationWhereInput | boolean
+    connect?: StoreCustomizationWhereUniqueInput
+    update?: XOR<XOR<StoreCustomizationUpdateToOneWithWhereWithoutStoreInput, StoreCustomizationUpdateWithoutStoreInput>, StoreCustomizationUncheckedUpdateWithoutStoreInput>
   }
 
   export type UserCreateNestedOneWithoutAccountInput = {
@@ -26973,6 +34083,160 @@ export namespace Prisma {
     deleteMany?: ActionLogScalarWhereInput | ActionLogScalarWhereInput[]
   }
 
+  export type StoreCreateNestedOneWithoutCustomizationInput = {
+    create?: XOR<StoreCreateWithoutCustomizationInput, StoreUncheckedCreateWithoutCustomizationInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutCustomizationInput
+    connect?: StoreWhereUniqueInput
+  }
+
+  export type StoreSectionConfigCreateNestedManyWithoutCustomizationInput = {
+    create?: XOR<StoreSectionConfigCreateWithoutCustomizationInput, StoreSectionConfigUncheckedCreateWithoutCustomizationInput> | StoreSectionConfigCreateWithoutCustomizationInput[] | StoreSectionConfigUncheckedCreateWithoutCustomizationInput[]
+    connectOrCreate?: StoreSectionConfigCreateOrConnectWithoutCustomizationInput | StoreSectionConfigCreateOrConnectWithoutCustomizationInput[]
+    createMany?: StoreSectionConfigCreateManyCustomizationInputEnvelope
+    connect?: StoreSectionConfigWhereUniqueInput | StoreSectionConfigWhereUniqueInput[]
+  }
+
+  export type StoreWidgetConfigCreateNestedManyWithoutCustomizationInput = {
+    create?: XOR<StoreWidgetConfigCreateWithoutCustomizationInput, StoreWidgetConfigUncheckedCreateWithoutCustomizationInput> | StoreWidgetConfigCreateWithoutCustomizationInput[] | StoreWidgetConfigUncheckedCreateWithoutCustomizationInput[]
+    connectOrCreate?: StoreWidgetConfigCreateOrConnectWithoutCustomizationInput | StoreWidgetConfigCreateOrConnectWithoutCustomizationInput[]
+    createMany?: StoreWidgetConfigCreateManyCustomizationInputEnvelope
+    connect?: StoreWidgetConfigWhereUniqueInput | StoreWidgetConfigWhereUniqueInput[]
+  }
+
+  export type StoreSectionConfigUncheckedCreateNestedManyWithoutCustomizationInput = {
+    create?: XOR<StoreSectionConfigCreateWithoutCustomizationInput, StoreSectionConfigUncheckedCreateWithoutCustomizationInput> | StoreSectionConfigCreateWithoutCustomizationInput[] | StoreSectionConfigUncheckedCreateWithoutCustomizationInput[]
+    connectOrCreate?: StoreSectionConfigCreateOrConnectWithoutCustomizationInput | StoreSectionConfigCreateOrConnectWithoutCustomizationInput[]
+    createMany?: StoreSectionConfigCreateManyCustomizationInputEnvelope
+    connect?: StoreSectionConfigWhereUniqueInput | StoreSectionConfigWhereUniqueInput[]
+  }
+
+  export type StoreWidgetConfigUncheckedCreateNestedManyWithoutCustomizationInput = {
+    create?: XOR<StoreWidgetConfigCreateWithoutCustomizationInput, StoreWidgetConfigUncheckedCreateWithoutCustomizationInput> | StoreWidgetConfigCreateWithoutCustomizationInput[] | StoreWidgetConfigUncheckedCreateWithoutCustomizationInput[]
+    connectOrCreate?: StoreWidgetConfigCreateOrConnectWithoutCustomizationInput | StoreWidgetConfigCreateOrConnectWithoutCustomizationInput[]
+    createMany?: StoreWidgetConfigCreateManyCustomizationInputEnvelope
+    connect?: StoreWidgetConfigWhereUniqueInput | StoreWidgetConfigWhereUniqueInput[]
+  }
+
+  export type EnumHeaderPositionFieldUpdateOperationsInput = {
+    set?: $Enums.HeaderPosition
+  }
+
+  export type EnumHeaderStyleFieldUpdateOperationsInput = {
+    set?: $Enums.HeaderStyle
+  }
+
+  export type EnumLayoutStyleFieldUpdateOperationsInput = {
+    set?: $Enums.LayoutStyle
+  }
+
+  export type EnumProductCardStyleFieldUpdateOperationsInput = {
+    set?: $Enums.ProductCardStyle
+  }
+
+  export type StoreUpdateOneRequiredWithoutCustomizationNestedInput = {
+    create?: XOR<StoreCreateWithoutCustomizationInput, StoreUncheckedCreateWithoutCustomizationInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutCustomizationInput
+    upsert?: StoreUpsertWithoutCustomizationInput
+    connect?: StoreWhereUniqueInput
+    update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutCustomizationInput, StoreUpdateWithoutCustomizationInput>, StoreUncheckedUpdateWithoutCustomizationInput>
+  }
+
+  export type StoreSectionConfigUpdateManyWithoutCustomizationNestedInput = {
+    create?: XOR<StoreSectionConfigCreateWithoutCustomizationInput, StoreSectionConfigUncheckedCreateWithoutCustomizationInput> | StoreSectionConfigCreateWithoutCustomizationInput[] | StoreSectionConfigUncheckedCreateWithoutCustomizationInput[]
+    connectOrCreate?: StoreSectionConfigCreateOrConnectWithoutCustomizationInput | StoreSectionConfigCreateOrConnectWithoutCustomizationInput[]
+    upsert?: StoreSectionConfigUpsertWithWhereUniqueWithoutCustomizationInput | StoreSectionConfigUpsertWithWhereUniqueWithoutCustomizationInput[]
+    createMany?: StoreSectionConfigCreateManyCustomizationInputEnvelope
+    set?: StoreSectionConfigWhereUniqueInput | StoreSectionConfigWhereUniqueInput[]
+    disconnect?: StoreSectionConfigWhereUniqueInput | StoreSectionConfigWhereUniqueInput[]
+    delete?: StoreSectionConfigWhereUniqueInput | StoreSectionConfigWhereUniqueInput[]
+    connect?: StoreSectionConfigWhereUniqueInput | StoreSectionConfigWhereUniqueInput[]
+    update?: StoreSectionConfigUpdateWithWhereUniqueWithoutCustomizationInput | StoreSectionConfigUpdateWithWhereUniqueWithoutCustomizationInput[]
+    updateMany?: StoreSectionConfigUpdateManyWithWhereWithoutCustomizationInput | StoreSectionConfigUpdateManyWithWhereWithoutCustomizationInput[]
+    deleteMany?: StoreSectionConfigScalarWhereInput | StoreSectionConfigScalarWhereInput[]
+  }
+
+  export type StoreWidgetConfigUpdateManyWithoutCustomizationNestedInput = {
+    create?: XOR<StoreWidgetConfigCreateWithoutCustomizationInput, StoreWidgetConfigUncheckedCreateWithoutCustomizationInput> | StoreWidgetConfigCreateWithoutCustomizationInput[] | StoreWidgetConfigUncheckedCreateWithoutCustomizationInput[]
+    connectOrCreate?: StoreWidgetConfigCreateOrConnectWithoutCustomizationInput | StoreWidgetConfigCreateOrConnectWithoutCustomizationInput[]
+    upsert?: StoreWidgetConfigUpsertWithWhereUniqueWithoutCustomizationInput | StoreWidgetConfigUpsertWithWhereUniqueWithoutCustomizationInput[]
+    createMany?: StoreWidgetConfigCreateManyCustomizationInputEnvelope
+    set?: StoreWidgetConfigWhereUniqueInput | StoreWidgetConfigWhereUniqueInput[]
+    disconnect?: StoreWidgetConfigWhereUniqueInput | StoreWidgetConfigWhereUniqueInput[]
+    delete?: StoreWidgetConfigWhereUniqueInput | StoreWidgetConfigWhereUniqueInput[]
+    connect?: StoreWidgetConfigWhereUniqueInput | StoreWidgetConfigWhereUniqueInput[]
+    update?: StoreWidgetConfigUpdateWithWhereUniqueWithoutCustomizationInput | StoreWidgetConfigUpdateWithWhereUniqueWithoutCustomizationInput[]
+    updateMany?: StoreWidgetConfigUpdateManyWithWhereWithoutCustomizationInput | StoreWidgetConfigUpdateManyWithWhereWithoutCustomizationInput[]
+    deleteMany?: StoreWidgetConfigScalarWhereInput | StoreWidgetConfigScalarWhereInput[]
+  }
+
+  export type StoreSectionConfigUncheckedUpdateManyWithoutCustomizationNestedInput = {
+    create?: XOR<StoreSectionConfigCreateWithoutCustomizationInput, StoreSectionConfigUncheckedCreateWithoutCustomizationInput> | StoreSectionConfigCreateWithoutCustomizationInput[] | StoreSectionConfigUncheckedCreateWithoutCustomizationInput[]
+    connectOrCreate?: StoreSectionConfigCreateOrConnectWithoutCustomizationInput | StoreSectionConfigCreateOrConnectWithoutCustomizationInput[]
+    upsert?: StoreSectionConfigUpsertWithWhereUniqueWithoutCustomizationInput | StoreSectionConfigUpsertWithWhereUniqueWithoutCustomizationInput[]
+    createMany?: StoreSectionConfigCreateManyCustomizationInputEnvelope
+    set?: StoreSectionConfigWhereUniqueInput | StoreSectionConfigWhereUniqueInput[]
+    disconnect?: StoreSectionConfigWhereUniqueInput | StoreSectionConfigWhereUniqueInput[]
+    delete?: StoreSectionConfigWhereUniqueInput | StoreSectionConfigWhereUniqueInput[]
+    connect?: StoreSectionConfigWhereUniqueInput | StoreSectionConfigWhereUniqueInput[]
+    update?: StoreSectionConfigUpdateWithWhereUniqueWithoutCustomizationInput | StoreSectionConfigUpdateWithWhereUniqueWithoutCustomizationInput[]
+    updateMany?: StoreSectionConfigUpdateManyWithWhereWithoutCustomizationInput | StoreSectionConfigUpdateManyWithWhereWithoutCustomizationInput[]
+    deleteMany?: StoreSectionConfigScalarWhereInput | StoreSectionConfigScalarWhereInput[]
+  }
+
+  export type StoreWidgetConfigUncheckedUpdateManyWithoutCustomizationNestedInput = {
+    create?: XOR<StoreWidgetConfigCreateWithoutCustomizationInput, StoreWidgetConfigUncheckedCreateWithoutCustomizationInput> | StoreWidgetConfigCreateWithoutCustomizationInput[] | StoreWidgetConfigUncheckedCreateWithoutCustomizationInput[]
+    connectOrCreate?: StoreWidgetConfigCreateOrConnectWithoutCustomizationInput | StoreWidgetConfigCreateOrConnectWithoutCustomizationInput[]
+    upsert?: StoreWidgetConfigUpsertWithWhereUniqueWithoutCustomizationInput | StoreWidgetConfigUpsertWithWhereUniqueWithoutCustomizationInput[]
+    createMany?: StoreWidgetConfigCreateManyCustomizationInputEnvelope
+    set?: StoreWidgetConfigWhereUniqueInput | StoreWidgetConfigWhereUniqueInput[]
+    disconnect?: StoreWidgetConfigWhereUniqueInput | StoreWidgetConfigWhereUniqueInput[]
+    delete?: StoreWidgetConfigWhereUniqueInput | StoreWidgetConfigWhereUniqueInput[]
+    connect?: StoreWidgetConfigWhereUniqueInput | StoreWidgetConfigWhereUniqueInput[]
+    update?: StoreWidgetConfigUpdateWithWhereUniqueWithoutCustomizationInput | StoreWidgetConfigUpdateWithWhereUniqueWithoutCustomizationInput[]
+    updateMany?: StoreWidgetConfigUpdateManyWithWhereWithoutCustomizationInput | StoreWidgetConfigUpdateManyWithWhereWithoutCustomizationInput[]
+    deleteMany?: StoreWidgetConfigScalarWhereInput | StoreWidgetConfigScalarWhereInput[]
+  }
+
+  export type StoreCustomizationCreateNestedOneWithoutSectionsInput = {
+    create?: XOR<StoreCustomizationCreateWithoutSectionsInput, StoreCustomizationUncheckedCreateWithoutSectionsInput>
+    connectOrCreate?: StoreCustomizationCreateOrConnectWithoutSectionsInput
+    connect?: StoreCustomizationWhereUniqueInput
+  }
+
+  export type EnumSectionTypeFieldUpdateOperationsInput = {
+    set?: $Enums.SectionType
+  }
+
+  export type StoreCustomizationUpdateOneRequiredWithoutSectionsNestedInput = {
+    create?: XOR<StoreCustomizationCreateWithoutSectionsInput, StoreCustomizationUncheckedCreateWithoutSectionsInput>
+    connectOrCreate?: StoreCustomizationCreateOrConnectWithoutSectionsInput
+    upsert?: StoreCustomizationUpsertWithoutSectionsInput
+    connect?: StoreCustomizationWhereUniqueInput
+    update?: XOR<XOR<StoreCustomizationUpdateToOneWithWhereWithoutSectionsInput, StoreCustomizationUpdateWithoutSectionsInput>, StoreCustomizationUncheckedUpdateWithoutSectionsInput>
+  }
+
+  export type StoreCustomizationCreateNestedOneWithoutWidgetsInput = {
+    create?: XOR<StoreCustomizationCreateWithoutWidgetsInput, StoreCustomizationUncheckedCreateWithoutWidgetsInput>
+    connectOrCreate?: StoreCustomizationCreateOrConnectWithoutWidgetsInput
+    connect?: StoreCustomizationWhereUniqueInput
+  }
+
+  export type EnumWidgetTypeFieldUpdateOperationsInput = {
+    set?: $Enums.WidgetType
+  }
+
+  export type EnumWidgetPositionFieldUpdateOperationsInput = {
+    set?: $Enums.WidgetPosition
+  }
+
+  export type StoreCustomizationUpdateOneRequiredWithoutWidgetsNestedInput = {
+    create?: XOR<StoreCustomizationCreateWithoutWidgetsInput, StoreCustomizationUncheckedCreateWithoutWidgetsInput>
+    connectOrCreate?: StoreCustomizationCreateOrConnectWithoutWidgetsInput
+    upsert?: StoreCustomizationUpsertWithoutWidgetsInput
+    connect?: StoreCustomizationWhereUniqueInput
+    update?: XOR<XOR<StoreCustomizationUpdateToOneWithWhereWithoutWidgetsInput, StoreCustomizationUpdateWithoutWidgetsInput>, StoreCustomizationUncheckedUpdateWithoutWidgetsInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -27329,6 +34593,125 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumHeaderPositionFilter<$PrismaModel = never> = {
+    equals?: $Enums.HeaderPosition | EnumHeaderPositionFieldRefInput<$PrismaModel>
+    in?: $Enums.HeaderPosition[] | ListEnumHeaderPositionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HeaderPosition[] | ListEnumHeaderPositionFieldRefInput<$PrismaModel>
+    not?: NestedEnumHeaderPositionFilter<$PrismaModel> | $Enums.HeaderPosition
+  }
+
+  export type NestedEnumHeaderStyleFilter<$PrismaModel = never> = {
+    equals?: $Enums.HeaderStyle | EnumHeaderStyleFieldRefInput<$PrismaModel>
+    in?: $Enums.HeaderStyle[] | ListEnumHeaderStyleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HeaderStyle[] | ListEnumHeaderStyleFieldRefInput<$PrismaModel>
+    not?: NestedEnumHeaderStyleFilter<$PrismaModel> | $Enums.HeaderStyle
+  }
+
+  export type NestedEnumLayoutStyleFilter<$PrismaModel = never> = {
+    equals?: $Enums.LayoutStyle | EnumLayoutStyleFieldRefInput<$PrismaModel>
+    in?: $Enums.LayoutStyle[] | ListEnumLayoutStyleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LayoutStyle[] | ListEnumLayoutStyleFieldRefInput<$PrismaModel>
+    not?: NestedEnumLayoutStyleFilter<$PrismaModel> | $Enums.LayoutStyle
+  }
+
+  export type NestedEnumProductCardStyleFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProductCardStyle | EnumProductCardStyleFieldRefInput<$PrismaModel>
+    in?: $Enums.ProductCardStyle[] | ListEnumProductCardStyleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProductCardStyle[] | ListEnumProductCardStyleFieldRefInput<$PrismaModel>
+    not?: NestedEnumProductCardStyleFilter<$PrismaModel> | $Enums.ProductCardStyle
+  }
+
+  export type NestedEnumHeaderPositionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.HeaderPosition | EnumHeaderPositionFieldRefInput<$PrismaModel>
+    in?: $Enums.HeaderPosition[] | ListEnumHeaderPositionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HeaderPosition[] | ListEnumHeaderPositionFieldRefInput<$PrismaModel>
+    not?: NestedEnumHeaderPositionWithAggregatesFilter<$PrismaModel> | $Enums.HeaderPosition
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumHeaderPositionFilter<$PrismaModel>
+    _max?: NestedEnumHeaderPositionFilter<$PrismaModel>
+  }
+
+  export type NestedEnumHeaderStyleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.HeaderStyle | EnumHeaderStyleFieldRefInput<$PrismaModel>
+    in?: $Enums.HeaderStyle[] | ListEnumHeaderStyleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HeaderStyle[] | ListEnumHeaderStyleFieldRefInput<$PrismaModel>
+    not?: NestedEnumHeaderStyleWithAggregatesFilter<$PrismaModel> | $Enums.HeaderStyle
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumHeaderStyleFilter<$PrismaModel>
+    _max?: NestedEnumHeaderStyleFilter<$PrismaModel>
+  }
+
+  export type NestedEnumLayoutStyleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LayoutStyle | EnumLayoutStyleFieldRefInput<$PrismaModel>
+    in?: $Enums.LayoutStyle[] | ListEnumLayoutStyleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LayoutStyle[] | ListEnumLayoutStyleFieldRefInput<$PrismaModel>
+    not?: NestedEnumLayoutStyleWithAggregatesFilter<$PrismaModel> | $Enums.LayoutStyle
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLayoutStyleFilter<$PrismaModel>
+    _max?: NestedEnumLayoutStyleFilter<$PrismaModel>
+  }
+
+  export type NestedEnumProductCardStyleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProductCardStyle | EnumProductCardStyleFieldRefInput<$PrismaModel>
+    in?: $Enums.ProductCardStyle[] | ListEnumProductCardStyleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProductCardStyle[] | ListEnumProductCardStyleFieldRefInput<$PrismaModel>
+    not?: NestedEnumProductCardStyleWithAggregatesFilter<$PrismaModel> | $Enums.ProductCardStyle
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumProductCardStyleFilter<$PrismaModel>
+    _max?: NestedEnumProductCardStyleFilter<$PrismaModel>
+  }
+
+  export type NestedEnumSectionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.SectionType | EnumSectionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SectionType[] | ListEnumSectionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SectionType[] | ListEnumSectionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSectionTypeFilter<$PrismaModel> | $Enums.SectionType
+  }
+
+  export type NestedEnumSectionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SectionType | EnumSectionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SectionType[] | ListEnumSectionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SectionType[] | ListEnumSectionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSectionTypeWithAggregatesFilter<$PrismaModel> | $Enums.SectionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSectionTypeFilter<$PrismaModel>
+    _max?: NestedEnumSectionTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumWidgetTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.WidgetType | EnumWidgetTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.WidgetType[] | ListEnumWidgetTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WidgetType[] | ListEnumWidgetTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWidgetTypeFilter<$PrismaModel> | $Enums.WidgetType
+  }
+
+  export type NestedEnumWidgetPositionFilter<$PrismaModel = never> = {
+    equals?: $Enums.WidgetPosition | EnumWidgetPositionFieldRefInput<$PrismaModel>
+    in?: $Enums.WidgetPosition[] | ListEnumWidgetPositionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WidgetPosition[] | ListEnumWidgetPositionFieldRefInput<$PrismaModel>
+    not?: NestedEnumWidgetPositionFilter<$PrismaModel> | $Enums.WidgetPosition
+  }
+
+  export type NestedEnumWidgetTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WidgetType | EnumWidgetTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.WidgetType[] | ListEnumWidgetTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WidgetType[] | ListEnumWidgetTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWidgetTypeWithAggregatesFilter<$PrismaModel> | $Enums.WidgetType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWidgetTypeFilter<$PrismaModel>
+    _max?: NestedEnumWidgetTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumWidgetPositionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WidgetPosition | EnumWidgetPositionFieldRefInput<$PrismaModel>
+    in?: $Enums.WidgetPosition[] | ListEnumWidgetPositionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WidgetPosition[] | ListEnumWidgetPositionFieldRefInput<$PrismaModel>
+    not?: NestedEnumWidgetPositionWithAggregatesFilter<$PrismaModel> | $Enums.WidgetPosition
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWidgetPositionFilter<$PrismaModel>
+    _max?: NestedEnumWidgetPositionFilter<$PrismaModel>
+  }
+
   export type NotificationCreateWithoutUserInput = {
     created_at?: Date | string
     updated_at?: Date | string
@@ -27375,6 +34758,7 @@ export namespace Prisma {
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutUserInput = {
@@ -27393,6 +34777,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutUserInput = {
@@ -28251,6 +35636,122 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StoreCustomizationCreateWithoutStoreInput = {
+    primary_color?: string
+    secondary_color?: string
+    accent_color?: string
+    background_color?: string
+    text_color?: string
+    secondary_text_color?: string
+    border_color?: string
+    success_color?: string
+    warning_color?: string
+    error_color?: string
+    primary_font?: string
+    secondary_font?: string
+    font_size_base?: string
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: $Enums.HeaderPosition
+    header_style?: $Enums.HeaderStyle
+    show_footer?: boolean
+    footer_text?: string | null
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: $Enums.LayoutStyle
+    container_max_width?: string
+    border_radius?: string
+    spacing_unit?: string
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: number
+    product_card_style?: $Enums.ProductCardStyle
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: string | null
+    custom_js?: string | null
+    favicon_url?: string | null
+    meta_title?: string | null
+    meta_description?: string | null
+    google_analytics_id?: string | null
+    facebook_pixel_id?: string | null
+    google_tag_manager_id?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    sections?: StoreSectionConfigCreateNestedManyWithoutCustomizationInput
+    widgets?: StoreWidgetConfigCreateNestedManyWithoutCustomizationInput
+  }
+
+  export type StoreCustomizationUncheckedCreateWithoutStoreInput = {
+    id?: number
+    primary_color?: string
+    secondary_color?: string
+    accent_color?: string
+    background_color?: string
+    text_color?: string
+    secondary_text_color?: string
+    border_color?: string
+    success_color?: string
+    warning_color?: string
+    error_color?: string
+    primary_font?: string
+    secondary_font?: string
+    font_size_base?: string
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: $Enums.HeaderPosition
+    header_style?: $Enums.HeaderStyle
+    show_footer?: boolean
+    footer_text?: string | null
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: $Enums.LayoutStyle
+    container_max_width?: string
+    border_radius?: string
+    spacing_unit?: string
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: number
+    product_card_style?: $Enums.ProductCardStyle
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: string | null
+    custom_js?: string | null
+    favicon_url?: string | null
+    meta_title?: string | null
+    meta_description?: string | null
+    google_analytics_id?: string | null
+    facebook_pixel_id?: string | null
+    google_tag_manager_id?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    sections?: StoreSectionConfigUncheckedCreateNestedManyWithoutCustomizationInput
+    widgets?: StoreWidgetConfigUncheckedCreateNestedManyWithoutCustomizationInput
+  }
+
+  export type StoreCustomizationCreateOrConnectWithoutStoreInput = {
+    where: StoreCustomizationWhereUniqueInput
+    create: XOR<StoreCustomizationCreateWithoutStoreInput, StoreCustomizationUncheckedCreateWithoutStoreInput>
+  }
+
   export type UserUpsertWithoutStoreInput = {
     update: XOR<UserUpdateWithoutStoreInput, UserUncheckedUpdateWithoutStoreInput>
     create: XOR<UserCreateWithoutStoreInput, UserUncheckedCreateWithoutStoreInput>
@@ -28436,6 +35937,128 @@ export namespace Prisma {
     data: XOR<EmployeeUpdateManyMutationInput, EmployeeUncheckedUpdateManyWithoutStoreInput>
   }
 
+  export type StoreCustomizationUpsertWithoutStoreInput = {
+    update: XOR<StoreCustomizationUpdateWithoutStoreInput, StoreCustomizationUncheckedUpdateWithoutStoreInput>
+    create: XOR<StoreCustomizationCreateWithoutStoreInput, StoreCustomizationUncheckedCreateWithoutStoreInput>
+    where?: StoreCustomizationWhereInput
+  }
+
+  export type StoreCustomizationUpdateToOneWithWhereWithoutStoreInput = {
+    where?: StoreCustomizationWhereInput
+    data: XOR<StoreCustomizationUpdateWithoutStoreInput, StoreCustomizationUncheckedUpdateWithoutStoreInput>
+  }
+
+  export type StoreCustomizationUpdateWithoutStoreInput = {
+    primary_color?: StringFieldUpdateOperationsInput | string
+    secondary_color?: StringFieldUpdateOperationsInput | string
+    accent_color?: StringFieldUpdateOperationsInput | string
+    background_color?: StringFieldUpdateOperationsInput | string
+    text_color?: StringFieldUpdateOperationsInput | string
+    secondary_text_color?: StringFieldUpdateOperationsInput | string
+    border_color?: StringFieldUpdateOperationsInput | string
+    success_color?: StringFieldUpdateOperationsInput | string
+    warning_color?: StringFieldUpdateOperationsInput | string
+    error_color?: StringFieldUpdateOperationsInput | string
+    primary_font?: StringFieldUpdateOperationsInput | string
+    secondary_font?: StringFieldUpdateOperationsInput | string
+    font_size_base?: StringFieldUpdateOperationsInput | string
+    show_header?: BoolFieldUpdateOperationsInput | boolean
+    show_logo?: BoolFieldUpdateOperationsInput | boolean
+    show_search_bar?: BoolFieldUpdateOperationsInput | boolean
+    show_navigation_menu?: BoolFieldUpdateOperationsInput | boolean
+    show_cart_icon?: BoolFieldUpdateOperationsInput | boolean
+    show_user_account?: BoolFieldUpdateOperationsInput | boolean
+    header_position?: EnumHeaderPositionFieldUpdateOperationsInput | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleFieldUpdateOperationsInput | $Enums.HeaderStyle
+    show_footer?: BoolFieldUpdateOperationsInput | boolean
+    footer_text?: NullableStringFieldUpdateOperationsInput | string | null
+    show_social_links?: BoolFieldUpdateOperationsInput | boolean
+    show_contact_info?: BoolFieldUpdateOperationsInput | boolean
+    show_store_info?: BoolFieldUpdateOperationsInput | boolean
+    layout_style?: EnumLayoutStyleFieldUpdateOperationsInput | $Enums.LayoutStyle
+    container_max_width?: StringFieldUpdateOperationsInput | string
+    border_radius?: StringFieldUpdateOperationsInput | string
+    spacing_unit?: StringFieldUpdateOperationsInput | string
+    show_hero_section?: BoolFieldUpdateOperationsInput | boolean
+    show_featured_products?: BoolFieldUpdateOperationsInput | boolean
+    show_categories?: BoolFieldUpdateOperationsInput | boolean
+    show_testimonials?: BoolFieldUpdateOperationsInput | boolean
+    show_about_section?: BoolFieldUpdateOperationsInput | boolean
+    products_per_page?: IntFieldUpdateOperationsInput | number
+    product_card_style?: EnumProductCardStyleFieldUpdateOperationsInput | $Enums.ProductCardStyle
+    show_product_rating?: BoolFieldUpdateOperationsInput | boolean
+    show_product_stock?: BoolFieldUpdateOperationsInput | boolean
+    show_add_to_cart_btn?: BoolFieldUpdateOperationsInput | boolean
+    custom_css?: NullableStringFieldUpdateOperationsInput | string | null
+    custom_js?: NullableStringFieldUpdateOperationsInput | string | null
+    favicon_url?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_title?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
+    google_analytics_id?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook_pixel_id?: NullableStringFieldUpdateOperationsInput | string | null
+    google_tag_manager_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    sections?: StoreSectionConfigUpdateManyWithoutCustomizationNestedInput
+    widgets?: StoreWidgetConfigUpdateManyWithoutCustomizationNestedInput
+  }
+
+  export type StoreCustomizationUncheckedUpdateWithoutStoreInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    primary_color?: StringFieldUpdateOperationsInput | string
+    secondary_color?: StringFieldUpdateOperationsInput | string
+    accent_color?: StringFieldUpdateOperationsInput | string
+    background_color?: StringFieldUpdateOperationsInput | string
+    text_color?: StringFieldUpdateOperationsInput | string
+    secondary_text_color?: StringFieldUpdateOperationsInput | string
+    border_color?: StringFieldUpdateOperationsInput | string
+    success_color?: StringFieldUpdateOperationsInput | string
+    warning_color?: StringFieldUpdateOperationsInput | string
+    error_color?: StringFieldUpdateOperationsInput | string
+    primary_font?: StringFieldUpdateOperationsInput | string
+    secondary_font?: StringFieldUpdateOperationsInput | string
+    font_size_base?: StringFieldUpdateOperationsInput | string
+    show_header?: BoolFieldUpdateOperationsInput | boolean
+    show_logo?: BoolFieldUpdateOperationsInput | boolean
+    show_search_bar?: BoolFieldUpdateOperationsInput | boolean
+    show_navigation_menu?: BoolFieldUpdateOperationsInput | boolean
+    show_cart_icon?: BoolFieldUpdateOperationsInput | boolean
+    show_user_account?: BoolFieldUpdateOperationsInput | boolean
+    header_position?: EnumHeaderPositionFieldUpdateOperationsInput | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleFieldUpdateOperationsInput | $Enums.HeaderStyle
+    show_footer?: BoolFieldUpdateOperationsInput | boolean
+    footer_text?: NullableStringFieldUpdateOperationsInput | string | null
+    show_social_links?: BoolFieldUpdateOperationsInput | boolean
+    show_contact_info?: BoolFieldUpdateOperationsInput | boolean
+    show_store_info?: BoolFieldUpdateOperationsInput | boolean
+    layout_style?: EnumLayoutStyleFieldUpdateOperationsInput | $Enums.LayoutStyle
+    container_max_width?: StringFieldUpdateOperationsInput | string
+    border_radius?: StringFieldUpdateOperationsInput | string
+    spacing_unit?: StringFieldUpdateOperationsInput | string
+    show_hero_section?: BoolFieldUpdateOperationsInput | boolean
+    show_featured_products?: BoolFieldUpdateOperationsInput | boolean
+    show_categories?: BoolFieldUpdateOperationsInput | boolean
+    show_testimonials?: BoolFieldUpdateOperationsInput | boolean
+    show_about_section?: BoolFieldUpdateOperationsInput | boolean
+    products_per_page?: IntFieldUpdateOperationsInput | number
+    product_card_style?: EnumProductCardStyleFieldUpdateOperationsInput | $Enums.ProductCardStyle
+    show_product_rating?: BoolFieldUpdateOperationsInput | boolean
+    show_product_stock?: BoolFieldUpdateOperationsInput | boolean
+    show_add_to_cart_btn?: BoolFieldUpdateOperationsInput | boolean
+    custom_css?: NullableStringFieldUpdateOperationsInput | string | null
+    custom_js?: NullableStringFieldUpdateOperationsInput | string | null
+    favicon_url?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_title?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
+    google_analytics_id?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook_pixel_id?: NullableStringFieldUpdateOperationsInput | string | null
+    google_tag_manager_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    sections?: StoreSectionConfigUncheckedUpdateManyWithoutCustomizationNestedInput
+    widgets?: StoreWidgetConfigUncheckedUpdateManyWithoutCustomizationNestedInput
+  }
+
   export type UserCreateWithoutAccountInput = {
     email: string
     first_name?: string | null
@@ -28557,6 +36180,7 @@ export namespace Prisma {
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutProductsInput = {
@@ -28575,6 +36199,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutProductsInput = {
@@ -28716,6 +36341,7 @@ export namespace Prisma {
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutProductsInput = {
@@ -28734,6 +36360,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type CategoryUpsertWithWhereUniqueWithoutProductsInput = {
@@ -28849,6 +36476,7 @@ export namespace Prisma {
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutBranchesInput = {
@@ -28867,6 +36495,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutBranchesInput = {
@@ -28969,6 +36598,7 @@ export namespace Prisma {
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutBranchesInput = {
@@ -28987,6 +36617,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type ProductStockUpsertWithWhereUniqueWithoutBranchInput = {
@@ -29316,6 +36947,7 @@ export namespace Prisma {
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutOrdersInput = {
@@ -29334,6 +36966,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutOrdersInput = {
@@ -29602,6 +37235,7 @@ export namespace Prisma {
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutOrdersInput = {
@@ -29620,6 +37254,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type BranchUpsertWithoutOrdersInput = {
@@ -30123,6 +37758,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutBalanceInput = {
@@ -30141,6 +37777,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutBalanceInput = {
@@ -30174,6 +37811,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutBalanceInput = {
@@ -30192,6 +37830,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreCreateWithoutTransactionsInput = {
@@ -30209,6 +37848,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutTransactionsInput = {
@@ -30227,6 +37867,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutTransactionsInput = {
@@ -30320,6 +37961,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutTransactionsInput = {
@@ -30338,6 +37980,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type EmployeeUpsertWithoutTransactionsInput = {
@@ -30667,6 +38310,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutEmployeesInput = {
@@ -30685,6 +38329,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutEmployeesInput = {
@@ -30928,6 +38573,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutEmployeesInput = {
@@ -30946,6 +38592,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type OrderUpsertWithWhereUniqueWithoutCreated_by_employeeInput = {
@@ -31010,6 +38657,780 @@ export namespace Prisma {
   export type ActionLogUpdateManyWithWhereWithoutEmployeeInput = {
     where: ActionLogScalarWhereInput
     data: XOR<ActionLogUpdateManyMutationInput, ActionLogUncheckedUpdateManyWithoutEmployeeInput>
+  }
+
+  export type StoreCreateWithoutCustomizationInput = {
+    name: string
+    description?: string | null
+    logo?: string | null
+    slogan?: string | null
+    slug: string
+    subdomain: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutStoreInput
+    branches?: BranchCreateNestedManyWithoutStoreInput
+    products?: ProductCreateNestedManyWithoutStoreInput
+    orders?: OrderCreateNestedManyWithoutStoreInput
+    balance?: StoreBalanceCreateNestedOneWithoutStoreInput
+    transactions?: TransactionCreateNestedManyWithoutStoreInput
+    employees?: EmployeeCreateNestedManyWithoutStoreInput
+  }
+
+  export type StoreUncheckedCreateWithoutCustomizationInput = {
+    id?: number
+    name: string
+    description?: string | null
+    logo?: string | null
+    slogan?: string | null
+    slug: string
+    subdomain: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    user_id: number
+    branches?: BranchUncheckedCreateNestedManyWithoutStoreInput
+    products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+    orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+    balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
+    employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
+  }
+
+  export type StoreCreateOrConnectWithoutCustomizationInput = {
+    where: StoreWhereUniqueInput
+    create: XOR<StoreCreateWithoutCustomizationInput, StoreUncheckedCreateWithoutCustomizationInput>
+  }
+
+  export type StoreSectionConfigCreateWithoutCustomizationInput = {
+    section_type: $Enums.SectionType
+    section_name: string
+    is_visible?: boolean
+    sort_order?: number
+    background_color?: string | null
+    text_color?: string | null
+    padding?: string | null
+    margin?: string | null
+    title?: string | null
+    subtitle?: string | null
+    description?: string | null
+    image_url?: string | null
+    button_text?: string | null
+    button_link?: string | null
+    show_title?: boolean
+    show_subtitle?: boolean
+    show_description?: boolean
+    columns_count?: number | null
+    items_per_row?: number | null
+    layout_style?: string | null
+    config_json?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreSectionConfigUncheckedCreateWithoutCustomizationInput = {
+    id?: number
+    section_type: $Enums.SectionType
+    section_name: string
+    is_visible?: boolean
+    sort_order?: number
+    background_color?: string | null
+    text_color?: string | null
+    padding?: string | null
+    margin?: string | null
+    title?: string | null
+    subtitle?: string | null
+    description?: string | null
+    image_url?: string | null
+    button_text?: string | null
+    button_link?: string | null
+    show_title?: boolean
+    show_subtitle?: boolean
+    show_description?: boolean
+    columns_count?: number | null
+    items_per_row?: number | null
+    layout_style?: string | null
+    config_json?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreSectionConfigCreateOrConnectWithoutCustomizationInput = {
+    where: StoreSectionConfigWhereUniqueInput
+    create: XOR<StoreSectionConfigCreateWithoutCustomizationInput, StoreSectionConfigUncheckedCreateWithoutCustomizationInput>
+  }
+
+  export type StoreSectionConfigCreateManyCustomizationInputEnvelope = {
+    data: StoreSectionConfigCreateManyCustomizationInput | StoreSectionConfigCreateManyCustomizationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StoreWidgetConfigCreateWithoutCustomizationInput = {
+    widget_type: $Enums.WidgetType
+    widget_name: string
+    position?: $Enums.WidgetPosition
+    sort_order?: number
+    is_visible?: boolean
+    background_color?: string | null
+    text_color?: string | null
+    border_color?: string | null
+    padding?: string | null
+    margin?: string | null
+    border_radius?: string | null
+    title?: string | null
+    show_title?: boolean
+    max_items?: number | null
+    auto_refresh?: boolean
+    refresh_interval?: number | null
+    config_json?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreWidgetConfigUncheckedCreateWithoutCustomizationInput = {
+    id?: number
+    widget_type: $Enums.WidgetType
+    widget_name: string
+    position?: $Enums.WidgetPosition
+    sort_order?: number
+    is_visible?: boolean
+    background_color?: string | null
+    text_color?: string | null
+    border_color?: string | null
+    padding?: string | null
+    margin?: string | null
+    border_radius?: string | null
+    title?: string | null
+    show_title?: boolean
+    max_items?: number | null
+    auto_refresh?: boolean
+    refresh_interval?: number | null
+    config_json?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreWidgetConfigCreateOrConnectWithoutCustomizationInput = {
+    where: StoreWidgetConfigWhereUniqueInput
+    create: XOR<StoreWidgetConfigCreateWithoutCustomizationInput, StoreWidgetConfigUncheckedCreateWithoutCustomizationInput>
+  }
+
+  export type StoreWidgetConfigCreateManyCustomizationInputEnvelope = {
+    data: StoreWidgetConfigCreateManyCustomizationInput | StoreWidgetConfigCreateManyCustomizationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StoreUpsertWithoutCustomizationInput = {
+    update: XOR<StoreUpdateWithoutCustomizationInput, StoreUncheckedUpdateWithoutCustomizationInput>
+    create: XOR<StoreCreateWithoutCustomizationInput, StoreUncheckedCreateWithoutCustomizationInput>
+    where?: StoreWhereInput
+  }
+
+  export type StoreUpdateToOneWithWhereWithoutCustomizationInput = {
+    where?: StoreWhereInput
+    data: XOR<StoreUpdateWithoutCustomizationInput, StoreUncheckedUpdateWithoutCustomizationInput>
+  }
+
+  export type StoreUpdateWithoutCustomizationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutStoreNestedInput
+    branches?: BranchUpdateManyWithoutStoreNestedInput
+    products?: ProductUpdateManyWithoutStoreNestedInput
+    orders?: OrderUpdateManyWithoutStoreNestedInput
+    balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
+    transactions?: TransactionUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUpdateManyWithoutStoreNestedInput
+  }
+
+  export type StoreUncheckedUpdateWithoutCustomizationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user_id?: IntFieldUpdateOperationsInput | number
+    branches?: BranchUncheckedUpdateManyWithoutStoreNestedInput
+    products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+    balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
+  }
+
+  export type StoreSectionConfigUpsertWithWhereUniqueWithoutCustomizationInput = {
+    where: StoreSectionConfigWhereUniqueInput
+    update: XOR<StoreSectionConfigUpdateWithoutCustomizationInput, StoreSectionConfigUncheckedUpdateWithoutCustomizationInput>
+    create: XOR<StoreSectionConfigCreateWithoutCustomizationInput, StoreSectionConfigUncheckedCreateWithoutCustomizationInput>
+  }
+
+  export type StoreSectionConfigUpdateWithWhereUniqueWithoutCustomizationInput = {
+    where: StoreSectionConfigWhereUniqueInput
+    data: XOR<StoreSectionConfigUpdateWithoutCustomizationInput, StoreSectionConfigUncheckedUpdateWithoutCustomizationInput>
+  }
+
+  export type StoreSectionConfigUpdateManyWithWhereWithoutCustomizationInput = {
+    where: StoreSectionConfigScalarWhereInput
+    data: XOR<StoreSectionConfigUpdateManyMutationInput, StoreSectionConfigUncheckedUpdateManyWithoutCustomizationInput>
+  }
+
+  export type StoreSectionConfigScalarWhereInput = {
+    AND?: StoreSectionConfigScalarWhereInput | StoreSectionConfigScalarWhereInput[]
+    OR?: StoreSectionConfigScalarWhereInput[]
+    NOT?: StoreSectionConfigScalarWhereInput | StoreSectionConfigScalarWhereInput[]
+    id?: IntFilter<"StoreSectionConfig"> | number
+    customization_id?: IntFilter<"StoreSectionConfig"> | number
+    section_type?: EnumSectionTypeFilter<"StoreSectionConfig"> | $Enums.SectionType
+    section_name?: StringFilter<"StoreSectionConfig"> | string
+    is_visible?: BoolFilter<"StoreSectionConfig"> | boolean
+    sort_order?: IntFilter<"StoreSectionConfig"> | number
+    background_color?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    text_color?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    padding?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    margin?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    title?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    subtitle?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    description?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    image_url?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    button_text?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    button_link?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    show_title?: BoolFilter<"StoreSectionConfig"> | boolean
+    show_subtitle?: BoolFilter<"StoreSectionConfig"> | boolean
+    show_description?: BoolFilter<"StoreSectionConfig"> | boolean
+    columns_count?: IntNullableFilter<"StoreSectionConfig"> | number | null
+    items_per_row?: IntNullableFilter<"StoreSectionConfig"> | number | null
+    layout_style?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    config_json?: StringNullableFilter<"StoreSectionConfig"> | string | null
+    created_at?: DateTimeFilter<"StoreSectionConfig"> | Date | string
+    updated_at?: DateTimeFilter<"StoreSectionConfig"> | Date | string
+  }
+
+  export type StoreWidgetConfigUpsertWithWhereUniqueWithoutCustomizationInput = {
+    where: StoreWidgetConfigWhereUniqueInput
+    update: XOR<StoreWidgetConfigUpdateWithoutCustomizationInput, StoreWidgetConfigUncheckedUpdateWithoutCustomizationInput>
+    create: XOR<StoreWidgetConfigCreateWithoutCustomizationInput, StoreWidgetConfigUncheckedCreateWithoutCustomizationInput>
+  }
+
+  export type StoreWidgetConfigUpdateWithWhereUniqueWithoutCustomizationInput = {
+    where: StoreWidgetConfigWhereUniqueInput
+    data: XOR<StoreWidgetConfigUpdateWithoutCustomizationInput, StoreWidgetConfigUncheckedUpdateWithoutCustomizationInput>
+  }
+
+  export type StoreWidgetConfigUpdateManyWithWhereWithoutCustomizationInput = {
+    where: StoreWidgetConfigScalarWhereInput
+    data: XOR<StoreWidgetConfigUpdateManyMutationInput, StoreWidgetConfigUncheckedUpdateManyWithoutCustomizationInput>
+  }
+
+  export type StoreWidgetConfigScalarWhereInput = {
+    AND?: StoreWidgetConfigScalarWhereInput | StoreWidgetConfigScalarWhereInput[]
+    OR?: StoreWidgetConfigScalarWhereInput[]
+    NOT?: StoreWidgetConfigScalarWhereInput | StoreWidgetConfigScalarWhereInput[]
+    id?: IntFilter<"StoreWidgetConfig"> | number
+    customization_id?: IntFilter<"StoreWidgetConfig"> | number
+    widget_type?: EnumWidgetTypeFilter<"StoreWidgetConfig"> | $Enums.WidgetType
+    widget_name?: StringFilter<"StoreWidgetConfig"> | string
+    position?: EnumWidgetPositionFilter<"StoreWidgetConfig"> | $Enums.WidgetPosition
+    sort_order?: IntFilter<"StoreWidgetConfig"> | number
+    is_visible?: BoolFilter<"StoreWidgetConfig"> | boolean
+    background_color?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    text_color?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    border_color?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    padding?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    margin?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    border_radius?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    title?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    show_title?: BoolFilter<"StoreWidgetConfig"> | boolean
+    max_items?: IntNullableFilter<"StoreWidgetConfig"> | number | null
+    auto_refresh?: BoolFilter<"StoreWidgetConfig"> | boolean
+    refresh_interval?: IntNullableFilter<"StoreWidgetConfig"> | number | null
+    config_json?: StringNullableFilter<"StoreWidgetConfig"> | string | null
+    created_at?: DateTimeFilter<"StoreWidgetConfig"> | Date | string
+    updated_at?: DateTimeFilter<"StoreWidgetConfig"> | Date | string
+  }
+
+  export type StoreCustomizationCreateWithoutSectionsInput = {
+    primary_color?: string
+    secondary_color?: string
+    accent_color?: string
+    background_color?: string
+    text_color?: string
+    secondary_text_color?: string
+    border_color?: string
+    success_color?: string
+    warning_color?: string
+    error_color?: string
+    primary_font?: string
+    secondary_font?: string
+    font_size_base?: string
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: $Enums.HeaderPosition
+    header_style?: $Enums.HeaderStyle
+    show_footer?: boolean
+    footer_text?: string | null
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: $Enums.LayoutStyle
+    container_max_width?: string
+    border_radius?: string
+    spacing_unit?: string
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: number
+    product_card_style?: $Enums.ProductCardStyle
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: string | null
+    custom_js?: string | null
+    favicon_url?: string | null
+    meta_title?: string | null
+    meta_description?: string | null
+    google_analytics_id?: string | null
+    facebook_pixel_id?: string | null
+    google_tag_manager_id?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    store: StoreCreateNestedOneWithoutCustomizationInput
+    widgets?: StoreWidgetConfigCreateNestedManyWithoutCustomizationInput
+  }
+
+  export type StoreCustomizationUncheckedCreateWithoutSectionsInput = {
+    id?: number
+    store_id: number
+    primary_color?: string
+    secondary_color?: string
+    accent_color?: string
+    background_color?: string
+    text_color?: string
+    secondary_text_color?: string
+    border_color?: string
+    success_color?: string
+    warning_color?: string
+    error_color?: string
+    primary_font?: string
+    secondary_font?: string
+    font_size_base?: string
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: $Enums.HeaderPosition
+    header_style?: $Enums.HeaderStyle
+    show_footer?: boolean
+    footer_text?: string | null
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: $Enums.LayoutStyle
+    container_max_width?: string
+    border_radius?: string
+    spacing_unit?: string
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: number
+    product_card_style?: $Enums.ProductCardStyle
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: string | null
+    custom_js?: string | null
+    favicon_url?: string | null
+    meta_title?: string | null
+    meta_description?: string | null
+    google_analytics_id?: string | null
+    facebook_pixel_id?: string | null
+    google_tag_manager_id?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    widgets?: StoreWidgetConfigUncheckedCreateNestedManyWithoutCustomizationInput
+  }
+
+  export type StoreCustomizationCreateOrConnectWithoutSectionsInput = {
+    where: StoreCustomizationWhereUniqueInput
+    create: XOR<StoreCustomizationCreateWithoutSectionsInput, StoreCustomizationUncheckedCreateWithoutSectionsInput>
+  }
+
+  export type StoreCustomizationUpsertWithoutSectionsInput = {
+    update: XOR<StoreCustomizationUpdateWithoutSectionsInput, StoreCustomizationUncheckedUpdateWithoutSectionsInput>
+    create: XOR<StoreCustomizationCreateWithoutSectionsInput, StoreCustomizationUncheckedCreateWithoutSectionsInput>
+    where?: StoreCustomizationWhereInput
+  }
+
+  export type StoreCustomizationUpdateToOneWithWhereWithoutSectionsInput = {
+    where?: StoreCustomizationWhereInput
+    data: XOR<StoreCustomizationUpdateWithoutSectionsInput, StoreCustomizationUncheckedUpdateWithoutSectionsInput>
+  }
+
+  export type StoreCustomizationUpdateWithoutSectionsInput = {
+    primary_color?: StringFieldUpdateOperationsInput | string
+    secondary_color?: StringFieldUpdateOperationsInput | string
+    accent_color?: StringFieldUpdateOperationsInput | string
+    background_color?: StringFieldUpdateOperationsInput | string
+    text_color?: StringFieldUpdateOperationsInput | string
+    secondary_text_color?: StringFieldUpdateOperationsInput | string
+    border_color?: StringFieldUpdateOperationsInput | string
+    success_color?: StringFieldUpdateOperationsInput | string
+    warning_color?: StringFieldUpdateOperationsInput | string
+    error_color?: StringFieldUpdateOperationsInput | string
+    primary_font?: StringFieldUpdateOperationsInput | string
+    secondary_font?: StringFieldUpdateOperationsInput | string
+    font_size_base?: StringFieldUpdateOperationsInput | string
+    show_header?: BoolFieldUpdateOperationsInput | boolean
+    show_logo?: BoolFieldUpdateOperationsInput | boolean
+    show_search_bar?: BoolFieldUpdateOperationsInput | boolean
+    show_navigation_menu?: BoolFieldUpdateOperationsInput | boolean
+    show_cart_icon?: BoolFieldUpdateOperationsInput | boolean
+    show_user_account?: BoolFieldUpdateOperationsInput | boolean
+    header_position?: EnumHeaderPositionFieldUpdateOperationsInput | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleFieldUpdateOperationsInput | $Enums.HeaderStyle
+    show_footer?: BoolFieldUpdateOperationsInput | boolean
+    footer_text?: NullableStringFieldUpdateOperationsInput | string | null
+    show_social_links?: BoolFieldUpdateOperationsInput | boolean
+    show_contact_info?: BoolFieldUpdateOperationsInput | boolean
+    show_store_info?: BoolFieldUpdateOperationsInput | boolean
+    layout_style?: EnumLayoutStyleFieldUpdateOperationsInput | $Enums.LayoutStyle
+    container_max_width?: StringFieldUpdateOperationsInput | string
+    border_radius?: StringFieldUpdateOperationsInput | string
+    spacing_unit?: StringFieldUpdateOperationsInput | string
+    show_hero_section?: BoolFieldUpdateOperationsInput | boolean
+    show_featured_products?: BoolFieldUpdateOperationsInput | boolean
+    show_categories?: BoolFieldUpdateOperationsInput | boolean
+    show_testimonials?: BoolFieldUpdateOperationsInput | boolean
+    show_about_section?: BoolFieldUpdateOperationsInput | boolean
+    products_per_page?: IntFieldUpdateOperationsInput | number
+    product_card_style?: EnumProductCardStyleFieldUpdateOperationsInput | $Enums.ProductCardStyle
+    show_product_rating?: BoolFieldUpdateOperationsInput | boolean
+    show_product_stock?: BoolFieldUpdateOperationsInput | boolean
+    show_add_to_cart_btn?: BoolFieldUpdateOperationsInput | boolean
+    custom_css?: NullableStringFieldUpdateOperationsInput | string | null
+    custom_js?: NullableStringFieldUpdateOperationsInput | string | null
+    favicon_url?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_title?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
+    google_analytics_id?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook_pixel_id?: NullableStringFieldUpdateOperationsInput | string | null
+    google_tag_manager_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    store?: StoreUpdateOneRequiredWithoutCustomizationNestedInput
+    widgets?: StoreWidgetConfigUpdateManyWithoutCustomizationNestedInput
+  }
+
+  export type StoreCustomizationUncheckedUpdateWithoutSectionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    primary_color?: StringFieldUpdateOperationsInput | string
+    secondary_color?: StringFieldUpdateOperationsInput | string
+    accent_color?: StringFieldUpdateOperationsInput | string
+    background_color?: StringFieldUpdateOperationsInput | string
+    text_color?: StringFieldUpdateOperationsInput | string
+    secondary_text_color?: StringFieldUpdateOperationsInput | string
+    border_color?: StringFieldUpdateOperationsInput | string
+    success_color?: StringFieldUpdateOperationsInput | string
+    warning_color?: StringFieldUpdateOperationsInput | string
+    error_color?: StringFieldUpdateOperationsInput | string
+    primary_font?: StringFieldUpdateOperationsInput | string
+    secondary_font?: StringFieldUpdateOperationsInput | string
+    font_size_base?: StringFieldUpdateOperationsInput | string
+    show_header?: BoolFieldUpdateOperationsInput | boolean
+    show_logo?: BoolFieldUpdateOperationsInput | boolean
+    show_search_bar?: BoolFieldUpdateOperationsInput | boolean
+    show_navigation_menu?: BoolFieldUpdateOperationsInput | boolean
+    show_cart_icon?: BoolFieldUpdateOperationsInput | boolean
+    show_user_account?: BoolFieldUpdateOperationsInput | boolean
+    header_position?: EnumHeaderPositionFieldUpdateOperationsInput | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleFieldUpdateOperationsInput | $Enums.HeaderStyle
+    show_footer?: BoolFieldUpdateOperationsInput | boolean
+    footer_text?: NullableStringFieldUpdateOperationsInput | string | null
+    show_social_links?: BoolFieldUpdateOperationsInput | boolean
+    show_contact_info?: BoolFieldUpdateOperationsInput | boolean
+    show_store_info?: BoolFieldUpdateOperationsInput | boolean
+    layout_style?: EnumLayoutStyleFieldUpdateOperationsInput | $Enums.LayoutStyle
+    container_max_width?: StringFieldUpdateOperationsInput | string
+    border_radius?: StringFieldUpdateOperationsInput | string
+    spacing_unit?: StringFieldUpdateOperationsInput | string
+    show_hero_section?: BoolFieldUpdateOperationsInput | boolean
+    show_featured_products?: BoolFieldUpdateOperationsInput | boolean
+    show_categories?: BoolFieldUpdateOperationsInput | boolean
+    show_testimonials?: BoolFieldUpdateOperationsInput | boolean
+    show_about_section?: BoolFieldUpdateOperationsInput | boolean
+    products_per_page?: IntFieldUpdateOperationsInput | number
+    product_card_style?: EnumProductCardStyleFieldUpdateOperationsInput | $Enums.ProductCardStyle
+    show_product_rating?: BoolFieldUpdateOperationsInput | boolean
+    show_product_stock?: BoolFieldUpdateOperationsInput | boolean
+    show_add_to_cart_btn?: BoolFieldUpdateOperationsInput | boolean
+    custom_css?: NullableStringFieldUpdateOperationsInput | string | null
+    custom_js?: NullableStringFieldUpdateOperationsInput | string | null
+    favicon_url?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_title?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
+    google_analytics_id?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook_pixel_id?: NullableStringFieldUpdateOperationsInput | string | null
+    google_tag_manager_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    widgets?: StoreWidgetConfigUncheckedUpdateManyWithoutCustomizationNestedInput
+  }
+
+  export type StoreCustomizationCreateWithoutWidgetsInput = {
+    primary_color?: string
+    secondary_color?: string
+    accent_color?: string
+    background_color?: string
+    text_color?: string
+    secondary_text_color?: string
+    border_color?: string
+    success_color?: string
+    warning_color?: string
+    error_color?: string
+    primary_font?: string
+    secondary_font?: string
+    font_size_base?: string
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: $Enums.HeaderPosition
+    header_style?: $Enums.HeaderStyle
+    show_footer?: boolean
+    footer_text?: string | null
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: $Enums.LayoutStyle
+    container_max_width?: string
+    border_radius?: string
+    spacing_unit?: string
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: number
+    product_card_style?: $Enums.ProductCardStyle
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: string | null
+    custom_js?: string | null
+    favicon_url?: string | null
+    meta_title?: string | null
+    meta_description?: string | null
+    google_analytics_id?: string | null
+    facebook_pixel_id?: string | null
+    google_tag_manager_id?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    store: StoreCreateNestedOneWithoutCustomizationInput
+    sections?: StoreSectionConfigCreateNestedManyWithoutCustomizationInput
+  }
+
+  export type StoreCustomizationUncheckedCreateWithoutWidgetsInput = {
+    id?: number
+    store_id: number
+    primary_color?: string
+    secondary_color?: string
+    accent_color?: string
+    background_color?: string
+    text_color?: string
+    secondary_text_color?: string
+    border_color?: string
+    success_color?: string
+    warning_color?: string
+    error_color?: string
+    primary_font?: string
+    secondary_font?: string
+    font_size_base?: string
+    show_header?: boolean
+    show_logo?: boolean
+    show_search_bar?: boolean
+    show_navigation_menu?: boolean
+    show_cart_icon?: boolean
+    show_user_account?: boolean
+    header_position?: $Enums.HeaderPosition
+    header_style?: $Enums.HeaderStyle
+    show_footer?: boolean
+    footer_text?: string | null
+    show_social_links?: boolean
+    show_contact_info?: boolean
+    show_store_info?: boolean
+    layout_style?: $Enums.LayoutStyle
+    container_max_width?: string
+    border_radius?: string
+    spacing_unit?: string
+    show_hero_section?: boolean
+    show_featured_products?: boolean
+    show_categories?: boolean
+    show_testimonials?: boolean
+    show_about_section?: boolean
+    products_per_page?: number
+    product_card_style?: $Enums.ProductCardStyle
+    show_product_rating?: boolean
+    show_product_stock?: boolean
+    show_add_to_cart_btn?: boolean
+    custom_css?: string | null
+    custom_js?: string | null
+    favicon_url?: string | null
+    meta_title?: string | null
+    meta_description?: string | null
+    google_analytics_id?: string | null
+    facebook_pixel_id?: string | null
+    google_tag_manager_id?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    sections?: StoreSectionConfigUncheckedCreateNestedManyWithoutCustomizationInput
+  }
+
+  export type StoreCustomizationCreateOrConnectWithoutWidgetsInput = {
+    where: StoreCustomizationWhereUniqueInput
+    create: XOR<StoreCustomizationCreateWithoutWidgetsInput, StoreCustomizationUncheckedCreateWithoutWidgetsInput>
+  }
+
+  export type StoreCustomizationUpsertWithoutWidgetsInput = {
+    update: XOR<StoreCustomizationUpdateWithoutWidgetsInput, StoreCustomizationUncheckedUpdateWithoutWidgetsInput>
+    create: XOR<StoreCustomizationCreateWithoutWidgetsInput, StoreCustomizationUncheckedCreateWithoutWidgetsInput>
+    where?: StoreCustomizationWhereInput
+  }
+
+  export type StoreCustomizationUpdateToOneWithWhereWithoutWidgetsInput = {
+    where?: StoreCustomizationWhereInput
+    data: XOR<StoreCustomizationUpdateWithoutWidgetsInput, StoreCustomizationUncheckedUpdateWithoutWidgetsInput>
+  }
+
+  export type StoreCustomizationUpdateWithoutWidgetsInput = {
+    primary_color?: StringFieldUpdateOperationsInput | string
+    secondary_color?: StringFieldUpdateOperationsInput | string
+    accent_color?: StringFieldUpdateOperationsInput | string
+    background_color?: StringFieldUpdateOperationsInput | string
+    text_color?: StringFieldUpdateOperationsInput | string
+    secondary_text_color?: StringFieldUpdateOperationsInput | string
+    border_color?: StringFieldUpdateOperationsInput | string
+    success_color?: StringFieldUpdateOperationsInput | string
+    warning_color?: StringFieldUpdateOperationsInput | string
+    error_color?: StringFieldUpdateOperationsInput | string
+    primary_font?: StringFieldUpdateOperationsInput | string
+    secondary_font?: StringFieldUpdateOperationsInput | string
+    font_size_base?: StringFieldUpdateOperationsInput | string
+    show_header?: BoolFieldUpdateOperationsInput | boolean
+    show_logo?: BoolFieldUpdateOperationsInput | boolean
+    show_search_bar?: BoolFieldUpdateOperationsInput | boolean
+    show_navigation_menu?: BoolFieldUpdateOperationsInput | boolean
+    show_cart_icon?: BoolFieldUpdateOperationsInput | boolean
+    show_user_account?: BoolFieldUpdateOperationsInput | boolean
+    header_position?: EnumHeaderPositionFieldUpdateOperationsInput | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleFieldUpdateOperationsInput | $Enums.HeaderStyle
+    show_footer?: BoolFieldUpdateOperationsInput | boolean
+    footer_text?: NullableStringFieldUpdateOperationsInput | string | null
+    show_social_links?: BoolFieldUpdateOperationsInput | boolean
+    show_contact_info?: BoolFieldUpdateOperationsInput | boolean
+    show_store_info?: BoolFieldUpdateOperationsInput | boolean
+    layout_style?: EnumLayoutStyleFieldUpdateOperationsInput | $Enums.LayoutStyle
+    container_max_width?: StringFieldUpdateOperationsInput | string
+    border_radius?: StringFieldUpdateOperationsInput | string
+    spacing_unit?: StringFieldUpdateOperationsInput | string
+    show_hero_section?: BoolFieldUpdateOperationsInput | boolean
+    show_featured_products?: BoolFieldUpdateOperationsInput | boolean
+    show_categories?: BoolFieldUpdateOperationsInput | boolean
+    show_testimonials?: BoolFieldUpdateOperationsInput | boolean
+    show_about_section?: BoolFieldUpdateOperationsInput | boolean
+    products_per_page?: IntFieldUpdateOperationsInput | number
+    product_card_style?: EnumProductCardStyleFieldUpdateOperationsInput | $Enums.ProductCardStyle
+    show_product_rating?: BoolFieldUpdateOperationsInput | boolean
+    show_product_stock?: BoolFieldUpdateOperationsInput | boolean
+    show_add_to_cart_btn?: BoolFieldUpdateOperationsInput | boolean
+    custom_css?: NullableStringFieldUpdateOperationsInput | string | null
+    custom_js?: NullableStringFieldUpdateOperationsInput | string | null
+    favicon_url?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_title?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
+    google_analytics_id?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook_pixel_id?: NullableStringFieldUpdateOperationsInput | string | null
+    google_tag_manager_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    store?: StoreUpdateOneRequiredWithoutCustomizationNestedInput
+    sections?: StoreSectionConfigUpdateManyWithoutCustomizationNestedInput
+  }
+
+  export type StoreCustomizationUncheckedUpdateWithoutWidgetsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    primary_color?: StringFieldUpdateOperationsInput | string
+    secondary_color?: StringFieldUpdateOperationsInput | string
+    accent_color?: StringFieldUpdateOperationsInput | string
+    background_color?: StringFieldUpdateOperationsInput | string
+    text_color?: StringFieldUpdateOperationsInput | string
+    secondary_text_color?: StringFieldUpdateOperationsInput | string
+    border_color?: StringFieldUpdateOperationsInput | string
+    success_color?: StringFieldUpdateOperationsInput | string
+    warning_color?: StringFieldUpdateOperationsInput | string
+    error_color?: StringFieldUpdateOperationsInput | string
+    primary_font?: StringFieldUpdateOperationsInput | string
+    secondary_font?: StringFieldUpdateOperationsInput | string
+    font_size_base?: StringFieldUpdateOperationsInput | string
+    show_header?: BoolFieldUpdateOperationsInput | boolean
+    show_logo?: BoolFieldUpdateOperationsInput | boolean
+    show_search_bar?: BoolFieldUpdateOperationsInput | boolean
+    show_navigation_menu?: BoolFieldUpdateOperationsInput | boolean
+    show_cart_icon?: BoolFieldUpdateOperationsInput | boolean
+    show_user_account?: BoolFieldUpdateOperationsInput | boolean
+    header_position?: EnumHeaderPositionFieldUpdateOperationsInput | $Enums.HeaderPosition
+    header_style?: EnumHeaderStyleFieldUpdateOperationsInput | $Enums.HeaderStyle
+    show_footer?: BoolFieldUpdateOperationsInput | boolean
+    footer_text?: NullableStringFieldUpdateOperationsInput | string | null
+    show_social_links?: BoolFieldUpdateOperationsInput | boolean
+    show_contact_info?: BoolFieldUpdateOperationsInput | boolean
+    show_store_info?: BoolFieldUpdateOperationsInput | boolean
+    layout_style?: EnumLayoutStyleFieldUpdateOperationsInput | $Enums.LayoutStyle
+    container_max_width?: StringFieldUpdateOperationsInput | string
+    border_radius?: StringFieldUpdateOperationsInput | string
+    spacing_unit?: StringFieldUpdateOperationsInput | string
+    show_hero_section?: BoolFieldUpdateOperationsInput | boolean
+    show_featured_products?: BoolFieldUpdateOperationsInput | boolean
+    show_categories?: BoolFieldUpdateOperationsInput | boolean
+    show_testimonials?: BoolFieldUpdateOperationsInput | boolean
+    show_about_section?: BoolFieldUpdateOperationsInput | boolean
+    products_per_page?: IntFieldUpdateOperationsInput | number
+    product_card_style?: EnumProductCardStyleFieldUpdateOperationsInput | $Enums.ProductCardStyle
+    show_product_rating?: BoolFieldUpdateOperationsInput | boolean
+    show_product_stock?: BoolFieldUpdateOperationsInput | boolean
+    show_add_to_cart_btn?: BoolFieldUpdateOperationsInput | boolean
+    custom_css?: NullableStringFieldUpdateOperationsInput | string | null
+    custom_js?: NullableStringFieldUpdateOperationsInput | string | null
+    favicon_url?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_title?: NullableStringFieldUpdateOperationsInput | string | null
+    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
+    google_analytics_id?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook_pixel_id?: NullableStringFieldUpdateOperationsInput | string | null
+    google_tag_manager_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    sections?: StoreSectionConfigUncheckedUpdateManyWithoutCustomizationNestedInput
   }
 
   export type NotificationCreateManyUserInput = {
@@ -31161,6 +39582,7 @@ export namespace Prisma {
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutUserInput = {
@@ -31179,6 +39601,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateManyWithoutUserInput = {
@@ -32328,6 +40751,204 @@ export namespace Prisma {
     entity_id?: IntFieldUpdateOperationsInput | number
     details?: NullableStringFieldUpdateOperationsInput | string | null
     action_initiator?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type StoreSectionConfigCreateManyCustomizationInput = {
+    id?: number
+    section_type: $Enums.SectionType
+    section_name: string
+    is_visible?: boolean
+    sort_order?: number
+    background_color?: string | null
+    text_color?: string | null
+    padding?: string | null
+    margin?: string | null
+    title?: string | null
+    subtitle?: string | null
+    description?: string | null
+    image_url?: string | null
+    button_text?: string | null
+    button_link?: string | null
+    show_title?: boolean
+    show_subtitle?: boolean
+    show_description?: boolean
+    columns_count?: number | null
+    items_per_row?: number | null
+    layout_style?: string | null
+    config_json?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreWidgetConfigCreateManyCustomizationInput = {
+    id?: number
+    widget_type: $Enums.WidgetType
+    widget_name: string
+    position?: $Enums.WidgetPosition
+    sort_order?: number
+    is_visible?: boolean
+    background_color?: string | null
+    text_color?: string | null
+    border_color?: string | null
+    padding?: string | null
+    margin?: string | null
+    border_radius?: string | null
+    title?: string | null
+    show_title?: boolean
+    max_items?: number | null
+    auto_refresh?: boolean
+    refresh_interval?: number | null
+    config_json?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreSectionConfigUpdateWithoutCustomizationInput = {
+    section_type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+    section_name?: StringFieldUpdateOperationsInput | string
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    subtitle?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    button_text?: NullableStringFieldUpdateOperationsInput | string | null
+    button_link?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    show_subtitle?: BoolFieldUpdateOperationsInput | boolean
+    show_description?: BoolFieldUpdateOperationsInput | boolean
+    columns_count?: NullableIntFieldUpdateOperationsInput | number | null
+    items_per_row?: NullableIntFieldUpdateOperationsInput | number | null
+    layout_style?: NullableStringFieldUpdateOperationsInput | string | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreSectionConfigUncheckedUpdateWithoutCustomizationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    section_type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+    section_name?: StringFieldUpdateOperationsInput | string
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    subtitle?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    button_text?: NullableStringFieldUpdateOperationsInput | string | null
+    button_link?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    show_subtitle?: BoolFieldUpdateOperationsInput | boolean
+    show_description?: BoolFieldUpdateOperationsInput | boolean
+    columns_count?: NullableIntFieldUpdateOperationsInput | number | null
+    items_per_row?: NullableIntFieldUpdateOperationsInput | number | null
+    layout_style?: NullableStringFieldUpdateOperationsInput | string | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreSectionConfigUncheckedUpdateManyWithoutCustomizationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    section_type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+    section_name?: StringFieldUpdateOperationsInput | string
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    subtitle?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    button_text?: NullableStringFieldUpdateOperationsInput | string | null
+    button_link?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    show_subtitle?: BoolFieldUpdateOperationsInput | boolean
+    show_description?: BoolFieldUpdateOperationsInput | boolean
+    columns_count?: NullableIntFieldUpdateOperationsInput | number | null
+    items_per_row?: NullableIntFieldUpdateOperationsInput | number | null
+    layout_style?: NullableStringFieldUpdateOperationsInput | string | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreWidgetConfigUpdateWithoutCustomizationInput = {
+    widget_type?: EnumWidgetTypeFieldUpdateOperationsInput | $Enums.WidgetType
+    widget_name?: StringFieldUpdateOperationsInput | string
+    position?: EnumWidgetPositionFieldUpdateOperationsInput | $Enums.WidgetPosition
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    border_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    border_radius?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    max_items?: NullableIntFieldUpdateOperationsInput | number | null
+    auto_refresh?: BoolFieldUpdateOperationsInput | boolean
+    refresh_interval?: NullableIntFieldUpdateOperationsInput | number | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreWidgetConfigUncheckedUpdateWithoutCustomizationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    widget_type?: EnumWidgetTypeFieldUpdateOperationsInput | $Enums.WidgetType
+    widget_name?: StringFieldUpdateOperationsInput | string
+    position?: EnumWidgetPositionFieldUpdateOperationsInput | $Enums.WidgetPosition
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    border_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    border_radius?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    max_items?: NullableIntFieldUpdateOperationsInput | number | null
+    auto_refresh?: BoolFieldUpdateOperationsInput | boolean
+    refresh_interval?: NullableIntFieldUpdateOperationsInput | number | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreWidgetConfigUncheckedUpdateManyWithoutCustomizationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    widget_type?: EnumWidgetTypeFieldUpdateOperationsInput | $Enums.WidgetType
+    widget_name?: StringFieldUpdateOperationsInput | string
+    position?: EnumWidgetPositionFieldUpdateOperationsInput | $Enums.WidgetPosition
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_visible?: BoolFieldUpdateOperationsInput | boolean
+    background_color?: NullableStringFieldUpdateOperationsInput | string | null
+    text_color?: NullableStringFieldUpdateOperationsInput | string | null
+    border_color?: NullableStringFieldUpdateOperationsInput | string | null
+    padding?: NullableStringFieldUpdateOperationsInput | string | null
+    margin?: NullableStringFieldUpdateOperationsInput | string | null
+    border_radius?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    show_title?: BoolFieldUpdateOperationsInput | boolean
+    max_items?: NullableIntFieldUpdateOperationsInput | number | null
+    auto_refresh?: BoolFieldUpdateOperationsInput | boolean
+    refresh_interval?: NullableIntFieldUpdateOperationsInput | number | null
+    config_json?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
