@@ -23,6 +23,9 @@ function AccountDropdown() {
             </DropdownMenuTrigger>
             <DropdownMenuContent side="bottom" align="end">
                 <DropdownMenuItem onClick={handleClick}>
+                    <Link href="/dashboard">Dashboard</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleClick}>
                     <Link href="/account">Account</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleClick}>
