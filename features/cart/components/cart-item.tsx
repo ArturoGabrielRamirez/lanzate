@@ -5,11 +5,14 @@ import { Button } from "@/components/ui/button"
 import { Trash2 } from "lucide-react"
 import { CartItemType } from "../types"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 type CartItemProps = {
     item: CartItemType
 }
 
 function CartItem({ item }: CartItemProps) {
+
+    const t = useTranslations("cart.item")
 
     const { removeFromCart } = useCart()
 
@@ -35,7 +38,7 @@ function CartItem({ item }: CartItemProps) {
                 <div>
                     <h3 className="text-lg font-bold">{item.name}</h3>
                     <p className="text-sm text-muted-foreground">
-                        ${item.price} x {item.quantity} {item.quantity > 1 ? "items" : "item"}
+                        ${item.price} x {item.quantity} {item.quantity > 1 ? t("items") : t("item")}
                     </p>
                 </div>
                 <Button variant="destructive" size="icon" onClick={handleRemove} className="self-end">

@@ -5,8 +5,11 @@ import { Button } from "@/components/ui/button"
 import { Trash2, ShoppingBag } from "lucide-react"
 import CartItem from "./cart-item"
 import Link from "next/link"
+import { useTranslations } from "next-intl"
 
 function CartList() {
+
+    const t = useTranslations("cart")
 
     const { cart, clearCart } = useCart()
 
@@ -21,19 +24,19 @@ function CartList() {
                 <div className="flex gap-2 justify-end mt-4">
                     <Button variant="outline" onClick={clearCart} >
                         <Trash2 />
-                        <span>Remove all</span>
+                        <span>{t("buttons.remove")}</span>
                     </Button>
                     <Button variant="outline" asChild>
                         <Link href="/checkout">
                             <ShoppingBag />
-                            <span>Checkout</span>
+                            <span>{t("buttons.checkout")}</span>
                         </Link>
                     </Button>
                 </div>
             )}
             {cart.length === 0 && (
                 <div className="border-muted-foreground/20 border-2 rounded-md p-4 border-dashed">
-                    <p className="text-muted-foreground text-center">No items in cart</p>
+                    <p className="text-muted-foreground text-center">{t("description.no-items")}</p>
                 </div>
             )}
         </div>

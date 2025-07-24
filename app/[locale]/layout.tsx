@@ -6,9 +6,10 @@ import type { Metadata } from "next";
 import { LayoutProps } from "@/features/layout/types";
 import SubdomainProvider from "@/features/layout/components/subdomain-provider";
 import "../globals.css";
-import { NextIntlClientProvider, Locale, hasLocale } from 'next-intl';
-import { I18nProviderClient } from "@/locales/client";
-import { ReactNode } from "react";
+import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { routing } from '@/i18n/routing'; // ✅ Importar routing
+import { notFound } from 'next/navigation'; // ✅ Importar notFound
+/* import { ReactNode } from "react"; */
 
 export const metadata: Metadata = {
   title: 'Lanzate',
@@ -19,20 +20,24 @@ export const metadata: Metadata = {
   ],
 };
 
-type RootLayoutProps = {
+/* type RootLayoutProps = {
   children: ReactNode;
-  params: {
+  params: Promise<{
     locale: string;
-  };
-};
+  }>;
+}; */
 
-export default function RootLayout({ children, params }: RootLayoutProps) {
-  const { locale } = params;
+export default async function RootLayout({ children, params }: LayoutProps) {
+
+  const { locale } = await params;
+
+ /*  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  } */
+
   return (
-    <html lang={locale}>
-      <body
-        className="min-h-dvh flex flex-col"
-      >
+    <html lang={locale} suppressHydrationWarning>
+      <body className="min-h-dvh flex flex-col">
         <NextThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -40,23 +45,23 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <NuqsAdapter>
-            <SubdomainProvider
-              adminLayout={(
-                <>
-                  <I18nProviderClient locale={locale}>
+            <NextIntlClientProvider locale={locale}>
+              <SubdomainProvider
+                adminLayout={(
+                  <>
                     <Header />
                     <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow'>
                       {children}
                     </main>
                     <Toaster />
-                  </I18nProviderClient>
-                </>
-              )}
-              userLayout={children}
-            />
+                  </>
+                )}
+                userLayout={children}
+              />
+            </NextIntlClientProvider>
           </NuqsAdapter>
         </NextThemeProvider>
       </body>
     </html>
-  );
+  )
 }

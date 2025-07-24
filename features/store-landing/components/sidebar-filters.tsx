@@ -1,16 +1,19 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import SidebarCategorySelect from "./sidebar-category-select";
 import SidebarOrderBySelect from "./sidebar-price-select";
 import SidebarSearchInput from "./sidebar-search-input";
 import SidebarPriceRange from "./sidebar-price-range";
+import { getTranslations } from "next-intl/server";
 
-function SidebarFilters() {
+async function SidebarFilters() {
+
+    const t = await getTranslations("subdomain.sidebar.filters");
+
     return (
         <div className="flex flex-col gap-4">
             <Card className="w-full">
                 <CardHeader>
-                    <CardTitle>Search</CardTitle>
+                    <CardTitle>{t("search")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <SidebarSearchInput />
@@ -18,7 +21,7 @@ function SidebarFilters() {
             </Card>
             <Card className="w-full">
                 <CardHeader>
-                    <CardTitle>Sort by</CardTitle>
+                    <CardTitle>{t("sort-by")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="flex gap-2">
@@ -28,7 +31,7 @@ function SidebarFilters() {
             </Card>
             <Card className="w-full">
                 <CardHeader>
-                    <CardTitle>Category</CardTitle>
+                    <CardTitle>{t("categories")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="flex gap-2">
@@ -38,7 +41,7 @@ function SidebarFilters() {
             </Card>
             <Card className="w-full">
                 <CardHeader>
-                    <CardTitle>Price Range</CardTitle>
+                    <CardTitle>{t("price-range")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <SidebarPriceRange />

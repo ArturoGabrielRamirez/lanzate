@@ -1,4 +1,7 @@
 {
+    "layout": {
+        "title": "Home"
+    },
     "home": {
         "slogan": {
             "1": "You",
@@ -122,6 +125,68 @@
                 "title": "Community"
             },
             "copyright": "© Copyright 2025. All Rights Reserved."
+        }
+    },
+    "cart": {
+        "title": "Cart",
+        "description": {
+            "products": "FEATURED PRODUCTS",
+            "coming-soon": "Coming soon",
+            "no-items": "No items in cart"
+        },
+        "buttons": {
+            "remove": "Empty Cart",
+            "checkout": "Checkout"
+        },
+        "resume": {
+            "title": "Cart Resume",
+            "quantity": "Quantity",
+            "sub-total": "Sub-total",
+            "shipping": "Shipping",
+            "discount": "Discount",
+            "total": "Total",
+            "item": "item",
+            "items": "items"
+        }
+    },
+    "store": {
+        "store-not-found": "Store not found",
+        "product-not-found": "Product not found"
+    },
+    "auth": {
+        "login": "Log In",
+        "signup": "Sign Up"
+    },
+    "subdomain": {
+        "title": "My Products",
+        "sidebar": {
+            "placeholder": {
+                "search": "Search"
+            },
+            "filters": {
+                "search": "Search",
+                "sort-by": "Sort by",
+                "categories": "Categories",
+                "price-range": "Price range"
+            },
+            "order-by": {
+                "select-a-product": "Select a product",
+                "name-ascending": "Name (A-Z)",
+                "name-descending": "Name (Z-A)",
+                "price-ascending": "Price (low to high)",
+                "price-descending": "Price (high to low)",
+                "oldest": "Oldest",
+                "newest": "Newest"
+            },
+            "categories": {
+                "category": "Category"
+            },
+            "limit": {
+                "1": "Showing",
+                "2": "of",
+                "3": "items",
+                "4": "item"
+            }
         }
     }
 }

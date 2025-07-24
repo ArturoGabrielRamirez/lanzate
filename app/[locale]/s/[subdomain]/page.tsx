@@ -7,6 +7,7 @@ import ProductListDisplay from "@/features/store-landing/components/product-list
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters";
 import { loadFilterParams } from "@/features/store-landing/utils/load-filter-params";
 import { getStoreProductAmount } from "@/features/subdomain/actions/getStoreProductAmount";
+import { getTranslations } from "next-intl/server";
 import { SearchParams } from "nuqs";
 import { Suspense } from "react";
 
@@ -20,10 +21,11 @@ export default async function StorePage({ params, searchParams }: Props) {
     const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams)
 
     const { payload: productAmount } = await getStoreProductAmount(subdomain);
+    const t = await getTranslations("subdomain");
 
     return (
         <section className="p-4 grow flex flex-col">
-            <Title title="My Products" />
+            <Title title={t("title")} />
 
             <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] xl:grid-cols-[350px_1fr] gap-4 grow">
                 <SidebarFilters />

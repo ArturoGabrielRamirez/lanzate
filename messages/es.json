@@ -1,4 +1,7 @@
 {
+    "layout": {
+        "title": "Inicio"
+    },
     "home": {
         "slogan": {
             "1": "Vos",
@@ -122,6 +125,69 @@
                 "title": "Comunidad"
             },
             "copyright": "© Copyright 2025. Todos los derechos reservados."
+        }
+    },
+    "cart": {
+        "title": "Carrito",
+        "description": {
+            "products": "PRODUCTOS EN EL CARRITO",
+            "coming-soon": "Próximamente",
+            "no-items": "No hay artículos en el carrito"
+        },
+        "buttons": {
+            "remove": "Vaciar Carrito",
+            "checkout": "Pagar"
+        },
+        "resume": {
+            "title": "Resumen del Carrito",
+            "quantity": "Cantidad",
+            "sub-total": "Subtotal",
+            "shipping": "Envío",
+            "discount": "Descuento",
+            "total": "Total",
+            "item": "artículo",
+            "items": "artículos"
+        },
+        "item": {
+            "item": "unidad",
+            "items": "unidades"
+        }
+    },
+    "store": {},
+    "auth": {
+        "login": "Iniciar sesión",
+        "signup": "Registrarse"
+    },
+    "subdomain": {
+        "title": "Mis Productos",
+        "sidebar": {
+            "placeholder": {
+                "search": "Buscar"
+            },
+            "filters": {
+                "search": "Buscar",
+                "sort-by": "Ordenar por",
+                "categories": "Categorías",
+                "price-range": "Rango de precios"
+            },
+            "order-by": {
+                "select-a-product": "Seleccionar un producto",
+                "name-ascending": "Nombre (A-Z)",
+                "name-descending": "Nombre (Z-A)",
+                "price-ascending": "Precio (menor a mayor)",
+                "price-descending": "Precio (mayor a menor)",
+                "oldest": "Más antiguo",
+                "newest": "Más reciente"
+            },
+            "categories": {
+                "category": "Categoría"
+            },
+            "limit": {
+                "1": "Mostrar",
+                "2": "de",
+                "3": "productos",
+                "4": "producto"
+            }
         }
     }
 }

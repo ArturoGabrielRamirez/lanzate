@@ -19,7 +19,7 @@ async function CheckoutPage({ params }: { params: Promise<{ subdomain: string }>
                 { label: "checkout", href: "/checkout" }
             ]} />
             <div className="flex flex-col gap-4 lg:flex-row">
-                <CheckoutForm subdomain={subdomain} userId={user.id} />
+                <CheckoutForm subdomain={subdomain} userId={String(user.id)} />
                 <CartResume />
             </div>
         </section>

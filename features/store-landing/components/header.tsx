@@ -3,12 +3,15 @@ import { Rocket } from "lucide-react"
 import { createServerSideClient } from "@/utils/supabase/server"
 import { AccountDropdown } from "@/features/header/components"
 import CartIcon from "@/features/cart/components/cart-icon"
+import { getTranslations } from "next-intl/server"
 
 type Props = {
     title: string
 }
 
 async function Header({ title }: Props) {
+
+   const t = await getTranslations("auth");
 
     const supabase = createServerSideClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -20,8 +23,8 @@ async function Header({ title }: Props) {
                 <h1>{title}</h1>
             </Link>
             <div className="flex items-center gap-2">
-                {!user && <Link href='/login' className='p-2 hover:underline hover:!text-primary'>Log In</Link>}
-                {!user && <Link href='/signup' className='p-2 hover:underline hover:text-primary'>Sign Up</Link>}
+                {!user && <Link href='/login' className='p-2 hover:underline hover:!text-primary'>{t("login")}</Link>}
+                {!user && <Link href='/signup' className='p-2 hover:underline hover:text-primary'>{t("signup")}</Link>}
                 <CartIcon />
                 {user && <AccountDropdown />}
             </div>
