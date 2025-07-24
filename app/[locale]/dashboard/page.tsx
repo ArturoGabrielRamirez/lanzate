@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getDashboardStores } from "@/features/dashboard/actions/getDashboardStores"
+import { CreateProductForStoreButton } from "@/features/dashboard/components"
 import { Title } from "@/features/layout/components"
 import { CreateStoreButton, StoreCard } from "@/features/stores/components"
 import { ArrowRight, ChevronRight, Hand, Settings, Share, Share2, ShoppingCart, Store, Plus } from "lucide-react"
@@ -23,7 +24,7 @@ async function DashboardPage() {
     }
 
     const hasStores = dashboardData.storeCount > 0
-
+    
     return (
         <section className="p-4 flex flex-col max-md:pt-24">
             <Title title={(
@@ -37,22 +38,22 @@ async function DashboardPage() {
                     {/* Step 1: Create Store */}
                     <Card className={cn(
                         "transition-all duration-200",
-                        hasStores
-                            ? "opacity-60 border-muted"
+                        hasStores 
+                            ? "opacity-60 border-muted" 
                             : "border-primary/20 shadow-md"
                     )}>
                         <CardHeader>
                             <div className="grid grid-cols-[100px_1fr] gap-4">
                                 <div className={cn(
                                     "rounded-md flex items-center justify-center aspect-square",
-                                    hasStores
-                                        ? "bg-muted"
+                                    hasStores 
+                                        ? "bg-muted" 
                                         : "bg-primary/10"
                                 )}>
                                     <Store className={cn(
                                         "size-8",
-                                        hasStores
-                                            ? "text-muted-foreground"
+                                        hasStores 
+                                            ? "text-muted-foreground" 
                                             : "text-primary"
                                     )} />
                                 </div>
@@ -69,8 +70,8 @@ async function DashboardPage() {
                             </div>
                         </CardHeader>
                         <CardContent className={cn(
-                            hasStores
-                                ? "text-muted-foreground/30"
+                            hasStores 
+                                ? "text-muted-foreground/30" 
                                 : "text-muted-foreground/50"
                         )}>
                             To get started selling like a pro, you need to create a new store. This will give you your storefront, a place to list your products, and a place to manage your orders.
@@ -88,22 +89,22 @@ async function DashboardPage() {
                     {/* Step 2: Create Product */}
                     <Card className={cn(
                         "transition-all duration-200",
-                        hasStores
-                            ? "border-primary/20 shadow-md"
+                        hasStores 
+                            ? "border-primary/20 shadow-md" 
                             : "opacity-40 border-muted cursor-not-allowed"
                     )}>
                         <CardHeader>
                             <div className="grid grid-cols-[100px_1fr] gap-4">
                                 <div className={cn(
                                     "rounded-md flex items-center justify-center aspect-square",
-                                    hasStores
-                                        ? "bg-primary/10"
+                                    hasStores 
+                                        ? "bg-primary/10" 
                                         : "bg-muted"
                                 )}>
                                     <ShoppingCart className={cn(
                                         "size-8",
-                                        hasStores
-                                            ? "text-primary"
+                                        hasStores 
+                                            ? "text-primary" 
                                             : "text-muted-foreground"
                                     )} />
                                 </div>
@@ -120,8 +121,8 @@ async function DashboardPage() {
                             </div>
                         </CardHeader>
                         <CardContent className={cn(
-                            hasStores
-                                ? "text-muted-foreground/50"
+                            hasStores 
+                                ? "text-muted-foreground/50" 
                                 : "text-muted-foreground/30"
                         )}>
                             Once created, your products will be visible to customers and ready for sale. You can add images, descriptions, pricing, and inventory tracking.
@@ -131,6 +132,14 @@ async function DashboardPage() {
                                 </div>
                             )}
                         </CardContent>
+                        {hasStores && (
+                            <CardFooter>
+                                <CreateProductForStoreButton 
+                                    userId={user.id} 
+                                    stores={dashboardData.stores}
+                                />
+                            </CardFooter>
+                        )}
                     </Card>
 
                     {/* Step 3: Set up account */}
@@ -196,8 +205,8 @@ async function DashboardPage() {
                     <div className="">
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="text-2xl font-bold">Your Stores ({dashboardData.storeCount})</h2>
-                            <Link
-                                href="/stores"
+                            <Link 
+                                href="/stores" 
                                 className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
                             >
                                 ver todas
