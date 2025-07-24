@@ -28,7 +28,12 @@ async function StoresPage() {
 
     return (
         <div className="p-4">
-            <Title title="Stores" />
+            <Title title="Stores" breadcrumbs={[
+                {
+                    label: "Stores",
+                    href: "/stores"
+                }
+            ]} />
             {stores.length > 0 ? (
                 <section className="grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4">
                     <Card className="border-dashed">

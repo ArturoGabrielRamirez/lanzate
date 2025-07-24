@@ -22,8 +22,17 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
     }
 
     return (
-        <div className="p-4 grow flex flex-col pt-24 pb-12">
-            <Title title="Store Details" />
+        <div className="p-4 grow flex flex-col max-md:pt-24 max-md:pb-12">
+            <Title title="Store Details" canGoBack breadcrumbs={[
+                {
+                    label: "Stores",
+                    href: "/stores"
+                },
+                {
+                    label: store.name,
+                    href: `/stores/${slug}`
+                }
+            ]} />
             <section className="flex items-center gap-4">
                 <Card className="w-full">
                     <CardContent className="flex md:items-center gap-4 w-full justify-between flex-col xs:flex-row">
@@ -53,7 +62,7 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                 <TabsClientContainer>
                     <TabsList className="w-full h-full items-start max-md:bg-transparent">
                         <div className="flex md:block w-full fixed bottom-0 md:relative bg-accent z-10 overflow-x-auto md:h-full">
-                            <TabTriggerLink value="overview" text="Overview" slug={slug} icon={<BookOpenText className="w-4 h-4" />}/>
+                            <TabTriggerLink value="overview" text="Overview" slug={slug} icon={<BookOpenText className="w-4 h-4" />} />
                             <TabTriggerLink value="account" text="Store Details" slug={slug} icon={<Store className="w-4 h-4" />} />
                             <TabTriggerLink value="branches" text="Branches" slug={slug} icon={<Building2 className="w-4 h-4" />} />
                             <TabTriggerLink value="employees" text="Employees" slug={slug} icon={<UsersRound className="w-4 h-4" />} />
