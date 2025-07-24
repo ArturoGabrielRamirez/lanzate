@@ -7,9 +7,9 @@ import { getTranslations } from 'next-intl/server';
 export default async function LoginPage() {
 
     const t = await getTranslations("auth");
-    
+
     return (
-        <div className="p-4 grow flex flex-col">
+        <div className="p-4 grow flex flex-col max-md:pt-24">
             <Title title={t("login")} />
             <div className='flex flex-col lg:flex-row gap-4 w-full max-w-4xl mx-auto grow items-center'>
                 <div className='w-full lg:pr-10'>

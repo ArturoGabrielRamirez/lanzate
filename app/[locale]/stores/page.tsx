@@ -27,8 +27,13 @@ async function StoresPage() {
     const canCreate = await canCreateStore(user.id)
 
     return (
-        <div className="p-4">
-            <Title title="Stores" />
+        <div className="p-4 max-md:pt-24 max-md:pb-12">
+            <Title title="Stores" breadcrumbs={[
+                {
+                    label: "Stores",
+                    href: "/stores"
+                }
+            ]} />
             {stores.length > 0 ? (
                 <section className="grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4">
                     <Card className="border-dashed">

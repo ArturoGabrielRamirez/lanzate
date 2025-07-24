@@ -7,7 +7,7 @@ export default function Home() {
   const t = useTranslations('home');
 
   return (
-    <>
+    <div className="max-md:pt-24 max-md:pb-12">
       <section>
         <div className="container mx-auto flex flex-col items-center px-4 py-16 text-center md:py-32 md:px-10 lg:px-32 xl:max-w-7xl">
           {/* <h1 className="text-4xl font-bold leading-none sm:text-5xl">
@@ -329,6 +329,6 @@ export default function Home() {
           <span className="dark:text-gray-600">{t('footer.copyright')}</span>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

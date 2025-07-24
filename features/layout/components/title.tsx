@@ -1,4 +1,4 @@
-import { Home, House } from "lucide-react"
+import { Home, House, ArrowLeft } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import React from "react"
@@ -10,14 +10,22 @@ type TitleProps = {
         label: string
         href: string
     }[]
+    canGoBack?: boolean
 }
 
-const Title = ({ title, breadcrumbs, className }: TitleProps) => {
+const Title = ({ title, breadcrumbs, className, canGoBack }: TitleProps) => {
 
     const t = useTranslations("layout");
     return (
-        <div className={`flex flex-col gap-0 mb-12 ${className}`}>
-            <h2 className='text-3xl dark:text-white font-bold'>{title}</h2>
+        <div className={`flex flex-col gap-0 mb-6 ${className}`}>
+            <h2 className='text-3xl dark:text-white font-bold flex items-center gap-2'>
+                {/* {canGoBack && (
+                    <Link href="/" className="capitalize hover:text-primary">
+                        <ArrowLeft />
+                    </Link>
+                )} */}
+                {title}
+            </h2>
             {breadcrumbs && breadcrumbs?.length > 0 && (
                 <div className="flex items-end gap-2 text-muted-foreground/50">
                     <Link href="/" className="capitalize hover:text-primary">
@@ -26,18 +34,17 @@ const Title = ({ title, breadcrumbs, className }: TitleProps) => {
                     <span className="text-xl">/</span>
                     {breadcrumbs.map((breadcrumb, index) => (
                         <React.Fragment key={index}>
-                            <Link key={index} href={breadcrumb.href} className="capitalize hover:text-primary">
+                            <Link href={breadcrumb.href} className="capitalize hover:text-primary">
                                 {breadcrumb.label}
                             </Link>
                             {index !== breadcrumbs.length - 1 && (
                                 <span className="text-xl">/</span>
                             )}
                         </React.Fragment>
-
                     ))}
-                </div>
+                </div >
             )}
-        </div>
+        </div >
     );
 };
 
