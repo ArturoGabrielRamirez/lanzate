@@ -1,12 +1,12 @@
 'use server'
 
-import { formatErrorResponse } from '@/utils/lib'
+import { actionWrapper } from '@/utils/lib'
 import { ResponseType } from '@/features/layout/types/response-type'
 import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function handleResetPassword(payload: any): Promise<ResponseType<any>> {
 
-    try {
+    return actionWrapper(async () => {
 
         const email = payload.email?.toString() || ''
 
@@ -26,7 +26,5 @@ export async function handleResetPassword(payload: any): Promise<ResponseType<an
             payload: null
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error sending reset password email", error, null)
-    }
+    })
 }

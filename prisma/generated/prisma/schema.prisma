@@ -24,6 +24,8 @@ model User {
   Account      Account[]
   Product      Product[]
   Order        Order[]
+  ActionLog    ActionLog[]
+  Employee     Employee[] // Relación con empleados
 
   @@map("users")
 }
@@ -60,11 +62,13 @@ model Store {
   user_id Int
   user    User @relation(fields: [user_id], references: [id])
 
-  branches     Branch[]
-  products     Product[]
-  orders       Order[]
-  balance      StoreBalance?
-  transactions Transaction[]
+  branches      Branch[]
+  products      Product[]
+  orders        Order[]
+  balance       StoreBalance?
+  transactions  Transaction[]
+  employees     Employee[] // Relación con empleados
+  customization StoreCustomization? // Relación con personalización
 
   @@map("stores")
 }
@@ -138,11 +142,13 @@ model Branch {
   updated_at DateTime @updatedAt
 
   store_id Int
-  store    Store @relation(fields: [store_id], references: [id])
+  store    Store @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
   stock ProductStock[]
 
   orders Order[]
+
+  is_main Boolean @default(false)
 
   @@map("branches")
 }
@@ -188,8 +194,8 @@ model Order {
   store_id Int
   store    Store @relation(fields: [store_id], references: [id])
 
-  branch_id Int
-  branch    Branch @relation(fields: [branch_id], references: [id])
+  branch_id Int?
+  branch    Branch? @relation(fields: [branch_id], references: [id], onDelete: SetNull)
 
   items OrderItem[]
 
@@ -204,6 +210,14 @@ model Order {
   // Campos adicionales para el sistema de balance
   is_paid      Boolean   @default(false)
   payment_date DateTime?
+
+  // Campo para registrar qué empleado creó la orden
+  created_by_employee_id Int?
+  created_by_employee    Employee? @relation("OrderCreatedBy", fields: [created_by_employee_id], references: [id])
+
+  // Campo para registrar qué empleado actualizó el estado
+  updated_by_employee_id Int?
+  updated_by_employee    Employee? @relation("OrderUpdatedBy", fields: [updated_by_employee_id], references: [id])
 
   @@map("orders")
 }
@@ -288,6 +302,10 @@ model Transaction {
   created_by Int? // user_id que creó la transacción
   branch_id  Int? // si la transacción está relacionada a una sucursal específica
 
+  // Campo para registrar qué empleado creó la transacción
+  created_by_employee_id Int?
+  created_by_employee    Employee? @relation(fields: [created_by_employee_id], references: [id])
+
   @@map("transactions")
 }
 
@@ -301,4 +319,351 @@ enum TransactionType {
   ADJUSTMENT // Ajuste de balance
   WITHDRAWAL // Extracción de caja
   DEPOSIT // Depósito a caja
+}
+
+model ActionLog {
+  id Int @id @default(autoincrement())
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user_id Int?
+  user    User? @relation(fields: [user_id], references: [id])
+
+  action           ActionType
+  entity_type      EntityType
+  entity_id        Int
+  details          String?
+  action_initiator String?
+
+  // Campo para registrar qué empleado realizó la acción
+  employee_id Int?
+  employee    Employee? @relation(fields: [employee_id], references: [id])
+
+  @@map("action_logs")
+}
+
+enum ActionType {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+}
+
+enum EntityType {
+  USER
+  STORE
+  PRODUCT
+  ORDER
+  BRANCH
+  CATEGORY
+  TAG
+  STOCK
+  TRANSACTION
+  EMPLOYEE
+  SETTINGS
+}
+
+// Nuevos modelos para el sistema de empleados
+
+model Employee {
+  id Int @id @default(autoincrement())
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
+
+  store_id Int
+  store    Store @relation(fields: [store_id], references: [id], onDelete: Cascade)
+
+  role EmployeeRole @default(EMPLOYEE)
+
+  // Permisos específicos
+  can_create_orders    Boolean @default(false)
+  can_update_orders    Boolean @default(false)
+  can_create_products  Boolean @default(false)
+  can_update_products  Boolean @default(false)
+  can_manage_stock     Boolean @default(false)
+  can_process_refunds  Boolean @default(false)
+  can_view_reports     Boolean @default(false)
+  can_manage_employees Boolean @default(false)
+  can_manage_store     Boolean @default(false)
+
+  // Estado del empleado
+  is_active Boolean   @default(true)
+  hired_at  DateTime  @default(now())
+  fired_at  DateTime?
+
+  // Información adicional
+  position   String? // Cargo/Puesto
+  department String? // Departamento
+  salary     Float? // Salario (opcional)
+  notes      String? // Notas adicionales
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relaciones con acciones que puede realizar
+  orders_created Order[]       @relation("OrderCreatedBy")
+  orders_updated Order[]       @relation("OrderUpdatedBy")
+  transactions   Transaction[]
+  action_logs    ActionLog[]
+
+  @@unique([user_id, store_id]) // Un usuario solo puede ser empleado una vez por tienda
+  @@map("employees")
+}
+
+enum EmployeeRole {
+  OWNER // Dueño de la tienda (solo el creador)
+  MANAGER // Gerente/Administrador
+  SUPERVISOR // Supervisor
+  EMPLOYEE // Empleado regular
+  CASHIER // Cajero
+  STOCKIST // Encargado de inventario
+  SALES // Vendedor
+}
+
+// Modelos para personalización del frontend de la tienda
+
+model StoreCustomization {
+  id Int @id @default(autoincrement())
+
+  store_id Int   @unique
+  store    Store @relation(fields: [store_id], references: [id], onDelete: Cascade)
+
+  // Configuración de tema y colores
+  primary_color        String @default("#000000")
+  secondary_color      String @default("#ffffff")
+  accent_color         String @default("#6366f1")
+  background_color     String @default("#ffffff")
+  text_color           String @default("#000000")
+  secondary_text_color String @default("#6b7280")
+  border_color         String @default("#e5e7eb")
+  success_color        String @default("#10b981")
+  warning_color        String @default("#f59e0b")
+  error_color          String @default("#ef4444")
+
+  // Configuración de fuentes
+  primary_font   String @default("Inter")
+  secondary_font String @default("Inter")
+  font_size_base String @default("16px")
+
+  // Configuración del header
+  show_header          Boolean        @default(true)
+  show_logo            Boolean        @default(true)
+  show_search_bar      Boolean        @default(true)
+  show_navigation_menu Boolean        @default(true)
+  show_cart_icon       Boolean        @default(true)
+  show_user_account    Boolean        @default(true)
+  header_position      HeaderPosition @default(TOP)
+  header_style         HeaderStyle    @default(MODERN)
+
+  // Configuración del footer
+  show_footer       Boolean @default(true)
+  footer_text       String?
+  show_social_links Boolean @default(true)
+  show_contact_info Boolean @default(true)
+  show_store_info   Boolean @default(true)
+
+  // Configuración general del layout
+  layout_style        LayoutStyle @default(MODERN)
+  container_max_width String      @default("1200px")
+  border_radius       String      @default("8px")
+  spacing_unit        String      @default("1rem")
+
+  // Configuración de la página principal
+  show_hero_section      Boolean @default(true)
+  show_featured_products Boolean @default(true)
+  show_categories        Boolean @default(true)
+  show_testimonials      Boolean @default(false)
+  show_about_section     Boolean @default(false)
+
+  // Configuración de productos
+  products_per_page    Int              @default(12)
+  product_card_style   ProductCardStyle @default(MODERN)
+  show_product_rating  Boolean          @default(true)
+  show_product_stock   Boolean          @default(true)
+  show_add_to_cart_btn Boolean          @default(true)
+
+  // Configuración avanzada
+  custom_css       String?
+  custom_js        String?
+  favicon_url      String?
+  meta_title       String?
+  meta_description String?
+
+  // SEO y Analytics
+  google_analytics_id   String?
+  facebook_pixel_id     String?
+  google_tag_manager_id String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relaciones
+  sections StoreSectionConfig[]
+  widgets  StoreWidgetConfig[]
+
+  @@map("store_customizations")
+}
+
+model StoreSectionConfig {
+  id Int @id @default(autoincrement())
+
+  customization_id Int
+  customization    StoreCustomization @relation(fields: [customization_id], references: [id], onDelete: Cascade)
+
+  section_type SectionType
+  section_name String // Nombre personalizable de la sección
+
+  // Configuración de visibilidad y orden
+  is_visible Boolean @default(true)
+  sort_order Int     @default(0)
+
+  // Configuración de estilo
+  background_color String?
+  text_color       String?
+  padding          String? @default("2rem")
+  margin           String? @default("0")
+
+  // Configuración específica por tipo de sección
+  title            String?
+  subtitle         String?
+  description      String?
+  image_url        String?
+  button_text      String?
+  button_link      String?
+  show_title       Boolean @default(true)
+  show_subtitle    Boolean @default(true)
+  show_description Boolean @default(true)
+
+  // Configuración de layout
+  columns_count Int?    @default(3)
+  items_per_row Int?    @default(4)
+  layout_style  String? @default("grid")
+
+  // Configuración específica para diferentes tipos
+  config_json String? // JSON flexible para configuraciones específicas
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([customization_id, section_type])
+  @@map("store_section_configs")
+}
+
+model StoreWidgetConfig {
+  id Int @id @default(autoincrement())
+
+  customization_id Int
+  customization    StoreCustomization @relation(fields: [customization_id], references: [id], onDelete: Cascade)
+
+  widget_type WidgetType
+  widget_name String // Nombre personalizable del widget
+
+  // Configuración de posición
+  position   WidgetPosition @default(SIDEBAR)
+  sort_order Int            @default(0)
+  is_visible Boolean        @default(true)
+
+  // Configuración de estilo
+  background_color String?
+  text_color       String?
+  border_color     String?
+  padding          String? @default("1rem")
+  margin           String? @default("0.5rem")
+  border_radius    String? @default("8px")
+
+  // Configuración específica del widget
+  title            String?
+  show_title       Boolean @default(true)
+  max_items        Int?    @default(5)
+  auto_refresh     Boolean @default(false)
+  refresh_interval Int?    @default(300) // segundos
+
+  // Configuración flexible
+  config_json String? // JSON para configuraciones específicas de cada widget
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("store_widget_configs")
+}
+
+// Enums para las configuraciones
+
+enum HeaderPosition {
+  TOP
+  FIXED_TOP
+  STICKY
+}
+
+enum HeaderStyle {
+  MODERN
+  CLASSIC
+  MINIMAL
+  BOLD
+}
+
+enum LayoutStyle {
+  MODERN
+  CLASSIC
+  MINIMAL
+  GRID
+  MAGAZINE
+}
+
+enum ProductCardStyle {
+  MODERN
+  CLASSIC
+  MINIMAL
+  DETAILED
+  COMPACT
+}
+
+enum SectionType {
+  HERO
+  FEATURED_PRODUCTS
+  CATEGORIES
+  ABOUT
+  TESTIMONIALS
+  NEWSLETTER
+  CONTACT
+  CUSTOM_HTML
+  PRODUCT_GRID
+  BANNER
+  VIDEO
+  GALLERY
+  FAQ
+  BLOG_POSTS
+  SOCIAL_FEED
+}
+
+enum WidgetType {
+  FEATURED_PRODUCTS
+  RECENT_PRODUCTS
+  POPULAR_PRODUCTS
+  CATEGORIES
+  SEARCH
+  CART_SUMMARY
+  USER_MENU
+  SOCIAL_LINKS
+  CONTACT_INFO
+  NEWSLETTER_SIGNUP
+  RECENT_ORDERS
+  TESTIMONIALS
+  CUSTOM_HTML
+  WEATHER
+  CLOCK
+  ANNOUNCEMENTS
+}
+
+enum WidgetPosition {
+  HEADER
+  SIDEBAR
+  FOOTER
+  FLOATING
+  MODAL
+  BANNER_TOP
+  BANNER_BOTTOM
 }

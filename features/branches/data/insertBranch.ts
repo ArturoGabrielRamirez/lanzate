@@ -8,13 +8,24 @@ export async function insertBranch(payload: any, storeId: number) {
 
         const client = new PrismaClient()
 
+        // Check if this is the first branch for the store
+        const existingBranches = await client.branch.count({
+            where: {
+                store_id: storeId
+            }
+        })
+
+        // If this is the first branch, make it the main branch
+        const isFirstBranch = existingBranches === 0
+
         const branch = await client.branch.create({
             data: {
                 store_id: storeId,
                 name: payload.name,
                 address: payload.address,
                 email: payload.email,
-                phone: payload.phone
+                phone: payload.phone,
+                is_main: isFirstBranch
             }
         })
 

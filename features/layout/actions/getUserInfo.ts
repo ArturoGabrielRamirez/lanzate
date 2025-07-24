@@ -2,7 +2,7 @@
 
 import { createServerSideClient } from "@/utils/supabase/server"
 import { getUserByEmail } from "../data/getUserByEmail"
-import { formatErrorResponse } from "@/utils/lib"
+import { actionWrapper } from "@/utils/lib"
 import { Account, User } from "@/prisma/generated/prisma"
 
 export async function getUserInfo(): Promise<{
@@ -10,7 +10,7 @@ export async function getUserInfo(): Promise<{
     error: Error | null,
     message: string
 }> {
-    try {
+    return actionWrapper(async () => {
         const supabase = await createServerSideClient()
         const { data, error } = await supabase.auth.getUser()
 
@@ -29,7 +29,5 @@ export async function getUserInfo(): Promise<{
             error: null,
             message: "User info fetched"
         }
-    } catch (error) {
-        return formatErrorResponse("Error fetching user info", error)
-    }
+    })
 }

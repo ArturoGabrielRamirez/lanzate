@@ -15,6 +15,7 @@ async function TabLayout({ children, params }: TabLayoutProps) {
         orders: "Orders",
         settings: "Settings",
         analytics: "Analytics",
+        history: "History",
     }
 
     return (

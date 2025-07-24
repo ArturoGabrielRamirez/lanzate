@@ -7,12 +7,17 @@ import { cn } from "@/lib/utils"
 import { Order } from "@/prisma/generated/prisma"
 import { ColumnDef } from "@tanstack/react-table"
 import { Edit, Eye, MapPin, MoreHorizontal, Trash2, Truck } from "lucide-react"
+import Link from "next/link"
+import ChangeOrderStatusButton from "./change-order-status-button"
+import CancelOrderButton from "./cancel-order-button"
 
 type Props = {
     data: Order[]
+    slug: string
+    userId: number
 }
 
-function OrdersTable({ data }: Props) {
+function OrdersTable({ data, slug, userId }: Props) {
 
     const columns: ColumnDef<Order>[] = [
         {
@@ -78,7 +83,7 @@ function OrdersTable({ data }: Props) {
             accessorKey: "shipping_method",
             cell: ({ row }) => {
                 const shippingMethod = row.original.shipping_method
-                return <span>{shippingMethod === "PICKUP" ? <MapPin className="w-4 h-4" /> : <Truck className="w-4 h-4" />}</span>
+                return <span>{shippingMethod === "pickup" ? <MapPin className="w-4 h-4" /> : <Truck className="w-4 h-4" />}</span>
             }
         },
         {
@@ -86,6 +91,7 @@ function OrdersTable({ data }: Props) {
             accessorKey: "actions",
             cell: ({ row }) => {
                 const order = row.original
+
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -96,10 +102,27 @@ function OrdersTable({ data }: Props) {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">Actions</DropdownMenuLabel>
-                            <DropdownMenuItem><Eye className="w-4 h-4" />View details</DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Link href={`/stores/${slug}/orders/${order.id}`} className="flex items-center gap-2">
+                                    <Eye className="w-4 h-4" />
+                                    View details
+                                </Link>
+                            </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem><Edit className="w-4 h-4" />Change status</DropdownMenuItem>
-                            <DropdownMenuItem><Trash2 className="w-4 h-4" />Cancel order</DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <ChangeOrderStatusButton 
+                                    order={order}
+                                    slug={slug}
+                                    userId={userId}
+                                />
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <CancelOrderButton
+                                    order={order}
+                                    slug={slug}
+                                    userId={userId}
+                                />
+                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )

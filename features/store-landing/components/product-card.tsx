@@ -68,7 +68,7 @@ function ProductCard({ product }: Props) {
 
 
     return (
-        <Card className="aspect-9/12 bg-accent hover:scale-105 transition-all cursor-pointer object-cover h-full w-full max-h-90 gap-2" onClick={handleClick}>
+        <Card className="aspect-9/12 bg-accent hover:scale-105 transition-all cursor-pointer object-cover w-full h-fit gap-2" onClick={handleClick}>
             <CardHeader>
                 <CardTitle>{product.name}</CardTitle>
                 <CardDescription className="line-clamp-2 h-11">{product.description || "No description available for this product"}</CardDescription>

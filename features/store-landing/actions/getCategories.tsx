@@ -1,6 +1,6 @@
 "use server"
 
-import { formatErrorResponse } from "@/utils/lib";
+import { actionWrapper } from "@/utils/lib";
 import { selectAllCategories } from "../data/selectAllCategories";
 import { Category } from "../types";
 
@@ -9,7 +9,7 @@ export async function getCategories(): Promise<{
   payload: Category[];
   error: boolean;
 }> {
-  try {
+  return actionWrapper(async () => {
     const { payload: categories, error, message } = await selectAllCategories();
     if (error) throw new Error(message);
     return {
@@ -17,7 +17,5 @@ export async function getCategories(): Promise<{
       payload: categories,
       error: false,
     };
-  } catch (error) {
-    return formatErrorResponse("Error fetching categories", error, []);
-  }
+  });
 }

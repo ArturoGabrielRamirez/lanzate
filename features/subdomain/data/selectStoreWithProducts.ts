@@ -107,7 +107,8 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
                     orderBy: orderBy,
                     take: limit,
                     skip: limit * (page - 1)
-                }
+                },
+                customization: true
             },
         })
 

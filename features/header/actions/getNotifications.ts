@@ -1,11 +1,11 @@
 "use server"
 
-import { formatErrorResponse } from "@/utils/lib"
+import { actionWrapper } from "@/utils/lib"
 import { getNotifications as getNotificationsFromDb } from "../data/getNotifications"
 
 export const getNotifications = async () => {
 
-    try {
+    return actionWrapper(async () => {
 
         const { payload, error, message } = await getNotificationsFromDb(1)
 
@@ -17,8 +17,6 @@ export const getNotifications = async () => {
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching notifications", error, [])
-    }
+    })
 
 }

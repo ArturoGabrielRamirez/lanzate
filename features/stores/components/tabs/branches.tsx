@@ -12,7 +12,7 @@ async function BranchesTab({ slug, userId }: BranchesTabProps) {
 
     return (
         <>
-            <BranchTable branches={store.branches} storeId={store.id} userId={userId} />
+            <BranchTable branches={store.branches} storeId={store.id} userId={userId} slug={slug} />
         </>
     )
 }

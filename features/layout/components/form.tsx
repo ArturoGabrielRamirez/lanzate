@@ -22,6 +22,7 @@ export default function Form<T extends FieldValues>({
     loadingMessage = 'Loading...',
     className,
     onComplete,
+    disabled = false
 }: FormPropsType<T>) {
 
     const config: UseFormProps<T> = { mode: 'onChange' }
@@ -58,7 +59,7 @@ export default function Form<T extends FieldValues>({
         <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)} className={cn("flex flex-col gap-4", className)}>
                 {children}
-                <LoadingSubmitButtonContext text={contentButton} />
+                <LoadingSubmitButtonContext text={contentButton} disabled={disabled} />
             </form>
         </FormProvider>
     )

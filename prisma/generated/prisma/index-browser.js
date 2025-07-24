@@ -194,7 +194,8 @@ exports.Prisma.BranchScalarFieldEnum = {
   email: 'email',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  store_id: 'store_id'
+  store_id: 'store_id',
+  is_main: 'is_main'
 };
 
 exports.Prisma.ProductStockScalarFieldEnum = {
@@ -309,6 +310,113 @@ exports.Prisma.EmployeeScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.StoreCustomizationScalarFieldEnum = {
+  id: 'id',
+  store_id: 'store_id',
+  primary_color: 'primary_color',
+  secondary_color: 'secondary_color',
+  accent_color: 'accent_color',
+  background_color: 'background_color',
+  text_color: 'text_color',
+  secondary_text_color: 'secondary_text_color',
+  border_color: 'border_color',
+  success_color: 'success_color',
+  warning_color: 'warning_color',
+  error_color: 'error_color',
+  primary_font: 'primary_font',
+  secondary_font: 'secondary_font',
+  font_size_base: 'font_size_base',
+  show_header: 'show_header',
+  show_logo: 'show_logo',
+  show_search_bar: 'show_search_bar',
+  show_navigation_menu: 'show_navigation_menu',
+  show_cart_icon: 'show_cart_icon',
+  show_user_account: 'show_user_account',
+  header_position: 'header_position',
+  header_style: 'header_style',
+  show_footer: 'show_footer',
+  footer_text: 'footer_text',
+  show_social_links: 'show_social_links',
+  show_contact_info: 'show_contact_info',
+  show_store_info: 'show_store_info',
+  layout_style: 'layout_style',
+  container_max_width: 'container_max_width',
+  border_radius: 'border_radius',
+  spacing_unit: 'spacing_unit',
+  show_hero_section: 'show_hero_section',
+  show_featured_products: 'show_featured_products',
+  show_categories: 'show_categories',
+  show_testimonials: 'show_testimonials',
+  show_about_section: 'show_about_section',
+  products_per_page: 'products_per_page',
+  product_card_style: 'product_card_style',
+  show_product_rating: 'show_product_rating',
+  show_product_stock: 'show_product_stock',
+  show_add_to_cart_btn: 'show_add_to_cart_btn',
+  custom_css: 'custom_css',
+  custom_js: 'custom_js',
+  favicon_url: 'favicon_url',
+  meta_title: 'meta_title',
+  meta_description: 'meta_description',
+  google_analytics_id: 'google_analytics_id',
+  facebook_pixel_id: 'facebook_pixel_id',
+  google_tag_manager_id: 'google_tag_manager_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.StoreSectionConfigScalarFieldEnum = {
+  id: 'id',
+  customization_id: 'customization_id',
+  section_type: 'section_type',
+  section_name: 'section_name',
+  is_visible: 'is_visible',
+  sort_order: 'sort_order',
+  background_color: 'background_color',
+  text_color: 'text_color',
+  padding: 'padding',
+  margin: 'margin',
+  title: 'title',
+  subtitle: 'subtitle',
+  description: 'description',
+  image_url: 'image_url',
+  button_text: 'button_text',
+  button_link: 'button_link',
+  show_title: 'show_title',
+  show_subtitle: 'show_subtitle',
+  show_description: 'show_description',
+  columns_count: 'columns_count',
+  items_per_row: 'items_per_row',
+  layout_style: 'layout_style',
+  config_json: 'config_json',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.StoreWidgetConfigScalarFieldEnum = {
+  id: 'id',
+  customization_id: 'customization_id',
+  widget_type: 'widget_type',
+  widget_name: 'widget_name',
+  position: 'position',
+  sort_order: 'sort_order',
+  is_visible: 'is_visible',
+  background_color: 'background_color',
+  text_color: 'text_color',
+  border_color: 'border_color',
+  padding: 'padding',
+  margin: 'margin',
+  border_radius: 'border_radius',
+  title: 'title',
+  show_title: 'show_title',
+  max_items: 'max_items',
+  auto_refresh: 'auto_refresh',
+  refresh_interval: 'refresh_interval',
+  config_json: 'config_json',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -394,6 +502,62 @@ exports.Prisma.EmployeeOrderByRelevanceFieldEnum = {
   department: 'department',
   notes: 'notes'
 };
+
+exports.Prisma.StoreCustomizationOrderByRelevanceFieldEnum = {
+  primary_color: 'primary_color',
+  secondary_color: 'secondary_color',
+  accent_color: 'accent_color',
+  background_color: 'background_color',
+  text_color: 'text_color',
+  secondary_text_color: 'secondary_text_color',
+  border_color: 'border_color',
+  success_color: 'success_color',
+  warning_color: 'warning_color',
+  error_color: 'error_color',
+  primary_font: 'primary_font',
+  secondary_font: 'secondary_font',
+  font_size_base: 'font_size_base',
+  footer_text: 'footer_text',
+  container_max_width: 'container_max_width',
+  border_radius: 'border_radius',
+  spacing_unit: 'spacing_unit',
+  custom_css: 'custom_css',
+  custom_js: 'custom_js',
+  favicon_url: 'favicon_url',
+  meta_title: 'meta_title',
+  meta_description: 'meta_description',
+  google_analytics_id: 'google_analytics_id',
+  facebook_pixel_id: 'facebook_pixel_id',
+  google_tag_manager_id: 'google_tag_manager_id'
+};
+
+exports.Prisma.StoreSectionConfigOrderByRelevanceFieldEnum = {
+  section_name: 'section_name',
+  background_color: 'background_color',
+  text_color: 'text_color',
+  padding: 'padding',
+  margin: 'margin',
+  title: 'title',
+  subtitle: 'subtitle',
+  description: 'description',
+  image_url: 'image_url',
+  button_text: 'button_text',
+  button_link: 'button_link',
+  layout_style: 'layout_style',
+  config_json: 'config_json'
+};
+
+exports.Prisma.StoreWidgetConfigOrderByRelevanceFieldEnum = {
+  widget_name: 'widget_name',
+  background_color: 'background_color',
+  text_color: 'text_color',
+  border_color: 'border_color',
+  padding: 'padding',
+  margin: 'margin',
+  border_radius: 'border_radius',
+  title: 'title',
+  config_json: 'config_json'
+};
 exports.AccountType = exports.$Enums.AccountType = {
   FREE: 'FREE',
   PRO: 'PRO',
@@ -458,6 +622,82 @@ exports.EmployeeRole = exports.$Enums.EmployeeRole = {
   SALES: 'SALES'
 };
 
+exports.HeaderPosition = exports.$Enums.HeaderPosition = {
+  TOP: 'TOP',
+  FIXED_TOP: 'FIXED_TOP',
+  STICKY: 'STICKY'
+};
+
+exports.HeaderStyle = exports.$Enums.HeaderStyle = {
+  MODERN: 'MODERN',
+  CLASSIC: 'CLASSIC',
+  MINIMAL: 'MINIMAL',
+  BOLD: 'BOLD'
+};
+
+exports.LayoutStyle = exports.$Enums.LayoutStyle = {
+  MODERN: 'MODERN',
+  CLASSIC: 'CLASSIC',
+  MINIMAL: 'MINIMAL',
+  GRID: 'GRID',
+  MAGAZINE: 'MAGAZINE'
+};
+
+exports.ProductCardStyle = exports.$Enums.ProductCardStyle = {
+  MODERN: 'MODERN',
+  CLASSIC: 'CLASSIC',
+  MINIMAL: 'MINIMAL',
+  DETAILED: 'DETAILED',
+  COMPACT: 'COMPACT'
+};
+
+exports.SectionType = exports.$Enums.SectionType = {
+  HERO: 'HERO',
+  FEATURED_PRODUCTS: 'FEATURED_PRODUCTS',
+  CATEGORIES: 'CATEGORIES',
+  ABOUT: 'ABOUT',
+  TESTIMONIALS: 'TESTIMONIALS',
+  NEWSLETTER: 'NEWSLETTER',
+  CONTACT: 'CONTACT',
+  CUSTOM_HTML: 'CUSTOM_HTML',
+  PRODUCT_GRID: 'PRODUCT_GRID',
+  BANNER: 'BANNER',
+  VIDEO: 'VIDEO',
+  GALLERY: 'GALLERY',
+  FAQ: 'FAQ',
+  BLOG_POSTS: 'BLOG_POSTS',
+  SOCIAL_FEED: 'SOCIAL_FEED'
+};
+
+exports.WidgetType = exports.$Enums.WidgetType = {
+  FEATURED_PRODUCTS: 'FEATURED_PRODUCTS',
+  RECENT_PRODUCTS: 'RECENT_PRODUCTS',
+  POPULAR_PRODUCTS: 'POPULAR_PRODUCTS',
+  CATEGORIES: 'CATEGORIES',
+  SEARCH: 'SEARCH',
+  CART_SUMMARY: 'CART_SUMMARY',
+  USER_MENU: 'USER_MENU',
+  SOCIAL_LINKS: 'SOCIAL_LINKS',
+  CONTACT_INFO: 'CONTACT_INFO',
+  NEWSLETTER_SIGNUP: 'NEWSLETTER_SIGNUP',
+  RECENT_ORDERS: 'RECENT_ORDERS',
+  TESTIMONIALS: 'TESTIMONIALS',
+  CUSTOM_HTML: 'CUSTOM_HTML',
+  WEATHER: 'WEATHER',
+  CLOCK: 'CLOCK',
+  ANNOUNCEMENTS: 'ANNOUNCEMENTS'
+};
+
+exports.WidgetPosition = exports.$Enums.WidgetPosition = {
+  HEADER: 'HEADER',
+  SIDEBAR: 'SIDEBAR',
+  FOOTER: 'FOOTER',
+  FLOATING: 'FLOATING',
+  MODAL: 'MODAL',
+  BANNER_TOP: 'BANNER_TOP',
+  BANNER_BOTTOM: 'BANNER_BOTTOM'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Notification: 'Notification',
@@ -473,7 +713,10 @@ exports.Prisma.ModelName = {
   StoreBalance: 'StoreBalance',
   Transaction: 'Transaction',
   ActionLog: 'ActionLog',
-  Employee: 'Employee'
+  Employee: 'Employee',
+  StoreCustomization: 'StoreCustomization',
+  StoreSectionConfig: 'StoreSectionConfig',
+  StoreWidgetConfig: 'StoreWidgetConfig'
 };
 
 /**

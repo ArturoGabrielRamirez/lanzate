@@ -5,7 +5,7 @@ import { AccountTabProps } from "@/features/stores/types"
 
 async function AccountTab({ slug, userId }: AccountTabProps) {
 
-    const { payload: store, error } = await getStoresFromSlug(slug)
+    const { payload: store, error, message } = await getStoresFromSlug(slug)
 
     if (error || !store) {
         return console.log(error)
