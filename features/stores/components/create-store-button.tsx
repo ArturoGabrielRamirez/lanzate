@@ -42,6 +42,7 @@ function CreateStoreButton({ userId, canCreate = true }: CreateStoreButtonProps)
                 error: "Failed to create store",
                 loading: "Creating store..."
             }}
+            className="w-full"
         >
             <InputField name="name" label="Name" type="text" />
             <InputField name="description" label="Description" type="text" />
