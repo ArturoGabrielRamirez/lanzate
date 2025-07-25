@@ -15,6 +15,7 @@ type DashboardStepCardProps = {
     status: StepStatus
     children?: ReactNode
     footer?: ReactNode
+    cardClassName?: string
 }
 
 function DashboardStepCard({
@@ -24,21 +25,30 @@ function DashboardStepCard({
     icon: Icon,
     status,
     children,
-    footer
+    footer,
+    cardClassName
 }: DashboardStepCardProps) {
     const isActive = status === 'active'
     const isComplete = status === 'complete'
     const isDisabled = status === 'disabled'
+
+    const isHorizontalLayout = cardClassName?.includes('md:grid-cols-[auto_auto_1fr]')
 
     return (
         <Card className={cn(
             "transition-all duration-200",
             isActive && "border-primary/20 shadow-md",
             (isComplete || isDisabled) && "opacity-60 border-muted",
-            isDisabled && "cursor-not-allowed"
+            isDisabled && "cursor-not-allowed",
+            cardClassName
         )}>
-            <CardHeader>
-                <div className="grid grid-cols-[100px_1fr] gap-4">
+            <CardHeader className={cn(
+                isHorizontalLayout && "md:col-span-2"
+            )}>
+                <div className={cn(
+                    "grid gap-4",
+                    isHorizontalLayout ? "md:grid-cols-[100px_1fr]" : "grid-cols-[100px_1fr]"
+                )}>
                     <div className={cn(
                         "rounded-md flex items-center justify-center aspect-square",
                         isActive && "bg-primary/10",
@@ -71,14 +81,35 @@ function DashboardStepCard({
                     </div>
                 </div>
             </CardHeader>
-            <CardContent className={cn(
-                isActive && "text-muted-foreground/50",
-                (isComplete || isDisabled) && "text-muted-foreground/30"
-            )}>
-                {description}
-                {children}
-            </CardContent>
-            {footer && <CardFooter>{footer}</CardFooter>}
+            
+            {!isHorizontalLayout && (
+                <CardContent className={cn(
+                    isActive && "text-muted-foreground/50",
+                    (isComplete || isDisabled) && "text-muted-foreground/30"
+                )}>
+                    {description}
+                    {children}
+                </CardContent>
+            )}
+
+            {isHorizontalLayout && (
+                <CardContent className={cn(
+                    "md:col-span-1 md:flex md:flex-col md:justify-center",
+                    isActive && "text-muted-foreground/50",
+                    (isComplete || isDisabled) && "text-muted-foreground/30"
+                )}>
+                    <p className="mb-2">{description}</p>
+                    {children}
+                </CardContent>
+            )}
+
+            {footer && (
+                <CardFooter className={cn(
+                    isHorizontalLayout && "md:col-span-3"
+                )}>
+                    {footer}
+                </CardFooter>
+            )}
         </Card>
     )
 }

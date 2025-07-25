@@ -17,12 +17,39 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
     const hasProducts = dashboardData.productCount > 0
     const hasOperationalSettings = dashboardData.operationalSettingsCount > 0
 
+    // Check if all previous steps are complete
+    const allPreviousStepsComplete = hasStores && hasProducts && hasOperationalSettings
+
     // Determine step statuses
     const step1Status = hasStores ? 'complete' : 'active'
     const step2Status = !hasStores ? 'disabled' : (hasProducts ? 'complete' : 'active')
     const step3Status = !hasProducts ? 'disabled' : (hasOperationalSettings ? 'complete' : 'active')
     const step4Status = !hasOperationalSettings ? 'disabled' : 'active'
 
+    // If all previous steps are complete, only show step 4
+    if (allPreviousStepsComplete) {
+        return (
+            <div className="">
+                {/* <div className="text-center mb-6">
+                    <h2 className="text-2xl font-bold text-green-700 mb-2">🎉 Setup Complete!</h2>
+                    <p className="text-muted-foreground">
+                        Your store is ready! Now you can share it with your customers.
+                    </p>
+                </div> */}
+                <DashboardStepCard
+                    stepNumber={4}
+                    title="Share your store's link!"
+                    description="Share your store's link with your customers to start selling!"
+                    icon={Share2}
+                    status={step4Status}
+                    footer={<ShareStoreLink stores={dashboardData.stores} />}
+                    cardClassName="md:grid md:grid-cols-[300px_auto_1fr]"
+                />
+            </div>
+        )
+    }
+
+    // Show all steps if not all are complete
     return (
         <div className="grid grid-cols-[repeat(auto-fill,minmax(min(350px,100%),1fr))] gap-4">
             {/* Step 1: Create Store */}
