@@ -5,6 +5,7 @@ import { Title } from "@/features/layout/components";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { User, UserCircle } from "lucide-react";
 
 export default async function AccountPage() {
 
@@ -18,7 +19,17 @@ export default async function AccountPage() {
 
     return (
         <div className="p-4 grow flex flex-col">
-            <Title title={t("title")} />
+            <Title title={(
+                <div className="flex items-center gap-2">
+                    <User />
+                    {t("title")}
+                </div>
+            )} breadcrumbs={[
+                {
+                    label: t("title"),
+                    href: "/account"
+                }
+            ]} />
             <section className="flex items-center gap-4">
                 <Card className="w-full">
                     <CardContent className="flex items-center gap-4 w-full">
