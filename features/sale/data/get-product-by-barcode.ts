@@ -4,15 +4,8 @@ import { PrismaClient } from "@/prisma/generated/prisma"
 import { formatErrorResponse } from "@/utils/lib"
 
 export async function getProductByBarcode(barcode: string, storeId: number) {
-    console.log("🚀 ~ getProductByBarcode ~ storeId:", storeId)
-    console.log("🚀 ~ getProductByBarcode ~ barcode:", barcode)
     try {
         const prisma = new PrismaClient()
-
-        console.log(await prisma.product.findMany({
-            where : {
-            }
-        }))
 
         const product = await prisma.product.findFirst({
             where: {
@@ -30,7 +23,6 @@ export async function getProductByBarcode(barcode: string, storeId: number) {
                 }
             }
         })
-        console.log("🚀 ~ getProductByBarcode ~ product:", product)
 
         if (!product) {
             return {

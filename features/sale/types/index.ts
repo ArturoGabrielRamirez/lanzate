@@ -54,4 +54,25 @@ export type ProductSearchResult = {
   message: string
   isLoading: boolean
   error: boolean
+}
+
+// Nuevo: Tipos para el carrito de compras
+export type CartItem = {
+  product: ScannedProduct
+  quantity: number
+  addedAt: Date
+}
+
+export type Cart = {
+  items: CartItem[]
+  total: number
+  itemCount: number
+}
+
+// Nuevo: Tipos para búsqueda de productos por nombre
+export type ProductSearchByNameResult = {
+  products: ScannedProduct[]
+  message: string
+  isLoading: boolean
+  error: boolean
 } 
