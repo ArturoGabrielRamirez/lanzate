@@ -23,7 +23,12 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
 
     return (
         <div className="p-4 grow flex flex-col max-md:pt-24 max-md:pb-12">
-            <Title title="Store Details" canGoBack breadcrumbs={[
+            <Title title={(
+                <div className="flex items-center gap-2">
+                    <Store />
+                    Store Details
+                </div>
+            )} canGoBack breadcrumbs={[
                 {
                     label: "Stores",
                     href: "/stores"

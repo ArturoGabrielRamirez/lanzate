@@ -89,6 +89,11 @@ export type ActionLog = $Result.DefaultSelection<Prisma.$ActionLogPayload>
  */
 export type Employee = $Result.DefaultSelection<Prisma.$EmployeePayload>
 /**
+ * Model StoreOperationalSettings
+ * 
+ */
+export type StoreOperationalSettings = $Result.DefaultSelection<Prisma.$StoreOperationalSettingsPayload>
+/**
  * Model StoreCustomization
  * 
  */
@@ -191,6 +196,19 @@ export const EmployeeRole: {
 };
 
 export type EmployeeRole = (typeof EmployeeRole)[keyof typeof EmployeeRole]
+
+
+export const PaymentMethod: {
+  CASH: 'CASH',
+  CREDIT_CARD: 'CREDIT_CARD',
+  DEBIT_CARD: 'DEBIT_CARD',
+  TRANSFER: 'TRANSFER',
+  MERCADO_PAGO: 'MERCADO_PAGO',
+  PAYPAL: 'PAYPAL',
+  CRYPTO: 'CRYPTO'
+};
+
+export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
 
 
 export const HeaderPosition: {
@@ -318,6 +336,10 @@ export const EntityType: typeof $Enums.EntityType
 export type EmployeeRole = $Enums.EmployeeRole
 
 export const EmployeeRole: typeof $Enums.EmployeeRole
+
+export type PaymentMethod = $Enums.PaymentMethod
+
+export const PaymentMethod: typeof $Enums.PaymentMethod
 
 export type HeaderPosition = $Enums.HeaderPosition
 
@@ -623,6 +645,16 @@ export class PrismaClient<
   get employee(): Prisma.EmployeeDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.storeOperationalSettings`: Exposes CRUD operations for the **StoreOperationalSettings** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StoreOperationalSettings
+    * const storeOperationalSettings = await prisma.storeOperationalSettings.findMany()
+    * ```
+    */
+  get storeOperationalSettings(): Prisma.StoreOperationalSettingsDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.storeCustomization`: Exposes CRUD operations for the **StoreCustomization** model.
     * Example usage:
     * ```ts
@@ -709,8 +741,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.11.1
-   * Query Engine version: f40f79ec31188888a2e33acda0ecc8fd10a853a9
+   * Prisma Client JS version: 6.12.0
+   * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
    */
   export type PrismaVersion = {
     client: string
@@ -1106,6 +1138,7 @@ export namespace Prisma {
     Transaction: 'Transaction',
     ActionLog: 'ActionLog',
     Employee: 'Employee',
+    StoreOperationalSettings: 'StoreOperationalSettings',
     StoreCustomization: 'StoreCustomization',
     StoreSectionConfig: 'StoreSectionConfig',
     StoreWidgetConfig: 'StoreWidgetConfig'
@@ -1127,7 +1160,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "notification" | "store" | "account" | "product" | "branch" | "productStock" | "category" | "order" | "orderItem" | "orderPayment" | "storeBalance" | "transaction" | "actionLog" | "employee" | "storeCustomization" | "storeSectionConfig" | "storeWidgetConfig"
+      modelProps: "user" | "notification" | "store" | "account" | "product" | "branch" | "productStock" | "category" | "order" | "orderItem" | "orderPayment" | "storeBalance" | "transaction" | "actionLog" | "employee" | "storeOperationalSettings" | "storeCustomization" | "storeSectionConfig" | "storeWidgetConfig"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2241,6 +2274,80 @@ export namespace Prisma {
           }
         }
       }
+      StoreOperationalSettings: {
+        payload: Prisma.$StoreOperationalSettingsPayload<ExtArgs>
+        fields: Prisma.StoreOperationalSettingsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StoreOperationalSettingsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreOperationalSettingsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StoreOperationalSettingsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreOperationalSettingsPayload>
+          }
+          findFirst: {
+            args: Prisma.StoreOperationalSettingsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreOperationalSettingsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StoreOperationalSettingsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreOperationalSettingsPayload>
+          }
+          findMany: {
+            args: Prisma.StoreOperationalSettingsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreOperationalSettingsPayload>[]
+          }
+          create: {
+            args: Prisma.StoreOperationalSettingsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreOperationalSettingsPayload>
+          }
+          createMany: {
+            args: Prisma.StoreOperationalSettingsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StoreOperationalSettingsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreOperationalSettingsPayload>[]
+          }
+          delete: {
+            args: Prisma.StoreOperationalSettingsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreOperationalSettingsPayload>
+          }
+          update: {
+            args: Prisma.StoreOperationalSettingsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreOperationalSettingsPayload>
+          }
+          deleteMany: {
+            args: Prisma.StoreOperationalSettingsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StoreOperationalSettingsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StoreOperationalSettingsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreOperationalSettingsPayload>[]
+          }
+          upsert: {
+            args: Prisma.StoreOperationalSettingsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StoreOperationalSettingsPayload>
+          }
+          aggregate: {
+            args: Prisma.StoreOperationalSettingsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStoreOperationalSettings>
+          }
+          groupBy: {
+            args: Prisma.StoreOperationalSettingsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StoreOperationalSettingsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StoreOperationalSettingsCountArgs<ExtArgs>
+            result: $Utils.Optional<StoreOperationalSettingsCountAggregateOutputType> | number
+          }
+        }
+      }
       StoreCustomization: {
         payload: Prisma.$StoreCustomizationPayload<ExtArgs>
         fields: Prisma.StoreCustomizationFieldRefs
@@ -2562,6 +2669,7 @@ export namespace Prisma {
     transaction?: TransactionOmit
     actionLog?: ActionLogOmit
     employee?: EmployeeOmit
+    storeOperationalSettings?: StoreOperationalSettingsOmit
     storeCustomization?: StoreCustomizationOmit
     storeSectionConfig?: StoreSectionConfigOmit
     storeWidgetConfig?: StoreWidgetConfigOmit
@@ -5768,6 +5876,7 @@ export namespace Prisma {
     transactions?: boolean | Store$transactionsArgs<ExtArgs>
     employees?: boolean | Store$employeesArgs<ExtArgs>
     customization?: boolean | Store$customizationArgs<ExtArgs>
+    operational_settings?: boolean | Store$operational_settingsArgs<ExtArgs>
     _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["store"]>
 
@@ -5822,6 +5931,7 @@ export namespace Prisma {
     transactions?: boolean | Store$transactionsArgs<ExtArgs>
     employees?: boolean | Store$employeesArgs<ExtArgs>
     customization?: boolean | Store$customizationArgs<ExtArgs>
+    operational_settings?: boolean | Store$operational_settingsArgs<ExtArgs>
     _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StoreIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5842,6 +5952,7 @@ export namespace Prisma {
       transactions: Prisma.$TransactionPayload<ExtArgs>[]
       employees: Prisma.$EmployeePayload<ExtArgs>[]
       customization: Prisma.$StoreCustomizationPayload<ExtArgs> | null
+      operational_settings: Prisma.$StoreOperationalSettingsPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6256,6 +6367,7 @@ export namespace Prisma {
     transactions<T extends Store$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Store$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     employees<T extends Store$employeesArgs<ExtArgs> = {}>(args?: Subset<T, Store$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     customization<T extends Store$customizationArgs<ExtArgs> = {}>(args?: Subset<T, Store$customizationArgs<ExtArgs>>): Prisma__StoreCustomizationClient<$Result.GetResult<Prisma.$StoreCustomizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    operational_settings<T extends Store$operational_settingsArgs<ExtArgs> = {}>(args?: Subset<T, Store$operational_settingsArgs<ExtArgs>>): Prisma__StoreOperationalSettingsClient<$Result.GetResult<Prisma.$StoreOperationalSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6846,6 +6958,25 @@ export namespace Prisma {
      */
     include?: StoreCustomizationInclude<ExtArgs> | null
     where?: StoreCustomizationWhereInput
+  }
+
+  /**
+   * Store.operational_settings
+   */
+  export type Store$operational_settingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsInclude<ExtArgs> | null
+    where?: StoreOperationalSettingsWhereInput
   }
 
   /**
@@ -21387,6 +21518,1563 @@ export namespace Prisma {
 
 
   /**
+   * Model StoreOperationalSettings
+   */
+
+  export type AggregateStoreOperationalSettings = {
+    _count: StoreOperationalSettingsCountAggregateOutputType | null
+    _avg: StoreOperationalSettingsAvgAggregateOutputType | null
+    _sum: StoreOperationalSettingsSumAggregateOutputType | null
+    _min: StoreOperationalSettingsMinAggregateOutputType | null
+    _max: StoreOperationalSettingsMaxAggregateOutputType | null
+  }
+
+  export type StoreOperationalSettingsAvgAggregateOutputType = {
+    id: number | null
+    store_id: number | null
+    delivery_price: number | null
+    free_delivery_minimum: number | null
+    delivery_radius_km: number | null
+    delivery_time_min: number | null
+    delivery_time_max: number | null
+    pickup_time_min: number | null
+    pickup_time_max: number | null
+    minimum_order_amount: number | null
+    preparation_time_buffer: number | null
+  }
+
+  export type StoreOperationalSettingsSumAggregateOutputType = {
+    id: number | null
+    store_id: number | null
+    delivery_price: number | null
+    free_delivery_minimum: number | null
+    delivery_radius_km: number | null
+    delivery_time_min: number | null
+    delivery_time_max: number | null
+    pickup_time_min: number | null
+    pickup_time_max: number | null
+    minimum_order_amount: number | null
+    preparation_time_buffer: number | null
+  }
+
+  export type StoreOperationalSettingsMinAggregateOutputType = {
+    id: number | null
+    store_id: number | null
+    offers_delivery: boolean | null
+    delivery_price: number | null
+    free_delivery_minimum: number | null
+    delivery_radius_km: number | null
+    monday_open: string | null
+    monday_close: string | null
+    tuesday_open: string | null
+    tuesday_close: string | null
+    wednesday_open: string | null
+    wednesday_close: string | null
+    thursday_open: string | null
+    thursday_close: string | null
+    friday_open: string | null
+    friday_close: string | null
+    saturday_open: string | null
+    saturday_close: string | null
+    sunday_open: string | null
+    sunday_close: string | null
+    delivery_time_min: number | null
+    delivery_time_max: number | null
+    pickup_time_min: number | null
+    pickup_time_max: number | null
+    requires_phone_for_delivery: boolean | null
+    minimum_order_amount: number | null
+    preparation_time_buffer: number | null
+    is_temporarily_closed: boolean | null
+    temporary_closure_reason: string | null
+    contact_phone: string | null
+    contact_whatsapp: string | null
+    contact_email: string | null
+    delivery_instructions: string | null
+    pickup_instructions: string | null
+    special_notes: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type StoreOperationalSettingsMaxAggregateOutputType = {
+    id: number | null
+    store_id: number | null
+    offers_delivery: boolean | null
+    delivery_price: number | null
+    free_delivery_minimum: number | null
+    delivery_radius_km: number | null
+    monday_open: string | null
+    monday_close: string | null
+    tuesday_open: string | null
+    tuesday_close: string | null
+    wednesday_open: string | null
+    wednesday_close: string | null
+    thursday_open: string | null
+    thursday_close: string | null
+    friday_open: string | null
+    friday_close: string | null
+    saturday_open: string | null
+    saturday_close: string | null
+    sunday_open: string | null
+    sunday_close: string | null
+    delivery_time_min: number | null
+    delivery_time_max: number | null
+    pickup_time_min: number | null
+    pickup_time_max: number | null
+    requires_phone_for_delivery: boolean | null
+    minimum_order_amount: number | null
+    preparation_time_buffer: number | null
+    is_temporarily_closed: boolean | null
+    temporary_closure_reason: string | null
+    contact_phone: string | null
+    contact_whatsapp: string | null
+    contact_email: string | null
+    delivery_instructions: string | null
+    pickup_instructions: string | null
+    special_notes: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type StoreOperationalSettingsCountAggregateOutputType = {
+    id: number
+    store_id: number
+    offers_delivery: number
+    delivery_price: number
+    free_delivery_minimum: number
+    delivery_radius_km: number
+    monday_open: number
+    monday_close: number
+    tuesday_open: number
+    tuesday_close: number
+    wednesday_open: number
+    wednesday_close: number
+    thursday_open: number
+    thursday_close: number
+    friday_open: number
+    friday_close: number
+    saturday_open: number
+    saturday_close: number
+    sunday_open: number
+    sunday_close: number
+    delivery_time_min: number
+    delivery_time_max: number
+    pickup_time_min: number
+    pickup_time_max: number
+    payment_methods: number
+    requires_phone_for_delivery: number
+    minimum_order_amount: number
+    preparation_time_buffer: number
+    is_temporarily_closed: number
+    temporary_closure_reason: number
+    contact_phone: number
+    contact_whatsapp: number
+    contact_email: number
+    delivery_instructions: number
+    pickup_instructions: number
+    special_notes: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type StoreOperationalSettingsAvgAggregateInputType = {
+    id?: true
+    store_id?: true
+    delivery_price?: true
+    free_delivery_minimum?: true
+    delivery_radius_km?: true
+    delivery_time_min?: true
+    delivery_time_max?: true
+    pickup_time_min?: true
+    pickup_time_max?: true
+    minimum_order_amount?: true
+    preparation_time_buffer?: true
+  }
+
+  export type StoreOperationalSettingsSumAggregateInputType = {
+    id?: true
+    store_id?: true
+    delivery_price?: true
+    free_delivery_minimum?: true
+    delivery_radius_km?: true
+    delivery_time_min?: true
+    delivery_time_max?: true
+    pickup_time_min?: true
+    pickup_time_max?: true
+    minimum_order_amount?: true
+    preparation_time_buffer?: true
+  }
+
+  export type StoreOperationalSettingsMinAggregateInputType = {
+    id?: true
+    store_id?: true
+    offers_delivery?: true
+    delivery_price?: true
+    free_delivery_minimum?: true
+    delivery_radius_km?: true
+    monday_open?: true
+    monday_close?: true
+    tuesday_open?: true
+    tuesday_close?: true
+    wednesday_open?: true
+    wednesday_close?: true
+    thursday_open?: true
+    thursday_close?: true
+    friday_open?: true
+    friday_close?: true
+    saturday_open?: true
+    saturday_close?: true
+    sunday_open?: true
+    sunday_close?: true
+    delivery_time_min?: true
+    delivery_time_max?: true
+    pickup_time_min?: true
+    pickup_time_max?: true
+    requires_phone_for_delivery?: true
+    minimum_order_amount?: true
+    preparation_time_buffer?: true
+    is_temporarily_closed?: true
+    temporary_closure_reason?: true
+    contact_phone?: true
+    contact_whatsapp?: true
+    contact_email?: true
+    delivery_instructions?: true
+    pickup_instructions?: true
+    special_notes?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type StoreOperationalSettingsMaxAggregateInputType = {
+    id?: true
+    store_id?: true
+    offers_delivery?: true
+    delivery_price?: true
+    free_delivery_minimum?: true
+    delivery_radius_km?: true
+    monday_open?: true
+    monday_close?: true
+    tuesday_open?: true
+    tuesday_close?: true
+    wednesday_open?: true
+    wednesday_close?: true
+    thursday_open?: true
+    thursday_close?: true
+    friday_open?: true
+    friday_close?: true
+    saturday_open?: true
+    saturday_close?: true
+    sunday_open?: true
+    sunday_close?: true
+    delivery_time_min?: true
+    delivery_time_max?: true
+    pickup_time_min?: true
+    pickup_time_max?: true
+    requires_phone_for_delivery?: true
+    minimum_order_amount?: true
+    preparation_time_buffer?: true
+    is_temporarily_closed?: true
+    temporary_closure_reason?: true
+    contact_phone?: true
+    contact_whatsapp?: true
+    contact_email?: true
+    delivery_instructions?: true
+    pickup_instructions?: true
+    special_notes?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type StoreOperationalSettingsCountAggregateInputType = {
+    id?: true
+    store_id?: true
+    offers_delivery?: true
+    delivery_price?: true
+    free_delivery_minimum?: true
+    delivery_radius_km?: true
+    monday_open?: true
+    monday_close?: true
+    tuesday_open?: true
+    tuesday_close?: true
+    wednesday_open?: true
+    wednesday_close?: true
+    thursday_open?: true
+    thursday_close?: true
+    friday_open?: true
+    friday_close?: true
+    saturday_open?: true
+    saturday_close?: true
+    sunday_open?: true
+    sunday_close?: true
+    delivery_time_min?: true
+    delivery_time_max?: true
+    pickup_time_min?: true
+    pickup_time_max?: true
+    payment_methods?: true
+    requires_phone_for_delivery?: true
+    minimum_order_amount?: true
+    preparation_time_buffer?: true
+    is_temporarily_closed?: true
+    temporary_closure_reason?: true
+    contact_phone?: true
+    contact_whatsapp?: true
+    contact_email?: true
+    delivery_instructions?: true
+    pickup_instructions?: true
+    special_notes?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type StoreOperationalSettingsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StoreOperationalSettings to aggregate.
+     */
+    where?: StoreOperationalSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreOperationalSettings to fetch.
+     */
+    orderBy?: StoreOperationalSettingsOrderByWithRelationInput | StoreOperationalSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StoreOperationalSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreOperationalSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreOperationalSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StoreOperationalSettings
+    **/
+    _count?: true | StoreOperationalSettingsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: StoreOperationalSettingsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StoreOperationalSettingsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StoreOperationalSettingsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StoreOperationalSettingsMaxAggregateInputType
+  }
+
+  export type GetStoreOperationalSettingsAggregateType<T extends StoreOperationalSettingsAggregateArgs> = {
+        [P in keyof T & keyof AggregateStoreOperationalSettings]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStoreOperationalSettings[P]>
+      : GetScalarType<T[P], AggregateStoreOperationalSettings[P]>
+  }
+
+
+
+
+  export type StoreOperationalSettingsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StoreOperationalSettingsWhereInput
+    orderBy?: StoreOperationalSettingsOrderByWithAggregationInput | StoreOperationalSettingsOrderByWithAggregationInput[]
+    by: StoreOperationalSettingsScalarFieldEnum[] | StoreOperationalSettingsScalarFieldEnum
+    having?: StoreOperationalSettingsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StoreOperationalSettingsCountAggregateInputType | true
+    _avg?: StoreOperationalSettingsAvgAggregateInputType
+    _sum?: StoreOperationalSettingsSumAggregateInputType
+    _min?: StoreOperationalSettingsMinAggregateInputType
+    _max?: StoreOperationalSettingsMaxAggregateInputType
+  }
+
+  export type StoreOperationalSettingsGroupByOutputType = {
+    id: number
+    store_id: number
+    offers_delivery: boolean
+    delivery_price: number | null
+    free_delivery_minimum: number | null
+    delivery_radius_km: number | null
+    monday_open: string | null
+    monday_close: string | null
+    tuesday_open: string | null
+    tuesday_close: string | null
+    wednesday_open: string | null
+    wednesday_close: string | null
+    thursday_open: string | null
+    thursday_close: string | null
+    friday_open: string | null
+    friday_close: string | null
+    saturday_open: string | null
+    saturday_close: string | null
+    sunday_open: string | null
+    sunday_close: string | null
+    delivery_time_min: number | null
+    delivery_time_max: number | null
+    pickup_time_min: number | null
+    pickup_time_max: number | null
+    payment_methods: $Enums.PaymentMethod[]
+    requires_phone_for_delivery: boolean
+    minimum_order_amount: number | null
+    preparation_time_buffer: number | null
+    is_temporarily_closed: boolean
+    temporary_closure_reason: string | null
+    contact_phone: string | null
+    contact_whatsapp: string | null
+    contact_email: string | null
+    delivery_instructions: string | null
+    pickup_instructions: string | null
+    special_notes: string | null
+    created_at: Date
+    updated_at: Date
+    _count: StoreOperationalSettingsCountAggregateOutputType | null
+    _avg: StoreOperationalSettingsAvgAggregateOutputType | null
+    _sum: StoreOperationalSettingsSumAggregateOutputType | null
+    _min: StoreOperationalSettingsMinAggregateOutputType | null
+    _max: StoreOperationalSettingsMaxAggregateOutputType | null
+  }
+
+  type GetStoreOperationalSettingsGroupByPayload<T extends StoreOperationalSettingsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StoreOperationalSettingsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StoreOperationalSettingsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StoreOperationalSettingsGroupByOutputType[P]>
+            : GetScalarType<T[P], StoreOperationalSettingsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StoreOperationalSettingsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    store_id?: boolean
+    offers_delivery?: boolean
+    delivery_price?: boolean
+    free_delivery_minimum?: boolean
+    delivery_radius_km?: boolean
+    monday_open?: boolean
+    monday_close?: boolean
+    tuesday_open?: boolean
+    tuesday_close?: boolean
+    wednesday_open?: boolean
+    wednesday_close?: boolean
+    thursday_open?: boolean
+    thursday_close?: boolean
+    friday_open?: boolean
+    friday_close?: boolean
+    saturday_open?: boolean
+    saturday_close?: boolean
+    sunday_open?: boolean
+    sunday_close?: boolean
+    delivery_time_min?: boolean
+    delivery_time_max?: boolean
+    pickup_time_min?: boolean
+    pickup_time_max?: boolean
+    payment_methods?: boolean
+    requires_phone_for_delivery?: boolean
+    minimum_order_amount?: boolean
+    preparation_time_buffer?: boolean
+    is_temporarily_closed?: boolean
+    temporary_closure_reason?: boolean
+    contact_phone?: boolean
+    contact_whatsapp?: boolean
+    contact_email?: boolean
+    delivery_instructions?: boolean
+    pickup_instructions?: boolean
+    special_notes?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["storeOperationalSettings"]>
+
+  export type StoreOperationalSettingsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    store_id?: boolean
+    offers_delivery?: boolean
+    delivery_price?: boolean
+    free_delivery_minimum?: boolean
+    delivery_radius_km?: boolean
+    monday_open?: boolean
+    monday_close?: boolean
+    tuesday_open?: boolean
+    tuesday_close?: boolean
+    wednesday_open?: boolean
+    wednesday_close?: boolean
+    thursday_open?: boolean
+    thursday_close?: boolean
+    friday_open?: boolean
+    friday_close?: boolean
+    saturday_open?: boolean
+    saturday_close?: boolean
+    sunday_open?: boolean
+    sunday_close?: boolean
+    delivery_time_min?: boolean
+    delivery_time_max?: boolean
+    pickup_time_min?: boolean
+    pickup_time_max?: boolean
+    payment_methods?: boolean
+    requires_phone_for_delivery?: boolean
+    minimum_order_amount?: boolean
+    preparation_time_buffer?: boolean
+    is_temporarily_closed?: boolean
+    temporary_closure_reason?: boolean
+    contact_phone?: boolean
+    contact_whatsapp?: boolean
+    contact_email?: boolean
+    delivery_instructions?: boolean
+    pickup_instructions?: boolean
+    special_notes?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["storeOperationalSettings"]>
+
+  export type StoreOperationalSettingsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    store_id?: boolean
+    offers_delivery?: boolean
+    delivery_price?: boolean
+    free_delivery_minimum?: boolean
+    delivery_radius_km?: boolean
+    monday_open?: boolean
+    monday_close?: boolean
+    tuesday_open?: boolean
+    tuesday_close?: boolean
+    wednesday_open?: boolean
+    wednesday_close?: boolean
+    thursday_open?: boolean
+    thursday_close?: boolean
+    friday_open?: boolean
+    friday_close?: boolean
+    saturday_open?: boolean
+    saturday_close?: boolean
+    sunday_open?: boolean
+    sunday_close?: boolean
+    delivery_time_min?: boolean
+    delivery_time_max?: boolean
+    pickup_time_min?: boolean
+    pickup_time_max?: boolean
+    payment_methods?: boolean
+    requires_phone_for_delivery?: boolean
+    minimum_order_amount?: boolean
+    preparation_time_buffer?: boolean
+    is_temporarily_closed?: boolean
+    temporary_closure_reason?: boolean
+    contact_phone?: boolean
+    contact_whatsapp?: boolean
+    contact_email?: boolean
+    delivery_instructions?: boolean
+    pickup_instructions?: boolean
+    special_notes?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["storeOperationalSettings"]>
+
+  export type StoreOperationalSettingsSelectScalar = {
+    id?: boolean
+    store_id?: boolean
+    offers_delivery?: boolean
+    delivery_price?: boolean
+    free_delivery_minimum?: boolean
+    delivery_radius_km?: boolean
+    monday_open?: boolean
+    monday_close?: boolean
+    tuesday_open?: boolean
+    tuesday_close?: boolean
+    wednesday_open?: boolean
+    wednesday_close?: boolean
+    thursday_open?: boolean
+    thursday_close?: boolean
+    friday_open?: boolean
+    friday_close?: boolean
+    saturday_open?: boolean
+    saturday_close?: boolean
+    sunday_open?: boolean
+    sunday_close?: boolean
+    delivery_time_min?: boolean
+    delivery_time_max?: boolean
+    pickup_time_min?: boolean
+    pickup_time_max?: boolean
+    payment_methods?: boolean
+    requires_phone_for_delivery?: boolean
+    minimum_order_amount?: boolean
+    preparation_time_buffer?: boolean
+    is_temporarily_closed?: boolean
+    temporary_closure_reason?: boolean
+    contact_phone?: boolean
+    contact_whatsapp?: boolean
+    contact_email?: boolean
+    delivery_instructions?: boolean
+    pickup_instructions?: boolean
+    special_notes?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type StoreOperationalSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "store_id" | "offers_delivery" | "delivery_price" | "free_delivery_minimum" | "delivery_radius_km" | "monday_open" | "monday_close" | "tuesday_open" | "tuesday_close" | "wednesday_open" | "wednesday_close" | "thursday_open" | "thursday_close" | "friday_open" | "friday_close" | "saturday_open" | "saturday_close" | "sunday_open" | "sunday_close" | "delivery_time_min" | "delivery_time_max" | "pickup_time_min" | "pickup_time_max" | "payment_methods" | "requires_phone_for_delivery" | "minimum_order_amount" | "preparation_time_buffer" | "is_temporarily_closed" | "temporary_closure_reason" | "contact_phone" | "contact_whatsapp" | "contact_email" | "delivery_instructions" | "pickup_instructions" | "special_notes" | "created_at" | "updated_at", ExtArgs["result"]["storeOperationalSettings"]>
+  export type StoreOperationalSettingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }
+  export type StoreOperationalSettingsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }
+  export type StoreOperationalSettingsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+  }
+
+  export type $StoreOperationalSettingsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StoreOperationalSettings"
+    objects: {
+      store: Prisma.$StorePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      store_id: number
+      offers_delivery: boolean
+      delivery_price: number | null
+      free_delivery_minimum: number | null
+      delivery_radius_km: number | null
+      monday_open: string | null
+      monday_close: string | null
+      tuesday_open: string | null
+      tuesday_close: string | null
+      wednesday_open: string | null
+      wednesday_close: string | null
+      thursday_open: string | null
+      thursday_close: string | null
+      friday_open: string | null
+      friday_close: string | null
+      saturday_open: string | null
+      saturday_close: string | null
+      sunday_open: string | null
+      sunday_close: string | null
+      delivery_time_min: number | null
+      delivery_time_max: number | null
+      pickup_time_min: number | null
+      pickup_time_max: number | null
+      payment_methods: $Enums.PaymentMethod[]
+      requires_phone_for_delivery: boolean
+      minimum_order_amount: number | null
+      preparation_time_buffer: number | null
+      is_temporarily_closed: boolean
+      temporary_closure_reason: string | null
+      contact_phone: string | null
+      contact_whatsapp: string | null
+      contact_email: string | null
+      delivery_instructions: string | null
+      pickup_instructions: string | null
+      special_notes: string | null
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["storeOperationalSettings"]>
+    composites: {}
+  }
+
+  type StoreOperationalSettingsGetPayload<S extends boolean | null | undefined | StoreOperationalSettingsDefaultArgs> = $Result.GetResult<Prisma.$StoreOperationalSettingsPayload, S>
+
+  type StoreOperationalSettingsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StoreOperationalSettingsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StoreOperationalSettingsCountAggregateInputType | true
+    }
+
+  export interface StoreOperationalSettingsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StoreOperationalSettings'], meta: { name: 'StoreOperationalSettings' } }
+    /**
+     * Find zero or one StoreOperationalSettings that matches the filter.
+     * @param {StoreOperationalSettingsFindUniqueArgs} args - Arguments to find a StoreOperationalSettings
+     * @example
+     * // Get one StoreOperationalSettings
+     * const storeOperationalSettings = await prisma.storeOperationalSettings.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StoreOperationalSettingsFindUniqueArgs>(args: SelectSubset<T, StoreOperationalSettingsFindUniqueArgs<ExtArgs>>): Prisma__StoreOperationalSettingsClient<$Result.GetResult<Prisma.$StoreOperationalSettingsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StoreOperationalSettings that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StoreOperationalSettingsFindUniqueOrThrowArgs} args - Arguments to find a StoreOperationalSettings
+     * @example
+     * // Get one StoreOperationalSettings
+     * const storeOperationalSettings = await prisma.storeOperationalSettings.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StoreOperationalSettingsFindUniqueOrThrowArgs>(args: SelectSubset<T, StoreOperationalSettingsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StoreOperationalSettingsClient<$Result.GetResult<Prisma.$StoreOperationalSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StoreOperationalSettings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreOperationalSettingsFindFirstArgs} args - Arguments to find a StoreOperationalSettings
+     * @example
+     * // Get one StoreOperationalSettings
+     * const storeOperationalSettings = await prisma.storeOperationalSettings.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StoreOperationalSettingsFindFirstArgs>(args?: SelectSubset<T, StoreOperationalSettingsFindFirstArgs<ExtArgs>>): Prisma__StoreOperationalSettingsClient<$Result.GetResult<Prisma.$StoreOperationalSettingsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StoreOperationalSettings that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreOperationalSettingsFindFirstOrThrowArgs} args - Arguments to find a StoreOperationalSettings
+     * @example
+     * // Get one StoreOperationalSettings
+     * const storeOperationalSettings = await prisma.storeOperationalSettings.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StoreOperationalSettingsFindFirstOrThrowArgs>(args?: SelectSubset<T, StoreOperationalSettingsFindFirstOrThrowArgs<ExtArgs>>): Prisma__StoreOperationalSettingsClient<$Result.GetResult<Prisma.$StoreOperationalSettingsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StoreOperationalSettings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreOperationalSettingsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StoreOperationalSettings
+     * const storeOperationalSettings = await prisma.storeOperationalSettings.findMany()
+     * 
+     * // Get first 10 StoreOperationalSettings
+     * const storeOperationalSettings = await prisma.storeOperationalSettings.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const storeOperationalSettingsWithIdOnly = await prisma.storeOperationalSettings.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StoreOperationalSettingsFindManyArgs>(args?: SelectSubset<T, StoreOperationalSettingsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreOperationalSettingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StoreOperationalSettings.
+     * @param {StoreOperationalSettingsCreateArgs} args - Arguments to create a StoreOperationalSettings.
+     * @example
+     * // Create one StoreOperationalSettings
+     * const StoreOperationalSettings = await prisma.storeOperationalSettings.create({
+     *   data: {
+     *     // ... data to create a StoreOperationalSettings
+     *   }
+     * })
+     * 
+     */
+    create<T extends StoreOperationalSettingsCreateArgs>(args: SelectSubset<T, StoreOperationalSettingsCreateArgs<ExtArgs>>): Prisma__StoreOperationalSettingsClient<$Result.GetResult<Prisma.$StoreOperationalSettingsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StoreOperationalSettings.
+     * @param {StoreOperationalSettingsCreateManyArgs} args - Arguments to create many StoreOperationalSettings.
+     * @example
+     * // Create many StoreOperationalSettings
+     * const storeOperationalSettings = await prisma.storeOperationalSettings.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StoreOperationalSettingsCreateManyArgs>(args?: SelectSubset<T, StoreOperationalSettingsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many StoreOperationalSettings and returns the data saved in the database.
+     * @param {StoreOperationalSettingsCreateManyAndReturnArgs} args - Arguments to create many StoreOperationalSettings.
+     * @example
+     * // Create many StoreOperationalSettings
+     * const storeOperationalSettings = await prisma.storeOperationalSettings.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many StoreOperationalSettings and only return the `id`
+     * const storeOperationalSettingsWithIdOnly = await prisma.storeOperationalSettings.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StoreOperationalSettingsCreateManyAndReturnArgs>(args?: SelectSubset<T, StoreOperationalSettingsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreOperationalSettingsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a StoreOperationalSettings.
+     * @param {StoreOperationalSettingsDeleteArgs} args - Arguments to delete one StoreOperationalSettings.
+     * @example
+     * // Delete one StoreOperationalSettings
+     * const StoreOperationalSettings = await prisma.storeOperationalSettings.delete({
+     *   where: {
+     *     // ... filter to delete one StoreOperationalSettings
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StoreOperationalSettingsDeleteArgs>(args: SelectSubset<T, StoreOperationalSettingsDeleteArgs<ExtArgs>>): Prisma__StoreOperationalSettingsClient<$Result.GetResult<Prisma.$StoreOperationalSettingsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StoreOperationalSettings.
+     * @param {StoreOperationalSettingsUpdateArgs} args - Arguments to update one StoreOperationalSettings.
+     * @example
+     * // Update one StoreOperationalSettings
+     * const storeOperationalSettings = await prisma.storeOperationalSettings.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StoreOperationalSettingsUpdateArgs>(args: SelectSubset<T, StoreOperationalSettingsUpdateArgs<ExtArgs>>): Prisma__StoreOperationalSettingsClient<$Result.GetResult<Prisma.$StoreOperationalSettingsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StoreOperationalSettings.
+     * @param {StoreOperationalSettingsDeleteManyArgs} args - Arguments to filter StoreOperationalSettings to delete.
+     * @example
+     * // Delete a few StoreOperationalSettings
+     * const { count } = await prisma.storeOperationalSettings.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StoreOperationalSettingsDeleteManyArgs>(args?: SelectSubset<T, StoreOperationalSettingsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StoreOperationalSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreOperationalSettingsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StoreOperationalSettings
+     * const storeOperationalSettings = await prisma.storeOperationalSettings.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StoreOperationalSettingsUpdateManyArgs>(args: SelectSubset<T, StoreOperationalSettingsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StoreOperationalSettings and returns the data updated in the database.
+     * @param {StoreOperationalSettingsUpdateManyAndReturnArgs} args - Arguments to update many StoreOperationalSettings.
+     * @example
+     * // Update many StoreOperationalSettings
+     * const storeOperationalSettings = await prisma.storeOperationalSettings.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more StoreOperationalSettings and only return the `id`
+     * const storeOperationalSettingsWithIdOnly = await prisma.storeOperationalSettings.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StoreOperationalSettingsUpdateManyAndReturnArgs>(args: SelectSubset<T, StoreOperationalSettingsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreOperationalSettingsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one StoreOperationalSettings.
+     * @param {StoreOperationalSettingsUpsertArgs} args - Arguments to update or create a StoreOperationalSettings.
+     * @example
+     * // Update or create a StoreOperationalSettings
+     * const storeOperationalSettings = await prisma.storeOperationalSettings.upsert({
+     *   create: {
+     *     // ... data to create a StoreOperationalSettings
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StoreOperationalSettings we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StoreOperationalSettingsUpsertArgs>(args: SelectSubset<T, StoreOperationalSettingsUpsertArgs<ExtArgs>>): Prisma__StoreOperationalSettingsClient<$Result.GetResult<Prisma.$StoreOperationalSettingsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StoreOperationalSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreOperationalSettingsCountArgs} args - Arguments to filter StoreOperationalSettings to count.
+     * @example
+     * // Count the number of StoreOperationalSettings
+     * const count = await prisma.storeOperationalSettings.count({
+     *   where: {
+     *     // ... the filter for the StoreOperationalSettings we want to count
+     *   }
+     * })
+    **/
+    count<T extends StoreOperationalSettingsCountArgs>(
+      args?: Subset<T, StoreOperationalSettingsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StoreOperationalSettingsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StoreOperationalSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreOperationalSettingsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StoreOperationalSettingsAggregateArgs>(args: Subset<T, StoreOperationalSettingsAggregateArgs>): Prisma.PrismaPromise<GetStoreOperationalSettingsAggregateType<T>>
+
+    /**
+     * Group by StoreOperationalSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StoreOperationalSettingsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StoreOperationalSettingsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StoreOperationalSettingsGroupByArgs['orderBy'] }
+        : { orderBy?: StoreOperationalSettingsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StoreOperationalSettingsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStoreOperationalSettingsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StoreOperationalSettings model
+   */
+  readonly fields: StoreOperationalSettingsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StoreOperationalSettings.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StoreOperationalSettingsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StoreOperationalSettings model
+   */
+  interface StoreOperationalSettingsFieldRefs {
+    readonly id: FieldRef<"StoreOperationalSettings", 'Int'>
+    readonly store_id: FieldRef<"StoreOperationalSettings", 'Int'>
+    readonly offers_delivery: FieldRef<"StoreOperationalSettings", 'Boolean'>
+    readonly delivery_price: FieldRef<"StoreOperationalSettings", 'Float'>
+    readonly free_delivery_minimum: FieldRef<"StoreOperationalSettings", 'Float'>
+    readonly delivery_radius_km: FieldRef<"StoreOperationalSettings", 'Float'>
+    readonly monday_open: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly monday_close: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly tuesday_open: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly tuesday_close: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly wednesday_open: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly wednesday_close: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly thursday_open: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly thursday_close: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly friday_open: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly friday_close: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly saturday_open: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly saturday_close: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly sunday_open: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly sunday_close: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly delivery_time_min: FieldRef<"StoreOperationalSettings", 'Int'>
+    readonly delivery_time_max: FieldRef<"StoreOperationalSettings", 'Int'>
+    readonly pickup_time_min: FieldRef<"StoreOperationalSettings", 'Int'>
+    readonly pickup_time_max: FieldRef<"StoreOperationalSettings", 'Int'>
+    readonly payment_methods: FieldRef<"StoreOperationalSettings", 'PaymentMethod[]'>
+    readonly requires_phone_for_delivery: FieldRef<"StoreOperationalSettings", 'Boolean'>
+    readonly minimum_order_amount: FieldRef<"StoreOperationalSettings", 'Float'>
+    readonly preparation_time_buffer: FieldRef<"StoreOperationalSettings", 'Int'>
+    readonly is_temporarily_closed: FieldRef<"StoreOperationalSettings", 'Boolean'>
+    readonly temporary_closure_reason: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly contact_phone: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly contact_whatsapp: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly contact_email: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly delivery_instructions: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly pickup_instructions: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly special_notes: FieldRef<"StoreOperationalSettings", 'String'>
+    readonly created_at: FieldRef<"StoreOperationalSettings", 'DateTime'>
+    readonly updated_at: FieldRef<"StoreOperationalSettings", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StoreOperationalSettings findUnique
+   */
+  export type StoreOperationalSettingsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreOperationalSettings to fetch.
+     */
+    where: StoreOperationalSettingsWhereUniqueInput
+  }
+
+  /**
+   * StoreOperationalSettings findUniqueOrThrow
+   */
+  export type StoreOperationalSettingsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreOperationalSettings to fetch.
+     */
+    where: StoreOperationalSettingsWhereUniqueInput
+  }
+
+  /**
+   * StoreOperationalSettings findFirst
+   */
+  export type StoreOperationalSettingsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreOperationalSettings to fetch.
+     */
+    where?: StoreOperationalSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreOperationalSettings to fetch.
+     */
+    orderBy?: StoreOperationalSettingsOrderByWithRelationInput | StoreOperationalSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StoreOperationalSettings.
+     */
+    cursor?: StoreOperationalSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreOperationalSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreOperationalSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StoreOperationalSettings.
+     */
+    distinct?: StoreOperationalSettingsScalarFieldEnum | StoreOperationalSettingsScalarFieldEnum[]
+  }
+
+  /**
+   * StoreOperationalSettings findFirstOrThrow
+   */
+  export type StoreOperationalSettingsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreOperationalSettings to fetch.
+     */
+    where?: StoreOperationalSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreOperationalSettings to fetch.
+     */
+    orderBy?: StoreOperationalSettingsOrderByWithRelationInput | StoreOperationalSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StoreOperationalSettings.
+     */
+    cursor?: StoreOperationalSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreOperationalSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreOperationalSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StoreOperationalSettings.
+     */
+    distinct?: StoreOperationalSettingsScalarFieldEnum | StoreOperationalSettingsScalarFieldEnum[]
+  }
+
+  /**
+   * StoreOperationalSettings findMany
+   */
+  export type StoreOperationalSettingsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsInclude<ExtArgs> | null
+    /**
+     * Filter, which StoreOperationalSettings to fetch.
+     */
+    where?: StoreOperationalSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StoreOperationalSettings to fetch.
+     */
+    orderBy?: StoreOperationalSettingsOrderByWithRelationInput | StoreOperationalSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StoreOperationalSettings.
+     */
+    cursor?: StoreOperationalSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StoreOperationalSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StoreOperationalSettings.
+     */
+    skip?: number
+    distinct?: StoreOperationalSettingsScalarFieldEnum | StoreOperationalSettingsScalarFieldEnum[]
+  }
+
+  /**
+   * StoreOperationalSettings create
+   */
+  export type StoreOperationalSettingsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a StoreOperationalSettings.
+     */
+    data: XOR<StoreOperationalSettingsCreateInput, StoreOperationalSettingsUncheckedCreateInput>
+  }
+
+  /**
+   * StoreOperationalSettings createMany
+   */
+  export type StoreOperationalSettingsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StoreOperationalSettings.
+     */
+    data: StoreOperationalSettingsCreateManyInput | StoreOperationalSettingsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StoreOperationalSettings createManyAndReturn
+   */
+  export type StoreOperationalSettingsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * The data used to create many StoreOperationalSettings.
+     */
+    data: StoreOperationalSettingsCreateManyInput | StoreOperationalSettingsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StoreOperationalSettings update
+   */
+  export type StoreOperationalSettingsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a StoreOperationalSettings.
+     */
+    data: XOR<StoreOperationalSettingsUpdateInput, StoreOperationalSettingsUncheckedUpdateInput>
+    /**
+     * Choose, which StoreOperationalSettings to update.
+     */
+    where: StoreOperationalSettingsWhereUniqueInput
+  }
+
+  /**
+   * StoreOperationalSettings updateMany
+   */
+  export type StoreOperationalSettingsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StoreOperationalSettings.
+     */
+    data: XOR<StoreOperationalSettingsUpdateManyMutationInput, StoreOperationalSettingsUncheckedUpdateManyInput>
+    /**
+     * Filter which StoreOperationalSettings to update
+     */
+    where?: StoreOperationalSettingsWhereInput
+    /**
+     * Limit how many StoreOperationalSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StoreOperationalSettings updateManyAndReturn
+   */
+  export type StoreOperationalSettingsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * The data used to update StoreOperationalSettings.
+     */
+    data: XOR<StoreOperationalSettingsUpdateManyMutationInput, StoreOperationalSettingsUncheckedUpdateManyInput>
+    /**
+     * Filter which StoreOperationalSettings to update
+     */
+    where?: StoreOperationalSettingsWhereInput
+    /**
+     * Limit how many StoreOperationalSettings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StoreOperationalSettings upsert
+   */
+  export type StoreOperationalSettingsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the StoreOperationalSettings to update in case it exists.
+     */
+    where: StoreOperationalSettingsWhereUniqueInput
+    /**
+     * In case the StoreOperationalSettings found by the `where` argument doesn't exist, create a new StoreOperationalSettings with this data.
+     */
+    create: XOR<StoreOperationalSettingsCreateInput, StoreOperationalSettingsUncheckedCreateInput>
+    /**
+     * In case the StoreOperationalSettings was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StoreOperationalSettingsUpdateInput, StoreOperationalSettingsUncheckedUpdateInput>
+  }
+
+  /**
+   * StoreOperationalSettings delete
+   */
+  export type StoreOperationalSettingsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsInclude<ExtArgs> | null
+    /**
+     * Filter which StoreOperationalSettings to delete.
+     */
+    where: StoreOperationalSettingsWhereUniqueInput
+  }
+
+  /**
+   * StoreOperationalSettings deleteMany
+   */
+  export type StoreOperationalSettingsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StoreOperationalSettings to delete
+     */
+    where?: StoreOperationalSettingsWhereInput
+    /**
+     * Limit how many StoreOperationalSettings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StoreOperationalSettings without action
+   */
+  export type StoreOperationalSettingsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StoreOperationalSettings
+     */
+    select?: StoreOperationalSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StoreOperationalSettings
+     */
+    omit?: StoreOperationalSettingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreOperationalSettingsInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model StoreCustomization
    */
 
@@ -26088,6 +27776,50 @@ export namespace Prisma {
   export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
 
 
+  export const StoreOperationalSettingsScalarFieldEnum: {
+    id: 'id',
+    store_id: 'store_id',
+    offers_delivery: 'offers_delivery',
+    delivery_price: 'delivery_price',
+    free_delivery_minimum: 'free_delivery_minimum',
+    delivery_radius_km: 'delivery_radius_km',
+    monday_open: 'monday_open',
+    monday_close: 'monday_close',
+    tuesday_open: 'tuesday_open',
+    tuesday_close: 'tuesday_close',
+    wednesday_open: 'wednesday_open',
+    wednesday_close: 'wednesday_close',
+    thursday_open: 'thursday_open',
+    thursday_close: 'thursday_close',
+    friday_open: 'friday_open',
+    friday_close: 'friday_close',
+    saturday_open: 'saturday_open',
+    saturday_close: 'saturday_close',
+    sunday_open: 'sunday_open',
+    sunday_close: 'sunday_close',
+    delivery_time_min: 'delivery_time_min',
+    delivery_time_max: 'delivery_time_max',
+    pickup_time_min: 'pickup_time_min',
+    pickup_time_max: 'pickup_time_max',
+    payment_methods: 'payment_methods',
+    requires_phone_for_delivery: 'requires_phone_for_delivery',
+    minimum_order_amount: 'minimum_order_amount',
+    preparation_time_buffer: 'preparation_time_buffer',
+    is_temporarily_closed: 'is_temporarily_closed',
+    temporary_closure_reason: 'temporary_closure_reason',
+    contact_phone: 'contact_phone',
+    contact_whatsapp: 'contact_whatsapp',
+    contact_email: 'contact_email',
+    delivery_instructions: 'delivery_instructions',
+    pickup_instructions: 'pickup_instructions',
+    special_notes: 'special_notes',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type StoreOperationalSettingsScalarFieldEnum = (typeof StoreOperationalSettingsScalarFieldEnum)[keyof typeof StoreOperationalSettingsScalarFieldEnum]
+
+
   export const StoreCustomizationScalarFieldEnum: {
     id: 'id',
     store_id: 'store_id',
@@ -26329,6 +28061,33 @@ export namespace Prisma {
   export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevanceFieldEnum)[keyof typeof EmployeeOrderByRelevanceFieldEnum]
 
 
+  export const StoreOperationalSettingsOrderByRelevanceFieldEnum: {
+    monday_open: 'monday_open',
+    monday_close: 'monday_close',
+    tuesday_open: 'tuesday_open',
+    tuesday_close: 'tuesday_close',
+    wednesday_open: 'wednesday_open',
+    wednesday_close: 'wednesday_close',
+    thursday_open: 'thursday_open',
+    thursday_close: 'thursday_close',
+    friday_open: 'friday_open',
+    friday_close: 'friday_close',
+    saturday_open: 'saturday_open',
+    saturday_close: 'saturday_close',
+    sunday_open: 'sunday_open',
+    sunday_close: 'sunday_close',
+    temporary_closure_reason: 'temporary_closure_reason',
+    contact_phone: 'contact_phone',
+    contact_whatsapp: 'contact_whatsapp',
+    contact_email: 'contact_email',
+    delivery_instructions: 'delivery_instructions',
+    pickup_instructions: 'pickup_instructions',
+    special_notes: 'special_notes'
+  };
+
+  export type StoreOperationalSettingsOrderByRelevanceFieldEnum = (typeof StoreOperationalSettingsOrderByRelevanceFieldEnum)[keyof typeof StoreOperationalSettingsOrderByRelevanceFieldEnum]
+
+
   export const StoreCustomizationOrderByRelevanceFieldEnum: {
     primary_color: 'primary_color',
     secondary_color: 'secondary_color',
@@ -26557,6 +28316,20 @@ export namespace Prisma {
    * Reference to a field of type 'EmployeeRole[]'
    */
   export type ListEnumEmployeeRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmployeeRole[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentMethod[]'
+   */
+  export type ListEnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentMethod'
+   */
+  export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
     
 
 
@@ -26852,6 +28625,7 @@ export namespace Prisma {
     transactions?: TransactionListRelationFilter
     employees?: EmployeeListRelationFilter
     customization?: XOR<StoreCustomizationNullableScalarRelationFilter, StoreCustomizationWhereInput> | null
+    operational_settings?: XOR<StoreOperationalSettingsNullableScalarRelationFilter, StoreOperationalSettingsWhereInput> | null
   }
 
   export type StoreOrderByWithRelationInput = {
@@ -26873,6 +28647,7 @@ export namespace Prisma {
     transactions?: TransactionOrderByRelationAggregateInput
     employees?: EmployeeOrderByRelationAggregateInput
     customization?: StoreCustomizationOrderByWithRelationInput
+    operational_settings?: StoreOperationalSettingsOrderByWithRelationInput
     _relevance?: StoreOrderByRelevanceInput
   }
 
@@ -26898,6 +28673,7 @@ export namespace Prisma {
     transactions?: TransactionListRelationFilter
     employees?: EmployeeListRelationFilter
     customization?: XOR<StoreCustomizationNullableScalarRelationFilter, StoreCustomizationWhereInput> | null
+    operational_settings?: XOR<StoreOperationalSettingsNullableScalarRelationFilter, StoreOperationalSettingsWhereInput> | null
   }, "id" | "slug" | "subdomain">
 
   export type StoreOrderByWithAggregationInput = {
@@ -27980,6 +29756,229 @@ export namespace Prisma {
     updated_at?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
   }
 
+  export type StoreOperationalSettingsWhereInput = {
+    AND?: StoreOperationalSettingsWhereInput | StoreOperationalSettingsWhereInput[]
+    OR?: StoreOperationalSettingsWhereInput[]
+    NOT?: StoreOperationalSettingsWhereInput | StoreOperationalSettingsWhereInput[]
+    id?: IntFilter<"StoreOperationalSettings"> | number
+    store_id?: IntFilter<"StoreOperationalSettings"> | number
+    offers_delivery?: BoolFilter<"StoreOperationalSettings"> | boolean
+    delivery_price?: FloatNullableFilter<"StoreOperationalSettings"> | number | null
+    free_delivery_minimum?: FloatNullableFilter<"StoreOperationalSettings"> | number | null
+    delivery_radius_km?: FloatNullableFilter<"StoreOperationalSettings"> | number | null
+    monday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    monday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    tuesday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    tuesday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    wednesday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    wednesday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    thursday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    thursday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    friday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    friday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    saturday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    saturday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    sunday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    sunday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    delivery_time_min?: IntNullableFilter<"StoreOperationalSettings"> | number | null
+    delivery_time_max?: IntNullableFilter<"StoreOperationalSettings"> | number | null
+    pickup_time_min?: IntNullableFilter<"StoreOperationalSettings"> | number | null
+    pickup_time_max?: IntNullableFilter<"StoreOperationalSettings"> | number | null
+    payment_methods?: EnumPaymentMethodNullableListFilter<"StoreOperationalSettings">
+    requires_phone_for_delivery?: BoolFilter<"StoreOperationalSettings"> | boolean
+    minimum_order_amount?: FloatNullableFilter<"StoreOperationalSettings"> | number | null
+    preparation_time_buffer?: IntNullableFilter<"StoreOperationalSettings"> | number | null
+    is_temporarily_closed?: BoolFilter<"StoreOperationalSettings"> | boolean
+    temporary_closure_reason?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    contact_phone?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    contact_whatsapp?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    contact_email?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    delivery_instructions?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    pickup_instructions?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    special_notes?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    created_at?: DateTimeFilter<"StoreOperationalSettings"> | Date | string
+    updated_at?: DateTimeFilter<"StoreOperationalSettings"> | Date | string
+    store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+  }
+
+  export type StoreOperationalSettingsOrderByWithRelationInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    offers_delivery?: SortOrder
+    delivery_price?: SortOrderInput | SortOrder
+    free_delivery_minimum?: SortOrderInput | SortOrder
+    delivery_radius_km?: SortOrderInput | SortOrder
+    monday_open?: SortOrderInput | SortOrder
+    monday_close?: SortOrderInput | SortOrder
+    tuesday_open?: SortOrderInput | SortOrder
+    tuesday_close?: SortOrderInput | SortOrder
+    wednesday_open?: SortOrderInput | SortOrder
+    wednesday_close?: SortOrderInput | SortOrder
+    thursday_open?: SortOrderInput | SortOrder
+    thursday_close?: SortOrderInput | SortOrder
+    friday_open?: SortOrderInput | SortOrder
+    friday_close?: SortOrderInput | SortOrder
+    saturday_open?: SortOrderInput | SortOrder
+    saturday_close?: SortOrderInput | SortOrder
+    sunday_open?: SortOrderInput | SortOrder
+    sunday_close?: SortOrderInput | SortOrder
+    delivery_time_min?: SortOrderInput | SortOrder
+    delivery_time_max?: SortOrderInput | SortOrder
+    pickup_time_min?: SortOrderInput | SortOrder
+    pickup_time_max?: SortOrderInput | SortOrder
+    payment_methods?: SortOrder
+    requires_phone_for_delivery?: SortOrder
+    minimum_order_amount?: SortOrderInput | SortOrder
+    preparation_time_buffer?: SortOrderInput | SortOrder
+    is_temporarily_closed?: SortOrder
+    temporary_closure_reason?: SortOrderInput | SortOrder
+    contact_phone?: SortOrderInput | SortOrder
+    contact_whatsapp?: SortOrderInput | SortOrder
+    contact_email?: SortOrderInput | SortOrder
+    delivery_instructions?: SortOrderInput | SortOrder
+    pickup_instructions?: SortOrderInput | SortOrder
+    special_notes?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    store?: StoreOrderByWithRelationInput
+    _relevance?: StoreOperationalSettingsOrderByRelevanceInput
+  }
+
+  export type StoreOperationalSettingsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    store_id?: number
+    AND?: StoreOperationalSettingsWhereInput | StoreOperationalSettingsWhereInput[]
+    OR?: StoreOperationalSettingsWhereInput[]
+    NOT?: StoreOperationalSettingsWhereInput | StoreOperationalSettingsWhereInput[]
+    offers_delivery?: BoolFilter<"StoreOperationalSettings"> | boolean
+    delivery_price?: FloatNullableFilter<"StoreOperationalSettings"> | number | null
+    free_delivery_minimum?: FloatNullableFilter<"StoreOperationalSettings"> | number | null
+    delivery_radius_km?: FloatNullableFilter<"StoreOperationalSettings"> | number | null
+    monday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    monday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    tuesday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    tuesday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    wednesday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    wednesday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    thursday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    thursday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    friday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    friday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    saturday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    saturday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    sunday_open?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    sunday_close?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    delivery_time_min?: IntNullableFilter<"StoreOperationalSettings"> | number | null
+    delivery_time_max?: IntNullableFilter<"StoreOperationalSettings"> | number | null
+    pickup_time_min?: IntNullableFilter<"StoreOperationalSettings"> | number | null
+    pickup_time_max?: IntNullableFilter<"StoreOperationalSettings"> | number | null
+    payment_methods?: EnumPaymentMethodNullableListFilter<"StoreOperationalSettings">
+    requires_phone_for_delivery?: BoolFilter<"StoreOperationalSettings"> | boolean
+    minimum_order_amount?: FloatNullableFilter<"StoreOperationalSettings"> | number | null
+    preparation_time_buffer?: IntNullableFilter<"StoreOperationalSettings"> | number | null
+    is_temporarily_closed?: BoolFilter<"StoreOperationalSettings"> | boolean
+    temporary_closure_reason?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    contact_phone?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    contact_whatsapp?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    contact_email?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    delivery_instructions?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    pickup_instructions?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    special_notes?: StringNullableFilter<"StoreOperationalSettings"> | string | null
+    created_at?: DateTimeFilter<"StoreOperationalSettings"> | Date | string
+    updated_at?: DateTimeFilter<"StoreOperationalSettings"> | Date | string
+    store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+  }, "id" | "store_id">
+
+  export type StoreOperationalSettingsOrderByWithAggregationInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    offers_delivery?: SortOrder
+    delivery_price?: SortOrderInput | SortOrder
+    free_delivery_minimum?: SortOrderInput | SortOrder
+    delivery_radius_km?: SortOrderInput | SortOrder
+    monday_open?: SortOrderInput | SortOrder
+    monday_close?: SortOrderInput | SortOrder
+    tuesday_open?: SortOrderInput | SortOrder
+    tuesday_close?: SortOrderInput | SortOrder
+    wednesday_open?: SortOrderInput | SortOrder
+    wednesday_close?: SortOrderInput | SortOrder
+    thursday_open?: SortOrderInput | SortOrder
+    thursday_close?: SortOrderInput | SortOrder
+    friday_open?: SortOrderInput | SortOrder
+    friday_close?: SortOrderInput | SortOrder
+    saturday_open?: SortOrderInput | SortOrder
+    saturday_close?: SortOrderInput | SortOrder
+    sunday_open?: SortOrderInput | SortOrder
+    sunday_close?: SortOrderInput | SortOrder
+    delivery_time_min?: SortOrderInput | SortOrder
+    delivery_time_max?: SortOrderInput | SortOrder
+    pickup_time_min?: SortOrderInput | SortOrder
+    pickup_time_max?: SortOrderInput | SortOrder
+    payment_methods?: SortOrder
+    requires_phone_for_delivery?: SortOrder
+    minimum_order_amount?: SortOrderInput | SortOrder
+    preparation_time_buffer?: SortOrderInput | SortOrder
+    is_temporarily_closed?: SortOrder
+    temporary_closure_reason?: SortOrderInput | SortOrder
+    contact_phone?: SortOrderInput | SortOrder
+    contact_whatsapp?: SortOrderInput | SortOrder
+    contact_email?: SortOrderInput | SortOrder
+    delivery_instructions?: SortOrderInput | SortOrder
+    pickup_instructions?: SortOrderInput | SortOrder
+    special_notes?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: StoreOperationalSettingsCountOrderByAggregateInput
+    _avg?: StoreOperationalSettingsAvgOrderByAggregateInput
+    _max?: StoreOperationalSettingsMaxOrderByAggregateInput
+    _min?: StoreOperationalSettingsMinOrderByAggregateInput
+    _sum?: StoreOperationalSettingsSumOrderByAggregateInput
+  }
+
+  export type StoreOperationalSettingsScalarWhereWithAggregatesInput = {
+    AND?: StoreOperationalSettingsScalarWhereWithAggregatesInput | StoreOperationalSettingsScalarWhereWithAggregatesInput[]
+    OR?: StoreOperationalSettingsScalarWhereWithAggregatesInput[]
+    NOT?: StoreOperationalSettingsScalarWhereWithAggregatesInput | StoreOperationalSettingsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"StoreOperationalSettings"> | number
+    store_id?: IntWithAggregatesFilter<"StoreOperationalSettings"> | number
+    offers_delivery?: BoolWithAggregatesFilter<"StoreOperationalSettings"> | boolean
+    delivery_price?: FloatNullableWithAggregatesFilter<"StoreOperationalSettings"> | number | null
+    free_delivery_minimum?: FloatNullableWithAggregatesFilter<"StoreOperationalSettings"> | number | null
+    delivery_radius_km?: FloatNullableWithAggregatesFilter<"StoreOperationalSettings"> | number | null
+    monday_open?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    monday_close?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    tuesday_open?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    tuesday_close?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    wednesday_open?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    wednesday_close?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    thursday_open?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    thursday_close?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    friday_open?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    friday_close?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    saturday_open?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    saturday_close?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    sunday_open?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    sunday_close?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    delivery_time_min?: IntNullableWithAggregatesFilter<"StoreOperationalSettings"> | number | null
+    delivery_time_max?: IntNullableWithAggregatesFilter<"StoreOperationalSettings"> | number | null
+    pickup_time_min?: IntNullableWithAggregatesFilter<"StoreOperationalSettings"> | number | null
+    pickup_time_max?: IntNullableWithAggregatesFilter<"StoreOperationalSettings"> | number | null
+    payment_methods?: EnumPaymentMethodNullableListFilter<"StoreOperationalSettings">
+    requires_phone_for_delivery?: BoolWithAggregatesFilter<"StoreOperationalSettings"> | boolean
+    minimum_order_amount?: FloatNullableWithAggregatesFilter<"StoreOperationalSettings"> | number | null
+    preparation_time_buffer?: IntNullableWithAggregatesFilter<"StoreOperationalSettings"> | number | null
+    is_temporarily_closed?: BoolWithAggregatesFilter<"StoreOperationalSettings"> | boolean
+    temporary_closure_reason?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    contact_phone?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    contact_whatsapp?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    contact_email?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    delivery_instructions?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    pickup_instructions?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    special_notes?: StringNullableWithAggregatesFilter<"StoreOperationalSettings"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"StoreOperationalSettings"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"StoreOperationalSettings"> | Date | string
+  }
+
   export type StoreCustomizationWhereInput = {
     AND?: StoreCustomizationWhereInput | StoreCustomizationWhereInput[]
     OR?: StoreCustomizationWhereInput[]
@@ -28775,6 +30774,7 @@ export namespace Prisma {
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateInput = {
@@ -28795,6 +30795,7 @@ export namespace Prisma {
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUpdateInput = {
@@ -28814,6 +30815,7 @@ export namespace Prisma {
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateInput = {
@@ -28834,6 +30836,7 @@ export namespace Prisma {
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreCreateManyInput = {
@@ -29945,6 +31948,289 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type StoreOperationalSettingsCreateInput = {
+    offers_delivery?: boolean
+    delivery_price?: number | null
+    free_delivery_minimum?: number | null
+    delivery_radius_km?: number | null
+    monday_open?: string | null
+    monday_close?: string | null
+    tuesday_open?: string | null
+    tuesday_close?: string | null
+    wednesday_open?: string | null
+    wednesday_close?: string | null
+    thursday_open?: string | null
+    thursday_close?: string | null
+    friday_open?: string | null
+    friday_close?: string | null
+    saturday_open?: string | null
+    saturday_close?: string | null
+    sunday_open?: string | null
+    sunday_close?: string | null
+    delivery_time_min?: number | null
+    delivery_time_max?: number | null
+    pickup_time_min?: number | null
+    pickup_time_max?: number | null
+    payment_methods?: StoreOperationalSettingsCreatepayment_methodsInput | $Enums.PaymentMethod[]
+    requires_phone_for_delivery?: boolean
+    minimum_order_amount?: number | null
+    preparation_time_buffer?: number | null
+    is_temporarily_closed?: boolean
+    temporary_closure_reason?: string | null
+    contact_phone?: string | null
+    contact_whatsapp?: string | null
+    contact_email?: string | null
+    delivery_instructions?: string | null
+    pickup_instructions?: string | null
+    special_notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    store: StoreCreateNestedOneWithoutOperational_settingsInput
+  }
+
+  export type StoreOperationalSettingsUncheckedCreateInput = {
+    id?: number
+    store_id: number
+    offers_delivery?: boolean
+    delivery_price?: number | null
+    free_delivery_minimum?: number | null
+    delivery_radius_km?: number | null
+    monday_open?: string | null
+    monday_close?: string | null
+    tuesday_open?: string | null
+    tuesday_close?: string | null
+    wednesday_open?: string | null
+    wednesday_close?: string | null
+    thursday_open?: string | null
+    thursday_close?: string | null
+    friday_open?: string | null
+    friday_close?: string | null
+    saturday_open?: string | null
+    saturday_close?: string | null
+    sunday_open?: string | null
+    sunday_close?: string | null
+    delivery_time_min?: number | null
+    delivery_time_max?: number | null
+    pickup_time_min?: number | null
+    pickup_time_max?: number | null
+    payment_methods?: StoreOperationalSettingsCreatepayment_methodsInput | $Enums.PaymentMethod[]
+    requires_phone_for_delivery?: boolean
+    minimum_order_amount?: number | null
+    preparation_time_buffer?: number | null
+    is_temporarily_closed?: boolean
+    temporary_closure_reason?: string | null
+    contact_phone?: string | null
+    contact_whatsapp?: string | null
+    contact_email?: string | null
+    delivery_instructions?: string | null
+    pickup_instructions?: string | null
+    special_notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreOperationalSettingsUpdateInput = {
+    offers_delivery?: BoolFieldUpdateOperationsInput | boolean
+    delivery_price?: NullableFloatFieldUpdateOperationsInput | number | null
+    free_delivery_minimum?: NullableFloatFieldUpdateOperationsInput | number | null
+    delivery_radius_km?: NullableFloatFieldUpdateOperationsInput | number | null
+    monday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    monday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    tuesday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    tuesday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    wednesday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    wednesday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    thursday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    thursday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    friday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    friday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    saturday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    saturday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    sunday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    sunday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    delivery_time_min?: NullableIntFieldUpdateOperationsInput | number | null
+    delivery_time_max?: NullableIntFieldUpdateOperationsInput | number | null
+    pickup_time_min?: NullableIntFieldUpdateOperationsInput | number | null
+    pickup_time_max?: NullableIntFieldUpdateOperationsInput | number | null
+    payment_methods?: StoreOperationalSettingsUpdatepayment_methodsInput | $Enums.PaymentMethod[]
+    requires_phone_for_delivery?: BoolFieldUpdateOperationsInput | boolean
+    minimum_order_amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    preparation_time_buffer?: NullableIntFieldUpdateOperationsInput | number | null
+    is_temporarily_closed?: BoolFieldUpdateOperationsInput | boolean
+    temporary_closure_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    delivery_instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    pickup_instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    special_notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    store?: StoreUpdateOneRequiredWithoutOperational_settingsNestedInput
+  }
+
+  export type StoreOperationalSettingsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    offers_delivery?: BoolFieldUpdateOperationsInput | boolean
+    delivery_price?: NullableFloatFieldUpdateOperationsInput | number | null
+    free_delivery_minimum?: NullableFloatFieldUpdateOperationsInput | number | null
+    delivery_radius_km?: NullableFloatFieldUpdateOperationsInput | number | null
+    monday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    monday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    tuesday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    tuesday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    wednesday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    wednesday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    thursday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    thursday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    friday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    friday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    saturday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    saturday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    sunday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    sunday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    delivery_time_min?: NullableIntFieldUpdateOperationsInput | number | null
+    delivery_time_max?: NullableIntFieldUpdateOperationsInput | number | null
+    pickup_time_min?: NullableIntFieldUpdateOperationsInput | number | null
+    pickup_time_max?: NullableIntFieldUpdateOperationsInput | number | null
+    payment_methods?: StoreOperationalSettingsUpdatepayment_methodsInput | $Enums.PaymentMethod[]
+    requires_phone_for_delivery?: BoolFieldUpdateOperationsInput | boolean
+    minimum_order_amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    preparation_time_buffer?: NullableIntFieldUpdateOperationsInput | number | null
+    is_temporarily_closed?: BoolFieldUpdateOperationsInput | boolean
+    temporary_closure_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    delivery_instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    pickup_instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    special_notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreOperationalSettingsCreateManyInput = {
+    id?: number
+    store_id: number
+    offers_delivery?: boolean
+    delivery_price?: number | null
+    free_delivery_minimum?: number | null
+    delivery_radius_km?: number | null
+    monday_open?: string | null
+    monday_close?: string | null
+    tuesday_open?: string | null
+    tuesday_close?: string | null
+    wednesday_open?: string | null
+    wednesday_close?: string | null
+    thursday_open?: string | null
+    thursday_close?: string | null
+    friday_open?: string | null
+    friday_close?: string | null
+    saturday_open?: string | null
+    saturday_close?: string | null
+    sunday_open?: string | null
+    sunday_close?: string | null
+    delivery_time_min?: number | null
+    delivery_time_max?: number | null
+    pickup_time_min?: number | null
+    pickup_time_max?: number | null
+    payment_methods?: StoreOperationalSettingsCreatepayment_methodsInput | $Enums.PaymentMethod[]
+    requires_phone_for_delivery?: boolean
+    minimum_order_amount?: number | null
+    preparation_time_buffer?: number | null
+    is_temporarily_closed?: boolean
+    temporary_closure_reason?: string | null
+    contact_phone?: string | null
+    contact_whatsapp?: string | null
+    contact_email?: string | null
+    delivery_instructions?: string | null
+    pickup_instructions?: string | null
+    special_notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreOperationalSettingsUpdateManyMutationInput = {
+    offers_delivery?: BoolFieldUpdateOperationsInput | boolean
+    delivery_price?: NullableFloatFieldUpdateOperationsInput | number | null
+    free_delivery_minimum?: NullableFloatFieldUpdateOperationsInput | number | null
+    delivery_radius_km?: NullableFloatFieldUpdateOperationsInput | number | null
+    monday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    monday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    tuesday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    tuesday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    wednesday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    wednesday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    thursday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    thursday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    friday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    friday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    saturday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    saturday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    sunday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    sunday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    delivery_time_min?: NullableIntFieldUpdateOperationsInput | number | null
+    delivery_time_max?: NullableIntFieldUpdateOperationsInput | number | null
+    pickup_time_min?: NullableIntFieldUpdateOperationsInput | number | null
+    pickup_time_max?: NullableIntFieldUpdateOperationsInput | number | null
+    payment_methods?: StoreOperationalSettingsUpdatepayment_methodsInput | $Enums.PaymentMethod[]
+    requires_phone_for_delivery?: BoolFieldUpdateOperationsInput | boolean
+    minimum_order_amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    preparation_time_buffer?: NullableIntFieldUpdateOperationsInput | number | null
+    is_temporarily_closed?: BoolFieldUpdateOperationsInput | boolean
+    temporary_closure_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    delivery_instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    pickup_instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    special_notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreOperationalSettingsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    store_id?: IntFieldUpdateOperationsInput | number
+    offers_delivery?: BoolFieldUpdateOperationsInput | boolean
+    delivery_price?: NullableFloatFieldUpdateOperationsInput | number | null
+    free_delivery_minimum?: NullableFloatFieldUpdateOperationsInput | number | null
+    delivery_radius_km?: NullableFloatFieldUpdateOperationsInput | number | null
+    monday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    monday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    tuesday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    tuesday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    wednesday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    wednesday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    thursday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    thursday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    friday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    friday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    saturday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    saturday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    sunday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    sunday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    delivery_time_min?: NullableIntFieldUpdateOperationsInput | number | null
+    delivery_time_max?: NullableIntFieldUpdateOperationsInput | number | null
+    pickup_time_min?: NullableIntFieldUpdateOperationsInput | number | null
+    pickup_time_max?: NullableIntFieldUpdateOperationsInput | number | null
+    payment_methods?: StoreOperationalSettingsUpdatepayment_methodsInput | $Enums.PaymentMethod[]
+    requires_phone_for_delivery?: BoolFieldUpdateOperationsInput | boolean
+    minimum_order_amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    preparation_time_buffer?: NullableIntFieldUpdateOperationsInput | number | null
+    is_temporarily_closed?: BoolFieldUpdateOperationsInput | boolean
+    temporary_closure_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    delivery_instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    pickup_instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    special_notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StoreCustomizationCreateInput = {
     primary_color?: string
     secondary_color?: string
@@ -31026,6 +33312,11 @@ export namespace Prisma {
     isNot?: StoreCustomizationWhereInput | null
   }
 
+  export type StoreOperationalSettingsNullableScalarRelationFilter = {
+    is?: StoreOperationalSettingsWhereInput | null
+    isNot?: StoreOperationalSettingsWhereInput | null
+  }
+
   export type BranchOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -32074,6 +34365,169 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
+  export type EnumPaymentMethodNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel> | null
+    has?: $Enums.PaymentMethod | EnumPaymentMethodFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type StoreOperationalSettingsOrderByRelevanceInput = {
+    fields: StoreOperationalSettingsOrderByRelevanceFieldEnum | StoreOperationalSettingsOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type StoreOperationalSettingsCountOrderByAggregateInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    offers_delivery?: SortOrder
+    delivery_price?: SortOrder
+    free_delivery_minimum?: SortOrder
+    delivery_radius_km?: SortOrder
+    monday_open?: SortOrder
+    monday_close?: SortOrder
+    tuesday_open?: SortOrder
+    tuesday_close?: SortOrder
+    wednesday_open?: SortOrder
+    wednesday_close?: SortOrder
+    thursday_open?: SortOrder
+    thursday_close?: SortOrder
+    friday_open?: SortOrder
+    friday_close?: SortOrder
+    saturday_open?: SortOrder
+    saturday_close?: SortOrder
+    sunday_open?: SortOrder
+    sunday_close?: SortOrder
+    delivery_time_min?: SortOrder
+    delivery_time_max?: SortOrder
+    pickup_time_min?: SortOrder
+    pickup_time_max?: SortOrder
+    payment_methods?: SortOrder
+    requires_phone_for_delivery?: SortOrder
+    minimum_order_amount?: SortOrder
+    preparation_time_buffer?: SortOrder
+    is_temporarily_closed?: SortOrder
+    temporary_closure_reason?: SortOrder
+    contact_phone?: SortOrder
+    contact_whatsapp?: SortOrder
+    contact_email?: SortOrder
+    delivery_instructions?: SortOrder
+    pickup_instructions?: SortOrder
+    special_notes?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type StoreOperationalSettingsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    delivery_price?: SortOrder
+    free_delivery_minimum?: SortOrder
+    delivery_radius_km?: SortOrder
+    delivery_time_min?: SortOrder
+    delivery_time_max?: SortOrder
+    pickup_time_min?: SortOrder
+    pickup_time_max?: SortOrder
+    minimum_order_amount?: SortOrder
+    preparation_time_buffer?: SortOrder
+  }
+
+  export type StoreOperationalSettingsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    offers_delivery?: SortOrder
+    delivery_price?: SortOrder
+    free_delivery_minimum?: SortOrder
+    delivery_radius_km?: SortOrder
+    monday_open?: SortOrder
+    monday_close?: SortOrder
+    tuesday_open?: SortOrder
+    tuesday_close?: SortOrder
+    wednesday_open?: SortOrder
+    wednesday_close?: SortOrder
+    thursday_open?: SortOrder
+    thursday_close?: SortOrder
+    friday_open?: SortOrder
+    friday_close?: SortOrder
+    saturday_open?: SortOrder
+    saturday_close?: SortOrder
+    sunday_open?: SortOrder
+    sunday_close?: SortOrder
+    delivery_time_min?: SortOrder
+    delivery_time_max?: SortOrder
+    pickup_time_min?: SortOrder
+    pickup_time_max?: SortOrder
+    requires_phone_for_delivery?: SortOrder
+    minimum_order_amount?: SortOrder
+    preparation_time_buffer?: SortOrder
+    is_temporarily_closed?: SortOrder
+    temporary_closure_reason?: SortOrder
+    contact_phone?: SortOrder
+    contact_whatsapp?: SortOrder
+    contact_email?: SortOrder
+    delivery_instructions?: SortOrder
+    pickup_instructions?: SortOrder
+    special_notes?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type StoreOperationalSettingsMinOrderByAggregateInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    offers_delivery?: SortOrder
+    delivery_price?: SortOrder
+    free_delivery_minimum?: SortOrder
+    delivery_radius_km?: SortOrder
+    monday_open?: SortOrder
+    monday_close?: SortOrder
+    tuesday_open?: SortOrder
+    tuesday_close?: SortOrder
+    wednesday_open?: SortOrder
+    wednesday_close?: SortOrder
+    thursday_open?: SortOrder
+    thursday_close?: SortOrder
+    friday_open?: SortOrder
+    friday_close?: SortOrder
+    saturday_open?: SortOrder
+    saturday_close?: SortOrder
+    sunday_open?: SortOrder
+    sunday_close?: SortOrder
+    delivery_time_min?: SortOrder
+    delivery_time_max?: SortOrder
+    pickup_time_min?: SortOrder
+    pickup_time_max?: SortOrder
+    requires_phone_for_delivery?: SortOrder
+    minimum_order_amount?: SortOrder
+    preparation_time_buffer?: SortOrder
+    is_temporarily_closed?: SortOrder
+    temporary_closure_reason?: SortOrder
+    contact_phone?: SortOrder
+    contact_whatsapp?: SortOrder
+    contact_email?: SortOrder
+    delivery_instructions?: SortOrder
+    pickup_instructions?: SortOrder
+    special_notes?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type StoreOperationalSettingsSumOrderByAggregateInput = {
+    id?: SortOrder
+    store_id?: SortOrder
+    delivery_price?: SortOrder
+    free_delivery_minimum?: SortOrder
+    delivery_radius_km?: SortOrder
+    delivery_time_min?: SortOrder
+    delivery_time_max?: SortOrder
+    pickup_time_min?: SortOrder
+    pickup_time_max?: SortOrder
+    minimum_order_amount?: SortOrder
+    preparation_time_buffer?: SortOrder
+  }
+
   export type EnumHeaderPositionFilter<$PrismaModel = never> = {
     equals?: $Enums.HeaderPosition | EnumHeaderPositionFieldRefInput<$PrismaModel>
     in?: $Enums.HeaderPosition[] | ListEnumHeaderPositionFieldRefInput<$PrismaModel>
@@ -32991,6 +35445,12 @@ export namespace Prisma {
     connect?: StoreCustomizationWhereUniqueInput
   }
 
+  export type StoreOperationalSettingsCreateNestedOneWithoutStoreInput = {
+    create?: XOR<StoreOperationalSettingsCreateWithoutStoreInput, StoreOperationalSettingsUncheckedCreateWithoutStoreInput>
+    connectOrCreate?: StoreOperationalSettingsCreateOrConnectWithoutStoreInput
+    connect?: StoreOperationalSettingsWhereUniqueInput
+  }
+
   export type BranchUncheckedCreateNestedManyWithoutStoreInput = {
     create?: XOR<BranchCreateWithoutStoreInput, BranchUncheckedCreateWithoutStoreInput> | BranchCreateWithoutStoreInput[] | BranchUncheckedCreateWithoutStoreInput[]
     connectOrCreate?: BranchCreateOrConnectWithoutStoreInput | BranchCreateOrConnectWithoutStoreInput[]
@@ -33036,6 +35496,12 @@ export namespace Prisma {
     create?: XOR<StoreCustomizationCreateWithoutStoreInput, StoreCustomizationUncheckedCreateWithoutStoreInput>
     connectOrCreate?: StoreCustomizationCreateOrConnectWithoutStoreInput
     connect?: StoreCustomizationWhereUniqueInput
+  }
+
+  export type StoreOperationalSettingsUncheckedCreateNestedOneWithoutStoreInput = {
+    create?: XOR<StoreOperationalSettingsCreateWithoutStoreInput, StoreOperationalSettingsUncheckedCreateWithoutStoreInput>
+    connectOrCreate?: StoreOperationalSettingsCreateOrConnectWithoutStoreInput
+    connect?: StoreOperationalSettingsWhereUniqueInput
   }
 
   export type UserUpdateOneRequiredWithoutStoreNestedInput = {
@@ -33136,6 +35602,16 @@ export namespace Prisma {
     update?: XOR<XOR<StoreCustomizationUpdateToOneWithWhereWithoutStoreInput, StoreCustomizationUpdateWithoutStoreInput>, StoreCustomizationUncheckedUpdateWithoutStoreInput>
   }
 
+  export type StoreOperationalSettingsUpdateOneWithoutStoreNestedInput = {
+    create?: XOR<StoreOperationalSettingsCreateWithoutStoreInput, StoreOperationalSettingsUncheckedCreateWithoutStoreInput>
+    connectOrCreate?: StoreOperationalSettingsCreateOrConnectWithoutStoreInput
+    upsert?: StoreOperationalSettingsUpsertWithoutStoreInput
+    disconnect?: StoreOperationalSettingsWhereInput | boolean
+    delete?: StoreOperationalSettingsWhereInput | boolean
+    connect?: StoreOperationalSettingsWhereUniqueInput
+    update?: XOR<XOR<StoreOperationalSettingsUpdateToOneWithWhereWithoutStoreInput, StoreOperationalSettingsUpdateWithoutStoreInput>, StoreOperationalSettingsUncheckedUpdateWithoutStoreInput>
+  }
+
   export type BranchUncheckedUpdateManyWithoutStoreNestedInput = {
     create?: XOR<BranchCreateWithoutStoreInput, BranchUncheckedCreateWithoutStoreInput> | BranchCreateWithoutStoreInput[] | BranchUncheckedCreateWithoutStoreInput[]
     connectOrCreate?: BranchCreateOrConnectWithoutStoreInput | BranchCreateOrConnectWithoutStoreInput[]
@@ -33224,6 +35700,16 @@ export namespace Prisma {
     delete?: StoreCustomizationWhereInput | boolean
     connect?: StoreCustomizationWhereUniqueInput
     update?: XOR<XOR<StoreCustomizationUpdateToOneWithWhereWithoutStoreInput, StoreCustomizationUpdateWithoutStoreInput>, StoreCustomizationUncheckedUpdateWithoutStoreInput>
+  }
+
+  export type StoreOperationalSettingsUncheckedUpdateOneWithoutStoreNestedInput = {
+    create?: XOR<StoreOperationalSettingsCreateWithoutStoreInput, StoreOperationalSettingsUncheckedCreateWithoutStoreInput>
+    connectOrCreate?: StoreOperationalSettingsCreateOrConnectWithoutStoreInput
+    upsert?: StoreOperationalSettingsUpsertWithoutStoreInput
+    disconnect?: StoreOperationalSettingsWhereInput | boolean
+    delete?: StoreOperationalSettingsWhereInput | boolean
+    connect?: StoreOperationalSettingsWhereUniqueInput
+    update?: XOR<XOR<StoreOperationalSettingsUpdateToOneWithWhereWithoutStoreInput, StoreOperationalSettingsUpdateWithoutStoreInput>, StoreOperationalSettingsUncheckedUpdateWithoutStoreInput>
   }
 
   export type UserCreateNestedOneWithoutAccountInput = {
@@ -34083,6 +36569,29 @@ export namespace Prisma {
     deleteMany?: ActionLogScalarWhereInput | ActionLogScalarWhereInput[]
   }
 
+  export type StoreOperationalSettingsCreatepayment_methodsInput = {
+    set: $Enums.PaymentMethod[]
+  }
+
+  export type StoreCreateNestedOneWithoutOperational_settingsInput = {
+    create?: XOR<StoreCreateWithoutOperational_settingsInput, StoreUncheckedCreateWithoutOperational_settingsInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutOperational_settingsInput
+    connect?: StoreWhereUniqueInput
+  }
+
+  export type StoreOperationalSettingsUpdatepayment_methodsInput = {
+    set?: $Enums.PaymentMethod[]
+    push?: $Enums.PaymentMethod | $Enums.PaymentMethod[]
+  }
+
+  export type StoreUpdateOneRequiredWithoutOperational_settingsNestedInput = {
+    create?: XOR<StoreCreateWithoutOperational_settingsInput, StoreUncheckedCreateWithoutOperational_settingsInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutOperational_settingsInput
+    upsert?: StoreUpsertWithoutOperational_settingsInput
+    connect?: StoreWhereUniqueInput
+    update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutOperational_settingsInput, StoreUpdateWithoutOperational_settingsInput>, StoreUncheckedUpdateWithoutOperational_settingsInput>
+  }
+
   export type StoreCreateNestedOneWithoutCustomizationInput = {
     create?: XOR<StoreCreateWithoutCustomizationInput, StoreUncheckedCreateWithoutCustomizationInput>
     connectOrCreate?: StoreCreateOrConnectWithoutCustomizationInput
@@ -34759,6 +37268,7 @@ export namespace Prisma {
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutUserInput = {
@@ -34778,6 +37288,7 @@ export namespace Prisma {
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutUserInput = {
@@ -35752,6 +38263,90 @@ export namespace Prisma {
     create: XOR<StoreCustomizationCreateWithoutStoreInput, StoreCustomizationUncheckedCreateWithoutStoreInput>
   }
 
+  export type StoreOperationalSettingsCreateWithoutStoreInput = {
+    offers_delivery?: boolean
+    delivery_price?: number | null
+    free_delivery_minimum?: number | null
+    delivery_radius_km?: number | null
+    monday_open?: string | null
+    monday_close?: string | null
+    tuesday_open?: string | null
+    tuesday_close?: string | null
+    wednesday_open?: string | null
+    wednesday_close?: string | null
+    thursday_open?: string | null
+    thursday_close?: string | null
+    friday_open?: string | null
+    friday_close?: string | null
+    saturday_open?: string | null
+    saturday_close?: string | null
+    sunday_open?: string | null
+    sunday_close?: string | null
+    delivery_time_min?: number | null
+    delivery_time_max?: number | null
+    pickup_time_min?: number | null
+    pickup_time_max?: number | null
+    payment_methods?: StoreOperationalSettingsCreatepayment_methodsInput | $Enums.PaymentMethod[]
+    requires_phone_for_delivery?: boolean
+    minimum_order_amount?: number | null
+    preparation_time_buffer?: number | null
+    is_temporarily_closed?: boolean
+    temporary_closure_reason?: string | null
+    contact_phone?: string | null
+    contact_whatsapp?: string | null
+    contact_email?: string | null
+    delivery_instructions?: string | null
+    pickup_instructions?: string | null
+    special_notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreOperationalSettingsUncheckedCreateWithoutStoreInput = {
+    id?: number
+    offers_delivery?: boolean
+    delivery_price?: number | null
+    free_delivery_minimum?: number | null
+    delivery_radius_km?: number | null
+    monday_open?: string | null
+    monday_close?: string | null
+    tuesday_open?: string | null
+    tuesday_close?: string | null
+    wednesday_open?: string | null
+    wednesday_close?: string | null
+    thursday_open?: string | null
+    thursday_close?: string | null
+    friday_open?: string | null
+    friday_close?: string | null
+    saturday_open?: string | null
+    saturday_close?: string | null
+    sunday_open?: string | null
+    sunday_close?: string | null
+    delivery_time_min?: number | null
+    delivery_time_max?: number | null
+    pickup_time_min?: number | null
+    pickup_time_max?: number | null
+    payment_methods?: StoreOperationalSettingsCreatepayment_methodsInput | $Enums.PaymentMethod[]
+    requires_phone_for_delivery?: boolean
+    minimum_order_amount?: number | null
+    preparation_time_buffer?: number | null
+    is_temporarily_closed?: boolean
+    temporary_closure_reason?: string | null
+    contact_phone?: string | null
+    contact_whatsapp?: string | null
+    contact_email?: string | null
+    delivery_instructions?: string | null
+    pickup_instructions?: string | null
+    special_notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type StoreOperationalSettingsCreateOrConnectWithoutStoreInput = {
+    where: StoreOperationalSettingsWhereUniqueInput
+    create: XOR<StoreOperationalSettingsCreateWithoutStoreInput, StoreOperationalSettingsUncheckedCreateWithoutStoreInput>
+  }
+
   export type UserUpsertWithoutStoreInput = {
     update: XOR<UserUpdateWithoutStoreInput, UserUncheckedUpdateWithoutStoreInput>
     create: XOR<UserCreateWithoutStoreInput, UserUncheckedCreateWithoutStoreInput>
@@ -36059,6 +38654,96 @@ export namespace Prisma {
     widgets?: StoreWidgetConfigUncheckedUpdateManyWithoutCustomizationNestedInput
   }
 
+  export type StoreOperationalSettingsUpsertWithoutStoreInput = {
+    update: XOR<StoreOperationalSettingsUpdateWithoutStoreInput, StoreOperationalSettingsUncheckedUpdateWithoutStoreInput>
+    create: XOR<StoreOperationalSettingsCreateWithoutStoreInput, StoreOperationalSettingsUncheckedCreateWithoutStoreInput>
+    where?: StoreOperationalSettingsWhereInput
+  }
+
+  export type StoreOperationalSettingsUpdateToOneWithWhereWithoutStoreInput = {
+    where?: StoreOperationalSettingsWhereInput
+    data: XOR<StoreOperationalSettingsUpdateWithoutStoreInput, StoreOperationalSettingsUncheckedUpdateWithoutStoreInput>
+  }
+
+  export type StoreOperationalSettingsUpdateWithoutStoreInput = {
+    offers_delivery?: BoolFieldUpdateOperationsInput | boolean
+    delivery_price?: NullableFloatFieldUpdateOperationsInput | number | null
+    free_delivery_minimum?: NullableFloatFieldUpdateOperationsInput | number | null
+    delivery_radius_km?: NullableFloatFieldUpdateOperationsInput | number | null
+    monday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    monday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    tuesday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    tuesday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    wednesday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    wednesday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    thursday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    thursday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    friday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    friday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    saturday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    saturday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    sunday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    sunday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    delivery_time_min?: NullableIntFieldUpdateOperationsInput | number | null
+    delivery_time_max?: NullableIntFieldUpdateOperationsInput | number | null
+    pickup_time_min?: NullableIntFieldUpdateOperationsInput | number | null
+    pickup_time_max?: NullableIntFieldUpdateOperationsInput | number | null
+    payment_methods?: StoreOperationalSettingsUpdatepayment_methodsInput | $Enums.PaymentMethod[]
+    requires_phone_for_delivery?: BoolFieldUpdateOperationsInput | boolean
+    minimum_order_amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    preparation_time_buffer?: NullableIntFieldUpdateOperationsInput | number | null
+    is_temporarily_closed?: BoolFieldUpdateOperationsInput | boolean
+    temporary_closure_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    delivery_instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    pickup_instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    special_notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreOperationalSettingsUncheckedUpdateWithoutStoreInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    offers_delivery?: BoolFieldUpdateOperationsInput | boolean
+    delivery_price?: NullableFloatFieldUpdateOperationsInput | number | null
+    free_delivery_minimum?: NullableFloatFieldUpdateOperationsInput | number | null
+    delivery_radius_km?: NullableFloatFieldUpdateOperationsInput | number | null
+    monday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    monday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    tuesday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    tuesday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    wednesday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    wednesday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    thursday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    thursday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    friday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    friday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    saturday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    saturday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    sunday_open?: NullableStringFieldUpdateOperationsInput | string | null
+    sunday_close?: NullableStringFieldUpdateOperationsInput | string | null
+    delivery_time_min?: NullableIntFieldUpdateOperationsInput | number | null
+    delivery_time_max?: NullableIntFieldUpdateOperationsInput | number | null
+    pickup_time_min?: NullableIntFieldUpdateOperationsInput | number | null
+    pickup_time_max?: NullableIntFieldUpdateOperationsInput | number | null
+    payment_methods?: StoreOperationalSettingsUpdatepayment_methodsInput | $Enums.PaymentMethod[]
+    requires_phone_for_delivery?: BoolFieldUpdateOperationsInput | boolean
+    minimum_order_amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    preparation_time_buffer?: NullableIntFieldUpdateOperationsInput | number | null
+    is_temporarily_closed?: BoolFieldUpdateOperationsInput | boolean
+    temporary_closure_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    delivery_instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    pickup_instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    special_notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateWithoutAccountInput = {
     email: string
     first_name?: string | null
@@ -36181,6 +38866,7 @@ export namespace Prisma {
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutProductsInput = {
@@ -36200,6 +38886,7 @@ export namespace Prisma {
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutProductsInput = {
@@ -36342,6 +39029,7 @@ export namespace Prisma {
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutProductsInput = {
@@ -36361,6 +39049,7 @@ export namespace Prisma {
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type CategoryUpsertWithWhereUniqueWithoutProductsInput = {
@@ -36477,6 +39166,7 @@ export namespace Prisma {
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutBranchesInput = {
@@ -36496,6 +39186,7 @@ export namespace Prisma {
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutBranchesInput = {
@@ -36599,6 +39290,7 @@ export namespace Prisma {
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutBranchesInput = {
@@ -36618,6 +39310,7 @@ export namespace Prisma {
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type ProductStockUpsertWithWhereUniqueWithoutBranchInput = {
@@ -36948,6 +39641,7 @@ export namespace Prisma {
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutOrdersInput = {
@@ -36967,6 +39661,7 @@ export namespace Prisma {
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutOrdersInput = {
@@ -37236,6 +39931,7 @@ export namespace Prisma {
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutOrdersInput = {
@@ -37255,6 +39951,7 @@ export namespace Prisma {
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type BranchUpsertWithoutOrdersInput = {
@@ -37759,6 +40456,7 @@ export namespace Prisma {
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutBalanceInput = {
@@ -37778,6 +40476,7 @@ export namespace Prisma {
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutBalanceInput = {
@@ -37812,6 +40511,7 @@ export namespace Prisma {
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutBalanceInput = {
@@ -37831,6 +40531,7 @@ export namespace Prisma {
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreCreateWithoutTransactionsInput = {
@@ -37849,6 +40550,7 @@ export namespace Prisma {
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutTransactionsInput = {
@@ -37868,6 +40570,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutTransactionsInput = {
@@ -37962,6 +40665,7 @@ export namespace Prisma {
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutTransactionsInput = {
@@ -37981,6 +40685,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type EmployeeUpsertWithoutTransactionsInput = {
@@ -38311,6 +41016,7 @@ export namespace Prisma {
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutEmployeesInput = {
@@ -38330,6 +41036,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutEmployeesInput = {
@@ -38574,6 +41281,7 @@ export namespace Prisma {
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutEmployeesInput = {
@@ -38593,6 +41301,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type OrderUpsertWithWhereUniqueWithoutCreated_by_employeeInput = {
@@ -38659,6 +41368,100 @@ export namespace Prisma {
     data: XOR<ActionLogUpdateManyMutationInput, ActionLogUncheckedUpdateManyWithoutEmployeeInput>
   }
 
+  export type StoreCreateWithoutOperational_settingsInput = {
+    name: string
+    description?: string | null
+    logo?: string | null
+    slogan?: string | null
+    slug: string
+    subdomain: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutStoreInput
+    branches?: BranchCreateNestedManyWithoutStoreInput
+    products?: ProductCreateNestedManyWithoutStoreInput
+    orders?: OrderCreateNestedManyWithoutStoreInput
+    balance?: StoreBalanceCreateNestedOneWithoutStoreInput
+    transactions?: TransactionCreateNestedManyWithoutStoreInput
+    employees?: EmployeeCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationCreateNestedOneWithoutStoreInput
+  }
+
+  export type StoreUncheckedCreateWithoutOperational_settingsInput = {
+    id?: number
+    name: string
+    description?: string | null
+    logo?: string | null
+    slogan?: string | null
+    slug: string
+    subdomain: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    user_id: number
+    branches?: BranchUncheckedCreateNestedManyWithoutStoreInput
+    products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+    orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+    balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
+    employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
+    customization?: StoreCustomizationUncheckedCreateNestedOneWithoutStoreInput
+  }
+
+  export type StoreCreateOrConnectWithoutOperational_settingsInput = {
+    where: StoreWhereUniqueInput
+    create: XOR<StoreCreateWithoutOperational_settingsInput, StoreUncheckedCreateWithoutOperational_settingsInput>
+  }
+
+  export type StoreUpsertWithoutOperational_settingsInput = {
+    update: XOR<StoreUpdateWithoutOperational_settingsInput, StoreUncheckedUpdateWithoutOperational_settingsInput>
+    create: XOR<StoreCreateWithoutOperational_settingsInput, StoreUncheckedCreateWithoutOperational_settingsInput>
+    where?: StoreWhereInput
+  }
+
+  export type StoreUpdateToOneWithWhereWithoutOperational_settingsInput = {
+    where?: StoreWhereInput
+    data: XOR<StoreUpdateWithoutOperational_settingsInput, StoreUncheckedUpdateWithoutOperational_settingsInput>
+  }
+
+  export type StoreUpdateWithoutOperational_settingsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutStoreNestedInput
+    branches?: BranchUpdateManyWithoutStoreNestedInput
+    products?: ProductUpdateManyWithoutStoreNestedInput
+    orders?: OrderUpdateManyWithoutStoreNestedInput
+    balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
+    transactions?: TransactionUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
+  }
+
+  export type StoreUncheckedUpdateWithoutOperational_settingsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user_id?: IntFieldUpdateOperationsInput | number
+    branches?: BranchUncheckedUpdateManyWithoutStoreNestedInput
+    products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+    balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
+    employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
+    customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
+  }
+
   export type StoreCreateWithoutCustomizationInput = {
     name: string
     description?: string | null
@@ -38675,6 +41478,7 @@ export namespace Prisma {
     balance?: StoreBalanceCreateNestedOneWithoutStoreInput
     transactions?: TransactionCreateNestedManyWithoutStoreInput
     employees?: EmployeeCreateNestedManyWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsCreateNestedOneWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutCustomizationInput = {
@@ -38694,6 +41498,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedCreateNestedOneWithoutStoreInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutStoreInput
     employees?: EmployeeUncheckedCreateNestedManyWithoutStoreInput
+    operational_settings?: StoreOperationalSettingsUncheckedCreateNestedOneWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutCustomizationInput = {
@@ -38846,6 +41651,7 @@ export namespace Prisma {
     balance?: StoreBalanceUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutCustomizationInput = {
@@ -38865,6 +41671,7 @@ export namespace Prisma {
     balance?: StoreBalanceUncheckedUpdateOneWithoutStoreNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreSectionConfigUpsertWithWhereUniqueWithoutCustomizationInput = {
@@ -39583,6 +42390,7 @@ export namespace Prisma {
     transactions?: TransactionUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutUserInput = {
@@ -39602,6 +42410,7 @@ export namespace Prisma {
     transactions?: TransactionUncheckedUpdateManyWithoutStoreNestedInput
     employees?: EmployeeUncheckedUpdateManyWithoutStoreNestedInput
     customization?: StoreCustomizationUncheckedUpdateOneWithoutStoreNestedInput
+    operational_settings?: StoreOperationalSettingsUncheckedUpdateOneWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateManyWithoutUserInput = {

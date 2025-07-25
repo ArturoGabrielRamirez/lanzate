@@ -49,6 +49,7 @@ export async function createProduct(payload: any, storeId: number, userId: numbe
         if (error) throw new Error(message)
 
         revalidatePath(`/stores/${storeId}`)
+        revalidatePath(`/dashboard`)
 
         //Create product notification
         //Create action_log record

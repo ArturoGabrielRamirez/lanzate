@@ -29,12 +29,30 @@ export async function selectDashboardStores(userId: number): Promise<GetDashboar
             }
         })
 
+        // Get total product count across all user stores
+        const productCount = await client.product.count({
+            where: {
+                owner_id: userId
+            }
+        })
+
+        // Get count of stores with operational settings configured
+        const operationalSettingsCount = await client.storeOperationalSettings.count({
+            where: {
+                store: {
+                    user_id: userId
+                }
+            }
+        })
+
         const storeCount = stores.length
 
         return {
             message: "Dashboard stores fetched successfully from db",
             payload: {
                 storeCount,
+                productCount,
+                operationalSettingsCount,
                 stores
             },
             error: false
