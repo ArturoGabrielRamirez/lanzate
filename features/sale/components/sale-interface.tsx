@@ -2,12 +2,11 @@
 
 import { useState } from 'react'
 import { searchProductByBarcode } from '../actions/search-product-by-barcode'
-import type { ScannedProduct, ProductSearchResult, CartItem } from '../types'
+import type { ScannedProduct, ProductSearchResult, CartItem, ProductSearchByNameResult } from '../types'
 import CartSection from './cart-section'
 import SearchSection from './search-section'
 import ActionsSection from './actions-section'
-import ProductsSection from './products-section'
-import OrdersSection from './orders-section'
+import ProductResults from './product-results'
 import BarcodeScannerUSB from './barcode-scanner-usb'
 
 type SaleInterfaceProps = {
@@ -19,8 +18,14 @@ type SaleInterfaceProps = {
 function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfaceProps) {
   const [scannedProducts, setScannedProducts] = useState<ScannedProduct[]>([])
   const [cartItems, setCartItems] = useState<CartItem[]>([])
-  const [searchResult, setSearchResult] = useState<ProductSearchResult>({
+  const [barcodeResult, setBarcodeResult] = useState<ProductSearchResult>({
     product: null,
+    message: '',
+    isLoading: false,
+    error: false
+  })
+  const [searchResults, setSearchResults] = useState<ProductSearchByNameResult>({
+    products: [],
     message: '',
     isLoading: false,
     error: false
@@ -29,8 +34,16 @@ function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfacePr
   const handleProductScanned = async (barcode: string) => {
     console.log('Producto escaneado:', barcode)
 
+    // Limpiar resultados de búsqueda por texto cuando se escanea algo
+    setSearchResults({
+      products: [],
+      message: '',
+      isLoading: false,
+      error: false
+    })
+
     // Establecer estado de carga
-    setSearchResult({
+    setBarcodeResult({
       product: null,
       message: 'Buscando producto...',
       isLoading: true,
@@ -42,7 +55,7 @@ function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfacePr
       const { error, payload, message } = await searchProductByBarcode(barcode, storeId)
 
       if (error || !payload) {
-        setSearchResult({
+        setBarcodeResult({
           product: null,
           message: message || 'Producto no encontrado',
           isLoading: false,
@@ -50,7 +63,7 @@ function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfacePr
         })
       } else {
         // Producto encontrado
-        setSearchResult({
+        setBarcodeResult({
           product: payload,
           message: 'Producto encontrado',
           isLoading: false,
@@ -62,11 +75,25 @@ function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfacePr
       }
     } catch (error) {
       console.error('Error buscando producto:', error)
-      setSearchResult({
+      setBarcodeResult({
         product: null,
         message: 'Error al buscar el producto',
         isLoading: false,
         error: true
+      })
+    }
+  }
+
+  const handleSearchResults = (results: ProductSearchByNameResult) => {
+    setSearchResults(results)
+    
+    // Limpiar resultados de código de barras cuando se busca por texto
+    if (results.products.length > 0 || results.isLoading) {
+      setBarcodeResult({
+        product: null,
+        message: '',
+        isLoading: false,
+        error: false
       })
     }
   }
@@ -162,7 +189,15 @@ function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfacePr
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-areas-[barcode_search_cart,products_products_cart,products_products_cart,buttons_buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_1fr_350px] xl:grid-cols-[1fr_1fr_450px] lg:grid-rows-[min-content_1fr_min-content]">
+    <div className="grid grid-cols-1 lg:grid-areas-[search_barcode_cart,results_results_cart,buttons_buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_1fr_350px] xl:grid-cols-[1fr_1fr_450px] lg:grid-rows-[min-content_1fr_min-content]">
+
+      <SearchSection
+        storeId={storeId}
+        onAddToCart={handleAddToCart}
+        onSearchResults={handleSearchResults}
+      />
+
+      <BarcodeScannerUSB onProductScanned={handleProductScanned} />
 
       <CartSection
         cartItems={cartItems}
@@ -170,34 +205,21 @@ function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfacePr
         onRemoveItem={handleRemoveItem}
       />
 
-      <ActionsSection
-          cartTotal={cartTotal}
-          cartItemCount={cartItemCount}
-          onFinalizeSale={handleFinalizeSale}
-          onRefund={handleRefund}
-          onClearCart={handleClearCart}
-          onCalculateChange={handleCalculateChange}
-          onPrintReceipt={handlePrintReceipt}
-        />
-
-      <SearchSection
-        storeId={storeId}
+      <ProductResults
+        searchResults={searchResults}
+        barcodeResult={barcodeResult}
         onAddToCart={handleAddToCart}
       />
 
-      <BarcodeScannerUSB onProductScanned={handleProductScanned} />
-
-      {/* <ProductsSection
-          storeName={storeName}
-          scannedProducts={scannedProducts}
-          searchResult={searchResult}
-          onProductScanned={handleProductScanned}
-          onAddToCart={handleAddToCart}
-        /> */}
-
-      {/* <OrdersSection
-        onViewOrderHistory={handleViewOrderHistory}
-      /> */}
+      <ActionsSection
+        cartTotal={cartTotal}
+        cartItemCount={cartItemCount}
+        onFinalizeSale={handleFinalizeSale}
+        onRefund={handleRefund}
+        onClearCart={handleClearCart}
+        onCalculateChange={handleCalculateChange}
+        onPrintReceipt={handlePrintReceipt}
+      />
 
     </div>
   )

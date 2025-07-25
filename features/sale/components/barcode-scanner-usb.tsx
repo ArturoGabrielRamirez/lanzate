@@ -42,7 +42,7 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
   })
 
   return (
-    <Card className={className}>
+    <Card className={`lg:area-[barcode] ${className || ''}`}>
       {/* <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Scan className="size-5" />
