@@ -14,6 +14,7 @@ export type DashboardStore = {
 export type DashboardStoreStats = {
     storeCount: number
     productCount: number
+    operationalSettingsCount: number
     stores: DashboardStore[]
 }
 

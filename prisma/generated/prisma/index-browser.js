@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.11.1
- * Query Engine version: f40f79ec31188888a2e33acda0ecc8fd10a853a9
+ * Prisma Client JS version: 6.12.0
+ * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
  */
 Prisma.prismaVersion = {
-  client: "6.11.1",
-  engine: "f40f79ec31188888a2e33acda0ecc8fd10a853a9"
+  client: "6.12.0",
+  engine: "8047c96bbd92db98a2abc7c9323ce77c02c89dbc"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -310,6 +310,47 @@ exports.Prisma.EmployeeScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.StoreOperationalSettingsScalarFieldEnum = {
+  id: 'id',
+  store_id: 'store_id',
+  offers_delivery: 'offers_delivery',
+  delivery_price: 'delivery_price',
+  free_delivery_minimum: 'free_delivery_minimum',
+  delivery_radius_km: 'delivery_radius_km',
+  monday_open: 'monday_open',
+  monday_close: 'monday_close',
+  tuesday_open: 'tuesday_open',
+  tuesday_close: 'tuesday_close',
+  wednesday_open: 'wednesday_open',
+  wednesday_close: 'wednesday_close',
+  thursday_open: 'thursday_open',
+  thursday_close: 'thursday_close',
+  friday_open: 'friday_open',
+  friday_close: 'friday_close',
+  saturday_open: 'saturday_open',
+  saturday_close: 'saturday_close',
+  sunday_open: 'sunday_open',
+  sunday_close: 'sunday_close',
+  delivery_time_min: 'delivery_time_min',
+  delivery_time_max: 'delivery_time_max',
+  pickup_time_min: 'pickup_time_min',
+  pickup_time_max: 'pickup_time_max',
+  payment_methods: 'payment_methods',
+  requires_phone_for_delivery: 'requires_phone_for_delivery',
+  minimum_order_amount: 'minimum_order_amount',
+  preparation_time_buffer: 'preparation_time_buffer',
+  is_temporarily_closed: 'is_temporarily_closed',
+  temporary_closure_reason: 'temporary_closure_reason',
+  contact_phone: 'contact_phone',
+  contact_whatsapp: 'contact_whatsapp',
+  contact_email: 'contact_email',
+  delivery_instructions: 'delivery_instructions',
+  pickup_instructions: 'pickup_instructions',
+  special_notes: 'special_notes',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.StoreCustomizationScalarFieldEnum = {
   id: 'id',
   store_id: 'store_id',
@@ -503,6 +544,30 @@ exports.Prisma.EmployeeOrderByRelevanceFieldEnum = {
   notes: 'notes'
 };
 
+exports.Prisma.StoreOperationalSettingsOrderByRelevanceFieldEnum = {
+  monday_open: 'monday_open',
+  monday_close: 'monday_close',
+  tuesday_open: 'tuesday_open',
+  tuesday_close: 'tuesday_close',
+  wednesday_open: 'wednesday_open',
+  wednesday_close: 'wednesday_close',
+  thursday_open: 'thursday_open',
+  thursday_close: 'thursday_close',
+  friday_open: 'friday_open',
+  friday_close: 'friday_close',
+  saturday_open: 'saturday_open',
+  saturday_close: 'saturday_close',
+  sunday_open: 'sunday_open',
+  sunday_close: 'sunday_close',
+  temporary_closure_reason: 'temporary_closure_reason',
+  contact_phone: 'contact_phone',
+  contact_whatsapp: 'contact_whatsapp',
+  contact_email: 'contact_email',
+  delivery_instructions: 'delivery_instructions',
+  pickup_instructions: 'pickup_instructions',
+  special_notes: 'special_notes'
+};
+
 exports.Prisma.StoreCustomizationOrderByRelevanceFieldEnum = {
   primary_color: 'primary_color',
   secondary_color: 'secondary_color',
@@ -622,6 +687,16 @@ exports.EmployeeRole = exports.$Enums.EmployeeRole = {
   SALES: 'SALES'
 };
 
+exports.PaymentMethod = exports.$Enums.PaymentMethod = {
+  CASH: 'CASH',
+  CREDIT_CARD: 'CREDIT_CARD',
+  DEBIT_CARD: 'DEBIT_CARD',
+  TRANSFER: 'TRANSFER',
+  MERCADO_PAGO: 'MERCADO_PAGO',
+  PAYPAL: 'PAYPAL',
+  CRYPTO: 'CRYPTO'
+};
+
 exports.HeaderPosition = exports.$Enums.HeaderPosition = {
   TOP: 'TOP',
   FIXED_TOP: 'FIXED_TOP',
@@ -714,6 +789,7 @@ exports.Prisma.ModelName = {
   Transaction: 'Transaction',
   ActionLog: 'ActionLog',
   Employee: 'Employee',
+  StoreOperationalSettings: 'StoreOperationalSettings',
   StoreCustomization: 'StoreCustomization',
   StoreSectionConfig: 'StoreSectionConfig',
   StoreWidgetConfig: 'StoreWidgetConfig'

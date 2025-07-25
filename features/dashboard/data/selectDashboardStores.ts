@@ -36,6 +36,15 @@ export async function selectDashboardStores(userId: number): Promise<GetDashboar
             }
         })
 
+        // Get count of stores with operational settings configured
+        const operationalSettingsCount = await client.storeOperationalSettings.count({
+            where: {
+                store: {
+                    user_id: userId
+                }
+            }
+        })
+
         const storeCount = stores.length
 
         return {
@@ -43,6 +52,7 @@ export async function selectDashboardStores(userId: number): Promise<GetDashboar
             payload: {
                 storeCount,
                 productCount,
+                operationalSettingsCount,
                 stores
             },
             error: false
