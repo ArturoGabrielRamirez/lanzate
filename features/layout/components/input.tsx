@@ -15,9 +15,23 @@ type InputFieldProps = {
   className?: string
   containerClassName?: string
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  startContent?: React.ReactNode
+  endContent?: React.ReactNode
 }
 
-const InputField = ({ name, label, type = 'text', defaultValue, onChange, value, className, containerClassName, onKeyDown }: InputFieldProps) => {
+const InputField = ({
+  name,
+  label,
+  type = 'text',
+  defaultValue,
+  onChange,
+  value,
+  className,
+  containerClassName,
+  onKeyDown,
+  startContent,
+  endContent
+}: InputFieldProps) => {
   const {
     register,
     formState: { errors },
@@ -28,7 +42,7 @@ const InputField = ({ name, label, type = 'text', defaultValue, onChange, value,
   return (
     <div className={cn("flex flex-col gap-1", containerClassName)}>
       <Label htmlFor={name}>{label}</Label>
-      <Input id={name} type={type} {...register(name)} defaultValue={defaultValue} onChange={onChange} value={value} className={className} onKeyDown={onKeyDown} />
+      <Input id={name} type={type} {...register(name)} defaultValue={defaultValue} onChange={onChange} value={value} className={className} onKeyDown={onKeyDown} startContent={startContent} endContent={endContent} />
       {error && <p className="text-sm text-red-500">{error}</p>}
     </div>
   )
