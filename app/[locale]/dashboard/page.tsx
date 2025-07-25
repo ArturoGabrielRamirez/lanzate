@@ -7,6 +7,8 @@ import { CreateStoreButton, StoreCard } from "@/features/stores/components"
 import { ArrowRight, Hand, Plus, ShoppingBasket } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
 
 async function DashboardPage() {
 
@@ -71,24 +73,27 @@ async function DashboardPage() {
                         </div>
                     )}
                 </div>
-                <Card className="w-full h-fit">
-                    <CardHeader>
-                        <CardTitle>
-                            <h2 className="text-2xl font-bold">New order</h2>
-                        </CardTitle>
-                        <CardDescription>
-                            Create a new order to start selling!
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <Button className="w-full" asChild>
-                            <Link href="/sale">
-                                <ShoppingBasket />
-                                New order
-                            </Link>
-                        </Button>
-                    </CardContent>
-                </Card>
+                <div className="flex flex-col gap-4">
+                    <Card className="w-full h-fit">
+                        <CardHeader>
+                            <CardTitle>
+                                <h2 className="text-2xl font-bold">New order</h2>
+                            </CardTitle>
+                            <CardDescription>
+                                Create a new order to start selling!
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <Button className="w-full" asChild>
+                                <Link href="/sale">
+                                    <ShoppingBasket />
+                                    New order
+                                </Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
+                    <DashboardCalendar />
+                </div>
             </div>
         </section>
     )
