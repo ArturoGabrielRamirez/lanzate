@@ -44,6 +44,7 @@ async function SaleStorePage({ params }: Props) {
             <SaleInterface 
                 storeName={store.name}
                 storeDescription={store.description ?? undefined}
+                storeId={store.id}
             />
         </section>
     )
