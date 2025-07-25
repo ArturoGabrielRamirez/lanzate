@@ -169,7 +169,7 @@ function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfacePr
         onRemoveItem={handleRemoveItem}
       />
 
-      {/* <ActionsSection
+      <ActionsSection
           cartTotal={cartTotal}
           cartItemCount={cartItemCount}
           onFinalizeSale={handleFinalizeSale}
@@ -177,7 +177,7 @@ function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfacePr
           onClearCart={handleClearCart}
           onCalculateChange={handleCalculateChange}
           onPrintReceipt={handlePrintReceipt}
-        /> */}
+        />
 
       <SearchSection
         storeId={storeId}

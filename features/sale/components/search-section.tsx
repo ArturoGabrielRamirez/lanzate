@@ -87,7 +87,7 @@ function SearchSection({ storeId, onAddToCart }: SearchSectionProps) {
   }, [searchTerm, storeId])
 
   return (
-    <Card className='area-[search] h-fit'>
+    <Card className='lg:area-[search] h-fit'>
       {/* <CardHeader>
         <CardTitle className='flex items-center gap-2'>
           <Search />

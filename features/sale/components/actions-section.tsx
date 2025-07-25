@@ -15,17 +15,17 @@ type ActionsSectionProps = {
   disabled?: boolean
 }
 
-function ActionsSection({ 
-  cartTotal, 
-  cartItemCount, 
-  onFinalizeSale, 
-  onRefund, 
-  onClearCart, 
-  onCalculateChange, 
+function ActionsSection({
+  cartTotal,
+  cartItemCount,
+  onFinalizeSale,
+  onRefund,
+  onClearCart,
+  onCalculateChange,
   onPrintReceipt,
-  disabled = false 
+  disabled = false
 }: ActionsSectionProps) {
-  
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
@@ -34,90 +34,78 @@ function ActionsSection({
   }
 
   return (
-    <Card className='area-[buttons] h-fit'>
-      <CardHeader>
+    <Card className='lg:area-[buttons] h-fit'>
+      {/* <CardHeader>
         <CardTitle className='flex items-center gap-2'>
           <Settings />
           Acciones
         </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {/* Resumen rápido */}
-          <div className="p-3 bg-muted rounded-lg">
+      </CardHeader> */}
+      <CardContent className='grid grid-cols-[repeat(auto-fill,minmax(min(100%,200px),1fr))] gap-2'>
+        {/* <div className="space-y-4"> */}
+        {/* Resumen rápido */}
+        {/* <div className="p-3 bg-muted rounded-lg">
             <div className="text-center">
               <div className="text-sm text-muted-foreground">Total a cobrar</div>
               <div className="text-lg font-bold">{formatPrice(cartTotal)}</div>
               <div className="text-xs text-muted-foreground">{cartItemCount} productos</div>
             </div>
-          </div>
+          </div> */}
 
-          {/* Botones principales */}
-          <div className="space-y-2">
-            <Button 
-              onClick={onFinalizeSale}
-              disabled={disabled || cartItemCount === 0}
-              className="w-full h-12 text-base"
-              variant="default"
-            >
-              <CreditCard className="mr-2 h-5 w-5" />
-              Finalizar Venta
-            </Button>
+        {/* Botones principales */}
+        <Button
+          onClick={onFinalizeSale}
+          disabled={disabled || cartItemCount === 0}
+          className="w-full text-base"
+          variant="default"
+        >
+          <CreditCard className="mr-2 h-5 w-5" />
+          Finalizar Venta
+        </Button>
 
-            <Button 
-              onClick={onCalculateChange}
-              disabled={disabled || cartItemCount === 0}
-              className="w-full"
-              variant="outline"
-            >
-              <Calculator className="mr-2 h-4 w-4" />
-              Calcular Vuelto
-            </Button>
-          </div>
+        <Button
+          onClick={onCalculateChange}
+          disabled={disabled || cartItemCount === 0}
+          className="w-full"
+          variant="outline"
+        >
+          <Calculator className="mr-2 h-4 w-4" />
+          Calcular Vuelto
+        </Button>
 
-          <hr className="border-muted-foreground/20" />
+        <Button
+          onClick={onPrintReceipt}
+          disabled={disabled}
+          className="w-full"
+          variant="outline"
+        >
+          <Receipt className="mr-2 h-4 w-4" />
+          Imprimir Ticket
+        </Button>
 
-          {/* Botones secundarios */}
-          <div className="space-y-2">
-            <Button 
-              onClick={onPrintReceipt}
-              disabled={disabled}
-              className="w-full"
-              variant="outline"
-            >
-              <Receipt className="mr-2 h-4 w-4" />
-              Imprimir Ticket
-            </Button>
+        <Button
+          onClick={onRefund}
+          disabled={disabled}
+          className="w-full"
+          variant="outline"
+        >
+          <RotateCcw className="mr-2 h-4 w-4" />
+          Procesar Reembolso
+        </Button>
 
-            <Button 
-              onClick={onRefund}
-              disabled={disabled}
-              className="w-full"
-              variant="outline"
-            >
-              <RotateCcw className="mr-2 h-4 w-4" />
-              Procesar Reembolso
-            </Button>
-          </div>
+        {/* Botones de utilidad */}
+        <Button
+          onClick={onClearCart}
+          disabled={disabled || cartItemCount === 0}
+          className="w-full"
+          variant="destructive"
+        >
+          <Trash2 className="mr-2 h-4 w-4" />
+          Vaciar Carrito
+        </Button>
 
-          <hr className="border-muted-foreground/20" />
-
-          {/* Botones de utilidad */}
-          <div className="space-y-2">
-            <Button 
-              onClick={onClearCart}
-              disabled={disabled || cartItemCount === 0}
-              className="w-full"
-              variant="destructive"
-              size="sm"
-            >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Vaciar Carrito
-            </Button>
-          </div>
-
-          {/* Información adicional */}
-          <div className="text-xs text-muted-foreground space-y-1 pt-2 border-t">
+        {/* Información adicional */}
+        {/* <div className="text-xs text-muted-foreground space-y-1 pt-2 border-t">
             <div className="flex items-center gap-1">
               <DollarSign className="h-3 w-3" />
               <span>Métodos: Efectivo, Tarjeta</span>
@@ -126,8 +114,8 @@ function ActionsSection({
               <Receipt className="h-3 w-3" />
               <span>Ticket automático</span>
             </div>
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
       </CardContent>
     </Card>
   )
