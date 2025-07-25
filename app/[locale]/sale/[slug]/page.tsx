@@ -2,7 +2,7 @@ import { ShoppingBasket } from "lucide-react"
 import { Title } from "@/features/layout/components"
 import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { SaleInterface } from "@/features/sale/components"
 
 type Props = {
     params: Promise<{ slug: string }>
@@ -10,7 +10,7 @@ type Props = {
 
 async function SaleStorePage({ params }: Props) {
     const { slug } = await params
-    
+
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
@@ -24,7 +24,7 @@ async function SaleStorePage({ params }: Props) {
     }
 
     return (
-        <section className="p-4 flex flex-col max-md:pt-24">
+        <section className="p-4 flex flex-col max-md:pt-24 grow">
             <Title title={(
                 <div className="flex items-center gap-2">
                     <ShoppingBasket />
@@ -40,38 +40,11 @@ async function SaleStorePage({ params }: Props) {
                     href: `/sale/${slug}`
                 }
             ]} />
-            
-            <div className="mt-6">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Tienda Seleccionada: {store.name}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-4">
-                            <p className="text-muted-foreground">
-                                {store.description || "Sin descripción disponible"}
-                            </p>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <h4 className="font-medium">Información de la tienda</h4>
-                                    <p className="text-sm text-muted-foreground">Slug: {store.slug}</p>
-                                    <p className="text-sm text-muted-foreground">
-                                        Sitio web: {store.subdomain}.lanzate.com
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            {/* Aquí puedes agregar la interfaz de ventas específica */}
-                            <div className="mt-8 p-6 border-2 border-dashed border-gray-300 rounded-lg text-center">
-                                <p className="text-muted-foreground">
-                                    Interfaz de ventas para {store.name} - En desarrollo
-                                </p>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
-            </div>
+
+            <SaleInterface 
+                storeName={store.name}
+                storeDescription={store.description ?? undefined}
+            />
         </section>
     )
 }
