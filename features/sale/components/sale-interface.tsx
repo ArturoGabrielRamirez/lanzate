@@ -8,6 +8,7 @@ import SearchSection from './search-section'
 import ActionsSection from './actions-section'
 import ProductsSection from './products-section'
 import OrdersSection from './orders-section'
+import BarcodeScannerUSB from './barcode-scanner-usb'
 
 type SaleInterfaceProps = {
   storeName: string
@@ -161,7 +162,7 @@ function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfacePr
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-areas-[search_cart,products_cart,products_cart,buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_350px] xl:grid-cols-[1fr_450px] lg:grid-rows-[min-content_1fr_min-content]">
+    <div className="grid grid-cols-1 lg:grid-areas-[barcode_search_cart,products_products_cart,products_products_cart,buttons_buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_1fr_350px] xl:grid-cols-[1fr_1fr_450px] lg:grid-rows-[min-content_1fr_min-content]">
 
       <CartSection
         cartItems={cartItems}
@@ -183,6 +184,8 @@ function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfacePr
         storeId={storeId}
         onAddToCart={handleAddToCart}
       />
+
+      <BarcodeScannerUSB onProductScanned={handleProductScanned} />
 
       {/* <ProductsSection
           storeName={storeName}

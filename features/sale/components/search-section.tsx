@@ -135,12 +135,15 @@ function SearchSection({ storeId, onAddToCart }: SearchSectionProps) {
                       </p>
                     )}
                     <div className="flex gap-2 mt-1">
-                      <Badge variant="outline" className="text-xs">
+                      {/* <Badge variant="outline" className="text-xs">
                         SKU: {product.sku}
-                      </Badge>
-                      <Badge variant="outline" className="text-xs">
+                      </Badge> */}
+                      {/* <Badge variant="outline" className="text-xs">
                         Stock: {product.totalStock}
-                      </Badge>
+                      </Badge> */}
+                      <p className='text-xs'>
+                        {product.totalStock} {product.totalStock > 1 ? 'units' : 'unit'} remaining
+                      </p>
                       {product.categories.length > 0 && (
                         <Badge variant="outline" className="text-xs">
                           {product.categories[0].name}
@@ -149,10 +152,10 @@ function SearchSection({ storeId, onAddToCart }: SearchSectionProps) {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 ml-2">
-                    <Badge variant="secondary">
+                  <div className="flex items-center gap-2 flex-col">
+                    <p className='font-bold text-lg'>
                       {formatPrice(product.price)}
-                    </Badge>
+                    </p>
                     <Button
                       size="sm"
                       onClick={() => onAddToCart(product)}

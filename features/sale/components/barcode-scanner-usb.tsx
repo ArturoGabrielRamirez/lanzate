@@ -42,9 +42,8 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
   })
 
   return (
-    <div className={className}>
-      <Card>
-        <CardHeader>
+    <Card className={className}>
+      {/* <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Scan className="size-5" />
             Scanner de Códigos de Barras USB
@@ -55,41 +54,41 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
           <CardDescription>
             Conecta tu scanner USB y escanea códigos de productos
           </CardDescription>
-        </CardHeader>
-        
-        <CardContent className="space-y-4">
-          {/* Scanner Status */}
-          <div className="flex items-center justify-between p-4 rounded-lg border bg-muted/20">
-            <div className="flex items-center gap-3">
-              {isScanning ? (
-                <>
-                  <div className="size-3 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-sm font-medium">Escaneando...</span>
-                </>
-              ) : (
-                <>
-                  <div className="size-3 bg-gray-400 rounded-full" />
-                  <span className="text-sm text-muted-foreground">
-                    {enabled ? "Esperando escaneo" : "Scanner desactivado"}
-                  </span>
-                </>
-              )}
-            </div>
-            
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="scanner-enabled"
-                checked={enabled}
-                onCheckedChange={setEnabled}
-              />
-              <Label htmlFor="scanner-enabled" className="text-sm">
-                Activado
-              </Label>
-            </div>
-          </div>
+        </CardHeader> */}
 
-          {/* Last Scanned */}
-          {lastScanned && (
+      <CardContent className="flex justify-between grow">
+        {/* Scanner Status */}
+        {/* <div className="flex items-center justify-between p-4 rounded-lg border bg-muted/20"> */}
+        <div className="flex items-center gap-3">
+          {isScanning ? (
+            <>
+              <div className="size-3 bg-green-500 rounded-full animate-pulse" />
+              <span className="text-sm font-medium">Escaneando...</span>
+            </>
+          ) : (
+            <>
+              <div className="size-3 bg-gray-400 rounded-full" />
+              <span className="text-sm text-muted-foreground">
+                {enabled ? "Esperando escaneo" : "Scanner desactivado"}
+              </span>
+            </>
+          )}
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="scanner-enabled"
+            checked={enabled}
+            onCheckedChange={setEnabled}
+          />
+          <Label htmlFor="scanner-enabled" className="text-sm">
+            Activado
+          </Label>
+        </div>
+        {/* </div> */}
+
+        {/* Last Scanned */}
+        {/* {lastScanned && (
             <div className="p-4 rounded-lg border bg-green-50 dark:bg-green-950/20">
               <div className="flex items-center gap-2 mb-2">
                 <Check className="size-4 text-green-600" />
@@ -101,10 +100,10 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
                 {lastScanned}
               </code>
             </div>
-          )}
+          )} */}
 
-          {/* Controls */}
-          <div className="flex gap-2">
+        {/* Controls */}
+        {/* <div className="flex gap-2">
             <Button
               variant="outline"
               size="sm"
@@ -127,9 +126,9 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
               Configuración
             </Button>
           </div>
-
-          {/* History */}
-          {showHistory && (
+ */}
+        {/* History */}
+        {/* {showHistory && (
             <div className="space-y-2">
               <div className="border rounded-lg p-3">
                 <h4 className="text-sm font-medium mb-2">Historial de escaneos</h4>
@@ -146,10 +145,10 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
                 )}
               </div>
             </div>
-          )}
+          )} */}
 
-          {/* Settings */}
-          {showSettings && (
+        {/* Settings */}
+        {/* {showSettings && (
             <div className="border rounded-lg p-3 space-y-3">
               <h4 className="text-sm font-medium">Configuración del Scanner</h4>
               <div className="text-xs text-muted-foreground space-y-1">
@@ -159,18 +158,17 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
                 <p>• Ignora inputs: Activado (no escanea en campos de texto)</p>
               </div>
             </div>
-          )}
+          )} */}
 
-          {/* Instructions */}
-          <div className="border-t pt-4">
+        {/* Instructions */}
+        {/* <div className="border-t pt-4">
             <p className="text-xs text-muted-foreground">
               <strong>Instrucciones:</strong> Conecta tu scanner USB y apunta hacia un código de barras. 
               El sistema detectará automáticamente las pulsaciones rápidas del scanner.
             </p>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          </div> */}
+      </CardContent>
+    </Card>
   )
 }
 

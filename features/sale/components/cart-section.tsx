@@ -1,6 +1,6 @@
 "use client"
 
-import { ShoppingBasket, Plus, Minus, X } from 'lucide-react'
+import { ShoppingBasket, Plus, Minus, X, Trash2 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -43,13 +43,13 @@ function CartSection({ cartItems, onUpdateQuantity, onRemoveItem }: CartSectionP
                   <div className="flex-1 min-w-0">
                     <h4 className="font-medium text-sm truncate">{item.product.name}</h4>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <span>SKU: {item.product.sku}</span>
-                      <span>•</span>
-                      <span>{formatPrice(item.product.price)}</span>
+                      {/* <span>SKU: {item.product.sku}</span> */}
+                      {/* <span>•</span> */}
+                      <span>1 x {formatPrice(item.product.price)}</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  {/* <div className="flex items-center gap-2">
                     <Button
                       variant="outline"
                       size="sm"
@@ -74,19 +74,19 @@ function CartSection({ cartItems, onUpdateQuantity, onRemoveItem }: CartSectionP
                       <Plus className="h-3 w-3" />
                     </Button>
                   </div>
-
+ */}
                   <div className="text-right">
-                    <div className="text-sm font-medium">
-                      {formatPrice(item.product.price * item.quantity)}
-                    </div>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => onRemoveItem(item.product.id)}
                       className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
                     >
-                      <X className="h-3 w-3" />
+                      <Trash2 className="h-3 w-3" />
                     </Button>
+                    <div className="text-sm font-medium">
+                      {formatPrice(item.product.price * item.quantity)}
+                    </div>
                   </div>
                 </div>
               ))}
