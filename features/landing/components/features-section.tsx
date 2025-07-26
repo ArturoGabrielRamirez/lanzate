@@ -6,31 +6,34 @@ function FeaturesSection() {
     const t = useTranslations('home');
 
     const variants = {
-        hidden: { opacity: 0, y: 100, scale: 0.9 },
+        hidden: { opacity: 0, y: 100, scale: 0.75 },
         visible: {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            transition: {
-                staggerChildren: 0.15,
-            }
-        },
+            opacity: 1, y: 0, scale: 1, transition: { staggerChildren: 0.15, delayChildren: 0.3 }
+        }
     }
 
     const itemVariants = {
-        hidden: { opacity: 0, y: 100, scale: 0.9 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-        },
+        hidden: { opacity: 0, y: 100, scale: 0.75 },
+        visible: { opacity: 1, y: 0, scale: 1, }
     }
 
     return (
         <section className="p-6">
             <div className="container mx-auto">
-                <span className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-accent">{t('description.how-it-work.title')}</span>
-                <h2 className="text-5xl font-bold text-center">{t('description.how-it-work.description')}</h2>
+                <motion.p
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-accent"
+                >
+                    {t('description.how-it-work.title')}
+                </motion.p>
+                <motion.h2
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
+                    className="text-5xl font-bold text-center"
+                >
+                    {t('description.how-it-work.description')}
+                </motion.h2>
                 <motion.div className="grid gap-6 my-16 lg:grid-cols-3"
                     initial="hidden"
                     whileInView="visible"
