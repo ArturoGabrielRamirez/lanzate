@@ -102,7 +102,7 @@ export const FollowPointer = ({
         fill="currentColor"
         strokeWidth="1"
         viewBox="0 0 16 16"
-        className="h-6 w-6 -translate-x-[12px] -translate-y-[10px] -rotate-[70deg] transform stroke-sky-600 text-sky-500"
+        className="h-6 w-6 -translate-x-[12px] -translate-y-[10px] -rotate-[70deg] transform stroke-primary text-primary"
         height="1em"
         width="1em"
         xmlns="http://www.w3.org/2000/svg"
@@ -120,13 +120,14 @@ export const FollowPointer = ({
         animate={{
           scale: 1,
           opacity: 1,
+          transition: { duration: 0.15 }
         }}
         exit={{
           scale: 0.5,
           opacity: 0,
         }}
         className={
-          "min-w-max rounded-full bg-neutral-200 px-2 py-2 text-xs whitespace-nowrap text-white"
+          "min-w-max rounded-full bg-primary px-2 py-2 text-xs whitespace-nowrap text-white z-50"
         }
       >
         {title || `William Shakespeare`}

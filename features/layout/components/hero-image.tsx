@@ -67,7 +67,7 @@ export function AnimatedBeamMultipleOutputDemo({
                     </div>
                 </div>
                 <div className="flex flex-row justify-center gap-20">
-                    <div className="relative hover:scale-110 z-10 transition-all group">
+                    <div className="relative hover:scale-110 z-50 transition-all group">
                         <div className="absolute inset-0 bg-primary/30 blur-xl group-hover:blur-2xl transition-all"></div>
                         <FollowerPointerCard title="Outage problems? Use it in your phone!">
                             <Circle ref={div2Ref}>
@@ -75,7 +75,7 @@ export function AnimatedBeamMultipleOutputDemo({
                             </Circle>
                         </FollowerPointerCard>
                     </div>
-                    <div className="relative hover:scale-110 z-10 transition-all group">
+                    <div className="relative hover:scale-110 z-40 transition-all group">
                         <div className="absolute inset-0 bg-primary/30 blur-xl group-hover:blur-2xl transition-all"></div>
                         <FollowerPointerCard title="Available on any device!">
                             <Circle ref={div3Ref}>
@@ -83,7 +83,7 @@ export function AnimatedBeamMultipleOutputDemo({
                             </Circle>
                         </FollowerPointerCard>
                     </div>
-                    <div className="relative hover:scale-110 z-10 transition-all group">
+                    <div className="relative hover:scale-110 z-30 transition-all group">
                         <div className="absolute inset-0 bg-primary/30 blur-xl group-hover:blur-2xl transition-all"></div>
                         <FollowerPointerCard title="Benefit from our USB Barcode Scanner!">
                             <Circle ref={div4Ref}>
