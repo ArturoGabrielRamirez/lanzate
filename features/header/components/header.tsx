@@ -6,11 +6,11 @@ import { Rocket } from "lucide-react"
 
 async function Header() {
 
-    const supabase = await createServerSideClient()
+    const supabase = createServerSideClient()
     const { data: { user } } = await supabase.auth.getUser()
 
     return (
-        <header className="flex items-center justify-between w-full bg-accent text-accent-foreground p-4 fixed top-0 left-0 right-0 z-50 md:relative">
+        <header className="flex items-center justify-between w-full bg-transparent backdrop-blur-[3px] text-accent-foreground p-4 fixed top-0 left-0 right-0 z-50 shadow-md">
             <Link href="/" className="text-2xl font-bold flex items-center gap-2">
                 <Rocket className="text-primary" />
                 <h1>Lanzate</h1>
