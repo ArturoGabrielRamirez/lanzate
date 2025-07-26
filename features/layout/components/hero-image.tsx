@@ -308,7 +308,17 @@ export function AnimatedBeamMultipleOutputDemo({
                 <div className="flex size-full max-w-lg flex-col items-center justify-between gap-10">
                     <div className="flex flex-col justify-center">
                         <div className="relative z-10 group">
-                            <div className="absolute inset-0 bg-primary/30 blur-xl group-hover:blur-2xl transition-all"></div>
+                            <AnimatePresence>
+                                {isUserActive && (
+                                    <motion.div 
+                                        className="absolute inset-0 bg-primary/30 blur-xl transition-all"
+                                        initial={{ scale: 0, opacity: 0 }}
+                                        animate={{ scale: 1.2, opacity: 1 }}
+                                        exit={{ scale: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    />
+                                )}
+                            </AnimatePresence>
                             <FollowerPointerCard title="Users won't stop buying!">
                                 <Circle ref={div7Ref} isActive={isUserActive}>
                                     <User />
@@ -325,7 +335,17 @@ export function AnimatedBeamMultipleOutputDemo({
                     </div>
                     <div className="flex flex-col justify-center">
                         <div className="relative z-10 group">
-                            <div className="absolute inset-0 bg-primary/30 blur-xl group-hover:blur-2xl transition-all"></div>
+                            <AnimatePresence>
+                                {isRocketActive && (
+                                    <motion.div 
+                                        className="absolute inset-0 bg-primary/30 blur-xl transition-all"
+                                        initial={{ scale: 0, opacity: 0 }}
+                                        animate={{ scale: 1.2, opacity: 1 }}
+                                        exit={{ scale: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    />
+                                )}
+                            </AnimatePresence>
                             <FollowerPointerCard title="Lanzate makes it easy to sell">
                                 <Circle ref={div6Ref} className="size-16" isActive={isRocketActive}>
                                     {/* <Rocket /> */}
@@ -336,7 +356,17 @@ export function AnimatedBeamMultipleOutputDemo({
                     </div>
                     <div className="flex flex-row justify-center gap-20">
                         <div className="relative z-50 group">
-                            <div className="absolute inset-0 bg-primary/30 blur-xl group-hover:blur-2xl transition-all"></div>
+                            <AnimatePresence>
+                                {isDeviceActive(0) && (
+                                    <motion.div 
+                                        className="absolute inset-0 bg-primary/30 blur-xl transition-all"
+                                        initial={{ scale: 0, opacity: 0 }}
+                                        animate={{ scale: 1.2, opacity: 1 }}
+                                        exit={{ scale: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    />
+                                )}
+                            </AnimatePresence>
                             <FollowerPointerCard title="Outage problems? Use it in your phone!">
                                 <Circle ref={div2Ref} isActive={isDeviceActive(0)}>
                                     <Smartphone />
@@ -344,7 +374,17 @@ export function AnimatedBeamMultipleOutputDemo({
                             </FollowerPointerCard>
                         </div>
                         <div className="relative hover:scale-110 z-40 transition-all group">
-                            <div className="absolute inset-0 bg-primary/30 blur-xl group-hover:blur-2xl transition-all"></div>
+                            <AnimatePresence>
+                                {isDeviceActive(1) && (
+                                    <motion.div 
+                                        className="absolute inset-0 bg-primary/30 blur-xl transition-all"
+                                        initial={{ scale: 0, opacity: 0 }}
+                                        animate={{ scale: 1.2, opacity: 1 }}
+                                        exit={{ scale: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    />
+                                )}
+                            </AnimatePresence>
                             <FollowerPointerCard title="Available on any device!">
                                 <Circle ref={div3Ref} isActive={isDeviceActive(1)}>
                                     <Tablet />
@@ -352,7 +392,17 @@ export function AnimatedBeamMultipleOutputDemo({
                             </FollowerPointerCard>
                         </div>
                         <div className="relative hover:scale-110 z-30 transition-all group">
-                            <div className="absolute inset-0 bg-primary/30 blur-xl group-hover:blur-2xl transition-all"></div>
+                            <AnimatePresence>
+                                {isDeviceActive(2) && (
+                                    <motion.div 
+                                        className="absolute inset-0 bg-primary/30 blur-xl transition-all"
+                                        initial={{ scale: 0, opacity: 0 }}
+                                        animate={{ scale: 1.2, opacity: 1 }}
+                                        exit={{ scale: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    />
+                                )}
+                            </AnimatePresence>
                             <FollowerPointerCard title="Benefit from our USB Barcode Scanner!">
                                 <Circle ref={div4Ref} isActive={isDeviceActive(2)}>
                                     <Monitor />
