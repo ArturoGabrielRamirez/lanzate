@@ -6,6 +6,7 @@ import { ArrowLeft, UserCheck, UserX, Calendar, Building, Briefcase, DollarSign,
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getTranslations } from "next-intl/server"
 
 async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
 
@@ -31,16 +32,18 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
         })
     }
 
+    const t = await getTranslations("employee")
+
     const permissions = [
-        { key: 'can_create_orders', label: 'Create Orders', value: employee.can_create_orders },
-        { key: 'can_update_orders', label: 'Update Orders', value: employee.can_update_orders },
-        { key: 'can_create_products', label: 'Create Products', value: employee.can_create_products },
-        { key: 'can_update_products', label: 'Update Products', value: employee.can_update_products },
-        { key: 'can_manage_stock', label: 'Manage Stock', value: employee.can_manage_stock },
-        { key: 'can_process_refunds', label: 'Process Refunds', value: employee.can_process_refunds },
-        { key: 'can_view_reports', label: 'View Reports', value: employee.can_view_reports },
-        { key: 'can_manage_employees', label: 'Manage Employees', value: employee.can_manage_employees },
-        { key: 'can_manage_store', label: 'Manage Store', value: employee.can_manage_store },
+        { key: 'can_create_orders', label: t("create-orders"), value: employee.can_create_orders },
+        { key: 'can_update_orders', label: t("update-orders"), value: employee.can_update_orders },
+        { key: 'can_create_products', label: t("create-products"), value: employee.can_create_products },
+        { key: 'can_update_products', label: t("update-products"), value: employee.can_update_products },
+        { key: 'can_manage_stock', label: t("manage-stock"), value: employee.can_manage_stock },
+        { key: 'can_process_refunds', label: t("process-refunds"), value: employee.can_process_refunds },
+        { key: 'can_view_reports', label: t("view-reports"), value: employee.can_view_reports },
+        { key: 'can_manage_employees', label: t("manage-employees"), value: employee.can_manage_employees },
+        { key: 'can_manage_store', label: t("manage-store"), value: employee.can_manage_store },
     ]
 
     return (
@@ -50,7 +53,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                     <Link href={`/stores/${slug}/employees`}>
                         <ArrowLeft className="size-4" />
                     </Link>
-                    Employee Details
+                    {t("employee-details")}
                 </CardTitle>
             </CardHeader>
             <CardContent className="grow flex">
@@ -85,7 +88,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                         <div className="flex gap-2 flex-wrap">
                             <Badge variant={employee.is_active ? "default" : "destructive"} className="flex items-center gap-1">
                                 {employee.is_active ? <UserCheck className="w-3 h-3" /> : <UserX className="w-3 h-3" />}
-                                {employee.is_active ? "Active" : "Inactive"}
+                                {employee.is_active ? t("active") : t("inactive")}
                             </Badge>
                             <Badge variant="outline" className="flex items-center gap-1">
                                 <Shield className="w-3 h-3" />
@@ -99,7 +102,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                                 <div className="flex items-center gap-2">
                                     <Briefcase className="w-4 h-4 text-muted-foreground" />
                                     <div>
-                                        <p className="text-sm font-medium">Position</p>
+                                        <p className="text-sm font-medium">{t("position")}</p>
                                         <p className="text-sm text-muted-foreground">{employee.position}</p>
                                     </div>
                                 </div>
@@ -109,7 +112,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                                 <div className="flex items-center gap-2">
                                     <Building className="w-4 h-4 text-muted-foreground" />
                                     <div>
-                                        <p className="text-sm font-medium">Department</p>
+                                        <p className="text-sm font-medium">{t("department")}</p>
                                         <p className="text-sm text-muted-foreground">{employee.department}</p>
                                     </div>
                                 </div>
@@ -118,7 +121,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                             <div className="flex items-center gap-2">
                                 <Calendar className="w-4 h-4 text-muted-foreground" />
                                 <div>
-                                    <p className="text-sm font-medium">Hired Date</p>
+                                    <p className="text-sm font-medium">{t("hired-date")}</p>
                                     <p className="text-sm text-muted-foreground">{formatDate(employee.hired_at)}</p>
                                 </div>
                             </div>
@@ -127,7 +130,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                                 <div className="flex items-center gap-2">
                                     <DollarSign className="w-4 h-4 text-muted-foreground" />
                                     <div>
-                                        <p className="text-sm font-medium">Salary</p>
+                                        <p className="text-sm font-medium">{t("salary")}</p>
                                         <p className="text-sm text-muted-foreground">${employee.salary.toLocaleString()}</p>
                                     </div>
                                 </div>
@@ -139,7 +142,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                             <div className="flex items-start gap-2">
                                 <FileText className="w-4 h-4 text-muted-foreground mt-1" />
                                 <div>
-                                    <p className="text-sm font-medium">Notes</p>
+                                    <p className="text-sm font-medium">{t("notes")}</p>
                                     <p className="text-sm text-muted-foreground">{employee.notes}</p>
                                 </div>
                             </div>

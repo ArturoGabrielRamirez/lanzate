@@ -1,5 +1,6 @@
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { TabPageProps } from "@/features/stores/types"
+import { getTranslations } from "next-intl/server"
 import { lazy, Suspense } from "react"
 
 async function TabPage({ params }: TabPageProps) {
@@ -9,12 +10,14 @@ async function TabPage({ params }: TabPageProps) {
     if (userError || !user) {
         return console.error(userMessage)
     }
+    const t = await getTranslations("store")
+
     const { tab, slug } = await params
     const LazyComponent = lazy(() => import(`@/features/stores/components/tabs/${tab}`))
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <LazyComponent slug={slug} userId={user.id}/>
+        <Suspense fallback={<div>{t("loading")}</div>}>
+            <LazyComponent slug={slug} userId={user.id} />
         </Suspense>
     )
 }

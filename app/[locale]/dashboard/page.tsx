@@ -7,6 +7,7 @@ import { ArrowRight, ChevronRight, Hand, Settings, Share, Share2, ShoppingCart, 
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { Separator } from "@radix-ui/react-select"
+import { getTranslations } from "next-intl/server"
 
 async function DashboardPage() {
 
@@ -24,12 +25,14 @@ async function DashboardPage() {
 
     const hasStores = dashboardData.storeCount > 0
 
+    const t = await getTranslations("dashboard")
+
     return (
         <section className="p-4 flex flex-col max-md:pt-24">
             <Title title={(
                 <div className="flex items-center gap-2">
                     <Hand />
-                    Welcome!
+                    {t("title")}
                 </div>
             )} />
             <div className="max-w-[1500px]">
@@ -59,11 +62,12 @@ async function DashboardPage() {
                                 <div>
                                     <CardTitle className="flex items-center gap-2">
                                         <ArrowRight className="size-4" />
-                                        <h2 className="font-normal text-sm">Step 1</h2>
-                                        {hasStores && <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">✓ Complete</span>}
+                                        <h2 className="font-normal text-sm">{t("step-1.title")}
+                                        </h2>
+                                        {hasStores && <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">✓{t("step-1.complete")}</span>}
                                     </CardTitle>
                                     <CardDescription className="font-bold text-2xl text-accent-foreground">
-                                        Create a new store
+                                        {t("step-1.create-a-new-store")}
                                     </CardDescription>
                                 </div>
                             </div>
@@ -73,13 +77,13 @@ async function DashboardPage() {
                                 ? "text-muted-foreground/30"
                                 : "text-muted-foreground/50"
                         )}>
-                            To get started selling like a pro, you need to create a new store. This will give you your storefront, a place to list your products, and a place to manage your orders.
+                            {t("step-1.to-continue")}
                         </CardContent>
                         <CardFooter>
                             {!hasStores && <CreateStoreButton userId={user.id} />}
                             {hasStores && (
                                 <p className="text-sm text-muted-foreground">
-                                    You have {dashboardData.storeCount} store{dashboardData.storeCount > 1 ? 's' : ''} created
+                                    {t("step-1.stores-created-1")}{dashboardData.storeCount} {t("step-1.stores-created-2")}{dashboardData.storeCount > 1 ? 's' : ''} {t("step-1.stores-created-3")}{dashboardData.storeCount > 1 ? 's' : ''}
                                 </p>
                             )}
                         </CardFooter>
@@ -110,11 +114,11 @@ async function DashboardPage() {
                                 <div>
                                     <CardTitle className="flex items-center gap-2">
                                         <ArrowRight className="size-4" />
-                                        <h2 className="font-normal text-sm">Step 2</h2>
-                                        {hasStores && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">Available</span>}
+                                        <h2 className="font-normal text-sm">{t("step-2.title")}</h2>
+                                        {hasStores && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">{t("step-2.available")}</span>}
                                     </CardTitle>
                                     <CardDescription className="font-bold text-2xl text-accent-foreground">
-                                        Create a product
+                                        {t("step-2.create-a-product")}
                                     </CardDescription>
                                 </div>
                             </div>
@@ -124,10 +128,10 @@ async function DashboardPage() {
                                 ? "text-muted-foreground/50"
                                 : "text-muted-foreground/30"
                         )}>
-                            Once created, your products will be visible to customers and ready for sale. You can add images, descriptions, pricing, and inventory tracking.
+                            {t("step-2.to-continue")}
                             {!hasStores && (
                                 <div className="mt-2 text-xs text-amber-600 bg-amber-50 p-2 rounded">
-                                    Complete Step 1 first to unlock this feature
+                                    {t("step-2.first-complete")}
                                 </div>
                             )}
                         </CardContent>
@@ -146,18 +150,18 @@ async function DashboardPage() {
                                 <div>
                                     <CardTitle className="flex items-center gap-2">
                                         <ArrowRight className="size-4" />
-                                        <h2 className="font-normal text-sm">Step 3</h2>
+                                        <h2 className="font-normal text-sm">{t("step-3.title")}</h2>
                                     </CardTitle>
                                     <CardDescription className="font-bold text-2xl text-accent-foreground">
-                                        Set up your account
+                                        {t("step-3.setup-account")}
                                     </CardDescription>
                                 </div>
                             </div>
                         </CardHeader>
                         <CardContent className="text-muted-foreground/30">
-                            To finish setting up your account, choose whether your store offers delivery, set your delivery fee, and your payment options.
+                            {t("step-3.to-continue")}
                             <div className="mt-2 text-xs text-amber-600 bg-amber-50 p-2 rounded">
-                                Complete previous steps to unlock this feature
+                                {t("step-3.first-complete")}
                             </div>
                         </CardContent>
                     </Card>
@@ -175,18 +179,18 @@ async function DashboardPage() {
                                 <div>
                                     <CardTitle className="flex items-center gap-2">
                                         <ArrowRight className="size-4" />
-                                        <h2 className="font-normal text-sm">Step 4</h2>
+                                        <h2 className="font-normal text-sm">{t("step-4.title")}</h2>
                                     </CardTitle>
                                     <CardDescription className="font-bold text-2xl text-accent-foreground">
-                                        Share your store's link!
+                                        {t("step-4.share-your-store")}
                                     </CardDescription>
                                 </div>
                             </div>
                         </CardHeader>
                         <CardContent className="text-muted-foreground/30">
-                            Share your store's link with your customers to start selling!
+                            {t("step-4.share-your-store-with")}
                             <div className="mt-2 text-xs text-amber-600 bg-amber-50 p-2 rounded">
-                                Complete previous steps to unlock this feature
+                                {t("step-4.first-complete")}
                             </div>
                         </CardContent>
                     </Card>
@@ -195,12 +199,12 @@ async function DashboardPage() {
                 {dashboardData.storeCount > 0 && (
                     <div className="">
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-2xl font-bold">Your Stores ({dashboardData.storeCount})</h2>
+                            <h2 className="text-2xl font-bold">{t("your-store.title")} ({dashboardData.storeCount})</h2>
                             <Link
                                 href="/stores"
                                 className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
                             >
-                                ver todas
+                                {t("your-store.see-all")}
                                 <ArrowRight className="size-4" />
                             </Link>
                         </div>
@@ -209,7 +213,7 @@ async function DashboardPage() {
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2">
                                         <Plus />
-                                        <h2 className="text-2xl font-bold">New store</h2>
+                                        <h2 className="text-2xl font-bold">{t("your-store.new-store")}</h2>
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="flex justify-center items-center grow">

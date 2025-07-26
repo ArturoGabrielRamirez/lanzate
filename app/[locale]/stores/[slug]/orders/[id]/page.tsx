@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { cn } from "@/lib/utils"
 import { OrderItem, Product, Category } from "@/prisma/generated/prisma"
+import { getTranslations } from "next-intl/server"
 
 type OrderItemWithProduct = OrderItem & {
     product: Product & {
@@ -44,6 +45,8 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
         return Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(amount)
     }
 
+    const t = await getTranslations("store")
+
     return (
         <Card>
             <CardHeader>
@@ -51,7 +54,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                     <Link href={`/stores/${slug}/orders`}>
                         <ArrowLeft className="size-4" />
                     </Link>
-                    Order Details #{order.id}
+                    {t("order-details")}#{order.id}
                 </CardTitle>
             </CardHeader>
             <CardContent className="grow flex">
@@ -63,7 +66,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                                     <Package className="w-4 h-4" />
-                                    Status
+                                    {t("status")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -87,7 +90,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                                     <Calendar className="w-4 h-4" />
-                                    Date Created
+                                    {t("date-created")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -99,12 +102,12 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                                     <DollarSign className="w-4 h-4" />
-                                    Total
+                                    {t("total")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <p className="text-lg font-bold">{formatCurrency(order.total_price)}</p>
-                                <p className="text-xs text-muted-foreground">{order.total_quantity} {order.total_quantity === 1 ? "item" : "items"}</p>
+                                <p className="text-xs text-muted-foreground">{order.total_quantity} {order.total_quantity === 1 ? t("item") : t("items")}</p>
                             </CardContent>
                         </Card>
                     </div>
@@ -114,7 +117,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                                 <User className="w-4 h-4" />
-                                Customer Information
+                                {t("customer-information")}
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
@@ -149,13 +152,13 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                                 {order.shipping_method === "pickup" ? <MapPin className="w-4 h-4" /> : <Truck className="w-4 h-4" />}
-                                Shipping Method
+                                {t("shipping-method")}
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="flex items-center gap-2">
                                 <Badge variant="outline">
-                                    {order.shipping_method === "pickup" ? "Store Pickup" : "Delivery"}
+                                    {order.shipping_method === "pickup" ? t("store-pickup") : t("delivery")}
                                 </Badge>
                                 {order.branch && (
                                     <div className="ml-4">
@@ -172,7 +175,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                                 <Package className="w-4 h-4" />
-                                Order Items
+                                {t("order-items")}
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
@@ -194,7 +197,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                                             <div>
                                                 <h4 className="font-medium">{item.product.name}</h4>
                                                 <p className="text-sm text-muted-foreground">
-                                                    Quantity: {item.quantity} × {formatCurrency(item.price)}
+                                                    {t("quantity")}{item.quantity} × {formatCurrency(item.price)}
                                                 </p>
                                             </div>
                                         </div>
@@ -213,17 +216,17 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
                                     <CreditCard className="w-4 h-4" />
-                                    Payment Information
+                                    {t("payment-information")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <p className="text-sm text-muted-foreground">Amount</p>
+                                        <p className="text-sm text-muted-foreground">{t("amount")}</p>
                                         <p className="font-medium">{formatCurrency(order.payment.amount)}</p>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-muted-foreground">Status</p>
+                                        <p className="text-sm text-muted-foreground">{t("status")}</p>
                                         <Badge variant={order.payment.status === "PAID" ? "default" : "secondary"}>
                                             {order.payment.status}
                                         </Badge>
@@ -239,7 +242,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
                                     <UserCheck className="w-4 h-4" />
-                                    Employee Information
+                                    {t("employee-information")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -257,7 +260,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                                     )}
                                     {order.updated_by_employee && (
                                         <div>
-                                            <p className="text-sm text-muted-foreground">Last updated by</p>
+                                            <p className="text-sm text-muted-foreground">{t("last-updated-by")}</p>
                                             <p className="font-medium">
                                                 {order.updated_by_employee.user?.first_name 
                                                     ? `${order.updated_by_employee.user.first_name} ${order.updated_by_employee.user.last_name || ''}`

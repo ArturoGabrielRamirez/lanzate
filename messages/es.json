@@ -21,7 +21,8 @@
         "buttons": {
             "login": "Iniciar sesión",
             "sign-up": "Registrarse",
-            "send-reset-link": "Enviar enlace de recuperación"
+            "send-reset-link": "Enviar enlace de recuperación",
+            "update-password": "Actualizar contraseña"
         },
         "check-email": {
             "message-1": "Ya casi estamos, revisá tu correo electrónico. Deberías recibir un enlace de confirmación.",
@@ -34,16 +35,23 @@
             "success-logged-in": "Has iniciado sesión con éxito",
             "success-registered": "Has sido registrado con éxito",
             "success-reset-password": "¡Enlace de recuperación enviado!",
+            "success-password-updated": "¡Contraseña actualizada!",
             "signing-in": "Iniciando sesión...",
             "signing-up": "Registrándose...",
-            "reset-password": "Enviando enlace de recuperación..."
+            "reset-password": "Enviando enlace de recuperación...",
+            "updating-password": "Actualizando contraseña..."
         },
         "reset-password": {
+            "new-password": "Nueva contraseña",
             "title": "Restablecer contraseña",
             "description": {
                 "forgot-password": "¿Olvidaste tu contraseña?",
-                "reset-password": "Restablece tu contraseña haciendo clic acá"
+                "reset-password": "Restablece tu contraseña haciendo clic acá",
+                "password-updated": "¡Contraseña actualizada! Ahora puedes iniciar sesión."
             }
+        },
+        "update-password": {
+            "title": "Actualizar contraseña"
         }
     },
     "cart": {
@@ -72,9 +80,46 @@
             "items": "unidades"
         }
     },
+    "dashboard": {
+        "title": "¡Bienvenido!",
+        "step-1": {
+            "title": "Paso 1",
+            "complete": "Completado",
+            "create-a-new-store": "Crear una nueva tienda",
+            "to-continue": "Para comenzar a vender, necesitas crear una nueva tienda. Esto dará lugar a tu tienda, un lugar para listar tus productos y un lugar para gestionar tus pedidos.",
+            "stores-created-1": "Tenés ",
+            "stores-created-2": " tienda",
+            "stores-created-3": " creada"
+        },
+        "step-2": {
+            "title": "Paso 2",
+            "available": "Disponible",
+            "create-a-product": "Crear un producto",
+            "to-continue": "Una vez creado, tus productos estarán visibles para los clientes y listos para la venta. Podrás agregar imágenes, descripciones, precios y seguimiento de inventario.",
+            "first-complete": "Primero, completá el paso 1 para desbloquear esta función."
+        },
+        "step-3": {
+            "title": "Paso 3",
+            "set-up-your-account": "Configura tu cuenta",
+            "to-continue": "Para terminar de configurar tu cuenta, elegí si tu tienda ofrece entregas, establecé tu tarifa de entrega y tus opciones de pago.",
+            "first-complete": " Completá los pasos anteriores para desbloquear esta función."
+        },
+        "step-4": {
+            "title": "Paso 4",
+            "share-your-store": "¡Compartí el link de tus tiendas!",
+            "share-your-store-with": "¡Compartí el link de tus tiendas con tus clientes para comenzar a vender!",
+            "first-complete": "Completá los pasos anteriores para desbloquear esta función."
+        },
+        "your-store": {
+            "title": "Tu tienda",
+            "see-all": "Ver todo",
+            "new-store": "Nueva tienda"
+        }
+    },
     "error": {
         "oops": "Uuy...no hay nada que ver acá",
         "something-went-wrong": "Algo salió mal",
+        "page-not-found": "La página que estás buscando no existe.",
         "go-back": "Volver a la página de inicio"
     },
     "home": {
@@ -91,7 +136,7 @@
                 "description": "¿Cómo Lanzate hace crecer tu negocio?"
             },
             "centralize": {
-                "title": "Centraliza",
+                "title": "Centraliza.",
                 "description": "Gestioná todos tus productos y stock desde un panel intuitivo."
             },
             "sell": {
@@ -100,7 +145,7 @@
                 "description": "Procesá ventas y seguí tu crecimiento con análisis en tiempo real."
             },
             "ship-easily": {
-                "title": "Envíe fácilmente",
+                "title": "Envíe fácilmente.",
                 "description": "Coordiná envíos y rastreá tus entregas con una interfaz intuitiva y sencilla."
             },
             "analytics": {
@@ -206,8 +251,108 @@
         "title": "Inicio"
     },
     "store": {
+        "title": "Tienda",
+        "plural-title": "Tiendas",
+        "current-balance": "Saldo actual",
+        "store-details": "Detalles de la tienda",
+        "loading": "Cargando...",
+        "no-stores": "No se encontraron tiendas",
         "store-not-found": "Tienda no encontrada",
-        "product-not-found": "Producto no encontrado"
+        "product-not-found": "Producto no encontrado",
+        "store-details-page": "Página de detalles de la tienda",
+        "branches": {
+            "branch-details": "Detalles de la sucursal",
+            "main-branch": "Sucursal principal",
+            "address": "Dirección",
+            "no-address": "No hay dirección",
+            "phone": "Teléfono",
+            "no-phone": "No hay teléfono",
+            "email": "Correo electrónico",
+            "no-email": "No hay correo electrónico",
+            "products-in-stock": "Productos en stock",
+            "total-orders": "Pedidos totales",
+            "revenue": "Ingresos",
+            "created-on": "Creado el ",
+            "recent-orders": "Pedidos recientes",
+            "order": "Pedido ",
+            "store-pickup": "Recoger en tienda",
+            "delivery": "Delivery"
+        },
+        "buttons": {
+            "new-store": "Nueva tienda"
+        },
+        "employees": {
+            "create-orders": "Crear pedidos",
+            "update-orders": "Actualizar pedidos",
+            "create-products": "Crear productos",
+            "update-products": "Actualizar productos",
+            "manage-stock": "Gestionar stock",
+            "process-refunds": "Procesar reembolsos",
+            "view-reports": "Ver informes",
+            "manage-employees": "Gestionar empleados",
+            "manage-store": "Gestionar tienda",
+            "employee-details": "Detalles del empleado",
+            "position": "Posición",
+            "department": "Departamento",
+            "hired-date": "Fecha de contratación",
+            "salary": "Sueldo",
+            "notes": "Notas",
+            "permissions": "Permisos",
+            "active": "Activo",
+            "inactive": "Inactivo"
+        },
+        "layout": {
+            "overview": "Visión general",
+            "account-details": "Detalles de la cuenta",
+            "branches": "Sucursales",
+            "employees": "Empleados",
+            "products": "Productos",
+            "orders": "Pedidos",
+            "settings": "Configuración",
+            "analytics": "Análisis",
+            "history": "Historial",
+            "store-details": "Detalles de la tienda",
+            "no-description": "No hay descripción disponible"
+        },
+        "logs": {
+            "log-details": "Detalles del registro ",
+            "log-id": "ID de registro ",
+            "created-at": "Creado el",
+            "action": "Acción",
+            "entity-type": "Tipo de entidad",
+            "entity-id": "ID de entidad: ",
+            "user-information": "Información del usuario",
+            "name": "Nombre: ",
+            "user-id": "ID de usuario: ",
+            "employee": "Empleado",
+            "employee-id": "ID de empleado: ",
+            "unknown-user": "Usuario desconocido",
+            "action-initiator": "Origen de la acción",
+            "details": "Detalles",
+            "timestamps": "Fecha",
+            "updated-at": "Actualizado el"
+        },
+        "orders": {
+            "order-details": "Detalles de la orden ",
+            "status": "Estado",
+            "date-created": "Fecha de creación",
+            "total": "Total",
+            "item": "artículo",
+            "items": "artículos",
+            "customer-information": "Información del cliente",
+            "shipping-method": "Método de envío",
+            "order-items": "Artículos de la orden",
+            "quantity": "Cantidad: ",
+            "payment-information": "Información de pago",
+            "amount": "Cantidad",
+            "employee-information": "Información del empleado",
+            "created-by": "Creado por",
+            "last-updated-by": "Última actualización por"
+        },
+        "products": {
+            "product-details": "Detalles del producto ",
+            "no-categories": "No hay categorías"
+        }
     },
     "subdomain": {
         "title": "Mis Productos",

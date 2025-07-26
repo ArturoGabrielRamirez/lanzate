@@ -5,6 +5,7 @@ import { ArrowLeft, Activity, User, Clock, Tag, Hash, FileText, Info, UserCheck 
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getTranslations } from "next-intl/server"
 
 async function LogDetailPage({ params }: LogDetailPageProps) {
 
@@ -56,6 +57,8 @@ async function LogDetailPage({ params }: LogDetailPageProps) {
         }
     }
 
+    const t = await getTranslations("store.logs")
+
     return (
         <Card>
             <CardHeader>
@@ -63,19 +66,19 @@ async function LogDetailPage({ params }: LogDetailPageProps) {
                     <Link href={`/stores/${slug}/history`}>
                         <ArrowLeft className="size-4" />
                     </Link>
-                    Log Details #{log.id}
+                    {t("logDetails")}#{log.id}
                 </CardTitle>
             </CardHeader>
             <CardContent className="grow flex">
                 <div className="grid grid-cols-1 gap-6 w-full">
-                    
+
                     {/* Basic Log Information */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Card>
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                                     <Hash className="w-4 h-4" />
-                                    Log ID
+                                    {t("log-id")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -87,7 +90,7 @@ async function LogDetailPage({ params }: LogDetailPageProps) {
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                                     <Clock className="w-4 h-4" />
-                                    Created At
+                                    {t("created-at")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -102,7 +105,7 @@ async function LogDetailPage({ params }: LogDetailPageProps) {
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                                     <Activity className="w-4 h-4" />
-                                    Action
+                                    {t("action")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -116,7 +119,7 @@ async function LogDetailPage({ params }: LogDetailPageProps) {
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                                     <Tag className="w-4 h-4" />
-                                    Entity Type
+                                    {t("entity-type")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -124,8 +127,7 @@ async function LogDetailPage({ params }: LogDetailPageProps) {
                                     <Badge variant="outline" className={getEntityColor(log.entity_type)}>
                                         {log.entity_type}
                                     </Badge>
-                                    <p className="text-sm text-muted-foreground">
-                                        Entity ID: <span className="font-mono">{log.entity_id}</span>
+                                    <p className="text-sm text-muted-foreground">{t("entity-id")} <span className="font-mono">{log.entity_id}</span>
                                     </p>
                                 </div>
                             </CardContent>
@@ -137,7 +139,7 @@ async function LogDetailPage({ params }: LogDetailPageProps) {
                         <CardHeader className="pb-3">
                             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                                 <User className="w-4 h-4" />
-                                User Information
+                                {t("user-information")}
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
@@ -149,11 +151,10 @@ async function LogDetailPage({ params }: LogDetailPageProps) {
                                     </div>
                                     {(log.user.first_name || log.user.last_name) && (
                                         <p className="text-sm text-muted-foreground">
-                                            Name: {log.user.first_name} {log.user.last_name}
+                                            {t("name")} {log.user.first_name} {log.user.last_name}
                                         </p>
                                     )}
-                                    <p className="text-sm text-muted-foreground">
-                                        User ID: <span className="font-mono">{log.user.id}</span>
+                                    <p className="text-sm text-muted-foreground">{t("user-id")} <span className="font-mono">{log.user.id}</span>
                                     </p>
                                 </div>
                             ) : log.employee?.user ? (
@@ -161,22 +162,20 @@ async function LogDetailPage({ params }: LogDetailPageProps) {
                                     <div className="flex items-center gap-2">
                                         <UserCheck className="w-4 h-4" />
                                         <span className="font-medium">{log.employee.user.email}</span>
-                                        <Badge variant="outline">Employee</Badge>
+                                        <Badge variant="outline">{t("employee")}</Badge>
                                     </div>
                                     {(log.employee.user.first_name || log.employee.user.last_name) && (
                                         <p className="text-sm text-muted-foreground">
-                                            Name: {log.employee.user.first_name} {log.employee.user.last_name}
+                                            {t("name")} {log.employee.user.first_name} {log.employee.user.last_name}
                                         </p>
                                     )}
-                                    <p className="text-sm text-muted-foreground">
-                                        Employee ID: <span className="font-mono">{log.employee_id}</span>
+                                    <p className="text-sm text-muted-foreground">{t("employee-id")} <span className="font-mono">{log.employee_id}</span>
                                     </p>
-                                    <p className="text-sm text-muted-foreground">
-                                        User ID: <span className="font-mono">{log.employee.user.id}</span>
+                                    <p className="text-sm text-muted-foreground">{t("user-id")} <span className="font-mono">{log.employee.user.id}</span>
                                     </p>
                                 </div>
                             ) : (
-                                <p className="text-muted-foreground italic">Unknown user</p>
+                                <p className="text-muted-foreground italic">{t("unknown-user")}</p>
                             )}
                         </CardContent>
                     </Card>
@@ -187,8 +186,7 @@ async function LogDetailPage({ params }: LogDetailPageProps) {
                             <Card>
                                 <CardHeader className="pb-3">
                                     <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                                        <Info className="w-4 h-4" />
-                                        Action Initiator
+                                        <Info className="w-4 h-4" />{t("action-initiator")}
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
@@ -201,8 +199,7 @@ async function LogDetailPage({ params }: LogDetailPageProps) {
                             <Card>
                                 <CardHeader className="pb-3">
                                     <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                                        <FileText className="w-4 h-4" />
-                                        Details
+                                        <FileText className="w-4 h-4" />{t("details")}
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
@@ -216,18 +213,17 @@ async function LogDetailPage({ params }: LogDetailPageProps) {
                     <Card>
                         <CardHeader className="pb-3">
                             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                                <Clock className="w-4 h-4" />
-                                Timestamps
+                                <Clock className="w-4 h-4" />{t("timestamps")}
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <p className="text-sm text-muted-foreground">Created At</p>
+                                    <p className="text-sm text-muted-foreground">{t("created-at")}</p>
                                     <p className="font-mono text-sm">{formatDate(log.created_at)}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-muted-foreground">Updated At</p>
+                                    <p className="text-sm text-muted-foreground">{t("updated-at")}</p>
                                     <p className="font-mono text-sm">{formatDate(log.updated_at)}</p>
                                 </div>
                             </div>

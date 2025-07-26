@@ -6,6 +6,7 @@ import { ArrowLeft, UserCheck, UserX, Calendar, Building, Briefcase, DollarSign,
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getTranslations } from "next-intl/server"
 
 async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
 
@@ -23,6 +24,8 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
         return console.log(error)
     }
 
+    const t = await getTranslations("store.employees")
+
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -32,15 +35,15 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
     }
 
     const permissions = [
-        { key: 'can_create_orders', label: 'Create Orders', value: employee.can_create_orders },
-        { key: 'can_update_orders', label: 'Update Orders', value: employee.can_update_orders },
-        { key: 'can_create_products', label: 'Create Products', value: employee.can_create_products },
-        { key: 'can_update_products', label: 'Update Products', value: employee.can_update_products },
-        { key: 'can_manage_stock', label: 'Manage Stock', value: employee.can_manage_stock },
-        { key: 'can_process_refunds', label: 'Process Refunds', value: employee.can_process_refunds },
-        { key: 'can_view_reports', label: 'View Reports', value: employee.can_view_reports },
-        { key: 'can_manage_employees', label: 'Manage Employees', value: employee.can_manage_employees },
-        { key: 'can_manage_store', label: 'Manage Store', value: employee.can_manage_store },
+        { key: 'can_create_orders', label: t('create-orders'), value: employee.can_create_orders },
+        { key: 'can_update_orders', label: t('update-orders'), value: employee.can_update_orders },
+        { key: 'can_create_products', label: t('create-products'), value: employee.can_create_products },
+        { key: 'can_update_products', label: t('update-products'), value: employee.can_update_products },
+        { key: 'can_manage_stock', label: t('manage-stock'), value: employee.can_manage_stock },
+        { key: 'can_process_refunds', label: t('process-refunds'), value: employee.can_process_refunds },
+        { key: 'can_view_reports', label: t('view-reports'), value: employee.can_view_reports },
+        { key: 'can_manage_employees', label: t('manage-employees'), value: employee.can_manage_employees },
+        { key: 'can_manage_store', label: t('manage-store'), value: employee.can_manage_store },
     ]
 
     return (
@@ -50,7 +53,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                     <Link href={`/stores/${slug}/employees`}>
                         <ArrowLeft className="size-4" />
                     </Link>
-                    Employee Details
+                    {t("employee-details")}
                 </CardTitle>
             </CardHeader>
             <CardContent className="grow flex">
@@ -64,14 +67,14 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                                 className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 rounded-md"
                             />
                         ) : (
-                            <img 
-                                src={`https://api.dicebear.com/9.x/initials/svg?seed=${employee.user?.first_name || 'Employee'} ${employee.user?.last_name || ''}`} 
-                                alt="Employee Avatar" 
-                                className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 rounded-md" 
+                            <img
+                                src={`https://api.dicebear.com/9.x/initials/svg?seed=${employee.user?.first_name || 'Employee'} ${employee.user?.last_name || ''}`}
+                                alt="Employee Avatar"
+                                className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 rounded-md"
                             />
                         )}
                     </div>
-                    
+
                     {/* Employee Details */}
                     <div className="flex flex-col gap-4">
                         <div>
@@ -99,7 +102,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                                 <div className="flex items-center gap-2">
                                     <Briefcase className="w-4 h-4 text-muted-foreground" />
                                     <div>
-                                        <p className="text-sm font-medium">Position</p>
+                                        <p className="text-sm font-medium">{t("position")}</p>
                                         <p className="text-sm text-muted-foreground">{employee.position}</p>
                                     </div>
                                 </div>
@@ -109,7 +112,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                                 <div className="flex items-center gap-2">
                                     <Building className="w-4 h-4 text-muted-foreground" />
                                     <div>
-                                        <p className="text-sm font-medium">Department</p>
+                                        <p className="text-sm font-medium">{t("department")}</p>
                                         <p className="text-sm text-muted-foreground">{employee.department}</p>
                                     </div>
                                 </div>
@@ -118,7 +121,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                             <div className="flex items-center gap-2">
                                 <Calendar className="w-4 h-4 text-muted-foreground" />
                                 <div>
-                                    <p className="text-sm font-medium">Hired Date</p>
+                                    <p className="text-sm font-medium">{t("hired-date")}</p>
                                     <p className="text-sm text-muted-foreground">{formatDate(employee.hired_at)}</p>
                                 </div>
                             </div>
@@ -127,7 +130,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                                 <div className="flex items-center gap-2">
                                     <DollarSign className="w-4 h-4 text-muted-foreground" />
                                     <div>
-                                        <p className="text-sm font-medium">Salary</p>
+                                        <p className="text-sm font-medium">{t("salary")}</p>
                                         <p className="text-sm text-muted-foreground">${employee.salary.toLocaleString()}</p>
                                     </div>
                                 </div>
@@ -139,7 +142,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                             <div className="flex items-start gap-2">
                                 <FileText className="w-4 h-4 text-muted-foreground mt-1" />
                                 <div>
-                                    <p className="text-sm font-medium">Notes</p>
+                                    <p className="text-sm font-medium">{t("notes")}</p>
                                     <p className="text-sm text-muted-foreground">{employee.notes}</p>
                                 </div>
                             </div>
@@ -149,12 +152,12 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                         <div>
                             <h4 className="text-lg font-semibold mb-3 flex items-center gap-2">
                                 <Shield className="w-4 h-4" />
-                                Permissions
+                                {t("permissions")}
                             </h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                                 {permissions.map((permission) => (
-                                    <Badge 
-                                        key={permission.key} 
+                                    <Badge
+                                        key={permission.key}
                                         variant={permission.value ? "default" : "outline"}
                                         className="justify-start"
                                     >
@@ -168,15 +171,15 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                         {/* Action Buttons */}
                         <div className="flex justify-end mt-auto">
                             <div className="grid grid-cols-2 gap-4 mt-auto justify-end max-w-xs">
-                                <DeleteEmployeeButton 
-                                    employeeId={employee.id} 
-                                    slug={slug} 
-                                    userId={user.id} 
+                                <DeleteEmployeeButton
+                                    employeeId={employee.id}
+                                    slug={slug}
+                                    userId={user.id}
                                 />
-                                <EditEmployeeButton 
-                                    employee={employee} 
-                                    slug={slug} 
-                                    userId={user.id} 
+                                <EditEmployeeButton
+                                    employee={employee}
+                                    slug={slug}
+                                    userId={user.id}
                                 />
                             </div>
                         </div>

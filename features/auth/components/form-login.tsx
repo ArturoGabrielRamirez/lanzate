@@ -16,8 +16,8 @@ export default function LoginForm() {
             formAction={handleLogIn}
             contentButton={t("login")}
             successRedirect="/account"
-            successMessage={t("success-logged-in")}
-            loadingMessage={t("signing-in")}
+            successMessage={t("toast-message.success-logged-in")}
+            loadingMessage={t("toast-message.signing-in")}
             className={`flex flex-col gap-3 sm:row-start-2 sm:col-start-1 sm:min-w-full sm:justify-center`}
         >
             <InputField name="email" label={t("email")} type="email" />

@@ -9,6 +9,7 @@ import { StoreDetailsLayoutProps } from "@/features/stores/types"
 import { Box, Building2, ChartLine, Clock, Settings, ShoppingCart, UsersRound } from "lucide-react"
 import { Store } from "lucide-react"
 import { BookOpenText } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 
 
 async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps) {
@@ -21,11 +22,13 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
         return console.log(error)
     }
 
+    const t = await getTranslations("store")
+
     return (
         <div className="p-4 grow flex flex-col max-md:pt-24 max-md:pb-12">
-            <Title title="Store Details" canGoBack breadcrumbs={[
+            <Title title={t("store-details")} canGoBack breadcrumbs={[
                 {
-                    label: "Stores",
+                    label: t("plural-title"),
                     href: "/stores"
                 },
                 {
@@ -46,13 +49,13 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                                 <p className="text-xl font-bold">{store.name}</p>
                                 <div>
                                     <p className="capitalize text-muted-foreground">
-                                        {store.description || "No description available"}
+                                        {store.description || t("no-description")}
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <p>Current Balance</p>
+                            <p>{t("current-balance")}</p>
                             <p className="text-lg lg:text-2xl font-bold">{Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(store.balance.current_balance)}</p>
                         </div>
                     </CardContent>
@@ -62,15 +65,15 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                 <TabsClientContainer>
                     <TabsList className="w-full h-full items-start max-md:bg-transparent">
                         <div className="flex md:block w-full fixed bottom-0 md:relative bg-accent z-10 overflow-x-auto md:h-full">
-                            <TabTriggerLink value="overview" text="Overview" slug={slug} icon={<BookOpenText className="w-4 h-4" />} />
-                            <TabTriggerLink value="account" text="Store Details" slug={slug} icon={<Store className="w-4 h-4" />} />
-                            <TabTriggerLink value="branches" text="Branches" slug={slug} icon={<Building2 className="w-4 h-4" />} />
-                            <TabTriggerLink value="employees" text="Employees" slug={slug} icon={<UsersRound className="w-4 h-4" />} />
-                            <TabTriggerLink value="products" text="Products" slug={slug} icon={<Box className="w-4 h-4" />} />
-                            <TabTriggerLink value="orders" text="Orders" slug={slug} icon={<ShoppingCart className="w-4 h-4" />} />
-                            <TabTriggerLink value="settings" text="Settings" slug={slug} icon={<Settings className="w-4 h-4" />} />
-                            <TabTriggerLink value="analytics" text="Analytics" slug={slug} icon={<ChartLine className="w-4 h-4" />} />
-                            <TabTriggerLink value="history" text="History" slug={slug} icon={<Clock className="w-4 h-4" />} />
+                            <TabTriggerLink value="overview" text={t("layout.overview")} slug={slug} icon={<BookOpenText className="w-4 h-4" />} />
+                            <TabTriggerLink value="account" text={t("account-details")} slug={slug} icon={<Store className="w-4 h-4" />} />
+                            <TabTriggerLink value="branches" text={t("branches")} slug={slug} icon={<Building2 className="w-4 h-4" />} />
+                            <TabTriggerLink value="employees" text={t("employees")} slug={slug} icon={<UsersRound className="w-4 h-4" />} />
+                            <TabTriggerLink value="products" text={t("products")} slug={slug} icon={<Box className="w-4 h-4" />} />
+                            <TabTriggerLink value="orders" text={t("orders")} slug={slug} icon={<ShoppingCart className="w-4 h-4" />} />
+                            <TabTriggerLink value="settings" text={t("settings")} slug={slug} icon={<Settings className="w-4 h-4" />} />
+                            <TabTriggerLink value="analytics" text={t("analytics")} slug={slug} icon={<ChartLine className="w-4 h-4" />} />
+                            <TabTriggerLink value="history" text={t("history")} slug={slug} icon={<Clock className="w-4 h-4" />} />
                         </div>
                     </TabsList>
                     {children}
