@@ -5,6 +5,7 @@ import React, { forwardRef, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { AnimatedBeam } from "@/components/magicui/animated-beam";
 import { Monitor, Phone, Rocket, Smartphone, Tablet, User } from "lucide-react";
+import { FollowerPointerCard } from "@/components/ui/following-pointer";
 
 
 
@@ -68,21 +69,27 @@ export function AnimatedBeamMultipleOutputDemo({
                 <div className="flex flex-row justify-center gap-20">
                     <div className="relative hover:scale-110 z-10 transition-all group">
                         <div className="absolute inset-0 bg-primary/30 blur-xl group-hover:blur-2xl transition-all"></div>
-                        <Circle ref={div2Ref}>
-                            <Smartphone />
-                        </Circle>
+                        <FollowerPointerCard title="Outage problems? Use it in your phone!">
+                            <Circle ref={div2Ref}>
+                                <Smartphone />
+                            </Circle>
+                        </FollowerPointerCard>
                     </div>
                     <div className="relative hover:scale-110 z-10 transition-all group">
                         <div className="absolute inset-0 bg-primary/30 blur-xl group-hover:blur-2xl transition-all"></div>
-                        <Circle ref={div3Ref}>
-                            <Tablet />
-                        </Circle>
+                        <FollowerPointerCard title="Available on any device!">
+                            <Circle ref={div3Ref}>
+                                <Tablet />
+                            </Circle>
+                        </FollowerPointerCard>
                     </div>
                     <div className="relative hover:scale-110 z-10 transition-all group">
                         <div className="absolute inset-0 bg-primary/30 blur-xl group-hover:blur-2xl transition-all"></div>
-                        <Circle ref={div4Ref}>
-                            <Monitor />
-                        </Circle>
+                        <FollowerPointerCard title="Benefit from our USB Barcode Scanner!">
+                            <Circle ref={div4Ref}>
+                                <Monitor />
+                            </Circle>
+                        </FollowerPointerCard>
                     </div>
                 </div>
             </div>
