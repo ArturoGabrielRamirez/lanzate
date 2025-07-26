@@ -1,7 +1,7 @@
 "use client";
 
 import React, { forwardRef, useRef, useState, useEffect } from "react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 
 import { cn } from "@/lib/utils";
 import { AnimatedBeam } from "@/components/magicui/animated-beam";
@@ -53,24 +53,34 @@ const Circle = forwardRef<
 
 Circle.displayName = "Circle";
 
-// Sale Toast component for the animated list
-function SaleToast({ message, amount }: { message: string; amount: string }) {
+// Sale Toast component for single notification
+function SaleToastSingle({ message, amount, isVisible }: { message: string; amount: string; isVisible: boolean }) {
     return (
-        <motion.div
-            className="flex items-center gap-3 px-4 py-3 rounded-xl border border-border/50 bg-white/10 backdrop-blur-md shadow-lg"
-            initial={{ x: 100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: 100, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        >
-            <div className="flex items-center justify-center w-6 h-6 rounded-full bg-green-500/20 backdrop-blur-sm">
-                <Check className="w-3 h-3 text-green-400" />
-            </div>
-            <div className="flex flex-col">
-                <span className="text-sm font-semibold text-white/90">{message}</span>
-                <span className="text-xs text-white/70">{amount}</span>
-            </div>
-        </motion.div>
+        <AnimatePresence>
+            {isVisible && (
+                <motion.div
+                    className="absolute top-[0px] left-22 flex items-center gap-3 px-4 py-3 rounded-xl border border-border/50 bg-white/10 backdrop-blur-md shadow-lg w-max"
+                    initial={{ scale: 0, x: -20, opacity: 0 }}
+                    animate={{ scale: 1, x: 0, opacity: 1 }}
+                    exit={{ scale: 0, x: -20, opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                >
+                    {/* Speech bubble tail */}
+                    <div className="absolute -left-2 top-1/2 transform -translate-y-1/2">
+                        <div className="w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-r-[8px] border-r-white/10"></div>
+                        <div className="absolute -left-[1px] top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[6px] border-r-border/50"></div>
+                    </div>
+                    
+                    <div className="flex items-center justify-center w-6 h-6 rounded-full bg-green-500/20 backdrop-blur-sm">
+                        <Check className="w-3 h-3 text-green-400" />
+                    </div>
+                    <div className="">
+                        <p className="text-sm font-semibold text-white/90">{message}</p>
+                        <p className="text-xs text-white/70">{amount}</p>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 }
 
@@ -89,44 +99,59 @@ export function AnimatedBeamMultipleOutputDemo({
     // Animation state
     const [currentDevice, setCurrentDevice] = useState(0); // 0: smartphone, 1: tablet, 2: monitor
     const [animationStep, setAnimationStep] = useState(0); // 0: device, 1: rocket, 2: user
-    const [listIndex, setListIndex] = useState(-1); // Control AnimatedList
-
+    const [showSaleToast, setShowSaleToast] = useState(false); // Control single toast visibility
+    const [currentSaleIndex, setCurrentSaleIndex] = useState(0); // Track which sale to show
+    
     const devices = ['smartphone', 'tablet', 'monitor'];
+    
+    // Sale messages array
+    const salesData = [
+        { message: "New sale!", amount: "$89.99" },
+        { message: "Product sold!", amount: "$156.50" },
+        { message: "Sale completed!", amount: "$43.25" },
+        { message: "New purchase!", amount: "$267.80" },
+        { message: "Order received!", amount: "$92.15" },
+        { message: "Payment processed!", amount: "$134.60" },
+        { message: "Sale confirmed!", amount: "$78.30" }
+    ];
 
     useEffect(() => {
         const animationCycle = () => {
             // Reset all - start with everything off
             setAnimationStep(-1);
-
+            setShowSaleToast(false);
+            
             // After 0.5 seconds, light up device
             setTimeout(() => setAnimationStep(0), 500);
-
+            
             // After 1.5 seconds, light up rocket
             setTimeout(() => setAnimationStep(1), 1500);
-
-            // After 2.5 seconds, light up user and show first list item
+            
+            // After 2.5 seconds, light up user and show sale toast
             setTimeout(() => {
                 setAnimationStep(2);
-                setListIndex(prev => prev + 1);
+                setShowSaleToast(true);
+                setCurrentSaleIndex(prev => (prev + 1) % salesData.length);
             }, 2500);
-
-            // After 3.5 seconds, turn everything off
-            setTimeout(() => setAnimationStep(-1), 3500);
-
-            // After 4 seconds, move to next device and start cycle again
+            
+            // After 3.5 seconds, hide sale toast
+            setTimeout(() => setShowSaleToast(false), 4000);
+            
+            // After 4 seconds, turn everything off and move to next device
             setTimeout(() => {
+                setAnimationStep(-1);
                 setCurrentDevice((prev) => (prev + 1) % devices.length);
             }, 4000);
         };
 
         // Start the animation immediately
         animationCycle();
-
+        
         // Repeat every 4.5 seconds
         const interval = setInterval(animationCycle, 4500);
-
+        
         return () => clearInterval(interval);
-    }, [devices.length]);
+    }, [devices.length, salesData.length]);
 
     // Determine which circles should be active
     const isDeviceActive = (deviceIndex: number) =>
@@ -153,6 +178,13 @@ export function AnimatedBeamMultipleOutputDemo({
                                     <User />
                                 </Circle>
                             </FollowerPointerCard>
+                            
+                            {/* Sale toast positioned relative to user circle */}
+                            <SaleToastSingle
+                                message={salesData[currentSaleIndex].message}
+                                amount={salesData[currentSaleIndex].amount}
+                                isVisible={showSaleToast}
+                            />
                         </div>
                     </div>
                     <div className="flex flex-col justify-center">
@@ -215,15 +247,6 @@ export function AnimatedBeamMultipleOutputDemo({
                 />
 
             </div>
-            <AnimatedList externalIndex={listIndex} maxVisible={5} className="absolute top-0 -right-50 z-0 ">
-                <SaleToast message="New sale!" amount="$89.99" />
-                <SaleToast message="Product sold!" amount="$156.50" />
-                <SaleToast message="Sale completed!" amount="$43.25" />
-                <SaleToast message="New purchase!" amount="$267.80" />
-                <SaleToast message="Order received!" amount="$92.15" />
-                <SaleToast message="Payment processed!" amount="$134.60" />
-                <SaleToast message="Sale confirmed!" amount="$78.30" />
-            </AnimatedList>
         </div>
     );
 }
