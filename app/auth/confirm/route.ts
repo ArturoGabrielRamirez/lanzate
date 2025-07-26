@@ -8,8 +8,9 @@ export async function GET(request: NextRequest) {
     const token_hash = searchParams.get('token_hash')
     const type = searchParams.get('type') as EmailOtpType | null
     const next = searchParams.get('next') ?? '/'
-    const redirectTo = request.nextUrl.clone()
-    redirectTo.pathname = next
+    
+    const baseUrl = process.env.NEXTAUTH_URL || `http://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+    const redirectTo = new URL(next, baseUrl)
 
     if (token_hash && type) {
         const supabase = await createServerSideClient()
@@ -23,6 +24,6 @@ export async function GET(request: NextRequest) {
         }
     }
 
-    redirectTo.pathname = '/error'
-    return NextResponse.redirect(redirectTo)
+    const errorUrl = new URL('/error', baseUrl)
+    return NextResponse.redirect(errorUrl)
 }

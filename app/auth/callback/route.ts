@@ -8,24 +8,21 @@ export async function GET(request: Request) {
   const url = new URL(request.url)
   const code = url.searchParams.get('code')
   const next = url.searchParams.get('next') ?? '/'
-  
-  // Obtener locale de los headers o usar el por defecto
+
   const acceptLanguage = request.headers.get('accept-language')
   const preferredLocale = acceptLanguage?.split(',')[0]?.split('-')[0]
-  const locale = routing.locales.includes(preferredLocale as any) 
-    ? preferredLocale 
+  const locale = routing.locales.includes(preferredLocale as any)
+    ? preferredLocale
     : routing.defaultLocale
 
-    
-    const envURL = process.env.NEXTAUTH_URL
-    
-    
+
+  const envURL = process.env.NEXTAUTH_URL || `http://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+
+
 
   if (!code) {
     return NextResponse.redirect(`${envURL}/${locale}/auth/auth-code-error`)
   }
-
- /*  console.log(`urlOrigin: ${url.origin}`) */
 
   const supabase = await createServerSideClient()
 
@@ -52,7 +49,6 @@ export async function GET(request: Request) {
     }
   }
 
-  // Construir la URL de redirección con locale
   const redirectPath = next === '/' ? `/${locale}/account` : `/${locale}${next}`
   return NextResponse.redirect(`${envURL}${redirectPath}`)
 }
