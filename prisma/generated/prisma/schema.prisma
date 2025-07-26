@@ -62,13 +62,14 @@ model Store {
   user_id Int
   user    User @relation(fields: [user_id], references: [id])
 
-  branches      Branch[]
-  products      Product[]
-  orders        Order[]
-  balance       StoreBalance?
-  transactions  Transaction[]
-  employees     Employee[] // Relación con empleados
-  customization StoreCustomization? // Relación con personalización
+  branches             Branch[]
+  products             Product[]
+  orders               Order[]
+  balance              StoreBalance?
+  transactions         Transaction[]
+  employees            Employee[] // Relación con empleados
+  customization        StoreCustomization? // Relación con personalización
+  operational_settings StoreOperationalSettings? // Relación con configuración operacional
 
   @@map("stores")
 }
@@ -421,6 +422,82 @@ enum EmployeeRole {
   CASHIER // Cajero
   STOCKIST // Encargado de inventario
   SALES // Vendedor
+}
+
+// Nuevo modelo para configuraciones operacionales de la tienda
+
+model StoreOperationalSettings {
+  id Int @id @default(autoincrement())
+
+  store_id Int   @unique
+  store    Store @relation(fields: [store_id], references: [id], onDelete: Cascade)
+
+  // Configuración de delivery
+  offers_delivery       Boolean @default(false)
+  delivery_price        Float?  @default(0)
+  free_delivery_minimum Float?
+  delivery_radius_km    Float?  @default(5)
+
+  // Horarios de negocio
+  monday_open     String? // "09:00"
+  monday_close    String? // "18:00"
+  tuesday_open    String?
+  tuesday_close   String?
+  wednesday_open  String?
+  wednesday_close String?
+  thursday_open   String?
+  thursday_close  String?
+  friday_open     String?
+  friday_close    String?
+  saturday_open   String?
+  saturday_close  String?
+  sunday_open     String?
+  sunday_close    String?
+
+  // Tiempos de entrega
+  delivery_time_min Int? @default(30) // minutos
+  delivery_time_max Int? @default(60) // minutos
+
+  // Tiempos de preparación para pickup
+  pickup_time_min Int? @default(15) // minutos
+  pickup_time_max Int? @default(30) // minutos
+
+  // Métodos de pago
+  payment_methods PaymentMethod[] @default([CASH])
+
+  // Configuraciones adicionales
+  requires_phone_for_delivery Boolean @default(true)
+  minimum_order_amount        Float?  @default(0)
+  preparation_time_buffer     Int?    @default(10) // minutos extra de buffer
+  is_temporarily_closed       Boolean @default(false)
+  temporary_closure_reason    String?
+
+  // Información de contacto
+  contact_phone    String?
+  contact_whatsapp String?
+  contact_email    String?
+
+  // Instrucciones especiales
+  delivery_instructions String?
+  pickup_instructions   String?
+  special_notes         String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("store_operational_settings")
+}
+
+// Enums para configuraciones operacionales
+
+enum PaymentMethod {
+  CASH
+  CREDIT_CARD
+  DEBIT_CARD
+  TRANSFER
+  MERCADO_PAGO
+  PAYPAL
+  CRYPTO
 }
 
 // Modelos para personalización del frontend de la tienda
