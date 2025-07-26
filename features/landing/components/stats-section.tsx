@@ -7,7 +7,6 @@ function StatsSection() {
 
     return (
         <section className="p-6 my-6 ">
-            {/* <div className="container grid grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-4"> */}
             <Marquee className="container mx-auto mask-l-from-60% mask-l-to-90% mask-r-from-60% mask-r-to-90%">
                 <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent text-primary-foreground">
                     <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-primary">
@@ -64,7 +63,6 @@ function StatsSection() {
                     </div>
                 </div>
             </Marquee>
-            {/* </div> */}
         </section>
     )
 }
