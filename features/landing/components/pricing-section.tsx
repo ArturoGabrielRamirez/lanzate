@@ -1,6 +1,8 @@
 import { DotPattern } from "@/components/magicui/dot-pattern";
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils";
+import * as motion from "motion/react-client"
+
 import { useTranslations } from "next-intl";
 
 function PricingSection() {
@@ -11,8 +13,20 @@ function PricingSection() {
         <section className="py-6 relative">
             <div className="container mx-auto p-4 sm:p-10">
                 <div className="mb-16 space-y-4 text-center">
-                    <h1 className="text-4xl font-semibold leading-tight">{t('description.plan.title')}</h1>
-                    <p className="px-4 sm:px-8 lg:px-24">{t('description.plan.description')}</p>
+                    <motion.h2
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
+                        className="text-5xl font-bold text-center"
+                    >
+                        {t('description.plan.title')}
+                    </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-muted-foreground/50 max-w-3xl mx-auto"
+                    >
+                        {t('description.plan.description')}
+                    </motion.p>
                     <div>
                         <button className="px-4 py-1 font-semibold border rounded-l-lg bg-primary border-primary">{t('buttons.monthly')}</button>
                         <button className="px-4 py-1 border rounded-r-lg border-primary">{t('buttons.annually')}</button>
