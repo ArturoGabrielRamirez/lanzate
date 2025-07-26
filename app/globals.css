@@ -154,6 +154,8 @@
   --shadow-2xl: var(--shadow-2xl);
 
   --breakpoint-xs: 480px;
+
+  --animate-bg-shine: bg-shine 2.1s linear infinite;
 }
 
 body {
@@ -169,3 +171,13 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes bg-shine {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
