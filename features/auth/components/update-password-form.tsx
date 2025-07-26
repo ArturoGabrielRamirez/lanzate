@@ -2,10 +2,13 @@
 
 import { Form, InputField } from '@/features/layout/components'
 import { formatErrorResponse } from '@/utils/lib'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 export default function UpdatePasswordForm() {
     const [done, setDone] = useState(false)
+
+    const t = useTranslations("auth");
 
     const handleSubmit = async (payload: any) => {
         try {
@@ -27,17 +30,17 @@ export default function UpdatePasswordForm() {
 
     return done ? (
         <div className="flex flex-col items-center justify-center h-full">
-            <p>Password updated! You can now log in.</p>
+            <p>{t("reset-password.password-updated")}</p>
         </div>
     ) : (
         <Form
             formAction={handleSubmit}
-            contentButton='Update Password'
-            successMessage='Password updated!'
-            loadingMessage='Updating password...'
+            contentButton={t("buttons.update-password")}
+            successMessage={t("toast-message.success-password-updated")}
+            loadingMessage={t("toast-message.updating-password")}
             className="flex flex-col p-8 gap-4 sm:gap-6 w-full max-w-xl"
         >
-            <InputField name='password' label='New Password:' type='password' />
+            <InputField name='password' label={t("auth.reset-password.new-password")} type='password' />
         </Form>
     )
 }

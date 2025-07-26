@@ -778,7 +778,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\personal-dev\\lanzate\\prisma\\generated\\prisma",
+      "value": "C:\\Users\\Colo\\Cmder\\Code\\NextJS\\lanzate\\prisma\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -794,7 +794,7 @@ const config = {
     "previewFeatures": [
       "fullTextSearchPostgres"
     ],
-    "sourceFilePath": "E:\\personal-dev\\lanzate\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Colo\\Cmder\\Code\\NextJS\\lanzate\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -808,6 +808,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

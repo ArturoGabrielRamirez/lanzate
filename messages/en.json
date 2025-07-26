@@ -21,7 +21,8 @@
         "buttons": {
             "login": "Log In",
             "sign-up": "Sign Up",
-            "send-reset-link": "Send Reset Link"
+            "send-reset-link": "Send Reset Link",
+            "update-password": "Update Password"
         },
         "check-email": {
             "message-1": "Almost there, please check your email. You should receive a confirmation link.",
@@ -34,16 +35,23 @@
             "success-logged-in": "You have been logged in successfully",
             "success-registered": "You have been registered successfully",
             "success-reset-password": "Reset link sent!",
+            "success-password-updated": "Password updated!",
             "signing-in": "Signing in...",
             "signing-up": "Signing up...",
-            "reset-password": "Sending reset link..."
+            "reset-password": "Sending reset link...",
+            "updating-password": "Updating password..."
         },
         "reset-password": {
+            "new-password": "New Password",
             "title": "Reset Password",
             "description": {
                 "forgot-password": "Forgot password?",
-                "reset-password": "Reset your password clicking here"
+                "reset-password": "Reset your password clicking here",
+                "password-updated": "Password updated! You can now log in."
             }
+        },
+        "update-password": {
+            "title": "Update Password"
         }
     },
     "cart": {
@@ -66,11 +74,52 @@
             "total": "Total",
             "item": "item",
             "items": "items"
+        },
+        "item": {
+            "item": "item",
+            "items": "items"
+        }
+    },
+    "dashboard": {
+        "title": "Welcome!",
+        "step-1": {
+            "title": "Step 1",
+            "complete": " Complete",
+            "create-a-new-store": "Create a new store",
+            "to-continue": "To get started selling, you need to create a new store. This will give you your storefront, a place to list your products, and a place to manage your orders.",
+            "stores-created-1": "You have ",
+            "stores-created-2": " store",
+            "stores-created-3": " created"
+        },
+        "step-2": {
+            "title": "Step 2",
+            "available": "Available",
+            "create-a-product": "Create a product",
+            "to-continue": "Once created, your products will be visible to customers and ready for sale. You can add images, descriptions, pricing, and inventory tracking.",
+            "first-complete": "Complete Step 1 first to unlock this feature."
+        },
+        "step-3": {
+            "title": "Step 3",
+            "set-up-your-account": "Set up your account",
+            "to-continue": "To finish setting up your account, choose whether your store offers delivery, set your delivery fee, and your payment options.",
+            "first-complete": " Complete previous steps to unlock this feature."
+        },
+        "step-4": {
+            "title": "Step 4",
+            "share-your-store": "Share your store's link!",
+            "share-your-store-with": "Share your store's link with your customers to start selling!",
+            "first-complete": "Complete previous steps to unlock this feature."
+        },
+        "your-store": {
+            "title": "Your Store",
+            "see-all": "See All",
+            "new-store": "New Store"
         }
     },
     "error": {
         "oops": "Oops...nothing to see here",
         "something-went-wrong": "Something went wrong",
+        "page-not-found": "The page you are looking for does not exist.",
         "go-back": "Go back to home"
     },
     "home": {
@@ -87,7 +136,7 @@
                 "description": "How Lanzate empowers your business?"
             },
             "centralize": {
-                "title": "Centralize",
+                "title": "Centralize.",
                 "description": "Manage all your products and inventory from one intuitive dashboard."
             },
             "sell": {
@@ -96,7 +145,7 @@
                 "description": "Process sales and track your growth with real-time analytics."
             },
             "ship-easily": {
-                "title": "Ship Easily",
+                "title": "Ship Easily.",
                 "description": "Coordinate shipping and track your deliveries with a simple and intuitive interface."
             },
             "analytics": {
@@ -202,8 +251,108 @@
         "title": "Home"
     },
     "store": {
+        "title": "Store",
+        "plural-title": "Stores",
+        "current-balance": "Current Balance",
+        "store-details": "Store Details",
+        "loading": "Loading...",
+        "no-stores": "No stores found",
         "store-not-found": "Store not found",
-        "product-not-found": "Product not found"
+        "product-not-found": "Product not found",
+        "store-details-page": "Store Details Page",
+        "branches": {
+            "branch-details": "Branch Details",
+            "main-branch": "Main Branch",
+            "address": "Address",
+            "no-address": "No address",
+            "phone": "Phone",
+            "no-phone": "No phone",
+            "email": "Email",
+            "no-email": "No email",
+            "products-in-stock": "Products in Stock",
+            "total-orders": "Total Orders",
+            "revenue": "Revenue",
+            "created-on": "Created on ",
+            "recent-orders": "Recent Orders",
+            "order": "Order ",
+            "store-pickup": "Store Pickup",
+            "delivery": "Delivery"
+        },
+        "buttons": {
+            "new-store": "New Store"
+        },
+        "employees": {
+            "create-orders": "Create Orders",
+            "update-orders": "Update Orders",
+            "create-products": "Create Products",
+            "update-products": "Update Products",
+            "manage-stock": "Manage Stock",
+            "process-refunds": "Process Refunds",
+            "view-reports": "View Reports",
+            "manage-employees": "Manage Employees",
+            "manage-store": "Manage Store",
+            "employee-details": "Employee Details",
+            "position": "Position",
+            "department": "Department",
+            "hired-date": "Hired Date",
+            "salary": "Salary",
+            "notes": "Notes",
+            "permissions": "Permissions",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "layout": {
+            "overview": "Overview",
+            "account-details": "Account Details",
+            "branches": "Branches",
+            "employees": "Employees",
+            "products": "Products",
+            "orders": "Orders",
+            "settings": "Settings",
+            "analytics": "Analytics",
+            "history": "History",
+            "store-details": "Store Details",
+            "no-description": "No description available"
+        },
+        "logs": {
+            "log-details": "Log Details ",
+            "log-id": "Log ID ",
+            "created-at": "Created At",
+            "action": "Action",
+            "entity-type": "Entity Type",
+            "entity-id": "Entity ID: ",
+            "user-information": "User Information",
+            "name": "Name: ",
+            "user-id": "User ID: ",
+            "employee": "Employee",
+            "employee-id": "Employee ID: ",
+            "unknown-user": "Unknown User",
+            "action-initiator": "Action Initiator",
+            "details": "Details",
+            "timestamps": "Timestamps",
+            "updated-at": "Updated At"
+        },
+        "orders": {
+            "order-details": "Order Details ",
+            "status": "Status",
+            "date-created": "Date Created",
+            "total": "Total",
+            "item": "item",
+            "items": "items",
+            "customer-information": "Customer Information",
+            "shipping-method": "Shipping Method",
+            "order-items": "Order Items",
+            "quantity": "Quantity: ",
+            "payment-information": "Payment Information",
+            "amount": "Amount",
+            "employee-information": "Employee Information",
+            "created-by": "Created By",
+            "last-updated-by": "Last Updated By"
+        },
+        "products": {
+            "product-details": "Product Details ",
+            "no-categories": "No categories"
+        }
     },
     "subdomain": {
         "title": "My Products",

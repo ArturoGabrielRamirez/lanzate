@@ -8,6 +8,7 @@ import { CreateStoreButton, StoreCard } from "@/features/stores/components"
 import { Title } from "@/features/layout/components"
 
 import { Plus } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 
 
 async function StoresPage() {
@@ -26,11 +27,13 @@ async function StoresPage() {
 
     const canCreate = await canCreateStore(user.id)
 
+    const t = await getTranslations("store");
+
     return (
         <div className="p-4 max-md:pt-24 max-md:pb-12">
-            <Title title="Stores" breadcrumbs={[
+            <Title title={t("title")} breadcrumbs={[
                 {
-                    label: "Stores",
+                    label: t("title"),
                     href: "/stores"
                 }
             ]} />
@@ -40,7 +43,7 @@ async function StoresPage() {
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                                 <Plus />
-                                <h2 className="text-2xl font-bold">New store</h2>
+                                <h2 className="text-2xl font-bold">{t("buttons.new-store")}</h2>
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="flex justify-center items-center grow">
@@ -53,7 +56,7 @@ async function StoresPage() {
                 </section>
             ) : (
                 <div className="flex flex-col justify-center items-center h-full border-dashed border-2 border-secondary rounded-md p-6 gap-4">
-                    <p className="text-xl font-bold">No stores found</p>
+                    <p className="text-xl font-bold">{t("no-stores")}</p>
                     <CreateStoreButton userId={user.id} canCreate={canCreate} />
                 </div>
             )}

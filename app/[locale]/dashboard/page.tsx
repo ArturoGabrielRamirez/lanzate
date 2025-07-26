@@ -9,6 +9,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
+import { Separator } from "@radix-ui/react-select"
+import { getTranslations } from "next-intl/server"
 
 async function DashboardPage() {
 
@@ -24,12 +26,16 @@ async function DashboardPage() {
         return console.error("Error loading dashboard data")
     }
 
+    const hasStores = dashboardData.storeCount > 0
+
+    const t = await getTranslations("dashboard")
+
     return (
         <section className="p-4 flex flex-col max-md:pt-24">
             <Title title={(
                 <div className="flex items-center gap-2">
                     <Hand />
-                    Welcome!
+                    {t("title")}
                 </div>
             )} />
 

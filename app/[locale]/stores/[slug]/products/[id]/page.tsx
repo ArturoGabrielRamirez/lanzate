@@ -10,6 +10,7 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getTranslations } from "next-intl/server"
 
 async function ProductDetailPage({ params }: ProductDetailPageProps) {
 
@@ -27,6 +28,8 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
         return console.log(error)
     }
 
+    const t = await getTranslations("store.products")
+
     return (
         <Card>
             <CardHeader>
@@ -34,7 +37,7 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
                     <Link href={`/stores/${slug}/products`}>
                         <ArrowLeft className="size-4" />
                     </Link>
-                    Product Details
+                    {t("product-details")}
                 </CardTitle>
             </CardHeader>
             <CardContent className="grow flex">
@@ -55,7 +58,7 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
                         <h3 className="text-4xl font-bold">{product.name}</h3>
                         <div className="flex gap-2">
                             {product.categories.length === 0 && (
-                                <Badge variant="outline">No categories</Badge>
+                                <Badge variant="outline">{t("no-categories")}</Badge>
                             )}
                             {product.categories.map((category: any) => (
                                 <Badge key={category.id} variant="outline">{category.name}</Badge>
