@@ -9,6 +9,7 @@ import "../globals.css";
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { routing } from '@/i18n/routing'; // ✅ Importar routing
 import { notFound } from 'next/navigation'; // ✅ Importar notFound
+import Footer from "@/features/header/components/footer";
 /* import { ReactNode } from "react"; */
 
 export const metadata: Metadata = {
@@ -53,6 +54,8 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                     <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow'>
                       {children}
                     </main>
+                    <Footer />
+
                     <Toaster />
                   </>
                 )}
