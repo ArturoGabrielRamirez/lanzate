@@ -1,90 +1,14 @@
 import { Button } from "@/components/ui/button"
-import Link from "next/link";
 import { useTranslations } from 'next-intl';
-import { Check } from "lucide-react";
-import { AnimatedBeamMultipleOutputDemo } from "@/features/layout/components/hero-image";
-import { DotPattern } from "@/components/magicui/dot-pattern";
-import { cn } from "@/lib/utils";
-import { ContainerTextFlip } from "@/components/ui/container-text-flip";
+import HeroSection from "@/features/landing/components/hero-section";
 
 export default function Home() {
 
   const t = useTranslations('home');
-  const words = ["soñá", "emprende", "crecé"]
 
   return (
     <div className="max-md:pt-24 max-md:pb-12">
-      <section className="flex flex-col md:grid md:grid-cols-[auto_auto] md:gap-10 xl:gap-20 2xl:gap-56 min-h-dvh justify-center items-center relative">
-        <div className="flex flex-col gap-4 items-start xl:max-w-2xl">
-          <p className="text-sm font-medium bg-primary/20 text-primary-foreground px-2 py-1 rounded-full border-primary border">Just released: Enhanced customization and new components</p>
-          <h1 className="text-4xl font-bold leading-none sm:text-6xl flex flex-col gap-2">
-            <span>Vos <ContainerTextFlip words={words} /></span>
-            <span className="text-primary">Lanzate lo hace posible.</span>
-          </h1>
-          <p className="text-xl mb-8">
-            Gestionar tu negocio online nunca fue tan fácil. Enfocate en crecer mientras te damos el control total:
-          </p>
-          <ul className="flex flex-col gap-2">
-            <li className="flex items-center gap-2">
-              <Check className="size-4" />
-              <span>gestioná tus productos</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <Check className="size-4" />
-              <span>procesá ventas</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <Check className="size-4" />
-              <span>organizá a tu equipo de trabajo</span>
-            </li>
-          </ul>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button asChild>
-              <Link href="/login">
-                {t('buttons.get-started')}
-              </Link>
-            </Button>
-            <Button variant="outline">
-              <Link href="/about">
-                {t('buttons.learn-more')}
-              </Link>
-            </Button>
-          </div>
-        </div>
-        <AnimatedBeamMultipleOutputDemo />
-        <DotPattern
-          width={30}
-          height={30}
-          cx={1}
-          cy={1}
-          cr={1}
-          className={cn(
-            "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
-          )}
-        />
-      </section>
-      {/* <section>
-        <div className="container mx-auto flex flex-col items-center px-4 py-16 text-center md:py-32 md:px-10 lg:px-32 xl:max-w-7xl">
-          <h1 className="text-4xl font-bold leading-none sm:text-5xl xl:max-w-xl">
-            {t('slogan.1')}&nbsp;
-            <span className="text-primary">{t('slogan.2')}</span>{t('slogan.3')}&nbsp;
-            <span className="text-primary">{t('slogan.4')}</span>
-          </h1>
-          <p className="px-8 mt-8 mb-12 text-lg text-balance">{t('description.slogan')}</p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button asChild>
-              <Link href="/login">
-                {t('buttons.get-started')}
-              </Link>
-            </Button>
-            <Button variant="outline">
-              <Link href="/about">
-                {t('buttons.learn-more')}
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
+      <HeroSection />
       <section className="p-6">
         <div className="container mx-auto">
           <span className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-accent">{t('description.how-it-work.title')}</span>
