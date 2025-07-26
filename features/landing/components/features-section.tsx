@@ -23,7 +23,7 @@ function FeaturesSection() {
                 <motion.p
                     initial={{ opacity: 0, y: 100 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-accent"
+                    className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-muted-foreground/50"
                 >
                     {t('description.how-it-work.title')}
                 </motion.p>
