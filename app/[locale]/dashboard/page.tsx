@@ -18,7 +18,7 @@ async function DashboardPage() {
         return console.error(userMessage)
     }
 
-    const { payload: dashboardData, error: dashboardError } = await getDashboardStores(user.id)
+    const { payload: dashboardData, error: dashboardError, message } = await getDashboardStores(user.id)
 
     if (dashboardError || !dashboardData) {
         return console.error("Error loading dashboard data")
