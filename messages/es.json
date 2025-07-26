@@ -119,7 +119,7 @@
     "error": {
         "oops": "Uuy...no hay nada que ver acá",
         "something-went-wrong": "Algo salió mal",
-        "page-not-found": "La página que estás buscando no existe.",
+        "page-not-founded": "La página que estás buscando no existe.",
         "go-back": "Volver a la página de inicio"
     },
     "home": {

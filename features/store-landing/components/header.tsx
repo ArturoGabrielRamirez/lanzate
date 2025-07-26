@@ -11,7 +11,7 @@ type Props = {
 
 async function Header({ title }: Props) {
 
-    const t = await getTranslations("auth");
+    const t = await getTranslations("auth.buttons");
 
     const supabase = createServerSideClient()
     const { data: { user } } = await supabase.auth.getUser()
