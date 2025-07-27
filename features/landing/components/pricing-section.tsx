@@ -4,10 +4,10 @@ import { cn } from "@/lib/utils";
 import * as motion from "motion/react-client"
 
 import { useTranslations } from "next-intl";
-import { EyeCatchingButton_v4 } from "./hero-section";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
+import SectionTitle from "./section-title";
 
 function PricingSection() {
 
@@ -70,13 +70,7 @@ function PricingSection() {
         <section className="py-6 relative">
             <div className="container mx-auto p-4 sm:p-10">
                 <div className="mb-16 space-y-4 text-center">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
-                        className="text-5xl font-bold text-center"
-                    >
-                        {t('description.plan.title')}
-                    </motion.h2>
+                    <SectionTitle title={t('description.plan.title')} />
                     <motion.p
                         initial={{ opacity: 0, y: 100 }}
                         whileInView={{ opacity: 1, y: 0 }}

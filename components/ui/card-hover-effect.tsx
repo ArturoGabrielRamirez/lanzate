@@ -1,10 +1,10 @@
 "use client"
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { useState } from "react";
 import { Check } from "lucide-react";
-import { EyeCatchingButton_v4 } from "@/features/landing/components/hero-section";
 import Link from "next/link";
+import EyeCatchingButton from "@/features/landing/components/eye-catching-button";
 
 export const HoverEffect = ({
   items,
@@ -186,10 +186,10 @@ export const PricingCardButton = ({
   children: React.ReactNode;
 }) => {
   return (
-    <EyeCatchingButton_v4 asChild className={cn("text-xl font-bold", className)}>
+    <EyeCatchingButton asChild className={cn("text-xl font-bold", className)}>
       <Link href={href}>
         {children}
       </Link>
-    </EyeCatchingButton_v4>
+    </EyeCatchingButton>
   );
 };

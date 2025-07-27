@@ -2,34 +2,30 @@ import { DotPattern } from "@/components/magicui/dot-pattern";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import * as motion from "motion/react-client"
+import SectionTitle from "@/features/landing/components/section-title";
+import Link from "next/link";
+import EyeCatchingButton from "@/features/landing/components/eye-catching-button";
 
 function Footer() {
 
     const t = useTranslations('home');
 
     return (
-        <footer className="">
+        <footer className="bg-background relative">
             <div className="mx-auto max-w-screen-xl px-4 pt-16 pb-8 sm:px-6 lg:px-8 lg:pt-24">
                 <div className="text-center">
-                    <motion.h2
+                    <SectionTitle title={"Customise Your Product"} />
+                    <motion.p
                         initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
-                        className="text-5xl font-bold text-center mb-22"
+                        whileInView={{ opacity: 1, y: 0 }}
+                        className="block text-xs font-medium tracking-widest text-center uppercase text-muted-foreground/50 mb-8"
                     >
-                        Customise Your Product
-                    </motion.h2>
-
-                    <p className="mx-auto mt-4 max-w-sm text-gray-500 dark:text-gray-400">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum maiores ipsum eos temporibus
                         ea nihil.
-                    </p>
-
-                    <a
-                        href="#"
-                        className="mt-8 inline-block rounded-full border border-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-indigo-600 hover:text-white focus:ring-3 focus:outline-hidden"
-                    >
-                        Get Started
-                    </a>
+                    </motion.p>
+                    <EyeCatchingButton asChild className="text-xl font-bold">
+                        <Link href="/signup">Get Started</Link>
+                    </EyeCatchingButton>
                 </div>
 
                 <div
@@ -151,6 +147,13 @@ function Footer() {
                     </ul>
                 </div>
             </div>
+            <DotPattern
+                width={30}
+                height={30}
+                className={cn(
+                    "[mask-image:linear-gradient(to_top_right,white,transparent_70%,transparent)] ",
+                )}
+            />
         </footer>
     )
 
@@ -206,13 +209,7 @@ function Footer() {
             <div className="flex items-center justify-center px-6 pt-12 text-sm">
                 <span className="dark:text-gray-600">{t('footer.copyright')}</span>
             </div>
-            <DotPattern
-                width={30}
-                height={30}
-                className={cn(
-                    "[mask-image:linear-gradient(to_top,white,transparent_70%,transparent)] ",
-                )}
-            />
+
         </footer>
     )
 }

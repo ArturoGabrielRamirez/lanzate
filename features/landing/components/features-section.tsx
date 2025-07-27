@@ -22,7 +22,7 @@ function FeaturesSection() {
                 >
                     {t('description.how-it-work.title')}
                 </motion.p>
-                <SectionTitle title={t('description.how-it-work.description')} />
+                <SectionTitle title={t('description.how-it-work.description')} className="mb-22" />
                 <div className="mask-l-from-80% mask-l-to-100% mask-r-from-80% mask-r-to-95%">
                     <EmblaCarousel slides={SLIDES} options={OPTIONS} />
                 </div>
