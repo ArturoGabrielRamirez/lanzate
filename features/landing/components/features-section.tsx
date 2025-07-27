@@ -40,48 +40,94 @@ function FeaturesSection() {
                 </motion.h2>
                 <Carousel
                     plugins={[
-                        Autoplay({ delay: 2000 })
+                        Autoplay({ delay: 5000 })
                     ]}
-                    opts={{ loop: true }}
+                    opts={{ loop: true, inViewThreshold: 0.8 }}
                     className="container mx-auto mask-l-from-60% mask-l-to-90% mask-r-from-60% mask-r-to-90%"
                 >
                     <CarouselContent className="">
-                        <CarouselItem className="basis-1/2 grow grid grid-cols-2 gap-1">
-                            <motion.div className="flex flex-col p-8 h-full rounded-md bg-primary text-primary-foreground gap-22">
-                                <motion.div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent">
-                                    1
+                        <CarouselItem className="basis-1/2 grow ">
+                            <motion.div
+                                initial={{ scale: 0.75 }}
+                                whileInView={{ scale: 1 }}
+                                viewport={{ amount: 0.8 }}
+                                exit={{ scale: 0.75 }}
+                                className="grid grid-cols-2 gap-1"
+                            >
+                                <motion.div className="flex flex-col p-8 h-full rounded-md bg-primary text-primary-foreground gap-22">
+                                    <motion.div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent">
+                                        1
+                                    </motion.div>
+                                    <p className="text-2xl font-semibold">
+                                        <b>{t('description.centralize.title')}</b> {t('description.centralize.description')}
+                                    </p>
                                 </motion.div>
-                                <p className="text-2xl font-semibold">
-                                    <b>{t('description.centralize.title')}</b> {t('description.centralize.description')}
-                                </p>
-                            </motion.div>
-                            <div className="relative rounded-md overflow-hidden">
-                                <Image
-                                    src="/landing/feature-1.jpg"
-                                    alt="Centralize"
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
-                        </CarouselItem>
-                        <CarouselItem className="basis-1/2 grow">
-                            <motion.div className="flex flex-col p-8 h-full rounded-md bg-primary text-primary-foreground"
-                                variants={itemVariants}
-                            >
-                                <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent ">2</div>
-                                <p className="text-2xl font-semibold">
-                                    <b>{t('description.sell.title')} &amp; {t('description.sell.title-2')}</b> {t('description.sell.description')}
-                                </p>
+                                <div className="relative rounded-md overflow-hidden">
+                                    <motion.div className="relative h-full" whileInView={{ scale: 1.5, transition: { duration: 5 } }} exit={{ scale: 1 }}>
+                                        <Image
+                                            src="/landing/feature-1.jpg"
+                                            alt="Centralize"
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    </motion.div>
+                                </div>
                             </motion.div>
                         </CarouselItem>
                         <CarouselItem className="basis-1/2 grow">
-                            <motion.div className="flex flex-col p-8 h-full rounded-md bg-primary text-primary-foreground"
-                                variants={itemVariants}
+                            <motion.div
+                                initial={{ scale: 0.75 }}
+                                whileInView={{ scale: 1 }}
+                                viewport={{ amount: 0.8 }}
+                                exit={{ scale: 0.75 }}
+                                className="grid grid-cols-2 gap-1"
                             >
-                                <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent ">3</div>
-                                <p className="text-2xl font-semibold">
-                                    <b>{t('description.ship-easily.title')}</b> {t('description.ship-easily.description')}
-                                </p>
+                                <motion.div className="flex flex-col p-8 h-full rounded-md bg-primary text-primary-foreground gap-22">
+                                    <motion.div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent">
+                                        2
+                                    </motion.div>
+                                    <p className="text-2xl font-semibold">
+                                        <b>{t('description.centralize.title')}</b> {t('description.centralize.description')}
+                                    </p>
+                                </motion.div>
+                                <div className="relative rounded-md overflow-hidden">
+                                    <motion.div className="relative h-full" whileInView={{ scale: 1.5, transition: { duration: 5 } }} exit={{ scale: 1 }}>
+                                        <Image
+                                            src="/landing/feature-1.jpg"
+                                            alt="Centralize"
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    </motion.div>
+                                </div>
+                            </motion.div>
+                        </CarouselItem>
+                        <CarouselItem className="basis-1/2 grow">
+                            <motion.div
+                                initial={{ scale: 0.75 }}
+                                whileInView={{ scale: 1 }}
+                                viewport={{ amount: 0.8 }}
+                                exit={{ scale: 0.75 }}
+                                className="grid grid-cols-2 gap-1"
+                            >
+                                <motion.div className="flex flex-col p-8 h-full rounded-md bg-primary text-primary-foreground gap-22">
+                                    <motion.div className="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-accent">
+                                        3
+                                    </motion.div>
+                                    <p className="text-2xl font-semibold">
+                                        <b>{t('description.centralize.title')}</b> {t('description.centralize.description')}
+                                    </p>
+                                </motion.div>
+                                <div className="relative rounded-md overflow-hidden">
+                                    <motion.div className="relative h-full" whileInView={{ scale: 1.5, transition: { duration: 5 } }} exit={{ scale: 1 }}>
+                                        <Image  
+                                            src="/landing/feature-1.jpg"
+                                            alt="Centralize"
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    </motion.div>
+                                </div>
                             </motion.div>
                         </CarouselItem>
                     </CarouselContent>
