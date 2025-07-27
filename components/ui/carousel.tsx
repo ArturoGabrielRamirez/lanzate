@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import * as motion from "motion/react-client"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
@@ -28,6 +29,8 @@ type CarouselContextProps = {
   scrollNext: () => void
   canScrollPrev: boolean
   canScrollNext: boolean
+  activeIndex: number
+  getNextIndex: () => number
 } & CarouselProps
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
@@ -60,11 +63,23 @@ function Carousel({
   )
   const [canScrollPrev, setCanScrollPrev] = React.useState(false)
   const [canScrollNext, setCanScrollNext] = React.useState(false)
+  const [activeIndex, setActiveIndex] = React.useState(0)
+  const indexCounter = React.useRef(0)
+
+  const getNextIndex = React.useCallback(() => {
+    return indexCounter.current++
+  }, [])
+
+  // Reset counter when component mounts
+  React.useEffect(() => {
+    indexCounter.current = 0
+  }, [])
 
   const onSelect = React.useCallback((api: CarouselApi) => {
     if (!api) return
     setCanScrollPrev(api.canScrollPrev())
     setCanScrollNext(api.canScrollNext())
+    setActiveIndex(api.selectedScrollSnap())
   }, [])
 
   const scrollPrev = React.useCallback(() => {
@@ -116,6 +131,8 @@ function Carousel({
         scrollNext,
         canScrollPrev,
         canScrollNext,
+        activeIndex,
+        getNextIndex,
       }}
     >
       <div
@@ -153,8 +170,49 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
-  const { orientation } = useCarousel()
+// Hook para manejar el progress bar
+function useCarouselProgress(isActive: boolean, duration: number = 5000) {
+  const [progress, setProgress] = React.useState(0)
+  const intervalRef = React.useRef<NodeJS.Timeout | null>(null)
+
+  React.useEffect(() => {
+    if (isActive) {
+      setProgress(0)
+      const stepTime = 50 // Actualizar cada 50ms para suavidad
+      const steps = duration / stepTime
+      const increment = 100 / steps
+
+      intervalRef.current = setInterval(() => {
+        setProgress(prev => {
+          const newProgress = prev + increment
+          if (newProgress >= 100) {
+            return 100
+          }
+          return newProgress
+        })
+      }, stepTime)
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+      setProgress(0)
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
+  }, [isActive, duration])
+
+  return progress
+}
+
+function CarouselItem({ className, children, ...props }: React.ComponentProps<"div">) {
+  const { orientation, activeIndex, getNextIndex } = useCarousel()
+  const itemIndex = React.useMemo(() => getNextIndex(), [getNextIndex])
+  const isActive = itemIndex === activeIndex
+  const progress = useCarouselProgress(isActive)
 
   return (
     <div
@@ -162,12 +220,28 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
       aria-roledescription="slide"
       data-slot="carousel-item"
       className={cn(
-        "min-w-0 shrink-0 grow-0 basis-full",
+        "min-w-0 shrink-0 grow-0 basis-full relative",
         orientation === "horizontal" ? "pl-4" : "pt-4",
         className
       )}
       {...props}
-    />
+    >
+      {children}
+      {/* Progress bar que aparece solo cuando hay contenido de texto */}
+      {/* <div className="mt-2 w-full">
+        <div className="h-1 bg-muted rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-primary"
+            initial={{ width: "0%" }}
+            animate={{ width: isActive ? `${progress}%` : "0%" }}
+            transition={{ 
+              duration: 0.1,
+              ease: "linear"
+            }}
+          />
+        </div>
+      </div> */}
+    </div>
   )
 }
 
