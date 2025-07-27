@@ -73,7 +73,7 @@ function useAutoScroll(emblaApi: EmblaCarouselType | undefined, delay: number = 
 
     const startAutoScroll = useCallback(() => {
         if (!emblaApi) return
-        
+
         resetAutoScroll()
         autoScrollRef.current = setTimeout(() => {
             if (emblaApi.canScrollNext()) {
@@ -184,7 +184,7 @@ function EmblaCarousel(props: PropType) {
                 const scale = numberWithinRange(tweenValue, 0.75, 1).toString()
                 const opacity = numberWithinRange(tweenValue, 0.3, 1).toString()
                 const tweenNode = tweenNodes.current[slideIndex]
-                
+
                 // Usar transform CSS de manera optimizada con opacidad
                 if (tweenNode?.style) {
                     tweenNode.style.transform = `scale3d(${scale}, ${scale}, 1)`
@@ -210,16 +210,16 @@ function EmblaCarousel(props: PropType) {
     }, [emblaApi, tweenScale, setTweenNodes, setTweenFactor])
 
     return (
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto cursor-grab select-none active:cursor-grabbing">
             <div className="" ref={emblaRef}>
                 <div className="flex touch-pan-y touch-pinch-zoom -ml-6">
                     {slides.map((index) => {
                         const isActive = index === selectedIndex
                         const progress = useCarouselProgress(isActive)
-                        
+
                         return (
-                            <div 
-                                className="transform-gpu flex-none w-[70%] min-w-0 pl-6" 
+                            <div
+                                className="transform-gpu flex-none w-[70%] min-w-0 pl-6"
                                 key={index}
                             >
                                 <div className="embla__slide__content rounded-[1.8rem] text-6xl font-semibold flex items-center justify-center h-96 select-none will-change-transform backface-hidden">
@@ -230,22 +230,22 @@ function EmblaCarousel(props: PropType) {
                                         transition={{ duration: 0.6, ease: "easeOut" }}
                                         className="grid grid-cols-2 gap-2 w-full h-full"
                                     >
-                                        <motion.div 
+                                        <motion.div
                                             className="flex flex-col p-10 h-full rounded-md bg-primary text-primary-foreground gap-6"
-                                            initial={{ x: -50, opacity: 0 }}
+                                            /* initial={{ x: -50, opacity: 0 }} */
                                             whileInView={{ x: 0, opacity: 1 }}
                                             viewport={{ amount: 0.3 }}
                                             transition={{ duration: 0.8, delay: 0.2 }}
                                         >
                                             {isActive && (
-                                                <motion.div 
+                                                <motion.div
                                                     className="flex items-center justify-center flex-shrink-0 text-xl font-bold rounded-full bg-accent text-accent-foreground overflow-hidden"
                                                     initial={{ width: 0, height: 0, opacity: 0 }}
-                                                    animate={{ 
-                                                        width: 56, 
-                                                        height: 56, 
+                                                    animate={{
+                                                        width: 56,
+                                                        height: 56,
                                                         opacity: 1,
-                                                        transition: { 
+                                                        transition: {
                                                             delay: 0.4,
                                                             duration: 0.6,
                                                             type: "spring",
@@ -257,7 +257,7 @@ function EmblaCarousel(props: PropType) {
                                                 >
                                                     <motion.span
                                                         initial={{ opacity: 0 }}
-                                                        animate={{ 
+                                                        animate={{
                                                             opacity: 1,
                                                             transition: { delay: 0.8, duration: 0.3 }
                                                         }}
@@ -267,7 +267,7 @@ function EmblaCarousel(props: PropType) {
                                                     </motion.span>
                                                 </motion.div>
                                             )}
-                                            <motion.p 
+                                            <motion.p
                                                 className="text-xl font-semibold leading-tight"
                                                 initial={{ y: 20, opacity: 0 }}
                                                 whileInView={{ y: 0, opacity: 1 }}
@@ -276,7 +276,7 @@ function EmblaCarousel(props: PropType) {
                                             >
                                                 <b className='block text-3xl'>{t('description.centralize.title')}</b> {t('description.centralize.description')}
                                             </motion.p>
-                                            
+
                                             {/* Progress bar que aparece solo cuando el slide está activo */}
                                             <div className="mt-auto w-full">
                                                 <div className="h-1.5 bg-primary-foreground/20 rounded-full overflow-hidden">
@@ -284,7 +284,7 @@ function EmblaCarousel(props: PropType) {
                                                         className="h-full bg-primary-foreground"
                                                         initial={{ width: "0%" }}
                                                         animate={{ width: isActive ? `${progress}%` : "0%" }}
-                                                        transition={{ 
+                                                        transition={{
                                                             duration: 0.1,
                                                             ease: "linear"
                                                         }}
@@ -293,12 +293,16 @@ function EmblaCarousel(props: PropType) {
                                             </div>
                                         </motion.div>
                                         <div className="relative rounded-md overflow-hidden">
-                                            <motion.div 
-                                                className="relative h-full" 
-                                                initial={{ scale: 1.2, opacity: 0 }}
-                                                whileInView={{ scale: 1, opacity: 1 }}
-                                                viewport={{ amount: 0.3 }}
-                                                transition={{ duration: 1.2, delay: 0.3 }}
+                                            <motion.div
+                                                className="relative h-full"
+                                                animate={{
+                                                    scale: isActive ? 1.5 : 1,
+                                                    opacity: isActive ? 1 : 0.3,
+                                                    transition: {
+                                                        duration: isActive ? 7 : 0.3,
+                                                        delay: isActive ? 0.3 : 0
+                                                    }
+                                                }}
                                             >
                                                 <Image
                                                     src="/landing/feature-1.jpg"
@@ -316,26 +320,28 @@ function EmblaCarousel(props: PropType) {
                 </div>
             </div>
 
-            {/* <div className="grid grid-cols-[auto_1fr] justify-between gap-5 mt-7">
-                <div className="grid grid-cols-2 gap-2 items-center">
+            <div className="flex justify-center mt-7">
+                {/* <div className="grid grid-cols-2 gap-2 items-center">
                     <PrevButton onClick={handlePrevClick} disabled={prevBtnDisabled} />
                     <NextButton onClick={handleNextClick} disabled={nextBtnDisabled} />
-                </div>
+                </div> */}
 
-                <div className="flex flex-wrap justify-end items-center -mr-3">
-                    {scrollSnaps.map((_, index) => (
-                        <DotButton
-                            key={index}
-                            onClick={() => handleDotClick(index)}
-                            className={`w-10 h-10 flex items-center justify-center rounded-full cursor-pointer border-0 p-0 m-0 bg-transparent appearance-none touch-manipulation inline-flex no-underline disabled:cursor-not-allowed transition-colors hover:bg-accent ${
-                                index === selectedIndex 
-                                    ? 'after:w-6 after:h-6 after:rounded-full after:flex after:items-center after:content-[""] after:shadow-[inset_0_0_0_0.2rem_hsl(var(--foreground))]' 
-                                    : 'after:w-6 after:h-6 after:rounded-full after:flex after:items-center after:content-[""] after:shadow-[inset_0_0_0_0.2rem_hsl(var(--border))]'
-                            }`}
-                        />
-                    ))}
-                </div>
-            </div> */}
+                {/* <div className="flex flex-wrap justify-end items-center -mr-3 gap-2 h-10">
+                    {scrollSnaps.map((_, index) => {
+                        const isActive = index === selectedIndex
+                        return (
+                            <DotButton
+                                key={index}
+                                onClick={() => handleDotClick(index)}
+                                className={`items-center justify-center rounded-full cursor-pointer border-0 p-0 m-0 bg-primary appearance-none touch-manipulation inline-flex no-underline disabled:cursor-not-allowed transition-all duration-300 hover:bg-accent ${isActive
+                                    ? 'bg-primary size-10'
+                                    : 'bg-primary/20 size-6'
+                                    }`}
+                            />
+                        )
+                    })}
+                </div> */}
+            </div>
         </div>
     )
 }

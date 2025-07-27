@@ -1,17 +1,15 @@
 "use client"
 import * as motion from "motion/react-client"
 import { useTranslations } from "next-intl";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import Autoplay from "embla-carousel-autoplay"
-import Image from "next/image";
 import EmblaCarousel from "./embla-carousel";
+import SectionTitle from "./section-title";
 
 function FeaturesSection() {
 
     const t = useTranslations('home');
 
     const OPTIONS = { loop: true }
-    const SLIDE_COUNT = 5
+    const SLIDE_COUNT = 3
     const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
 
     return (
@@ -24,14 +22,8 @@ function FeaturesSection() {
                 >
                     {t('description.how-it-work.title')}
                 </motion.p>
-                <motion.h2
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
-                    className="text-5xl font-bold text-center mb-22"
-                >
-                    {t('description.how-it-work.description')}
-                </motion.h2>
-                <div className="mask-l-from-80% mask-l-to-95% mask-r-from-80% mask-r-to-95%">
+                <SectionTitle title={t('description.how-it-work.description')} />
+                <div className="mask-l-from-80% mask-l-to-100% mask-r-from-80% mask-r-to-95%">
                     <EmblaCarousel slides={SLIDES} options={OPTIONS} />
                 </div>
             </div>
