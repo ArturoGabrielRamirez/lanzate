@@ -4,10 +4,15 @@ import { useTranslations } from "next-intl";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
 import Image from "next/image";
+import EmblaCarousel from "./embla-carousel";
 
 function FeaturesSection() {
 
     const t = useTranslations('home');
+
+    const OPTIONS = { loop: true }
+    const SLIDE_COUNT = 5
+    const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
 
     return (
         <section className="p-6">
@@ -26,7 +31,10 @@ function FeaturesSection() {
                 >
                     {t('description.how-it-work.description')}
                 </motion.h2>
-                <Carousel
+                <div className="mask-l-from-80% mask-l-to-95% mask-r-from-80% mask-r-to-95%">
+                    <EmblaCarousel slides={SLIDES} options={OPTIONS} />
+                </div>
+                {/* <Carousel
                     plugins={[
                         Autoplay({ delay: 5000 })
                     ]}
@@ -151,7 +159,7 @@ function FeaturesSection() {
                     </CarouselContent>
                     <CarouselPrevious />
                     <CarouselNext />
-                </Carousel>
+                </Carousel> */}
             </div>
         </section>
     )
