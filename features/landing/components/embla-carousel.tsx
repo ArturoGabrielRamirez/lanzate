@@ -237,27 +237,48 @@ function EmblaCarousel(props: PropType) {
                                             viewport={{ amount: 0.3 }}
                                             transition={{ duration: 0.8, delay: 0.2 }}
                                         >
-                                            <motion.div 
-                                                className="flex items-center justify-center flex-shrink-0 w-14 h-14 text-xl font-bold rounded-full bg-accent text-accent-foreground"
-                                                initial={{ scale: 0 }}
-                                                whileInView={{ scale: 1 }}
-                                                viewport={{ amount: 0.3 }}
-                                                transition={{ duration: 0.5, delay: 0.4, type: "spring" }}
-                                            >
-                                                1
-                                            </motion.div>
+                                            {isActive && (
+                                                <motion.div 
+                                                    className="flex items-center justify-center flex-shrink-0 text-xl font-bold rounded-full bg-accent text-accent-foreground overflow-hidden"
+                                                    initial={{ width: 0, height: 0, opacity: 0 }}
+                                                    animate={{ 
+                                                        width: 56, 
+                                                        height: 56, 
+                                                        opacity: 1,
+                                                        transition: { 
+                                                            delay: 0.4,
+                                                            duration: 0.6,
+                                                            type: "spring",
+                                                            stiffness: 200,
+                                                            damping: 20
+                                                        }
+                                                    }}
+                                                    exit={{ width: 0, height: 0, opacity: 0 }}
+                                                >
+                                                    <motion.span
+                                                        initial={{ opacity: 0 }}
+                                                        animate={{ 
+                                                            opacity: 1,
+                                                            transition: { delay: 0.8, duration: 0.3 }
+                                                        }}
+                                                        exit={{ opacity: 0 }}
+                                                    >
+                                                        1
+                                                    </motion.span>
+                                                </motion.div>
+                                            )}
                                             <motion.p 
-                                                className="text-3xl font-semibold leading-tight"
+                                                className="text-xl font-semibold leading-tight"
                                                 initial={{ y: 20, opacity: 0 }}
                                                 whileInView={{ y: 0, opacity: 1 }}
                                                 viewport={{ amount: 0.3 }}
                                                 transition={{ duration: 0.6, delay: 0.6 }}
                                             >
-                                                <b>{t('description.centralize.title')}</b> {t('description.centralize.description')}
+                                                <b className='block text-3xl'>{t('description.centralize.title')}</b> {t('description.centralize.description')}
                                             </motion.p>
                                             
                                             {/* Progress bar que aparece solo cuando el slide está activo */}
-                                            <div className="mt-4 w-full">
+                                            <div className="mt-auto w-full">
                                                 <div className="h-1.5 bg-primary-foreground/20 rounded-full overflow-hidden">
                                                     <motion.div
                                                         className="h-full bg-primary-foreground"
