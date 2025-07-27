@@ -30,7 +30,7 @@ function FeaturesSection() {
                     plugins={[
                         Autoplay({ delay: 5000 })
                     ]}
-                    opts={{ loop: true, inViewThreshold: 0.2 }}
+                    opts={{ loop: true, inViewThreshold: 0.9 }}
                     className="container mx-auto mask-l-from-60% mask-l-to-90% mask-r-from-60% mask-r-to-90%"
                 >
                     <CarouselContent className="">
