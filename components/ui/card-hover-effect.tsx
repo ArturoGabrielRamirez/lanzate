@@ -24,18 +24,41 @@ export const HoverEffect = ({
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(0);
 
   return (
-    <div
+    <motion.div
       className={cn(
         "grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3  py-10",
         className
       )}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false }}
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: 0.2,
+          },
+        },
+      }}
     >
       {items.map((item, idx) => (
-        <div
+        <motion.div
           key={item?.link}
-          className="relative group block p-2 h-full w-full"
+          className="relative group block p-4 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(0)}
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: 50,
+              scale: 0.9
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+            },
+          }}
         >
           {/* <AnimatePresence> */}
           {hoveredIndex === idx && (
@@ -68,9 +91,9 @@ export const HoverEffect = ({
               {item.buttonText}
             </PricingCardButton>
           </PricingCard>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 
@@ -84,7 +107,7 @@ export const PricingCard = ({
   return (
     <div
       className={cn(
-        "relative z-0 flex flex-col items-center p-8 border rounded-md h-full bg-background group-hover:border-slate-700 transition-colors duration-200",
+        "relative z-0 flex flex-col items-center p-8 border rounded-md h-full bg-background group-hover:border-primary transition-colors duration-200",
         className
       )}
     >
@@ -103,7 +126,7 @@ export const PricingCardTitle = ({
   children: React.ReactNode;
 }) => {
   return (
-    <span className={cn("absolute top-0 px-6 pt-1 pb-2 font-medium rounded-b-lg bg-primary", className)}>
+    <span className={cn("absolute -top-10 px-6 pt-1 pb-2 font-medium rounded-b-lg bg-primary", className)}>
       {children}
     </span>
   );
@@ -123,7 +146,7 @@ export const PricingCardPrice = ({
   return (
     <div className={cn("flex items-center justify-center my-6 space-x-2 font-bold", className)}>
       {originalPrice && (
-        <span className="text-lg line-through dark:text-gray-700">
+        <span className="text-lg line-through text-muted-foreground/50">
           &nbsp;{originalPrice}&nbsp;
         </span>
       )}
