@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import * as motion from "motion/react-client"
 
 import { useTranslations } from "next-intl";
+import { EyeCatchingButton_v4 } from "./hero-section";
+import Link from "next/link";
 
 function PricingSection() {
 
@@ -33,7 +35,7 @@ function PricingSection() {
                     <button className="px-4 py-1 border rounded-r-lg border-primary">{t('buttons.annually')}</button>
                 </div>
                 <div className="grid max-w-md grid-cols-1 gap-6 mx-auto auto-rows-fr lg:max-w-full lg:gap-2 xl:gap-6 lg:grid-cols-3">
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
                         className="relative z-0 flex flex-col items-center p-8 border rounded-md"
@@ -73,9 +75,14 @@ function PricingSection() {
                             </li>
 
                         </ul>
-                        <Button>{t('buttons.subscribe')}</Button>
+                        {/* <Button>{t('buttons.subscribe')}</Button> */}
+                        <EyeCatchingButton_v4 asChild className="text-xl font-bold">
+                            <Link href="/login">
+                                {t('buttons.subscribe')}
+                            </Link>
+                        </EyeCatchingButton_v4>
                     </motion.div>
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
                         className="relative flex flex-col items-center p-8 border-2 rounded-md border-primary bg-secondary"
@@ -124,9 +131,13 @@ function PricingSection() {
                                 <span>{t('description.plan.professional.benefits.6')}</span>
                             </li>
                         </ul>
-                        <Button>{t('buttons.subscribe')}</Button>
+                        <EyeCatchingButton_v4 asChild className="text-xl font-bold">
+                            <Link href="/login">
+                                {t('buttons.subscribe')}
+                            </Link>
+                        </EyeCatchingButton_v4>
                     </motion.div>
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0, transition: { delay: 0.3 } }}
                         className="relative z-0 flex flex-col items-center p-8 border rounded-md "
@@ -181,7 +192,11 @@ function PricingSection() {
                                 <span>{t('description.plan.enterprise.benefits.7')}</span>
                             </li>
                         </ul>
-                        <Button>{t('buttons.subscribe')}</Button>
+                        <EyeCatchingButton_v4 asChild className="text-xl font-bold">
+                            <Link href="/login">
+                                {t('buttons.subscribe')}
+                            </Link>
+                        </EyeCatchingButton_v4>
                     </motion.div>
                 </div>
             </div>
