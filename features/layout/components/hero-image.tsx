@@ -35,121 +35,121 @@ const circleVariants = {
 
 
 export interface RocketIconHandle {
-  startAnimation: () => void;
-  stopAnimation: () => void;
+    startAnimation: () => void;
+    stopAnimation: () => void;
 }
 
 interface RocketIconProps extends HTMLAttributes<HTMLDivElement> {
-  size?: number;
+    size?: number;
 }
 
 const variants: Variants = {
-  normal: {
-    x: 0,
-    y: 0,
-  },
-  animate: {
-    x: [0, 0, -3, 2, -2, 1, -1, 0],
-    y: [0, -3, 0, -2, -3, -1, -2, 0],
-    transition: {
-      duration: 6,
-      ease: 'easeInOut',
-      repeat: Infinity,
-      repeatType: 'reverse',
-      times: [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1],
+    normal: {
+        x: 0,
+        y: 0,
     },
-  },
+    animate: {
+        x: [0, 0, -3, 2, -2, 1, -1, 0],
+        y: [0, -3, 0, -2, -3, -1, -2, 0],
+        transition: {
+            duration: 6,
+            ease: 'easeInOut',
+            repeat: Infinity,
+            repeatType: 'reverse',
+            times: [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1],
+        },
+    },
 };
 
 const fireVariants: Variants = {
-  normal: {
-    d: 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z',
-  },
-  animate: {
-    d: [
-      'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z',
-      'M4.5 16.5c-1.5 1.26-3 5.5-3 5.5s4.74-1 6-2.5c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z',
-      'M4.5 16.5c-1.5 1.26-2.2 4.8-2.2 4.8s3.94-0.3 5.2-1.8c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z',
-      'M4.5 16.5c-1.5 1.26-2.8 5.2-2.8 5.2s4.54-0.7 5.8-2.2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z',
-      'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z',
-    ],
-    transition: {
-      duration: 2,
-      ease: [0.4, 0, 0.2, 1],
-      repeat: Infinity,
-      times: [0, 0.2, 0.5, 0.8, 1],
+    normal: {
+        d: 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z',
     },
-  },
+    animate: {
+        d: [
+            'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z',
+            'M4.5 16.5c-1.5 1.26-3 5.5-3 5.5s4.74-1 6-2.5c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z',
+            'M4.5 16.5c-1.5 1.26-2.2 4.8-2.2 4.8s3.94-0.3 5.2-1.8c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z',
+            'M4.5 16.5c-1.5 1.26-2.8 5.2-2.8 5.2s4.54-0.7 5.8-2.2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z',
+            'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z',
+        ],
+        transition: {
+            duration: 2,
+            ease: [0.4, 0, 0.2, 1],
+            repeat: Infinity,
+            times: [0, 0.2, 0.5, 0.8, 1],
+        },
+    },
 };
 
 const RocketIcon = forwardRef<RocketIconHandle, RocketIconProps>(
-  ({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
-    const controls = useAnimation();
-    const isControlledRef = useRef(false);
+    ({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+        const controls = useAnimation();
+        const isControlledRef = useRef(false);
 
-    useImperativeHandle(ref, () => {
-      isControlledRef.current = true;
+        useImperativeHandle(ref, () => {
+            isControlledRef.current = true;
 
-      return {
-        startAnimation: () => controls.start('animate'),
-        stopAnimation: () => controls.start('normal'),
-      };
-    });
+            return {
+                startAnimation: () => controls.start('animate'),
+                stopAnimation: () => controls.start('normal'),
+            };
+        });
 
-    const handleMouseEnter = useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!isControlledRef.current) {
-          controls.start('animate');
-        } else {
-          onMouseEnter?.(e);
-        }
-      },
-      [controls, onMouseEnter]
-    );
+        const handleMouseEnter = useCallback(
+            (e: React.MouseEvent<HTMLDivElement>) => {
+                if (!isControlledRef.current) {
+                    controls.start('animate');
+                } else {
+                    onMouseEnter?.(e);
+                }
+            },
+            [controls, onMouseEnter]
+        );
 
-    const handleMouseLeave = useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!isControlledRef.current) {
-          controls.start('normal');
-        } else {
-          onMouseLeave?.(e);
-        }
-      },
-      [controls, onMouseLeave]
-    );
+        const handleMouseLeave = useCallback(
+            (e: React.MouseEvent<HTMLDivElement>) => {
+                if (!isControlledRef.current) {
+                    controls.start('normal');
+                } else {
+                    onMouseLeave?.(e);
+                }
+            },
+            [controls, onMouseLeave]
+        );
 
-    return (
-      <div
-        className={cn(className)}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        {...props}
-      >
-        <motion.svg
-          xmlns="http://www.w3.org/2000/svg"
-          width={size}
-          height={size}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          variants={variants}
-          animate={controls}
-        >
-          <motion.path
-            d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"
-            variants={fireVariants}
-            animate={controls}
-          />
-          <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-          <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
-          <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-        </motion.svg>
-      </div>
-    );
-  }
+        return (
+            <div
+                className={cn(className)}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                {...props}
+            >
+                <motion.svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={size}
+                    height={size}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    variants={variants}
+                    animate={controls}
+                >
+                    <motion.path
+                        d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"
+                        variants={fireVariants}
+                        animate={controls}
+                    />
+                    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+                    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+                    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+                </motion.svg>
+            </div>
+        );
+    }
 );
 
 RocketIcon.displayName = 'RocketIcon';
@@ -196,7 +196,7 @@ function SaleToastSingle({ message, amount, isVisible }: { message: string; amou
                         <div className="w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-r-[8px] border-r-white/10"></div>
                         <div className="absolute -left-[1px] top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[6px] border-r-border/50"></div>
                     </div>
-                    
+
                     <div className="flex items-center justify-center w-6 h-6 rounded-full bg-green-500/20 backdrop-blur-sm">
                         <Check className="w-3 h-3 text-green-400" />
                     </div>
@@ -228,9 +228,9 @@ export function AnimatedBeamMultipleOutputDemo({
     const [animationStep, setAnimationStep] = useState(0); // 0: device, 1: rocket, 2: user
     const [showSaleToast, setShowSaleToast] = useState(false); // Control single toast visibility
     const [currentSaleIndex, setCurrentSaleIndex] = useState(0); // Track which sale to show
-    
+
     const devices = ['smartphone', 'tablet', 'monitor'];
-    
+
     // Sale messages array
     const salesData = [
         { message: "New sale!", amount: "$89.99" },
@@ -243,9 +243,9 @@ export function AnimatedBeamMultipleOutputDemo({
     ];
 
     // Determine which circles should be active
-    const isDeviceActive = (deviceIndex: number) => 
+    const isDeviceActive = (deviceIndex: number) =>
         currentDevice === deviceIndex && animationStep >= 0;
-    
+
     const isRocketActive = animationStep >= 1;
     const isUserActive = animationStep >= 2;
 
@@ -263,23 +263,23 @@ export function AnimatedBeamMultipleOutputDemo({
             // Reset all - start with everything off
             setAnimationStep(-1);
             setShowSaleToast(false);
-            
+
             // After 0.5 seconds, light up device
             setTimeout(() => setAnimationStep(0), 500);
-            
+
             // After 1.5 seconds, light up rocket
             setTimeout(() => setAnimationStep(1), 1500);
-            
+
             // After 2.5 seconds, light up user and show sale toast
             setTimeout(() => {
                 setAnimationStep(2);
                 setShowSaleToast(true);
                 setCurrentSaleIndex(prev => (prev + 1) % salesData.length);
             }, 2500);
-            
+
             // After 3.5 seconds, hide sale toast
             setTimeout(() => setShowSaleToast(false), 4000);
-            
+
             // After 4 seconds, turn everything off and move to next device
             setTimeout(() => {
                 setAnimationStep(-1);
@@ -289,10 +289,10 @@ export function AnimatedBeamMultipleOutputDemo({
 
         // Start the animation immediately
         animationCycle();
-        
+
         // Repeat every 4.5 seconds
         const interval = setInterval(animationCycle, 4500);
-        
+
         return () => clearInterval(interval);
     }, [devices.length, salesData.length]);
 
@@ -300,7 +300,7 @@ export function AnimatedBeamMultipleOutputDemo({
         <div className="relative">
             <div
                 className={cn(
-                    "relative flex h-[500px] w-full items-center justify-center p-10 z-10 ",
+                    "relative flex lg:h-[500px] w-full items-center justify-center p-10 z-10 ",
                     className,
                 )}
                 ref={containerRef}
@@ -310,7 +310,7 @@ export function AnimatedBeamMultipleOutputDemo({
                         <div className="relative z-10 group">
                             <AnimatePresence>
                                 {isUserActive && (
-                                    <motion.div 
+                                    <motion.div
                                         className="absolute inset-0 bg-primary/30 blur-xl transition-all"
                                         initial={{ scale: 0, opacity: 0 }}
                                         animate={{ scale: 1.2, opacity: 1 }}
@@ -320,12 +320,11 @@ export function AnimatedBeamMultipleOutputDemo({
                                 )}
                             </AnimatePresence>
                             <FollowerPointerCard title="Users won't stop buying!">
-                                <Circle ref={div7Ref} isActive={isUserActive}>
+                                <Circle ref={div7Ref} isActive={isUserActive} className="size-12 lg:size-16">
                                     <User />
                                 </Circle>
                             </FollowerPointerCard>
-                            
-                            {/* Sale toast positioned relative to user circle */}
+
                             <SaleToastSingle
                                 message={salesData[currentSaleIndex].message}
                                 amount={salesData[currentSaleIndex].amount}
@@ -337,7 +336,7 @@ export function AnimatedBeamMultipleOutputDemo({
                         <div className="relative z-10 group">
                             <AnimatePresence>
                                 {isRocketActive && (
-                                    <motion.div 
+                                    <motion.div
                                         className="absolute inset-0 bg-primary/30 blur-xl transition-all"
                                         initial={{ scale: 0, opacity: 0 }}
                                         animate={{ scale: 1.2, opacity: 1 }}
@@ -347,18 +346,17 @@ export function AnimatedBeamMultipleOutputDemo({
                                 )}
                             </AnimatePresence>
                             <FollowerPointerCard title="Lanzate makes it easy to sell">
-                                <Circle ref={div6Ref} className="size-16" isActive={isRocketActive}>
-                                    {/* <Rocket /> */}
+                                <Circle ref={div6Ref} className="size-12 lg:size-16" isActive={isRocketActive}>
                                     <RocketIcon ref={rocketIconRef} />
                                 </Circle>
                             </FollowerPointerCard>
                         </div>
                     </div>
-                    <div className="flex flex-row justify-center gap-20">
+                    <div className="flex flex-row justify-center gap-10 lg:gap-20">
                         <div className="relative z-50 group">
                             <AnimatePresence>
                                 {isDeviceActive(0) && (
-                                    <motion.div 
+                                    <motion.div
                                         className="absolute inset-0 bg-primary/30 blur-xl transition-all"
                                         initial={{ scale: 0, opacity: 0 }}
                                         animate={{ scale: 1.2, opacity: 1 }}
@@ -368,7 +366,7 @@ export function AnimatedBeamMultipleOutputDemo({
                                 )}
                             </AnimatePresence>
                             <FollowerPointerCard title="Outage problems? Use it in your phone!">
-                                <Circle ref={div2Ref} isActive={isDeviceActive(0)}>
+                                <Circle ref={div2Ref} isActive={isDeviceActive(0)} className="size-12 lg:size-16">
                                     <Smartphone />
                                 </Circle>
                             </FollowerPointerCard>
@@ -376,7 +374,7 @@ export function AnimatedBeamMultipleOutputDemo({
                         <div className="relative hover:scale-110 z-40 transition-all group">
                             <AnimatePresence>
                                 {isDeviceActive(1) && (
-                                    <motion.div 
+                                    <motion.div
                                         className="absolute inset-0 bg-primary/30 blur-xl transition-all"
                                         initial={{ scale: 0, opacity: 0 }}
                                         animate={{ scale: 1.2, opacity: 1 }}
@@ -386,7 +384,7 @@ export function AnimatedBeamMultipleOutputDemo({
                                 )}
                             </AnimatePresence>
                             <FollowerPointerCard title="Available on any device!">
-                                <Circle ref={div3Ref} isActive={isDeviceActive(1)}>
+                                <Circle ref={div3Ref} isActive={isDeviceActive(1)} className="size-12 lg:size-16">
                                     <Tablet />
                                 </Circle>
                             </FollowerPointerCard>
@@ -394,7 +392,7 @@ export function AnimatedBeamMultipleOutputDemo({
                         <div className="relative hover:scale-110 z-30 transition-all group">
                             <AnimatePresence>
                                 {isDeviceActive(2) && (
-                                    <motion.div 
+                                    <motion.div
                                         className="absolute inset-0 bg-primary/30 blur-xl transition-all"
                                         initial={{ scale: 0, opacity: 0 }}
                                         animate={{ scale: 1.2, opacity: 1 }}
@@ -404,7 +402,7 @@ export function AnimatedBeamMultipleOutputDemo({
                                 )}
                             </AnimatePresence>
                             <FollowerPointerCard title="Benefit from our USB Barcode Scanner!">
-                                <Circle ref={div4Ref} isActive={isDeviceActive(2)}>
+                                <Circle ref={div4Ref} isActive={isDeviceActive(2)} className="size-12 lg:size-16">
                                     <Monitor />
                                 </Circle>
                             </FollowerPointerCard>

@@ -15,11 +15,13 @@ function HeroSection() {
     const words = ["soñá", "emprende", "crecé"]
 
     return (
-        <section className="flex flex-col md:grid md:grid-cols-[auto_auto] md:gap-10 xl:gap-20 2xl:gap-56 min-h-dvh justify-center items-center relative">
-            <div className="flex flex-col gap-4 items-start xl:max-w-2xl">
-                <p className="text-sm font-medium bg-primary/20 text-primary-foreground px-2 py-1 rounded-full border-primary border">Just released: Enhanced customization and new components</p>
-                <h1 className="text-4xl font-bold leading-none sm:text-6xl flex flex-col gap-2">
-                    <span>Vos <ContainerTextFlip words={words} /></span>
+        <section className="flex flex-col md:grid md:grid-cols-[auto_auto] md:gap-10 xl:gap-20 2xl:gap-56 min-h-dvh justify-center items-center relative pt-17 px-4 md:px-0">
+            <div className="flex flex-col gap-4 items-start xl:max-w-2xl pt-4 md:pt-0">
+                <p className="text-sm font-medium bg-primary/20 text-primary-foreground px-2 py-1 rounded-full border-primary border line-clamp-1">
+                    Just released: Enhanced customization and new components
+                </p>
+                <h1 className="text-4xl font-bold leading-none sm:text-6xl flex flex-col gap-2 justify-end">
+                    <span className="flex">Vos <ContainerTextFlip words={words} /></span>
                     <span className="text-primary">Lanzate lo hace posible.</span>
                 </h1>
                 <p className="text-xl mb-8">

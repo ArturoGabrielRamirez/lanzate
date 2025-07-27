@@ -1,4 +1,3 @@
-import { useTranslations } from 'next-intl';
 import HeroSection from "@/features/landing/components/hero-section";
 import FeaturesSection from "@/features/landing/components/features-section";
 import StatsSection from "@/features/landing/components/stats-section";
@@ -8,10 +7,8 @@ import PricingSection from "@/features/landing/components/pricing-section";
 
 export default function Home() {
 
-  const t = useTranslations('home');
-
   return (
-    <div className="max-md:pt-24 max-md:pb-12">
+    <>
       <HeroSection />
       <div className="relative">
         <FeaturesSection />
@@ -24,7 +21,7 @@ export default function Home() {
           )}
         />
       </div>
-      <PricingSection/>
-    </div>
+      <PricingSection />
+    </>
   );
 }
