@@ -18,6 +18,7 @@ export const HoverEffect = ({
     benefits: string[];
     buttonText: string;
     link: string;
+    id: number;
   }[];
   className?: string;
 }) => {
@@ -43,7 +44,7 @@ export const HoverEffect = ({
     >
       {items.map((item, idx) => (
         <motion.div
-          key={item?.link}
+          key={item?.id}
           className="relative group block p-4 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(0)}

@@ -15,6 +15,7 @@ function PricingSection() {
 
     const pricingPlans = [
         {
+            id: 1,
             title: t('description.plan.personal.title'),
             price: t('description.plan.personal.price'),
             priceDescription: "",
@@ -29,6 +30,7 @@ function PricingSection() {
             link: "/login"
         },
         {
+            id: 2,
             title: t('description.plan.professional.title'),
             price: "$10",
             originalPrice: "$12",
@@ -45,6 +47,7 @@ function PricingSection() {
             link: "/login"
         },
         {
+            id: 3,
             title: t('description.plan.enterprise.title'),
             price: "$30",
             originalPrice: "$40",
