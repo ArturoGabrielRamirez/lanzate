@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import EyeCatchingButton from "./eye-catching-button";
+import HeroDescription from "./hero-description";
 
 
 function HeroSection() {
@@ -15,46 +16,19 @@ function HeroSection() {
     const words = ["soñá", "emprende", "crecé"]
 
     return (
-        <section className="flex flex-col md:grid md:grid-cols-[auto_auto] md:gap-10 xl:gap-20 2xl:gap-56 min-h-dvh justify-center items-center relative pt-17 px-4 md:px-0">
-            <div className="flex flex-col gap-4 items-start xl:max-w-2xl pt-4 md:pt-0">
-                <p className="text-sm font-medium bg-primary/20 text-primary-foreground px-2 py-1 rounded-full border-primary border line-clamp-1">
+        <section className="flex flex-col md:grid md:grid-cols-[auto_auto] md:gap-10 xl:gap-20 2xl:gap-56 min-h-dvh justify-center items-center relative pt-17 px-4 lg:px-0">
+            <div className="flex flex-col items-center md:items-start xl:max-w-2xl pt-4 md:pt-0">
+                <p className="text-sm font-medium bg-primary/20 text-primary-foreground px-2 py-1 rounded-full border-primary border line-clamp-1 mb-8 md:mb-4">
                     Just released: Enhanced customization and new components
                 </p>
-                <h1 className="text-4xl font-bold leading-none sm:text-6xl flex flex-col gap-2 justify-end">
-                    <span className="flex">Vos <ContainerTextFlip words={words} /></span>
-                    <span className="text-primary">Lanzate lo hace posible.</span>
+                <h1 className="text-4xl font-bold leading-none sm:text-6xl flex flex-col gap-2 justify-end mb-0 md:mb-8 text-center md:text-left">
+                    <span className="flex flex-col items-center md:flex-row gap-2 md:gap-4">Vos <ContainerTextFlip words={words} className="text-5xl mx-auto md:mx-0" /></span>
+                    <span className="text-primary">Lanzate lo hace posible</span>
                 </h1>
-                <p className="text-xl mb-8">
-                    Gestionar tu negocio online nunca fue tan fácil. Enfocate en crecer mientras te damos el control total:
-                </p>
-                <ul className="flex flex-col gap-2">
-                    <li className="flex items-center gap-2">
-                        <Check className="size-4" />
-                        <span>gestioná tus productos</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                        <Check className="size-4" />
-                        <span>procesá ventas</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                        <Check className="size-4" />
-                        <span>organizá a tu equipo de trabajo</span>
-                    </li>
-                </ul>
-                <div className="flex flex-wrap justify-center gap-4">
-                    <EyeCatchingButton asChild className="text-xl font-bold">
-                        <Link href="/login">
-                            {t('buttons.get-started')}
-                        </Link>
-                    </EyeCatchingButton>
-                    <Button variant="outline" className="text-xl font-bold">
-                        <Link href="/about">
-                            {t('buttons.learn-more')}
-                        </Link>
-                    </Button>
-                </div>
+                <HeroDescription className="hidden md:block" />
             </div>
             <AnimatedBeamMultipleOutputDemo />
+            <HeroDescription className="block md:hidden" />
             <DotPattern
                 width={30}
                 height={30}
