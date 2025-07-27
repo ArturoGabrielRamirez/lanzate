@@ -9,7 +9,7 @@ async function TabLayout({ children, params }: TabLayoutProps) {
 
     const { tab } = await params
 
-    const t = await getTranslations("store.")
+    const t = await getTranslations("store")
 
     const titles = {
         overview: <><BookOpenText className="w-4 h-4" />Overview</>,
@@ -31,7 +31,7 @@ async function TabLayout({ children, params }: TabLayoutProps) {
                         {titles[tab as keyof typeof titles]}
                     </CardTitle>
                 </CardHeader>
-                <CardContent className="gap-4 flex flex-col grow">
+                <CardContent className="flex flex-col gap-4 grow">
                     {children}
                 </CardContent>
             </Card>
