@@ -38,7 +38,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className="min-h-dvh flex flex-col">
+      <body className="min-h-dvh flex flex-col bg-gradient-to-b from-background to-primary from-70%">
         <NextThemeProvider
           attribute="class"
           defaultTheme="system"
