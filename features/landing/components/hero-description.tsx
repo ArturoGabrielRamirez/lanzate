@@ -32,7 +32,7 @@ function HeroDescription({ className }: Props) {
                     <span>organizá a tu equipo de trabajo</span>
                 </li>
             </ul>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center md:justify-start gap-4">
                 <EyeCatchingButton asChild className="text-xl font-bold">
                     <Link href="/login">
                         {t('buttons.get-started')}
