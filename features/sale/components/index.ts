@@ -1,6 +1,5 @@
 export { default as SaleInterface } from './sale-interface'
 export { default as BarcodeScannerUSB } from './barcode-scanner-usb'
-export { default as BarcodeScannerButton } from './barcode-scanner-button'
 export { default as StoreSelector } from './store-selector'
 export { default as CartSection } from './cart-section'
 export { default as SearchSection } from './search-section'

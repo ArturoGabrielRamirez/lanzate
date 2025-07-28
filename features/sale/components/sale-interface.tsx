@@ -10,13 +10,11 @@ import ProductResults from './product-results'
 import BarcodeScannerUSB from './barcode-scanner-usb'
 
 type SaleInterfaceProps = {
-  storeName: string
-  storeDescription?: string
   storeId: number
 }
 
-function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfaceProps) {
-  const [scannedProducts, setScannedProducts] = useState<ScannedProduct[]>([])
+function SaleInterface({ storeId }: SaleInterfaceProps) {
+  /* const [scannedProducts, setScannedProducts] = useState<ScannedProduct[]>([]) */
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [barcodeResult, setBarcodeResult] = useState<ProductSearchResult>({
     product: null,
@@ -71,7 +69,7 @@ function SaleInterface({ storeName, storeDescription, storeId }: SaleInterfacePr
         })
 
         // Agregar a la lista de productos escaneados
-        setScannedProducts(prev => [payload, ...prev])
+        /* setScannedProducts(prev => [payload, ...prev]) */
       }
     } catch (error) {
       console.error('Error buscando producto:', error)
