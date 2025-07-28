@@ -6,9 +6,7 @@ import type { Metadata } from "next";
 import { LayoutProps } from "@/features/layout/types";
 import SubdomainProvider from "@/features/layout/components/subdomain-provider";
 import "../globals.css";
-import { NextIntlClientProvider, hasLocale } from 'next-intl';
-import { routing } from '@/i18n/routing'; // ✅ Importar routing
-import { notFound } from 'next/navigation'; // ✅ Importar notFound
+import { NextIntlClientProvider } from 'next-intl';
 import Footer from "@/features/header/components/footer";
 
 export const metadata: Metadata = {
