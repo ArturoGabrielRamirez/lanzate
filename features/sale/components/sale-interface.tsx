@@ -10,6 +10,8 @@ import ProductResults from './product-results'
 import BarcodeScannerUSB from './barcode-scanner-usb'
 
 type SaleInterfaceProps = {
+  storeName: string
+  storeDescription?: string
   storeId: number
 }
 
