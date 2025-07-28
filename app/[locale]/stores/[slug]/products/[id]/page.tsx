@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
-import { Category } from "@/prisma/generated/prisma"
+import { Category } from "@prisma/client"
 
 async function ProductDetailPage({ params }: ProductDetailPageProps) {
 

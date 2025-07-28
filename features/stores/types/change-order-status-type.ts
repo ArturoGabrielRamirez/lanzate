@@ -1,4 +1,4 @@
-import { Order } from "@/prisma/generated/prisma"
+import { Order } from "@prisma/client"
 
 export type ChangeOrderStatusButtonProps = {
     order: Order

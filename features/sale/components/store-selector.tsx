@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Store } from "@/prisma/generated/prisma"
+import { Store } from "@prisma/client"
 
 type StoreSelectorProps = {
     stores: Store[]

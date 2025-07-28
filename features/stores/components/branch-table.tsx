@@ -4,7 +4,7 @@ import CreateBranchButton from "@/features/branches/components/create-branch-but
 import EditBranchButton from "@/features/branches/components/edit-branch-button"
 import DeleteBranchButton from "@/features/branches/components/delete-branch-button"
 import { DataTable } from "@/features/layout/components/data-table"
-import { Branch } from "@/prisma/generated/prisma"
+import { Branch } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal, Eye, Edit, Trash2, Crown } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"

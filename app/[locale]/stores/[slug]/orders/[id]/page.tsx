@@ -6,7 +6,7 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { cn } from "@/lib/utils"
-import { OrderItem, Product, Category } from "@/prisma/generated/prisma"
+import { OrderItem, Product, Category } from "@prisma/client"
 import { getTranslations } from "next-intl/server"
 
 type OrderItemWithProduct = OrderItem & {
@@ -57,14 +57,14 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                     {t("order-details")}#{order.id}
                 </CardTitle>
             </CardHeader>
-            <CardContent className="grow flex">
-                <div className="grid grid-cols-1 gap-6 w-full">
+            <CardContent className="flex grow">
+                <div className="grid w-full grid-cols-1 gap-6">
                     
                     {/* Order Status and Basic Info */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                         <Card>
                             <CardHeader className="pb-3">
-                                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                                <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                                     <Package className="w-4 h-4" />
                                     {t("status")}
                                 </CardTitle>
@@ -88,7 +88,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
 
                         <Card>
                             <CardHeader className="pb-3">
-                                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                                <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                                     <Calendar className="w-4 h-4" />
                                     {t("date-created")}
                                 </CardTitle>
@@ -100,7 +100,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
 
                         <Card>
                             <CardHeader className="pb-3">
-                                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                                <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                                     <DollarSign className="w-4 h-4" />
                                     {t("total")}
                                 </CardTitle>
@@ -122,7 +122,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                         </CardHeader>
                         <CardContent>
                             <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 overflow-hidden rounded-full bg-secondary flex items-center justify-center">
+                                <div className="flex items-center justify-center w-12 h-12 overflow-hidden rounded-full bg-secondary">
                                     {order.user.avatar ? (
                                         <img
                                             src={order.user.avatar}
@@ -183,7 +183,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                                 {order.items.map((item: OrderItemWithProduct) => (
                                     <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-12 h-12 bg-secondary rounded-md flex items-center justify-center overflow-hidden">
+                                            <div className="flex items-center justify-center w-12 h-12 overflow-hidden rounded-md bg-secondary">
                                                 {item.product.image ? (
                                                     <img
                                                         src={item.product.image}
@@ -220,7 +220,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                                     <div>
                                         <p className="text-sm text-muted-foreground">{t("amount")}</p>
                                         <p className="font-medium">{formatCurrency(order.payment.amount)}</p>
@@ -246,7 +246,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                                     {order.created_by_employee && (
                                         <div>
                                             <p className="text-sm text-muted-foreground">Created by</p>

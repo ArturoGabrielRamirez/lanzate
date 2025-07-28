@@ -3,8 +3,8 @@ import { ResponseType } from "./response-type";
 import { FormPropsType } from "./form-type";
 import { ButtonWithPopupPropsType } from "./button-with-popup-type";
 import { Props as LayoutProps } from "./layout-type";
-import { EntityType } from "@/prisma/generated/prisma";
-import { ActionType } from "@/prisma/generated/prisma";
+import { EntityType } from "@prisma/client";
+import { ActionType } from "@prisma/client";
 
 export type InsertLogEntryProps = {
     action: ActionType,

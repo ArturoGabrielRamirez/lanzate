@@ -6,7 +6,7 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { cn } from "@/lib/utils"
-import { OrderItem, Product, Category } from "@/prisma/generated/prisma"
+import { OrderItem, Product, Category } from "@prisma/client"
 import { getTranslations } from "next-intl/server"
 
 type OrderItemWithProduct = OrderItem & {

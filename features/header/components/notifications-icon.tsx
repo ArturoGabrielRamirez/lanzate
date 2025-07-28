@@ -1,6 +1,6 @@
 "use client"
 
-import { Notification } from "@/prisma/generated/prisma"
+import { Notification } from "@prisma/client"
 import { createClient } from "@/utils/supabase/client"
 import { useEffect, useState } from "react"
 import { getNotifications } from "../actions/getNotifications"

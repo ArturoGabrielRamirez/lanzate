@@ -1,4 +1,4 @@
-import { Store } from "@/prisma/generated/prisma"
+import { Store } from "@prisma/client"
 
 export type Props = {
     store: Store

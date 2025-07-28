@@ -1,4 +1,4 @@
-import { Product as PrismaProduct, Store, StoreBalance, StoreCustomization } from "@/prisma/generated/prisma";
+import { Product as PrismaProduct, Store, StoreBalance, StoreCustomization } from "@prisma/client";
 
 export type Product = PrismaProduct;
 

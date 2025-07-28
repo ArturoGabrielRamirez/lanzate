@@ -3,7 +3,7 @@
 import { createServerSideClient } from "@/utils/supabase/server"
 import { getUserByEmail } from "../data/getUserByEmail"
 import { actionWrapper } from "@/utils/lib"
-import { Account, User } from "@/prisma/generated/prisma"
+import { Account, User } from "@prisma/client"
 
 export async function getUserInfo(): Promise<{
     payload: User & { Account: Account[] } | null,

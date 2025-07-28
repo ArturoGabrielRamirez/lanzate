@@ -2,7 +2,7 @@
 
 import { formatErrorResponse } from "@/utils/lib"
 import { selectStoreBySlug } from "../data/selectStoreBySlug"
-import { Branch, Store, Product, Category, StoreBalance } from "@/prisma/generated/prisma"
+import { Branch, Store, Product, Category, StoreBalance } from "@prisma/client"
 
 type GetStoresFromSlugReturn = {
     message: string
