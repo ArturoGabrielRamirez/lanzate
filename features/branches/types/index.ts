@@ -1,4 +1,3 @@
-import { Branch } from "@/prisma/generated/prisma"
 
 export type CreateBranchButtonProps = {
     storeId: number
