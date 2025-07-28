@@ -9,7 +9,6 @@ import { routing } from '@/i18n/routing'
 const intlMiddleware = createIntlMiddleware(routing)
 
 function shouldApplyI18n(pathname: string): boolean {
-
   if (
     pathname.startsWith('/api/') ||
     pathname.startsWith('/_next/') ||
@@ -40,9 +39,17 @@ function extractLocaleFromPath(pathname: string): { locale: string | null; pathW
 }
 
 export async function updateSession(request: NextRequest) {
-  const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost.com'
+  const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'
   const subdomain = extractSubdomain(request)
   const { pathname } = request.nextUrl
+
+  // Log para debug en producción
+  console.log('Middleware:', { 
+    hostname: request.nextUrl.hostname, 
+    pathname, 
+    subdomain,
+    rootDomain 
+  })
 
   if (pathname.startsWith('/auth/')) {
     let response = NextResponse.next({ request })
@@ -61,14 +68,25 @@ export async function updateSession(request: NextRequest) {
             })
             response = NextResponse.next({ request })
             cookiesToSet.forEach(({ name, value, options }) => {
-              response.cookies.set(name, value, options)
+              // Configurar cookies para subdominios
+              const cookieOptions = {
+                ...options,
+                domain: process.env.NODE_ENV === 'production' ? '.lanzate.app' : options?.domain,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : options?.sameSite
+              }
+              response.cookies.set(name, value, cookieOptions)
             })
           },
         },
       }
     )
 
-    await supabase.auth.getUser()
+    try {
+      await supabase.auth.getUser()
+    } catch (error) {
+      console.error('Auth error in middleware:', error)
+    }
 
     return response
   }
@@ -95,6 +113,7 @@ export async function updateSession(request: NextRequest) {
         response = NextResponse.next({ request })
       }
     } catch (error) {
+      console.error('i18n middleware error:', error)
       response = NextResponse.next({ request })
     }
   } else {
@@ -115,16 +134,27 @@ export async function updateSession(request: NextRequest) {
           })
           response = NextResponse.next({ request })
           cookiesToSet.forEach(({ name, value, options }) => {
-            response.cookies.set(name, value, options)
+            // Configurar cookies para subdominios en producción
+            const cookieOptions = {
+              ...options,
+              domain: process.env.NODE_ENV === 'production' ? '.lanzate.app' : options?.domain,
+              secure: process.env.NODE_ENV === 'production',
+              sameSite: process.env.NODE_ENV === 'production' ? 'none' : options?.sameSite
+            }
+            response.cookies.set(name, value, cookieOptions)
           })
         },
       },
     }
   )
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  let user = null
+  try {
+    const { data } = await supabase.auth.getUser()
+    user = data.user
+  } catch (error) {
+    console.error('Error getting user:', error)
+  }
 
   if (subdomain) {
     const { locale, pathWithoutLocale } = extractLocaleFromPath(pathname)
@@ -132,13 +162,18 @@ export async function updateSession(request: NextRequest) {
       return response
     }
 
-    const { payload: exists } = await validateSubdomain(subdomain)
+    try {
+      const { payload: exists } = await validateSubdomain(subdomain)
 
-    if (!exists) {
-      const url = new URL(request.url)
-      url.hostname = rootDomain
-      url.pathname = '/not-found'
-      return NextResponse.redirect(url)
+      if (!exists) {
+        const url = new URL(request.url)
+        url.hostname = rootDomain
+        url.pathname = '/not-found'
+        return NextResponse.redirect(url)
+      }
+    } catch (error) {
+      console.error('Error validating subdomain:', error)
+      // En caso de error, permitir continuar
     }
 
     const currentLocale = locale || routing.defaultLocale
