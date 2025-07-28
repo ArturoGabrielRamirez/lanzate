@@ -152,12 +152,12 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                             <div>
                                 <h4 className="text-lg font-semibold mb-2">{t("recent-orders")}</h4>
                                 <div className="space-y-2">
-                                    {branch.orders.slice(0, 5).map((order: any) => (
+                                    {branch.orders.slice(0, 5).map((order: Order) => (
                                         <div key={order.id} className="flex items-center justify-between p-2 bg-secondary/30 rounded">
                                             <div>
                                                 <p className="text-sm font-medium">{t("order")}#{order.id}</p>
                                                 <p className="text-xs text-muted-foreground">
-                                                    {formatDate(order.created_at)}
+                                                    {formatDate(order.created_at.toISOString())}
                                                 </p>
                                             </div>
                                             <div className="text-right">
