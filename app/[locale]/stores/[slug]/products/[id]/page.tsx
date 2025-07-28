@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
+import { Category } from "@/prisma/generated/prisma"
 
 async function ProductDetailPage({ params }: ProductDetailPageProps) {
 
@@ -60,7 +61,7 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
                             {product.categories.length === 0 && (
                                 <Badge variant="outline">{t("no-categories")}</Badge>
                             )}
-                            {product.categories.map((category: any) => (
+                            {product.categories.map((category: Category) => (
                                 <Badge key={category.id} variant="outline">{category.name}</Badge>
                             ))}
                         </div>
