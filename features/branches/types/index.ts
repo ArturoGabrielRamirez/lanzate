@@ -9,6 +9,7 @@ export type EditBranchButtonProps = {
     branch: any
     slug: string
     userId: number
+    onComplete?: () => void
 }
 
 export type DeleteBranchButtonProps = {
