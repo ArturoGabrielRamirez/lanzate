@@ -1,5 +1,3 @@
-import { Store } from "@/prisma/generated/prisma";
-
 export type Category = {
   id: number;
   name: string;
