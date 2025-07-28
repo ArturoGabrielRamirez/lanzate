@@ -2,7 +2,7 @@
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useStore } from "./store-provider"
-import { useQueryState, parseAsInteger } from "nuqs"
+import { useQueryState } from "nuqs"
 import { useTranslations } from "next-intl"
 
 function ProductAmountDisplay({ amount }: { amount: number }) {

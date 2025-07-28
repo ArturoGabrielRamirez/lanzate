@@ -22,7 +22,7 @@ function SubdomainProvider({ adminLayout, userLayout }: Props) {
 
             const parts = hostname.split('.');
 
-            if (parts.length >= 3) {
+            if (parts.length >= 4) {
                 return parts[0];
             }
             return null;

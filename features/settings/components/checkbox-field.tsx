@@ -21,6 +21,7 @@ function CheckboxField({ name, label }: CheckboxFieldProps) {
                     id={name}
                     checked={value || false}
                     onCheckedChange={(checked) => setValue(name, checked)}
+                    {...register(name)}
                 />
                 <Label htmlFor={name}>{label}</Label>
             </div>
