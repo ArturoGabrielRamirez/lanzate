@@ -5,7 +5,7 @@ import { Title } from "@/features/layout/components";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { User, UserCircle } from "lucide-react";
+import { User } from "lucide-react";
 
 export default async function AccountPage() {
 
