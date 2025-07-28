@@ -15,6 +15,7 @@ export type DeleteBranchButtonProps = {
     branchId: number
     slug: string
     userId: number
+    onComplete?: () => void
 }
 
 // Tipos para la página de detalle de sucursal
