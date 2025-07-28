@@ -1,5 +1,4 @@
 import { type EmailOtpType } from '@supabase/supabase-js'
-import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerSideClient } from '@/utils/supabase/server'
 
