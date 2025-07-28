@@ -10,6 +10,7 @@ import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
 import { Order } from "@prisma/client"
 
+
 async function BranchDetailPage({ params }: BranchDetailPageProps) {
 
     const { slug, id } = await params
