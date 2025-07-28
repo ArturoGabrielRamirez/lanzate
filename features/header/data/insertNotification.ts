@@ -11,7 +11,7 @@ export async function insertNotification(message: string) {
 
         const notification = await prisma.notification.create({
             data: {
-                message: "Cuchaaaa",
+                message: message,
                 title: "Nueva notificacion nenita!",
                 type: "notification",
                 user_id: 1
