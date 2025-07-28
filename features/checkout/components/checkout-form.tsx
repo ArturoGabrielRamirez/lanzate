@@ -25,8 +25,14 @@ function CheckoutForm({ subdomain, userId }: { subdomain: string, userId: string
     }
 
     const handleSubmit = async (formData: any) => {
-        await createNewOrder(formData, cart, shippingMethod, subdomain, userId)
+        const { error, message, payload } = await createNewOrder(formData, cart, shippingMethod, subdomain, userId)
+        if (error) throw new Error(message)
         clearCart()
+        return {
+            error: false,
+            message: "Order created successfully",
+            payload: payload
+        }
     }
 
     return (
