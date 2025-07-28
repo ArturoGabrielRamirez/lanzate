@@ -4,7 +4,7 @@ import { Notification } from "@/prisma/generated/prisma"
 import { createClient } from "@/utils/supabase/client"
 import { useEffect, useState } from "react"
 import { getNotifications } from "../actions/getNotifications"
-import { markNotificationAsRead } from "../actions/markNotificationAsRead"
+/* import { markNotificationAsRead } from "../actions/markNotificationAsRead" */
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Bell, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -31,7 +31,7 @@ function NotificationsIcon() {
                 event: "INSERT",
                 schema: "public",
                 table: "notifications",
-                filter: `user_id=eq.${user.id}`
+                filter: `user_id=eq.${user?.id}`
             }, handleShout).subscribe()
         }
 
@@ -49,8 +49,8 @@ function NotificationsIcon() {
         })
     }
 
-    const handleViewNotification = async (id: number) => {
-        const { error } = await markNotificationAsRead(id)
+    const handleViewNotification = async (/* id: number */) => {
+        /* const { error } = await markNotificationAsRead(id, user?.id)
 
         if (error) {
             return console.log(error)
@@ -58,7 +58,7 @@ function NotificationsIcon() {
 
         setNotifications(notifications => {
             return notifications.filter(notification => notification.id !== id)
-        })
+        }) */
     }
 
 
@@ -81,7 +81,7 @@ function NotificationsIcon() {
                         <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => handleViewNotification(notification.id)} >
+                            onClick={() => handleViewNotification(/* notification.id */)} >
                             <Eye />
                         </Button>
                         <DropdownMenuSeparator />
