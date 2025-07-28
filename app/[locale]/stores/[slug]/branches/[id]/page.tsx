@@ -8,6 +8,7 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
+import { Order } from "@/prisma/generated/prisma"
 
 async function BranchDetailPage({ params }: BranchDetailPageProps) {
 
@@ -37,7 +38,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
 
     const totalProducts = branch.stock?.length || 0
     const totalOrders = branch.orders?.length || 0
-    const totalRevenue = branch.orders?.reduce((sum: number, order: any) => sum + order.total_price, 0) || 0
+    const totalRevenue = branch.orders?.reduce((sum: number, order: Order) => sum + order.total_price, 0) || 0
 
     return (
         <Card>
