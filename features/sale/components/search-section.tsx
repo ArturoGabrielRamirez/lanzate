@@ -5,15 +5,14 @@ import { Search, Loader2 } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { searchProductsByNameAction } from '../actions/search-products-by-name'
-import type { ScannedProduct, ProductSearchByNameResult } from '../types'
+import type { ProductSearchByNameResult } from '../types'
 
 type SearchSectionProps = {
   storeId: number
-  onAddToCart: (product: ScannedProduct) => void
   onSearchResults: (results: ProductSearchByNameResult) => void
 }
 
-function SearchSection({ storeId, onAddToCart, onSearchResults }: SearchSectionProps) {
+function SearchSection({ storeId, onSearchResults }: SearchSectionProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState<ProductSearchByNameResult>({
     products: [],

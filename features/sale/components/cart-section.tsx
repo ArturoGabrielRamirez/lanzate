@@ -1,18 +1,16 @@
 "use client"
 
-import { ShoppingBasket, Plus, Minus, X, Trash2 } from 'lucide-react'
+import { ShoppingBasket, Trash2 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import type { CartItem } from '../types'
 
 type CartSectionProps = {
   cartItems: CartItem[]
-  onUpdateQuantity: (productId: number, newQuantity: number) => void
   onRemoveItem: (productId: number) => void
 }
 
-function CartSection({ cartItems, onUpdateQuantity, onRemoveItem }: CartSectionProps) {
+function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
