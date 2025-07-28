@@ -11,7 +11,7 @@ export type SubdomainData = {
 
 export type StoreWithProducts = Store & {
     products: Product[]
-    customization: StoreCustomization
+    customization: StoreCustomization | null
 }
 
 export type GetStoreWithProductsReturn = {
