@@ -13,7 +13,7 @@ function FeaturesSection() {
     const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
 
     return (
-        <section className="p-6">
+        <section className="p-6 pt-16 md:pt-0">
             <div className="container mx-auto">
                 <motion.p
                     initial={{ opacity: 0, y: 100 }}

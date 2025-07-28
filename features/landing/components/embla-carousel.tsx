@@ -219,7 +219,7 @@ function EmblaCarousel(props: PropType) {
 
                         return (
                             <div
-                                className="transform-gpu flex-none w-[70%] min-w-0 pl-6"
+                                className="transform-gpu flex-none w-[100%] md:w-[70%] min-w-0 pl-6"
                                 key={index}
                             >
                                 <div className="embla__slide__content rounded-[1.8rem] text-6xl font-semibold flex items-center justify-center h-96 select-none will-change-transform backface-hidden">
@@ -263,7 +263,7 @@ function EmblaCarousel(props: PropType) {
                                                         }}
                                                         exit={{ opacity: 0 }}
                                                     >
-                                                        1
+                                                        {index + 1}
                                                     </motion.span>
                                                 </motion.div>
                                             )}
@@ -274,7 +274,7 @@ function EmblaCarousel(props: PropType) {
                                                 viewport={{ amount: 0.3 }}
                                                 transition={{ duration: 0.6, delay: 0.6 }}
                                             >
-                                                <b className='block text-3xl'>{t('description.centralize.title')}</b> {t('description.centralize.description')}
+                                                <b className='block text-2xl md:text-3xl mb-2'>{t('description.centralize.title')}</b> {t('description.centralize.description')}
                                             </motion.p>
 
                                             {/* Progress bar que aparece solo cuando el slide está activo */}
