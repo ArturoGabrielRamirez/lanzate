@@ -29,9 +29,13 @@ export async function updateProduct(productId: number, data: any) {
 
                 const { data: payload, error } = await supabase.storage.from("product-images").upload(data.image.name, data.image)
 
-                if (error && error.statusCode != 409) throw new Error(error.message)
+                // Validar errores que no sean de archivo ya existente
+                if (error && !error.message.includes("already exists") && !error.message.includes("Duplicate")) {
+                    throw new Error(error.message)
+                }
 
-                if (error && error.statusCode == 409) {
+                // Si el archivo ya existe (validar por mensaje de error)
+                if (error && (error.message.includes("already exists") || error.message.includes("Duplicate"))) {
 
                     const { data: { publicUrl } } = supabase.storage.from("product-images").getPublicUrl(data.image.name)
 
