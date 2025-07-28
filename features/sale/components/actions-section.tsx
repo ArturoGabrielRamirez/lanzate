@@ -1,7 +1,7 @@
 "use client"
 
 import { CreditCard, RotateCcw, Trash2, Calculator, Receipt } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
 type ActionsSectionProps = {
@@ -16,7 +16,7 @@ type ActionsSectionProps = {
 }
 
 function ActionsSection({
-  cartTotal,
+  /* cartTotal, */
   cartItemCount,
   onFinalizeSale,
   onRefund,
@@ -26,13 +26,13 @@ function ActionsSection({
   disabled = false
 }: ActionsSectionProps) {
 
-  const formatPrice = (price: number) => {
+  /* const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
       currency: 'ARS'
     }).format(price)
   }
-
+ */
   return (
     <Card className='lg:area-[buttons] h-fit'>
       {/* <CardHeader>

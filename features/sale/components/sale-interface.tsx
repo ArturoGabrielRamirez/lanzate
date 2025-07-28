@@ -182,11 +182,11 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
     alert('Función de impresión no implementada aún')
   }
 
-  const handleViewOrderHistory = () => {
+  /* const handleViewOrderHistory = () => {
     // TODO: Implementar vista de historial de órdenes
     console.log('Viendo historial de órdenes')
     alert('Vista de historial no implementada aún')
-  }
+  } */
 
   return (
     <div className="grid grid-cols-1 lg:grid-areas-[search_barcode_cart,results_results_cart,buttons_buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_1fr_350px] xl:grid-cols-[1fr_1fr_450px] lg:grid-rows-[min-content_1fr_min-content]">
