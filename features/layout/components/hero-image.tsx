@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 
 import { cn } from "@/lib/utils";
 import { AnimatedBeam } from "@/components/magicui/animated-beam";
-import { Monitor, Rocket, Smartphone, Tablet, User, Check } from "lucide-react";
+import { Monitor, Smartphone, Tablet, User, Check } from "lucide-react";
 import { FollowerPointerCard } from "@/components/ui/following-pointer";
 
 import type { Variants } from 'motion/react';
