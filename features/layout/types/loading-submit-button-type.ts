@@ -1,4 +1,4 @@
 export type Props = {
-    text?: string
+    text?: string | React.ReactNode
     disabled?: boolean
 }
