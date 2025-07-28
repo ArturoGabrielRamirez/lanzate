@@ -5,7 +5,7 @@ import { updateBranch as updateBranchInDb } from "../data/updateBranch"
 import { revalidatePath } from "next/cache"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 // import { canEditBranch } from "../access/canEditBranch"
-import { PrismaClient } from "@/prisma/generated/prisma"
+import { PrismaClient } from '@prisma/client'
 
 export async function editBranch(branchId: number, data: any, slug: string, userId: number) {
     return actionWrapper(async () => {

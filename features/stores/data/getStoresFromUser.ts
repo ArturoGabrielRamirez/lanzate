@@ -1,6 +1,6 @@
 "use server"
 
-import { PrismaClient, Store } from "@/prisma/generated/prisma"
+import { PrismaClient, Store } from '@prisma/client'
 import { formatErrorResponse } from "@/utils/lib"
 
 type GetStoresFromUserReturn = {

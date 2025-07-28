@@ -1,6 +1,6 @@
 "use server"
 
-import { PrismaClient } from "@/prisma/generated/prisma"
+import { PrismaClient } from '@prisma/client'
 import { formatErrorResponse } from "@/utils/lib"
 
 export async function getProductByBarcode(barcode: string, storeId: number) {

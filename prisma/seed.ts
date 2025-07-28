@@ -1,4 +1,4 @@
-import { PrismaClient } from './generated/prisma'; // Ajusta el path si tu output es diferente
+import { PrismaClient } from '@prisma/client' // Ajusta el path si tu output es diferente
 
 const prisma = new PrismaClient();
 

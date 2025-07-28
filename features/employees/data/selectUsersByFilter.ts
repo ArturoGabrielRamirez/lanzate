@@ -1,7 +1,8 @@
 "use server"
 
-import { PrismaClient } from "@/prisma/generated/prisma"
+import { PrismaClient } from '@prisma/client'
 import { actionWrapper } from "@/utils/lib"
+
 
 export async function selectUsersByFilter(filter: string, storeId: number, userId: number) {
     console.log("🚀 ~ selectUsersByFilter ~ userId:", userId)

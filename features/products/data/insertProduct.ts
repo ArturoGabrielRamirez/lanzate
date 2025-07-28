@@ -1,7 +1,7 @@
 "use server"
 
 
-import { PrismaClient } from "@/prisma/generated/prisma"
+import { PrismaClient } from '@prisma/client'
 import { actionWrapper } from "@/utils/lib"
 import { createServerSideClient } from "@/utils/supabase/server"
 import randomstring from "randomstring"
