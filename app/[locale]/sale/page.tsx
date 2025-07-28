@@ -4,9 +4,7 @@ import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getStoresFromUser } from "@/features/stores/actions/getStoresFromUser"
 import { StoreSelector } from "@/features/sale/components"
 
-type Props = {}
-
-async function SalePage({ }: Props) {
+async function SalePage() {
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
