@@ -10,7 +10,6 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { routing } from '@/i18n/routing'; // ✅ Importar routing
 import { notFound } from 'next/navigation'; // ✅ Importar notFound
 import Footer from "@/features/header/components/footer";
-/* import { ReactNode } from "react"; */
 
 export const metadata: Metadata = {
   title: 'Lanzate',
@@ -51,7 +50,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                 adminLayout={(
                   <>
                     <Header />
-                    <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow'>
+                    <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
                       {children}
                     </main>
                     <Footer />
