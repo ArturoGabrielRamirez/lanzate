@@ -4,7 +4,7 @@ import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { createProduct } from "../actions/createProduct"
 import { productCreateSchema } from "../schemas/product-schema"
 import { formatErrorResponse } from "@/utils/lib"
-import { Plus, Upload, X } from "lucide-react"
+import { DollarSign, FileText, Package, Plus, Tag, Upload, X } from "lucide-react"
 import { useCallback, useState } from "react"
 import { CreateProductButtonProps } from "@/features/products/type"
 import CategorySelect from "@/features/store-landing/components/category-select-"
@@ -106,10 +106,10 @@ function CreateProductButton({ storeId, userId }: CreateProductButtonProps) {
                     ))}
                 </FileUploadList>
             </FileUpload>
-            <InputField name="name" label="Name" type="text" />
-            <InputField name="price" label="Price" type="number" defaultValue="0" />
-            <InputField name="stock" label="Stock" type="number" defaultValue="0" />
-            <InputField name="description" label="Description" type="text" />
+            <InputField name="name" label="Name" type="text" startContent={<Tag />} />
+            <InputField name="price" label="Price" type="number" defaultValue="0" startContent={<DollarSign />} />
+            <InputField name="stock" label="Stock" type="number" defaultValue="0" startContent={<Package />} />
+            <InputField name="description" label="Description" type="text" startContent={<FileText />} />
             <CategorySelect onChange={handleAddCategory} />
         </ButtonWithPopup>
     )

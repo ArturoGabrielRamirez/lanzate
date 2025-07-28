@@ -19,7 +19,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, Search, X } from "lucide-react"
 import { ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
@@ -86,6 +86,7 @@ export function DataTable<TData, TValue>({
                         table.getColumn(filterKey)?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm grow"
+                    startContent={<Search />}
                 />
                 {topActions}
             </div>

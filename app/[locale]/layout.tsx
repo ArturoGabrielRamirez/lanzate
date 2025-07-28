@@ -9,6 +9,7 @@ import "../globals.css";
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { routing } from '@/i18n/routing'; // ✅ Importar routing
 import { notFound } from 'next/navigation'; // ✅ Importar notFound
+import Footer from "@/features/header/components/footer";
 /* import { ReactNode } from "react"; */
 
 export const metadata: Metadata = {
@@ -37,7 +38,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className="min-h-dvh flex flex-col">
+      <body className="min-h-dvh flex flex-col bg-gradient-to-b from-background to-primary from-70%">
         <NextThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -53,6 +54,8 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                     <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow'>
                       {children}
                     </main>
+                    <Footer />
+
                     <Toaster />
                   </>
                 )}
