@@ -8,6 +8,8 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
+import { Order } from "@prisma/client"
+
 
 async function BranchDetailPage({ params }: BranchDetailPageProps) {
 
@@ -46,20 +48,20 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                     <Link href={`/stores/${slug}/branches`}>
                         <ArrowLeft className="size-4" />
                     </Link>
-                   {t("branch-details")}
+                    {t("branch-details")}
                 </CardTitle>
             </CardHeader>
             <CardContent className="flex grow">
                 <div className="grid grid-cols-1 lg:grid-cols-[max-content_1fr] grid-rows-[auto_1fr] lg:grid-rows-1 gap-6 w-full">
                     {/* Branch Icon/Image */}
                     <div className="relative flex items-center justify-center w-full overflow-hidden rounded-md h-35 lg:h-full lg:w-60 xl:w-80 group bg-secondary">
-                        <img 
-                            src={`https://api.dicebear.com/9.x/initials/svg?seed=${branch.name}`} 
-                            alt="Branch Icon" 
-                            className="object-cover w-full h-full transition-all duration-300 bg-center rounded-md group-hover:scale-105" 
+                        <img
+                            src={`https://api.dicebear.com/9.x/initials/svg?seed=${branch.name}`}
+                            alt="Branch Icon"
+                            className="object-cover w-full h-full transition-all duration-300 bg-center rounded-md group-hover:scale-105"
                         />
                     </div>
-                    
+
                     {/* Branch Details */}
                     <div className="flex flex-col gap-4">
                         <div>
@@ -91,7 +93,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                                     </p>
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-center gap-2 p-3 rounded-lg bg-secondary/50">
                                 <Phone className="w-4 h-4 text-muted-foreground" />
                                 <div>
@@ -101,7 +103,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                                     </p>
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-center gap-2 p-3 rounded-lg bg-secondary/50">
                                 <Mail className="w-4 h-4 text-muted-foreground" />
                                 <div>
@@ -122,7 +124,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                                     <p className="text-2xl font-bold">{totalProducts}</p>
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-center gap-2 p-3 rounded-lg bg-secondary/50">
                                 <ShoppingCart className="w-4 h-4 text-green-500" />
                                 <div>
@@ -130,7 +132,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                                     <p className="text-2xl font-bold">{totalOrders}</p>
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-center gap-2 p-3 rounded-lg bg-secondary/50">
                                 <DollarSign className="w-4 h-4 text-purple-500" />
                                 <div>
