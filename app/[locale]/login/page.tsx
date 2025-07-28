@@ -8,7 +8,7 @@ export default async function LoginPage() {
     const t = await getTranslations("auth")
 
     return (
-        <div className="flex flex-col p-4 grow max-md:pt-24">
+        <div className="flex flex-col p-4 grow pt-17">
             <Title title={t("login")} />
             <div className='flex flex-col items-center w-full max-w-4xl gap-4 mx-auto lg:flex-row grow'>
                 <div className='w-full lg:pr-10'>

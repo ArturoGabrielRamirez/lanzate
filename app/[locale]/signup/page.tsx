@@ -6,7 +6,7 @@ export default function SignupPage() {
     const t = useTranslations("auth");
 
     return (
-        <div className='p-4 grow flex flex-col max-md:pt-24'>
+        <div className='p-4 grow flex flex-col pt-17'>
             <Title title={t("signup")} />
             <section className='grow flex justify-center items-center w-full'>
                 <SignupForm />
