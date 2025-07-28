@@ -2,7 +2,7 @@
 
 import { formatErrorResponse } from "@/utils/lib"
 import { getStoresFromUser as getStoresFromUserDb } from "../data/getStoresFromUser"
-import { Store } from "@/prisma/generated/prisma"
+import { Store } from "@prisma/client"
 
 type GetStoresFromUserReturn = {
     message: string

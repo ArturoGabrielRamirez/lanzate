@@ -1,4 +1,4 @@
-import { Product, Category } from "@/prisma/generated/prisma"
+import { Product, Category } from "@prisma/client"
 
 export type Props = {
     product: Product & { categories: Category[] }

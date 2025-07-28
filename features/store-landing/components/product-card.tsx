@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { useCart } from "@/features/cart/components/cart-provider"
-import { Product } from "@/prisma/generated/prisma"
+import { Product } from "@prisma/client"
 import { ShoppingCart } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"

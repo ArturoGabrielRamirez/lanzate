@@ -3,7 +3,7 @@
 import { ButtonWithPopup } from "@/features/layout/components"
 import { formatErrorResponse } from "@/utils/lib"
 import { Trash2 } from "lucide-react"
-import { Order } from "@/prisma/generated/prisma"
+import { Order } from "@prisma/client"
 import { changeOrderStatus } from "../actions/changeOrderStatus"
 
 type Props = {

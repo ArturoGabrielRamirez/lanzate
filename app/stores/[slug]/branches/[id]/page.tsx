@@ -8,7 +8,7 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
-import { Order } from "@/prisma/generated/prisma"
+import { Order } from "@prisma/client"
 
 async function BranchDetailPage({ params }: BranchDetailPageProps) {
 
