@@ -11,7 +11,7 @@ import {
     DrawerTrigger,
     DrawerClose
 } from "@/components/ui/drawer"
-import { ThemeToggle, NotificationsIcon, AccountDropdown } from "@/features/header/components"
+import { ThemeToggle, NotificationsIcon } from "@/features/header/components"
 import { Button } from "@/components/ui/button"
 
 type MobileMenuProps = {

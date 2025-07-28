@@ -2,11 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react'
 import { EmblaOptionsType } from 'embla-carousel'
 import {
-    NextButton,
-    PrevButton,
     usePrevNextButtons
 } from './embla-carousel-arrow-buttons'
-import { DotButton, useDotButton } from './embla-carousel-dot-button'
+import { useDotButton } from './embla-carousel-dot-button'
 import * as motion from "motion/react-client"
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
@@ -108,34 +106,32 @@ function EmblaCarousel(props: PropType) {
     const tweenNodes = useRef<HTMLElement[]>([])
     const t = useTranslations('home')
 
-    const { selectedIndex, scrollSnaps, onDotButtonClick } =
+    const { selectedIndex/* , onDotButtonClick  */} =
         useDotButton(emblaApi, undefined)
 
-    const {
-        prevBtnDisabled,
-        nextBtnDisabled,
+    /* const {
         onPrevButtonClick,
         onNextButtonClick
-    } = usePrevNextButtons(emblaApi, undefined)
+    } = usePrevNextButtons(emblaApi, undefined) */
 
     // Usar auto-scroll
-    const { resetAutoScroll } = useAutoScroll(emblaApi, 5000)
+    /* const { resetAutoScroll } = useAutoScroll(emblaApi, 5000) */
 
     // Modificar los handlers de navegación para resetear el auto-scroll
-    const handlePrevClick = useCallback(() => {
+    /* const handlePrevClick = useCallback(() => {
         onPrevButtonClick()
         resetAutoScroll()
-    }, [onPrevButtonClick, resetAutoScroll])
+    }, [onPrevButtonClick, resetAutoScroll]) */
 
-    const handleNextClick = useCallback(() => {
+    /* const handleNextClick = useCallback(() => {
         onNextButtonClick()
         resetAutoScroll()
-    }, [onNextButtonClick, resetAutoScroll])
+    }, [onNextButtonClick, resetAutoScroll]) */
 
-    const handleDotClick = useCallback((index: number) => {
+    /* const handleDotClick = useCallback((index: number) => {
         onDotButtonClick(index)
         resetAutoScroll()
-    }, [onDotButtonClick, resetAutoScroll])
+    }, [onDotButtonClick, resetAutoScroll]) */
 
     const setTweenNodes = useCallback((emblaApi: EmblaCarouselType) => {
         if (!emblaApi) return
