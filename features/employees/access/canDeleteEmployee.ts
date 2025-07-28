@@ -1,7 +1,7 @@
 "use server"
 
 import { getUserById } from "@/features/layout/data/getUserById"
-import { PrismaClient } from "@/prisma/generated/prisma"
+import { PrismaClient } from '@prisma/client'
 
 export async function canDeleteEmployee(employeeId: number, userId: number) {
     try {

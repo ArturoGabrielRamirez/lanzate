@@ -5,7 +5,7 @@ import { deleteBranch as deleteBranchFromDb } from "../data/deleteBranch"
 import { revalidatePath } from "next/cache"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 // import { canDeleteBranch } from "../access/canDeleteBranch"
-import { PrismaClient } from "@/prisma/generated/prisma"
+import { PrismaClient } from '@prisma/client'
 
 export async function deleteBranch(branchId: number, slug: string, userId: number) {
     return actionWrapper(async () => {

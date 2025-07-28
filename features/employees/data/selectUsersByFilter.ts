@@ -1,6 +1,6 @@
 "use server"
 
-import { PrismaClient } from "@/prisma/generated/prisma"
+import { PrismaClient } from '@prisma/client'
 import { actionWrapper } from "@/utils/lib"
 
 export async function selectUsersByFilter(filter: string, storeId: number, userId: number) {
@@ -60,7 +60,7 @@ export async function selectUsersByFilter(filter: string, storeId: number, userI
         })
 
         // Transform the data to include employee status
-        const usersWithEmployeeStatus = users.map(user => ({
+        const usersWithEmployeeStatus = users.map((user: { Employee: string | any[] }) => ({
             ...user,
             isEmployee: user.Employee.length > 0,
             employeeData: user.Employee[0] || null
