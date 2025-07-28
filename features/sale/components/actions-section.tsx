@@ -1,6 +1,6 @@
 "use client"
 
-import { Settings, CreditCard, RotateCcw, Trash2, Calculator, Receipt, DollarSign } from 'lucide-react'
+import { CreditCard, RotateCcw, Trash2, Calculator, Receipt } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 

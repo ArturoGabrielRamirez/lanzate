@@ -9,7 +9,7 @@ type Props = {
     userId: number
 }
 
-function QuickActionsBar({ slug, storeId, userId }: Props) {
+function QuickActionsBar({ storeId, userId }: Props) {
 
     return (
         <Card className="grow hover:bg-accent transition-colors duration-200 justify-between">
