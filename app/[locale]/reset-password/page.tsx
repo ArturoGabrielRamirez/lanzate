@@ -3,10 +3,10 @@ import { DotPattern } from '@/components/magicui/dot-pattern';
 import { ResetPassword } from '@/features/auth/components'
 /* import { Title } from '@/features/layout/components' */
 import { cn } from '@/lib/utils';
-import { useTranslations } from 'next-intl';
+/* import { useTranslations } from 'next-intl'; */
 export default function ResetPage() {
 
-  const t = useTranslations("auth");
+  /* const t = useTranslations("auth"); */
 
   return (
     <div className='p-4 grow flex flex-col pt-17 relative'>
