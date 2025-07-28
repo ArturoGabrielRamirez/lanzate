@@ -27,7 +27,7 @@ export async function getUserById(id: number): Promise<{
 
         return {
             payload: user,
-            error: null,
+            error: false,
             message: "User found"
         }
 
