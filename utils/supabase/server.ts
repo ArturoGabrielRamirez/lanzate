@@ -10,16 +10,20 @@ export function createServerSideClient() {
     {
       cookies: {
         async getAll() {
+          console.log("🚀 ~ getAll ~ cookieStore:", await cookieStore)
+          console.log("🚀 ~ getAll ~ cookieStore:", (await cookieStore).getAll())
           return (await cookieStore).getAll();
         },
         setAll(cookiesToSet) {
+          console.log("🚀 ~ setAll ~ cookiesToSet:", cookiesToSet)
           try {
             cookiesToSet.forEach(async ({ name, value, options }) => {
               const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost';
               const cookieOptions = {
                 ...options,
                 //domain: rootDomain.includes('localhost') ? 'localhost' : `.${rootDomain}`,
-                domain: 'localhost.com',
+                //domain: 'localhost.com',
+                domain: 'lanzate.app',
                 path: '/',
                 secure: !rootDomain.includes('localhost'),
                 sameSite: 'lax' as const,
@@ -27,11 +31,15 @@ export function createServerSideClient() {
 
               (await cookieStore).set(name, value, cookieOptions);
             });
-          } catch {
+          } catch (error) {
             // En algunos contextos del servidor no se pueden establecer cookies
+            console.log("🚀 ~ setAll ~ error:", error)
           }
         },
       },
+      auth: {
+        flowType: "pkce"
+      }
     }
   );
 }
