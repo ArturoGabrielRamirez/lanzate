@@ -7,6 +7,7 @@ import type { CartItem } from '../types'
 
 type CartSectionProps = {
   cartItems: CartItem[]
+  onUpdateQuantity: (productId: number, newQuantity: number) => void
   onRemoveItem: (productId: number) => void
 }
 

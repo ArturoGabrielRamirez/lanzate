@@ -3,7 +3,6 @@
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { employeeUpdateSchema } from "../schemas/employee-schema"
 import { editEmployee } from "../actions/editEmployee"
-import { formatErrorResponse } from "@/utils/lib"
 import { Pencil } from "lucide-react"
 import { EditEmployeeButtonProps } from "@/features/employees/types"
 import { Checkbox } from "@/components/ui/checkbox"

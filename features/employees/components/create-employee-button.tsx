@@ -15,7 +15,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
     const [users, setUsers] = useState<UserWithEmployeeStatus[]>([])
     const [selectedUser, setSelectedUser] = useState<UserWithEmployeeStatus | null>(null)
 
-    const handleAddEmployee = async (value: string): Promise<ResponseType<any>> => {
+    const handleAddEmployee = async (): Promise<ResponseType<any>> => {
         if (!selectedUser) {
             return {
                 error: true,
