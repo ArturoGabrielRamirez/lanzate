@@ -1,25 +1,22 @@
-import { handleGoogleLogIn } from '@/features/auth/actions/handleGoogleLogIn'
 import { LoginForm, ResetPasswordLink } from '@/features/auth/components'
-import { Form, Title } from '@/features/layout/components'
-import { Label } from '@/components/ui/label'
-import { getTranslations } from 'next-intl/server';
+import { GoogleLoginButton } from '@/features/auth/components/login-google-button'
+import { Title } from '@/features/layout/components'
+import { getTranslations } from 'next-intl/server'
+
 
 export default async function LoginPage() {
-
-    const t = await getTranslations("auth");
+    const t = await getTranslations("auth")
 
     return (
-        <div className="p-4 grow flex flex-col max-md:pt-24">
+        <div className="flex flex-col p-4 grow max-md:pt-24">
             <Title title={t("login")} />
-            <div className='flex flex-col lg:flex-row gap-4 w-full max-w-4xl mx-auto grow items-center'>
+            <div className='flex flex-col items-center w-full max-w-4xl gap-4 mx-auto lg:flex-row grow'>
                 <div className='w-full lg:pr-10'>
                     <LoginForm />
                     <ResetPasswordLink />
                 </div>
-                <div className='lg:w-1 lg:h-100 w-full h-1 bg-primary/50'></div>
-                <Form formAction={handleGoogleLogIn} className={"w-full grid place-content-left lg:pl-10"} contentButton='Google'>
-                    <Label htmlFor='google' className='mb-2 w-full text-center justify-center'>{t("description.or-login-with")}</Label>
-                </Form>
+                <div className='w-full h-1 lg:w-1 lg:h-100 bg-primary/50'></div>
+                <GoogleLoginButton orLoginWith={t("description.or-login-with")} />
             </div>
         </div>
     )

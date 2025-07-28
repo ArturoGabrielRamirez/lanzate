@@ -2,6 +2,7 @@
 
 import { Form, InputField } from '@/features/layout/components'
 import { formatErrorResponse } from '@/utils/lib'
+import { Link } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
@@ -30,7 +31,7 @@ export default function UpdatePasswordForm() {
 
     return done ? (
         <div className="flex flex-col items-center justify-center h-full">
-            <p>{t("reset-password.password-updated")}</p>
+            <p>{t("reset-password.description.password-updated")}</p>
         </div>
     ) : (
         <Form
@@ -38,9 +39,9 @@ export default function UpdatePasswordForm() {
             contentButton={t("buttons.update-password")}
             successMessage={t("toast-message.success-password-updated")}
             loadingMessage={t("toast-message.updating-password")}
-            className="flex flex-col p-8 gap-4 sm:gap-6 w-full max-w-xl"
+            className="flex flex-col w-full max-w-xl gap-4 p-8 sm:gap-6"
         >
-            <InputField name='password' label={t("auth.reset-password.new-password")} type='password' />
+            <InputField name='password' label={t("reset-password.new-password")} type='password' />
         </Form>
     )
 }

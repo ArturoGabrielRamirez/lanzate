@@ -22,20 +22,21 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
         return console.log(error)
     }
 
-    const t = await getTranslations("store")
+    const t = await getTranslations("store.layout")
+    const t2 = await getTranslations("store")
 
     return (
-        <div className="p-4 grow flex flex-col max-md:pt-24 max-md:pb-12">
+        <div className="flex flex-col p-4 grow max-md:pt-24 max-md:pb-12">
             <Title
                 title={(
                     <div className="flex items-center gap-2">
                         <Store />
-                        {t("store-details")}
+                        {t2("store-details")}
                     </div>
                 )}
                 breadcrumbs={[
                     {
-                        label: t("plural-title"),
+                        label: t2("plural-title"),
                         href: "/stores"
                     },
                     {
@@ -46,12 +47,12 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
             />
             <section className="flex items-center gap-4">
                 <Card className="w-full">
-                    <CardContent className="flex md:items-center gap-4 w-full justify-between flex-col xs:flex-row">
+                    <CardContent className="flex flex-col justify-between w-full gap-4 md:items-center xs:flex-row">
                         <div className="flex items-center gap-4">
                             <img
                                 src={`https://api.dicebear.com/9.x/initials/svg?seed=${store.name}`}
                                 alt="User avatar"
-                                className="size-24 rounded-full"
+                                className="rounded-full size-24"
                             />
                             <div className="flex flex-col gap-2">
                                 <p className="text-xl font-bold">{store.name}</p>
@@ -63,17 +64,17 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                             </div>
                         </div>
                         <div>
-                            <p>{t("current-balance")}</p>
-                            <p className="text-lg lg:text-2xl font-bold">{Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(store.balance.current_balance)}</p>
+                            <p>{t2("current-balance")}</p>
+                            <p className="text-lg font-bold lg:text-2xl">{Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(store.balance.current_balance)}</p>
                         </div>
                     </CardContent>
                 </Card>
             </section>
-            <section className="py-4 grow flex">
+            <section className="flex py-4 grow">
                 <TabsClientContainer>
-                    <TabsList className="w-full h-full items-start max-md:bg-transparent">
-                        <div className="flex md:block w-full fixed bottom-0 md:relative bg-accent z-10 overflow-x-auto md:h-full">
-                            <TabTriggerLink value="overview" text={t("layout.overview")} slug={slug} icon={<BookOpenText className="w-4 h-4" />} />
+                    <TabsList className="items-start w-full h-full max-md:bg-transparent">
+                        <div className="fixed bottom-0 z-10 flex w-full overflow-x-auto md:block md:relative bg-accent md:h-full">
+                            <TabTriggerLink value="overview" text={t("overview")} slug={slug} icon={<BookOpenText className="w-4 h-4" />} />
                             <TabTriggerLink value="account" text={t("account-details")} slug={slug} icon={<Store className="w-4 h-4" />} />
                             <TabTriggerLink value="branches" text={t("branches")} slug={slug} icon={<Building2 className="w-4 h-4" />} />
                             <TabTriggerLink value="employees" text={t("employees")} slug={slug} icon={<UsersRound className="w-4 h-4" />} />
