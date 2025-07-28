@@ -41,12 +41,16 @@ export default async function Layout({ children, params }: LayoutProps) {
     return (
         <CartProvider>
             <StoreProvider>
-                <div style={{
-                    "--background": storeData.customization?.background_color,
-                    "--primary": storeData.customization?.primary_color,
-                    "--accent": storeData.customization?.accent_color,
-                    "--secondary": storeData.customization?.secondary_color,
-                }} className="contents">
+                <div
+                    style={{
+                        // CSS custom properties for theming
+                        "--background": storeData.customization?.background_color,
+                        "--primary": storeData.customization?.primary_color,
+                        "--accent": storeData.customization?.accent_color,
+                        "--secondary": storeData.customization?.secondary_color,
+                    } as React.CSSProperties}
+                    className="contents"
+                >
                     <Header title={storeData.name} />
                     <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow bg-background' >
                         {children}
