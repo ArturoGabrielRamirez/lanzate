@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react'
 import { EmblaOptionsType } from 'embla-carousel'
-import {
+/* import {
     usePrevNextButtons
-} from './embla-carousel-arrow-buttons'
+} from './embla-carousel-arrow-buttons' */
 import { useDotButton } from './embla-carousel-dot-button'
 import * as motion from "motion/react-client"
 import { useTranslations } from 'next-intl'
@@ -60,7 +60,7 @@ function useCarouselProgress(isActive: boolean, duration: number = 5000) {
 }
 
 // Hook para auto-scroll del carousel
-function useAutoScroll(emblaApi: EmblaCarouselType | undefined, delay: number = 5000) {
+/* function useAutoScroll(emblaApi: EmblaCarouselType | undefined, delay: number = 5000) {
     const autoScrollRef = useRef<NodeJS.Timeout | null>(null)
 
     const resetAutoScroll = useCallback(() => {
@@ -97,7 +97,7 @@ function useAutoScroll(emblaApi: EmblaCarouselType | undefined, delay: number = 
     }, [emblaApi, startAutoScroll, resetAutoScroll])
 
     return { resetAutoScroll, startAutoScroll }
-}
+} */
 
 function EmblaCarousel(props: PropType) {
     const { slides, options } = props

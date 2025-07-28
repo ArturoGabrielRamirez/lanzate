@@ -1,4 +1,3 @@
-import { Home, House, ArrowLeft } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import React from "react"
@@ -13,7 +12,7 @@ type TitleProps = {
     canGoBack?: boolean
 }
 
-const Title = ({ title, breadcrumbs, className, canGoBack }: TitleProps) => {
+const Title = ({ title, breadcrumbs, className }: TitleProps) => {
 
     const t = useTranslations("layout");
     return (

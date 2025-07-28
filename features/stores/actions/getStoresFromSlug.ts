@@ -18,12 +18,14 @@ export async function getStoresFromSlug(slug: string): Promise<GetStoresFromSlug
 
         if (error) throw new Error(message)
 
+        if (!store)
+            throw new Error("Store not found")
+
         return {
             message: "Store fetched successfully from db",
-            payload: store,
+            payload: store as Store & { branches: Branch[], products: (Product & { categories: Category[] })[], balance: StoreBalance },
             error: false
         }
-
     } catch (error) {
         return formatErrorResponse("Error fetching store from db", error, null)
     }
