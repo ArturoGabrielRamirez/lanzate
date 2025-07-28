@@ -16,23 +16,9 @@ function Footer() {
 
     return (
         <footer className="bg-background relative">
-            <div className="mx-auto container px-4 pt-16 pb-8 sm:px-6 lg:px-8 lg:pt-24">
-                <div className="text-center">
-                    <SectionTitle title={"Customise Your Product"} />
-                    <motion.p
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        className="block text-xs font-medium tracking-widest text-center uppercase text-muted-foreground/50 mb-8"
-                    >
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum maiores ipsum eos temporibus
-                        ea nihil.
-                    </motion.p>
-                    <EyeCatchingButton asChild className="text-xl font-bold">
-                        <Link href="/signup">Get Started</Link>
-                    </EyeCatchingButton>
-                </div>
+            <div className="mx-auto container px-4 pt-16 pb-8 sm:px-6 lg:px-8 lg:pt-0">
 
-                <div className="mt-16 border-t border-gray-100 pt-8 sm:flex sm:items-center sm:justify-between lg:mt-24 dark:border-gray-800 flex flex-col md:flex-row gap-4 items-center md:items-start">
+                <div className="border-t border-gray-100 pt-8 sm:flex sm:items-center sm:justify-between dark:border-gray-800 flex flex-col md:flex-row gap-4 items-center md:items-start">
                     <nav className="flex gap-6">
                         <Link href="/terms-and-conditions" className="text-muted-foreground text-sm hover:text-primary">Terms & Conditions</Link>
                         <Link href="/privacy-policy" className="text-muted-foreground text-sm hover:text-primary">Privacy Policy</Link>
@@ -55,13 +41,13 @@ function Footer() {
                     </nav>
                 </div>
             </div>
-            <DotPattern
+            {/* <DotPattern
                 width={30}
                 height={30}
                 className={cn(
                     "[mask-image:linear-gradient(to_top_right,white,transparent_70%,transparent)] ",
                 )}
-            />
+            /> */}
         </footer>
     )
 }

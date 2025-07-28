@@ -10,9 +10,10 @@ type TitleProps = {
         href: string
     }[]
     canGoBack?: boolean
+    showDate?: boolean
 }
 
-const Title = ({ title, breadcrumbs, className }: TitleProps) => {
+const Title = ({ title, breadcrumbs, className, showDate }: TitleProps) => {
 
     const t = useTranslations("layout");
     return (
@@ -26,11 +27,13 @@ const Title = ({ title, breadcrumbs, className }: TitleProps) => {
                 )} */}
                     {title}
                 </h2>
-                <p className="text-muted-foreground/50">
-                    {Intl.DateTimeFormat("en-US", {
-                        dateStyle: "full",
-                    }).format(new Date())}
-                </p>
+                {showDate && (
+                    <p className="text-muted-foreground/50">
+                        {Intl.DateTimeFormat("en-US", {
+                            dateStyle: "full",
+                        }).format(new Date())}
+                    </p>
+                )}
             </div>
             {breadcrumbs && breadcrumbs?.length > 0 && (
                 <div className="flex items-end gap-2 text-muted-foreground/50">

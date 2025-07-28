@@ -3,6 +3,7 @@ import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { NextResponse } from 'next/server'
 import { routing } from '@/i18n/routing'
+import { cookies } from 'next/headers'
 
 export async function GET(request: Request) {
   const url = new URL(request.url)
@@ -16,7 +17,7 @@ export async function GET(request: Request) {
     : routing.defaultLocale
 
 
-  const envURL = process.env.NEXTAUTH_URL || `http://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+  const envURL = process.env.NEXTAUTH_URL || `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
 
 
 
@@ -24,9 +25,15 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${envURL}/${locale}/auth/auth-code-error`)
   }
 
-  const supabase = await createServerSideClient()
+  const supabase = await createServerSideClient();
+  
+  console.log("🚀 ~ GET ~ cookies:", (await cookies()).getAll())
+  console.log("🚀 ~ GET ~ code:", code)
 
   const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
+
+  console.log("🚀 ~ GET ~ exchangeError:", exchangeError)
+
   if (exchangeError) {
     console.error('Error exchanging code for session:', exchangeError)
     return NextResponse.redirect(`${envURL}/${locale}/auth/auth-code-error`)

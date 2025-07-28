@@ -16,6 +16,7 @@ export function createClient() {
     {
       cookies: {
         getAll() {
+          if (typeof document === 'undefined') return [];
           return document.cookie
             .split(';')
             .map(cookie => cookie.trim())
@@ -29,6 +30,7 @@ export function createClient() {
             });
         },
         setAll(cookiesToSet) {
+          if (typeof document === 'undefined') return;
           cookiesToSet.forEach(({ name, value, options }) => {
             const cookieOptions = {
               ...options,

@@ -4,6 +4,7 @@ import StatsSection from "@/features/landing/components/stats-section";
 import { DotPattern } from "@/components/magicui/dot-pattern";
 import { cn } from "@/lib/utils";
 import PricingSection from "@/features/landing/components/pricing-section";
+import CustomSection from "@/features/landing/components/custom-section";
 
 export default function Home() {
 
@@ -22,6 +23,7 @@ export default function Home() {
         />
       </div>
       <PricingSection />
+      <CustomSection />
     </>
   );
 }

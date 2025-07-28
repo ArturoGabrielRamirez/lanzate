@@ -8,6 +8,8 @@ import SubdomainProvider from "@/features/layout/components/subdomain-provider";
 import "../globals.css";
 import { NextIntlClientProvider } from 'next-intl';
 import Footer from "@/features/header/components/footer";
+/* import { DotPattern } from "@/components/magicui/dot-pattern";
+import { cn } from "@/lib/utils"; */
 
 export const metadata: Metadata = {
   title: 'Lanzate',
@@ -29,13 +31,13 @@ export default async function RootLayout({ children, params }: LayoutProps) {
 
   const { locale } = await params;
 
- /*  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  } */
+  /*  if (!hasLocale(routing.locales, locale)) {
+     notFound();
+   } */
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className="min-h-dvh flex flex-col bg-gradient-to-b from-background to-primary from-70%">
+      <body className="min-h-dvh flex flex-col">
         <NextThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -52,7 +54,6 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                       {children}
                     </main>
                     <Footer />
-
                     <Toaster />
                   </>
                 )}
