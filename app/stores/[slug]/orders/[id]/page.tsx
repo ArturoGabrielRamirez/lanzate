@@ -1,7 +1,7 @@
 import { getOrderDetails } from "@/features/stores/actions/getOrderDetails"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { OrderDetailPageProps } from "@/features/stores/types/order-detail-page-type"
-import { ArrowLeft, User, MapPin, Truck, Calendar, DollarSign, Package, CreditCard, UserCheck, Clock } from "lucide-react"
+import { ArrowLeft, User, MapPin, Truck, Calendar, DollarSign, Package, CreditCard, UserCheck } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"

@@ -7,9 +7,7 @@ import { CreateStoreButton, StoreCard } from "@/features/stores/components"
 import { ArrowRight, Hand, Plus, ShoppingBasket } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
 import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
-import { Separator } from "@radix-ui/react-select"
 import { getTranslations } from "next-intl/server"
 
 async function DashboardPage() {
@@ -20,13 +18,12 @@ async function DashboardPage() {
         return console.error(userMessage)
     }
 
-    const { payload: dashboardData, error: dashboardError, message } = await getDashboardStores(user.id)
+    const { payload: dashboardData, error: dashboardError } = await getDashboardStores(user.id)
 
     if (dashboardError || !dashboardData) {
         return console.error("Error loading dashboard data")
     }
 
-    const hasStores = dashboardData.storeCount > 0
 
     const t = await getTranslations("dashboard")
 

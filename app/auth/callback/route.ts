@@ -11,7 +11,7 @@ export async function GET(request: Request) {
 
   const acceptLanguage = request.headers.get('accept-language')
   const preferredLocale = acceptLanguage?.split(',')[0]?.split('-')[0]
-  const locale = routing.locales.includes(preferredLocale as any)
+  const locale = routing.locales.includes(preferredLocale as typeof routing.locales[number])
     ? preferredLocale
     : routing.defaultLocale
 

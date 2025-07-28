@@ -7,7 +7,8 @@ import { ArrowLeft, MapPin, Phone, Mail, Crown, Package, ShoppingCart, DollarSig
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { useTranslations } from "next-intl"
+import { getTranslations } from "next-intl/server"
+import { Order } from "@/prisma/generated/prisma"
 
 async function BranchDetailPage({ params }: BranchDetailPageProps) {
 
@@ -25,7 +26,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
         return console.log(error)
     }
 
-    const t = useTranslations("store.branches")
+    const t = await getTranslations("store.branches")
 
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString('en-US', {
@@ -37,7 +38,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
 
     const totalProducts = branch.stock?.length || 0
     const totalOrders = branch.orders?.length || 0
-    const totalRevenue = branch.orders?.reduce((sum: number, order: any) => sum + order.total_price, 0) || 0
+    const totalRevenue = branch.orders?.reduce((sum: number, order: Order) => sum + order.total_price, 0) || 0
 
     return (
         <Card>
@@ -151,12 +152,12 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                             <div>
                                 <h4 className="text-lg font-semibold mb-2">{t("recent-orders")}</h4>
                                 <div className="space-y-2">
-                                    {branch.orders.slice(0, 5).map((order: any) => (
+                                    {branch.orders.slice(0, 5).map((order: Order) => (
                                         <div key={order.id} className="flex items-center justify-between p-2 bg-secondary/30 rounded">
                                             <div>
                                                 <p className="text-sm font-medium">{t("order")} #{order.id}</p>
                                                 <p className="text-xs text-muted-foreground">
-                                                    {formatDate(order.created_at)}
+                                                    {formatDate(order.created_at.toISOString())}
                                                 </p>
                                             </div>
                                             <div className="text-right">

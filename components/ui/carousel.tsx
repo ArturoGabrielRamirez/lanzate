@@ -169,49 +169,8 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-// Hook para manejar el progress bar
-function useCarouselProgress(isActive: boolean, duration: number = 5000) {
-  const [progress, setProgress] = React.useState(0)
-  const intervalRef = React.useRef<NodeJS.Timeout | null>(null)
-
-  React.useEffect(() => {
-    if (isActive) {
-      setProgress(0)
-      const stepTime = 50 // Actualizar cada 50ms para suavidad
-      const steps = duration / stepTime
-      const increment = 100 / steps
-
-      intervalRef.current = setInterval(() => {
-        setProgress(prev => {
-          const newProgress = prev + increment
-          if (newProgress >= 100) {
-            return 100
-          }
-          return newProgress
-        })
-      }, stepTime)
-    } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current)
-      }
-      setProgress(0)
-    }
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current)
-      }
-    }
-  }, [isActive, duration])
-
-  return progress
-}
-
 function CarouselItem({ className, children, ...props }: React.ComponentProps<"div">) {
-  const { orientation, activeIndex, getNextIndex } = useCarousel()
-  const itemIndex = React.useMemo(() => getNextIndex(), [getNextIndex])
-  const isActive = itemIndex === activeIndex
-  const progress = useCarouselProgress(isActive)
+  const { orientation } = useCarousel()
 
   return (
     <div
@@ -226,20 +185,6 @@ function CarouselItem({ className, children, ...props }: React.ComponentProps<"d
       {...props}
     >
       {children}
-      {/* Progress bar que aparece solo cuando hay contenido de texto */}
-      {/* <div className="mt-2 w-full">
-        <div className="h-1 bg-muted rounded-full overflow-hidden">
-          <motion.div
-            className="h-full bg-primary"
-            initial={{ width: "0%" }}
-            animate={{ width: isActive ? `${progress}%` : "0%" }}
-            transition={{ 
-              duration: 0.1,
-              ease: "linear"
-            }}
-          />
-        </div>
-      </div> */}
     </div>
   )
 }

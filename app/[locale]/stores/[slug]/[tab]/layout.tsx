@@ -3,13 +3,10 @@ import { TabsContent } from "@/components/ui/tabs"
 
 import { TabLayoutProps } from "@/features/stores/types"
 import { BookOpenText, Building2, UsersRound, Box, Store, ShoppingCart, Settings, ChartLine, Clock } from "lucide-react"
-import { getTranslations } from "next-intl/server"
 
 async function TabLayout({ children, params }: TabLayoutProps) {
 
     const { tab } = await params
-
-    const t = await getTranslations("store")
 
     const titles = {
         overview: <><BookOpenText className="w-4 h-4" />Overview</>,
