@@ -1,11 +1,8 @@
 import { DotPattern } from "@/components/magicui/dot-pattern";
-import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils";
 import * as motion from "motion/react-client"
 
 import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { Check } from "lucide-react";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
 import SectionTitle from "./section-title";
 
@@ -85,7 +82,7 @@ function PricingSection() {
                 </div>
                 <HoverEffect
                     items={pricingPlans}
-                    className="max-w-md mx-auto lg:max-w-full"
+                    className="mx-auto lg:max-w-full"
                 />
             </div>
             <DotPattern
