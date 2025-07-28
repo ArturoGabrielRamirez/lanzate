@@ -1,6 +1,6 @@
 import { actionWrapper } from "@/utils/lib"
 import { UpdateSettingsReturn, StoreCustomizationForm } from "@/features/settings/types"
-import { PrismaClient } from "@/prisma/generated/prisma"
+import { PrismaClient } from '@prisma/client'
 
 export async function updateStoreSettings(
     storeId: number, 

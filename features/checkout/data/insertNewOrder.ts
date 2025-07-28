@@ -2,7 +2,7 @@
 
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getStoreBySubdomain } from "@/features/subdomain/actions/getStoreBySubdomain"
-import { Prisma, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import { formatErrorResponse } from "@/utils/lib"
 
 /* 
@@ -42,7 +42,7 @@ export async function insertNewOrder(formData: any, cart: any[], shippingMethod:
 
         const client = new PrismaClient()
 
-        await client.$transaction(async (tx: Prisma.TransactionClient ) => {
+        await client.$transaction(async (tx) => {
 
             const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 

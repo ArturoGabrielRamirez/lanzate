@@ -1,4 +1,4 @@
-import { PrismaClient } from "@/prisma/generated/prisma"
+import { PrismaClient } from '@prisma/client'
 import { actionWrapper } from "@/utils/lib"
 import { GetSettingsReturn } from "@/features/settings/types"
 

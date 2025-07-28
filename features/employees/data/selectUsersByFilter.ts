@@ -3,6 +3,7 @@
 import { PrismaClient } from '@prisma/client'
 import { actionWrapper } from "@/utils/lib"
 
+
 export async function selectUsersByFilter(filter: string, storeId: number, userId: number) {
     console.log("🚀 ~ selectUsersByFilter ~ userId:", userId)
     return actionWrapper(async () => {
@@ -60,7 +61,7 @@ export async function selectUsersByFilter(filter: string, storeId: number, userI
         })
 
         // Transform the data to include employee status
-        const usersWithEmployeeStatus = users.map((user: { Employee: string | any[] }) => ({
+        const usersWithEmployeeStatus = users.map(user => ({
             ...user,
             isEmployee: user.Employee.length > 0,
             employeeData: user.Employee[0] || null

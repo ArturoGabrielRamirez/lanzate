@@ -1,6 +1,6 @@
 "use server"
 
-import { Branch, PrismaClient, Store } from "@/prisma/generated/prisma"
+import { Branch, PrismaClient, Store } from '@prisma/client'
 import { formatErrorResponse } from "@/utils/lib"
 
 type SelectStoreBySlugReturn = {

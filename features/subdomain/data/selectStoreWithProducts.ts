@@ -2,7 +2,7 @@
 
 import { SelectStoreWithProductsReturn } from "../types/types";
 import { formatErrorResponse } from "@/utils/lib";
-import { PrismaClient } from "@/prisma/generated/prisma";
+import { PrismaClient } from '@prisma/client'
 
 export async function selectStoreWithProducts(subdomain: string, category: string | undefined, sort: string | undefined, search: string | undefined, min: string | undefined, max: string | undefined, limit: number = 10, page: number = 1): Promise<SelectStoreWithProductsReturn> {
     try {

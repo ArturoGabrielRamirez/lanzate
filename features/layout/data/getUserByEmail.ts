@@ -1,6 +1,6 @@
 "use server"
 
-import { PrismaClient, User, Account } from "@/prisma/generated/prisma"
+import { Account, PrismaClient, User } from '@prisma/client'
 import { formatErrorResponse } from "@/utils/lib"
 
 
