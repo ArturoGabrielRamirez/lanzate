@@ -2,12 +2,12 @@
 import { actionWrapper } from "@/utils/lib";
 import { selectOrdersFromStore } from "../data/selectOrdersFromStore";
 import { getStoresFromSlug } from "./getStoresFromSlug";
-import { Order, Order, Branch, OrderPayment, User } from "@prisma/client";
+import { Order, OrderItem, Branch, OrderPayment, User } from "@prisma/client";
 
 type getOrdersFromStoreReturn = Promise<{
     message: string
     payload: (Order & {
-        items: Order[]
+        items: OrderItem[]
         branch: Branch
         payment: OrderPayment
         user: User
