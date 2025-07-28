@@ -20,7 +20,7 @@ type Props = {
 
 function ProductsTable({ data, userId, slug, storeId }: Props) {
 
-    const columns: ColumnDef<Product>[] = [
+    const columns: ColumnDef<Product & { categories: Category[] }>[] = [
         {
             header: "ID",
             accessorKey: "id",
@@ -41,9 +41,17 @@ function ProductsTable({ data, userId, slug, storeId }: Props) {
             header: "Categories",
             accessorKey: "categories",
             cell: ({ row }) => {
-                const categories = row.original.categories
-                return <Badge variant="outline">{categories.map((category) => category.name).join(", ")}</Badge>
-            }
+                const categories = (row.original as Product & { categories: Category[] }).categories
+
+                if (!categories?.length)
+                    return <Badge variant="outline">None</Badge>
+
+                return (
+                    <Badge variant="outline">
+                        {categories.map((category: Category) => category.name).join(", ")}
+                    </Badge>
+                )
+            },
         },
         {
             header: "Stock",
