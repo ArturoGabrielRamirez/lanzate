@@ -18,7 +18,7 @@ type ConfigureStoreOperationsButtonProps = {
     stores: DashboardStore[]
 }
 
-function ConfigureStoreOperationsButton({ userId, stores }: ConfigureStoreOperationsButtonProps) {
+function ConfigureStoreOperationsButton({ stores }: ConfigureStoreOperationsButtonProps) {
     const [selectedStoreId, setSelectedStoreId] = useState<string>("")
     const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>(["CASH"])
 

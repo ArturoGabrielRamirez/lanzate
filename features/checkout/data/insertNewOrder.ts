@@ -1,11 +1,9 @@
 "use server"
 
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getProductDetails } from "@/features/stores/actions/getProductDetails"
 import { getStoreBySubdomain } from "@/features/subdomain/actions/getStoreBySubdomain"
 import { PrismaClient } from "@/prisma/generated/prisma"
 import { formatErrorResponse } from "@/utils/lib"
-import { createServerSideClient } from "@/utils/supabase/server"
 
 /* 
 ### 5.1 Nueva Orden de Compra
