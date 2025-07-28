@@ -22,7 +22,7 @@ export const HoverEffect = ({
   }[];
   className?: string;
 }) => {
-  let [hoveredIndex, setHoveredIndex] = useState<number | null>(0);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(0);
 
   return (
     <motion.div
