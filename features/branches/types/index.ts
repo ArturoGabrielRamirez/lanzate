@@ -1,4 +1,3 @@
-import { Branch } from "@/prisma/generated/prisma"
 
 export type CreateBranchButtonProps = {
     storeId: number
@@ -9,6 +8,7 @@ export type EditBranchButtonProps = {
     branch: any
     slug: string
     userId: number
+    onComplete?: () => void
 }
 
 export type DeleteBranchButtonProps = {
