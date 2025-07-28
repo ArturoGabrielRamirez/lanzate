@@ -26,7 +26,7 @@ export async function getUserInfo(): Promise<{
 
         return {
             payload: payload,
-            error: null,
+            error: false,
             message: "User info fetched"
         }
     })

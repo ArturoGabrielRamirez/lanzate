@@ -28,7 +28,7 @@ export async function insertUser(email: string, password: string) {
 
         return {
             payload: user,
-            error: null,
+            error: false,
             message: "User created"
         }
 
