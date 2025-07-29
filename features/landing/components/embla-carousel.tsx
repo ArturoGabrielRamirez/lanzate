@@ -12,7 +12,11 @@ import Image from 'next/image'
 const TWEEN_FACTOR_BASE = 0.52
 
 type PropType = {
-    slides: number[]
+    slides: {
+        title: string
+        description: string
+        image: string
+    }[]
     options?: EmblaOptionsType
 }
 
@@ -209,7 +213,7 @@ function EmblaCarousel(props: PropType) {
         <div className="max-w-5xl mx-auto cursor-grab select-none active:cursor-grabbing">
             <div className="" ref={emblaRef}>
                 <div className="flex touch-pan-y touch-pinch-zoom -ml-6">
-                    {slides.map((index) => {
+                    {slides.map((slide, index) => {
                         const isActive = index === selectedIndex
                         const progress = useCarouselProgress(isActive)
 
@@ -270,7 +274,7 @@ function EmblaCarousel(props: PropType) {
                                                 viewport={{ amount: 0.3 }}
                                                 transition={{ duration: 0.6, delay: 0.6 }}
                                             >
-                                                <b className='block text-2xl md:text-3xl mb-2'>{t('description.centralize.title')}</b> {t('description.centralize.description')}
+                                                <b className='block text-2xl md:text-3xl mb-2'>{slide.title}</b> {slide.description}
                                             </motion.p>
 
                                             {/* Progress bar que aparece solo cuando el slide está activo */}
@@ -301,8 +305,8 @@ function EmblaCarousel(props: PropType) {
                                                 }}
                                             >
                                                 <Image
-                                                    src="/landing/feature-1.jpg"
-                                                    alt="Centralize"
+                                                    src={slide.image}
+                                                    alt={slide.title}
                                                     fill
                                                     className="object-cover"
                                                 />

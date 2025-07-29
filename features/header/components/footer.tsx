@@ -20,9 +20,9 @@ function Footer() {
 
                 <div className="border-t border-gray-100 pt-8 sm:flex sm:items-center sm:justify-between dark:border-gray-800 flex flex-col md:flex-row gap-4 items-center md:items-start">
                     <nav className="flex gap-6">
-                        <Link href="/terms-and-conditions" className="text-muted-foreground text-sm hover:text-primary">Terms & Conditions</Link>
-                        <Link href="/privacy-policy" className="text-muted-foreground text-sm hover:text-primary">Privacy Policy</Link>
-                        <Link href="/cookies" className="text-muted-foreground text-sm hover:text-primary">Cookies</Link>
+                        <Link href="/terms-and-conditions" className="text-muted-foreground text-sm hover:text-primary">{t('footer.links.1')}</Link>
+                        <Link href="/privacy-policy" className="text-muted-foreground text-sm hover:text-primary">{t('footer.links.2')}</Link>
+                        <Link href="/cookies" className="text-muted-foreground text-sm hover:text-primary">{t('footer.links.3')}</Link>
                     </nav>
 
                     <nav className="flex gap-6 items-center">
