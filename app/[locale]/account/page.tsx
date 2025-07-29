@@ -18,7 +18,7 @@ export default async function AccountPage() {
     }
 
     return (
-        <div className="p-4 grow flex flex-col">
+        <div className="p-4 grow flex flex-col mt-17">
             <Title title={(
                 <div className="flex items-center gap-2">
                     <User />
