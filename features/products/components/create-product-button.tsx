@@ -11,21 +11,24 @@ import CategorySelect from "@/features/store-landing/components/category-select-
 import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/components/ui/file-upload";
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
+import { useTranslations } from "next-intl"
 
 function CreateProductButton({ storeId, userId }: CreateProductButtonProps) {
 
     const [categories, setCategories] = useState<string[]>([])
     const [files, setFiles] = useState<File[]>([])
+    const t = useTranslations("store.create-product")
 
     const handleAddCategory = (value: any) => {
         setCategories(value)
     }
 
     const onFileReject = useCallback((file: File, message: string) => {
+        const filename = file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name
         toast(message, {
-            description: `"${file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name}" has been rejected`,
+            description: t("file-rejected", { filename }),
         });
-    }, []);
+    }, [t]);
 
     const handleCreateProduct = async (payload: any) => {
         try {
@@ -40,11 +43,11 @@ function CreateProductButton({ storeId, userId }: CreateProductButtonProps) {
             if (error) throw new Error(message)
             return {
                 error: false,
-                message: "Product created successfully",
+                message: t("messages.success"),
                 payload: product
             }
         } catch (error) {
-            return formatErrorResponse("Error creating product", error, null)
+            return formatErrorResponse(t("messages.error"), error, null)
         }
     }
 
@@ -53,17 +56,17 @@ function CreateProductButton({ storeId, userId }: CreateProductButtonProps) {
             text={(
                 <>
                     <Plus />
-                    Create Product
+                    {t("button")}
                 </>
             )}
             schema={productCreateSchema}
-            title="Create new product"
-            description="Create a new product to start selling your products! Choose a name for your product and click on the button below, you can continue to add more details of the product once it's created."
+            title={t("title")}
+            description={t("description")}
             action={handleCreateProduct}
             messages={{
-                success: "Product created successfully!",
-                error: "Failed to create product",
-                loading: "Creating product..."
+                success: t("messages.success"),
+                error: t("messages.error"),
+                loading: t("messages.loading")
             }}
         >
             <FileUpload
@@ -81,14 +84,14 @@ function CreateProductButton({ storeId, userId }: CreateProductButtonProps) {
                         <div className="flex items-center justify-center rounded-full border p-2.5">
                             <Upload className="size-6 text-muted-foreground" />
                         </div>
-                        <p className="font-medium text-sm">Drag & drop files here</p>
+                        <p className="font-medium text-sm">{t("drag-drop")}</p>
                         <p className="text-muted-foreground text-xs">
-                            Or click to browse (max 1 files, up to 2MB each)
+                            {t("click-browse")}
                         </p>
                     </div>
                     <FileUploadTrigger asChild>
                         <Button variant="outline" size="sm" className="mt-2 w-fit">
-                            Browse files
+                            {t("browse-files")}
                         </Button>
                     </FileUploadTrigger>
                 </FileUploadDropzone>
@@ -106,10 +109,10 @@ function CreateProductButton({ storeId, userId }: CreateProductButtonProps) {
                     ))}
                 </FileUploadList>
             </FileUpload>
-            <InputField name="name" label="Name" type="text" startContent={<Tag />} />
-            <InputField name="price" label="Price" type="number" defaultValue="0" startContent={<DollarSign />} />
-            <InputField name="stock" label="Stock" type="number" defaultValue="0" startContent={<Package />} />
-            <InputField name="description" label="Description" type="text" startContent={<FileText />} />
+            <InputField name="name" label={t("name")} type="text" startContent={<Tag />} />
+            <InputField name="price" label={t("price")} type="number" defaultValue="0" startContent={<DollarSign />} />
+            <InputField name="stock" label={t("stock")} type="number" defaultValue="0" startContent={<Package />} />
+            <InputField name="description" label={t("description")} type="text" startContent={<FileText />} />
             <CategorySelect onChange={handleAddCategory} />
         </ButtonWithPopup>
     )

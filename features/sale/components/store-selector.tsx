@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Store } from "@prisma/client"
+import { useTranslations } from "next-intl"
 
 type StoreSelectorProps = {
     stores: Store[]
@@ -13,6 +14,7 @@ type StoreSelectorProps = {
 function StoreSelector({ stores }: StoreSelectorProps) {
     const [selectedStore, setSelectedStore] = useState<string>("")
     const router = useRouter()
+    const t = useTranslations("sale.store-selector")
 
     const handleConfirm = () => {
         if (selectedStore) {
@@ -23,16 +25,16 @@ function StoreSelector({ stores }: StoreSelectorProps) {
     return (
         <div className="flex flex-col items-center space-y-6">
             <div className="text-center">
-                <h3 className="text-lg font-semibold mb-2">Seleccionar Tienda</h3>
+                <h3 className="text-lg font-semibold mb-2">{t("title")}</h3>
                 <p className="text-sm text-muted-foreground">
-                    Elige una tienda para crear una nueva orden
+                    {t("description")}
                 </p>
             </div>
             
             <div className="w-full space-y-4">
                 <Select value={selectedStore} onValueChange={setSelectedStore}>
                     <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Selecciona una tienda..." />
+                        <SelectValue placeholder={t("placeholder")} />
                     </SelectTrigger>
                     <SelectContent>
                         {stores.map((store) => (
@@ -48,7 +50,7 @@ function StoreSelector({ stores }: StoreSelectorProps) {
                     disabled={!selectedStore}
                     className="w-full"
                 >
-                    Confirmar Tienda
+                    {t("confirm")}
                 </Button>
             </div>
         </div>

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import CreateProductButton from "@/features/products/components/create-product-button"
+import { getTranslations } from "next-intl/server"
 
 type Props = {
     slug: string
@@ -9,19 +10,21 @@ type Props = {
     userId: number
 }
 
-function QuickActionsBar({ storeId, userId }: Props) {
+async function QuickActionsBar({ storeId, userId }: Props) {
+
+    const t = await getTranslations("overview.quick-actions")
 
     return (
         <Card className="grow hover:bg-accent transition-colors duration-200 justify-between">
             <CardHeader>
-                <CardTitle className="font-bold text-2xl">Welcome!</CardTitle>
+                <CardTitle className="font-bold text-2xl">{t("title")}</CardTitle>
                 <CardDescription>
-                    Here you can find the most important actions for your store together with some quick links to get you started.
+                    {t("description")}
                 </CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="flex flex-col space-y-4">
-                    <h3 className="text-sm font-semibold">Acciones Rápidas</h3>
+                    <h3 className="text-sm font-semibold">{t("title")}</h3>
                     
                     <div className="flex flex-wrap gap-3">
                         {/* Create Product Button */}
@@ -35,13 +38,13 @@ function QuickActionsBar({ storeId, userId }: Props) {
                                 disabled
                                 className="flex items-center opacity-50 h-full"
                             >
-                                <span>Análisis Avanzado</span>
+                                <span>{t("advanced-analytics")}</span>
                             </Button>
                             <Badge 
                                 variant="secondary" 
                                 className="absolute -top-2 -right-2 text-xs px-1 py-0"
                             >
-                                Coming Soon
+                                {t("coming-soon")}
                             </Badge>
                         </div>
                         
@@ -52,13 +55,13 @@ function QuickActionsBar({ storeId, userId }: Props) {
                                 disabled
                                 className="flex items-center opacity-50 h-full"
                             >
-                                <span>Marketing Tools</span>
+                                <span>{t("marketing-tools")}</span>
                             </Button>
                             <Badge 
                                 variant="secondary" 
                                 className="absolute -top-2 -right-2 text-xs px-1 py-0"
                             >
-                                Coming Soon
+                                {t("coming-soon")}
                             </Badge>
                         </div>
 

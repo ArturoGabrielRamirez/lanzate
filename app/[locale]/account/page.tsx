@@ -18,7 +18,7 @@ export default async function AccountPage() {
     }
 
     return (
-        <div className="p-4 grow flex flex-col">
+        <div className="p-4 grow flex flex-col pt-17">
             <Title title={(
                 <div className="flex items-center gap-2">
                     <User />
@@ -29,7 +29,7 @@ export default async function AccountPage() {
                     label: t("title"),
                     href: "/account"
                 }
-            ]} />
+            ]} showDate/>
             <section className="flex items-center gap-4">
                 <Card className="w-full">
                     <CardContent className="flex items-center gap-4 w-full">

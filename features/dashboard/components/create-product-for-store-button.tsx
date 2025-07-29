@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { DashboardStore } from "../types/types"
+import { useTranslations } from "next-intl"
 
 type CreateProductForStoreButtonProps = {
     userId: number
@@ -23,6 +24,7 @@ function CreateProductForStoreButton({ userId, stores }: CreateProductForStoreBu
     const [categories, setCategories] = useState<string[]>([])
     const [files, setFiles] = useState<File[]>([])
     const [selectedStoreId, setSelectedStoreId] = useState<string>("")
+    const t = useTranslations("dashboard.create-product")
 
     const handleAddCategory = (value: any) => {
         setCategories(value)
@@ -37,7 +39,7 @@ function CreateProductForStoreButton({ userId, stores }: CreateProductForStoreBu
     const handleCreateProduct = async (payload: any) => {
         try {
             if (!selectedStoreId) {
-                throw new Error("Please select a store first")
+                throw new Error(t("messages.select-store-first"))
             }
 
             const data = {
@@ -56,11 +58,11 @@ function CreateProductForStoreButton({ userId, stores }: CreateProductForStoreBu
             
             return {
                 error: false,
-                message: "Product created successfully",
+                message: t("messages.success"),
                 payload: product
             }
         } catch (error) {
-            return formatErrorResponse("Error creating product", error, null)
+            return formatErrorResponse(t("messages.error"), error, null)
         }
     }
 
@@ -71,26 +73,26 @@ function CreateProductForStoreButton({ userId, stores }: CreateProductForStoreBu
             text={(
                 <>
                     <ShoppingCart className="size-4" />
-                    Create Product
+                    {t("button")}
                 </>
             )}
             schema={productCreateSchema}
-            title="Create new product"
-            description="Select a store and create a new product to start selling!"
+            title={t("title")}
+            description={t("description")}
             action={handleCreateProduct}
             messages={{
-                success: "Product created successfully!",
-                error: "Failed to create product",
-                loading: "Creating product..."
+                success: t("messages.success"),
+                error: t("messages.error"),
+                loading: t("messages.loading")
             }}
             className="w-full"
         >
             <div className="space-y-4">
                 <div className="space-y-2">
-                    <Label htmlFor="store-select">Select Store</Label>
+                    <Label htmlFor="store-select">{t("select-store")}</Label>
                     <Select value={selectedStoreId} onValueChange={setSelectedStoreId}>
                         <SelectTrigger>
-                            <SelectValue placeholder="Choose a store..." />
+                            <SelectValue placeholder={t("choose-store")} />
                         </SelectTrigger>
                         <SelectContent>
                             {stores.map((store) => (
@@ -107,7 +109,7 @@ function CreateProductForStoreButton({ userId, stores }: CreateProductForStoreBu
                     </Select>
                     {selectedStore && (
                         <p className="text-xs text-muted-foreground">
-                            Product will be created in: <span className="font-medium">{selectedStore.name}</span>
+                            {t("product-will-be-created", { storeName: selectedStore.name })}
                         </p>
                     )}
                 </div>
@@ -127,14 +129,14 @@ function CreateProductForStoreButton({ userId, stores }: CreateProductForStoreBu
                             <div className="flex items-center justify-center rounded-full border p-2.5">
                                 <Upload className="size-6 text-muted-foreground" />
                             </div>
-                            <p className="font-medium text-sm">Drag & drop product image</p>
+                            <p className="font-medium text-sm">{t("drag-drop-image")}</p>
                             <p className="text-muted-foreground text-xs">
-                                Or click to browse (max 1 file, up to 2MB)
+                                {t("click-browse")}
                             </p>
                         </div>
                         <FileUploadTrigger asChild>
                             <Button variant="outline" size="sm" className="mt-2 w-fit">
-                                Browse files
+                                {t("browse-files")}
                             </Button>
                         </FileUploadTrigger>
                     </FileUploadDropzone>
@@ -153,10 +155,10 @@ function CreateProductForStoreButton({ userId, stores }: CreateProductForStoreBu
                     </FileUploadList>
                 </FileUpload>
 
-                <InputField name="name" label="Product Name" type="text" />
-                <InputField name="price" label="Price" type="number" defaultValue="0" />
-                <InputField name="stock" label="Stock" type="number" defaultValue="0" />
-                <InputField name="description" label="Description" type="text" />
+                <InputField name="name" label={t("product-name")} type="text" />
+                <InputField name="price" label={t("price")} type="number" defaultValue="0" />
+                <InputField name="stock" label={t("stock")} type="number" defaultValue="0" />
+                <InputField name="description" label={t("description")} type="text" />
                 <CategorySelect onChange={handleAddCategory} />
             </div>
         </ButtonWithPopup>

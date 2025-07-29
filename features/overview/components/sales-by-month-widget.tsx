@@ -5,23 +5,26 @@ import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import { TrendingUp } from "lucide-react"
 import { SalesByMonthData } from "../types"
+import { useTranslations } from "next-intl"
 
 type Props = {
     data: SalesByMonthData[]
 }
 
-const chartConfig = {
-    revenue: {
-        label: "Ingresos",
-        color: "hsl(var(--chart-1))",
-    },
-    orders: {
-        label: "Órdenes",
-        color: "hsl(var(--chart-2))",
-    },
-} satisfies ChartConfig
-
 function SalesByMonthWidget({ data }: Props) {
+
+    const t = useTranslations("overview.sales-by-month")
+
+    const chartConfig = {
+        revenue: {
+            label: t("revenue"),
+            color: "hsl(var(--chart-1))",
+        },
+        orders: {
+            label: t("orders"),
+            color: "hsl(var(--chart-2))",
+        },
+    } satisfies ChartConfig
 
     // Format data for the chart - take only month name for shorter labels
     const chartData = data.map(item => ({
@@ -34,7 +37,7 @@ function SalesByMonthWidget({ data }: Props) {
         <Card  className="hover:bg-accent transition-colors duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
-                    Ventas por Mes
+                    {t("title")}
                 </CardTitle>
                 <TrendingUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>

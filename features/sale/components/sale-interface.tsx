@@ -8,6 +8,7 @@ import SearchSection from './search-section'
 import ActionsSection from './actions-section'
 import ProductResults from './product-results'
 import BarcodeScannerUSB from './barcode-scanner-usb'
+import { useTranslations } from 'next-intl'
 
 type SaleInterfaceProps = {
   storeName: string
@@ -30,6 +31,8 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
     isLoading: false,
     error: false
   })
+  
+  const t = useTranslations('sale.messages')
 
   const handleProductScanned = async (barcode: string) => {
     console.log('Producto escaneado:', barcode)
@@ -45,7 +48,7 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
     // Establecer estado de carga
     setBarcodeResult({
       product: null,
-      message: 'Buscando producto...',
+      message: t('searching-product'),
       isLoading: true,
       error: false
     })
@@ -57,7 +60,7 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
       if (error || !payload) {
         setBarcodeResult({
           product: null,
-          message: message || 'Producto no encontrado',
+          message: message || t('product-not-found'),
           isLoading: false,
           error: true
         })
@@ -65,7 +68,7 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
         // Producto encontrado
         setBarcodeResult({
           product: payload,
-          message: 'Producto encontrado',
+          message: t('product-found'),
           isLoading: false,
           error: false
         })
@@ -77,7 +80,7 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
       console.error('Error buscando producto:', error)
       setBarcodeResult({
         product: null,
-        message: 'Error al buscar el producto',
+        message: t('search-error'),
         isLoading: false,
         error: true
       })
@@ -151,7 +154,8 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
   const handleFinalizeSale = () => {
     // TODO: Implementar lógica de finalizar venta
     console.log('Finalizando venta:', { cartItems, total: cartTotal })
-    alert(`Venta finalizada. Total: ${new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(cartTotal)}`)
+    const formattedTotal = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(cartTotal)
+    alert(t('sale-completed', { total: formattedTotal }))
     // Limpiar carrito después de la venta
     setCartItems([])
   }
@@ -159,19 +163,19 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
   const handleRefund = () => {
     // TODO: Implementar lógica de reembolso
     console.log('Procesando reembolso')
-    alert('Función de reembolso no implementada aún')
+    alert(t('refund-not-implemented'))
   }
 
   const handleCalculateChange = () => {
     // TODO: Implementar calculadora de vuelto
     console.log('Calculando vuelto para total:', cartTotal)
-    const payment = prompt(`Total a cobrar: $${cartTotal.toFixed(2)}\n¿Cuánto pagó el cliente?`)
+    const payment = prompt(t('change-calculation', { total: cartTotal.toFixed(2) }))
     if (payment) {
       const change = parseFloat(payment) - cartTotal
       if (change >= 0) {
-        alert(`Vuelto: $${change.toFixed(2)}`)
+        alert(t('change-result', { change: change.toFixed(2) }))
       } else {
-        alert('El pago es insuficiente')
+        alert(t('insufficient-payment'))
       }
     }
   }
@@ -179,7 +183,7 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
   const handlePrintReceipt = () => {
     // TODO: Implementar impresión de ticket
     console.log('Imprimiendo ticket')
-    alert('Función de impresión no implementada aún')
+    alert(t('print-not-implemented'))
   }
 
   /* const handleViewOrderHistory = () => {

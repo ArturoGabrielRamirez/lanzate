@@ -1,6 +1,8 @@
+"use client"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import React from "react"
+import { useCurrentLocale } from "@/locales/client"
 
 type TitleProps = {
     className?: string
@@ -16,6 +18,8 @@ type TitleProps = {
 const Title = ({ title, breadcrumbs, className, showDate }: TitleProps) => {
 
     const t = useTranslations("layout");
+    const locale = useCurrentLocale()
+
     return (
         <div className={`flex flex-col gap-0 mb-6 ${className}`}>
             <div className="flex items-center gap-2 justify-between">
@@ -29,7 +33,7 @@ const Title = ({ title, breadcrumbs, className, showDate }: TitleProps) => {
                 </h2>
                 {showDate && (
                     <p className="text-muted-foreground/50">
-                        {Intl.DateTimeFormat("en-US", {
+                        {Intl.DateTimeFormat(locale, {
                             dateStyle: "full",
                         }).format(new Date())}
                     </p>

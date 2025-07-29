@@ -1,23 +1,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { TabsContent } from "@/components/ui/tabs"
-
 import { TabLayoutProps } from "@/features/stores/types"
 import { BookOpenText, Building2, UsersRound, Box, Store, ShoppingCart, Settings, ChartLine, Clock } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 
 async function TabLayout({ children, params }: TabLayoutProps) {
 
     const { tab } = await params
+    const t = await getTranslations("store.tabs")
 
     const titles = {
-        overview: <><BookOpenText className="w-4 h-4" />Overview</>,
-        account: <><Store className="w-4 h-4" />Account Details</>,
-        branches: <><Building2 className="w-4 h-4" />Branches</>,
-        employees: <><UsersRound className="w-4 h-4" />Employees</>,
-        products: <><Box className="w-4 h-4" />Products</>,
-        orders: <><ShoppingCart className="w-4 h-4" />Orders</>,
-        settings: <><Settings className="w-4 h-4" />Settings</>,
-        analytics: <><ChartLine className="w-4 h-4" />Analytics</>,
-        history: <><Clock className="w-4 h-4" />History</>,
+        overview: <><BookOpenText className="w-4 h-4" />{t("overview")}</>,
+        account: <><Store className="w-4 h-4" />{t("account")}</>,
+        branches: <><Building2 className="w-4 h-4" />{t("branches")}</>,
+        employees: <><UsersRound className="w-4 h-4" />{t("employees")}</>,
+        products: <><Box className="w-4 h-4" />{t("products")}</>,
+        orders: <><ShoppingCart className="w-4 h-4" />{t("orders")}</>,
+        settings: <><Settings className="w-4 h-4" />{t("settings")}</>,
+        analytics: <><ChartLine className="w-4 h-4" />{t("analytics")}</>,
+        history: <><Clock className="w-4 h-4" />{t("history")}</>,
     }
 
     return (
