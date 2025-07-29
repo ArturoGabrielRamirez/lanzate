@@ -10,8 +10,11 @@ import {
     QuickActionsBar
 } from "./index"
 import { Skeleton } from "@/components/ui/skeleton"
+import { getTranslations } from "next-intl/server"
 
 async function OverviewTab({ slug, userId }: OverviewTabProps) {
+
+    const t = await getTranslations("overview")
 
     const [
         { payload: data, error, message },
@@ -25,7 +28,7 @@ async function OverviewTab({ slug, userId }: OverviewTabProps) {
         return (
             <div className="text-center p-8">
                 <p className="text-muted-foreground">
-                    {message || "Error al cargar datos del overview"}
+                    {message || t("error-loading-overview")}
                 </p>
             </div>
         )
@@ -35,7 +38,7 @@ async function OverviewTab({ slug, userId }: OverviewTabProps) {
         return (
             <div className="text-center p-8">
                 <p className="text-muted-foreground">
-                    Error al cargar información de la tienda
+                    {t("error-loading-store")}
                 </p>
             </div>
         )

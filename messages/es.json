@@ -82,33 +82,137 @@
     },
     "dashboard": {
         "title": "¡Bienvenido!",
+        "your-stores": {
+            "title": "Tus Tiendas ({count})",
+            "see-all": "ver todas",
+            "new-store": "Nueva tienda"
+        },
+        "new-order": {
+            "title": "Nueva orden",
+            "description": "¡Creá una nueva orden para comenzar a vender!"
+        },
+        "share-store": {
+            "select-store": "Seleccionar Tienda para Compartir",
+            "choose-store": "Elegí una tienda...",
+            "store-url": "URL de la Tienda",
+            "copy-url": "Copiar URL",
+            "open-store": "Abrir Tienda",
+            "ready-to-share": "¡Listo para compartir!",
+            "store-live": "Tu tienda \"{storeName}\" está activa y lista para los clientes.",
+            "share-instructions": "Compartí este enlace en redes sociales, enviálo a clientes, o agregálo a tus tarjetas de presentación.",
+            "toast": {
+                "select-store-first": "Por favor, seleccioná una tienda primero",
+                "url-copied": "¡URL de la tienda copiada al portapapeles!",
+                "copy-failed": "Error al copiar URL al portapapeles"
+            }
+        },
+        "create-product": {
+            "button": "Crear Producto",
+            "title": "Crear nuevo producto",
+            "description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
+            "select-store": "Seleccionar Tienda",
+            "choose-store": "Elegí una tienda...",
+            "product-will-be-created": "El producto será creado en: {storeName}",
+            "drag-drop-image": "Arrastrá y soltá la imagen del producto",
+            "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB)",
+            "browse-files": "Explorar archivos",
+            "product-name": "Nombre del Producto",
+            "price": "Precio",
+            "stock": "Stock",
+            "description": "Descripción",
+            "messages": {
+                "select-store-first": "Por favor, seleccioná una tienda primero",
+                "success": "¡Producto creado exitosamente!",
+                "error": "Error al crear producto",
+                "loading": "Creando producto..."
+            }
+        },
+        "configure-operations": {
+            "button": "Configurar Operaciones",
+            "title": "Configurar Operaciones de la Tienda",
+            "description": "Configurá entregas, horarios comerciales y métodos de pago para tu tienda.",
+            "select-store": "Seleccionar Tienda",
+            "choose-store": "Elegí una tienda...",
+            "configuring-for": "Configurando operaciones para: {storeName}",
+            "delivery-settings": "Configuración de Entregas",
+            "offer-delivery": "Ofrecer Servicio de Entrega",
+            "delivery-price": "Precio de Entrega ($)",
+            "free-delivery-minimum": "Mínimo para Entrega Gratis ($)",
+            "delivery-time-min": "Tiempo de Entrega Mín. (minutos)",
+            "delivery-time-max": "Tiempo de Entrega Máx. (minutos)",
+            "business-hours": "Horarios Comerciales",
+            "monday-open": "Lunes Apertura",
+            "monday-close": "Lunes Cierre",
+            "tuesday-open": "Martes Apertura",
+            "tuesday-close": "Martes Cierre",
+            "wednesday-open": "Miércoles Apertura",
+            "wednesday-close": "Miércoles Cierre",
+            "thursday-open": "Jueves Apertura",
+            "thursday-close": "Jueves Cierre",
+            "friday-open": "Viernes Apertura",
+            "friday-close": "Viernes Cierre",
+            "saturday-open": "Sábado Apertura",
+            "saturday-close": "Sábado Cierre",
+            "sunday-open": "Domingo Apertura",
+            "sunday-close": "Domingo Cierre",
+            "pickup-times": "Horarios de Retiro",
+            "pickup-time-min": "Tiempo de Retiro Mín. (minutos)",
+            "pickup-time-max": "Tiempo de Retiro Máx. (minutos)",
+            "payment-methods": "Métodos de Pago",
+            "cash": "Efectivo",
+            "credit-card": "Tarjeta de Crédito",
+            "debit-card": "Tarjeta de Débito",
+            "transfer": "Transferencia Bancaria",
+            "mercado-pago": "Mercado Pago",
+            "paypal": "PayPal",
+            "crypto": "Criptomonedas",
+            "payment-required": "Se requiere al menos un método de pago",
+            "additional-settings": "Configuraciones Adicionales",
+            "require-phone": "Requerir Teléfono para Entrega",
+            "minimum-order": "Monto Mínimo de Pedido ($)",
+            "preparation-buffer": "Tiempo de Preparación (minutos)",
+            "temporarily-closed": "Temporalmente Cerrado",
+            "closure-reason": "Razón del Cierre (si está temporalmente cerrado)",
+            "messages": {
+                "select-store-first": "Por favor, seleccioná una tienda primero",
+                "success": "¡Operaciones de la tienda configuradas exitosamente!",
+                "error": "Error al configurar operaciones de la tienda",
+                "loading": "Configurando operaciones..."
+            }
+        },
         "step-1": {
             "title": "Paso 1",
             "complete": "Completado",
             "create-a-new-store": "Crear una nueva tienda",
-            "to-continue": "Para comenzar a vender, necesitas crear una nueva tienda. Esto dará lugar a tu tienda, un lugar para listar tus productos y un lugar para gestionar tus pedidos.",
-            "stores-created-1": "Tenés ",
-            "stores-created-2": " tienda",
-            "stores-created-3": " creada"
+            "to-continue": "Para comenzar a vender como un profesional, necesitas crear una nueva tienda. Esto te dará tu escaparate, un lugar para listar tus productos y un lugar para gestionar tus pedidos.",
+            "stores-created": "Tenés {count} tienda{plural} creada{plural}",
+            "store": "",
+            "stores": "s"
         },
         "step-2": {
             "title": "Paso 2",
             "available": "Disponible",
             "create-a-product": "Crear un producto",
             "to-continue": "Una vez creado, tus productos estarán visibles para los clientes y listos para la venta. Podrás agregar imágenes, descripciones, precios y seguimiento de inventario.",
-            "first-complete": "Primero, completá el paso 1 para desbloquear esta función."
+            "first-complete": "Completá el Paso 1 primero para desbloquear esta función",
+            "products-created": "Tenés {count} producto{plural} creado{plural}",
+            "product": "",
+            "products": "s"
         },
         "step-3": {
             "title": "Paso 3",
-            "set-up-your-account": "Configura tu cuenta",
-            "to-continue": "Para terminar de configurar tu cuenta, elegí si tu tienda ofrece entregas, establecé tu tarifa de entrega y tus opciones de pago.",
-            "first-complete": " Completá los pasos anteriores para desbloquear esta función."
+            "configure-operations": "Configurar operaciones",
+            "to-continue": "Configurá opciones de entrega, horarios comerciales, métodos de pago y configuraciones operativas para tu tienda.",
+            "first-complete": "Completá los pasos anteriores para desbloquear esta función",
+            "operations-configured": "Operaciones configuradas para {count} tienda{plural}",
+            "store": "",
+            "stores": "s"
         },
         "step-4": {
             "title": "Paso 4",
-            "share-your-store": "¡Compartí el link de tus tiendas!",
-            "share-your-store-with": "¡Compartí el link de tus tiendas con tus clientes para comenzar a vender!",
-            "first-complete": "Completá los pasos anteriores para desbloquear esta función."
+            "share-your-store": "¡Compartí el link de tu tienda!",
+            "share-your-store-with": "¡Compartí el link de tu tienda con tus clientes para comenzar a vender!",
+            "first-complete": "Completá los pasos anteriores para desbloquear esta función"
         },
         "your-store": {
             "title": "Tu tienda",
@@ -319,28 +423,424 @@
         "buttons": {
             "new-store": "Nueva tienda"
         },
-        "employees": {
-            "create-orders": "Crear pedidos",
-            "update-orders": "Actualizar pedidos",
-            "create-products": "Crear productos",
-            "update-products": "Actualizar productos",
-            "manage-stock": "Gestionar stock",
-            "process-refunds": "Procesar reembolsos",
-            "view-reports": "Ver informes",
-            "manage-employees": "Gestionar empleados",
-            "manage-store": "Gestionar tienda",
-            "employee-details": "Detalles del empleado",
+        "create-store": {
+            "button": "Nueva tienda",
+            "title": "Crear nueva tienda",
+            "description": "¡Creá una nueva tienda para comenzar a vender tus productos! Elegí un nombre para tu tienda y hacé clic en el botón de abajo, podés continuar agregando más detalles de la tienda una vez que esté creada.",
+            "name": "Nombre",
+            "description-field": "Descripción",
+            "subdomain": "Subdominio",
+            "messages": {
+                "name-required": "El nombre es requerido",
+                "user-id-required": "ID de usuario es requerido",
+                "success": "¡Tienda creada exitosamente!",
+                "error": "Error al crear tienda",
+                "loading": "Creando tienda..."
+            }
+        },
+        "store-card": {
+            "no-description": "Sin descripción",
+            "products": "productos",
+            "product": "producto"
+        },
+        "product-card": {
+            "no-description": "No hay descripción disponible",
+            "items-left": "restantes",
+            "item-left": "restante"
+        },
+        "tabs": {
+            "overview": "General",
+            "account": "Detalles de la Cuenta",
+            "branches": "Sucursales",
+            "employees": "Empleados",
+            "products": "Productos",
+            "orders": "Pedidos",
+            "settings": "Configuración",
+            "analytics": "Análisis",
+            "history": "Historial"
+        },
+        "account-tab": {
+            "name": "Nombre",
+            "description": "Descripción",
+            "website": "Sitio Web",
+            "no-description": "No hay descripción disponible",
+            "danger-zone": "Zona de Peligro",
+            "delete-warning": "Podés eliminar tu tienda haciendo clic en el botón de abajo.",
+            "delete-irreversible": "Tené en cuenta que esta acción es irreversible y eliminará todos los datos asociados con tu tienda."
+        },
+        "edit-store": {
+            "button": "Editar tienda",
+            "title": "Editar tienda",
+            "description": "Editá los detalles de tu tienda",
+            "name": "Nombre",
+            "description-field": "Descripción",
+            "subdomain": "Subdominio",
+            "messages": {
+                "name-required": "El nombre es requerido",
+                "user-id-required": "ID de usuario es requerido",
+                "success": "¡Tienda actualizada exitosamente!",
+                "error": "Error al actualizar tienda",
+                "loading": "Actualizando tienda..."
+            }
+        },
+        "delete-store": {
+            "button": "Eliminar Tienda",
+            "title": "Eliminar Tienda",
+            "description": "Podés eliminar tu tienda haciendo clic en el botón de abajo. Tené en cuenta que esta acción es irreversible y eliminará todos los datos asociados con tu tienda.",
+            "messages": {
+                "success": "Tienda eliminada exitosamente",
+                "error": "Error al eliminar tienda",
+                "loading": "Eliminando tienda..."
+            }
+        },
+        "branches-tab": {
+            "no-branches": "No hay sucursales"
+        },
+        "branch-table": {
+            "headers": {
+                "name": "Nombre",
+                "address": "Dirección",
+                "phone": "Teléfono",
+                "email": "Email",
+                "actions": "Acciones"
+            },
+            "main-badge": "Principal",
+            "no-address": "Sin dirección",
+            "no-phone": "Sin teléfono",
+            "no-email": "Sin email",
+            "dropdown": {
+                "actions": "Acciones",
+                "view-details": "Ver detalles",
+                "cannot-delete-main": "No se puede eliminar la sucursal principal",
+                "open-menu": "Abrir menú"
+            }
+        },
+        "create-branch": {
+            "button": "Crear Sucursal",
+            "title": "Crear nueva sucursal",
+            "description": "¡Creá una nueva sucursal para comenzar a vender tus productos! Elegí un nombre para tu sucursal y hacé clic en el botón de abajo, podés continuar agregando más detalles de la sucursal una vez que esté creada.",
+            "name": "Nombre",
+            "address": "Dirección",
+            "phone": "Teléfono",
+            "email": "Email",
+            "messages": {
+                "success": "¡Sucursal creada exitosamente!",
+                "error": "Error al crear sucursal",
+                "loading": "Creando sucursal..."
+            }
+        },
+        "edit-branch": {
+            "button": "Editar Sucursal",
+            "title": "Editar sucursal",
+            "description": "Editá los detalles de la sucursal incluyendo nombre, dirección, teléfono y email. También podés designar esta sucursal como la principal.",
+            "name": "Nombre",
+            "description": "Descripción",
+            "description-placeholder": "Descripción de la sucursal",
+            "address": "Dirección",
+            "phone": "Teléfono",
+            "email": "Email",
+            "set-as-main": "Establecer como sucursal principal",
+            "main-branch-note": "Esta será la sucursal principal de la tienda. Todas las otras sucursales dejarán de ser principales.",
+            "messages": {
+                "success": "¡Sucursal actualizada exitosamente!",
+                "error": "Error al actualizar sucursal",
+                "loading": "Actualizando sucursal..."
+            }
+        },
+        "delete-branch": {
+            "button": "Eliminar Sucursal",
+            "title": "Eliminar Sucursal",
+            "description": "¿Estás seguro de que querés eliminar esta sucursal? Esta acción es irreversible. Los pedidos asociados con esta sucursal se preservarán pero la referencia de la sucursal será removida.",
+            "messages": {
+                "success": "Sucursal eliminada exitosamente",
+                "error": "Error al eliminar sucursal",
+                "loading": "Eliminando sucursal..."
+            }
+        },
+        "employees-tab": {
+            "error-loading-employees": "Error al cargar empleados",
+            "error-loading-store": "Error al cargar la tienda"
+        },
+        "employees-table": {
+            "headers": {
+                "id": "ID",
+                "user": "Usuario",
+                "role": "Rol",
+                "active": "Activo",
+                "hired": "Contratado",
+                "department": "Departamento",
+                "actions": "Acciones"
+            },
+            "yes": "Sí",
+            "no": "No",
+            "no-department": "-",
+            "no-hired-date": "-",
+            "dropdown": {
+                "actions": "Acciones",
+                "view-details": "Ver detalles",
+                "open-menu": "Abrir menú"
+            }
+        },
+        "create-employee": {
+            "button": "Agregar empleado",
+            "title": "Agregar empleado",
+            "description": "Busca un usuario registrado para agregarlo como empleado de esta tienda.",
+            "search-user": "Buscar usuario",
+            "search-button": "Buscar",
+            "user-selected": "Usuario seleccionado:",
+            "users-found": "Usuarios encontrados:",
+            "already-employee": "Ya es empleado",
+            "no-users-found": "No se encontraron usuarios",
+            "role-label": "Rol:",
+            "hired-label": "Contratado:",
+            "messages": {
+                "select-user-first": "Debes seleccionar un usuario primero",
+                "user-already-employee": "Este usuario ya es empleado de esta tienda",
+                "success": "¡Empleado agregado correctamente!",
+                "error": "Error al agregar empleado",
+                "loading": "Agregando empleado..."
+            }
+        },
+        "edit-employee": {
+            "button": "Editar Empleado",
+            "title": "Editar empleado",
+            "description": "Editá el rol, permisos y otros detalles del empleado. Nota: El email y nombre no se pueden cambiar ya que pertenecen a la cuenta del usuario.",
+            "user-info-title": "Información del Usuario Empleado",
+            "email": "Email:",
+            "name": "Nombre:",
+            "email-name-note": "Nota: El email y nombre no se pueden editar aquí ya que son parte de la cuenta del usuario",
+            "role": "Rol",
+            "role-placeholder": "Seleccionar un rol",
             "position": "Posición",
             "department": "Departamento",
-            "hired-date": "Fecha de contratación",
             "salary": "Sueldo",
+            "salary-placeholder": "Ingresar sueldo",
             "notes": "Notas",
-            "permissions": "Permisos",
-            "active": "Activo",
-            "inactive": "Inactivo"
+            "notes-placeholder": "Notas adicionales sobre el empleado...",
+            "employee-active": "El empleado está activo",
+            "permissions-title": "Permisos",
+            "roles": {
+                "employee": "Empleado",
+                "cashier": "Cajero",
+                "stockist": "Inventario",
+                "sales": "Ventas",
+                "supervisor": "Supervisor",
+                "manager": "Gerente"
+            },
+            "permissions": {
+                "can-create-orders": "Puede crear pedidos",
+                "can-update-orders": "Puede actualizar pedidos",
+                "can-create-products": "Puede crear productos",
+                "can-update-products": "Puede actualizar productos",
+                "can-manage-stock": "Puede gestionar stock",
+                "can-process-refunds": "Puede procesar reembolsos",
+                "can-view-reports": "Puede ver informes",
+                "can-manage-employees": "Puede gestionar empleados",
+                "can-manage-store": "Puede gestionar tienda"
+            },
+            "messages": {
+                "success": "¡Empleado actualizado exitosamente!",
+                "error": "Error al actualizar empleado",
+                "loading": "Actualizando empleado..."
+            }
+        },
+        "delete-employee": {
+            "button": "Eliminar Empleado",
+            "title": "Eliminar Empleado",
+            "description": "¿Estás seguro de que querés eliminar este empleado? Esta acción es irreversible. Los pedidos creados por este empleado se preservarán pero la referencia del empleado será removida.",
+            "messages": {
+                "success": "Empleado eliminado exitosamente",
+                "error": "Error al eliminar empleado",
+                "loading": "Eliminando empleado..."
+            }
+        },
+        "orders-tab": {
+            "error-loading-user": "Error al cargar información del usuario",
+            "error-loading-orders": "Error al cargar pedidos"
+        },
+        "orders-table": {
+            "headers": {
+                "id": "ID",
+                "status": "Estado",
+                "total": "Total",
+                "customer": "Cliente",
+                "date": "Fecha",
+                "items": "Artículos",
+                "type": "Tipo"
+            },
+            "statuses": {
+                "pending": "Pendiente",
+                "processing": "Procesando",
+                "ready": "Listo",
+                "shipped": "Enviado",
+                "delivered": "Entregado",
+                "cancelled": "Cancelado"
+            },
+            "items-count": {
+                "item": "artículo",
+                "items": "artículos"
+            },
+            "dropdown": {
+                "actions": "Acciones",
+                "view-details": "Ver detalles",
+                "open-menu": "Abrir menú"
+            }
+        },
+        "change-order-status": {
+            "button": "Cambiar Estado",
+            "title": "Cambiar Estado del Pedido",
+            "current-order-status": "Estado Actual del Pedido",
+            "new-status": "Nuevo Estado",
+            "status-placeholder": "Seleccionar nuevo estado",
+            "new-status-preview": "Vista Previa del Nuevo Estado",
+            "payment-marked-paid": "El pago será marcado automáticamente como PAGADO",
+            "payment-explanation": "Cambiar de PENDIENTE a {status} indica que el pedido ha sido pagado. El estado del pago será actualizado en consecuencia.",
+            "confirm-payment": "Confirmo que este pedido ha sido pagado",
+            "stock-restore-warning": "Esto restaurará el stock de productos y revertirá el saldo de la tienda",
+            "cancellation-consequences": "Cancelar este pedido:",
+            "restore-stock": "Restaurará las cantidades de stock de productos",
+            "reverse-balance": "Revertirá la transacción del saldo de la tienda",
+            "create-refund": "Creará una nueva transacción de REEMBOLSO",
+            "log-action": "Registrará la acción de cancelación",
+            "understand-consequences": "Entiendo las consecuencias de cancelar este pedido",
+            "no-changes-warning": "El estado seleccionado es el mismo que el estado actual. No se realizarán cambios.",
+            "descriptions": {
+                "cancel": "Cancelar este pedido restaurará el stock de productos y revertirá el saldo de la tienda.",
+                "from-pending": "Cambiar del estado PENDIENTE marcará el pedido como pagado y actualizará los registros de pago.",
+                "default": "Actualizá el estado del pedido para reflejar su estado actual."
+            },
+            "messages": {
+                "confirm-required": "Por favor, confirmá todos los campos requeridos",
+                "success": "¡Estado del pedido actualizado exitosamente!",
+                "error": "Error al actualizar estado del pedido",
+                "loading": "Actualizando estado del pedido..."
+            }
+        },
+        "cancel-order": {
+            "button": "Cancelar Pedido",
+            "title": "Cancelar Pedido",
+            "description": "¿Estás seguro de que querés cancelar este pedido? Esto restaurará el stock de productos y revertirá el saldo de la tienda. Esta acción no se puede deshacer.",
+            "cannot-cancel": "No se puede cancelar",
+            "messages": {
+                "success": "¡Pedido cancelado exitosamente!",
+                "error": "Error al cancelar pedido",
+                "loading": "Cancelando pedido..."
+            }
+        },
+        "products-tab": {
+            "error-loading-store": "Error al cargar información de la tienda"
+        },
+        "products-table": {
+            "headers": {
+                "id": "ID",
+                "name": "Nombre",
+                "price": "Precio",
+                "categories": "Categorías",
+                "stock": "Stock",
+                "featured": "Destacado",
+                "active": "Activo",
+                "actions": "Acciones"
+            },
+            "categories": {
+                "none": "Ninguna"
+            },
+            "boolean": {
+                "yes": "Sí",
+                "no": "No"
+            },
+            "dropdown": {
+                "actions": "Acciones",
+                "view-details": "Ver detalles",
+                "open-menu": "Abrir menú"
+            }
+        },
+        "create-product": {
+            "button": "Crear Producto",
+            "title": "Crear nuevo producto",
+            "description": "¡Creá un nuevo producto para comenzar a vender! Elegí un nombre para tu producto y hacé clic en el botón de abajo, podés continuar agregando más detalles del producto una vez que esté creado.",
+            "drag-drop": "Arrastrá y soltá archivos aquí",
+            "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
+            "browse-files": "Explorar archivos",
+            "name": "Nombre",
+            "price": "Precio",
+            "stock": "Stock",
+            "description": "Descripción",
+            "file-rejected": "\"{filename}\" ha sido rechazado",
+            "messages": {
+                "success": "¡Producto creado exitosamente!",
+                "error": "Error al crear producto",
+                "loading": "Creando producto..."
+            }
+        },
+        "edit-product": {
+            "button": "Editar Producto",
+            "title": "Editar producto",
+            "description": "Editá los detalles de tu producto",
+            "drag-drop": "Arrastrá y soltá archivos aquí",
+            "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
+            "browse-files": "Explorar archivos",
+            "name": "Nombre",
+            "price": "Precio",
+            "stock": "Stock",
+            "description": "Descripción",
+            "file-rejected": "\"{filename}\" ha sido rechazado",
+            "validation": {
+                "name-required": "El nombre es requerido",
+                "price-required": "El precio es requerido",
+                "stock-required": "El stock es requerido"
+            },
+            "messages": {
+                "success": "¡Producto actualizado exitosamente!",
+                "error": "Error al actualizar producto",
+                "loading": "Actualizando producto..."
+            }
+        },
+        "delete-product": {
+            "button": "Eliminar Producto",
+            "title": "Eliminar Producto",
+            "description": "¿Estás seguro de que querés eliminar este producto? Esta acción es irreversible.",
+            "messages": {
+                "success": "Producto eliminado exitosamente",
+                "error": "Error al eliminar producto",
+                "loading": "Eliminando producto..."
+            }
+        },
+        "history-tab": {
+            "error-loading-logs": "Error al cargar registros"
+        },
+        "history-table": {
+            "headers": {
+                "date": "Fecha",
+                "user": "Usuario",
+                "action": "Acción",
+                "entity-type": "Tipo de Entidad",
+                "actions": "Acciones"
+            },
+            "employee": "(Empleado)",
+            "unknown-user": "Usuario desconocido",
+            "actions": {
+                "create": "CREAR",
+                "update": "ACTUALIZAR",
+                "delete": "ELIMINAR",
+                "login": "INICIAR SESIÓN",
+                "logout": "CERRAR SESIÓN"
+            },
+            "entities": {
+                "store": "TIENDA",
+                "product": "PRODUCTO",
+                "order": "PEDIDO",
+                "branch": "SUCURSAL",
+                "user": "USUARIO",
+                "employee": "EMPLEADO"
+            },
+            "dropdown": {
+                "actions": "Acciones",
+                "view-details": "Ver detalles",
+                "open-menu": "Abrir menú"
+            }
         },
         "layout": {
-            "overview": "Visión general",
+            "overview": "General",
             "account-details": "Detalles de la cuenta",
             "branches": "Sucursales",
             "employees": "Empleados",
@@ -390,6 +890,110 @@
         "products": {
             "product-details": "Detalles del producto ",
             "no-categories": "No hay categorías"
+        }
+    },
+    "sale": {
+        "title": "Nueva Orden",
+        "store-selector": {
+            "title": "Seleccionar Tienda",
+            "description": "Elige una tienda para crear una nueva orden",
+            "placeholder": "Selecciona una tienda...",
+            "confirm": "Confirmar Tienda"
+        },
+        "breadcrumbs": {
+            "sale": "Venta"
+        },
+        "search": {
+            "placeholder": "Buscar por nombre, descripción o SKU...",
+            "searching": "Buscando productos...",
+            "found": "Se encontraron {count} productos",
+            "no-results": "No se encontraron productos",
+            "error": "Error al buscar productos"
+        },
+        "cart": {
+            "title": "Carrito",
+            "items": "items",
+            "item": "item",
+            "empty-title": "El carrito está vacío",
+            "empty-description": "Escanea o busca productos para agregar",
+            "total": "Total:",
+            "add": "Agregar",
+            "remove": "Eliminar"
+        },
+        "scanner": {
+            "scanning": "Escaneando...",
+            "waiting": "Esperando escaneo",
+            "disabled": "Scanner desactivado",
+            "enabled": "Activado",
+            "start": "Iniciando escaneo...",
+            "completed": "Escaneo completado"
+        },
+        "product-results": {
+            "title": "Resultados de Búsqueda",
+            "barcode-found": "Producto encontrado por código de barras",
+            "search-found": "Se encontraron {count} productos",
+            "scanned": "Escaneado",
+            "search": "Búsqueda",
+            "add": "Agregar",
+            "units-remaining": "{count} {units} restantes",
+            "unit": "unidad",
+            "units": "unidades",
+            "try-again": "Intenta nuevamente con otros términos de búsqueda",
+            "search-instruction": "Busca productos por nombre o escanea un código de barras",
+            "results-here": "Los resultados aparecerán aquí"
+        },
+        "actions": {
+            "finalize-sale": "Finalizar Venta",
+            "calculate-change": "Calcular Vuelto",
+            "print-receipt": "Imprimir Ticket",
+            "process-refund": "Procesar Reembolso",
+            "clear-cart": "Vaciar Carrito"
+        },
+        "messages": {
+            "searching-product": "Buscando producto...",
+            "product-found": "Producto encontrado",
+            "product-not-found": "Producto no encontrado",
+            "search-error": "Error al buscar el producto",
+            "sale-completed": "Venta finalizada. Total: {total}",
+            "refund-not-implemented": "Función de reembolso no implementada aún",
+            "print-not-implemented": "Función de impresión no implementada aún",
+            "change-calculation": "Total a cobrar: ${total}\n¿Cuánto pagó el cliente?",
+            "change-result": "Vuelto: ${change}",
+            "insufficient-payment": "El pago es insuficiente"
+        }
+    },
+    "overview": {
+        "error-loading-overview": "Error al cargar datos del overview",
+        "error-loading-store": "Error al cargar información de la tienda",
+        "quick-actions": {
+            "title": "Acciones Rápidas",
+            "description": "Aquí puedes encontrar las acciones más importantes para tu tienda junto con algunos enlaces rápidos para empezar.",
+            "advanced-analytics": "Análisis Avanzado",
+            "marketing-tools": "Herramientas de Marketing",
+            "coming-soon": "Próximamente"
+        },
+        "top-products": {
+            "title": "Productos Más Vendidos",
+            "no-data": "No hay datos de ventas disponibles",
+            "sold": "vendidos"
+        },
+        "sales-by-month": {
+            "title": "Ventas por Mes",
+            "revenue": "Ingresos",
+            "orders": "Órdenes"
+        },
+        "sales-overview": {
+            "title": "Resumen de Ventas",
+            "total-revenue": "Ingresos totales",
+            "orders": "Órdenes",
+            "average": "Promedio"
+        },
+        "product-store-count": {
+            "title": "Productos y Sucursales",
+            "total-products": "Productos totales",
+            "branches": "Sucursales",
+            "active": "Activos",
+            "published": "Publicados"
         }
     },
     "subdomain": {

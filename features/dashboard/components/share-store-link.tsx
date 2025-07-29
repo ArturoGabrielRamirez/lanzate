@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Copy, ExternalLink } from "lucide-react"
 import { toast } from "sonner"
 import { DashboardStore } from "../types/types"
+import { useTranslations } from "next-intl"
 
 type ShareStoreLinkProps = {
     stores: DashboardStore[]
@@ -15,27 +16,28 @@ type ShareStoreLinkProps = {
 
 function ShareStoreLink({ stores }: ShareStoreLinkProps) {
     const [selectedStoreId, setSelectedStoreId] = useState<string>("")
+    const t = useTranslations("dashboard.share-store")
 
     const selectedStore = stores.find(store => store.id.toString() === selectedStoreId)
     const storeUrl = selectedStore ? `https://${selectedStore.subdomain}.lanzate.co` : ""
 
     const handleCopyUrl = async () => {
         if (!storeUrl) {
-            toast.error("Please select a store first")
+            toast.error(t("toast.select-store-first"))
             return
         }
 
         try {
             await navigator.clipboard.writeText(storeUrl)
-            toast.success("Store URL copied to clipboard!")
+            toast.success(t("toast.url-copied"))
         } catch (error) {
-            toast.error("Failed to copy URL to clipboard")
+            toast.error(t("toast.copy-failed"))
         }
     }
 
     const handleOpenStore = () => {
         if (!storeUrl) {
-            toast.error("Please select a store first")
+            toast.error(t("toast.select-store-first"))
             return
         }
         window.open(storeUrl, '_blank')
@@ -44,10 +46,10 @@ function ShareStoreLink({ stores }: ShareStoreLinkProps) {
     return (
         <div className="space-y-4">
             <div className="space-y-2">
-                <Label htmlFor="store-select">Select Store to Share</Label>
+                <Label htmlFor="store-select">{t("select-store")}</Label>
                 <Select value={selectedStoreId} onValueChange={setSelectedStoreId}>
                     <SelectTrigger>
-                        <SelectValue placeholder="Choose a store..." />
+                        <SelectValue placeholder={t("choose-store")} />
                     </SelectTrigger>
                     <SelectContent>
                         {stores.map((store) => (
@@ -67,7 +69,7 @@ function ShareStoreLink({ stores }: ShareStoreLinkProps) {
             {selectedStore && (
                 <>
                     <div className="space-y-2">
-                        <Label htmlFor="store-url">Store URL</Label>
+                        <Label htmlFor="store-url">{t("store-url")}</Label>
                         <div className="flex gap-2">
                             <Input
                                 id="store-url"
@@ -79,7 +81,7 @@ function ShareStoreLink({ stores }: ShareStoreLinkProps) {
                                 variant="outline"
                                 size="icon"
                                 onClick={handleCopyUrl}
-                                title="Copy URL"
+                                title={t("copy-url")}
                             >
                                 <Copy className="size-4" />
                             </Button>
@@ -87,7 +89,7 @@ function ShareStoreLink({ stores }: ShareStoreLinkProps) {
                                 variant="outline"
                                 size="icon"
                                 onClick={handleOpenStore}
-                                title="Open Store"
+                                title={t("open-store")}
                             >
                                 <ExternalLink className="size-4" />
                             </Button>
@@ -96,10 +98,10 @@ function ShareStoreLink({ stores }: ShareStoreLinkProps) {
 
                     <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
                         <p className="text-sm text-blue-800">
-                            <strong>Ready to share!</strong> Your store "<strong>{selectedStore.name}</strong>" is live and ready for customers.
+                            <strong>{t("ready-to-share")}</strong> {t("store-live", { storeName: selectedStore.name })}
                         </p>
                         <p className="text-xs text-blue-600 mt-1">
-                            Share this link on social media, send it to customers, or add it to your business cards.
+                            {t("share-instructions")}
                         </p>
                     </div>
                 </>

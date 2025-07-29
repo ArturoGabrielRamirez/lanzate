@@ -6,6 +6,7 @@ import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { useBarcodeScanner } from '../lib/use-barcode-scanner'
 import type { ScannedData } from '../types'
+import { useTranslations } from 'next-intl'
 
 type BarcodeScannerUSBProps = {
   onProductScanned?: (barcode: string) => void
@@ -14,6 +15,7 @@ type BarcodeScannerUSBProps = {
 
 function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBProps) {
   const [enabled, setEnabled] = useState(true)
+  const t = useTranslations('sale.scanner')
 
   const handleScanned = (data: ScannedData) => {
     onProductScanned?.(data.data)
@@ -29,10 +31,10 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
     },
     onScanned: handleScanned,
     onScanStart: () => {
-      console.log('Iniciando escaneo...')
+      console.log(t('start'))
     },
     onScanEnd: () => {
-      console.log('Escaneo completado')
+      console.log(t('completed'))
     }
   })
 
@@ -45,13 +47,13 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
           {isScanning ? (
             <>
               <div className="size-3 bg-green-500 rounded-full animate-pulse" />
-              <span className="text-sm font-medium">Escaneando...</span>
+              <span className="text-sm font-medium">{t('scanning')}</span>
             </>
           ) : (
             <>
               <div className="size-3 bg-gray-400 rounded-full" />
               <span className="text-sm text-muted-foreground">
-                {enabled ? "Esperando escaneo" : "Scanner desactivado"}
+                {enabled ? t('waiting') : t('disabled')}
               </span>
             </>
           )}
@@ -64,7 +66,7 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
             onCheckedChange={setEnabled}
           />
           <Label htmlFor="scanner-enabled" className="text-sm">
-            Activado
+            {t('enabled')}
           </Label>
         </div>
 

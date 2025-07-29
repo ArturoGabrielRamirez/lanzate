@@ -6,19 +6,23 @@ import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
 import { Trash2 } from "lucide-react"
 import { DeleteBranchButtonProps } from "../types"
+import { useTranslations } from "next-intl"
 
 function DeleteBranchButton({ branchId, slug, onComplete, userId }: DeleteBranchButtonProps) {
+    
+    const t = useTranslations("store.delete-branch")
+    
     const handleDeleteBranch = async () => {
         try {
             const { error, message, payload } = await deleteBranch(branchId, slug, userId)
             if (error) throw new Error(message)
             return {
                 error: false,
-                message: "Branch deleted successfully",
+                message: t("messages.success"),
                 payload: payload
             }
         } catch (error) {
-            return formatErrorResponse("Error deleting branch", error, null)
+            return formatErrorResponse(t("messages.error"), error, null)
         }
     }
 
@@ -29,24 +33,23 @@ function DeleteBranchButton({ branchId, slug, onComplete, userId }: DeleteBranch
 
     return (
         <ButtonWithPopup
-            title="Delete Branch"
-            description="Are you sure you want to delete this branch? This action is irreversible. Orders associated with this branch will be preserved but the branch reference will be removed."
+            title={t("title")}
+            description={t("description")}
             action={handleDeleteBranch}
             onComplete={handleComplete}
             text={(
                 <>
                     <Trash2 className="text-muted-foreground size-4" />
-                    Delete Branch
+                    {t("button")}
                 </>
             )}
             messages={{
-                success: "Branch deleted successfully",
-                error: "Failed to delete branch",
-                loading: "Deleting branch..."
+                success: t("messages.success"),
+                error: t("messages.error"),
+                loading: t("messages.loading")
             }}
             className="bg-transparent w-full justify-start"
         />
     )
 }
-
 export default DeleteBranchButton 

@@ -6,10 +6,11 @@ import { DataTable } from "@/features/layout/components/data-table"
 import { cn } from "@/lib/utils"
 import { Order } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { Edit, Eye, MapPin, MoreHorizontal, Trash2, Truck } from "lucide-react"
+import { Eye, MapPin, MoreHorizontal, Truck } from "lucide-react"
 import Link from "next/link"
 import ChangeOrderStatusButton from "./change-order-status-button"
 import CancelOrderButton from "./cancel-order-button"
+import { useTranslations } from "next-intl"
 
 type Props = {
     data: Order[]
@@ -19,16 +20,26 @@ type Props = {
 
 function OrdersTable({ data, slug, userId }: Props) {
 
+    const t = useTranslations("store.orders-table")
+
     const columns: ColumnDef<Order>[] = [
         {
-            header: "ID",
+            header: t("headers.id"),
             accessorKey: "id",
         },
         {
-            header: "Status",
+            header: t("headers.status"),
             accessorKey: "status",
             cell: ({ row }) => {
                 const status = row.original.status
+                const statusMap = {
+                    "PENDING": t("statuses.pending"),
+                    "PROCESSING": t("statuses.processing"),
+                    "READY": t("statuses.ready"),
+                    "SHIPPED": t("statuses.shipped"),
+                    "DELIVERED": t("statuses.delivered"),
+                    "CANCELLED": t("statuses.cancelled")
+                }
                 return (
                     <Badge
                         className={cn(
@@ -41,13 +52,13 @@ function OrdersTable({ data, slug, userId }: Props) {
                             status === "CANCELLED" && "border-red-500 text-red-500",
                         )}
                     >
-                        {status}
+                        {statusMap[status as keyof typeof statusMap] || status}
                     </Badge>
                 )
             }
         },
         {
-            header: "Total",
+            header: t("headers.total"),
             accessorKey: "total_price",
             cell: ({ row }) => {
                 const total = row.original.total_price
@@ -55,7 +66,7 @@ function OrdersTable({ data, slug, userId }: Props) {
             }
         },
         {
-            header: "Customer",
+            header: t("headers.customer"),
             accessorKey: "user",
             cell: ({ row }) => {
                 console.log(row.original)
@@ -63,7 +74,7 @@ function OrdersTable({ data, slug, userId }: Props) {
             }
         },
         {
-            header: "Date",
+            header: t("headers.date"),
             accessorKey: "created_at",
             cell: ({ row }) => {
                 const createdAt = row.original.created_at
@@ -71,15 +82,15 @@ function OrdersTable({ data, slug, userId }: Props) {
             }
         },
         {
-            header: "Items",
+            header: t("headers.items"),
             accessorKey: "total_quantity",
             cell: ({ row }) => {
                 const totalQuantity = row.original.total_quantity
-                return <span>{totalQuantity} {totalQuantity === 1 ? "item" : "items"}</span>
+                return <span>{totalQuantity} {totalQuantity === 1 ? t("items-count.item") : t("items-count.items")}</span>
             }
         },
         {
-            header: "Type",
+            header: t("headers.type"),
             accessorKey: "shipping_method",
             cell: ({ row }) => {
                 const shippingMethod = row.original.shipping_method
@@ -87,7 +98,7 @@ function OrdersTable({ data, slug, userId }: Props) {
             }
         },
         {
-            header: "Actions",
+            header: t("dropdown.actions"),
             accessorKey: "actions",
             cell: ({ row }) => {
                 const order = row.original
@@ -96,16 +107,16 @@ function OrdersTable({ data, slug, userId }: Props) {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">Open menu</span>
+                                <span className="sr-only">{t("dropdown.open-menu")}</span>
                                 <MoreHorizontal className="h-4 w-4" />
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">Actions</DropdownMenuLabel>
+                            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">{t("dropdown.actions")}</DropdownMenuLabel>
                             <DropdownMenuItem asChild>
                                 <Link href={`/stores/${slug}/orders/${order.id}`} className="flex items-center gap-2">
                                     <Eye className="w-4 h-4" />
-                                    View details
+                                    {t("dropdown.view-details")}
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />

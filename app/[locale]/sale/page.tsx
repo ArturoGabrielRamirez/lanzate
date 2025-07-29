@@ -3,8 +3,11 @@ import { Title } from "@/features/layout/components"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getStoresFromUser } from "@/features/stores/actions/getStoresFromUser"
 import { StoreSelector } from "@/features/sale/components"
+import { getTranslations } from "next-intl/server"
 
 async function SalePage() {
+    const t = await getTranslations("sale")
+    
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
@@ -18,14 +21,14 @@ async function SalePage() {
     }
 
     return (
-        <section className="p-4 flex flex-col max-md:pt-24">
+        <section className="p-4 flex flex-col pt-17">
             <Title title={(
                 <div className="flex items-center gap-2">
                     <ShoppingBasket />
-                    New order
+                    {t("title")}
                 </div>
             )} breadcrumbs={[{
-                label: "Sale",
+                label: t("breadcrumbs.sale"),
                 href: "/sale"
             }]} />
             

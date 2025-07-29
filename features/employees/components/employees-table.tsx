@@ -11,39 +11,43 @@ import { MoreHorizontal, Eye } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { useTranslations } from "next-intl"
 
 export default function EmployeesTable({ data, userId, slug, storeId }: EmployeesTableProps) {
+    
+    const t = useTranslations("store.employees-table")
+    
     const columns: ColumnDef<Employee>[] = [
         {
-            header: "ID",
+            header: t("headers.id"),
             accessorKey: "id",
         },
         {
-            header: "Usuario",
+            header: t("headers.user"),
             accessorKey: "user",
             cell: ({ row }) => row.original.user?.email || row.original.user_id,
         },
         {
-            header: "Rol",
+            header: t("headers.role"),
             accessorKey: "role",
         },
         {
-            header: "Activo",
+            header: t("headers.active"),
             accessorKey: "is_active",
-            cell: ({ row }) => row.original.is_active ? "Sí" : "No",
+            cell: ({ row }) => row.original.is_active ? t("yes") : t("no"),
         },
         {
-            header: "Contratado",
+            header: t("headers.hired"),
             accessorKey: "hired_at",
-            cell: ({ row }) => row.original.hired_at ? new Date(row.original.hired_at).toLocaleDateString() : "-",
+            cell: ({ row }) => row.original.hired_at ? new Date(row.original.hired_at).toLocaleDateString() : t("no-hired-date"),
         },
         {
-            header: "Departamento",
+            header: t("headers.department"),
             accessorKey: "department",
-            cell: ({ row }) => row.original.department || "-",
+            cell: ({ row }) => row.original.department || t("no-department"),
         },
         {
-            header: "Acciones",
+            header: t("headers.actions"),
             accessorKey: "actions",
             cell: ({ row }) => {
                 const employee = row.original
@@ -51,16 +55,16 @@ export default function EmployeesTable({ data, userId, slug, storeId }: Employee
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">Open menu</span>
+                                <span className="sr-only">{t("dropdown.open-menu")}</span>
                                 <MoreHorizontal className="h-4 w-4" />
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">Actions</DropdownMenuLabel>
+                            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">{t("dropdown.actions")}</DropdownMenuLabel>
                             <DropdownMenuItem asChild>
                                 <Link href={`/stores/${slug}/employees/${employee.id}`} className="flex items-center gap-2 w-full">
                                     <Eye className="w-4 h-4" />
-                                    View details
+                                    {t("dropdown.view-details")}
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />

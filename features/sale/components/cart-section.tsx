@@ -4,6 +4,7 @@ import { ShoppingBasket, Trash2 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import type { CartItem } from '../types'
+import { useTranslations } from 'next-intl'
 
 type CartSectionProps = {
   cartItems: CartItem[]
@@ -12,6 +13,8 @@ type CartSectionProps = {
 }
 
 function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
+  const t = useTranslations('sale.cart')
+  
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
@@ -27,7 +30,7 @@ function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
       <CardHeader>
         <CardTitle className='flex items-center gap-2'>
           <ShoppingBasket />
-          Carrito ({totalItems} items)
+          {t('title')} ({totalItems} {totalItems === 1 ? t('item') : t('items')})
         </CardTitle>
       </CardHeader>
       <CardContent className='h-full flex flex-col'>
@@ -96,17 +99,17 @@ function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
             <div className="text-center">
               <ShoppingBasket className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
               <p className="text-muted-foreground text-sm">
-                El carrito está vacío
+                {t('empty-title')}
               </p>
               <p className="text-xs text-muted-foreground">
-                Escanea o busca productos para agregar
+                {t('empty-description')}
               </p>
             </div>
           </div>
         )}
         <div className="border-t pt-4 mt-4">
           <div className="flex justify-between items-center">
-            <span className="font-semibold">Total:</span>
+            <span className="font-semibold">{t('total')}</span>
             <span className="text-lg py-1 px-3 font-bold">
               {formatPrice(totalPrice)}
             </span>

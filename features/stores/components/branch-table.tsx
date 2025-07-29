@@ -11,6 +11,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
+import { useTranslations } from "next-intl"
 
 type Props = {
     branches: Branch[]
@@ -21,9 +22,11 @@ type Props = {
 
 function BranchTable({ branches, storeId, userId, slug }: Props) {
 
+    const t = useTranslations("store.branch-table")
+
     const columns: ColumnDef<Branch>[] = [
         {
-            header: "Name",
+            header: t("headers.name"),
             accessorKey: "name",
             cell: ({ row }) => {
                 const branch = row.original
@@ -33,7 +36,7 @@ function BranchTable({ branches, storeId, userId, slug }: Props) {
                         {branch.is_main && (
                             <Badge variant="secondary" className="flex items-center gap-1 text-xs">
                                 <Crown className="w-3 h-3" />
-                                Main
+                                {t("main-badge")}
                             </Badge>
                         )}
                     </div>
@@ -41,31 +44,31 @@ function BranchTable({ branches, storeId, userId, slug }: Props) {
             }
         },
         {
-            header: "Address",
+            header: t("headers.address"),
             accessorKey: "address",
             cell: ({ row }) => {
                 const address = row.original.address
-                return <span>{address ? address : "No address"}</span>
+                return <span>{address ? address : t("no-address")}</span>
             }
         },
         {
-            header: "Phone",
+            header: t("headers.phone"),
             accessorKey: "phone",
             cell: ({ row }) => {
                 const phone = row.original.phone
-                return <span>{phone ? phone : "No phone"}</span>
+                return <span>{phone ? phone : t("no-phone")}</span>
             }
         },
         {
-            header: "Email",
+            header: t("headers.email"),
             accessorKey: "email",
             cell: ({ row }) => {
                 const email = row.original.email
-                return <span>{email ? email : "No email"}</span>
+                return <span>{email ? email : t("no-email")}</span>
             }
         },
         {
-            header: "Actions",
+            header: t("headers.actions"),
             accessorKey: "actions",
             cell: ({ row }) => {
                 const branch = row.original
@@ -73,16 +76,16 @@ function BranchTable({ branches, storeId, userId, slug }: Props) {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">Open menu</span>
+                                <span className="sr-only">{t("dropdown.open-menu")}</span>
                                 <MoreHorizontal className="h-4 w-4" />
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">Actions</DropdownMenuLabel>
+                            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">{t("dropdown.actions")}</DropdownMenuLabel>
                             <DropdownMenuItem asChild>
                                 <Link href={`/stores/${slug}/branches/${branch.id}`} className="flex items-center gap-2 w-full">
                                     <Eye className="w-4 h-4" />
-                                    View details
+                                    {t("dropdown.view-details")}
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
@@ -105,7 +108,7 @@ function BranchTable({ branches, storeId, userId, slug }: Props) {
                             {branch.is_main && (
                                 <DropdownMenuItem disabled className="opacity-50">
                                     <Trash2 className="w-4 h-4 text-muted-foreground" />
-                                    Cannot delete main branch
+                                    {t("dropdown.cannot-delete-main")}
                                 </DropdownMenuItem>
                             )}
                         </DropdownMenuContent>
@@ -124,5 +127,4 @@ function BranchTable({ branches, storeId, userId, slug }: Props) {
         />
     )
 }
-
 export default BranchTable

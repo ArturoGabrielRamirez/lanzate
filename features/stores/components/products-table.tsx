@@ -10,6 +10,7 @@ import { Product, Category } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { CreateProductButton, DeleteProductButton, EditProductButton } from "@/features/products/components"
 import Link from "next/link"
+import { useTranslations } from "next-intl"
 
 type Props = {
     data: (Product & { categories: Category[] })[]
@@ -20,17 +21,19 @@ type Props = {
 
 function ProductsTable({ data, userId, slug, storeId }: Props) {
 
+    const t = useTranslations("store.products-table")
+
     const columns: ColumnDef<Product & { categories: Category[] }>[] = [
         {
-            header: "ID",
+            header: t("headers.id"),
             accessorKey: "id",
         },
         {
-            header: "Name",
+            header: t("headers.name"),
             accessorKey: "name",
         },
         {
-            header: "Price",
+            header: t("headers.price"),
             accessorKey: "price",
             cell: ({ row }) => {
                 const price = row.original.price
@@ -38,13 +41,13 @@ function ProductsTable({ data, userId, slug, storeId }: Props) {
             }
         },
         {
-            header: "Categories",
+            header: t("headers.categories"),
             accessorKey: "categories",
             cell: ({ row }) => {
                 const categories = (row.original as Product & { categories: Category[] }).categories
 
                 if (!categories?.length)
-                    return <Badge variant="outline">None</Badge>
+                    return <Badge variant="outline">{t("categories.none")}</Badge>
 
                 return (
                     <Badge variant="outline">
@@ -54,43 +57,43 @@ function ProductsTable({ data, userId, slug, storeId }: Props) {
             },
         },
         {
-            header: "Stock",
+            header: t("headers.stock"),
             accessorKey: "stock",
         },
         {
-            header: "Featured",
+            header: t("headers.featured"),
             accessorKey: "is_featured",
             cell: ({ row }) => {
                 const isFeatured = row.original.is_featured
-                return <Badge variant="outline">{isFeatured ? "Yes" : "No"}</Badge>
+                return <Badge variant="outline">{isFeatured ? t("boolean.yes") : t("boolean.no")}</Badge>
             }
         },
         {
-            header: "Active",
+            header: t("headers.active"),
             accessorKey: "is_published",
             cell: ({ row }) => {
                 const isActive = row.original.is_published
-                return <Badge variant="outline">{isActive ? "Yes" : "No"}</Badge>
+                return <Badge variant="outline">{isActive ? t("boolean.yes") : t("boolean.no")}</Badge>
             }
         },
         {
-            header: "Actions",
+            header: t("headers.actions"),
             accessorKey: "actions",
             cell: ({ row }) => {
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">Open menu</span>
+                                <span className="sr-only">{t("dropdown.open-menu")}</span>
                                 <MoreHorizontal className="h-4 w-4" />
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="flex flex-col">
-                            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">Actions</DropdownMenuLabel>
+                            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">{t("dropdown.actions")}</DropdownMenuLabel>
                             <DropdownMenuItem asChild>
                                 <Button variant="ghost" className="w-full justify-start cursor-pointer hover:!bg-primary" asChild>
                                     <Link href={`/stores/${slug}/products/${row.original.id}`} >
-                                        <Eye className="w-4 h-4" />View details
+                                        <Eye className="w-4 h-4" />{t("dropdown.view-details")}
                                     </Link>
                                 </Button>
                             </DropdownMenuItem>

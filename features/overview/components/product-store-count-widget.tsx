@@ -1,18 +1,21 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Package, Store, Eye, Activity } from "lucide-react"
 import { ProductStoreCountData } from "../types"
+import { getTranslations } from "next-intl/server"
 
 type Props = {
     data: ProductStoreCountData
 }
 
-function ProductStoreCountWidget({ data }: Props) {
+async function ProductStoreCountWidget({ data }: Props) {
+
+    const t = await getTranslations("overview.product-store-count")
 
     return (
         <Card className="hover:bg-accent transition-colors duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
-                    Productos y Sucursales
+                    {t("title")}
                 </CardTitle>
                 <Package className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
@@ -23,7 +26,7 @@ function ProductStoreCountWidget({ data }: Props) {
                             <Package className="h-4 w-4 text-blue-500" />
                             <div>
                                 <div className="text-2xl font-bold">{data.totalProducts}</div>
-                                <p className="text-xs text-muted-foreground">Productos totales</p>
+                                <p className="text-xs text-muted-foreground">{t("total-products")}</p>
                             </div>
                         </div>
                         
@@ -31,7 +34,7 @@ function ProductStoreCountWidget({ data }: Props) {
                             <Store className="h-4 w-4 text-green-500" />
                             <div>
                                 <div className="text-2xl font-bold">{data.totalStores}</div>
-                                <p className="text-xs text-muted-foreground">Sucursales</p>
+                                <p className="text-xs text-muted-foreground">{t("branches")}</p>
                             </div>
                         </div>
                     </div>
@@ -41,7 +44,7 @@ function ProductStoreCountWidget({ data }: Props) {
                             <Activity className="h-4 w-4 text-emerald-500" />
                             <div>
                                 <div className="text-sm font-medium">{data.activeProducts}</div>
-                                <p className="text-xs text-muted-foreground">Activos</p>
+                                <p className="text-xs text-muted-foreground">{t("active")}</p>
                             </div>
                         </div>
                         
@@ -49,7 +52,7 @@ function ProductStoreCountWidget({ data }: Props) {
                             <Eye className="h-4 w-4 text-purple-500" />
                             <div>
                                 <div className="text-sm font-medium">{data.publishedProducts}</div>
-                                <p className="text-xs text-muted-foreground">Publicados</p>
+                                <p className="text-xs text-muted-foreground">{t("published")}</p>
                             </div>
                         </div>
                     </div>

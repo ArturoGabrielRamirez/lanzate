@@ -26,7 +26,7 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
     const t2 = await getTranslations("store")
 
     return (
-        <div className="flex flex-col p-4 grow max-md:pt-24 max-md:pb-12">
+        <div className="flex flex-col p-4 grow pt-17 max-md:pb-12">
             <Title
                 title={(
                     <div className="flex items-center gap-2">
@@ -44,6 +44,7 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                         href: `/stores/${slug}`
                     }
                 ]}
+                showDate
             />
             <section className="flex items-center gap-4">
                 <Card className="w-full">

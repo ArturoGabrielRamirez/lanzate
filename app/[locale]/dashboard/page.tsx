@@ -28,13 +28,13 @@ async function DashboardPage() {
     const t = await getTranslations("dashboard")
 
     return (
-        <section className="p-4 flex flex-col pt-24">
+        <section className="p-4 flex flex-col pt-17">
             <Title title={(
                 <div className="flex items-center gap-2">
                     <Hand />
                     {t("title")}
                 </div>
-            )} />
+            )} showDate/>
 
             <div className="grid md:grid-cols-[minmax(0,1500px)_auto] gap-4">
                 <div className="max-w-[1500px] w-full">
@@ -48,12 +48,14 @@ async function DashboardPage() {
                     {dashboardData.storeCount > 0 && (
                         <div className="">
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-2xl font-bold">Your Stores ({dashboardData.storeCount})</h2>
+                                <h2 className="text-2xl font-bold">
+                                    {t("your-stores.title", { count: dashboardData.storeCount })}
+                                </h2>
                                 <Link
                                     href="/stores"
                                     className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
                                 >
-                                    ver todas
+                                    {t("your-stores.see-all")}
                                     <ArrowRight className="size-4" />
                                 </Link>
                             </div>
@@ -62,7 +64,7 @@ async function DashboardPage() {
                                     <CardHeader>
                                         <CardTitle className="flex items-center gap-2">
                                             <Plus />
-                                            <h2 className="text-2xl font-bold">New store</h2>
+                                            <h2 className="text-2xl font-bold">{t("your-stores.new-store")}</h2>
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="flex justify-center items-center grow">
@@ -80,17 +82,17 @@ async function DashboardPage() {
                     <Card className="w-full h-fit">
                         <CardHeader>
                             <CardTitle>
-                                <h2 className="text-2xl font-bold">New order</h2>
+                                <h2 className="text-2xl font-bold">{t("new-order.title")}</h2>
                             </CardTitle>
                             <CardDescription>
-                                Create a new order to start selling!
+                                {t("new-order.description")}
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
                             <Button className="w-full" asChild>
                                 <Link href="/sale">
                                     <ShoppingBasket />
-                                    New order
+                                    {t("new-order.title")}
                                 </Link>
                             </Button>
                         </CardContent>

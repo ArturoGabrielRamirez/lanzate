@@ -8,6 +8,7 @@ import { ActionLog, User, Employee } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { Eye, MoreHorizontal, User as UserIcon, Clock, Activity, Tag } from "lucide-react"
 import Link from "next/link"
+import { useTranslations } from "next-intl"
 
 type ActionLogWithRelations = ActionLog & {
     user?: {
@@ -33,6 +34,8 @@ type Props = {
 }
 
 function HistoryTable({ data, slug }: Props) {
+
+    const t = useTranslations("store.history-table")
 
     const formatDate = (dateString: string | Date) => {
         return Intl.DateTimeFormat('en-US', {
@@ -67,12 +70,35 @@ function HistoryTable({ data, slug }: Props) {
         }
     }
 
+    const getActionTranslation = (action: string) => {
+        const actionMap = {
+            "CREATE": t("actions.create"),
+            "UPDATE": t("actions.update"),
+            "DELETE": t("actions.delete"),
+            "LOGIN": t("actions.login"),
+            "LOGOUT": t("actions.logout")
+        }
+        return actionMap[action as keyof typeof actionMap] || action
+    }
+
+    const getEntityTranslation = (entityType: string) => {
+        const entityMap = {
+            "STORE": t("entities.store"),
+            "PRODUCT": t("entities.product"),
+            "ORDER": t("entities.order"),
+            "BRANCH": t("entities.branch"),
+            "USER": t("entities.user"),
+            "EMPLOYEE": t("entities.employee")
+        }
+        return entityMap[entityType as keyof typeof entityMap] || entityType
+    }
+
     const columns: ColumnDef<ActionLogWithRelations>[] = [
         {
             header: () => (
                 <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4" />
-                    Date
+                    {t("headers.date")}
                 </div>
             ),
             accessorKey: "created_at",
@@ -85,7 +111,7 @@ function HistoryTable({ data, slug }: Props) {
             header: () => (
                 <div className="flex items-center gap-2">
                     <UserIcon className="w-4 h-4" />
-                    User
+                    {t("headers.user")}
                 </div>
             ),
             accessorKey: "user.email",
@@ -107,12 +133,12 @@ function HistoryTable({ data, slug }: Props) {
                         <div className="flex flex-col">
                             <span className="font-medium">{log.employee.user.email}</span>
                             <span className="text-sm text-muted-foreground">
-                                (Employee)
+                                {t("employee")}
                             </span>
                         </div>
                     )
                 } else {
-                    return <span className="text-muted-foreground italic">Unknown user</span>
+                    return <span className="text-muted-foreground italic">{t("unknown-user")}</span>
                 }
             }
         },
@@ -120,7 +146,7 @@ function HistoryTable({ data, slug }: Props) {
             header: () => (
                 <div className="flex items-center gap-2">
                     <Activity className="w-4 h-4" />
-                    Action
+                    {t("headers.action")}
                 </div>
             ),
             accessorKey: "action",
@@ -128,7 +154,7 @@ function HistoryTable({ data, slug }: Props) {
                 const action = row.original.action
                 return (
                     <Badge className={getActionColor(action)}>
-                        {action}
+                        {getActionTranslation(action)}
                     </Badge>
                 )
             }
@@ -137,7 +163,7 @@ function HistoryTable({ data, slug }: Props) {
             header: () => (
                 <div className="flex items-center gap-2">
                     <Tag className="w-4 h-4" />
-                    Entity Type
+                    {t("headers.entity-type")}
                 </div>
             ),
             accessorKey: "entity_type",
@@ -145,13 +171,13 @@ function HistoryTable({ data, slug }: Props) {
                 const entityType = row.original.entity_type
                 return (
                     <Badge variant="outline" className={getEntityColor(entityType)}>
-                        {entityType}
+                        {getEntityTranslation(entityType)}
                     </Badge>
                 )
             }
         },
         {
-            header: "Actions",
+            header: t("headers.actions"),
             accessorKey: "actions",
             cell: ({ row }) => {
                 const log = row.original
@@ -160,16 +186,16 @@ function HistoryTable({ data, slug }: Props) {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">Open menu</span>
+                                <span className="sr-only">{t("dropdown.open-menu")}</span>
                                 <MoreHorizontal className="h-4 w-4" />
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">Actions</DropdownMenuLabel>
+                            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">{t("dropdown.actions")}</DropdownMenuLabel>
                             <DropdownMenuItem asChild>
                                 <Link href={`/stores/${slug}/logs/${log.id}`} className="flex items-center gap-2">
                                     <Eye className="w-4 h-4" />
-                                    View details
+                                    {t("dropdown.view-details")}
                                 </Link>
                             </DropdownMenuItem>
                         </DropdownMenuContent>

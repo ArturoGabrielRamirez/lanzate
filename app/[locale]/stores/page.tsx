@@ -30,13 +30,13 @@ async function StoresPage() {
     const t = await getTranslations("store");
 
     return (
-        <div className="p-4 max-md:pt-24 max-md:pb-12">
+        <div className="p-4 pt-17 max-md:pb-12">
             <Title title={t("title")} breadcrumbs={[
                 {
                     label: t("title"),
                     href: "/stores"
                 }
-            ]} />
+            ]} showDate/>
             {stores.length > 0 ? (
                 <section className="grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4">
                     <Card className="border-dashed">
