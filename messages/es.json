@@ -727,6 +727,84 @@
                 "loading": "Cancelando pedido..."
             }
         },
+        "products-tab": {
+            "error-loading-store": "Error al cargar información de la tienda"
+        },
+        "products-table": {
+            "headers": {
+                "id": "ID",
+                "name": "Nombre",
+                "price": "Precio",
+                "categories": "Categorías",
+                "stock": "Stock",
+                "featured": "Destacado",
+                "active": "Activo",
+                "actions": "Acciones"
+            },
+            "categories": {
+                "none": "Ninguna"
+            },
+            "boolean": {
+                "yes": "Sí",
+                "no": "No"
+            },
+            "dropdown": {
+                "actions": "Acciones",
+                "view-details": "Ver detalles",
+                "open-menu": "Abrir menú"
+            }
+        },
+        "create-product": {
+            "button": "Crear Producto",
+            "title": "Crear nuevo producto",
+            "description": "¡Creá un nuevo producto para comenzar a vender! Elegí un nombre para tu producto y hacé clic en el botón de abajo, podés continuar agregando más detalles del producto una vez que esté creado.",
+            "drag-drop": "Arrastrá y soltá archivos aquí",
+            "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
+            "browse-files": "Explorar archivos",
+            "name": "Nombre",
+            "price": "Precio",
+            "stock": "Stock",
+            "description": "Descripción",
+            "file-rejected": "\"{filename}\" ha sido rechazado",
+            "messages": {
+                "success": "¡Producto creado exitosamente!",
+                "error": "Error al crear producto",
+                "loading": "Creando producto..."
+            }
+        },
+        "edit-product": {
+            "button": "Editar Producto",
+            "title": "Editar producto",
+            "description": "Editá los detalles de tu producto",
+            "drag-drop": "Arrastrá y soltá archivos aquí",
+            "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
+            "browse-files": "Explorar archivos",
+            "name": "Nombre",
+            "price": "Precio",
+            "stock": "Stock",
+            "description": "Descripción",
+            "file-rejected": "\"{filename}\" ha sido rechazado",
+            "validation": {
+                "name-required": "El nombre es requerido",
+                "price-required": "El precio es requerido",
+                "stock-required": "El stock es requerido"
+            },
+            "messages": {
+                "success": "¡Producto actualizado exitosamente!",
+                "error": "Error al actualizar producto",
+                "loading": "Actualizando producto..."
+            }
+        },
+        "delete-product": {
+            "button": "Eliminar Producto",
+            "title": "Eliminar Producto",
+            "description": "¿Estás seguro de que querés eliminar este producto? Esta acción es irreversible.",
+            "messages": {
+                "success": "Producto eliminado exitosamente",
+                "error": "Error al eliminar producto",
+                "loading": "Eliminando producto..."
+            }
+        },
         "layout": {
             "overview": "General",
             "account-details": "Detalles de la cuenta",

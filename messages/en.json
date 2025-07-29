@@ -831,6 +831,84 @@
                 "loading": "Cancelling order..."
             }
         },
+        "products-tab": {
+            "error-loading-store": "Error loading store information"
+        },
+        "products-table": {
+            "headers": {
+                "id": "ID",
+                "name": "Name",
+                "price": "Price",
+                "categories": "Categories",
+                "stock": "Stock",
+                "featured": "Featured",
+                "active": "Active",
+                "actions": "Actions"
+            },
+            "categories": {
+                "none": "None"
+            },
+            "boolean": {
+                "yes": "Yes",
+                "no": "No"
+            },
+            "dropdown": {
+                "actions": "Actions",
+                "view-details": "View details",
+                "open-menu": "Open menu"
+            }
+        },
+        "create-product": {
+            "button": "Create Product",
+            "title": "Create new product",
+            "description": "Create a new product to start selling your products! Choose a name for your product and click on the button below, you can continue to add more details of the product once it's created.",
+            "drag-drop": "Drag & drop files here",
+            "click-browse": "Or click to browse (max 1 files, up to 2MB each)",
+            "browse-files": "Browse files",
+            "name": "Name",
+            "price": "Price",
+            "stock": "Stock",
+            "description": "Description",
+            "file-rejected": "\"{filename}\" has been rejected",
+            "messages": {
+                "success": "Product created successfully!",
+                "error": "Failed to create product",
+                "loading": "Creating product..."
+            }
+        },
+        "edit-product": {
+            "button": "Edit Product",
+            "title": "Edit product",
+            "description": "Edit the details of your product",
+            "drag-drop": "Drag & drop files here",
+            "click-browse": "Or click to browse (max 1 files, up to 2MB each)",
+            "browse-files": "Browse files",
+            "name": "Name",
+            "price": "Price",
+            "stock": "Stock",
+            "description": "Description",
+            "file-rejected": "\"{filename}\" has been rejected",
+            "validation": {
+                "name-required": "Name is required",
+                "price-required": "Price is required",
+                "stock-required": "Stock is required"
+            },
+            "messages": {
+                "success": "Product updated successfully!",
+                "error": "Failed to update product",
+                "loading": "Updating product..."
+            }
+        },
+        "delete-product": {
+            "button": "Delete Product",
+            "title": "Delete Product",
+            "description": "Are you sure you want to delete this product? This action is irreversible.",
+            "messages": {
+                "success": "Product deleted successfully",
+                "error": "Error deleting product",
+                "loading": "Deleting product..."
+            }
+        },
         "layout": {
             "overview": "Overview",
             "account-details": "Account Details",

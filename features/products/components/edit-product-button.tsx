@@ -10,21 +10,24 @@ import CategorySelect from "@/features/store-landing/components/category-select-
 import { useCallback, useState } from "react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
+import { useTranslations } from "next-intl"
 
 function EditProductButton({ product, slug, onComplete, userId }: EditProductButtonProps) {
 
     const [categories, setCategories] = useState<string[]>([])
     const [files, setFiles] = useState<File[]>([])
+    const t = useTranslations("store.edit-product")
 
     const handleAddCategory = (value: any) => {
         setCategories(value)
     }
 
     const onFileReject = useCallback((file: File, message: string) => {
+        const filename = file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name
         toast(message, {
-            description: `"${file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name}" has been rejected`,
+            description: t("file-rejected", { filename }),
         });
-    }, []);
+    }, [t]);
 
     const handleEditProduct = async (payload: any) => {
 
@@ -34,9 +37,9 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
             image: files[0]
         }
 
-        if (!payload.name) return formatErrorResponse("Name is required", null, null)
-        if (payload.price == null) return formatErrorResponse("Price is required", null, null)
-        if (payload.stock == null) return formatErrorResponse("Stock is required", null, null)
+        if (!payload.name) return formatErrorResponse(t("validation.name-required"), null, null)
+        if (payload.price == null) return formatErrorResponse(t("validation.price-required"), null, null)
+        if (payload.stock == null) return formatErrorResponse(t("validation.stock-required"), null, null)
         return editProduct(product.id, data, slug, userId)
     }
 
@@ -45,18 +48,18 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
             text={(
                 <>
                     <Pencil className="text-muted-foreground size-4" />
-                    Edit Product
+                    {t("button")}
                 </>
             )}
-            title="Edit product"
+            title={t("title")}
             schema={productUpdateSchema}
-            description="Edit the details of your product"
+            description={t("description")}
             action={handleEditProduct}
             onComplete={onComplete}
             messages={{
-                success: "Product updated successfully!",
-                error: "Failed to update product",
-                loading: "Updating product..."
+                success: t("messages.success"),
+                error: t("messages.error"),
+                loading: t("messages.loading")
             }}
             className="bg-transparent w-full justify-start"
         >
@@ -75,14 +78,14 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                         <div className="flex items-center justify-center rounded-full border p-2.5">
                             <Upload className="size-6 text-muted-foreground" />
                         </div>
-                        <p className="font-medium text-sm">Drag & drop files here</p>
+                        <p className="font-medium text-sm">{t("drag-drop")}</p>
                         <p className="text-muted-foreground text-xs">
-                            Or click to browse (max 1 files, up to 2MB each)
+                            {t("click-browse")}
                         </p>
                     </div>
                     <FileUploadTrigger asChild>
                         <Button variant="outline" size="sm" className="mt-2 w-fit">
-                            Browse files
+                            {t("browse-files")}
                         </Button>
                     </FileUploadTrigger>
                 </FileUploadDropzone>
@@ -100,10 +103,10 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                     ))}
                 </FileUploadList>
             </FileUpload>
-            <InputField name="name" label="Name" type="text" defaultValue={product.name} />
-            <InputField name="price" label="Price" type="number" defaultValue={String(product.price)} />
-            <InputField name="stock" label="Stock" type="number" defaultValue={String(product.stock)} />
-            <InputField name="description" label="Description" type="text" defaultValue={product.description || ""} />
+            <InputField name="name" label={t("name")} type="text" defaultValue={product.name} />
+            <InputField name="price" label={t("price")} type="number" defaultValue={String(product.price)} />
+            <InputField name="stock" label={t("stock")} type="number" defaultValue={String(product.stock)} />
+            <InputField name="description" label={t("description")} type="text" defaultValue={product.description || ""} />
             <CategorySelect onChange={handleAddCategory} defaultValue={product.categories.map((category: any) => ({ label: category.name, value: category.id }))} />
         </ButtonWithPopup>
     )
