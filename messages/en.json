@@ -135,22 +135,22 @@
             "word-2": "build it.",
             "word-3": "grow it."
         },
-        "beam" : {
-            "sales" : {
-                "1" : "New sale!",
-                "2" : "Product sold!",
-                "3" : "Sale completed!",
-                "4" : "New purchase!",
-                "5" : "Order received!",
-                "6" : "Payment processed!",
-                "7" : "Sale confirmed!"
+        "beam": {
+            "sales": {
+                "1": "New sale!",
+                "2": "Product sold!",
+                "3": "Sale completed!",
+                "4": "New purchase!",
+                "5": "Order received!",
+                "6": "Payment processed!",
+                "7": "Sale confirmed!"
             },
-            "following" : {
-                "users" : "Users won't stop buying!",
-                "rocket" : "Lanzate makes it easy to sell",
-                "mobile" : "Outage problems? Use it in your phone!",
-                "tablet" : "Available on any device!",
-                "barcode" : "Benefit from our USB Barcode Scanner!"
+            "following": {
+                "users": "Users won't stop buying!",
+                "rocket": "Lanzate makes it easy to sell",
+                "mobile": "Outage problems? Use it in your phone!",
+                "tablet": "Available on any device!",
+                "barcode": "Benefit from our USB Barcode Scanner!"
             }
         },
         "description": {
@@ -169,9 +169,9 @@
                 "description": "Work from anywhere, anytime, with any device."
             },
             "sell": {
-                "title": "Sell",
+                "title": "Customize",
                 "title-2": "Grow.",
-                "description": "Process sales and track your growth with real-time analytics."
+                "description": "Get your custom domain and store with your name."
             },
             "ship-easily": {
                 "title": "Accessibility",
@@ -223,6 +223,10 @@
                     }
                 }
             }
+        },
+        "customization": {
+            "title": "Customize your store",
+            "description": "If you want to customize your store beyond what we offer, please contact us!"
         },
         "buttons": {
             "login": "Login",

@@ -169,9 +169,9 @@
                 "description": "Trabaja desde cualquier lugar, en cualquier momento, con cualquier dispositivo."
             },
             "sell": {
-                "title": "Vendé",
+                "title": "Personalización",
                 "title-2": "Crecé.",
-                "description": "Procesá ventas y seguí tu crecimiento con análisis en tiempo real."
+                "description": "Obtené tu dominio personalizado y tu tienda con tu nombre."
             },
             "ship-easily": {
                 "title": "Accesibilidad",
@@ -223,6 +223,10 @@
                     }
                 }
             }
+        },
+        "customization": {
+            "title": "Personalizá tu tienda",
+            "description": "Si queres personalizar tu tienda mas allá de lo que te ofrecemos no dudes en contactarnos!"
         },
         "buttons": {
             "login": "Iniciar sesión",

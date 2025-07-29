@@ -78,7 +78,9 @@ function PricingSection() {
                 </div>
                 <div className="flex justify-center mb-8">
                     <button className="px-4 py-1 font-semibold border rounded-l-lg bg-primary border-primary">{t('buttons.monthly')}</button>
-                    <button className="px-4 py-1 border rounded-r-lg border-primary">{t('buttons.annually')}</button>
+                    <button className="px-4 py-1 border rounded-r-lg border-primary">
+                        {t('buttons.annually')}
+                    </button>
                 </div>
                 <HoverEffect
                     items={pricingPlans}
