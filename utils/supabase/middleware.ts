@@ -42,8 +42,9 @@ export async function updateSession(request: NextRequest) {
   const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'
   const subdomain = extractSubdomain(request)
   const { pathname } = request.nextUrl
+  console.log("🚀 ~ updateSession ~ request.cookies.getAll():", request.cookies.getAll())
 
-  if (pathname.startsWith('/auth/')) {
+  /* if (pathname.startsWith('/auth/')) {
     let response = NextResponse.next({ request })
 
     const supabase = createServerClient(
@@ -81,19 +82,24 @@ export async function updateSession(request: NextRequest) {
     }
 
     return response
-  }
+  } */
 
   let response: NextResponse
 
   if (shouldApplyI18n(pathname)) {
+    console.log("🚀 ~ updateSession ~ shouldApplyI18n(pathname):", shouldApplyI18n(pathname))
     try {
       const intlResponse = intlMiddleware(request)
       if (intlResponse) {
+        console.log("🚀 ~ updateSession ~ intlResponse:", intlResponse)
         response = intlResponse
         if (response.status === 307 || response.status === 308 || response.headers.get('location')) {
+          console.log("🚀 ~ updateSession ~ response:", response)
           if (subdomain) {
+            console.log("🚀 ~ updateSession ~ subdomain:", subdomain)
             const location = response.headers.get('location')
             if (location) {
+              console.log("🚀 ~ updateSession ~ location:", location)
               const locationUrl = new URL(location)
               locationUrl.hostname = request.nextUrl.hostname
               response.headers.set('location', locationUrl.toString())

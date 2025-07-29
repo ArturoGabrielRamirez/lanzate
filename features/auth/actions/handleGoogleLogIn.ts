@@ -20,7 +20,8 @@ export async function handleGoogleLogIn() {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: redirectUrl,
+                //redirectTo: redirectUrl,
+                redirectTo : "https://lanzate.app/auth/callback",
                 queryParams: {
                     access_type: 'offline',
                     prompt: 'consent',
