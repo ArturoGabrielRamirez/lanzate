@@ -36,14 +36,14 @@ function TopProductsWidget({ data }: Props) {
                                 <div className="flex items-center justify-center w-6 h-6 rounded-full bg-muted text-xs font-medium">
                                     {index + 1}
                                 </div>
-                                
+
                                 <Avatar className="h-8 w-8">
                                     <AvatarImage src={product.image} alt={product.productName} />
                                     <AvatarFallback>
                                         {product.productName.charAt(0).toUpperCase()}
                                     </AvatarFallback>
                                 </Avatar>
-                                
+
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm font-medium truncate">
                                         {product.productName}
@@ -52,7 +52,7 @@ function TopProductsWidget({ data }: Props) {
                                         {product.totalSold} vendidos
                                     </p>
                                 </div>
-                                
+
                                 <div className="text-right">
                                     <p className="text-sm font-medium">
                                         {formatCurrency(product.revenue)}

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import CreateProductButton from "@/features/products/components/create-product-button"
+import { getTranslations } from "next-intl/server"
 
 type Props = {
     slug: string
@@ -9,12 +10,14 @@ type Props = {
     userId: number
 }
 
-function QuickActionsBar({ storeId, userId }: Props) {
+async function QuickActionsBar({ storeId, userId }: Props) {
+
+    const t = await getTranslations("dashboard")
 
     return (
         <Card className="grow hover:bg-accent transition-colors duration-200 justify-between">
             <CardHeader>
-                <CardTitle className="font-bold text-2xl">Welcome!</CardTitle>
+                <CardTitle className="font-bold text-2xl">{t("title")}</CardTitle>
                 <CardDescription>
                     Here you can find the most important actions for your store together with some quick links to get you started.
                 </CardDescription>
