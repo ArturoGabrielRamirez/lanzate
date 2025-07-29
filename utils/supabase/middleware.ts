@@ -68,12 +68,14 @@ export async function updateSession(request: NextRequest) {
             })
             response = NextResponse.next({ request })
             cookiesToSet.forEach(({ name, value, options }) => {
-              // Configurar cookies para subdominios
+              // CONFIGURACIÓN CORREGIDA PARA SUPABASE AUTH
               const cookieOptions = {
                 ...options,
-                domain: process.env.NODE_ENV === 'production' ? '.lanzate.app' : options?.domain,
+                // Solo configurar domain para subdominios si es necesario
+                domain: subdomain && process.env.NODE_ENV === 'production' ? '.lanzate.app' : options?.domain,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: process.env.NODE_ENV === 'production' ? 'none' : options?.sameSite
+                // CRÍTICO: No forzar sameSite none para auth cookies
+                sameSite: options?.sameSite || (process.env.NODE_ENV === 'production' ? 'lax' : 'lax')
               }
               response.cookies.set(name, value, cookieOptions)
             })
@@ -134,12 +136,12 @@ export async function updateSession(request: NextRequest) {
           })
           response = NextResponse.next({ request })
           cookiesToSet.forEach(({ name, value, options }) => {
-            // Configurar cookies para subdominios en producción
+            // MISMA CONFIGURACIÓN CORREGIDA
             const cookieOptions = {
               ...options,
-              domain: process.env.NODE_ENV === 'production' ? '.lanzate.app' : options?.domain,
+              domain: subdomain && process.env.NODE_ENV === 'production' ? '.lanzate.app' : options?.domain,
               secure: process.env.NODE_ENV === 'production',
-              sameSite: process.env.NODE_ENV === 'production' ? 'none' : options?.sameSite
+              sameSite: options?.sameSite || (process.env.NODE_ENV === 'production' ? 'lax' : 'lax')
             }
             response.cookies.set(name, value, cookieOptions)
           })
