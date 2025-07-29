@@ -71,11 +71,13 @@ export async function updateSession(request: NextRequest) {
               // CONFIGURACIÓN CORREGIDA PARA SUPABASE AUTH
               const cookieOptions = {
                 ...options,
-                // Solo configurar domain para subdominios si es necesario
-                domain: subdomain && process.env.NODE_ENV === 'production' ? '.lanzate.app' : options?.domain,
+                // Configurar domain solo en producción y para subdominios
+                domain: process.env.NODE_ENV === 'production' ? '.lanzate.app' : undefined,
                 secure: process.env.NODE_ENV === 'production',
-                // CRÍTICO: No forzar sameSite none para auth cookies
-                sameSite: options?.sameSite || (process.env.NODE_ENV === 'production' ? 'lax' : 'lax')
+                httpOnly: options?.httpOnly || false,
+                // CRÍTICO: sameSite debe ser 'lax' para auth
+                sameSite: options?.sameSite || 'lax',
+                path: options?.path || '/'
               }
               response.cookies.set(name, value, cookieOptions)
             })
@@ -139,9 +141,11 @@ export async function updateSession(request: NextRequest) {
             // MISMA CONFIGURACIÓN CORREGIDA
             const cookieOptions = {
               ...options,
-              domain: subdomain && process.env.NODE_ENV === 'production' ? '.lanzate.app' : options?.domain,
+              domain: process.env.NODE_ENV === 'production' ? '.lanzate.app' : undefined,
               secure: process.env.NODE_ENV === 'production',
-              sameSite: options?.sameSite || (process.env.NODE_ENV === 'production' ? 'lax' : 'lax')
+              httpOnly: options?.httpOnly || false,
+              sameSite: options?.sameSite || 'lax',
+              path: options?.path || '/'
             }
             response.cookies.set(name, value, cookieOptions)
           })
