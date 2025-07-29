@@ -238,6 +238,11 @@
             "subscribe": "Suscribirse"
         },
         "footer": {
+            "links": {
+                "1": "Términos y condiciones",
+                "2": "Política de privacidad",
+                "3": "Política de cookies"
+            },
             "getting-started": {
                 "title": "Como empezar",
                 "links": {
