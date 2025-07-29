@@ -135,6 +135,24 @@
             "word-2": "build it.",
             "word-3": "grow it."
         },
+        "beam" : {
+            "sales" : {
+                "1" : "New sale!",
+                "2" : "Product sold!",
+                "3" : "Sale completed!",
+                "4" : "New purchase!",
+                "5" : "Order received!",
+                "6" : "Payment processed!",
+                "7" : "Sale confirmed!"
+            },
+            "following" : {
+                "users" : "Users won't stop buying!",
+                "rocket" : "Lanzate makes it easy to sell",
+                "mobile" : "Outage problems? Use it in your phone!",
+                "tablet" : "Available on any device!",
+                "barcode" : "Benefit from our USB Barcode Scanner!"
+            }
+        },
         "description": {
             "slogan": "Manage your business has never been easier. Focus on growth while we give you full control:",
             "slogan-items": {

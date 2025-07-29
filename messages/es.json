@@ -135,6 +135,24 @@
             "word-2": "emprende",
             "word-3": "crecé"
         },
+        "beam": {
+            "sales": {
+                "1": "¡Nueva venta!",
+                "2": "¡Producto vendido!",
+                "3": "¡Venta completada!",
+                "4": "¡Nueva compra!",
+                "5": "¡Pedido recibido!",
+                "6": "¡Pago procesado!",
+                "7": "¡Venta confirmada!"
+            },
+            "following": {
+                "users": "¡Los usuarios no dejarán de comprar!",
+                "rocket": "Lanzate hace que sea fácil vender",
+                "mobile": "¿Se cortó la luz? Usalo en tu celular!",
+                "tablet": "¡Disponible en cualquier dispositivo!",
+                "barcode": "¡Benefíciate de nuestro escáner de código de barras USB!"
+            }
+        },
         "description": {
             "slogan": "Gestionar tu negocio online nunca fue tan fácil. Enfocate en crecer mientras te damos el control total",
             "slogan-items": {
