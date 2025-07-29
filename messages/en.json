@@ -527,6 +527,31 @@
         "buttons": {
             "new-store": "New Store"
         },
+        "create-store": {
+            "button": "New store",
+            "title": "Create new store",
+            "description": "Create a new store to start selling your products! Choose a name for your store and click on the button below, you can continue to add more details of the store once it's created.",
+            "name": "Name",
+            "description-field": "Description",
+            "subdomain": "Subdomain",
+            "messages": {
+                "name-required": "Name is required",
+                "user-id-required": "User ID is required",
+                "success": "Store created successfully!",
+                "error": "Failed to create store",
+                "loading": "Creating store..."
+            }
+        },
+        "store-card": {
+            "no-description": "No description",
+            "products": "products",
+            "product": "product"
+        },
+        "product-card": {
+            "no-description": "No description available",
+            "items-left": "left",
+            "item-left": "left"
+        },
         "employees": {
             "create-orders": "Create Orders",
             "update-orders": "Update Orders",

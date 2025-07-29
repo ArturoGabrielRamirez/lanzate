@@ -423,6 +423,31 @@
         "buttons": {
             "new-store": "Nueva tienda"
         },
+        "create-store": {
+            "button": "Nueva tienda",
+            "title": "Crear nueva tienda",
+            "description": "¡Creá una nueva tienda para comenzar a vender tus productos! Elegí un nombre para tu tienda y hacé clic en el botón de abajo, podés continuar agregando más detalles de la tienda una vez que esté creada.",
+            "name": "Nombre",
+            "description-field": "Descripción",
+            "subdomain": "Subdominio",
+            "messages": {
+                "name-required": "El nombre es requerido",
+                "user-id-required": "ID de usuario es requerido",
+                "success": "¡Tienda creada exitosamente!",
+                "error": "Error al crear tienda",
+                "loading": "Creando tienda..."
+            }
+        },
+        "store-card": {
+            "no-description": "Sin descripción",
+            "products": "productos",
+            "product": "producto"
+        },
+        "product-card": {
+            "no-description": "No hay descripción disponible",
+            "items-left": "restantes",
+            "item-left": "restante"
+        },
         "employees": {
             "create-orders": "Crear pedidos",
             "update-orders": "Actualizar pedidos",

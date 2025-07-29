@@ -3,12 +3,13 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar, StoreIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
-
 import { StoreCardProps } from "@/features/stores/types"
+import { useTranslations } from "next-intl"
 
 function StoreCard({ store }: StoreCardProps) {
 
     const router = useRouter()
+    const t = useTranslations("store.store-card")
 
     const handleClick = () => {
         router.push(`/stores/${store.slug}/account`)
@@ -23,7 +24,7 @@ function StoreCard({ store }: StoreCardProps) {
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <p className="text-sm text-muted-foreground">{store.description || "No description"}</p>
+                <p className="text-sm text-muted-foreground">{store.description || t("no-description")}</p>
             </CardContent>
             <CardFooter className="justify-between">
                 <p className="text-sm text-muted-foreground flex items-center gap-2">
@@ -31,7 +32,7 @@ function StoreCard({ store }: StoreCardProps) {
                     {store.created_at.toLocaleDateString()}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                    0 products
+                    0 {t("products")}
                 </p>
             </CardFooter>
         </Card>
