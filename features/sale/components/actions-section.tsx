@@ -3,6 +3,7 @@
 import { CreditCard, RotateCcw, Trash2, Calculator, Receipt } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 
 type ActionsSectionProps = {
   cartTotal: number
@@ -25,6 +26,7 @@ function ActionsSection({
   onPrintReceipt,
   disabled = false
 }: ActionsSectionProps) {
+  const t = useTranslations('sale.actions')
 
   /* const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-AR', {
@@ -60,7 +62,7 @@ function ActionsSection({
           variant="default"
         >
           <CreditCard className="mr-2 h-5 w-5" />
-          Finalizar Venta
+          {t('finalize-sale')}
         </Button>
 
         <Button
@@ -70,7 +72,7 @@ function ActionsSection({
           variant="outline"
         >
           <Calculator className="mr-2 h-4 w-4" />
-          Calcular Vuelto
+          {t('calculate-change')}
         </Button>
 
         <Button
@@ -80,7 +82,7 @@ function ActionsSection({
           variant="outline"
         >
           <Receipt className="mr-2 h-4 w-4" />
-          Imprimir Ticket
+          {t('print-receipt')}
         </Button>
 
         <Button
@@ -90,7 +92,7 @@ function ActionsSection({
           variant="outline"
         >
           <RotateCcw className="mr-2 h-4 w-4" />
-          Procesar Reembolso
+          {t('process-refund')}
         </Button>
 
         {/* Botones de utilidad */}
@@ -101,7 +103,7 @@ function ActionsSection({
           variant="destructive"
         >
           <Trash2 className="mr-2 h-4 w-4" />
-          Vaciar Carrito
+          {t('clear-cart')}
         </Button>
 
         {/* Información adicional */}

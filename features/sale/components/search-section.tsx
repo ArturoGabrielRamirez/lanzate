@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { searchProductsByNameAction } from '../actions/search-products-by-name'
 import type { ScannedProduct, ProductSearchByNameResult } from '../types'
+import { useTranslations } from 'next-intl'
 
 type SearchSectionProps = {
   storeId: number
@@ -21,6 +22,7 @@ function SearchSection({ storeId, onSearchResults }: SearchSectionProps) {
     isLoading: false,
     error: false
   })
+  const t = useTranslations('sale.search')
 
   const handleSearch = async (term: string) => {
     if (!term.trim()) {
@@ -37,7 +39,7 @@ function SearchSection({ storeId, onSearchResults }: SearchSectionProps) {
 
     const loadingResult = {
       products: [],
-      message: 'Buscando productos...',
+      message: t('searching'),
       isLoading: true,
       error: false
     }
@@ -51,14 +53,14 @@ function SearchSection({ storeId, onSearchResults }: SearchSectionProps) {
       if (error || !payload) {
         result = {
           products: [],
-          message: message || 'Error al buscar productos',
+          message: message || t('error'),
           isLoading: false,
           error: true
         }
       } else {
         result = {
           products: payload,
-          message: payload.length > 0 ? `Se encontraron ${payload.length} productos` : 'No se encontraron productos',
+          message: payload.length > 0 ? t('found', { count: payload.length }) : t('no-results'),
           isLoading: false,
           error: payload.length === 0
         }
@@ -70,7 +72,7 @@ function SearchSection({ storeId, onSearchResults }: SearchSectionProps) {
       console.error('Error buscando productos:', error)
       const errorResult = {
         products: [],
-        message: 'Error al buscar productos',
+        message: t('error'),
         isLoading: false,
         error: true
       }
@@ -95,7 +97,7 @@ function SearchSection({ storeId, onSearchResults }: SearchSectionProps) {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
-              placeholder="Buscar por nombre, descripción o SKU..."
+              placeholder={t('placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10"

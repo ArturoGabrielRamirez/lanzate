@@ -285,6 +285,76 @@
             "copyright": "© Copyright 2025. All Rights Reserved."
         }
     },
+    "sale": {
+        "title": "New Order",
+        "store-selector": {
+            "title": "Select Store",
+            "description": "Choose a store to create a new order",
+            "placeholder": "Select a store...",
+            "confirm": "Confirm Store"
+        },
+        "breadcrumbs": {
+            "sale": "Sale"
+        },
+        "search": {
+            "placeholder": "Search by name, description or SKU...",
+            "searching": "Searching products...",
+            "found": "Found {count} products",
+            "no-results": "No products found",
+            "error": "Error searching products"
+        },
+        "cart": {
+            "title": "Cart",
+            "items": "items",
+            "item": "item",
+            "empty-title": "Cart is empty",
+            "empty-description": "Scan or search products to add",
+            "total": "Total:",
+            "add": "Add",
+            "remove": "Remove"
+        },
+        "scanner": {
+            "scanning": "Scanning...",
+            "waiting": "Waiting for scan",
+            "disabled": "Scanner disabled",
+            "enabled": "Enabled",
+            "start": "Starting scan...",
+            "completed": "Scan completed"
+        },
+        "product-results": {
+            "title": "Search Results",
+            "barcode-found": "Product found by barcode",
+            "search-found": "Found {count} products",
+            "scanned": "Scanned",
+            "search": "Search",
+            "add": "Add",
+            "units-remaining": "{count} {units} remaining",
+            "unit": "unit",
+            "units": "units",
+            "try-again": "Try again with different search terms",
+            "search-instruction": "Search products by name or scan a barcode",
+            "results-here": "Results will appear here"
+        },
+        "actions": {
+            "finalize-sale": "Finalize Sale",
+            "calculate-change": "Calculate Change",
+            "print-receipt": "Print Receipt",
+            "process-refund": "Process Refund",
+            "clear-cart": "Clear Cart"
+        },
+        "messages": {
+            "searching-product": "Searching product...",
+            "product-found": "Product found",
+            "product-not-found": "Product not found",
+            "search-error": "Error searching the product",
+            "sale-completed": "Sale completed. Total: {total}",
+            "refund-not-implemented": "Refund function not implemented yet",
+            "print-not-implemented": "Print function not implemented yet",
+            "change-calculation": "Total to charge: ${total}\nHow much did the customer pay?",
+            "change-result": "Change: ${change}",
+            "insufficient-payment": "Insufficient payment"
+        }
+    },
     "overview": {
         "error-loading-overview": "Error loading overview data",
         "error-loading-store": "Error loading store information",

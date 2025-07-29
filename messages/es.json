@@ -392,6 +392,76 @@
             "no-categories": "No hay categorías"
         }
     },
+    "sale": {
+        "title": "Nueva Orden",
+        "store-selector": {
+            "title": "Seleccionar Tienda",
+            "description": "Elige una tienda para crear una nueva orden",
+            "placeholder": "Selecciona una tienda...",
+            "confirm": "Confirmar Tienda"
+        },
+        "breadcrumbs": {
+            "sale": "Venta"
+        },
+        "search": {
+            "placeholder": "Buscar por nombre, descripción o SKU...",
+            "searching": "Buscando productos...",
+            "found": "Se encontraron {count} productos",
+            "no-results": "No se encontraron productos",
+            "error": "Error al buscar productos"
+        },
+        "cart": {
+            "title": "Carrito",
+            "items": "items",
+            "item": "item",
+            "empty-title": "El carrito está vacío",
+            "empty-description": "Escanea o busca productos para agregar",
+            "total": "Total:",
+            "add": "Agregar",
+            "remove": "Eliminar"
+        },
+        "scanner": {
+            "scanning": "Escaneando...",
+            "waiting": "Esperando escaneo",
+            "disabled": "Scanner desactivado",
+            "enabled": "Activado",
+            "start": "Iniciando escaneo...",
+            "completed": "Escaneo completado"
+        },
+        "product-results": {
+            "title": "Resultados de Búsqueda",
+            "barcode-found": "Producto encontrado por código de barras",
+            "search-found": "Se encontraron {count} productos",
+            "scanned": "Escaneado",
+            "search": "Búsqueda",
+            "add": "Agregar",
+            "units-remaining": "{count} {units} restantes",
+            "unit": "unidad",
+            "units": "unidades",
+            "try-again": "Intenta nuevamente con otros términos de búsqueda",
+            "search-instruction": "Busca productos por nombre o escanea un código de barras",
+            "results-here": "Los resultados aparecerán aquí"
+        },
+        "actions": {
+            "finalize-sale": "Finalizar Venta",
+            "calculate-change": "Calcular Vuelto",
+            "print-receipt": "Imprimir Ticket",
+            "process-refund": "Procesar Reembolso",
+            "clear-cart": "Vaciar Carrito"
+        },
+        "messages": {
+            "searching-product": "Buscando producto...",
+            "product-found": "Producto encontrado",
+            "product-not-found": "Producto no encontrado",
+            "search-error": "Error al buscar el producto",
+            "sale-completed": "Venta finalizada. Total: {total}",
+            "refund-not-implemented": "Función de reembolso no implementada aún",
+            "print-not-implemented": "Función de impresión no implementada aún",
+            "change-calculation": "Total a cobrar: ${total}\n¿Cuánto pagó el cliente?",
+            "change-result": "Vuelto: ${change}",
+            "insufficient-payment": "El pago es insuficiente"
+        }
+    },
     "overview": {
         "error-loading-overview": "Error al cargar datos del overview",
         "error-loading-store": "Error al cargar información de la tienda",

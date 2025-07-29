@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import type { ScannedProduct, ProductSearchByNameResult, ProductSearchResult } from '../types'
+import { useTranslations } from 'next-intl'
 
 type ProductResultsProps = {
   searchResults: ProductSearchByNameResult
@@ -13,6 +14,8 @@ type ProductResultsProps = {
 }
 
 function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductResultsProps) {
+  const t = useTranslations('sale.product-results')
+  
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
@@ -30,7 +33,7 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
       <CardHeader>
         <CardTitle className='flex items-center gap-2'>
           <Package className="size-5" />
-          Resultados de Búsqueda
+          {t('title')}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -52,9 +55,9 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Badge variant="outline" className="text-xs">
-                  Escaneado
+                  {t('scanned')}
                 </Badge>
-                <span className="text-sm font-medium">Producto encontrado por código de barras</span>
+                <span className="text-sm font-medium">{t('barcode-found')}</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-950/20 rounded border border-green-200 dark:border-green-800">
                 <div className="flex-1 min-w-0">
@@ -66,7 +69,10 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
                   )}
                   <div className="flex gap-2 mt-1">
                     <p className='text-xs'>
-                      {barcodeResult.product!.totalStock} {barcodeResult.product!.totalStock > 1 ? 'units' : 'unit'} remaining
+                      {t('units-remaining', { 
+                        count: barcodeResult.product!.totalStock, 
+                        units: barcodeResult.product!.totalStock > 1 ? t('units') : t('unit') 
+                      })}
                     </p>
                     {barcodeResult.product!.categories.length > 0 && (
                       <Badge variant="outline" className="text-xs">
@@ -87,7 +93,7 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
                     className="h-8"
                   >
                     <Plus className="h-3 w-3 mr-1" />
-                    Agregar
+                    {t('add')}
                   </Button>
                 </div>
               </div>
@@ -99,10 +105,10 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Badge variant="outline" className="text-xs">
-                  Búsqueda
+                  {t('search')}
                 </Badge>
                 <span className="text-sm font-medium">
-                  Se encontraron {searchResults.products.length} productos
+                  {t('search-found', { count: searchResults.products.length })}
                 </span>
               </div>
               <div className="overflow-y-auto space-y-3 max-h-96">
@@ -120,7 +126,10 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
                       )}
                       <div className="flex gap-2 mt-1">
                         <p className='text-xs'>
-                          {product.totalStock} {product.totalStock > 1 ? 'units' : 'unit'} remaining
+                          {t('units-remaining', { 
+                            count: product.totalStock, 
+                            units: product.totalStock > 1 ? t('units') : t('unit') 
+                          })}
                         </p>
                         {product.categories.length > 0 && (
                           <Badge variant="outline" className="text-xs">
@@ -141,7 +150,7 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
                         className="h-8"
                       >
                         <Plus className="h-3 w-3 mr-1" />
-                        Agregar
+                        {t('add')}
                       </Button>
                     </div>
                   </div>
@@ -159,7 +168,7 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
                   {searchResults.error ? searchResults.message : barcodeResult.message}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Intenta nuevamente con otros términos de búsqueda
+                  {t('try-again')}
                 </p>
               </div>
             </div>
@@ -171,10 +180,10 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
               <div className="text-center">
                 <Search className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
                 <p className="text-muted-foreground text-sm">
-                  Busca productos por nombre o escanea un código de barras
+                  {t('search-instruction')}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Los resultados aparecerán aquí
+                  {t('results-here')}
                 </p>
               </div>
             </div>
