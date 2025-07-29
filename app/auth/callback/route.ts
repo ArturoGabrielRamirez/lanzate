@@ -5,7 +5,6 @@ import { NextResponse } from 'next/server'
 import { routing } from '@/i18n/routing'
 
 export async function GET(request: Request) {
-  console.log("🚀 ~ GET ~ request:", request)
   const url = new URL(request.url)
   const code = url.searchParams.get('code')
   const next = url.searchParams.get('next') ?? '/'
