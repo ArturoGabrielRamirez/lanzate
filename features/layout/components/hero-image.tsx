@@ -11,6 +11,7 @@ import { FollowerPointerCard } from "@/components/ui/following-pointer";
 import type { Variants } from 'motion/react';
 import { useAnimation } from 'motion/react';
 import type { HTMLAttributes } from 'react';
+import { useTranslations } from "next-intl";
 // Animation variants for circles
 const circleVariants = {
     inactive: {
@@ -215,6 +216,7 @@ export function AnimatedBeamMultipleOutputDemo({
 }: {
     className?: string;
 }) {
+    const t = useTranslations("home.beam")
     const containerRef = useRef<HTMLDivElement>(null);
     const div2Ref = useRef<HTMLDivElement>(null); // Smartphone
     const div3Ref = useRef<HTMLDivElement>(null); // Tablet  
@@ -233,13 +235,13 @@ export function AnimatedBeamMultipleOutputDemo({
 
     // Sale messages array
     const salesData = [
-        { message: "New sale!", amount: "$89.99" },
-        { message: "Product sold!", amount: "$156.50" },
-        { message: "Sale completed!", amount: "$43.25" },
-        { message: "New purchase!", amount: "$267.80" },
-        { message: "Order received!", amount: "$92.15" },
-        { message: "Payment processed!", amount: "$134.60" },
-        { message: "Sale confirmed!", amount: "$78.30" }
+        { message: t("sales.1"), amount: "$89.99" },
+        { message: t("sales.2"), amount: "$156.50" },
+        { message: t("sales.3"), amount: "$43.25" },
+        { message: t("sales.4"), amount: "$267.80" },
+        { message: t("sales.5"), amount: "$92.15" },
+        { message: t("sales.6"), amount: "$134.60" },
+        { message: t("sales.7"), amount: "$78.30" }
     ];
 
     // Determine which circles should be active
@@ -319,7 +321,7 @@ export function AnimatedBeamMultipleOutputDemo({
                                     />
                                 )}
                             </AnimatePresence>
-                            <FollowerPointerCard title="Users won't stop buying!">
+                            <FollowerPointerCard title={t("following.users")}>
                                 <Circle ref={div7Ref} isActive={isUserActive} className="size-12 lg:size-16">
                                     <User />
                                 </Circle>
@@ -345,7 +347,7 @@ export function AnimatedBeamMultipleOutputDemo({
                                     />
                                 )}
                             </AnimatePresence>
-                            <FollowerPointerCard title="Lanzate makes it easy to sell">
+                            <FollowerPointerCard title={t("following.rocket")}>
                                 <Circle ref={div6Ref} className="size-12 lg:size-16" isActive={isRocketActive}>
                                     <RocketIcon ref={rocketIconRef} />
                                 </Circle>
@@ -365,7 +367,7 @@ export function AnimatedBeamMultipleOutputDemo({
                                     />
                                 )}
                             </AnimatePresence>
-                            <FollowerPointerCard title="Outage problems? Use it in your phone!">
+                            <FollowerPointerCard title={t("following.mobile")}>
                                 <Circle ref={div2Ref} isActive={isDeviceActive(0)} className="size-12 lg:size-16">
                                     <Smartphone />
                                 </Circle>
@@ -383,7 +385,7 @@ export function AnimatedBeamMultipleOutputDemo({
                                     />
                                 )}
                             </AnimatePresence>
-                            <FollowerPointerCard title="Available on any device!">
+                            <FollowerPointerCard title={t("following.tablet")}>
                                 <Circle ref={div3Ref} isActive={isDeviceActive(1)} className="size-12 lg:size-16">
                                     <Tablet />
                                 </Circle>
@@ -401,7 +403,7 @@ export function AnimatedBeamMultipleOutputDemo({
                                     />
                                 )}
                             </AnimatePresence>
-                            <FollowerPointerCard title="Benefit from our USB Barcode Scanner!">
+                            <FollowerPointerCard title={t("following.barcode")}>
                                 <Circle ref={div4Ref} isActive={isDeviceActive(2)} className="size-12 lg:size-16">
                                     <Monitor />
                                 </Circle>

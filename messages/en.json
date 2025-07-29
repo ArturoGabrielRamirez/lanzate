@@ -123,14 +123,43 @@
         "go-back": "Go back to home"
     },
     "home": {
+        "hero": {
+            "just_released": "Last update: Enhanced customization and new components"
+        },
         "slogan": {
             "1": "You",
             "2": "dream it. ",
             "3": "Lanzate makes it",
-            "4": "happen."
+            "4": "happen.",
+            "word-1": "dream it. ",
+            "word-2": "build it.",
+            "word-3": "grow it."
+        },
+        "beam": {
+            "sales": {
+                "1": "New sale!",
+                "2": "Product sold!",
+                "3": "Sale completed!",
+                "4": "New purchase!",
+                "5": "Order received!",
+                "6": "Payment processed!",
+                "7": "Sale confirmed!"
+            },
+            "following": {
+                "users": "Users won't stop buying!",
+                "rocket": "Lanzate makes it easy to sell",
+                "mobile": "Outage problems? Use it in your phone!",
+                "tablet": "Available on any device!",
+                "barcode": "Benefit from our USB Barcode Scanner!"
+            }
         },
         "description": {
-            "slogan": "With Lanzate, managing your online business is simpler than ever. Focus on growth while we give you full control: manage products, centralize inventory, process sales, coordinate shipping and organize your team, all from your phone or computer. No need to invest in expensive infrastructure to start your business. Simplify your operations and watch your business take off.",
+            "slogan": "Manage your business has never been easier. Focus on growth while we give you full control:",
+            "slogan-items": {
+                "1": "manage your products",
+                "2": "process sales",
+                "3": "organize your team"
+            },
             "how-it-work": {
                 "title": "How it works",
                 "description": "How Lanzate empowers your business?"
@@ -140,13 +169,13 @@
                 "description": "Work from anywhere, anytime, with any device."
             },
             "sell": {
-                "title": "Sell",
+                "title": "Customize",
                 "title-2": "Grow.",
-                "description": "Process sales and track your growth with real-time analytics."
+                "description": "Get your custom domain and store with your name."
             },
             "ship-easily": {
-                "title": "Ship Easily.",
-                "description": "Coordinate shipping and track your deliveries with a simple and intuitive interface."
+                "title": "Accessibility",
+                "description": "Access your store from any device, anytime, with any internet connection."
             },
             "analytics": {
                 "orders": "Orders",
@@ -195,6 +224,10 @@
                 }
             }
         },
+        "customization": {
+            "title": "Customize your store",
+            "description": "If you want to customize your store beyond what we offer, please contact us!"
+        },
         "buttons": {
             "login": "Login",
             "sign-up": "Sign up",
@@ -205,6 +238,11 @@
             "subscribe": "Subscribe"
         },
         "footer": {
+            "links": {
+                "1": "Terms and conditions",
+                "2": "Privacy policy",
+                "3": "Cookies"
+            },
             "getting-started": {
                 "title": "Getting started",
                 "links": {

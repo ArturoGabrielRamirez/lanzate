@@ -16,20 +16,20 @@ function HeroDescription({ className }: Props) {
     return (
         <div className={cn("flex flex-col gap-4", className)}>
             <p className="text-lg lg:text-xl mb-8 text-center md:text-left">
-                Gestionar tu negocio online nunca fue tan fácil. Enfocate en crecer mientras te damos el control total:
+                {t("description.slogan")}
             </p>
             <ul className="flex flex-col gap-2 self-start mb-8">
                 <li className="flex items-center gap-2">
                     <Check className="size-4" />
-                    <span>gestioná tus productos</span>
+                    <span>{t("description.slogan-items.1")}</span>
                 </li>
                 <li className="flex items-center gap-2">
                     <Check className="size-4" />
-                    <span>procesá ventas</span>
+                    <span>{t("description.slogan-items.2")}</span>
                 </li>
                 <li className="flex items-center gap-2">
                     <Check className="size-4" />
-                    <span>organizá a tu equipo de trabajo</span>
+                    <span>{t("description.slogan-items.3")}</span>
                 </li>
             </ul>
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
