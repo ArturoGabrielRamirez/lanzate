@@ -9,6 +9,7 @@ import { routing } from '@/i18n/routing'
 const intlMiddleware = createIntlMiddleware(routing)
 
 function shouldApplyI18n(pathname: string): boolean {
+
   if (
     pathname.startsWith('/api/') ||
     pathname.startsWith('/_next/') ||
@@ -43,14 +44,6 @@ export async function updateSession(request: NextRequest) {
   const subdomain = extractSubdomain(request)
   const { pathname } = request.nextUrl
 
-  // Log para debug en producción
-  console.log('Middleware:', { 
-    hostname: request.nextUrl.hostname, 
-    pathname, 
-    subdomain,
-    rootDomain 
-  })
-
   if (pathname.startsWith('/auth/')) {
     let response = NextResponse.next({ request })
 
@@ -68,29 +61,14 @@ export async function updateSession(request: NextRequest) {
             })
             response = NextResponse.next({ request })
             cookiesToSet.forEach(({ name, value, options }) => {
-              // CONFIGURACIÓN CORREGIDA PARA SUPABASE AUTH
-              const cookieOptions = {
-                ...options,
-                // Configurar domain solo en producción y para subdominios
-                domain: process.env.NODE_ENV === 'production' ? '.lanzate.app' : undefined,
-                secure: process.env.NODE_ENV === 'production',
-                httpOnly: options?.httpOnly || false,
-                // CRÍTICO: sameSite debe ser 'lax' para auth
-                sameSite: options?.sameSite || 'lax',
-                path: options?.path || '/'
-              }
-              response.cookies.set(name, value, cookieOptions)
+              response.cookies.set(name, value, options)
             })
           },
         },
       }
     )
 
-    try {
-      await supabase.auth.getUser()
-    } catch (error) {
-      console.error('Auth error in middleware:', error)
-    }
+    await supabase.auth.getUser()
 
     return response
   }
@@ -117,7 +95,6 @@ export async function updateSession(request: NextRequest) {
         response = NextResponse.next({ request })
       }
     } catch (error) {
-      console.error('i18n middleware error:', error)
       response = NextResponse.next({ request })
     }
   } else {
@@ -138,29 +115,16 @@ export async function updateSession(request: NextRequest) {
           })
           response = NextResponse.next({ request })
           cookiesToSet.forEach(({ name, value, options }) => {
-            // MISMA CONFIGURACIÓN CORREGIDA
-            const cookieOptions = {
-              ...options,
-              domain: process.env.NODE_ENV === 'production' ? '.lanzate.app' : undefined,
-              secure: process.env.NODE_ENV === 'production',
-              httpOnly: options?.httpOnly || false,
-              sameSite: options?.sameSite || 'lax',
-              path: options?.path || '/'
-            }
-            response.cookies.set(name, value, cookieOptions)
+            response.cookies.set(name, value, options)
           })
         },
       },
     }
   )
 
-  let user = null
-  try {
-    const { data } = await supabase.auth.getUser()
-    user = data.user
-  } catch (error) {
-    console.error('Error getting user:', error)
-  }
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   if (subdomain) {
     const { locale, pathWithoutLocale } = extractLocaleFromPath(pathname)
@@ -168,18 +132,13 @@ export async function updateSession(request: NextRequest) {
       return response
     }
 
-    try {
-      const { payload: exists } = await validateSubdomain(subdomain)
+    const { payload: exists } = await validateSubdomain(subdomain)
 
-      if (!exists) {
-        const url = new URL(request.url)
-        url.hostname = rootDomain
-        url.pathname = '/not-found'
-        return NextResponse.redirect(url)
-      }
-    } catch (error) {
-      console.error('Error validating subdomain:', error)
-      // En caso de error, permitir continuar
+    if (!exists) {
+      const url = new URL(request.url)
+      url.hostname = rootDomain
+      url.pathname = '/not-found'
+      return NextResponse.redirect(url)
     }
 
     const currentLocale = locale || routing.defaultLocale
