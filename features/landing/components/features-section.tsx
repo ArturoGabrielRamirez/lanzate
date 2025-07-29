@@ -9,8 +9,25 @@ function FeaturesSection() {
     const t = useTranslations('home');
 
     const OPTIONS = { loop: true }
-    const SLIDE_COUNT = 3
-    const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
+    //const SLIDE_COUNT = 3
+    //const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
+    const SLIDES = [
+        {
+            title: t('description.centralize.title'),
+            description: t('description.centralize.description'),
+            image: "/landing/feature-1.jpg"
+        },
+        {
+            title: t('description.ship-easily.title'),
+            description: t('description.ship-easily.description'),
+            image: "/landing/feature-2.jpg"
+        },
+        {
+            title: t('description.sell.title'),
+            description: t('description.sell.description'),
+            image: "/landing/feature-3.jpg"
+        }
+    ]
 
     return (
         <section className="p-6 pt-16 md:pt-0">
