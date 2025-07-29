@@ -36,10 +36,10 @@ export function createServerSideClient() {
             console.log("🚀 ~ setAll ~ error:", error)
           }
         },
-      },
+      }/* ,
       auth: {
         flowType: "pkce"
-      }
+      } */
     }
   );
 }

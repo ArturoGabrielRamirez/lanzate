@@ -34,7 +34,8 @@ export function createClient() {
           cookiesToSet.forEach(({ name, value, options }) => {
             const cookieOptions = {
               ...options,
-              domain: getCookieDomain(),
+              //domain: getCookieDomain(),
+              domain: '.lanzate.app',
               path: '/',
               secure: !window.location.hostname.includes('localhost'),
               sameSite: 'lax'
@@ -44,7 +45,8 @@ export function createClient() {
             
             if (cookieOptions.domain) {
               //cookieString += `; Domain=${cookieOptions.domain}`;
-              cookieString += `; Domain=localhost.com`;
+              //cookieString += `; Domain=localhost.com`;
+              cookieString += `; Domain=.lanzate.app`;
             }
             
             if (cookieOptions.path) {
