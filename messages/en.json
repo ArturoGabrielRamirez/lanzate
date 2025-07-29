@@ -909,6 +909,40 @@
                 "loading": "Deleting product..."
             }
         },
+        "history-tab": {
+            "error-loading-logs": "Error loading logs"
+        },
+        "history-table": {
+            "headers": {
+                "date": "Date",
+                "user": "User",
+                "action": "Action",
+                "entity-type": "Entity Type",
+                "actions": "Actions"
+            },
+            "employee": "(Employee)",
+            "unknown-user": "Unknown user",
+            "actions": {
+                "create": "CREATE",
+                "update": "UPDATE",
+                "delete": "DELETE",
+                "login": "LOGIN",
+                "logout": "LOGOUT"
+            },
+            "entities": {
+                "store": "STORE",
+                "product": "PRODUCT",
+                "order": "ORDER",
+                "branch": "BRANCH",
+                "user": "USER",
+                "employee": "EMPLOYEE"
+            },
+            "dropdown": {
+                "actions": "Actions",
+                "view-details": "View details",
+                "open-menu": "Open menu"
+            }
+        },
         "layout": {
             "overview": "Overview",
             "account-details": "Account Details",

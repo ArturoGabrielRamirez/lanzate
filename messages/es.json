@@ -805,6 +805,40 @@
                 "loading": "Eliminando producto..."
             }
         },
+        "history-tab": {
+            "error-loading-logs": "Error al cargar registros"
+        },
+        "history-table": {
+            "headers": {
+                "date": "Fecha",
+                "user": "Usuario",
+                "action": "Acción",
+                "entity-type": "Tipo de Entidad",
+                "actions": "Acciones"
+            },
+            "employee": "(Empleado)",
+            "unknown-user": "Usuario desconocido",
+            "actions": {
+                "create": "CREAR",
+                "update": "ACTUALIZAR",
+                "delete": "ELIMINAR",
+                "login": "INICIAR SESIÓN",
+                "logout": "CERRAR SESIÓN"
+            },
+            "entities": {
+                "store": "TIENDA",
+                "product": "PRODUCTO",
+                "order": "PEDIDO",
+                "branch": "SUCURSAL",
+                "user": "USUARIO",
+                "employee": "EMPLEADO"
+            },
+            "dropdown": {
+                "actions": "Acciones",
+                "view-details": "Ver detalles",
+                "open-menu": "Abrir menú"
+            }
+        },
         "layout": {
             "overview": "General",
             "account-details": "Detalles de la cuenta",

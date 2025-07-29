@@ -4,7 +4,6 @@ import { SettingsTabProps } from "@/features/settings/types"
 
 async function SettingsTab({ slug, userId }: SettingsTabProps) {
     const { payload: settings, error , message } = await getStoreSettingsAction(slug)
-    console.log("🚀 ~ SettingsTab ~ message:", message)
 
     if (error || !settings) {
         return (
