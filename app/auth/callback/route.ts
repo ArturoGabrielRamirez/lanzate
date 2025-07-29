@@ -21,7 +21,7 @@ export async function GET(request: Request) {
 
 
   if (!code) {
-    return NextResponse.redirect(`${envURL}/${locale}/not-found`)
+    return NextResponse.redirect(`${envURL}/${locale}/error`)
   }
 
   const supabase = await createServerSideClient()
@@ -29,13 +29,13 @@ export async function GET(request: Request) {
   const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
   if (exchangeError) {
     console.error('Error exchanging code for session:', exchangeError)
-    return NextResponse.redirect(`${envURL}/${locale}/not-found`)
+    return NextResponse.redirect(`${envURL}/${locale}/error`)
   }
 
   const { data: { user }, error: userError } = await supabase.auth.getUser()
   if (userError || !user) {
     console.error('Error getting user:', userError)
-    return NextResponse.redirect(`${envURL}/${locale}/not-found`)
+    return NextResponse.redirect(`${envURL}/${locale}/error`)
   }
 
   const { payload: existingUser } = await getUserByEmail(user.email ?? "")
@@ -45,7 +45,7 @@ export async function GET(request: Request) {
 
     if (insertError) {
       console.error('Error inserting user into users:', insertError)
-      return NextResponse.redirect(`${envURL}/${locale}/not-found`)
+      return NextResponse.redirect(`${envURL}/${locale}/error`)
     }
   }
 
