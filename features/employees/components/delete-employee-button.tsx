@@ -5,21 +5,24 @@ import { deleteEmployee } from "../actions/deleteEmployee"
 import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
 import { Trash2 } from "lucide-react"
-
 import { DeleteEmployeeButtonProps } from "@/features/employees/types"
+import { useTranslations } from "next-intl"
 
 function DeleteEmployeeButton({ employeeId, slug, onComplete, userId }: DeleteEmployeeButtonProps) {
+    
+    const t = useTranslations("store.delete-employee")
+    
     const handleDeleteEmployee = async () => {
         try {
             const { error, message, payload } = await deleteEmployee(employeeId, slug, userId)
             if (error) throw new Error(message)
             return {
                 error: false,
-                message: "Employee deleted successfully",
+                message: t("messages.success"),
                 payload: payload
             }
         } catch (error) {
-            return formatErrorResponse("Error deleting employee", error, null)
+            return formatErrorResponse(t("messages.error"), error, null)
         }
     }
 
@@ -30,24 +33,23 @@ function DeleteEmployeeButton({ employeeId, slug, onComplete, userId }: DeleteEm
 
     return (
         <ButtonWithPopup
-            title="Delete Employee"
-            description="Are you sure you want to delete this employee? This action is irreversible. Orders created by this employee will be preserved but the employee reference will be removed."
+            title={t("title")}
+            description={t("description")}
             action={handleDeleteEmployee}
             onComplete={handleComplete}
             text={(
                 <>
                     <Trash2 className="text-muted-foreground size-4" />
-                    Delete Employee
+                    {t("button")}
                 </>
             )}
             messages={{
-                success: "Employee deleted successfully",
-                error: "Failed to delete employee",
-                loading: "Deleting employee..."
+                success: t("messages.success"),
+                error: t("messages.error"),
+                loading: t("messages.loading")
             }}
             className="bg-transparent w-full justify-start"
         />
     )
 }
-
 export default DeleteEmployeeButton 

@@ -8,18 +8,20 @@ import { getEmployeesByFilter } from "../actions/getEmployeesByFilter"
 import { createEmployee } from "../actions/createEmployee"
 import { ResponseType } from "@/features/layout/types"
 import { CreateEmployeeButtonProps, UserWithEmployeeStatus } from "../types"
+import { useTranslations } from "next-intl"
 
 export default function CreateEmployeeButton({ storeId, userId }: CreateEmployeeButtonProps) {
 
     const [search, setSearch] = useState('')
     const [users, setUsers] = useState<UserWithEmployeeStatus[]>([])
     const [selectedUser, setSelectedUser] = useState<UserWithEmployeeStatus | null>(null)
+    const t = useTranslations("store.create-employee")
 
     const handleAddEmployee = async (): Promise<ResponseType<any>> => {
         if (!selectedUser) {
             return {
                 error: true,
-                message: "Debes seleccionar un usuario primero",
+                message: t("messages.select-user-first"),
                 payload: null
             }
         }
@@ -28,7 +30,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
         if (selectedUser.isEmployee) {
             return {
                 error: true,
-                message: "Este usuario ya es empleado de esta tienda",
+                message: t("messages.user-already-employee"),
                 payload: null
             }
         }
@@ -50,13 +52,13 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
 
             return {
                 error: false,
-                message: "Empleado agregado correctamente",
+                message: t("messages.success"),
                 payload: employee
             }
         } catch (error) {
             return {
                 error: true,
-                message: "Error al agregar empleado",
+                message: t("messages.error"),
                 payload: null
             }
         }
@@ -99,31 +101,31 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
             text={(
                 <>
                     <Plus />
-                    Agregar empleado
+                    {t("button")}
                 </>
             )}
-            title="Agregar empleado"
-            description="Busca un usuario registrado para agregarlo como empleado de esta tienda."
+            title={t("title")}
+            description={t("description")}
             action={handleAddEmployee}
             messages={{
-                success: "Empleado agregado correctamente!",
-                error: "Error al agregar empleado",
-                loading: "Agregando empleado..."
+                success: t("messages.success"),
+                error: t("messages.error"),
+                loading: t("messages.loading")
             }}
             formDisabled={!selectedUser}
         >
             <div className="flex gap-2 items-end">
-                <InputField name="user_search" label="Buscar usuario" type="text" containerClassName="w-full" onChange={handleChange} value={search} onKeyDown={handleKeyDown} />
+                <InputField name="user_search" label={t("search-user")} type="text" containerClassName="w-full" onChange={handleChange} value={search} onKeyDown={handleKeyDown} />
                 <Button onClick={handleSearch} type="button">
                     <Search />
-                    Buscar
+                    {t("search-button")}
                 </Button>
             </div>
             {selectedUser && (
                 <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
                     <div className="flex items-center gap-2">
                         <Check className="text-green-600 size-4" />
-                        <span className="text-sm font-medium text-green-800">Usuario seleccionado:</span>
+                        <span className="text-sm font-medium text-green-800">{t("user-selected")}</span>
                     </div>
                     <div className="mt-1 text-sm text-green-700">
                         {selectedUser.first_name} {selectedUser.last_name} ({selectedUser.email})
@@ -133,7 +135,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
 
             {users.length > 0 && (
                 <div className="mt-4">
-                    <h4 className="text-sm font-medium mb-2">Usuarios encontrados:</h4>
+                    <h4 className="text-sm font-medium mb-2">{t("users-found")}</h4>
                     <div className="space-y-2">
                         {users.map((user) => (
                             <div
@@ -152,13 +154,13 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
                                     {user.isEmployee && (
                                         <div className="flex items-center gap-1 text-xs text-gray-500">
                                             <UserCheck className="size-3" />
-                                            <span>Ya es empleado</span>
+                                            <span>{t("already-employee")}</span>
                                         </div>
                                     )}
                                 </div>
                                 {user.isEmployee && user.employeeData && (
                                     <div className="mt-1 text-xs text-gray-500">
-                                        Rol: {user.employeeData.role} • Contratado: {new Date(user.employeeData.hired_at).toLocaleDateString()}
+                                        {t("role-label")} {user.employeeData.role} • {t("hired-label")} {new Date(user.employeeData.hired_at).toLocaleDateString()}
                                     </div>
                                 )}
                             </div>
@@ -168,7 +170,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
             )}
             {users.length === 0 && search.trim() && !selectedUser && (
                 <div className="mt-4">
-                    <p className="text-sm text-muted-foreground">No se encontraron usuarios</p>
+                    <p className="text-sm text-muted-foreground">{t("no-users-found")}</p>
                 </div>
             )}
         </ButtonWithPopup>

@@ -557,25 +557,102 @@
                 "loading": "Eliminando sucursal..."
             }
         },
-        "employees": {
-            "create-orders": "Crear pedidos",
-            "update-orders": "Actualizar pedidos",
-            "create-products": "Crear productos",
-            "update-products": "Actualizar productos",
-            "manage-stock": "Gestionar stock",
-            "process-refunds": "Procesar reembolsos",
-            "view-reports": "Ver informes",
-            "manage-employees": "Gestionar empleados",
-            "manage-store": "Gestionar tienda",
-            "employee-details": "Detalles del empleado",
+        "employees-tab": {
+            "error-loading-employees": "Error al cargar empleados",
+            "error-loading-store": "Error al cargar la tienda"
+        },
+        "employees-table": {
+            "headers": {
+                "id": "ID",
+                "user": "Usuario",
+                "role": "Rol",
+                "active": "Activo",
+                "hired": "Contratado",
+                "department": "Departamento",
+                "actions": "Acciones"
+            },
+            "yes": "Sí",
+            "no": "No",
+            "no-department": "-",
+            "no-hired-date": "-",
+            "dropdown": {
+                "actions": "Acciones",
+                "view-details": "Ver detalles",
+                "open-menu": "Abrir menú"
+            }
+        },
+        "create-employee": {
+            "button": "Agregar empleado",
+            "title": "Agregar empleado",
+            "description": "Busca un usuario registrado para agregarlo como empleado de esta tienda.",
+            "search-user": "Buscar usuario",
+            "search-button": "Buscar",
+            "user-selected": "Usuario seleccionado:",
+            "users-found": "Usuarios encontrados:",
+            "already-employee": "Ya es empleado",
+            "no-users-found": "No se encontraron usuarios",
+            "role-label": "Rol:",
+            "hired-label": "Contratado:",
+            "messages": {
+                "select-user-first": "Debes seleccionar un usuario primero",
+                "user-already-employee": "Este usuario ya es empleado de esta tienda",
+                "success": "¡Empleado agregado correctamente!",
+                "error": "Error al agregar empleado",
+                "loading": "Agregando empleado..."
+            }
+        },
+        "edit-employee": {
+            "button": "Editar Empleado",
+            "title": "Editar empleado",
+            "description": "Editá el rol, permisos y otros detalles del empleado. Nota: El email y nombre no se pueden cambiar ya que pertenecen a la cuenta del usuario.",
+            "user-info-title": "Información del Usuario Empleado",
+            "email": "Email:",
+            "name": "Nombre:",
+            "email-name-note": "Nota: El email y nombre no se pueden editar aquí ya que son parte de la cuenta del usuario",
+            "role": "Rol",
+            "role-placeholder": "Seleccionar un rol",
             "position": "Posición",
             "department": "Departamento",
-            "hired-date": "Fecha de contratación",
             "salary": "Sueldo",
+            "salary-placeholder": "Ingresar sueldo",
             "notes": "Notas",
-            "permissions": "Permisos",
-            "active": "Activo",
-            "inactive": "Inactivo"
+            "notes-placeholder": "Notas adicionales sobre el empleado...",
+            "employee-active": "El empleado está activo",
+            "permissions-title": "Permisos",
+            "roles": {
+                "employee": "Empleado",
+                "cashier": "Cajero",
+                "stockist": "Inventario",
+                "sales": "Ventas",
+                "supervisor": "Supervisor",
+                "manager": "Gerente"
+            },
+            "permissions": {
+                "can-create-orders": "Puede crear pedidos",
+                "can-update-orders": "Puede actualizar pedidos",
+                "can-create-products": "Puede crear productos",
+                "can-update-products": "Puede actualizar productos",
+                "can-manage-stock": "Puede gestionar stock",
+                "can-process-refunds": "Puede procesar reembolsos",
+                "can-view-reports": "Puede ver informes",
+                "can-manage-employees": "Puede gestionar empleados",
+                "can-manage-store": "Puede gestionar tienda"
+            },
+            "messages": {
+                "success": "¡Empleado actualizado exitosamente!",
+                "error": "Error al actualizar empleado",
+                "loading": "Actualizando empleado..."
+            }
+        },
+        "delete-employee": {
+            "button": "Eliminar Empleado",
+            "title": "Eliminar Empleado",
+            "description": "¿Estás seguro de que querés eliminar este empleado? Esta acción es irreversible. Los pedidos creados por este empleado se preservarán pero la referencia del empleado será removida.",
+            "messages": {
+                "success": "Empleado eliminado exitosamente",
+                "error": "Error al eliminar empleado",
+                "loading": "Eliminando empleado..."
+            }
         },
         "layout": {
             "overview": "General",
