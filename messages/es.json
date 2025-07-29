@@ -392,6 +392,40 @@
             "no-categories": "No hay categorías"
         }
     },
+    "overview": {
+        "error-loading-overview": "Error al cargar datos del overview",
+        "error-loading-store": "Error al cargar información de la tienda",
+        "quick-actions": {
+            "title": "Acciones Rápidas",
+            "description": "Aquí puedes encontrar las acciones más importantes para tu tienda junto con algunos enlaces rápidos para empezar.",
+            "advanced-analytics": "Análisis Avanzado",
+            "marketing-tools": "Herramientas de Marketing",
+            "coming-soon": "Próximamente"
+        },
+        "top-products": {
+            "title": "Productos Más Vendidos",
+            "no-data": "No hay datos de ventas disponibles",
+            "sold": "vendidos"
+        },
+        "sales-by-month": {
+            "title": "Ventas por Mes",
+            "revenue": "Ingresos",
+            "orders": "Órdenes"
+        },
+        "sales-overview": {
+            "title": "Resumen de Ventas",
+            "total-revenue": "Ingresos totales",
+            "orders": "Órdenes",
+            "average": "Promedio"
+        },
+        "product-store-count": {
+            "title": "Productos y Sucursales",
+            "total-products": "Productos totales",
+            "branches": "Sucursales",
+            "active": "Activos",
+            "published": "Publicados"
+        }
+    },
     "subdomain": {
         "title": "Mis Productos",
         "sidebar": {

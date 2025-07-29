@@ -285,6 +285,40 @@
             "copyright": "© Copyright 2025. All Rights Reserved."
         }
     },
+    "overview": {
+        "error-loading-overview": "Error loading overview data",
+        "error-loading-store": "Error loading store information",
+        "quick-actions": {
+            "title": "Quick Actions",
+            "description": "Here you can find the most important actions for your store together with some quick links to get you started.",
+            "advanced-analytics": "Advanced Analytics",
+            "marketing-tools": "Marketing Tools",
+            "coming-soon": "Coming Soon"
+        },
+        "top-products": {
+            "title": "Top Selling Products",
+            "no-data": "No sales data available",
+            "sold": "sold"
+        },
+        "sales-by-month": {
+            "title": "Sales by Month",
+            "revenue": "Revenue",
+            "orders": "Orders"
+        },
+        "sales-overview": {
+            "title": "Sales Overview",
+            "total-revenue": "Total revenue",
+            "orders": "Orders",
+            "average": "Average"
+        },
+        "product-store-count": {
+            "title": "Products and Branches",
+            "total-products": "Total products",
+            "branches": "Branches",
+            "active": "Active",
+            "published": "Published"
+        }
+    },
     "layout": {
         "title": "Home"
     },

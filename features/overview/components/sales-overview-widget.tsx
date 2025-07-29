@@ -1,12 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { DollarSign, ShoppingCart, TrendingUp } from "lucide-react"
 import { SalesOverviewData } from "../types"
+import { getTranslations } from "next-intl/server"
 
 type Props = {
     data: SalesOverviewData
 }
 
-function SalesOverviewWidget({ data }: Props) {
+async function SalesOverviewWidget({ data }: Props) {
+
+    const t = await getTranslations("overview.sales-overview")
 
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('es-AR', {
@@ -19,7 +22,7 @@ function SalesOverviewWidget({ data }: Props) {
         <Card className="hover:bg-accent transition-colors duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
-                    Resumen de Ventas
+                    {t("title")}
                 </CardTitle>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
@@ -30,7 +33,7 @@ function SalesOverviewWidget({ data }: Props) {
                             {formatCurrency(data.totalRevenue)}
                         </div>
                         <p className="text-xs text-muted-foreground">
-                            Ingresos totales
+                            {t("total-revenue")}
                         </p>
                     </div>
                     
@@ -39,7 +42,7 @@ function SalesOverviewWidget({ data }: Props) {
                             <ShoppingCart className="h-4 w-4 text-muted-foreground" />
                             <div>
                                 <div className="text-sm font-medium">{data.totalOrders}</div>
-                                <p className="text-xs text-muted-foreground">Órdenes</p>
+                                <p className="text-xs text-muted-foreground">{t("orders")}</p>
                             </div>
                         </div>
                         
@@ -49,7 +52,7 @@ function SalesOverviewWidget({ data }: Props) {
                                 <div className="text-sm font-medium">
                                     {formatCurrency(data.averageOrderValue)}
                                 </div>
-                                <p className="text-xs text-muted-foreground">Promedio</p>
+                                <p className="text-xs text-muted-foreground">{t("average")}</p>
                             </div>
                         </div>
                     </div>
