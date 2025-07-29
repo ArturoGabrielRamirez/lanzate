@@ -654,6 +654,79 @@
                 "loading": "Eliminando empleado..."
             }
         },
+        "orders-tab": {
+            "error-loading-user": "Error al cargar información del usuario",
+            "error-loading-orders": "Error al cargar pedidos"
+        },
+        "orders-table": {
+            "headers": {
+                "id": "ID",
+                "status": "Estado",
+                "total": "Total",
+                "customer": "Cliente",
+                "date": "Fecha",
+                "items": "Artículos",
+                "type": "Tipo"
+            },
+            "statuses": {
+                "pending": "Pendiente",
+                "processing": "Procesando",
+                "ready": "Listo",
+                "shipped": "Enviado",
+                "delivered": "Entregado",
+                "cancelled": "Cancelado"
+            },
+            "items-count": {
+                "item": "artículo",
+                "items": "artículos"
+            },
+            "dropdown": {
+                "actions": "Acciones",
+                "view-details": "Ver detalles",
+                "open-menu": "Abrir menú"
+            }
+        },
+        "change-order-status": {
+            "button": "Cambiar Estado",
+            "title": "Cambiar Estado del Pedido",
+            "current-order-status": "Estado Actual del Pedido",
+            "new-status": "Nuevo Estado",
+            "status-placeholder": "Seleccionar nuevo estado",
+            "new-status-preview": "Vista Previa del Nuevo Estado",
+            "payment-marked-paid": "El pago será marcado automáticamente como PAGADO",
+            "payment-explanation": "Cambiar de PENDIENTE a {status} indica que el pedido ha sido pagado. El estado del pago será actualizado en consecuencia.",
+            "confirm-payment": "Confirmo que este pedido ha sido pagado",
+            "stock-restore-warning": "Esto restaurará el stock de productos y revertirá el saldo de la tienda",
+            "cancellation-consequences": "Cancelar este pedido:",
+            "restore-stock": "Restaurará las cantidades de stock de productos",
+            "reverse-balance": "Revertirá la transacción del saldo de la tienda",
+            "create-refund": "Creará una nueva transacción de REEMBOLSO",
+            "log-action": "Registrará la acción de cancelación",
+            "understand-consequences": "Entiendo las consecuencias de cancelar este pedido",
+            "no-changes-warning": "El estado seleccionado es el mismo que el estado actual. No se realizarán cambios.",
+            "descriptions": {
+                "cancel": "Cancelar este pedido restaurará el stock de productos y revertirá el saldo de la tienda.",
+                "from-pending": "Cambiar del estado PENDIENTE marcará el pedido como pagado y actualizará los registros de pago.",
+                "default": "Actualizá el estado del pedido para reflejar su estado actual."
+            },
+            "messages": {
+                "confirm-required": "Por favor, confirmá todos los campos requeridos",
+                "success": "¡Estado del pedido actualizado exitosamente!",
+                "error": "Error al actualizar estado del pedido",
+                "loading": "Actualizando estado del pedido..."
+            }
+        },
+        "cancel-order": {
+            "button": "Cancelar Pedido",
+            "title": "Cancelar Pedido",
+            "description": "¿Estás seguro de que querés cancelar este pedido? Esto restaurará el stock de productos y revertirá el saldo de la tienda. Esta acción no se puede deshacer.",
+            "cannot-cancel": "No se puede cancelar",
+            "messages": {
+                "success": "¡Pedido cancelado exitosamente!",
+                "error": "Error al cancelar pedido",
+                "loading": "Cancelando pedido..."
+            }
+        },
         "layout": {
             "overview": "General",
             "account-details": "Detalles de la cuenta",

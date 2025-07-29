@@ -758,6 +758,79 @@
                 "loading": "Deleting employee..."
             }
         },
+        "orders-tab": {
+            "error-loading-user": "Error loading user information",
+            "error-loading-orders": "Error loading orders"
+        },
+        "orders-table": {
+            "headers": {
+                "id": "ID",
+                "status": "Status",
+                "total": "Total",
+                "customer": "Customer",
+                "date": "Date",
+                "items": "Items",
+                "type": "Type"
+            },
+            "statuses": {
+                "pending": "Pending",
+                "processing": "Processing",
+                "ready": "Ready",
+                "shipped": "Shipped",
+                "delivered": "Delivered",
+                "cancelled": "Cancelled"
+            },
+            "items-count": {
+                "item": "item",
+                "items": "items"
+            },
+            "dropdown": {
+                "actions": "Actions",
+                "view-details": "View details",
+                "open-menu": "Open menu"
+            }
+        },
+        "change-order-status": {
+            "button": "Change Status",
+            "title": "Change Order Status",
+            "current-order-status": "Current Order Status",
+            "new-status": "New Status",
+            "status-placeholder": "Select new status",
+            "new-status-preview": "New Status Preview",
+            "payment-marked-paid": "Payment will be automatically marked as PAID",
+            "payment-explanation": "Changing from PENDING to {status} indicates the order has been paid. The payment status will be updated accordingly.",
+            "confirm-payment": "I confirm this order has been paid",
+            "stock-restore-warning": "This will restore product stock and reverse store balance",
+            "cancellation-consequences": "Cancelling this order will:",
+            "restore-stock": "Restore product stock quantities",
+            "reverse-balance": "Reverse the store balance transaction",
+            "create-refund": "Create a new REFUND transaction",
+            "log-action": "Log the cancellation action",
+            "understand-consequences": "I understand the consequences of cancelling this order",
+            "no-changes-warning": "The selected status is the same as the current status. No changes will be made.",
+            "descriptions": {
+                "cancel": "Cancelling this order will restore product stock and reverse the store balance.",
+                "from-pending": "Changing from PENDING status will mark the order as paid and update payment records.",
+                "default": "Update the order status to reflect its current state."
+            },
+            "messages": {
+                "confirm-required": "Please confirm all required fields",
+                "success": "Order status updated successfully!",
+                "error": "Failed to update order status",
+                "loading": "Updating order status..."
+            }
+        },
+        "cancel-order": {
+            "button": "Cancel Order",
+            "title": "Cancel Order",
+            "description": "Are you sure you want to cancel this order? This will restore product stock and reverse the store balance. This action cannot be undone.",
+            "cannot-cancel": "Cannot cancel",
+            "messages": {
+                "success": "Order cancelled successfully!",
+                "error": "Failed to cancel order",
+                "loading": "Cancelling order..."
+            }
+        },
         "layout": {
             "overview": "Overview",
             "account-details": "Account Details",
