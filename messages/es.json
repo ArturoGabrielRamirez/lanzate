@@ -448,6 +448,51 @@
             "items-left": "restantes",
             "item-left": "restante"
         },
+        "tabs": {
+            "overview": "General",
+            "account": "Detalles de la Cuenta",
+            "branches": "Sucursales",
+            "employees": "Empleados",
+            "products": "Productos",
+            "orders": "Pedidos",
+            "settings": "Configuración",
+            "analytics": "Análisis",
+            "history": "Historial"
+        },
+        "account-tab": {
+            "name": "Nombre",
+            "description": "Descripción",
+            "website": "Sitio Web",
+            "no-description": "No hay descripción disponible",
+            "danger-zone": "Zona de Peligro",
+            "delete-warning": "Podés eliminar tu tienda haciendo clic en el botón de abajo.",
+            "delete-irreversible": "Tené en cuenta que esta acción es irreversible y eliminará todos los datos asociados con tu tienda."
+        },
+        "edit-store": {
+            "button": "Editar tienda",
+            "title": "Editar tienda",
+            "description": "Editá los detalles de tu tienda",
+            "name": "Nombre",
+            "description-field": "Descripción",
+            "subdomain": "Subdominio",
+            "messages": {
+                "name-required": "El nombre es requerido",
+                "user-id-required": "ID de usuario es requerido",
+                "success": "¡Tienda actualizada exitosamente!",
+                "error": "Error al actualizar tienda",
+                "loading": "Actualizando tienda..."
+            }
+        },
+        "delete-store": {
+            "button": "Eliminar Tienda",
+            "title": "Eliminar Tienda",
+            "description": "Podés eliminar tu tienda haciendo clic en el botón de abajo. Tené en cuenta que esta acción es irreversible y eliminará todos los datos asociados con tu tienda.",
+            "messages": {
+                "success": "Tienda eliminada exitosamente",
+                "error": "Error al eliminar tienda",
+                "loading": "Eliminando tienda..."
+            }
+        },
         "employees": {
             "create-orders": "Crear pedidos",
             "update-orders": "Actualizar pedidos",

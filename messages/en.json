@@ -552,6 +552,51 @@
             "items-left": "left",
             "item-left": "left"
         },
+        "tabs": {
+            "overview": "Overview",
+            "account": "Account Details",
+            "branches": "Branches",
+            "employees": "Employees",
+            "products": "Products",
+            "orders": "Orders",
+            "settings": "Settings",
+            "analytics": "Analytics",
+            "history": "History"
+        },
+        "account-tab": {
+            "name": "Name",
+            "description": "Description",
+            "website": "Website",
+            "no-description": "No description available",
+            "danger-zone": "Danger zone",
+            "delete-warning": "You can delete your store by clicking the button below.",
+            "delete-irreversible": "Keep in mind that this action is irreversible and it will delete all the data associated with your store."
+        },
+        "edit-store": {
+            "button": "Edit store",
+            "title": "Edit store",
+            "description": "Edit the details of your store",
+            "name": "Name",
+            "description-field": "Description",
+            "subdomain": "Subdomain",
+            "messages": {
+                "name-required": "Name is required",
+                "user-id-required": "User ID is required",
+                "success": "Store updated successfully!",
+                "error": "Failed to update store",
+                "loading": "Updating store..."
+            }
+        },
+        "delete-store": {
+            "button": "Delete Store",
+            "title": "Delete Store",
+            "description": "You can delete your store by clicking the button below. Keep in mind that this action is irreversible and it will delete all the data associated with your store.",
+            "messages": {
+                "success": "Store deleted successfully",
+                "error": "Error deleting store",
+                "loading": "Deleting store..."
+            }
+        },
         "employees": {
             "create-orders": "Create Orders",
             "update-orders": "Update Orders",

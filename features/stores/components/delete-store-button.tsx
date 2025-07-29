@@ -4,10 +4,12 @@ import { deleteStore } from "../actions/deleteStore"
 import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
 import { Trash2 } from "lucide-react"
-
 import { DeleteStoreButtonProps } from "@/features/stores/types"
+import { useTranslations } from "next-intl"
 
 function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
+
+    const t = useTranslations("store.delete-store")
 
     const handleDeleteStore = async () => {
         try {
@@ -17,12 +19,12 @@ function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
 
             return {
                 error: false,
-                message: "Store deleted successfully",
+                message: t("messages.success"),
                 payload: payload
             }
 
         } catch (error) {
-            return formatErrorResponse("Error deleting store", error, null)
+            return formatErrorResponse(t("messages.error"), error, null)
         }
     }
 
@@ -32,21 +34,21 @@ function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
 
     return (
         <ButtonWithPopup
-            title="Delete Store"
-            description="You can delete your store by clicking the button below. Keep in mind that this action is irreversible and it will delete all the data associated with your store."
+            title={t("title")}
+            description={t("description")}
             action={handleDeleteStore}
             onComplete={handleComplete}
             variant="destructive"
             text={(
                 <>
                     <Trash2 />
-                    Delete Store
+                    {t("button")}
                 </>
             )}
             messages={{
-                success: "Store deleted successfully",
-                error: "Error deleting store",
-                loading: "Deleting store..."
+                success: t("messages.success"),
+                error: t("messages.error"),
+                loading: t("messages.loading")
             }}
         />
     )
