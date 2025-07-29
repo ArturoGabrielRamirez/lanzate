@@ -6,8 +6,11 @@ import { Plus } from "lucide-react"
 import { branchCreateSchema } from "../schemas/branch-schema"
 import { formatErrorResponse } from "@/utils/lib"
 import { createBranch } from "../actions/createBranch"
+import { useTranslations } from "next-intl"
 
 function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
+
+    const t = useTranslations("store.create-branch")
 
     const handleCreateProduct = async (payload: any) => {
         try {
@@ -16,11 +19,11 @@ function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
             if (error) throw new Error(message)
             return {
                 error: false,
-                message: "Branch created successfully",
+                message: t("messages.success"),
                 payload: branch
             }
         } catch (error) {
-            return formatErrorResponse("Error creating branch", error, null)
+            return formatErrorResponse(t("messages.error"), error, null)
         }
     }
 
@@ -29,25 +32,24 @@ function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
             text={(
                 <>
                     <Plus />
-                    Create Branch
+                    {t("button")}
                 </>
             )}
             schema={branchCreateSchema}
-            title="Create new branch"
-            description="Create a new branch to start selling your products! Choose a name for your branch and click on the button below, you can continue to add more details of the branch once it's created."
+            title={t("title")}
+            description={t("description")}
             action={handleCreateProduct}
             messages={{
-                success: "Branch created successfully!",
-                error: "Failed to create branch",
-                loading: "Creating branch..."
+                success: t("messages.success"),
+                error: t("messages.error"),
+                loading: t("messages.loading")
             }}
         >
-            <InputField name="name" label="Name" type="text" />
-            <InputField name="address" label="Address" type="text" />
-            <InputField name="phone" label="Phone" type="text" />
-            <InputField name="email" label="Email" type="text" />
+            <InputField name="name" label={t("name")} type="text" />
+            <InputField name="address" label={t("address")} type="text" />
+            <InputField name="phone" label={t("phone")} type="text" />
+            <InputField name="email" label={t("email")} type="text" />
         </ButtonWithPopup>
     )
 }
-
 export default CreateBranchButton

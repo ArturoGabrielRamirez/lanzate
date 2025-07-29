@@ -10,10 +10,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 
 function EditBranchButton({ branch, slug, onComplete, userId }: EditBranchButtonProps) {
     
     const [isMain, setIsMain] = useState(branch.is_main)
+    const t = useTranslations("store.edit-branch")
 
     const handleEditBranch = async (payload: any) => {
         const data = {
@@ -29,54 +31,54 @@ function EditBranchButton({ branch, slug, onComplete, userId }: EditBranchButton
             text={(
                 <>
                     <Pencil className="text-muted-foreground size-4" />
-                    Edit Branch
+                    {t("button")}
                 </>
             )}
-            title="Edit branch"
+            title={t("title")}
             schema={branchUpdateSchema}
-            description="Edit the branch details including name, address, phone, and email. You can also designate this branch as the main branch."
+            description={t("description")}
             action={handleEditBranch}
             onComplete={onComplete}
             messages={{
-                success: "Branch updated successfully!",
-                error: "Failed to update branch",
-                loading: "Updating branch..."
+                success: t("messages.success"),
+                error: t("messages.error"),
+                loading: t("messages.loading")
             }}
             className="bg-transparent w-full justify-start"
         >
             <InputField 
                 name="name" 
-                label="Name" 
+                label={t("name")} 
                 type="text" 
                 defaultValue={branch.name || ""} 
             />
             
             <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">{t("description")}</Label>
                 <Textarea 
                     name="description" 
-                    placeholder="Branch description"
+                    placeholder={t("description-placeholder")}
                     defaultValue={branch.description || ""}
                 />
             </div>
 
             <InputField 
                 name="address" 
-                label="Address" 
+                label={t("address")} 
                 type="text" 
                 defaultValue={branch.address || ""} 
             />
 
             <InputField 
                 name="phone" 
-                label="Phone" 
+                label={t("phone")} 
                 type="text" 
                 defaultValue={branch.phone || ""} 
             />
 
             <InputField 
                 name="email" 
-                label="Email" 
+                label={t("email")} 
                 type="email" 
                 defaultValue={branch.email || ""} 
             />
@@ -88,16 +90,15 @@ function EditBranchButton({ branch, slug, onComplete, userId }: EditBranchButton
                     onCheckedChange={(checked) => setIsMain(checked as boolean)}
                 />
                 <Label htmlFor="is_main" className="text-sm">
-                    Set as main branch
+                    {t("set-as-main")}
                 </Label>
             </div>
             {isMain && (
                 <p className="text-xs text-muted-foreground">
-                    This will be the primary branch for the store. All other branches will be unset as main.
+                    {t("main-branch-note")}
                 </p>
             )}
         </ButtonWithPopup>
     )
 }
-
 export default EditBranchButton 

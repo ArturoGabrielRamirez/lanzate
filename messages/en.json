@@ -597,6 +597,70 @@
                 "loading": "Deleting store..."
             }
         },
+        "branches-tab": {
+            "no-branches": "No branches found"
+        },
+        "branch-table": {
+            "headers": {
+                "name": "Name",
+                "address": "Address",
+                "phone": "Phone",
+                "email": "Email",
+                "actions": "Actions"
+            },
+            "main-badge": "Main",
+            "no-address": "No address",
+            "no-phone": "No phone",
+            "no-email": "No email",
+            "dropdown": {
+                "actions": "Actions",
+                "view-details": "View details",
+                "cannot-delete-main": "Cannot delete main branch",
+                "open-menu": "Open menu"
+            }
+        },
+        "create-branch": {
+            "button": "Create Branch",
+            "title": "Create new branch",
+            "description": "Create a new branch to start selling your products! Choose a name for your branch and click on the button below, you can continue to add more details of the branch once it's created.",
+            "name": "Name",
+            "address": "Address",
+            "phone": "Phone",
+            "email": "Email",
+            "messages": {
+                "success": "Branch created successfully!",
+                "error": "Failed to create branch",
+                "loading": "Creating branch..."
+            }
+        },
+        "edit-branch": {
+            "button": "Edit Branch",
+            "title": "Edit branch",
+            "description": "Edit the branch details including name, address, phone, and email. You can also designate this branch as the main branch.",
+            "name": "Name",
+            "description": "Description",
+            "description-placeholder": "Branch description",
+            "address": "Address",
+            "phone": "Phone",
+            "email": "Email",
+            "set-as-main": "Set as main branch",
+            "main-branch-note": "This will be the primary branch for the store. All other branches will be unset as main.",
+            "messages": {
+                "success": "Branch updated successfully!",
+                "error": "Failed to update branch",
+                "loading": "Updating branch..."
+            }
+        },
+        "delete-branch": {
+            "button": "Delete Branch",
+            "title": "Delete Branch",
+            "description": "Are you sure you want to delete this branch? This action is irreversible. Orders associated with this branch will be preserved but the branch reference will be removed.",
+            "messages": {
+                "success": "Branch deleted successfully",
+                "error": "Error deleting branch",
+                "loading": "Deleting branch..."
+            }
+        },
         "employees": {
             "create-orders": "Create Orders",
             "update-orders": "Update Orders",

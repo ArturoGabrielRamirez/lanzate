@@ -493,6 +493,70 @@
                 "loading": "Eliminando tienda..."
             }
         },
+        "branches-tab": {
+            "no-branches": "No hay sucursales"
+        },
+        "branch-table": {
+            "headers": {
+                "name": "Nombre",
+                "address": "Dirección",
+                "phone": "Teléfono",
+                "email": "Email",
+                "actions": "Acciones"
+            },
+            "main-badge": "Principal",
+            "no-address": "Sin dirección",
+            "no-phone": "Sin teléfono",
+            "no-email": "Sin email",
+            "dropdown": {
+                "actions": "Acciones",
+                "view-details": "Ver detalles",
+                "cannot-delete-main": "No se puede eliminar la sucursal principal",
+                "open-menu": "Abrir menú"
+            }
+        },
+        "create-branch": {
+            "button": "Crear Sucursal",
+            "title": "Crear nueva sucursal",
+            "description": "¡Creá una nueva sucursal para comenzar a vender tus productos! Elegí un nombre para tu sucursal y hacé clic en el botón de abajo, podés continuar agregando más detalles de la sucursal una vez que esté creada.",
+            "name": "Nombre",
+            "address": "Dirección",
+            "phone": "Teléfono",
+            "email": "Email",
+            "messages": {
+                "success": "¡Sucursal creada exitosamente!",
+                "error": "Error al crear sucursal",
+                "loading": "Creando sucursal..."
+            }
+        },
+        "edit-branch": {
+            "button": "Editar Sucursal",
+            "title": "Editar sucursal",
+            "description": "Editá los detalles de la sucursal incluyendo nombre, dirección, teléfono y email. También podés designar esta sucursal como la principal.",
+            "name": "Nombre",
+            "description": "Descripción",
+            "description-placeholder": "Descripción de la sucursal",
+            "address": "Dirección",
+            "phone": "Teléfono",
+            "email": "Email",
+            "set-as-main": "Establecer como sucursal principal",
+            "main-branch-note": "Esta será la sucursal principal de la tienda. Todas las otras sucursales dejarán de ser principales.",
+            "messages": {
+                "success": "¡Sucursal actualizada exitosamente!",
+                "error": "Error al actualizar sucursal",
+                "loading": "Actualizando sucursal..."
+            }
+        },
+        "delete-branch": {
+            "button": "Eliminar Sucursal",
+            "title": "Eliminar Sucursal",
+            "description": "¿Estás seguro de que querés eliminar esta sucursal? Esta acción es irreversible. Los pedidos asociados con esta sucursal se preservarán pero la referencia de la sucursal será removida.",
+            "messages": {
+                "success": "Sucursal eliminada exitosamente",
+                "error": "Error al eliminar sucursal",
+                "loading": "Eliminando sucursal..."
+            }
+        },
         "employees": {
             "create-orders": "Crear pedidos",
             "update-orders": "Actualizar pedidos",
