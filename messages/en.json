@@ -86,29 +86,35 @@
             "title": "Step 1",
             "complete": " Complete",
             "create-a-new-store": "Create a new store",
-            "to-continue": "To get started selling, you need to create a new store. This will give you your storefront, a place to list your products, and a place to manage your orders.",
-            "stores-created-1": "You have ",
-            "stores-created-2": " store",
-            "stores-created-3": " created"
+            "to-continue": "To get started selling like a pro, you need to create a new store. This will give you your storefront, a place to list your products, and a place to manage your orders.",
+            "stores-created": "You have {count} store{plural} created",
+            "store": "",
+            "stores": "s"
         },
         "step-2": {
             "title": "Step 2",
             "available": "Available",
             "create-a-product": "Create a product",
             "to-continue": "Once created, your products will be visible to customers and ready for sale. You can add images, descriptions, pricing, and inventory tracking.",
-            "first-complete": "Complete Step 1 first to unlock this feature."
+            "first-complete": "Complete Step 1 first to unlock this feature",
+            "products-created": "You have {count} product{plural} created",
+            "product": "",
+            "products": "s"
         },
         "step-3": {
             "title": "Step 3",
-            "set-up-your-account": "Set up your account",
-            "to-continue": "To finish setting up your account, choose whether your store offers delivery, set your delivery fee, and your payment options.",
-            "first-complete": " Complete previous steps to unlock this feature."
+            "configure-operations": "Configure operations",
+            "to-continue": "Set up delivery options, business hours, payment methods, and operational settings for your store.",
+            "first-complete": "Complete previous steps to unlock this feature",
+            "operations-configured": "Operations configured for {count} store{plural}",
+            "store": "",
+            "stores": "s"
         },
         "step-4": {
             "title": "Step 4",
             "share-your-store": "Share your store's link!",
             "share-your-store-with": "Share your store's link with your customers to start selling!",
-            "first-complete": "Complete previous steps to unlock this feature."
+            "first-complete": "Complete previous steps to unlock this feature"
         },
         "your-store": {
             "title": "Your Store",

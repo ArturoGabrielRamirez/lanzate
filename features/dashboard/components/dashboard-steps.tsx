@@ -6,6 +6,7 @@ import ShareStoreLink from "./share-store-link"
 import { CreateStoreButton } from "@/features/stores/components"
 import { CreateProductForStoreButton, ConfigureStoreOperationsButton } from "@/features/dashboard/components"
 import { DashboardStoreStats } from "../types/types"
+import { useTranslations } from "next-intl"
 
 type DashboardStepsProps = {
     userId: number
@@ -13,6 +14,8 @@ type DashboardStepsProps = {
 }
 
 function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
+    const t = useTranslations("dashboard")
+    
     const hasStores = dashboardData.storeCount > 0
     const hasProducts = dashboardData.productCount > 0
     const hasOperationalSettings = dashboardData.operationalSettingsCount > 0
@@ -38,8 +41,8 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
                 </div> */}
                 <DashboardStepCard
                     stepNumber={4}
-                    title="Share your store's link!"
-                    description="Share your store's link with your customers to start selling!"
+                    title={t("step-4.share-your-store")}
+                    description={t("step-4.share-your-store-with")}
                     icon={Share2}
                     status={step4Status}
                     footer={<ShareStoreLink stores={dashboardData.stores} />}
@@ -55,8 +58,8 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             {/* Step 1: Create Store */}
             <DashboardStepCard
                 stepNumber={1}
-                title="Create a new store"
-                description="To get started selling like a pro, you need to create a new store. This will give you your storefront, a place to list your products, and a place to manage your orders."
+                title={t("step-1.create-a-new-store")}
+                description={t("step-1.to-continue")}
                 icon={Store}
                 status={step1Status}
                 footer={
@@ -64,7 +67,10 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
                         <CreateStoreButton userId={userId} />
                     ) : (
                         <p className="text-sm text-muted-foreground">
-                            You have {dashboardData.storeCount} store{dashboardData.storeCount > 1 ? 's' : ''} created
+                            {t("step-1.stores-created", { 
+                                count: dashboardData.storeCount,
+                                plural: dashboardData.storeCount > 1 ? t("step-1.stores") : t("step-1.store")
+                            })}
                         </p>
                     )
                 }
@@ -75,8 +81,8 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             {/* Step 2: Create Product */}
             <DashboardStepCard
                 stepNumber={2}
-                title="Create a product"
-                description="Once created, your products will be visible to customers and ready for sale. You can add images, descriptions, pricing, and inventory tracking."
+                title={t("step-2.create-a-product")}
+                description={t("step-2.to-continue")}
                 icon={ShoppingCart}
                 status={step2Status}
                 footer={
@@ -90,12 +96,15 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             >
                 {!hasStores && (
                     <div className="mt-2 text-xs text-amber-600 bg-amber-50 p-2 rounded">
-                        Complete Step 1 first to unlock this feature
+                        {t("step-2.first-complete")}
                     </div>
                 )}
                 {hasProducts && (
                     <div className="mt-2 text-xs text-green-600 bg-green-50 p-2 rounded">
-                        You have {dashboardData.productCount} product{dashboardData.productCount > 1 ? 's' : ''} created
+                        {t("step-2.products-created", { 
+                            count: dashboardData.productCount,
+                            plural: dashboardData.productCount > 1 ? t("step-2.products") : t("step-2.product")
+                        })}
                     </div>
                 )}
             </DashboardStepCard>
@@ -103,8 +112,8 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             {/* Step 3: Configure Operations */}
             <DashboardStepCard
                 stepNumber={3}
-                title="Configure operations"
-                description="Set up delivery options, business hours, payment methods, and operational settings for your store."
+                title={t("step-3.configure-operations")}
+                description={t("step-3.to-continue")}
                 icon={Settings}
                 status={step3Status}
                 footer={
@@ -118,12 +127,15 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             >
                 {!hasProducts && (
                     <div className="mt-2 text-xs text-amber-600 bg-amber-50 p-2 rounded">
-                        Complete previous steps to unlock this feature
+                        {t("step-3.first-complete")}
                     </div>
                 )}
                 {hasOperationalSettings && (
                     <div className="mt-2 text-xs text-green-600 bg-green-50 p-2 rounded">
-                        Operations configured for {dashboardData.operationalSettingsCount} store{dashboardData.operationalSettingsCount > 1 ? 's' : ''}
+                        {t("step-3.operations-configured", { 
+                            count: dashboardData.operationalSettingsCount,
+                            plural: dashboardData.operationalSettingsCount > 1 ? t("step-3.stores") : t("step-3.store")
+                        })}
                     </div>
                 )}
             </DashboardStepCard>
@@ -131,8 +143,8 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             {/* Step 4: Share Store */}
             <DashboardStepCard
                 stepNumber={4}
-                title="Share your store's link!"
-                description="Share your store's link with your customers to start selling!"
+                title={t("step-4.share-your-store")}
+                description={t("step-4.share-your-store-with")}
                 icon={Share2}
                 status={step4Status}
                 footer={
@@ -143,7 +155,7 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             >
                 {!hasOperationalSettings && (
                     <div className="mt-2 text-xs text-amber-600 bg-amber-50 p-2 rounded">
-                        Complete previous steps to unlock this feature
+                        {t("step-4.first-complete")}
                     </div>
                 )}
             </DashboardStepCard>

@@ -86,29 +86,35 @@
             "title": "Paso 1",
             "complete": "Completado",
             "create-a-new-store": "Crear una nueva tienda",
-            "to-continue": "Para comenzar a vender, necesitas crear una nueva tienda. Esto dará lugar a tu tienda, un lugar para listar tus productos y un lugar para gestionar tus pedidos.",
-            "stores-created-1": "Tenés ",
-            "stores-created-2": " tienda",
-            "stores-created-3": " creada"
+            "to-continue": "Para comenzar a vender como un profesional, necesitas crear una nueva tienda. Esto te dará tu escaparate, un lugar para listar tus productos y un lugar para gestionar tus pedidos.",
+            "stores-created": "Tenés {count} tienda{plural} creada{plural}",
+            "store": "",
+            "stores": "s"
         },
         "step-2": {
             "title": "Paso 2",
             "available": "Disponible",
             "create-a-product": "Crear un producto",
             "to-continue": "Una vez creado, tus productos estarán visibles para los clientes y listos para la venta. Podrás agregar imágenes, descripciones, precios y seguimiento de inventario.",
-            "first-complete": "Primero, completá el paso 1 para desbloquear esta función."
+            "first-complete": "Completá el Paso 1 primero para desbloquear esta función",
+            "products-created": "Tenés {count} producto{plural} creado{plural}",
+            "product": "",
+            "products": "s"
         },
         "step-3": {
             "title": "Paso 3",
-            "set-up-your-account": "Configura tu cuenta",
-            "to-continue": "Para terminar de configurar tu cuenta, elegí si tu tienda ofrece entregas, establecé tu tarifa de entrega y tus opciones de pago.",
-            "first-complete": " Completá los pasos anteriores para desbloquear esta función."
+            "configure-operations": "Configurar operaciones",
+            "to-continue": "Configurá opciones de entrega, horarios comerciales, métodos de pago y configuraciones operativas para tu tienda.",
+            "first-complete": "Completá los pasos anteriores para desbloquear esta función",
+            "operations-configured": "Operaciones configuradas para {count} tienda{plural}",
+            "store": "",
+            "stores": "s"
         },
         "step-4": {
             "title": "Paso 4",
-            "share-your-store": "¡Compartí el link de tus tiendas!",
-            "share-your-store-with": "¡Compartí el link de tus tiendas con tus clientes para comenzar a vender!",
-            "first-complete": "Completá los pasos anteriores para desbloquear esta función."
+            "share-your-store": "¡Compartí el link de tu tienda!",
+            "share-your-store-with": "¡Compartí el link de tu tienda con tus clientes para comenzar a vender!",
+            "first-complete": "Completá los pasos anteriores para desbloquear esta función"
         },
         "your-store": {
             "title": "Tu tienda",
