@@ -29,7 +29,7 @@ export default async function AccountPage() {
                     label: t("title"),
                     href: "/account"
                 }
-            ]} />
+            ]} showDate/>
             <section className="flex items-center gap-4">
                 <Card className="w-full">
                     <CardContent className="flex items-center gap-4 w-full">
