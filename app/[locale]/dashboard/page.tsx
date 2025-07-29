@@ -34,7 +34,7 @@ async function DashboardPage() {
                     <Hand />
                     {t("title")}
                 </div>
-            )} />
+            )} showDate/>
 
             <div className="grid md:grid-cols-[minmax(0,1500px)_auto] gap-4">
                 <div className="max-w-[1500px] w-full">

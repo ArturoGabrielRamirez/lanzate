@@ -18,7 +18,7 @@ async function SalePage() {
     }
 
     return (
-        <section className="p-4 flex flex-col max-md:pt-24">
+        <section className="p-4 flex flex-col pt-17">
             <Title title={(
                 <div className="flex items-center gap-2">
                     <ShoppingBasket />
