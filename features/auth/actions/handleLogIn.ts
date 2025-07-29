@@ -26,6 +26,7 @@ import { createServerSideClient } from '@/utils/supabase/server'
 import { HandleLoginAction } from '../types'
 import { insertLogEntry } from '@/features/layout/data/insertLogEntry'
 import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
+import { headers } from 'next/headers'
 
 
 export async function handleLogIn(formData: HandleLoginAction) {
@@ -38,11 +39,17 @@ export async function handleLogIn(formData: HandleLoginAction) {
 
     const { error: signInError, data: { user: authUser } } = await supabase.auth.signInWithPassword({ email, password })
 
-    if (signInError || !authUser) throw new Error('Invalid credentials')
+    if (signInError || !authUser) {
+      console.error('Login error:', signInError)
+      throw new Error('Invalid credentials')
+    }
 
     const { error, payload: user } = await getUserByEmail(authUser.email || "")
 
-    if (error || !user) throw new Error("There was an error after logging in")
+    if (error || !user) {
+      console.error('User fetch error after login:', error)
+      throw new Error("There was an error after logging in")
+    }
 
     // Create action log
     const { error: logError } = await insertLogEntry({
@@ -54,12 +61,31 @@ export async function handleLogIn(formData: HandleLoginAction) {
       details: "User signed in using sign in form"
     })
 
-    if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
+    if (logError) {
+      console.error('Log error after login:', logError)
+      // No lanzar error aquí, solo loggear
+    }
+
+    // MEJORA: Determinar redirección basada en el hostname
+    const headersList = headers()
+    const host = (await headersList).get('host') || ''
+    const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'
+    
+    console.log('Login successful:', { 
+      userEmail: user.email, 
+      host, 
+      rootDomain 
+    })
 
     return {
       error: false,
       message: "Logged in successfully",
-      payload: user
+      payload: user,
+      // Añadir información para el redirect
+      redirectInfo: {
+        host,
+        isSubdomain: host !== rootDomain && host.endsWith(`.${rootDomain}`)
+      }
     }
 
   })
