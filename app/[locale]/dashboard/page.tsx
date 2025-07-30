@@ -38,7 +38,7 @@ async function DashboardPage() {
 
             <div className="grid grid-cols-1 
                             grid-areas-[steps,stores,coming-soon,calendar,order]
-                           md:grid-areas-[coming-soon_steps,coming-soon_stores,coming-soon_calendar,order_order] 
+                           md:grid-areas-[order_steps,coming-soon_steps,coming-soon_stores,coming-soon_calendar] 
                            md:grid-cols-[1fr_minmax(auto,300px)] 
                            lg:grid-areas-[steps_coming-soon_order,steps_coming-soon_stores,calendar_coming-soon_stores,calendar_coming-soon_stores] 
                            lg:grid-cols-[minmax(auto,300px)_1fr_minmax(auto,300px)] 
@@ -85,7 +85,7 @@ async function DashboardPage() {
                             <div className="sm:hidden mb-3">
                                 <CreateStoreButton userId={user.id} />
                             </div>
-                            <div className="md:grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4 flex overflow-x-auto">
+                            <div className="md:grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4 flex overflow-x-auto md:overflow-x-visible">
                                 <Card className="border-dashed gap-2 md:gap-3 lg:gap-4 hidden sm:block shrink-0">
                                     <CardHeader>
                                         <CardTitle className="flex items-center gap-2">
