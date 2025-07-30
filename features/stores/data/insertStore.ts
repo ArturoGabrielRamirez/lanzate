@@ -11,6 +11,7 @@ type InsertStoreReturn = {
 }
 
 export async function insertStore(payload: any, userId: number): Promise<InsertStoreReturn> {
+    console.log("🚀 ~ insertStore ~ payload:", payload)
     return actionWrapper(async () => {
 
         const client = new PrismaClient()
