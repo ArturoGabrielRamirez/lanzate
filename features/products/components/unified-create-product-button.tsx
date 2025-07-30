@@ -63,6 +63,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
             }
 
             const { error, message, payload: product } = await createProduct(data, targetStoreId, props.userId)
+            
             if (error) throw new Error(message)
             
             // Reset form for store selection mode

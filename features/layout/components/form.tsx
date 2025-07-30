@@ -22,6 +22,8 @@ export default function Form<T extends FieldValues>({
     loadingMessage = 'Loading...',
     className,
     onComplete,
+    onSuccess,
+    onError,
     disabled = false
 }: FormPropsType<T>) {
 
@@ -41,9 +43,11 @@ export default function Form<T extends FieldValues>({
                 success: (data: ResponseType<T>) => {
                     if (data && data.error) throw new Error(data.message)
                     successRedirect && router.push(successRedirect)
+                    onSuccess && typeof onSuccess === 'function' && onSuccess()
                     return successMessage
                 },
                 error: (error) => {
+                    onError && typeof onError === 'function' && onError()
                     reject(error)
                     return error.message
                 },
