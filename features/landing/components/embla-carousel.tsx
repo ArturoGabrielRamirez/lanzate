@@ -1,12 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react'
 import { EmblaOptionsType } from 'embla-carousel'
-/* import {
-    usePrevNextButtons
-} from './embla-carousel-arrow-buttons' */
 import { useDotButton } from './embla-carousel-dot-button'
 import * as motion from "motion/react-client"
-import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 
 const TWEEN_FACTOR_BASE = 0.52
@@ -25,7 +21,6 @@ type EmblaCarouselType = UseEmblaCarouselType[1]
 const numberWithinRange = (number: number, min: number, max: number): number =>
     Math.min(Math.max(number, min), max)
 
-// Hook para manejar el progress bar
 function useCarouselProgress(isActive: boolean, duration: number = 5000) {
     const [progress, setProgress] = useState(0)
     const intervalRef = useRef<NodeJS.Timeout | null>(null)
@@ -63,8 +58,7 @@ function useCarouselProgress(isActive: boolean, duration: number = 5000) {
     return progress
 }
 
-// Hook para auto-scroll del carousel
-/* function useAutoScroll(emblaApi: EmblaCarouselType | undefined, delay: number = 5000) {
+function useAutoScroll(emblaApi: EmblaCarouselType | undefined, delay: number = 5000) {
     const autoScrollRef = useRef<NodeJS.Timeout | null>(null)
 
     const resetAutoScroll = useCallback(() => {
@@ -101,41 +95,18 @@ function useCarouselProgress(isActive: boolean, duration: number = 5000) {
     }, [emblaApi, startAutoScroll, resetAutoScroll])
 
     return { resetAutoScroll, startAutoScroll }
-} */
+}
 
 function EmblaCarousel(props: PropType) {
     const { slides, options } = props
     const [emblaRef, emblaApi] = useEmblaCarousel(options)
     const tweenFactor = useRef(0)
     const tweenNodes = useRef<HTMLElement[]>([])
-    const t = useTranslations('home')
 
-    const { selectedIndex/* , onDotButtonClick  */} =
+    const { selectedIndex/* , onDotButtonClick  */ } =
         useDotButton(emblaApi, undefined)
 
-    /* const {
-        onPrevButtonClick,
-        onNextButtonClick
-    } = usePrevNextButtons(emblaApi, undefined) */
-
-    // Usar auto-scroll
-    /* const { resetAutoScroll } = useAutoScroll(emblaApi, 5000) */
-
-    // Modificar los handlers de navegación para resetear el auto-scroll
-    /* const handlePrevClick = useCallback(() => {
-        onPrevButtonClick()
-        resetAutoScroll()
-    }, [onPrevButtonClick, resetAutoScroll]) */
-
-    /* const handleNextClick = useCallback(() => {
-        onNextButtonClick()
-        resetAutoScroll()
-    }, [onNextButtonClick, resetAutoScroll]) */
-
-    /* const handleDotClick = useCallback((index: number) => {
-        onDotButtonClick(index)
-        resetAutoScroll()
-    }, [onDotButtonClick, resetAutoScroll]) */
+    useAutoScroll(emblaApi, 5000)
 
     const setTweenNodes = useCallback((emblaApi: EmblaCarouselType) => {
         if (!emblaApi) return
@@ -185,7 +156,6 @@ function EmblaCarousel(props: PropType) {
                 const opacity = numberWithinRange(tweenValue, 0.3, 1).toString()
                 const tweenNode = tweenNodes.current[slideIndex]
 
-                // Usar transform CSS de manera optimizada con opacidad
                 if (tweenNode?.style) {
                     tweenNode.style.transform = `scale3d(${scale}, ${scale}, 1)`
                     tweenNode.style.opacity = opacity
@@ -318,29 +288,6 @@ function EmblaCarousel(props: PropType) {
                         )
                     })}
                 </div>
-            </div>
-
-            <div className="flex justify-center mt-7">
-                {/* <div className="grid grid-cols-2 gap-2 items-center">
-                    <PrevButton onClick={handlePrevClick} disabled={prevBtnDisabled} />
-                    <NextButton onClick={handleNextClick} disabled={nextBtnDisabled} />
-                </div> */}
-
-                {/* <div className="flex flex-wrap justify-end items-center -mr-3 gap-2 h-10">
-                    {scrollSnaps.map((_, index) => {
-                        const isActive = index === selectedIndex
-                        return (
-                            <DotButton
-                                key={index}
-                                onClick={() => handleDotClick(index)}
-                                className={`items-center justify-center rounded-full cursor-pointer border-0 p-0 m-0 bg-primary appearance-none touch-manipulation inline-flex no-underline disabled:cursor-not-allowed transition-all duration-300 hover:bg-accent ${isActive
-                                    ? 'bg-primary size-10'
-                                    : 'bg-primary/20 size-6'
-                                    }`}
-                            />
-                        )
-                    })}
-                </div> */}
             </div>
         </div>
     )
