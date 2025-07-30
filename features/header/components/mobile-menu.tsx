@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/drawer"
 import { ThemeToggle, NotificationsIcon } from "@/features/header/components"
 import { Button } from "@/components/ui/button"
+import { signOut } from "@/features/auth/actions/handleSignOut"
+
 
 type MobileMenuProps = {
     user: any
@@ -20,6 +22,11 @@ type MobileMenuProps = {
 
 function MobileMenu({ user }: MobileMenuProps) {
     const [open, setOpen] = useState(false)
+
+    const handleSignOut = async () => {
+        await signOut()
+        setOpen(!open)
+    }
 
     return (
         <Drawer open={open} onOpenChange={setOpen}>
@@ -64,52 +71,43 @@ function MobileMenu({ user }: MobileMenuProps) {
                     )}
 
                     {user && (
-                        <Button asChild>
-                            <Link
-                                href="/stores"
-                                className="p-3 transition-colors rounded-md hover:bg-accent"
-                                onClick={() => setOpen(false)}
-                            >
-                                Stores
-                            </Link>
-                        </Button>
+                        <Link
+                            href="/stores"
+                            className="p-3 transition-colors rounded-md hover:bg-accent"
+                            onClick={() => setOpen(false)}
+                        >
+                            Stores
+                        </Link>
                     )}
 
                     {user && (
-                        <Button asChild>
-                            <Link
-                                href="/account"
-                                className="p-3 transition-colors rounded-md hover:bg-accent"
-                                onClick={() => setOpen(false)}
-                            >
-                                Account
-                            </Link>
-                        </Button>
+                        <Link
+                            href="/account"
+                            className="p-3 transition-colors rounded-md hover:bg-accent"
+                            onClick={() => setOpen(false)}
+                        >
+                            Account
+                        </Link>
                     )}
 
                     {user && (
-                        <form action='/auth/signout' method='post' className="w-full">
-                            <Button type='submit' className="w-full p-3 transition-colors rounded-md hover:bg-accent">
-                                Sign out
-                            </Button>
-                        </form>
+                        <Button
+                            onClick={handleSignOut}
+                            className="justify-start w-full p-3 transition-colors rounded-md hover:bg-accent"
+                            variant="ghost"
+                        >
+                            Sign out
+                        </Button>
                     )}
 
                     <div className="flex items-center justify-end gap-4 pt-4 border-t">
                         {user && <NotificationsIcon />}
                         <ThemeToggle />
                     </div>
-
-
-                    {/* {user && (
-                        <div className="pt-4 border-t">
-                            <AccountDropdown />
-                        </div>
-                    )} */}
                 </div>
             </DrawerContent>
         </Drawer>
     )
 }
 
-export default MobileMenu 
+export default MobileMenu

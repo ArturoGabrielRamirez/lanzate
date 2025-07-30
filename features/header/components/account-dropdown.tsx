@@ -17,6 +17,7 @@ function AccountDropdown() {
 
     const handleSignOut = async () => {
         await signOut()
+        setOpen(!open)
     }
 
     return (
