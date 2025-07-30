@@ -96,7 +96,7 @@ function MobileMenu({ user }: MobileMenuProps) {
                             className="justify-start w-full p-3 transition-colors rounded-md hover:bg-accent"
                             variant="ghost"
                         >
-                            Sign outyyyy
+                            Sign out
                         </Button>
                     )}
 
