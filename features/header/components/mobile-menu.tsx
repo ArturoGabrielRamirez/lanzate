@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/drawer"
 import { ThemeToggle, NotificationsIcon } from "@/features/header/components"
 import { Button } from "@/components/ui/button"
+import { signOut } from "@/features/auth/actions/handleSignOut"
+
 
 type MobileMenuProps = {
     user: any
@@ -21,11 +23,16 @@ type MobileMenuProps = {
 function MobileMenu({ user }: MobileMenuProps) {
     const [open, setOpen] = useState(false)
 
+    const handleSignOut = async () => {
+        await signOut()
+        setOpen(false)
+    }
+
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant="ghost" size="icon" className="md:hidden">
-                    <Menu className="h-5 w-5" />
+                    <Menu className="w-5 h-5" />
                     <span className="sr-only">Toggle menu</span>
                 </Button>
             </DrawerTrigger>
@@ -35,7 +42,7 @@ function MobileMenu({ user }: MobileMenuProps) {
                         <DrawerTitle>Menu</DrawerTitle>
                         <DrawerClose asChild>
                             <Button variant="ghost" size="icon">
-                                <X className="h-5 w-5" />
+                                <X className="w-5 h-5" />
                                 <span className="sr-only">Close menu</span>
                             </Button>
                         </DrawerClose>
@@ -46,7 +53,7 @@ function MobileMenu({ user }: MobileMenuProps) {
                     {!user && (
                         <Link
                             href="/login"
-                            className="p-3 hover:bg-accent rounded-md transition-colors"
+                            className="p-3 transition-colors rounded-md hover:bg-accent"
                             onClick={() => setOpen(false)}
                         >
                             Log In
@@ -56,7 +63,7 @@ function MobileMenu({ user }: MobileMenuProps) {
                     {!user && (
                         <Link
                             href="/signup"
-                            className="p-3 hover:bg-accent rounded-md transition-colors"
+                            className="p-3 transition-colors rounded-md hover:bg-accent"
                             onClick={() => setOpen(false)}
                         >
                             Sign Up
@@ -64,52 +71,43 @@ function MobileMenu({ user }: MobileMenuProps) {
                     )}
 
                     {user && (
-                        <Button asChild>
-                            <Link
-                                href="/stores"
-                                className="p-3 hover:bg-accent rounded-md transition-colors"
-                                onClick={() => setOpen(false)}
-                            >
-                                Stores
-                            </Link>
-                        </Button>
+                        <Link
+                            href="/stores"
+                            className="p-3 transition-colors rounded-md hover:bg-accent"
+                            onClick={() => setOpen(false)}
+                        >
+                            Stores
+                        </Link>
                     )}
 
                     {user && (
-                        <Button asChild>
-                            <Link
-                                href="/account"
-                                className="p-3 hover:bg-accent rounded-md transition-colors"
-                                onClick={() => setOpen(false)}
-                            >
-                                Account
-                            </Link>
-                        </Button>
+                        <Link
+                            href="/account"
+                            className="p-3 transition-colors rounded-md hover:bg-accent"
+                            onClick={() => setOpen(false)}
+                        >
+                            Account
+                        </Link>
                     )}
 
                     {user && (
-                        <form action='/auth/signout' method='post' className="w-full">
-                            <Button type='submit' className="p-3 hover:bg-accent rounded-md transition-colors w-full">
-                                Sign out
-                            </Button>
-                        </form>
+                        <Button 
+                            onClick={handleSignOut}
+                            className="justify-start w-full p-3 transition-colors rounded-md hover:bg-accent"
+                            variant="ghost"
+                        >
+                            Sign out
+                        </Button>
                     )}
 
                     <div className="flex items-center justify-end gap-4 pt-4 border-t">
                         {user && <NotificationsIcon />}
                         <ThemeToggle />
                     </div>
-
-
-                    {/* {user && (
-                        <div className="pt-4 border-t">
-                            <AccountDropdown />
-                        </div>
-                    )} */}
                 </div>
             </DrawerContent>
         </Drawer>
     )
 }
 
-export default MobileMenu 
+export default MobileMenu

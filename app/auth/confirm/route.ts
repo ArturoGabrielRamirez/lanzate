@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     const next = searchParams.get('next') ?? '/'
     console.log("🚀 ~ GET ~ next:", next)
     
-    const baseUrl = process.env.NEXTAUTH_URL || `http://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+    const baseUrl = process.env.NEXTAUTH_URL || `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
     const redirectTo = new URL(next, baseUrl)
 
     if (token_hash && type) {
