@@ -16,7 +16,7 @@ function StoreCard({ store }: StoreCardProps) {
     }
 
     return (
-        <Card className="hover:scale-105 transition-all cursor-pointer hover:bg-primary hover:text-primary-foreground gap-2 md:gap-3 lg:gap-4" onClick={handleClick}>
+        <Card className="hover:scale-105 transition-all cursor-pointer hover:bg-primary hover:text-primary-foreground gap-2 md:gap-3 lg:gap-4 shrink-0" onClick={handleClick}>
             <CardHeader className="gap-0">
                 <CardTitle className="flex items-center gap-2">
                     <StoreIcon className="size-4 md:size-5 lg:size-6" />
@@ -26,7 +26,7 @@ function StoreCard({ store }: StoreCardProps) {
             <CardContent>
                 <p className="text-sm text-muted-foreground">{store.description || t("no-description")}</p>
             </CardContent>
-            <CardFooter className="justify-between">
+            <CardFooter className="justify-between items-center gap-2">
                 <p className="text-sm text-muted-foreground flex items-center gap-2">
                     <Calendar className="size-4" />
                     {store.created_at.toLocaleDateString()}
