@@ -38,16 +38,18 @@ function DashboardStepCard({
         <Card className={cn(
             "transition-all duration-200",
             isActive && "border-primary/20 shadow-md",
-            (isComplete || isDisabled) && "opacity-60 border-muted",
+            (isComplete || isDisabled) && "border-muted",
             isDisabled && "cursor-not-allowed",
+            "gap-3 md:gap-4",
             cardClassName
         )}>
             <CardHeader className={cn(
-                isHorizontalLayout && "md:col-span-2"
+                isHorizontalLayout && "md:col-span-2",
+                "gap-0"
             )}>
                 <div className={cn(
                     "grid gap-4",
-                    isHorizontalLayout ? "md:grid-cols-[100px_1fr]" : "grid-cols-[100px_1fr]"
+                    isHorizontalLayout ? "md:grid-cols-[100px_1fr]" : "grid-cols-[45px_1fr] md:grid-cols-[50px_1fr]  xl:grid-cols-[80px_1fr] items-center"
                 )}>
                     <div className={cn(
                         "rounded-md flex items-center justify-center aspect-square",
@@ -55,7 +57,7 @@ function DashboardStepCard({
                         (isComplete || isDisabled) && "bg-muted"
                     )}>
                         <Icon className={cn(
-                            "size-8",
+                            "size-5 md:size-6 xl:size-8",
                             isActive && "text-primary",
                             (isComplete || isDisabled) && "text-muted-foreground"
                         )} />
@@ -63,9 +65,9 @@ function DashboardStepCard({
                     <div>
                         <CardTitle className="flex items-center gap-2">
                             <ArrowRight className="size-4" />
-                            <h2 className="font-normal text-sm">Step {stepNumber}</h2>
+                            <h2 className="font-normal text-xs md:text-sm">Step {stepNumber}</h2>
                             {isComplete && (
-                                <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
+                                <span className="text-[12px] md:text-xs bg-green-100 text-green-700 px-1 md:px-2 py-1 rounded">
                                     ✓ Complete
                                 </span>
                             )}
@@ -75,7 +77,7 @@ function DashboardStepCard({
                                 </span>
                             )}
                         </CardTitle>
-                        <CardDescription className="font-bold text-2xl text-accent-foreground">
+                        <CardDescription className="font-bold text-xl xl:text-2xl text-accent-foreground">
                             {title}
                         </CardDescription>
                     </div>
@@ -85,7 +87,8 @@ function DashboardStepCard({
             {!isHorizontalLayout && (
                 <CardContent className={cn(
                     isActive && "text-muted-foreground/50",
-                    (isComplete || isDisabled) && "text-muted-foreground/30"
+                    (isComplete || isDisabled) && "text-muted-foreground/30",
+                    "text-sm md:text-base leading-tight"
                 )}>
                     {description}
                     {children}

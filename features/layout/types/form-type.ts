@@ -12,5 +12,7 @@ export type FormPropsType<T extends FieldValues> = {
     loadingMessage?: string
     className?: string
     onComplete?: () => void
+    onSuccess?: () => void
+    onError?: () => void
     disabled?: boolean
 }

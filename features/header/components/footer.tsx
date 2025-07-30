@@ -36,13 +36,6 @@ function Footer() {
                     </nav>
                 </div>
             </div>
-            {/* <DotPattern
-                width={30}
-                height={30}
-                className={cn(
-                    "[mask-image:linear-gradient(to_top_right,white,transparent_70%,transparent)] ",
-                )}
-            /> */}
         </footer>
     )
 }

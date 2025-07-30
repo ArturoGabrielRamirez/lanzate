@@ -4,6 +4,8 @@ import EditStoreButton from "./edit-store-button";
 import ProductCard from "./product-card";
 import ProductDetail from "./product-detail";
 import StoreCard from "./store-card";
+import StoreHeader from "./store-header";
+import StoreHeaderSkeleton from "./store-header-skeleton";
 import TabTriggerLink from "./tab-trigger-link";
 import TabsClientContainer from "./tabs-client-container";
 import AccountTab from "./tabs/account";
@@ -27,6 +29,8 @@ export {
     ProductCard,
     ProductDetail,
     StoreCard,
+    StoreHeader,
+    StoreHeaderSkeleton,
     TabTriggerLink,
     TabsClientContainer,
     AccountTab,

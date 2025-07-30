@@ -26,7 +26,7 @@ function ButtonWithPopup<T>({
 
     const [open, setOpen] = useState(false)
 
-    const handleComplete = async () => {
+    const handleSuccess = async () => {
         setOpen(false)
         onComplete && typeof onComplete === "function" && onComplete()
     }
@@ -51,7 +51,7 @@ function ButtonWithPopup<T>({
                     contentButton={text}
                     successMessage={messages.success}
                     loadingMessage={messages.loading}
-                    onComplete={handleComplete}
+                    onSuccess={handleSuccess}
                     disabled={formDisabled}
                 >
                     {children}
