@@ -16,7 +16,7 @@ export async function GET(request: Request) {
     : routing.defaultLocale
 
 
-  const envURL = process.env.NEXTAUTH_URL || `http://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+  const envURL = process.env.NEXTAUTH_URL || `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
 
 
 

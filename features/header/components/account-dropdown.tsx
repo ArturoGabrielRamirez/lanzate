@@ -5,13 +5,17 @@ import { Button } from "@/components/ui/button"
 import { User } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
+import { signOut } from "@/features/auth/actions/handleSignOut"
 
 function AccountDropdown() {
-
     const [open, setOpen] = useState(false)
 
     const handleClick = () => {
         setOpen(!open)
+    }
+
+    const handleSignOut = async () => {
+        await signOut()
     }
 
     return (
@@ -32,15 +36,17 @@ function AccountDropdown() {
                     <Link href="/stores">Stores</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleClick}>
-                    <form action='/auth/signout' method='post' className="w-full">
-                        <Button type='submit' className="p-0 h-5 hover:!bg-transparent w-full justify-start" variant={"ghost"}>
-                            Sign out
-                        </Button>
-                    </form>
+                <DropdownMenuItem asChild>
+                    <Button 
+                        onClick={handleSignOut}
+                        className="w-full text-left cursor-pointer"
+                    >
+                        Sign out
+                    </Button>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )
 }
+
 export default AccountDropdown
