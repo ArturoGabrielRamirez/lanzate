@@ -34,9 +34,9 @@ async function DashboardPage() {
                     <Hand />
                     {t("title")}
                 </div>
-            )} showDate/>
+            )} showDate />
 
-            <div className="grid md:grid-cols-[minmax(0,1500px)_auto] gap-4">
+            <div className="grid md:grid-cols-[minmax(auto,300px)_1fr_minmax(auto,300px)] gap-4">
                 <div className="max-w-[1500px] w-full">
                     {/* Dashboard Steps */}
                     <DashboardSteps userId={user.id} dashboardData={dashboardData} />
@@ -44,41 +44,23 @@ async function DashboardPage() {
                     {/* Separator */}
                     <div className="h-px bg-muted-foreground/20 my-2 md:my-4" />
 
-                    {/* Store Management Section */}
-                    {dashboardData.storeCount > 0 && (
-                        <div className="">
-                            <div className="flex items-center justify-between mb-4 md:mb-6">
-                                <h2 className="text-xl md:text-2xl font-bold leading-tight">
-                                    {t("your-stores.title", { count: dashboardData.storeCount })}
-                                </h2>
-                                <Link
-                                    href="/stores"
-                                    className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    {t("your-stores.see-all")}
-                                    <ArrowRight className="size-4" />
-                                </Link>
-                            </div>
-                            <section className="grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4">
-                                <Card className="border-dashed gap-2 md:gap-3 lg:gap-4">
-                                    <CardHeader>
-                                        <CardTitle className="flex items-center gap-2">
-                                            <Plus className="size-4 md:size-5 lg:size-6" />
-                                            <h2 className="text-lg md:text-xl lg:text-2xl font-bold">{t("your-stores.new-store")}</h2>
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="flex justify-center items-center grow">
-                                        <CreateStoreButton userId={user.id} />
-                                    </CardContent>
-                                </Card>
-                                {dashboardData.stores.map((store) => (
-                                    <StoreCard key={store.id} store={store} />
-                                ))}
-                            </section>
-                        </div>
-                    )}
+                    <DashboardCalendar />
+
+
                 </div>
-                <div className="flex flex-col gap-4">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>
+                            <h2 className="text-2xl font-bold">Coming Soon</h2>
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p>
+                            This feature is coming soon.
+                        </p>
+                    </CardContent>
+                </Card>
+                <div className="flex flex-col">
                     <Card className="w-full h-fit">
                         <CardHeader>
                             <CardTitle>
@@ -97,7 +79,44 @@ async function DashboardPage() {
                             </Button>
                         </CardContent>
                     </Card>
-                    <DashboardCalendar />
+                    <div className="h-px bg-muted-foreground/20 my-2 md:my-4" />
+                    {/* Store Management Section */}
+                    {dashboardData.storeCount > 0 && (
+                        <div className="">
+                            <div className="flex items-center justify-between mb-4 md:mb-6">
+                                <h2 className="text-xl md:text-2xl font-bold leading-tight">
+                                    {t("your-stores.title", { count: dashboardData.storeCount })}
+                                </h2>
+                                <Link
+                                    href="/stores"
+                                    className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
+                                >
+                                    {t("your-stores.see-all")}
+                                    <ArrowRight className="size-4" />
+                                </Link>
+                            </div>
+                            <section className="grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4">
+                                <div className="sm:hidden">
+                                    <CreateStoreButton userId={user.id} />
+                                </div>
+                                <Card className="border-dashed gap-2 md:gap-3 lg:gap-4 hidden sm:block">
+                                    <CardHeader>
+                                        <CardTitle className="flex items-center gap-2">
+                                            <Plus className="size-4 md:size-5 lg:size-6" />
+                                            <h2 className="text-lg md:text-xl lg:text-2xl font-bold">{t("your-stores.new-store")}</h2>
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="flex justify-center items-center grow">
+                                        <CreateStoreButton userId={user.id} />
+                                    </CardContent>
+                                </Card>
+                                {dashboardData.stores.map((store) => (
+                                    <StoreCard key={store.id} store={store} />
+                                ))}
+                            </section>
+                        </div>
+                    )}
+                    
                 </div>
             </div>
         </section>
