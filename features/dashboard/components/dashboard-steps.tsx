@@ -68,7 +68,7 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             children: (
                 <div>
                     {!hasStores && (
-                        <div className="mt-2 text-xs text-amber-600 bg-amber-50 p-1 md:p-2 rounded">
+                        <div className="mt-2 md:mt-3 lg:mt-4 text-xs text-amber-600 bg-amber-50 p-1 md:p-2 rounded">
                             {t("step-2.first-complete")}
                         </div>
                     )}
@@ -98,7 +98,7 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             children: (
                 <div>
                     {!hasProducts && (
-                        <div className="mt-2 text-xs text-amber-600 bg-amber-50 p-1 md:p-2 rounded">
+                        <div className="mt-2 md:mt-3 lg:mt-4 text-xs text-amber-600 bg-amber-50 p-1 md:p-2 rounded">
                             {t("step-3.first-complete")}
                         </div>
                     )}
@@ -123,7 +123,7 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
                 <ShareStoreLink stores={dashboardData.stores} />
             ) : undefined,
             children: !hasOperationalSettings ? (
-                <div className="mt-2 text-xs text-amber-600 bg-amber-50 p-1 md:p-2 rounded">
+                <div className="mt-2 md:mt-3 lg:mt-4 text-xs text-amber-600 bg-amber-50 p-1 md:p-2 rounded">
                     {t("step-4.first-complete")}
                 </div>
             ) : null

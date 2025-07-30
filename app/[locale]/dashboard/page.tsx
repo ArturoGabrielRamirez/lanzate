@@ -60,11 +60,11 @@ async function DashboardPage() {
                                 </Link>
                             </div>
                             <section className="grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4">
-                                <Card className="border-dashed">
+                                <Card className="border-dashed gap-2 md:gap-3 lg:gap-4">
                                     <CardHeader>
                                         <CardTitle className="flex items-center gap-2">
-                                            <Plus />
-                                            <h2 className="text-2xl font-bold">{t("your-stores.new-store")}</h2>
+                                            <Plus className="size-4 md:size-5 lg:size-6" />
+                                            <h2 className="text-lg md:text-xl lg:text-2xl font-bold">{t("your-stores.new-store")}</h2>
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="flex justify-center items-center grow">

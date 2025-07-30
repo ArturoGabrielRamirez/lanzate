@@ -16,11 +16,11 @@ function StoreCard({ store }: StoreCardProps) {
     }
 
     return (
-        <Card className="hover:scale-105 transition-all cursor-pointer hover:bg-primary hover:text-primary-foreground" onClick={handleClick}>
-            <CardHeader>
+        <Card className="hover:scale-105 transition-all cursor-pointer hover:bg-primary hover:text-primary-foreground gap-2 md:gap-3 lg:gap-4" onClick={handleClick}>
+            <CardHeader className="gap-0">
                 <CardTitle className="flex items-center gap-2">
-                    <StoreIcon className="size-6" />
-                    <h2 className="text-2xl font-bold">{store.name}</h2>
+                    <StoreIcon className="size-4 md:size-5 lg:size-6" />
+                    <h2 className="text-lg md:text-xl lg:text-2xl font-bold">{store.name}</h2>
                 </CardTitle>
             </CardHeader>
             <CardContent>
