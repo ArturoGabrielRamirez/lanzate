@@ -25,7 +25,7 @@ function MobileMenu({ user }: MobileMenuProps) {
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant="ghost" size="icon" className="md:hidden">
-                    <Menu className="h-5 w-5" />
+                    <Menu className="w-5 h-5" />
                     <span className="sr-only">Toggle menu</span>
                 </Button>
             </DrawerTrigger>
@@ -35,7 +35,7 @@ function MobileMenu({ user }: MobileMenuProps) {
                         <DrawerTitle>Menu</DrawerTitle>
                         <DrawerClose asChild>
                             <Button variant="ghost" size="icon">
-                                <X className="h-5 w-5" />
+                                <X className="w-5 h-5" />
                                 <span className="sr-only">Close menu</span>
                             </Button>
                         </DrawerClose>
@@ -46,7 +46,7 @@ function MobileMenu({ user }: MobileMenuProps) {
                     {!user && (
                         <Link
                             href="/login"
-                            className="p-3 hover:bg-accent rounded-md transition-colors"
+                            className="p-3 transition-colors rounded-md hover:bg-accent"
                             onClick={() => setOpen(false)}
                         >
                             Log In
@@ -56,7 +56,7 @@ function MobileMenu({ user }: MobileMenuProps) {
                     {!user && (
                         <Link
                             href="/signup"
-                            className="p-3 hover:bg-accent rounded-md transition-colors"
+                            className="p-3 transition-colors rounded-md hover:bg-accent"
                             onClick={() => setOpen(false)}
                         >
                             Sign Up
@@ -67,7 +67,7 @@ function MobileMenu({ user }: MobileMenuProps) {
                         <Button asChild>
                             <Link
                                 href="/stores"
-                                className="p-3 hover:bg-accent rounded-md transition-colors"
+                                className="p-3 transition-colors rounded-md hover:bg-accent"
                                 onClick={() => setOpen(false)}
                             >
                                 Stores
@@ -79,7 +79,7 @@ function MobileMenu({ user }: MobileMenuProps) {
                         <Button asChild>
                             <Link
                                 href="/account"
-                                className="p-3 hover:bg-accent rounded-md transition-colors"
+                                className="p-3 transition-colors rounded-md hover:bg-accent"
                                 onClick={() => setOpen(false)}
                             >
                                 Account
@@ -89,7 +89,7 @@ function MobileMenu({ user }: MobileMenuProps) {
 
                     {user && (
                         <form action='/auth/signout' method='post' className="w-full">
-                            <Button type='submit' className="p-3 hover:bg-accent rounded-md transition-colors w-full">
+                            <Button type='submit' className="w-full p-3 transition-colors rounded-md hover:bg-accent">
                                 Sign out
                             </Button>
                         </form>

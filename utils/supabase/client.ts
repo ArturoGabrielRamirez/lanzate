@@ -1,13 +1,13 @@
 import { createBrowserClient } from '@supabase/ssr';
 
-function getCookieDomain() {
+/* function getCookieDomain() {
   if (typeof window === 'undefined') return 'localhost';
-  
+
   const hostname = window.location.hostname;
-  const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost';
-  
-  return hostname.includes('localhost') ? 'localhost' : `.${rootDomain}`;
-}
+  const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app';
+
+  return hostname.includes('localhost') ? 'lanzate.app' : `.${rootDomain}`;
+} */
 
 export function createClient() {
   return createBrowserClient(
@@ -37,35 +37,35 @@ export function createClient() {
               //domain: getCookieDomain(),
               domain: '.lanzate.app',
               path: '/',
-              secure: !window.location.hostname.includes('localhost'),
+              secure: !window.location.hostname.includes('localhost') && !window.location.hostname.includes('lanzate.app'),
               sameSite: 'lax'
             };
-            
+
             let cookieString = `${name}=${value}`;
-            
+
             if (cookieOptions.domain) {
               //cookieString += `; Domain=${cookieOptions.domain}`;
               //cookieString += `; Domain=localhost.com`;
               cookieString += `; Domain=.lanzate.app`;
             }
-            
+
             if (cookieOptions.path) {
               cookieString += `; Path=${cookieOptions.path}`;
             }
-            
+
             if (cookieOptions.secure) {
               cookieString += `; Secure`;
             }
-            
+
             if (cookieOptions.sameSite) {
               //cookieString += `; SameSite=${cookieOptions.sameSite}`;
               cookieString += `; SameSite=Lax`;
             }
-            
+
             if (cookieOptions.maxAge) {
               cookieString += `; Max-Age=${cookieOptions.maxAge}`;
             }
-            
+
             document.cookie = cookieString;
           });
         },

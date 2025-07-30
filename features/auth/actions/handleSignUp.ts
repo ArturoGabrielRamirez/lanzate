@@ -33,45 +33,30 @@ import { insertLogEntry } from '@/features/layout/data/insertLogEntry'
 
 export const handleSignup = async (payload: any): Promise<ResponseType<any>> => {
     return actionWrapper(async () => {
-        const supabase = createServerSideClient()
-        const email = payload.email?.toString() || ''
-        const password = payload.password?.toString() || ''
-
-        // Check if user already exists
+        const supabase = await createServerSideClient()
+        const { email, password } = payload
         const { payload: existingUser } = await getUserByEmail(email)
 
-        // If user already exists, throw error
         if (existingUser) throw new Error('User already exists')
-
-        // Create user in Auth table
         const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
             email,
             password,
         })
 
-        // If there is an error, throw error
         if (signUpError) throw new Error(signUpError.message)
-
-        // If no user is returned, throw error
         if (!signUpData.user) throw new Error('No user returned')
 
-        // Insert user in database and create default FREE account
         const { error: insertError, payload: user } = await insertUser(email, "email")
-
-        // If there is an error, throw error
         if (insertError) throw new Error('Error inserting user')
 
-        // Create action log
-        const { error: logError } = await insertLogEntry({
+        insertLogEntry({
             action: "CREATE",
             entity_type: "USER",
             entity_id: user.id,
             user_id: user.id,
             action_initiator: "Signup form",
             details: "User signed up using sign up form"
-        })
-
-        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
+        }).catch(error => console.error('Log error after signup:', error))
 
         return {
             error: false,
