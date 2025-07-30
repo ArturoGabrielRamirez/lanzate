@@ -13,10 +13,10 @@ async function Header() {
     const t = await getTranslations("auth.buttons")
 
     return (
-        <header className="flex items-center justify-between w-full bg-transparent backdrop-blur-[3px] text-accent-foreground p-4 fixed top-0 left-0 right-0 z-50 shadow-md">
+        <header className="flex items-center justify-between w-full bg-transparent backdrop-blur-[3px] text-accent-foreground p-4 py-2 md:py-4 fixed top-0 left-0 right-0 z-50 shadow-md">
             <Link href="/" className="text-2xl font-bold flex items-center gap-2">
-                <Rocket className="text-primary" />
-                <h1>Lanzate</h1>
+                <Rocket className="text-primary size-4 md:size-5 xl:size-6" />
+                <h1 className="text-xl md:text-2xl xl:text-3xl">Lanzate</h1>
             </Link>
 
             <nav className="items-center hidden gap-4 md:flex">

@@ -38,7 +38,7 @@ function DashboardStepCard({
         <Card className={cn(
             "transition-all duration-200",
             isActive && "border-primary/20 shadow-md",
-            (isComplete || isDisabled) && "opacity-60 border-muted",
+            (isComplete || isDisabled) && "opacity-30 border-muted mask-b-from-10% mask-b-to-80%",
             isDisabled && "cursor-not-allowed",
             cardClassName
         )}>
@@ -47,7 +47,7 @@ function DashboardStepCard({
             )}>
                 <div className={cn(
                     "grid gap-4",
-                    isHorizontalLayout ? "md:grid-cols-[100px_1fr]" : "grid-cols-[100px_1fr]"
+                    isHorizontalLayout ? "md:grid-cols-[100px_1fr]" : "grid-cols-[50px_1fr] md:grid-cols-[65px_1fr]  xl:grid-cols-[80px_1fr] items-center"
                 )}>
                     <div className={cn(
                         "rounded-md flex items-center justify-center aspect-square",
@@ -55,7 +55,7 @@ function DashboardStepCard({
                         (isComplete || isDisabled) && "bg-muted"
                     )}>
                         <Icon className={cn(
-                            "size-8",
+                            "size-5 md:size-6 xl:size-8",
                             isActive && "text-primary",
                             (isComplete || isDisabled) && "text-muted-foreground"
                         )} />

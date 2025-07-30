@@ -23,7 +23,7 @@ const Title = ({ title, breadcrumbs, className, showDate }: TitleProps) => {
     return (
         <div className={`flex flex-col gap-0 mb-6 ${className}`}>
             <div className="flex items-center gap-2 justify-between">
-                <h2 className='text-3xl dark:text-white font-bold flex items-center gap-2'>
+                <h2 className='text-xl md:text-2xl xl:text-3xl dark:text-white font-bold flex items-center gap-2'>
                     {/* {canGoBack && (
                     <Link href="/" className="capitalize hover:text-primary">
                         <ArrowLeft />
@@ -32,11 +32,18 @@ const Title = ({ title, breadcrumbs, className, showDate }: TitleProps) => {
                     {title}
                 </h2>
                 {showDate && (
-                    <p className="text-muted-foreground/50">
-                        {Intl.DateTimeFormat(locale, {
-                            dateStyle: "full",
-                        }).format(new Date())}
-                    </p>
+                    <>
+                        <p className="text-muted-foreground/50 hidden md:block">
+                            {Intl.DateTimeFormat(locale, {
+                                dateStyle: "full",
+                            }).format(new Date())}
+                        </p>
+                        <p className="text-muted-foreground/50 md:hidden">
+                            {Intl.DateTimeFormat(locale, {
+                                dateStyle: "short",
+                            }).format(new Date())}
+                        </p>
+                    </>
                 )}
             </div>
             {breadcrumbs && breadcrumbs?.length > 0 && (
