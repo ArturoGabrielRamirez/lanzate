@@ -17,14 +17,12 @@ function Footer() {
     return (
         <footer className="bg-background relative">
             <div className="mx-auto container px-4 pt-16 pb-8 sm:px-6 lg:px-8 lg:pt-0">
-
                 <div className="border-t border-gray-100 pt-8 sm:flex sm:items-center sm:justify-between dark:border-gray-800 flex flex-col md:flex-row gap-4 items-center md:items-start">
                     <nav className="flex gap-6">
                         <Link href="/terms-and-conditions" className="text-muted-foreground text-sm hover:text-primary">{t('footer.links.1')}</Link>
                         <Link href="/privacy-policy" className="text-muted-foreground text-sm hover:text-primary">{t('footer.links.2')}</Link>
                         <Link href="/cookies" className="text-muted-foreground text-sm hover:text-primary">{t('footer.links.3')}</Link>
                     </nav>
-
                     <nav className="flex gap-6 items-center">
                         <a href="#" className="text-muted-foreground text-sm hover:text-primary">
                             <span className="sr-only">Facebook</span>
@@ -41,13 +39,6 @@ function Footer() {
                     </nav>
                 </div>
             </div>
-            {/* <DotPattern
-                width={30}
-                height={30}
-                className={cn(
-                    "[mask-image:linear-gradient(to_top_right,white,transparent_70%,transparent)] ",
-                )}
-            /> */}
         </footer>
     )
 }
