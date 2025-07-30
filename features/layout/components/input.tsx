@@ -39,10 +39,25 @@ const InputField = ({
 
   const error = errors[name]?.message as string | undefined
 
+  const controlls: Record<string, any> = {}
+
+  if (value) controlls.value = value
+  if (onChange) controlls.onChange = onChange
+
   return (
     <div className={cn("flex flex-col gap-1", containerClassName)}>
       <Label htmlFor={name}>{label}</Label>
-      <Input id={name} type={type} {...register(name)} defaultValue={defaultValue} onChange={onChange} value={value} className={className} onKeyDown={onKeyDown} startContent={startContent} endContent={endContent} />
+      <Input
+        id={name}
+        type={type} 
+        {...register(name)}
+        defaultValue={defaultValue}
+        className={className}
+        onKeyDown={onKeyDown}
+        startContent={startContent}
+        endContent={endContent}
+        {...controlls}
+      />
       {error && <p className="text-sm text-red-500">{error}</p>}
     </div>
   )
