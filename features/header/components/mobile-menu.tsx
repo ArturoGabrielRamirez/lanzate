@@ -25,7 +25,7 @@ function MobileMenu({ user }: MobileMenuProps) {
 
     const handleSignOut = async () => {
         await signOut()
-        setOpen(!open)
+        setOpen(false)
     }
 
     return (
@@ -91,12 +91,12 @@ function MobileMenu({ user }: MobileMenuProps) {
                     )}
 
                     {user && (
-                        <Button
+                        <Button 
                             onClick={handleSignOut}
                             className="justify-start w-full p-3 transition-colors rounded-md hover:bg-accent"
                             variant="ghost"
                         >
-                            Sign out
+                            Sign outyyyy
                         </Button>
                     )}
 

@@ -14,7 +14,7 @@ async function HeroSection() {
 
     return (
         <section className="flex flex-col md:grid md:grid-cols-[auto_auto] md:gap-0 xl:gap-20 2xl:gap-56 min-h-dvh justify-center items-center relative pt-17 px-4 lg:px-0">
-    {/*         <div className="flex flex-col items-center pt-4 md:items-start xl:max-w-2xl md:pt-0">
+            <div className="flex flex-col items-center pt-4 md:items-start xl:max-w-2xl md:pt-0">
                 <p className="px-2 py-1 mb-8 text-sm font-medium border rounded-full bg-primary/20 text-primary-foreground border-primary line-clamp-1 md:mb-4">
                     {t("hero.just_released")}
                 </p>
@@ -37,7 +37,7 @@ async function HeroSection() {
                 width={30}
                 height={30}
                 className={cn("[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ")}
-            /> */}
+            />
         </section>
     )
 }

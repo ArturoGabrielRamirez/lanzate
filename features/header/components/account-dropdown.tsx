@@ -7,7 +7,6 @@ import { useState } from "react"
 import Link from "next/link"
 import { signOut } from "@/features/auth/actions/handleSignOut"
 
-
 function AccountDropdown() {
     const [open, setOpen] = useState(false)
 
@@ -17,7 +16,6 @@ function AccountDropdown() {
 
     const handleSignOut = async () => {
         await signOut()
-        setOpen(!open)
     }
 
     return (
@@ -38,8 +36,13 @@ function AccountDropdown() {
                     <Link href="/stores">Stores</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut}>
-                    Sign out
+                <DropdownMenuItem asChild>
+                    <Button 
+                        onClick={handleSignOut}
+                        className="w-full text-left cursor-pointer"
+                    >
+                        Sign out
+                    </Button>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
