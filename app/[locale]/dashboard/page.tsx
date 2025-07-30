@@ -42,13 +42,13 @@ async function DashboardPage() {
                     <DashboardSteps userId={user.id} dashboardData={dashboardData} />
 
                     {/* Separator */}
-                    <div className="h-px bg-muted-foreground/20 my-4" />
+                    <div className="h-px bg-muted-foreground/20 my-2 md:my-4" />
 
                     {/* Store Management Section */}
                     {dashboardData.storeCount > 0 && (
                         <div className="">
-                            <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-2xl font-bold">
+                            <div className="flex items-center justify-between mb-4 md:mb-6">
+                                <h2 className="text-xl md:text-2xl font-bold leading-tight">
                                     {t("your-stores.title", { count: dashboardData.storeCount })}
                                 </h2>
                                 <Link
