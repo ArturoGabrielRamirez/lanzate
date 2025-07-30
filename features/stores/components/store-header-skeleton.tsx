@@ -4,7 +4,6 @@ import { Skeleton } from "@/components/ui/skeleton"
 function StoreHeaderSkeleton() {
     return (
         <>
-            {/* Title skeleton */}
             <div className="flex flex-col gap-4 mb-6 pt-2">
                 <div className="flex items-center gap-2">
                     <Skeleton className="w-6 h-6" />
@@ -15,10 +14,7 @@ function StoreHeaderSkeleton() {
                     <Skeleton className="w-2 h-4" />
                     <Skeleton className="w-24 h-4" />
                 </div>
-{/*                 <Skeleton className="w-32 h-4" /> */}
             </div>
-
-            {/* Card skeleton */}
             <section className="flex items-center gap-4">
                 <Card className="w-full">
                     <CardContent className="flex flex-col justify-between w-full gap-4 md:items-center xs:flex-row">
