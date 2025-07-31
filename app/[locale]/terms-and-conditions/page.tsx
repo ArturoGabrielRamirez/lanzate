@@ -13,11 +13,11 @@ function TermsAndConditions() {
                     <h2 className="text-2xl font-bold mb-4">AGREEMENT TO OUR LEGAL TERMS</h2>
                     <div className="mb-4">
                         <p className="text-sm leading-relaxed mb-4">
-                            We are Lanzate ("Company," "we," "us," "our"), a company registered in Argentina at Las Palmas 735, no, Atlantida, Santa Clara del Mar, Buenos Aires 7609.
+                            We are Lanzate (&quot;Company,&quot; &quot;we,&quot; &quot;us,&quot; &quot;our&quot;), a company registered in Argentina at Las Palmas 735, no, Atlantida, Santa Clara del Mar, Buenos Aires 7609.
                         </p>
                         
                         <p className="text-sm leading-relaxed mb-4">
-                            We operate the website <a href="https://www.lanzate.app" target="_blank" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> (the "Site"), the mobile application Lanzate App (the "App"), as well as any other related products and services that refer or link to these legal terms (the "Legal Terms") (collectively, the "Services").
+                            We operate the website <a href="https://www.lanzate.app" target="_blank" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> (the &quot;Site&quot;), the mobile application Lanzate App (the &quot;App&quot;), as well as any other related products and services that refer or link to these legal terms (the &quot;Legal Terms&quot;) (collectively, the &quot;Services&quot;).
                         </p>
                         
                         <p className="text-sm leading-relaxed mb-4">
@@ -25,7 +25,7 @@ function TermsAndConditions() {
                         </p>
                         
                         <p className="text-sm leading-relaxed mb-4">
-                            These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you"), and Lanzate, concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.
+                            These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity (&quot;you&quot;), and Lanzate, concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.
                         </p>
                         
                         <p className="text-sm leading-relaxed mb-4">
@@ -88,20 +88,20 @@ function TermsAndConditions() {
                     <h3 className="text-lg font-bold mb-3">Our intellectual property</h3>
                     <div className="space-y-4 text-sm leading-relaxed">
                         <p>
-                            We are the owner or the licensee of all intellectual property rights in our Services, including all source code, databases, functionality, software, website designs, audio, video, text, photographs, and graphics in the Services (collectively, the "Content"), as well as the trademarks, service marks, and logos contained therein (the "Marks").
+                            We are the owner or the licensee of all intellectual property rights in our Services, including all source code, databases, functionality, software, website designs, audio, video, text, photographs, and graphics in the Services (collectively, the &quot;Content&quot;), as well as the trademarks, service marks, and logos contained therein (the &quot;Marks&quot;).
                         </p>
                         <p>
                             Our Content and Marks are protected by copyright and trademark laws (and various other intellectual property rights and unfair competition laws) and treaties around the world.
                         </p>
                         <p>
-                            The Content and Marks are provided in or through the Services "AS IS" for your personal, non-commercial use or internal business purpose only.
+                            The Content and Marks are provided in or through the Services &quot;AS IS&quot; for your personal, non-commercial use or internal business purpose only.
                         </p>
                     </div>
 
                     <h3 className="text-lg font-bold mb-3 mt-6">Your use of our Services</h3>
                     <div className="space-y-4 text-sm leading-relaxed">
                         <p>
-                            Subject to your compliance with these Legal Terms, including the <a href="#prohibited" className="text-blue-600 hover:text-blue-800 underline">"PROHIBITED ACTIVITIES"</a> section below, we grant you a non-exclusive, non-transferable, revocable license to:
+                            Subject to your compliance with these Legal Terms, including the <a href="#prohibited" className="text-blue-600 hover:text-blue-800 underline">&quot;PROHIBITED ACTIVITIES&quot;</a> section below, we grant you a non-exclusive, non-transferable, revocable license to:
                         </p>
                         <ul className="list-disc ml-6 space-y-2">
                             <li>access the Services; and</li>
@@ -127,15 +127,15 @@ function TermsAndConditions() {
                     <h3 className="text-lg font-bold mb-3 mt-6">Your submissions and contributions</h3>
                     <div className="space-y-4 text-sm leading-relaxed">
                         <p>
-                            Please review this section and the <a href="#prohibited" className="text-blue-600 hover:text-blue-800 underline">"PROHIBITED ACTIVITIES"</a> section carefully prior to using our Services to understand the (a) rights you give us and (b) obligations you have when you post or upload any content through the Services.
+                            Please review this section and the <a href="#prohibited" className="text-blue-600 hover:text-blue-800 underline">&quot;PROHIBITED ACTIVITIES&quot;</a> section carefully prior to using our Services to understand the (a) rights you give us and (b) obligations you have when you post or upload any content through the Services.
                         </p>
                         
                         <p>
-                            <strong>Submissions:</strong> By directly sending us any question, comment, suggestion, idea, feedback, or other information about the Services ("Submissions"), you agree to assign to us all intellectual property rights in such Submission. You agree that we shall own this Submission and be entitled to its unrestricted use and dissemination for any lawful purpose, commercial or otherwise, without acknowledgment or compensation to you.
+                            <strong>Submissions:</strong> By directly sending us any question, comment, suggestion, idea, feedback, or other information about the Services (&quot;Submissions&quot;), you agree to assign to us all intellectual property rights in such Submission. You agree that we shall own this Submission and be entitled to its unrestricted use and dissemination for any lawful purpose, commercial or otherwise, without acknowledgment or compensation to you.
                         </p>
                         
                         <p>
-                            <strong>Contributions:</strong> The Services may invite you to chat, contribute to, or participate in blogs, message boards, online forums, and other functionality during which you may create, submit, post, display, transmit, publish, distribute, or broadcast content and materials to us or through the Services, including but not limited to text, writings, video, audio, photographs, music, graphics, comments, reviews, rating suggestions, personal information, or other material ("Contributions"). Any Submission that is publicly posted shall also be treated as a Contribution.
+                            <strong>Contributions:</strong> The Services may invite you to chat, contribute to, or participate in blogs, message boards, online forums, and other functionality during which you may create, submit, post, display, transmit, publish, distribute, or broadcast content and materials to us or through the Services, including but not limited to text, writings, video, audio, photographs, music, graphics, comments, reviews, rating suggestions, personal information, or other material (&quot;Contributions&quot;). Any Submission that is publicly posted shall also be treated as a Contribution.
                         </p>
                         
                         <p>
@@ -155,7 +155,7 @@ function TermsAndConditions() {
                         </p>
                         
                         <ul className="list-disc ml-6 space-y-2">
-                            <li>confirm that you have read and agree with our <a href="#prohibited" className="text-blue-600 hover:text-blue-800 underline">"PROHIBITED ACTIVITIES"</a> and will not post, send, publish, upload, or transmit through the Services any Submission nor post any Contribution that is illegal, harassing, hateful, harmful, defamatory, obscene, bullying, abusive, discriminatory, threatening to any person or group, sexually explicit, false, inaccurate, deceitful, or misleading;</li>
+                            <li>confirm that you have read and agree with our <a href="#prohibited" className="text-blue-600 hover:text-blue-800 underline">&quot;PROHIBITED ACTIVITIES&quot;</a> and will not post, send, publish, upload, or transmit through the Services any Submission nor post any Contribution that is illegal, harassing, hateful, harmful, defamatory, obscene, bullying, abusive, discriminatory, threatening to any person or group, sexually explicit, false, inaccurate, deceitful, or misleading;</li>
                             <li>to the extent permissible by applicable law, waive any and all moral rights to any such Submission and/or Contribution;</li>
                             <li>warrant that any such Submission and/or Contributions are original to you or that you have the necessary rights and licenses to submit such Submissions and/or Contributions and that you have full authority to grant us the above-mentioned rights in relation to your Submissions and/or Contributions; and</li>
                             <li>warrant and represent that your Submissions and/or Contributions do not constitute confidential information.</li>
@@ -257,7 +257,7 @@ function TermsAndConditions() {
                             <li>Engage in any automated use of the system, such as using scripts to send comments or messages, or using any data mining, robots, or similar data gathering and extraction tools.</li>
                             <li>Delete the copyright or other proprietary rights notice from any Content.</li>
                             <li>Attempt to impersonate another user or person or use the username of another user.</li>
-                            <li>Upload or transmit (or attempt to upload or to transmit) any material that acts as a passive or active information collection or transmission mechanism, including without limitation, clear graphics interchange formats ("gifs"), 1×1 pixels, web bugs, cookies, or other similar devices (sometimes referred to as "spyware" or "passive collection mechanisms" or "pcms").</li>
+                            <li>Upload or transmit (or attempt to upload or to transmit) any material that acts as a passive or active information collection or transmission mechanism, including without limitation, clear graphics interchange formats (&quot;gifs&quot;), 1×1 pixels, web bugs, cookies, or other similar devices (sometimes referred to as &quot;spyware&quot; or &quot;passive collection mechanisms&quot; or &quot;pcms&quot;).</li>
                             <li>Interfere with, disrupt, or create an undue burden on the Services or the networks or services connected to the Services.</li>
                             <li>Harass, annoy, intimidate, or threaten any of our employees or agents engaged in providing any portion of the Services to you.</li>
                             <li>Attempt to bypass any measures of the Services designed to prevent or restrict access to the Services, or any portion of the Services.</li>
@@ -277,7 +277,7 @@ function TermsAndConditions() {
                     <h2 className="text-xl font-bold mb-4">8. USER GENERATED CONTRIBUTIONS</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            The Services may invite you to chat, contribute to, or participate in blogs, message boards, online forums, and other functionality, and may provide you with the opportunity to create, submit, post, display, transmit, perform, publish, distribute, or broadcast content and materials to us or on the Services, including but not limited to text, writings, video, audio, photographs, graphics, comments, suggestions, or personal information or other material (collectively, "Contributions").
+                            The Services may invite you to chat, contribute to, or participate in blogs, message boards, online forums, and other functionality, and may provide you with the opportunity to create, submit, post, display, transmit, perform, publish, distribute, or broadcast content and materials to us or on the Services, including but not limited to text, writings, video, audio, photographs, graphics, comments, suggestions, or personal information or other material (&quot;Contributions&quot;).
                         </p>
                         
                         <p>
@@ -374,7 +374,7 @@ function TermsAndConditions() {
                         
                         <h3 className="text-lg font-bold mb-3">Apple and Android Devices</h3>
                         <p>
-                            The following terms apply when you use the mobile application obtained from either the Apple Store or Google Play (each an "App Distributor") to access the Services: (1) the license granted to you for our mobile application is limited to a non-transferable license to use the application on a device that utilizes the Apple iOS or Android operating systems, as applicable, and in accordance with the usage rules set forth in the applicable App Distributor&apos;s terms of service; (2) we are responsible for providing any maintenance and support services with respect to the mobile application as specified in the terms and conditions of this mobile application license contained in these Legal Terms or as otherwise required under applicable law, and you acknowledge that each App Distributor has no obligation whatsoever to furnish any maintenance and support services with respect to the mobile application; (3) in the event of any failure of the mobile application to conform to any applicable warranty, you may notify the applicable App Distributor, and the App Distributor, in accordance with its terms and policies, may refund the purchase price, if any, paid for the mobile application, and to the maximum extent permitted by applicable law, the App Distributor will have no other warranty obligation whatsoever with respect to the mobile application; (4) you represent and warrant that (i) you are not located in a country that is subject to a US government embargo, or that has been designated by the US government as a "terrorist supporting" country and (ii) you are not listed on any US government list of prohibited or restricted parties; (5) you must comply with applicable third-party terms of agreement when using the mobile application, e.g., if you have a VoIP application, then you must not be in violation of their wireless data service agreement when using the mobile application; and (6) you acknowledge and agree that the App Distributors are third-party beneficiaries of the terms and conditions in this mobile application license contained in these Legal Terms, and that each App Distributor will have the right (and will be deemed to have accepted the right) to enforce the terms and conditions in this mobile application license contained in these Legal Terms against you as a third-party beneficiary thereof.
+                            The following terms apply when you use the mobile application obtained from either the Apple Store or Google Play (each an &quote;App Distributor&quote;) to access the Services: (1) the license granted to you for our mobile application is limited to a non-transferable license to use the application on a device that utilizes the Apple iOS or Android operating systems, as applicable, and in accordance with the usage rules set forth in the applicable App Distributor&apos;s terms of service; (2) we are responsible for providing any maintenance and support services with respect to the mobile application as specified in the terms and conditions of this mobile application license contained in these Legal Terms or as otherwise required under applicable law, and you acknowledge that each App Distributor has no obligation whatsoever to furnish any maintenance and support services with respect to the mobile application; (3) in the event of any failure of the mobile application to conform to any applicable warranty, you may notify the applicable App Distributor, and the App Distributor, in accordance with its terms and policies, may refund the purchase price, if any, paid for the mobile application, and to the maximum extent permitted by applicable law, the App Distributor will have no other warranty obligation whatsoever with respect to the mobile application; (4) you represent and warrant that (i) you are not located in a country that is subject to a US government embargo, or that has been designated by the US government as a &quote;terrorist supporting&quote; country and (ii) you are not listed on any US government list of prohibited or restricted parties; (5) you must comply with applicable third-party terms of agreement when using the mobile application, e.g., if you have a VoIP application, then you must not be in violation of their wireless data service agreement when using the mobile application; and (6) you acknowledge and agree that the App Distributors are third-party beneficiaries of the terms and conditions in this mobile application license contained in these Legal Terms, and that each App Distributor will have the right (and will be deemed to have accepted the right) to enforce the terms and conditions in this mobile application license contained in these Legal Terms against you as a third-party beneficiary thereof.
                         </p>
                     </div>
                 </section>
@@ -383,7 +383,7 @@ function TermsAndConditions() {
                     <h2 className="text-xl font-bold mb-4">12. SOCIAL MEDIA</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            As part of the functionality of the Services, you may link your account with online accounts you have with third-party service providers (each such account, a "Third-Party Account") by either: (1) providing your Third-Party Account login information through the Services; or (2) allowing us to access your Third-Party Account, as is permitted under the applicable terms and conditions that govern your use of each Third-Party Account.
+                            As part of the functionality of the Services, you may link your account with online accounts you have with third-party service providers (each such account, a &quot;Third-Party Account&quot;) by either: (1) providing your Third-Party Account login information through the Services; or (2) allowing us to access your Third-Party Account, as is permitted under the applicable terms and conditions that govern your use of each Third-Party Account.
                         </p>
                         
                         <p>
@@ -391,7 +391,7 @@ function TermsAndConditions() {
                         </p>
                         
                         <p>
-                            By granting us access to any Third-Party Accounts, you understand that (1) we may access, make available, and store (if applicable) any content that you have provided to and stored in your Third-Party Account (the "Social Network Content") so that it is available on and through the Services via your account, including without limitation any friend lists and (2) we may submit to and receive from your Third-Party Account additional information to the extent you are notified when you link your account with the Third-Party Account.
+                            By granting us access to any Third-Party Accounts, you understand that (1) we may access, make available, and store (if applicable) any content that you have provided to and stored in your Third-Party Account (the &quot;Social Network Content&quot;) so that it is available on and through the Services via your account, including without limitation any friend lists and (2) we may submit to and receive from your Third-Party Account additional information to the extent you are notified when you link your account with the Third-Party Account.
                         </p>
                         
                         <p>
@@ -416,7 +416,7 @@ function TermsAndConditions() {
                     <h2 className="text-xl font-bold mb-4">13. THIRD-PARTY WEBSITES AND CONTENT</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            The Services may contain (or you may be sent via the Site) links to other websites ("Third-Party Websites") as well as articles, photographs, text, graphics, pictures, designs, music, sound, video, information, applications, software, and other content or items belonging to or originating from third parties ("Third-Party Content").
+                            The Services may contain (or you may be sent via the Site) links to other websites (&quot;Third-Party Websites&quot;) as well as articles, photographs, text, graphics, pictures, designs, music, sound, video, information, applications, software, and other content or items belonging to or originating from third parties (&quot;Third-Party Content&quot;).
                         </p>
                         
                         <p>
@@ -509,7 +509,7 @@ function TermsAndConditions() {
                     <div className="text-sm leading-relaxed space-y-4">
                         <h3 className="text-lg font-bold mb-3">Informal Negotiations</h3>
                         <p>
-                            To expedite resolution and control the cost of any dispute, controversy, or claim related to these Legal Terms (each a "Dispute" and collectively, the "Disputes") brought by either you or us (individually, a "Party" and collectively, the "Parties"), the Parties agree to first attempt to negotiate any Dispute (except those Disputes expressly provided below) informally for at least thirty (30) days before initiating arbitration. Such informal negotiations commence upon written notice from one Party to the other Party.
+                            To expedite resolution and control the cost of any dispute, controversy, or claim related to these Legal Terms (each a &quot;Dispute&quot; and collectively, the &quot;Disputes&quot;) brought by either you or us (individually, a &quot;Party&quot; and collectively, the &quot;Parties&quot;), the Parties agree to first attempt to negotiate any Dispute (except those Disputes expressly provided below) informally for at least thirty (30) days before initiating arbitration. Such informal negotiations commence upon written notice from one Party to the other Party.
                         </p>
                         
                         <h3 className="text-lg font-bold mb-3">Binding Arbitration</h3>
