@@ -3,7 +3,7 @@ import { Product } from "@prisma/client"
 import Image from "next/image"
 import AddToCartButton from "./add-to-cart-button"
 import Link from "next/link"
-
+import LikeButton from "./like-button"
 type Props = {
     product: Product
 }
@@ -34,7 +34,10 @@ function GridCard({ product }: Props) {
                 </CardContent>
                 <CardFooter className="flex justify-between items-center">
                     <p>${product.price}</p>
-                    <AddToCartButton product={product} />
+                    <div className="flex gap-2">
+                        <AddToCartButton product={product} />
+                        <LikeButton productId={product.id} />
+                    </div>
                 </CardFooter>
             </Card>
         </Link>
