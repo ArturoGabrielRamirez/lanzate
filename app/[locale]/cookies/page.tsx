@@ -152,7 +152,7 @@ function CookiesPolicy() {
                     <h2 className="text-xl font-bold mb-4">5. PERFORMANCE AND ANALYTICS COOKIES</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            These cookies collect information about how visitors use our Services, for instance which pages visitors go to most often, and if they get error messages from web pages. These cookies don't collect information that identifies a visitor. All information these cookies collect is aggregated and therefore anonymous. It is only used to improve how our Services work.
+                            These cookies collect information about how visitors use our Services, for instance which pages visitors go to most often, and if they get error messages from web pages. These cookies don&apos;t collect information that identifies a visitor. All information these cookies collect is aggregated and therefore anonymous. It is only used to improve how our Services work.
                         </p>
                         
                         <div className="overflow-x-auto">
