@@ -1,11 +1,11 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Form, Title } from "@/features/layout/components"
+import { Title } from "@/features/layout/components"
 import AddToCartButton from "@/features/store-landing/components/add-to-cart-button"
 import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"
+import Comments from "@/features/subdomain/components/comments"
 import { Category } from "@prisma/client"
-import { Flame, Share, ShoppingBag, ShoppingCart } from "lucide-react"
+import { Flame, Image, Share, ShoppingBag } from "lucide-react"
 import Link from "next/link"
 
 type Props = {
@@ -35,21 +35,25 @@ async function ProductDetailsPage({ params }: Props) {
         <section className="p-4 grow flex flex-col pb-8">
             <Title
                 title={product.name}
-                breadcrumbs={[{ label: product.name, href: `/item/${id}` }]}
+                breadcrumbs={[
+                    ...product.categories.map((category: Category) => ({
+                        label: category.name,
+                        href: `/category/${category.id}`
+                    })),
+                    { label: product.name, href: `/item/${id}` }
+                ]}
                 homePath={`/`}
             />
 
             <div className="grow flex flex-col">
                 <div className="grid grid-cols-1 md:grid-cols-[minmax(min(400px,100%),1fr)_1fr] gap-12 grow">
-                    <div className="flex gap-8 border-r pr-8 border-muted-foreground">
+                    <div className="flex gap-8 border-r pr-12 border-muted-foreground">
                         {/* Product Image */}
-                        <div className="flex flex-col gap-4">
-                            <div className="flex flex-col gap-4 bg-gray-100 rounded-lg p-4">
-                                <div className="text-gray-400 flex flex-col items-center justify-center gap-2">
-                                    <svg className="size-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                    <p className="text-sm text-muted-foreground">No image available</p>
+                        <div className="flex flex-col gap-4 max-w-28 w-full">
+                            <div className="flex flex-col gap-4 bg-gray-100 rounded-lg p-2">
+                                <div className="text-gray-400 flex flex-col items-center justify-center gap-2 aspect-square">
+                                    <Image className="size-10" />
+                                    <p className="text-sm text-muted-foreground text-center">No image</p>
                                 </div>
                             </div>
                         </div>
@@ -62,9 +66,7 @@ async function ProductDetailsPage({ params }: Props) {
                                 />
                             ) : (
                                 <div className="text-gray-400 flex flex-col items-center justify-center gap-2">
-                                    <svg className="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
+                                    <Image className="size-16" />
                                     <p className="text-sm text-muted-foreground">No image available</p>
                                 </div>
                             )}
@@ -80,8 +82,8 @@ async function ProductDetailsPage({ params }: Props) {
                     </div>
 
                     {/* Product Details */}
-                    <div className="space-y-4 text-primary">
-                        <div className="flex flex-col gap-2">
+                    <div className="space-y-4 text-primary overflow-y-auto max-h-[calc(100vh-205px)] pr-4 relative">
+                        <div className="flex flex-col gap-2 sticky top-0 left-0 w-full bg-background">
                             <p className="text-sm text-muted-foreground">Sin marca</p>
                             <h2 className="text-4xl font-bold leading-[0.8]">{product.name}</h2>
                             {product.categories && product.categories.length > 0 && (
@@ -123,20 +125,7 @@ async function ProductDetailsPage({ params }: Props) {
                             </div>
                         </div>
 
-                        <div className="">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-2">Comentarios</h3>
-                            <p className="text-sm text-muted-foreground mb-2">No hay comentarios aún. Podés ser el primero en comentar!</p>
-                            <Form
-                                className="w-full flex flex-col gap-2 items-end"
-                                contentButton={<span>Comentar</span>}
-                                formAction={async (formData) => {
-                                    "use server"
-                                    console.log(formData)
-                                }}
-                            >
-                                <Textarea placeholder="Escribe un comentario" />
-                            </Form>
-                        </div>
+                        <Comments productId={product.id} />
 
                     </div>
                 </div>
