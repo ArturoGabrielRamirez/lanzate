@@ -23,8 +23,14 @@ function SubdomainProvider({ adminLayout, userLayout }: Props) {
             const parts = hostname.split('.');
 
             if (parts.length >= 3) {
-                return parts[0];
+                const subdomain = parts[0];
+
+                if (subdomain === 'www') {
+                    return null;
+                }
+                return subdomain;
             }
+            
             return null;
         } catch {
             return null;
