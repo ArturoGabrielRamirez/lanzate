@@ -52,12 +52,12 @@ function CookiesPolicy() {
                         </p>
                         
                         <p>
-                            Cookies set by the website owner (in this case, Lanzate) are called "first-party cookies." Cookies set by parties other than the website owner are called "third-party cookies." Third-party cookies enable third-party features or functionality to be provided on or through the website (e.g., advertising, interactive content, and analytics). The parties that set these third-party cookies can recognize your computer both when it visits the website in question and also when it visits certain other websites.
+                            Cookies set by the website owner (in this case, Lanzate) are called &quot;first-party cookies.&quot; Cookies set by parties other than the website owner are called &quot;third-party cookies.&quot; Third-party cookies enable third-party features or functionality to be provided on or through the website (e.g., advertising, interactive content, and analytics). The parties that set these third-party cookies can recognize your computer both when it visits the website in question and also when it visits certain other websites.
                         </p>
                         
                         <h3 className="text-lg font-bold mb-3 mt-6">Similar Technologies</h3>
                         <p>
-                            We also use other similar technologies like web beacons (sometimes called "tracking pixels" or "clear gifs"). These are tiny graphics files that contain a unique identifier that enables us to recognize when someone has visited our Services or opened an email that we have sent them. This allows us, for example, to monitor the traffic patterns of users from one page within our Services to another, to deliver or communicate with cookies, to understand whether you have come to our Services from an online advertisement displayed on a third-party website, to improve site performance, and to measure the success of email marketing campaigns.
+                            We also use other similar technologies like web beacons (sometimes called &quot;tracking pixels&quot; or &quot;clear gifs&quot;). These are tiny graphics files that contain a unique identifier that enables us to recognize when someone has visited our Services or opened an email that we have sent them. This allows us, for example, to monitor the traffic patterns of users from one page within our Services to another, to deliver or communicate with cookies, to understand whether you have come to our Services from an online advertisement displayed on a third-party website, to improve site performance, and to measure the success of email marketing campaigns.
                         </p>
                     </div>
                 </section>

@@ -444,7 +444,7 @@ function PrivacyPolicy() {
                     <h2 className="text-xl font-bold mb-4">12. CHILDREN&apos;S PRIVACY</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            Our Service does not address anyone under the age of 18 ("Children").
+                            Our Service does not address anyone under the age of 18 (&quot;Children&quot;).
                         </p>
                         
                         <p>
