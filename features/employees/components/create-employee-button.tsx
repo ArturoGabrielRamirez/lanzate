@@ -2,8 +2,9 @@
 
 import { Button } from "@/components/ui/button"
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
-import { Plus, Search, Check, UserCheck } from "lucide-react"
+import { Plus, Search, Check, UserCheck, Loader } from "lucide-react"
 import { useState } from "react"
+import { toast } from "sonner"
 import { getEmployeesByFilter } from "../actions/getEmployeesByFilter"
 import { createEmployee } from "../actions/createEmployee"
 import { ResponseType } from "@/features/layout/types"
@@ -15,6 +16,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
     const [search, setSearch] = useState('')
     const [users, setUsers] = useState<UserWithEmployeeStatus[]>([])
     const [selectedUser, setSelectedUser] = useState<UserWithEmployeeStatus | null>(null)
+    const [isSearching, setIsSearching] = useState(false)
     const t = useTranslations("store.create-employee")
 
     const handleAddEmployee = async (): Promise<ResponseType<any>> => {
@@ -67,15 +69,31 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
     const handleSearch = async () => {
         if (!search.trim()) return
 
+        setIsSearching(true)
+        const searchToastId = toast(t("messages.searching"), {
+            description: t("messages.searching-description")
+        })
+
         try {
             const { payload: users, error, message } = await getEmployeesByFilter(search, storeId, userId)
             if (error) {
                 console.error("Error searching users:", message)
+                toast.error(message || t("messages.search-error"))
                 return
             }
             setUsers(users || [])
+            
+            // Dismiss the searching toast first
+            toast.dismiss(searchToastId)
+            
+            if (users && users.length === 0) {
+                toast.info(t("messages.no-users-found"))
+            }
         } catch (error) {
             console.error("Error searching users:", error)
+            toast.error(t("messages.search-error"))
+        } finally {
+            setIsSearching(false)
         }
     }
 
@@ -116,8 +134,8 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
         >
             <div className="flex gap-2 items-end">
                 <InputField name="user_search" label={t("search-user")} type="text" containerClassName="w-full" onChange={handleChange} value={search} onKeyDown={handleKeyDown} />
-                <Button onClick={handleSearch} type="button">
-                    <Search />
+                <Button onClick={handleSearch} type="button" disabled={isSearching}>
+                    {isSearching ? <Loader className="w-4 h-4 animate-spin" /> : <Search />}
                     {t("search-button")}
                 </Button>
             </div>
@@ -170,7 +188,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
             )}
             {users.length === 0 && search.trim() && !selectedUser && (
                 <div className="mt-4">
-                    <p className="text-sm text-muted-foreground">{t("no-users-found")}</p>
+                    <p className="text-sm text-muted-foreground">{t("messages.no-users-found")}</p>
                 </div>
             )}
         </ButtonWithPopup>

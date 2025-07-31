@@ -1,4 +1,5 @@
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import TableSkeleton from "@/features/stores/components/tabs/table-skeleton"
 import { TabPageProps } from "@/features/stores/types"
 import { getTranslations } from "next-intl/server"
 import { lazy, Suspense } from "react"
@@ -16,7 +17,7 @@ async function TabPage({ params }: TabPageProps) {
     const LazyComponent = lazy(() => import(`@/features/stores/components/tabs/${tab}`))
 
     return (
-        <Suspense fallback={<div>{t("loading")}</div>}>
+        <Suspense fallback={<TableSkeleton />}>
             <LazyComponent slug={slug} userId={user.id} />
         </Suspense>
     )
