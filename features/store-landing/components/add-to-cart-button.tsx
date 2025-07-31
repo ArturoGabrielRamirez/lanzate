@@ -24,7 +24,7 @@ function AddToCartButton({ product }: Props) {
     }
 
     return (
-        <Button variant="outline" size="icon" onClick={handleAddToCart}>
+        <Button variant="outline" size="icon" onClick={handleAddToCart} className="border-none">
             <ShoppingCart />
         </Button>
     )

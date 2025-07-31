@@ -118,7 +118,7 @@ function LikeButtonUser({
             onClick={handleToggleLike}
             /* disabled={isPending} */
             className={cn(
-                "transition-colors",
+                "transition-colors border-none",
                 optimisticLike && "bg-red-50 border-red-200 text-red-600 hover:bg-red-100",
                 isPending && "!animate-pulse"
             )}
