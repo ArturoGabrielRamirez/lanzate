@@ -13,7 +13,7 @@ function PrivacyPolicy() {
                     <h2 className="text-2xl font-bold mb-4">INTRODUCTION</h2>
                     <div className="mb-4">
                         <p className="text-sm leading-relaxed mb-4">
-                            Lanzate ("we," "us," "our") respects your privacy and is committed to protecting your personal data. This Privacy Policy tells you how we look after your personal data when you visit our website (regardless of where you visit it from) and tells you about your privacy rights and how the law protects you.
+                            Lanzate (&quot;we,&quot; &quot;us,&quot; &quot;our&quot;) respects your privacy and is committed to protecting your personal data. This Privacy Policy tells you how we look after your personal data when you visit our website (regardless of where you visit it from) and tells you about your privacy rights and how the law protects you.
                         </p>
                         
                         <p className="text-sm leading-relaxed mb-4">
@@ -64,7 +64,7 @@ function PrivacyPolicy() {
                         
                         <h3 className="text-lg font-bold mb-3 mt-6">Controller</h3>
                         <p>
-                            Lanzate is the controller and responsible for your personal data (collectively referred to as "Lanzate," "we," "us," or "our" in this Privacy Policy).
+                            Lanzate is the controller and responsible for your personal data (collectively referred to as &quot;Lanzate,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot; in this Privacy Policy).
                         </p>
                         
                         <p>
@@ -465,7 +465,7 @@ function PrivacyPolicy() {
                         </p>
                         
                         <p>
-                            We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective and update the "Last updated" date at the top of this Privacy Policy.
+                            We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective and update the &quot;Last updated&quot; date at the top of this Privacy Policy.
                         </p>
                         
                         <p>

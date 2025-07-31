@@ -13,7 +13,7 @@ function CookiesPolicy() {
                     <h2 className="text-2xl font-bold mb-4">INTRODUCTION</h2>
                     <div className="mb-4">
                         <p className="text-sm leading-relaxed mb-4">
-                            This Cookies Policy explains how Lanzate ("we," "us," "our") uses cookies and similar technologies when you visit our website <a href="https://www.lanzate.app" target="_blank" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> and use our mobile application Lanzate App (collectively, the "Services").
+                            This Cookies Policy explains how Lanzate (&quot;we,&quot; &quot;us,&quot; &quot;our&quot;) uses cookies and similar technologies when you visit our website <a href="https://www.lanzate.app" target="_blank" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> and use our mobile application Lanzate App (collectively, the &quot;Services&quot;).
                         </p>
                         
                         <p className="text-sm leading-relaxed mb-4">
@@ -68,7 +68,7 @@ function CookiesPolicy() {
                         <p>We use first-party and third-party cookies for several reasons:</p>
                         
                         <ul className="list-disc ml-6 space-y-2">
-                            <li><strong>Essential functionality:</strong> Some cookies are required for technical reasons in order for our Services to operate. We refer to these as "essential" or "strictly necessary" cookies.</li>
+                            <li><strong>Essential functionality:</strong> Some cookies are required for technical reasons in order for our Services to operate. We refer to these as &quot;essential&quot; or &quot;strictly necessary&quot; cookies.</li>
                             <li><strong>Performance and analytics:</strong> Other cookies enable us to track and target the interests of our users to enhance the experience on our Services.</li>
                             <li><strong>Personalization:</strong> Cookies help us provide you with personalized content and remember your preferences.</li>
                             <li><strong>Security:</strong> Cookies help us identify and prevent security risks.</li>
@@ -347,7 +347,7 @@ function CookiesPolicy() {
                         
                         <h3 className="text-lg font-bold mb-3 mt-6">Do Not Track</h3>
                         <p>
-                            Some browsers include a "Do Not Track" feature that lets you tell websites that you do not want to have your online activities tracked. These features are not yet uniform, and our Services do not currently respond to those signals.
+                            Some browsers include a &quot;Do Not Track&quot; feature that lets you tell websites that you do not want to have your online activities tracked. These features are not yet uniform, and our Services do not currently respond to those signals.
                         </p>
                     </div>
                 </section>
