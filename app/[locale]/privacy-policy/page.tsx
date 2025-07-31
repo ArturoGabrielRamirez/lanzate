@@ -44,7 +44,7 @@ function PrivacyPolicy() {
                         <div><a href="#your-rights" className="text-blue-600 hover:text-blue-800 underline">9. YOUR LEGAL RIGHTS</a></div>
                         <div><a href="#cookies" className="text-blue-600 hover:text-blue-800 underline">10. COOKIES</a></div>
                         <div><a href="#third-party-links" className="text-blue-600 hover:text-blue-800 underline">11. THIRD-PARTY LINKS</a></div>
-                        <div><a href="#children" className="text-blue-600 hover:text-blue-800 underline">12. CHILDREN'S PRIVACY</a></div>
+                        <div><a href="#children" className="text-blue-600 hover:text-blue-800 underline">12. CHILDREN&apos;S PRIVACY</a></div>
                         <div><a href="#changes" className="text-blue-600 hover:text-blue-800 underline">13. CHANGES TO PRIVACY POLICY</a></div>
                         <div><a href="#contact" className="text-blue-600 hover:text-blue-800 underline">14. CONTACT US</a></div>
                     </div>
@@ -365,7 +365,7 @@ function PrivacyPolicy() {
                         <p>Where we are relying on a legitimate interest (or those of a third party) and there is something about your particular situation which makes you want to object to processing on this ground as you feel it impacts on your fundamental rights and freedoms. You also have the right to object where we are processing your personal data for direct marketing purposes.</p>
                         
                         <h3 className="text-lg font-bold mb-3">Request restriction of processing your personal data</h3>
-                        <p>This enables you to ask us to suspend the processing of your personal data in the following scenarios: (a) if you want us to establish the data's accuracy; (b) where our use of the data is unlawful but you do not want us to erase it; (c) where you need us to hold the data even if we no longer require it as you need it to establish, exercise or defend legal claims; or (d) you have objected to our use of your data but we need to verify whether we have overriding legitimate grounds to use it.</p>
+                        <p>This enables you to ask us to suspend the processing of your personal data in the following scenarios: (a) if you want us to establish the data&apos;s accuracy; (b) where our use of the data is unlawful but you do not want us to erase it; (c) where you need us to hold the data even if we no longer require it as you need it to establish, exercise or defend legal claims; or (d) you have objected to our use of your data but we need to verify whether we have overriding legitimate grounds to use it.</p>
                         
                         <h3 className="text-lg font-bold mb-3">Request transfer of your personal data</h3>
                         <p>We will provide to you, or a third party you have chosen, your personal data in a structured, commonly used, machine-readable format. Note that this right only applies to automated information which you initially provided consent for us to use or where we used the information to perform a contract with you.</p>
@@ -441,7 +441,7 @@ function PrivacyPolicy() {
                 </section>
 
                 <section id="children" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">12. CHILDREN'S PRIVACY</h2>
+                    <h2 className="text-xl font-bold mb-4">12. CHILDREN&apos;S PRIVACY</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
                             Our Service does not address anyone under the age of 18 ("Children").
@@ -452,7 +452,7 @@ function PrivacyPolicy() {
                         </p>
                         
                         <p>
-                            If we need to rely on consent as a legal basis for processing your information and your country requires consent from a parent, we may require your parent's consent before we collect and use that information.
+                            If we need to rely on consent as a legal basis for processing your information and your country requires consent from a parent, we may require your parent&apos;s consent before we collect and use that information.
                         </p>
                     </div>
                 </section>

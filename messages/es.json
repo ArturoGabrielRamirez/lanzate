@@ -590,7 +590,6 @@
             "user-selected": "Usuario seleccionado:",
             "users-found": "Usuarios encontrados:",
             "already-employee": "Ya es empleado",
-            "no-users-found": "No se encontraron usuarios",
             "role-label": "Rol:",
             "hired-label": "Contratado:",
             "messages": {
@@ -598,7 +597,11 @@
                 "user-already-employee": "Este usuario ya es empleado de esta tienda",
                 "success": "¡Empleado agregado correctamente!",
                 "error": "Error al agregar empleado",
-                "loading": "Agregando empleado..."
+                "loading": "Agregando empleado...",
+                "searching": "Buscando usuarios...",
+                "searching-description": "Esto puede tomar unos segundos",
+                "search-error": "Error al buscar usuarios",
+                "no-users-found": "No se encontraron usuarios"
             }
         },
         "edit-employee": {

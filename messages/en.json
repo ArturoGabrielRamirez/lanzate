@@ -694,7 +694,6 @@
             "user-selected": "User selected:",
             "users-found": "Users found:",
             "already-employee": "Already employee",
-            "no-users-found": "No users found",
             "role-label": "Role:",
             "hired-label": "Hired:",
             "messages": {
@@ -702,7 +701,11 @@
                 "user-already-employee": "This user is already an employee of this store",
                 "success": "Employee added successfully!",
                 "error": "Error adding employee",
-                "loading": "Adding employee..."
+                "loading": "Adding employee...",
+                "searching": "Searching users...",
+                "searching-description": "This may take a few seconds",
+                "search-error": "Error searching users",
+                "no-users-found": "No users found"
             }
         },
         "edit-employee": {
