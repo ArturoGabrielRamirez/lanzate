@@ -1,12 +1,10 @@
 "use client"
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useStore } from "./store-provider"
 import { useQueryState } from "nuqs"
 import { useTranslations } from "next-intl"
 
 function ProductAmountDisplay({ amount }: { amount: number }) {
-    const { } = useStore()
     const [limit, setLimit] = useQueryState("limit", { shallow: false, clearOnDefault: true })
     const t = useTranslations("subdomain.sidebar.limit")
 
