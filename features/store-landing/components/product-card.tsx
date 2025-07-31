@@ -35,7 +35,9 @@ function ProductCard({ product }: Props) {
                         </div>
                         <div>
                             <CardTitle className="text-lg font-bold">{product.name}</CardTitle>
-                            <CardDescription className="line-clamp-2 h-11">{product.description || "No description available for this product"}</CardDescription>
+                            <CardDescription className="line-clamp-2 h-11">
+                                {product.description || "No description available for this product"}
+                            </CardDescription>
                         </div>
                     </CardHeader>
                     <CardFooter className="flex justify-between items-center flex-col">
@@ -53,7 +55,9 @@ function ProductCard({ product }: Props) {
             <Card className="aspect-9/12 bg-accent hover:scale-105 transition-all cursor-pointer object-cover w-full h-fit gap-2">
                 <CardHeader>
                     <CardTitle>{product.name}</CardTitle>
-                    <CardDescription className="line-clamp-2 h-11">{product.description || "No description available for this product"}</CardDescription>
+                    <CardDescription className="line-clamp-2 h-11">
+                        {product.description || "No description available for this product"}
+                    </CardDescription>
                 </CardHeader>
                 <CardContent className="grow">
                     <div className="relative h-full">
