@@ -6,7 +6,7 @@ import LikeButton from "@/features/store-landing/components/like-button"
 import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"
 import Comments from "@/features/subdomain/components/comments"
 import { Category } from "@prisma/client"
-import { Flame, Image, Share, ShoppingBag } from "lucide-react"
+import { Image, Share, ShoppingBag } from "lucide-react"
 import Link from "next/link"
 
 type Props = {

@@ -1,4 +1,3 @@
-import { getUserInfo } from "@/features/layout/actions/getUserInfo";
 import { Title } from "@/features/layout/components";
 import PaginationNav from "@/features/store-landing/components/pagination-nav";
 import ProductAmountDisplay from "@/features/store-landing/components/product-amount-display";
