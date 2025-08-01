@@ -10,12 +10,9 @@ export function createServerSideClient() {
     {
       cookies: {
         async getAll() {
-          console.log("🚀 ~ getAll ~ cookieStore:", await cookieStore)
-          console.log("🚀 ~ getAll ~ cookieStore:", (await cookieStore).getAll())
           return (await cookieStore).getAll();
         },
         setAll(cookiesToSet) {
-          console.log("🚀 ~ setAll ~ cookiesToSet:", cookiesToSet)
           try {
             cookiesToSet.forEach(async ({ name, value, options }) => {
               const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost';

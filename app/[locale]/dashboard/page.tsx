@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getDashboardStores } from "@/features/dashboard/actions/getDashboardStores"
-import { DashboardSteps } from "@/features/dashboard/components"
+import { DashboardSteps, ActivityFeed, ActivityFeedSkeleton } from "@/features/dashboard/components"
 import { Title } from "@/features/layout/components"
 import { CreateStoreButton, StoreCard } from "@/features/stores/components"
 import { ArrowRight, Hand, Plus, ShoppingBasket } from "lucide-react"
@@ -9,6 +9,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
 import { getTranslations } from "next-intl/server"
+import { Suspense } from "react"
 
 async function DashboardPage() {
 
@@ -40,9 +41,9 @@ async function DashboardPage() {
                             grid-areas-[steps,stores,coming-soon,calendar,order]
                            md:grid-areas-[order_steps,coming-soon_steps,coming-soon_stores,coming-soon_calendar] 
                            md:grid-cols-[1fr_minmax(auto,300px)] 
-                           lg:grid-areas-[steps_coming-soon_order,steps_coming-soon_stores,calendar_coming-soon_stores,calendar_coming-soon_stores] 
+                           lg:grid-areas-[steps_coming-soon_order,steps_coming-soon_stores,calendar_coming-soon_stores,calendar_coming-soon_stores,empty_coming-soon_empty2] 
                            lg:grid-cols-[minmax(auto,300px)_1fr_minmax(auto,300px)] 
-                           gap-2 mg:gap-3 lg:gap-4">
+                           gap-2 mg:gap-3 lg:gap-4 lg:grid-rows-[min-content_auto_auto]">
 
                 {/* Dashboard Steps */}
                 <div className="area-steps md:area-[steps] lg:area-[steps]">
@@ -50,20 +51,11 @@ async function DashboardPage() {
                     {/* <div className="h-px bg-muted-foreground/20 my-2 md:my-4" /> */}
                 </div>
 
-                {/* Coming Soon Card */}
+                {/* Activity Feed */}
                 <div className="area-[coming-soon] md:area-[coming-soon] lg:area-[coming-soon] pt-1 md:pt-0">
-                    <Card >
-                        <CardHeader>
-                            <CardTitle>
-                                <h2 className="text-2xl font-bold">Coming Soon</h2>
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p>
-                                This feature is coming soon.
-                            </p>
-                        </CardContent>
-                    </Card>
+                    <Suspense fallback={<ActivityFeedSkeleton />}>
+                        <ActivityFeed userId={user.id} />
+                    </Suspense>
                 </div>
 
                 {/* Store Management Section */}

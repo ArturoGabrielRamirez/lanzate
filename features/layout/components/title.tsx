@@ -13,9 +13,10 @@ type TitleProps = {
     }[]
     canGoBack?: boolean
     showDate?: boolean
+    homePath?: string
 }
 
-const Title = ({ title, breadcrumbs, className, showDate }: TitleProps) => {
+const Title = ({ title, breadcrumbs, className, showDate, homePath }: TitleProps) => {
 
     const t = useTranslations("layout");
     const locale = useCurrentLocale()
@@ -48,7 +49,7 @@ const Title = ({ title, breadcrumbs, className, showDate }: TitleProps) => {
             </div>
             {breadcrumbs && breadcrumbs?.length > 0 && (
                 <div className="flex items-end gap-2 text-muted-foreground/50">
-                    <Link href="/dashboard" className="capitalize hover:text-primary">
+                    <Link href={homePath || "/dashboard"} className="capitalize hover:text-primary">
                         {t("title")}
                     </Link>
                     <span className="text-xl">/</span>
