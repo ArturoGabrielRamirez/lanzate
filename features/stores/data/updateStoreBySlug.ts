@@ -8,11 +8,38 @@ export async function updateStoreBySlug(slug: string, data: any) {
 
         const client = new PrismaClient()
 
+        // Separar los campos de operational_settings de los campos del store
+        const { contact_phone, contact_whatsapp, facebook_url, instagram_url, x_url, ...storeData } = data
+
+        const operationalData = {
+            contact_phone,
+            contact_whatsapp,
+            facebook_url,
+            instagram_url,
+            x_url,
+        }
+
+        // Filtrar campos undefined/null para no enviarlos a la base de datos
+        const cleanOperationalData = Object.fromEntries(
+            Object.entries(operationalData).filter(([_, value]) => value !== undefined && value !== null && value !== '')
+        )
+
         const updatedStore = await client.store.update({
             where: {
                 slug: slug
             },
-            data: { ...data }
+            data: { 
+                ...storeData,
+                operational_settings: Object.keys(cleanOperationalData).length > 0 ? {
+                    upsert: {
+                        update: cleanOperationalData,
+                        create: cleanOperationalData
+                    }
+                } : undefined
+            },
+            include: {
+                operational_settings: true
+            }
         })
 
         return {
