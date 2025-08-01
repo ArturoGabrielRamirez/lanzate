@@ -700,6 +700,15 @@
                 "actions": "Acciones",
                 "view-details": "Ver detalles",
                 "open-menu": "Abrir menú"
+            },
+            "export": {
+                "button": "Exportar a Excel",
+                "payment_status": "Estado de Pago",
+                "created_at": "Fecha de creación",
+                "updated_at": "Fecha de actualización",
+                "no-customer": "Sin cliente",
+                "no-shipping": "Sin método de envío",
+                "no-payment-status": "Sin estado de pago"
             }
         },
         "change-order-status": {

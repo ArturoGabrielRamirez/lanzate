@@ -804,6 +804,15 @@
                 "actions": "Actions",
                 "view-details": "View details",
                 "open-menu": "Open menu"
+            },
+            "export": {
+                "button": "Export to Excel",
+                "payment_status": "Payment Status",
+                "created_at": "Created at",
+                "updated_at": "Updated at",
+                "no-customer": "No customer",
+                "no-shipping": "No shipping method",
+                "no-payment-status": "No payment status"
             }
         },
         "change-order-status": {
