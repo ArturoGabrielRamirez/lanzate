@@ -7,7 +7,7 @@ import { getTranslations } from "next-intl/server"
 
 async function SalePage() {
     const t = await getTranslations("sale")
-    
+
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
@@ -31,7 +31,7 @@ async function SalePage() {
                 label: t("breadcrumbs.sale"),
                 href: "/sale"
             }]} />
-            
+
             <div className="flex-1 flex items-center justify-center min-h-[400px]">
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 w-full max-w-md">
                     <StoreSelector stores={stores} />
