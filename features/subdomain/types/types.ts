@@ -1,4 +1,4 @@
-import { Product as PrismaProduct, Store, StoreBalance, StoreCustomization } from "@prisma/client";
+import { Product as PrismaProduct, Store, StoreBalance, StoreCustomization, Category } from "@prisma/client";
 
 export type Product = PrismaProduct;
 
@@ -59,5 +59,19 @@ export type SelectStoreBySubdomainReturn = {
 export type SelectStoreWithProductsReturn = {
     message: string;
     payload: StoreWithProducts | null;
+    error: boolean;
+};
+
+export type GetProductDetailsReturn = {
+    message: string;
+    payload: (Product & {
+        categories: Category[];
+        store: {
+            id: number;
+            name: string;
+            subdomain: string;
+            customization: StoreCustomization | null;
+        };
+    }) | null;
     error: boolean;
 };
