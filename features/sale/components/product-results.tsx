@@ -15,7 +15,7 @@ type ProductResultsProps = {
 
 function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductResultsProps) {
   const t = useTranslations('sale.product-results')
-  
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
@@ -29,8 +29,8 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
   const hasAnyResults = hasSearchResults || hasBarcodeResult
 
   return (
-    <Card className="lg:area-[results] lg:col-span-2">
-      <CardHeader>
+    <Card className="lg:area-[results] lg:col-span-2 gap-2">
+      <CardHeader className='gap-0'>
         <CardTitle className='flex items-center gap-2'>
           <Package className="size-5" />
           {t('title')}
@@ -69,9 +69,9 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
                   )}
                   <div className="flex gap-2 mt-1">
                     <p className='text-xs'>
-                      {t('units-remaining', { 
-                        count: barcodeResult.product!.totalStock, 
-                        units: barcodeResult.product!.totalStock > 1 ? t('units') : t('unit') 
+                      {t('units-remaining', {
+                        count: barcodeResult.product!.totalStock,
+                        units: barcodeResult.product!.totalStock > 1 ? t('units') : t('unit')
                       })}
                     </p>
                     {barcodeResult.product!.categories.length > 0 && (
@@ -113,7 +113,7 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
               </div>
               <div className="overflow-y-auto space-y-3 max-h-96">
                 {searchResults.products.map((product) => (
-                  <div 
+                  <div
                     key={product.id}
                     className="flex items-center justify-between p-3 bg-muted rounded border hover:bg-muted/80 transition-colors"
                   >
@@ -126,9 +126,9 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
                       )}
                       <div className="flex gap-2 mt-1">
                         <p className='text-xs'>
-                          {t('units-remaining', { 
-                            count: product.totalStock, 
-                            units: product.totalStock > 1 ? t('units') : t('unit') 
+                          {t('units-remaining', {
+                            count: product.totalStock,
+                            units: product.totalStock > 1 ? t('units') : t('unit')
                           })}
                         </p>
                         {product.categories.length > 0 && (
@@ -176,10 +176,10 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
 
           {/* Empty state */}
           {!isLoading && !hasAnyResults && !searchResults.error && !barcodeResult.error && (
-            <div className="flex items-center justify-center h-32 border-2 border-dashed border-gray-300 rounded-lg">
+            <div className="flex items-center justify-center py-4 lg:py-0 lg:h-32 border-2 border-dashed border-gray-300 rounded-lg">
               <div className="text-center">
                 <Search className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                <p className="text-muted-foreground text-sm">
+                <p className="text-muted-foreground text-sm hidden lg:block">
                   {t('search-instruction')}
                 </p>
                 <p className="text-xs text-muted-foreground">

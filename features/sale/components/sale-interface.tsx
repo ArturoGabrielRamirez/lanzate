@@ -205,17 +205,18 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
         <BarcodeScannerUSB onProductScanned={handleProductScanned} />
       </div>
 
+      <ProductResults
+        searchResults={searchResults}
+        barcodeResult={barcodeResult}
+        onAddToCart={handleAddToCart}
+      />
+      
       <CartSection
         cartItems={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
       />
 
-      <ProductResults
-        searchResults={searchResults}
-        barcodeResult={barcodeResult}
-        onAddToCart={handleAddToCart}
-      />
 
       <ActionsSection
         cartTotal={cartTotal}

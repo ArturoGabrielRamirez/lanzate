@@ -43,7 +43,7 @@ function ActionsSection({
           Acciones
         </CardTitle>
       </CardHeader> */}
-      <CardContent className='grid grid-cols-[repeat(auto-fill,minmax(min(100%,200px),1fr))] gap-2'>
+      <CardContent className='flex lg:grid grid-cols-[repeat(auto-fill,minmax(min(100%,200px),1fr))] gap-2'>
         {/* <div className="space-y-4"> */}
         {/* Resumen rápido */}
         {/* <div className="p-3 bg-muted rounded-lg">
@@ -58,52 +58,52 @@ function ActionsSection({
         <Button
           onClick={onFinalizeSale}
           disabled={disabled || cartItemCount === 0}
-          className="w-full text-base"
+          className="md:w-full text-base"
           variant="default"
         >
           <CreditCard className="mr-2 h-5 w-5" />
-          {t('finalize-sale')}
+          <span className='hidden lg:block'>{t('finalize-sale')}</span>
         </Button>
 
         <Button
           onClick={onCalculateChange}
           disabled={disabled || cartItemCount === 0}
-          className="w-full"
+          className="md:w-full"
           variant="outline"
         >
           <Calculator className="mr-2 h-4 w-4" />
-          {t('calculate-change')}
+          <span className='hidden lg:block'>{t('calculate-change')}</span>
         </Button>
 
         <Button
           onClick={onPrintReceipt}
           disabled={disabled}
-          className="w-full"
+          className="md:w-full"
           variant="outline"
         >
           <Receipt className="mr-2 h-4 w-4" />
-          {t('print-receipt')}
+          <span className='hidden lg:block'>{t('print-receipt')}</span>
         </Button>
 
         <Button
           onClick={onRefund}
           disabled={disabled}
-          className="w-full"
+          className="md:w-full"
           variant="outline"
         >
           <RotateCcw className="mr-2 h-4 w-4" />
-          {t('process-refund')}
+          <span className='hidden lg:block'>{t('process-refund')}</span>
         </Button>
 
         {/* Botones de utilidad */}
         <Button
           onClick={onClearCart}
           disabled={disabled || cartItemCount === 0}
-          className="w-full"
+          className="md:w-full"
           variant="destructive"
         >
           <Trash2 className="mr-2 h-4 w-4" />
-          {t('clear-cart')}
+          <span className='hidden lg:block'>{t('clear-cart')}</span>
         </Button>
 
         {/* Información adicional */}

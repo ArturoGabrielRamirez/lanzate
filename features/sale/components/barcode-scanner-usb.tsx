@@ -52,7 +52,7 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
           ) : (
             <>
               <div className="size-3 bg-gray-400 rounded-full" />
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-muted-foreground truncate hidden lg:block">
                 {enabled ? t('waiting') : t('disabled')}
               </span>
             </>
