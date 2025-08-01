@@ -1,30 +1,47 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 import { getUserStoreActivities } from "../actions/getUserStoreActivities"
-import { Heart, MessageCircle, Clock, Flame } from "lucide-react"
+import { Heart, MessageCircle, Clock, Flame, FileText } from "lucide-react"
 import { ActivityFeedItem, UserStoreActivity } from "../types"
 import Link from "next/link"
 import { formatDistance } from "date-fns"
 import { es } from "date-fns/locale"
+import ContractResponseButtons from "./contract-response-buttons"
+import ContractActionButtons from "./contract-action-buttons"
 
 type Props = {
     userId: number
 }
 
 function getUserInitials(firstName?: string | null, lastName?: string | null) {
-    if (!firstName && !lastName) return "U"
-    
-    const first = firstName?.charAt(0) || ""
-    const last = lastName?.charAt(0) || ""
-    
-    return (first + last).toUpperCase() || "U"
+    const first = firstName?.charAt(0) || ''
+    const last = lastName?.charAt(0) || ''
+    return (first + last).toUpperCase()
 }
 
 function formatActivityDate(date: Date) {
-    return formatDistance(date, new Date(), { 
-        addSuffix: true, 
-        locale: es 
+    return formatDistance(new Date(date), new Date(), {
+        addSuffix: true,
+        locale: es
     })
+}
+
+function getStatusBadgeVariant(status: string) {
+    switch (status) {
+        case 'PENDING':
+            return 'secondary'
+        case 'APPROVED':
+            return 'default'
+        case 'REJECTED':
+            return 'destructive'
+        case 'COMPLETED':
+            return 'default'
+        case 'EXPIRED':
+            return 'outline'
+        default:
+            return 'secondary'
+    }
 }
 
 async function ActivityFeed({ userId }: Props) {
@@ -63,27 +80,38 @@ async function ActivityFeed({ userId }: Props) {
             product: comment.products,
             content: comment.content,
             created_at: comment.created_at
+        })),
+        ...activities.contractAssignmentsAsEmployee.map((assignment: UserStoreActivity['contractAssignmentsAsEmployee'][0]) => ({
+            id: `contract-employee-${assignment.id}`,
+            type: 'contract_assignment_as_employee' as const,
+            user: assignment.assigned_by_user,
+            contract: assignment.contract,
+            status: assignment.status,
+            created_at: assignment.assigned_at
+        })),
+        ...activities.contractAssignmentsAsOwner.map((assignment: UserStoreActivity['contractAssignmentsAsOwner'][0]) => ({
+            id: `contract-owner-${assignment.id}`,
+            type: 'contract_assignment_as_owner' as const,
+            user: assignment.assigned_by_user,
+            contract: assignment.contract,
+            employee: assignment.employee.user,
+            status: assignment.status,
+            created_at: assignment.assigned_at
         }))
     ].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 
     if (feedItems.length === 0) {
         return (
-            <Card className="h-full">
+            <Card>
                 <CardHeader>
                     <CardTitle>
                         <h2 className="text-2xl font-bold">Actividad Reciente</h2>
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-center py-8">
-                        <MessageCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                        <p className="text-muted-foreground">
-                            Aún no hay actividad en tus tiendas.
-                        </p>
-                        <p className="text-sm text-muted-foreground mt-2">
-                            Los likes y comentarios de tus productos aparecerán aquí.
-                        </p>
-                    </div>
+                    <p className="text-muted-foreground">
+                        No hay actividad reciente.
+                    </p>
                 </CardContent>
             </Card>
         )
@@ -110,24 +138,105 @@ async function ActivityFeed({ userId }: Props) {
                                 </AvatarFallback>
                             </Avatar>
                             <div className="flex-1 space-y-2">
-                                <div className="flex items-center space-x-2 text-sm">
-                                    <span className="font-semibold">
-                                        {item.user.first_name} {item.user.last_name}
-                                    </span>
-                                    <span className="text-muted-foreground">
-                                        {item.type === 'like' ? 'le dio like a' : 'comentó en'}
-                                    </span>
-                                    <Link 
-                                        href={`/stores/WLEIAxpn/products/${item.product.id}`}
-                                        className="font-medium text-primary hover:underline"
-                                    >
-                                        {item.product.name}
-                                    </Link>
-                                </div>
+                                {item.type === 'like' && (
+                                    <div className="flex items-center space-x-2">
+                                        <span className="font-medium">
+                                            {item.user.first_name} {item.user.last_name}
+                                        </span>
+                                        <span className="text-muted-foreground">le dio like a</span>
+                                        <Link 
+                                            href={`/stores/${item.product?.store.slug}/products/${item.product?.id}`}
+                                            className="font-medium text-primary hover:underline"
+                                        >
+                                            {item.product?.name}
+                                        </Link>
+                                    </div>
+                                )}
                                 
-                                {item.type === 'comment' && item.content && (
-                                    <div className="bg-muted/50 rounded-lg p-3">
-                                        <p className="text-sm">{item.content}</p>
+                                {item.type === 'comment' && (
+                                    <div className="space-y-1">
+                                        <div className="flex items-center space-x-2">
+                                            <span className="font-medium">
+                                                {item.user.first_name} {item.user.last_name}
+                                            </span>
+                                            <span className="text-muted-foreground">comentó en</span>
+                                            <Link 
+                                                href={`/stores/${item.product?.store.slug}/products/${item.product?.id}`}
+                                                className="font-medium text-primary hover:underline"
+                                            >
+                                                {item.product?.name}
+                                            </Link>
+                                        </div>
+                                        <p className="text-sm text-muted-foreground">{item.content}</p>
+                                    </div>
+                                )}
+
+                                {item.type === 'contract_assignment_as_employee' && (
+                                    <div className="space-y-2">
+                                        <div className="flex items-center space-x-2">
+                                            <span className="font-medium">
+                                                {item.user.first_name} {item.user.last_name}
+                                            </span>
+                                            <span className="text-muted-foreground">te asignó el contrato</span>
+                                            <span className="font-medium text-primary">
+                                                {item.contract?.title}
+                                            </span>
+                                            <Badge variant={getStatusBadgeVariant(item.status || 'PENDING')} className="text-xs">
+                                                {item.status}
+                                            </Badge>
+                                        </div>
+                                        
+                                        {item.contract?.comments && (
+                                            <p className="text-sm text-muted-foreground">
+                                                <strong>Comentarios:</strong> {item.contract.comments}
+                                            </p>
+                                        )}
+
+                                        <ContractActionButtons 
+                                            fileUrl={item.contract?.file_url || ''}
+                                            title={item.contract?.title || 'contrato'}
+                                        />
+
+                                        {item.status === 'PENDING' && (
+                                            <ContractResponseButtons 
+                                                assignmentId={parseInt(item.id.split('-')[2])}
+                                                onResponse={() => {
+                                                    // This will trigger a page refresh to show updated status
+                                                    window.location.reload()
+                                                }}
+                                            />
+                                        )}
+                                    </div>
+                                )}
+
+                                {item.type === 'contract_assignment_as_owner' && (
+                                    <div className="space-y-2">
+                                        <div className="flex items-center space-x-2">
+                                            <span className="font-medium">
+                                                Asignaste el contrato
+                                            </span>
+                                            <span className="font-medium text-primary">
+                                                {item.contract?.title}
+                                            </span>
+                                            <span className="text-muted-foreground">a</span>
+                                            <span className="font-medium">
+                                                {item.employee?.first_name} {item.employee?.last_name}
+                                            </span>
+                                            <Badge variant={getStatusBadgeVariant(item.status || 'PENDING')} className="text-xs">
+                                                {item.status}
+                                            </Badge>
+                                        </div>
+                                        
+                                        {item.contract?.comments && (
+                                            <p className="text-sm text-muted-foreground">
+                                                <strong>Comentarios:</strong> {item.contract.comments}
+                                            </p>
+                                        )}
+
+                                        <ContractActionButtons 
+                                            fileUrl={item.contract?.file_url || ''}
+                                            title={item.contract?.title || 'contrato'}
+                                        />
                                     </div>
                                 )}
                                 
@@ -135,11 +244,13 @@ async function ActivityFeed({ userId }: Props) {
                                     <div className="flex items-center space-x-1">
                                         {item.type === 'like' ? (
                                             <Flame className="h-3 w-3 text-red-500 fill-current" />
-                                        ) : (
+                                        ) : item.type === 'comment' ? (
                                             <MessageCircle className="h-3 w-3 text-white fill-current" />
+                                        ) : (
+                                            <FileText className="h-3 w-3 text-blue-500" />
                                         )}
                                         <span className="text-muted-foreground">
-                                            en {item.product.store.name}
+                                            en {item.type.includes('contract') ? item.contract?.store.name : item.product?.store.name}
                                         </span>
                                     </div>
                                     <div className="flex items-center space-x-1">
