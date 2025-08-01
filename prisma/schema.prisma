@@ -29,6 +29,7 @@ model User {
   Product          Product[]
   Store            Store[]
   contracts_created Contract[]        @relation("ContractCreatedBy")
+  contracts_assigned ContractAssignment[] @relation("ContractAssignedBy")
 
   @@map("users")
 }
@@ -283,7 +284,7 @@ model Employee {
   orders_created       Order[]       @relation("OrderCreatedBy")
   orders_updated       Order[]       @relation("OrderUpdatedBy")
   transactions         Transaction[]
-  contracts_assigned   Contract[]    @relation("ContractAssignedTo")
+  contract_assignments ContractAssignment[]
   contract_responses   ContractResponse[]
 
   @@unique([user_id, store_id])
@@ -459,34 +460,51 @@ model StoreWidgetConfig {
 }
 
 model Contract {
-  id                Int               @id @default(autoincrement())
+  id                Int                   @id @default(autoincrement())
   store_id          Int
   title             String
   file_url          String
   comments          String?
-  status            ContractStatus    @default(PENDING)
-  created_at        DateTime          @default(now())
-  updated_at        DateTime          @updatedAt
-  created_by        Int               // user_id who created the contract
-  assigned_to       Int?              // employee_id who should review the contract
-  store             Store             @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  created_by_user   User              @relation("ContractCreatedBy", fields: [created_by], references: [id])
-  assigned_employee Employee?         @relation("ContractAssignedTo", fields: [assigned_to], references: [id])
+  status            ContractStatus        @default(PENDING)
+  created_at        DateTime              @default(now())
+  updated_at        DateTime              @updatedAt
+  created_by        Int                   // user_id who created the contract
+  store             Store                 @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  created_by_user   User                  @relation("ContractCreatedBy", fields: [created_by], references: [id])
+  assignments       ContractAssignment[]
   responses         ContractResponse[]
 
   @@map("contracts")
 }
 
-model ContractResponse {
+model ContractAssignment {
   id           Int              @id @default(autoincrement())
   contract_id  Int
   employee_id  Int
-  status       ContractStatus
-  comments     String?
-  created_at   DateTime         @default(now())
-  updated_at   DateTime         @updatedAt
+  assigned_at  DateTime         @default(now())
+  status       ContractStatus   @default(PENDING)
+  assigned_by  Int              // user_id who assigned the contract
   contract     Contract         @relation(fields: [contract_id], references: [id], onDelete: Cascade)
   employee     Employee         @relation(fields: [employee_id], references: [id], onDelete: Cascade)
+  assigned_by_user User         @relation("ContractAssignedBy", fields: [assigned_by], references: [id])
+  responses    ContractResponse[]
+
+  @@unique([contract_id, employee_id]) // Evita asignaciones duplicadas
+  @@map("contract_assignments")
+}
+
+model ContractResponse {
+  id                   Int              @id @default(autoincrement())
+  contract_id          Int
+  employee_id          Int
+  assignment_id        Int?             // referencia a la asignación específica
+  status               ContractStatus
+  comments             String?
+  created_at           DateTime         @default(now())
+  updated_at           DateTime         @updatedAt
+  contract             Contract         @relation(fields: [contract_id], references: [id], onDelete: Cascade)
+  employee             Employee         @relation(fields: [employee_id], references: [id], onDelete: Cascade)
+  assignment           ContractAssignment? @relation(fields: [assignment_id], references: [id], onDelete: Cascade)
 
   @@map("contract_responses")
 }

@@ -93,10 +93,23 @@ export type Contract = {
   created_at: string
   updated_at: string
   created_by: number
-  assigned_to?: number | null
   store?: any
   created_by_user?: any
-  assigned_employee?: Employee | null
+  assignments?: ContractAssignment[]
+  responses?: ContractResponse[]
+}
+
+// Nuevo tipo para asignaciones de contratos
+export type ContractAssignment = {
+  id: number
+  contract_id: number
+  employee_id: number
+  assigned_at: string
+  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
+  assigned_by: number
+  contract?: Contract
+  employee?: Employee
+  assigned_by_user?: any
   responses?: ContractResponse[]
 }
 
@@ -104,12 +117,14 @@ export type ContractResponse = {
   id: number
   contract_id: number
   employee_id: number
+  assignment_id?: number | null
   status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
   comments?: string | null
   created_at: string
   updated_at: string
   contract?: Contract
   employee?: Employee
+  assignment?: ContractAssignment
 }
 
 // Tipos para el botón de crear contrato
