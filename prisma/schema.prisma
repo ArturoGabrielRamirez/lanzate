@@ -320,6 +320,11 @@ model StoreOperationalSettings {
   contact_phone               String?
   contact_whatsapp            String?
   contact_email               String?
+  contact_phone_2             String?
+  contact_whatsapp_2          String?
+  facebook_url                String?
+  instagram_url               String?
+  x_url                       String?
   delivery_instructions       String?
   pickup_instructions         String?
   special_notes               String?

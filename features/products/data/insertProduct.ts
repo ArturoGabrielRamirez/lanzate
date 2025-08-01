@@ -34,17 +34,27 @@ export async function insertProduct(payload: any, storeId: number, userId: numbe
             // Si hay imagen, subirla primero antes de crear el producto
             let imageUrl: string | null = null
             if (payload.image) {
-                const { data, error } = await supabase.storage
-                    .from("product-images")
-                    .upload(payload.image.name, payload.image)
-
-                if (error) throw new Error(error.message)
 
                 const { data: { publicUrl } } = supabase.storage
                     .from("product-images")
-                    .getPublicUrl(data.path)
+                    .getPublicUrl(payload.image.name)
 
-                imageUrl = publicUrl
+                if (publicUrl) {
+                    imageUrl = publicUrl
+                } else {
+
+                    const { data, error } = await supabase.storage
+                        .from("product-images")
+                        .upload(payload.image.name, payload.image)
+
+                    if (error) throw new Error(error.message)
+
+                    const { data: { publicUrl } } = supabase.storage
+                        .from("product-images")
+                        .getPublicUrl(data.path)
+
+                    imageUrl = publicUrl
+                }
             }
 
             const product = await tx.product.create({
