@@ -5,6 +5,11 @@ const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin')
 
 const nextConfig: NextConfig = {
   /* config options here */
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '3mb',
+    },
+  },
   images: {
     remotePatterns: [
       {
@@ -22,13 +27,13 @@ const nextConfig: NextConfig = {
 
     if (!isServer) {
       config.resolve.fallback = {
-          ...config.resolve.fallback,
-          fs: false,
-          net: false,
-          tls: false,
-          crypto: false,
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
       }
-  }
+    }
 
     return config
   },
