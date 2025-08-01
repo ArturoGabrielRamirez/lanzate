@@ -108,7 +108,8 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
                     take: limit,
                     skip: limit * (page - 1)
                 },
-                customization: true
+                customization: true,
+                operational_settings: true
             },
         })
 
