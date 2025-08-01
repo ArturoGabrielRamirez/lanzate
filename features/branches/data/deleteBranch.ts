@@ -1,15 +1,16 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function deleteBranch(branchId: number) {
     return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
         // First check if the branch exists and if it's the main branch
-        const branch = await client.branch.findUnique({
+        const branch = await prisma.branch.findUnique({
             where: {
                 id: branchId
             }
@@ -22,7 +23,7 @@ export async function deleteBranch(branchId: number) {
         }
 
         // Delete the branch - orders will have their branch_id set to NULL due to foreign key constraint
-        const deletedBranch = await client.branch.delete({
+        const deletedBranch = await prisma.branch.delete({
             where: {
                 id: branchId
             }

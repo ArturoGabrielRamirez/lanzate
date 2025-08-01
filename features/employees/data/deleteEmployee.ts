@@ -1,11 +1,12 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function deleteEmployee(employeeId: number) {
-    try {
-        const prisma = new PrismaClient()
+    return actionWrapper(async () => {
+        /* const prisma = new PrismaClient() */
 
         const employee = await prisma.employee.findUnique({
             where: { id: employeeId },
@@ -35,7 +36,5 @@ export async function deleteEmployee(employeeId: number) {
             payload: employee,
             error: false
         }
-    } catch (error) {
-        return formatErrorResponse("Error deleting employee", error, null)
-    }
+    })
 } 

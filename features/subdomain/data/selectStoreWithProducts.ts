@@ -1,14 +1,15 @@
 "use server"
 
 import { SelectStoreWithProductsReturn } from "../types/types";
-import { formatErrorResponse } from "@/utils/lib";
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function selectStoreWithProducts(subdomain: string, category: string | undefined, sort: string | undefined, search: string | undefined, min: string | undefined, max: string | undefined, limit: number = 10, page: number = 1): Promise<SelectStoreWithProductsReturn> {
-    try {
+    return actionWrapper(async () => {
 
         const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
-        const prisma = new PrismaClient()
+        /* const prisma = new PrismaClient() */
 
         const categoryIds = category
             ? category.split(',').map(id => id.trim())
@@ -108,7 +109,8 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
                     take: limit,
                     skip: limit * (page - 1)
                 },
-                customization: true
+                customization: true,
+                operational_settings: true
             },
         })
 
@@ -118,7 +120,5 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
             error: false
         };
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching store with products from db", error, null);
-    }
+    })
 }

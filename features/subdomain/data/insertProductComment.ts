@@ -1,12 +1,13 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function insertProductComment(userId: number, productId: number, content: string) {
     return actionWrapper(async () => {
-        
-        const prisma = new PrismaClient()
+
+        /* const prisma = new PrismaClient() */
 
         const comment = await prisma.product_comments.create({
             data: {

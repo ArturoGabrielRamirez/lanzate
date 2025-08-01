@@ -10,6 +10,7 @@ import { Eye, MapPin, MoreHorizontal, Truck } from "lucide-react"
 import Link from "next/link"
 import ChangeOrderStatusButton from "./change-order-status-button"
 import CancelOrderButton from "./cancel-order-button"
+import { ExportOrdersButton } from "@/features/orders/components"
 import { useTranslations } from "next-intl"
 
 type Props = {
@@ -146,6 +147,7 @@ function OrdersTable({ data, slug, userId }: Props) {
             columns={columns}
             data={data}
             filterKey="id"
+            topActions={<ExportOrdersButton data={data} />}
         />
     )
 }

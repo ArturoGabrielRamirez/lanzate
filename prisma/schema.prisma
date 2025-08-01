@@ -28,6 +28,8 @@ model User {
   product_likes    product_likes[]
   Product          Product[]
   Store            Store[]
+  contracts_created Contract[]        @relation("ContractCreatedBy")
+  contracts_assigned ContractAssignment[] @relation("ContractAssignedBy")
 
   @@map("users")
 }
@@ -67,6 +69,7 @@ model Store {
   operational_settings StoreOperationalSettings?
   user                 User                      @relation(fields: [user_id], references: [id])
   transactions         Transaction[]
+  contracts            Contract[]
 
   @@map("stores")
 }
@@ -281,6 +284,8 @@ model Employee {
   orders_created       Order[]       @relation("OrderCreatedBy")
   orders_updated       Order[]       @relation("OrderUpdatedBy")
   transactions         Transaction[]
+  contract_assignments ContractAssignment[]
+  contract_responses   ContractResponse[]
 
   @@unique([user_id, store_id])
   @@map("employees")
@@ -320,6 +325,11 @@ model StoreOperationalSettings {
   contact_phone               String?
   contact_whatsapp            String?
   contact_email               String?
+  contact_phone_2             String?
+  contact_whatsapp_2          String?
+  facebook_url                String?
+  instagram_url               String?
+  x_url                       String?
   delivery_instructions       String?
   pickup_instructions         String?
   special_notes               String?
@@ -447,6 +457,56 @@ model StoreWidgetConfig {
   customization    StoreCustomization @relation(fields: [customization_id], references: [id], onDelete: Cascade)
 
   @@map("store_widget_configs")
+}
+
+model Contract {
+  id                Int                   @id @default(autoincrement())
+  store_id          Int
+  title             String
+  file_url          String
+  comments          String?
+  status            ContractStatus        @default(PENDING)
+  created_at        DateTime              @default(now())
+  updated_at        DateTime              @updatedAt
+  created_by        Int                   // user_id who created the contract
+  store             Store                 @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  created_by_user   User                  @relation("ContractCreatedBy", fields: [created_by], references: [id])
+  assignments       ContractAssignment[]
+  responses         ContractResponse[]
+
+  @@map("contracts")
+}
+
+model ContractAssignment {
+  id           Int              @id @default(autoincrement())
+  contract_id  Int
+  employee_id  Int
+  assigned_at  DateTime         @default(now())
+  status       ContractStatus   @default(PENDING)
+  assigned_by  Int              // user_id who assigned the contract
+  contract     Contract         @relation(fields: [contract_id], references: [id], onDelete: Cascade)
+  employee     Employee         @relation(fields: [employee_id], references: [id], onDelete: Cascade)
+  assigned_by_user User         @relation("ContractAssignedBy", fields: [assigned_by], references: [id])
+  responses    ContractResponse[]
+
+  @@unique([contract_id, employee_id]) // Evita asignaciones duplicadas
+  @@map("contract_assignments")
+}
+
+model ContractResponse {
+  id                   Int              @id @default(autoincrement())
+  contract_id          Int
+  employee_id          Int
+  assignment_id        Int?             // referencia a la asignación específica
+  status               ContractStatus
+  comments             String?
+  created_at           DateTime         @default(now())
+  updated_at           DateTime         @updatedAt
+  contract             Contract         @relation(fields: [contract_id], references: [id], onDelete: Cascade)
+  employee             Employee         @relation(fields: [employee_id], references: [id], onDelete: Cascade)
+  assignment           ContractAssignment? @relation(fields: [assignment_id], references: [id], onDelete: Cascade)
+
+  @@map("contract_responses")
 }
 
 model product_comments {
@@ -619,4 +679,12 @@ enum WidgetPosition {
   MODAL
   BANNER_TOP
   BANNER_BOTTOM
+}
+
+enum ContractStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  COMPLETED
+  EXPIRED
 }

@@ -1,11 +1,12 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper, formatErrorResponse } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function updateEmployee(employeeId: number, data: any) {
-    try {
-        const prisma = new PrismaClient()
+    return actionWrapper(async () => {
+        /* const prisma = new PrismaClient() */
 
         const employee = await prisma.employee.findUnique({
             where: { id: employeeId },
@@ -60,7 +61,5 @@ export async function updateEmployee(employeeId: number, data: any) {
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error updating employee", error, null)
-    }
+    })
 } 

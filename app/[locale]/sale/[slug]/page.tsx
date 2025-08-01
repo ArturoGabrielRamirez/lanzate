@@ -41,7 +41,7 @@ async function SaleStorePage({ params }: Props) {
                     label: store.name,
                     href: `/sale/${slug}`
                 }
-            ]} />
+            ]} className="hidden md:block"/>
 
             <SaleInterface 
                 storeName={store.name}

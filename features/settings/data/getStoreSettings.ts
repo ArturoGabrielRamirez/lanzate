@@ -1,12 +1,13 @@
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
 import { GetSettingsReturn } from "@/features/settings/types"
+import { prisma } from "@/utils/prisma"
 
 export async function getStoreSettings(storeId: number): Promise<GetSettingsReturn> {
     return actionWrapper(async () => {
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
-        let customization = await client.storeCustomization.findUnique({
+        let customization = await prisma.storeCustomization.findUnique({
             where: {
                 store_id: storeId
             }
@@ -14,7 +15,7 @@ export async function getStoreSettings(storeId: number): Promise<GetSettingsRetu
 
         // Si no existe, crear una con valores por defecto
         if (!customization) {
-            customization = await client.storeCustomization.create({
+            customization = await prisma.storeCustomization.create({
                 data: {
                     store_id: storeId,
                     // Los valores por defecto ya están definidos en el schema de Prisma

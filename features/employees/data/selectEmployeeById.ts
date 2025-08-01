@@ -1,11 +1,12 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function selectEmployeeById(id: number) {
-    try {
-        const prisma = new PrismaClient()
+    return actionWrapper(async () => {
+        /* const prisma = new PrismaClient() */
 
         const employee = await prisma.employee.findUnique({
             where: {
@@ -40,7 +41,5 @@ export async function selectEmployeeById(id: number) {
             message: "Employee details fetched successfully"
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching employee details", error)
-    }
+    })
 } 

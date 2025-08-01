@@ -1,15 +1,16 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib"
 import { SalesOverviewData } from "../types"
+import { prisma } from "@/utils/prisma"
 
 export async function getSalesOverview(storeId: number) {
-    try {
-        const client = new PrismaClient()
+    return actionWrapper(async () => {
+        /* const client = new PrismaClient() */
 
         // Get all orders for this store
-        const orders = await client.order.findMany({
+        const orders = await prisma.order.findMany({
             where: {
                 store_id: storeId,
                 is_paid: true
@@ -37,7 +38,5 @@ export async function getSalesOverview(storeId: number) {
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching sales overview", error, null)
-    }
+    })
 } 

@@ -1,16 +1,16 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 
 export async function selectUsersByFilter(filter: string, storeId: number, userId: number) {
-    console.log("🚀 ~ selectUsersByFilter ~ userId:", userId)
     return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
-        const users = await client.user.findMany({
+        const users = await prisma.user.findMany({
             where: {
                 OR: [
                     {

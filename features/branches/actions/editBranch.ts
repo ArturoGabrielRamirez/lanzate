@@ -5,18 +5,19 @@ import { updateBranch as updateBranchInDb } from "../data/updateBranch"
 import { revalidatePath } from "next/cache"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 // import { canEditBranch } from "../access/canEditBranch"
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
+import { prisma } from "@/utils/prisma"
 
 export async function editBranch(branchId: number, data: any, slug: string, userId: number) {
     return actionWrapper(async () => {
 
         // Check user can edit branch (must be store owner)
-        const client = new PrismaClient()
-        const branch = await client.branch.findUnique({
+        /* const client = new PrismaClient() */
+        const branch = await prisma.branch.findUnique({
             where: { id: branchId },
             include: { store: true }
         })
-        
+
         if (!branch) throw new Error("Branch not found")
         if (branch.store.user_id !== userId) throw new Error("User does not have permission to edit this branch")
 

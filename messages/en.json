@@ -568,6 +568,12 @@
             "description": "Description",
             "website": "Website",
             "no-description": "No description available",
+            "contact-phone": "Phone",
+            "contact-whatsapp": "WhatsApp",
+            "facebook": "Facebook",
+            "instagram": "Instagram",
+            "x-twitter": "X (Twitter)",
+            "not-provided": "Not provided",
             "danger-zone": "Danger zone",
             "delete-warning": "You can delete your store by clicking the button below.",
             "delete-irreversible": "Keep in mind that this action is irreversible and it will delete all the data associated with your store."
@@ -579,6 +585,13 @@
             "name": "Name",
             "description-field": "Description",
             "subdomain": "Subdomain",
+            "contact-section": "Contact Information",
+            "contact-phone": "Phone",
+            "contact-whatsapp": "WhatsApp",
+            "social-media-section": "Social Media",
+            "facebook-url": "Facebook URL",
+            "instagram-url": "Instagram URL",
+            "x-url": "X (Twitter) URL",
             "messages": {
                 "name-required": "Name is required",
                 "user-id-required": "User ID is required",
@@ -791,6 +804,15 @@
                 "actions": "Actions",
                 "view-details": "View details",
                 "open-menu": "Open menu"
+            },
+            "export": {
+                "button": "Export to Excel",
+                "payment_status": "Payment Status",
+                "created_at": "Created at",
+                "updated_at": "Updated at",
+                "no-customer": "No customer",
+                "no-shipping": "No shipping method",
+                "no-payment-status": "No payment status"
             }
         },
         "change-order-status": {
@@ -859,6 +881,12 @@
                 "actions": "Actions",
                 "view-details": "View details",
                 "open-menu": "Open menu"
+            },
+            "export": {
+                "button": "Export to Excel",
+                "description": "Description",
+                "created_at": "Created at",
+                "updated_at": "Updated at"
             }
         },
         "create-product": {

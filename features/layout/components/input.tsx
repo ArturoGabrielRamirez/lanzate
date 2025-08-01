@@ -17,6 +17,7 @@ type InputFieldProps = {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   startContent?: React.ReactNode
   endContent?: React.ReactNode
+  placeholder?: string
 }
 
 const InputField = ({
@@ -30,7 +31,8 @@ const InputField = ({
   containerClassName,
   onKeyDown,
   startContent,
-  endContent
+  endContent,
+  placeholder
 }: InputFieldProps) => {
   const {
     register,
@@ -50,6 +52,7 @@ const InputField = ({
       <Input
         id={name}
         type={type} 
+        placeholder={placeholder}
         {...register(name)}
         defaultValue={defaultValue}
         className={className}

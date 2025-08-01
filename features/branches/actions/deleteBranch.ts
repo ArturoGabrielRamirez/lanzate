@@ -5,18 +5,19 @@ import { deleteBranch as deleteBranchFromDb } from "../data/deleteBranch"
 import { revalidatePath } from "next/cache"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 // import { canDeleteBranch } from "../access/canDeleteBranch"
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
+import { prisma } from "@/utils/prisma"
 
 export async function deleteBranch(branchId: number, slug: string, userId: number) {
     return actionWrapper(async () => {
 
         // Check user can delete branch (must be store owner)
-        const client = new PrismaClient()
-        const branch = await client.branch.findUnique({
+        /* const client = new PrismaClient() */
+        const branch = await prisma.branch.findUnique({
             where: { id: branchId },
             include: { store: true }
         })
-        
+
         if (!branch) throw new Error("Branch not found")
         if (branch.store.user_id !== userId) throw new Error("User does not have permission to delete this branch")
 
