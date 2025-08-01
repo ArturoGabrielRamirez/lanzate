@@ -72,7 +72,7 @@ export async function insertContract(payload: any, storeId: number, userId: numb
                 }
             })
 
-            return true
+            return contract
         })
 
         return {

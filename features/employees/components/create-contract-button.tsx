@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { useTranslations } from "next-intl"
 import { ResponseType } from "@/features/layout/types"
 import { insertContract, getContracts, checkStorageBucket } from "@/features/employees/data"
 import { Contract } from "@/features/employees/types"
@@ -25,7 +24,6 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
     const [contracts, setContracts] = useState<Contract[]>([])
     const [loading, setLoading] = useState(false)
     const [bucketChecked, setBucketChecked] = useState(false)
-    const t = useTranslations("store.contracts")
 
     // Cargar contratos existentes cuando se abre el popup
     useEffect(() => {
