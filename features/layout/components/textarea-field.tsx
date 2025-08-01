@@ -1,39 +1,33 @@
 'use client'
 
 import { useFormContext } from 'react-hook-form'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 
-type InputFieldProps = {
+type TextareaFieldProps = {
   name: string
   label: string
-  type?: string
   defaultValue?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   value?: string
   className?: string
   containerClassName?: string
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
-  startContent?: React.ReactNode
-  endContent?: React.ReactNode
   placeholder?: string
+  rows?: number
 }
 
-const InputField = ({
+const TextareaField = ({
   name,
   label,
-  type = 'text',
   defaultValue,
   onChange,
   value,
   className,
   containerClassName,
-  onKeyDown,
-  startContent,
-  endContent,
-  placeholder
-}: InputFieldProps) => {
+  placeholder,
+  rows = 4
+}: TextareaFieldProps) => {
   const {
     register,
     formState: { errors },
@@ -49,16 +43,13 @@ const InputField = ({
   return (
     <div className={cn("flex flex-col gap-1", containerClassName)}>
       <Label htmlFor={name}>{label}</Label>
-      <Input
+      <Textarea
         id={name}
-        type={type} 
+        rows={rows}
         placeholder={placeholder}
         {...register(name)}
         defaultValue={defaultValue}
         className={className}
-        onKeyDown={onKeyDown}
-        startContent={startContent}
-        endContent={endContent}
         {...controlls}
       />
       {error && <p className="text-sm text-red-500">{error}</p>}
@@ -66,4 +57,4 @@ const InputField = ({
   )
 }
 
-export default InputField
+export default TextareaField 
