@@ -41,9 +41,9 @@ async function DashboardPage() {
                             grid-areas-[steps,stores,coming-soon,calendar,order]
                            md:grid-areas-[order_steps,coming-soon_steps,coming-soon_stores,coming-soon_calendar] 
                            md:grid-cols-[1fr_minmax(auto,300px)] 
-                           lg:grid-areas-[steps_coming-soon_order,steps_coming-soon_stores,calendar_coming-soon_stores,calendar_coming-soon_stores] 
+                           lg:grid-areas-[steps_coming-soon_order,steps_coming-soon_stores,calendar_coming-soon_stores,calendar_coming-soon_stores,empty_coming-soon_empty2] 
                            lg:grid-cols-[minmax(auto,300px)_1fr_minmax(auto,300px)] 
-                           gap-2 mg:gap-3 lg:gap-4">
+                           gap-2 mg:gap-3 lg:gap-4 lg:grid-rows-[min-content_auto_auto]">
 
                 {/* Dashboard Steps */}
                 <div className="area-steps md:area-[steps] lg:area-[steps]">

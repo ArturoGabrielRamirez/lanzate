@@ -96,7 +96,7 @@ async function ActivityFeed({ userId }: Props) {
                     <h2 className="text-2xl font-bold">Actividad Reciente</h2>
                 </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4 max-h-135 overflow-y-auto">
+            <CardContent className="space-y-4">
                 {feedItems.slice(0, 10).map((item) => (
                     <div key={item.id} className="space-y-3">
                         <div className="flex items-start space-x-3">
