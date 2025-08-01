@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Title } from "@/features/layout/components"
 import AddToCartButton from "@/features/store-landing/components/add-to-cart-button"
+import LikeButton from "@/features/store-landing/components/like-button"
 import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"
 import Comments from "@/features/subdomain/components/comments"
 import { Category } from "@prisma/client"
@@ -75,9 +76,7 @@ async function ProductDetailsPage({ params }: Props) {
                             <Button variant="outline" size="icon">
                                 <Share />
                             </Button>
-                            <Button variant="outline" size="icon">
-                                <Flame />
-                            </Button>
+                            <LikeButton productId={product.id} />
                         </div>
                     </div>
 
