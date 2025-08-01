@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "caddy": "caddy run",
-    "local-dev" : "concurrently 'bun caddy' 'bun dev'"
+    "local-dev": "concurrently 'bun caddy' 'bun dev'"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
