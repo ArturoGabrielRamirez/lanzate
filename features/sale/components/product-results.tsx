@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import type { ScannedProduct, ProductSearchByNameResult, ProductSearchResult } from '../types'
 import { useTranslations } from 'next-intl'
+import { cn } from '@/lib/utils'
 
 type ProductResultsProps = {
   searchResults: ProductSearchByNameResult
@@ -29,7 +30,7 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
   const hasAnyResults = hasSearchResults || hasBarcodeResult
 
   return (
-    <Card className="lg:area-[results] lg:col-span-2 gap-2">
+    <Card className={cn("lg:area-[results] lg:col-span-2 gap-2", !isLoading && !hasAnyResults && !searchResults.error && !barcodeResult.error && "hidden lg:block")}>
       <CardHeader className='gap-0'>
         <CardTitle className='flex items-center gap-2'>
           <Package className="size-5" />
@@ -176,7 +177,7 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
 
           {/* Empty state */}
           {!isLoading && !hasAnyResults && !searchResults.error && !barcodeResult.error && (
-            <div className="flex items-center justify-center py-4 lg:py-0 lg:h-32 border-2 border-dashed border-gray-300 rounded-lg">
+            <div className="hidden lg:flex items-center justify-center py-4 lg:py-0 lg:h-32 border-2 border-dashed border-gray-300 rounded-lg">
               <div className="text-center">
                 <Search className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
                 <p className="text-muted-foreground text-sm hidden lg:block">
