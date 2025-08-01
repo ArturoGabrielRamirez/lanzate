@@ -470,6 +470,24 @@
             "success-message": "Change calculated successfully",
             "error-message": "Error calculating change",
             "loading-message": "Calculating change..."
+        },
+        "finalize-sale": {
+            "title": "Finalize Sale",
+            "popup-title": "Confirm Sale",
+            "popup-description": "Total: {total} • {items} {itemText}",
+            "summary-title": "Sale Total",
+            "payment-method": "Payment method",
+            "transaction-type": "Transaction type",
+            "status": "Status",
+            "cash": "Cash",
+            "sale": "Sale",
+            "completed": "Completed",
+            "confirmation-message": "Are you sure you want to finalize this sale?",
+            "item": "item",
+            "items": "items",
+            "success-message": "Sale finalized successfully!",
+            "error-message": "Error finalizing sale",
+            "loading-message": "Finalizing sale..."
         }
     },
     "overview": {

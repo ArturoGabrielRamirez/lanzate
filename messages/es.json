@@ -1004,6 +1004,24 @@
             "success-message": "Vuelto calculado correctamente",
             "error-message": "Error al calcular el vuelto",
             "loading-message": "Calculando vuelto..."
+        },
+        "finalize-sale": {
+            "title": "Finalizar Venta",
+            "popup-title": "Confirmar Venta",
+            "popup-description": "Total: {total} • {items} {itemText}",
+            "summary-title": "Total de la Venta",
+            "payment-method": "Método de pago",
+            "transaction-type": "Tipo de transacción",
+            "status": "Estado",
+            "cash": "Efectivo",
+            "sale": "Venta",
+            "completed": "Completada",
+            "confirmation-message": "¿Estás seguro de que quieres finalizar esta venta?",
+            "item": "artículo",
+            "items": "artículos",
+            "success-message": "¡Venta finalizada exitosamente!",
+            "error-message": "Error al finalizar la venta",
+            "loading-message": "Finalizando venta..."
         }
     },
     "overview": {

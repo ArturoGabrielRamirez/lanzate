@@ -1,10 +1,11 @@
 "use client"
 
-import { CreditCard, RotateCcw, Trash2, Receipt } from 'lucide-react'
+import { RotateCcw, Trash2, Receipt } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
 import CalculateChangeButton from './calculate-change-button'
+import FinalizeSaleButton from './finalize-sale-button'
 
 type ActionsSectionProps = {
   cartTotal: number
@@ -21,9 +22,7 @@ function ActionsSection({
   cartTotal,
   cartItemCount,
   onFinalizeSale,
-  onRefund,
   onClearCart,
-  onCalculateChange,
   onPrintReceipt,
   disabled = false
 }: ActionsSectionProps) {
@@ -56,15 +55,13 @@ function ActionsSection({
           </div> */}
 
         {/* Botones principales */}
-        <Button
-          onClick={onFinalizeSale}
-          disabled={disabled || cartItemCount === 0}
+        <FinalizeSaleButton
+          cartTotal={cartTotal}
+          cartItemCount={cartItemCount}
+          onConfirm={onFinalizeSale}
+          disabled={disabled}
           className="lg:w-full text-base"
-          variant="default"
-        >
-          <CreditCard className="h-5 w-5" />
-          <span className='hidden lg:block'>{t('finalize-sale')}</span>
-        </Button>
+        />
 
         <CalculateChangeButton
           cartTotal={cartTotal}
@@ -82,7 +79,7 @@ function ActionsSection({
           <span className='hidden lg:block'>{t('print-receipt')}</span>
         </Button>
 
-        <Button
+        {/* <Button
           onClick={onRefund}
           disabled={disabled}
           className="lg:w-full"
@@ -90,7 +87,7 @@ function ActionsSection({
         >
           <RotateCcw className="h-4 w-4" />
           <span className='hidden lg:block'>{t('process-refund')}</span>
-        </Button>
+        </Button> */}
 
         {/* Botones de utilidad */}
         <Button
