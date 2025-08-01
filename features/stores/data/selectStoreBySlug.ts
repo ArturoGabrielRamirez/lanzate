@@ -1,7 +1,8 @@
 "use server"
 
-import { Branch, PrismaClient, Store } from '@prisma/client'
+import { Branch, Store } from '@prisma/client'
 import { formatErrorResponse } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 type SelectStoreBySlugReturn = {
     message: string
@@ -12,9 +13,7 @@ type SelectStoreBySlugReturn = {
 export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlugReturn> {
     try {
 
-        const client = new PrismaClient()
-
-        const store = await client.store.findUnique({
+        const store = await prisma.store.findUnique({
             where: {
                 slug: slug
             },
@@ -31,7 +30,7 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
             }
         })
 
-        const aggregate = await client.productStock.groupBy({
+        const aggregate = await prisma.productStock.groupBy({
             by: ["branch_id"],
             _sum: {
                 quantity: true

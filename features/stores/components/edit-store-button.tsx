@@ -19,12 +19,13 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
         return updateStore(slug, { 
             ...payload, 
             subdomain,
-            // Incluir los campos de operational_settings
-            contact_phone: payload.contact_phone || null,
-            contact_whatsapp: payload.contact_whatsapp || null,
-            facebook_url: payload.facebook_url || null,
-            instagram_url: payload.instagram_url || null,
-            x_url: payload.x_url || null,
+            // Incluir todos los campos de operational_settings
+            // Usar strings vacíos en lugar de null para permitir borrar campos
+            contact_phone: payload.contact_phone || "",
+            contact_whatsapp: payload.contact_whatsapp || "",
+            facebook_url: payload.facebook_url || "",
+            instagram_url: payload.instagram_url || "",
+            x_url: payload.x_url || "",
         }, userId)
     }
 
@@ -89,19 +90,19 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
                     name="facebook_url" 
                     label={t("facebook-url")} 
                     type="url" 
-                    defaultValue={(store.operational_settings as any)?.facebook_url || ""} 
+                    defaultValue={store.operational_settings?.facebook_url || ""} 
                 />
                 <InputField 
                     name="instagram_url" 
                     label={t("instagram-url")} 
                     type="url" 
-                    defaultValue={(store.operational_settings as any)?.instagram_url || ""} 
+                    defaultValue={store.operational_settings?.instagram_url || ""} 
                 />
                 <InputField 
                     name="x_url" 
                     label={t("x-url")} 
                     type="url" 
-                    defaultValue={(store.operational_settings as any)?.x_url || ""} 
+                    defaultValue={store.operational_settings?.x_url || ""} 
                 />
             </div>
         </ButtonWithPopup>
