@@ -1,15 +1,16 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib"
 import { ProductStoreCountData } from "../types"
+import { prisma } from "@/utils/prisma"
 
 export async function getProductStoreCount(storeId: number) {
-    try {
-        const client = new PrismaClient()
+    return actionWrapper(async () => {
+        /* const client = new PrismaClient() */
 
         // Get store with products and branches
-        const store = await client.store.findUnique({
+        const store = await prisma.store.findUnique({
             where: {
                 id: storeId
             },
@@ -41,7 +42,5 @@ export async function getProductStoreCount(storeId: number) {
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching product store count", error, null)
-    }
+    })
 } 

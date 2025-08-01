@@ -1,15 +1,16 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib"
 import { TopProductData } from "../types"
+import { prisma } from "@/utils/prisma"
 
 export async function getTopProducts(storeId: number, limit: number = 5) {
-    try {
-        const client = new PrismaClient()
+    return actionWrapper(async () => {
+        /* const client = new PrismaClient() */
 
         // Get order items with product info for this store
-        const orderItems = await client.orderItem.findMany({
+        const orderItems = await prisma.orderItem.findMany({
             where: {
                 order: {
                     store_id: storeId,
@@ -32,9 +33,9 @@ export async function getTopProducts(storeId: number, limit: number = 5) {
 
         orderItems.forEach(item => {
             const productId = item.product_id
-            const existing = productSales.get(productId) || { 
-                name: item.product.name, 
-                totalSold: 0, 
+            const existing = productSales.get(productId) || {
+                name: item.product.name,
+                totalSold: 0,
                 revenue: 0,
                 image: item.product.image || undefined
             }
@@ -65,7 +66,5 @@ export async function getTopProducts(storeId: number, limit: number = 5) {
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching top products", error, [])
-    }
+    })
 } 

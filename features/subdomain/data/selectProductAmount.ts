@@ -1,12 +1,13 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib";
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib";
+import { prisma } from "@/utils/prisma"
 
 export async function selectProductAmount(subdomain: string) {
-    try {
+    return actionWrapper(async () => {
 
-        const prisma = new PrismaClient();
+        /* const prisma = new PrismaClient(); */
 
         const productAmount = await prisma.product.count({
             where: {
@@ -21,7 +22,5 @@ export async function selectProductAmount(subdomain: string) {
             payload: productAmount || 0,
             error: false
         };
-    } catch (e) {
-        return formatErrorResponse("Error fetching product amount", e, null);
-    }
+    })
 }

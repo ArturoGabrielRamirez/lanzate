@@ -2,8 +2,9 @@
 
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getStoreBySubdomain } from "@/features/subdomain/actions/getStoreBySubdomain"
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper, formatErrorResponse } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 /* 
 ### 5.1 Nueva Orden de Compra
@@ -38,11 +39,11 @@ import { formatErrorResponse } from "@/utils/lib"
 
 */
 export async function insertNewOrder(formData: any, cart: any[], shippingMethod: "delivery" | "pickup", subdomain: string, userId: string) {
-    try {
+    return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
-        await client.$transaction(async (tx) => {
+        await prisma.$transaction(async (tx) => {
 
             const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
@@ -53,7 +54,7 @@ export async function insertNewOrder(formData: any, cart: any[], shippingMethod:
             if (storeError || !store) throw new Error(storeMessage)
 
             //get main branch
-            const mainBranch = await client.branch.findFirst({
+            const mainBranch = await prisma.branch.findFirst({
                 where: {
                     store_id: Number(store.id),
                 }
@@ -63,7 +64,7 @@ export async function insertNewOrder(formData: any, cart: any[], shippingMethod:
 
             for (const item of cart) {
 
-                const product = await client.product.findUnique({
+                const product = await prisma.product.findUnique({
                     where: {
                         id: Number(item.id)
                     }
@@ -188,7 +189,5 @@ export async function insertNewOrder(formData: any, cart: any[], shippingMethod:
             payload: null
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error inserting new order", error)
-    }
+    })
 }

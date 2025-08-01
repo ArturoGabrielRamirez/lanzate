@@ -1,7 +1,8 @@
 "use server"
 
-import { Branch, PrismaClient, Store } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+import { Branch/* , PrismaClient */, Store } from '@prisma/client'
+import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 type SelectStoreByIdReturn = {
     message: string
@@ -10,11 +11,11 @@ type SelectStoreByIdReturn = {
 }
 
 export async function selectStoreById(storeId: number): Promise<SelectStoreByIdReturn> {
-    try {
+    return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
-        const store = await client.store.findUnique({
+        const store = await prisma.store.findUnique({
             where: {
                 id: storeId
             },
@@ -30,7 +31,7 @@ export async function selectStoreById(storeId: number): Promise<SelectStoreByIdR
             }
         })
 
-        const aggregate = await client.productStock.groupBy({
+        const aggregate = await prisma.productStock.groupBy({
             by: ["branch_id"],
             _sum: {
                 quantity: true
@@ -50,7 +51,5 @@ export async function selectStoreById(storeId: number): Promise<SelectStoreByIdR
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching store from db", error, null)
-    }
+    })
 }

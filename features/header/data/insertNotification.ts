@@ -1,13 +1,14 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 
 export async function insertNotification(message: string) {
-    try {
+    return actionWrapper(async () => {
 
-        const prisma = new PrismaClient()
+        /* const prisma = new PrismaClient() */
 
         const notification = await prisma.notification.create({
             data: {
@@ -24,7 +25,5 @@ export async function insertNotification(message: string) {
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error creating notification", error)
-    }
+    })
 }

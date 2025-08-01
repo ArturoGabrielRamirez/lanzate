@@ -1,8 +1,9 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { prisma } from "@/utils/prisma"
 
 type ChangeOrderStatusData = {
     newStatus: string
@@ -13,10 +14,10 @@ type ChangeOrderStatusData = {
 export async function updateOrderStatus(orderId: number, data: ChangeOrderStatusData, userId: number) {
     return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
         // Usar transacción para asegurar consistencia
-        const updatedOrder = await client.$transaction(async (tx) => {
+        const updatedOrder = await prisma.$transaction(async (tx) => {
 
             // Obtener la orden con todas las relaciones necesarias
             const order = await tx.order.findUnique({

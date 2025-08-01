@@ -1,14 +1,15 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function getContracts(storeId: number) {
     return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
-        const contracts = await client.contract.findMany({
+        const contracts = await prisma.contract.findMany({
             where: {
                 store_id: storeId
             },
@@ -34,8 +35,6 @@ export async function getContracts(storeId: number) {
                 created_at: 'desc'
             }
         })
-
-        await client.$disconnect()
 
         return {
             error: false,

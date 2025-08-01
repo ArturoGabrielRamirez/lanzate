@@ -1,14 +1,15 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function deleteStore(storeId: number) {
     return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
-        const store = await client.store.findUnique({
+        const store = await prisma.store.findUnique({
             where: {
                 id: storeId
             }
@@ -16,7 +17,7 @@ export async function deleteStore(storeId: number) {
 
         if (!store) throw new Error("Store not found")
 
-        await client.store.delete({
+        await prisma.store.delete({
             where: {
                 id: store.id
             },

@@ -1,11 +1,12 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper, formatErrorResponse } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function selectUserStoreActivities(userId: number) {
-    try {
-        const prisma = new PrismaClient()
+    return actionWrapper(async () => {
+        /* const prisma = new PrismaClient() */
 
         // Get all stores owned by the user
         const userStores = await prisma.store.findMany({
@@ -110,7 +111,5 @@ export async function selectUserStoreActivities(userId: number) {
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching user store activities", error)
-    }
+    })
 } 

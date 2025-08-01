@@ -1,12 +1,13 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function getProductLikesCount(productId: number) {
     return actionWrapper(async () => {
-        
-        const prisma = new PrismaClient()
+
+        /* const prisma = new PrismaClient() */
 
         const result = await prisma.$queryRaw`
             SELECT COUNT(*) as count FROM product_likes 

@@ -1,16 +1,17 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function updateBranch(branchId: number, payload: any) {
     return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
         // If setting this branch as main, first unset all other branches as main
         if (payload.is_main === true) {
-            const currentBranch = await client.branch.findUnique({
+            const currentBranch = await prisma.branch.findUnique({
                 where: { id: branchId },
                 include: { store: true }
             })
@@ -18,7 +19,7 @@ export async function updateBranch(branchId: number, payload: any) {
             if (!currentBranch) throw new Error("Branch not found")
 
             // Unset all other branches as main for this store
-            await client.branch.updateMany({
+            await prisma.branch.updateMany({
                 where: {
                     store_id: currentBranch.store_id,
                     id: { not: branchId }
@@ -31,14 +32,14 @@ export async function updateBranch(branchId: number, payload: any) {
 
         // If unsetting this branch as main, ensure there's at least one main branch
         if (payload.is_main === false) {
-            const currentBranch = await client.branch.findUnique({
+            const currentBranch = await prisma.branch.findUnique({
                 where: { id: branchId },
                 include: { store: true }
             })
 
             if (!currentBranch) throw new Error("Branch not found")
 
-            const otherMainBranches = await client.branch.count({
+            const otherMainBranches = await prisma.branch.count({
                 where: {
                     store_id: currentBranch.store_id,
                     id: { not: branchId },
@@ -51,7 +52,7 @@ export async function updateBranch(branchId: number, payload: any) {
             }
         }
 
-        const branch = await client.branch.update({
+        const branch = await prisma.branch.update({
             where: {
                 id: branchId
             },

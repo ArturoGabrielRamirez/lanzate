@@ -1,7 +1,8 @@
 "use server"
 
-import { PrismaClient, Store } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+import { /* PrismaClient, */ Store } from '@prisma/client'
+import { actionWrapper, formatErrorResponse } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 type GetStoresFromUserReturn = {
     message: string
@@ -10,11 +11,11 @@ type GetStoresFromUserReturn = {
 }
 
 export async function getStoresFromUser(userId: number): Promise<GetStoresFromUserReturn> {
-    try {
+    return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
-        const stores = await client.store.findMany({
+        const stores = await prisma.store.findMany({
             where: {
                 OR: [
                     {
@@ -37,7 +38,5 @@ export async function getStoresFromUser(userId: number): Promise<GetStoresFromUs
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching stores from db", error, [])
-    }
+    })
 }

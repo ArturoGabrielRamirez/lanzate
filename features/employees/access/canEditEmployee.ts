@@ -1,17 +1,19 @@
 "use server"
 
 import { getUserById } from "@/features/layout/data/getUserById"
-import { PrismaClient } from '@prisma/client'
+import { actionWrapper } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { prisma } from "@/utils/prisma"
 
 export async function canEditEmployee(employeeId: number, userId: number) {
-    try {
+    return actionWrapper(async () => {
         const { payload: user, error: userError } = await getUserById(userId)
 
         if (userError || !user) return false
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
-        const employee = await client.employee.findUnique({
+        const employee = await prisma.employee.findUnique({
             where: {
                 id: employeeId
             },
@@ -26,7 +28,5 @@ export async function canEditEmployee(employeeId: number, userId: number) {
         if (employee.store.user_id !== userId) return false
 
         return true
-    } catch (error) {
-        return false
-    }
+    })
 } 
