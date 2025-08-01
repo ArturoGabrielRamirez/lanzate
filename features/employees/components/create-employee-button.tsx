@@ -2,20 +2,23 @@
 
 import { Button } from "@/components/ui/button"
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
-import { Plus, Search, Check, UserCheck, Loader } from "lucide-react"
+import { Plus, Search, Check, UserCheck, Loader, FileText } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 import { getEmployeesByFilter } from "../actions/getEmployeesByFilter"
 import { createEmployee } from "../actions/createEmployee"
 import { ResponseType } from "@/features/layout/types"
-import { CreateEmployeeButtonProps, UserWithEmployeeStatus } from "../types"
+import { CreateEmployeeButtonProps, UserWithEmployeeStatus, Contract } from "../types"
 import { useTranslations } from "next-intl"
+import { assignContractToEmployee } from "../data"
+import ContractsSelector from "./contracts-selector"
 
 export default function CreateEmployeeButton({ storeId, userId }: CreateEmployeeButtonProps) {
 
     const [search, setSearch] = useState('')
     const [users, setUsers] = useState<UserWithEmployeeStatus[]>([])
     const [selectedUser, setSelectedUser] = useState<UserWithEmployeeStatus | null>(null)
+    const [selectedContract, setSelectedContract] = useState<Contract | null>(null)
     const [isSearching, setIsSearching] = useState(false)
     const t = useTranslations("store.create-employee")
 
@@ -47,8 +50,26 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
                 }
             }
 
+            // Si hay un contrato seleccionado, asignarlo al empleado
+            if (selectedContract && employee) {
+                try {
+                    const contractResult = await assignContractToEmployee(selectedContract.id, employee.id, userId)
+                    if (contractResult.error) {
+                        console.error("Error assigning contract:", contractResult.message)
+                        // No fallamos la creación del empleado si falla la asignación del contrato
+                        toast.warning("Empleado creado pero hubo un problema al asignar el contrato")
+                    } else {
+                        toast.success("Empleado creado y contrato asignado exitosamente")
+                    }
+                } catch (contractError) {
+                    console.error("Error assigning contract:", contractError)
+                    toast.warning("Empleado creado pero hubo un problema al asignar el contrato")
+                }
+            }
+
             // Reset form
             setSelectedUser(null)
+            setSelectedContract(null)
             setUsers([])
             setSearch('')
 
@@ -105,7 +126,13 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
         // Only allow selection if user is not already an employee
         if (!user.isEmployee) {
             setSelectedUser(user)
+            // Reset contract selection when user changes
+            setSelectedContract(null)
         }
+    }
+
+    const handleContractSelect = (contract: Contract | null) => {
+        setSelectedContract(contract)
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -139,6 +166,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
                     {t("search-button")}
                 </Button>
             </div>
+            
             {selectedUser && (
                 <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
                     <div className="flex items-center gap-2">
@@ -186,9 +214,39 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
                     </div>
                 </div>
             )}
+            
             {users.length === 0 && search.trim() && !selectedUser && (
                 <div className="mt-4">
                     <p className="text-sm text-muted-foreground">{t("messages.no-users-found")}</p>
+                </div>
+            )}
+
+            {/* Sección de selección de contratos - solo se muestra cuando hay un usuario seleccionado */}
+            {selectedUser && (
+                <div className="mt-6 border-t pt-4">
+                    <div className="flex items-center gap-2 mb-3">
+                        <FileText className="w-4 h-4" />
+                        <h3 className="text-sm font-medium">Asignar Contrato (Opcional)</h3>
+                    </div>
+                    
+                    {selectedContract && (
+                        <div className="mb-3 p-2 bg-blue-50 border border-blue-200 rounded-md">
+                            <div className="flex items-center gap-2">
+                                <Check className="text-blue-600 size-4" />
+                                <span className="text-sm font-medium text-blue-800">Contrato seleccionado</span>
+                            </div>
+                            <div className="mt-1 text-sm text-blue-700">
+                                {selectedContract.title}
+                            </div>
+                        </div>
+                    )}
+
+                    <ContractsSelector
+                        storeId={storeId}
+                        selectedContractId={selectedContract?.id || null}
+                        onContractSelect={handleContractSelect}
+                        employeeId={selectedUser?.employeeData?.id}
+                    />
                 </div>
             )}
         </ButtonWithPopup>

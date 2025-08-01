@@ -1,11 +1,12 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+import { actionWrapper } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { prisma } from "@/utils/prisma"
 
 export async function getProductByBarcode(barcode: string, storeId: number) {
-    try {
-        const prisma = new PrismaClient()
+    return actionWrapper(async () => {
+        /* const prisma = new PrismaClient() */
 
         const product = await prisma.product.findFirst({
             where: {
@@ -43,7 +44,5 @@ export async function getProductByBarcode(barcode: string, storeId: number) {
             },
             error: false
         }
-    } catch (error) {
-        return formatErrorResponse("Error searching product by barcode", error, null)
-    }
+    })
 } 

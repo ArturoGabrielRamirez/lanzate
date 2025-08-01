@@ -3,7 +3,7 @@ import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { updateStore } from "../actions/updateStore"
 import { editSchema } from "../schemas/store-schema"
 import { formatErrorResponse } from "@/utils/lib"
-import { Pencil } from "lucide-react"
+import { Pencil, Phone, MessageCircle } from "lucide-react"
 import { useState } from "react"
 import { EditStoreButtonProps } from "@/features/stores/types"
 import { useTranslations } from "next-intl"
@@ -16,7 +16,17 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
     const handleEditStore = async (payload: any) => {
         if (!payload.name) return formatErrorResponse(t("messages.name-required"), null, null)
         if (!userId) return formatErrorResponse(t("messages.user-id-required"), null, null)
-        return updateStore(slug, { ...payload, subdomain }, userId)
+        return updateStore(slug, { 
+            ...payload, 
+            subdomain,
+            // Incluir todos los campos de operational_settings
+            // Usar strings vacíos en lugar de null para permitir borrar campos
+            contact_phone: payload.contact_phone || "",
+            contact_whatsapp: payload.contact_whatsapp || "",
+            facebook_url: payload.facebook_url || "",
+            instagram_url: payload.instagram_url || "",
+            x_url: payload.x_url || "",
+        }, userId)
     }
 
     const handleSubdomainChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +58,52 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
                 <span className="text-muted-foreground pointer-events-none select-none">
                     .lanzate.com
                 </span>
+            </div>
+
+            {/* Sección de Contacto */}
+            <div className="space-y-4 pt-4 border-t">
+                <h4 className="text-sm font-medium flex items-center gap-2">
+                    <Phone className="size-4" />
+                    {t("contact-section")}
+                </h4>
+                <InputField 
+                    name="contact_phone" 
+                    label={t("contact-phone")} 
+                    type="tel" 
+                    defaultValue={store.operational_settings?.contact_phone || ""} 
+                />
+                <InputField 
+                    name="contact_whatsapp" 
+                    label={t("contact-whatsapp")} 
+                    type="tel" 
+                    defaultValue={store.operational_settings?.contact_whatsapp || ""} 
+                />
+            </div>
+
+            {/* Sección de Redes Sociales */}
+            <div className="space-y-4 pt-4 border-t">
+                <h4 className="text-sm font-medium flex items-center gap-2">
+                    <MessageCircle className="size-4" />
+                    {t("social-media-section")}
+                </h4>
+                <InputField 
+                    name="facebook_url" 
+                    label={t("facebook-url")} 
+                    type="url" 
+                    defaultValue={store.operational_settings?.facebook_url || ""} 
+                />
+                <InputField 
+                    name="instagram_url" 
+                    label={t("instagram-url")} 
+                    type="url" 
+                    defaultValue={store.operational_settings?.instagram_url || ""} 
+                />
+                <InputField 
+                    name="x_url" 
+                    label={t("x-url")} 
+                    type="url" 
+                    defaultValue={store.operational_settings?.x_url || ""} 
+                />
             </div>
         </ButtonWithPopup>
     )

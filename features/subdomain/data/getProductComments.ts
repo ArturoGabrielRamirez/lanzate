@@ -1,12 +1,13 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function getProductComments(productId: number) {
     return actionWrapper(async () => {
-        
-        const prisma = new PrismaClient()
+
+        /* const prisma = new PrismaClient() */
 
         const comments = await prisma.product_comments.findMany({
             where: {

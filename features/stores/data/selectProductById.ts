@@ -1,12 +1,13 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function selectProductById(id: number) {
-    try {
+    return actionWrapper(async () => {
 
-        const prisma = new PrismaClient()
+        /* const prisma = new PrismaClient() */
 
         const product = await prisma.product.findUnique({
             where: {
@@ -25,7 +26,5 @@ export async function selectProductById(id: number) {
             message: "Product details fetched successfully"
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching product details", error)
-    }
+    })
 }

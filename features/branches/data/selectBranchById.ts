@@ -1,11 +1,12 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function selectBranchById(id: number) {
-    try {
-        const prisma = new PrismaClient()
+    return actionWrapper(async () => {
+        /* const prisma = new PrismaClient() */
 
         const branch = await prisma.branch.findUnique({
             where: {
@@ -53,8 +54,5 @@ export async function selectBranchById(id: number) {
             error: false,
             message: "Branch details fetched successfully"
         }
-
-    } catch (error) {
-        return formatErrorResponse("Error fetching branch details", error)
-    }
+    })
 } 

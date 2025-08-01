@@ -3,7 +3,7 @@
   "version": "0.25.2",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "NODE_NO_WARNINGS=1 next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -61,6 +61,7 @@
     "tsx": "^4.20.3",
     "use-query-params": "^2.2.1",
     "vaul": "^1.1.2",
+    "xlsx-js-style": "^1.2.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {

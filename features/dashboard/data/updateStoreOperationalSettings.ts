@@ -1,18 +1,19 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
 import { UpdateOperationalSettingsReturn, StoreOperationalSettingsForm } from "../types/operational-settings"
+import { prisma } from "@/utils/prisma"
 
 export async function updateStoreOperationalSettings(
     storeId: number, 
     settings: StoreOperationalSettingsForm
 ): Promise<UpdateOperationalSettingsReturn> {
     return actionWrapper(async () => {
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
         // Actualizar o crear la configuración operacional
-        const operationalSettings = await client.storeOperationalSettings.upsert({
+        const operationalSettings = await prisma.storeOperationalSettings.upsert({
             where: {
                 store_id: storeId
             },

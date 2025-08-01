@@ -32,10 +32,10 @@ async function DashboardPage() {
         <section className="p-4 flex flex-col pt-13 md:pt-17">
             <Title title={(
                 <div className="flex items-center gap-2">
-                    <Hand />
+                    <Hand className="size-4 md:size-5 lg:size-6" />
                     {t("title")}
                 </div>
-            )} showDate />
+            )} showDate className="hidden md:block"/>
 
             <div className="grid grid-cols-1 
                             grid-areas-[steps,stores,coming-soon,calendar,order]
@@ -43,7 +43,7 @@ async function DashboardPage() {
                            md:grid-cols-[1fr_minmax(auto,300px)] 
                            lg:grid-areas-[steps_coming-soon_order,steps_coming-soon_stores,calendar_coming-soon_stores,calendar_coming-soon_stores,empty_coming-soon_empty2] 
                            lg:grid-cols-[minmax(auto,300px)_1fr_minmax(auto,300px)] 
-                           gap-2 mg:gap-3 lg:gap-4 lg:grid-rows-[min-content_auto_auto]">
+                           gap-4 mg:gap-3 lg:gap-4 lg:grid-rows-[min-content_auto_auto]">
 
                 {/* Dashboard Steps */}
                 <div className="area-steps md:area-[steps] lg:area-[steps]">
@@ -52,7 +52,7 @@ async function DashboardPage() {
                 </div>
 
                 {/* Activity Feed */}
-                <div className="area-[coming-soon] md:area-[coming-soon] lg:area-[coming-soon] pt-1 md:pt-0">
+                <div className="area-[coming-soon] md:area-[coming-soon] lg:area-[coming-soon] md:pt-0">
                     <Suspense fallback={<ActivityFeedSkeleton />}>
                         <ActivityFeed userId={user.id} />
                     </Suspense>
@@ -60,9 +60,9 @@ async function DashboardPage() {
 
                 {/* Store Management Section */}
                 {dashboardData.storeCount > 0 && (
-                    <div className="area-[stores] md:area-[stores] lg:area-[stores] border-t md:border-t-0 pt-1 md:pt-0 border-b md:border-b-0 pb-3 md:pb-0">
+                    <div className="area-[stores] md:area-[stores] lg:area-[stores] border-t md:border-t-0 pt-2 md:pt-0 border-b md:border-b-0 pb-4 md:pb-0">
                         <div className="flex items-center justify-between mb-4 md:mb-6">
-                            <h2 className="text-xl md:text-2xl font-bold leading-tight">
+                            <h2 className="text-xl md:text-2xl font-bold leading-6">
                                 {t("your-stores.title", { count: dashboardData.storeCount })}
                             </h2>
                             <Link

@@ -1,12 +1,13 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function getStoreLogsBySlug(slug: string) {
     return actionWrapper(async () => {
 
-        const prisma = new PrismaClient()
+        /* const prisma = new PrismaClient() */
 
         // First get the store to verify it exists
         const store = await prisma.store.findUnique({

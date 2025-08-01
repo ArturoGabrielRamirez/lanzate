@@ -1,14 +1,15 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function insertEmployee(userId: number, storeId: number, role: string = "EMPLOYEE") {
     return actionWrapper(async () => {
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
         
         // Check if user is already an employee in this store
-        const existingEmployee = await client.employee.findUnique({
+        const existingEmployee = await prisma.employee.findUnique({
             where: {
                 user_id_store_id: {
                     user_id: userId,
@@ -22,7 +23,7 @@ export async function insertEmployee(userId: number, storeId: number, role: stri
         }
 
         // Create new employee
-        const employee = await client.employee.create({
+        const employee = await prisma.employee.create({
             data: {
                 user_id: userId,
                 store_id: storeId,

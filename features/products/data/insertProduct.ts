@@ -1,19 +1,20 @@
 "use server"
 
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
 import { createServerSideClient } from "@/utils/supabase/server"
 import randomstring from "randomstring"
+import { prisma } from "@/utils/prisma"
 
 export async function insertProduct(payload: any, storeId: number, userId: number) {
     return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
         const supabase = createServerSideClient()
 
         // Usar transacción para asegurar consistencia
-        const result = await client.$transaction(async (tx) => {
+        const result = await prisma.$transaction(async (tx) => {
 
             const store = await tx.store.findUnique({
                 where: {
@@ -34,17 +35,27 @@ export async function insertProduct(payload: any, storeId: number, userId: numbe
             // Si hay imagen, subirla primero antes de crear el producto
             let imageUrl: string | null = null
             if (payload.image) {
-                const { data, error } = await supabase.storage
-                    .from("product-images")
-                    .upload(payload.image.name, payload.image)
-
-                if (error) throw new Error(error.message)
 
                 const { data: { publicUrl } } = supabase.storage
                     .from("product-images")
-                    .getPublicUrl(data.path)
+                    .getPublicUrl(payload.image.name)
 
-                imageUrl = publicUrl
+                if (publicUrl) {
+                    imageUrl = publicUrl
+                } else {
+
+                    const { data, error } = await supabase.storage
+                        .from("product-images")
+                        .upload(payload.image.name, payload.image)
+
+                    if (error) throw new Error(error.message)
+
+                    const { data: { publicUrl } } = supabase.storage
+                        .from("product-images")
+                        .getPublicUrl(data.path)
+
+                    imageUrl = publicUrl
+                }
             }
 
             const product = await tx.product.create({

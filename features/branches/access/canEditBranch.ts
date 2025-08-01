@@ -1,15 +1,16 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function canEditBranch(branchId: number, userId: number) {
     return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
         // Get branch with store info
-        const branch = await client.branch.findUnique({
+        const branch = await prisma.branch.findUnique({
             where: {
                 id: branchId
             },

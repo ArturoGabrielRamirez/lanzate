@@ -26,7 +26,7 @@ function SidebarSearchInput() {
     }
 
     return (
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
             <Input placeholder={t("search")} value={searchValue} onChange={handleChange} />
             <Button variant="outline" onClick={handleSubmit}>
                 <Search />

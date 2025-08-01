@@ -95,7 +95,7 @@ function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-center grow border-2 border-dashed border-muted-foreground/20 rounded-lg">
+          <div className="flex items-center justify-center grow border-2 border-dashed border-muted-foreground/20 rounded-lg py-4">
             <div className="text-center">
               <ShoppingBasket className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
               <p className="text-muted-foreground text-sm">

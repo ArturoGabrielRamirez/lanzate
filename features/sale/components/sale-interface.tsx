@@ -31,7 +31,7 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
     isLoading: false,
     error: false
   })
-  
+
   const t = useTranslations('sale.messages')
 
   const handleProductScanned = async (barcode: string) => {
@@ -89,7 +89,7 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
 
   const handleSearchResults = (results: ProductSearchByNameResult) => {
     setSearchResults(results)
-    
+
     // Limpiar resultados de código de barras cuando se busca por texto
     if (results.products.length > 0 || results.isLoading) {
       setBarcodeResult({
@@ -193,15 +193,23 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
   } */
 
   return (
-    <div className="grid grid-cols-1 lg:grid-areas-[search_barcode_cart,results_results_cart,buttons_buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_1fr_350px] xl:grid-cols-[1fr_1fr_450px] lg:grid-rows-[min-content_1fr_min-content]">
+    <div className="grid grid-cols-1 lg:grid-areas-[search_barcode_cart,results_results_cart,buttons_buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_1fr_350px] xl:grid-cols-[1fr_1fr_450px] grid-rows-[min-content_1fr_min-content]">
+      
+      <div className='grid grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-2'>
+        <SearchSection
+          storeId={storeId}
+          onAddToCart={handleAddToCart}
+          onSearchResults={handleSearchResults}
+        />
 
-      <SearchSection
-        storeId={storeId}
+        <BarcodeScannerUSB onProductScanned={handleProductScanned} />
+      </div>
+
+      <ProductResults
+        searchResults={searchResults}
+        barcodeResult={barcodeResult}
         onAddToCart={handleAddToCart}
-        onSearchResults={handleSearchResults}
       />
-
-      <BarcodeScannerUSB onProductScanned={handleProductScanned} />
 
       <CartSection
         cartItems={cartItems}
@@ -209,11 +217,6 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
         onRemoveItem={handleRemoveItem}
       />
 
-      <ProductResults
-        searchResults={searchResults}
-        barcodeResult={barcodeResult}
-        onAddToCart={handleAddToCart}
-      />
 
       <ActionsSection
         cartTotal={cartTotal}

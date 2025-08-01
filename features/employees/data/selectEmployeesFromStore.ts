@@ -1,14 +1,15 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function selectEmployeesFromStore(storeId: number) {
     return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
-        const employees = await client.employee.findMany({
+        const employees = await prisma.employee.findMany({
             where: {
                 store_id: storeId
             },
