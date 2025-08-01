@@ -39,7 +39,7 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
   })
 
   return (
-    <Card className={`lg:area-[barcode] ${className || ''}`}>
+    <Card className={`!py-2 lg:!py-3 ${className || ''}`}>
       <CardContent className="flex justify-between grow">
         {/* Scanner Status */}
         {/* <div className="flex items-center justify-between p-4 rounded-lg border bg-muted/20"> */}

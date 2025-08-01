@@ -65,7 +65,7 @@ function SearchSection({ storeId, onSearchResults }: SearchSectionProps) {
           error: payload.length === 0
         }
       }
-      
+
       setSearchResult(result)
       onSearchResults(result)
     } catch (error) {
@@ -91,24 +91,18 @@ function SearchSection({ storeId, onSearchResults }: SearchSectionProps) {
   }, [searchTerm, storeId])
 
   return (
-    <Card className='lg:area-[search] h-fit'>
-      <CardContent>
-        <div className="space-y-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder={t('placeholder')}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-            {searchResult.isLoading && (
-              <Loader2 className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 animate-spin text-muted-foreground" />
-            )}
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="relative flex items-center h-full">
+      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+      <Input
+        placeholder={t('placeholder')}
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="pl-10 py-0 h-full rounded-xl"
+      />
+      {searchResult.isLoading && (
+        <Loader2 className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 animate-spin text-muted-foreground" />
+      )}
+    </div>
   )
 }
 
