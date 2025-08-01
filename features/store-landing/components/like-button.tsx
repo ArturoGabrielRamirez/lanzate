@@ -1,5 +1,5 @@
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getLikeStatus } from "../actions/getLikeStatus"
+import { getProductLikeInfo } from "../data/getProductLikeInfo"
 import LikeButtonClient from "./like-button-client"
 
 type Props = {
@@ -10,20 +10,18 @@ async function LikeButton({ productId }: Props) {
 
     const { payload: user } = await getUserInfo()
     
-    // Verificar si el producto ya tiene like del usuario
-    let isLiked = false
-    if (user) {
-        const { payload: likeData, error } = await getLikeStatus(user.id, productId)
-        if (!error && likeData) {
-            isLiked = likeData.isLiked
-        }
-    }
+    // Obtener el estado del like y el conteo total
+    const { payload: likeInfo, error } = await getProductLikeInfo(user?.id || null, productId)
+    
+    const isLiked = likeInfo?.isLiked || false
+    const count = likeInfo?.count || 0
 
     return (
         <LikeButtonClient 
             productId={productId}
             user={user}
             initialLiked={isLiked}
+            initialCount={count}
         />
     )
 }
