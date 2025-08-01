@@ -768,6 +768,12 @@
                 "actions": "Acciones",
                 "view-details": "Ver detalles",
                 "open-menu": "Abrir menú"
+            },
+            "export": {
+                "button": "Exportar a Excel",
+                "description": "Descripción",
+                "created_at": "Fecha de creación",
+                "updated_at": "Fecha de actualización"
             }
         },
         "create-product": {

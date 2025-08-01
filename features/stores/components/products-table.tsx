@@ -8,7 +8,7 @@ import { MoreHorizontal } from "lucide-react"
 import { Eye } from "lucide-react"
 import { Product, Category } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { CreateProductButton, DeleteProductButton, EditProductButton } from "@/features/products/components"
+import { CreateProductButton, DeleteProductButton, EditProductButton, ExportProductsButton } from "@/features/products/components"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 
@@ -124,7 +124,12 @@ function ProductsTable({ data, userId, slug, storeId }: Props) {
             columns={columns}
             data={data}
             filterKey="name"
-            topActions={<CreateProductButton storeId={storeId} userId={userId} />}
+            topActions={
+                <div className="flex items-center gap-2">
+                    <ExportProductsButton data={data} />
+                    <CreateProductButton storeId={storeId} userId={userId} />
+                </div>
+            }
         />
     )
 }

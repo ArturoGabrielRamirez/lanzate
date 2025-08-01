@@ -872,6 +872,12 @@
                 "actions": "Actions",
                 "view-details": "View details",
                 "open-menu": "Open menu"
+            },
+            "export": {
+                "button": "Export to Excel",
+                "description": "Description",
+                "created_at": "Created at",
+                "updated_at": "Updated at"
             }
         },
         "create-product": {
