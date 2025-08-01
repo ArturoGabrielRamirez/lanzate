@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Calculator } from 'lucide-react'
-import { ButtonWithPopup, Form, InputField } from '@/features/layout/components'
+import { ButtonWithPopup, InputField } from '@/features/layout/components'
 import { useTranslations } from 'next-intl'
 import * as Yup from 'yup'
 

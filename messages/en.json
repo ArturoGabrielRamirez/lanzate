@@ -483,6 +483,7 @@
             "sale": "Sale",
             "completed": "Completed",
             "confirmation-message": "Are you sure you want to finalize this sale?",
+            "info-message": "Toggle the switch above to confirm and finalize the sale",
             "item": "item",
             "items": "items",
             "success-message": "Sale finalized successfully!",

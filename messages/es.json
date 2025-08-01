@@ -1017,6 +1017,7 @@
             "sale": "Venta",
             "completed": "Completada",
             "confirmation-message": "¿Estás seguro de que quieres finalizar esta venta?",
+            "info-message": "Activa el switch de arriba para confirmar y finalizar la venta",
             "item": "artículo",
             "items": "artículos",
             "success-message": "¡Venta finalizada exitosamente!",

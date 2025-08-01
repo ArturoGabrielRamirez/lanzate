@@ -1,6 +1,6 @@
 "use client"
 
-import { RotateCcw, Trash2, Receipt } from 'lucide-react'
+import { Trash2, Receipt } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'

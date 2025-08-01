@@ -2,8 +2,10 @@
 
 import { CreditCard } from 'lucide-react'
 import { ButtonWithPopup } from '@/features/layout/components'
+import { Switch } from '@/components/ui/switch'
+import { Label } from '@/components/ui/label'
 import { useTranslations } from 'next-intl'
-import * as Yup from 'yup'
+/* import * as Yup from 'yup' */
 
 type FinalizeSaleButtonProps = {
   cartTotal: number
@@ -17,11 +19,11 @@ type FinalizeSaleFormData = {
   confirmed: boolean
 }
 
-const finalizeSaleSchema = Yup.object({
+/* const finalizeSaleSchema = Yup.object({
   confirmed: Yup.boolean()
     .oneOf([true], 'Debes confirmar la venta para continuar')
     .required('Confirmación requerida')
-})
+}) */
 
 function FinalizeSaleButton({ cartTotal, cartItemCount, disabled = false, className, onConfirm }: FinalizeSaleButtonProps) {
   const t = useTranslations('sale.finalize-sale')
@@ -35,6 +37,7 @@ function FinalizeSaleButton({ cartTotal, cartItemCount, disabled = false, classN
 
   const handleFinalizeSale = async (data: FinalizeSaleFormData) => {
     // Llamar a la función de confirmación pasada como prop
+    console.log("finalizar venta")
     onConfirm()
     return { error: false, payload: data, message: 'Venta finalizada correctamente' }
   }
@@ -54,7 +57,7 @@ function FinalizeSaleButton({ cartTotal, cartItemCount, disabled = false, classN
         itemText: cartItemCount === 1 ? t('item') : t('items')
       })}
       action={handleFinalizeSale}
-      schema={finalizeSaleSchema}
+      /* schema={finalizeSaleSchema} */
       disabled={disabled || cartItemCount === 0}
       className={className}
       variant="default"
@@ -98,11 +101,19 @@ function FinalizeSaleButton({ cartTotal, cartItemCount, disabled = false, classN
           </div>
         </div>
 
-        {/* Mensaje de confirmación */}
+        {/* Switch de confirmación */}
+        <div className="flex items-center space-x-2">
+          <Switch id="confirm-sale" name="confirmed" />
+          <Label htmlFor="confirm-sale" className="text-sm font-medium">
+            {t('confirmation-message')}
+          </Label>
+        </div>
+
+        {/* Mensaje informativo */}
         <div className="p-3 bg-blue-50 dark:bg-blue-950/20 rounded-md border border-blue-200 dark:border-blue-800">
           <div className="text-center">
-            <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">
-              {t('confirmation-message')}
+            <p className="text-sm text-blue-700 dark:text-blue-300">
+              {t('info-message')}
             </p>
           </div>
         </div>
