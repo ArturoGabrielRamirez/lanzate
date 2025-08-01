@@ -4,6 +4,7 @@
 import { actionWrapper } from "@/utils/lib"
 import { createServerSideClient } from "@/utils/supabase/server"
 import { prisma } from "@/utils/prisma"
+import randomstring from "randomstring"
 
 export async function insertContract(payload: any, storeId: number, userId: number) {
     return actionWrapper(async () => {
@@ -29,7 +30,7 @@ export async function insertContract(payload: any, storeId: number, userId: numb
                 const file = payload.file[0]
 
                 // Generar nombre único para el archivo
-                const fileName = `${Date.now()}-${file.name}`
+                const fileName = `${randomstring.generate(10)}`
 
                 const { data, error } = await supabase.storage
                     .from("contracts")
@@ -71,7 +72,7 @@ export async function insertContract(payload: any, storeId: number, userId: numb
                 }
             })
 
-            return contract
+            return true
         })
 
         return {
