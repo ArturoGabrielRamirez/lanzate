@@ -1,9 +1,10 @@
 "use client"
 
-import { CreditCard, RotateCcw, Trash2, Calculator, Receipt } from 'lucide-react'
+import { CreditCard, RotateCcw, Trash2, Receipt } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
+import CalculateChangeButton from './calculate-change-button'
 
 type ActionsSectionProps = {
   cartTotal: number
@@ -17,7 +18,7 @@ type ActionsSectionProps = {
 }
 
 function ActionsSection({
-  /* cartTotal, */
+  cartTotal,
   cartItemCount,
   onFinalizeSale,
   onRefund,
@@ -65,15 +66,11 @@ function ActionsSection({
           <span className='hidden lg:block'>{t('finalize-sale')}</span>
         </Button>
 
-        <Button
-          onClick={onCalculateChange}
+        <CalculateChangeButton
+          cartTotal={cartTotal}
           disabled={disabled || cartItemCount === 0}
           className="lg:w-full"
-          variant="outline"
-        >
-          <Calculator className="h-4 w-4" />
-          <span className='hidden lg:block'>{t('calculate-change')}</span>
-        </Button>
+        />
 
         <Button
           onClick={onPrintReceipt}

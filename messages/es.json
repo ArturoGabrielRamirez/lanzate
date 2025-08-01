@@ -991,6 +991,19 @@
             "change-calculation": "Total a cobrar: ${total}\n¿Cuánto pagó el cliente?",
             "change-result": "Vuelto: ${change}",
             "insufficient-payment": "El pago es insuficiente"
+        },
+        "calculate-change": {
+            "title": "Calcular Vuelto",
+            "popup-title": "Calcular Vuelto",
+            "popup-description": "Total a cobrar: {total}",
+            "payment-amount-label": "Monto de pago",
+            "payment-amount-placeholder": "Ingresa el monto que pagó el cliente",
+            "preset-amounts-label": "Cantidades preestablecidas",
+            "change-amount-label": "Vuelto a devolver",
+            "insufficient-amount-label": "Falta para completar el pago",
+            "success-message": "Vuelto calculado correctamente",
+            "error-message": "Error al calcular el vuelto",
+            "loading-message": "Calculando vuelto..."
         }
     },
     "overview": {
