@@ -16,7 +16,7 @@ type LayoutProps = {
 
 export default async function Layout({ children, params }: LayoutProps) {
 
-    const { locale, subdomain } = await params;
+    const { subdomain } = await params;
 
     const { payload: storeData, error } = await getStoreWithProducts(
         subdomain,
