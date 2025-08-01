@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
 import { Search, Loader2 } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -14,7 +14,11 @@ type SearchSectionProps = {
   onSearchResults: (results: ProductSearchByNameResult) => void
 }
 
-function SearchSection({ storeId, onSearchResults }: SearchSectionProps) {
+export type SearchSectionRef = {
+  clearSearch: () => void
+}
+
+const SearchSection = forwardRef<SearchSectionRef, SearchSectionProps>(({ storeId, onSearchResults }, ref) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState<ProductSearchByNameResult>({
     products: [],
@@ -23,6 +27,22 @@ function SearchSection({ storeId, onSearchResults }: SearchSectionProps) {
     error: false
   })
   const t = useTranslations('sale.search')
+
+  const clearSearch = () => {
+    setSearchTerm('')
+    const emptyResult = {
+      products: [],
+      message: '',
+      isLoading: false,
+      error: false
+    }
+    setSearchResult(emptyResult)
+    onSearchResults(emptyResult)
+  }
+
+  useImperativeHandle(ref, () => ({
+    clearSearch
+  }))
 
   const handleSearch = async (term: string) => {
     if (!term.trim()) {
@@ -104,6 +124,6 @@ function SearchSection({ storeId, onSearchResults }: SearchSectionProps) {
       )}
     </div>
   )
-}
+})
 
 export default SearchSection 

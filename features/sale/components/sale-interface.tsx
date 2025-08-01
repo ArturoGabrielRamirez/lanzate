@@ -1,8 +1,9 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { searchProductByBarcode } from '../actions/search-product-by-barcode'
 import type { ScannedProduct, ProductSearchResult, CartItem, ProductSearchByNameResult } from '../types'
+import type { SearchSectionRef } from './search-section'
 import CartSection from './cart-section'
 import SearchSection from './search-section'
 import ActionsSection from './actions-section'
@@ -32,6 +33,7 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
     error: false
   })
 
+  const searchSectionRef = useRef<SearchSectionRef>(null)
   const t = useTranslations('sale.messages')
 
   const handleProductScanned = async (barcode: string) => {
@@ -99,6 +101,27 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
         error: false
       })
     }
+  }
+
+  const handleClearResults = () => {
+    // Limpiar resultados de búsqueda
+    setSearchResults({
+      products: [],
+      message: '',
+      isLoading: false,
+      error: false
+    })
+
+    // Limpiar resultados de código de barras
+    setBarcodeResult({
+      product: null,
+      message: '',
+      isLoading: false,
+      error: false
+    })
+
+    // Limpiar input de búsqueda
+    searchSectionRef.current?.clearSearch()
   }
 
   const handleAddToCart = (product: ScannedProduct) => {
@@ -194,12 +217,13 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-areas-[search_barcode_cart,results_results_cart,buttons_buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_1fr_350px] xl:grid-cols-[1fr_1fr_450px] grid-rows-[min-content_1fr_min-content]">
-      
-      <div className='grid grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-2'>
+
+      <div className='grid grid-cols-[1fr_auto] gap-4 lg:col-span-2 lg:grid-cols-2'>
         <SearchSection
           storeId={storeId}
           onAddToCart={handleAddToCart}
           onSearchResults={handleSearchResults}
+          ref={searchSectionRef}
         />
 
         <BarcodeScannerUSB onProductScanned={handleProductScanned} />
@@ -209,6 +233,7 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
         searchResults={searchResults}
         barcodeResult={barcodeResult}
         onAddToCart={handleAddToCart}
+        onClearResults={handleClearResults}
       />
 
       <CartSection

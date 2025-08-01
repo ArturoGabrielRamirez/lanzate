@@ -40,7 +40,7 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
 
   return (
     <Card className={`!py-2 lg:!py-3 ${className || ''}`}>
-      <CardContent className="flex justify-between grow">
+      <CardContent className="flex justify-between grow gap-2">
         {/* Scanner Status */}
         {/* <div className="flex items-center justify-between p-4 rounded-lg border bg-muted/20"> */}
         <div className="flex items-center gap-3">
@@ -52,7 +52,7 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
           ) : (
             <>
               <div className="size-3 bg-gray-400 rounded-full" />
-              <span className="text-sm text-muted-foreground truncate hidden lg:block">
+              <span className="text-xs lg:text-sm text-muted-foreground truncate hidden lg:block">
                 {enabled ? t('waiting') : t('disabled')}
               </span>
             </>
@@ -65,7 +65,8 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
             checked={enabled}
             onCheckedChange={setEnabled}
           />
-          <Label htmlFor="scanner-enabled" className="text-sm">
+          <Label htmlFor="scanner-enabled" className="text-xs lg:text-sm">
+            <span className='lg:hidden'>USB</span>
             {t('enabled')}
           </Label>
         </div>

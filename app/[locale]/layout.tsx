@@ -8,8 +8,7 @@ import SubdomainProvider from "@/features/layout/components/subdomain-provider";
 import "../globals.css";
 import { NextIntlClientProvider } from 'next-intl';
 import Footer from "@/features/header/components/footer";
-/* import { DotPattern } from "@/components/magicui/dot-pattern";
-import { cn } from "@/lib/utils"; */
+
 
 export const metadata: Metadata = {
   title: 'Lanzate',
@@ -20,20 +19,9 @@ export const metadata: Metadata = {
   ],
 };
 
-/* type RootLayoutProps = {
-  children: ReactNode;
-  params: Promise<{
-    locale: string;
-  }>;
-}; */
-
 export default async function RootLayout({ children, params }: LayoutProps) {
 
   const { locale } = await params;
-
-  /*  if (!hasLocale(routing.locales, locale)) {
-     notFound();
-   } */
 
   return (
     <html lang={locale} suppressHydrationWarning>
