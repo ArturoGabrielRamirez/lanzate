@@ -80,4 +80,48 @@ export type UserWithEmployeeStatus = {
     is_active: boolean
     hired_at: string
   } | null
+}
+
+// Tipos para contratos
+export type Contract = {
+  id: number
+  store_id: number
+  title: string
+  file_url: string
+  comments?: string | null
+  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
+  created_at: string
+  updated_at: string
+  created_by: number
+  assigned_to?: number | null
+  store?: any
+  created_by_user?: any
+  assigned_employee?: Employee | null
+  responses?: ContractResponse[]
+}
+
+export type ContractResponse = {
+  id: number
+  contract_id: number
+  employee_id: number
+  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
+  comments?: string | null
+  created_at: string
+  updated_at: string
+  contract?: Contract
+  employee?: Employee
+}
+
+// Tipos para el botón de crear contrato
+export type CreateContractButtonProps = {
+    storeId: number
+    userId: number
+}
+
+// Tipos para la tabla de contratos
+export type ContractsTableProps = {
+    data: Contract[]
+    userId: number
+    slug: string
+    storeId: number
 } 

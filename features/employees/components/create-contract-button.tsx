@@ -64,6 +64,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                     loadingMessage="Creando contrato..."
                     onSuccess={handleSuccess}
                     disabled={true} // Disable form submission as requested
+                    className="max-w-md"
                 >
                     <div className="space-y-4">
                         {/* Title Input */}
@@ -105,11 +106,11 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                                 )}
                                 <FileUploadList className="w-full">
                                     {files.map((file, index) => (
-                                        <FileUploadItem key={index} value={file}>
+                                        <FileUploadItem key={index} value={file} className="max-w-full">
                                             <FileUploadItemPreview />
-                                            <FileUploadItemMetadata />
+                                            <FileUploadItemMetadata className="truncate min-w-0 flex-1" />
                                             <FileUploadItemDelete asChild>
-                                                <Button variant="ghost" size="icon" className="size-7">
+                                                <Button variant="ghost" size="icon" className="size-7 flex-shrink-0">
                                                     <X />
                                                 </Button>
                                             </FileUploadItemDelete>

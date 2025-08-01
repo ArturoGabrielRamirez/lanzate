@@ -28,6 +28,7 @@ model User {
   product_likes    product_likes[]
   Product          Product[]
   Store            Store[]
+  contracts_created Contract[]        @relation("ContractCreatedBy")
 
   @@map("users")
 }
@@ -67,6 +68,7 @@ model Store {
   operational_settings StoreOperationalSettings?
   user                 User                      @relation(fields: [user_id], references: [id])
   transactions         Transaction[]
+  contracts            Contract[]
 
   @@map("stores")
 }
@@ -281,6 +283,8 @@ model Employee {
   orders_created       Order[]       @relation("OrderCreatedBy")
   orders_updated       Order[]       @relation("OrderUpdatedBy")
   transactions         Transaction[]
+  contracts_assigned   Contract[]    @relation("ContractAssignedTo")
+  contract_responses   ContractResponse[]
 
   @@unique([user_id, store_id])
   @@map("employees")
@@ -454,6 +458,39 @@ model StoreWidgetConfig {
   @@map("store_widget_configs")
 }
 
+model Contract {
+  id                Int               @id @default(autoincrement())
+  store_id          Int
+  title             String
+  file_url          String
+  comments          String?
+  status            ContractStatus    @default(PENDING)
+  created_at        DateTime          @default(now())
+  updated_at        DateTime          @updatedAt
+  created_by        Int               // user_id who created the contract
+  assigned_to       Int?              // employee_id who should review the contract
+  store             Store             @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  created_by_user   User              @relation("ContractCreatedBy", fields: [created_by], references: [id])
+  assigned_employee Employee?         @relation("ContractAssignedTo", fields: [assigned_to], references: [id])
+  responses         ContractResponse[]
+
+  @@map("contracts")
+}
+
+model ContractResponse {
+  id           Int              @id @default(autoincrement())
+  contract_id  Int
+  employee_id  Int
+  status       ContractStatus
+  comments     String?
+  created_at   DateTime         @default(now())
+  updated_at   DateTime         @updatedAt
+  contract     Contract         @relation(fields: [contract_id], references: [id], onDelete: Cascade)
+  employee     Employee         @relation(fields: [employee_id], references: [id], onDelete: Cascade)
+
+  @@map("contract_responses")
+}
+
 model product_comments {
   id         Int      @id @default(autoincrement())
   user_id    Int
@@ -624,4 +661,12 @@ enum WidgetPosition {
   MODAL
   BANNER_TOP
   BANNER_BOTTOM
+}
+
+enum ContractStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  COMPLETED
+  EXPIRED
 }
