@@ -38,7 +38,13 @@ import { prisma } from "@/utils/prisma"
 - Error en items → Rollback order
 
 */
-export async function insertNewOrder(formData: any, cart: any[], shippingMethod: "delivery" | "pickup", subdomain: string, userId: string) {
+export async function insertNewOrder(
+    formData: any,
+    cart: any[],
+    shippingMethod: "delivery" | "pickup",
+    subdomain: string,
+    userId: string
+) {
     return actionWrapper(async () => {
 
         /* const client = new PrismaClient() */
@@ -143,6 +149,7 @@ export async function insertNewOrder(formData: any, cart: any[], shippingMethod:
                     }
                 })
             }
+            
             //update store balance
             const updatedStore = await tx.store.update({
                 where: {
