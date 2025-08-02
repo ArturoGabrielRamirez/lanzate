@@ -14,6 +14,7 @@ import { createNewWalkInOrder } from '@/features/checkout/actions/createNewWalkI
 /* import { toast } from 'sonner' */
 import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
 import { CartItemType } from '@/features/cart/types'
+import { actionWrapper } from '@/utils/lib'
 
 type SaleInterfaceProps = {
   storeName: string
@@ -197,36 +198,42 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
 
   // Handlers para acciones
   const handleFinalizeSale = async (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => {
-    console.log("🚀 ~ handleFinalizeSale ~ formData:", formData)
+    return actionWrapper(async () => {
 
-    const { error, message } = await createNewWalkInOrder({
-      branch_id: branchId,
-      subdomain: subdomain,
-      cart: cartItems.map(item => ({
-        quantity: item.quantity,
-        id: item.product.id.toString(),
-        price: item.product.price
-      } as CartItemType)),
-      total_price: cartTotal,
-      total_quantity: cartItemCount,
-      isPaid: true,
-      payment_method: formData.paymentMethod,
-      processed_by_user_id: processed_by_user_id,
-      customer_info: {
-        name: formData.customerInfo.name,
-        phone: formData.customerInfo.phone,
-        email: formData.customerInfo.email,
-      },
+      const { error, message, payload } = await createNewWalkInOrder({
+        branch_id: branchId,
+        subdomain: subdomain,
+        cart: cartItems.map(item => ({
+          quantity: item.quantity,
+          id: item.product.id.toString(),
+          price: item.product.price
+        } as CartItemType)),
+        total_price: cartTotal,
+        total_quantity: cartItemCount,
+        isPaid: true,
+        payment_method: formData.paymentMethod,
+        processed_by_user_id: processed_by_user_id,
+        customer_info: {
+          name: formData.customerInfo.name,
+          phone: formData.customerInfo.phone,
+          email: formData.customerInfo.email,
+        },
+      })
+
+      if (error) {
+        throw new Error(message)
+      }
+
+      setCartItems([])
+      // Reset customer info after successful sale
+      setCustomerInfo({ name: '', phone: '', email: '' })
+
+      return {
+        error: false,
+        message: "Order created successfully",
+        payload: payload
+      }
     })
-
-    if (error) {
-      throw new Error(message)
-    }
-
-    setCartItems([])
-    // Reset customer info after successful sale
-    setCustomerInfo({ name: '', phone: '', email: '' })
-
   }
 
   const handleRefund = () => {
