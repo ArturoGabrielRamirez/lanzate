@@ -17,17 +17,18 @@ import { useFormContext } from "react-hook-form"
 import { ShippingMethodSelector } from "./shipping-method-selector"
 import { BranchSelector } from "./branch-selector"
 import { PaymentInformation } from "./payment-information"
+import { CheckoutStepItem } from "./checkout-step-item"
 /* import { createNewCheckoutOrder } from "../actions/createNewCheckoutOrder" */
 import { Label } from "@/components/ui/label"
 
 function StepNavigation() {
     const { currentStep, nextStep, prevStep, hasNext, hasPrev } = useStepper()
-    
+
     return (
         <div className="flex justify-between pt-4">
             {currentStep > 1 && (
-                <Button 
-                    type="button" 
+                <Button
+                    type="button"
                     variant="outline"
                     onClick={prevStep}
                 >
@@ -36,8 +37,8 @@ function StepNavigation() {
                 </Button>
             )}
             {hasNext() && (
-                <Button 
-                    type="button" 
+                <Button
+                    type="button"
                     onClick={nextStep}
                     className={currentStep === 1 ? "ml-auto" : ""}
                 >
@@ -90,34 +91,28 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
         >
             <InteractiveStepper defaultValue={1} className="grow">
                 <InteractiveStepperItem>
-                    <InteractiveStepperTrigger>
-                        <InteractiveStepperIndicator />
-                        <div>
-                            <InteractiveStepperTitle>Personal Information</InteractiveStepperTitle>
-                            <InteractiveStepperDescription>Provide your personal information</InteractiveStepperDescription>
-                        </div>
-                    </InteractiveStepperTrigger>
-                    <InteractiveStepperSeparator />
+                    <CheckoutStepItem
+                        step={1}
+                        title="Personal Information"
+                        description="Provide your personal information"
+                        errorFields={["name", "email", "phone"]}
+                    />
                 </InteractiveStepperItem>
                 <InteractiveStepperItem>
-                    <InteractiveStepperTrigger>
-                        <InteractiveStepperIndicator />
-                        <div>
-                            <InteractiveStepperTitle>Delivery Information</InteractiveStepperTitle>
-                            <InteractiveStepperDescription>Choose how your order gets to you</InteractiveStepperDescription>
-                        </div>
-                    </InteractiveStepperTrigger>
-                    <InteractiveStepperSeparator />
+                    <CheckoutStepItem
+                        step={2}
+                        title="Delivery Information"
+                        description="Choose how your order gets to you"
+                        errorFields={["shippingMethod", "branchId", "address", "city", "state", "country"]}
+                    />
                 </InteractiveStepperItem>
                 <InteractiveStepperItem>
-                    <InteractiveStepperTrigger>
-                        <InteractiveStepperIndicator />
-                        <div>
-                            <InteractiveStepperTitle>Payment Information</InteractiveStepperTitle>
-                            <InteractiveStepperDescription>Choose how you want to pay</InteractiveStepperDescription>
-                        </div>
-                    </InteractiveStepperTrigger>
-                    <InteractiveStepperSeparator />
+                    <CheckoutStepItem
+                        step={3}
+                        title="Payment Information"
+                        description="Choose how you want to pay"
+                        errorFields={["paymentMethod", "cardNumber", "cardHolder", "expiryDate", "cvv"]}
+                    />
                 </InteractiveStepperItem>
 
                 <InteractiveStepperContent step={1}>
@@ -140,13 +135,13 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                         </CardHeader>
                         <CardContent className="flex flex-col gap-6">
                             {/* Shipping Method Selection */}
-                            <ShippingMethodSelector 
-                                value={shippingMethod} 
-                                onChange={setShippingMethod} 
+                            <ShippingMethodSelector
+                                value={shippingMethod}
+                                onChange={setShippingMethod}
                             />
 
                             {/* Branch Selection */}
-                            <BranchSelector 
+                            <BranchSelector
                                 branches={branches}
                                 value={selectedBranchId}
                                 onChange={setSelectedBranchId}
@@ -177,7 +172,7 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                             <CardTitle>Payment Information</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <PaymentInformation 
+                            <PaymentInformation
                                 paymentMethod={paymentMethod}
                                 onChange={setPaymentMethod}
                             />
