@@ -1,4 +1,5 @@
 "use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useCart } from "./cart-provider"
 import { useTranslations } from "next-intl"

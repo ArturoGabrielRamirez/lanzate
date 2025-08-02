@@ -902,7 +902,7 @@
             "updated-at": "Actualizado el"
         },
         "orders": {
-            "order-details": "Detalles de la orden ",
+            "order-details": "Detalles de la orden",
             "status": "Estado",
             "date-created": "Fecha de creación",
             "total": "Total",
@@ -991,6 +991,38 @@
             "change-calculation": "Total a cobrar: ${total}\n¿Cuánto pagó el cliente?",
             "change-result": "Vuelto: ${change}",
             "insufficient-payment": "El pago es insuficiente"
+        },
+        "calculate-change": {
+            "title": "Calcular Vuelto",
+            "popup-title": "Calcular Vuelto",
+            "popup-description": "Total a cobrar: {total}",
+            "payment-amount-label": "Monto de pago",
+            "payment-amount-placeholder": "Ingresa el monto que pagó el cliente",
+            "preset-amounts-label": "Cantidades preestablecidas",
+            "change-amount-label": "Vuelto a devolver",
+            "insufficient-amount-label": "Falta para completar el pago",
+            "success-message": "Vuelto calculado correctamente",
+            "error-message": "Error al calcular el vuelto",
+            "loading-message": "Calculando vuelto..."
+        },
+        "finalize-sale": {
+            "title": "Finalizar Venta",
+            "popup-title": "Confirmar Venta",
+            "popup-description": "Total: {total} • {items} {itemText}",
+            "summary-title": "Total de la Venta",
+            "payment-method": "Método de pago",
+            "transaction-type": "Tipo de transacción",
+            "status": "Estado",
+            "cash": "Efectivo",
+            "sale": "Venta",
+            "completed": "Completada",
+            "confirmation-message": "¿Estás seguro de que quieres finalizar esta venta?",
+            "info-message": "Activa el switch de arriba para confirmar y finalizar la venta",
+            "item": "artículo",
+            "items": "artículos",
+            "success-message": "¡Venta finalizada exitosamente!",
+            "error-message": "Error al finalizar la venta",
+            "loading-message": "Finalizando venta..."
         }
     },
     "overview": {

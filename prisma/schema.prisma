@@ -11,25 +11,28 @@ datasource db {
 }
 
 model User {
-  id               Int                @id @default(autoincrement())
-  email            String             @unique
-  avatar           String?
-  created_at       DateTime           @default(now())
-  first_name       String?
-  last_name        String?
-  password         String
-  updated_at       DateTime           @updatedAt
-  Account          Account[]
-  ActionLog        ActionLog[]
-  Employee         Employee[]
-  Notification     Notification[]
-  Order            Order[]
-  product_comments product_comments[]
-  product_likes    product_likes[]
-  Product          Product[]
-  Store            Store[]
-  contracts_created Contract[]        @relation("ContractCreatedBy")
+  id                 Int                  @id @default(autoincrement())
+  email              String               @unique
+  avatar             String?
+  created_at         DateTime             @default(now())
+  first_name         String?
+  last_name          String?
+  password           String
+  updated_at         DateTime             @updatedAt
+  Account            Account[]
+  ActionLog          ActionLog[]
+  Employee           Employee[]
+  Notification       Notification[]
+  product_comments   product_comments[]
+  product_likes      product_likes[]
+  Product            Product[]
+  Store              Store[]
+  contracts_created  Contract[]           @relation("ContractCreatedBy")
   contracts_assigned ContractAssignment[] @relation("ContractAssignedBy")
+
+  // Relaciones de órdenes
+  orders_as_customer Order[] @relation("OrderCustomer")
+  orders_processed   Order[] @relation("OrderProcessedBy")
 
   @@map("users")
 }
@@ -158,27 +161,45 @@ model Category {
 }
 
 model Order {
-  id                     Int           @id @default(autoincrement())
-  created_at             DateTime      @default(now())
-  updated_at             DateTime      @updatedAt
-  user_id                Int
-  store_id               Int
-  branch_id              Int?
-  total_price            Float
-  total_quantity         Int
-  status                 OrderStatus   @default(PENDING)
-  shipping_method        String        @default("pickup")
-  is_paid                Boolean       @default(false)
-  payment_date           DateTime?
-  created_by_employee_id Int?
-  updated_by_employee_id Int?
-  items                  OrderItem[]
-  payment                OrderPayment?
-  branch                 Branch?       @relation(fields: [branch_id], references: [id])
-  created_by_employee    Employee?     @relation("OrderCreatedBy", fields: [created_by_employee_id], references: [id])
-  store                  Store         @relation(fields: [store_id], references: [id])
-  updated_by_employee    Employee?     @relation("OrderUpdatedBy", fields: [updated_by_employee_id], references: [id])
-  user                   User          @relation(fields: [user_id], references: [id])
+  id              Int         @id @default(autoincrement())
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+
+  // Información del cliente walk-in
+  customer_id     Int? // Cliente (opcional para walk-in)
+  customer_name  String?
+  customer_phone String?
+  customer_email String?
+
+  store_id        Int
+  branch_id       Int
+  total_price     Float
+  total_quantity  Int
+  status          OrderStatus @default(PENDING)
+  shipping_method String      @default("pickup")
+
+  is_paid         Boolean     @default(false)
+  payment_date    DateTime?
+  payment_method  String?
+  
+  address_one     String?
+  address_two     String?
+  city            String?
+  state           String?
+  zip_code        String?
+  country         String?
+
+  // Cambiar nombres para mayor claridad
+  processed_by_user_id Int?
+
+
+  // Relaciones
+  customer        User?         @relation("OrderCustomer", fields: [customer_id], references: [id])
+  processed_by    User?         @relation("OrderProcessedBy", fields: [processed_by_user_id], references: [id])
+  store           Store         @relation(fields: [store_id], references: [id])
+  branch          Branch?       @relation(fields: [branch_id], references: [id])
+  items           OrderItem[]
+  payment         OrderPayment?
 
   @@map("orders")
 }
@@ -256,33 +277,31 @@ model ActionLog {
 }
 
 model Employee {
-  id                   Int           @id @default(autoincrement())
+  id                   Int                  @id @default(autoincrement())
   user_id              Int
   store_id             Int
-  role                 EmployeeRole  @default(EMPLOYEE)
-  can_create_orders    Boolean       @default(false)
-  can_update_orders    Boolean       @default(false)
-  can_create_products  Boolean       @default(false)
-  can_update_products  Boolean       @default(false)
-  can_manage_stock     Boolean       @default(false)
-  can_process_refunds  Boolean       @default(false)
-  can_view_reports     Boolean       @default(false)
-  can_manage_employees Boolean       @default(false)
-  can_manage_store     Boolean       @default(false)
-  is_active            Boolean       @default(true)
-  hired_at             DateTime      @default(now())
+  role                 EmployeeRole         @default(EMPLOYEE)
+  can_create_orders    Boolean              @default(false)
+  can_update_orders    Boolean              @default(false)
+  can_create_products  Boolean              @default(false)
+  can_update_products  Boolean              @default(false)
+  can_manage_stock     Boolean              @default(false)
+  can_process_refunds  Boolean              @default(false)
+  can_view_reports     Boolean              @default(false)
+  can_manage_employees Boolean              @default(false)
+  can_manage_store     Boolean              @default(false)
+  is_active            Boolean              @default(true)
+  hired_at             DateTime             @default(now())
   fired_at             DateTime?
   position             String?
   department           String?
   salary               Float?
   notes                String?
-  created_at           DateTime      @default(now())
-  updated_at           DateTime      @updatedAt
+  created_at           DateTime             @default(now())
+  updated_at           DateTime             @updatedAt
   action_logs          ActionLog[]
-  store                Store         @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  user                 User          @relation(fields: [user_id], references: [id])
-  orders_created       Order[]       @relation("OrderCreatedBy")
-  orders_updated       Order[]       @relation("OrderUpdatedBy")
+  store                Store                @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  user                 User                 @relation(fields: [user_id], references: [id])
   transactions         Transaction[]
   contract_assignments ContractAssignment[]
   contract_responses   ContractResponse[]
@@ -460,51 +479,51 @@ model StoreWidgetConfig {
 }
 
 model Contract {
-  id                Int                   @id @default(autoincrement())
-  store_id          Int
-  title             String
-  file_url          String
-  comments          String?
-  status            ContractStatus        @default(PENDING)
-  created_at        DateTime              @default(now())
-  updated_at        DateTime              @updatedAt
-  created_by        Int                   // user_id who created the contract
-  store             Store                 @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  created_by_user   User                  @relation("ContractCreatedBy", fields: [created_by], references: [id])
-  assignments       ContractAssignment[]
-  responses         ContractResponse[]
+  id              Int                  @id @default(autoincrement())
+  store_id        Int
+  title           String
+  file_url        String
+  comments        String?
+  status          ContractStatus       @default(PENDING)
+  created_at      DateTime             @default(now())
+  updated_at      DateTime             @updatedAt
+  created_by      Int // user_id who created the contract
+  store           Store                @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  created_by_user User                 @relation("ContractCreatedBy", fields: [created_by], references: [id])
+  assignments     ContractAssignment[]
+  responses       ContractResponse[]
 
   @@map("contracts")
 }
 
 model ContractAssignment {
-  id           Int              @id @default(autoincrement())
-  contract_id  Int
-  employee_id  Int
-  assigned_at  DateTime         @default(now())
-  status       ContractStatus   @default(PENDING)
-  assigned_by  Int              // user_id who assigned the contract
-  contract     Contract         @relation(fields: [contract_id], references: [id], onDelete: Cascade)
-  employee     Employee         @relation(fields: [employee_id], references: [id], onDelete: Cascade)
-  assigned_by_user User         @relation("ContractAssignedBy", fields: [assigned_by], references: [id])
-  responses    ContractResponse[]
+  id               Int                @id @default(autoincrement())
+  contract_id      Int
+  employee_id      Int
+  assigned_at      DateTime           @default(now())
+  status           ContractStatus     @default(PENDING)
+  assigned_by      Int // user_id who assigned the contract
+  contract         Contract           @relation(fields: [contract_id], references: [id], onDelete: Cascade)
+  employee         Employee           @relation(fields: [employee_id], references: [id], onDelete: Cascade)
+  assigned_by_user User               @relation("ContractAssignedBy", fields: [assigned_by], references: [id])
+  responses        ContractResponse[]
 
   @@unique([contract_id, employee_id]) // Evita asignaciones duplicadas
   @@map("contract_assignments")
 }
 
 model ContractResponse {
-  id                   Int              @id @default(autoincrement())
-  contract_id          Int
-  employee_id          Int
-  assignment_id        Int?             // referencia a la asignación específica
-  status               ContractStatus
-  comments             String?
-  created_at           DateTime         @default(now())
-  updated_at           DateTime         @updatedAt
-  contract             Contract         @relation(fields: [contract_id], references: [id], onDelete: Cascade)
-  employee             Employee         @relation(fields: [employee_id], references: [id], onDelete: Cascade)
-  assignment           ContractAssignment? @relation(fields: [assignment_id], references: [id], onDelete: Cascade)
+  id            Int                 @id @default(autoincrement())
+  contract_id   Int
+  employee_id   Int
+  assignment_id Int? // referencia a la asignación específica
+  status        ContractStatus
+  comments      String?
+  created_at    DateTime            @default(now())
+  updated_at    DateTime            @updatedAt
+  contract      Contract            @relation(fields: [contract_id], references: [id], onDelete: Cascade)
+  employee      Employee            @relation(fields: [employee_id], references: [id], onDelete: Cascade)
+  assignment    ContractAssignment? @relation(fields: [assignment_id], references: [id], onDelete: Cascade)
 
   @@map("contract_responses")
 }

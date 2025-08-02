@@ -1,20 +1,10 @@
 "use client"
+
+import { TitleProps } from "@/features/layout/types"
+import { useCurrentLocale } from "@/locales/client"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import React from "react"
-import { useCurrentLocale } from "@/locales/client"
-
-type TitleProps = {
-    className?: string
-    title: string | React.ReactNode
-    breadcrumbs?: {
-        label: string
-        href: string
-    }[]
-    canGoBack?: boolean
-    showDate?: boolean
-    homePath?: string
-}
 
 const Title = ({ title, breadcrumbs, className, showDate, homePath }: TitleProps) => {
 

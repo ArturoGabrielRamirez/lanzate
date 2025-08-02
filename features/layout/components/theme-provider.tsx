@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const initialRender = process.env.NODE_ENV === "production";
 
-export function NextThemeProvider(props: ThemeProviderProps) {
+export default function NextThemeProvider(props: ThemeProviderProps) {
   const [shouldRender, setShouldRender] = useState(initialRender);
   useEffect(() => {
     if (!initialRender) {
