@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, Loader2, Plus, AlertCircle, Package } from 'lucide-react'
+import { Search, Loader2, Plus, AlertCircle, Package, X } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -12,9 +12,10 @@ type ProductResultsProps = {
   searchResults: ProductSearchByNameResult
   barcodeResult: ProductSearchResult
   onAddToCart: (product: ScannedProduct) => void
+  onClearResults?: () => void
 }
 
-function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductResultsProps) {
+function ProductResults({ searchResults, barcodeResult, onAddToCart, onClearResults }: ProductResultsProps) {
   const t = useTranslations('sale.product-results')
 
   const formatPrice = (price: number) => {
@@ -32,9 +33,19 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart }: ProductRe
   return (
     <Card className={cn("lg:area-[results] lg:col-span-2 gap-2", !isLoading && !hasAnyResults && !searchResults.error && !barcodeResult.error && "hidden lg:block")}>
       <CardHeader className='gap-0'>
-        <CardTitle className='flex items-center gap-2'>
-          <Package className="size-5" />
-          {t('title')}
+        <CardTitle className='flex items-center justify-between'>
+          <div className='flex items-center gap-2'>
+            <Package className="size-5" />
+            {t('title')}
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onClearResults}
+            className="h-6 w-6 p-0 text-muted-foreground hover:text-foreground"
+          >
+            <X className="h-4 w-4" />
+          </Button>
         </CardTitle>
       </CardHeader>
       <CardContent>

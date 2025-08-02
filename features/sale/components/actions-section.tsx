@@ -1,30 +1,45 @@
 "use client"
 
-import { CreditCard, RotateCcw, Trash2, Calculator, Receipt } from 'lucide-react'
+import { Trash2, Receipt } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
+import CalculateChangeButton from './calculate-change-button'
+import FinalizeSaleButton from './finalize-sale-button'
+import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
+
+type CustomerInfo = {
+  name: string
+  phone: string
+  email: string
+}
 
 type ActionsSectionProps = {
   cartTotal: number
   cartItemCount: number
-  onFinalizeSale: () => void
+  onFinalizeSale: (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => Promise<{ error: boolean; payload: any; message: string }>
   onRefund: () => void
   onClearCart: () => void
   onCalculateChange: () => void
   onPrintReceipt: () => void
   disabled?: boolean
+  selectedPaymentMethod: PaymentMethod
+  setSelectedPaymentMethod: (method: PaymentMethod) => void
+  customerInfo: CustomerInfo
+  setCustomerInfo: (info: CustomerInfo) => void
 }
 
 function ActionsSection({
-  /* cartTotal, */
+  cartTotal,
   cartItemCount,
   onFinalizeSale,
-  onRefund,
   onClearCart,
-  onCalculateChange,
   onPrintReceipt,
-  disabled = false
+  disabled = false,
+  selectedPaymentMethod,
+  setSelectedPaymentMethod,
+  customerInfo,
+  setCustomerInfo
 }: ActionsSectionProps) {
   const t = useTranslations('sale.actions')
 
@@ -55,25 +70,23 @@ function ActionsSection({
           </div> */}
 
         {/* Botones principales */}
-        <Button
-          onClick={onFinalizeSale}
-          disabled={disabled || cartItemCount === 0}
+        <FinalizeSaleButton
+          cartTotal={cartTotal}
+          cartItemCount={cartItemCount}
+          onConfirm={onFinalizeSale}
+          disabled={disabled}
           className="lg:w-full text-base"
-          variant="default"
-        >
-          <CreditCard className="h-5 w-5" />
-          <span className='hidden lg:block'>{t('finalize-sale')}</span>
-        </Button>
+          selectedPaymentMethod={selectedPaymentMethod}
+          setSelectedPaymentMethod={setSelectedPaymentMethod}
+          customerInfo={customerInfo}
+          setCustomerInfo={setCustomerInfo}
+        />
 
-        <Button
-          onClick={onCalculateChange}
+        <CalculateChangeButton
+          cartTotal={cartTotal}
           disabled={disabled || cartItemCount === 0}
           className="lg:w-full"
-          variant="outline"
-        >
-          <Calculator className="h-4 w-4" />
-          <span className='hidden lg:block'>{t('calculate-change')}</span>
-        </Button>
+        />
 
         <Button
           onClick={onPrintReceipt}
@@ -85,7 +98,7 @@ function ActionsSection({
           <span className='hidden lg:block'>{t('print-receipt')}</span>
         </Button>
 
-        <Button
+        {/* <Button
           onClick={onRefund}
           disabled={disabled}
           className="lg:w-full"
@@ -93,7 +106,7 @@ function ActionsSection({
         >
           <RotateCcw className="h-4 w-4" />
           <span className='hidden lg:block'>{t('process-refund')}</span>
-        </Button>
+        </Button> */}
 
         {/* Botones de utilidad */}
         <Button

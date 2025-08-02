@@ -2,32 +2,47 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, InputField } from "@/features/layout/components"
-import { cn } from "@/lib/utils"
-import { MapPin, Truck } from "lucide-react"
 import { useState } from "react"
-import { createNewOrder } from "../actions/createNewOrder"
-import { useCart } from "@/features/cart/components/cart-provider"
-import { Button } from "@/components/ui/button"
 import { deliveryOrderSchema, pickupOrderSchema } from "../schemas/order-schema"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { createNewCheckoutOrder } from "../actions/createNewCheckoutOrder"
+import { Branch } from "@prisma/client"
+import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem } from "@/components/expansion/interactive-stepper"
+import { ShippingMethodSelector } from "./shipping-method-selector"
+import { BranchSelector } from "./branch-selector"
+import { PaymentInformation } from "./payment-information"
+import { CheckoutStepItem } from "./checkout-step-item"
+import { StepNavigation } from "./step-navigation"
+import { Label } from "@/components/ui/label"
+import { useCart } from "@/features/cart/components/cart-provider"
 
-function CheckoutForm({ subdomain, userId }: { subdomain: string, userId: string }) {
+function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, userId: string, branches: Branch[] }) {
 
     const [shippingMethod, setShippingMethod] = useState<"delivery" | "pickup">("delivery")
-    const { cart, clearCart } = useCart()
-
-    const handleShippingMethodChange = (e: React.MouseEvent<HTMLButtonElement>) => {
-        const target = e.target as HTMLButtonElement
-        const type = target.dataset.type
-        if (type) {
-            setShippingMethod(type as "delivery" | "pickup")
-        }
-    }
+    const [selectedBranchId, setSelectedBranchId] = useState<number | null>(null)
+    const [paymentMethod, setPaymentMethod] = useState<string>("")
+    const { quantity, total, cart } = useCart()
 
     const handleSubmit = async (formData: any) => {
-        const { error, message, payload } = await createNewOrder(formData, cart, shippingMethod, subdomain, userId)
+
+        const { error, message, payload } = await createNewCheckoutOrder({
+            branch_id: selectedBranchId as number,
+            customer_info: {
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+            },
+            payment_method: paymentMethod,
+            shipping_method: shippingMethod,
+            subdomain: subdomain,
+            total_price: total,
+            total_quantity: quantity,
+            cart: cart,
+            processed_by_user_id: Number(userId)
+        })
+
         if (error) throw new Error(message)
-        clearCart()
+
         return {
             error: false,
             message: "Order created successfully",
@@ -37,66 +52,105 @@ function CheckoutForm({ subdomain, userId }: { subdomain: string, userId: string
 
     return (
         <Form
-            className="flex-1"
+            className="grow"
             contentButton="Continue"
             formAction={handleSubmit}
             resolver={yupResolver(shippingMethod === "delivery" ? deliveryOrderSchema : pickupOrderSchema)}
         >
-            <h3 className="text-xl font-bold">Personal Information</h3>
-            <div className="grid grid-cols-2 gap-4">
-                <InputField name="name" label="Name" />
-                <InputField name="email" label="Email" />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-                <InputField name="phone" label="Phone" />
-            </div>
-            <div className="w-full h-px bg-muted-foreground/20"></div>
-            <h3 className="text-xl font-bold">Shipping Information</h3>
-            <div className="grid grid-cols-2 gap-4">
-                <Button onClick={handleShippingMethodChange} asChild data-type="delivery">
-                    <Card className={cn("grow cursor-pointer py-6 bg-muted-foreground/10 transition-all duration-300 h-full", shippingMethod === "delivery" && "bg-primary")}>
+            <InteractiveStepper defaultValue={1} className="grow">
+                <InteractiveStepperItem>
+                    <CheckoutStepItem
+                        step={1}
+                        title="Personal Information"
+                        description="Provide your personal information"
+                        errorFields={["name", "email", "phone"]}
+                    />
+                </InteractiveStepperItem>
+                <InteractiveStepperItem>
+                    <CheckoutStepItem
+                        step={2}
+                        title="Delivery Information"
+                        description="Choose how your order gets to you"
+                        errorFields={["shippingMethod", "branchId", "address", "city", "state", "country"]}
+                    />
+                </InteractiveStepperItem>
+                <InteractiveStepperItem>
+                    <CheckoutStepItem
+                        step={3}
+                        title="Payment Information"
+                        description="Choose how you want to pay"
+                        errorFields={["paymentMethod", "cardNumber", "cardHolder", "expiryDate", "cvv"]}
+                    />
+                </InteractiveStepperItem>
+
+                <InteractiveStepperContent step={1}>
+                    <Card>
                         <CardHeader>
-                            <CardTitle className="flex gap-2 flex-col items-center">
-                                <Truck className="size-8" />
-                                Delivery
-                            </CardTitle>
+                            <CardTitle>Personal Information</CardTitle>
                         </CardHeader>
-                        <CardContent >
-                            <p className="text-center text-balance">Orders with delivery take up 30 min to 2 hours to be ready.</p>
-                            <p className="text-center text-balance">You will receive a notification when your order is ready for pickup or you can message us at any time.</p>
+                        <CardContent className="flex flex-col gap-4">
+                            <InputField name="name" label="Name" />
+                            <InputField name="email" label="Email" />
+                            <InputField name="phone" label="Phone" />
+                            <StepNavigation />
                         </CardContent>
                     </Card>
-                </Button>
-                <Button onClick={handleShippingMethodChange} asChild data-type="pickup">
-                    <Card className={cn("grow cursor-pointer py-6 bg-muted-foreground/10 transition-all duration-300 h-fit", shippingMethod === "pickup" && "bg-primary")}>
+                </InteractiveStepperContent>
+                <InteractiveStepperContent step={2}>
+                    <Card>
                         <CardHeader>
-                            <CardTitle className="flex gap-2 flex-col items-center">
-                                <MapPin className="size-8" />
-                                Pickup
-                            </CardTitle>
+                            <CardTitle>Delivery Information</CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex flex-col gap-6">
+
+                            <ShippingMethodSelector
+                                value={shippingMethod}
+                                onChange={setShippingMethod}
+                            />
+
+                            <BranchSelector
+                                branches={branches}
+                                value={selectedBranchId}
+                                onChange={setSelectedBranchId}
+                            />
+
+                            {shippingMethod === "delivery" && (
+                                <div className="space-y-4">
+                                    <Label className="text-base font-medium block">Delivery Address</Label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <InputField name="address" label="Address" />
+                                        <InputField name="city" label="City" />
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <InputField name="state" label="State" />
+                                        <InputField name="country" label="Country" />
+                                    </div>
+                                </div>
+                            )}
+
+                            <StepNavigation />
+                        </CardContent>
+                    </Card>
+                </InteractiveStepperContent>
+                <InteractiveStepperContent step={3}>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Payment Information</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-center text-balance">Orders with pickup option usually take 5-10 minutes to be ready. </p>
-                            <p className="text-center text-balance">You will receive a notification when your order is ready for pickup or you can message us at any time.</p>
+                            <PaymentInformation
+                                paymentMethod={paymentMethod}
+                                onChange={setPaymentMethod}
+                            />
+                            <div className="flex justify-between pt-4">
+                                <StepNavigation />
+                            </div>
                         </CardContent>
                     </Card>
-                </Button>
-            </div>
-            {shippingMethod === "delivery" && (
-                <>
-                    <div className="w-full h-px bg-muted-foreground/20"></div>
-                    <h3 className="text-xl font-bold">Address Information</h3>
-                    <div className="grid grid-cols-2 gap-4">
-                        <InputField name="address" label="Address" />
-                        <InputField name="city" label="City" />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                        <InputField name="state" label="State" />
-                        <InputField name="country" label="Country" />
-                    </div>
-                </>
-            )}
+                </InteractiveStepperContent>
+            </InteractiveStepper>
         </Form>
     )
 }
+
 export default CheckoutForm

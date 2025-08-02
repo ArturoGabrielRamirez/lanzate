@@ -2,11 +2,11 @@
 
 import { formatErrorResponse } from "@/utils/lib"
 import { getStoresFromUser as getStoresFromUserDb } from "../data/getStoresFromUser"
-import { Store } from "@prisma/client"
+import { Branch, Store } from "@prisma/client"
 
 type GetStoresFromUserReturn = {
     message: string
-    payload: Store[]
+    payload: (Store & { branches: Branch[] })[]
     error: boolean
 }
 

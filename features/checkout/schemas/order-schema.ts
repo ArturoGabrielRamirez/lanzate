@@ -13,12 +13,50 @@ const shippingInfoSchema = {
     country: yup.string().required('Country is required'),
 }
 
+const orderMethodSchema = {
+    shippingMethod: yup.string().oneOf(['delivery', 'pickup']).required('Shipping method is required'),
+    branchId: yup.number().required('Branch selection is required'),
+}
+
+const paymentMethodSchema = {
+    paymentMethod: yup.string().oneOf(['credit-debit', 'transfer', 'mercadopago']).required('Payment method is required'),
+}
+
+const cardInfoSchema = {
+    cardNumber: yup.string().required('Card number is required'),
+    cardHolder: yup.string().required('Cardholder name is required'),
+    expiryDate: yup.string().required('Expiry date is required'),
+    cvv: yup.string().required('CVV is required'),
+}
+
 export const pickupOrderSchema = yup.object({
     ...personalInfoSchema,
+    ...orderMethodSchema,
+    ...paymentMethodSchema,
+}).test('card-info-required', 'Card information is required for credit/debit payment', function(value: any) {
+    if (value.paymentMethod === 'credit-debit') {
+        const cardFields = ['cardNumber', 'cardHolder', 'expiryDate', 'cvv']
+        const missingFields = cardFields.filter(field => !value[field])
+        if (missingFields.length > 0) {
+            return this.createError({ message: 'Card information is required for credit/debit payment' })
+        }
+    }
+    return true
 })
 
 export const deliveryOrderSchema = yup.object({
     ...personalInfoSchema,
+    ...orderMethodSchema,
+    ...paymentMethodSchema,
     ...shippingInfoSchema,
+}).test('card-info-required', 'Card information is required for credit/debit payment', function(value: any) {
+    if (value.paymentMethod === 'credit-debit') {
+        const cardFields = ['cardNumber', 'cardHolder', 'expiryDate', 'cvv']
+        const missingFields = cardFields.filter(field => !value[field])
+        if (missingFields.length > 0) {
+            return this.createError({ message: 'Card information is required for credit/debit payment' })
+        }
+    }
+    return true
 })
 

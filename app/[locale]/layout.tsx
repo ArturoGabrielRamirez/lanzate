@@ -1,15 +1,12 @@
-import { NextThemeProvider } from "@/features/layout/components";
-import { Header } from "@/features/header/components";
+import { NextThemeProvider, SubdomainProvider } from "@/features/layout/components";
+import { Header, Footer } from "@/features/header/components";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Toaster } from "@/components/ui/sonner"
 import type { Metadata } from "next";
 import { LayoutProps } from "@/features/layout/types";
-import SubdomainProvider from "@/features/layout/components/subdomain-provider";
-import "../globals.css";
 import { NextIntlClientProvider } from 'next-intl';
-import Footer from "@/features/header/components/footer";
-/* import { DotPattern } from "@/components/magicui/dot-pattern";
-import { cn } from "@/lib/utils"; */
+import "../globals.css";
+
 
 export const metadata: Metadata = {
   title: 'Lanzate',
@@ -20,20 +17,9 @@ export const metadata: Metadata = {
   ],
 };
 
-/* type RootLayoutProps = {
-  children: ReactNode;
-  params: Promise<{
-    locale: string;
-  }>;
-}; */
-
 export default async function RootLayout({ children, params }: LayoutProps) {
 
   const { locale } = await params;
-
-  /*  if (!hasLocale(routing.locales, locale)) {
-     notFound();
-   } */
 
   return (
     <html lang={locale} suppressHydrationWarning>

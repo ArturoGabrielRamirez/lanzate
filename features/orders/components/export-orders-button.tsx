@@ -121,7 +121,7 @@ function ExportOrdersButton({ data }: Props) {
                 s: { alignment: { horizontal: 'left', vertical: 'center' } }
             },
             {
-                v: order.total,
+                v: order.total_price,
                 t: 'n',
                 s: { alignment: { horizontal: 'left', vertical: 'center' } }
             },
@@ -136,7 +136,7 @@ function ExportOrdersButton({ data }: Props) {
                 s: { alignment: { horizontal: 'left', vertical: 'center' } }
             },
             {
-                v: order.items_count || 0,
+                v: order.total_quantity || 0,
                 t: 'n',
                 s: { alignment: { horizontal: 'left', vertical: 'center' } }
             },
@@ -146,7 +146,7 @@ function ExportOrdersButton({ data }: Props) {
                 s: { alignment: { horizontal: 'left', vertical: 'center' } }
             },
             {
-                v: order.payment_status || t("export.no-payment-status"),
+                v: order.is_paid ? t("export.paid") : t("export.no-payment-status"),
                 t: 's',
                 s: { alignment: { horizontal: 'left', vertical: 'center' } }
             },

@@ -14,7 +14,7 @@ type CartSectionProps = {
 
 function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
   const t = useTranslations('sale.cart')
-  
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
@@ -45,38 +45,10 @@ function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
                   <div className="flex-1 min-w-0">
                     <h4 className="font-medium text-sm truncate">{item.product.name}</h4>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      {/* <span>SKU: {item.product.sku}</span> */}
-                      {/* <span>•</span> */}
-                      <span>1 x {formatPrice(item.product.price)}</span>
+                      <span>{item.quantity} x {formatPrice(item.product.price)}</span>
                     </div>
                   </div>
 
-                  {/* <div className="flex items-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
-                      disabled={item.quantity <= 1}
-                      className="h-8 w-8 p-0"
-                    >
-                      <Minus className="h-3 w-3" />
-                    </Button>
-
-                    <span className="w-8 text-center text-sm font-medium">
-                      {item.quantity}
-                    </span>
-
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
-                      disabled={item.quantity >= item.product.totalStock}
-                      className="h-8 w-8 p-0"
-                    >
-                      <Plus className="h-3 w-3" />
-                    </Button>
-                  </div>
- */}
                   <div className="text-right">
                     <Button
                       variant="ghost"

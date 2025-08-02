@@ -26,7 +26,7 @@ function CartItem({ item }: CartItemProps) {
                 {item.image ? (
                     <Image
                         src={item.image}
-                        alt={item.name}
+                        alt={item.name || "Product Image"}
                         fill
                         className="rounded-md"
                     />

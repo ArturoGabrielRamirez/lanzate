@@ -1,24 +1,40 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { searchProductByBarcode } from '../actions/search-product-by-barcode'
 import type { ScannedProduct, ProductSearchResult, CartItem, ProductSearchByNameResult } from '../types'
+import type { SearchSectionRef } from './search-section'
 import CartSection from './cart-section'
 import SearchSection from './search-section'
 import ActionsSection from './actions-section'
 import ProductResults from './product-results'
 import BarcodeScannerUSB from './barcode-scanner-usb'
 import { useTranslations } from 'next-intl'
+import { createNewWalkInOrder } from '@/features/checkout/actions/createNewWalkInOrder'
+/* import { toast } from 'sonner' */
+import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
+import { CartItemType } from '@/features/cart/types'
+import { actionWrapper } from '@/utils/lib'
 
 type SaleInterfaceProps = {
   storeName: string
   storeDescription?: string
   storeId: number
+  branchId: number
+  subdomain: string
+  processed_by_user_id: number
 }
 
-function SaleInterface({ storeId }: SaleInterfaceProps) {
+type CustomerInfo = {
+  name: string
+  phone: string
+  email: string
+}
+
+function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: SaleInterfaceProps) {
   /* const [scannedProducts, setScannedProducts] = useState<ScannedProduct[]>([]) */
   const [cartItems, setCartItems] = useState<CartItem[]>([])
+  console.log("🚀 ~ SaleInterface ~ cartItems:", cartItems)
   const [barcodeResult, setBarcodeResult] = useState<ProductSearchResult>({
     product: null,
     message: '',
@@ -32,6 +48,15 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
     error: false
   })
 
+  // New state for payment method and customer info
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>('CASH')
+  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
+    name: '',
+    phone: '',
+    email: ''
+  })
+
+  const searchSectionRef = useRef<SearchSectionRef>(null)
   const t = useTranslations('sale.messages')
 
   const handleProductScanned = async (barcode: string) => {
@@ -101,6 +126,27 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
     }
   }
 
+  const handleClearResults = () => {
+    // Limpiar resultados de búsqueda
+    setSearchResults({
+      products: [],
+      message: '',
+      isLoading: false,
+      error: false
+    })
+
+    // Limpiar resultados de código de barras
+    setBarcodeResult({
+      product: null,
+      message: '',
+      isLoading: false,
+      error: false
+    })
+
+    // Limpiar input de búsqueda
+    searchSectionRef.current?.clearSearch()
+  }
+
   const handleAddToCart = (product: ScannedProduct) => {
     setCartItems(prev => {
       const existingItem = prev.find(item => item.product.id === product.id)
@@ -151,13 +197,43 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
   const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
   // Handlers para acciones
-  const handleFinalizeSale = () => {
-    // TODO: Implementar lógica de finalizar venta
-    console.log('Finalizando venta:', { cartItems, total: cartTotal })
-    const formattedTotal = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(cartTotal)
-    alert(t('sale-completed', { total: formattedTotal }))
-    // Limpiar carrito después de la venta
-    setCartItems([])
+  const handleFinalizeSale = async (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => {
+    return actionWrapper(async () => {
+
+      const { error, message, payload } = await createNewWalkInOrder({
+        branch_id: branchId,
+        subdomain: subdomain,
+        cart: cartItems.map(item => ({
+          quantity: item.quantity,
+          id: item.product.id.toString(),
+          price: item.product.price
+        } as CartItemType)),
+        total_price: cartTotal,
+        total_quantity: cartItemCount,
+        isPaid: true,
+        payment_method: formData.paymentMethod,
+        processed_by_user_id: processed_by_user_id,
+        customer_info: {
+          name: formData.customerInfo.name,
+          phone: formData.customerInfo.phone,
+          email: formData.customerInfo.email,
+        },
+      })
+
+      if (error) {
+        throw new Error(message)
+      }
+
+      setCartItems([])
+      // Reset customer info after successful sale
+      setCustomerInfo({ name: '', phone: '', email: '' })
+
+      return {
+        error: false,
+        message: "Order created successfully",
+        payload: payload
+      }
+    })
   }
 
   const handleRefund = () => {
@@ -194,12 +270,13 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-areas-[search_barcode_cart,results_results_cart,buttons_buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_1fr_350px] xl:grid-cols-[1fr_1fr_450px] grid-rows-[min-content_1fr_min-content]">
-      
-      <div className='grid grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-2'>
+
+      <div className='grid grid-cols-[1fr_auto] gap-4 lg:col-span-2 lg:grid-cols-2'>
         <SearchSection
           storeId={storeId}
           onAddToCart={handleAddToCart}
           onSearchResults={handleSearchResults}
+          ref={searchSectionRef}
         />
 
         <BarcodeScannerUSB onProductScanned={handleProductScanned} />
@@ -209,6 +286,7 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
         searchResults={searchResults}
         barcodeResult={barcodeResult}
         onAddToCart={handleAddToCart}
+        onClearResults={handleClearResults}
       />
 
       <CartSection
@@ -226,6 +304,10 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
         onClearCart={handleClearCart}
         onCalculateChange={handleCalculateChange}
         onPrintReceipt={handlePrintReceipt}
+        selectedPaymentMethod={selectedPaymentMethod}
+        setSelectedPaymentMethod={setSelectedPaymentMethod}
+        customerInfo={customerInfo}
+        setCustomerInfo={setCustomerInfo}
       />
 
     </div>

@@ -17,7 +17,8 @@ export async function selectOrdersFromStore(storeId: number) {
                 branch: true,
                 items: true,
                 payment: true,
-                user: true
+                customer: true,
+                processed_by: true,
             }
         })
 
