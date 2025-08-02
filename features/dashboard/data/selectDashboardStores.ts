@@ -1,17 +1,27 @@
 "use server"
 
-/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
 import { GetDashboardStoresReturn } from "../types/types"
 import { prisma } from "@/utils/prisma"
 
 export async function selectDashboardStores(userId: number): Promise<GetDashboardStoresReturn> {
     return actionWrapper(async () => {
-        /* const client = new PrismaClient() */
 
         const stores = await prisma.store.findMany({
             where: {
-                user_id: userId
+                
+                OR: [
+                    {
+                        user_id: userId
+                    },
+                    {
+                        employees: {
+                            some: {
+                                user_id: userId
+                            }
+                        }
+                    }
+                ]
             },
             select: {
                 id: true,
@@ -30,14 +40,12 @@ export async function selectDashboardStores(userId: number): Promise<GetDashboar
             }
         })
 
-        // Get total product count across all user stores
         const productCount = await prisma.product.count({
             where: {
                 owner_id: userId
             }
         })
 
-        // Get count of stores with operational settings configured
         const operationalSettingsCount = await prisma.storeOperationalSettings.count({
             where: {
                 store: {
