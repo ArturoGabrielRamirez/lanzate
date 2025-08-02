@@ -1,8 +1,9 @@
 "use server"
 
-import { PrismaClient, Store } from '@prisma/client'
+import { /* PrismaClient, */ Store } from '@prisma/client'
 import { actionWrapper } from "@/utils/lib"
 import randomstring from "randomstring"
+import { prisma } from "@/utils/prisma"
 
 type InsertStoreReturn = {
     message: string
@@ -11,14 +12,14 @@ type InsertStoreReturn = {
 }
 
 export async function insertStore(payload: any, userId: number): Promise<InsertStoreReturn> {
-    console.log("🚀 ~ insertStore ~ payload:", payload)
+
     return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
         const slug = randomstring.generate(8)
 
-        const existingSlugStore = await client.store.findUnique({
+        const existingSlugStore = await prisma.store.findUnique({
             where: {
                 slug: slug
             }
@@ -26,7 +27,7 @@ export async function insertStore(payload: any, userId: number): Promise<InsertS
 
         if (existingSlugStore) throw new Error("The store slug (Internal URL) already exists. Try another one.")
 
-        const existingSubdomain = await client.store.findUnique({
+        const existingSubdomain = await prisma.store.findUnique({
             where: {
                 subdomain: payload.subdomain
             }
@@ -34,7 +35,7 @@ export async function insertStore(payload: any, userId: number): Promise<InsertS
 
         if (existingSubdomain) throw new Error("The store subdomain (Public URL) already exists. Try another one.")
 
-        const store = await client.store.create({
+        const store = await prisma.store.create({
             data: {
                 name: payload.name,
                 slug: randomstring.generate(8),

@@ -1,7 +1,7 @@
-import { Store } from "@prisma/client"
+import { Store, StoreOperationalSettings } from "@prisma/client"
 
 export type Props = {
     userId: number
     slug: string
-    store: Store
+    store: Store & { operational_settings: StoreOperationalSettings | null }
 }

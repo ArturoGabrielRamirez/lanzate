@@ -1,18 +1,19 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib"
 import { SalesByMonthData } from "../types"
+import { prisma } from "@/utils/prisma"
 
 export async function getSalesByMonth(storeId: number) {
-    try {
-        const client = new PrismaClient()
+    return actionWrapper(async () => {
+        /* const client = new PrismaClient() */
 
         // Get orders from the last 12 months
         const twelveMonthsAgo = new Date()
         twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12)
 
-        const orders = await client.order.findMany({
+        const orders = await prisma.order.findMany({
             where: {
                 store_id: storeId,
                 is_paid: true,
@@ -42,7 +43,7 @@ export async function getSalesByMonth(storeId: number) {
         orders.forEach(order => {
             const monthKey = order.created_at.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
             const existing = salesByMonth.get(monthKey) || { sales: 0, orders: 0, revenue: 0 }
-            
+
             salesByMonth.set(monthKey, {
                 sales: existing.sales + order.total_quantity,
                 orders: existing.orders + 1,
@@ -64,7 +65,5 @@ export async function getSalesByMonth(storeId: number) {
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching sales by month", error, [])
-    }
+    })
 } 

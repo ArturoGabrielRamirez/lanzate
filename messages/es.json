@@ -464,6 +464,12 @@
             "description": "Descripción",
             "website": "Sitio Web",
             "no-description": "No hay descripción disponible",
+            "contact-phone": "Teléfono",
+            "contact-whatsapp": "WhatsApp",
+            "facebook": "Facebook",
+            "instagram": "Instagram",
+            "x-twitter": "X (Twitter)",
+            "not-provided": "No proporcionado",
             "danger-zone": "Zona de Peligro",
             "delete-warning": "Podés eliminar tu tienda haciendo clic en el botón de abajo.",
             "delete-irreversible": "Tené en cuenta que esta acción es irreversible y eliminará todos los datos asociados con tu tienda."
@@ -475,6 +481,13 @@
             "name": "Nombre",
             "description-field": "Descripción",
             "subdomain": "Subdominio",
+            "contact-section": "Información de Contacto",
+            "contact-phone": "Teléfono",
+            "contact-whatsapp": "WhatsApp",
+            "social-media-section": "Redes Sociales",
+            "facebook-url": "URL de Facebook",
+            "instagram-url": "URL de Instagram",
+            "x-url": "URL de X (Twitter)",
             "messages": {
                 "name-required": "El nombre es requerido",
                 "user-id-required": "ID de usuario es requerido",
@@ -687,6 +700,15 @@
                 "actions": "Acciones",
                 "view-details": "Ver detalles",
                 "open-menu": "Abrir menú"
+            },
+            "export": {
+                "button": "Exportar a Excel",
+                "payment_status": "Estado de Pago",
+                "created_at": "Fecha de creación",
+                "updated_at": "Fecha de actualización",
+                "no-customer": "Sin cliente",
+                "no-shipping": "Sin método de envío",
+                "no-payment-status": "Sin estado de pago"
             }
         },
         "change-order-status": {
@@ -755,6 +777,12 @@
                 "actions": "Acciones",
                 "view-details": "Ver detalles",
                 "open-menu": "Abrir menú"
+            },
+            "export": {
+                "button": "Exportar a Excel",
+                "description": "Descripción",
+                "created_at": "Fecha de creación",
+                "updated_at": "Fecha de actualización"
             }
         },
         "create-product": {

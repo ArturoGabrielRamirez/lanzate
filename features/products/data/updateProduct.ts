@@ -1,13 +1,15 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
 import { createServerSideClient } from "@/utils/supabase/server"
+import { prisma } from "@/utils/prisma"
+import { actionWrapper } from "@/utils/lib"
+
 
 export async function updateProduct(productId: number, data: any) {
-    try {
+    return actionWrapper(async () => {
 
-        const prisma = new PrismaClient()
+        /* const prisma = new PrismaClient() */
         const supabase = createServerSideClient()
 
         const updatedProduct = await prisma.product.update({
@@ -68,7 +70,5 @@ export async function updateProduct(productId: number, data: any) {
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error updating product", error, null)
-    }
+    })
 } 

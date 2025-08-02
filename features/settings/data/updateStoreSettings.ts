@@ -1,16 +1,17 @@
 import { actionWrapper } from "@/utils/lib"
 import { UpdateSettingsReturn, StoreCustomizationForm } from "@/features/settings/types"
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client' */
+import { prisma } from "@/utils/prisma"
 
 export async function updateStoreSettings(
     storeId: number, 
     settings: StoreCustomizationForm
 ): Promise<UpdateSettingsReturn> {
     return actionWrapper(async () => {
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
         // Actualizar o crear la configuración
-        const customization = await client.storeCustomization.upsert({
+        const customization = await prisma.storeCustomization.upsert({
             where: {
                 store_id: storeId
             },

@@ -1,18 +1,16 @@
 "use server"
 
-import { Account, PrismaClient, User } from '@prisma/client'
+import { Account, User } from "@prisma/client"
 import { formatErrorResponse } from "@/utils/lib"
-
+import { prisma } from "@/utils/prisma"
 
 export async function getUserByEmail(email: string): Promise<{
     payload: User & { Account: Account[] } | null,
     error: Boolean,
     message: string
 }> {
+
     try {
-
-        const prisma = new PrismaClient()
-
         const user = await prisma.user.findUnique({
             where: {
                 email: email
@@ -22,18 +20,14 @@ export async function getUserByEmail(email: string): Promise<{
             }
         })
 
-        if (!user) {
-            throw new Error("User not found")
-        }
-
         return {
-            payload: user,
+            message: "User fetched successfully from database",
             error: false,
-            message: "User found"
+            payload: user
         }
 
     } catch (error) {
-        return formatErrorResponse("Error fetching user", error)
+        return formatErrorResponse("Error fetching user", error, null)
     }
 }
 

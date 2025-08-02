@@ -1,12 +1,13 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper, formatErrorResponse } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function insertUser(email: string, password: string) {
-    try {
+    return actionWrapper(async () => {
 
-        const prisma = new PrismaClient()
+        /* const prisma = new PrismaClient() */
 
         const user = await prisma.user.create({
             data: {
@@ -32,7 +33,5 @@ export async function insertUser(email: string, password: string) {
             message: "User created"
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error creating user", error)
-    }
+    })
 }

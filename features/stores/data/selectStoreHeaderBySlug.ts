@@ -1,7 +1,8 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 type StoreHeader = {
     name: string
@@ -18,10 +19,9 @@ type SelectStoreHeaderBySlugReturn = {
 }
 
 export async function selectStoreHeaderBySlug(slug: string): Promise<SelectStoreHeaderBySlugReturn> {
-    try {
-        const client = new PrismaClient()
+    return actionWrapper(async () => {
 
-        const store = await client.store.findUnique({
+        const store = await prisma.store.findUnique({
             where: {
                 slug: slug
             },
@@ -46,7 +46,5 @@ export async function selectStoreHeaderBySlug(slug: string): Promise<SelectStore
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching store header from db", error, null)
-    }
+    })
 } 

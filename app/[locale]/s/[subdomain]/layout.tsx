@@ -16,7 +16,7 @@ type LayoutProps = {
 
 export default async function Layout({ children, params }: LayoutProps) {
 
-    const { locale, subdomain } = await params;
+    const { subdomain } = await params;
 
     const { payload: storeData, error } = await getStoreWithProducts(
         subdomain,
@@ -34,9 +34,6 @@ export default async function Layout({ children, params }: LayoutProps) {
     if (error || !storeData) {
         return <div>{t("store-not-found")}</div>;
     }
-    console.log("🏪 Store layout - locale:", locale, "subdomain:", subdomain, "store:", storeData.name);
-
-    console.log("🚀 ~ Layout ~ storeData.customization?.background_color:", storeData.customization?.background_color)
 
     return (
         <CartProvider>
@@ -51,7 +48,11 @@ export default async function Layout({ children, params }: LayoutProps) {
                     } as React.CSSProperties}
                     className="contents"
                 >
-                    <Header title={storeData.name} />
+                    <Header 
+                        title={storeData.name} 
+                        socialMedia={storeData.operational_settings}
+                        showSocialLinks={storeData.customization?.show_social_links ?? true}
+                    />
                     <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow bg-background' >
                         {children}
                     </main>

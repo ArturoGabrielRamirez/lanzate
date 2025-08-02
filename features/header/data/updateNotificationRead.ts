@@ -1,14 +1,15 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export const updateNotificationRead = async (id: number) => {
-    try {
+    return actionWrapper(async () => {
 
-        const client = new PrismaClient()
+        /* const client = new PrismaClient() */
 
-        const notification = await client.notification.update({
+        const notification = await prisma.notification.update({
             where: {
                 id: id
             },
@@ -23,7 +24,5 @@ export const updateNotificationRead = async (id: number) => {
             error: false
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error updating notification read", error)
-    }
+    })
 }

@@ -11,27 +11,27 @@ function Footer() {
 
     return (
         <footer className="relative bg-background">
-            <div className="container px-4 pt-16 pb-8 mx-auto sm:px-6 lg:px-8 lg:pt-0">
+            <div className="container px-4 pb-4 lg:pb-8 mx-auto sm:px-6 lg:px-8 lg:pt-0">
 
-                <div className="flex flex-col items-center gap-4 pt-8 border-t border-gray-100 sm:flex sm:items-center sm:justify-between dark:border-gray-800 md:flex-row md:items-start">
-                    <nav className="flex gap-6">
-                        <Link href="/terms-and-conditions" className="text-sm text-muted-foreground hover:text-primary">{t('footer.links.1')}</Link>
-                        <Link href="/privacy-policy" className="text-sm text-muted-foreground hover:text-primary">{t('footer.links.2')}</Link>
-                        <Link href="/cookies" className="text-sm text-muted-foreground hover:text-primary">{t('footer.links.3')}</Link>
+                <div className="flex flex-col items-center gap-4 pt-4 lg:pt-8 border-t border-gray-100 sm:flex sm:items-center sm:justify-between dark:border-gray-800 md:flex-row md:items-start">
+                    <nav className="flex gap-2 lg:gap-6 flex-col text-center md:flex-row md:items-start text-xs md:text-sm">
+                        <Link href="/terms-and-conditions" className="text-muted-foreground hover:text-primary">{t('footer.links.1')}</Link>
+                        <Link href="/privacy-policy" className="text-muted-foreground hover:text-primary">{t('footer.links.2')}</Link>
+                        <Link href="/cookies" className="text-muted-foreground hover:text-primary">{t('footer.links.3')}</Link>
                     </nav>
 
                     <nav className="flex items-center gap-6">
                         <a href="#" className="text-sm text-muted-foreground hover:text-primary">
                             <span className="sr-only">Facebook</span>
-                            <Facebook />
+                            <Facebook className="size-4 md:size-5" />
                         </a>
                         <a href="#" className="text-sm text-muted-foreground hover:text-primary">
                             <span className="sr-only">Instagram</span>
-                            <InstagramIcon />
+                            <InstagramIcon className="size-4 md:size-5" />
                         </a>
                         <a href="#" className="text-sm text-muted-foreground hover:text-primary">
                             <span className="sr-only">X (Twitter)</span>
-                            <XformerlyTwitter className="size-5 fill-muted-foreground hover:fill-primary" />
+                            <XformerlyTwitter className="size-4 md:size-5 fill-muted-foreground hover:fill-primary" />
                         </a>
                     </nav>
                 </div>

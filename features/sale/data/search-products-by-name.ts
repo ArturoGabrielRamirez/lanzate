@@ -1,11 +1,12 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
-import { formatErrorResponse } from "@/utils/lib"
+/* import { PrismaClient } from '@prisma/client' */
+import { actionWrapper, formatErrorResponse } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
 export async function searchProductsByName(searchTerm: string, storeId: number) {
-    try {
-        const prisma = new PrismaClient()
+    return actionWrapper(async () => {
+        /* const prisma = new PrismaClient() */
 
         if (!searchTerm || searchTerm.trim() === '') {
             return {
@@ -63,7 +64,5 @@ export async function searchProductsByName(searchTerm: string, storeId: number) 
             payload: productsWithTotalStock,
             error: false
         }
-    } catch (error) {
-        return formatErrorResponse("Error searching products by name", error, [])
-    }
+    })
 } 
