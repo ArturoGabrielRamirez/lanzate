@@ -11,16 +11,21 @@ import ProductResults from './product-results'
 import BarcodeScannerUSB from './barcode-scanner-usb'
 import { useTranslations } from 'next-intl'
 import { createNewWalkInOrder } from '@/features/checkout/actions/createNewWalkInOrder'
+import { toast } from 'sonner'
 
 type SaleInterfaceProps = {
   storeName: string
   storeDescription?: string
   storeId: number
+  branchId: number
+  subdomain: string
+  processed_by_user_id: number
 }
 
-function SaleInterface({ storeId }: SaleInterfaceProps) {
+function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: SaleInterfaceProps) {
   /* const [scannedProducts, setScannedProducts] = useState<ScannedProduct[]>([]) */
   const [cartItems, setCartItems] = useState<CartItem[]>([])
+  console.log("🚀 ~ SaleInterface ~ cartItems:", cartItems)
   const [barcodeResult, setBarcodeResult] = useState<ProductSearchResult>({
     product: null,
     message: '',
@@ -176,15 +181,32 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
 
   // Handlers para acciones
   const handleFinalizeSale = async () => {
-    // TODO: Implementar lógica de finalizar venta
-    console.log('Finalizando venta:', { cartItems, total: cartTotal })
     const formattedTotal = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(cartTotal)
-    //alert(t('sale-completed', { total: formattedTotal }))
-    /* const {} = createNewWalkInOrder({
 
-    }) */
-    // Limpiar carrito después de la venta
-    setCartItems([])
+    toast.loading("Creando nueva orden...")
+
+    const { error, message } = await createNewWalkInOrder({
+      branch_id: branchId,
+      subdomain: subdomain,
+      cart: cartItems.map(item => ({
+        quantity: item.quantity,
+        id: item.product.id,
+        price: item.product.price
+      })),
+      total_price: cartTotal,
+      total_quantity: cartItemCount,
+      isPaid: true,
+      payment_method: "cash",
+      processed_by_user_id: processed_by_user_id,
+      customer_info: {}
+    })
+
+    if (error) {
+      toast.error(message)
+    } else {
+      toast.success(t('sale-completed', { total: formattedTotal }))
+      setCartItems([])
+    }
   }
 
   const handleRefund = () => {

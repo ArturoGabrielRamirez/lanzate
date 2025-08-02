@@ -14,7 +14,7 @@ export async function selectOrderById(orderId: number) {
                 id: orderId
             },
             include: {
-                user: {
+                customer: {
                     select: {
                         id: true,
                         email: true,
@@ -51,30 +51,7 @@ export async function selectOrderById(orderId: number) {
                     }
                 },
                 payment: true,
-                created_by_employee: {
-                    include: {
-                        user: {
-                            select: {
-                                id: true,
-                                email: true,
-                                first_name: true,
-                                last_name: true
-                            }
-                        }
-                    }
-                },
-                updated_by_employee: {
-                    include: {
-                        user: {
-                            select: {
-                                id: true,
-                                email: true,
-                                first_name: true,
-                                last_name: true
-                            }
-                        }
-                    }
-                },
+                processed_by: true,
                 store: {
                     select: {
                         id: true,

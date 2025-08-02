@@ -53,7 +53,7 @@ export type SelectAllStoresReturn = {
 
 export type SelectStoreBySubdomainReturn = {
     message: string;
-    payload: SubdomainData | null;
+    payload: StoreWithProducts | null;
     error: boolean;
 };
 

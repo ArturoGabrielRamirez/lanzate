@@ -902,7 +902,7 @@
             "updated-at": "Actualizado el"
         },
         "orders": {
-            "order-details": "Detalles de la orden ",
+            "order-details": "Detalles de la orden",
             "status": "Estado",
             "date-created": "Fecha de creación",
             "total": "Total",

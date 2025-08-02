@@ -14,10 +14,10 @@ type CreateNewWalkInOrderFormData = {
     cart: { quantity: number, id: number, price: number }[]
     processed_by_user_id: number
     customer_info: {
-        name: string
-        phone: string
-        email: string
-        id: number
+        name?: string
+        phone?: string
+        email?: string
+        id?: number
     }
 }
 

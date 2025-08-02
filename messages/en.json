@@ -1038,7 +1038,7 @@
             "updated-at": "Updated At"
         },
         "orders": {
-            "order-details": "Order Details ",
+            "order-details": "Order Details",
             "status": "Status",
             "date-created": "Date Created",
             "total": "Total",

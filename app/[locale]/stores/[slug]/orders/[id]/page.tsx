@@ -26,6 +26,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
     }
 
     const { payload: order, error } = await getOrderDetails(id)
+    console.log("🚀 ~ OrderDetailPage ~ order:", order)
 
     if (error || !order) {
         return console.log(error)
@@ -54,19 +55,19 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                     <Link href={`/stores/${slug}/orders`}>
                         <ArrowLeft className="size-4" />
                     </Link>
-                    {t("order-details")}#{order.id}
+                    {t("orders.order-details")}#{order.id}
                 </CardTitle>
             </CardHeader>
             <CardContent className="flex grow">
                 <div className="grid w-full grid-cols-1 gap-6">
-                    
+
                     {/* Order Status and Basic Info */}
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                         <Card>
                             <CardHeader className="pb-3">
                                 <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                                     <Package className="w-4 h-4" />
-                                    {t("status")}
+                                    {t("orders.status")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -90,7 +91,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             <CardHeader className="pb-3">
                                 <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                                     <Calendar className="w-4 h-4" />
-                                    {t("date-created")}
+                                    {t("orders.date-created")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -102,12 +103,12 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             <CardHeader className="pb-3">
                                 <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                                     <DollarSign className="w-4 h-4" />
-                                    {t("total")}
+                                    {t("orders.total")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <p className="text-lg font-bold">{formatCurrency(order.total_price)}</p>
-                                <p className="text-xs text-muted-foreground">{order.total_quantity} {order.total_quantity === 1 ? t("item") : t("items")}</p>
+                                <p className="text-xs text-muted-foreground">{order.total_quantity} {order.total_quantity === 1 ? t("orders.item") : t("orders.items")}</p>
                             </CardContent>
                         </Card>
                     </div>
@@ -117,31 +118,36 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                                 <User className="w-4 h-4" />
-                                {t("customer-information")}
+                                {t("orders.customer-information")}
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="flex items-center gap-4">
-                                <div className="flex items-center justify-center w-12 h-12 overflow-hidden rounded-full bg-secondary">
-                                    {order.user.avatar ? (
+                                {/* <div className="flex items-center justify-center w-12 h-12 overflow-hidden rounded-full bg-secondary">
+                                    {order.processed_by.avatar ? (
                                         <img
-                                            src={order.user.avatar}
-                                            alt={`${order.user.first_name || 'Customer'} avatar`}
+                                            src={order.processed_by.avatar}
+                                            alt={`${order.processed_by.name || 'Customer'} avatar`}
                                             className="object-cover w-full h-full"
                                         />
                                     ) : (
                                         <img 
-                                            src={`https://api.dicebear.com/9.x/initials/svg?seed=${order.user.first_name || 'Customer'} ${order.user.last_name || ''}`} 
+                                            src={`https://api.dicebear.com/9.x/initials/svg?seed=${order.processed_by.name || 'Customer'}`} 
                                             alt="Customer Avatar" 
                                             className="object-cover w-full h-full" 
                                         />
                                     )}
-                                </div>
+                                </div> */}
                                 <div>
                                     <h3 className="font-semibold">
-                                        {order.user.first_name ? `${order.user.first_name} ${order.user.last_name || ''}` : order.user.email}
+                                        {order.customer_name || 'No name provided'}
                                     </h3>
-                                    <p className="text-sm text-muted-foreground">{order.user.email}</p>
+                                    <p className="text-sm text-muted-foreground">
+                                        {order.customer_email || "No email provided"}
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">
+                                        {order.customer_phone || "No phone provided"}
+                                    </p>
                                 </div>
                             </div>
                         </CardContent>
@@ -152,13 +158,13 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                                 {order.shipping_method === "pickup" ? <MapPin className="w-4 h-4" /> : <Truck className="w-4 h-4" />}
-                                {t("shipping-method")}
+                                {t("orders.shipping-method")}
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="flex items-center gap-2">
                                 <Badge variant="outline">
-                                    {order.shipping_method === "pickup" ? t("store-pickup") : t("delivery")}
+                                    {order.shipping_method === "pickup" ? t("branches.store-pickup") : t("branches.delivery")}
                                 </Badge>
                                 {order.branch && (
                                     <div className="ml-4">
@@ -175,7 +181,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                                 <Package className="w-4 h-4" />
-                                {t("order-items")}
+                                {t("orders.order-items")}
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
@@ -197,7 +203,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                                             <div>
                                                 <h4 className="font-medium">{item.product.name}</h4>
                                                 <p className="text-sm text-muted-foreground">
-                                                    {t("quantity")}{item.quantity} × {formatCurrency(item.price)}
+                                                    {t("orders.quantity")}{item.quantity} × {formatCurrency(item.price)}
                                                 </p>
                                             </div>
                                         </div>
@@ -216,17 +222,17 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
                                     <CreditCard className="w-4 h-4" />
-                                    {t("payment-information")}
+                                    {t("orders.payment-information")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                                     <div>
-                                        <p className="text-sm text-muted-foreground">{t("amount")}</p>
+                                        <p className="text-sm text-muted-foreground">{t("orders.amount")}</p>
                                         <p className="font-medium">{formatCurrency(order.payment.amount)}</p>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-muted-foreground">{t("status")}</p>
+                                        <p className="text-sm text-muted-foreground">{t("orders.status")}</p>
                                         <Badge variant={order.payment.status === "PAID" ? "default" : "secondary"}>
                                             {order.payment.status}
                                         </Badge>
@@ -242,16 +248,16 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
                                     <UserCheck className="w-4 h-4" />
-                                    {t("employee-information")}
+                                    {t("orders.employee-information")}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                                     {order.created_by_employee && (
                                         <div>
-                                            <p className="text-sm text-muted-foreground">Created by</p>
+                                            <p className="text-sm text-muted-foreground">{t("orders.created-by")}</p>
                                             <p className="font-medium">
-                                                {order.created_by_employee.user?.first_name 
+                                                {order.created_by_employee.user?.first_name
                                                     ? `${order.created_by_employee.user.first_name} ${order.created_by_employee.user.last_name || ''}`
                                                     : order.created_by_employee.user?.email
                                                 }
@@ -260,9 +266,9 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                                     )}
                                     {order.updated_by_employee && (
                                         <div>
-                                            <p className="text-sm text-muted-foreground">{t("last-updated-by")}</p>
+                                            <p className="text-sm text-muted-foreground">{t("orders.last-updated-by")}</p>
                                             <p className="font-medium">
-                                                {order.updated_by_employee.user?.first_name 
+                                                {order.updated_by_employee.user?.first_name
                                                     ? `${order.updated_by_employee.user.first_name} ${order.updated_by_employee.user.last_name || ''}`
                                                     : order.updated_by_employee.user?.email
                                                 }

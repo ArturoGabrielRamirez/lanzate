@@ -12,14 +12,13 @@ type StoreSelectorProps = {
 }
 
 function StoreSelector({ stores }: StoreSelectorProps) {
-    console.log("🚀 ~ StoreSelector ~ stores:", stores)
     const [selectedStore, setSelectedStore] = useState<string>("")
     const [selectedBranch, setSelectedBranch] = useState<number | null>(null)
     const router = useRouter()
     const t = useTranslations("sale.store-selector")
 
     // Get the selected store object
-    const selectedStoreData = stores.find(store => store.slug === selectedStore)
+    const selectedStoreData = stores.find(store => store.subdomain === selectedStore)
 
     // Auto-select branch if store has only one branch
     useEffect(() => {
@@ -54,7 +53,7 @@ function StoreSelector({ stores }: StoreSelectorProps) {
                     </SelectTrigger>
                     <SelectContent>
                         {stores.map((store) => (
-                            <SelectItem key={store.id} value={store.slug}>
+                            <SelectItem key={store.id} value={store.subdomain}>
                                 {store.name}
                             </SelectItem>
                         ))}

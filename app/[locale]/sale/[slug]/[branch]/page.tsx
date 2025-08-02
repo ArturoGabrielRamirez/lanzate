@@ -4,13 +4,14 @@ import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { SaleInterface } from "@/features/sale/components"
 import { getTranslations } from "next-intl/server"
+import { getStoreBySubdomain } from "@/features/subdomain/actions/getStoreBySubdomain"
 
 type Props = {
-    params: Promise<{ slug: string }>
+    params: Promise<{ slug: string, branch: string }>
 }
 
 async function SaleStorePage({ params }: Props) {
-    const { slug } = await params
+    const { slug, branch } = await params
     const t = await getTranslations("sale")
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
@@ -19,7 +20,7 @@ async function SaleStorePage({ params }: Props) {
         return console.error(userMessage)
     }
 
-    const { payload: store, error: storeError, message: storeMessage } = await getStoresFromSlug(slug)
+    const { payload: store, error: storeError, message: storeMessage } = await getStoreBySubdomain(slug)
 
     if (storeError || !store) {
         return console.error(storeMessage)
@@ -41,12 +42,15 @@ async function SaleStorePage({ params }: Props) {
                     label: store.name,
                     href: `/sale/${slug}`
                 }
-            ]} className="hidden md:block"/>
+            ]} className="hidden md:block" />
 
-            <SaleInterface 
+            <SaleInterface
                 storeName={store.name}
                 storeDescription={store.description ?? undefined}
                 storeId={store.id}
+                branchId={parseInt(branch)}
+                subdomain={store.subdomain}
+                processed_by_user_id={user.id}
             />
         </section>
     )
