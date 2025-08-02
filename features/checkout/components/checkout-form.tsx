@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, InputField } from "@/features/layout/components"
 import { cn } from "@/lib/utils"
-import { CreditCard, Banknote, Smartphone, ArrowLeft, ArrowRight } from "lucide-react"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 import { useState } from "react"
 /* import { createNewOrder } from "../actions/createNewOrder" */
 /* import { useCart } from "@/features/cart/components/cart-provider" */
@@ -13,11 +13,12 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { createNewCheckoutOrder } from "../actions/createNewCheckoutOrder"
 import { Branch } from "@prisma/client"
 import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperItem, InteractiveStepperSeparator, InteractiveStepperTitle, InteractiveStepperTrigger, useStepper } from "@/components/expansion/interactive-stepper"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
 import { useFormContext } from "react-hook-form"
 import { ShippingMethodSelector } from "./shipping-method-selector"
+import { BranchSelector } from "./branch-selector"
+import { PaymentInformation } from "./payment-information"
 /* import { createNewCheckoutOrder } from "../actions/createNewCheckoutOrder" */
+import { Label } from "@/components/ui/label"
 
 function StepNavigation() {
     const { currentStep, nextStep, prevStep, hasNext, hasPrev } = useStepper()
@@ -53,19 +54,9 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
     /* const { formState: { errors } } = useFormContext()
     console.log("🚀 ~ CheckoutForm ~ errors:", errors) */
     const [shippingMethod, setShippingMethod] = useState<"delivery" | "pickup">("delivery")
-    const [selectedBranchId, setSelectedBranchId] = useState<number | null>(
-        branches.length === 1 ? branches[0].id : null
-    )
+    const [selectedBranchId, setSelectedBranchId] = useState<number | null>(null)
     const [paymentMethod, setPaymentMethod] = useState<string>("")
     /* const { cart, clearCart } = useCart() */
-
-    const handleBranchChange = (value: string) => {
-        setSelectedBranchId(Number(value))
-    }
-
-    const handlePaymentMethodChange = (value: string) => {
-        setPaymentMethod(value)
-    }
 
     const handleSubmit = async (formData: any) => {
         console.log("🚀 ~ handleSubmit ~ formData:", formData)
@@ -155,28 +146,11 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                             />
 
                             {/* Branch Selection */}
-                            <div>
-                                <Label htmlFor="branchId" className="text-base font-medium mb-2 block">
-                                    Select Branch
-                                </Label>
-                                <Select 
-                                    value={selectedBranchId?.toString() || ""} 
-                                    onValueChange={handleBranchChange}
-                                    required
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Choose a branch" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {branches.map((branch) => (
-                                            <SelectItem key={branch.id} value={branch.id.toString()}>
-                                                {branch.name}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                <input type="hidden" name="branchId" value={selectedBranchId || ""} />
-                            </div>
+                            <BranchSelector 
+                                branches={branches}
+                                value={selectedBranchId}
+                                onChange={setSelectedBranchId}
+                            />
 
                             {/* Address Fields (only for delivery) */}
                             {shippingMethod === "delivery" && (
@@ -202,96 +176,11 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                         <CardHeader>
                             <CardTitle>Payment Information</CardTitle>
                         </CardHeader>
-                        <CardContent className="flex flex-col gap-6">
-                            {/* Payment Method Selection */}
-                            <div>
-                                <Label htmlFor="paymentMethod" className="text-base font-medium mb-2 block">
-                                    Select Payment Method
-                                </Label>
-                                <Select 
-                                    value={paymentMethod} 
-                                    onValueChange={handlePaymentMethodChange}
-                                    required
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Choose a payment method" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="credit-debit">
-                                            <div className="flex items-center gap-2">
-                                                <CreditCard className="size-4" />
-                                                Credit/Debit Card
-                                            </div>
-                                        </SelectItem>
-                                        <SelectItem value="transfer">
-                                            <div className="flex items-center gap-2">
-                                                <Banknote className="size-4" />
-                                                Bank Transfer
-                                            </div>
-                                        </SelectItem>
-                                        <SelectItem value="mercadopago">
-                                            <div className="flex items-center gap-2">
-                                                <Smartphone className="size-4" />
-                                                Mercado Pago
-                                            </div>
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                <input type="hidden" name="paymentMethod" value={paymentMethod} />
-                            </div>
-
-                            {/* Conditional Payment Fields */}
-                            {paymentMethod === "credit-debit" && (
-                                <div className="space-y-4">
-                                    <Label className="text-base font-medium block">Card Information</Label>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <InputField name="cardNumber" label="Card Number" placeholder="1234 5678 9012 3456" />
-                                        <InputField name="cardHolder" label="Cardholder Name" placeholder="John Doe" />
-                                    </div>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <InputField name="expiryDate" label="Expiry Date" placeholder="MM/YY" />
-                                        <InputField name="cvv" label="CVV" placeholder="123" />
-                                    </div>
-                                </div>
-                            )}
-
-                            {paymentMethod === "transfer" && (
-                                <Card className="border-blue-200 bg-blue-50">
-                                    <CardContent className="pt-6">
-                                        <div className="flex items-start gap-3">
-                                            <Banknote className="h-5 w-5 text-blue-600 mt-0.5" />
-                                            <div className="space-y-2">
-                                                <p className="font-medium text-blue-900">Bank Transfer Details:</p>
-                                                <p className="text-sm text-accent"><strong>CVU:</strong> 0000003100061234567890</p>
-                                                <p className="text-sm text-accent"><strong>Alias:</strong> MI.TIENDA.ONLINE</p>
-                                                <p className="text-sm text-blue-700 mt-2">
-                                                    Please include your order number in the transfer description. 
-                                                    Your order will be confirmed once the payment is received.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            )}
-
-                            {paymentMethod === "mercadopago" && (
-                                <Card className="border-orange-200 bg-orange-50">
-                                    <CardContent className="pt-6">
-                                        <div className="flex items-start gap-3">
-                                            <Smartphone className="h-5 w-5 text-orange-600 mt-0.5" />
-                                            <div className="space-y-2">
-                                                <p className="font-medium text-orange-900">Mercado Pago Payment</p>
-                                                <p className="text-sm text-orange-700 max-w-xl">
-                                                    When you click "Confirm Order", you will be redirected to Mercado Pago 
-                                                    to complete your payment securely. After payment, you will be brought 
-                                                    back to our site with your order confirmation.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            )}
-
+                        <CardContent>
+                            <PaymentInformation 
+                                paymentMethod={paymentMethod}
+                                onChange={setPaymentMethod}
+                            />
                             <div className="flex justify-between pt-4">
                                 <StepNavigation />
                             </div>

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 import { MapPin, Truck } from "lucide-react"
+import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 
 type ShippingMethod = "delivery" | "pickup"
@@ -14,7 +15,12 @@ interface ShippingMethodSelectorProps {
 }
 
 export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelectorProps) {
+    console.log("🚀 ~ ShippingMethodSelector ~ value:", value)
     const { setValue } = useFormContext()
+
+    useEffect(() => {
+        setValue("shippingMethod", value)
+    }, [value, setValue])
 
     const handleShippingMethodChange = (e: React.MouseEvent<HTMLButtonElement>) => {
         const target = e.target as HTMLButtonElement
@@ -30,15 +36,15 @@ export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelect
         <div>
             <Label className="text-base font-medium mb-4 block">Choose your delivery method</Label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Button 
+                <Button
                     type="button"
-                    variant="outline" 
-                    onClick={handleShippingMethodChange} 
+                    variant="outline"
+                    onClick={handleShippingMethodChange}
                     data-type="delivery"
                     className={cn(
                         "h-auto p-4 flex flex-col items-center gap-2 transition-all duration-300",
-                        value === "delivery" 
-                            ? "border-primary bg-primary text-primary-foreground hover:bg-primary/90" 
+                        value === "delivery"
+                            ? "!border-primary !bg-primary !text-primary-foreground !hover:bg-primary/90"
                             : "hover:bg-muted"
                     )}
                 >
@@ -50,15 +56,15 @@ export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelect
                         </div>
                     </div>
                 </Button>
-                <Button 
+                <Button
                     type="button"
-                    variant="outline" 
-                    onClick={handleShippingMethodChange} 
+                    variant="outline"
+                    onClick={handleShippingMethodChange}
                     data-type="pickup"
                     className={cn(
                         "h-auto p-4 flex flex-col items-center gap-2 transition-all duration-300",
-                        value === "pickup" 
-                            ? "border-primary bg-primary text-primary-foreground hover:bg-primary/90" 
+                        value === "pickup"
+                            ? "!border-primary !bg-primary !text-primary-foreground !hover:bg-primary/90"
                             : "hover:bg-muted"
                     )}
                 >
