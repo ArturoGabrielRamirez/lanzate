@@ -1,6 +1,5 @@
 import { ShoppingBasket } from "lucide-react"
 import { Title } from "@/features/layout/components"
-import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { SaleInterface } from "@/features/sale/components"
 import { getTranslations } from "next-intl/server"
