@@ -162,7 +162,6 @@ export async function updateOrderStatus(orderId: number, data: ChangeOrderStatus
                 where: { id: orderId },
                 data: {
                     status: newStatus,
-                    updated_by_employee_id: null, // Por ahora null, se puede agregar lógica de empleados después
                 },
                 include: {
                     items: {
@@ -173,7 +172,8 @@ export async function updateOrderStatus(orderId: number, data: ChangeOrderStatus
                     payment: true,
                     store: true,
                     branch: true,
-                    user: true
+                    customer: true,
+                    processed_by: true
                 }
             })
 
