@@ -22,7 +22,13 @@ type insertOrderProps = {
         name?: string,
         phone?: string,
         email?: string,
-        id?: number
+        id?: number,
+        address_one?: string,
+        address_two?: string,
+        city?: string,
+        state?: string,
+        zip_code?: string,
+        country?: string
     }
 }
 
@@ -140,7 +146,13 @@ export async function insertOrder({
                                 }))
                             ]
                         }
-                    }
+                    },
+                    address_one: customer_info?.address_one || null,
+                    address_two: customer_info?.address_two || null,
+                    city: customer_info?.city || null,
+                    state: customer_info?.state || null,
+                    zip_code: customer_info?.zip_code || null,
+                    country: customer_info?.country || null
                 }
             })
 

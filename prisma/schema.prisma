@@ -181,6 +181,13 @@ model Order {
   is_paid         Boolean     @default(false)
   payment_date    DateTime?
   payment_method  String?
+  
+  address_one     String?
+  address_two     String?
+  city            String?
+  state           String?
+  zip_code        String?
+  country         String?
 
   // Cambiar nombres para mayor claridad
   processed_by_user_id Int?

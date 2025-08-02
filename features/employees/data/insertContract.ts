@@ -59,7 +59,6 @@ export async function insertContract(payload: any, storeId: number, userId: numb
                 include: {
                     store: true,
                     created_by_user: true,
-                    assigned_employee: true,
                     responses: {
                         include: {
                             employee: {

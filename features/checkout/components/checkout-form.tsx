@@ -5,16 +5,17 @@ import { Form, InputField } from "@/features/layout/components"
 import { cn } from "@/lib/utils"
 import { MapPin, Truck } from "lucide-react"
 import { useState } from "react"
-import { createNewOrder } from "../actions/createNewOrder"
-import { useCart } from "@/features/cart/components/cart-provider"
+/* import { createNewOrder } from "../actions/createNewOrder" */
+/* import { useCart } from "@/features/cart/components/cart-provider" */
 import { Button } from "@/components/ui/button"
 import { deliveryOrderSchema, pickupOrderSchema } from "../schemas/order-schema"
 import { yupResolver } from "@hookform/resolvers/yup"
+/* import { createNewCheckoutOrder } from "../actions/createNewCheckoutOrder" */
 
-function CheckoutForm({ subdomain, userId }: { subdomain: string, userId: string }) {
+function CheckoutForm({ /* subdomain, userId  */}: { subdomain: string, userId: string }) {
 
     const [shippingMethod, setShippingMethod] = useState<"delivery" | "pickup">("delivery")
-    const { cart, clearCart } = useCart()
+    /* const { cart, clearCart } = useCart() */
 
     const handleShippingMethodChange = (e: React.MouseEvent<HTMLButtonElement>) => {
         const target = e.target as HTMLButtonElement
@@ -24,22 +25,25 @@ function CheckoutForm({ subdomain, userId }: { subdomain: string, userId: string
         }
     }
 
-    const handleSubmit = async (formData: any) => {
-        const { error, message, payload } = await createNewOrder(formData, cart, shippingMethod, subdomain, userId)
+    const handleSubmit = async (/* formData: any */) => {
+        //const { error, message, payload } = await createNewOrder(formData, cart, shippingMethod, subdomain, userId)
+        /* const {} = createNewCheckoutOrder({
+
+        })
         if (error) throw new Error(message)
         clearCart()
         return {
             error: false,
             message: "Order created successfully",
             payload: payload
-        }
+        } */
     }
 
     return (
         <Form
             className="flex-1"
             contentButton="Continue"
-            formAction={handleSubmit}
+            /* formAction={handleSubmit} */
             resolver={yupResolver(shippingMethod === "delivery" ? deliveryOrderSchema : pickupOrderSchema)}
         >
             <h3 className="text-xl font-bold">Personal Information</h3>
