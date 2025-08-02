@@ -18,6 +18,12 @@ type CreateNewCheckoutOrderFormData = {
         phone: string
         email: string
         id: number
+        address_one?: string
+        address_two?: string
+        city?: string
+        state?: string
+        zip_code?: string
+        country?: string
     }
 }
 
