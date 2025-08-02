@@ -11,8 +11,15 @@ function ProductListContainer({ children }: Props) {
 
     const { displayType } = useStore()
 
+    if (displayType === "list") {
+        return (
+            <div className={cn("flex flex-col gap-2 w-full", displayType === "list" && "flex-wrap")}>
+                {children}
+            </div>
+        )
+    }
     return (
-        <div className={cn("grid grid-cols-2 md:grid-cols-[repeat(auto-fill,minmax(min(250px,100%),1fr))] gap-4 grow", displayType === "list" && "grid-cols-1")}>
+        <div className={cn("grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3", displayType === "grid" && "grid-cols-2")}>
             {children}
         </div>
     )
