@@ -32,9 +32,9 @@ type FinalizeSaleButtonProps = {
 type FinalizeSaleFormData = {
   paymentMethod: PaymentMethod
   includeCustomerInfo: boolean
-  customerName: string
-  customerPhone: string
-  customerEmail: string
+  name: string
+  phone: string
+  email: string
 }
 
 const finalizeSaleSchema = Yup.object({
@@ -42,7 +42,7 @@ const finalizeSaleSchema = Yup.object({
     .oneOf(['CASH', 'CREDIT_CARD', 'DEBIT_CARD', 'TRANSFER', 'MERCADO_PAGO', 'PAYPAL', 'CRYPTO'])
     .required('Debes seleccionar un método de pago'),
   includeCustomerInfo: Yup.boolean(),
-  customerName: Yup.string()
+  name: Yup.string()
     .when('includeCustomerInfo', {
       is: true,
       then: (schema) => schema
@@ -50,7 +50,7 @@ const finalizeSaleSchema = Yup.object({
         .required('El nombre del cliente es requerido'),
       otherwise: (schema) => schema.optional()
     }),
-  customerPhone: Yup.string()
+  phone: Yup.string()
     .when('includeCustomerInfo', {
       is: true,
       then: (schema) => schema
@@ -58,7 +58,7 @@ const finalizeSaleSchema = Yup.object({
         .required('El teléfono del cliente es requerido'),
       otherwise: (schema) => schema.optional()
     }),
-  customerEmail: Yup.string()
+  email: Yup.string()
     .when('includeCustomerInfo', {
       is: true,
       then: (schema) => schema
@@ -78,11 +78,11 @@ const paymentMethodOptions = [
   { value: 'CRYPTO', label: 'Criptomonedas' }
 ]
 
-function FinalizeSaleButton({ 
-  cartTotal, 
-  cartItemCount, 
-  disabled = false, 
-  className, 
+function FinalizeSaleButton({
+  cartTotal,
+  cartItemCount,
+  disabled = false,
+  className,
   onConfirm,
   /* selectedPaymentMethod, */
   setSelectedPaymentMethod,
@@ -100,15 +100,16 @@ function FinalizeSaleButton({
   }
 
   const handleFinalizeSale = async (data: FinalizeSaleFormData) => {
+    console.log("🚀 ~ handleFinalizeSale ~ data:", data)
     // Update the parent state with the form data
     setSelectedPaymentMethod(data.paymentMethod)
-    
+
     // Only set customer info if the switch was enabled
     if (data.includeCustomerInfo) {
       setCustomerInfo({
-        name: data.customerName,
-        phone: data.customerPhone,
-        email: data.customerEmail
+        name: data.name,
+        phone: data.phone,
+        email: data.email
       })
     } else {
       setCustomerInfo({ name: '', phone: '', email: '' })
@@ -117,11 +118,11 @@ function FinalizeSaleButton({
     // Call the parent confirmation function
     await onConfirm({
       paymentMethod: data.paymentMethod,
-      customerInfo: data.includeCustomerInfo ? {
-        name: data.customerName,
-        phone: data.customerPhone,
-        email: data.customerEmail
-      } : { name: '', phone: '', email: '' }
+      customerInfo: {
+        name: data.name,
+        phone: data.phone,
+        email: data.email
+      }
     })
 
     return { error: false, payload: data, message: 'Venta finalizada correctamente' }
@@ -136,7 +137,7 @@ function FinalizeSaleButton({
         </>
       }
       title={t('popup-title')}
-      description={t('popup-description', { 
+      description={t('popup-description', {
         total: formatPrice(cartTotal),
         items: cartItemCount,
         itemText: cartItemCount === 1 ? t('item') : t('items')
@@ -179,8 +180,8 @@ function FinalizeSaleButton({
 
         {/* Switch para información del cliente */}
         <div className="flex items-center space-x-2">
-          <Switch 
-            id="include-customer-info" 
+          <Switch
+            id="include-customer-info"
             name="includeCustomerInfo"
             checked={includeCustomerInfo}
             onCheckedChange={setIncludeCustomerInfo}
@@ -194,23 +195,23 @@ function FinalizeSaleButton({
         {includeCustomerInfo && (
           <div className="space-y-4">
             <h4 className="text-sm font-medium">Información del cliente</h4>
-            
+
             <InputField
-              name="customerName"
+              name="name"
               label="Nombre completo"
               type="text"
               placeholder="Ingrese el nombre del cliente"
             />
 
             <InputField
-              name="customerPhone"
+              name="phone"
               label="Teléfono"
               type="tel"
               placeholder="Ingrese el teléfono del cliente"
             />
 
             <InputField
-              name="customerEmail"
+              name="email"
               label="Email"
               type="email"
               placeholder="Ingrese el email del cliente"

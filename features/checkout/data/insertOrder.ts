@@ -152,7 +152,7 @@ export async function insertOrder({
                     city: customer_info?.city,
                     state: customer_info?.state,
                     zip_code: customer_info?.zip_code,
-                    country: customer_info?.country
+                    country: customer_info?.country,
                 }
             })
 
@@ -226,7 +226,7 @@ export async function insertOrder({
 
             return order
         })
-        
+
         insertLogEntry({
             action: "CREATE",
             entity_type: "ORDER",

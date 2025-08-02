@@ -11,7 +11,7 @@ import ProductResults from './product-results'
 import BarcodeScannerUSB from './barcode-scanner-usb'
 import { useTranslations } from 'next-intl'
 import { createNewWalkInOrder } from '@/features/checkout/actions/createNewWalkInOrder'
-import { toast } from 'sonner'
+/* import { toast } from 'sonner' */
 import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
 
 type SaleInterfaceProps = {
