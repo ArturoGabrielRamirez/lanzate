@@ -13,6 +13,7 @@ import { useTranslations } from 'next-intl'
 import { createNewWalkInOrder } from '@/features/checkout/actions/createNewWalkInOrder'
 /* import { toast } from 'sonner' */
 import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
+import { CartItemType } from '@/features/cart/types'
 
 type SaleInterfaceProps = {
   storeName: string
@@ -203,9 +204,9 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
       subdomain: subdomain,
       cart: cartItems.map(item => ({
         quantity: item.quantity,
-        id: item.product.id,
+        id: item.product.id.toString(),
         price: item.product.price
-      })),
+      } as CartItemType)),
       total_price: cartTotal,
       total_quantity: cartItemCount,
       isPaid: true,

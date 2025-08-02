@@ -2,7 +2,7 @@
 
 import { actionWrapper } from "@/utils/lib"
 import { insertOrder } from "../data/insertOrder"
-
+import { CartItemType } from "@/features/cart/types"
 
 type CreateNewWalkInOrderFormData = {
     branch_id: number
@@ -11,7 +11,7 @@ type CreateNewWalkInOrderFormData = {
     subdomain: string
     isPaid: boolean
     payment_method: string
-    cart: { quantity: number, id: number, price: number }[]
+    cart: CartItemType[]
     processed_by_user_id: number
     customer_info: {
         name?: string
