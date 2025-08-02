@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, InputField } from "@/features/layout/components"
 import { cn } from "@/lib/utils"
-import { MapPin, Truck, CreditCard, Banknote, Smartphone, ArrowLeft, ArrowRight } from "lucide-react"
+import { CreditCard, Banknote, Smartphone, ArrowLeft, ArrowRight } from "lucide-react"
 import { useState } from "react"
 /* import { createNewOrder } from "../actions/createNewOrder" */
 /* import { useCart } from "@/features/cart/components/cart-provider" */
@@ -16,16 +16,17 @@ import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperDescri
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { useFormContext } from "react-hook-form"
+import { ShippingMethodSelector } from "./shipping-method-selector"
 /* import { createNewCheckoutOrder } from "../actions/createNewCheckoutOrder" */
 
 function StepNavigation() {
     const { currentStep, nextStep, prevStep, hasNext, hasPrev } = useStepper()
-
+    
     return (
         <div className="flex justify-between pt-4">
             {currentStep > 1 && (
-                <Button
-                    type="button"
+                <Button 
+                    type="button" 
                     variant="outline"
                     onClick={prevStep}
                 >
@@ -34,8 +35,8 @@ function StepNavigation() {
                 </Button>
             )}
             {hasNext() && (
-                <Button
-                    type="button"
+                <Button 
+                    type="button" 
                     onClick={nextStep}
                     className={currentStep === 1 ? "ml-auto" : ""}
                 >
@@ -58,14 +59,6 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
     const [paymentMethod, setPaymentMethod] = useState<string>("")
     /* const { cart, clearCart } = useCart() */
 
-    const handleShippingMethodChange = (e: React.MouseEvent<HTMLButtonElement>) => {
-        const target = e.target as HTMLButtonElement
-        const type = target.dataset.type
-        if (type) {
-            setShippingMethod(type as "delivery" | "pickup")
-        }
-    }
-
     const handleBranchChange = (value: string) => {
         setSelectedBranchId(Number(value))
     }
@@ -75,6 +68,7 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
     }
 
     const handleSubmit = async (formData: any) => {
+        console.log("🚀 ~ handleSubmit ~ formData:", formData)
         /* createNewCheckoutOrder({
             branch_id : 1,
         }) */
@@ -148,7 +142,6 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                         </CardContent>
                     </Card>
                 </InteractiveStepperContent>
-
                 <InteractiveStepperContent step={2}>
                     <Card>
                         <CardHeader>
@@ -156,60 +149,18 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                         </CardHeader>
                         <CardContent className="flex flex-col gap-6">
                             {/* Shipping Method Selection */}
-                            <div>
-                                <Label className="text-base font-medium mb-4 block">Choose your delivery method</Label>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <Button
-                                        type="button"
-                                        variant="outline"
-                                        onClick={handleShippingMethodChange}
-                                        data-type="delivery"
-                                        className={cn(
-                                            "h-auto p-4 flex flex-col items-center gap-2 transition-all duration-300",
-                                            shippingMethod === "delivery"
-                                                ? "border-primary bg-primary text-primary-foreground hover:bg-primary/90"
-                                                : "hover:bg-muted"
-                                        )}
-                                    >
-                                        <Truck className="size-8" />
-                                        <div className="text-center">
-                                            <div className="font-semibold">Delivery</div>
-                                            <div className="text-sm opacity-80">
-                                                Orders take 30 min to 2 hours
-                                            </div>
-                                        </div>
-                                    </Button>
-                                    <Button
-                                        type="button"
-                                        variant="outline"
-                                        onClick={handleShippingMethodChange}
-                                        data-type="pickup"
-                                        className={cn(
-                                            "h-auto p-4 flex flex-col items-center gap-2 transition-all duration-300",
-                                            shippingMethod === "pickup"
-                                                ? "border-primary bg-primary text-primary-foreground hover:bg-primary/90"
-                                                : "hover:bg-muted"
-                                        )}
-                                    >
-                                        <MapPin className="size-8" />
-                                        <div className="text-center">
-                                            <div className="font-semibold">Pickup</div>
-                                            <div className="text-sm opacity-80">
-                                                Orders take 5-10 minutes
-                                            </div>
-                                        </div>
-                                    </Button>
-                                </div>
-                                <input type="hidden" name="shippingMethod" value={shippingMethod} />
-                            </div>
+                            <ShippingMethodSelector 
+                                value={shippingMethod} 
+                                onChange={setShippingMethod} 
+                            />
 
                             {/* Branch Selection */}
                             <div>
                                 <Label htmlFor="branchId" className="text-base font-medium mb-2 block">
                                     Select Branch
                                 </Label>
-                                <Select
-                                    value={selectedBranchId?.toString() || ""}
+                                <Select 
+                                    value={selectedBranchId?.toString() || ""} 
                                     onValueChange={handleBranchChange}
                                     required
                                 >
@@ -246,7 +197,6 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                         </CardContent>
                     </Card>
                 </InteractiveStepperContent>
-
                 <InteractiveStepperContent step={3}>
                     <Card>
                         <CardHeader>
@@ -258,8 +208,8 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                                 <Label htmlFor="paymentMethod" className="text-base font-medium mb-2 block">
                                     Select Payment Method
                                 </Label>
-                                <Select
-                                    value={paymentMethod}
+                                <Select 
+                                    value={paymentMethod} 
                                     onValueChange={handlePaymentMethodChange}
                                     required
                                 >
@@ -315,7 +265,7 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                                                 <p className="text-sm text-accent"><strong>CVU:</strong> 0000003100061234567890</p>
                                                 <p className="text-sm text-accent"><strong>Alias:</strong> MI.TIENDA.ONLINE</p>
                                                 <p className="text-sm text-blue-700 mt-2">
-                                                    Please include your order number in the transfer description.
+                                                    Please include your order number in the transfer description. 
                                                     Your order will be confirmed once the payment is received.
                                                 </p>
                                             </div>
@@ -332,8 +282,8 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                                             <div className="space-y-2">
                                                 <p className="font-medium text-orange-900">Mercado Pago Payment</p>
                                                 <p className="text-sm text-orange-700 max-w-xl">
-                                                    When you click "Confirm Order", you will be redirected to Mercado Pago
-                                                    to complete your payment securely. After payment, you will be brought
+                                                    When you click "Confirm Order", you will be redirected to Mercado Pago 
+                                                    to complete your payment securely. After payment, you will be brought 
                                                     back to our site with your order confirmation.
                                                 </p>
                                             </div>
