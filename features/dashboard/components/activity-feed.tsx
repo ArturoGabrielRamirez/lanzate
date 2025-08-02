@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { getUserStoreActivities } from "../actions/getUserStoreActivities"
-import { Heart, MessageCircle, Clock, Flame, FileText } from "lucide-react"
+import { MessageCircle, Clock, Flame, FileText } from "lucide-react"
 import { ActivityFeedItem, UserStoreActivity } from "../types"
 import Link from "next/link"
 import { formatDistance } from "date-fns"
@@ -200,10 +200,6 @@ async function ActivityFeed({ userId }: Props) {
                                         {item.status === 'PENDING' && (
                                             <ContractResponseButtons 
                                                 assignmentId={parseInt(item.id.split('-')[2])}
-                                                onResponse={() => {
-                                                    // This will trigger a page refresh to show updated status
-                                                    window.location.reload()
-                                                }}
                                             />
                                         )}
                                     </div>
