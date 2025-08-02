@@ -10,6 +10,7 @@ import ActionsSection from './actions-section'
 import ProductResults from './product-results'
 import BarcodeScannerUSB from './barcode-scanner-usb'
 import { useTranslations } from 'next-intl'
+import { createNewWalkInOrder } from '@/features/checkout/actions/createNewWalkInOrder'
 
 type SaleInterfaceProps = {
   storeName: string
@@ -174,11 +175,14 @@ function SaleInterface({ storeId }: SaleInterfaceProps) {
   const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
   // Handlers para acciones
-  const handleFinalizeSale = () => {
+  const handleFinalizeSale = async () => {
     // TODO: Implementar lógica de finalizar venta
     console.log('Finalizando venta:', { cartItems, total: cartTotal })
     const formattedTotal = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(cartTotal)
-    alert(t('sale-completed', { total: formattedTotal }))
+    //alert(t('sale-completed', { total: formattedTotal }))
+    /* const {} = createNewWalkInOrder({
+
+    }) */
     // Limpiar carrito después de la venta
     setCartItems([])
   }
