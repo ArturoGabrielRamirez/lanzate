@@ -5,6 +5,7 @@ import { ButtonWithPopupPropsType } from "./button-with-popup-type";
 import { Props as LayoutProps } from "./layout-type";
 import { EntityType } from "@prisma/client";
 import { ActionType } from "@prisma/client";
+export { type TitleProps } from "./title-type"
 
 export type InsertLogEntryProps = {
     action: ActionType,

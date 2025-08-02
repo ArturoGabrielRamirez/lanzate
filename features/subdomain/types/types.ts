@@ -1,4 +1,4 @@
-import { Product as PrismaProduct, Store, StoreBalance, StoreCustomization, Category, StoreOperationalSettings } from "@prisma/client";
+import { Product as PrismaProduct, Store, StoreBalance, StoreCustomization, Category, StoreOperationalSettings, Branch } from "@prisma/client";
 
 export type Product = PrismaProduct;
 
@@ -29,7 +29,7 @@ export type GetAllStoresReturn = {
 
 export type GetStoreBySubdomainReturn = {
     message: string;
-    payload: Store & { balance: StoreBalance } | null;
+    payload: Store & { balance: StoreBalance, branches: Branch[] } | null;
     error: boolean;
 };
 

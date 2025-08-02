@@ -1,0 +1,1 @@
+export { default as CartResume } from "./cart-resume"

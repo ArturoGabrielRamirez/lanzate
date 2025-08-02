@@ -13,12 +13,19 @@ const shippingInfoSchema = {
     country: yup.string().required('Country is required'),
 }
 
+const orderMethodSchema = {
+    shippingMethod: yup.string().oneOf(['delivery', 'pickup']).required('Shipping method is required'),
+    branchId: yup.number().required('Branch selection is required'),
+}
+
 export const pickupOrderSchema = yup.object({
     ...personalInfoSchema,
+    ...orderMethodSchema,
 })
 
 export const deliveryOrderSchema = yup.object({
     ...personalInfoSchema,
+    ...orderMethodSchema,
     ...shippingInfoSchema,
 })
 
