@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { handleGoogleLogIn } from '../actions/handleGoogleLogIn'
+import { handleFacebookLogin } from '../actions/handleFacebookLogin'
 
 
 interface GoogleLoginButtonProps {
@@ -15,14 +16,24 @@ export function GoogleLoginButton({ orLoginWith }: GoogleLoginButtonProps) {
             <Label htmlFor='google' className='justify-center w-full mb-2 text-center'>
                 {orLoginWith}
             </Label>
-            <form action={handleGoogleLogIn}>
-                <Button
-                    type="submit"
-                    className="w-full"
-                >
-                    Google
-                </Button>
-            </form>
+            <>
+                <form action={handleGoogleLogIn}>
+                    <Button
+                        type="submit"
+                        className="w-full"
+                    >
+                        Google
+                    </Button>
+                </form>
+                <form action={handleFacebookLogin}>
+                    <Button
+                        type="submit"
+                        className="w-full"
+                    >
+                        Facebook
+                    </Button>
+                </form>
+            </>
         </div>
     )
 }
