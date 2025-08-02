@@ -1,5 +1,6 @@
 "use server"
 
+import { CartItemType } from "@/features/cart/types"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { getStoreBySubdomain } from "@/features/subdomain/actions/getStoreBySubdomain"
@@ -15,7 +16,7 @@ type insertOrderProps = {
     shipping_method: "delivery" | "pickup",
     processed_by_user_id: number,
     payment_method: string,
-    cart: { quantity: number, id: number, price: number }[],
+    cart: CartItemType[],
     isWalkIn: boolean,
     isPaid: boolean,
     customer_info?: {
