@@ -13,14 +13,12 @@ interface BranchSelectorProps {
 }
 
 export function BranchSelector({ branches, value, onChange }: BranchSelectorProps) {
-    console.log("🚀 ~ BranchSelector ~ value:", value)
     const { setValue } = useFormContext()
 
     useEffect(() => {
         setValue("branchId", value)
     }, [value, setValue])
 
-    // Auto-select if there's only one branch
     useEffect(() => {
         if (branches.length === 1 && !value) {
             const singleBranch = branches[0]
@@ -40,8 +38,8 @@ export function BranchSelector({ branches, value, onChange }: BranchSelectorProp
             <Label htmlFor="branchId" className="text-base font-medium mb-2 block">
                 Select Branch
             </Label>
-            <Select 
-                value={value?.toString() || ""} 
+            <Select
+                value={value?.toString() || ""}
                 onValueChange={handleBranchChange}
                 required
             >

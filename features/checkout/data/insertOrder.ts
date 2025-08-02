@@ -86,14 +86,14 @@ export async function insertOrder({
                 where: {
                     product_id_branch_id: {
                         branch_id: branch.id,
-                        product_id: item.id
+                        product_id: Number(item.id)
                     }
                 }
             })
 
             const product = await prisma.product.findUnique({
                 where: {
-                    id: item.id
+                    id: Number(item.id)
                 }
             })
 

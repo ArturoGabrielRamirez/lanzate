@@ -14,7 +14,6 @@ interface CheckoutStepItemProps {
 export function CheckoutStepItem({ title, description, errorFields = [] }: CheckoutStepItemProps) {
     const { formState: { errors } } = useFormContext()
 
-    // Check if any of the error fields have errors
     const hasErrors = errorFields.some(field => errors[field])
 
     return (

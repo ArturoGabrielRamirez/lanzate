@@ -2,6 +2,7 @@
 
 import { actionWrapper } from "@/utils/lib"
 import { insertOrder } from "../data/insertOrder"
+import { CartItemType } from "@/features/cart/types"
 
 
 type CreateNewCheckoutOrderFormData = {
@@ -10,14 +11,14 @@ type CreateNewCheckoutOrderFormData = {
     total_quantity: number
     subdomain: string
     payment_method: string
-    cart: { quantity: number, id: number, price: number }[]
+    cart: CartItemType[]
     processed_by_user_id: number
     shipping_method: "delivery" | "pickup"
     customer_info: {
         name: string
         phone: string
         email: string
-        id: number
+        id?: number
         address_one?: string
         address_two?: string
         city?: string
