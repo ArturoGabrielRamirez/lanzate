@@ -71,7 +71,7 @@ function OrdersTable({ data, slug, userId }: Props) {
             accessorKey: "user",
             cell: ({ row }) => {
                 console.log(row.original)
-                return <span>test@test.com</span>
+                return <span>{row.original.customer_email || "No email"}</span>
             }
         },
         {
