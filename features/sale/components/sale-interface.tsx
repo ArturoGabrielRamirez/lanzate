@@ -12,6 +12,7 @@ import BarcodeScannerUSB from './barcode-scanner-usb'
 import { useTranslations } from 'next-intl'
 import { createNewWalkInOrder } from '@/features/checkout/actions/createNewWalkInOrder'
 import { toast } from 'sonner'
+import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
 
 type SaleInterfaceProps = {
   storeName: string
@@ -20,6 +21,12 @@ type SaleInterfaceProps = {
   branchId: number
   subdomain: string
   processed_by_user_id: number
+}
+
+type CustomerInfo = {
+  name: string
+  phone: string
+  email: string
 }
 
 function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: SaleInterfaceProps) {
@@ -37,6 +44,14 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
     message: '',
     isLoading: false,
     error: false
+  })
+
+  // New state for payment method and customer info
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>('CASH')
+  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
+    name: '',
+    phone: '',
+    email: ''
   })
 
   const searchSectionRef = useRef<SearchSectionRef>(null)
@@ -180,10 +195,8 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
   const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
   // Handlers para acciones
-  const handleFinalizeSale = async () => {
-    const formattedTotal = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(cartTotal)
-
-    toast.loading("Creando nueva orden...")
+  const handleFinalizeSale = async (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => {
+    console.log("🚀 ~ handleFinalizeSale ~ formData:", formData)
 
     const { error, message } = await createNewWalkInOrder({
       branch_id: branchId,
@@ -196,17 +209,23 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
       total_price: cartTotal,
       total_quantity: cartItemCount,
       isPaid: true,
-      payment_method: "cash",
+      payment_method: formData.paymentMethod,
       processed_by_user_id: processed_by_user_id,
-      customer_info: {}
+      customer_info: {
+        name: formData.customerInfo.name,
+        phone: formData.customerInfo.phone,
+        email: formData.customerInfo.email,
+      },
     })
 
     if (error) {
-      toast.error(message)
-    } else {
-      toast.success(t('sale-completed', { total: formattedTotal }))
-      setCartItems([])
+      throw new Error(message)
     }
+
+    setCartItems([])
+    // Reset customer info after successful sale
+    setCustomerInfo({ name: '', phone: '', email: '' })
+
   }
 
   const handleRefund = () => {
@@ -277,6 +296,10 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
         onClearCart={handleClearCart}
         onCalculateChange={handleCalculateChange}
         onPrintReceipt={handlePrintReceipt}
+        selectedPaymentMethod={selectedPaymentMethod}
+        setSelectedPaymentMethod={setSelectedPaymentMethod}
+        customerInfo={customerInfo}
+        setCustomerInfo={setCustomerInfo}
       />
 
     </div>

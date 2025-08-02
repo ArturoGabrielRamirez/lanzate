@@ -32,6 +32,7 @@ export async function createNewWalkInOrder({
     processed_by_user_id,
     customer_info
 }: CreateNewWalkInOrderFormData) {
+    console.log("🚀 ~ createNewWalkInOrder ~ customer_info:", customer_info)
 
     return actionWrapper(async () => {
 

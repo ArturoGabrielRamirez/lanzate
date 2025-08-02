@@ -47,73 +47,73 @@ export async function insertOrder({
 }: insertOrderProps) {
     return actionWrapper(async () => {
 
-        await prisma.$transaction(async (tx) => {
+        const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
-            const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+        if (userError || !user) throw new Error(userMessage)
 
-            if (userError || !user) throw new Error(userMessage)
+        const { payload: store, error: storeError, message: storeMessage } = await getStoreBySubdomain(subdomain)
 
-            const { payload: store, error: storeError, message: storeMessage } = await getStoreBySubdomain(subdomain)
-
-            if (storeError || !store) throw new Error(storeMessage)
+        if (storeError || !store) throw new Error(storeMessage)
 
 
-            const branch = await prisma.branch.findFirst({
+        const branch = await prisma.branch.findFirst({
+            where: {
+                store_id: store.id,
+                id: branch_id
+            }
+        })
+
+        if (!branch) throw new Error("Branch not found")
+
+        if (isWalkIn && store.user_id !== processed_by_user_id) {
+
+            const employee = await prisma.employee.findFirst({
                 where: {
                     store_id: store.id,
-                    id: branch_id
+                    user_id: processed_by_user_id,
                 }
             })
 
-            if (!branch) throw new Error("Branch not found")
+            if (!employee) throw new Error("Employee not found")
 
-            if (isWalkIn && store.user_id !== processed_by_user_id) {
+            if (!employee.can_create_orders) throw new Error("You are not authorized to create orders")
 
-                const employee = await prisma.employee.findFirst({
-                    where: {
-                        store_id: store.id,
-                        user_id: processed_by_user_id,
+        }
+
+        for (const item of cart) {
+
+            const productStock = await prisma.productStock.findUnique({
+                where: {
+                    product_id_branch_id: {
+                        branch_id: branch.id,
+                        product_id: item.id
                     }
-                })
+                }
+            })
 
-                if (!employee) throw new Error("Employee not found")
+            const product = await prisma.product.findUnique({
+                where: {
+                    id: item.id
+                }
+            })
 
-                if (!employee.can_create_orders) throw new Error("You are not authorized to create orders")
+            if (!product) throw new Error("Product not found")
 
-            }
+            if (product.is_active === false) throw new Error("Product is not active")
 
-            for (const item of cart) {
+            if (!product.is_published) throw new Error(`Product ${product.name} is not published`)
 
-                const productStock = await prisma.productStock.findUnique({
-                    where: {
-                        product_id_branch_id: {
-                            branch_id: branch.id,
-                            product_id: item.id
-                        }
-                    }
-                })
+            if (product.stock <= 0) throw new Error(`Product ${product.name} is out of stock`)
 
-                const product = await prisma.product.findUnique({
-                    where: {
-                        id: item.id
-                    }
-                })
+            if (product.stock < item.quantity) throw new Error(`Product ${product.name} is out of stock`)
 
-                if (!product) throw new Error("Product not found")
+            if (!productStock) throw new Error("Product not found")
 
-                if (product.is_active === false) throw new Error("Product is not active")
+            if (productStock.quantity < item.quantity) throw new Error("Product is out of stock")
 
-                if (!product.is_published) throw new Error(`Product ${product.name} is not published`)
+        }
 
-                if (product.stock <= 0) throw new Error(`Product ${product.name} is out of stock`)
-
-                if (product.stock < item.quantity) throw new Error(`Product ${product.name} is out of stock`)
-
-                if (!productStock) throw new Error("Product not found")
-
-                if (productStock.quantity < item.quantity) throw new Error("Product is out of stock")
-
-            }
+        const order = await prisma.$transaction(async (tx) => {
 
             const order = await tx.order.create({
                 data: {
@@ -148,11 +148,11 @@ export async function insertOrder({
                         }
                     },
                     address_one: customer_info?.address_one || null,
-                    address_two: customer_info?.address_two || null,
-                    city: customer_info?.city || null,
-                    state: customer_info?.state || null,
-                    zip_code: customer_info?.zip_code || null,
-                    country: customer_info?.country || null
+                    address_two: customer_info?.address_two,
+                    city: customer_info?.city,
+                    state: customer_info?.state,
+                    zip_code: customer_info?.zip_code,
+                    country: customer_info?.country
                 }
             })
 
@@ -224,15 +224,16 @@ export async function insertOrder({
 
             if (!transaction) throw new Error("Transaction not created")
 
-            insertLogEntry({
-                action: "CREATE",
-                entity_type: "ORDER",
-                entity_id: order.id,
-                user_id: user.id,
-                action_initiator: isWalkIn ? "Walk-in" : "Checkout",
-                details: `Order ${order.id} created`
-            })
-
+            return order
+        })
+        
+        insertLogEntry({
+            action: "CREATE",
+            entity_type: "ORDER",
+            entity_id: order.id,
+            user_id: user.id,
+            action_initiator: isWalkIn ? "Walk-in" : "Checkout",
+            details: `Order ${order.id} created`
         })
 
         return {

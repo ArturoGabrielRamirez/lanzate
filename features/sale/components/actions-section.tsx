@@ -6,16 +6,27 @@ import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
 import CalculateChangeButton from './calculate-change-button'
 import FinalizeSaleButton from './finalize-sale-button'
+import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
+
+type CustomerInfo = {
+  name: string
+  phone: string
+  email: string
+}
 
 type ActionsSectionProps = {
   cartTotal: number
   cartItemCount: number
-  onFinalizeSale: () => void
+  onFinalizeSale: (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => void
   onRefund: () => void
   onClearCart: () => void
   onCalculateChange: () => void
   onPrintReceipt: () => void
   disabled?: boolean
+  selectedPaymentMethod: PaymentMethod
+  setSelectedPaymentMethod: (method: PaymentMethod) => void
+  customerInfo: CustomerInfo
+  setCustomerInfo: (info: CustomerInfo) => void
 }
 
 function ActionsSection({
@@ -24,7 +35,11 @@ function ActionsSection({
   onFinalizeSale,
   onClearCart,
   onPrintReceipt,
-  disabled = false
+  disabled = false,
+  selectedPaymentMethod,
+  setSelectedPaymentMethod,
+  customerInfo,
+  setCustomerInfo
 }: ActionsSectionProps) {
   const t = useTranslations('sale.actions')
 
@@ -61,6 +76,10 @@ function ActionsSection({
           onConfirm={onFinalizeSale}
           disabled={disabled}
           className="lg:w-full text-base"
+          selectedPaymentMethod={selectedPaymentMethod}
+          setSelectedPaymentMethod={setSelectedPaymentMethod}
+          customerInfo={customerInfo}
+          setCustomerInfo={setCustomerInfo}
         />
 
         <CalculateChangeButton
