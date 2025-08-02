@@ -1,41 +1,40 @@
 'use server'
 
-import { createServerSideClient } from "@/utils/supabase/server"
-import { redirect } from "next/navigation"
+import { createServerSideClient } from '@/utils/supabase/server'
+import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
+import { extractSubdomainFromHost } from '../utils/extract-subdomain-from-host'
+import { buildLoginErrorUrl } from '../utils/build-login-error-url'
 
 export async function handleFacebookLogin() {
     const supabase = await createServerSideClient()
-    
-    // URL absoluta sin variables por ahora
-    const redirectUrl = 'https://lanzate.app/auth/callback'
+    const headersList = await headers()
+    const host = headersList.get('host') || ''
+    const subdomain = extractSubdomainFromHost(host)
+
+    const redirectUrl = `https://lanzate.app/auth/callback${subdomain ? `?subdomain=${subdomain}` : ''}`
 
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'facebook',
         options: {
             redirectTo: redirectUrl,
-            // NO agregues scopes - deja que Facebook use los defaults
+            scopes: 'email,public_profile',
+            queryParams: {
+                display: 'popup',
+                auth_type: 'rerequest',
+                response_type: 'code',
+            },
         },
     })
 
     if (error) {
         console.error('Facebook OAuth error:', error)
-        throw new Error(error.message)
+        const errorUrl = await buildLoginErrorUrl(subdomain, 'oauth_failed', error.message)
+        redirect(errorUrl)
     }
 
     if (data.url) {
-        console.log('Redirecting to:', data.url)
         redirect(data.url)
     }
-}
-
-function extractSubdomainFromHost(host: string): string | null {
-    const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'
-    
-    if (host === rootDomain || host === `www.${rootDomain}`) {
-        return null
-    }
-    
-    const subdomain = host.replace(`.${rootDomain}`, '')
-    return subdomain !== host ? subdomain : null
+    redirect(await buildLoginErrorUrl(subdomain, 'no_url'))
 }
