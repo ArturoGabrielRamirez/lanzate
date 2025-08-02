@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, InputField } from "@/features/layout/components"
 import { cn } from "@/lib/utils"
-import { MapPin, Truck, CreditCard, Banknote, Smartphone } from "lucide-react"
+import { MapPin, Truck, CreditCard, Banknote, Smartphone, ArrowLeft, ArrowRight } from "lucide-react"
 import { useState } from "react"
 /* import { createNewOrder } from "../actions/createNewOrder" */
 /* import { useCart } from "@/features/cart/components/cart-provider" */
@@ -12,13 +12,45 @@ import { deliveryOrderSchema, pickupOrderSchema } from "../schemas/order-schema"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { createNewCheckoutOrder } from "../actions/createNewCheckoutOrder"
 import { Branch } from "@prisma/client"
-import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperItem, InteractiveStepperSeparator, InteractiveStepperTitle, InteractiveStepperTrigger } from "@/components/expansion/interactive-stepper"
+import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperItem, InteractiveStepperSeparator, InteractiveStepperTitle, InteractiveStepperTrigger, useStepper } from "@/components/expansion/interactive-stepper"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
+import { useFormContext } from "react-hook-form"
 /* import { createNewCheckoutOrder } from "../actions/createNewCheckoutOrder" */
+
+function StepNavigation() {
+    const { currentStep, nextStep, prevStep, hasNext, hasPrev } = useStepper()
+
+    return (
+        <div className="flex justify-between pt-4">
+            {currentStep > 1 && (
+                <Button
+                    type="button"
+                    variant="outline"
+                    onClick={prevStep}
+                >
+                    <ArrowLeft />
+                    Previous
+                </Button>
+            )}
+            {hasNext() && (
+                <Button
+                    type="button"
+                    onClick={nextStep}
+                    className={currentStep === 1 ? "ml-auto" : ""}
+                >
+                    Next
+                    <ArrowRight />
+                </Button>
+            )}
+        </div>
+    )
+}
 
 function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string, userId: string, branches: Branch[] }) {
 
+    /* const { formState: { errors } } = useFormContext()
+    console.log("🚀 ~ CheckoutForm ~ errors:", errors) */
     const [shippingMethod, setShippingMethod] = useState<"delivery" | "pickup">("delivery")
     const [selectedBranchId, setSelectedBranchId] = useState<number | null>(
         branches.length === 1 ? branches[0].id : null
@@ -68,12 +100,11 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
         <Form
             className="grow"
             contentButton="Continue"
-            disabled={false}
             formAction={handleSubmit}
             resolver={yupResolver(shippingMethod === "delivery" ? deliveryOrderSchema : pickupOrderSchema)}
         >
             <InteractiveStepper defaultValue={1} className="grow">
-                <InteractiveStepperItem completed>
+                <InteractiveStepperItem>
                     <InteractiveStepperTrigger>
                         <InteractiveStepperIndicator />
                         <div>
@@ -113,9 +144,11 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                             <InputField name="name" label="Name" />
                             <InputField name="email" label="Email" />
                             <InputField name="phone" label="Phone" />
+                            <StepNavigation />
                         </CardContent>
                     </Card>
                 </InteractiveStepperContent>
+
                 <InteractiveStepperContent step={2}>
                     <Card>
                         <CardHeader>
@@ -208,9 +241,12 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                                     </div>
                                 </div>
                             )}
+
+                            <StepNavigation />
                         </CardContent>
                     </Card>
                 </InteractiveStepperContent>
+
                 <InteractiveStepperContent step={3}>
                     <Card>
                         <CardHeader>
@@ -305,6 +341,10 @@ function CheckoutForm({ /* subdomain, userId  */ branches }: { subdomain: string
                                     </CardContent>
                                 </Card>
                             )}
+
+                            <div className="flex justify-between pt-4">
+                                <StepNavigation />
+                            </div>
                         </CardContent>
                     </Card>
                 </InteractiveStepperContent>

@@ -89,7 +89,7 @@ export interface IStepperMethods {
 const InteractiveStepperContext = createContext<IStepperContextValue | null>(null);
 const InteractiveStepperItemContext = createContext<IStepperItemContextValue | null>(null);
 
-const useStepper = () => {
+export const useStepper = () => {
     const context = useContext(InteractiveStepperContext);
     if (!context) {
         throw new Error('useStepper must be used within a StepperRoot');
