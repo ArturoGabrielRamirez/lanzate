@@ -17,7 +17,7 @@ type CustomerInfo = {
 type ActionsSectionProps = {
   cartTotal: number
   cartItemCount: number
-  onFinalizeSale: (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => void
+  onFinalizeSale: (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => Promise<{ error: boolean; payload: any; message: string }>
   onRefund: () => void
   onClearCart: () => void
   onCalculateChange: () => void
