@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/drawer"
 import { ThemeToggle, NotificationsIcon } from "@/features/header/components"
 import { Button } from "@/components/ui/button"
-import { signOut } from "@/features/auth/actions/handleSignOut"
+import { signOut } from "@/features/auth/actions/handle-sign-out"
 
 
 type MobileMenuProps = {
