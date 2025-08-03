@@ -123,7 +123,7 @@ function OrderSummarySteps({ order }: Props) {
                 </InteractiveStepperTrigger>
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
-            <InteractiveStepperItem completed={isThirdStepCompleted}>
+            <InteractiveStepperItem completed={isThirdStepCompleted} disabled={order.status !== "READY"}>
                 <InteractiveStepperTrigger>
                     <InteractiveStepperIndicator />
                     <div>
