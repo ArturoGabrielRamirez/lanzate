@@ -1,5 +1,5 @@
 @import "tailwindcss";
-/* @import "tw-animate-css"; */
+@import "tw-animate-css";
 
 @config "../tailwind.config.mjs";
 
@@ -334,4 +334,20 @@ body {
 
 .embla__slide__number {
   backface-visibility: hidden;
+}
+
+.animate-ping-custom {
+  animation: ping-custom 2s linear infinite;
+}
+
+@keyframes ping-custom {
+
+  75% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
 }

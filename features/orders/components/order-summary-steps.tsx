@@ -46,15 +46,15 @@ function OrderSummarySteps({ order }: Props) {
     // Configuration for each step trigger
     const stepTriggerConfigs = [
         {
-            title: "Order Placed",
-            description: "Your order has been placed successfully",
+            title: "Order Details",
+            description: "What has been ordered",
             completed: true,
             icon: Package,
             step: 1
         },
         {
-            title: "Processing",
-            description: "We are preparing your order",
+            title: "Order Status",
+            description: "The status of the order",
             completed: isProcessingCompleted,
             icon: Settings,
             step: 2

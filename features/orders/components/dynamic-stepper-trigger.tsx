@@ -24,7 +24,6 @@ function DynamicStepperTrigger({ config }: Props) {
         title,
         description,
         completed = false,
-        icon: Icon,
         iconClassName,
         titleClassName,
         descriptionClassName,
@@ -40,6 +39,7 @@ function DynamicStepperTrigger({ config }: Props) {
         )}>
             <InteractiveStepperIndicator 
                 className={cn(
+                    currentStep === step && "animate-ping-custom",
                     completed && "bg-green-500",
                     iconClassName
                 )}
