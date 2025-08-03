@@ -46,7 +46,8 @@ export async function createNewWalkInOrder({
             shipping_method: "pickup",
             total_price: total_price,
             total_quantity: total_quantity,
-            customer_info: customer_info
+            customer_info: customer_info,
+            status: "COMPLETED"
         })
 
         if (error) throw new Error(message)

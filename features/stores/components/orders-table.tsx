@@ -39,22 +39,26 @@ function OrdersTable({ data, slug, userId }: Props) {
                     "READY": t("statuses.ready"),
                     "SHIPPED": t("statuses.shipped"),
                     "DELIVERED": t("statuses.delivered"),
-                    "CANCELLED": t("statuses.cancelled")
+                    "CANCELLED": t("statuses.cancelled"),
+                    "COMPLETED": t("statuses.completed")
                 }
                 return (
-                    <Badge
-                        className={cn(
-                            "bg-transparent",
-                            status === "PENDING" && "border-yellow-500 text-yellow-500",
-                            status === "PROCESSING" && "border-orange-500 text-orange-500",
-                            status === "READY" && "border-blue-500 text-blue-500",
-                            status === "SHIPPED" && "border-violet-500 text-violet-500",
-                            status === "DELIVERED" && "border-green-500 text-green-500",
-                            status === "CANCELLED" && "border-red-500 text-red-500",
-                        )}
-                    >
-                        {statusMap[status as keyof typeof statusMap] || status}
-                    </Badge>
+                    <div className="flex justify-center">
+                        <Badge
+                            className={cn(
+                                "bg-transparent",
+                                status === "PENDING" && "border-yellow-500 text-yellow-500",
+                                status === "PROCESSING" && "border-orange-500 text-orange-500",
+                                status === "READY" && "border-blue-500 text-blue-500",
+                                status === "SHIPPED" && "border-violet-500 text-violet-500",
+                                status === "DELIVERED" && "border-green-500 text-green-500",
+                                status === "CANCELLED" && "border-red-500 text-red-500",
+                                status === "COMPLETED" && "border-green-500 text-green-500"
+                            )}
+                        >
+                            {statusMap[status as keyof typeof statusMap] || status}
+                        </Badge>
+                    </div>
                 )
             }
         },
@@ -122,7 +126,7 @@ function OrdersTable({ data, slug, userId }: Props) {
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem asChild>
-                                <ChangeOrderStatusButton 
+                                <ChangeOrderStatusButton
                                     order={order}
                                     slug={slug}
                                     userId={userId}

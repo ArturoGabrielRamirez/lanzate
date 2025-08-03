@@ -58,7 +58,8 @@ export async function selectOrderById(orderId: number) {
                         name: true,
                         slug: true
                     }
-                }
+                },
+                messages : true
             }
         })
 

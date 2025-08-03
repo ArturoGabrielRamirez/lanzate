@@ -6,6 +6,7 @@ import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { getStoreBySubdomain } from "@/features/subdomain/actions/getStoreBySubdomain"
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
+import { OrderStatus } from "@prisma/client"
 
 
 type insertOrderProps = {
@@ -30,7 +31,8 @@ type insertOrderProps = {
         state?: string,
         zip_code?: string,
         country?: string
-    }
+    },
+    status?: OrderStatus
 }
 
 export async function insertOrder({
@@ -45,6 +47,7 @@ export async function insertOrder({
     customer_info,
     cart,
     subdomain,
+    status
 }: insertOrderProps) {
     return actionWrapper(async () => {
 
@@ -154,6 +157,7 @@ export async function insertOrder({
                     state: customer_info?.state,
                     zip_code: customer_info?.zip_code,
                     country: customer_info?.country,
+                    status: status || "PENDING"
                 }
             })
 

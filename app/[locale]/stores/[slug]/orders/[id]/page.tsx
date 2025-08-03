@@ -8,6 +8,8 @@ import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { cn } from "@/lib/utils"
 import { OrderItem, Product, Category } from "@prisma/client"
 import { getTranslations } from "next-intl/server"
+import HorizontalPanels from "@/features/orders/components/horizontal-panels"
+import OrderChat from "@/features/orders/components/order-chat"
 
 type OrderItemWithProduct = OrderItem & {
     product: Product & {
@@ -26,7 +28,6 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
     }
 
     const { payload: order, error } = await getOrderDetails(id)
-    console.log("🚀 ~ OrderDetailPage ~ order:", order)
 
     if (error || !order) {
         return console.log(error)
@@ -59,9 +60,12 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                 </CardTitle>
             </CardHeader>
             <CardContent className="flex grow">
-                <div className="grid w-full grid-cols-1 gap-6">
-
-                    {/* Order Status and Basic Info */}
+                <OrderChat storeSlug={slug} orderId={id} />
+                {/* <HorizontalPanels
+                    leftPanel={<p>left</p>}
+                    rightPanel={<p>right</p>}
+                /> */}
+                {/* <div className="grid w-full grid-cols-1 gap-6">
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                         <Card>
                             <CardHeader className="pb-3">
@@ -113,7 +117,6 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                         </Card>
                     </div>
 
-                    {/* Customer Information */}
                     <Card>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
@@ -123,21 +126,6 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                         </CardHeader>
                         <CardContent>
                             <div className="flex items-center gap-4">
-                                {/* <div className="flex items-center justify-center w-12 h-12 overflow-hidden rounded-full bg-secondary">
-                                    {order.processed_by.avatar ? (
-                                        <img
-                                            src={order.processed_by.avatar}
-                                            alt={`${order.processed_by.name || 'Customer'} avatar`}
-                                            className="object-cover w-full h-full"
-                                        />
-                                    ) : (
-                                        <img 
-                                            src={`https://api.dicebear.com/9.x/initials/svg?seed=${order.processed_by.name || 'Customer'}`} 
-                                            alt="Customer Avatar" 
-                                            className="object-cover w-full h-full" 
-                                        />
-                                    )}
-                                </div> */}
                                 <div>
                                     <h3 className="font-semibold">
                                         {order.customer_name || 'No name provided'}
@@ -152,8 +140,6 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             </div>
                         </CardContent>
                     </Card>
-
-                    {/* Shipping Method */}
                     <Card>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
@@ -175,8 +161,6 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             </div>
                         </CardContent>
                     </Card>
-
-                    {/* Order Items */}
                     <Card>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
@@ -215,8 +199,6 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             </div>
                         </CardContent>
                     </Card>
-
-                    {/* Payment Information */}
                     {order.payment && (
                         <Card>
                             <CardHeader>
@@ -241,8 +223,6 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             </CardContent>
                         </Card>
                     )}
-
-                    {/* Employee Information */}
                     {(order.created_by_employee || order.updated_by_employee) && (
                         <Card>
                             <CardHeader>
@@ -279,8 +259,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                             </CardContent>
                         </Card>
                     )}
-
-                </div>
+                </div> */}
             </CardContent>
         </Card>
     )
