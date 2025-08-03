@@ -86,7 +86,7 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
 
             <div>
                 <h3 className="text-lg font-semibold mb-4">Order Details</h3>
-                <div className="space-y-4">
+                <div className="">
                     <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">Order ID</span>
                         <span className="font-medium">#{order.id}</span>
