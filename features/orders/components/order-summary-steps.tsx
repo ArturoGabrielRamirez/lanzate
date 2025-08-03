@@ -98,7 +98,7 @@ function OrderSummarySteps({ order }: Props) {
     }
 
     return (
-        <InteractiveStepper orientation="horizontal">
+        <InteractiveStepper orientation="horizontal" className="grow">
             <InteractiveStepperItem completed>
                 <InteractiveStepperTrigger>
                     <InteractiveStepperIndicator />
@@ -134,17 +134,17 @@ function OrderSummarySteps({ order }: Props) {
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
             
-            <InteractiveStepperContent step={1}>
+            <InteractiveStepperContent step={1} className="grow flex flex-col">
                 <OrderDetailsStep order={order} showFullDetails={showFullDetails} />
                 {!showFullDetails && <StepNavigation />}
             </InteractiveStepperContent>
             
-            <InteractiveStepperContent step={2}>
+            <InteractiveStepperContent step={2} className="grow flex flex-col">
                 <OrderStatusStep order={order} />
                 <StepNavigation />
             </InteractiveStepperContent>
             
-            <InteractiveStepperContent step={3}>
+            <InteractiveStepperContent step={3} className="grow flex flex-col">
                 <CustomerInfoStep order={order} />
                 <StepNavigation />
             </InteractiveStepperContent>

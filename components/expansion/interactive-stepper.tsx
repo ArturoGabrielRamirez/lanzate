@@ -255,7 +255,7 @@ export const InteractiveStepperRoot = React.forwardRef<
                 {orientation === 'horizontal' ? (
                     <>
                         {stepperItemsContainer}
-                        {activeContent && <div className="mt-6 w-full">{activeContent}</div>}
+                        {activeContent && <div className="grow w-full flex flex-col">{activeContent}</div>}
                     </>
                 ) : (
                     <div className="flex gap-8">
