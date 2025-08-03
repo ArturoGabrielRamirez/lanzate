@@ -34,8 +34,8 @@ function DynamicStepperTrigger({ config }: Props) {
 
     return (
         <InteractiveStepperTrigger className={cn(
-            "opacity-50",
-            currentStep === step && "opacity-100",
+            "opacity-50 scale-75 transition-all duration-300",
+            currentStep === step && "opacity-100 scale-100",
         )}>
             <InteractiveStepperIndicator 
                 className={cn(
