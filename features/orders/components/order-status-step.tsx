@@ -10,7 +10,7 @@ import { OrderStatus } from "@prisma/client"
 
 type Order = {
     id: number
-    shipping_method: "pickup" | "delivery"
+    shipping_method: "PICKUP" | "DELIVERY"
     status: OrderStatus
 }
 
@@ -23,7 +23,7 @@ function OrderStatusStep({ order }: Props) {
     const [isPending, startTransition] = useTransition()
 
     // Define status options based on order type
-    const statusOptions = order.shipping_method === "pickup"
+    const statusOptions = order.shipping_method === "PICKUP"
         ? [
             { value: "PROCESSING", label: "Processing" },
             { value: "READY", label: "Ready" },

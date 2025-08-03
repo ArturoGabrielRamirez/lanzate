@@ -5,7 +5,7 @@ import { User, Mail, Phone, MapPin, MessageCircle } from "lucide-react"
 
 type Order = {
     id: number
-    shipping_method: "pickup" | "delivery"
+    shipping_method: "PICKUP" | "DELIVERY"
     customer_name: string | null
     customer_email: string | null
     customer_phone: string | null
@@ -40,7 +40,7 @@ type Props = {
 }
 
 function CustomerInfoStep({ order }: Props) {
-    const isPickup = order.shipping_method === "pickup"
+    const isPickup = order.shipping_method === "PICKUP"
 
     const handleWhatsAppClick = () => {
         if (order.customer_phone) {
