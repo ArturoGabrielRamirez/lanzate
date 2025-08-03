@@ -3,7 +3,8 @@
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { Order } from "@prisma/client"
-import { Package } from "lucide-react"
+import { Package, User, Store, Globe } from "lucide-react"
+import React from "react"
 
 type OrderItemWithProduct = {
     id: number
@@ -22,6 +23,9 @@ type Props = {
         payment: {
             status: "PENDING" | "PAID"
         }
+        customer_name?: string | null
+        customer_email?: string | null
+        customer_phone?: string | null
     }
     showFullDetails?: boolean
 }
@@ -52,9 +56,21 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
             "orders.items": "items",
             "orders.quantity": "Quantity: ",
             "orders.amount": "Amount",
-            "orders.status": "Status"
+            "orders.status": "Status",
+            "orders.cash-register": "Cash Register",
+            "orders.public-store": "Online Store",
+            "orders.customer-info": "Customer Information",
+            "orders.order-type": "Order Type"
         }
         return translations[key] || key
+    }
+
+    const getOrderTypeIcon = () => {
+        return order.order_type === "CASH_REGISTER" ? Store : Globe
+    }
+
+    const getOrderTypeLabel = () => {
+        return order.order_type === "CASH_REGISTER" ? t("orders.cash-register") : t("orders.public-store")
     }
 
     return (
@@ -86,7 +102,7 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
 
             <div>
                 <h3 className="text-lg font-semibold mb-4">Order Details</h3>
-                <div className="">
+                <div className="space-y-3">
                     <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">Order ID</span>
                         <span className="font-medium">#{order.id}</span>
@@ -105,6 +121,41 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
                             {order.payment.status}
                         </Badge>
                     </div>
+                    <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">{t("orders.order-type")}</span>
+                        <div className="flex items-center gap-2">
+                            {React.createElement(getOrderTypeIcon(), { className: "w-4 h-4" })}
+                            <span className="font-medium">{getOrderTypeLabel()}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Customer Information */}
+            <div>
+                <h4 className="font-medium mb-3 flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    {t("orders.customer-info")}
+                </h4>
+                <div className="space-y-2 p-3 border rounded-lg bg-muted/30">
+                    {order.customer_name && (
+                        <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">Name</span>
+                            <span className="font-medium">{order.customer_name}</span>
+                        </div>
+                    )}
+                    {order.customer_email && (
+                        <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">Email</span>
+                            <span className="font-medium">{order.customer_email}</span>
+                        </div>
+                    )}
+                    {order.customer_phone && (
+                        <div className="flex justify-between items-center">
+                            <span className="text-sm text-muted-foreground">Phone</span>
+                            <span className="font-medium">{order.customer_phone}</span>
+                        </div>
+                    )}
                 </div>
             </div>
 
