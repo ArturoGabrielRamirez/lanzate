@@ -6,12 +6,12 @@ import { useStepper } from "@/components/expansion/interactive-stepper"
 
 export function StepNavigation() {
     const { currentStep, nextStep, prevStep, hasNext, hasPrev } = useStepper()
-    
+
     return (
         <div className="flex justify-between pt-4">
             {currentStep > 1 && (
-                <Button 
-                    type="button" 
+                <Button
+                    type="button"
                     variant="outline"
                     onClick={prevStep}
                 >
@@ -20,8 +20,8 @@ export function StepNavigation() {
                 </Button>
             )}
             {hasNext() && (
-                <Button 
-                    type="button" 
+                <Button
+                    type="button"
                     onClick={nextStep}
                     className={currentStep === 1 ? "ml-auto" : ""}
                 >

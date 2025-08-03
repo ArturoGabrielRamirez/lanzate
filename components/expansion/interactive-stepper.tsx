@@ -109,10 +109,13 @@ export const InteractiveStepperRoot = React.forwardRef<
     HTMLDivElement & IStepperMethods,
     IStepperRootProps
 >(({ children, defaultValue = 1, orientation = 'horizontal', className = '', ...props }, ref) => {
+
     const [currentStep, setCurrentStep] = useState(defaultValue);
 
     const totalSteps = React.Children.toArray(children).filter(
-        (child) => React.isValidElement(child) && child.type !== InteractiveStepperContent,
+        (child) => {
+            return React.isValidElement(child) && child.type !== InteractiveStepperContent
+        },
     ).length;
 
     const goToStep = useCallback(

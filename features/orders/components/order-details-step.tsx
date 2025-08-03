@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { Order } from "@prisma/client"
 import { Package } from "lucide-react"
 
 type OrderItemWithProduct = {
@@ -15,22 +16,13 @@ type OrderItemWithProduct = {
     }
 }
 
-type Order = {
-    id: number
-    created_at: Date
-    shipping_method: "PICKUP" | "DELIVERY"
-    status: "PENDING" | "PROCESSING" | "READY" | "SHIPPED" | "DELIVERED" | "CANCELLED" | "COMPLETED"
-    total_price: number
-    total_quantity: number
-    items: OrderItemWithProduct[]
-    payment: {
-        amount: number
-        status: "PENDING" | "PAID"
-    }
-}
-
 type Props = {
-    order: Order
+    order: Order & {
+        items: OrderItemWithProduct[]
+        payment: {
+            status: "PENDING" | "PAID"
+        }
+    }
     showFullDetails?: boolean
 }
 

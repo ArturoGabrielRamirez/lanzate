@@ -1,10 +1,13 @@
 "use client"
 
-import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperItem, InteractiveStepperSeparator, InteractiveStepperTitle, InteractiveStepperTrigger } from "@/components/expansion/interactive-stepper"
+import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem, InteractiveStepperSeparator } from "@/components/expansion/interactive-stepper"
 import { StepNavigation } from "@/features/checkout/components/step-navigation"
 import OrderDetailsStep from "./order-details-step"
 import OrderStatusStep from "./order-status-step"
 import CustomerInfoStep from "./customer-info-step"
+import DynamicStepperTrigger from "./dynamic-stepper-trigger"
+import { Order } from "@prisma/client"
+import { Package, Settings, User } from "lucide-react"
 
 type OrderItemWithProduct = {
     id: number
@@ -17,49 +20,13 @@ type OrderItemWithProduct = {
     }
 }
 
-type Order = {
-    id: number
-    created_at: Date
-    shipping_method: "PICKUP" | "DELIVERY" 
-    status: "PENDING" | "PROCESSING" | "READY" | "SHIPPED" | "DELIVERED" | "CANCELLED" | "COMPLETED"
-    customer_name: string | null
-    customer_email: string | null
-    customer_phone: string | null
-    address_one?: string | null
-    address_two?: string | null
-    city?: string | null
-    state?: string | null
-    zip_code?: string | null
-    country?: string | null
-    total_price: number
-    total_quantity: number
-    branch: {
-        name: string
-        address: string
-    } | null
-    items: OrderItemWithProduct[]
-    payment: {
-        amount: number
-        status: "PENDING" | "PAID"
-    }
-    created_by_employee?: {
-        user?: {
-            first_name: string | null
-            last_name: string | null
-            email: string
-        }
-    } | null
-    updated_by_employee?: {
-        user?: {
-            first_name: string | null
-            last_name: string | null
-            email: string
-        }
-    } | null
-}
-
 type Props = {
-    order: Order
+    order: Order & {
+        items: OrderItemWithProduct[]
+        payment: {
+            status: "PENDING" | "PAID"
+        }
+    }
 }
 
 function OrderSummarySteps({ order }: Props) {
@@ -76,19 +43,42 @@ function OrderSummarySteps({ order }: Props) {
     const isProcessingCompleted = isCompleted || order.status === "READY" || order.status === "DELIVERED" || order.status === "SHIPPED"
     const isThirdStepCompleted = isCompleted || order.status === "DELIVERED"
 
+    // Configuration for each step trigger
+    const stepTriggerConfigs = [
+        {
+            title: "Order Placed",
+            description: "Your order has been placed successfully",
+            completed: true,
+            icon: Package,
+            step: 1
+        },
+        {
+            title: "Processing",
+            description: "We are preparing your order",
+            completed: isProcessingCompleted,
+            icon: Settings,
+            step: 2
+        },
+        {
+            title: thirdStepTitle,
+            description: thirdStepDescription,
+            completed: isThirdStepCompleted,
+            icon: User,
+            step: 3
+        }
+    ]
+
     if (isCompleted || isCancelled) {
         return (
             <InteractiveStepper orientation="horizontal">
                 <InteractiveStepperItem completed>
-                    <InteractiveStepperTrigger>
-                        <InteractiveStepperIndicator />
-                        <div>
-                            <InteractiveStepperTitle>Order Completed</InteractiveStepperTitle>
-                            <InteractiveStepperDescription>
-                                This order has been completed successfully
-                            </InteractiveStepperDescription>
-                        </div>
-                    </InteractiveStepperTrigger>
+                    <DynamicStepperTrigger 
+                        config={{
+                            title: "Order Completed",
+                            description: "This order has been completed successfully",
+                            completed: true
+                        }}
+                    />
                 </InteractiveStepperItem>
                 <InteractiveStepperContent step={1}>
                     <OrderDetailsStep order={order} showFullDetails={true} />
@@ -100,50 +90,30 @@ function OrderSummarySteps({ order }: Props) {
     return (
         <InteractiveStepper orientation="horizontal" className="grow">
             <InteractiveStepperItem completed>
-                <InteractiveStepperTrigger>
-                    <InteractiveStepperIndicator />
-                    <div>
-                        <InteractiveStepperTitle>Order Placed</InteractiveStepperTitle>
-                        <InteractiveStepperDescription>
-                            Your order has been placed successfully
-                        </InteractiveStepperDescription>
-                    </div>
-                </InteractiveStepperTrigger>
-                <InteractiveStepperSeparator />
-            </InteractiveStepperItem>
-            <InteractiveStepperItem completed={isProcessingCompleted}>
-                <InteractiveStepperTrigger>
-                    <InteractiveStepperIndicator />
-                    <div>
-                        <InteractiveStepperTitle>Processing</InteractiveStepperTitle>
-                        <InteractiveStepperDescription>
-                            We are preparing your order
-                        </InteractiveStepperDescription>
-                    </div>
-                </InteractiveStepperTrigger>
-                <InteractiveStepperSeparator />
-            </InteractiveStepperItem>
-            <InteractiveStepperItem completed={isThirdStepCompleted} disabled={order.status !== "READY"}>
-                <InteractiveStepperTrigger>
-                    <InteractiveStepperIndicator />
-                    <div>
-                        <InteractiveStepperTitle>{thirdStepTitle}</InteractiveStepperTitle>
-                        <InteractiveStepperDescription>{thirdStepDescription}</InteractiveStepperDescription>
-                    </div>
-                </InteractiveStepperTrigger>
+                <DynamicStepperTrigger config={stepTriggerConfigs[0]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
             
+            <InteractiveStepperItem completed={isProcessingCompleted}>
+                <DynamicStepperTrigger config={stepTriggerConfigs[1]} />
+                <InteractiveStepperSeparator />
+            </InteractiveStepperItem>
+            
+            <InteractiveStepperItem completed={isThirdStepCompleted} disabled={order.status !== "READY"}>
+                <DynamicStepperTrigger config={stepTriggerConfigs[2]} />
+                <InteractiveStepperSeparator />
+            </InteractiveStepperItem>
+
             <InteractiveStepperContent step={1} className="grow flex flex-col">
                 <OrderDetailsStep order={order} showFullDetails={showFullDetails} />
                 {!showFullDetails && <StepNavigation />}
             </InteractiveStepperContent>
-            
+
             <InteractiveStepperContent step={2} className="grow flex flex-col">
                 <OrderStatusStep order={order} />
                 <StepNavigation />
             </InteractiveStepperContent>
-            
+
             <InteractiveStepperContent step={3} className="grow flex flex-col">
                 <CustomerInfoStep order={order} />
                 <StepNavigation />
