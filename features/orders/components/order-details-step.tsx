@@ -18,7 +18,7 @@ type OrderItemWithProduct = {
 type Order = {
     id: number
     created_at: Date
-    shipping_method: "pickup" | "delivery"
+    shipping_method: "PICKUP" | "DELIVERY"
     status: "PENDING" | "PROCESSING" | "READY" | "SHIPPED" | "DELIVERED" | "CANCELLED" | "COMPLETED"
     total_price: number
     total_quantity: number
@@ -72,7 +72,7 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
                     <p className="text-sm">{formatDate(order.created_at)}</p>
                     <div className="flex items-center gap-2">
                         <Badge variant="outline" className="text-sm uppercase border-2">
-                            {order.shipping_method === "pickup" ? t("branches.store-pickup") : t("branches.delivery")}
+                            {order.shipping_method === "PICKUP" ? t("branches.store-pickup") : t("branches.delivery")}
                         </Badge>
                         <Badge
                             className={cn(

@@ -99,7 +99,7 @@ function OrdersTable({ data, slug, userId }: Props) {
             accessorKey: "shipping_method",
             cell: ({ row }) => {
                 const shippingMethod = row.original.shipping_method
-                return <span>{shippingMethod === "pickup" ? <MapPin className="w-4 h-4" /> : <Truck className="w-4 h-4" />}</span>
+                return <span>{shippingMethod === "PICKUP" ? <MapPin className="w-4 h-4" /> : <Truck className="w-4 h-4" />}</span>
             }
         },
         {

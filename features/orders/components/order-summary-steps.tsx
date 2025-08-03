@@ -20,7 +20,7 @@ type OrderItemWithProduct = {
 type Order = {
     id: number
     created_at: Date
-    shipping_method: "pickup" | "delivery"
+    shipping_method: "PICKUP" | "DELIVERY" 
     status: "PENDING" | "PROCESSING" | "READY" | "SHIPPED" | "DELIVERED" | "CANCELLED" | "COMPLETED"
     customer_name: string | null
     customer_email: string | null
@@ -63,7 +63,7 @@ type Props = {
 }
 
 function OrderSummarySteps({ order }: Props) {
-    const isPickup = order.shipping_method === "pickup"
+    const isPickup = order.shipping_method === "PICKUP"
     const isCompleted = order.status === "COMPLETED"
     const isCancelled = order.status === "CANCELLED"
     const thirdStepTitle = isPickup ? "Ready for Pickup" : "Shipped"
