@@ -147,7 +147,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (user && (pathWithoutLocale.includes('/login') || pathWithoutLocale.includes('/signup'))) {
-    const url = new URL(`/${currentLocale}/account`, `https://${rootDomain}`)
+    const url = new URL(`/${currentLocale}/dashboard`, `https://${rootDomain}`)
     return NextResponse.redirect(url)
   }
 

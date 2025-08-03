@@ -15,7 +15,7 @@ export default function LoginForm() {
             resolver={yupResolver(schema)}
             formAction={handleLogIn}
             contentButton={t("login")}
-            successRedirect="/account"
+            successRedirect="/dashboard"
             successMessage={t("toast-message.success-logged-in")}
             loadingMessage={t("toast-message.signing-in")}
             className={`flex flex-col gap-3 sm:row-start-2 sm:col-start-1 sm:min-w-full sm:justify-center`}
