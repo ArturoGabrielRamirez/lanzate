@@ -177,11 +177,11 @@ model Order {
   total_price     Float
   total_quantity  Int
   status          OrderStatus @default(PENDING)
-  shipping_method String      @default("pickup")
+  shipping_method ShippingMethod      @default(PICKUP)
 
   is_paid         Boolean     @default(false)
   payment_date    DateTime?
-  payment_method  String?
+  payment_method  PaymentMethod? @default(CASH)
   
   address_one     String?
   address_two     String?
@@ -189,6 +189,8 @@ model Order {
   state           String?
   zip_code        String?
   country         String?
+
+  order_type      OrderType @default(CASH_REGISTER)
 
   // Cambiar nombres para mayor claridad
   processed_by_user_id Int?
@@ -597,6 +599,7 @@ enum OrderStatus {
 enum OrderPaymentStatus {
   PENDING
   PAID
+  CANCELLED
 }
 
 enum TransactionType {
@@ -735,4 +738,15 @@ enum ContractStatus {
   REJECTED
   COMPLETED
   EXPIRED
+}
+
+enum OrderType {
+  CASH_REGISTER
+  PUBLIC_STORE
+}
+
+
+enum ShippingMethod {
+  PICKUP
+  DELIVERY
 }

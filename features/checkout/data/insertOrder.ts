@@ -157,7 +157,7 @@ export async function insertOrder({
                     state: customer_info?.state,
                     zip_code: customer_info?.zip_code,
                     country: customer_info?.country,
-                    status: status || "PENDING"
+                    status: status || "PROCESSING"
                 }
             })
 
