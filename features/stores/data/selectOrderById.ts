@@ -20,8 +20,8 @@ export async function selectOrderById(orderId: number) {
                         email: true,
                         first_name: true,
                         last_name: true,
-                        avatar: true
-                    }
+                        avatar: true, 
+                    },
                 },
                 items: {
                     include: {
