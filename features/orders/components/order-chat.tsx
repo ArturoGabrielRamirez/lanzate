@@ -1,29 +1,25 @@
-import { AutosizeTextarea } from "@/components/expansion/autosize-textarea"
-import { Button } from "@/components/ui/button"
-import { Paperclip } from "lucide-react"
-import OrderChatMessages from "./order-chat-messages"
+import OrderChatWrapper from "./order-chat-wrapper"
 import { Suspense } from "react"
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getMessagesFromOrderAction } from "../actions"
 
 type Props = {
     storeSlug: string
     orderId: string
 }
-async function OrderChat({ storeSlug, orderId }: Props) {
 
+async function OrderChat({ storeSlug, orderId }: Props) {
+    const { payload: user } = await getUserInfo()
+    const { payload: messages } = await getMessagesFromOrderAction({ storeSlug, orderId })
 
     return (
-        <div className="w-full">
-            <Suspense fallback={<div>Loading...</div>}>
-                <OrderChatMessages storeSlug={storeSlug} orderId={orderId} />
-            </Suspense>
-            <div className="flex items-center relative">
-                <Button variant="outline" size="icon" className="absolute left-2">
-                    <Paperclip />
-                </Button>
-                <AutosizeTextarea className="w-full pr-22 pl-14" />
-                <Button className="absolute right-2">Send</Button>
-            </div>
-        </div>
+        <Suspense fallback={<div className="flex-1 flex items-center justify-center">Loading messages...</div>}>
+            <OrderChatWrapper 
+                messages={messages || []} 
+                currentUser={user} 
+                orderId={orderId} 
+            />
+        </Suspense>
     )
 }
 export default OrderChat
