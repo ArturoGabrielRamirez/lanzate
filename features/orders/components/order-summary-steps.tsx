@@ -33,8 +33,8 @@ function OrderSummarySteps({ order }: Props) {
     const isPickup = order.shipping_method === "PICKUP"
     const isCompleted = order.status === "COMPLETED"
     const isCancelled = order.status === "CANCELLED"
-    const thirdStepTitle = isPickup ? "Ready for Pickup" : "Shipped"
-    const thirdStepDescription = isPickup ? "Your order is ready for pickup" : "Your order is on the way"
+    const thirdStepTitle = isPickup ? "Ready for Pickup" : "Delivery Tracking"
+    const thirdStepDescription = isPickup ? "The order is ready for pickup" : "Track where the order is"
 
     // Show full details only for completed or cancelled orders
     const showFullDetails = isCompleted || isCancelled
@@ -46,15 +46,15 @@ function OrderSummarySteps({ order }: Props) {
     // Configuration for each step trigger
     const stepTriggerConfigs = [
         {
-            title: "Order Details",
-            description: "What has been ordered",
+            title: "Order Placed",
+            description: "Someone made a new order!",
             completed: true,
             icon: Package,
             step: 1
         },
         {
-            title: "Order Status",
-            description: "The status of the order",
+            title: "Confirm Order",
+            description: "Tell the customer their order is ready!",
             completed: isProcessingCompleted,
             icon: Settings,
             step: 2
@@ -72,7 +72,7 @@ function OrderSummarySteps({ order }: Props) {
         return (
             <InteractiveStepper orientation="horizontal">
                 <InteractiveStepperItem completed>
-                    <DynamicStepperTrigger 
+                    <DynamicStepperTrigger
                         config={{
                             title: "Order Completed",
                             description: "This order has been completed successfully",
@@ -93,12 +93,12 @@ function OrderSummarySteps({ order }: Props) {
                 <DynamicStepperTrigger config={stepTriggerConfigs[0]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
-            
+
             <InteractiveStepperItem completed={isProcessingCompleted}>
                 <DynamicStepperTrigger config={stepTriggerConfigs[1]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
-            
+
             <InteractiveStepperItem completed={isThirdStepCompleted} disabled={order.status !== "READY"}>
                 <DynamicStepperTrigger config={stepTriggerConfigs[2]} />
                 <InteractiveStepperSeparator />
