@@ -3,7 +3,7 @@
 import { schema } from '@/features/auth/schemas/log-user-schema'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Form, InputField } from '@/features/layout/components'
-import { handleLogIn } from '../actions/handleLogIn'
+import { handleLogIn } from '../actions/handle-logIn'
 import { useTranslations } from 'next-intl'
 
 export default function LoginForm() {

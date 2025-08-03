@@ -2,8 +2,8 @@
 
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
-import { handleGoogleLogIn } from '../actions/handleGoogleLogIn'
-import { handleFacebookLogin } from '../actions/handleFacebookLogin'
+import { handleGoogleLogIn } from '../actions/handle-google-logIn'
+import { handleFacebookLogin } from '../actions/handle-facebook-login'
 import Facebook from './facebook-logo'
 import Google from './google-logo'
 

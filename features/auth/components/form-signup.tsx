@@ -1,6 +1,6 @@
 'use client'
 
-import { handleSignup } from '@/features/auth/actions/handleSignUp'
+import { handleSignup } from '@/features/auth/actions/handle-sign-up'
 import { schema } from '@/features/auth/schemas/log-user-schema'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Form, InputField } from '@/features/layout/components'

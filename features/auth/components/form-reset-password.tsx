@@ -1,6 +1,6 @@
 'use client'
 
-import { handleResetPassword } from '@/features/auth/actions/handleResetPassword'
+import { handleResetPassword } from '@/features/auth/actions/handle-reset-password'
 import { schema } from '@/features/auth/schemas/email-schema'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Form, InputField } from '@/features/layout/components'
