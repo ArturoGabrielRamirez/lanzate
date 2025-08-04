@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react"
 import { useStepper } from "@/components/expansion/interactive-stepper"
 
 export function StepNavigation() {
-    const { currentStep, nextStep, prevStep, hasNext, hasPrev } = useStepper()
+    const { currentStep, nextStep, prevStep, hasNext } = useStepper()
 
     return (
         <div className="flex justify-between pt-4">

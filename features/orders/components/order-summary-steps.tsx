@@ -33,11 +33,26 @@ function OrderSummarySteps({ order }: Props) {
     const isPickup = order.shipping_method === "PICKUP"
     const isCompleted = order.status === "COMPLETED"
     const isCancelled = order.status === "CANCELLED"
-    const thirdStepTitle = isPickup ? "Ready for Pickup" : "Delivery Tracking"
-    const thirdStepDescription = isPickup ? "The order is ready for pickup" : "Track where the order is"
+    
+    // Determine third step title and description based on completion status
+    let thirdStepTitle: string
+    let thirdStepDescription: string
+    
+    if (isCompleted) {
+        if (isPickup) {
+            thirdStepTitle = "Order Picked Up"
+            thirdStepDescription = "The customer has picked up their order"
+        } else {
+            thirdStepTitle = "Order Delivered"
+            thirdStepDescription = "The order has been delivered to the customer"
+        }
+    } else {
+        thirdStepTitle = isPickup ? "Ready for Pickup" : "Delivery Tracking"
+        thirdStepDescription = isPickup ? "The order is ready for pickup" : "Track where the order is"
+    }
 
     // Show full details only for completed or cancelled orders
-    const showFullDetails = isCompleted || isCancelled
+    const showFullDetails = true
 
     // Determine which steps should be completed
     const isProcessingCompleted = isCompleted || order.status === "READY" || order.status === "DELIVERED" || order.status === "SHIPPED"
@@ -68,7 +83,7 @@ function OrderSummarySteps({ order }: Props) {
         }
     ]
 
-    if (isCompleted || isCancelled) {
+    if (isCancelled) {
         return (
             <InteractiveStepper orientation="horizontal">
                 <InteractiveStepperItem completed>
@@ -99,14 +114,14 @@ function OrderSummarySteps({ order }: Props) {
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
 
-            <InteractiveStepperItem completed={isThirdStepCompleted} disabled={order.status !== "READY"}>
+            <InteractiveStepperItem completed={isThirdStepCompleted}>
                 <DynamicStepperTrigger config={stepTriggerConfigs[2]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
 
             <InteractiveStepperContent step={1} className="grow flex flex-col">
                 <OrderDetailsStep order={order} showFullDetails={showFullDetails} />
-                {!showFullDetails && <StepNavigation />}
+                <StepNavigation />
             </InteractiveStepperContent>
 
             <InteractiveStepperContent step={2} className="grow flex flex-col">

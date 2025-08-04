@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { Order } from "@prisma/client"
-import { Package, User, Store, Globe } from "lucide-react"
+import { Package, User, Store, Globe, MapPin, Truck, CheckCircle, Check, Clock, X, Loader2 } from "lucide-react"
 import React from "react"
 
 type OrderItemWithProduct = {
@@ -77,7 +77,14 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
         <div className="space-y-6">
             {showFullDetails && (
                 <div className="flex items-center gap-2 justify-between">
-                    <p className="text-sm">{formatDate(order.created_at)}</p>
+                    {/* <p className="text-sm">{formatDate(order.created_at)}</p> */}
+                    {/*  */}
+                </div>
+            )}
+
+            <div>
+                <h3 className="text-lg font-semibold mb-4 flex items-center justify-between gap-2">
+                    <span>Order Details</span>
                     <div className="flex items-center gap-2">
                         <Badge variant="outline" className="text-sm uppercase border-2">
                             {order.shipping_method === "PICKUP" ? t("branches.store-pickup") : t("branches.delivery")}
@@ -97,12 +104,8 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
                             {order.status}
                         </Badge>
                     </div>
-                </div>
-            )}
-
-            <div>
-                <h3 className="text-lg font-semibold mb-4">Order Details</h3>
-                <div className="space-y-3">
+                </h3>
+                <div className="flex flex-col gap-2 border rounded-lg bg-muted/30 p-3">
                     <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">Order ID</span>
                         <span className="font-medium">#{order.id}</span>
@@ -117,9 +120,48 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
                     </div>
                     <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">Payment Status</span>
-                        <Badge variant={order.payment.status === "PAID" ? "default" : "secondary"}>
+                        <Badge variant={"outline"} className={cn(
+                            order.payment.status === "PAID" && "bg-green-500 text-white"
+                        )}>
+                            {order.payment.status === "PAID" && <Check className="w-4 h-4" />}
                             {order.payment.status}
                         </Badge>
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Order Status</span>
+                        <Badge variant={order.status === "COMPLETED" ? "default" : "secondary"}
+                            className={cn(
+                                order.status === "COMPLETED" && "bg-green-500 text-white",
+                                order.status === "CANCELLED" && "bg-red-500 text-white",
+                                order.status === "PENDING" && "bg-yellow-500 text-white",
+                                order.status === "PROCESSING" && "bg-orange-500 text-white",
+                                order.status === "READY" && "bg-blue-500 text-white",
+                                order.status === "SHIPPED" && "bg-violet-500 text-white",
+                                order.status === "DELIVERED" && "bg-green-500 text-white"
+                            )}
+                        >
+                            {order.status === "COMPLETED" && <Check className="w-4 h-4" />}
+                            {order.status === "CANCELLED" && <X className="w-4 h-4" />}
+                            {order.status === "PENDING" && <Clock className="w-4 h-4" />}
+                            {order.status === "PROCESSING" && <Loader2 className="w-4 h-4" />}
+                            {order.status === "READY" && <Check className="w-4 h-4" />}
+                            {order.status === "SHIPPED" && <Truck className="w-4 h-4" />}
+                            {order.status === "DELIVERED" && <Check className="w-4 h-4" />}
+                            {order.status}
+                        </Badge>
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Shipping Method</span>
+                        {order.shipping_method === "PICKUP" ? (
+                            <Badge variant="outline">
+                                <MapPin className="w-4 h-4" />
+                                {order.shipping_method}
+                            </Badge>
+                        ) : (
+                            <Badge variant="secondary">
+                                {order.shipping_method}
+                            </Badge>
+                        )}
                     </div>
                     <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">{t("orders.order-type")}</span>
@@ -127,6 +169,13 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
                             {React.createElement(getOrderTypeIcon(), { className: "w-4 h-4" })}
                             <span className="font-medium">{getOrderTypeLabel()}</span>
                         </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Order Date</span>
+                        <span className="font-medium">{formatDate(order.created_at)}</span>
                     </div>
                 </div>
             </div>
@@ -138,24 +187,18 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
                     {t("orders.customer-info")}
                 </h4>
                 <div className="space-y-2 p-3 border rounded-lg bg-muted/30">
-                    {order.customer_name && (
-                        <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">Name</span>
-                            <span className="font-medium">{order.customer_name}</span>
-                        </div>
-                    )}
-                    {order.customer_email && (
-                        <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">Email</span>
-                            <span className="font-medium">{order.customer_email}</span>
-                        </div>
-                    )}
-                    {order.customer_phone && (
-                        <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">Phone</span>
-                            <span className="font-medium">{order.customer_phone}</span>
-                        </div>
-                    )}
+                    <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Name</span>
+                        <span className="font-medium">{order.customer_name || "Name not available"}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Email</span>
+                        <span className="font-medium">{order.customer_email || "Email not available"}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Phone</span>
+                        <span className="font-medium">{order.customer_phone || "Phone not available"}</span>
+                    </div>
                 </div>
             </div>
 
