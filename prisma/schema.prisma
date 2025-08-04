@@ -35,6 +35,11 @@ model User {
   orders_processed   Order[] @relation("OrderProcessedBy")
   order_messages     OrderMessage[] @relation("OrderMessageSender")
   
+  // Relaciones de recordatorios
+  user_reminders     UserReminder[]
+  store_reminders_created StoreReminder[] @relation("StoreReminderCreatedBy")
+  store_reminders_completed StoreReminder[] @relation("StoreReminderCompletedBy")
+  
   @@map("users")
 }
 
@@ -75,6 +80,7 @@ model Store {
   transactions         Transaction[]
   contracts            Contract[]
   categories           Category[]
+  store_reminders     StoreReminder[]
 
   @@map("stores")
 }
@@ -331,6 +337,7 @@ model Employee {
   transactions         Transaction[]
   contract_assignments ContractAssignment[]
   contract_responses   ContractResponse[]
+  assigned_reminders   StoreReminder[]
 
   @@unique([user_id, store_id])
   @@map("employees")
@@ -597,6 +604,58 @@ model OrderMessage {
   @@map("order_messages")
 }
 
+model UserReminder {
+  id          Int                @id @default(autoincrement())
+  user_id     Int
+  title       String
+  description String?
+  due_date    DateTime
+  priority    ReminderPriority   @default(MEDIUM)
+  status      ReminderStatus     @default(PENDING)
+  category    String?            // Categoría personalizable (ej: "trabajo", "personal", "salud")
+  color       String?            // Color para UI (hex code)
+  is_recurring Boolean           @default(false)
+  recurrence_pattern String?     // Patrón de recurrencia (ej: "daily", "weekly", "monthly")
+  recurrence_end_date DateTime?  // Fecha de fin de recurrencia
+  completed_at DateTime?
+  created_at  DateTime           @default(now())
+  updated_at  DateTime           @updatedAt
+  
+  // Relaciones
+  user        User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("user_reminders")
+}
+
+model StoreReminder {
+  id          Int                @id @default(autoincrement())
+  store_id    Int
+  title       String
+  description String?
+  due_date    DateTime
+  priority    ReminderPriority   @default(MEDIUM)
+  status      ReminderStatus     @default(PENDING)
+  category    String?            // Categoría (ej: "inventario", "mantenimiento", "eventos")
+  color       String?            // Color para UI (hex code)
+  is_recurring Boolean           @default(false)
+  recurrence_pattern String?     // Patrón de recurrencia
+  recurrence_end_date DateTime?  // Fecha de fin de recurrencia
+  assigned_to Int?               // employee_id al que se asigna (opcional)
+  created_by  Int                // user_id que creó el recordatorio
+  completed_at DateTime?
+  completed_by Int?              // user_id que completó el recordatorio
+  created_at  DateTime           @default(now())
+  updated_at  DateTime           @updatedAt
+  
+  // Relaciones
+  store       Store              @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  created_by_user User           @relation("StoreReminderCreatedBy", fields: [created_by], references: [id])
+  completed_by_user User?        @relation("StoreReminderCompletedBy", fields: [completed_by], references: [id])
+  assigned_employee Employee?    @relation(fields: [assigned_to], references: [id])
+
+  @@map("store_reminders")
+}
+
 enum MessageType {
   CUSTOMER_TO_STORE
   STORE_TO_CUSTOMER
@@ -772,4 +831,17 @@ enum OrderType {
 enum ShippingMethod {
   PICKUP
   DELIVERY
+}
+
+enum ReminderPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum ReminderStatus {
+  PENDING
+  COMPLETED
+  OVERDUE
 }
