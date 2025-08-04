@@ -23,15 +23,15 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                 <TabsClientContainer>
                     <TabsList className="items-start w-full h-full max-md:bg-transparent">
                         <div className="fixed bottom-0 z-10 flex w-full overflow-x-auto md:block md:relative bg-accent md:h-full">
-                            <TabTriggerLink value="overview" text={t("overview")} slug={slug} icon={<BookOpenText className="w-4 h-4" />} />
-                            <TabTriggerLink value="account" text={t("account-details")} slug={slug} icon={<Store className="w-4 h-4" />} />
-                            <TabTriggerLink value="branches" text={t("branches")} slug={slug} icon={<Building2 className="w-4 h-4" />} />
-                            <TabTriggerLink value="employees" text={t("employees")} slug={slug} icon={<UsersRound className="w-4 h-4" />} />
-                            <TabTriggerLink value="products" text={t("products")} slug={slug} icon={<Box className="w-4 h-4" />} />
-                            <TabTriggerLink value="orders" text={t("orders")} slug={slug} icon={<ShoppingCart className="w-4 h-4" />} />
-                            <TabTriggerLink value="settings" text={t("settings")} slug={slug} icon={<Settings className="w-4 h-4" />} />
-                            <TabTriggerLink value="analytics" text={t("analytics")} slug={slug} icon={<ChartLine className="w-4 h-4" />} />
-                            <TabTriggerLink value="history" text={t("history")} slug={slug} icon={<Clock className="w-4 h-4" />} />
+                            <TabTriggerLink value="overview" text={t("overview")} slug={slug} icon={<BookOpenText className="size-6 lg:size-4" />} />
+                            <TabTriggerLink value="account" text={t("account-details")} slug={slug} icon={<Store className="size-6 lg:size-4" />} />
+                            <TabTriggerLink value="branches" text={t("branches")} slug={slug} icon={<Building2 className="size-6 lg:size-4" />} />
+                            <TabTriggerLink value="employees" text={t("employees")} slug={slug} icon={<UsersRound className="size-6 lg:size-4" />} />
+                            <TabTriggerLink value="products" text={t("products")} slug={slug} icon={<Box className="size-6 lg:size-4" />} />
+                            <TabTriggerLink value="orders" text={t("orders")} slug={slug} icon={<ShoppingCart className="size-6 lg:size-4" />} />
+                            <TabTriggerLink value="settings" text={t("settings")} slug={slug} icon={<Settings className="size-6 lg:size-4" />} />
+                            <TabTriggerLink value="analytics" text={t("analytics")} slug={slug} icon={<ChartLine className="size-6 lg:size-4" />} />
+                            <TabTriggerLink value="history" text={t("history")} slug={slug} icon={<Clock className="size-6 lg:size-4" />} />
                         </div>
                     </TabsList>
                     {children}
