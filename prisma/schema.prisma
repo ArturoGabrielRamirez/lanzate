@@ -74,6 +74,7 @@ model Store {
   user                 User                      @relation(fields: [user_id], references: [id])
   transactions         Transaction[]
   contracts            Contract[]
+  categories           Category[]
 
   @@map("stores")
 }
@@ -155,10 +156,32 @@ model Category {
   name        String
   description String?
   image       String?
-  slug        String    @unique
+  slug        String
+  store_id    Int
+  is_default  Boolean   @default(false)
+  sort_order  Int       @default(0)
+  is_active   Boolean   @default(true)
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
   products    Product[] @relation("CategoryToProduct")
+  store       Store     @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
+  @@unique([store_id, slug])
   @@map("categories")
+}
+
+model DefaultCategory {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  image       String?
+  slug        String    @unique
+  sort_order  Int       @default(0)
+  is_active   Boolean   @default(true)
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+
+  @@map("default_categories")
 }
 
 model Order {
