@@ -9,7 +9,11 @@ import "../globals.css";
 
 
 export const metadata: Metadata = {
-  title: 'Lanzate',
+  title: {
+    default: 'Lanzate',
+    template: 'Lanzate | %s',
+    absolute: 'Lanzate',
+  },
   description: 'A customizable E-commerce platform.',
   authors: [
     { name: 'Arturo Gabriel Ramirez', url: 'https://github.com/ArturoGabrielRamirez' },

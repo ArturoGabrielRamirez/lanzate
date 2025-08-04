@@ -7,7 +7,6 @@ import { BookOpenText } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
 
-
 async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps) {
 
     const { slug } = await params
