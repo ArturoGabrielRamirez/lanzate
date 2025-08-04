@@ -3,6 +3,7 @@
 import { actionWrapper } from "@/utils/lib"
 import { insertOrder } from "../data/insertOrder"
 import { CartItemType } from "@/features/cart/types"
+import { PaymentMethod } from "@prisma/client"
 
 type CreateNewWalkInOrderFormData = {
     branch_id: number
@@ -10,7 +11,7 @@ type CreateNewWalkInOrderFormData = {
     total_quantity: number
     subdomain: string
     isPaid: boolean
-    payment_method: string
+    payment_method: PaymentMethod
     cart: CartItemType[]
     processed_by_user_id: number
     customer_info: {
@@ -43,7 +44,7 @@ export async function createNewWalkInOrder({
             cart: cart,
             subdomain: subdomain,
             processed_by_user_id: processed_by_user_id,
-            shipping_method: "pickup",
+            shipping_method: "PICKUP",
             total_price: total_price,
             total_quantity: total_quantity,
             customer_info: customer_info,
