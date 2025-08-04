@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import MultipleSelector from "@/components/expansion/multiple-selector";
 import { searchCategories } from "@/features/categories/data/searchCategories";
 import { createCategoryDynamic } from "@/features/categories/actions/createCategoryDynamic";
+import { toast } from "sonner";
 
 const animatedComponents = makeAnimated();
 
@@ -22,6 +23,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
 
     const [categories, setCategories] = useState<{ label: string, value: number }[]>([])
     const [isLoading, setIsLoading] = useState(false)
+    const [creatingCategories, setCreatingCategories] = useState<Set<string>>(new Set())
 
     const t = useTranslations("subdomain.sidebar.categories");
 
@@ -53,7 +55,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
         try {
             const { payload, error } = await searchCategories(storeId, searchTerm)
             if (error) {
-                console.error('Error searching categories:', error)
+                toast.error('Error al buscar categorías')
                 return []
             }
 
@@ -62,7 +64,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
                 value: cat.id.toString()
             }))
         } catch (error) {
-            console.error('Error in search:', error)
+            toast.error('Error al buscar categorías')
             return []
         } finally {
             setIsLoading(false)
@@ -82,11 +84,14 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
             )
 
             if (isNewCategory) {
+                // Agregar a la lista de categorías en creación
+                setCreatingCategories(prev => new Set(prev).add(option.label))
+
                 try {
                     // Crear la nueva categoría
                     const { payload, error } = await createCategoryDynamic(storeId, option.label)
                     if (error) {
-                        console.error('Error creating category:', error)
+                        toast.error('Error al crear la categoría')
                         continue
                     }
 
@@ -97,9 +102,16 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
                     // Actualizar el valor de la opción con el ID real
                     option.value = payload.id.toString()
 
-                    console.log('Nueva categoría creada:', payload)
+                    toast.success(`Categoría "${payload.name}" creada exitosamente`)
                 } catch (error) {
-                    console.error('Error creating category:', error)
+                    toast.error('Error al crear la categoría')
+                } finally {
+                    // Remover de la lista de categorías en creación
+                    setCreatingCategories(prev => {
+                        const newSet = new Set(prev)
+                        newSet.delete(option.label)
+                        return newSet
+                    })
                 }
             }
         }
@@ -146,6 +158,17 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
                     </p>
                 }
             />
+            {/* Indicador de categorías en creación */}
+            {creatingCategories.size > 0 && (
+                <div className="mt-2 space-y-1">
+                    {Array.from(creatingCategories).map((categoryName) => (
+                        <div key={categoryName} className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-primary"></div>
+                            <span>Creando categoría "{categoryName}"...</span>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     )
 }

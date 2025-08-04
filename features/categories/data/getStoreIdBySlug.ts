@@ -14,6 +14,10 @@ export async function getStoreIdBySlug(slug: string) {
             }
         })
 
-        return store?.id || null
+        return {
+            payload: store?.id || null,
+            error: null,
+            message: "Store ID obtenido exitosamente"
+        }
     })
 } 

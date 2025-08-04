@@ -15,7 +15,7 @@ import { getStoreIdBySlug } from "@/features/categories/data/getStoreIdBySlug"
 
 function EditProductButton({ product, slug, onComplete, userId }: EditProductButtonProps) {
 
-    const [categories, setCategories] = useState<string[]>([])
+    const [categories, setCategories] = useState<{ label: string, value: string }[]>([])
     const [files, setFiles] = useState<File[]>([])
     const [storeId, setStoreId] = useState<number | null>(null)
     const t = useTranslations("store.edit-product")
@@ -30,6 +30,17 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
         }
         fetchStoreId()
     }, [slug])
+
+    // Inicializar categorías con las categorías existentes del producto
+    useEffect(() => {
+        if (product.categories && product.categories.length > 0) {
+            const initialCategories = product.categories.map((category: any) => ({
+                label: category.name,
+                value: category.id.toString()
+            }))
+            setCategories(initialCategories)
+        }
+    }, [product.categories])
 
     const handleAddCategory = (value: any) => {
         setCategories(value)
@@ -122,7 +133,6 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
             <InputField name="description" label={t("description")} type="text" defaultValue={product.description || ""} />
             <CategorySelect 
                 onChange={handleAddCategory} 
-                defaultValue={product.categories.map((category: any) => ({ label: category.name, value: category.id }))} 
                 storeId={storeId || undefined}
             />
         </ButtonWithPopup>

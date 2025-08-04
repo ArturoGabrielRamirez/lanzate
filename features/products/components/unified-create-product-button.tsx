@@ -42,6 +42,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
     }, [open, hasStoreId])
 
     const handleAddCategory = (value: any) => {
+        console.log("🚀 ~ handleAddCategory ~ value:", value)
         setCategories(value)
     }
 
