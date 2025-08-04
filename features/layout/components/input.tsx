@@ -17,7 +17,8 @@ type InputFieldProps = {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   startContent?: React.ReactNode
   endContent?: React.ReactNode
-  placeholder?: string
+  placeholder?: string,
+  disabled?: boolean
 }
 
 const InputField = ({
@@ -32,7 +33,8 @@ const InputField = ({
   onKeyDown,
   startContent,
   endContent,
-  placeholder
+  placeholder,
+  disabled = false,
 }: InputFieldProps) => {
   const {
     register,
@@ -60,6 +62,7 @@ const InputField = ({
         startContent={startContent}
         endContent={endContent}
         {...controlls}
+        disabled={disabled}
       />
       {error && <p className="text-sm text-red-500">{error}</p>}
     </div>

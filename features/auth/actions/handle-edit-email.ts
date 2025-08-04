@@ -11,8 +11,8 @@ export async function handleEditEmail(email: string) {
     }
 
     const supabase = await createServerSideClient();
-    const { data, error } = await supabase.auth.admin.updateUserById(
-        user.id,
+    
+    const { data, error } = await supabase.auth.updateUser(
         { email: email }
     );
 
@@ -20,5 +20,10 @@ export async function handleEditEmail(email: string) {
         return { error: error.message };
     }
 
-    return { success: true, data };
+    return { 
+        success: true, 
+        data,
+        message: "Proceso de cambio iniciado. Confirma desde ambos emails.",
+        newEmail: email
+    };
 }

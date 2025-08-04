@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { User } from "lucide-react";
+import ChangePasswordButton from "@/features/auth/components/changue-password-button";
+import { EmailStatusBanner } from "@/features/auth/components/email-status-banner";
+import ChangeEmailButton from "@/features/auth/components/changue-email-button";
+
 
 export default async function AccountPage() {
 
@@ -29,7 +33,11 @@ export default async function AccountPage() {
                     label: t("title"),
                     href: "/account"
                 }
-            ]} showDate/>
+            ]} showDate />
+            
+            {/* Banner de estado del email */}
+            <EmailStatusBanner />
+            
             <section className="flex items-center gap-4">
                 <Card className="w-full">
                     <CardContent className="flex items-center gap-4 w-full">
@@ -42,7 +50,7 @@ export default async function AccountPage() {
                             <p className="text-xl font-bold">{user.email}</p>
                             <div>
                                 <p className="capitalize">
-                                    {user.Account[0].type.toLowerCase()} {t("title")} {/* fijarse si este es necesario o va texto plano */}
+                                    {user.Account[0].type.toLowerCase()} {t("title")}
                                 </p>
                                 {user.Account[0].type === "FREE" && (
                                     <Button asChild size="sm">
@@ -81,11 +89,23 @@ export default async function AccountPage() {
                                 </div>
                                 <div className="flex flex-col">
                                     <p className="font-light text-sm">{t("description.email")}</p>
-                                    <p className="font-medium">{user.email}</p>
+                                    <div className="flex items-center gap-2">
+                                        <p className="font-medium">{user.email}</p>
+                                        <ChangeEmailButton
+                                            buttonText="Cambiar"
+                                            title={t("description.change-email") || "Cambiar email"}
+                                            currentEmail={user.email}
+                                            className="font-medium text-xs h-6 px-2"
+                                        />
+                                    </div>
                                 </div>
                                 <div className="flex flex-col">
                                     <p className="font-light text-sm">{t("description.password")}</p>
-                                    <Link href="/account/password" className="font-medium">{t("description.change-password")}</Link>
+                                    <ChangePasswordButton
+                                        buttonText={t("description.change-password")}
+                                        title={t("description.change-password")}
+                                        className="font-medium justify-start p-0 h-auto text-foreground"
+                                    />
                                 </div>
                             </CardContent>
                         </Card>
