@@ -246,7 +246,10 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             type="text"
                             startContent={hasStoreId ? <FileText /> : undefined}
                         />
-                        <CategorySelect onChange={handleAddCategory} />
+                        <CategorySelect 
+                            onChange={handleAddCategory} 
+                            storeId={hasStoreId ? props.storeId : (selectedStoreId ? parseInt(selectedStoreId) : undefined)}
+                        />
                     </div>
                 </Form>
             </DialogContent>
