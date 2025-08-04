@@ -11,35 +11,32 @@ datasource db {
 }
 
 model User {
-  id                 Int                  @id @default(autoincrement())
-  email              String               @unique
-  avatar             String?
-  created_at         DateTime             @default(now())
-  first_name         String?
-  last_name          String?
-  password           String
-  updated_at         DateTime             @updatedAt
-  Account            Account[]
-  ActionLog          ActionLog[]
-  Employee           Employee[]
-  Notification       Notification[]
-  product_comments   product_comments[]
-  product_likes      product_likes[]
-  Product            Product[]
-  Store              Store[]
-  contracts_created  Contract[]           @relation("ContractCreatedBy")
-  contracts_assigned ContractAssignment[] @relation("ContractAssignedBy")
+  id                        Int                     @id @default(autoincrement())
+  email                     String                  @unique
+  avatar                    String?
+  created_at                DateTime                @default(now())
+  first_name                String?
+  last_name                 String?
+  password                  String
+  updated_at                DateTime                @updatedAt
+  Account                   Account[]
+  ActionLog                 ActionLog[]
+  contracts_assigned        ContractAssignment[]    @relation("ContractAssignedBy")
+  contracts_created         Contract[]              @relation("ContractCreatedBy")
+  email_change_requests     email_change_requests[]
+  Employee                  Employee[]
+  Notification              Notification[]
+  order_messages            OrderMessage[]          @relation("OrderMessageSender")
+  orders_as_customer        Order[]                 @relation("OrderCustomer")
+  orders_processed          Order[]                 @relation("OrderProcessedBy")
+  product_comments          product_comments[]
+  product_likes             product_likes[]
+  Product                   Product[]
+  store_reminders_completed StoreReminder[]         @relation("StoreReminderCompletedBy")
+  store_reminders_created   StoreReminder[]         @relation("StoreReminderCreatedBy")
+  Store                     Store[]
+  user_reminders            UserReminder[]
 
-  // Relaciones de órdenes
-  orders_as_customer Order[] @relation("OrderCustomer")
-  orders_processed   Order[] @relation("OrderProcessedBy")
-  order_messages     OrderMessage[] @relation("OrderMessageSender")
-  
-  // Relaciones de recordatorios
-  user_reminders     UserReminder[]
-  store_reminders_created StoreReminder[] @relation("StoreReminderCreatedBy")
-  store_reminders_completed StoreReminder[] @relation("StoreReminderCompletedBy")
-  
   @@map("users")
 }
 
@@ -70,17 +67,17 @@ model Store {
   slug                 String                    @unique
   subdomain            String                    @unique
   branches             Branch[]
+  categories           Category[]
+  contracts            Contract[]
   employees            Employee[]
   orders               Order[]
   products             Product[]
   balance              StoreBalance?
   customization        StoreCustomization?
   operational_settings StoreOperationalSettings?
+  store_reminders      StoreReminder[]
   user                 User                      @relation(fields: [user_id], references: [id])
   transactions         Transaction[]
-  contracts            Contract[]
-  categories           Category[]
-  store_reminders     StoreReminder[]
 
   @@map("stores")
 }
@@ -163,76 +160,66 @@ model Category {
   description String?
   image       String?
   slug        String
-  store_id    Int
+  created_at  DateTime  @default(now())
+  is_active   Boolean   @default(true)
   is_default  Boolean   @default(false)
   sort_order  Int       @default(0)
-  is_active   Boolean   @default(true)
-  created_at  DateTime  @default(now())
+  store_id    Int
   updated_at  DateTime  @updatedAt
-  products    Product[] @relation("CategoryToProduct")
   store       Store     @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  products    Product[] @relation("CategoryToProduct")
 
   @@unique([store_id, slug])
   @@map("categories")
 }
 
 model DefaultCategory {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String?
   image       String?
-  slug        String    @unique
-  sort_order  Int       @default(0)
-  is_active   Boolean   @default(true)
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
+  slug        String   @unique
+  sort_order  Int      @default(0)
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 
   @@map("default_categories")
 }
 
 model Order {
-  id              Int         @id @default(autoincrement())
-  created_at      DateTime    @default(now())
-  updated_at      DateTime    @updatedAt
-
-  // Información del cliente walk-in
-  customer_id     Int? // Cliente (opcional para walk-in)
-  customer_name  String?
-  customer_phone String?
-  customer_email String?
-
-  store_id        Int
-  branch_id       Int
-  total_price     Float
-  total_quantity  Int
-  status          OrderStatus @default(PENDING)
-  shipping_method ShippingMethod      @default(PICKUP)
-
-  is_paid         Boolean     @default(false)
-  payment_date    DateTime?
-  payment_method  PaymentMethod? @default(CASH)
-  
-  address_one     String?
-  address_two     String?
-  city            String?
-  state           String?
-  zip_code        String?
-  country         String?
-
-  order_type      OrderType @default(CASH_REGISTER)
-
-  // Cambiar nombres para mayor claridad
+  id                   Int            @id @default(autoincrement())
+  created_at           DateTime       @default(now())
+  updated_at           DateTime       @updatedAt
+  store_id             Int
+  branch_id            Int
+  total_price          Float
+  total_quantity       Int
+  status               OrderStatus    @default(PENDING)
+  is_paid              Boolean        @default(false)
+  payment_date         DateTime?
+  customer_email       String?
+  customer_id          Int?
+  customer_name        String?
+  customer_phone       String?
   processed_by_user_id Int?
+  address_one          String?
+  address_two          String?
+  city                 String?
+  country              String?
+  state                String?
+  zip_code             String?
+  order_type           OrderType      @default(CASH_REGISTER)
+  payment_method       PaymentMethod? @default(CASH)
+  shipping_method      ShippingMethod @default(PICKUP)
+  items                OrderItem[]
+  messages             OrderMessage[]
+  payment              OrderPayment?
+  branch               Branch         @relation(fields: [branch_id], references: [id])
+  customer             User?          @relation("OrderCustomer", fields: [customer_id], references: [id])
+  processed_by         User?          @relation("OrderProcessedBy", fields: [processed_by_user_id], references: [id])
+  store                Store          @relation(fields: [store_id], references: [id])
 
-
-  // Relaciones
-  customer        User?         @relation("OrderCustomer", fields: [customer_id], references: [id])
-  processed_by    User?         @relation("OrderProcessedBy", fields: [processed_by_user_id], references: [id])
-  store           Store         @relation(fields: [store_id], references: [id])
-  branch          Branch?       @relation(fields: [branch_id], references: [id])
-  items           OrderItem[]
-  payment         OrderPayment?
-  messages        OrderMessage[]
   @@map("orders")
 }
 
@@ -332,12 +319,12 @@ model Employee {
   created_at           DateTime             @default(now())
   updated_at           DateTime             @updatedAt
   action_logs          ActionLog[]
-  store                Store                @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  user                 User                 @relation(fields: [user_id], references: [id])
-  transactions         Transaction[]
   contract_assignments ContractAssignment[]
   contract_responses   ContractResponse[]
+  store                Store                @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  user                 User                 @relation(fields: [user_id], references: [id])
   assigned_reminders   StoreReminder[]
+  transactions         Transaction[]
 
   @@unique([user_id, store_id])
   @@map("employees")
@@ -377,16 +364,16 @@ model StoreOperationalSettings {
   contact_phone               String?
   contact_whatsapp            String?
   contact_email               String?
-  contact_phone_2             String?
-  contact_whatsapp_2          String?
-  facebook_url                String?
-  instagram_url               String?
-  x_url                       String?
   delivery_instructions       String?
   pickup_instructions         String?
   special_notes               String?
   created_at                  DateTime        @default(now())
   updated_at                  DateTime        @updatedAt
+  contact_phone_2             String?
+  contact_whatsapp_2          String?
+  facebook_url                String?
+  instagram_url               String?
+  x_url                       String?
   store                       Store           @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
   @@map("store_operational_settings")
@@ -520,11 +507,11 @@ model Contract {
   status          ContractStatus       @default(PENDING)
   created_at      DateTime             @default(now())
   updated_at      DateTime             @updatedAt
-  created_by      Int // user_id who created the contract
-  store           Store                @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  created_by_user User                 @relation("ContractCreatedBy", fields: [created_by], references: [id])
+  created_by      Int
   assignments     ContractAssignment[]
   responses       ContractResponse[]
+  created_by_user User                 @relation("ContractCreatedBy", fields: [created_by], references: [id])
+  store           Store                @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
   @@map("contracts")
 }
@@ -535,13 +522,13 @@ model ContractAssignment {
   employee_id      Int
   assigned_at      DateTime           @default(now())
   status           ContractStatus     @default(PENDING)
-  assigned_by      Int // user_id who assigned the contract
+  assigned_by      Int
+  assigned_by_user User               @relation("ContractAssignedBy", fields: [assigned_by], references: [id])
   contract         Contract           @relation(fields: [contract_id], references: [id], onDelete: Cascade)
   employee         Employee           @relation(fields: [employee_id], references: [id], onDelete: Cascade)
-  assigned_by_user User               @relation("ContractAssignedBy", fields: [assigned_by], references: [id])
   responses        ContractResponse[]
 
-  @@unique([contract_id, employee_id]) // Evita asignaciones duplicadas
+  @@unique([contract_id, employee_id])
   @@map("contract_assignments")
 }
 
@@ -549,14 +536,14 @@ model ContractResponse {
   id            Int                 @id @default(autoincrement())
   contract_id   Int
   employee_id   Int
-  assignment_id Int? // referencia a la asignación específica
   status        ContractStatus
   comments      String?
   created_at    DateTime            @default(now())
   updated_at    DateTime            @updatedAt
+  assignment_id Int?
+  assignment    ContractAssignment? @relation(fields: [assignment_id], references: [id], onDelete: Cascade)
   contract      Contract            @relation(fields: [contract_id], references: [id], onDelete: Cascade)
   employee      Employee            @relation(fields: [employee_id], references: [id], onDelete: Cascade)
-  assignment    ContractAssignment? @relation(fields: [assignment_id], references: [id], onDelete: Cascade)
 
   @@map("contract_responses")
 }
@@ -584,76 +571,91 @@ model product_likes {
 }
 
 model OrderMessage {
-  id         Int           @id @default(autoincrement())
-  order_id   Int
-  sender_id  Int
-  message    String
+  id           Int         @id @default(autoincrement())
+  order_id     Int
+  sender_id    Int
+  message      String
   message_type MessageType @default(CUSTOMER_TO_STORE)
-  file_url   String?       // URL del archivo subido (opcional)
-  file_name  String?       // Nombre original del archivo
-  file_size  Int?          // Tamaño del archivo en bytes
-  is_read    Boolean       @default(false)
-  read_at    DateTime?     // Cuándo fue leído
-  created_at DateTime      @default(now())
-  updated_at DateTime      @updatedAt
-  
-  // Relaciones
-  order      Order         @relation(fields: [order_id], references: [id], onDelete: Cascade)
-  sender     User          @relation("OrderMessageSender", fields: [sender_id], references: [id])
+  file_url     String?
+  file_name    String?
+  file_size    Int?
+  is_read      Boolean     @default(false)
+  read_at      DateTime?
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @updatedAt
+  order        Order       @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  sender       User        @relation("OrderMessageSender", fields: [sender_id], references: [id])
 
   @@map("order_messages")
 }
 
 model UserReminder {
-  id          Int                @id @default(autoincrement())
-  user_id     Int
-  title       String
-  description String?
-  due_date    DateTime
-  priority    ReminderPriority   @default(MEDIUM)
-  status      ReminderStatus     @default(PENDING)
-  category    String?            // Categoría personalizable (ej: "trabajo", "personal", "salud")
-  color       String?            // Color para UI (hex code)
-  is_recurring Boolean           @default(false)
-  recurrence_pattern String?     // Patrón de recurrencia (ej: "daily", "weekly", "monthly")
-  recurrence_end_date DateTime?  // Fecha de fin de recurrencia
-  completed_at DateTime?
-  created_at  DateTime           @default(now())
-  updated_at  DateTime           @updatedAt
-  
-  // Relaciones
-  user        User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  id                  Int              @id @default(autoincrement())
+  user_id             Int
+  title               String
+  description         String?
+  due_date            DateTime
+  priority            ReminderPriority @default(MEDIUM)
+  status              ReminderStatus   @default(PENDING)
+  category            String?
+  color               String?
+  is_recurring        Boolean          @default(false)
+  recurrence_pattern  String?
+  recurrence_end_date DateTime?
+  completed_at        DateTime?
+  created_at          DateTime         @default(now())
+  updated_at          DateTime         @updatedAt
+  user                User             @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("user_reminders")
 }
 
 model StoreReminder {
-  id          Int                @id @default(autoincrement())
-  store_id    Int
-  title       String
-  description String?
-  due_date    DateTime
-  priority    ReminderPriority   @default(MEDIUM)
-  status      ReminderStatus     @default(PENDING)
-  category    String?            // Categoría (ej: "inventario", "mantenimiento", "eventos")
-  color       String?            // Color para UI (hex code)
-  is_recurring Boolean           @default(false)
-  recurrence_pattern String?     // Patrón de recurrencia
-  recurrence_end_date DateTime?  // Fecha de fin de recurrencia
-  assigned_to Int?               // employee_id al que se asigna (opcional)
-  created_by  Int                // user_id que creó el recordatorio
-  completed_at DateTime?
-  completed_by Int?              // user_id que completó el recordatorio
-  created_at  DateTime           @default(now())
-  updated_at  DateTime           @updatedAt
-  
-  // Relaciones
-  store       Store              @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  created_by_user User           @relation("StoreReminderCreatedBy", fields: [created_by], references: [id])
-  completed_by_user User?        @relation("StoreReminderCompletedBy", fields: [completed_by], references: [id])
-  assigned_employee Employee?    @relation(fields: [assigned_to], references: [id])
+  id                  Int              @id @default(autoincrement())
+  store_id            Int
+  title               String
+  description         String?
+  due_date            DateTime
+  priority            ReminderPriority @default(MEDIUM)
+  status              ReminderStatus   @default(PENDING)
+  category            String?
+  color               String?
+  is_recurring        Boolean          @default(false)
+  recurrence_pattern  String?
+  recurrence_end_date DateTime?
+  assigned_to         Int?
+  created_by          Int
+  completed_at        DateTime?
+  completed_by        Int?
+  created_at          DateTime         @default(now())
+  updated_at          DateTime         @updatedAt
+  assigned_employee   Employee?        @relation(fields: [assigned_to], references: [id])
+  completed_by_user   User?            @relation("StoreReminderCompletedBy", fields: [completed_by], references: [id])
+  created_by_user     User             @relation("StoreReminderCreatedBy", fields: [created_by], references: [id])
+  store               Store            @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
   @@map("store_reminders")
+}
+
+model email_change_requests {
+  id                     String    @id
+  user_id                Int
+  old_email              String
+  new_email              String
+  old_email_confirmed    Boolean   @default(false)
+  new_email_confirmed    Boolean   @default(false)
+  old_email_confirmed_at DateTime?
+  new_email_confirmed_at DateTime?
+  completed              Boolean   @default(false)
+  completed_at           DateTime?
+  expires_at             DateTime
+  created_at             DateTime  @default(now())
+  updated_at             DateTime
+  users                  User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([completed])
+  @@index([expires_at])
+  @@index([user_id])
 }
 
 enum MessageType {
@@ -826,7 +828,6 @@ enum OrderType {
   CASH_REGISTER
   PUBLIC_STORE
 }
-
 
 enum ShippingMethod {
   PICKUP
