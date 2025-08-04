@@ -2,12 +2,20 @@
 
 import { useState } from "react"
 import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { CalendarClock } from "lucide-react"
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 
 export default function DashboardCalendar() {
 
     const [date, setDate] = useState<Date | undefined>(new Date())
+    const [isReminderOpen, setIsReminderOpen] = useState(false)
+
+
+    const handleReminderOpenChange = () => {
+        setIsReminderOpen(true)
+    }
 
     return (
         <>
@@ -19,16 +27,26 @@ export default function DashboardCalendar() {
                 components={{
                     DayButton: ({ day, modifiers }) => {
                         return (
-                            <Popover>
-                                <PopoverTrigger asChild>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
                                     <Button variant="ghost" className="rounded-full" size="sm">
                                         {day.date.getDate()}
                                     </Button>
-                                </PopoverTrigger>
-                                <PopoverContent>
-                                    Events and reminders coming soon!
-                                </PopoverContent>
-                            </Popover>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                    <Dialog open={isReminderOpen} onOpenChange={setIsReminderOpen}>
+                                        <DialogTrigger asChild>
+                                            <DropdownMenuItem onClick={handleReminderOpenChange}>
+                                                <CalendarClock />
+                                                add reminder
+                                            </DropdownMenuItem>
+                                        </DialogTrigger>
+                                        <DialogContent>
+                                            <DialogTitle>Add reminder</DialogTitle>
+                                        </DialogContent>
+                                    </Dialog>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         )
                     }
                 }}

@@ -6,7 +6,7 @@ import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { getStoreBySubdomain } from "@/features/subdomain/actions/getStoreBySubdomain"
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
-import { OrderStatus } from "@prisma/client"
+import { OrderStatus, PaymentMethod } from "@prisma/client"
 
 
 type insertOrderProps = {
@@ -14,9 +14,9 @@ type insertOrderProps = {
     branch_id: number,
     total_price: number,
     total_quantity: number,
-    shipping_method: "delivery" | "pickup",
+    shipping_method: "DELIVERY" | "PICKUP",
     processed_by_user_id: number,
-    payment_method: string,
+    payment_method: PaymentMethod, 
     cart: CartItemType[],
     isWalkIn: boolean,
     isPaid: boolean,

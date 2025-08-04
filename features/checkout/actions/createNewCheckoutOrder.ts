@@ -3,6 +3,7 @@
 import { actionWrapper } from "@/utils/lib"
 import { insertOrder } from "../data/insertOrder"
 import { CartItemType } from "@/features/cart/types"
+import { PaymentMethod, ShippingMethod } from "@prisma/client"
 
 
 type CreateNewCheckoutOrderFormData = {
@@ -10,10 +11,10 @@ type CreateNewCheckoutOrderFormData = {
     total_price: number
     total_quantity: number
     subdomain: string
-    payment_method: string
+    payment_method: PaymentMethod
     cart: CartItemType[]
     processed_by_user_id: number
-    shipping_method: "delivery" | "pickup"
+    shipping_method: ShippingMethod
     customer_info: {
         name: string
         phone: string
