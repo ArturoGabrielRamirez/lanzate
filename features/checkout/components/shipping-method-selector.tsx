@@ -6,8 +6,7 @@ import { cn } from "@/lib/utils"
 import { MapPin, Truck } from "lucide-react"
 import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
-
-type ShippingMethod = "delivery" | "pickup"
+import { ShippingMethod } from "@prisma/client"
 
 interface ShippingMethodSelectorProps {
     value: ShippingMethod
@@ -43,7 +42,7 @@ export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelect
                     data-type="delivery"
                     className={cn(
                         "h-auto p-4 flex flex-col items-center gap-2 transition-all duration-300",
-                        value === "delivery"
+                        value === "DELIVERY"
                             ? "!border-primary !bg-primary !text-primary-foreground !hover:bg-primary/90"
                             : "hover:bg-muted"
                     )}
@@ -63,7 +62,7 @@ export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelect
                     data-type="pickup"
                     className={cn(
                         "h-auto p-4 flex flex-col items-center gap-2 transition-all duration-300",
-                        value === "pickup"
+                        value === "PICKUP"
                             ? "!border-primary !bg-primary !text-primary-foreground !hover:bg-primary/90"
                             : "hover:bg-muted"
                     )}

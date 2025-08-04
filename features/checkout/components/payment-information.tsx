@@ -6,16 +6,17 @@ import { Label } from "@/components/ui/label"
 import { InputField } from "@/features/layout/components"
 import { CreditCard, Banknote, Smartphone } from "lucide-react"
 import { useFormContext } from "react-hook-form"
+import { PaymentMethod } from "@prisma/client"
 
 interface PaymentInformationProps {
-    paymentMethod: string
-    onChange: (method: string) => void
+    paymentMethod: PaymentMethod
+    onChange: (method: PaymentMethod) => void
 }
 
 export function PaymentInformation({ paymentMethod, onChange }: PaymentInformationProps) {
     const { setValue } = useFormContext()
 
-    const handlePaymentMethodChange = (value: string) => {
+    const handlePaymentMethodChange = (value: PaymentMethod) => {
         onChange(value)
         setValue("paymentMethod", value)
     }
@@ -31,8 +32,8 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
                 <Label htmlFor="paymentMethod" className="text-base font-medium mb-2 block">
                     Select Payment Method
                 </Label>
-                <Select 
-                    value={paymentMethod} 
+                <Select
+                    value={paymentMethod}
                     onValueChange={handlePaymentMethodChange}
                     required
                 >
@@ -63,33 +64,33 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
             </div>
 
             {/* Conditional Payment Fields */}
-            {paymentMethod === "credit-debit" && (
+            {(paymentMethod === "CREDIT_CARD" || paymentMethod === "DEBIT_CARD") && (
                 <div className="space-y-4">
                     <Label className="text-base font-medium block">Card Information</Label>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <InputField 
-                            name="cardNumber" 
-                            label="Card Number" 
+                        <InputField
+                            name="cardNumber"
+                            label="Card Number"
                             placeholder="1234 5678 9012 3456"
                             onChange={(e) => handleCardFieldChange("cardNumber", e.target.value)}
                         />
-                        <InputField 
-                            name="cardHolder" 
-                            label="Cardholder Name" 
+                        <InputField
+                            name="cardHolder"
+                            label="Cardholder Name"
                             placeholder="John Doe"
                             onChange={(e) => handleCardFieldChange("cardHolder", e.target.value)}
                         />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <InputField 
-                            name="expiryDate" 
-                            label="Expiry Date" 
+                        <InputField
+                            name="expiryDate"
+                            label="Expiry Date"
                             placeholder="MM/YY"
                             onChange={(e) => handleCardFieldChange("expiryDate", e.target.value)}
                         />
-                        <InputField 
-                            name="cvv" 
-                            label="CVV" 
+                        <InputField
+                            name="cvv"
+                            label="CVV"
                             placeholder="123"
                             onChange={(e) => handleCardFieldChange("cvv", e.target.value)}
                         />
@@ -97,7 +98,7 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
                 </div>
             )}
 
-            {paymentMethod === "transfer" && (
+            {paymentMethod === "TRANSFER" && (
                 <Card className="border-blue-200 bg-blue-50">
                     <CardContent className="pt-6">
                         <div className="flex items-start gap-3">
@@ -107,7 +108,7 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
                                 <p className="text-sm text-accent"><strong>CVU:</strong> 0000003100061234567890</p>
                                 <p className="text-sm text-accent"><strong>Alias:</strong> MI.TIENDA.ONLINE</p>
                                 <p className="text-sm text-blue-700 mt-2">
-                                    Please include your order number in the transfer description. 
+                                    Please include your order number in the transfer description.
                                     Your order will be confirmed once the payment is received.
                                 </p>
                             </div>
@@ -116,7 +117,7 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
                 </Card>
             )}
 
-            {paymentMethod === "mercadopago" && (
+            {paymentMethod === "MERCADO_PAGO" && (
                 <Card className="border-orange-200 bg-orange-50">
                     <CardContent className="pt-6">
                         <div className="flex items-start gap-3">
@@ -124,8 +125,8 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
                             <div className="space-y-2">
                                 <p className="font-medium text-orange-900">Mercado Pago Payment</p>
                                 <p className="text-sm text-orange-700 max-w-xl">
-                                    When you click "Confirm Order", you will be redirected to Mercado Pago 
-                                    to complete your payment securely. After payment, you will be brought 
+                                    When you click "Confirm Order", you will be redirected to Mercado Pago
+                                    to complete your payment securely. After payment, you will be brought
                                     back to our site with your order confirmation.
                                 </p>
                             </div>

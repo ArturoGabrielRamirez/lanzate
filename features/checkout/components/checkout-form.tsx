@@ -6,7 +6,7 @@ import { useState } from "react"
 import { deliveryOrderSchema, pickupOrderSchema } from "../schemas/order-schema"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { createNewCheckoutOrder } from "../actions/createNewCheckoutOrder"
-import { Branch } from "@prisma/client"
+import { Branch, PaymentMethod, ShippingMethod } from "@prisma/client"
 import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem } from "@/components/expansion/interactive-stepper"
 import { ShippingMethodSelector } from "./shipping-method-selector"
 import { BranchSelector } from "./branch-selector"
@@ -18,9 +18,9 @@ import { useCart } from "@/features/cart/components/cart-provider"
 
 function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, userId: string, branches: Branch[] }) {
 
-    const [shippingMethod, setShippingMethod] = useState<"delivery" | "pickup">("delivery")
+    const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("DELIVERY")
     const [selectedBranchId, setSelectedBranchId] = useState<number | null>(null)
-    const [paymentMethod, setPaymentMethod] = useState<string>("")
+    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("CASH")
     const { quantity, total, cart } = useCart()
 
     const handleSubmit = async (formData: any) => {
@@ -55,7 +55,7 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
             className="grow"
             contentButton="Continue"
             formAction={handleSubmit}
-            resolver={yupResolver(shippingMethod === "delivery" ? deliveryOrderSchema : pickupOrderSchema)}
+            resolver={yupResolver(shippingMethod === "DELIVERY" ? deliveryOrderSchema : pickupOrderSchema)}
         >
             <InteractiveStepper defaultValue={1} className="grow">
                 <InteractiveStepperItem>
@@ -114,7 +114,7 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
                                 onChange={setSelectedBranchId}
                             />
 
-                            {shippingMethod === "delivery" && (
+                            {shippingMethod === "DELIVERY" && (
                                 <div className="space-y-4">
                                     <Label className="text-base font-medium block">Delivery Address</Label>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
