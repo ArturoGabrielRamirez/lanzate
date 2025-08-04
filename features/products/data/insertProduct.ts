@@ -74,7 +74,7 @@ export async function insertProduct(payload: any, storeId: number, userId: numbe
                     },
                     categories: {
                         connect: [
-                            ...payload.categories.map((category: any) => ({ id: category.value }))
+                            ...payload.categories.map((category: any) => ({ id: Number(category.value) }))
                         ]
                     },
                     owner_id: userId,
