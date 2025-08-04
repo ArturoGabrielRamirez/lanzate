@@ -48,7 +48,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
     // Función de búsqueda para MultipleSelector
     const handleSearch = async (searchTerm: string) => {
         if (!storeId) return []
-        
+
         setIsLoading(true)
         try {
             const { payload, error } = await searchCategories(storeId, searchTerm)
@@ -56,7 +56,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
                 console.error('Error searching categories:', error)
                 return []
             }
-            
+
             return payload.map((cat: any) => ({
                 label: cat.name,
                 value: cat.id.toString()
@@ -74,13 +74,13 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
         if (!storeId) return
 
         const newCategories = []
-        
+
         for (const option of selectedOptions) {
             // Verificar si es una categoría nueva (no existe en las categorías originales)
-            const isNewCategory = !categories.some(cat => 
+            const isNewCategory = !categories.some(cat =>
                 cat.value.toString() === option.value || cat.label.toLowerCase() === option.label.toLowerCase()
             )
-            
+
             if (isNewCategory) {
                 try {
                     // Crear la nueva categoría
@@ -89,21 +89,21 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
                         console.error('Error creating category:', error)
                         continue
                     }
-                    
+
                     // Agregar la nueva categoría al estado local
                     const newCategory = { label: payload.name, value: payload.id }
                     setCategories(prev => [...prev, newCategory])
-                    
+
                     // Actualizar el valor de la opción con el ID real
                     option.value = payload.id.toString()
-                    
+
                     console.log('Nueva categoría creada:', payload)
                 } catch (error) {
                     console.error('Error creating category:', error)
                 }
             }
         }
-        
+
         // Llamar al onChange original con las opciones actualizadas
         if (onChange && typeof onChange === "function") {
             onChange(selectedOptions)

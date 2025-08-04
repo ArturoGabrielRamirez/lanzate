@@ -44,6 +44,10 @@ export async function createCategoryDynamic(storeId: number, categoryName: strin
         revalidatePath(`/stores/${storeId}/categories`)
         revalidatePath(`/stores/${storeId}`)
 
-        return category
+        return {
+            payload: category,
+            error: null,
+            message: "Categoría creada exitosamente"
+        }
     })
 } 
