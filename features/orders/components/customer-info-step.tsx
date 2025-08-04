@@ -1,11 +1,13 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { User, Mail, Phone, MapPin, MessageCircle } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { User, Mail, Phone, MapPin, MessageCircle, Check } from "lucide-react"
 
 type Order = {
     id: number
     shipping_method: "PICKUP" | "DELIVERY"
+    status: "PENDING" | "PROCESSING" | "READY" | "SHIPPED" | "DELIVERED" | "CANCELLED" | "COMPLETED"
     customer_name: string | null
     customer_email: string | null
     customer_phone: string | null
@@ -41,6 +43,7 @@ type Props = {
 
 function CustomerInfoStep({ order }: Props) {
     const isPickup = order.shipping_method === "PICKUP"
+    const isCompleted = order.status === "COMPLETED"
 
     const handleWhatsAppClick = () => {
         if (order.customer_phone) {
@@ -65,26 +68,48 @@ function CustomerInfoStep({ order }: Props) {
             order.zip_code,
             order.country
         ].filter(Boolean)
-        
+
         return parts.join(', ')
     }
 
     return (
         <div className="space-y-6">
+            {/* Success Message for Completed Orders */}
+            {isCompleted && (
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-8">
+                    <div className="flex items-center gap-3 flex-col">
+                        <div className="flex-shrink-0 rounded-full border border-green-600  p-2">
+                            <Check className="w-6 h-6 text-green-600" />
+                        </div>
+                        <div>
+                            <h3 className="text-green-800 font-medium">
+                                Order Successfully Completed!
+                            </h3>
+                            <p className="text-green-700 text-sm mt-1">
+                                {isPickup
+                                    ? "The customer has picked up their order successfully."
+                                    : "The order has been delivered to the customer successfully."
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div>
                 <h3 className="text-lg font-semibold mb-4">Customer Information</h3>
-                
+
                 <div className="space-y-4">
                     <div className="flex items-center gap-2">
                         <User className="size-4 text-muted-foreground" />
                         <span className="font-medium">{order.customer_name || 'No name provided'}</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-2">
                         <Mail className="size-4 text-muted-foreground" />
                         <span className="text-muted-foreground">{order.customer_email || "No email provided"}</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-2">
                         <Phone className="size-4 text-muted-foreground" />
                         <span className="text-muted-foreground">{order.customer_phone || "No phone provided"}</span>
@@ -117,26 +142,32 @@ function CustomerInfoStep({ order }: Props) {
                 <div className="space-y-3">
                     <h4 className="font-medium">Contact Customer</h4>
                     <div className="space-y-2">
-                        {order.customer_phone && (
-                            <Button 
+                        <div className={cn(
+                            !order.customer_phone && "opacity-50 cursor-not-allowed"
+                        )}>
+                            <Button
                                 onClick={handleWhatsAppClick}
-                                className="w-full"
+                                className={cn("w-full")}
                                 variant="outline"
+                                disabled={!order.customer_phone}
                             >
                                 <MessageCircle className="w-4 h-4 mr-2" />
                                 Send WhatsApp Message
                             </Button>
-                        )}
-                        {order.customer_email && (
-                            <Button 
+                        </div>
+                        <div className={cn(
+                            !order.customer_email && "opacity-50 cursor-not-allowed"
+                        )}>
+                            <Button
                                 onClick={handleEmailClick}
-                                className="w-full"
+                                className={cn("w-full")}
                                 variant="outline"
+                                disabled={!order.customer_email}
                             >
                                 <Mail className="w-4 h-4 mr-2" />
                                 Send Email (Coming Soon)
                             </Button>
-                        )}
+                        </div>
                     </div>
                 </div>
             ) : (
