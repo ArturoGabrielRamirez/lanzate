@@ -1,4 +1,6 @@
 import { Title } from "@/features/layout/components"
+import { MyOrdersContainer, OrdersSkeleton } from "@/features/store-orders/components"
+import { Suspense } from "react"
 
 async function MyOrdersPage() {
     return (
@@ -11,7 +13,14 @@ async function MyOrdersPage() {
                 ]}
                 homePath={`/`}
             />
+            
+            <div className="mt-6">
+                <Suspense fallback={<OrdersSkeleton />}>
+                    <MyOrdersContainer />
+                </Suspense>
+            </div>
         </section>
     )
 }
+
 export default MyOrdersPage
