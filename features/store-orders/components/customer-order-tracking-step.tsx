@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { Order } from "@prisma/client"
 import { CheckCircle, Clock, Package, Truck, MapPin, AlertCircle, Check } from "lucide-react"

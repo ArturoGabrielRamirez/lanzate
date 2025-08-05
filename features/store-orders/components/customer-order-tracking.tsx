@@ -3,11 +3,11 @@
 import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem, InteractiveStepperSeparator } from "@/components/expansion/interactive-stepper"
 import { Order } from "@prisma/client"
 import { Package, CheckCircle, Truck } from "lucide-react"
+import DynamicStepperTrigger from "@/features/orders/components/dynamic-stepper-trigger"
+import { StepNavigation } from "@/features/checkout/components/step-navigation"
 import CustomerOrderDetailsStep from "./customer-order-details-step"
 import CustomerOrderConfirmationStep from "./customer-order-confirmation-step"
 import CustomerOrderTrackingStep from "./customer-order-tracking-step"
-import DynamicStepperTrigger from "@/features/orders/components/dynamic-stepper-trigger"
-import { StepNavigation } from "@/features/checkout/components/step-navigation"
 
 type OrderItemWithProduct = {
     id: number
@@ -28,6 +28,7 @@ type Props = {
         }
         branch: {
             name: string
+            address: string
         }
         tracking?: {
             tracking_status: string
