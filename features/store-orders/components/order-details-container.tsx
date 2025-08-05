@@ -6,6 +6,7 @@ import { Calendar, MapPin, Store as StoreIcon, Package } from "lucide-react"
 import OrderItemComponent from "./order-item"
 import { OrderItem, Product } from "@prisma/client"
 import { notFound } from "next/navigation"
+import CustomerOrderTracking from "./customer-order-tracking"
 
 type Props = {
     orderId: string
@@ -65,55 +66,7 @@ async function OrderDetailsContainer({ orderId }: Props) {
 
     return (
         <div className="space-y-6">
-
-            <Card className="w-full">
-                <CardHeader>
-                    <div className="flex items-center justify-between">
-                        <CardTitle className="text-xl">Order #{order.id}</CardTitle>
-                        <Badge className={getStatusColor(order.status)}>
-                            {order.status}
-                        </Badge>
-                    </div>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
-                            {formatDate(order.created_at)}
-                        </div>
-                        <div className="flex items-center gap-1">
-                            <StoreIcon className="w-4 h-4" />
-                            {order.store.name}
-                        </div>
-                        <div className="flex items-center gap-1">
-                            <MapPin className="w-4 h-4" />
-                            {order.branch.name}
-                        </div>
-                    </div>
-                </CardHeader>
-                <CardContent>
-                    <div className="space-y-4">
-                        <div className="space-y-3">
-                            <h4 className="font-medium text-lg">Order Items</h4>
-                            {order.items.map((item: OrderItem & { product: Product }) => (
-                                <OrderItemComponent key={item.id} item={item} />
-                            ))}
-                        </div>
-                        <div className="pt-4 border-t border-muted">
-                            <div className="flex justify-between items-center">
-                                <span className="font-medium">Total:</span>
-                                <span className="font-bold text-xl">
-                                    ${order.total_price.toFixed(2)}
-                                </span>
-                            </div>
-                            <div className="flex justify-between items-center text-sm text-muted-foreground mt-2">
-                                <span>Items: {order.total_quantity}</span>
-                                <span>
-                                    {order.is_paid ? 'Paid' : 'Pending Payment'}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </CardContent>
-            </Card>
+            <CustomerOrderTracking order={order} />
         </div>
     )
 }
