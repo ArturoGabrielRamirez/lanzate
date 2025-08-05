@@ -11,32 +11,31 @@ datasource db {
 }
 
 model User {
-  id                                                  Int                  @id @default(autoincrement())
-  email                                               String               @unique
+  id                                                  Int                     @id @default(autoincrement())
+  email                                               String                  @unique
   avatar                                              String?
-  created_at                                          DateTime             @default(now())
+  created_at                                          DateTime                @default(now())
   first_name                                          String?
   last_name                                           String?
   password                                            String
-  updated_at                                          DateTime             @updatedAt
+  updated_at                                          DateTime                @updatedAt
   Account                                             Account[]
   ActionLog                                           ActionLog[]
-  contracts_assigned                                  ContractAssignment[] @relation("ContractAssignedBy")
-  contracts_created                                   Contract[]           @relation("ContractCreatedBy")
+  contracts_assigned                                  ContractAssignment[]    @relation("ContractAssignedBy")
+  contracts_created                                   Contract[]              @relation("ContractCreatedBy")
+  email_change_requests                               email_change_requests[]
   Employee                                            Employee[]
   Notification                                        Notification[]
   order_messages                                      order_messages[]
-  orders_as_customer                                  Order[]              @relation("OrderCustomer")
-  orders_processed                                    Order[]              @relation("OrderProcessedBy")
+  orders_as_customer                                  Order[]                 @relation("OrderCustomer")
+  orders_processed                                    Order[]                 @relation("OrderProcessedBy")
   product_comments                                    product_comments[]
   product_likes                                       product_likes[]
   Product                                             Product[]
-  store_reminders_store_reminders_completed_byTousers store_reminders[]    @relation("store_reminders_completed_byTousers")
-  store_reminders_store_reminders_created_byTousers   store_reminders[]    @relation("store_reminders_created_byTousers")
+  store_reminders_store_reminders_completed_byTousers store_reminders[]       @relation("store_reminders_completed_byTousers")
+  store_reminders_store_reminders_created_byTousers   store_reminders[]       @relation("store_reminders_created_byTousers")
   Store                                               Store[]
   user_reminders                                      user_reminders[]
-
-  email_change_requests email_change_requests[]
 
   @@map("users")
 }
@@ -202,6 +201,7 @@ model Order {
   items                OrderItem[]
   order_messages       order_messages[]
   payment              OrderPayment?
+  order_tracking       order_tracking?
   branch               Branch           @relation(fields: [branch_id], references: [id])
   customer             User?            @relation("OrderCustomer", fields: [customer_id], references: [id])
   processed_by         User?            @relation("OrderProcessedBy", fields: [processed_by_user_id], references: [id])
@@ -631,26 +631,33 @@ model user_reminders {
 }
 
 model email_change_requests {
-  id                    String    @id @default(cuid())
-  user_id                Int    
-  old_email              String    @map("old_email")
-  new_email              String    @map("new_email")
-  old_email_confirmed     Boolean   @default(false) @map("old_email_confirmed")
-  new_email_confirmed     Boolean   @default(false) @map("new_email_confirmed")
-  old_email_confirmed_at   DateTime? @map("old_email_confirmed_at")
-  new_email_confirmed_at   DateTime? @map("new_email_confirmed_at")
-  completed             Boolean   @default(false)
-  completed_at           DateTime? @map("completed_at")
-  expires_at             DateTime  @map("expires_at")
-  created_at             DateTime  @default(now()) @map("created_at")
-  updated_at             DateTime  @updatedAt @map("updated_at")
-  
-  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  id                     String    @id
+  user_id                Int
+  old_email              String
+  new_email              String
+  old_email_confirmed    Boolean   @default(false)
+  new_email_confirmed    Boolean   @default(false)
+  old_email_confirmed_at DateTime?
+  new_email_confirmed_at DateTime?
+  completed              Boolean   @default(false)
+  completed_at           DateTime?
+  expires_at             DateTime
+  created_at             DateTime  @default(now())
+  updated_at             DateTime
+  users                  User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  @@map("email_change_requests")
-  @@index([user_id])
   @@index([completed])
   @@index([expires_at])
+  @@index([user_id])
+}
+
+model order_tracking {
+  id              Int                 @id @default(autoincrement())
+  order_id        Int                 @unique
+  tracking_status OrderTrackingStatus @default(PREPARING_ORDER)
+  created_at      DateTime            @default(now())
+  updated_at      DateTime
+  orders          Order               @relation(fields: [order_id], references: [id], onDelete: Cascade)
 }
 
 enum AccountType {
@@ -840,4 +847,14 @@ enum ReminderStatus {
 enum ShippingMethod {
   PICKUP
   DELIVERY
+}
+
+enum OrderTrackingStatus {
+  PREPARING_ORDER
+  WAITING_FOR_PICKUP
+  PICKED_UP
+  WAITING_FOR_DELIVERY
+  ON_THE_WAY
+  DELIVERED
+  CANCELLED
 }

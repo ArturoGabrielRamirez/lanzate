@@ -10,10 +10,11 @@ interface EmailChangeStatus {
     newEmail: string | null;
     currentEmail: string;
     loading: boolean;
-    processCompleted?: boolean;
-    emailConfirmed?: boolean;
-    emailConfirmedAt?: string | null;
-    confirmedAt?: string | null;
+    processCompleted: boolean;
+    requestId?: string;
+    expiresAt?: Date;
+    oldEmailConfirmedAt?: Date | null;
+    newEmailConfirmedAt?: Date | null;
 }
 
 export function useEmailChangeStatus() {
@@ -29,6 +30,7 @@ export function useEmailChangeStatus() {
 
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const mountedRef = useRef(true);
+    const lastUpdateRef = useRef<string>('');
 
     const checkStatus = async () => {
         try {
@@ -44,16 +46,40 @@ export function useEmailChangeStatus() {
                     currentEmail: result.data.currentEmail || '',
                     loading: false,
                     processCompleted: result.data.processCompleted || false,
+                    requestId: result.data.requestId,
+                    expiresAt: result.data.expiresAt ? new Date(result.data.expiresAt) : undefined,
+                    oldEmailConfirmedAt: result.data.oldEmailConfirmedAt ? new Date(result.data.oldEmailConfirmedAt) : null,
+                    newEmailConfirmedAt: result.data.newEmailConfirmedAt ? new Date(result.data.newEmailConfirmedAt) : null,
                 };
                 
-                console.log('📊 useEmailChangeStatus: New status:', newStatus);
-                console.log('🔍 Should start polling?', {
-                    hasEmailChange: newStatus.hasEmailChange,
-                    processCompleted: newStatus.processCompleted,
-                    loading: newStatus.loading
-                });
+                // Crear hash para detectar cambios reales
+                const statusHash = `${newStatus.hasEmailChange}-${newStatus.oldEmailConfirmed}-${newStatus.newEmailConfirmed}-${newStatus.processCompleted}`;
                 
-                setStatus(newStatus);
+                if (statusHash !== lastUpdateRef.current) {
+                    console.log('📊 useEmailChangeStatus: Status changed:', {
+                        previous: lastUpdateRef.current,
+                        current: statusHash,
+                        newStatus
+                    });
+                    
+                    setStatus(newStatus);
+                    lastUpdateRef.current = statusHash;
+                    
+                    // Si el proceso se completó, limpiar polling después de un breve delay
+                    if (newStatus.processCompleted && !newStatus.hasEmailChange) {
+                        console.log('✅ Process completed, will stop polling in 5 seconds');
+                        setTimeout(() => {
+                            if (intervalRef.current) {
+                                clearInterval(intervalRef.current);
+                                intervalRef.current = null;
+                                console.log('🛑 Polling stopped due to completion');
+                            }
+                        }, 5000);
+                    }
+                } else {
+                    console.log('⏸️ No status changes detected');
+                    setStatus(prev => ({ ...prev, loading: false }));
+                }
             } else if (mountedRef.current) {
                 console.error('❌ useEmailChangeStatus: Error getting status:', result.error);
                 setStatus(prev => ({ ...prev, loading: false }));
@@ -78,8 +104,8 @@ export function useEmailChangeStatus() {
     // Función para iniciar el polling
     const startPolling = () => {
         clearPolling(); // Limpiar cualquier interval existente
-        console.log('⏰ useEmailChangeStatus: Starting polling every 5 seconds');
-        intervalRef.current = setInterval(checkStatus, 5000);
+        console.log('⏰ useEmailChangeStatus: Starting polling every 3 seconds');
+        intervalRef.current = setInterval(checkStatus, 3000); // Más frecuente para mejor UX
     };
 
     // Effect inicial - solo para la primera carga
@@ -97,7 +123,7 @@ export function useEmailChangeStatus() {
 
     // Effect para manejar el polling basado en el estado
     useEffect(() => {
-        console.log('🔄 useEmailChangeStatus: Status changed, evaluating polling need...', {
+        console.log('🔄 useEmailChangeStatus: Evaluating polling need...', {
             hasEmailChange: status.hasEmailChange,
             processCompleted: status.processCompleted,
             loading: status.loading,
@@ -111,7 +137,7 @@ export function useEmailChangeStatus() {
         // Condiciones para iniciar polling:
         // 1. Hay un cambio de email pendiente
         // 2. El proceso no está completado
-        // 3. No estamos en estado de loading
+        // 3. No estamos en estado de loading inicial
         const shouldPoll = status.hasEmailChange && 
                           !status.processCompleted && 
                           !status.loading;
@@ -121,29 +147,42 @@ export function useEmailChangeStatus() {
         if (shouldPoll) {
             startPolling();
         } else {
-            console.log('⏹️ Not polling because:', {
-                noEmailChange: !status.hasEmailChange,
-                processCompleted: status.processCompleted,
-                loading: status.loading
-            });
+            const reasons = [];
+            if (!status.hasEmailChange) reasons.push('no email change');
+            if (status.processCompleted) reasons.push('process completed');
+            if (status.loading) reasons.push('still loading');
+            
+            console.log('⏹️ Not polling because:', reasons.join(', '));
         }
 
-        // Cleanup cuando el effect se ejecute de nuevo
         return clearPolling;
     }, [status.hasEmailChange, status.processCompleted, status.loading]);
 
-    // Effect adicional para detectar cuando se completa el proceso
-    useEffect(() => {
-        if (status.hasEmailChange && status.processCompleted) {
-            console.log('✅ useEmailChangeStatus: Process completed, stopping polling');
-            clearPolling();
+    // Función para obtener el progreso actual
+    const getProgress = () => {
+        if (!status.hasEmailChange || status.processCompleted) {
+            return { step: 'completed', percentage: 100, message: 'Completado' };
         }
-    }, [status.hasEmailChange, status.processCompleted]);
+        
+        if (status.oldEmailConfirmed && status.newEmailConfirmed) {
+            return { step: 'completed', percentage: 100, message: 'Completado' };
+        }
+        
+        if (status.oldEmailConfirmed && !status.newEmailConfirmed) {
+            return { step: 'step2', percentage: 75, message: 'Confirma tu nuevo email' };
+        }
+        
+        return { step: 'step1', percentage: 25, message: 'Confirma tu email actual' };
+    };
 
     return { 
         status, 
         refreshStatus: checkStatus,
-        // Funciones de utilidad para debugging
+        progress: getProgress(),
+        // Funciones de utilidad
+        isExpired: status.expiresAt ? new Date() > status.expiresAt : false,
+        timeRemaining: status.expiresAt ? Math.max(0, status.expiresAt.getTime() - Date.now()) : 0,
+        // Funciones de debugging
         startManualPolling: startPolling,
         stopManualPolling: clearPolling
     };

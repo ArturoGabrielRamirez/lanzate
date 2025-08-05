@@ -51,7 +51,7 @@ export default function EmailChangeMonitor({
                 };
                 
                 // Crear un string para comparar cambios
-                const statusString = `${newStatus.hasEmailChange}-${newStatus.oldEmailConfirmed}-${newStatus.newEmailConfirmed}`;
+                const statusString = `${newStatus.hasEmailChange}-${newStatus.oldEmailConfirmed}-${newStatus.newEmailConfirmed}-${newStatus.processCompleted}`;
                 
                 console.log('📊 Status check result:', {
                     attempt: checkCount + 1,
