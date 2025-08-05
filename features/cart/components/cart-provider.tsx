@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState } from "react"
-import { CartContextType, CartItemType } from "../types"
+import { CartContextType, CartItemType } from "@/features/cart/types"
 
 const CartContext = createContext<CartContextType>({
     cart: [],

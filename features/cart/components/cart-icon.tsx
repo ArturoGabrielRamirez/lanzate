@@ -4,8 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart } from "lucide-react"
 import Link from "next/link"
-import { useCart } from "./cart-provider"
-
+import { useCart } from "@/features/cart/components"
 
 function CartIcon() {
 

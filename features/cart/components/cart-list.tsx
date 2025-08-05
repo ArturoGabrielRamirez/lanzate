@@ -1,9 +1,8 @@
 "use client"
 
-import { useCart } from "./cart-provider"
+import { useCart, CartItem } from "@/features/cart/components"
 import { Button } from "@/components/ui/button"
 import { Trash2, ShoppingBag } from "lucide-react"
-import CartItem from "./cart-item"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 

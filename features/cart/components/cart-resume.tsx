@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useCart } from "./cart-provider"
+import { useCart } from "@/features/cart/components"
 import { useTranslations } from "next-intl"
 
 function CartResume() {
