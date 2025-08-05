@@ -639,7 +639,7 @@ model StoreReminder {
 }
 
 model email_change_requests {
-  id                     String    @id
+  id                     Int    @id @default(autoincrement())
   user_id                Int
   old_email              String
   new_email              String
