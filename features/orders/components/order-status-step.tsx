@@ -1,14 +1,11 @@
 "use client"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-import { Save, Truck, Store } from "lucide-react"
+import { CheckCircle, AlertCircle } from "lucide-react"
 import { useState, useTransition } from "react"
-import { updateOrderStatusAction } from "../actions/updateOrderStatusAction"
-import { updateOrderShippingMethodAction } from "../actions/updateOrderShippingMethodAction"
+import { confirmOrderAction } from "../actions/confirmOrderAction"
 import { toast } from "sonner"
 import { OrderStatus } from "@prisma/client"
-import { usePathname } from "next/navigation"
 
 type Order = {
     id: number
@@ -21,159 +18,75 @@ type Props = {
 }
 
 function OrderStatusStep({ order }: Props) {
-    const [selectedStatus, setSelectedStatus] = useState(order.status)
-    const [selectedShippingMethod, setSelectedShippingMethod] = useState(order.shipping_method)
     const [isPending, startTransition] = useTransition()
-    const [isShippingPending, startShippingTransition] = useTransition()
-    const pathname = usePathname()
 
-    // Define status options based on order type
-    const statusOptions = selectedShippingMethod === "PICKUP"
-        ? [
-            { value: "PROCESSING", label: "Processing" },
-            { value: "READY", label: "Ready" },
-            { value: "CANCELLED", label: "Cancelled" }
-          ]
-        : [
-            { value: "PROCESSING", label: "Processing" },
-            { value: "READY", label: "Ready" },
-            { value: "DELIVERED", label: "Delivered" },
-            { value: "CANCELLED", label: "Cancelled" }
-          ]
-
-    const shippingMethodOptions = [
-        { value: "PICKUP", label: "Pickup", icon: Store },
-        { value: "DELIVERY", label: "Delivery", icon: Truck }
-    ]
-
-    const handleStatusChange = (value: string) => {
-        setSelectedStatus(value as OrderStatus)
-    }
-
-    const handleShippingMethodChange = (value: string) => {
-        setSelectedShippingMethod(value as "PICKUP" | "DELIVERY")
-    }
-
-    const handleSaveStatus = () => {
-        if (selectedStatus === order.status) {
-            toast.info("Status is already the same")
-            return
-        }
-
+    const handleConfirmOrder = () => {
         startTransition(async () => {
             try {
-                const result = await updateOrderStatusAction({
-                    orderId: order.id.toString(),
-                    newStatus: selectedStatus
+                const result = await confirmOrderAction({
+                    orderId: order.id.toString()
                 })
 
                 if (result.error) {
                     toast.error(result.message)
                 } else {
-                    toast.success("Order status updated successfully")
+                    toast.success("Order confirmed successfully! The customer has been notified.")
                     window.location.reload()
                 }
             } catch (error) {
-                console.error("Error updating order status:", error)
-                toast.error("Failed to update order status")
+                console.error("Error confirming order:", error)
+                toast.error("Failed to confirm order")
             }
         })
     }
 
-    const handleSaveShippingMethod = () => {
-        if (selectedShippingMethod === order.shipping_method) {
-            toast.info("Shipping method is already the same")
-            return
-        }
-
-        startShippingTransition(async () => {
-            try {
-                const result = await updateOrderShippingMethodAction({
-                    orderId: order.id.toString(),
-                    newShippingMethod: selectedShippingMethod,
-                    pathname
-                })
-
-                if (result.error) {
-                    toast.error(result.message)
-                } else {
-                    toast.success("Order shipping method updated successfully")
-                    window.location.reload()
-                }
-            } catch (error) {
-                console.error("Error updating order shipping method:", error)
-                toast.error("Failed to update order shipping method")
-            }
-        })
-    }
+    const isOrderReady = order.status === "READY"
 
     return (
         <div className="grow flex flex-col justify-center">
-            <div>
-                <h3 className="text-lg font-semibold mb-2">Update Order Status</h3>
+            <div className="mb-6">
+                <h3 className="text-lg font-semibold mb-2">Confirm Order</h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                    Change the current status and shipping method of this order
+                    Review all order information before confirming
                 </p>
             </div>
             
-            <div className="grid grid-cols-2 gap-4">
-                {/* Shipping Method Section */}
-                <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium">Shipping Method</label>
-                    <Select value={selectedShippingMethod} onValueChange={handleShippingMethodChange}>
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select shipping method" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {shippingMethodOptions.map((option) => {
-                                const IconComponent = option.icon
-                                return (
-                                    <SelectItem key={option.value} value={option.value}>
-                                        <div className="flex items-center gap-2">
-                                            <IconComponent className="w-4 h-4" />
-                                            {option.label}
-                                        </div>
-                                    </SelectItem>
-                                )
-                            })}
-                        </SelectContent>
-                    </Select>
-                    <Button 
-                        onClick={handleSaveShippingMethod}
-                        disabled={isShippingPending || selectedShippingMethod === order.shipping_method}
-                        variant="outline"
-                        className="self-end"
-                    >
-                        <Truck className="w-4 h-4 mr-2" />
-                        {isShippingPending ? "Saving..." : "Save Method"}
-                    </Button>
-                </div>
-
-                {/* Order Status Section */}
-                <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium">Order Status</label>
-                    <Select value={selectedStatus} onValueChange={handleStatusChange}>
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {statusOptions.map((option) => (
-                                <SelectItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                    <Button 
-                        onClick={handleSaveStatus}
-                        disabled={isPending || selectedStatus === order.status}
-                        className="self-end"
-                    >
-                        <Save className="w-4 h-4 mr-2" />
-                        {isPending ? "Saving..." : "Save Status"}
-                    </Button>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                <div className="flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                    <div className="text-sm text-blue-800">
+                        <p className="font-medium mb-2">Important Information:</p>
+                        <ul className="space-y-1 text-blue-700">
+                            <li>• Please review all order details carefully before confirming</li>
+                            <li>• Once confirmed, the customer will be notified that their order is ready</li>
+                            <li>• For <strong>pickup orders</strong>: Customer will be informed their order is ready for pickup</li>
+                            <li>• For <strong>delivery orders</strong>: Customer will be informed their order is ready for delivery</li>
+                            <li>• Any changes to the order can still be made after confirmation</li>
+                            <li>• Order tracking will be automatically created for customer updates</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+
+            <div className="flex justify-center">
+                <Button 
+                    onClick={handleConfirmOrder}
+                    disabled={isPending || isOrderReady}
+                    size="lg"
+                    className="min-w-[200px]"
+                >
+                    <CheckCircle className="w-5 h-5 mr-2" />
+                    {isPending ? "Confirming..." : isOrderReady ? "Order Already Confirmed" : "Confirm Order"}
+                </Button>
+            </div>
+
+            {isOrderReady && (
+                <div className="mt-4 text-center">
+                    <p className="text-sm text-green-600 font-medium">
+                        ✓ This order has already been confirmed and the customer has been notified
+                    </p>
+                </div>
+            )}
         </div>
     )
 }
