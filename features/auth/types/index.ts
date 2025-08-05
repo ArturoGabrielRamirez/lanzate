@@ -4,3 +4,4 @@ export type HandleLoginAction = {
 }
 
 export type { FacebookLogoProps } from "./facebook-logo";
+export type { GoogleLogoProps } from "./google-logo";
