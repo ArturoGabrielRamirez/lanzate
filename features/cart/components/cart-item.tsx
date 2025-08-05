@@ -1,9 +1,9 @@
 "use client"
 
-import { useCart } from "./cart-provider"
+import { useCart } from "@/features/cart/components"
 import { Button } from "@/components/ui/button"
 import { Trash2 } from "lucide-react"
-import { CartItemType } from "../types"
+import { CartItemType } from "@/features/cart/types"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
 type CartItemProps = {

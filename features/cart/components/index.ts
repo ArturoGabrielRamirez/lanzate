@@ -1,1 +1,5 @@
 export { default as CartResume } from "./cart-resume"
+export { default as CartIcon } from "./cart-icon"
+export { default as CartItem } from "./cart-item"
+export { default as CartList } from "./cart-list"
+export { default as CartProvider, useCart } from "./cart-provider"

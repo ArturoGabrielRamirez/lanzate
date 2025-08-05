@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/drawer"
 import { ThemeToggle, NotificationsIcon } from "@/features/header/components"
 import { Button } from "@/components/ui/button"
-import { signOut } from "@/features/auth/actions/handle-sign-out"
+import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
 
 
 type MobileMenuProps = {
@@ -24,7 +24,7 @@ function MobileMenu({ user }: MobileMenuProps) {
     const [open, setOpen] = useState(false)
 
     const handleSignOut = async () => {
-        await signOut()
+        await handleSignOutAction()
         setOpen(false)
     }
 
@@ -91,7 +91,7 @@ function MobileMenu({ user }: MobileMenuProps) {
                     )}
 
                     {user && (
-                        <Button 
+                        <Button
                             onClick={handleSignOut}
                             className="justify-start w-full p-3 transition-colors rounded-md hover:bg-accent"
                             variant="ghost"

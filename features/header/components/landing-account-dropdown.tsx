@@ -1,0 +1,52 @@
+"use client"
+
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { User } from "lucide-react"
+import { useState } from "react"
+import Link from "next/link"
+import { handleSignOut as handleSignOutAction } from "@/features/auth/actions/handleSignOut"
+
+function LandingAccountDropdown() {
+    const [open, setOpen] = useState(false)
+
+    const handleClick = () => {
+        setOpen(!open)
+    }
+
+    const handleSignOut = async () => {
+        await handleSignOutAction()
+    }
+
+    return (
+        <DropdownMenu open={open} onOpenChange={setOpen}>
+            <DropdownMenuTrigger asChild>
+                <Button size="icon" variant={"outline"} onClick={handleClick}>
+                    <User />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="bottom" align="end">
+                <DropdownMenuItem onClick={handleClick}>
+                    <Link href="/account">Account</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleClick}>
+                    <Link href="/cart">Cart</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleClick}>
+                    <Link href="/my-orders">My Orders</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                    <Button
+                        onClick={handleSignOut}
+                        className="w-full text-left cursor-pointer"
+                    >
+                        Sign out
+                    </Button>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
+
+export default LandingAccountDropdown

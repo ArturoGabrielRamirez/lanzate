@@ -35,6 +35,12 @@ export async function insertStore(payload: any, userId: number): Promise<InsertS
 
         if (existingSubdomain) throw new Error("The store subdomain (Public URL) already exists. Try another one.")
 
+        // Obtener las categorías por defecto del sistema
+        const defaultCategories = await prisma.defaultCategory.findMany({
+            where: { is_active: true },
+            orderBy: { sort_order: 'asc' }
+        })
+
         const store = await prisma.store.create({
             data: {
                 name: payload.name,
@@ -52,6 +58,18 @@ export async function insertStore(payload: any, userId: number): Promise<InsertS
                     create: {
                         current_balance: 0,
                     }
+                },
+                // Crear categorías por defecto para la tienda
+                categories: {
+                    create: defaultCategories.map(cat => ({
+                        name: cat.name,
+                        description: cat.description,
+                        image: cat.image,
+                        slug: cat.slug,
+                        is_default: true,
+                        sort_order: cat.sort_order,
+                        is_active: cat.is_active
+                    }))
                 }
             }
         })

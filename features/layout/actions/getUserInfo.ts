@@ -7,7 +7,7 @@ import { Account, User , Order} from "@prisma/client"
 
 export async function getUserInfo(): Promise<{
     payload: User & { Account: Account[], Order: Order[] } | null,
-    error: Error | null,
+    error: Boolean | null,
     message: string
 }> {
     return actionWrapper(async () => {

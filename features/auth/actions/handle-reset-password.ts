@@ -1,16 +1,15 @@
 'use server'
 
 import { actionWrapper } from '@/utils/lib'
-import { ResponseType } from '@/features/layout/types/response-type'
+import { ResponseType } from '@/features/layout/types'
 import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function handleResetPassword(payload: any): Promise<ResponseType<any>> {
-
     return actionWrapper(async () => {
 
         const email = payload.email?.toString() || ''
 
-        const supabase = await createServerSideClient()
+        const supabase = createServerSideClient()
 
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
             redirectTo: `${process.env.NEXTAUTH_URL}auth/confirm?next=/update-password`,

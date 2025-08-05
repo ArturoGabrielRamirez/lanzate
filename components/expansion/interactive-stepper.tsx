@@ -1,5 +1,5 @@
+"use client"
 /* eslint-disable react/display-name */
-
 import { cn } from '@/lib/utils';
 import { Check } from 'lucide-react';
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
@@ -109,10 +109,13 @@ export const InteractiveStepperRoot = React.forwardRef<
     HTMLDivElement & IStepperMethods,
     IStepperRootProps
 >(({ children, defaultValue = 1, orientation = 'horizontal', className = '', ...props }, ref) => {
+
     const [currentStep, setCurrentStep] = useState(defaultValue);
 
     const totalSteps = React.Children.toArray(children).filter(
-        (child) => React.isValidElement(child) && child.type !== InteractiveStepperContent,
+        (child) => {
+            return React.isValidElement(child) && child.type !== InteractiveStepperContent
+        },
     ).length;
 
     const goToStep = useCallback(
@@ -255,7 +258,7 @@ export const InteractiveStepperRoot = React.forwardRef<
                 {orientation === 'horizontal' ? (
                     <>
                         {stepperItemsContainer}
-                        {activeContent && <div className="mt-6 w-full">{activeContent}</div>}
+                        {activeContent && <div className="grow w-full flex flex-col">{activeContent}</div>}
                     </>
                 ) : (
                     <div className="flex gap-8">

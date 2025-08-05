@@ -1,12 +1,14 @@
 "use client"
 
-import { CreateBranchButtonProps } from "../types"
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { Plus } from "lucide-react"
-import { branchCreateSchema } from "../schemas/branch-schema"
-import { formatErrorResponse } from "@/utils/lib"
-import { createBranch } from "../actions/createBranch"
 import { useTranslations } from "next-intl"
+import { formatErrorResponse } from "@/utils/lib"
+
+import { ButtonWithPopup, InputField } from "@/features/layout/components"
+
+import { CreateBranchButtonProps } from "@/features/branches/types"
+import { branchCreateSchema } from "@/features/branches/schemas"
+import { createBranch } from "@/features/branches/actions"
 
 function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
 
