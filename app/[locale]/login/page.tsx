@@ -22,11 +22,11 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         <div className="flex flex-col p-4 grow pt-17 relative">
             <div className='flex flex-col items-center w-full max-w-4xl gap-4 mx-auto lg:flex-row grow'>
                 <div className='w-full lg:pr-10'>
-                    <LoginErrorDisplay 
+                    <LoginErrorDisplay
                         error={params.error}
                         message={params.message}
                     />
-                    
+
                     <LoginForm />
                     <ResetPasswordLink />
                 </div>

@@ -7,7 +7,7 @@ import { Form, InputField } from '@/features/layout/components'
 import { handleLogIn } from '@/features/auth/actions'
 import { loginUserSchema } from '@/features/auth/schemas'
 
-export default function LoginForm() {
+const LoginForm = () => {
 
     const t = useTranslations("auth");
 
@@ -26,3 +26,5 @@ export default function LoginForm() {
         </Form>
     )
 }
+
+export default LoginForm;

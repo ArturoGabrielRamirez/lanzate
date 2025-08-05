@@ -1,10 +1,10 @@
 'use client'
 
-import { Form, InputField } from '@/features/layout/components'
-import { formatErrorResponse } from '@/utils/lib'
-import { Link } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
+
+import { Form, InputField } from '@/features/layout/components'
+import { formatErrorResponse } from '@/utils/lib'
 
 export default function UpdatePasswordForm() {
     const [done, setDone] = useState(false)

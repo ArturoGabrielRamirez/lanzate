@@ -1,7 +1,9 @@
-import LoginForm from "./form-login";
-import ResetPassword from "./form-reset-password";
-import SignupForm from "./form-signup";
-import ResetPasswordLink from "./reset-password-link";
-import UpdatePasswordForm from "./update-password-form";
-
-export { LoginForm, SignupForm, ResetPassword, UpdatePasswordForm, ResetPasswordLink }
+export { default as LoginForm } from "./form-login";
+export { default as SignupForm } from "./form-signup";
+export { default as ResetPassword } from "./form-reset-password";
+export { default as UpdatePasswordForm } from "./update-password-form";
+export { default as ResetPasswordLink } from "./reset-password-link";
+export { default as SocialLoginButtons } from "./social-login-buttons";
+export { default as LoginErrorDisplay } from "./login-error-display";
+export { default as FacebookLogo } from "./facebook-logo";
+export { default as GoogleLogo } from "./google-logo";

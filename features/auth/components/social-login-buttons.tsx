@@ -3,14 +3,13 @@
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { handleFacebookLogin, handleGoogleLogIn } from '@/features/auth/actions'
-import Facebook from './facebook-logo'
-import Google from './google-logo'
+import { FacebookLogo, GoogleLogo } from '@/features/auth/components'
 
 interface GoogleLoginButtonProps {
     orLoginWith: string
 }
 
-export function SocialLoginButtons({ orLoginWith }: GoogleLoginButtonProps) {
+const SocialLoginButtons = ({ orLoginWith }: GoogleLoginButtonProps) => {
     return (
         <div className="grid w-full place-content-left lg:pl-10">
             <Label htmlFor='google' className='justify-center w-full mb-2 text-center'>
@@ -22,7 +21,7 @@ export function SocialLoginButtons({ orLoginWith }: GoogleLoginButtonProps) {
                         type="submit"
                         className="w-full"
                     >
-                        <Google className='size-6' />
+                        <GoogleLogo className='size-6' />
                         Google
                     </Button>
                 </form>
@@ -31,7 +30,7 @@ export function SocialLoginButtons({ orLoginWith }: GoogleLoginButtonProps) {
                         type="submit"
                         className="w-full"
                     >
-                        <Facebook className='size-6' />
+                        <FacebookLogo className='size-6' />
                         Facebook
                     </Button>
                 </form>
@@ -39,3 +38,5 @@ export function SocialLoginButtons({ orLoginWith }: GoogleLoginButtonProps) {
         </div>
     )
 }
+
+export default SocialLoginButtons;

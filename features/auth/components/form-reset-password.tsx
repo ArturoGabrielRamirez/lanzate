@@ -7,7 +7,7 @@ import { Form, InputField } from '@/features/layout/components'
 import { handleResetPassword } from '@/features/auth/actions'
 import { emailSchema } from '@/features/auth/schemas'
 
-export default function ResetPassword() {
+const ResetPassword = () => {
 
   const t = useTranslations("auth");
 
@@ -25,3 +25,5 @@ export default function ResetPassword() {
     </Form>
   )
 }
+
+export default ResetPassword;
