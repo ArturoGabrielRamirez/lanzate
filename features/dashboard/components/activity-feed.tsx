@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { getUserStoreActivities } from "../actions/getUserStoreActivities"
-import { MessageCircle, Clock, Flame, FileText } from "lucide-react"
+import { MessageCircle, Clock, Flame, FileText, ShoppingCart } from "lucide-react"
 import { ActivityFeedItem, UserStoreActivity } from "../types"
 import Link from "next/link"
 import { formatDistance } from "date-fns"
@@ -15,29 +15,44 @@ type Props = {
 }
 
 function getUserInitials(firstName?: string | null, lastName?: string | null) {
-    const first = firstName?.charAt(0) || ''
-    const last = lastName?.charAt(0) || ''
-    return (first + last).toUpperCase()
+    return `${firstName?.charAt(0) || ''}${lastName?.charAt(0) || ''}`.toUpperCase()
 }
 
 function formatActivityDate(date: Date) {
-    return formatDistance(new Date(date), new Date(), {
-        addSuffix: true,
-        locale: es
-    })
+    return formatDistance(new Date(date), new Date(), { addSuffix: true, locale: es })
 }
 
 function getStatusBadgeVariant(status: string) {
     switch (status) {
-        case 'PENDING':
-            return 'secondary'
         case 'APPROVED':
-            return 'default'
-        case 'REJECTED':
-            return 'destructive'
         case 'COMPLETED':
+        case 'DELIVERED':
             return 'default'
+        case 'PENDING':
+        case 'PROCESSING':
+            return 'secondary'
+        case 'REJECTED':
+        case 'CANCELLED':
+            return 'destructive'
         case 'EXPIRED':
+            return 'outline'
+        default:
+            return 'secondary'
+    }
+}
+
+function getOrderStatusBadgeVariant(status: string) {
+    switch (status) {
+        case 'COMPLETED':
+        case 'DELIVERED':
+            return 'default'
+        case 'PENDING':
+        case 'PROCESSING':
+        case 'READY':
+            return 'secondary'
+        case 'CANCELLED':
+            return 'destructive'
+        case 'SHIPPED':
             return 'outline'
         default:
             return 'secondary'
@@ -80,6 +95,13 @@ async function ActivityFeed({ userId }: Props) {
             product: comment.products,
             content: comment.content,
             created_at: comment.created_at
+        })),
+        ...activities.orders.map((order: UserStoreActivity['orders'][0]) => ({
+            id: `order-${order.id}`,
+            type: 'order' as const,
+            user: order.customer || { id: 0, first_name: order.customer_name || 'Cliente', last_name: '', avatar: null },
+            order: order,
+            created_at: order.created_at
         })),
         ...activities.contractAssignmentsAsEmployee.map((assignment: UserStoreActivity['contractAssignmentsAsEmployee'][0]) => ({
             id: `contract-employee-${assignment.id}`,
@@ -171,6 +193,31 @@ async function ActivityFeed({ userId }: Props) {
                                     </div>
                                 )}
 
+                                {item.type === 'order' && (
+                                    <div className="space-y-2">
+                                        <div className="flex items-center space-x-2">
+                                            <span className="font-medium">
+                                                {item.user.first_name} {item.user.last_name}
+                                            </span>
+                                            <span className="text-muted-foreground">realizó la </span>
+                                            <Link 
+                                                href={`/stores/${item.order?.store.slug}/orders/${item.order?.id}`}
+                                                className="font-medium text-primary hover:underline"
+                                            >
+                                               orden #{item.order?.id}
+                                            </Link>
+                                            <Badge variant={getOrderStatusBadgeVariant(item.order?.status || 'PENDING')} className="text-xs">
+                                                {item.order?.status}
+                                            </Badge>
+                                        </div>
+                                        <div className="text-sm text-muted-foreground">
+                                            <span className="font-medium">Total:</span> ${item.order?.total_price.toFixed(2)} | 
+                                            <span className="font-medium ml-1">Items:</span> {item.order?.total_quantity} |
+                                            <span className="font-medium ml-1">Método:</span> {item.order?.shipping_method}
+                                        </div>
+                                    </div>
+                                )}
+
                                 {item.type === 'contract_assignment_as_employee' && (
                                     <div className="space-y-2">
                                         <div className="flex items-center space-x-2">
@@ -242,11 +289,19 @@ async function ActivityFeed({ userId }: Props) {
                                             <Flame className="h-3 w-3 text-red-500 fill-current" />
                                         ) : item.type === 'comment' ? (
                                             <MessageCircle className="h-3 w-3 text-white fill-current" />
+                                        ) : item.type === 'order' ? (
+                                            <ShoppingCart className="h-3 w-3 text-green-500" />
                                         ) : (
                                             <FileText className="h-3 w-3 text-blue-500" />
                                         )}
                                         <span className="text-muted-foreground">
-                                            en {item.type.includes('contract') ? item.contract?.store.name : item.product?.store.name}
+                                            en{' '}
+                                            <Link 
+                                                href={`/stores/${item.type.includes('contract') ? item.contract?.store.slug : item.type === 'order' ? item.order?.store.slug : item.product?.store.slug}/overview`}
+                                                className="text-primary hover:underline"
+                                            >
+                                                {item.type.includes('contract') ? item.contract?.store.name : item.type === 'order' ? item.order?.store.name : item.product?.store.name}
+                                            </Link>
                                         </span>
                                     </div>
                                     <div className="flex items-center space-x-1">
