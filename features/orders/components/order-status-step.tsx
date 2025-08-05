@@ -6,6 +6,7 @@ import { useState, useTransition } from "react"
 import { confirmOrderAction } from "../actions/confirmOrderAction"
 import { toast } from "sonner"
 import { OrderStatus } from "@prisma/client"
+import { cn } from "@/lib/utils"
 
 type Order = {
     id: number
@@ -44,14 +45,16 @@ function OrderStatusStep({ order }: Props) {
 
     return (
         <div className="grow flex flex-col justify-center">
-            <div className="mb-6">
-                <h3 className="text-lg font-semibold mb-2">Confirm Order</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                    Review all order information before confirming
+            <h3 className="text-lg font-semibold mb-2">Confirm Order</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+                Review all order information before confirming
+            </p>
+            {isOrderReady && (
+                <p className=" text-green-600 font-medium text-center mb-4">
+                    ✓ This order has already been confirmed and the customer has been notified
                 </p>
-            </div>
-            
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            )}
+            <div className={cn("bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6", isOrderReady && "opacity-30")}>
                 <div className="flex items-start gap-3">
                     <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                     <div className="text-sm text-blue-800">
@@ -69,7 +72,7 @@ function OrderStatusStep({ order }: Props) {
             </div>
 
             <div className="flex justify-center">
-                <Button 
+                <Button
                     onClick={handleConfirmOrder}
                     disabled={isPending || isOrderReady}
                     size="lg"
@@ -80,13 +83,7 @@ function OrderStatusStep({ order }: Props) {
                 </Button>
             </div>
 
-            {isOrderReady && (
-                <div className="mt-4 text-center">
-                    <p className="text-sm text-green-600 font-medium">
-                        ✓ This order has already been confirmed and the customer has been notified
-                    </p>
-                </div>
-            )}
+
         </div>
     )
 }

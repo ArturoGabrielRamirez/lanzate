@@ -59,7 +59,8 @@ export async function selectOrderById(orderId: number) {
                         slug: true
                     }
                 },
-                messages : true
+                messages : true,
+                tracking: true
             }
         })
 

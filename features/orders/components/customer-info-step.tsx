@@ -2,7 +2,11 @@
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { User, Mail, Phone, MapPin, MessageCircle, Check } from "lucide-react"
+import { User, Mail, Phone, MapPin, MessageCircle, Check, Package, Truck, Clock, CheckCircle2 } from "lucide-react"
+import { useState, useTransition } from "react"
+import { updateOrderTrackingAction } from "../actions/updateOrderTrackingAction"
+import { toast } from "sonner"
+import { OrderTrackingStatus } from "@prisma/client"
 
 type Order = {
     id: number
@@ -35,6 +39,9 @@ type Order = {
             email: string
         }
     } | null
+    tracking?: {
+        tracking_status: OrderTrackingStatus
+    } | null
 }
 
 type Props = {
@@ -42,8 +49,10 @@ type Props = {
 }
 
 function CustomerInfoStep({ order }: Props) {
+    const [isPending, startTransition] = useTransition()
     const isPickup = order.shipping_method === "PICKUP"
     const isCompleted = order.status === "COMPLETED"
+    const currentTrackingStatus = order.tracking?.tracking_status
 
     const handleWhatsAppClick = () => {
         if (order.customer_phone) {
@@ -59,6 +68,161 @@ function CustomerInfoStep({ order }: Props) {
         console.log("Email functionality to be implemented")
     }
 
+    const handleTrackingUpdate = (newStatus: OrderTrackingStatus) => {
+        startTransition(async () => {
+            try {
+                const result = await updateOrderTrackingAction({
+                    orderId: order.id.toString(),
+                    newTrackingStatus: newStatus
+                })
+
+                if (result.error) {
+                    toast.error(result.message)
+                } else {
+                    toast.success("Order tracking updated successfully")
+                    window.location.reload()
+                }
+            } catch (error) {
+                console.error("Error updating order tracking:", error)
+                toast.error("Failed to update order tracking")
+            }
+        })
+    }
+
+    const handleFinalize = () => {
+        // TODO: Implement finalize functionality
+        toast.info("Finalize functionality coming soon")
+    }
+
+    const getTrackingStatusInfo = () => {
+        if (!currentTrackingStatus) return null
+
+        const statusConfig = {
+            PREPARING_ORDER: {
+                icon: Package,
+                title: "Preparing Order",
+                description: "The order is being prepared and will be ready soon. Mark as ready when the order is ready for pickup or delivery",
+                color: "text-blue-600"
+            },
+            WAITING_FOR_PICKUP: {
+                icon: Clock,
+                title: "Ready for Pickup",
+                description: "The order is ready! The customer has been notified and can come to pick it up",
+                color: "text-green-600"
+            },
+            PICKED_UP: {
+                icon: CheckCircle2,
+                title: "Order Picked Up",
+                description: "The order has been successfully picked up by the customer",
+                color: "text-green-600"
+            },
+            WAITING_FOR_DELIVERY: {
+                icon: Package,
+                title: "Ready for Delivery",
+                description: "The order is ready and waiting to be delivered",
+                color: "text-green-600"
+            },
+            ON_THE_WAY: {
+                icon: Truck,
+                title: "On the Way",
+                description: "The order is on its way to the customer",
+                color: "text-orange-600"
+            },
+            DELIVERED: {
+                icon: CheckCircle2,
+                title: "Order Delivered",
+                description: "The order has been successfully delivered to the customer",
+                color: "text-green-600"
+            },
+            CANCELLED: {
+                icon: Check,
+                title: "Order Cancelled",
+                description: "The order has been cancelled",
+                color: "text-red-600"
+            }
+        }
+
+        return statusConfig[currentTrackingStatus]
+    }
+
+    const getTrackingButtons = () => {
+        if (!currentTrackingStatus) return null
+
+        if (isPickup) {
+            return (
+                <div className="space-y-2">
+                    {currentTrackingStatus === "PREPARING_ORDER" && (
+                        <Button
+                            onClick={() => handleTrackingUpdate("WAITING_FOR_PICKUP")}
+                            disabled={isPending}
+                            className="w-full"
+                            variant="outline"
+                        >
+                            <Clock className="w-4 h-4 mr-2" />
+                            {isPending ? "Updating..." : "Lista para Buscar"}
+                        </Button>
+                    )}
+                    {currentTrackingStatus === "WAITING_FOR_PICKUP" && (
+                        <Button
+                            onClick={() => handleTrackingUpdate("PREPARING_ORDER")}
+                            disabled={isPending}
+                            className="w-full"
+                            variant="outline"
+                        >
+                            <Package className="w-4 h-4 mr-2" />
+                            {isPending ? "Updating..." : "Volver a Preparar"}
+                        </Button>
+                    )}
+                    <Button
+                        onClick={handleFinalize}
+                        className="w-full"
+                        variant="default"
+                    >
+                        <CheckCircle2 className="w-4 h-4 mr-2" />
+                        Finalizar
+                    </Button>
+                </div>
+            )
+        } else {
+            return (
+                <div className="space-y-2">
+                    {currentTrackingStatus === "PREPARING_ORDER" && (
+                        <Button
+                            onClick={() => handleTrackingUpdate("WAITING_FOR_DELIVERY")}
+                            disabled={isPending}
+                            className="w-full"
+                            variant="outline"
+                        >
+                            <Package className="w-4 h-4 mr-2" />
+                            {isPending ? "Updating..." : "Esperando Delivery"}
+                        </Button>
+                    )}
+                    {currentTrackingStatus === "WAITING_FOR_DELIVERY" && (
+                        <Button
+                            onClick={() => handleTrackingUpdate("ON_THE_WAY")}
+                            disabled={isPending}
+                            className="w-full"
+                            variant="outline"
+                        >
+                            <Truck className="w-4 h-4 mr-2" />
+                            {isPending ? "Updating..." : "En Camino"}
+                        </Button>
+                    )}
+                    {currentTrackingStatus !== "ON_THE_WAY" && (
+                        <Button
+                            onClick={handleFinalize}
+                            className="w-full"
+                            variant="default"
+                        >
+                            <CheckCircle2 className="w-4 h-4 mr-2" />
+                            Finalizar
+                        </Button>
+                    )}
+                </div>
+            )
+        }
+    }
+
     const formatAddress = () => {
         const parts = [
             order.address_one,
@@ -71,6 +235,8 @@ function CustomerInfoStep({ order }: Props) {
 
         return parts.join(', ')
     }
+
+    const trackingInfo = getTrackingStatusInfo()
 
     return (
         <div className="space-y-6">
@@ -96,10 +262,38 @@ function CustomerInfoStep({ order }: Props) {
                 </div>
             )}
 
+            {/* Order Tracking Status */}
+
+
+            {/* Order Tracking Controls */}
+            {currentTrackingStatus && !isCompleted && (
+                <div className="space-y-3">
+                    <h4 className="font-medium">Order Tracking</h4>
+                    {trackingInfo && (
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <div className="flex items-start gap-3">
+                                <div className={`flex-shrink-0 rounded-full border border-blue-600 p-2 ${trackingInfo.color}`}>
+                                    <trackingInfo.icon className="w-5 h-5" />
+                                </div>
+                                <div>
+                                    <h3 className={`font-medium ${trackingInfo.color}`}>
+                                        {trackingInfo.title}
+                                    </h3>
+                                    <p className="text-blue-700 text-sm mt-1">
+                                        {trackingInfo.description}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {getTrackingButtons()}
+                </div>
+            )}
+
             <div>
                 <h3 className="text-lg font-semibold mb-4">Customer Information</h3>
 
-                <div className="space-y-4">
+                <div className="space-y-2">
                     <div className="flex items-center gap-2">
                         <User className="size-4 text-muted-foreground" />
                         <span className="font-medium">{order.customer_name || 'No name provided'}</span>
@@ -129,7 +323,6 @@ function CustomerInfoStep({ order }: Props) {
                         <div className="flex items-start gap-2">
                             <MapPin className="size-4 text-muted-foreground mt-0.5" />
                             <div className="text-muted-foreground">
-                                <p className="font-medium">Pickup Location:</p>
                                 <p>{order.branch.name}</p>
                                 <p>{order.branch.address}</p>
                             </div>
@@ -138,11 +331,14 @@ function CustomerInfoStep({ order }: Props) {
                 </div>
             </div>
 
+
+
             {isPickup ? (
                 <div className="space-y-3">
                     <h4 className="font-medium">Contact Customer</h4>
-                    <div className="space-y-2">
+                    <div className="flex gap-2">
                         <div className={cn(
+                            "w-full",
                             !order.customer_phone && "opacity-50 cursor-not-allowed"
                         )}>
                             <Button
@@ -156,6 +352,7 @@ function CustomerInfoStep({ order }: Props) {
                             </Button>
                         </div>
                         <div className={cn(
+                            "w-full",
                             !order.customer_email && "opacity-50 cursor-not-allowed"
                         )}>
                             <Button
