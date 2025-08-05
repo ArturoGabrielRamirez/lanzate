@@ -123,8 +123,9 @@ export async function updateSession(request: NextRequest) {
       '/checkout': `/${currentLocale}/s/${subdomain}/checkout`,
       '/my-orders': `/${currentLocale}/s/${subdomain}/my-orders`,
       '/account': `/${currentLocale}/s/${subdomain}/account`,
+      '/my-orders/[id]': `/${currentLocale}/s/${subdomain}/my-orders/[id]`,
     }
-
+    
     if (subdomainRoutes[pathWithoutLocale as keyof typeof subdomainRoutes]) {
       const url = new URL(subdomainRoutes[pathWithoutLocale as keyof typeof subdomainRoutes], request.url)
       url.search = request.nextUrl.search

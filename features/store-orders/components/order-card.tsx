@@ -1,8 +1,10 @@
 import { Order, OrderItem, Product, Store, Branch } from "@prisma/client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, MapPin, Store as StoreIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Calendar, MapPin, Store as StoreIcon, Eye } from "lucide-react"
 import OrderItemComponent from "./order-item"
+import Link from "next/link"
 
 type OrderWithDetails = Order & {
     items: (OrderItem & {
@@ -90,6 +92,14 @@ function OrderCard({ order }: Props) {
                         <span>
                             {order.is_paid ? 'Paid' : 'Pending Payment'}
                         </span>
+                    </div>
+                    <div className="mt-4 flex justify-end">
+                        <Button asChild variant="outline" size="sm">
+                            <Link href={`/my-orders/${order.id}`}>
+                                <Eye className="w-4 h-4 mr-2" />
+                                View Details
+                            </Link>
+                        </Button>
                     </div>
                 </div>
             </CardContent>
