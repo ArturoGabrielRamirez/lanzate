@@ -1,16 +1,17 @@
 'use client'
 
-import { handleSignup } from '@/features/auth/actions/handleSignUp'
-import { schema } from '@/features/auth/schemas/log-user-schema'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Form, InputField } from '@/features/layout/components'
 import { useTranslations } from 'next-intl'
 
-export default function SignupForm() {
+import { Form, InputField } from '@/features/layout/components'
+import { handleSignup } from '@/features/auth/actions'
+import { loginUserSchema } from '@/features/auth/schemas'
+
+const SignupForm = () => {
     const t = useTranslations("auth");
     return (
         <Form
-            resolver={yupResolver(schema)}
+            resolver={yupResolver(loginUserSchema)}
             formAction={handleSignup}
             contentButton={<span>{t("signup")}</span>}
             successRedirect="/check-email"
@@ -23,3 +24,5 @@ export default function SignupForm() {
         </Form>
     )
 }
+
+export default SignupForm;

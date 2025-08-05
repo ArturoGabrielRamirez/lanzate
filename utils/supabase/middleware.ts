@@ -121,12 +121,24 @@ export async function updateSession(request: NextRequest) {
       '/': `/${currentLocale}/s/${subdomain}`,
       '/cart': `/${currentLocale}/s/${subdomain}/cart`,
       '/checkout': `/${currentLocale}/s/${subdomain}/checkout`,
+      '/my-orders': `/${currentLocale}/s/${subdomain}/my-orders`,
+      '/account': `/${currentLocale}/s/${subdomain}/account`,
     }
-
+    
     if (subdomainRoutes[pathWithoutLocale as keyof typeof subdomainRoutes]) {
       const url = new URL(subdomainRoutes[pathWithoutLocale as keyof typeof subdomainRoutes], request.url)
       url.search = request.nextUrl.search
       return NextResponse.rewrite(url)
+    }
+
+    // Handle dynamic routes
+    if (pathWithoutLocale.startsWith('/my-orders/')) {
+      const orderId = pathWithoutLocale.split('/my-orders/')[1]
+      if (orderId && !isNaN(Number(orderId))) {
+        const url = new URL(`/${currentLocale}/s/${subdomain}/my-orders/${orderId}`, request.url)
+        url.search = request.nextUrl.search
+        return NextResponse.rewrite(url)
+      }
     }
 
     if (pathWithoutLocale.startsWith('/item/')) {

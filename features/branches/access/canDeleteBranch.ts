@@ -1,15 +1,11 @@
 "use server"
 
-/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 
 export async function canDeleteBranch(branchId: number, userId: number) {
     return actionWrapper(async () => {
 
-        /* const client = new PrismaClient() */
-
-        // Get branch with store info
         const branch = await prisma.branch.findUnique({
             where: {
                 id: branchId
@@ -21,13 +17,8 @@ export async function canDeleteBranch(branchId: number, userId: number) {
 
         if (!branch) throw new Error("Branch not found")
 
-        // Check if user is the store owner
         const isOwner = branch.store.user_id === userId
-
-        // Check if it's the main branch (cannot be deleted)
         const isMainBranch = branch.is_main
-
-        // User can delete if they are owner AND it's not the main branch
         const canDelete = isOwner && !isMainBranch
 
         return {

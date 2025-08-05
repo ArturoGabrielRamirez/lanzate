@@ -6,6 +6,7 @@ import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { getStoreBySubdomain } from "@/features/subdomain/actions/getStoreBySubdomain"
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
+import { OrderStatus, PaymentMethod } from "@prisma/client"
 
 
 type insertOrderProps = {
@@ -13,9 +14,9 @@ type insertOrderProps = {
     branch_id: number,
     total_price: number,
     total_quantity: number,
-    shipping_method: "delivery" | "pickup",
+    shipping_method: "DELIVERY" | "PICKUP",
     processed_by_user_id: number,
-    payment_method: string,
+    payment_method: PaymentMethod,
     cart: CartItemType[],
     isWalkIn: boolean,
     isPaid: boolean,
@@ -30,7 +31,8 @@ type insertOrderProps = {
         state?: string,
         zip_code?: string,
         country?: string
-    }
+    },
+    status?: OrderStatus
 }
 
 export async function insertOrder({
@@ -45,6 +47,7 @@ export async function insertOrder({
     customer_info,
     cart,
     subdomain,
+    status
 }: insertOrderProps) {
     return actionWrapper(async () => {
 
@@ -122,10 +125,10 @@ export async function insertOrder({
                     total_quantity: total_quantity,
                     branch_id: branch.id,
                     store_id: store.id,
-                    customer_id: !isWalkIn ? customer_info?.id : null,
-                    customer_name: customer_info?.name || null,
+                    customer_id: !isWalkIn ? user?.id : null,
+                    customer_name: customer_info?.name || user.first_name || null,
                     customer_phone: customer_info?.phone || null,
-                    customer_email: customer_info?.email || null,
+                    customer_email: customer_info?.email || user.email,
                     shipping_method: shipping_method,
                     is_paid: isPaid,
                     payment_date: isPaid ? new Date() : null,
@@ -154,6 +157,8 @@ export async function insertOrder({
                     state: customer_info?.state,
                     zip_code: customer_info?.zip_code,
                     country: customer_info?.country,
+                    status: status || "PROCESSING",
+                    order_type: isWalkIn ? "CASH_REGISTER" : "PUBLIC_STORE"
                 }
             })
 
@@ -240,7 +245,7 @@ export async function insertOrder({
         return {
             error: false,
             message: "Order created successfully",
-            payload: null
+            payload: order
         }
     })
 }

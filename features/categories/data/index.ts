@@ -1,0 +1,6 @@
+export { getStoreCategories } from "./getStoreCategories"
+export { searchCategories } from "./searchCategories"
+export { getStoreIdBySlug } from "./getStoreIdBySlug"
+export { insertCategory } from "./insertCategory"
+export { updateCategory } from "./updateCategory"
+export { deleteCategory } from "./deleteCategory" 

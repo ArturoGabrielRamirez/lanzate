@@ -1,9 +1,9 @@
 import Link from "next/link"
 import { Rocket, Facebook, Instagram } from "lucide-react"
 import { createServerSideClient } from "@/utils/supabase/server"
-import { AccountDropdown } from "@/features/header/components"
 import CartIcon from "@/features/cart/components/cart-icon"
 import { getTranslations } from "next-intl/server"
+import LandingAccountDropdown from "@/features/header/components/landing-account-dropdown"
 
 type Props = {
     title: string
@@ -52,7 +52,7 @@ async function Header({ title, socialMedia, showSocialLinks = true }: Props) {
                 {!user && <Link href='/login' className='p-2 hover:underline hover:!text-primary'>{t("login")}</Link>}
                 {!user && <Link href='/signup' className='p-2 hover:underline hover:text-primary'>{t("sign-up")}</Link>}
                 <CartIcon />
-                {user && <AccountDropdown />}
+                {user && <LandingAccountDropdown />}
                 
                 {/* Social Media Links */}
                 {showSocialLinks && hasSocialMedia && (

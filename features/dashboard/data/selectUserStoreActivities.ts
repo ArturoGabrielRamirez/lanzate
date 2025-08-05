@@ -1,12 +1,10 @@
 "use server"
 
-/* import { PrismaClient } from '@prisma/client' */
-import { actionWrapper, formatErrorResponse } from "@/utils/lib"
+import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 
 export async function selectUserStoreActivities(userId: number) {
     return actionWrapper(async () => {
-        /* const prisma = new PrismaClient() */
 
         // Get all stores owned by the user
         const userStores = await prisma.store.findMany({
@@ -18,7 +16,21 @@ export async function selectUserStoreActivities(userId: number) {
             }
         })
 
-        const storeIds = userStores.map(store => store.id)
+        // Get all stores where user is an employee
+        const userEmployeeStores = await prisma.employee.findMany({
+            where: {
+                user_id: userId,
+                is_active: true
+            },
+            select: {
+                store_id: true
+            }
+        })
+
+        const storeIds = [
+            ...userStores.map(store => store.id),
+            ...userEmployeeStores.map(emp => emp.store_id)
+        ]
 
         // Get all likes for products in user's stores
         const likes = await prisma.product_likes.findMany({
@@ -45,6 +57,7 @@ export async function selectUserStoreActivities(userId: number) {
                         image: true,
                         store: {
                             select: {
+                                id: true,
                                 name: true,
                                 slug: true
                             }
@@ -84,8 +97,58 @@ export async function selectUserStoreActivities(userId: number) {
                         image: true,
                         store: {
                             select: {
+                                id: true,
                                 name: true,
                                 slug: true
+                            }
+                        }
+                    }
+                }
+            },
+            orderBy: {
+                created_at: 'desc'
+            },
+            take: 50
+        })
+
+        // Get orders from stores where user is owner or employee
+        const orders = await prisma.order.findMany({
+            where: {
+                store_id: {
+                    in: storeIds
+                }
+            },
+            include: {
+                store: {
+                    select: {
+                        id: true,
+                        name: true,
+                        slug: true
+                    }
+                },
+                customer: {
+                    select: {
+                        id: true,
+                        first_name: true,
+                        last_name: true,
+                        avatar: true
+                    }
+                },
+                processed_by: {
+                    select: {
+                        id: true,
+                        first_name: true,
+                        last_name: true,
+                        avatar: true
+                    }
+                },
+                items: {
+                    include: {
+                        product: {
+                            select: {
+                                id: true,
+                                name: true,
+                                image: true
                             }
                         }
                     }
@@ -109,6 +172,7 @@ export async function selectUserStoreActivities(userId: number) {
                     include: {
                         store: {
                             select: {
+                                id: true,
                                 name: true,
                                 slug: true
                             }
@@ -164,6 +228,7 @@ export async function selectUserStoreActivities(userId: number) {
                     include: {
                         store: {
                             select: {
+                                id: true,
                                 name: true,
                                 slug: true
                             }
@@ -207,9 +272,10 @@ export async function selectUserStoreActivities(userId: number) {
 
         return {
             message: "User store activities fetched successfully",
-            payload: { 
-                likes, 
-                comments, 
+            payload: {
+                likes,
+                comments,
+                orders,
                 contractAssignmentsAsEmployee,
                 contractAssignmentsAsOwner
             },

@@ -1,39 +1,16 @@
 'use server'
 
-/* 
-
-### 1.1 Registro de Usuario
-**Pasos:**
-1. Check if email already exists
-2. Hash password
-3. Create user record
-4. Create default account (FREE)
-5. Send welcome notification
-6. Crear registro en action_logs ("register_user")
-
-**Tablas involucradas:**
-- `users` (CREATE)
-- `accounts` (CREATE)
-- `notifications` (CREATE)
-- `action_logs` (CREATE)
-
-**Manejo de errores:**
-- Email duplicado → Rollback completo
-- Error en hash → No crear usuario
-- Error en account → Rollback user creation
-
-*/
-
-import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
 import { createServerSideClient } from '@/utils/supabase/server'
-import { insertUser } from '../data/insertUser'
-import { ResponseType } from '@/features/layout/types'
+import { getUserByEmail, insertLogEntry } from '@/features/layout/data'
+import { insertUser } from '@/features/auth/data'
 import { actionWrapper } from '@/utils/lib'
-import { insertLogEntry } from '@/features/layout/data/insertLogEntry'
+import { ResponseType } from '@/features/layout/types'
 
 export const handleSignup = async (payload: any): Promise<ResponseType<any>> => {
     return actionWrapper(async () => {
-        const supabase = await createServerSideClient()
+
+        const supabase = createServerSideClient()
+
         const { email, password } = payload
         const { payload: existingUser } = await getUserByEmail(email)
 

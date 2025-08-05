@@ -20,7 +20,7 @@ export async function updateProduct(productId: number, data: any) {
                 stock: data.stock,
                 description: data.description,
                 categories: {
-                    set: data.categories.map((category: any) => ({ id: category.value }))
+                    set: data.categories.map((category: any) => ({ id: Number(category.value) }))
                 }
 
             }

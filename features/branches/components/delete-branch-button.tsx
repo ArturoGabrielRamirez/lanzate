@@ -1,12 +1,13 @@
 "use client"
 
-import { ButtonWithPopup } from "@/features/layout/components"
-import { deleteBranch } from "../actions/deleteBranch"
-import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
 import { Trash2 } from "lucide-react"
-import { DeleteBranchButtonProps } from "../types"
 import { useTranslations } from "next-intl"
+import { formatErrorResponse } from "@/utils/lib"
+
+import { ButtonWithPopup } from "@/features/layout/components"
+import { deleteBranch } from "@/features/branches/actions"
+import { DeleteBranchButtonProps } from "@/features/branches/types"
 
 function DeleteBranchButton({ branchId, slug, onComplete, userId }: DeleteBranchButtonProps) {
     
