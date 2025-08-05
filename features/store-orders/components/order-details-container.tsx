@@ -2,20 +2,10 @@ import { getUserInfo } from "@/features/layout/actions"
 import { getOrderByIdAction } from "../actions/getOrderByIdAction"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Calendar, MapPin, Store as StoreIcon, Package, ArrowLeft } from "lucide-react"
+import { Calendar, MapPin, Store as StoreIcon, Package } from "lucide-react"
 import OrderItemComponent from "./order-item"
-import Link from "next/link"
-import { Order, OrderItem, Product, Store, Branch } from "@prisma/client"
+import { OrderItem, Product } from "@prisma/client"
 import { notFound } from "next/navigation"
-
-type OrderWithDetails = Order & {
-    items: (OrderItem & {
-        product: Product
-    })[]
-    store: Store
-    branch: Branch
-}
 
 type Props = {
     orderId: string
@@ -75,14 +65,6 @@ async function OrderDetailsContainer({ orderId }: Props) {
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center gap-4">
-                <Button asChild variant="outline" size="sm">
-                    <Link href="/my-orders">
-                        <ArrowLeft className="w-4 h-4 mr-2" />
-                        Back to Orders
-                    </Link>
-                </Button>
-            </div>
 
             <Card className="w-full">
                 <CardHeader>
