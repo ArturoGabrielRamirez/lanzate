@@ -16,7 +16,7 @@ type insertOrderProps = {
     total_quantity: number,
     shipping_method: "DELIVERY" | "PICKUP",
     processed_by_user_id: number,
-    payment_method: PaymentMethod, 
+    payment_method: PaymentMethod,
     cart: CartItemType[],
     isWalkIn: boolean,
     isPaid: boolean,
@@ -125,10 +125,10 @@ export async function insertOrder({
                     total_quantity: total_quantity,
                     branch_id: branch.id,
                     store_id: store.id,
-                    customer_id: !isWalkIn ? customer_info?.id : null,
-                    customer_name: customer_info?.name || null,
+                    customer_id: !isWalkIn ? user?.id : null,
+                    customer_name: customer_info?.name || user.first_name || null,
                     customer_phone: customer_info?.phone || null,
-                    customer_email: customer_info?.email || null,
+                    customer_email: customer_info?.email || user.email,
                     shipping_method: shipping_method,
                     is_paid: isPaid,
                     payment_date: isPaid ? new Date() : null,
@@ -157,7 +157,8 @@ export async function insertOrder({
                     state: customer_info?.state,
                     zip_code: customer_info?.zip_code,
                     country: customer_info?.country,
-                    status: status || "PROCESSING"
+                    status: status || "PROCESSING",
+                    order_type: isWalkIn ? "CASH_REGISTER" : "PUBLIC_STORE"
                 }
             })
 
