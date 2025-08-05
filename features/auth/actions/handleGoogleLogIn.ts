@@ -5,36 +5,41 @@ import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
 import { extractSubdomainFromHost } from '../utils/extract-subdomain-from-host'
 import { buildLoginErrorUrl } from '../utils/build-login-error-url'
+import { actionWrapper } from '@/utils/lib'
 
 export async function handleGoogleLogIn() {
-    const supabase = createServerSideClient()
-    const headersList = await headers()
-    const host = headersList.get('host') || ''
-    const subdomain = extractSubdomainFromHost(host)
+    return actionWrapper(async () => {
 
-    const redirectUrl = `https://lanzate.app/auth/callback${subdomain ? `?subdomain=${subdomain}` : ''}`
+        const supabase = createServerSideClient()
 
-    const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-            redirectTo: redirectUrl,
-            scopes: 'email profile',
-            queryParams: {
-                access_type: 'offline',
-                prompt: 'consent',
-                include_granted_scopes: 'true',
+        const headersList = await headers()
+        const host = headersList.get('host') || ''
+        const subdomain = extractSubdomainFromHost(host)
+
+        const redirectUrl = `https://lanzate.app/auth/callback${subdomain ? `?subdomain=${subdomain}` : ''}`
+
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: redirectUrl,
+                scopes: 'email profile',
+                queryParams: {
+                    access_type: 'offline',
+                    prompt: 'consent',
+                    include_granted_scopes: 'true',
+                },
             },
-        },
+        })
+
+        if (error) {
+            const errorUrl = await buildLoginErrorUrl(subdomain, 'oauth_failed', error.message)
+            redirect(errorUrl)
+        }
+
+        if (data.url) {
+            redirect(data.url)
+        }
+
+        redirect(await buildLoginErrorUrl(subdomain, 'no_url'))
     })
-
-    if (error) {
-        const errorUrl = await buildLoginErrorUrl(subdomain, 'oauth_failed', error.message)
-        redirect(errorUrl)
-    }
-
-    if (data.url) {
-        redirect(data.url)
-    }
-
-    redirect(await buildLoginErrorUrl(subdomain, 'no_url'))
 }
