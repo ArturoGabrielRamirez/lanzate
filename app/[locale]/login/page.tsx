@@ -1,9 +1,8 @@
 import { DotPattern } from '@/components/magicui/dot-pattern'
 import { LoginForm, ResetPasswordLink } from '@/features/auth/components'
-import { SocialLoginButtons } from '@/features/auth/components/social-login-buttons'
 import { cn } from '@/lib/utils'
 import { getTranslations } from 'next-intl/server'
-import { LoginErrorDisplay } from '@/features/auth/components/login-error-display'
+import { LoginErrorDisplay, SocialLoginButtons } from '@/features/auth/components'
 
 type LoginPageProps = {
     searchParams: Promise<{
@@ -19,8 +18,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     const params = await searchParams
 
     return (
-        <div className="flex flex-col p-4 grow pt-17 relative">
-            <div className='flex flex-col items-center w-full max-w-4xl gap-4 mx-auto lg:flex-row grow'>
+        <section className="flex flex-col p-4 grow pt-17 relative">
+            <div className='flex flex-col justify-center items-center w-full max-w-4xl gap-4 mx-auto md:flex-row grow'>
                 <div className='w-full lg:pr-10'>
                     <LoginErrorDisplay
                         error={params.error}
@@ -30,7 +29,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                     <LoginForm />
                     <ResetPasswordLink />
                 </div>
-                <div className='w-full h-1 lg:w-1 lg:h-100 bg-primary/50'></div>
+                <div className='w-full h-1 md:w-1 md:h-100 bg-primary/50'></div>
                 <SocialLoginButtons orLoginWith={t("description.or-login-with")} />
             </div>
             <DotPattern
@@ -40,6 +39,6 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                     "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
                 )}
             />
-        </div>
+        </section>
     )
 }

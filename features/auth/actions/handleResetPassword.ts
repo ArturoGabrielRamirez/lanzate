@@ -1,7 +1,7 @@
 'use server'
 
 import { actionWrapper } from '@/utils/lib'
-import { type ResponseType } from '@/features/layout/types'
+import { ResponseType } from '@/features/layout/types'
 import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function handleResetPassword(payload: any): Promise<ResponseType<any>> {
