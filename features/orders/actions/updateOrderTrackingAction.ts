@@ -2,6 +2,7 @@
 
 import { updateOrderTrackingData } from "../data/updateOrderTrackingData"
 import { OrderTrackingStatus } from "@prisma/client"
+import { revalidatePath } from "next/cache"
 
 type UpdateOrderTrackingActionProps = {
     orderId: string
@@ -17,6 +18,10 @@ export async function updateOrderTrackingAction({
             orderId: parseInt(orderId),
             newTrackingStatus
         })
+
+        if (!result.error) {
+            revalidatePath(`/dashboard/orders/${orderId}`)
+        }
 
         return result
     } catch (error) {

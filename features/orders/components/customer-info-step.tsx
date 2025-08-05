@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import { User, Mail, Phone, MapPin, MessageCircle, Check, Package, Truck, Clock, CheckCircle2 } from "lucide-react"
 import { useState, useTransition } from "react"
 import { updateOrderTrackingAction } from "../actions/updateOrderTrackingAction"
+import { finalizeOrderAction } from "../actions/finalizeOrderAction"
 import { toast } from "sonner"
 import { OrderTrackingStatus } from "@prisma/client"
 
@@ -50,6 +51,7 @@ type Props = {
 
 function CustomerInfoStep({ order }: Props) {
     const [isPending, startTransition] = useTransition()
+    const [isFinalizing, startFinalizeTransition] = useTransition()
     const isPickup = order.shipping_method === "PICKUP"
     const isCompleted = order.status === "COMPLETED"
     const currentTrackingStatus = order.tracking?.tracking_status
@@ -80,7 +82,6 @@ function CustomerInfoStep({ order }: Props) {
                     toast.error(result.message)
                 } else {
                     toast.success("Order tracking updated successfully")
-                    window.location.reload()
                 }
             } catch (error) {
                 console.error("Error updating order tracking:", error)
@@ -90,8 +91,24 @@ function CustomerInfoStep({ order }: Props) {
     }
 
     const handleFinalize = () => {
-        // TODO: Implement finalize functionality
-        toast.info("Finalize functionality coming soon")
+        startFinalizeTransition(async () => {
+            try {
+                const result = await finalizeOrderAction({
+                    orderId: order.id.toString(),
+                    shippingMethod: order.shipping_method
+                })
+
+                if (result.error) {
+                    toast.error(result.message)
+                } else {
+                    const actionText = isPickup ? "picked up" : "delivered"
+                    toast.success(`Order successfully finalized! The order has been marked as ${actionText}.`)
+                }
+            } catch (error) {
+                console.error("Error finalizing order:", error)
+                toast.error("Failed to finalize order")
+            }
+        })
     }
 
     const getTrackingStatusInfo = () => {
@@ -175,11 +192,12 @@ function CustomerInfoStep({ order }: Props) {
                     )}
                     <Button
                         onClick={handleFinalize}
+                        disabled={isFinalizing}
                         className="w-full"
                         variant="default"
                     >
                         <CheckCircle2 className="w-4 h-4 mr-2" />
-                        Finalizar
+                        {isFinalizing ? "Finalizing..." : "Finalizar"}
                     </Button>
                 </div>
             )
@@ -211,11 +229,12 @@ function CustomerInfoStep({ order }: Props) {
                     {currentTrackingStatus !== "ON_THE_WAY" && (
                         <Button
                             onClick={handleFinalize}
+                            disabled={isFinalizing}
                             className="w-full"
                             variant="default"
                         >
                             <CheckCircle2 className="w-4 h-4 mr-2" />
-                            Finalizar
+                            {isFinalizing ? "Finalizing..." : "Finalizar"}
                         </Button>
                     )}
                 </div>
@@ -330,7 +349,6 @@ function CustomerInfoStep({ order }: Props) {
                     )}
                 </div>
             </div>
-
 
 
             {isPickup ? (

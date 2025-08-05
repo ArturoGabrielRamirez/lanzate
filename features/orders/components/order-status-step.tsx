@@ -42,6 +42,7 @@ function OrderStatusStep({ order }: Props) {
     }
 
     const isOrderReady = order.status === "READY"
+    const isOrderCompleted = order.status === "COMPLETED"
 
     return (
         <div className="grow flex flex-col justify-center">
@@ -54,7 +55,7 @@ function OrderStatusStep({ order }: Props) {
                     ✓ This order has already been confirmed and the customer has been notified
                 </p>
             )}
-            <div className={cn("bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6", isOrderReady && "opacity-30")}>
+            <div className={cn("bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6", isOrderReady || isOrderCompleted && "opacity-30")}>
                 <div className="flex items-start gap-3">
                     <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                     <div className="text-sm text-blue-800">
@@ -74,7 +75,7 @@ function OrderStatusStep({ order }: Props) {
             <div className="flex justify-center">
                 <Button
                     onClick={handleConfirmOrder}
-                    disabled={isPending || isOrderReady}
+                    disabled={isPending || isOrderReady || isOrderCompleted}
                     size="lg"
                     className="min-w-[200px]"
                 >
