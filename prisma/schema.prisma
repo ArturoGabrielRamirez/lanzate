@@ -700,6 +700,8 @@ enum ActionType {
   DELETE
   LOGIN
   LOGOUT
+  EMAIL_CHANGE_REQUEST
+  EMAIL_CONFIRMATION
 }
 
 enum EntityType {
@@ -714,6 +716,7 @@ enum EntityType {
   TRANSACTION
   EMPLOYEE
   SETTINGS
+  EMAIL_CHANGE_REQUEST
 }
 
 enum EmployeeRole {
