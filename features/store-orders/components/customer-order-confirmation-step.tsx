@@ -96,7 +96,9 @@ function CustomerOrderConfirmationStep({ order }: Props) {
                 <div className="space-y-3">
                     {isPickup ? (
                         <>
-                            <div className="flex items-start gap-3 p-3 border rounded-lg">
+                            <div className={`flex items-start gap-3 p-3 border rounded-lg ${
+                                isConfirmed ? 'opacity-50 line-through' : ''
+                            }`}>
                                 <div className="flex-shrink-0 rounded-full bg-blue-100 p-2">
                                     <Package className="w-4 h-4 text-blue-600" />
                                 </div>
@@ -107,7 +109,9 @@ function CustomerOrderConfirmationStep({ order }: Props) {
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex items-start gap-3 p-3 border rounded-lg">
+                            <div className={`flex items-start gap-3 p-3 border rounded-lg ${
+                                isConfirmed ? 'opacity-50 line-through' : ''
+                            }`}>
                                 <div className="flex-shrink-0 rounded-full bg-green-100 p-2">
                                     <CheckCircle className="w-4 h-4 text-green-600" />
                                 </div>
@@ -132,7 +136,9 @@ function CustomerOrderConfirmationStep({ order }: Props) {
                         </>
                     ) : (
                         <>
-                            <div className="flex items-start gap-3 p-3 border rounded-lg">
+                            <div className={`flex items-start gap-3 p-3 border rounded-lg ${
+                                isConfirmed ? 'opacity-50 line-through' : ''
+                            }`}>
                                 <div className="flex-shrink-0 rounded-full bg-blue-100 p-2">
                                     <Package className="w-4 h-4 text-blue-600" />
                                 </div>
@@ -143,7 +149,9 @@ function CustomerOrderConfirmationStep({ order }: Props) {
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex items-start gap-3 p-3 border rounded-lg">
+                            <div className={`flex items-start gap-3 p-3 border rounded-lg ${
+                                isConfirmed ? 'opacity-50 line-through' : ''
+                            }`}>
                                 <div className="flex-shrink-0 rounded-full bg-green-100 p-2">
                                     <CheckCircle className="w-4 h-4 text-green-600" />
                                 </div>
