@@ -29,6 +29,10 @@ export async function getStoreCategories(storeId: number) {
             }
         })
 
-        return categories
+        return {
+            error: false,
+            message: "Categories fetched successfully",
+            payload: categories
+        }
     })
 } 

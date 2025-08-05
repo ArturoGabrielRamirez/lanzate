@@ -36,7 +36,7 @@ export async function createNewWalkInOrder({
 
     return actionWrapper(async () => {
 
-        const { error, message } = await insertOrder({
+        const { error, message, payload: order } = await insertOrder({
             branch_id: branch_id,
             isPaid: isPaid,
             isWalkIn: true,
@@ -55,7 +55,8 @@ export async function createNewWalkInOrder({
 
         return {
             error: false,
-            message: "Order created successfully"
+            message: "Order created successfully",
+            payload: order
         }
     })
 }

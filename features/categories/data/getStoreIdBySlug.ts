@@ -16,7 +16,7 @@ export async function getStoreIdBySlug(slug: string) {
 
         return {
             payload: store?.id || null,
-            error: null,
+            error: false,
             message: "Store ID obtenido exitosamente"
         }
     })
