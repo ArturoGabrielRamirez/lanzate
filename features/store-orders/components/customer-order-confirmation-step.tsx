@@ -180,26 +180,6 @@ function CustomerOrderConfirmationStep({ order }: Props) {
                     )}
                 </div>
             </div>
-
-            <div>
-                <h4 className="font-medium mb-3">Need Help?</h4>
-                <div className="bg-muted/30 border rounded-lg p-4">
-                    <div className="flex items-start gap-3">
-                        <AlertCircle className="w-5 h-5 text-muted-foreground mt-0.5 flex-shrink-0" />
-                        <div className="text-sm text-muted-foreground">
-                            <p className="font-medium mb-2">Contact Information:</p>
-                            <ul className="space-y-1">
-                                <li>• Store: {order.store.name}</li>
-                                <li>• Branch: {order.branch.name}</li>
-                                <li>• Order ID: #{order.id}</li>
-                            </ul>
-                            <p className="mt-2">
-                                If you have any questions about your order, please contact the store directly.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     )
 }
