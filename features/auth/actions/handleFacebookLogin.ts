@@ -7,7 +7,7 @@ import { extractSubdomainFromHost } from '../utils/extract-subdomain-from-host'
 import { buildLoginErrorUrl } from '../utils/build-login-error-url'
 
 export async function handleFacebookLogin() {
-    const supabase = await createServerSideClient()
+    const supabase = createServerSideClient()
     const headersList = await headers()
     const host = headersList.get('host') || ''
     const subdomain = extractSubdomainFromHost(host)
@@ -36,5 +36,6 @@ export async function handleFacebookLogin() {
     if (data.url) {
         redirect(data.url)
     }
+    
     redirect(await buildLoginErrorUrl(subdomain, 'no_url'))
 }

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { User } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
-import { signOut } from "@/features/auth/actions/handleSignOut"
+import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
 
 function AccountDropdown() {
     const [open, setOpen] = useState(false)
@@ -15,7 +15,7 @@ function AccountDropdown() {
     }
 
     const handleSignOut = async () => {
-        await signOut()
+        await handleSignOutAction()
     }
 
     return (
@@ -37,7 +37,7 @@ function AccountDropdown() {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                    <Button 
+                    <Button
                         onClick={handleSignOut}
                         className="w-full text-left cursor-pointer"
                     >

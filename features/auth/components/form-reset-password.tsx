@@ -1,10 +1,11 @@
 'use client'
 
-import { handleResetPassword } from '@/features/auth/actions/handleResetPassword'
-import { schema } from '@/features/auth/schemas/email-schema'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Form, InputField } from '@/features/layout/components'
 import { useTranslations } from 'next-intl'
+
+import { Form, InputField } from '@/features/layout/components'
+import { handleResetPassword } from '@/features/auth/actions'
+import { emailSchema } from '@/features/auth/schemas'
 
 export default function ResetPassword() {
 
@@ -12,7 +13,7 @@ export default function ResetPassword() {
 
   return (
     <Form
-      resolver={yupResolver(schema)}
+      resolver={yupResolver(emailSchema)}
       formAction={handleResetPassword}
       successRedirect="/check-email"
       contentButton={t("buttons.send-reset-link")}

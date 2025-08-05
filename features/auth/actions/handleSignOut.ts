@@ -4,8 +4,8 @@ import { createServerSideClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-export async function signOut() {
-    const supabase = await createServerSideClient()
+export async function handleSignOut() {
+    const supabase = createServerSideClient()
 
     const { data: { user } } = await supabase.auth.getUser()
 
