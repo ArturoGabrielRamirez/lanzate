@@ -39,13 +39,47 @@ function CustomerOrderTrackingStep({ order }: Props) {
 
     const getTrackingStatusInfo = () => {
         if (!currentTrackingStatus) {
-            return {
-                icon: Clock,
-                title: "Order Received",
-                description: "Your order has been received and is being processed",
-                color: "text-blue-600",
-                bgColor: "bg-blue-50",
-                borderColor: "border-blue-200"
+            // If no tracking status but order is confirmed, show appropriate status
+            if (order.status === "READY") {
+                return {
+                    icon: CheckCircle,
+                    title: isPickup ? "Ready for Pickup" : "Ready for Delivery",
+                    description: isPickup
+                        ? "Your order is ready! You can come to pick it up at the store"
+                        : "Your order is ready and waiting to be delivered",
+                    color: "text-green-600",
+                    bgColor: "bg-green-50",
+                    borderColor: "border-green-200"
+                }
+            } else if (order.status === "SHIPPED") {
+                return {
+                    icon: Truck,
+                    title: "On the Way",
+                    description: "Your order is on its way to your address",
+                    color: "text-orange-600",
+                    bgColor: "bg-orange-50",
+                    borderColor: "border-orange-200"
+                }
+            } else if (order.status === "DELIVERED" || order.status === "COMPLETED") {
+                return {
+                    icon: CheckCircle,
+                    title: isPickup ? "Order Picked Up" : "Order Delivered",
+                    description: isPickup
+                        ? "Your order has been successfully picked up"
+                        : "Your order has been successfully delivered",
+                    color: "text-green-600",
+                    bgColor: "bg-green-50",
+                    borderColor: "border-green-200"
+                }
+            } else {
+                return {
+                    icon: Package,
+                    title: "Order Preparation",
+                    description: "Your order is being prepared and will be ready soon",
+                    color: "text-blue-600",
+                    bgColor: "bg-blue-50",
+                    borderColor: "border-blue-200"
+                }
             }
         }
 
@@ -113,7 +147,7 @@ function CustomerOrderTrackingStep({ order }: Props) {
 
     const getTrackingTimeline = () => {
         const timeline = []
-        
+
         // Always show order placed
         timeline.push({
             icon: CheckCircle,
@@ -242,45 +276,46 @@ function CustomerOrderTrackingStep({ order }: Props) {
             </div>
 
             {/* Tracking Timeline */}
-            <div>
-                <h4 className="font-medium mb-3">Order Timeline</h4>
-                <div className="space-y-3">
-                    {timeline.map((step, index) => (
-                        <div key={index} className="flex items-start gap-3">
-                            <div className={`flex-shrink-0 rounded-full p-2 ${step.bgColor}`}>
-                                <step.icon className={`w-4 h-4 ${step.color}`} />
-                            </div>
-                            <div className="flex-1">
-                                <h5 className={`font-medium text-sm ${step.completed ? 'text-foreground' : 'text-muted-foreground'}`}>
-                                    {step.title}
-                                </h5>
-                                <p className={`text-xs ${step.completed ? 'text-muted-foreground' : 'text-muted-foreground/70'}`}>
-                                    {step.description}
-                                </p>
+            <div className="flex gap-6">
+                <div className="flex-1">
+                    <h4 className="font-medium mb-3">Location</h4>
+                    <div className="border rounded-lg p-4 bg-muted/50">
+                        <div className="aspect-video bg-muted rounded flex items-center justify-center mb-3">
+                            <div className="text-center text-muted-foreground">
+                                <MapPin className="w-8 h-8 mx-auto mb-2" />
+                                <p className="text-sm">Google Maps Integration</p>
+                                <p className="text-xs">Coming Soon</p>
                             </div>
                         </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Location Information */}
-            <div>
-                <h4 className="font-medium mb-3">Location Information</h4>
-                <div className="bg-muted/30 border rounded-lg p-4">
-                    <div className="flex items-start gap-3">
-                        <MapPin className="w-5 h-5 text-muted-foreground mt-0.5 flex-shrink-0" />
-                        <div>
-                            <h5 className="font-medium text-sm">{order.branch.name}</h5>
-                            <p className="text-sm text-muted-foreground">{order.branch.address}</p>
-                            <p className="text-xs text-muted-foreground mt-1">
-                                {isPickup 
-                                    ? "This is where you'll pick up your order"
-                                    : "This is where your order is being prepared"
-                                }
-                            </p>
+                        <div className="text-sm">
+                            <p className="font-medium">{order.branch.name}</p>
+                            <p className="text-muted-foreground">{order.branch.address}</p>
                         </div>
                     </div>
                 </div>
+                
+                <div className="flex-1">
+                    <h4 className="font-medium mb-3">Order Timeline</h4>
+                    <div className="space-y-3">
+                        {timeline.map((step, index) => (
+                            <div key={index} className="flex items-start gap-3">
+                                <div className={`flex-shrink-0 rounded-full p-2 ${step.bgColor}`}>
+                                    <step.icon className={`w-4 h-4 ${step.color}`} />
+                                </div>
+                                <div className="flex-1">
+                                    <h5 className={`font-medium text-sm ${step.completed ? 'text-foreground' : 'text-muted-foreground'}`}>
+                                        {step.title}
+                                    </h5>
+                                    <p className={`text-xs ${step.completed ? 'text-muted-foreground' : 'text-muted-foreground/70'}`}>
+                                        {step.description}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+
             </div>
         </div>
     )

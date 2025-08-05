@@ -137,7 +137,9 @@ function CustomerOrderTracking({ order }: Props) {
             </InteractiveStepperContent>
 
             <InteractiveStepperContent step={3} className="grow flex flex-col">
+                <StepNavigation />
                 <CustomerOrderTrackingStep order={order} />
+                <StepNavigation />
             </InteractiveStepperContent>
         </InteractiveStepper>
     )
