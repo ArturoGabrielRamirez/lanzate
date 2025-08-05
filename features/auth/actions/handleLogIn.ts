@@ -2,9 +2,8 @@
 
 import { actionWrapper } from '@/utils/lib'
 import { createServerSideClient } from '@/utils/supabase/server'
-import { HandleLoginAction } from '../types'
-import { insertLogEntry } from '@/features/layout/data/insertLogEntry'
-import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
+import { HandleLoginAction } from '@/features/auth/types'
+import { insertLogEntry, getUserByEmail } from '@/features/layout/data'
 
 
 export async function handleLogIn(formData: HandleLoginAction) {

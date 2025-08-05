@@ -3,9 +3,9 @@
 import { createServerSideClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
-import { extractSubdomainFromHost } from '../utils/extract-subdomain-from-host'
-import { buildLoginErrorUrl } from '../utils/build-login-error-url'
+
 import { actionWrapper } from '@/utils/lib'
+import { extractSubdomainFromHost, buildLoginErrorUrl } from '@/features/auth/utils'
 
 export async function handleGoogleLogIn() {
     return actionWrapper(async () => {

@@ -1,11 +1,10 @@
 'use server'
 
-import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
 import { createServerSideClient } from '@/utils/supabase/server'
-import { insertUser } from '../data/insertUser'
-import { ResponseType } from '@/features/layout/types'
+import { getUserByEmail, insertLogEntry } from '@/features/layout/data'
+import { insertUser } from '@/features/auth/data'
 import { actionWrapper } from '@/utils/lib'
-import { insertLogEntry } from '@/features/layout/data/insertLogEntry'
+import { ResponseType } from '@/features/layout/types'
 
 export const handleSignup = async (payload: any): Promise<ResponseType<any>> => {
     return actionWrapper(async () => {

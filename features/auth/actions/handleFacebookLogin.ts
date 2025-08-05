@@ -1,10 +1,10 @@
 'use server'
 
-import { createServerSideClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
-import { extractSubdomainFromHost } from '../utils/extract-subdomain-from-host'
-import { buildLoginErrorUrl } from '../utils/build-login-error-url'
+
+import { extractSubdomainFromHost, buildLoginErrorUrl } from '@/features/auth/utils'
+import { createServerSideClient } from '@/utils/supabase/server'
 import { actionWrapper } from '@/utils/lib'
 
 export async function handleFacebookLogin() {
