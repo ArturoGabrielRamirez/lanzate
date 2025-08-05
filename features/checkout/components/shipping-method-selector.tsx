@@ -14,7 +14,6 @@ interface ShippingMethodSelectorProps {
 }
 
 export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelectorProps) {
-    console.log("🚀 ~ ShippingMethodSelector ~ value:", value)
     const { setValue } = useFormContext()
 
     useEffect(() => {
@@ -39,7 +38,7 @@ export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelect
                     type="button"
                     variant="outline"
                     onClick={handleShippingMethodChange}
-                    data-type="delivery"
+                    data-type="DELIVERY"
                     className={cn(
                         "h-auto p-4 flex flex-col items-center gap-2 transition-all duration-300",
                         value === "DELIVERY"
@@ -59,7 +58,7 @@ export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelect
                     type="button"
                     variant="outline"
                     onClick={handleShippingMethodChange}
-                    data-type="pickup"
+                    data-type="PICKUP"
                     className={cn(
                         "h-auto p-4 flex flex-col items-center gap-2 transition-all duration-300",
                         value === "PICKUP"

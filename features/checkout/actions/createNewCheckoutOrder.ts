@@ -2,6 +2,7 @@
 
 import { actionWrapper } from "@/utils/lib"
 import { insertOrder } from "../data/insertOrder"
+import { insertOrderTracking } from "../data/insertOrderTracking"
 import { CartItemType } from "@/features/cart/types"
 import { PaymentMethod, ShippingMethod } from "@prisma/client"
 
@@ -43,7 +44,7 @@ export async function createNewCheckoutOrder({
 
     return actionWrapper(async () => {
 
-        const { error, message } = await insertOrder({
+        const { error, message, payload } = await insertOrder({
             branch_id: branch_id,
             isPaid: true,
             isWalkIn: false,
@@ -59,9 +60,17 @@ export async function createNewCheckoutOrder({
 
         if (error) throw new Error(message)
 
+        // Create order tracking since the order was made through the checkout form, the customer is not phisically in the store
+        /* const { error: trackingError, message: trackingMessage } = await insertOrderTracking({
+            order_id: payload.id
+        })
+
+        if (trackingError) throw new Error(trackingMessage) */
+
         return {
             error: false,
-            message: "Order created successfully"
+            message: "Order created successfully",
+            payload: payload
         }
     })
 }

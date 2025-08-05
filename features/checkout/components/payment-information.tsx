@@ -41,19 +41,19 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
                         <SelectValue placeholder="Choose a payment method" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="credit-debit">
+                        <SelectItem value="CREDIT_CARD">
                             <div className="flex items-center gap-2">
                                 <CreditCard className="size-4" />
                                 Credit/Debit Card
                             </div>
                         </SelectItem>
-                        <SelectItem value="transfer">
+                        <SelectItem value="TRANSFER">
                             <div className="flex items-center gap-2">
                                 <Banknote className="size-4" />
                                 Bank Transfer
                             </div>
                         </SelectItem>
-                        <SelectItem value="mercadopago">
+                        <SelectItem value="MERCADO_PAGO">
                             <div className="flex items-center gap-2">
                                 <Smartphone className="size-4" />
                                 Mercado Pago
