@@ -1,0 +1,1 @@
+export { canManageCategories } from "./canManageCategories" 

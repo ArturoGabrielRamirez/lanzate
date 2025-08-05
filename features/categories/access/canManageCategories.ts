@@ -4,7 +4,6 @@ import { prisma } from "@/utils/prisma"
 
 export async function canManageCategories(userId: number, storeId: number): Promise<boolean> {
     try {
-        // Verificar si el usuario es el dueño de la tienda
         const store = await prisma.store.findFirst({
             where: {
                 id: storeId,
@@ -14,7 +13,6 @@ export async function canManageCategories(userId: number, storeId: number): Prom
 
         if (store) return true
 
-        // Verificar si el usuario es empleado con permisos de gestión de productos
         const employee = await prisma.employee.findFirst({
             where: {
                 user_id: userId,

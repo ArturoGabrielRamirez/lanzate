@@ -1,8 +1,7 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
-import { actionWrapper } from "@/utils/lib"
 import { revalidatePath } from "next/cache"
+import { insertCategory } from "@/features/categories/data"
 
 export async function createCategory(storeId: number, payload: {
     name: string
@@ -10,47 +9,14 @@ export async function createCategory(storeId: number, payload: {
     image?: string
     sort_order?: number
 }) {
-    return actionWrapper(async () => {
-        // Generar slug único para la tienda
-        const baseSlug = payload.name.toLowerCase()
-            .replace(/[^a-z0-9\s-]/g, '')
-            .replace(/\s+/g, '-')
-            .replace(/-+/g, '-')
-            .trim()
+    const { error, message, payload: category } = await insertCategory(storeId, payload)
 
-        let slug = baseSlug
-        let counter = 1
+    if (error) {
+        throw new Error(message)
+    }
 
-        // Verificar que el slug sea único dentro de la tienda
-        while (true) {
-            const existingCategory = await prisma.category.findFirst({
-                where: {
-                    store_id: storeId,
-                    slug: slug
-                }
-            })
+    revalidatePath(`/stores/${storeId}/categories`)
+    revalidatePath(`/stores/${storeId}`)
 
-            if (!existingCategory) break
-            slug = `${baseSlug}-${counter}`
-            counter++
-        }
-
-        const category = await prisma.category.create({
-            data: {
-                name: payload.name,
-                description: payload.description,
-                image: payload.image,
-                slug: slug,
-                store_id: storeId,
-                sort_order: payload.sort_order || 0,
-                is_default: false,
-                is_active: true
-            }
-        })
-
-        revalidatePath(`/stores/${storeId}/categories`)
-        revalidatePath(`/stores/${storeId}`)
-
-        return category
-    })
+    return category
 } 

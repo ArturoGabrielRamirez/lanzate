@@ -1,47 +1,17 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
-import { actionWrapper } from "@/utils/lib"
 import { revalidatePath } from "next/cache"
+import { deleteCategory as deleteCategoryFromDb } from "@/features/categories/data"
 
 export async function deleteCategory(storeId: number, categoryId: number) {
-    return actionWrapper(async () => {
-        // Verificar que la categoría pertenece a la tienda
-        const existingCategory = await prisma.category.findFirst({
-            where: {
-                id: categoryId,
-                store_id: storeId
-            },
-            include: {
-                products: true
-            }
-        })
+    const { error, message, payload: category } = await deleteCategoryFromDb(storeId, categoryId)
 
-        if (!existingCategory) {
-            throw new Error("Category not found or does not belong to this store")
-        }
+    if (error) {
+        throw new Error(message)
+    }
 
-        // No permitir eliminar categorías por defecto
-        if (existingCategory.is_default) {
-            throw new Error("Cannot delete default categories")
-        }
+    revalidatePath(`/stores/${storeId}/categories`)
+    revalidatePath(`/stores/${storeId}`)
 
-        // Verificar si hay productos en esta categoría
-        if (existingCategory.products.length > 0) {
-            throw new Error("Cannot delete category with products. Please move or delete the products first.")
-        }
-
-        // Soft delete - marcar como inactiva
-        const category = await prisma.category.update({
-            where: { id: categoryId },
-            data: {
-                is_active: false
-            }
-        })
-
-        revalidatePath(`/stores/${storeId}/categories`)
-        revalidatePath(`/stores/${storeId}`)
-
-        return category
-    })
+    return category
 } 

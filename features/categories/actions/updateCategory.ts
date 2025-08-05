@@ -1,8 +1,7 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
-import { actionWrapper } from "@/utils/lib"
 import { revalidatePath } from "next/cache"
+import { updateCategory as updateCategoryInDb } from "@/features/categories/data"
 
 export async function updateCategory(
     storeId: number, 
@@ -15,58 +14,14 @@ export async function updateCategory(
         is_active?: boolean
     }
 ) {
-    return actionWrapper(async () => {
-        // Verificar que la categoría pertenece a la tienda
-        const existingCategory = await prisma.category.findFirst({
-            where: {
-                id: categoryId,
-                store_id: storeId
-            }
-        })
+    const { error, message, payload: category } = await updateCategoryInDb(storeId, categoryId, payload)
 
-        if (!existingCategory) {
-            throw new Error("Category not found or does not belong to this store")
-        }
+    if (error) {
+        throw new Error(message)
+    }
 
-        // Si se está cambiando el nombre, generar nuevo slug
-        let slug = existingCategory.slug
-        if (payload.name && payload.name !== existingCategory.name) {
-            const baseSlug = payload.name.toLowerCase()
-                .replace(/[^a-z0-9\s-]/g, '')
-                .replace(/\s+/g, '-')
-                .replace(/-+/g, '-')
-                .trim()
+    revalidatePath(`/stores/${storeId}/categories`)
+    revalidatePath(`/stores/${storeId}`)
 
-            let newSlug = baseSlug
-            let counter = 1
-
-            while (true) {
-                const duplicateCategory = await prisma.category.findFirst({
-                    where: {
-                        store_id: storeId,
-                        slug: newSlug,
-                        id: { not: categoryId }
-                    }
-                })
-
-                if (!duplicateCategory) break
-                newSlug = `${baseSlug}-${counter}`
-                counter++
-            }
-            slug = newSlug
-        }
-
-        const category = await prisma.category.update({
-            where: { id: categoryId },
-            data: {
-                ...payload,
-                slug
-            }
-        })
-
-        revalidatePath(`/stores/${storeId}/categories`)
-        revalidatePath(`/stores/${storeId}`)
-
-        return category
-    })
+    return category
 } 
