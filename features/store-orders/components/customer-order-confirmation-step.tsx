@@ -33,7 +33,6 @@ function CustomerOrderConfirmationStep({ order }: Props) {
     const isPickup = order.shipping_method === "PICKUP"
     const isConfirmed = order.status === "READY" || order.status === "SHIPPED" || order.status === "DELIVERED" || order.status === "COMPLETED"
     const isProcessing = order.status === "PROCESSING"
-    const isPending = order.status === "PENDING"
 
     const getConfirmationStatus = () => {
         if (isConfirmed) {

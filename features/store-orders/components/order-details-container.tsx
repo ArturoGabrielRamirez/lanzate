@@ -1,10 +1,6 @@
 import { getUserInfo } from "@/features/layout/actions"
 import { getOrderByIdAction } from "../actions/getOrderByIdAction"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Calendar, MapPin, Store as StoreIcon, Package } from "lucide-react"
-import OrderItemComponent from "./order-item"
-import { OrderItem, Product } from "@prisma/client"
+import { Package } from "lucide-react"
 import { notFound } from "next/navigation"
 import CustomerOrderTracking from "./customer-order-tracking"
 
@@ -31,37 +27,6 @@ async function OrderDetailsContainer({ orderId }: Props) {
 
     if (orderError || !order) {
         notFound()
-    }
-
-    const formatDate = (date: Date) => {
-        return new Date(date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        })
-    }
-
-    const getStatusColor = (status: string) => {
-        switch (status) {
-            case 'PENDING':
-                return 'bg-yellow-100 text-yellow-800'
-            case 'PROCESSING':
-                return 'bg-blue-100 text-blue-800'
-            case 'READY':
-                return 'bg-green-100 text-green-800'
-            case 'SHIPPED':
-                return 'bg-purple-100 text-purple-800'
-            case 'DELIVERED':
-                return 'bg-green-100 text-green-800'
-            case 'CANCELLED':
-                return 'bg-red-100 text-red-800'
-            case 'COMPLETED':
-                return 'bg-green-100 text-green-800'
-            default:
-                return 'bg-gray-100 text-gray-800'
-        }
     }
 
     return (

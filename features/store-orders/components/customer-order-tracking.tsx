@@ -107,7 +107,9 @@ function CustomerOrderTracking({ order }: Props) {
     }
 
     return (
-        <InteractiveStepper orientation="horizontal" className="grow">
+        <InteractiveStepper orientation="horizontal" className="grow" defaultValue={
+            isCompleted ? 1 : isProcessingCompleted ? 3 : 2
+        }>
             <InteractiveStepperItem completed>
                 <DynamicStepperTrigger config={stepTriggerConfigs[0]} />
                 <InteractiveStepperSeparator />
