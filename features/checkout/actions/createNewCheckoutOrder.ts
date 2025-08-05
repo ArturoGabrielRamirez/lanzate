@@ -60,13 +60,6 @@ export async function createNewCheckoutOrder({
 
         if (error) throw new Error(message)
 
-        // Create order tracking since the order was made through the checkout form, the customer is not phisically in the store
-        /* const { error: trackingError, message: trackingMessage } = await insertOrderTracking({
-            order_id: payload.id
-        })
-
-        if (trackingError) throw new Error(trackingMessage) */
-
         return {
             error: false,
             message: "Order created successfully",

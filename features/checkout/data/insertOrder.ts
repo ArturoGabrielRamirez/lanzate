@@ -245,7 +245,7 @@ export async function insertOrder({
         return {
             error: false,
             message: "Order created successfully",
-            payload: null
+            payload: order
         }
     })
 }

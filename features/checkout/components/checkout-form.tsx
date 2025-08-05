@@ -15,13 +15,15 @@ import { CheckoutStepItem } from "./checkout-step-item"
 import { StepNavigation } from "./step-navigation"
 import { Label } from "@/components/ui/label"
 import { useCart } from "@/features/cart/components/cart-provider"
+import { useRouter } from "next/navigation"
 
 function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, userId: string, branches: Branch[] }) {
 
     const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("DELIVERY")
     const [selectedBranchId, setSelectedBranchId] = useState<number | null>(null)
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("CASH")
-    const { quantity, total, cart } = useCart()
+    const { quantity, total, cart , clearCart } = useCart()
+    const router = useRouter()
 
     const handleSubmit = async (formData: any) => {
 
@@ -40,8 +42,12 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
             cart: cart,
             processed_by_user_id: Number(userId)
         })
-
+        
         if (error) throw new Error(message)
+
+        clearCart()
+
+        router.push(`/my-orders/${payload.id}`)
 
         return {
             error: false,
