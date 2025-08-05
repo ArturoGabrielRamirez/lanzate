@@ -1,16 +1,16 @@
 "use client"
 
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
-import { branchUpdateSchema } from "../schemas/branch-schema"
-import { editBranch } from "../actions/editBranch"
-import { formatErrorResponse } from "@/utils/lib"
+import { useState } from "react"
 import { Pencil } from "lucide-react"
-import { EditBranchButtonProps } from "../types"
+import { useTranslations } from "next-intl"
+
+import { ButtonWithPopup, InputField } from "@/features/layout/components"
+import { branchUpdateSchema } from "@/features/branches/schemas"
+import { editBranch } from "@/features/branches/actions"
+import { EditBranchButtonProps } from "@/features/branches/types"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { useState } from "react"
-import { useTranslations } from "next-intl"
 
 function EditBranchButton({ branch, slug, onComplete, userId }: EditBranchButtonProps) {
     

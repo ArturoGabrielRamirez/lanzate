@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/utils/lib"
-import { selectBranchById } from "../data/selectBranchById"
+import { selectBranchById } from "@/features/branches/data"
 
 export async function getBranchDetails(id: string) {
     return actionWrapper(async () => {
