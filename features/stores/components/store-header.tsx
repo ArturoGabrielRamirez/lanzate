@@ -47,7 +47,7 @@ async function StoreHeader({ slug }: StoreHeaderProps) {
                             <img
                                 src={`https://api.dicebear.com/9.x/initials/svg?seed=${store.name}`}
                                 alt="User avatar"
-                                className="rounded-full size-24"
+                                className="rounded-full size-16 md:size-20 lg:size-24"
                             />
                             <div className="flex flex-col gap-2">
                                 <p className="text-xl font-bold">{store.name}</p>
