@@ -145,7 +145,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
             text={(
                 <>
                     <Plus />
-                    {t("button")}
+                    <span className="hidden md:block">{t("button")}</span>
                 </>
             )}
             title={t("title")}
