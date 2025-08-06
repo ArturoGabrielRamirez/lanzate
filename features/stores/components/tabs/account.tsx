@@ -1,4 +1,6 @@
 import { getStoresFromSlug } from "../../actions/getStoresFromSlug"
+import { getEmployeePermissions } from "../../actions/getEmployeePermissions"
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { DeleteStoreButton, EditStoreButton } from "@/features/stores/components"
 import { AccountTabProps } from "@/features/stores/types"
 import { getTranslations } from "next-intl/server"
@@ -6,12 +8,33 @@ import { Phone, MessageCircle, Facebook, Instagram, Twitter } from "lucide-react
 
 async function AccountTab({ slug, userId }: AccountTabProps) {
 
-    const { payload: store, error } = await getStoresFromSlug(slug)
     const t = await getTranslations("store.account-tab")
+    
+    // Get user info and employee permissions
+    const [
+        { payload: user, error: userError, message: userMessage },
+        { payload: store, error: storeError },
+        { payload: employeePermissions, error: permissionsError }
+    ] = await Promise.all([
+        getUserInfo(),
+        getStoresFromSlug(slug),
+        getEmployeePermissions(userId, slug)
+    ])
 
-    if (error || !store) {
-        return console.log(error)
+    if (userError || !user) {
+        return console.log(userMessage)
     }
+
+    if (storeError || !store) {
+        return console.log(storeError)
+    }
+
+    if (permissionsError || !employeePermissions) {
+        return console.log("Error loading employee permissions")
+    }
+
+    // Check if user can manage store
+    const canManageStore = employeePermissions.isAdmin || employeePermissions.permissions?.can_manage_store
 
     return (
         <>
@@ -90,18 +113,22 @@ async function AccountTab({ slug, userId }: AccountTabProps) {
                     )}
                 </div>
 
-                <div>
-                    <EditStoreButton
-                        userId={userId}
-                        slug={store.slug}
-                        store={store}
-                    />
-                </div>
+                {canManageStore && (
+                    <div>
+                        <EditStoreButton
+                            userId={userId}
+                            slug={store.slug}
+                            store={store}
+                        />
+                    </div>
+                )}
             </section>
-            <section className="p-4 bg-destructive/10 border-destructive border rounded-md">
-                <h2 className="text-base md:text-lg font-medium mb-4">{t("danger-zone")}</h2>
-                <DeleteStoreButton storeId={store.id} userId={userId} />
-            </section>
+            {canManageStore && (
+                <section className="p-4 bg-destructive/10 border-destructive border rounded-md">
+                    <h2 className="text-base md:text-lg font-medium mb-4">{t("danger-zone")}</h2>
+                    <DeleteStoreButton storeId={store.id} userId={userId} />
+                </section>
+            )}
         </>
     )
 }
