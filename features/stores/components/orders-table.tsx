@@ -126,13 +126,6 @@ function OrdersTable({ data, slug, userId }: Props) {
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem asChild>
-                                <ChangeOrderStatusButton
-                                    order={order}
-                                    slug={slug}
-                                    userId={userId}
-                                />
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
                                 <CancelOrderButton
                                     order={order}
                                     slug={slug}
