@@ -202,6 +202,7 @@
             "button": "Create Product",
             "title": "Create new product",
             "description": "Select a store and create a new product to start selling!",
+            "popup-description": "Select a store and create a new product to start selling!",
             "select-store": "Select Store",
             "choose-store": "Choose a store...",
             "product-will-be-created": "Product will be created in: {storeName}",
@@ -310,6 +311,28 @@
             "title": "Your Store",
             "see-all": "See All",
             "new-store": "New Store"
+        },
+        "create-product": {
+            "button": "Create Product",
+            "title": "Create new product",
+            "description": "Select a store and create a new product to start selling!",
+            "popup-description": "Select a store and create a new product to start selling!",
+            "select-store": "Select Store",
+            "choose-store": "Choose a store...",
+            "product-will-be-created": "Product will be created in: {storeName}",
+            "drag-drop-image": "Drag & drop product image",
+            "click-browse": "Or click to browse (max 1 file, up to 2MB)",
+            "browse-files": "Browse files",
+            "product-name": "Product Name",
+            "price": "Price",
+            "stock": "Stock",
+            "description": "Description",
+            "messages": {
+                "select-store-first": "Please select a store first",
+                "success": "Product created successfully!",
+                "error": "Failed to create product",
+                "loading": "Creating product..."
+            }
         }
     },
     "error": {
@@ -1020,6 +1043,7 @@
             "button": "Create Product",
             "title": "Create new product",
             "description": "Create a new product to start selling your products! Choose a name for your product and click on the button below, you can continue to add more details of the product once it's created.",
+            "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
             "drag-drop": "Drag & drop files here",
             "click-browse": "Or click to browse (max 1 files, up to 2MB each)",
             "browse-files": "Browse files",
@@ -1176,7 +1200,13 @@
                 "newest": "Newest"
             },
             "categories": {
-                "category": "Category"
+                "category": "Category",
+                "searching-categories": "Searching categories...",
+                "no-categories-found": "No categories found",
+                "creating-category": "Creating category \"{name}\"...",
+                "error-searching": "Error searching categories",
+                "error-creating": "Error creating category",
+                "category-created": "Category \"{name}\" created successfully"
             },
             "limit": {
                 "1": "Showing",
