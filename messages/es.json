@@ -201,7 +201,7 @@
         "create-product": {
             "button": "Crear Producto",
             "title": "Crear nuevo producto",
-            "description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
+            "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
             "select-store": "Seleccionar Tienda",
             "choose-store": "Elegí una tienda...",
             "product-will-be-created": "El producto será creado en: {storeName}",

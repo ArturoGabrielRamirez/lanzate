@@ -121,7 +121,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                 <DialogHeader>
                     <DialogTitle>{t("title")}</DialogTitle>
                     <DialogDescription>
-                        {t("description")}
+                        {t("popup-description")}
                     </DialogDescription>
                 </DialogHeader>
                 <Form
