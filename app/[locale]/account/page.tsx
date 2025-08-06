@@ -1,3 +1,5 @@
+"use server"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo";
@@ -6,15 +8,30 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { User } from "lucide-react";
-import ChangePasswordButton from "@/features/auth/components/changue-password-button";
-import { EmailStatusBanner } from "@/features/auth/components/email-status-banner";
-import ChangeEmailButton from "@/features/auth/components/changue-email-button";
+import { ChangeEmailButton, EmailStatusBanner, ChangePasswordButton, syncEmailAfterConfirmation } from "@/features/auth/components/index"
+import { redirect } from "next/navigation";
 
+// Definir las props para recibir searchParams
+interface Props {
+    searchParams: {
+        emailCompleted?: string;
+    }
+}
 
-export default async function AccountPage() {
+export default async function AccountPage({ searchParams }: Props) {
+
+    // Manejar la sincronización de email si viene el parámetro
+
+    if (searchParams.emailCompleted === 'true') {
+        const result = await syncEmailAfterConfirmation();
+        if (result && result.success) {
+            // Redirigir sin el parámetro para limpiar la URL
+            redirect('/account');
+        }
+        // Si hay error o result es null, continúa mostrando la página normalmente
+    }
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
-
     const t = await getTranslations("account");
 
     if (userError || !user) {
@@ -34,10 +51,9 @@ export default async function AccountPage() {
                     href: "/account"
                 }
             ]} showDate />
-            
-            {/* Banner de estado del email */}
+
             <EmailStatusBanner />
-            
+
             <section className="flex items-center gap-4">
                 <Card className="w-full">
                     <CardContent className="flex items-center gap-4 w-full">
@@ -63,8 +79,8 @@ export default async function AccountPage() {
                         </div>
                     </CardContent>
                 </Card>
-
             </section>
+
             <section className="py-4 grow flex">
                 <Tabs defaultValue="account" className="grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4">
                     <TabsList className="w-full h-full items-start">

@@ -3,7 +3,6 @@
 import { createServerSideClient } from "@/utils/supabase/server";
 import { getCurrentUser } from "./get-user";
 import { prisma } from "@/utils/prisma";
-import { randomUUID } from "crypto";
 
 export async function handleEditEmail(email: string) {
     const { user, error: userError } = await getCurrentUser();
@@ -12,12 +11,9 @@ export async function handleEditEmail(email: string) {
         return { error: userError || "User not found" };
     }
 
-    // Obtener el usuario desde tu base de datos local (asumiendo que tienes una relación)
     const localUser = await prisma.user.findFirst({
-        where: { 
-            // Asume que tienes algún campo para relacionar con Supabase
-            // Ajusta según tu esquema
-            email: user.email 
+        where: {
+            email: user.email
         }
     });
 
@@ -26,11 +22,9 @@ export async function handleEditEmail(email: string) {
     }
 
     try {
-        // 1. Crear o actualizar el registro de cambio de email
         const expiresAt = new Date();
         expiresAt.setHours(expiresAt.getHours() + 24); // Expira en 24 horas
 
-        // Verificar si ya existe una solicitud pendiente
         const existingRequest = await prisma.email_change_requests.findFirst({
             where: {
                 user_id: localUser.id,
@@ -44,7 +38,6 @@ export async function handleEditEmail(email: string) {
         let changeRequest;
 
         if (existingRequest) {
-            // Actualizar la solicitud existente
             changeRequest = await prisma.email_change_requests.update({
                 where: { id: existingRequest.id },
                 data: {
@@ -58,7 +51,6 @@ export async function handleEditEmail(email: string) {
                 }
             });
         } else {
-            // Crear nueva solicitud
             changeRequest = await prisma.email_change_requests.create({
                 data: {
                     user_id: localUser.id,
@@ -70,20 +62,27 @@ export async function handleEditEmail(email: string) {
             });
         }
 
-        // 2. Iniciar el proceso de cambio en Supabase
         const supabase = await createServerSideClient();
-        const { data, error } = await supabase.auth.updateUser({ email: email });
+
+        const baseUrl = process.env.NEXTAUTH_URL || `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`;
+        const redirectTo = `${baseUrl}/account?emailCompleted=true`;
+
+        const { data, error } = await supabase.auth.updateUser(
+            { email: email },
+            {
+                emailRedirectTo: redirectTo
+            }
+        );
 
         if (error) {
-            // Si falla Supabase, eliminar la solicitud creada
             await prisma.email_change_requests.delete({
                 where: { id: changeRequest.id }
             });
             return { error: error.message };
         }
 
-        return { 
-            success: true, 
+        return {
+            success: true,
             data,
             message: "Proceso de cambio iniciado. Confirma desde ambos emails.",
             new_email: email,
@@ -91,7 +90,6 @@ export async function handleEditEmail(email: string) {
         };
 
     } catch (error) {
-        console.error("Error creating email change request:", error);
         return { error: "Error interno del servidor" };
     }
 }

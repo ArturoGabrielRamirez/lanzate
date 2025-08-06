@@ -1,18 +1,17 @@
 'use client'
 
-
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle, Clock, Mail } from 'lucide-react';
-import { useEmailChangeStatus } from '../hooks/use-email-changue-status';
+import { useConfirmationEmailChangeStatus } from '../hooks/use-confirmation-email-change-status';
 
-export function EmailStatusBanner() {
-    const { status } = useEmailChangeStatus();
+export default function EmailStatusBanner() {
+    const { status } = useConfirmationEmailChangeStatus();
 
     if (!status.hasEmailChange || status.loading) {
         return null;
     }
 
-    if (status.oldEmailConfirmed && status.newEmailConfirmed) {
+    if (status.processCompleted || (status.oldEmailConfirmed && status.newEmailConfirmed)) {
         return (
             <Alert className="mb-4 border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950">
                 <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
@@ -43,7 +42,3 @@ export function EmailStatusBanner() {
         </Alert>
     );
 }
-
-// Actualizar AccountPage para incluir el banner
-// Agrega esto al inicio del contenido (después del Title):
-// <EmailStatusBanner />

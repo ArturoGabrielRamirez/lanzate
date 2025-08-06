@@ -13,7 +13,6 @@ export async function getEmailChangeStatus() {
     }
 
     try {
-        // Obtener el usuario local
         const localUser = await prisma.user.findFirst({
             where: { email: user.email }
         });
@@ -22,7 +21,6 @@ export async function getEmailChangeStatus() {
             return { error: "Usuario no encontrado en la base de datos local" };
         }
 
-        // Buscar solicitud de cambio de email activa
         const changeRequest = await prisma.email_change_requests.findFirst({
             where: {
                 user_id: localUser.id,
@@ -43,7 +41,6 @@ export async function getEmailChangeStatus() {
             return { error: "Error al obtener estado del usuario" };
         }
 
-        // Si no hay cambio pendiente
         if (!changeRequest) {
             return {
                 success: true,
@@ -59,10 +56,8 @@ export async function getEmailChangeStatus() {
             };
         }
 
-        // Verificar si el proceso se completó en Supabase
         const supabaseCompleted = !freshUser.new_email;
 
-        // Si se completó en Supabase pero no en nuestra DB, actualizar
         if (supabaseCompleted && !changeRequest.completed) {
             await prisma.email_change_requests.update({
                 where: { id: changeRequest.id },
@@ -104,9 +99,7 @@ export async function getEmailChangeStatus() {
                 newEmailConfirmedAt: changeRequest.new_email_confirmed_at
             }
         };
-
     } catch (error) {
-        console.error("Error getting email change status:", error);
         return { error: "Error interno del servidor" };
     }
 }
