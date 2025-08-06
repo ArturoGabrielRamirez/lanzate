@@ -61,7 +61,6 @@ export async function handleEditEmail(email: string) {
             // Crear nueva solicitud
             changeRequest = await prisma.email_change_requests.create({
                 data: {
-                    id: randomUUID(), // ⭐ AQUÍ ESTÁ LA CORRECCIÓN - genera el ID manualmente
                     user_id: localUser.id,
                     old_email: user.email!,
                     new_email: email,
