@@ -118,7 +118,6 @@ function FinalizeSaleButton({
         email: data.email
       }
     })
-    console.log("🚀 ~ handleFinalizeSale ~ error:", error)
 
     return { error, message, payload }
   }

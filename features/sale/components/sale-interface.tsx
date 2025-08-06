@@ -204,12 +204,9 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
         },
       })
       
-      console.log("🚀 ~ handleFinalizeSale ~ error:", error)
       if (error) {
         throw new Error(message)
       }
-
-      console.log("llega hasta aqui")
 
       setCartItems([])
       setCustomerInfo({ name: '', phone: '', email: '' })
