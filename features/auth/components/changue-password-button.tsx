@@ -15,8 +15,7 @@ export default function ChangePasswordButton({
         currentPassword: string; 
         password: string; 
         confirmPassword: string; 
-    }) {
-              
+    }) { 
         const result = await handleEditPassword(formData.currentPassword, formData.password);
         
         if (result.error) {

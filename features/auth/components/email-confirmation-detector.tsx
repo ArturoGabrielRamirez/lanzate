@@ -1,4 +1,4 @@
-'use client'
+/* 'use client'
 
 import { useEmailConfirmationDetector } from '../hooks/use-email-confirmation-detector';
 
@@ -18,4 +18,4 @@ export function EmailConfirmationDetector() {
     });
 
     return null; // No renderiza nada visible
-}
+} */

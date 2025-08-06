@@ -3,29 +3,15 @@
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle, Clock, Mail } from 'lucide-react';
 import { useEmailChangeStatus } from '../hooks/use-email-changue-status';
-import { useEmailConfirmationDetector } from '../hooks/use-email-confirmation-detector';
 
 export function EmailStatusBanner() {
-    const { status, refreshStatus } = useEmailChangeStatus();
+    const { status } = useEmailChangeStatus();
 
-    // Configurar el detector de confirmaciones
-    useEmailConfirmationDetector({
-        onFirstEmailConfirmed: () => {
-            console.log('🎉 First email confirmed! Refreshing status...');
-            // Refrescar el estado después de un breve delay
-            setTimeout(() => {
-                refreshStatus();
-            }, 1000);
-        },
-        onSecondEmailConfirmed: () => {
-            console.log('🎉 Second email confirmed! Refreshing status...');
-            setTimeout(() => {
-                refreshStatus();
-                // Opcional: recargar la página para mostrar el email actualizado
-                window.location.reload();
-            }, 1000);
-        }
-    });
+    // ❌ ELIMINAMOS ESTO - el detector global ya maneja las confirmaciones
+    // useEmailConfirmationDetector({
+    //     onFirstEmailConfirmed: () => { ... },
+    //     onSecondEmailConfirmed: () => { ... }
+    // });
 
     if (!status.hasEmailChange || status.loading) {
         return null;

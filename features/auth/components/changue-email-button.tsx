@@ -4,25 +4,12 @@ import { useState, useEffect } from 'react';
 import { ButtonWithPopup, InputField } from "@/features/layout/components";
 import { handleEditEmail } from "@/features/auth/actions/handle-edit-email";
 import { getEmailChangeStatus } from '@/features/auth/actions/email-change-status';
-
 import EmailChangeMonitor from "./email-change-monitor";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { emailSchema } from '../schemas/change-email-schema';
 import { Button } from "@/components/ui/button";
+import { ChangeEmailButtonProps, PendingChangeData } from '../types';
 
-interface ChangeEmailButtonProps {
-    buttonText: string;
-    title: string;
-    className?: string;
-    currentEmail: string;
-}
-
-interface PendingChangeData {
-    oldEmailConfirmed: boolean;
-    newEmailConfirmed: boolean;
-    newEmail: string;
-    processCompleted: boolean;
-}
 
 export default function ChangeEmailButton({
     buttonText,
@@ -40,11 +27,9 @@ export default function ChangeEmailButton({
         processCompleted: false
     });
 
-    // Verificar si hay un cambio pendiente al cargar el componente
     useEffect(() => {
         const checkPendingChange = async () => {
             try {
-                console.log('🔍 ChangeEmailButton: Checking pending change...');
                 const result = await getEmailChangeStatus();
                 
                 if (result.success && result.data?.hasEmailChange) {
@@ -59,10 +44,7 @@ export default function ChangeEmailButton({
                     setNewEmail(result.data.newEmail || '');
                     setPendingChangeData(pendingData);
                     
-                    console.log('📋 ChangeEmailButton: Pending change found:', pendingData);
                 } else if (result.success) {
-                    // No hay cambio pendiente
-                    console.log('✅ ChangeEmailButton: No pending change');
                     setHasPendingChange(false);
                     setPendingChangeData({
                         oldEmailConfirmed: false,
@@ -83,7 +65,6 @@ export default function ChangeEmailButton({
         currentPassword: string;
         email: string;
     }) {
-        // Validar que el email sea diferente al actual
         if (formData.email === currentEmail) {
             return {
                 error: true,
@@ -93,11 +74,9 @@ export default function ChangeEmailButton({
         }
 
         try {
-            console.log('📧 ChangeEmailButton: Starting email change process...');
             const result = await handleEditEmail(formData.email);
 
             if (result.error) {
-                console.error('❌ ChangeEmailButton: Email change failed:', result.error);
                 return {
                     error: true,
                     message: result.error,
@@ -105,7 +84,6 @@ export default function ChangeEmailButton({
                 };
             }
 
-            // Guardar el nuevo email y mostrar el monitor
             const newPendingData: PendingChangeData = {
                 oldEmailConfirmed: false,
                 newEmailConfirmed: false,
@@ -118,15 +96,12 @@ export default function ChangeEmailButton({
             setPendingChangeData(newPendingData);
             setShowMonitor(true);
 
-            console.log('✅ ChangeEmailButton: Email change initiated successfully');
-
             return {
                 error: false,
                 message: "Proceso iniciado. Revisa ambos emails para confirmar.",
                 payload: result.data || null
             };
         } catch (error) {
-            console.error('❌ ChangeEmailButton: Exception during email change:', error);
             return {
                 error: true,
                 message: "Error inesperado al cambiar el email",
@@ -136,7 +111,6 @@ export default function ChangeEmailButton({
     }
 
     const handleMonitorComplete = () => {
-        console.log('🎉 ChangeEmailButton: Monitor completed');
         setShowMonitor(false);
         setHasPendingChange(false);
         setNewEmail('');
@@ -147,7 +121,6 @@ export default function ChangeEmailButton({
             processCompleted: false
         });
         
-        // Recargar la página para mostrar el email actualizado
         setTimeout(() => {
             window.location.reload();
         }, 500);
@@ -155,7 +128,6 @@ export default function ChangeEmailButton({
 
     const handleShowMonitor = () => {
         if (hasPendingChange) {
-            console.log('👁️ ChangeEmailButton: Opening monitor for pending change');
             setShowMonitor(true);
         }
     };
@@ -193,7 +165,7 @@ export default function ChangeEmailButton({
                     className={className}
                     variant="default"
                     onComplete={() => {}}
-                    disabled={hasPendingChange && !isProcessCompleted} // Solo deshabilitar si hay cambio pendiente Y no está completado
+                    disabled={hasPendingChange && !isProcessCompleted}
                 >
                     <div className="mb-2 p-3 bg-blue-50 dark:bg-blue-950 rounded-md">
                         <p className="text-sm text-blue-700 dark:text-blue-300">
@@ -235,7 +207,6 @@ export default function ChangeEmailButton({
                     />
                 </ButtonWithPopup>
                 
-                {/* Botón de progreso solo si hay cambio pendiente */}
                 {hasPendingChange && (
                     <Button
                         variant={isProcessCompleted ? "default" : "outline"}
@@ -248,7 +219,6 @@ export default function ChangeEmailButton({
                 )}
             </div>
 
-            {/* Monitor Dialog */}
             <Dialog open={showMonitor} onOpenChange={setShowMonitor}>
                 <DialogContent className="max-w-md">
                     <EmailChangeMonitor
