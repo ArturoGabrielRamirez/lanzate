@@ -18,6 +18,11 @@ const employeeBaseSchema = {
     is_active: yup.boolean(),
 }
 
+export const contractCreateSchema = yup.object({
+    title: yup.string().required('Title is required'),
+    comments: yup.string().max(500, 'Comments must be less than 500 characters long'),
+})
+
 export const employeeUpdateSchema = yup.object({
     ...employeeBaseSchema,
 }) 

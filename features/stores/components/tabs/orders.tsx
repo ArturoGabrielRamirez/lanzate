@@ -9,8 +9,9 @@ type Props = {
 
 async function OrdersTab({ slug }: Props) {
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
     const t = await getTranslations("store.orders-tab")
+    
+    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage || t("error-loading-user"))

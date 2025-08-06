@@ -39,38 +39,30 @@ const LoginErrorDisplay = ({ error, message }: LoginErrorDisplayProps) => {
     const getErrorTitle = (errorType: string) => {
         switch (errorType) {
             case 'cancelled':
-                return t("errors.oauth.cancelled.title", { defaultValue: "Inicio de sesión cancelado" })
+                return t("errors.oauth.cancelled.title")
             case 'oauth_failed':
-                return t("errors.oauth.failed.title", { defaultValue: "Error de autenticación" })
+                return t("errors.oauth.failed.title")
             case 'temporary':
-                return t("errors.oauth.temporary.title", { defaultValue: "Servicio no disponible" })
+                return t("errors.oauth.temporary.title")
             case 'invalid':
-                return t("errors.oauth.invalid.title", { defaultValue: "Solicitud inválida" })
+                return t("errors.oauth.invalid.title")
             case 'unexpected':
-                return t("errors.oauth.unexpected.title", { defaultValue: "Error inesperado" })
+                return t("errors.oauth.unexpected.title")
             default:
-                return t("errors.oauth.generic.title", { defaultValue: "Error de autenticación" })
+                return t("errors.oauth.generic.title")
         }
     }
 
     const getErrorDescription = (errorType: string) => {
         switch (errorType) {
             case 'cancelled':
-                return t("errors.oauth.cancelled.description", {
-                    defaultValue: "Puedes intentar de nuevo con el mismo método o usar tu email y contraseña."
-                })
+                return t("errors.oauth.cancelled.description")
             case 'oauth_failed':
-                return t("errors.oauth.failed.description", {
-                    defaultValue: "Hubo un problema con la autenticación. Intenta de nuevo o usar otro método."
-                })
+                return t("errors.oauth.failed.description")
             case 'temporary':
-                return t("errors.oauth.temporary.description", {
-                    defaultValue: "El servicio está temporalmente no disponible. Intenta de nuevo en unos minutos."
-                })
+                return t("errors.oauth.temporary.description")
             default:
-                return t("errors.oauth.generic.description", {
-                    defaultValue: "Intenta de nuevo o usa tu email y contraseña."
-                })
+                return t("errors.oauth.generic.description")
         }
     }
 
@@ -93,7 +85,7 @@ const LoginErrorDisplay = ({ error, message }: LoginErrorDisplayProps) => {
                 <button
                     onClick={handleClose}
                     className="ml-4 text-red-400 hover:text-red-600 text-lg leading-none"
-                    aria-label="Cerrar"
+                    aria-label={t("close")}
                 >
                     ×
                 </button>
@@ -104,7 +96,7 @@ const LoginErrorDisplay = ({ error, message }: LoginErrorDisplayProps) => {
                         onClick={handleClose}
                         className="text-xs bg-red-100 hover:bg-red-200 px-3 py-1 rounded text-red-700"
                     >
-                        Intentar con Facebook de nuevo
+                        {t("try-facebook-again")}
                     </button>
                 </div>
             )}

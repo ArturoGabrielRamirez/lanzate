@@ -6,23 +6,42 @@ import DeleteBranchButton from "@/features/branches/components/delete-branch-but
 import { DataTable } from "@/features/layout/components/data-table"
 import { Branch } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal, Eye, Edit, Trash2, Crown } from "lucide-react"
+import { MoreHorizontal, Eye, Trash2, Crown } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 
+type EmployeePermissions = {
+    isAdmin: boolean
+    permissions?: {
+        can_create_orders: boolean
+        can_update_orders: boolean
+        can_create_products: boolean
+        can_update_products: boolean
+        can_manage_stock: boolean
+        can_process_refunds: boolean
+        can_view_reports: boolean
+        can_manage_employees: boolean
+        can_manage_store: boolean
+    }
+}
+
 type Props = {
     branches: Branch[]
     storeId: number
     userId: number
     slug: string
+    employeePermissions: EmployeePermissions
 }
 
-function BranchTable({ branches, storeId, userId, slug }: Props) {
+function BranchTable({ branches, storeId, userId, slug, employeePermissions }: Props) {
 
     const t = useTranslations("store.branch-table")
+
+    // Check if user can manage store
+    const canManageStore = employeePermissions.isAdmin || employeePermissions.permissions?.can_manage_store
 
     const columns: ColumnDef<Branch>[] = [
         {
@@ -88,28 +107,32 @@ function BranchTable({ branches, storeId, userId, slug }: Props) {
                                     {t("dropdown.view-details")}
                                 </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem asChild>
-                                <EditBranchButton
-                                    branch={branch}
-                                    slug={slug}
-                                    userId={userId}
-                                />
-                            </DropdownMenuItem>
-                            {!branch.is_main && (
-                                <DropdownMenuItem asChild>
-                                    <DeleteBranchButton
-                                        branchId={branch.id}
-                                        slug={slug}
-                                        userId={userId}
-                                    />
-                                </DropdownMenuItem>
-                            )}
-                            {branch.is_main && (
-                                <DropdownMenuItem disabled className="opacity-50">
-                                    <Trash2 className="w-4 h-4 text-muted-foreground" />
-                                    {t("dropdown.cannot-delete-main")}
-                                </DropdownMenuItem>
+                            {canManageStore && (
+                                <>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem asChild>
+                                        <EditBranchButton
+                                            branch={branch}
+                                            slug={slug}
+                                            userId={userId}
+                                        />
+                                    </DropdownMenuItem>
+                                    {!branch.is_main && (
+                                        <DropdownMenuItem asChild>
+                                            <DeleteBranchButton
+                                                branchId={branch.id}
+                                                slug={slug}
+                                                userId={userId}
+                                            />
+                                        </DropdownMenuItem>
+                                    )}
+                                    {branch.is_main && (
+                                        <DropdownMenuItem disabled className="opacity-50">
+                                            <Trash2 className="w-4 h-4 text-muted-foreground" />
+                                            {t("dropdown.cannot-delete-main")}
+                                        </DropdownMenuItem>
+                                    )}
+                                </>
                             )}
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -123,8 +146,13 @@ function BranchTable({ branches, storeId, userId, slug }: Props) {
             columns={columns}
             data={branches}
             filterKey="name"
-            topActions={<CreateBranchButton storeId={storeId} userId={userId} />}
+            topActions={
+                canManageStore ? (
+                    <CreateBranchButton storeId={storeId} userId={userId} />
+                ) : undefined
+            }
         />
     )
 }
+
 export default BranchTable

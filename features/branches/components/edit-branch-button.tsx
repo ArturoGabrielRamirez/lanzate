@@ -36,7 +36,7 @@ function EditBranchButton({ branch, slug, onComplete, userId }: EditBranchButton
             )}
             title={t("title")}
             schema={branchUpdateSchema}
-            description={t("description")}
+            description={t("description-popup")}
             action={handleEditBranch}
             onComplete={onComplete}
             messages={{

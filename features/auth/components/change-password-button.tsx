@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl';
 import { ButtonWithPopup, InputField } from "@/features/layout/components";
 import { handleEditPassword } from "@/features/auth/actions/handle-edit-password";
 import { passwordSchema } from "../schemas/password-schema";
@@ -10,6 +11,7 @@ export default function ChangePasswordButton({
     title,
     className
 }: ChangePasswordButtonProps) {
+    const t = useTranslations("auth.password-change");
 
     async function changePasswordAction(formData: { 
         currentPassword: string; 
@@ -28,7 +30,7 @@ export default function ChangePasswordButton({
         
         return { 
             error: false, 
-            message: "Contraseña actualizada correctamente",
+            message: t("password-updated"),
             payload: result.data || null
         };
     }
@@ -37,34 +39,34 @@ export default function ChangePasswordButton({
         <ButtonWithPopup
             text={buttonText}
             title={title}
-            description="Por seguridad, confirma tu contraseña actual antes de cambiarla."
+            description={t("security-description")}
             action={changePasswordAction}
             schema={passwordSchema}
             messages={{
-                success: "Contraseña actualizada correctamente",
-                error: "Error al actualizar la contraseña",
-                loading: "Verificando y actualizando contraseña..."
+                success: t("password-updated"),
+                error: t("error-updating-password"),
+                loading: t("verifying-updating")
             }}
             className={className}
             variant="default"
         >
             <InputField 
                 name="currentPassword" 
-                label="Contraseña actual" 
+                label={t("current-password-label")} 
                 type="password" 
-                placeholder="Tu contraseña actual"
+                placeholder={t("current-password-placeholder")}
             />
             <InputField 
                 name="password" 
-                label="Nueva contraseña" 
+                label={t("new-password-label")} 
                 type="password" 
-                placeholder="Mínimo 6 caracteres"
+                placeholder={t("new-password-placeholder")}
             />
             <InputField 
                 name="confirmPassword" 
-                label="Confirmar nueva contraseña" 
+                label={t("confirm-password-label")} 
                 type="password" 
-                placeholder="Confirma tu nueva contraseña"
+                placeholder={t("confirm-password-placeholder")}
             />
         </ButtonWithPopup>
     );

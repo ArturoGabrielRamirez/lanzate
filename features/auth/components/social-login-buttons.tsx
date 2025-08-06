@@ -6,7 +6,7 @@ import { GoogleLoginButtonProps } from '../types'
 
 const SocialLoginButtons = ({ orLoginWith }: GoogleLoginButtonProps) => {
     return (
-        <div className="grid w-full place-content-left lg:pl-10">
+        <div className="grid w-full place-content-left max-w-xl">
             <Label htmlFor='google' className='justify-center w-full mb-2 text-center'>
                 {orLoginWith}
             </Label>

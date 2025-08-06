@@ -14,9 +14,12 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 
-export default function EmployeesTable({ data, userId, slug, storeId }: EmployeesTableProps) {
+export default function EmployeesTable({ data, userId, slug, storeId, employeePermissions }: EmployeesTableProps) {
     
     const t = useTranslations("store.employees-table")
+    
+    // Check if user can manage employees
+    const canManageEmployees = employeePermissions.isAdmin || employeePermissions.permissions?.can_manage_employees
     
     const columns: ColumnDef<Employee>[] = [
         {
@@ -68,21 +71,25 @@ export default function EmployeesTable({ data, userId, slug, storeId }: Employee
                                     {t("dropdown.view-details")}
                                 </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem asChild>
-                                <EditEmployeeButton
-                                    employee={employee}
-                                    slug={slug}
-                                    userId={userId}
-                                />
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                                <DeleteEmployeeButton
-                                    employeeId={employee.id}
-                                    slug={slug}
-                                    userId={userId}
-                                />
-                            </DropdownMenuItem>
+                            {canManageEmployees && (
+                                <>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem asChild>
+                                        <EditEmployeeButton
+                                            employee={employee}
+                                            slug={slug}
+                                            userId={userId}
+                                        />
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
+                                        <DeleteEmployeeButton
+                                            employeeId={employee.id}
+                                            slug={slug}
+                                            userId={userId}
+                                        />
+                                    </DropdownMenuItem>
+                                </>
+                            )}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )
@@ -96,10 +103,12 @@ export default function EmployeesTable({ data, userId, slug, storeId }: Employee
             data={data}
             filterKey="user"
             topActions={
-                <div className="flex gap-2">
-                    <CreateEmployeeButton storeId={storeId} userId={userId} />
-                    <CreateContractButton storeId={storeId} userId={userId} />
-                </div>
+                canManageEmployees ? (
+                    <div className="flex gap-2">
+                        <CreateEmployeeButton storeId={storeId} userId={userId} />
+                        <CreateContractButton storeId={storeId} userId={userId} />
+                    </div>
+                ) : undefined
             }
         />
     )

@@ -1,11 +1,11 @@
 'use client'
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail } from "lucide-react";
 import { useResendCooldown } from "../hooks/use-resend-cooldown";
 import { useEmailChangeStatus } from "../hooks/use-email-change-status";
 import { EmailChangeMonitorProps } from "../types";
 import { EmailChangeActions, EmailStepInstructions, EmailStepProgress } from "./index";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Mail } from "lucide-react";
 
 
 export default function EmailChangeMonitor({
@@ -34,7 +34,7 @@ export default function EmailChangeMonitor({
             <CardHeader className="text-center">
                 <CardTitle className="flex items-center justify-center gap-2">
                     <Mail className="w-5 h-5" />
-                    Confirmación de Cambio de Email
+                    Cambio de email
                 </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -73,7 +73,7 @@ export default function EmailChangeMonitor({
                 </div>
 
                 <p className="text-xs text-muted-foreground text-center">
-                    La página se actualiza automáticamente cada 3 segundos
+                    La pagina se actualizara automaticamente cada 3 segundos
                 </p>
             </CardContent>
         </Card>

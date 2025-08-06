@@ -3,9 +3,11 @@
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { useStepper } from "@/components/expansion/interactive-stepper"
+import { useTranslations } from "next-intl"
 
 export function StepNavigation() {
     const { currentStep, nextStep, prevStep, hasNext } = useStepper()
+    const t = useTranslations("checkout.navigation")
 
     return (
         <div className="flex justify-between pt-4">
@@ -16,7 +18,7 @@ export function StepNavigation() {
                     onClick={prevStep}
                 >
                     <ArrowLeft />
-                    Previous
+                    {t("previous")}
                 </Button>
             )}
             {hasNext() && (
@@ -25,7 +27,7 @@ export function StepNavigation() {
                     onClick={nextStep}
                     className={currentStep === 1 ? "ml-auto" : ""}
                 >
-                    Next
+                    {t("next")}
                     <ArrowRight />
                 </Button>
             )}

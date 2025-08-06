@@ -51,14 +51,20 @@ export async function insertOrder({
 }: insertOrderProps) {
     return actionWrapper(async () => {
 
+        console.log("1")
         const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+
+        console.log("2")
 
         if (userError || !user) throw new Error(userMessage)
 
         const { payload: store, error: storeError, message: storeMessage } = await getStoreBySubdomain(subdomain)
 
+        console.log("3")
+
         if (storeError || !store) throw new Error(storeMessage)
 
+        console.log("4")
 
         const branch = await prisma.branch.findFirst({
             where: {
@@ -67,9 +73,13 @@ export async function insertOrder({
             }
         })
 
+        console.log("5")
+
         if (!branch) throw new Error("Branch not found")
 
         if (isWalkIn && store.user_id !== processed_by_user_id) {
+
+            console.log("6")
 
             const employee = await prisma.employee.findFirst({
                 where: {
@@ -83,6 +93,8 @@ export async function insertOrder({
             if (!employee.can_create_orders) throw new Error("You are not authorized to create orders")
 
         }
+
+        console.log("7")
 
         for (const item of cart) {
 

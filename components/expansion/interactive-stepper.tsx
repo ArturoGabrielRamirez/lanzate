@@ -207,7 +207,7 @@ export const InteractiveStepperRoot = React.forwardRef<
         [currentStep, totalSteps, orientation, goToStep, nextStep, prevStep, hasNext, hasPrev],
     );
 
-    const containerClasses = cn(orientation === 'horizontal' ? 'flex flex-col' : 'flex', className);
+    const containerClasses = cn(orientation === 'horizontal' ? 'flex flex-col gap-2 md:gap-3 lg:gap-4' : 'flex', className);
 
     React.useImperativeHandle(ref, () => ({
         ...({} as HTMLDivElement),
@@ -240,7 +240,7 @@ export const InteractiveStepperRoot = React.forwardRef<
 
     const stepperItemsContainer = (
         <div
-            className={orientation === 'horizontal' ? 'flex items-start' : 'flex flex-col items-start'}
+            className={orientation === 'horizontal' ? 'flex items-center' : 'flex flex-col items-start'}
         >
             {stepperItems}
         </div>

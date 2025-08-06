@@ -3,12 +3,15 @@ import { CartResume } from "@/features/cart/components"
 import { Title } from "@/features/layout/components"
 import { getUserInfo } from "@/features/layout/actions"
 import { getStoreBySubdomain } from "@/features/subdomain/actions"
+/* import { getCurrentLocale } from "@/locales/server" */
 
 async function CheckoutPage({ params }: { params: Promise<{ subdomain: string }> }) {
 
     const { subdomain } = await params
     const { payload: store, error: storeError, message: storeMessage } = await getStoreBySubdomain(subdomain)
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    /* const currentLocale = await getCurrentLocale()
+    console.log("🚀 ~ CheckoutPage ~ currentLocale:", currentLocale) */
 
     const breadcrumbs = [
         { label: "cart", href: "/cart" },

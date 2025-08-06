@@ -169,7 +169,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                         </div>
 
                         {/* Action Buttons */}
-                        <div className="flex justify-end mt-auto">
+                        <div className="flex justify-center md:justify-end mt-auto">
                             <div className="grid grid-cols-2 gap-4 mt-auto justify-end max-w-xs">
                                 <DeleteEmployeeButton 
                                     employeeId={employee.id} 

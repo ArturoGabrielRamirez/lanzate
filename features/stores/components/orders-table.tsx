@@ -8,7 +8,6 @@ import { Order } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { Eye, MapPin, MoreHorizontal, Truck } from "lucide-react"
 import Link from "next/link"
-import ChangeOrderStatusButton from "./change-order-status-button"
 import CancelOrderButton from "./cancel-order-button"
 import { ExportOrdersButton } from "@/features/orders/components"
 import { useTranslations } from "next-intl"
@@ -125,13 +124,6 @@ function OrdersTable({ data, slug, userId }: Props) {
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem asChild>
-                                <ChangeOrderStatusButton
-                                    order={order}
-                                    slug={slug}
-                                    userId={userId}
-                                />
-                            </DropdownMenuItem>
                             <DropdownMenuItem asChild>
                                 <CancelOrderButton
                                     order={order}

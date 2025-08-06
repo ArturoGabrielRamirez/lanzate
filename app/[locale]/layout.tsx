@@ -44,7 +44,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                       {children}
                     </main>
                     <Footer />
-                    <Toaster />
+                    <Toaster position="top-center"/>
                     {/* Detector global para confirmaciones de email */}
                     <GlobalEmailConfirmationDetector />
                   </>
@@ -54,6 +54,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                     {children}
                     {/* Detector global también en el layout de usuario */}
                     <GlobalEmailConfirmationDetector />
+                    <Toaster position="top-center"/>
                   </>
                 )}
               />

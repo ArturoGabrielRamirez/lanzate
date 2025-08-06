@@ -40,14 +40,14 @@ async function StoreHeader({ slug }: StoreHeaderProps) {
                 ]}
                 showDate
             />
-            <section className="flex items-center gap-4">
+            <section className="items-center gap-4 hidden md:flex">
                 <Card className="w-full">
                     <CardContent className="flex flex-col justify-between w-full gap-4 md:items-center xs:flex-row">
                         <div className="flex items-center gap-4">
                             <img
                                 src={`https://api.dicebear.com/9.x/initials/svg?seed=${store.name}`}
                                 alt="User avatar"
-                                className="rounded-full size-24"
+                                className="rounded-full size-16 md:size-20 lg:size-24"
                             />
                             <div className="flex flex-col gap-2">
                                 <p className="text-xl font-bold">{store.name}</p>
