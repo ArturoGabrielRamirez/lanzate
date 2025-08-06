@@ -1,147 +1,133 @@
-"use server";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo";
 import { Title } from "@/features/layout/components";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { User } from "lucide-react";
-import {
-  ChangeEmailButton,
-  EmailStatusBanner,
-  ChangePasswordButton,
-  syncEmailAfterConfirmation,
-} from "@/features/auth/components/index";
-import { redirect } from "next/navigation";
+import { ChangeEmailButton, EmailStatusBanner, ChangePasswordButton, /* syncEmailAfterConfirmation */  } from "@/features/auth/components/index"
 
-// ✅ Tipado compatible con App Router
-interface AccountPageProps {
-  params: { locale: string };
-  searchParams?: { emailCompleted?: string };
-}
 
-export default async function AccountPage({ searchParams }: AccountPageProps) {
-  if (searchParams?.emailCompleted === "true") {
-    const result = await syncEmailAfterConfirmation();
-    if (result?.success) {
-      redirect("/account");
-    }
-  }
+export default async function AccountPage() {
+    
+    // Manejar la sincronización de email si viene el parámetro
+/*     if (searchParams.emailCompleted === 'true') {
+        const result = await syncEmailAfterConfirmation();
+        if (result.success) {
 
-  const { payload: user, error: userError, message: userMessage } = await getUserInfo();
-  const t = await getTranslations("account");
-
-  if (userError || !user) {
-    console.error(userMessage);
-    return null;
-  }
-
-  return (
-    <div className="p-4 grow flex flex-col pt-17">
-      <Title
-        title={
-          <div className="flex items-center gap-2">
-            <User />
-            {t("title")}
-          </div>
+            redirect('/account');
         }
-        breadcrumbs={[{ label: t("title"), href: "/account" }]}
-        showDate
-      />
+        
+    } */
 
-      <EmailStatusBanner />
+    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const t = await getTranslations("account");
 
-      <section className="flex items-center gap-4">
-        <Card className="w-full">
-          <CardContent className="flex items-center gap-4 w-full">
-            <img
-              src={`https://api.dicebear.com/9.x/initials/svg?seed=${user.email}`}
-              alt="User avatar"
-              className="size-24 rounded-full"
-            />
-            <div className="flex flex-col gap-2">
-              <p className="text-xl font-bold">{user.email}</p>
-              <div>
-                <p className="capitalize">
-                  {user.Account[0].type.toLowerCase()} {t("title")}
-                </p>
-                {user.Account[0].type === "FREE" && (
-                  <Button asChild size="sm">
-                    <Link href="/upgrade">{t("description.upgrade-plan")}</Link>
-                  </Button>
-                )}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+    if (userError || !user) {
+        return console.error(userMessage)
+    }
 
-      <section className="py-4 grow flex">
-        <Tabs
-          defaultValue="account"
-          className="grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4"
-        >
-          <TabsList className="w-full h-full items-start">
-            <div className="flex md:block w-full">
-              <TabsTrigger value="account" className="w-full h-fit cursor-pointer py-3">
-                {t("description.account-details")}
-              </TabsTrigger>
-              <TabsTrigger value="password" className="w-full h-fit cursor-pointer py-3">
-                {t("description.membership")}
-              </TabsTrigger>
-            </div>
-          </TabsList>
-
-          <TabsContent value="account">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t("description.account-details")}</CardTitle>
-              </CardHeader>
-              <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-12 w-fit">
-                <div className="flex flex-col">
-                  <p className="font-light text-sm">{t("description.first-name")}</p>
-                  <p className="font-medium">{user.first_name || "No set"}</p>
+    return (
+        <div className="p-4 grow flex flex-col pt-17">
+            <Title title={(
+                <div className="flex items-center gap-2">
+                    <User />
+                    {t("title")}
                 </div>
-                <div className="flex flex-col">
-                  <p className="font-light text-sm">{t("description.last-name")}</p>
-                  <p className="font-medium">{user.last_name || "No set"}</p>
-                </div>
-                <div className="flex flex-col">
-                  <p className="font-light text-sm">{t("description.email")}</p>
-                  <div className="flex items-center gap-2">
-                    <p className="font-medium">{user.email}</p>
-                    <ChangeEmailButton
-                      buttonText="Cambiar"
-                      title={t("description.change-email") || "Cambiar email"}
-                      currentEmail={user.email}
-                      className="font-medium text-xs h-6 px-2"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  <p className="font-light text-sm">{t("description.password")}</p>
-                  <ChangePasswordButton
-                    buttonText={t("description.change-password")}
-                    title={t("description.change-password")}
-                    className="font-medium justify-start p-0 h-auto text-foreground"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+            )} breadcrumbs={[
+                {
+                    label: t("title"),
+                    href: "/account"
+                }
+            ]} showDate />
 
-          <TabsContent value="password">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t("description.membership")}</CardTitle>
-              </CardHeader>
-              <CardContent>{t("description.currently-not-available")}</CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </section>
-    </div>
-  );
+            <EmailStatusBanner />
+
+            <section className="flex items-center gap-4">
+                <Card className="w-full">
+                    <CardContent className="flex items-center gap-4 w-full">
+                        <img
+                            src={`https://api.dicebear.com/9.x/initials/svg?seed=${user.email}`}
+                            alt="User avatar"
+                            className="size-24 rounded-full"
+                        />
+                        <div className="flex flex-col gap-2">
+                            <p className="text-xl font-bold">{user.email}</p>
+                            <div>
+                                <p className="capitalize">
+                                    {user.Account[0].type.toLowerCase()} {t("title")}
+                                </p>
+                                {user.Account[0].type === "FREE" && (
+                                    <Button asChild size="sm">
+                                        <Link href="/upgrade">
+                                            {t("description.upgrade-plan")}
+                                        </Link>
+                                    </Button>
+                                )}
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            </section>
+
+            <section className="py-4 grow flex">
+                <Tabs defaultValue="account" className="grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4">
+                    <TabsList className="w-full h-full items-start">
+                        <div className="flex md:block w-full">
+                            <TabsTrigger value="account" className="w-full h-fit cursor-pointer py-3">{t("description.account-details")}</TabsTrigger>
+                            <TabsTrigger value="password" className="w-full h-fit cursor-pointer py-3">{t("description.membership")}</TabsTrigger>
+                        </div>
+                    </TabsList>
+                    <TabsContent value="account">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>{t("description.account-details")}</CardTitle>
+                            </CardHeader>
+                            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-12 w-fit">
+                                <div className="flex flex-col">
+                                    <p className="font-light text-sm">{t("description.first-name")}</p>
+                                    <p className="font-medium">{user.first_name || "No set"}</p>
+                                </div>
+                                <div className="flex flex-col">
+                                    <p className="font-light text-sm">{t("description.last-name")}</p>
+                                    <p className="font-medium">{user.last_name || "No set"}</p>
+                                </div>
+                                <div className="flex flex-col">
+                                    <p className="font-light text-sm">{t("description.email")}</p>
+                                    <div className="flex items-center gap-2">
+                                        <p className="font-medium">{user.email}</p>
+                                        <ChangeEmailButton
+                                            buttonText="Cambiar"
+                                            title={t("description.change-email") || "Cambiar email"}
+                                            currentEmail={user.email}
+                                            className="font-medium text-xs h-6 px-2"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex flex-col">
+                                    <p className="font-light text-sm">{t("description.password")}</p>
+                                    <ChangePasswordButton
+                                        buttonText={t("description.change-password")}
+                                        title={t("description.change-password")}
+                                        className="font-medium justify-start p-0 h-auto text-foreground"
+                                    />
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                    <TabsContent value="password">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>{t("description.membership")}</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                {t("description.currently-not-available")}
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                </Tabs>
+            </section>
+        </div>
+    );
 }
