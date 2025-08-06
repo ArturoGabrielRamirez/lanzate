@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { User } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
-import { handleSignOut as handleSignOutAction } from "@/features/auth/actions/handleSignOut"
+import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
 
 function LandingAccountDropdown() {
     const [open, setOpen] = useState(false)
