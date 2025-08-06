@@ -45,7 +45,7 @@ const InputField = ({
 
   const controlls: Record<string, any> = {}
 
-  if (!defaultValue) {
+  if (!defaultValue && value) {
     controlls.value = value || ""
   } else {
     controlls.defaultValue = defaultValue

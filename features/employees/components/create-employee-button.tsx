@@ -91,22 +91,21 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
         if (!search.trim()) return
 
         setIsSearching(true)
-        const searchToastId = toast(t("messages.searching"), {
+        const searchToastId = toast.loading(t("messages.searching"), {
             description: t("messages.searching-description")
         })
 
         try {
             const { payload: users, error, message } = await getEmployeesByFilter(search, storeId, userId)
             if (error) {
-                console.error("Error searching users:", message)
                 toast.error(message || t("messages.search-error"))
                 return
             }
             setUsers(users || [])
-            
+
             // Dismiss the searching toast first
             toast.dismiss(searchToastId)
-            
+
             if (users && users.length === 0) {
                 toast.info(t("messages.no-users-found"))
             }
@@ -166,7 +165,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
                     {t("search-button")}
                 </Button>
             </div>
-            
+
             {selectedUser && (
                 <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
                     <div className="flex items-center gap-2">
@@ -187,8 +186,8 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
                             <div
                                 key={user.id}
                                 className={`p-2 border rounded-md transition-colors ${user.isEmployee
-                                        ? 'bg-gray-50 border-gray-200 cursor-not-allowed opacity-60'
-                                        : 'cursor-pointer hover:bg-gray-50'
+                                    ? 'bg-gray-50 border-gray-200 cursor-not-allowed opacity-60'
+                                    : 'cursor-pointer hover:bg-gray-50'
                                     }`}
                                 onClick={() => handleSelectUser(user)}
                             >
@@ -214,7 +213,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
                     </div>
                 </div>
             )}
-            
+
             {users.length === 0 && search.trim() && !selectedUser && (
                 <div className="mt-4">
                     <p className="text-sm text-muted-foreground">{t("messages.no-users-found")}</p>
@@ -228,7 +227,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
                         <FileText className="w-4 h-4" />
                         <h3 className="text-sm font-medium">Asignar Contrato (Opcional)</h3>
                     </div>
-                    
+
                     {selectedContract && (
                         <div className="mb-3 p-2 bg-blue-50 border border-blue-200 rounded-md">
                             <div className="flex items-center gap-2">
