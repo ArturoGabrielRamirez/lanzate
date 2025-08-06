@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerSideClient } from "@/utils/supabase/server";
 import { prisma } from "@/utils/prisma";
 
 export async function POST(request: NextRequest) {
