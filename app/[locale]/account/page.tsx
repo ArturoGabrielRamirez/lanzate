@@ -13,9 +13,8 @@ import { redirect } from "next/navigation";
 
 // Definir las props para recibir searchParams
 interface Props {
-    searchParams: {
-        emailCompleted?: string;
-    }
+  params: { locale: string };
+  searchParams: { emailCompleted?: string };
 }
 
 export default async function AccountPage({ searchParams }: Props) {
