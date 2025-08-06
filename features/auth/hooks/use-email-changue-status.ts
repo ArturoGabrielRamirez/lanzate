@@ -11,7 +11,7 @@ interface EmailChangeStatus {
     currentEmail: string;
     loading: boolean;
     processCompleted: boolean;
-    requestId?: string;
+    requestId?: number | undefined;
     expiresAt?: Date;
     oldEmailConfirmedAt?: Date | null;
     newEmailConfirmedAt?: Date | null;
