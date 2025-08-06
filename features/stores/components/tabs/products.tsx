@@ -19,7 +19,6 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
         getStoresFromSlug(slug),
         getEmployeePermissions(userId, slug)
     ])
-    console.log("🚀 ~ ProductsTab ~ employeePermissions:", employeePermissions)
 
     if (userError || !user) {
         return console.log(userMessage)
