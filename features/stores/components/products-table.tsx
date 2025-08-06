@@ -12,14 +12,30 @@ import { CreateProductButton, DeleteProductButton, EditProductButton, ExportProd
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 
+type EmployeePermissions = {
+    isAdmin: boolean
+    permissions?: {
+        can_create_orders: boolean
+        can_update_orders: boolean
+        can_create_products: boolean
+        can_update_products: boolean
+        can_manage_stock: boolean
+        can_process_refunds: boolean
+        can_view_reports: boolean
+        can_manage_employees: boolean
+        can_manage_store: boolean
+    }
+}
+
 type Props = {
     data: (Product & { categories: Category[] })[]
     userId: number
     slug: string
     storeId: number
+    employeePermissions: EmployeePermissions
 }
 
-function ProductsTable({ data, userId, slug, storeId }: Props) {
+function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Props) {
 
     const t = useTranslations("store.products-table")
 
@@ -97,27 +113,37 @@ function ProductsTable({ data, userId, slug, storeId }: Props) {
                                     </Link>
                                 </Button>
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem asChild>
-                                <EditProductButton
-                                    product={row.original}
-                                    slug={slug}
-                                    userId={userId}
-                                />
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                                <DeleteProductButton
-                                    productId={row.original.id}
-                                    slug={slug}
-                                    userId={userId}
-                                />
-                            </DropdownMenuItem>
+                            {canUpdateProducts && (
+                                <>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem asChild>
+                                        <EditProductButton
+                                            product={row.original}
+                                            slug={slug}
+                                            userId={userId}
+                                        />
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
+                                        <DeleteProductButton
+                                            productId={row.original.id}
+                                            slug={slug}
+                                            userId={userId}
+                                        />
+                                    </DropdownMenuItem>
+                                </>
+                            )}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )
             }
         }
     ]
+
+    // Check if user can create products
+    const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
+    
+    // Check if user can update products
+    const canUpdateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_update_products
 
     return (
         <DataTable
@@ -127,7 +153,9 @@ function ProductsTable({ data, userId, slug, storeId }: Props) {
             topActions={
                 <div className="flex items-center gap-2">
                     <ExportProductsButton data={data} />
-                    <CreateProductButton storeId={storeId} userId={userId} />
+                    {canCreateProducts && (
+                        <CreateProductButton storeId={storeId} userId={userId} />
+                    )}
                 </div>
             }
         />
