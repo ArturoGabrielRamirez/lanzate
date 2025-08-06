@@ -67,7 +67,7 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
                         </div>
                         <p className="text-muted-foreground text-lg">${product.price}</p>
                         <p>{product.description || "No description available"}</p>
-                        <div className="flex justify-end mt-auto">
+                        <div className="flex justify-center md:justify-end mt-auto">
                             <div className="grid grid-cols-2 gap-4 mt-auto justify-end max-w-xs">
                                 <DeleteProductButton productId={product.id} slug={slug} userId={user.id} />
                                 <EditProductButton product={product} slug={slug} userId={user.id} />

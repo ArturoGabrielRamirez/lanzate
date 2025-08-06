@@ -240,7 +240,7 @@ export const InteractiveStepperRoot = React.forwardRef<
 
     const stepperItemsContainer = (
         <div
-            className={orientation === 'horizontal' ? 'flex items-start' : 'flex flex-col items-start'}
+            className={orientation === 'horizontal' ? 'flex items-center' : 'flex flex-col items-start'}
         >
             {stepperItems}
         </div>

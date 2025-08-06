@@ -74,7 +74,7 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-2 md:space-y-4 lg:space-y-6">
             {showFullDetails && (
                 <div className="flex items-center gap-2 justify-between">
                     {/* <p className="text-sm">{formatDate(order.created_at)}</p> */}
@@ -83,15 +83,15 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
             )}
 
             <div>
-                <h3 className="text-lg font-semibold mb-4 flex items-center justify-between gap-2">
+                <h3 className="text-base md:text-lg font-semibold mb-2 md:mb-4 flex items-center justify-between gap-2">
                     <span>Order Details</span>
                     <div className="flex items-center gap-2">
-                        <Badge variant="outline" className="text-sm uppercase border-2">
+                        <Badge variant="outline" className="text-xs md:text-sm uppercase border-2">
                             {order.shipping_method === "PICKUP" ? t("branches.store-pickup") : t("branches.delivery")}
                         </Badge>
                         <Badge
                             className={cn(
-                                "bg-transparent text-sm",
+                                "bg-transparent text-xs md:text-sm",
                                 order.status === "PENDING" && "border-yellow-500 text-yellow-500",
                                 order.status === "PROCESSING" && "border-orange-500 text-orange-500",
                                 order.status === "READY" && "border-blue-500 text-blue-500",
@@ -105,22 +105,23 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
                         </Badge>
                     </div>
                 </h3>
-                <div className="flex flex-col gap-2 border rounded-lg bg-muted/30 p-3">
+                <div className="flex flex-col gap-1 md:gap-2 border rounded-lg bg-muted/30 p-3">
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Order ID</span>
-                        <span className="font-medium">#{order.id}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Order ID</span>
+                        <span className="text-sm md:text-base font-medium">#{order.id}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Total Amount</span>
-                        <span className="text-lg font-bold">{formatCurrency(order.total_price)}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Total Amount</span>
+                        <span className="text-lg md:text-xl font-bold">{formatCurrency(order.total_price)}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Total Items</span>
-                        <span className="font-medium">{order.total_quantity} {order.total_quantity === 1 ? t("orders.item") : t("orders.items")}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Total Items</span>
+                        <span className="text-sm md:text-base font-medium">{order.total_quantity} {order.total_quantity === 1 ? t("orders.item") : t("orders.items")}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Payment Status</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Payment Status</span>
                         <Badge variant={"outline"} className={cn(
+                            "text-xs md:text-sm",
                             order.payment.status === "PAID" && "bg-green-500 text-white"
                         )}>
                             {order.payment.status === "PAID" && <Check className="w-4 h-4" />}
@@ -128,9 +129,10 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
                         </Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Order Status</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Order Status</span>
                         <Badge variant={order.status === "COMPLETED" ? "default" : "secondary"}
                             className={cn(
+                                "text-xs md:text-sm",
                                 order.status === "COMPLETED" && "bg-green-500 text-white",
                                 order.status === "CANCELLED" && "bg-red-500 text-white",
                                 order.status === "PENDING" && "bg-yellow-500 text-white",
@@ -151,31 +153,31 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
                         </Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Shipping Method</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Shipping Method</span>
                         {order.shipping_method === "PICKUP" ? (
                             <Badge variant="outline">
                                 <MapPin className="w-4 h-4" />
                                 {order.shipping_method}
                             </Badge>
                         ) : (
-                            <Badge variant="secondary">
+                            <Badge variant="secondary" className="text-xs md:text-sm">
                                 {order.shipping_method}
                             </Badge>
                         )}
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">{t("orders.order-type")}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">{t("orders.order-type")}</span>
                         <div className="flex items-center gap-2">
                             {React.createElement(getOrderTypeIcon(), { className: "w-4 h-4" })}
-                            <span className="font-medium">{getOrderTypeLabel()}</span>
+                            <span className="text-sm md:text-base font-medium">{getOrderTypeLabel()}</span>
                         </div>
                     </div>
                     <div className="flex justify-between items-center">
 
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Order Date</span>
-                        <span className="font-medium">{formatDate(order.created_at)}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Order Date</span>
+                        <span className="text-sm md:text-base font-medium">{formatDate(order.created_at)}</span>
                     </div>
                 </div>
             </div>
@@ -188,16 +190,16 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
                 </h4>
                 <div className="space-y-2 p-3 border rounded-lg bg-muted/30">
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Name</span>
-                        <span className="font-medium">{order.customer_name || "Name not available"}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Name</span>
+                        <span className="text-sm md:text-base font-medium">{order.customer_name || "Name not available"}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Email</span>
-                        <span className="font-medium">{order.customer_email || "Email not available"}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Email</span>
+                        <span className="text-sm md:text-base font-medium">{order.customer_email || "Email not available"}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Phone</span>
-                        <span className="font-medium">{order.customer_phone || "Phone not available"}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Phone</span>
+                        <span className="text-sm md:text-base font-medium">{order.customer_phone || "Phone not available"}</span>
                     </div>
                 </div>
             </div>

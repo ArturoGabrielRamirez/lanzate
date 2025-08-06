@@ -37,7 +37,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                     {t("orders.order-details")}#{order.id}
                 </CardTitle>
             </CardHeader>
-            <CardContent className="flex grow gap-4">
+            <CardContent className="flex grow gap-4 flex-col md:flex-row">
                 <Card className="w-full">
                     <CardContent className="flex flex-col gap-4 grow">
                         <OrderSummarySteps order={order} />

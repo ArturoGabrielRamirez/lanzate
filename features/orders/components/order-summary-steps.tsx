@@ -104,32 +104,32 @@ function OrderSummarySteps({ order }: Props) {
 
     return (
         <InteractiveStepper orientation="horizontal" className="grow">
-            <InteractiveStepperItem completed>
+            <InteractiveStepperItem completed key={0}>
                 <DynamicStepperTrigger config={stepTriggerConfigs[0]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
 
-            <InteractiveStepperItem completed={isProcessingCompleted}>
+            <InteractiveStepperItem completed={isProcessingCompleted} key={1}>
                 <DynamicStepperTrigger config={stepTriggerConfigs[1]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
 
-            <InteractiveStepperItem completed={isThirdStepCompleted}>
+            <InteractiveStepperItem completed={isThirdStepCompleted} key={2}>
                 <DynamicStepperTrigger config={stepTriggerConfigs[2]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
-
-            <InteractiveStepperContent step={1} className="grow flex flex-col">
+        
+            <InteractiveStepperContent step={1} className="grow flex flex-col" key={0}>
                 <OrderDetailsStep order={order} showFullDetails={showFullDetails} />
                 <StepNavigation />
             </InteractiveStepperContent>
 
-            <InteractiveStepperContent step={2} className="grow flex flex-col">
+            <InteractiveStepperContent step={2} className="grow flex flex-col" key={1}>
                 <OrderStatusStep order={order} />
                 <StepNavigation />
             </InteractiveStepperContent>
 
-            <InteractiveStepperContent step={3} className="grow flex flex-col">
+            <InteractiveStepperContent step={3} className="grow flex flex-col" key={2}>
                 <CustomerInfoStep order={order} />
                 <StepNavigation />
             </InteractiveStepperContent>
