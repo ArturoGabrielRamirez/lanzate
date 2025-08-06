@@ -9,6 +9,21 @@ import DynamicStepperTrigger from "./dynamic-stepper-trigger"
 import { Order } from "@prisma/client"
 import { Package, Settings, User } from "lucide-react"
 
+type EmployeePermissions = {
+    isAdmin: boolean
+    permissions?: {
+        can_create_orders: boolean
+        can_update_orders: boolean
+        can_create_products: boolean
+        can_update_products: boolean
+        can_manage_stock: boolean
+        can_process_refunds: boolean
+        can_view_reports: boolean
+        can_manage_employees: boolean
+        can_manage_store: boolean
+    }
+}
+
 type OrderItemWithProduct = {
     id: number
     quantity: number
@@ -27,9 +42,10 @@ type Props = {
             status: "PENDING" | "PAID"
         }
     }
+    employeePermissions: EmployeePermissions
 }
 
-function OrderSummarySteps({ order }: Props) {
+function OrderSummarySteps({ order, employeePermissions }: Props) {
     const isPickup = order.shipping_method === "PICKUP"
     const isCompleted = order.status === "COMPLETED"
     const isCancelled = order.status === "CANCELLED"
@@ -125,12 +141,12 @@ function OrderSummarySteps({ order }: Props) {
             </InteractiveStepperContent>
 
             <InteractiveStepperContent step={2} className="grow flex flex-col" key={1}>
-                <OrderStatusStep order={order} />
+                <OrderStatusStep order={order} employeePermissions={employeePermissions} />
                 <StepNavigation />
             </InteractiveStepperContent>
 
             <InteractiveStepperContent step={3} className="grow flex flex-col" key={2}>
-                <CustomerInfoStep order={order} />
+                <CustomerInfoStep order={order} employeePermissions={employeePermissions} />
                 <StepNavigation />
             </InteractiveStepperContent>
         </InteractiveStepper>
