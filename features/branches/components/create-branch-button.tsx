@@ -36,7 +36,7 @@ function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
             text={(
                 <>
                     <Plus />
-                    {t("button")}
+                    <span className="hidden md:block">{t("button")}</span>
                 </>
             )}
             schema={branchCreateSchema}

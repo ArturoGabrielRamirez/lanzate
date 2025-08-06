@@ -114,7 +114,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
             <DialogTrigger asChild>
                 <Button disabled={false} variant="default" type="button" className={cn(buttonClassName)}>
                     {buttonIcon}
-                    {t("button")}
+                    <span className="hidden md:block">{t("button")}</span>
                 </Button>
             </DialogTrigger>
             <DialogContent>
