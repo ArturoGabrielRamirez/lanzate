@@ -1,6 +1,6 @@
 "use client"
 
-import { Plus } from "lucide-react"
+import { Phone, Plus, User } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { formatErrorResponse } from "@/utils/lib"
 
@@ -9,6 +9,9 @@ import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { CreateBranchButtonProps } from "@/features/branches/types"
 import { branchCreateSchema } from "@/features/branches/schemas"
 import { createBranch } from "@/features/branches/actions"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { useFormContext } from "react-hook-form"
+import AccordionTriggerWithValidation from "./accordion-trigger-with-validation"
 
 function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
 
@@ -47,10 +50,32 @@ function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
                 loading: t("messages.loading")
             }}
         >
-            <InputField name="name" label={t("name")} type="text" />
-            <InputField name="address" label={t("address")} type="text" />
-            <InputField name="phone" label={t("phone")} type="text" />
-            <InputField name="email" label={t("email")} type="text" />
+            <Accordion type="single" collapsible defaultValue="item-1">
+                <AccordionItem value="item-1">
+                    <AccordionTriggerWithValidation keys={["name"]}>
+                        <span className="flex items-center gap-2">
+                            <User className="size-4" />
+                            Basic info
+                        </span>
+                    </AccordionTriggerWithValidation>
+                    <AccordionContent className="space-y-4">
+                        <InputField name="name" label={t("name")} type="text" />
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTriggerWithValidation keys={["address", "phone", "email"]}>
+                        <span className="flex items-center gap-2">
+                            <Phone className="size-4" />
+                            Contact info
+                        </span>
+                    </AccordionTriggerWithValidation>
+                    <AccordionContent className="space-y-4">
+                        <InputField name="address" label={t("address")} type="text" />
+                        <InputField name="phone" label={t("phone")} type="text" />
+                        <InputField name="email" label={t("email")} type="text" />
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
         </ButtonWithPopup>
     )
 }

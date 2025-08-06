@@ -8,10 +8,11 @@ import { useState } from "react"
 import { EditStoreButtonProps } from "@/features/stores/types"
 import { useTranslations } from "next-intl"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
 
 function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
 
-    const [subdomain, setSubdomain] = useState(store.subdomain)
+    const [subdomain, setSubdomain] = useState(store.subdomain || "")
     const t = useTranslations("store.edit-store")
 
     const handleEditStore = async (payload: any) => {
@@ -54,12 +55,12 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
         >
             <Accordion type="single" collapsible defaultValue="item-1">
                 <AccordionItem value="item-1">
-                    <AccordionTrigger>
+                    <AccordionTriggerWithValidation keys={["name", "description", "subdomain"]}>
                         <span className="flex items-center gap-2">
                             <User className="size-4" />
                             Basic info
                         </span>
-                    </AccordionTrigger>
+                    </AccordionTriggerWithValidation>
                     <AccordionContent className="space-y-4">
                         <InputField name="name" label={t("name")} type="text" defaultValue={store.name} />
                         <InputField name="description" label={t("description-field")} type="text" defaultValue={store.description || ""} />
@@ -72,12 +73,12 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">
-                    <AccordionTrigger>
+                    <AccordionTriggerWithValidation keys={["contact_phone", "contact_whatsapp"]}>
                         <span className="flex items-center gap-2">
                             <Phone className="size-4" />
                             {t("contact-section")}
                         </span>
-                    </AccordionTrigger>
+                    </AccordionTriggerWithValidation>
                     <AccordionContent className="space-y-4">
                         <InputField
                             name="contact_phone"
@@ -94,12 +95,12 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">
-                    <AccordionTrigger>
+                    <AccordionTriggerWithValidation keys={["facebook_url", "instagram_url", "x_url"]}>
                         <span className="flex items-center gap-2">
                             <MessageCircle className="size-4" />
                             {t("social-media-section")}
                         </span>
-                    </AccordionTrigger>
+                    </AccordionTriggerWithValidation>
                     <AccordionContent className="space-y-4">
                         <InputField
                             name="facebook_url"
