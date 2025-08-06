@@ -628,6 +628,8 @@
             "address": "Dirección",
             "phone": "Teléfono",
             "email": "Email",
+            "basic-info": "Información básica",
+            "contact-info": "Información de contacto",
             "messages": {
                 "success": "¡Sucursal creada exitosamente!",
                 "error": "Error al crear sucursal",
@@ -637,7 +639,7 @@
         "edit-branch": {
             "button": "Editar Sucursal",
             "title": "Editar sucursal",
-            "description": "Editá los detalles de la sucursal incluyendo nombre, dirección, teléfono y email. También podés designar esta sucursal como la principal.",
+            "description-popup": "Editá los detalles de la sucursal incluyendo nombre, dirección, teléfono y email. También podés designar esta sucursal como la principal.",
             "name": "Nombre",
             "description": "Descripción",
             "description-placeholder": "Descripción de la sucursal",

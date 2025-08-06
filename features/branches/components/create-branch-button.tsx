@@ -54,7 +54,7 @@ function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
                     <AccordionTriggerWithValidation keys={["name"]}>
                         <span className="flex items-center gap-2">
                             <User className="size-4" />
-                            Basic info
+                            {t("basic-info")}
                         </span>
                     </AccordionTriggerWithValidation>
                     <AccordionContent className="space-y-4">
@@ -65,7 +65,7 @@ function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
                     <AccordionTriggerWithValidation keys={["address", "phone", "email"]}>
                         <span className="flex items-center gap-2">
                             <Phone className="size-4" />
-                            Contact info
+                            {t("contact-info")}
                         </span>
                     </AccordionTriggerWithValidation>
                     <AccordionContent className="space-y-4">

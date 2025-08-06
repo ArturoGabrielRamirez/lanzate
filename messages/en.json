@@ -764,6 +764,8 @@
             "address": "Address",
             "phone": "Phone",
             "email": "Email",
+            "basic-info": "Basic info",
+            "contact-info": "Contact info",
             "messages": {
                 "success": "Branch created successfully!",
                 "error": "Failed to create branch",
@@ -773,7 +775,7 @@
         "edit-branch": {
             "button": "Edit Branch",
             "title": "Edit branch",
-            "description": "Edit the branch details including name, address, phone, and email. You can also designate this branch as the main branch.",
+            "description-popup": "Edit the branch details including name, address, phone, and email. You can also designate this branch as the main branch.",
             "name": "Name",
             "description": "Description",
             "description-placeholder": "Branch description",
