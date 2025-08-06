@@ -86,8 +86,8 @@ export async function POST(request: NextRequest) {
                 nextStep: 'Ahora confirma desde tu nuevo email'
             }
         });
-
     } catch (error) {
+        console.error(error);
         return NextResponse.json(
             { error: 'Error interno del servidor' },
             { status: 500 }

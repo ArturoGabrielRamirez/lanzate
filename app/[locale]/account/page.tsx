@@ -1,5 +1,3 @@
-"use server"
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo";
@@ -8,28 +6,20 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { User } from "lucide-react";
-import { ChangeEmailButton, EmailStatusBanner, ChangePasswordButton, syncEmailAfterConfirmation } from "@/features/auth/components/index"
-import { redirect } from "next/navigation";
+import { ChangeEmailButton, EmailStatusBanner, ChangePasswordButton, /* syncEmailAfterConfirmation */  } from "@/features/auth/components/index"
 
-// Definir las props para recibir searchParams
-interface Props {
-    searchParams: {
-        emailCompleted?: string;
-    }
-}
 
-export default async function AccountPage({ searchParams }: Props) {
-
+export default async function AccountPage() {
+    
     // Manejar la sincronización de email si viene el parámetro
-
-    if (searchParams.emailCompleted === 'true') {
+/*     if (searchParams.emailCompleted === 'true') {
         const result = await syncEmailAfterConfirmation();
-        if (result && result.success) {
-            // Redirigir sin el parámetro para limpiar la URL
+        if (result.success) {
+
             redirect('/account');
         }
-        // Si hay error o result es null, continúa mostrando la página normalmente
-    }
+        
+    } */
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
     const t = await getTranslations("account");
