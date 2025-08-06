@@ -44,7 +44,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                       {children}
                     </main>
                     <Footer />
-                    <Toaster />
+                    <Toaster position="top-center"/>
                   </>
                 )}
                 userLayout={children}
