@@ -183,7 +183,7 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
 
   const handleFinalizeSale = async (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => {
     return actionWrapper(async () => {
-
+      
       const { error, message, payload } = await createNewWalkInOrder({
         branch_id: branchId,
         subdomain: subdomain,
@@ -203,10 +203,13 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
           email: formData.customerInfo.email,
         },
       })
-
+      
+      console.log("🚀 ~ handleFinalizeSale ~ error:", error)
       if (error) {
         throw new Error(message)
       }
+
+      console.log("llega hasta aqui")
 
       setCartItems([])
       setCustomerInfo({ name: '', phone: '', email: '' })

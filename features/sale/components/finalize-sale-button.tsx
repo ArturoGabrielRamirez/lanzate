@@ -110,7 +110,7 @@ function FinalizeSaleButton({
       setCustomerInfo({ name: '', phone: '', email: '' })
     }
 
-    await onConfirm({
+    const { error, message, payload } = await onConfirm({
       paymentMethod: data.paymentMethod,
       customerInfo: {
         name: data.name,
@@ -118,8 +118,9 @@ function FinalizeSaleButton({
         email: data.email
       }
     })
+    console.log("🚀 ~ handleFinalizeSale ~ error:", error)
 
-    return { error: false, payload: data, message: 'Venta finalizada correctamente' }
+    return { error, message, payload }
   }
 
   return (
