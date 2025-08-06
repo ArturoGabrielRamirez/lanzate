@@ -31,7 +31,6 @@ export async function checkUserOrderPermissions(userId: number): Promise<CheckUs
         })
 
         const canCreateOrders = storesWithPermissions.length > 0
-        console.log("🚀 ~ checkUserOrderPermissions ~ canCreateOrders:", canCreateOrders)
 
         return {
             message: canCreateOrders ? "User has order creation permissions" : "User does not have order creation permissions",

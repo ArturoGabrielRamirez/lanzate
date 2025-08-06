@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { ButtonWithPopup, InputField } from "@/features/layout/components";
 import { handleEditEmail } from "@/features/auth/actions/handle-edit-email";
 import { getEmailChangeStatus } from '@/features/auth/actions/email-change-status';
@@ -30,6 +31,8 @@ export default function ChangeEmailButton({
     className,
     currentEmail
 }: ChangeEmailButtonProps) {
+    const t = useTranslations("auth.email-change");
+    
     const [showMonitor, setShowMonitor] = useState(false);
     const [newEmail, setNewEmail] = useState('');
     const [hasPendingChange, setHasPendingChange] = useState(false);
@@ -87,7 +90,7 @@ export default function ChangeEmailButton({
         if (formData.email === currentEmail) {
             return {
                 error: true,
-                message: "El nuevo email debe ser diferente al actual",
+                message: t("email-must-be-different"),
                 payload: null
             };
         }
@@ -182,30 +185,30 @@ export default function ChangeEmailButton({
                 <ButtonWithPopup
                     text={buttonText}
                     title={title}
-                    description="Por seguridad, confirma tu contraseña actual. Te enviaremos emails de verificación a ambas direcciones."
+                    description={t("security-description")}
                     action={changeEmailAction}
                     schema={emailSchema}
                     messages={{
-                        success: "Emails de verificación enviados",
-                        error: "Error al cambiar el email",
-                        loading: "Enviando emails de verificación..."
+                        success: t("verification-emails-sent"),
+                        error: t("error-changing-email"),
+                        loading: t("sending-verification")
                     }}
                     className={className}
                     variant="default"
                     onComplete={() => {}}
-                    disabled={hasPendingChange && !isProcessCompleted} // Solo deshabilitar si hay cambio pendiente Y no está completado
+                    disabled={hasPendingChange && !isProcessCompleted}
                 >
                     <div className="mb-2 p-3 bg-blue-50 dark:bg-blue-950 rounded-md">
                         <p className="text-sm text-blue-700 dark:text-blue-300">
-                            <strong>Email actual:</strong> {currentEmail}
+                            <strong>{t("current-email")}</strong> {currentEmail}
                         </p>
                     </div>
                     
                     {hasPendingChange && !isProcessCompleted && (
                         <div className="mb-4 p-3 bg-yellow-50 dark:bg-yellow-950 rounded-md">
                             <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                                <strong>⚠️ Hay un cambio en progreso</strong><br/>
-                                Completa el proceso actual antes de iniciar uno nuevo.
+                                <strong>{t("change-in-progress")}</strong><br/>
+                                {t("complete-current-process")}
                             </p>
                         </div>
                     )}
@@ -213,24 +216,24 @@ export default function ChangeEmailButton({
                     {hasPendingChange && isProcessCompleted && (
                         <div className="mb-4 p-3 bg-green-50 dark:bg-green-950 rounded-md">
                             <p className="text-sm text-green-700 dark:text-green-300">
-                                <strong>✅ Cambio completado</strong><br/>
-                                Tu email ha sido actualizado exitosamente. Puedes iniciar un nuevo cambio si es necesario.
+                                <strong>{t("change-completed")}</strong><br/>
+                                {t("email-updated-successfully")}
                             </p>
                         </div>
                     )}
                     
                     <InputField
                         name="email"
-                        label="Nuevo email"
+                        label={t("new-email-label")}
                         type="email"
-                        placeholder="nuevo-email@ejemplo.com"
+                        placeholder={t("new-email-placeholder")}
                         disabled={hasPendingChange && !isProcessCompleted}
                     />
                     <InputField
                         name="currentPassword"
-                        label="Contraseña actual"
+                        label={t("current-password-label")}
                         type="password"
-                        placeholder="Tu contraseña actual"
+                        placeholder={t("current-password-placeholder")}
                         disabled={hasPendingChange && !isProcessCompleted}
                     />
                 </ButtonWithPopup>

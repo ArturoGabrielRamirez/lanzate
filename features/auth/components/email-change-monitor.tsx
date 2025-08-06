@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Mail, Clock, ArrowRight, RefreshCw, AlertTriangle } from "lucide-react";
+import { CheckCircle, Mail, Clock, ArrowRight, RefreshCw } from "lucide-react";
 import { getEmailChangeStatus } from '@/features/auth/actions/email-change-status';
 
 interface EmailChangeMonitorProps {
@@ -17,6 +18,8 @@ export default function EmailChangeMonitor({
     initialOldEmail, 
     newEmail 
 }: EmailChangeMonitorProps) {
+    const t = useTranslations("auth.email-change");
+    
     const [status, setStatus] = useState({
         oldEmailConfirmed: false,
         newEmailConfirmed: false,
@@ -171,7 +174,7 @@ export default function EmailChangeMonitor({
             <CardHeader className="text-center">
                 <CardTitle className="flex items-center justify-center gap-2">
                     <Mail className="w-5 h-5" />
-                    Confirmación de Cambio de Email
+                    {t("title")}
                 </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -193,14 +196,14 @@ export default function EmailChangeMonitor({
                             )}
                         </div>
                         <div className="flex-1">
-                            <p className="font-medium text-sm">Confirmar email actual</p>
+                            <p className="font-medium text-sm">{t("step1.title")}</p>
                             <p className="text-xs text-muted-foreground">{initialOldEmail}</p>
                             <p className={`text-xs font-medium ${
                                 stepStatus.step1 === 'confirmed' 
                                     ? 'text-green-600 dark:text-green-400' 
                                     : 'text-yellow-600 dark:text-yellow-400'
                             }`}>
-                                {stepStatus.step1 === 'confirmed' ? '✓ Confirmado' : 'Esperando confirmación...'}
+                                {stepStatus.step1 === 'confirmed' ? t("step1.status.confirmed") : t("step1.status.pending")}
                             </p>
                         </div>
                     </div>
@@ -228,7 +231,7 @@ export default function EmailChangeMonitor({
                             )}
                         </div>
                         <div className="flex-1">
-                            <p className="font-medium text-sm">Confirmar nuevo email</p>
+                            <p className="font-medium text-sm">{t("step2.title")}</p>
                             <p className="text-xs text-muted-foreground">{newEmail}</p>
                             <p className={`text-xs font-medium ${
                                 stepStatus.step2 === 'confirmed' 
@@ -238,10 +241,10 @@ export default function EmailChangeMonitor({
                                     : 'text-gray-500'
                             }`}>
                                 {stepStatus.step2 === 'confirmed' 
-                                    ? '✓ Confirmado - ¡Cambio completado!' 
+                                    ? t("step2.status.completed") 
                                     : stepStatus.step2 === 'pending'
-                                    ? '⏳ Revisa este email y confirma'
-                                    : 'Esperando confirmación del email actual...'}
+                                    ? t("step2.status.pending")
+                                    : t("step2.status.waiting")}
                             </p>
                         </div>
                     </div>
@@ -252,7 +255,7 @@ export default function EmailChangeMonitor({
                     {stepStatus.currentStep === 'step1' && (
                         <div className="bg-yellow-50 dark:bg-yellow-950 p-3 rounded-md">
                             <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                                <strong>Paso 1:</strong> Revisa tu email actual ({initialOldEmail}) y confirma el cambio.
+                                <strong>Paso 1:</strong> {t("instructions.step1", { email: initialOldEmail })}
                             </p>
                         </div>
                     )}
@@ -260,7 +263,7 @@ export default function EmailChangeMonitor({
                     {stepStatus.currentStep === 'step2' && (
                         <div className="bg-blue-50 dark:bg-blue-950 p-3 rounded-md">
                             <p className="text-sm text-blue-700 dark:text-blue-300">
-                                <strong>Paso 2:</strong> Ahora revisa tu nuevo email ({newEmail}) y confirma para completar el cambio.
+                                <strong>Paso 2:</strong> {t("instructions.step2", { email: newEmail })}
                             </p>
                         </div>
                     )}
@@ -268,7 +271,7 @@ export default function EmailChangeMonitor({
                     {stepStatus.currentStep === 'completed' && (
                         <div className="bg-green-50 dark:bg-green-950 p-3 rounded-md">
                             <p className="text-sm text-green-700 dark:text-green-300">
-                                <strong>¡Completado!</strong> Tu email ha sido actualizado exitosamente.
+                                <strong>¡Completado!</strong> {t("instructions.completed")}
                             </p>
                         </div>
                     )}
@@ -278,7 +281,7 @@ export default function EmailChangeMonitor({
                 <div className="pt-4 space-y-2">
                     {stepStatus.currentStep === 'completed' ? (
                         <Button onClick={onComplete} className="w-full">
-                            Volver a mi cuenta
+                            {t("actions.back-to-account")}
                         </Button>
                     ) : (
                         <Button 
@@ -288,24 +291,13 @@ export default function EmailChangeMonitor({
                             className="w-full flex items-center gap-2"
                         >
                             <RefreshCw className={`w-4 h-4 ${(status.loading || isCheckingRef.current) ? 'animate-spin' : ''}`} />
-                            {status.loading || isCheckingRef.current ? 'Verificando...' : 'Verificar estado'}
+                            {status.loading || isCheckingRef.current ? t("actions.checking") : t("actions.check-status")}
                         </Button>
-                    )}
-                    
-                    {/* Debug info */}
-                    {process.env.NODE_ENV === 'development' && (
-                        <div className="text-xs text-muted-foreground p-2 bg-muted rounded space-y-1">
-                            <div><strong>Debug Info:</strong></div>
-                            <div>Checks: {checkCount} | Step: {stepStatus.currentStep}</div>
-                            <div>HasChange: {status.hasEmailChange ? '✅' : '❌'} | Old: {status.oldEmailConfirmed ? '✅' : '❌'} | New: {status.newEmailConfirmed ? '✅' : '❌'}</div>
-                            <div>Current: {status.currentEmail}</div>
-                            <div>New: {newEmail}</div>
-                        </div>
                     )}
                 </div>
 
                 <p className="text-xs text-muted-foreground text-center">
-                    La página se actualiza automáticamente cada 3 segundos
+                    {t("auto-refresh")}
                 </p>
             </CardContent>
         </Card>

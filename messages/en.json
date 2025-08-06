@@ -10,6 +10,7 @@
             "email": "Email",
             "password": "Password",
             "change-password": "Change Password",
+            "change-email": "Change Email",
             "currently-not-available": "Currently not available"
         }
     },
@@ -52,7 +53,98 @@
         },
         "update-password": {
             "title": "Update Password"
-        }
+        },
+        "errors": {
+            "oauth": {
+                "cancelled": {
+                    "title": "Login cancelled",
+                    "description": "You can try again with the same method or use your email and password."
+                },
+                "failed": {
+                    "title": "Authentication error",
+                    "description": "There was a problem with authentication. Try again or use another method."
+                },
+                "temporary": {
+                    "title": "Service unavailable",
+                    "description": "The service is temporarily unavailable. Try again in a few minutes."
+                },
+                "invalid": {
+                    "title": "Invalid request",
+                    "description": "The request is invalid. Please try again."
+                },
+                "unexpected": {
+                    "title": "Unexpected error",
+                    "description": "An unexpected error occurred. Please try again."
+                },
+                "generic": {
+                    "title": "Authentication error",
+                    "description": "Try again or use your email and password."
+                }
+            }
+        },
+        "email-change": {
+            "title": "Email Change Confirmation",
+            "step1": {
+                "title": "Confirm current email",
+                "status": {
+                    "pending": "Waiting for confirmation...",
+                    "confirmed": "✓ Confirmed"
+                }
+            },
+            "step2": {
+                "title": "Confirm new email",
+                "status": {
+                    "waiting": "Waiting for current email confirmation...",
+                    "pending": "⏳ Check this email and confirm",
+                    "confirmed": "✓ Confirmed - Change completed!"
+                }
+            },
+            "instructions": {
+                "step1": "Step 1: Check your current email ({email}) and confirm the change.",
+                "step2": "Step 2: Now check your new email ({email}) and confirm to complete the change.",
+                "completed": "Completed! Your email has been updated successfully."
+            },
+            "actions": {
+                "back-to-account": "Back to my account",
+                "check-status": "Check status",
+                "checking": "Checking..."
+            },
+            "auto-refresh": "The page updates automatically every 3 seconds",
+            "current-email": "Current email:",
+            "new-email": "New email:",
+            "email-must-be-different": "The new email must be different from the current one",
+            "verification-emails-sent": "Verification emails sent",
+            "error-changing-email": "Error changing email",
+            "sending-verification": "Sending verification emails...",
+            "change-in-progress": "⚠️ There is a change in progress",
+            "complete-current-process": "Complete the current process before starting a new one.",
+            "change-completed": "✅ Change completed",
+            "email-updated-successfully": "Your email has been updated successfully. You can start a new change if necessary.",
+            "new-email-label": "New email",
+            "new-email-placeholder": "new-email@example.com",
+            "current-password-label": "Current password",
+            "current-password-placeholder": "Your current password",
+            "security-description": "For security, confirm your current password. We will send verification emails to both addresses."
+        },
+        "email-status": {
+            "updated-successfully": "Email updated successfully! You can now use {email}",
+            "last-step": "Last step: Check your new email ({email}) and confirm to complete the change.",
+            "change-in-progress": "Email change in progress: Confirm from your current email ({email}) to continue."
+        },
+        "password-change": {
+            "security-description": "For security, confirm your current password before changing it.",
+            "current-password-label": "Current password",
+            "current-password-placeholder": "Your current password",
+            "new-password-label": "New password",
+            "new-password-placeholder": "Minimum 6 characters",
+            "confirm-password-label": "Confirm new password",
+            "confirm-password-placeholder": "Confirm your new password",
+            "password-updated": "Password updated correctly",
+            "error-updating-password": "Error updating password",
+            "verifying-updating": "Verifying and updating password..."
+        },
+        "close": "Close",
+        "try-facebook-again": "Try with Facebook again"
     },
     "cart": {
         "title": "Cart",
