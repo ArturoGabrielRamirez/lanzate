@@ -6,9 +6,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { User } from "lucide-react";
-import ChangePasswordButton from "@/features/auth/components/changue-password-button";
-import { EmailStatusBanner } from "@/features/auth/components/email-status-banner";
-import ChangeEmailButton from "@/features/auth/components/changue-email-button";
+import { ChangeEmailButton, EmailStatusBanner, ChangePasswordButton } from "@/features/auth/components/index"
 
 
 

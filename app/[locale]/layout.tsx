@@ -7,7 +7,7 @@ import { LayoutProps } from "@/features/layout/types";
 import { NextIntlClientProvider } from 'next-intl';
 
 import "../globals.css";
-import { GlobalEmailConfirmationDetector } from "@/features/auth/components/global-email-confirmation-detector";
+import { GlobalEmailConfirmationDetector } from "@/features/auth/components/index";
 
 export const metadata: Metadata = {
   title: {

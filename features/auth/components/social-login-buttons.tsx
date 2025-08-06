@@ -2,10 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { handleFacebookLogin, handleGoogleLogIn } from '@/features/auth/actions'
 import { FacebookLogo, GoogleLogo } from '@/features/auth/components'
-
-interface GoogleLoginButtonProps {
-    orLoginWith: string
-}
+import { GoogleLoginButtonProps } from '../types'
 
 const SocialLoginButtons = ({ orLoginWith }: GoogleLoginButtonProps) => {
     return (

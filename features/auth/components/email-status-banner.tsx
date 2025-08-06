@@ -2,16 +2,10 @@
 
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle, Clock, Mail } from 'lucide-react';
-import { useEmailChangeStatus } from '../hooks/use-email-changue-status';
+import { useConfirmationEmailChangeStatus } from '../hooks/use-confirmation-email-change-status';
 
-export function EmailStatusBanner() {
-    const { status } = useEmailChangeStatus();
-
-    // ❌ ELIMINAMOS ESTO - el detector global ya maneja las confirmaciones
-    // useEmailConfirmationDetector({
-    //     onFirstEmailConfirmed: () => { ... },
-    //     onSecondEmailConfirmed: () => { ... }
-    // });
+export default function EmailStatusBanner() {
+    const { status } = useConfirmationEmailChangeStatus();
 
     if (!status.hasEmailChange || status.loading) {
         return null;
