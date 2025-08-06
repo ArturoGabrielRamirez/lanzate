@@ -16,6 +16,7 @@ import { StepNavigation } from "./step-navigation"
 import { Label } from "@/components/ui/label"
 import { useCart } from "@/features/cart/components/cart-provider"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, userId: string, branches: Branch[] }) {
 
@@ -24,6 +25,7 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("CASH")
     const { quantity, total, cart , clearCart } = useCart()
     const router = useRouter()
+    const t = useTranslations("checkout")
 
     const handleSubmit = async (formData: any) => {
 
@@ -51,7 +53,7 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
 
         return {
             error: false,
-            message: "Order created successfully",
+            message: t("messages.order-created"),
             payload: payload
         }
     }
@@ -59,7 +61,7 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
     return (
         <Form
             className="grow"
-            contentButton="Continue"
+            contentButton={t("navigation.continue")}
             formAction={handleSubmit}
             resolver={yupResolver(shippingMethod === "DELIVERY" ? deliveryOrderSchema : pickupOrderSchema)}
         >
@@ -67,24 +69,24 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
                 <InteractiveStepperItem>
                     <CheckoutStepItem
                         step={1}
-                        title="Personal Information"
-                        description="Provide your personal information"
+                        title={t("steps.personal-information.title")}
+                        description={t("steps.personal-information.description")}
                         errorFields={["name", "email", "phone"]}
                     />
                 </InteractiveStepperItem>
                 <InteractiveStepperItem>
                     <CheckoutStepItem
                         step={2}
-                        title="Delivery Information"
-                        description="Choose how your order gets to you"
+                        title={t("steps.delivery-information.title")}
+                        description={t("steps.delivery-information.description")}
                         errorFields={["shippingMethod", "branchId", "address", "city", "state", "country"]}
                     />
                 </InteractiveStepperItem>
                 <InteractiveStepperItem>
                     <CheckoutStepItem
                         step={3}
-                        title="Payment Information"
-                        description="Choose how you want to pay"
+                        title={t("steps.payment-information.title")}
+                        description={t("steps.payment-information.description")}
                         errorFields={["paymentMethod", "cardNumber", "cardHolder", "expiryDate", "cvv"]}
                     />
                 </InteractiveStepperItem>
@@ -92,12 +94,12 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
                 <InteractiveStepperContent step={1}>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Personal Information</CardTitle>
+                            <CardTitle>{t("steps.personal-information.title")}</CardTitle>
                         </CardHeader>
                         <CardContent className="flex flex-col gap-4">
-                            <InputField name="name" label="Name" />
-                            <InputField name="email" label="Email" />
-                            <InputField name="phone" label="Phone" />
+                            <InputField name="name" label={t("personal-info.name")} />
+                            <InputField name="email" label={t("personal-info.email")} />
+                            <InputField name="phone" label={t("personal-info.phone")} />
                             <StepNavigation />
                         </CardContent>
                     </Card>
@@ -105,7 +107,7 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
                 <InteractiveStepperContent step={2}>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Delivery Information</CardTitle>
+                            <CardTitle>{t("steps.delivery-information.title")}</CardTitle>
                         </CardHeader>
                         <CardContent className="flex flex-col gap-6">
 
@@ -122,14 +124,14 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
 
                             {shippingMethod === "DELIVERY" && (
                                 <div className="space-y-4">
-                                    <Label className="text-base font-medium block">Delivery Address</Label>
+                                    <Label className="text-base font-medium block">{t("delivery.address.label")}</Label>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <InputField name="address" label="Address" />
-                                        <InputField name="city" label="City" />
+                                        <InputField name="address" label={t("delivery.address.address")} />
+                                        <InputField name="city" label={t("delivery.address.city")} />
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <InputField name="state" label="State" />
-                                        <InputField name="country" label="Country" />
+                                        <InputField name="state" label={t("delivery.address.state")} />
+                                        <InputField name="country" label={t("delivery.address.country")} />
                                     </div>
                                 </div>
                             )}
@@ -141,7 +143,7 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
                 <InteractiveStepperContent step={3}>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Payment Information</CardTitle>
+                            <CardTitle>{t("steps.payment-information.title")}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <PaymentInformation

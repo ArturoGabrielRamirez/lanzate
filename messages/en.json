@@ -1178,6 +1178,92 @@
             "no-categories": "No categories"
         }
     },
+    "checkout": {
+        "title": "Checkout",
+        "steps": {
+            "personal-information": {
+                "title": "Personal Information",
+                "description": "Provide your personal information"
+            },
+            "delivery-information": {
+                "title": "Delivery Information",
+                "description": "Choose how your order gets to you"
+            },
+            "payment-information": {
+                "title": "Payment Information",
+                "description": "Choose how you want to pay"
+            }
+        },
+        "navigation": {
+            "previous": "Previous",
+            "next": "Next",
+            "continue": "Continue"
+        },
+        "personal-info": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone"
+        },
+        "delivery": {
+            "title": "Delivery Information",
+            "method-selector": {
+                "label": "Choose your delivery method",
+                "delivery": {
+                    "title": "Delivery",
+                    "description": "Orders take 30 min to 2 hours"
+                },
+                "pickup": {
+                    "title": "Pickup",
+                    "description": "Orders take 5-10 minutes"
+                }
+            },
+            "address": {
+                "label": "Delivery Address",
+                "address": "Address",
+                "city": "City",
+                "state": "State",
+                "country": "Country"
+            },
+            "branch-selector": {
+                "label": "Select Branch",
+                "placeholder": "Choose a branch"
+            }
+        },
+        "payment": {
+            "title": "Payment Information",
+            "method-selector": {
+                "label": "Select Payment Method",
+                "placeholder": "Choose a payment method",
+                "credit-debit-card": "Credit/Debit Card",
+                "bank-transfer": "Bank Transfer",
+                "mercado-pago": "Mercado Pago"
+            },
+            "card-info": {
+                "label": "Card Information",
+                "card-number": "Card Number",
+                "card-number-placeholder": "1234 5678 9012 3456",
+                "cardholder-name": "Cardholder Name",
+                "cardholder-placeholder": "John Doe",
+                "expiry-date": "Expiry Date",
+                "expiry-placeholder": "MM/YY",
+                "cvv": "CVV",
+                "cvv-placeholder": "123"
+            },
+            "bank-transfer": {
+                "title": "Bank Transfer Details:",
+                "cvu": "CVU: 0000003100061234567890",
+                "alias": "Alias: MI.TIENDA.ONLINE",
+                "instructions": "Please include your order number in the transfer description. Your order will be confirmed once the payment is received."
+            },
+            "mercado-pago": {
+                "title": "Mercado Pago Payment",
+                "description": "When you click \"Confirm Order\", you will be redirected to Mercado Pago to complete your payment securely. After payment, you will be brought back to our site with your order confirmation."
+            }
+        },
+        "messages": {
+            "order-created": "Order created successfully"
+        }
+    },
     "subdomain": {
         "title": "My Products",
         "sidebar": {

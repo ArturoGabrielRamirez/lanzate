@@ -1153,6 +1153,92 @@
             "published": "Publicados"
         }
     },
+    "checkout": {
+        "title": "Finalizar Compra",
+        "steps": {
+            "personal-information": {
+                "title": "Información Personal",
+                "description": "Proporcioná tu información personal"
+            },
+            "delivery-information": {
+                "title": "Información de Entrega",
+                "description": "Elegí cómo recibir tu pedido"
+            },
+            "payment-information": {
+                "title": "Información de Pago",
+                "description": "Elegí cómo querés pagar"
+            }
+        },
+        "navigation": {
+            "previous": "Anterior",
+            "next": "Siguiente",
+            "continue": "Continuar"
+        },
+        "personal-info": {
+            "name": "Nombre",
+            "email": "Email",
+            "phone": "Teléfono"
+        },
+        "delivery": {
+            "title": "Información de Entrega",
+            "method-selector": {
+                "label": "Elegí tu método de entrega",
+                "delivery": {
+                    "title": "Delivery",
+                    "description": "Los pedidos tardan entre 30 min y 2 horas"
+                },
+                "pickup": {
+                    "title": "Retiro",
+                    "description": "Los pedidos tardan entre 5-10 minutos"
+                }
+            },
+            "address": {
+                "label": "Dirección de Entrega",
+                "address": "Dirección",
+                "city": "Ciudad",
+                "state": "Provincia",
+                "country": "País"
+            },
+            "branch-selector": {
+                "label": "Seleccionar Sucursal",
+                "placeholder": "Elegí una sucursal"
+            }
+        },
+        "payment": {
+            "title": "Información de Pago",
+            "method-selector": {
+                "label": "Seleccionar Método de Pago",
+                "placeholder": "Elegí un método de pago",
+                "credit-debit-card": "Tarjeta de Crédito/Débito",
+                "bank-transfer": "Transferencia Bancaria",
+                "mercado-pago": "Mercado Pago"
+            },
+            "card-info": {
+                "label": "Información de la Tarjeta",
+                "card-number": "Número de Tarjeta",
+                "card-number-placeholder": "1234 5678 9012 3456",
+                "cardholder-name": "Nombre del Titular",
+                "cardholder-placeholder": "Juan Pérez",
+                "expiry-date": "Fecha de Vencimiento",
+                "expiry-placeholder": "MM/AA",
+                "cvv": "CVV",
+                "cvv-placeholder": "123"
+            },
+            "bank-transfer": {
+                "title": "Detalles de Transferencia Bancaria:",
+                "cvu": "CVU: 0000003100061234567890",
+                "alias": "Alias: MI.TIENDA.ONLINE",
+                "instructions": "Por favor, incluí el número de tu pedido en la descripción de la transferencia. Tu pedido será confirmado una vez recibido el pago."
+            },
+            "mercado-pago": {
+                "title": "Pago con Mercado Pago",
+                "description": "Cuando hagas clic en \"Confirmar Pedido\", serás redirigido a Mercado Pago para completar tu pago de forma segura. Después del pago, volverás a nuestro sitio con la confirmación de tu pedido."
+            }
+        },
+        "messages": {
+            "order-created": "Pedido creado exitosamente"
+        }
+    },
     "subdomain": {
         "title": "Mis Productos",
         "sidebar": {

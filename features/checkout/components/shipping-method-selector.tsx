@@ -7,6 +7,7 @@ import { MapPin, Truck } from "lucide-react"
 import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 import { ShippingMethod } from "@prisma/client"
+import { useTranslations } from "next-intl"
 
 interface ShippingMethodSelectorProps {
     value: ShippingMethod
@@ -15,6 +16,7 @@ interface ShippingMethodSelectorProps {
 
 export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelectorProps) {
     const { setValue } = useFormContext()
+    const t = useTranslations("checkout.delivery.method-selector")
 
     useEffect(() => {
         setValue("shippingMethod", value)
@@ -32,7 +34,7 @@ export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelect
 
     return (
         <div>
-            <Label className="text-base font-medium mb-4 block">Choose your delivery method</Label>
+            <Label className="text-base font-medium mb-4 block">{t("label")}</Label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Button
                     type="button"
@@ -48,9 +50,9 @@ export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelect
                 >
                     <Truck className="size-8" />
                     <div className="text-center">
-                        <div className="font-semibold">Delivery</div>
+                        <div className="font-semibold">{t("delivery.title")}</div>
                         <div className="text-sm opacity-80">
-                            Orders take 30 min to 2 hours
+                            {t("delivery.description")}
                         </div>
                     </div>
                 </Button>
@@ -68,9 +70,9 @@ export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelect
                 >
                     <MapPin className="size-8" />
                     <div className="text-center">
-                        <div className="font-semibold">Pickup</div>
+                        <div className="font-semibold">{t("pickup.title")}</div>
                         <div className="text-sm opacity-80">
-                            Orders take 5-10 minutes
+                            {t("pickup.description")}
                         </div>
                     </div>
                 </Button>
