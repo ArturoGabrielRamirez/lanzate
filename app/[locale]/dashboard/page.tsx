@@ -1,12 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getDashboardStores } from "@/features/dashboard/actions/getDashboardStores"
+import { checkUserOrderPermissions } from "@/features/dashboard/actions/checkUserOrderPermissions"
 import { DashboardSteps, ActivityFeed, ActivityFeedSkeleton } from "@/features/dashboard/components"
 import { Title } from "@/features/layout/components"
 import { CreateStoreButton, StoreCard } from "@/features/stores/components"
-import { ArrowRight, Hand, Plus, ShoppingBasket } from "lucide-react"
+import { ArrowRight, Hand, Plus, ShoppingBasket, AlertTriangle } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
 import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
@@ -30,6 +32,16 @@ async function DashboardPage() {
         return console.error("Error loading dashboard data")
     }
 
+    // Check if user has can_create_orders permission in any store
+    let canCreateOrders = false
+    
+    if (dashboardData.storeCount > 0) {
+        const { payload: hasOrderPermissions, error: permissionsError } = await checkUserOrderPermissions(user.id)
+        
+        if (!permissionsError) {
+            canCreateOrders = hasOrderPermissions
+        }
+    }
 
     const t = await getTranslations("dashboard")
 
@@ -40,7 +52,7 @@ async function DashboardPage() {
                     <Hand className="size-4 md:size-5 lg:size-6" />
                     {t("title")}
                 </div>
-            )} showDate className="hidden md:block"/>
+            )} showDate className="hidden md:block" />
 
             <div className="grid grid-cols-1 
                             grid-areas-[steps,stores,coming-soon,calendar,order]
@@ -118,12 +130,21 @@ async function DashboardPage() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Button className="w-full" asChild>
-                            <Link href="/sale">
-                                <ShoppingBasket />
-                                {t("new-order.title")}
-                            </Link>
-                        </Button>
+                        {canCreateOrders ? (
+                            <Button className="w-full" asChild>
+                                <Link href="/sale">
+                                    <ShoppingBasket />
+                                    {t("new-order.title")}
+                                </Link>
+                            </Button>
+                        ) : (
+                            <Alert>
+                                <AlertTriangle className="h-4 w-4" />
+                                <AlertDescription>
+                                    You don&apos;t have sufficient permissions to create orders. Please contact an administrator.
+                                </AlertDescription>
+                            </Alert>
+                        )}
                     </CardContent>
                 </Card>
             </div>
