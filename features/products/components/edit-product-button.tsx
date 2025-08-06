@@ -7,16 +7,40 @@ import { Pencil, Upload, X } from "lucide-react"
 import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/components/ui/file-upload";
 import { EditProductButtonProps } from "@/features/products/type"
 import CategorySelect from "@/features/store-landing/components/category-select-"
-import { useCallback, useState } from "react"
+import { useCallback, useState, useEffect } from "react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
+import { getStoreIdBySlug } from "@/features/categories/data/getStoreIdBySlug"
 
 function EditProductButton({ product, slug, onComplete, userId }: EditProductButtonProps) {
 
-    const [categories, setCategories] = useState<string[]>([])
+    const [categories, setCategories] = useState<{ label: string, value: string }[]>([])
     const [files, setFiles] = useState<File[]>([])
+    const [storeId, setStoreId] = useState<number | null>(null)
     const t = useTranslations("store.edit-product")
+
+    // Obtener el storeId a partir del slug
+    useEffect(() => {
+        const fetchStoreId = async () => {
+            const { payload, error } = await getStoreIdBySlug(slug)
+            if (!error && payload) {
+                setStoreId(payload)
+            }
+        }
+        fetchStoreId()
+    }, [slug])
+
+    // Inicializar categorías con las categorías existentes del producto
+    useEffect(() => {
+        if (product.categories && product.categories.length > 0) {
+            const initialCategories = product.categories.map((category: any) => ({
+                label: category.name,
+                value: category.id.toString()
+            }))
+            setCategories(initialCategories)
+        }
+    }, [product.categories])
 
     const handleAddCategory = (value: any) => {
         setCategories(value)
@@ -107,7 +131,10 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
             <InputField name="price" label={t("price")} type="number" defaultValue={String(product.price)} />
             <InputField name="stock" label={t("stock")} type="number" defaultValue={String(product.stock)} />
             <InputField name="description" label={t("description")} type="text" defaultValue={product.description || ""} />
-            <CategorySelect onChange={handleAddCategory} defaultValue={product.categories.map((category: any) => ({ label: category.name, value: category.id }))} />
+            <CategorySelect 
+                onChange={handleAddCategory} 
+                storeId={storeId || undefined}
+            />
         </ButtonWithPopup>
     )
 }

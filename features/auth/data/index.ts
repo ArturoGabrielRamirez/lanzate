@@ -1,0 +1,1 @@
+export { insertUser } from "./insertUser"

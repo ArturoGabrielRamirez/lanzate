@@ -690,7 +690,8 @@
                 "ready": "Listo",
                 "shipped": "Enviado",
                 "delivered": "Entregado",
-                "cancelled": "Cancelado"
+                "cancelled": "Cancelado",
+                "completed": "Completado"
             },
             "items-count": {
                 "item": "artículo",

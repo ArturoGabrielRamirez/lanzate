@@ -10,6 +10,11 @@ import { Button } from "@/components/ui/button"
 import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
 import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+    title: "Dashboard"
+}
 
 async function DashboardPage() {
 

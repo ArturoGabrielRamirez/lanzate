@@ -1,13 +1,14 @@
 'use server'
 
-import { createServerSideClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
-import { extractSubdomainFromHost } from '../utils/extract-subdomain-from-host'
-import { buildLoginErrorUrl } from '../utils/build-login-error-url'
+import { extractSubdomainFromHost, buildLoginErrorUrl } from '@/features/auth/utils'
+import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function handleFacebookLogin() {
-    const supabase = await createServerSideClient()
+
+    const supabase = createServerSideClient()
+
     const headersList = await headers()
     const host = headersList.get('host') || ''
     const subdomain = extractSubdomainFromHost(host)
@@ -28,7 +29,6 @@ export async function handleFacebookLogin() {
     })
 
     if (error) {
-        console.error('Facebook OAuth error:', error)
         const errorUrl = await buildLoginErrorUrl(subdomain, 'oauth_failed', error.message)
         redirect(errorUrl)
     }
@@ -36,5 +36,6 @@ export async function handleFacebookLogin() {
     if (data.url) {
         redirect(data.url)
     }
+
     redirect(await buildLoginErrorUrl(subdomain, 'no_url'))
 }

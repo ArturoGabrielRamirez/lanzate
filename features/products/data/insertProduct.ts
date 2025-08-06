@@ -1,7 +1,6 @@
 "use server"
 
 
-/* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
 import { createServerSideClient } from "@/utils/supabase/server"
 import randomstring from "randomstring"
@@ -10,10 +9,8 @@ import { prisma } from "@/utils/prisma"
 export async function insertProduct(payload: any, storeId: number, userId: number) {
     return actionWrapper(async () => {
 
-        /* const client = new PrismaClient() */
         const supabase = createServerSideClient()
 
-        // Usar transacción para asegurar consistencia
         const result = await prisma.$transaction(async (tx) => {
 
             const store = await tx.store.findUnique({
@@ -32,7 +29,6 @@ export async function insertProduct(payload: any, storeId: number, userId: numbe
 
             if (!mainBranch) throw new Error("Main branch not found")
 
-            // Si hay imagen, subirla primero antes de crear el producto
             let imageUrl: string | null = null
             if (payload.image) {
 
@@ -74,7 +70,7 @@ export async function insertProduct(payload: any, storeId: number, userId: numbe
                     },
                     categories: {
                         connect: [
-                            ...payload.categories.map((category: any) => ({ id: category.value }))
+                            ...payload.categories.map((category: any) => ({ id: Number(category.value) }))
                         ]
                     },
                     owner_id: userId,

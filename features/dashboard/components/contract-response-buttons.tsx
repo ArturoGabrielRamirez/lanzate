@@ -8,7 +8,7 @@ import { toast } from "sonner"
 
 type ContractResponseButtonsProps = {
     assignmentId: number
-    onResponse: () => void
+    onResponse?: () => void
 }
 
 function ContractResponseButtons({ assignmentId, onResponse }: ContractResponseButtonsProps) {
@@ -16,15 +16,15 @@ function ContractResponseButtons({ assignmentId, onResponse }: ContractResponseB
 
     const handleResponse = async (status: 'APPROVED' | 'REJECTED') => {
         setIsResponding(true)
-        
+
         try {
             const result = await respondToContract(assignmentId, status)
-            
+
             if (result.error) {
                 toast.error(result.message || "Error al responder al contrato")
             } else {
                 toast.success(result.message)
-                onResponse()
+                onResponse?.()
             }
         } catch (error) {
             console.error("Error responding to contract:", error)

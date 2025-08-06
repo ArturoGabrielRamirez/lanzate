@@ -826,7 +826,8 @@
                 "ready": "Ready",
                 "shipped": "Shipped",
                 "delivered": "Delivered",
-                "cancelled": "Cancelled"
+                "cancelled": "Cancelled",
+                "completed": "Completed"
             },
             "items-count": {
                 "item": "item",

@@ -1,12 +1,13 @@
 'use client'
 
-import { Form, InputField } from '@/features/layout/components'
-import { formatErrorResponse } from '@/utils/lib'
-import { Link } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
+import { Form, InputField } from '@/features/layout/components'
+import { formatErrorResponse } from '@/utils/lib'
+
 export default function UpdatePasswordForm() {
+
     const [done, setDone] = useState(false)
 
     const t = useTranslations("auth");
@@ -29,19 +30,22 @@ export default function UpdatePasswordForm() {
         }
     }
 
-    return done ? (
-        <div className="flex flex-col items-center justify-center h-full">
-            <p>{t("reset-password.description.password-updated")}</p>
-        </div>
-    ) : (
-        <Form
-            formAction={handleSubmit}
-            contentButton={t("buttons.update-password")}
-            successMessage={t("toast-message.success-password-updated")}
-            loadingMessage={t("toast-message.updating-password")}
-            className="flex flex-col w-full max-w-xl gap-4 p-8 sm:gap-6"
-        >
-            <InputField name='password' label={t("reset-password.new-password")} type='password' />
-        </Form>
-    )
+    return (
+        <>
+            {done ? (
+                <div className="flex flex-col items-center justify-center h-full">
+                    <p>{t("reset-password.description.password-updated")}</p>
+                </div>
+            ) : (
+                <Form
+                    formAction={handleSubmit}
+                    contentButton={t("buttons.update-password")}
+                    successMessage={t("toast-message.success-password-updated")}
+                    loadingMessage={t("toast-message.updating-password")}
+                    className="flex flex-col w-full max-w-xl gap-4 p-8 sm:gap-6"
+                >
+                    <InputField name='password' label={t("reset-password.new-password")} type='password' />
+                </Form>
+            )}
+        </>)
 }

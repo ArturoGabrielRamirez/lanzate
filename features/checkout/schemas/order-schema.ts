@@ -14,12 +14,12 @@ const shippingInfoSchema = {
 }
 
 const orderMethodSchema = {
-    shippingMethod: yup.string().oneOf(['delivery', 'pickup']).required('Shipping method is required'),
+    shippingMethod: yup.string().oneOf(['DELIVERY', 'PICKUP']).required('Shipping method is required'),
     branchId: yup.number().required('Branch selection is required'),
 }
 
 const paymentMethodSchema = {
-    paymentMethod: yup.string().oneOf(['credit-debit', 'transfer', 'mercadopago']).required('Payment method is required'),
+    paymentMethod: yup.string().oneOf(['CASH', 'CREDIT_CARD', 'DEBIT_CARD', 'TRANSFER', 'MERCADO_PAGO', 'PAYPAL', 'CRYPTO']).required('Payment method is required'),
 }
 
 const cardInfoSchema = {

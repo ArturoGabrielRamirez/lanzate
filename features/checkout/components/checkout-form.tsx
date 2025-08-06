@@ -6,7 +6,7 @@ import { useState } from "react"
 import { deliveryOrderSchema, pickupOrderSchema } from "../schemas/order-schema"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { createNewCheckoutOrder } from "../actions/createNewCheckoutOrder"
-import { Branch } from "@prisma/client"
+import { Branch, PaymentMethod, ShippingMethod } from "@prisma/client"
 import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem } from "@/components/expansion/interactive-stepper"
 import { ShippingMethodSelector } from "./shipping-method-selector"
 import { BranchSelector } from "./branch-selector"
@@ -15,13 +15,15 @@ import { CheckoutStepItem } from "./checkout-step-item"
 import { StepNavigation } from "./step-navigation"
 import { Label } from "@/components/ui/label"
 import { useCart } from "@/features/cart/components/cart-provider"
+import { useRouter } from "next/navigation"
 
 function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, userId: string, branches: Branch[] }) {
 
-    const [shippingMethod, setShippingMethod] = useState<"delivery" | "pickup">("delivery")
+    const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("DELIVERY")
     const [selectedBranchId, setSelectedBranchId] = useState<number | null>(null)
-    const [paymentMethod, setPaymentMethod] = useState<string>("")
-    const { quantity, total, cart } = useCart()
+    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("CASH")
+    const { quantity, total, cart , clearCart } = useCart()
+    const router = useRouter()
 
     const handleSubmit = async (formData: any) => {
 
@@ -40,8 +42,12 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
             cart: cart,
             processed_by_user_id: Number(userId)
         })
-
+        
         if (error) throw new Error(message)
+
+        clearCart()
+
+        router.push(`/my-orders/${payload.id}`)
 
         return {
             error: false,
@@ -55,7 +61,7 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
             className="grow"
             contentButton="Continue"
             formAction={handleSubmit}
-            resolver={yupResolver(shippingMethod === "delivery" ? deliveryOrderSchema : pickupOrderSchema)}
+            resolver={yupResolver(shippingMethod === "DELIVERY" ? deliveryOrderSchema : pickupOrderSchema)}
         >
             <InteractiveStepper defaultValue={1} className="grow">
                 <InteractiveStepperItem>
@@ -114,7 +120,7 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
                                 onChange={setSelectedBranchId}
                             />
 
-                            {shippingMethod === "delivery" && (
+                            {shippingMethod === "DELIVERY" && (
                                 <div className="space-y-4">
                                     <Label className="text-base font-medium block">Delivery Address</Label>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

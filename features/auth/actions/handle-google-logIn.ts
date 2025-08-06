@@ -3,11 +3,12 @@
 import { createServerSideClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
-import { extractSubdomainFromHost } from '../utils/extract-subdomain-from-host'
-import { buildLoginErrorUrl } from '../utils/build-login-error-url'
+import { extractSubdomainFromHost, buildLoginErrorUrl } from '@/features/auth/utils'
 
 export async function handleGoogleLogIn() {
-    const supabase = await createServerSideClient()
+
+    const supabase = createServerSideClient()
+
     const headersList = await headers()
     const host = headersList.get('host') || ''
     const subdomain = extractSubdomainFromHost(host)
@@ -28,7 +29,6 @@ export async function handleGoogleLogIn() {
     })
 
     if (error) {
-        console.error('Google OAuth error:', error)
         const errorUrl = await buildLoginErrorUrl(subdomain, 'oauth_failed', error.message)
         redirect(errorUrl)
     }

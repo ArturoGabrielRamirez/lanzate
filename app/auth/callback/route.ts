@@ -181,7 +181,7 @@ export async function GET(request: Request) {
     const intermediateURL = `${baseUrl}/${locale}/auth/redirect?subdomain=${subdomain}&path=${encodeURIComponent(redirectPath)}`
     return NextResponse.redirect(intermediateURL)
   } else {
-    const redirectPath = next === '/' ? `/${locale}/account` : `/${locale}${next}`
+    const redirectPath = next === '/' ? `/${locale}/dashboard` : `/${locale}${next}`
     return NextResponse.redirect(`${baseUrl}${redirectPath}`)
   }
 }

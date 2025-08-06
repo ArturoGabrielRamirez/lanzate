@@ -2,7 +2,9 @@
 
 import { actionWrapper } from "@/utils/lib"
 import { insertOrder } from "../data/insertOrder"
+import { insertOrderTracking } from "../data/insertOrderTracking"
 import { CartItemType } from "@/features/cart/types"
+import { PaymentMethod, ShippingMethod } from "@prisma/client"
 
 
 type CreateNewCheckoutOrderFormData = {
@@ -10,10 +12,10 @@ type CreateNewCheckoutOrderFormData = {
     total_price: number
     total_quantity: number
     subdomain: string
-    payment_method: string
+    payment_method: PaymentMethod
     cart: CartItemType[]
     processed_by_user_id: number
-    shipping_method: "delivery" | "pickup"
+    shipping_method: ShippingMethod
     customer_info: {
         name: string
         phone: string
@@ -42,7 +44,7 @@ export async function createNewCheckoutOrder({
 
     return actionWrapper(async () => {
 
-        const { error, message } = await insertOrder({
+        const { error, message, payload } = await insertOrder({
             branch_id: branch_id,
             isPaid: true,
             isWalkIn: false,
@@ -60,7 +62,8 @@ export async function createNewCheckoutOrder({
 
         return {
             error: false,
-            message: "Order created successfully"
+            message: "Order created successfully",
+            payload: payload
         }
     })
 }

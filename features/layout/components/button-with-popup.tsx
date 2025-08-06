@@ -21,7 +21,9 @@ function ButtonWithPopup<T>({
     onComplete,
     variant = "default",
     className,
-    formDisabled = false
+    size = "default",
+    formDisabled = false,
+    contentButton
 }: ButtonWithPopupPropsType<T>) {
 
     const [open, setOpen] = useState(false)
@@ -36,7 +38,7 @@ function ButtonWithPopup<T>({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button disabled={disabled} variant={variant} type="button" className={cn(className)}>{text}</Button>
+                <Button disabled={disabled} variant={variant} type="button" className={cn(className)} size={size}>{text}</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
@@ -48,7 +50,7 @@ function ButtonWithPopup<T>({
                 <Form
                     resolver={resolverConfig.resolver}
                     formAction={action}
-                    contentButton={text}
+                    contentButton={contentButton || text}
                     successMessage={messages.success}
                     loadingMessage={messages.loading}
                     onSuccess={handleSuccess}

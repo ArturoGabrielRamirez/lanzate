@@ -7,7 +7,7 @@ function CartPage() {
     const t = useTranslations("cart");
     return (
         <section className="p-4 grow flex flex-col">
-            <Title title={t("title")} breadcrumbs={[{ label: t("title"), href: "/cart" }]} />
+            <Title title={t("title")} breadcrumbs={[{ label: t("title"), href: "/cart" }]} homePath="/"/>
             <div className="flex flex-col gap-4 lg:flex-row">
                 <CartList />
                 <CartResume />
