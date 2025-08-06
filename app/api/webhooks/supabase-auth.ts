@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from "@/utils/prisma";
 
+type UpdateData = {
+    old_email_confirmed?: boolean;
+    old_email_confirmed_at?: Date;
+    new_email_confirmed?: boolean;
+    new_email_confirmed_at?: Date;
+    completed?: boolean;
+    completed_at?: Date;
+}
+
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
@@ -60,7 +69,7 @@ export async function POST(request: NextRequest) {
         }
 
         const now = new Date();
-        let updateData: any = {};
+        const updateData: UpdateData  = {};
         let shouldUpdate = false;
 
         // Detectar confirmación del email antiguo
