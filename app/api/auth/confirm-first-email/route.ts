@@ -3,6 +3,10 @@ import { createServerSideClient } from '@/utils/supabase/server';
 import { prisma } from '@/utils/prisma';
 
 export async function POST(request: NextRequest) {
+
+    if (request.method !== 'POST') {
+        return NextResponse.json({ error: 'Método no permitido' }, { status: 405 });
+    }
     try {
         const supabase = await createServerSideClient();
         const { data: { user }, error: userError } = await supabase.auth.getUser();
