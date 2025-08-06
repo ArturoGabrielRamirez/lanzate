@@ -63,6 +63,20 @@ export type EmployeesTableProps = {
     userId: number
     slug: string
     storeId: number
+    employeePermissions: {
+        isAdmin: boolean
+        permissions?: {
+            can_create_orders: boolean
+            can_update_orders: boolean
+            can_create_products: boolean
+            can_update_products: boolean
+            can_manage_stock: boolean
+            can_process_refunds: boolean
+            can_view_reports: boolean
+            can_manage_employees: boolean
+            can_manage_store: boolean
+        }
+    }
 }
 
 // Tipo para usuarios con estado de empleado
