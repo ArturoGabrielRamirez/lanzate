@@ -10,6 +10,7 @@
             "email": "Correo electrónico",
             "password": "Contraseña",
             "change-password": "Cambiar contraseña",
+            "change-email": "Cambiar correo electrónico",
             "currently-not-available": "Actualmente no disponible"
         }
     },

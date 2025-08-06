@@ -10,6 +10,7 @@
             "email": "Email",
             "password": "Password",
             "change-password": "Change Password",
+            "change-email": "Change Email",
             "currently-not-available": "Currently not available"
         }
     },

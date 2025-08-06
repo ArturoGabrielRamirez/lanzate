@@ -9,6 +9,8 @@ import { User } from "lucide-react";
 import ChangePasswordButton from "@/features/auth/components/changue-password-button";
 import { EmailStatusBanner } from "@/features/auth/components/email-status-banner";
 import ChangeEmailButton from "@/features/auth/components/changue-email-button";
+import { EmailConfirmationDetector } from "@/features/auth/components/email-confirmation-detector";
+
 
 
 export default async function AccountPage() {
@@ -23,6 +25,9 @@ export default async function AccountPage() {
 
     return (
         <div className="p-4 grow flex flex-col pt-17">
+            {/* Detector de confirmaciones de email */}
+            <EmailConfirmationDetector />
+            
             <Title title={(
                 <div className="flex items-center gap-2">
                     <User />
