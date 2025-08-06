@@ -12,7 +12,7 @@ const Title = ({ title, breadcrumbs, className, showDate, homePath }: TitleProps
     const locale = useCurrentLocale()
 
     return (
-        <div className={`flex flex-col gap-0 mb-6 ${className}`}>
+        <div className={`flex flex-col gap-0 mb-2 md:mb-4 lg:mb-6 ${className}`}>
             <div className="flex items-center gap-2 justify-between">
                 <h2 className='text-xl md:text-2xl xl:text-3xl dark:text-white font-bold flex items-center gap-2'>
                     {/* {canGoBack && (

@@ -40,7 +40,7 @@ async function StoreHeader({ slug }: StoreHeaderProps) {
                 ]}
                 showDate
             />
-            <section className="flex items-center gap-4">
+            <section className="items-center gap-4 hidden md:flex">
                 <Card className="w-full">
                     <CardContent className="flex flex-col justify-between w-full gap-4 md:items-center xs:flex-row">
                         <div className="flex items-center gap-4">
