@@ -27,6 +27,7 @@ type FinalizeSaleButtonProps = {
   setSelectedPaymentMethod: (method: PaymentMethod) => void
   customerInfo: CustomerInfo
   setCustomerInfo: (info: CustomerInfo) => void
+  branchName?: string
 }
 
 type FinalizeSaleFormData = {
@@ -73,9 +74,7 @@ const paymentMethodOptions = [
   { value: 'CREDIT_CARD', label: 'Tarjeta de Crédito' },
   { value: 'DEBIT_CARD', label: 'Tarjeta de Débito' },
   { value: 'TRANSFER', label: 'Transferencia' },
-  { value: 'MERCADO_PAGO', label: 'Mercado Pago' },
-  { value: 'PAYPAL', label: 'PayPal' },
-  { value: 'CRYPTO', label: 'Criptomonedas' }
+  { value: 'MERCADO_PAGO', label: 'Mercado Pago' }
 ]
 
 function FinalizeSaleButton({
@@ -84,10 +83,9 @@ function FinalizeSaleButton({
   disabled = false,
   className,
   onConfirm,
-  /* selectedPaymentMethod, */
   setSelectedPaymentMethod,
-  /* customerInfo, */
-  setCustomerInfo
+  setCustomerInfo,
+  branchName
 }: FinalizeSaleButtonProps) {
   const t = useTranslations('sale.finalize-sale')
   const [includeCustomerInfo, setIncludeCustomerInfo] = useState(false)
@@ -100,11 +98,8 @@ function FinalizeSaleButton({
   }
 
   const handleFinalizeSale = async (data: FinalizeSaleFormData) => {
-    console.log("🚀 ~ handleFinalizeSale ~ data:", data)
-    // Update the parent state with the form data
     setSelectedPaymentMethod(data.paymentMethod)
 
-    // Only set customer info if the switch was enabled
     if (data.includeCustomerInfo) {
       setCustomerInfo({
         name: data.name,
@@ -115,7 +110,6 @@ function FinalizeSaleButton({
       setCustomerInfo({ name: '', phone: '', email: '' })
     }
 
-    // Call the parent confirmation function
     await onConfirm({
       paymentMethod: data.paymentMethod,
       customerInfo: {
@@ -154,44 +148,38 @@ function FinalizeSaleButton({
       }}
     >
       <div className="space-y-6">
-        {/* Resumen de la venta */}
-        <div className="p-4 bg-muted rounded-lg">
-          <div className="text-center space-y-2">
-            <div className="text-sm text-muted-foreground">
-              {t('summary-title')}
-            </div>
-            <div className="text-2xl font-bold">
-              {formatPrice(cartTotal)}
-            </div>
-            <div className="text-xs text-muted-foreground">
-              {cartItemCount} {cartItemCount === 1 ? t('item') : t('items')}
-            </div>
-          </div>
+        <div className="flex justify-between items-center text-sm">
+          <span className="text-muted-foreground">Sucursal</span>
+          <span className="font-medium">{branchName || t('sale')}</span>
         </div>
-
-        {/* Método de pago */}
-        <div className="w-full">
+        <div className="flex justify-between items-center text-sm">
+          <span className="text-muted-foreground">Total</span>
+          <span className="font-medium">{formatPrice(cartTotal)}</span>
+        </div>
+        <div className="flex justify-between items-center text-sm">
+          <span className="text-muted-foreground">Cant. items</span>
+          <span className="font-medium">{cartItemCount} {cartItemCount === 1 ? t('item') : t('items')}</span>
+        </div>
+        <div className="w-full grid grid-cols-2 gap-2">
           <SelectField
             name="paymentMethod"
             label="Método de pago"
             options={paymentMethodOptions}
           />
+          <div className="flex flex-col gap-2 justify-center items-center">
+            <Label htmlFor="include-customer-info" className="text-sm font-medium">
+              Información del cliente
+            </Label>
+            <Switch
+              id="include-customer-info"
+              name="includeCustomerInfo"
+              checked={includeCustomerInfo}
+              onCheckedChange={setIncludeCustomerInfo}
+            />
+          </div>
         </div>
 
-        {/* Switch para información del cliente */}
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="include-customer-info"
-            name="includeCustomerInfo"
-            checked={includeCustomerInfo}
-            onCheckedChange={setIncludeCustomerInfo}
-          />
-          <Label htmlFor="include-customer-info" className="text-sm font-medium">
-            Incluir información del cliente
-          </Label>
-        </div>
 
-        {/* Información del cliente - solo visible si el switch está activado */}
         {includeCustomerInfo && (
           <div className="space-y-4">
             <h4 className="text-sm font-medium">Información del cliente</h4>
@@ -219,18 +207,7 @@ function FinalizeSaleButton({
           </div>
         )}
 
-        {/* Información adicional */}
-        <div className="space-y-3">
-          <div className="flex justify-between items-center text-sm">
-            <span className="text-muted-foreground">{t('transaction-type')}</span>
-            <span className="font-medium">{t('sale')}</span>
-          </div>
 
-          <div className="flex justify-between items-center text-sm">
-            <span className="text-muted-foreground">{t('status')}</span>
-            <span className="font-medium text-green-600">{t('completed')}</span>
-          </div>
-        </div>
       </div>
     </ButtonWithPopup>
   )
