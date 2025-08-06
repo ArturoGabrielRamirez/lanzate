@@ -19,6 +19,7 @@ model User {
   last_name                 String?
   password                  String
   updated_at                DateTime                @updatedAt
+  supabase_user_id          String?                 @unique
   Account                   Account[]
   ActionLog                 ActionLog[]
   contracts_assigned        ContractAssignment[]    @relation("ContractAssignedBy")
@@ -188,15 +189,15 @@ model DefaultCategory {
 }
 
 model Order {
-  id                   Int                  @id @default(autoincrement())
-  created_at           DateTime             @default(now())
-  updated_at           DateTime             @updatedAt
+  id                   Int            @id @default(autoincrement())
+  created_at           DateTime       @default(now())
+  updated_at           DateTime       @updatedAt
   store_id             Int
   branch_id            Int
   total_price          Float
   total_quantity       Int
-  status               OrderStatus          @default(PENDING)
-  is_paid              Boolean              @default(false)
+  status               OrderStatus    @default(PENDING)
+  is_paid              Boolean        @default(false)
   payment_date         DateTime?
   customer_email       String?
   customer_id          Int?
@@ -209,16 +210,16 @@ model Order {
   country              String?
   state                String?
   zip_code             String?
-  order_type           OrderType            @default(CASH_REGISTER)
-  payment_method       PaymentMethod?       @default(CASH)
-  shipping_method      ShippingMethod       @default(PICKUP)
+  order_type           OrderType      @default(CASH_REGISTER)
+  payment_method       PaymentMethod? @default(CASH)
+  shipping_method      ShippingMethod @default(PICKUP)
   items                OrderItem[]
   messages             OrderMessage[]
   payment              OrderPayment?
-  branch               Branch               @relation(fields: [branch_id], references: [id])
-  customer             User?                @relation("OrderCustomer", fields: [customer_id], references: [id])
-  processed_by         User?                @relation("OrderProcessedBy", fields: [processed_by_user_id], references: [id])
-  store                Store                @relation(fields: [store_id], references: [id])
+  branch               Branch         @relation(fields: [branch_id], references: [id])
+  customer             User?          @relation("OrderCustomer", fields: [customer_id], references: [id])
+  processed_by         User?          @relation("OrderProcessedBy", fields: [processed_by_user_id], references: [id])
+  store                Store          @relation(fields: [store_id], references: [id])
   tracking             OrderTracking?
 
   @@map("orders")
@@ -639,7 +640,7 @@ model StoreReminder {
 }
 
 model email_change_requests {
-  id                     Int    @id @default(autoincrement())
+  id                     Int       @id @default(autoincrement())
   user_id                Int
   old_email              String
   new_email              String
