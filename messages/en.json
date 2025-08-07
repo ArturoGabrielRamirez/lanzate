@@ -708,7 +708,8 @@
             "orders": "Orders",
             "settings": "Settings",
             "analytics": "Analytics",
-            "history": "History"
+            "history": "History",
+            "styles": "Styles"
         },
         "account-tab": {
             "name": "Name",
@@ -1136,7 +1137,8 @@
             "analytics": "Analytics",
             "history": "History",
             "store-details": "Store Details",
-            "no-description": "No description available"
+            "no-description": "No description available",
+            "styles": "Styles"
         },
         "logs": {
             "log-details": "Log Details ",

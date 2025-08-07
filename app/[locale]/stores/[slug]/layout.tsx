@@ -1,7 +1,7 @@
 import { TabTriggerLink, TabsClientContainer, StoreHeader, StoreHeaderSkeleton } from "@/features/stores/components"
 import { TabsList } from "@/components/ui/tabs"
 import { StoreDetailsLayoutProps } from "@/features/stores/types"
-import { Box, Building2, ChartLine, Clock, Settings, ShoppingCart, UsersRound } from "lucide-react"
+import { Box, Brush, Building2, ChartLine, Clock, Settings, ShoppingCart, UsersRound } from "lucide-react"
 import { Store } from "lucide-react"
 import { BookOpenText } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -28,7 +28,7 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                             <TabTriggerLink value="employees" text={t("employees")} slug={slug} icon={<UsersRound className="size-6 lg:size-4" />} />
                             <TabTriggerLink value="products" text={t("products")} slug={slug} icon={<Box className="size-6 lg:size-4" />} />
                             <TabTriggerLink value="orders" text={t("orders")} slug={slug} icon={<ShoppingCart className="size-6 lg:size-4" />} />
-                            <TabTriggerLink value="settings" text={t("settings")} slug={slug} icon={<Settings className="size-6 lg:size-4" />} />
+                            <TabTriggerLink value="styles" text={t("styles")} slug={slug} icon={<Brush className="size-6 lg:size-4" />} />
                             <TabTriggerLink value="analytics" text={t("analytics")} slug={slug} icon={<ChartLine className="size-6 lg:size-4" />} />
                             <TabTriggerLink value="history" text={t("history")} slug={slug} icon={<Clock className="size-6 lg:size-4" />} />
                         </div>

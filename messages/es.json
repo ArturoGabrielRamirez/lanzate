@@ -547,7 +547,8 @@
             "orders": "Pedidos",
             "settings": "Configuración",
             "analytics": "Análisis",
-            "history": "Historial"
+            "history": "Historial",
+            "styles": "Estilos"
         },
         "account-tab": {
             "name": "Nombre",
@@ -975,7 +976,8 @@
             "analytics": "Análisis",
             "history": "Historial",
             "store-details": "Detalles de la tienda",
-            "no-description": "No hay descripción disponible"
+            "no-description": "No hay descripción disponible",
+            "styles": "Estilos"
         },
         "logs": {
             "log-details": "Detalles del registro ",

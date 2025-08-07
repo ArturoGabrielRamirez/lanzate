@@ -14,7 +14,7 @@ import BranchesTab from "./tabs/branches";
 import EmployeesTab from "./tabs/employees";
 import OrdersTab from "./tabs/orders";
 import ProductsTab from "./tabs/products";
-import SettingsTab from "./tabs/settings";
+import StylesTab from "./tabs/styles";
 import HistoryTab from "./tabs/history";
 import Overview from "./tabs/overview";
 import ChangeOrderStatusButton from "./change-order-status-button";
@@ -39,7 +39,7 @@ export {
     EmployeesTab,
     OrdersTab,
     ProductsTab,
-    SettingsTab,
+    StylesTab,
     HistoryTab,
     Overview,
     ChangeOrderStatusButton,
