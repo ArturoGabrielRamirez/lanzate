@@ -4,9 +4,7 @@ import { SettingsTabProps } from "@/features/settings/types"
 async function SettingsTab({ slug }: SettingsTabProps) {
 
     return (
-        <div>
-            <SettingsForm slug={slug} />
-        </div>
+        <SettingsForm slug={slug} />
     )
 }
 

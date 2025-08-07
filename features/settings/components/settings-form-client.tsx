@@ -39,7 +39,7 @@ function SettingsFormClient({ children }: SettingsFormClientProps) {
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+            <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full grow">
                 {children}
             </form>
         </FormProvider>

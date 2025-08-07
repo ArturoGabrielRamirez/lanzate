@@ -40,7 +40,6 @@ export default async function Layout({ children, params }: LayoutProps) {
             <StoreProvider>
                 <div
                     style={{
-                        // CSS custom properties for theming
                         "--background": storeData.customization?.background_color,
                         "--primary": storeData.customization?.primary_color,
                         "--accent": storeData.customization?.accent_color,
@@ -48,12 +47,12 @@ export default async function Layout({ children, params }: LayoutProps) {
                     } as React.CSSProperties}
                     className="contents"
                 >
-                    <Header 
-                        title={storeData.name} 
+                    <Header
+                        title={storeData.name}
                         socialMedia={storeData.operational_settings}
                         showSocialLinks={storeData.customization?.show_social_links ?? true}
                     />
-                    <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow bg-background' >
+                    <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow bg-background'>
                         {children}
                     </main>
                     <Toaster />

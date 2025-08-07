@@ -2,7 +2,11 @@
 
 import { useSettingsForm } from "./settings-form-provider"
 
-function StorePreview() {
+type StorePreviewProps = {
+    children: React.ReactNode
+}
+
+function StorePreview({ children }: StorePreviewProps) {
     const { background_color } = useSettingsForm()
 
     return (
@@ -10,9 +14,9 @@ function StorePreview() {
             style={{
                 "--background": background_color,
             } as React.CSSProperties}
-            className="bg-background"
+            className="bg-background rounded-lg overflow-hidden"
         >
-            preview
+            {children}
         </div>
     )
 }

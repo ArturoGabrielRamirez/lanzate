@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Settings } from "lucide-react"
 import ColorSelector from "./color-selector"
 import StorePreview from "./store-preview"
+import { Header } from "@/features/store-landing/components"
 
 type SettingsFormProps = {
     slug: string
@@ -41,7 +42,9 @@ async function SettingsForm({ slug }: SettingsFormProps) {
                         </AccordionContent>
                     </AccordionItem>
                 </Accordion>
-                <StorePreview />
+                <StorePreview>
+                    <Header title="Store Name" />
+                </StorePreview>
             </SettingsFormClient>
         </SettingsFormProvider>
     )
