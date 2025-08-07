@@ -1,28 +1,42 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ColorPicker, ColorPickerAlpha, ColorPickerEyeDropper, ColorPickerFormat, ColorPickerHue, ColorPickerOutput, ColorPickerSelection } from '@/components/ui/shadcn-io/color-picker'
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { ColorLike } from "color"
 import Color from "color"
 import { useFormContext } from "react-hook-form"
+import { useSettingsForm } from "./settings-form-provider"
 
 type ColorSelectorProps = {
     label: string
     defaultColor?: string
     onChange?: (color: number[]) => void
     className?: string
+    targetField?: "primary_color" | "background_color"
 }
 
 function ColorSelector({
     label,
     defaultColor = "#ef4444", // Red color as hex string
     onChange,
-    className
+    className,
+    targetField = "primary_color"
 }: ColorSelectorProps) {
-    const [selectedColor, setSelectedColor] = useState<string>(defaultColor)
     const { setValue } = useFormContext()
+    const { background_color, setBackgroundColor } = useSettingsForm()
+    
+    // Initialize with the appropriate color based on target field
+    const initialColor = targetField === "background_color" ? background_color : defaultColor
+    const [selectedColor, setSelectedColor] = useState<string>(initialColor)
+
+    // Update selected color when background_color changes from context
+    useEffect(() => {
+        if (targetField === "background_color") {
+            setSelectedColor(background_color)
+        }
+    }, [background_color, targetField])
 
     //(value: Parameters<typeof Color.rgb>[0]) => void
     const handleColorChange = (colorArray: ColorLike) => {
@@ -31,7 +45,13 @@ function ColorSelector({
         const [r, g, b] = color.rgb().array()
         const hexColor = `#${Math.round(r).toString(16).padStart(2, '0')}${Math.round(g).toString(16).padStart(2, '0')}${Math.round(b).toString(16).padStart(2, '0')}`
         setSelectedColor(hexColor)
-        setValue("primary_color", hexColor)
+        setValue(targetField, hexColor)
+        
+        // If this is for background color, update the context
+        if (targetField === "background_color") {
+            setBackgroundColor(hexColor)
+        }
+        
         onChange?.([r, g, b])
     }
 

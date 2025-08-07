@@ -1,35 +1,14 @@
-import { getStoreSettingsAction } from "@/features/settings/actions/getStoreSettingsAction"
-import { StoreCustomizationForm } from "@/features/settings/types"
+"use client"
 
-type StorePreviewProps = {
-    slug: string
-    initialData?: StoreCustomizationForm
-}
+import { useSettingsForm } from "./settings-form-provider"
 
-async function StorePreview({ slug, initialData }: StorePreviewProps) {
-    let storeData: StoreCustomizationForm | null = null
-    let error = false
-
-    if (initialData) {
-        storeData = initialData
-    } else {
-        const result = await getStoreSettingsAction(slug)
-        storeData = result.payload
-        error = result.error
-    }
-
-    if (error || !storeData) {
-        return (
-            <div className="contents">
-                <p className="text-muted-foreground">Unable to load preview</p>
-            </div>
-        )
-    }
+function StorePreview() {
+    const { background_color } = useSettingsForm()
 
     return (
         <div
             style={{
-                "--background": storeData.background_color,
+                "--background": background_color,
             } as React.CSSProperties}
             className="bg-background"
         >
