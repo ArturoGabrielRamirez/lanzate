@@ -50,7 +50,7 @@ function StorePreview({ children }: StorePreviewProps) {
                 "--header-padding-left": header_floating ? "24px" : "16px",
                 "--header-padding-right": header_floating ? "24px" : "16px",
                 "--header-border-radius": header_size !== "LARGE" ? "16px" : "0px",
-                "--show-filters": show_filters ? "block" : "none",
+                "--show-filters": show_filters ? "flex" : "none",
                 "--show-sorting-filter": show_sorting_filter ? "block" : "none",
                 "--show-categories-filter": show_categories_filter ? "block" : "none",
                 "--show-price-filter": show_price_filter ? "block" : "none",

@@ -60,7 +60,7 @@ export default async function Layout({ children, params }: LayoutProps) {
                         "--header-padding-left": storeData.customization?.header_floating ? "24px" : "16px",
                         "--header-padding-right": storeData.customization?.header_floating ? "24px" : "16px",
                         "--header-border-radius": storeData.customization?.header_size !== "LARGE" ? "16px" : "0px",
-                        "--show-filters": storeData.customization?.show_filters ? "block" : "none",
+                        "--show-filters": storeData.customization?.show_filters ? "flex" : "none",
                         "--show-sorting-filter": storeData.customization?.show_sorting_filter ? "block" : "none",
                         "--show-categories-filter": storeData.customization?.show_categories_filter ? "block" : "none",
                         "--show-price-filter": storeData.customization?.show_price_filter ? "block" : "none",

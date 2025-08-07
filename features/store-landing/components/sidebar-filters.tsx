@@ -10,7 +10,7 @@ async function SidebarFilters() {
     const t = await getTranslations("subdomain.sidebar.filters");
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex-col gap-4 [display:var(--show-filters)!important]">
             <div className="md:hidden">
                 <SidebarSearchInput />
             </div>
