@@ -38,6 +38,13 @@ function StorePreview({ children }: StorePreviewProps) {
                 "--show-brand-text": show_brand_text ? "block" : "none",
                 "--header-floating": header_floating ? "absolute" : "static",
                 "--header-size": header_size == "LARGE" ? "100%" : header_size == "MEDIUM" ? "80%" : "50%",
+                "--section-padding-top": header_floating ? "88px" : "0px",
+                "--header-top": header_floating ? "16px" : "0px",
+                "--header-padding-top": header_floating ? "8px" : "16px",
+                "--header-padding-bottom": header_floating ? "8px" : "16px",
+                "--header-padding-left": header_floating ? "24px" : "16px",
+                "--header-padding-right": header_floating ? "24px" : "16px",
+                "--header-border-radius": header_size !== "LARGE" ? "16px" : "0px"
             } as React.CSSProperties}
             className="bg-background rounded-lg overflow-hidden relative"
         >

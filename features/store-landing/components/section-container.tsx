@@ -6,7 +6,7 @@ type Props = {
 }
 const SectionContainer = ({ children, className }: Props) => {
     return (
-        <div className={cn("p-4 grow flex flex-col", className)}>
+        <div className={cn("p-4 grow flex flex-col [padding-top:var(--section-padding-top)]", className)}>
             {children}
         </div>
     )
