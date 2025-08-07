@@ -24,11 +24,10 @@ export const handleSignup = async (payload: any): Promise<ResponseType<any>> => 
         if (signUpError) throw new Error(signUpError.message)
         if (!signUpData.user) throw new Error('No user returned')
 
-        // 👈 PASAR EL SUPABASE_USER_ID AL CREAR EL USUARIO
         const { error: insertError, payload: user } = await insertUser(
-            email, 
-            "email", 
-            signUpData.user.id // 👈 NUEVO PARÁMETRO
+            email,
+            "email",
+            signUpData.user.id
         )
         
         if (insertError) throw new Error('Error inserting user')

@@ -3,22 +3,21 @@
 import { prisma } from '@/utils/prisma'
 import { ResponseType } from '@/features/layout/types'
 import { getCurrentUser } from '@/features/auth/actions/get-user'
+import { detectOAuthProvider } from "@/features/auth/utils/detect-provider";
 
 export async function insertUser(
-    email: string, 
-    provider: string,
-    supabaseUserId?: string // 👈 NUEVO PARÁMETRO OPCIONAL
+    email: string,
+    provider?: string,
+    supabaseUserId?: string
 ): Promise<ResponseType<any>> {
     try {
-        // Si no se proporciona supabaseUserId, intentar obtenerlo
         let finalSupabaseUserId = supabaseUserId;
-        
+
         if (!finalSupabaseUserId) {
             const { user } = await getCurrentUser();
             finalSupabaseUserId = user?.id;
         }
 
-        // Verificar si el usuario ya existe
         const existingUser = await prisma.user.findFirst({
             where: {
                 OR: [
@@ -29,20 +28,19 @@ export async function insertUser(
         });
 
         if (existingUser) {
-            // Si existe pero no tiene supabase_user_id, actualizarlo
             if (!existingUser.supabase_user_id && finalSupabaseUserId) {
                 const updatedUser = await prisma.user.update({
                     where: { id: existingUser.id },
                     data: {
                         supabase_user_id: finalSupabaseUserId,
-                        email: email, // Sincronizar email también
+                        email: email,
                         updated_at: new Date()
                     },
                     include: {
                         Account: true
                     }
                 });
-                
+
                 return {
                     error: false,
                     message: 'User updated successfully',
@@ -57,12 +55,14 @@ export async function insertUser(
             };
         }
 
-        // Crear nuevo usuario
+        // ✅ CORRECCIÓN: Pasar email como primer parámetro y provider como segundo
+        const detectedProvider = detectOAuthProvider(email, provider);
+
         const newUser = await prisma.user.create({
             data: {
                 email,
-                supabase_user_id: finalSupabaseUserId, // 👈 GUARDAR SUPABASE_USER_ID
-                password: provider === 'email' ? 'oauth_user' : 'oauth_user', // Placeholder para OAuth
+                supabase_user_id: finalSupabaseUserId,
+                password: detectedProvider, // ✅ Usar el provider detectado correctamente
                 created_at: new Date(),
                 updated_at: new Date(),
             },
@@ -71,7 +71,6 @@ export async function insertUser(
             }
         });
 
-        // Crear cuenta gratuita por defecto
         await prisma.account.create({
             data: {
                 user_id: newUser.id,

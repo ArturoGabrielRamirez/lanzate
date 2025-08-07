@@ -3,24 +3,16 @@
 import { createServerSideClient } from "@/utils/supabase/server";
 import { getCurrentUser } from "./get-user";
 import { prisma } from "@/utils/prisma";
-
+import { getLocalUser } from "./get-locale-user";
 
 export async function getEmailChangeStatus() {
-    const { user, error } = await getCurrentUser();
+    const { localUser, error: localUserError } = await getLocalUser();
     
-    if (error || !user) {
-        return { error: "Usuario no encontrado" };
+    if (localUserError || !localUser) {
+        return { error: localUserError || "Usuario no encontrado" };
     }
 
     try {
-        const localUser = await prisma.user.findFirst({
-            where: { email: user.email }
-        });
-
-        if (!localUser) {
-            return { error: "Usuario no encontrado en la base de datos local" };
-        }
-
         const changeRequest = await prisma.email_change_requests.findFirst({
             where: {
                 user_id: localUser.id,
@@ -56,6 +48,7 @@ export async function getEmailChangeStatus() {
             };
         }
 
+        // Verificar si el proceso se completó en Supabase pero no en nuestra DB
         const supabaseCompleted = !freshUser.new_email;
 
         if (supabaseCompleted && !changeRequest.completed) {
@@ -66,6 +59,15 @@ export async function getEmailChangeStatus() {
                     completed_at: new Date(),
                     new_email_confirmed: true,
                     new_email_confirmed_at: new Date()
+                }
+            });
+
+            // Actualizar el email del usuario local también
+            await prisma.user.update({
+                where: { id: localUser.id },
+                data: {
+                    email: changeRequest.new_email,
+                    updated_at: new Date()
                 }
             });
 
@@ -100,6 +102,7 @@ export async function getEmailChangeStatus() {
             }
         };
     } catch (error) {
+        console.error('Error getting email change status:', error);
         return { error: "Error interno del servidor" };
     }
 }

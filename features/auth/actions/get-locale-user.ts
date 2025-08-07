@@ -1,6 +1,5 @@
 "use server";
 
-/* import { createServerSideClient } from "@/utils/supabase/server"; */
 import { prisma } from "@/utils/prisma";
 import { getCurrentUser } from "./get-user";
 
@@ -12,44 +11,54 @@ export async function getLocalUser() {
   }
 
   try {
-    // Primero buscar por supabase_user_id (método preferido)
+    // Primero buscar por supabase_user_id (más confiable)
     let localUser = await prisma.user.findUnique({
       where: {
-       supabase_user_id: user.id
+        supabase_user_id: user.id
+      },
+      include: {
+        Account: true // Incluir información de cuenta si es necesaria
       }
     });
 
-    // Si no se encuentra por supabase_user_id, buscar por email y actualizar
+    // Si no existe, buscar por email y vincular
     if (!localUser) {
       localUser = await prisma.user.findUnique({
         where: {
           email: user.email!
+        },
+        include: {
+          Account: true
         }
       });
 
-      // Si se encuentra por email, actualizar con supabase_user_id
+      // Si encontramos por email, actualizar con supabase_user_id
       if (localUser) {
         localUser = await prisma.user.update({
           where: { id: localUser.id },
           data: {
             supabase_user_id: user.id,
-            email: user.email!, // Asegurar que el email esté sincronizado
+            email: user.email!, // Asegurar que el email esté actualizado
             updated_at: new Date()
+          },
+          include: {
+            Account: true
           }
         });
-        console.log(`✅ Usuario migrado: ${localUser.id} -> supabase_user_id: ${user.id}`);
       }
     } else {
-      // Si se encuentra por supabase_user_id, verificar que el email esté sincronizado
+      // Si encontramos por supabase_user_id, verificar si el email necesita actualización
       if (localUser.email !== user.email) {
         localUser = await prisma.user.update({
           where: { id: localUser.id },
           data: {
             email: user.email!,
             updated_at: new Date()
+          },
+          include: {
+            Account: true
           }
         });
-        console.log(`✅ Email sincronizado para usuario ${localUser.id}: ${user.email}`);
       }
     }
 

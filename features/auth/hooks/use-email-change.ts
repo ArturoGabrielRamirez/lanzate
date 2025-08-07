@@ -9,6 +9,7 @@ export function useEmailChange(currentEmail: string) {
     const [showMonitor, setShowMonitor] = useState(false);
     const [newEmail, setNewEmail] = useState('');
     const [hasPendingChange, setHasPendingChange] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [pendingChangeData, setPendingChangeData] = useState<PendingChangeData>({
         oldEmailConfirmed: false,
         newEmailConfirmed: false,
@@ -16,44 +17,69 @@ export function useEmailChange(currentEmail: string) {
         processCompleted: false
     });
 
-    useEffect(() => {
-        const checkPendingChange = async () => {
-            try {
-                const result = await getEmailChangeStatus();
+    // Función para limpiar el estado
+    const resetState = () => {
+        setHasPendingChange(false);
+        setNewEmail('');
+        setPendingChangeData({
+            oldEmailConfirmed: false,
+            newEmailConfirmed: false,
+            newEmail: '',
+            processCompleted: false
+        });
+    };
 
-                if (result.success && result.data?.hasEmailChange) {
-                    const pendingData: PendingChangeData = {
-                        oldEmailConfirmed: result.data.oldEmailConfirmed || false,
-                        newEmailConfirmed: result.data.newEmailConfirmed || false,
-                        newEmail: result.data.newEmail || '',
-                        processCompleted: result.data.processCompleted || false
-                    };
+    // Verificar estado inicial y cambios
+    const checkPendingChange = async () => {
+        if (isLoading) return; // Prevenir llamadas múltiples
+        
+        setIsLoading(true);
+        try {
+            const result = await getEmailChangeStatus();
 
-                    setHasPendingChange(true);
-                    setNewEmail(result.data.newEmail || '');
-                    setPendingChangeData(pendingData);
+            if (result.success && result.data?.hasEmailChange) {
+                const pendingData: PendingChangeData = {
+                    oldEmailConfirmed: result.data.oldEmailConfirmed || false,
+                    newEmailConfirmed: result.data.newEmailConfirmed || false,
+                    newEmail: result.data.newEmail || '',
+                    processCompleted: result.data.processCompleted || false
+                };
 
-                } else if (result.success) {
-                    setHasPendingChange(false);
-                    setPendingChangeData({
-                        oldEmailConfirmed: false,
-                        newEmailConfirmed: false,
-                        newEmail: '',
-                        processCompleted: false
-                    });
+                setHasPendingChange(true);
+                setNewEmail(result.data.newEmail || '');
+                setPendingChangeData(pendingData);
+
+                // Si el proceso está completado pero aún hay cambio pendiente, 
+                // probablemente necesitemos refrescar la página
+                if (pendingData.processCompleted) {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
                 }
-            } catch (error) {
-                console.error('❌ ChangeEmailButton: Error checking pending change:', error);
-            }
-        };
 
+            } else if (result.success) {
+                resetState();
+            } else if (result.error) {
+                console.error('❌ Error checking email status:', result.error);
+                resetState();
+            }
+        } catch (error) {
+            console.error('❌ ChangeEmailButton: Error checking pending change:', error);
+            resetState();
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
         checkPendingChange();
-    }, []);
+    }, [currentEmail]); // Recheck cuando cambia el email actual
 
     const changeEmailAction = async (formData: {
         currentPassword: string;
         email: string;
     }) => {
+        // Validaciones del lado cliente
         if (formData.email === currentEmail) {
             return {
                 error: true,
@@ -62,6 +88,15 @@ export function useEmailChange(currentEmail: string) {
             };
         }
 
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            return {
+                error: true,
+                message: "El formato del email no es válido",
+                payload: null
+            };
+        }
+
+        setIsLoading(true);
         try {
             const result = await handleEditEmail(formData.email);
 
@@ -91,25 +126,22 @@ export function useEmailChange(currentEmail: string) {
                 payload: result.data || null
             };
         } catch (error) {
+            console.error('❌ Error in changeEmailAction:', error);
             return {
                 error: true,
                 message: "Error inesperado al cambiar el email",
                 payload: null
             };
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleMonitorComplete = () => {
         setShowMonitor(false);
-        setHasPendingChange(false);
-        setNewEmail('');
-        setPendingChangeData({
-            oldEmailConfirmed: false,
-            newEmailConfirmed: false,
-            newEmail: '',
-            processCompleted: false
-        });
-
+        resetState();
+        
+        // Dar tiempo para que el usuario vea el estado de completado
         setTimeout(() => {
             window.location.reload();
         }, 500);
@@ -147,6 +179,8 @@ export function useEmailChange(currentEmail: string) {
         handleMonitorComplete,
         handleShowMonitor,
         getProgressText,
-        isProcessCompleted
+        isProcessCompleted,
+        isLoading,
+        refreshStatus: checkPendingChange
     };
 }

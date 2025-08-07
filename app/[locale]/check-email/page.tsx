@@ -1,13 +1,37 @@
-import { useTranslations } from "next-intl";
+import CheckEmail from "@/features/auth/components/check-email";
 
-export default function CheckEmail() {
+interface CheckEmailPageProps {
+    searchParams: Promise<{ 
+        email?: string;
+        type?: 'signup' | 'recovery';
+    }>;
+}
 
-    const t = useTranslations("auth.check-email");
+export default async function CheckEmailPage({ 
+    searchParams 
+}: CheckEmailPageProps) {
+    const resolvedSearchParams = await searchParams;
+    const email = resolvedSearchParams.email;
+    const type = resolvedSearchParams.type || 'signup';
 
+    
     return (
-        <div className="p-8 text-center grow --color-background text-white flex flex-col items-center justify-center">
-            <h2 className="text-2xl font-bold mb-4">{t("message-1")}</h2>
-            <p>{t("message-2")}</p>
+        <div>
+            {/* Debug temporal */}
+            <div style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                backgroundColor: 'red',
+                color: 'white',
+                padding: '10px',
+                zIndex: 9999,
+                fontSize: '12px'
+            }}>
+                DEBUG PAGE: email = {email || 'undefined'} | type = {type}
+            </div>
+            
+            <CheckEmail email={email} type={type} />
         </div>
-    )
+    );
 }
