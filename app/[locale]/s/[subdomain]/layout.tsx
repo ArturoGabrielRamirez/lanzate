@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import CartProvider from "@/features/cart/components/cart-provider";
 import { Header } from "@/features/store-landing/components"
+import MainContainer from "@/features/store-landing/components/main-container";
 import StoreProvider from "@/features/store-landing/components/store-provider";
 import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
 import { getTranslations } from "next-intl/server";
@@ -52,9 +53,9 @@ export default async function Layout({ children, params }: LayoutProps) {
                         socialMedia={storeData.operational_settings}
                         showSocialLinks={storeData.customization?.show_social_links ?? true}
                     />
-                    <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow bg-background'>
+                    <MainContainer>
                         {children}
-                    </main>
+                    </MainContainer>
                     <Toaster />
                 </div>
             </StoreProvider>

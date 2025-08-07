@@ -24,17 +24,6 @@ function SettingsFormClient({ children }: SettingsFormClientProps) {
 
     const onSubmit = async (data: FieldValues) => {
         console.log("🚀 ~ onSubmit ~ data:", data)
-        /* try {
-            const result = await updateStoreSettingsAction(slug, data as StoreCustomizationForm)
-            if (result.error) {
-                toast.error(result.message)
-            } else {
-                toast.success(result.message)
-            }
-        } catch (error) {
-            console.log(error)
-            toast.error("An error occurred while saving settings")
-        } */
     }
 
     return (

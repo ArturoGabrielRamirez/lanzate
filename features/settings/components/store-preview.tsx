@@ -7,12 +7,14 @@ type StorePreviewProps = {
 }
 
 function StorePreview({ children }: StorePreviewProps) {
-    const { background_color } = useSettingsForm()
+    const { background_color, background_foreground_color } = useSettingsForm()
+    console.log("🚀 ~ StorePreview ~ background_foreground_color:", background_foreground_color)
 
     return (
         <div
             style={{
                 "--background": background_color,
+                "--foreground": background_foreground_color,
             } as React.CSSProperties}
             className="bg-background rounded-lg overflow-hidden"
         >

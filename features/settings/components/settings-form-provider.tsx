@@ -4,7 +4,9 @@ import { createContext, useContext, useState, ReactNode } from "react"
 
 type SettingsFormContextType = {
     background_color: string
+    background_foreground_color: string
     setBackgroundColor: (color: string) => void
+    setBackgroundForegroundColor: (color: string) => void
 }
 
 const SettingsFormContext = createContext<SettingsFormContextType | undefined>(undefined)
@@ -12,14 +14,22 @@ const SettingsFormContext = createContext<SettingsFormContextType | undefined>(u
 type SettingsFormProviderProps = {
     children: ReactNode
     initialBackgroundColor?: string
+    initialBackgroundForegroundColor?: string
 }
 
-function SettingsFormProvider({ children, initialBackgroundColor }: SettingsFormProviderProps) {
+function SettingsFormProvider({ 
+    children, 
+    initialBackgroundColor,
+    initialBackgroundForegroundColor 
+}: SettingsFormProviderProps) {
     const [background_color, setBackgroundColor] = useState(initialBackgroundColor || "#ffffff")
+    const [background_foreground_color, setBackgroundForegroundColor] = useState(initialBackgroundForegroundColor || "#000000")
 
     const value = {
         background_color,
-        setBackgroundColor
+        background_foreground_color,
+        setBackgroundColor,
+        setBackgroundForegroundColor
     }
 
     return (

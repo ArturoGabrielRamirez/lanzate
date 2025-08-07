@@ -14,7 +14,7 @@ type ColorSelectorProps = {
     defaultColor?: string
     onChange?: (color: number[]) => void
     className?: string
-    targetField?: "primary_color" | "background_color"
+    targetField?: "primary_color" | "background_color" | "background_foreground_color"
 }
 
 function ColorSelector({
@@ -25,18 +25,35 @@ function ColorSelector({
     targetField = "primary_color"
 }: ColorSelectorProps) {
     const { setValue } = useFormContext()
-    const { background_color, setBackgroundColor } = useSettingsForm()
+    const { 
+        background_color, 
+        background_foreground_color,
+        setBackgroundColor, 
+        setBackgroundForegroundColor 
+    } = useSettingsForm()
     
     // Initialize with the appropriate color based on target field
-    const initialColor = targetField === "background_color" ? background_color : defaultColor
-    const [selectedColor, setSelectedColor] = useState<string>(initialColor)
+    const getInitialColor = () => {
+        switch (targetField) {
+            case "background_color":
+                return background_color
+            case "background_foreground_color":
+                return background_foreground_color
+            default:
+                return defaultColor
+        }
+    }
+    
+    const [selectedColor, setSelectedColor] = useState<string>(getInitialColor())
 
-    // Update selected color when background_color changes from context
+    // Update selected color when context colors change
     useEffect(() => {
         if (targetField === "background_color") {
             setSelectedColor(background_color)
+        } else if (targetField === "background_foreground_color") {
+            setSelectedColor(background_foreground_color)
         }
-    }, [background_color, targetField])
+    }, [background_color, background_foreground_color, targetField])
 
     //(value: Parameters<typeof Color.rgb>[0]) => void
     const handleColorChange = (colorArray: ColorLike) => {
@@ -47,9 +64,14 @@ function ColorSelector({
         setSelectedColor(hexColor)
         setValue(targetField, hexColor)
         
-        // If this is for background color, update the context
-        if (targetField === "background_color") {
-            setBackgroundColor(hexColor)
+        // Update the appropriate context based on target field
+        switch (targetField) {
+            case "background_color":
+                setBackgroundColor(hexColor)
+                break
+            case "background_foreground_color":
+                setBackgroundForegroundColor(hexColor)
+                break
         }
         
         onChange?.([r, g, b])

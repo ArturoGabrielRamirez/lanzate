@@ -1,3 +1,5 @@
+import { StoreCustomization } from "@prisma/client"
+
 export type StoreCustomizationForm = {
     // Configuración de tema y colores
     primary_color: string
@@ -69,6 +71,6 @@ export type UpdateSettingsReturn = {
 
 export type GetSettingsReturn = {
     message: string
-    payload: StoreCustomizationForm
+    payload: StoreCustomization
     error: boolean
 } 

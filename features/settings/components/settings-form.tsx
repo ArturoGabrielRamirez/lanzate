@@ -6,6 +6,7 @@ import { Settings } from "lucide-react"
 import ColorSelector from "./color-selector"
 import StorePreview from "./store-preview"
 import { Header } from "@/features/store-landing/components"
+import MainContainer from "@/features/store-landing/components/main-container"
 
 type SettingsFormProps = {
     slug: string
@@ -13,6 +14,7 @@ type SettingsFormProps = {
 
 async function SettingsForm({ slug }: SettingsFormProps) {
     const { payload: storeData, error } = await getStoreSettingsAction(slug)
+    console.log("🚀 ~ SettingsForm ~ storeData:", storeData)
 
     if (error || !storeData) {
         return (
@@ -23,7 +25,10 @@ async function SettingsForm({ slug }: SettingsFormProps) {
     }
 
     return (
-        <SettingsFormProvider initialBackgroundColor={storeData.background_color}>
+        <SettingsFormProvider
+            initialBackgroundColor={storeData.background_color}
+            initialBackgroundForegroundColor={storeData.background_foreground_color}
+        >
             <SettingsFormClient>
                 <Accordion type="single" collapsible>
                     <AccordionItem value="item-1">
@@ -33,17 +38,25 @@ async function SettingsForm({ slug }: SettingsFormProps) {
                                 Configuración general
                             </span>
                         </AccordionTrigger>
-                        <AccordionContent>
+                        <AccordionContent className="space-y-4">
                             <ColorSelector
                                 label="Color de fondo"
                                 defaultColor={storeData.background_color}
                                 targetField="background_color"
+                            />
+                            <ColorSelector
+                                label="Color de texto sobre fondo"
+                                defaultColor={storeData.background_foreground_color}
+                                targetField="background_foreground_color"
                             />
                         </AccordionContent>
                     </AccordionItem>
                 </Accordion>
                 <StorePreview>
                     <Header title="Store Name" />
+                    <MainContainer>
+                        test
+                    </MainContainer>
                 </StorePreview>
             </SettingsFormClient>
         </SettingsFormProvider>
