@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { DollarSign, ShoppingCart, TrendingUp } from "lucide-react"
+import { ArrowRight, DollarSign, ShoppingCart, TrendingUp } from "lucide-react"
 import { SalesOverviewData } from "../types"
 import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 type Props = {
     data: SalesOverviewData
@@ -19,12 +20,18 @@ async function SalesOverviewWidget({ data }: Props) {
     }
 
     return (
-        <Card className="hover:bg-accent transition-colors duration-200">
+        <Card className="hover:bg-accent transition-colors duration-200 group">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                    {t("title")}
-                </CardTitle>
-                <DollarSign className="h-4 w-4 text-muted-foreground" />
+                <div className="flex items-center gap-2">
+                    <DollarSign className="h-4 w-4 text-muted-foreground" />
+                    <CardTitle className="text-sm md:text-base font-medium">
+                        {t("title")}
+                    </CardTitle>
+                </div>
+                <Link href="" className="text-xs md:text-sm flex items-center gap-1 text-blue-500/50 group-hover:text-blue-500 transition-colors duration-200">
+                    ver mas
+                    <ArrowRight className="size-4" />
+                </Link>
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
@@ -36,7 +43,7 @@ async function SalesOverviewWidget({ data }: Props) {
                             {t("total-revenue")}
                         </p>
                     </div>
-                    
+
                     <div className="grid grid-cols-2 gap-4">
                         <div className="flex items-center space-x-2">
                             <ShoppingCart className="h-4 w-4 text-muted-foreground" />
@@ -45,7 +52,7 @@ async function SalesOverviewWidget({ data }: Props) {
                                 <p className="text-xs text-muted-foreground">{t("orders")}</p>
                             </div>
                         </div>
-                        
+
                         <div className="flex items-center space-x-2">
                             <TrendingUp className="h-4 w-4 text-muted-foreground" />
                             <div>

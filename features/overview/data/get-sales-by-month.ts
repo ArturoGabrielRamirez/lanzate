@@ -9,16 +9,16 @@ export async function getSalesByMonth(storeId: number) {
     return actionWrapper(async () => {
         /* const client = new PrismaClient() */
 
-        // Get orders from the last 12 months
-        const twelveMonthsAgo = new Date()
-        twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12)
+        // Get orders from the last 6 months
+        const sixMonthsAgo = new Date()
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6)
 
         const orders = await prisma.order.findMany({
             where: {
                 store_id: storeId,
                 is_paid: true,
                 created_at: {
-                    gte: twelveMonthsAgo
+                    gte: sixMonthsAgo
                 }
             },
             select: {
@@ -31,8 +31,8 @@ export async function getSalesByMonth(storeId: number) {
         // Group orders by month
         const salesByMonth = new Map<string, { sales: number; orders: number; revenue: number }>()
 
-        // Initialize last 12 months
-        for (let i = 11; i >= 0; i--) {
+        // Initialize last 6 months
+        for (let i = 5; i >= 0; i--) {
             const date = new Date()
             date.setMonth(date.getMonth() - i)
             const monthKey = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })

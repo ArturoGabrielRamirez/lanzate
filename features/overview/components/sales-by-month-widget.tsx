@@ -3,9 +3,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-import { TrendingUp } from "lucide-react"
+import { ArrowRight, TrendingUp } from "lucide-react"
 import { SalesByMonthData } from "../types"
 import { useTranslations } from "next-intl"
+import Link from "next/link"
 
 type Props = {
     data: SalesByMonthData[]
@@ -34,12 +35,18 @@ function SalesByMonthWidget({ data }: Props) {
     }))
 
     return (
-        <Card  className="hover:bg-accent transition-colors duration-200">
+        <Card className="hover:bg-accent transition-colors duration-200 group">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                    {t("title")}
-                </CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                <div className="flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                    <CardTitle className="text-sm md:text-base font-medium">
+                        {t("title")}
+                    </CardTitle>
+                </div>
+                <Link href="" className="text-xs md:text-sm flex items-center gap-1 text-blue-500/50 group-hover:text-blue-500 transition-colors duration-200">
+                    ver mas
+                    <ArrowRight className="size-4" />
+                </Link>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>
