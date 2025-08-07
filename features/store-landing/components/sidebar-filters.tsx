@@ -14,7 +14,7 @@ async function SidebarFilters() {
             <div className="md:hidden">
                 <SidebarSearchInput />
             </div>
-            <Card className="w-full bg-accent hidden lg:block">
+            <Card className="w-full bg-[var(--filter-background)] text-[var(--filter-text)] hidden lg:block">
                 <CardHeader>
                     <CardTitle>{t("search")}</CardTitle>
                 </CardHeader>
@@ -22,7 +22,7 @@ async function SidebarFilters() {
                     <SidebarSearchInput />
                 </CardContent>
             </Card>
-            <Card className="w-full bg-accent hidden lg:block">
+            <Card className="w-full bg-[var(--filter-background)] text-[var(--filter-text)] hidden lg:block">
                 <CardHeader>
                     <CardTitle>{t("sort-by")}</CardTitle>
                 </CardHeader>
@@ -32,7 +32,7 @@ async function SidebarFilters() {
                     </div>
                 </CardContent>
             </Card>
-            <Card className="w-full bg-accent hidden lg:block">
+            <Card className="w-full bg-[var(--filter-background)] text-[var(--filter-text)] hidden lg:block">
                 <CardHeader>
                     <CardTitle>{t("categories")}</CardTitle>
                 </CardHeader>
@@ -42,7 +42,7 @@ async function SidebarFilters() {
                     </div>
                 </CardContent>
             </Card>
-            <Card className="w-full bg-accent hidden lg:block">
+            <Card className="w-full bg-[var(--filter-background)] text-[var(--filter-text)] hidden lg:block">
                 <CardHeader>
                     <CardTitle>{t("price-range")}</CardTitle>
                 </CardHeader>

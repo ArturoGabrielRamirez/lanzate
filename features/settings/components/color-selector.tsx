@@ -14,7 +14,7 @@ type ColorSelectorProps = {
     defaultColor?: string
     onChange?: (color: number[]) => void
     className?: string
-    targetField?: "primary_color" | "background_color" | "background_foreground_color" | "header_color" | "header_foreground_color"
+    targetField?: "primary_color" | "background_color" | "background_foreground_color" | "header_color" | "header_foreground_color" | "filter_background_color" | "filter_text_color"
 }
 
 function ColorSelector({
@@ -30,10 +30,14 @@ function ColorSelector({
         background_foreground_color,
         header_color,
         header_foreground_color,
+        filter_background_color,
+        filter_text_color,
         setBackgroundColor, 
         setBackgroundForegroundColor,
         setHeaderColor,
-        setHeaderForegroundColor
+        setHeaderForegroundColor,
+        setFilterBackgroundColor,
+        setFilterTextColor
     } = useSettingsForm()
     
     // Initialize with the appropriate color based on target field
@@ -47,6 +51,10 @@ function ColorSelector({
                 return header_color
             case "header_foreground_color":
                 return header_foreground_color
+            case "filter_background_color":
+                return filter_background_color
+            case "filter_text_color":
+                return filter_text_color
             default:
                 return defaultColor
         }
@@ -64,8 +72,12 @@ function ColorSelector({
             setSelectedColor(header_color)
         } else if (targetField === "header_foreground_color") {
             setSelectedColor(header_foreground_color)
+        } else if (targetField === "filter_background_color") {
+            setSelectedColor(filter_background_color)
+        } else if (targetField === "filter_text_color") {
+            setSelectedColor(filter_text_color)
         }
-    }, [background_color, background_foreground_color, header_color, header_foreground_color, targetField])
+    }, [background_color, background_foreground_color, header_color, header_foreground_color, filter_background_color, filter_text_color, targetField])
 
     //(value: Parameters<typeof Color.rgb>[0]) => void
     const handleColorChange = (colorArray: ColorLike) => {
@@ -89,6 +101,12 @@ function ColorSelector({
                 break
             case "header_foreground_color":
                 setHeaderForegroundColor(hexColor)
+                break
+            case "filter_background_color":
+                setFilterBackgroundColor(hexColor)
+                break
+            case "filter_text_color":
+                setFilterTextColor(hexColor)
                 break
         }
         

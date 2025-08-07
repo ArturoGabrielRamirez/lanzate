@@ -7,10 +7,14 @@ type SettingsFormContextType = {
     background_foreground_color: string
     header_color: string
     header_foreground_color: string
+    filter_background_color: string
+    filter_text_color: string
     setBackgroundColor: (color: string) => void
     setBackgroundForegroundColor: (color: string) => void
     setHeaderColor: (color: string) => void
     setHeaderForegroundColor: (color: string) => void
+    setFilterBackgroundColor: (color: string) => void
+    setFilterTextColor: (color: string) => void
 }
 
 const SettingsFormContext = createContext<SettingsFormContextType | undefined>(undefined)
@@ -21,6 +25,8 @@ type SettingsFormProviderProps = {
     initialBackgroundForegroundColor?: string
     initialHeaderColor?: string
     initialHeaderForegroundColor?: string
+    initialFilterBackgroundColor?: string
+    initialFilterTextColor?: string
 }
 
 function SettingsFormProvider({ 
@@ -28,22 +34,30 @@ function SettingsFormProvider({
     initialBackgroundColor,
     initialBackgroundForegroundColor,
     initialHeaderColor,
-    initialHeaderForegroundColor
+    initialHeaderForegroundColor,
+    initialFilterBackgroundColor,
+    initialFilterTextColor
 }: SettingsFormProviderProps) {
     const [background_color, setBackgroundColor] = useState(initialBackgroundColor || "#ffffff")
     const [background_foreground_color, setBackgroundForegroundColor] = useState(initialBackgroundForegroundColor || "#000000")
     const [header_color, setHeaderColor] = useState(initialHeaderColor || "#ffffff")
     const [header_foreground_color, setHeaderForegroundColor] = useState(initialHeaderForegroundColor || "#000000")
+    const [filter_background_color, setFilterBackgroundColor] = useState(initialFilterBackgroundColor || "#ffffff")
+    const [filter_text_color, setFilterTextColor] = useState(initialFilterTextColor || "#000000")
 
     const value = {
         background_color,
         background_foreground_color,
         header_color,
         header_foreground_color,
+        filter_background_color,
+        filter_text_color,
         setBackgroundColor,
         setBackgroundForegroundColor,
         setHeaderColor,
-        setHeaderForegroundColor
+        setHeaderForegroundColor,
+        setFilterBackgroundColor,
+        setFilterTextColor
     }
 
     return (

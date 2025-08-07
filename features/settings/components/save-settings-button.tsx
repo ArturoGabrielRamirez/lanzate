@@ -19,7 +19,9 @@ function SaveSettingsButton({ slug }: SaveSettingsButtonProps) {
         background_color, 
         background_foreground_color,
         header_color,
-        header_foreground_color
+        header_foreground_color,
+        filter_background_color,
+        filter_text_color
     } = useSettingsForm()
     const { getValues } = useFormContext()
 
@@ -34,7 +36,9 @@ function SaveSettingsButton({ slug }: SaveSettingsButtonProps) {
                 background_color,
                 background_foreground_color,
                 header_color,
-                header_foreground_color
+                header_foreground_color,
+                filter_background_color,
+                filter_text_color
             } as StoreCustomization
 
             const result = await updateStoreSettingsAction(slug, settingsData)

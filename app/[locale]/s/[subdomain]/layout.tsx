@@ -45,6 +45,8 @@ export default async function Layout({ children, params }: LayoutProps) {
                         "--foreground": storeData.customization?.background_foreground_color,
                         "--header": storeData.customization?.header_color,
                         "--header-foreground": storeData.customization?.header_foreground_color,
+                        "--filter-background": storeData.customization?.filter_background_color,
+                        "--filter-text": storeData.customization?.filter_text_color,
                         "--primary": storeData.customization?.primary_color,
                         "--accent": storeData.customization?.accent_color,
                         "--secondary": storeData.customization?.secondary_color,
