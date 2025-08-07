@@ -9,6 +9,7 @@ import { Header } from "@/features/store-landing/components"
 import MainContainer from "@/features/store-landing/components/main-container"
 import { Title } from "@/features/layout/components"
 import SectionContainer from "@/features/store-landing/components/section-container"
+import SaveSettingsButton from "./save-settings-button"
 
 type SettingsFormProps = {
     slug: string
@@ -32,28 +33,31 @@ async function SettingsForm({ slug }: SettingsFormProps) {
             initialBackgroundForegroundColor={storeData.background_foreground_color}
         >
             <SettingsFormClient>
-                <Accordion type="single" collapsible>
-                    <AccordionItem value="item-1">
-                        <AccordionTrigger>
-                            <span className="flex items-center gap-2">
-                                <Settings />
-                                Configuración general
-                            </span>
-                        </AccordionTrigger>
-                        <AccordionContent className="space-y-4">
-                            <ColorSelector
-                                label="Color de fondo"
-                                defaultColor={storeData.background_color}
-                                targetField="background_color"
-                            />
-                            <ColorSelector
-                                label="Color de texto sobre fondo"
-                                defaultColor={storeData.background_foreground_color}
-                                targetField="background_foreground_color"
-                            />
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
+                <div>
+                    <Accordion type="single" collapsible>
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger>
+                                <span className="flex items-center gap-2">
+                                    <Settings />
+                                    Configuración general
+                                </span>
+                            </AccordionTrigger>
+                            <AccordionContent className="space-y-4">
+                                <ColorSelector
+                                    label="Color de fondo"
+                                    defaultColor={storeData.background_color}
+                                    targetField="background_color"
+                                />
+                                <ColorSelector
+                                    label="Color de texto sobre fondo"
+                                    defaultColor={storeData.background_foreground_color}
+                                    targetField="background_foreground_color"
+                                />
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                    <SaveSettingsButton slug={slug} />
+                </div>
                 <StorePreview>
                     <Header title="Store Name" />
                     <MainContainer>
