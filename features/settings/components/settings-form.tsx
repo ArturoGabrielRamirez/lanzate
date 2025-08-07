@@ -31,6 +31,8 @@ async function SettingsForm({ slug }: SettingsFormProps) {
         <SettingsFormProvider
             initialBackgroundColor={storeData.background_color}
             initialBackgroundForegroundColor={storeData.background_foreground_color}
+            initialHeaderColor={storeData.header_color}
+            initialHeaderForegroundColor={storeData.header_foreground_color}
         >
             <SettingsFormClient>
                 <div>
@@ -63,7 +65,16 @@ async function SettingsForm({ slug }: SettingsFormProps) {
                                 </span>
                             </AccordionTrigger>
                             <AccordionContent className="space-y-4">
-
+                                <ColorSelector
+                                    label="Color de cabecera"
+                                    defaultColor={storeData.header_color}
+                                    targetField="header_color"
+                                />
+                                <ColorSelector
+                                    label="Color de texto de cabecera"
+                                    defaultColor={storeData.header_foreground_color}
+                                    targetField="header_foreground_color"
+                                />
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>

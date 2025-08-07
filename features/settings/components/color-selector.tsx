@@ -14,7 +14,7 @@ type ColorSelectorProps = {
     defaultColor?: string
     onChange?: (color: number[]) => void
     className?: string
-    targetField?: "primary_color" | "background_color" | "background_foreground_color"
+    targetField?: "primary_color" | "background_color" | "background_foreground_color" | "header_color" | "header_foreground_color"
 }
 
 function ColorSelector({
@@ -28,8 +28,12 @@ function ColorSelector({
     const { 
         background_color, 
         background_foreground_color,
+        header_color,
+        header_foreground_color,
         setBackgroundColor, 
-        setBackgroundForegroundColor 
+        setBackgroundForegroundColor,
+        setHeaderColor,
+        setHeaderForegroundColor
     } = useSettingsForm()
     
     // Initialize with the appropriate color based on target field
@@ -39,6 +43,10 @@ function ColorSelector({
                 return background_color
             case "background_foreground_color":
                 return background_foreground_color
+            case "header_color":
+                return header_color
+            case "header_foreground_color":
+                return header_foreground_color
             default:
                 return defaultColor
         }
@@ -52,8 +60,12 @@ function ColorSelector({
             setSelectedColor(background_color)
         } else if (targetField === "background_foreground_color") {
             setSelectedColor(background_foreground_color)
+        } else if (targetField === "header_color") {
+            setSelectedColor(header_color)
+        } else if (targetField === "header_foreground_color") {
+            setSelectedColor(header_foreground_color)
         }
-    }, [background_color, background_foreground_color, targetField])
+    }, [background_color, background_foreground_color, header_color, header_foreground_color, targetField])
 
     //(value: Parameters<typeof Color.rgb>[0]) => void
     const handleColorChange = (colorArray: ColorLike) => {
@@ -71,6 +83,12 @@ function ColorSelector({
                 break
             case "background_foreground_color":
                 setBackgroundForegroundColor(hexColor)
+                break
+            case "header_color":
+                setHeaderColor(hexColor)
+                break
+            case "header_foreground_color":
+                setHeaderForegroundColor(hexColor)
                 break
         }
         

@@ -7,7 +7,6 @@ import { useSettingsForm } from "./settings-form-provider"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 import { updateStoreSettingsAction } from "@/features/settings/actions/updateStoreSettingsAction"
-import { StoreCustomizationForm } from "@/features/settings/types"
 import { StoreCustomization } from "@prisma/client"
 
 type SaveSettingsButtonProps = {
@@ -16,7 +15,12 @@ type SaveSettingsButtonProps = {
 
 function SaveSettingsButton({ slug }: SaveSettingsButtonProps) {
     const [isLoading, setIsLoading] = useState(false)
-    const { background_color, background_foreground_color } = useSettingsForm()
+    const { 
+        background_color, 
+        background_foreground_color,
+        header_color,
+        header_foreground_color
+    } = useSettingsForm()
     const { getValues } = useFormContext()
 
     const handleSave = async () => {
@@ -28,7 +32,9 @@ function SaveSettingsButton({ slug }: SaveSettingsButtonProps) {
             const settingsData: StoreCustomization = {
                 ...formValues,
                 background_color,
-                background_foreground_color
+                background_foreground_color,
+                header_color,
+                header_foreground_color
             } as StoreCustomization
 
             const result = await updateStoreSettingsAction(slug, settingsData)

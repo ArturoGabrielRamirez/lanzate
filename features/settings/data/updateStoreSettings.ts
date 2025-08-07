@@ -8,6 +8,7 @@ export async function updateStoreSettings(
     storeId: number,
     settings: StoreCustomization
 ): Promise<ResponseType<StoreCustomization>> {
+    console.log("🚀 ~ updateStoreSettings ~ settings:", settings)
     return actionWrapper(async () => {
 
         const customization = await prisma.storeCustomization.upsert({
@@ -17,11 +18,15 @@ export async function updateStoreSettings(
             update: {
                 background_foreground_color: settings.background_foreground_color,
                 background_color: settings.background_color,
+                header_color: settings.header_color,
+                header_foreground_color: settings.header_foreground_color,
             },
             create: {
                 store_id: storeId,
                 background_foreground_color: settings.background_foreground_color,
                 background_color: settings.background_color,
+                header_color: settings.header_color,
+                header_foreground_color: settings.header_foreground_color,
             }
         })
 
