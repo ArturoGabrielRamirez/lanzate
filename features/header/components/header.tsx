@@ -1,15 +1,17 @@
 "use server"
 
-import { createServerSideClient } from "@/utils/supabase/server"
+/* import { createServerSideClient } from "@/utils/supabase/server" */
 import { AccountDropdown, NotificationsIcon, ThemeToggle, MobileMenu, LanguageSwitch } from "@/features/header/components"
 import Link from "next/link"
 import { Rocket } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import { getUserInfo } from "@/features/layout/actions"
 
 async function Header() {
 
-    const supabase = createServerSideClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    /* const supabase = createServerSideClient()
+    const { data: { user } } = await supabase.auth.getUser() */
+    const { payload: user } = await getUserInfo()
     const t = await getTranslations("auth.buttons")
 
     return (

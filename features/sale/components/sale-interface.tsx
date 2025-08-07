@@ -14,6 +14,7 @@ import { createNewWalkInOrder } from '@/features/checkout/actions/createNewWalkI
 import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
 import { CartItemType } from '@/features/cart/types'
 import { actionWrapper } from '@/utils/lib'
+import BarcodeScannerCammeraButton from './barcode-scanner-cammera-button'
 
 type SaleInterfaceProps = {
   storeName: string
@@ -269,6 +270,8 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
           onSearchResults={handleSearchResults}
           ref={searchSectionRef}
         />
+
+        
 
         <BarcodeScannerUSB onProductScanned={handleProductScanned} />
       </div>
