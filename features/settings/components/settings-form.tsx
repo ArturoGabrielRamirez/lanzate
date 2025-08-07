@@ -192,7 +192,7 @@ async function SettingsForm({ slug }: SettingsFormProps) {
                     <MainContainer>
                         <SectionContainer>
                             <Title title="Products" />
-                            <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] xl:grid-cols-[350px_1fr] gap-4 grow grid-rows-[min-content_1fr_min-content]">
+                            <div className="grid grid-cols-1 @lg:grid-cols-[300px_1fr] @xl:grid-cols-[350px_1fr] gap-4 grow grid-rows-[min-content_1fr_min-content]">
                                 <SidebarFilters />
                                 <ProductList
                                     subdomain={storeData.store.subdomain}

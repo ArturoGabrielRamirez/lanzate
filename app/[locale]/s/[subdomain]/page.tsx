@@ -28,9 +28,9 @@ export default async function StorePage({ params, searchParams }: Props) {
         <SectionContainer>
             <Title title={t("title")} />
 
-            <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] xl:grid-cols-[350px_1fr] gap-4 grow grid-rows-[min-content_1fr_min-content]">
+            <div className="flex gap-4 grow grid-rows-[min-content_1fr_min-content]">
                 <SidebarFilters />
-                <div className="flex flex-col gap-4 relative">
+                <div className="flex flex-col gap-4 relative @container w-full">
                     <div className="flex gap-2 justify-between">
                         <ProductListDisplay />
                         <ProductAmountDisplay amount={productAmount || 0} />
