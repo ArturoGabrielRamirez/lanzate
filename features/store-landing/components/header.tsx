@@ -44,8 +44,8 @@ async function Header({ title = "Store Name", socialMedia, showSocialLinks = tru
     return (
         <header className="flex items-center justify-between w-full p-4 bg-[var(--header)] text-[var(--header-foreground)]">
             <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
-                <Rocket className="text-primary" />
-                <h1>{title}</h1>
+                <Rocket className="text-primary [display:var(--show-brand-logo)]" />
+                <h1 className="[display:var(--show-brand-text)]">{title}</h1>
             </Link>
             <div className="flex items-center gap-2">
                 {!user && <Link href='/login' className='p-2 hover:underline hover:!text-primary'>{t("login")}</Link>}

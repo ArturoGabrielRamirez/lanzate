@@ -4,6 +4,7 @@ import { SettingsFormProvider } from "./settings-form-provider"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { AppWindow, Filter, IdCard, Settings } from "lucide-react"
 import ColorSelector from "./color-selector"
+import SwitchSelector from "./switch-selector"
 import StorePreview from "./store-preview"
 import { Header } from "@/features/store-landing/components"
 import MainContainer from "@/features/store-landing/components/main-container"
@@ -11,8 +12,6 @@ import { Title } from "@/features/layout/components"
 import SectionContainer from "@/features/store-landing/components/section-container"
 import SaveSettingsButton from "./save-settings-button"
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters"
-import { Suspense } from "react"
-import ProductCardLoader from "@/features/store-landing/components/product-card-loader"
 import ProductList from "@/features/store-landing/components/product-list"
 
 type SettingsFormProps = {
@@ -41,6 +40,8 @@ async function SettingsForm({ slug }: SettingsFormProps) {
             initialFilterTextColor={storeData.filter_text_color}
             initialProductCardBackgroundColor={storeData.product_card_background_color}
             initialProductCardTextColor={storeData.product_card_text_color}
+            initialShowBrandLogo={storeData.show_brand_logo}
+            initialShowBrandText={storeData.show_brand_text}
         >
             <SettingsFormClient>
                 <div>
@@ -82,6 +83,16 @@ async function SettingsForm({ slug }: SettingsFormProps) {
                                     label="Color de texto de cabecera"
                                     defaultColor={storeData.header_foreground_color}
                                     targetField="header_foreground_color"
+                                />
+                                <SwitchSelector
+                                    label="Mostrar logo de marca"
+                                    defaultChecked={storeData.show_brand_logo}
+                                    targetField="show_brand_logo"
+                                />
+                                <SwitchSelector
+                                    label="Mostrar nombre de marca"
+                                    defaultChecked={storeData.show_brand_text}
+                                    targetField="show_brand_text"
                                 />
                             </AccordionContent>
                         </AccordionItem>

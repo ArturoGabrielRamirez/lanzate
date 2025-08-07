@@ -15,7 +15,9 @@ function StorePreview({ children }: StorePreviewProps) {
         filter_background_color,
         filter_text_color,
         product_card_background_color,
-        product_card_text_color
+        product_card_text_color,
+        show_brand_logo,
+        show_brand_text
     } = useSettingsForm()
     console.log("🚀 ~ StorePreview ~ background_foreground_color:", background_foreground_color)
 
@@ -30,6 +32,8 @@ function StorePreview({ children }: StorePreviewProps) {
                 "--filter-text": filter_text_color,
                 "--product-card-background": product_card_background_color,
                 "--product-card-text": product_card_text_color,
+                "--show-brand-logo": show_brand_logo ? "block" : "none",
+                "--show-brand-text": show_brand_text ? "block" : "none",
             } as React.CSSProperties}
             className="bg-background rounded-lg overflow-hidden"
         >

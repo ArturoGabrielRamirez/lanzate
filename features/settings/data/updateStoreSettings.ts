@@ -24,6 +24,8 @@ export async function updateStoreSettings(
                 filter_text_color: settings.filter_text_color,
                 product_card_background_color: settings.product_card_background_color,
                 product_card_text_color: settings.product_card_text_color,
+                show_brand_text: settings.show_brand_text,
+                show_brand_logo: settings.show_brand_logo,
             },
             create: {
                 store_id: storeId,
@@ -35,6 +37,8 @@ export async function updateStoreSettings(
                 filter_text_color: settings.filter_text_color,
                 product_card_background_color: settings.product_card_background_color,
                 product_card_text_color: settings.product_card_text_color,
+                show_brand_text: settings.show_brand_text,
+                show_brand_logo: settings.show_brand_logo,
             }
         })
 

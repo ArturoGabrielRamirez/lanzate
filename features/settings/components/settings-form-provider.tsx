@@ -11,6 +11,8 @@ type SettingsFormContextType = {
     filter_text_color: string
     product_card_background_color: string
     product_card_text_color: string
+    show_brand_logo: boolean
+    show_brand_text: boolean
     setBackgroundColor: (color: string) => void
     setBackgroundForegroundColor: (color: string) => void
     setHeaderColor: (color: string) => void
@@ -19,6 +21,8 @@ type SettingsFormContextType = {
     setFilterTextColor: (color: string) => void
     setProductCardBackgroundColor: (color: string) => void
     setProductCardTextColor: (color: string) => void
+    setShowBrandLogo: (show: boolean) => void
+    setShowBrandText: (show: boolean) => void
 }
 
 const SettingsFormContext = createContext<SettingsFormContextType | undefined>(undefined)
@@ -33,6 +37,8 @@ type SettingsFormProviderProps = {
     initialFilterTextColor?: string
     initialProductCardBackgroundColor?: string
     initialProductCardTextColor?: string
+    initialShowBrandLogo?: boolean
+    initialShowBrandText?: boolean
 }
 
 function SettingsFormProvider({ 
@@ -44,7 +50,9 @@ function SettingsFormProvider({
     initialFilterBackgroundColor,
     initialFilterTextColor,
     initialProductCardBackgroundColor,
-    initialProductCardTextColor
+    initialProductCardTextColor,
+    initialShowBrandLogo,
+    initialShowBrandText
 }: SettingsFormProviderProps) {
     const [background_color, setBackgroundColor] = useState(initialBackgroundColor || "#ffffff")
     const [background_foreground_color, setBackgroundForegroundColor] = useState(initialBackgroundForegroundColor || "#000000")
@@ -54,6 +62,8 @@ function SettingsFormProvider({
     const [filter_text_color, setFilterTextColor] = useState(initialFilterTextColor || "#000000")
     const [product_card_background_color, setProductCardBackgroundColor] = useState(initialProductCardBackgroundColor || "#ffffff")
     const [product_card_text_color, setProductCardTextColor] = useState(initialProductCardTextColor || "#000000")
+    const [show_brand_logo, setShowBrandLogo] = useState(initialShowBrandLogo ?? true)
+    const [show_brand_text, setShowBrandText] = useState(initialShowBrandText ?? true)
 
     const value = {
         background_color,
@@ -64,6 +74,8 @@ function SettingsFormProvider({
         filter_text_color,
         product_card_background_color,
         product_card_text_color,
+        show_brand_logo,
+        show_brand_text,
         setBackgroundColor,
         setBackgroundForegroundColor,
         setHeaderColor,
@@ -71,7 +83,9 @@ function SettingsFormProvider({
         setFilterBackgroundColor,
         setFilterTextColor,
         setProductCardBackgroundColor,
-        setProductCardTextColor
+        setProductCardTextColor,
+        setShowBrandLogo,
+        setShowBrandText
     }
 
     return (

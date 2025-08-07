@@ -23,7 +23,9 @@ function SaveSettingsButton({ slug }: SaveSettingsButtonProps) {
         filter_background_color,
         filter_text_color,
         product_card_background_color,
-        product_card_text_color
+        product_card_text_color,
+        show_brand_logo,
+        show_brand_text
     } = useSettingsForm()
     const { getValues } = useFormContext()
 
@@ -33,7 +35,7 @@ function SaveSettingsButton({ slug }: SaveSettingsButtonProps) {
         try {
             // Get all form values and merge with context values
             const formValues = getValues()
-            const settingsData: StoreCustomization = {
+            const settingsData: Partial<StoreCustomization> = {
                 ...formValues,
                 background_color,
                 background_foreground_color,
@@ -42,10 +44,12 @@ function SaveSettingsButton({ slug }: SaveSettingsButtonProps) {
                 filter_background_color,
                 filter_text_color,
                 product_card_background_color,
-                product_card_text_color
-            } as StoreCustomization
+                product_card_text_color,
+                show_brand_logo,
+                show_brand_text
+            }
 
-            const result = await updateStoreSettingsAction(slug, settingsData)
+            const result = await updateStoreSettingsAction(slug, settingsData as StoreCustomization)
             
             if (result.error) {
                 toast.error(result.message)
