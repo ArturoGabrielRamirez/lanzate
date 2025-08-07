@@ -26,7 +26,6 @@ function StorePreview({ children }: StorePreviewProps) {
         show_price_filter,
         show_searchbar_filter
     } = useSettingsForm()
-    console.log("🚀 ~ StorePreview ~ background_foreground_color:", background_foreground_color)
 
     return (
         <div

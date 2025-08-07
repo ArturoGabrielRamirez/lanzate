@@ -21,7 +21,6 @@ type SettingsFormProps = {
 
 async function SettingsForm({ slug }: SettingsFormProps) {
     const { payload: storeData, error } = await getStoreSettingsAction(slug)
-    console.log("🚀 ~ SettingsForm ~ storeData:", storeData)
 
     if (error || !storeData) {
         return (

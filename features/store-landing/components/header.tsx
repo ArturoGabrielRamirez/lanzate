@@ -1,9 +1,10 @@
 import Link from "next/link"
 import { Rocket, Facebook, Instagram } from "lucide-react"
-import { createServerSideClient } from "@/utils/supabase/server"
+/* import { createServerSideClient } from "@/utils/supabase/server" */
 import CartIcon from "@/features/cart/components/cart-icon"
 import { getTranslations } from "next-intl/server"
 import LandingAccountDropdown from "@/features/header/components/landing-account-dropdown"
+import { getUserInfo } from "@/features/layout/actions"
 
 type Props = {
     title?: string
@@ -19,8 +20,9 @@ async function Header({ title = "Store Name", socialMedia, showSocialLinks = tru
 
     const t = await getTranslations("auth.buttons");
 
-    const supabase = createServerSideClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    /* const supabase = createServerSideClient()
+    const { data: { user } } = await supabase.auth.getUser() */
+    const { payload: user } = await getUserInfo()
 
     const XformerlyTwitter = ({ className }: { className?: string }) => (
         <svg
