@@ -27,7 +27,12 @@ function SaveSettingsButton({ slug }: SaveSettingsButtonProps) {
         show_brand_logo,
         show_brand_text,
         header_floating,
-        header_size
+        header_size,
+        show_filters,
+        show_sorting_filter,
+        show_categories_filter,
+        show_price_filter,
+        show_searchbar_filter
     } = useSettingsForm()
     const { getValues } = useFormContext()
 
@@ -50,7 +55,12 @@ function SaveSettingsButton({ slug }: SaveSettingsButtonProps) {
                 show_brand_logo,
                 show_brand_text,
                 header_floating,
-                header_size
+                header_size,
+                show_filters,
+                show_sorting_filter,
+                show_categories_filter,
+                show_price_filter,
+                show_searchbar_filter
             }
 
             const result = await updateStoreSettingsAction(slug, settingsData as StoreCustomization)

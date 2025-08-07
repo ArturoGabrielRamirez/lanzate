@@ -9,7 +9,7 @@ type SwitchSelectorProps = {
     label: string
     defaultChecked?: boolean
     className?: string
-    targetField?: "show_brand_logo" | "show_brand_text" | "header_floating"
+    targetField?: "show_brand_logo" | "show_brand_text" | "header_floating" | "show_filters" | "show_sorting_filter" | "show_categories_filter" | "show_price_filter" | "show_searchbar_filter"
 }
 
 function SwitchSelector({
@@ -23,9 +23,19 @@ function SwitchSelector({
         show_brand_logo,
         show_brand_text,
         header_floating,
+        show_filters,
+        show_sorting_filter,
+        show_categories_filter,
+        show_price_filter,
+        show_searchbar_filter,
         setShowBrandLogo,
         setShowBrandText,
-        setHeaderFloating
+        setHeaderFloating,
+        setShowFilters,
+        setShowSortingFilter,
+        setShowCategoriesFilter,
+        setShowPriceFilter,
+        setShowSearchbarFilter
     } = useSettingsForm()
     
     // Initialize with the appropriate value based on target field
@@ -37,6 +47,16 @@ function SwitchSelector({
                 return show_brand_text
             case "header_floating":
                 return header_floating
+            case "show_filters":
+                return show_filters
+            case "show_sorting_filter":
+                return show_sorting_filter
+            case "show_categories_filter":
+                return show_categories_filter
+            case "show_price_filter":
+                return show_price_filter
+            case "show_searchbar_filter":
+                return show_searchbar_filter
             default:
                 return defaultChecked
         }
@@ -52,8 +72,18 @@ function SwitchSelector({
             setIsChecked(show_brand_text)
         } else if (targetField === "header_floating") {
             setIsChecked(header_floating)
+        } else if (targetField === "show_filters") {
+            setIsChecked(show_filters)
+        } else if (targetField === "show_sorting_filter") {
+            setIsChecked(show_sorting_filter)
+        } else if (targetField === "show_categories_filter") {
+            setIsChecked(show_categories_filter)
+        } else if (targetField === "show_price_filter") {
+            setIsChecked(show_price_filter)
+        } else if (targetField === "show_searchbar_filter") {
+            setIsChecked(show_searchbar_filter)
         }
-    }, [show_brand_logo, show_brand_text, header_floating, targetField])
+    }, [show_brand_logo, show_brand_text, header_floating, show_filters, show_sorting_filter, show_categories_filter, show_price_filter, show_searchbar_filter, targetField])
 
     const handleSwitchChange = (checked: boolean) => {
         setIsChecked(checked)
@@ -69,6 +99,21 @@ function SwitchSelector({
                 break
             case "header_floating":
                 setHeaderFloating(checked)
+                break
+            case "show_filters":
+                setShowFilters(checked)
+                break
+            case "show_sorting_filter":
+                setShowSortingFilter(checked)
+                break
+            case "show_categories_filter":
+                setShowCategoriesFilter(checked)
+                break
+            case "show_price_filter":
+                setShowPriceFilter(checked)
+                break
+            case "show_searchbar_filter":
+                setShowSearchbarFilter(checked)
                 break
         }
     }

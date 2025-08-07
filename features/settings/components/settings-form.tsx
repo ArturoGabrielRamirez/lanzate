@@ -45,6 +45,11 @@ async function SettingsForm({ slug }: SettingsFormProps) {
             initialShowBrandText={storeData.show_brand_text}
             initialHeaderFloating={storeData.header_floating}
             initialHeaderSize={storeData.header_size}
+            initialShowFilters={storeData.show_filters}
+            initialShowSortingFilter={storeData.show_sorting_filter}
+            initialShowCategoriesFilter={storeData.show_categories_filter}
+            initialShowPriceFilter={storeData.show_price_filter}
+            initialShowSearchbarFilter={storeData.show_searchbar_filter}
         >
             <SettingsFormClient>
                 <div>
@@ -131,6 +136,31 @@ async function SettingsForm({ slug }: SettingsFormProps) {
                                     label="Color de texto de filtros"
                                     defaultColor={storeData.filter_text_color}
                                     targetField="filter_text_color"
+                                />
+                                <SwitchSelector
+                                    label="Mostrar filtros en general"
+                                    defaultChecked={storeData.show_filters}
+                                    targetField="show_filters"
+                                />
+                                <SwitchSelector
+                                    label="Mostrar filtro de ordenamiento"
+                                    defaultChecked={storeData.show_sorting_filter}
+                                    targetField="show_sorting_filter"
+                                />
+                                <SwitchSelector
+                                    label="Mostrar filtro de categorías"
+                                    defaultChecked={storeData.show_categories_filter}
+                                    targetField="show_categories_filter"
+                                />
+                                <SwitchSelector
+                                    label="Mostrar filtro de precio"
+                                    defaultChecked={storeData.show_price_filter}
+                                    targetField="show_price_filter"
+                                />
+                                <SwitchSelector
+                                    label="Mostrar barra de búsqueda"
+                                    defaultChecked={storeData.show_searchbar_filter}
+                                    targetField="show_searchbar_filter"
                                 />
                             </AccordionContent>
                         </AccordionItem>

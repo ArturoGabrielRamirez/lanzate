@@ -7,10 +7,10 @@ type StorePreviewProps = {
 }
 
 function StorePreview({ children }: StorePreviewProps) {
-    const {
-        background_color,
-        background_foreground_color,
-        header_color,
+    const { 
+        background_color, 
+        background_foreground_color, 
+        header_color, 
         header_foreground_color,
         filter_background_color,
         filter_text_color,
@@ -19,7 +19,12 @@ function StorePreview({ children }: StorePreviewProps) {
         show_brand_logo,
         show_brand_text,
         header_floating,
-        header_size
+        header_size,
+        show_filters,
+        show_sorting_filter,
+        show_categories_filter,
+        show_price_filter,
+        show_searchbar_filter
     } = useSettingsForm()
     console.log("🚀 ~ StorePreview ~ background_foreground_color:", background_foreground_color)
 
@@ -44,7 +49,12 @@ function StorePreview({ children }: StorePreviewProps) {
                 "--header-padding-bottom": header_floating ? "8px" : "16px",
                 "--header-padding-left": header_floating ? "24px" : "16px",
                 "--header-padding-right": header_floating ? "24px" : "16px",
-                "--header-border-radius": header_size !== "LARGE" ? "16px" : "0px"
+                "--header-border-radius": header_size !== "LARGE" ? "16px" : "0px",
+                "--show-filters": show_filters ? "block" : "none",
+                "--show-sorting-filter": show_sorting_filter ? "block" : "none",
+                "--show-categories-filter": show_categories_filter ? "block" : "none",
+                "--show-price-filter": show_price_filter ? "block" : "none",
+                "--show-searchbar-filter": show_searchbar_filter ? "block" : "none",
             } as React.CSSProperties}
             className="bg-background rounded-lg overflow-hidden relative"
         >

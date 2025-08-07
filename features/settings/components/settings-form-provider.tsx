@@ -15,6 +15,11 @@ type SettingsFormContextType = {
     show_brand_text: boolean
     header_floating: boolean
     header_size: "SMALL" | "MEDIUM" | "LARGE"
+    show_filters: boolean
+    show_sorting_filter: boolean
+    show_categories_filter: boolean
+    show_price_filter: boolean
+    show_searchbar_filter: boolean
     setBackgroundColor: (color: string) => void
     setBackgroundForegroundColor: (color: string) => void
     setHeaderColor: (color: string) => void
@@ -27,6 +32,11 @@ type SettingsFormContextType = {
     setShowBrandText: (show: boolean) => void
     setHeaderFloating: (floating: boolean) => void
     setHeaderSize: (size: "SMALL" | "MEDIUM" | "LARGE") => void
+    setShowFilters: (show: boolean) => void
+    setShowSortingFilter: (show: boolean) => void
+    setShowCategoriesFilter: (show: boolean) => void
+    setShowPriceFilter: (show: boolean) => void
+    setShowSearchbarFilter: (show: boolean) => void
 }
 
 const SettingsFormContext = createContext<SettingsFormContextType | undefined>(undefined)
@@ -45,6 +55,11 @@ type SettingsFormProviderProps = {
     initialShowBrandText?: boolean
     initialHeaderFloating?: boolean
     initialHeaderSize?: "SMALL" | "MEDIUM" | "LARGE"
+    initialShowFilters?: boolean
+    initialShowSortingFilter?: boolean
+    initialShowCategoriesFilter?: boolean
+    initialShowPriceFilter?: boolean
+    initialShowSearchbarFilter?: boolean
 }
 
 function SettingsFormProvider({ 
@@ -60,7 +75,12 @@ function SettingsFormProvider({
     initialShowBrandLogo,
     initialShowBrandText,
     initialHeaderFloating,
-    initialHeaderSize
+    initialHeaderSize,
+    initialShowFilters,
+    initialShowSortingFilter,
+    initialShowCategoriesFilter,
+    initialShowPriceFilter,
+    initialShowSearchbarFilter
 }: SettingsFormProviderProps) {
     const [background_color, setBackgroundColor] = useState(initialBackgroundColor || "#ffffff")
     const [background_foreground_color, setBackgroundForegroundColor] = useState(initialBackgroundForegroundColor || "#000000")
@@ -74,6 +94,11 @@ function SettingsFormProvider({
     const [show_brand_text, setShowBrandText] = useState(initialShowBrandText ?? true)
     const [header_floating, setHeaderFloating] = useState(initialHeaderFloating ?? false)
     const [header_size, setHeaderSize] = useState<"SMALL" | "MEDIUM" | "LARGE">(initialHeaderSize || "MEDIUM")
+    const [show_filters, setShowFilters] = useState(initialShowFilters ?? true)
+    const [show_sorting_filter, setShowSortingFilter] = useState(initialShowSortingFilter ?? true)
+    const [show_categories_filter, setShowCategoriesFilter] = useState(initialShowCategoriesFilter ?? true)
+    const [show_price_filter, setShowPriceFilter] = useState(initialShowPriceFilter ?? true)
+    const [show_searchbar_filter, setShowSearchbarFilter] = useState(initialShowSearchbarFilter ?? true)
 
     const value = {
         background_color,
@@ -88,6 +113,11 @@ function SettingsFormProvider({
         show_brand_text,
         header_floating,
         header_size,
+        show_filters,
+        show_sorting_filter,
+        show_categories_filter,
+        show_price_filter,
+        show_searchbar_filter,
         setBackgroundColor,
         setBackgroundForegroundColor,
         setHeaderColor,
@@ -99,7 +129,12 @@ function SettingsFormProvider({
         setShowBrandLogo,
         setShowBrandText,
         setHeaderFloating,
-        setHeaderSize
+        setHeaderSize,
+        setShowFilters,
+        setShowSortingFilter,
+        setShowCategoriesFilter,
+        setShowPriceFilter,
+        setShowSearchbarFilter
     }
 
     return (

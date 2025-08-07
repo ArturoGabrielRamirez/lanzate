@@ -28,6 +28,13 @@ export async function updateStoreSettings(
                 show_brand_logo: settings.show_brand_logo,
                 header_floating: settings.header_floating,
                 header_size: settings.header_size,
+                show_filters: settings.show_filters,
+                show_sorting_filter: settings.show_sorting_filter,
+                show_categories_filter: settings.show_categories_filter,
+                show_price_filter: settings.show_price_filter,
+                show_searchbar_filter: settings.show_searchbar_filter,
+                show_main_searchbar: settings.show_main_searchbar,
+                
             },
             create: {
                 store_id: storeId,
@@ -43,6 +50,12 @@ export async function updateStoreSettings(
                 show_brand_logo: settings.show_brand_logo,
                 header_floating: settings.header_floating,
                 header_size: settings.header_size,
+                show_filters: settings.show_filters,
+                show_sorting_filter: settings.show_sorting_filter,
+                show_categories_filter: settings.show_categories_filter,
+                show_price_filter: settings.show_price_filter,
+                show_searchbar_filter: settings.show_searchbar_filter,
+                show_main_searchbar: settings.show_main_searchbar,
             }
         })
 
