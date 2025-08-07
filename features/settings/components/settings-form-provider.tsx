@@ -13,6 +13,8 @@ type SettingsFormContextType = {
     product_card_text_color: string
     show_brand_logo: boolean
     show_brand_text: boolean
+    header_floating: boolean
+    header_size: "SMALL" | "MEDIUM" | "LARGE"
     setBackgroundColor: (color: string) => void
     setBackgroundForegroundColor: (color: string) => void
     setHeaderColor: (color: string) => void
@@ -23,6 +25,8 @@ type SettingsFormContextType = {
     setProductCardTextColor: (color: string) => void
     setShowBrandLogo: (show: boolean) => void
     setShowBrandText: (show: boolean) => void
+    setHeaderFloating: (floating: boolean) => void
+    setHeaderSize: (size: "SMALL" | "MEDIUM" | "LARGE") => void
 }
 
 const SettingsFormContext = createContext<SettingsFormContextType | undefined>(undefined)
@@ -39,6 +43,8 @@ type SettingsFormProviderProps = {
     initialProductCardTextColor?: string
     initialShowBrandLogo?: boolean
     initialShowBrandText?: boolean
+    initialHeaderFloating?: boolean
+    initialHeaderSize?: "SMALL" | "MEDIUM" | "LARGE"
 }
 
 function SettingsFormProvider({ 
@@ -52,7 +58,9 @@ function SettingsFormProvider({
     initialProductCardBackgroundColor,
     initialProductCardTextColor,
     initialShowBrandLogo,
-    initialShowBrandText
+    initialShowBrandText,
+    initialHeaderFloating,
+    initialHeaderSize
 }: SettingsFormProviderProps) {
     const [background_color, setBackgroundColor] = useState(initialBackgroundColor || "#ffffff")
     const [background_foreground_color, setBackgroundForegroundColor] = useState(initialBackgroundForegroundColor || "#000000")
@@ -64,6 +72,8 @@ function SettingsFormProvider({
     const [product_card_text_color, setProductCardTextColor] = useState(initialProductCardTextColor || "#000000")
     const [show_brand_logo, setShowBrandLogo] = useState(initialShowBrandLogo ?? true)
     const [show_brand_text, setShowBrandText] = useState(initialShowBrandText ?? true)
+    const [header_floating, setHeaderFloating] = useState(initialHeaderFloating ?? false)
+    const [header_size, setHeaderSize] = useState<"SMALL" | "MEDIUM" | "LARGE">(initialHeaderSize || "MEDIUM")
 
     const value = {
         background_color,
@@ -76,6 +86,8 @@ function SettingsFormProvider({
         product_card_text_color,
         show_brand_logo,
         show_brand_text,
+        header_floating,
+        header_size,
         setBackgroundColor,
         setBackgroundForegroundColor,
         setHeaderColor,
@@ -85,7 +97,9 @@ function SettingsFormProvider({
         setProductCardBackgroundColor,
         setProductCardTextColor,
         setShowBrandLogo,
-        setShowBrandText
+        setShowBrandText,
+        setHeaderFloating,
+        setHeaderSize
     }
 
     return (

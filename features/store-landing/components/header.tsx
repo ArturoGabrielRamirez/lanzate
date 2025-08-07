@@ -42,7 +42,7 @@ async function Header({ title = "Store Name", socialMedia, showSocialLinks = tru
     );
 
     return (
-        <header className="flex items-center justify-between w-full p-4 bg-[var(--header)] text-[var(--header-foreground)]">
+        <header className="flex items-center justify-between p-4 bg-[var(--header)] text-[var(--header-foreground)] [width:var(--header-size)] m-auto [position:var(--header-floating)] left-0 right-0">
             <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
                 <Rocket className="text-primary [display:var(--show-brand-logo)]" />
                 <h1 className="[display:var(--show-brand-text)]">{title}</h1>

@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { AppWindow, Filter, IdCard, Settings } from "lucide-react"
 import ColorSelector from "./color-selector"
 import SwitchSelector from "./switch-selector"
+import SelectSelector from "./select-selector"
 import StorePreview from "./store-preview"
 import { Header } from "@/features/store-landing/components"
 import MainContainer from "@/features/store-landing/components/main-container"
@@ -42,6 +43,8 @@ async function SettingsForm({ slug }: SettingsFormProps) {
             initialProductCardTextColor={storeData.product_card_text_color}
             initialShowBrandLogo={storeData.show_brand_logo}
             initialShowBrandText={storeData.show_brand_text}
+            initialHeaderFloating={storeData.header_floating}
+            initialHeaderSize={storeData.header_size}
         >
             <SettingsFormClient>
                 <div>
@@ -93,6 +96,21 @@ async function SettingsForm({ slug }: SettingsFormProps) {
                                     label="Mostrar nombre de marca"
                                     defaultChecked={storeData.show_brand_text}
                                     targetField="show_brand_text"
+                                />
+                                <SwitchSelector
+                                    label="Cabecera flotante"
+                                    defaultChecked={storeData.header_floating}
+                                    targetField="header_floating"
+                                />
+                                <SelectSelector
+                                    label="Tamaño de cabecera"
+                                    defaultValue={storeData.header_size}
+                                    targetField="header_size"
+                                    options={[
+                                        { value: "SMALL", label: "Pequeña" },
+                                        { value: "MEDIUM", label: "Mediana" },
+                                        { value: "LARGE", label: "Grande" }
+                                    ]}
                                 />
                             </AccordionContent>
                         </AccordionItem>

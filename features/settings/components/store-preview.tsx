@@ -7,17 +7,19 @@ type StorePreviewProps = {
 }
 
 function StorePreview({ children }: StorePreviewProps) {
-    const { 
-        background_color, 
-        background_foreground_color, 
-        header_color, 
+    const {
+        background_color,
+        background_foreground_color,
+        header_color,
         header_foreground_color,
         filter_background_color,
         filter_text_color,
         product_card_background_color,
         product_card_text_color,
         show_brand_logo,
-        show_brand_text
+        show_brand_text,
+        header_floating,
+        header_size
     } = useSettingsForm()
     console.log("🚀 ~ StorePreview ~ background_foreground_color:", background_foreground_color)
 
@@ -34,8 +36,10 @@ function StorePreview({ children }: StorePreviewProps) {
                 "--product-card-text": product_card_text_color,
                 "--show-brand-logo": show_brand_logo ? "block" : "none",
                 "--show-brand-text": show_brand_text ? "block" : "none",
+                "--header-floating": header_floating ? "absolute" : "static",
+                "--header-size": header_size == "LARGE" ? "100%" : header_size == "MEDIUM" ? "80%" : "50%",
             } as React.CSSProperties}
-            className="bg-background rounded-lg overflow-hidden"
+            className="bg-background rounded-lg overflow-hidden relative"
         >
             {children}
         </div>

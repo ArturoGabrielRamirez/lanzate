@@ -25,7 +25,9 @@ function SaveSettingsButton({ slug }: SaveSettingsButtonProps) {
         product_card_background_color,
         product_card_text_color,
         show_brand_logo,
-        show_brand_text
+        show_brand_text,
+        header_floating,
+        header_size
     } = useSettingsForm()
     const { getValues } = useFormContext()
 
@@ -46,7 +48,9 @@ function SaveSettingsButton({ slug }: SaveSettingsButtonProps) {
                 product_card_background_color,
                 product_card_text_color,
                 show_brand_logo,
-                show_brand_text
+                show_brand_text,
+                header_floating,
+                header_size
             }
 
             const result = await updateStoreSettingsAction(slug, settingsData as StoreCustomization)

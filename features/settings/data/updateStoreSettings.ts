@@ -26,6 +26,8 @@ export async function updateStoreSettings(
                 product_card_text_color: settings.product_card_text_color,
                 show_brand_text: settings.show_brand_text,
                 show_brand_logo: settings.show_brand_logo,
+                header_floating: settings.header_floating,
+                header_size: settings.header_size,
             },
             create: {
                 store_id: storeId,
@@ -39,6 +41,8 @@ export async function updateStoreSettings(
                 product_card_text_color: settings.product_card_text_color,
                 show_brand_text: settings.show_brand_text,
                 show_brand_logo: settings.show_brand_logo,
+                header_floating: settings.header_floating,
+                header_size: settings.header_size,
             }
         })
 

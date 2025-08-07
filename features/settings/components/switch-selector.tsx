@@ -9,7 +9,7 @@ type SwitchSelectorProps = {
     label: string
     defaultChecked?: boolean
     className?: string
-    targetField?: "show_brand_logo" | "show_brand_text"
+    targetField?: "show_brand_logo" | "show_brand_text" | "header_floating"
 }
 
 function SwitchSelector({
@@ -22,8 +22,10 @@ function SwitchSelector({
     const { 
         show_brand_logo,
         show_brand_text,
+        header_floating,
         setShowBrandLogo,
-        setShowBrandText
+        setShowBrandText,
+        setHeaderFloating
     } = useSettingsForm()
     
     // Initialize with the appropriate value based on target field
@@ -33,6 +35,8 @@ function SwitchSelector({
                 return show_brand_logo
             case "show_brand_text":
                 return show_brand_text
+            case "header_floating":
+                return header_floating
             default:
                 return defaultChecked
         }
@@ -46,8 +50,10 @@ function SwitchSelector({
             setIsChecked(show_brand_logo)
         } else if (targetField === "show_brand_text") {
             setIsChecked(show_brand_text)
+        } else if (targetField === "header_floating") {
+            setIsChecked(header_floating)
         }
-    }, [show_brand_logo, show_brand_text, targetField])
+    }, [show_brand_logo, show_brand_text, header_floating, targetField])
 
     const handleSwitchChange = (checked: boolean) => {
         setIsChecked(checked)
@@ -60,6 +66,9 @@ function SwitchSelector({
                 break
             case "show_brand_text":
                 setShowBrandText(checked)
+                break
+            case "header_floating":
+                setHeaderFloating(checked)
                 break
         }
     }
