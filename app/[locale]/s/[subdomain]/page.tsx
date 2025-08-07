@@ -4,6 +4,7 @@ import ProductAmountDisplay from "@/features/store-landing/components/product-am
 import ProductCardLoader from "@/features/store-landing/components/product-card-loader";
 import ProductList from "@/features/store-landing/components/product-list";
 import ProductListDisplay from "@/features/store-landing/components/product-list-display";
+import SectionContainer from "@/features/store-landing/components/section-container";
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters";
 import { loadFilterParams } from "@/features/store-landing/utils/load-filter-params";
 import { getStoreProductAmount } from "@/features/subdomain/actions/getStoreProductAmount";
@@ -24,7 +25,7 @@ export default async function StorePage({ params, searchParams }: Props) {
     const t = await getTranslations("subdomain");
 
     return (
-        <section className="p-4 grow flex flex-col">
+        <SectionContainer>
             <Title title={t("title")} />
 
             <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] xl:grid-cols-[350px_1fr] gap-4 grow grid-rows-[min-content_1fr_min-content]">
@@ -49,6 +50,6 @@ export default async function StorePage({ params, searchParams }: Props) {
                     <PaginationNav productAmount={productAmount || 0} limit={limit} />
                 </div>
             </div>
-        </section>
+        </SectionContainer>
     );
 }

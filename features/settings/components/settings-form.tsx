@@ -7,6 +7,8 @@ import ColorSelector from "./color-selector"
 import StorePreview from "./store-preview"
 import { Header } from "@/features/store-landing/components"
 import MainContainer from "@/features/store-landing/components/main-container"
+import { Title } from "@/features/layout/components"
+import SectionContainer from "@/features/store-landing/components/section-container"
 
 type SettingsFormProps = {
     slug: string
@@ -55,7 +57,9 @@ async function SettingsForm({ slug }: SettingsFormProps) {
                 <StorePreview>
                     <Header title="Store Name" />
                     <MainContainer>
-                        test
+                        <SectionContainer>
+                            <Title title="Products" />
+                        </SectionContainer>
                     </MainContainer>
                 </StorePreview>
             </SettingsFormClient>
