@@ -14,7 +14,7 @@ type ColorSelectorProps = {
     defaultColor?: string
     onChange?: (color: number[]) => void
     className?: string
-    targetField?: "primary_color" | "background_color" | "background_foreground_color" | "header_color" | "header_foreground_color" | "filter_background_color" | "filter_text_color"
+    targetField?: "primary_color" | "background_color" | "background_foreground_color" | "header_color" | "header_foreground_color" | "filter_background_color" | "filter_text_color" | "product_card_background_color" | "product_card_text_color"
 }
 
 function ColorSelector({
@@ -32,12 +32,16 @@ function ColorSelector({
         header_foreground_color,
         filter_background_color,
         filter_text_color,
+        product_card_background_color,
+        product_card_text_color,
         setBackgroundColor, 
         setBackgroundForegroundColor,
         setHeaderColor,
         setHeaderForegroundColor,
         setFilterBackgroundColor,
-        setFilterTextColor
+        setFilterTextColor,
+        setProductCardBackgroundColor,
+        setProductCardTextColor
     } = useSettingsForm()
     
     // Initialize with the appropriate color based on target field
@@ -55,6 +59,10 @@ function ColorSelector({
                 return filter_background_color
             case "filter_text_color":
                 return filter_text_color
+            case "product_card_background_color":
+                return product_card_background_color
+            case "product_card_text_color":
+                return product_card_text_color
             default:
                 return defaultColor
         }
@@ -76,8 +84,12 @@ function ColorSelector({
             setSelectedColor(filter_background_color)
         } else if (targetField === "filter_text_color") {
             setSelectedColor(filter_text_color)
+        } else if (targetField === "product_card_background_color") {
+            setSelectedColor(product_card_background_color)
+        } else if (targetField === "product_card_text_color") {
+            setSelectedColor(product_card_text_color)
         }
-    }, [background_color, background_foreground_color, header_color, header_foreground_color, filter_background_color, filter_text_color, targetField])
+    }, [background_color, background_foreground_color, header_color, header_foreground_color, filter_background_color, filter_text_color, product_card_background_color, product_card_text_color, targetField])
 
     //(value: Parameters<typeof Color.rgb>[0]) => void
     const handleColorChange = (colorArray: ColorLike) => {
@@ -107,6 +119,12 @@ function ColorSelector({
                 break
             case "filter_text_color":
                 setFilterTextColor(hexColor)
+                break
+            case "product_card_background_color":
+                setProductCardBackgroundColor(hexColor)
+                break
+            case "product_card_text_color":
+                setProductCardTextColor(hexColor)
                 break
         }
         

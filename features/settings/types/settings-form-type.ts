@@ -71,6 +71,10 @@ export type UpdateSettingsReturn = {
 
 export type GetSettingsReturn = {
     message: string
-    payload: StoreCustomization
+    payload: StoreCustomization & {
+        store: {
+            subdomain: string
+        }
+    }
     error: boolean
 } 

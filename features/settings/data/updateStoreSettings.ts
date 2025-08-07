@@ -22,6 +22,8 @@ export async function updateStoreSettings(
                 header_foreground_color: settings.header_foreground_color,
                 filter_background_color: settings.filter_background_color,
                 filter_text_color: settings.filter_text_color,
+                product_card_background_color: settings.product_card_background_color,
+                product_card_text_color: settings.product_card_text_color,
             },
             create: {
                 store_id: storeId,
@@ -31,6 +33,8 @@ export async function updateStoreSettings(
                 header_foreground_color: settings.header_foreground_color,
                 filter_background_color: settings.filter_background_color,
                 filter_text_color: settings.filter_text_color,
+                product_card_background_color: settings.product_card_background_color,
+                product_card_text_color: settings.product_card_text_color,
             }
         })
 

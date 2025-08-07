@@ -11,7 +11,7 @@ type Props = {
 function GridCard({ product }: Props) {
     return (
         <Link href={`/item/${product.id}`}>
-            <Card className="aspect-9/12 bg-accent hover:scale-105 transition-all cursor-pointer object-cover w-full h-fit gap-2">
+            <Card className="aspect-9/12 bg-[var(--product-card-background)] text-[var(--product-card-text)] hover:scale-105 transition-all cursor-pointer object-cover w-full h-fit gap-2">
                 <CardHeader>
                     <CardTitle>{product.name}</CardTitle>
                     <CardDescription className="line-clamp-2">

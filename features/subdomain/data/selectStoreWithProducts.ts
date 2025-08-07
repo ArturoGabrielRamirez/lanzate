@@ -114,6 +114,8 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
             },
         })
 
+        console.log("🚀 ~ result:", result)
+
         return {
             message: "Store with products fetched successfully from db",
             payload: result,
