@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-export const settingsSchema = yup.object({
+export const settingsSchemaOld = yup.object({
     // Configuración de tema y colores
     primary_color: yup.string().matches(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, 'Invalid color format'),
     secondary_color: yup.string().matches(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, 'Invalid color format'),
@@ -61,4 +61,8 @@ export const settingsSchema = yup.object({
     google_analytics_id: yup.string(),
     facebook_pixel_id: yup.string(),
     google_tag_manager_id: yup.string(),
-}) 
+})
+
+export const settingsSchema = yup.object({
+    primary_color: yup.string().matches(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, 'Invalid color format'),
+})
