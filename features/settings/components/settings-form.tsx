@@ -2,7 +2,7 @@ import { getStoreSettingsAction } from "@/features/settings/actions/getStoreSett
 import SettingsFormClient from "./settings-form-client"
 import { SettingsFormProvider } from "./settings-form-provider"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Settings } from "lucide-react"
+import { AppWindow, Settings } from "lucide-react"
 import ColorSelector from "./color-selector"
 import StorePreview from "./store-preview"
 import { Header } from "@/features/store-landing/components"
@@ -53,6 +53,17 @@ async function SettingsForm({ slug }: SettingsFormProps) {
                                     defaultColor={storeData.background_foreground_color}
                                     targetField="background_foreground_color"
                                 />
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-2">
+                            <AccordionTrigger>
+                                <span className="flex items-center gap-2">
+                                    <AppWindow />
+                                    Configuración de cabecera
+                                </span>
+                            </AccordionTrigger>
+                            <AccordionContent className="space-y-4">
+
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
