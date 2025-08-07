@@ -3,28 +3,31 @@
 import { createServerSideClient } from "@/utils/supabase/server";
 import { getCurrentUser } from "./get-user";
 import { prisma } from "@/utils/prisma";
+import { getLocalUser } from "./get-locale-user";
 
 export async function handleEditEmail(email: string) {
     const { user, error: userError } = await getCurrentUser();
+    const { localUser, error: localUserError } = await getLocalUser();
 
     if (userError || !user) {
         return { error: userError || "User not found" };
     }
 
-    const localUser = await prisma.user.findFirst({
-        where: {
-            email: user.email
-        }
-    });
+    if (localUserError || !localUser) {
+        return { error: localUserError || "Usuario no encontrado en la base de datos local" };
+    }
 
-    if (!localUser) {
-        return { error: "Usuario no encontrado en la base de datos local" };
+    if (email === user.email) {
+        return {
+            error: "El nuevo email debe ser diferente al actual"
+        };
     }
 
     try {
         const expiresAt = new Date();
         expiresAt.setHours(expiresAt.getHours() + 24); // Expira en 24 horas
 
+        // Buscar solicitud existente por user_id (no por email)
         const existingRequest = await prisma.email_change_requests.findFirst({
             where: {
                 user_id: localUser.id,
@@ -90,6 +93,7 @@ export async function handleEditEmail(email: string) {
         };
 
     } catch (error) {
+        console.error('Error in handleEditEmail:', error);
         return { error: "Error interno del servidor" };
     }
 }

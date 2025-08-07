@@ -3,8 +3,8 @@
 import { actionWrapper } from '@/utils/lib'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { HandleLoginAction } from '@/features/auth/types'
-import { insertLogEntry, getUserByEmail } from '@/features/layout/data'
-
+import { insertLogEntry } from '@/features/layout/data'
+import { getLocalUser } from '@/features/auth/actions/get-locale-user' // 👈 CAMBIO
 
 export async function handleLogIn(formData: HandleLoginAction) {
   return actionWrapper(async () => {
@@ -20,17 +20,18 @@ export async function handleLogIn(formData: HandleLoginAction) {
       throw new Error('Invalid credentials')
     }
 
-    const { error, payload: user } = await getUserByEmail(authUser.email || "")
+    // 👈 USAR getLocalUser EN LUGAR DE getUserByEmail
+    const { localUser, error } = await getLocalUser()
 
-    if (error || !user) {
+    if (error || !localUser) {
       throw new Error("There was an error after logging in")
     }
 
     insertLogEntry({
       action: "LOGIN",
       entity_type: "USER",
-      entity_id: user.id,
-      user_id: user.id,
+      entity_id: localUser.id,
+      user_id: localUser.id,
       action_initiator: "Signin form",
       details: "User signed in using sign in form"
     })
@@ -38,7 +39,7 @@ export async function handleLogIn(formData: HandleLoginAction) {
     return {
       error: false,
       message: "Logged in successfully",
-      payload: user
+      payload: localUser
     }
   })
 }

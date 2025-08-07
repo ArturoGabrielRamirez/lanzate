@@ -15,6 +15,7 @@ export const handleSignup = async (payload: any): Promise<ResponseType<any>> => 
         const { payload: existingUser } = await getUserByEmail(email)
 
         if (existingUser) throw new Error('User already exists')
+        
         const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
             email,
             password,
@@ -23,7 +24,13 @@ export const handleSignup = async (payload: any): Promise<ResponseType<any>> => 
         if (signUpError) throw new Error(signUpError.message)
         if (!signUpData.user) throw new Error('No user returned')
 
-        const { error: insertError, payload: user } = await insertUser(email, "email")
+        // 👈 PASAR EL SUPABASE_USER_ID AL CREAR EL USUARIO
+        const { error: insertError, payload: user } = await insertUser(
+            email, 
+            "email", 
+            signUpData.user.id // 👈 NUEVO PARÁMETRO
+        )
+        
         if (insertError) throw new Error('Error inserting user')
 
         insertLogEntry({

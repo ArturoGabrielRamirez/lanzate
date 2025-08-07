@@ -3,9 +3,12 @@
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle, Clock, Mail } from 'lucide-react';
 import { useConfirmationEmailChangeStatus } from '../hooks/use-confirmation-email-change-status';
+import { useTranslations } from 'next-intl';
 
 export default function EmailStatusBanner() {
     const { status } = useConfirmationEmailChangeStatus();
+
+    const t = useTranslations("Auth");
 
     if (!status.hasEmailChange || status.loading) {
         return null;
