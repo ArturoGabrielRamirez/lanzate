@@ -3,9 +3,7 @@ import { OverviewTabProps } from "@/features/overview/types"
 
 function AnalyticsTab({ slug, userId }: OverviewTabProps) {
     return (
-        <div>
-            <OverviewTab slug={slug} userId={userId} />
-        </div>
+        <OverviewTab slug={slug} userId={userId} />
     )
 }
 export default AnalyticsTab
