@@ -8,47 +8,124 @@ import CreateContractButton from "@/features/employees/components/create-contrac
 import DeleteEmployeeButton from "@/features/employees/components/delete-employee-button"
 import EditEmployeeButton from "@/features/employees/components/edit-employee-button"
 import { EmployeesTableProps } from "@/features/employees/types"
-import { MoreHorizontal, Eye } from "lucide-react"
+import { MoreHorizontal, Eye, ArrowUpDown } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
+import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 
 export default function EmployeesTable({ data, userId, slug, storeId, employeePermissions }: EmployeesTableProps) {
-    
+
     const t = useTranslations("store.employees-table")
-    
+
     // Check if user can manage employees
     const canManageEmployees = employeePermissions.isAdmin || employeePermissions.permissions?.can_manage_employees
-    
+
     const columns: ColumnDef<Employee>[] = [
         {
             header: t("headers.id"),
             accessorKey: "id",
         },
         {
-            header: t("headers.user"),
             accessorKey: "user",
             cell: ({ row }) => row.original.user?.email || row.original.user_id,
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.user")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
         },
         {
-            header: t("headers.role"),
+            //header: t("headers.role"),
             accessorKey: "role",
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.role")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
+            cell: ({ row }) => {
+                const role = row.original.role
+                return (
+                    <Badge variant="outline" className={cn(role === "EMPLOYEE" && "border-blue-500 text-blue-500", role === "ADMIN" && "border-red-500 text-red-500")}>{role}</Badge>
+                )
+            }
         },
         {
-            header: t("headers.active"),
+            //header: t("headers.active"),
             accessorKey: "is_active",
             cell: ({ row }) => row.original.is_active ? t("yes") : t("no"),
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.active")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
         },
         {
-            header: t("headers.hired"),
+            //header: t("headers.hired"),   
             accessorKey: "hired_at",
             cell: ({ row }) => row.original.hired_at ? new Date(row.original.hired_at).toLocaleDateString() : t("no-hired-date"),
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.hired")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
         },
         {
-            header: t("headers.department"),
+            //header: t("headers.department"),  
             accessorKey: "department",
             cell: ({ row }) => row.original.department || t("no-department"),
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.department")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
         },
         {
             header: t("headers.actions"),
