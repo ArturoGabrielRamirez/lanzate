@@ -8,6 +8,15 @@ import { getTranslations } from "next-intl/server";
 import { User } from "lucide-react";
 import { ChangeEmailButton, EmailStatusBanner, ChangePasswordButton } from "@/features/auth/components/index"
 
+// Función para ocultar email con asteriscos
+function maskEmail(email: string): string {
+    const [localPart, domain] = email.split('@');
+    if (localPart.length <= 2) {
+        return `${localPart[0]}*@${domain}`;
+    }
+    const maskedLocal = `${localPart[0]}${'*'.repeat(localPart.length - 2)}${localPart[localPart.length - 1]}`;
+    return `${maskedLocal}@${domain}`;
+}
 
 export default async function AccountPage() {
 
@@ -74,34 +83,93 @@ export default async function AccountPage() {
                             <CardHeader>
                                 <CardTitle>{t("description.account-details")}</CardTitle>
                             </CardHeader>
-                            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-12 w-fit">
-                                <div className="flex flex-col">
-                                    <p className="font-light text-sm">{t("description.first-name")}</p>
-                                    <p className="font-medium">{user.first_name || "No set"}</p>
-                                </div>
-                                <div className="flex flex-col">
-                                    <p className="font-light text-sm">{t("description.last-name")}</p>
-                                    <p className="font-medium">{user.last_name || "No set"}</p>
-                                </div>
-                                <div className="flex flex-col">
-                                    <p className="font-light text-sm">{t("description.email")}</p>
-                                    <div className="flex items-center gap-2">
-                                        <p className="font-medium">{user.email}</p>
-                                        <ChangeEmailButton
-                                            buttonText="Cambiar"
-                                            title={t("description.change-email") || "Cambiar email"}
-                                            currentEmail={user.email}
-                                            className="font-medium text-xs h-6 px-2"
-                                        />
+                            <CardContent>
+                                {/* Mobile/Tablet Layout (Vertical) */}
+                                <div className="space-y-6 lg:hidden">
+                                    {/* First Name */}
+                                    <div className="flex flex-col space-y-1">
+                                        <p className="text-sm font-medium text-muted-foreground">{t("description.first-name")}</p>
+                                        <p className="font-semibold">{user.first_name || "No set"}</p>
+                                    </div>
+
+                                    {/* Last Name */}
+                                    <div className="flex flex-col space-y-1">
+                                        <p className="text-sm font-medium text-muted-foreground">{t("description.last-name")}</p>
+                                        <p className="font-semibold">{user.last_name || "No set"}</p>
+                                    </div>
+
+                                    {/* Email */}
+                                    <div className="flex flex-col space-y-2">
+                                        <p className="text-sm font-medium text-muted-foreground">{t("description.email")}</p>
+                                        <div className="flex items-center justify-between gap-3">
+                                            <p className="font-semibold truncate flex-1 min-w-0" title={user.email}>
+                                                {maskEmail(user.email)}
+                                            </p>
+                                            <ChangeEmailButton
+                                                buttonText="Cambiar"
+                                                title={t("description.change-email") || "Cambiar email"}
+                                                currentEmail={user.email}
+                                                className="font-medium text-xs h-6 px-2 shrink-0"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Password */}
+                                    <div className="flex flex-col space-y-2">
+                                        <p className="text-sm font-medium text-muted-foreground">{t("description.password")}</p>
+                                        <div className="flex items-center justify-between gap-3">
+                                            <p className="font-semibold">*********</p>
+                                            <ChangePasswordButton
+                                                buttonText={t("description.change-password")}
+                                                title={t("description.change-password")}
+                                                className="font-medium text-xs h-6 px-2 shrink-0"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="flex flex-col">
-                                    <p className="font-light text-sm">{t("description.password")}</p>
-                                    <ChangePasswordButton
-                                        buttonText={t("description.change-password")}
-                                        title={t("description.change-password")}
-                                        className="font-medium justify-start p-0 h-auto text-foreground"
-                                    />
+
+                                {/* Desktop Layout (2 Columns) */}
+                                <div className="hidden lg:grid lg:grid-cols-2 lg:gap-x-16 lg:gap-y-6">
+                                    {/* First Name */}
+                                    <div className="flex flex-col space-y-1">
+                                        <p className="text-sm font-medium text-muted-foreground">{t("description.first-name")}</p>
+                                        <p className="font-semibold">{user.first_name || "No set"}</p>
+                                    </div>
+
+                                    {/* Last Name */}
+                                    <div className="flex flex-col space-y-1">
+                                        <p className="text-sm font-medium text-muted-foreground">{t("description.last-name")}</p>
+                                        <p className="font-semibold">{user.last_name || "No set"}</p>
+                                    </div>
+
+                                    {/* Email */}
+                                    <div className="flex flex-col space-y-2">
+                                        <p className="text-sm font-medium text-muted-foreground">{t("description.email")}</p>
+                                        <div className="flex items-center gap-3">
+                                            <p className="font-semibold truncate" title={user.email}>
+                                                {maskEmail(user.email)}
+                                            </p>
+                                            <ChangeEmailButton
+                                                buttonText="Cambiar"
+                                                title={t("description.change-email") || "Cambiar email"}
+                                                currentEmail={user.email}
+                                                className="font-medium text-xs h-6 px-2 shrink-0"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Password */}
+                                    <div className="flex flex-col space-y-2">
+                                        <p className="text-sm font-medium text-muted-foreground">{t("description.password")}</p>
+                                        <div className="flex items-center gap-3">
+                                            <p className="font-semibold">*********</p>
+                                            <ChangePasswordButton
+                                                buttonText={t("description.change-password")}
+                                                title={t("description.change-password")}
+                                                className="font-medium text-xs h-6 px-2 shrink-0"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </CardContent>
                         </Card>

@@ -3,7 +3,7 @@ import CheckEmail from "@/features/auth/components/check-email";
 interface CheckEmailPageProps {
     searchParams: Promise<{ 
         email?: string;
-        type?: 'signup' | 'recovery';
+        type?: 'signup' | 'recovery' | 'smart';
     }>;
 }
 
