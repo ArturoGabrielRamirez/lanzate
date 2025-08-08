@@ -4,14 +4,15 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { DropdownMenu } from "@/components/ui/dropdown-menu"
 import { DataTable } from "@/features/layout/components/data-table"
-import { ArrowUpDown, Crown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, Crown, MoreHorizontal, Pencil } from "lucide-react"
 import { Eye } from "lucide-react"
 import { Product, Category } from "@prisma/client"
-import { ColumnDef } from "@tanstack/react-table"
+import { ColumnDef, RowModel } from "@tanstack/react-table"
 import { CreateProductButton, DeleteProductButton, EditProductButton, ExportProductsButton } from "@/features/products/components"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
+import { Checkbox } from "@/components/ui/checkbox"
 
 type EmployeePermissions = {
     isAdmin: boolean
@@ -41,6 +42,26 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Pro
     const t = useTranslations("store.products-table")
 
     const columns: ColumnDef<Product & { categories: Category[] }>[] = [
+        {
+            id: "select",
+            header: ({ table }) => (
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && "indeterminate")
+                    }
+                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                    aria-label="Select all"
+                />
+            ),
+            cell: ({ row }) => (
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            ),
+        },
         {
             header: t("headers.id"),
             accessorKey: "id",
@@ -253,12 +274,20 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Pro
             data={data}
             filterKey="name"
             topActions={
-                <div className="flex items-center gap-2">
-                    <ExportProductsButton data={data} />
-                    {canCreateProducts && (
-                        <CreateProductButton storeId={storeId} userId={userId} />
-                    )}
-                </div>
+                (filteredSelectedRowModel: any) => {
+                    return (
+                        <div className="flex items-center gap-2">
+                            <Button variant="outline">
+                                <Pencil className="size-4" />
+                                <span className="hidden md:block">Actualizar precios</span>
+                            </Button>
+                            <ExportProductsButton data={data} />
+                            {canCreateProducts && (
+                                <CreateProductButton storeId={storeId} userId={userId} />
+                            )}
+                        </div>
+                    )
+                }
             }
         />
     )

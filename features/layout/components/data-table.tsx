@@ -11,7 +11,8 @@ import {
     PaginationState,
     ColumnFiltersState,
     getFilteredRowModel,
-    getSortedRowModel
+    getSortedRowModel,
+    RowModel
 } from "@tanstack/react-table"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import {
@@ -28,12 +29,13 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
     filterKey: string
-    topActions?: React.ReactNode
+    topActions?: React.ReactNode | ((table: RowModel<TData>) => React.ReactNode)
 }
 
 export function DataTable<TData, TValue>({
@@ -42,6 +44,8 @@ export function DataTable<TData, TValue>({
     filterKey,
     topActions
 }: DataTableProps<TData, TValue>) {
+
+    const [rowSelection, setRowSelection] = useState({})
 
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
 
@@ -65,11 +69,13 @@ export function DataTable<TData, TValue>({
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
         state: {
             pagination,
             columnFilters,
             sorting,
             columnVisibility,
+            rowSelection,
         },
     })
 
@@ -129,8 +135,18 @@ export function DataTable<TData, TValue>({
                         className="max-w-sm grow"
                         startContent={<Search />}
                     />
+                    {table.getFilteredSelectedRowModel().rows.length > 0 && (
+                        <>
+                            {/* <Button variant="outline" size="sm">
+                                Actualizar precios
+                            </Button> */}
+                            <div className={cn("text-muted-foreground flex-1 text-sm", table.getFilteredSelectedRowModel().rows.length === 0 && "text-muted-foreground/50")}>
+                                {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} selected.
+                            </div>
+                        </>
+                    )}
                 </div>
-                {topActions}
+                {typeof topActions === "function" ? topActions(table.getFilteredSelectedRowModel()) : topActions}
             </div>
             <div className="rounded-md border">
                 <Table>
