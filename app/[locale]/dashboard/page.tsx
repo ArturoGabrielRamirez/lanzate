@@ -1,24 +1,47 @@
+import { Suspense } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getDashboardStores } from "@/features/dashboard/actions/getDashboardStores"
-import { checkUserOrderPermissions } from "@/features/dashboard/actions/checkUserOrderPermissions"
-import { DashboardSteps, ActivityFeed, ActivityFeedSkeleton } from "@/features/dashboard/components"
-import { Title } from "@/features/layout/components"
-import { CreateStoreButton, StoreCard } from "@/features/stores/components"
-import { ArrowRight, Hand, Plus, ShoppingBasket, AlertTriangle } from "lucide-react"
+import { Skeleton } from "@/components/ui/skeleton"
+import { AlertTriangle, ArrowDown, ArrowRight, ArrowUp, DollarSign, Package, Plus, ShoppingBasket, ShoppingCart, Users } from "lucide-react"
 import Link from "next/link"
+import ActivityFeed from "@/features/dashboard/components/activity-feed"
+import DashboardSteps from "@/features/dashboard/components/dashboard-steps"
+import GlobalSearch from "@/features/dashboard/components/global-search"
+import { AlertDescription } from "@/components/ui/alert"
+import { Alert } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
+import { checkUserOrderPermissions } from "@/features/dashboard/actions/checkUserOrderPermissions"
 import { getTranslations } from "next-intl/server"
-import { Suspense } from "react"
-import { Metadata } from "next"
+import { CreateStoreButton } from "@/features/stores/components"
+import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
+import { StoreCard } from "@/features/stores/components"
 
-export const metadata: Metadata = {
-    title: "Dashboard"
+function ActivityFeedSkeleton() {
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Recent Activity</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                {[...Array(5)].map((_, i) => (
+                    <div key={i} className="flex items-center space-x-4">
+                        <Skeleton className="h-10 w-10 rounded-full" />
+                        <div className="space-y-2 flex-1">
+                            <Skeleton className="h-4 w-[200px]" />
+                            <Skeleton className="h-4 w-[150px]" />
+                        </div>
+                    </div>
+                ))}
+            </CardContent>
+        </Card>
+    )
 }
 
-async function DashboardPage() {
+export default async function Dashboard() {
+
+    const t = await getTranslations("dashboard")
+
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
@@ -32,52 +55,104 @@ async function DashboardPage() {
         return console.error("Error loading dashboard data")
     }
 
-    // Check if user has can_create_orders permission in any store
     let canCreateOrders = false
-    
+
     if (dashboardData.storeCount > 0) {
         const { payload: hasOrderPermissions, error: permissionsError } = await checkUserOrderPermissions(user.id)
-        
+
         if (!permissionsError) {
             canCreateOrders = hasOrderPermissions
         }
     }
 
-    const t = await getTranslations("dashboard")
 
     return (
         <section className="p-4 flex flex-col pt-13 md:pt-17">
-            <Title title={(
-                <div className="flex items-center gap-2">
-                    <Hand className="size-4 md:size-5 lg:size-6" />
-                    {t("title")}
+            {/* Main Title */}
+            <div className="mb-2 md:mb-3 lg:mb-4">
+                <h1 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight hidden md:block">Dashboard</h1>
+                <p className="text-muted-foreground">
+                    Welcome back! <span className="hidden xl:inline">Here&apos;s what&apos;s happening with your store.</span>
+                </p>
+            </div>
+
+            <div className="grid grid-cols-1 grid-areas-[stores,search-bar,feed,quick-stats,steps,calendar] md:grid-areas-[stores_quick-stats,search-bar_search-bar,feed_feed,steps_calendar] lg:grid-areas-[search-bar_stores,feed_stores,feed_quick-stats,feed_steps,feed_calendar] lg:grid-cols-[1fr_35%] xl:grid-areas-[quick-stats_quick-stats_stores_stores,search-bar_search-bar_stores_stores,feed_feed_stores_stores,feed_feed_steps_steps,feed_feed_calendar_calendar,feed_feed_empty_empty] xl:grid-cols-[2fr_1fr_1fr_1fr] 2xl:grid-cols-[1fr_1fr_2fr_2fr_1fr_1fr] 2xl:grid-areas-[quick-stats_quick-stats_search-bar_search-bar_stores_stores,quick-stats_quick-stats_feed_feed_stores_stores,calendar_calendar_feed_feed_steps_steps] gap-4">
+                {/* Quick Stats */}
+                <div className="  grid grid-cols-2 xl:grid-cols-4 2xl:grid-cols-2 gap-4 area-[quick-stats]">
+                    <Card className="!p-2 !gap-2">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
+                            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+                            <DollarSign className="h-4 w-4 text-muted-foreground" />
+                        </CardHeader>
+                        <CardContent className="!px-2">
+                            <div className="text-2xl font-bold">$45,231.89</div>
+                            <p className="text-xs text-muted-foreground">
+                                <ArrowUp className="h-3 w-3 inline mr-1 text-green-500" />
+                                +20.1% from last month
+                            </p>
+                        </CardContent>
+                    </Card>
+                    <Card className="!p-2 !gap-2">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
+                            <CardTitle className="text-sm font-medium">Orders</CardTitle>
+                            <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+                        </CardHeader>
+                        <CardContent className="!px-2">
+                            <div className="text-2xl font-bold">+2350</div>
+                            <p className="text-xs text-muted-foreground">
+                                <ArrowUp className="h-3 w-3 inline mr-1 text-green-500" />
+                                +180.1% from last month
+                            </p>
+                        </CardContent>
+                    </Card>
+                    <Card className="!p-2 !gap-2">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
+                            <CardTitle className="text-sm font-medium">Products</CardTitle>
+                            <Package className="h-4 w-4 text-muted-foreground" />
+                        </CardHeader>
+                        <CardContent className="!px-2">
+                            <div className="text-2xl font-bold">+12,234</div>
+                            <p className="text-xs text-muted-foreground">
+                                <ArrowDown className="h-3 w-3 inline mr-1 text-red-500" />
+                                -19% from last month
+                            </p>
+                        </CardContent>
+                    </Card>
+                    <Card className="!p-2 !gap-2">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
+                            <CardTitle className="text-sm font-medium">Active Now</CardTitle>
+                            <Users className="h-4 w-4 text-muted-foreground" />
+                        </CardHeader>
+                        <CardContent className="!px-2">
+                            <div className="text-2xl font-bold">+573</div>
+                            <p className="text-xs text-muted-foreground">
+                                <ArrowUp className="h-3 w-3 inline mr-1 text-green-500" />
+                                +201 since last hour
+                            </p>
+                        </CardContent>
+                    </Card>
                 </div>
-            )} showDate className="hidden md:block" />
 
-            <div className="grid grid-cols-1 
-                            grid-areas-[steps,stores,coming-soon,calendar,order]
-                           md:grid-areas-[order_steps,coming-soon_steps,coming-soon_stores,coming-soon_calendar] 
-                           md:grid-cols-[1fr_minmax(auto,300px)] 
-                           lg:grid-areas-[steps_coming-soon_order,steps_coming-soon_stores,calendar_coming-soon_stores,calendar_coming-soon_stores,empty_coming-soon_empty2] 
-                           lg:grid-cols-[minmax(auto,300px)_1fr_minmax(auto,300px)] 
-                           gap-4 mg:gap-3 lg:gap-4 lg:grid-rows-[min-content_auto_auto]">
-
-                {/* Dashboard Steps */}
-                <div className="area-steps md:area-[steps] lg:area-[steps]">
-                    <DashboardSteps userId={user.id} dashboardData={dashboardData} />
-                    {/* <div className="h-px bg-muted-foreground/20 my-2 md:my-4" /> */}
+                {/* Search Bar */}
+                <div className="  flex items-center gap-2 area-[search-bar]">
+                    <GlobalSearch userId={user.id} />
                 </div>
 
                 {/* Activity Feed */}
-                <div className="area-[coming-soon] md:area-[coming-soon] lg:area-[coming-soon] md:pt-0">
+                <div className="area-[feed]">
                     <Suspense fallback={<ActivityFeedSkeleton />}>
                         <ActivityFeed userId={user.id} />
                     </Suspense>
                 </div>
 
+                {/* Store Steps */}
+                <div className="area-[steps]">
+                    <DashboardSteps userId={user.id} dashboardData={dashboardData} />
+                </div>
+
                 {/* Store Management Section */}
                 {dashboardData.storeCount > 0 && (
-                    <div className="area-[stores] md:area-[stores] lg:area-[stores] border-t md:border-t-0 pt-2 md:pt-0 border-b md:border-b-0 pb-4 md:pb-0">
+                    <div className="border-b md:border-b-0 pb-4 md:pb-0 area-[stores]">
                         <div className="flex items-center justify-between mb-4 md:mb-6">
                             <h2 className="text-xl md:text-2xl font-bold leading-6">
                                 {t("your-stores.title", { count: dashboardData.storeCount })}
@@ -115,41 +190,10 @@ async function DashboardPage() {
                 )}
 
                 {/* Calendar */}
-                <div className="md:area-[calendar] lg:area-[calendar]">
+                <div className="area-[calendar]">
                     <DashboardCalendar />
                 </div>
-
-                {/* New Order Card - Hidden on mobile */}
-                <Card className="md:area-[order] lg:area-[order] w-full h-fit hidden md:block">
-                    <CardHeader>
-                        <CardTitle>
-                            <h2 className="text-2xl font-bold">{t("new-order.title")}</h2>
-                        </CardTitle>
-                        <CardDescription>
-                            {t("new-order.description")}
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        {canCreateOrders ? (
-                            <Button className="w-full" asChild>
-                                <Link href="/sale">
-                                    <ShoppingBasket />
-                                    {t("new-order.title")}
-                                </Link>
-                            </Button>
-                        ) : (
-                            <Alert>
-                                <AlertTriangle className="h-4 w-4" />
-                                <AlertDescription>
-                                    You don&apos;t have sufficient permissions to create orders. Please contact an administrator.
-                                </AlertDescription>
-                            </Alert>
-                        )}
-                    </CardContent>
-                </Card>
             </div>
-        </section>
+        </section >
     )
 }
-
-export default DashboardPage

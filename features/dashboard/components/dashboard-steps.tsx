@@ -159,7 +159,7 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
     const currentStep = steps[currentStepIndex]
 
     return (
-        <div className="relative group xl:max-w-md">
+        <div className="relative group">
             {/* Navigation Buttons */}
             <button
                 onClick={goToPrevStep}
