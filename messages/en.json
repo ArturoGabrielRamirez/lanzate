@@ -758,6 +758,27 @@
                 "loading": "Deleting store..."
             }
         },
+        "update-prices": {
+            "button": "Update prices",
+            "title": "Update prices",
+            "description": "Update your product prices in bulk",
+            "selected-products": "{count} products selected",
+            "no-selection-disclaimer": "No products selected. Select products from the table or choose a category to update prices in bulk.",
+            "select-category": "Select category",
+            "choose-category": "Choose a category...",
+            "products-in-category": "{count} products in this category",
+            "amount": "Amount",
+            "amount-placeholder": "Enter the amount",
+            "update-type": "Update type",
+            "fixed": "Fixed",
+            "percentage": "Percentage",
+            "save": "Save",
+            "messages": {
+                "success": "Prices updated successfully",
+                "error": "Error updating prices",
+                "loading": "Updating prices..."
+            }
+        },
         "branches-tab": {
             "no-branches": "No branches found"
         },

@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { DropdownMenu } from "@/components/ui/dropdown-menu"
 import { DataTable } from "@/features/layout/components/data-table"
-import { ArrowUpDown, Crown, MoreHorizontal, Pencil } from "lucide-react"
+import { ArrowUpDown, Crown, MoreHorizontal } from "lucide-react"
 import { Eye } from "lucide-react"
 import { Product, Category } from "@prisma/client"
-import { ColumnDef, RowModel } from "@tanstack/react-table"
+import { RowModel, ColumnDef } from "@tanstack/react-table"
 import { CreateProductButton, DeleteProductButton, EditProductButton, ExportProductsButton } from "@/features/products/components"
+import { UpdatePricesButton } from "./update-prices-button"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
@@ -40,6 +41,9 @@ type Props = {
 function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Props) {
 
     const t = useTranslations("store.products-table")
+
+    // Check if user can create products
+    const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
 
     const columns: ColumnDef<Product & { categories: Category[] }>[] = [
         {
@@ -236,7 +240,7 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Pro
                                     </Link>
                                 </Button>
                             </DropdownMenuItem>
-                            {canUpdateProducts && (
+                            {employeePermissions.isAdmin && (
                                 <>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem asChild>
@@ -262,25 +266,19 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Pro
         }
     ]
 
-    // Check if user can create products
-    const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
-
-    // Check if user can update products
-    const canUpdateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_update_products
-
     return (
         <DataTable
             columns={columns}
             data={data}
             filterKey="name"
             topActions={
-                (filteredSelectedRowModel: any) => {
+                (filteredSelectedRowModel: RowModel<Product & { categories: Category[] }>) => {
                     return (
                         <div className="flex items-center gap-2">
-                            <Button variant="outline">
-                                <Pencil className="size-4" />
-                                <span className="hidden md:block">Actualizar precios</span>
-                            </Button>
+                            <UpdatePricesButton 
+                                selectedRows={filteredSelectedRowModel} 
+                                storeId={storeId} 
+                            />
                             <ExportProductsButton data={data} />
                             {canCreateProducts && (
                                 <CreateProductButton storeId={storeId} userId={userId} />

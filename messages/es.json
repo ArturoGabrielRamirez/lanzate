@@ -597,6 +597,27 @@
                 "loading": "Eliminando tienda..."
             }
         },
+        "update-prices": {
+            "button": "Actualizar precios",
+            "title": "Actualizar precios",
+            "description": "Actualizá los precios de tus productos de forma masiva",
+            "selected-products": "{count} productos seleccionados",
+            "no-selection-disclaimer": "No hay productos seleccionados. Seleccioná productos de la tabla o elegí una categoría para actualizar precios masivamente.",
+            "select-category": "Seleccionar categoría",
+            "choose-category": "Elegí una categoría...",
+            "products-in-category": "{count} productos en esta categoría",
+            "amount": "Monto",
+            "amount-placeholder": "Ingresá el monto",
+            "update-type": "Tipo de actualización",
+            "fixed": "Fijo",
+            "percentage": "Porcentaje",
+            "save": "Guardar",
+            "messages": {
+                "success": "Precios actualizados exitosamente",
+                "error": "Error al actualizar precios",
+                "loading": "Actualizando precios..."
+            }
+        },
         "branches-tab": {
             "no-branches": "No hay sucursales"
         },
