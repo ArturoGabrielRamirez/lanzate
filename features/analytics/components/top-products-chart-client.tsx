@@ -2,9 +2,10 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+/* import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select" */
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, PieChart, Pie, Cell, LineChart, Line } from "recharts"
 import { useState } from "react"
+import { BarChartBig, LineChartIcon, PieChartIcon } from "lucide-react"
 
 type ChartData = {
     name: string
@@ -26,7 +27,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D'
 
 export default function TopProductsChartClient({ data, pieData }: TopProductsChartClientProps) {
     const [chartType, setChartType] = useState<'bar' | 'pie' | 'line'>('bar')
-    const [timeRange, setTimeRange] = useState('30')
+    /* const [timeRange, setTimeRange] = useState('30') */
 
     // Calculate max value for Y axis with some padding
     const maxQuantity = Math.max(...data.map(item => item.quantity), 0)
@@ -34,11 +35,11 @@ export default function TopProductsChartClient({ data, pieData }: TopProductsCha
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="mb-10">
                 <div className="flex items-center justify-between">
                     <CardTitle>Top 10 Products</CardTitle>
                     <div className="flex items-center gap-2">
-                        <Select value={timeRange} onValueChange={setTimeRange}>
+                        {/* <Select value={timeRange} onValueChange={setTimeRange}>
                             <SelectTrigger className="w-32">
                                 <SelectValue />
                             </SelectTrigger>
@@ -47,7 +48,7 @@ export default function TopProductsChartClient({ data, pieData }: TopProductsCha
                                 <SelectItem value="30">Last Month</SelectItem>
                                 <SelectItem value="365">Last Year</SelectItem>
                             </SelectContent>
-                        </Select>
+                        </Select> */}
                         <Button
                             variant="outline"
                             size="sm"
@@ -57,18 +58,18 @@ export default function TopProductsChartClient({ data, pieData }: TopProductsCha
                                 else setChartType('bar')
                             }}
                         >
-                            {chartType === 'bar' ? 'Pie Chart' : chartType === 'pie' ? 'Line Chart' : 'Bar Chart'}
+                            {chartType === 'bar' ? <PieChartIcon /> : chartType === 'pie' ? <LineChartIcon /> : <BarChartBig />}
                         </Button>
                     </div>
                 </div>
             </CardHeader>
             <CardContent>
-                <ResponsiveContainer width="100%" height={400}>
+                <ResponsiveContainer width="100%" height={400} debounce={100} className={"relative -left-7"}>
                     {chartType === 'bar' ? (
                         <BarChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis 
-                                dataKey="name" 
+                            <XAxis
+                                dataKey="name"
                                 angle={-45}
                                 textAnchor="end"
                                 height={100}
@@ -99,8 +100,8 @@ export default function TopProductsChartClient({ data, pieData }: TopProductsCha
                     ) : (
                         <LineChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis 
-                                dataKey="name" 
+                            <XAxis
+                                dataKey="name"
                                 angle={-45}
                                 textAnchor="end"
                                 height={100}

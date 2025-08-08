@@ -10,7 +10,7 @@ type TopProductsProps = {
 
 export default function TopProducts({ slug }: TopProductsProps) {
     return (
-        <div className="space-y-6 lg:grid lg:grid-cols-3 lg:gap-6">
+        <div className="lg:grid lg:grid-cols-2 2xl:grid-cols-3 flex flex-col gap-4 lg:gap-6">
             <Suspense fallback={<ChartSkeleton />}>
                 <TopProductsServer slug={slug} />
             </Suspense>
