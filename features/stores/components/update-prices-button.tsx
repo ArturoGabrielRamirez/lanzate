@@ -59,7 +59,7 @@ export function UpdatePricesButton({ selectedRows }: UpdatePricesButtonProps) {
             amount,
             updateType
         })
-        
+
         return formatErrorResponse("Success", null, { success: true })
     }
 
@@ -94,9 +94,6 @@ export function UpdatePricesButton({ selectedRows }: UpdatePricesButtonProps) {
                                 </SelectContent>
                             </Select>
                         </div>
-                        <Button onClick={handleSave} className="w-full">
-                            {t("save")}
-                        </Button>
                     </div>
                 </div>
             )
