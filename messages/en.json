@@ -3,7 +3,7 @@
         "title": "Account",
         "description": {
             "upgrade-plan": "Upgrade Plan",
-            "account-details": "Account Details",
+            "account-details": "Store Settings",
             "membership": "Membership",
             "first-name": "First Name",
             "last-name": "Last Name",
@@ -701,7 +701,7 @@
         },
         "tabs": {
             "overview": "Overview",
-            "account": "Account Details",
+            "account": "Store Settings",
             "branches": "Branches",
             "employees": "Employees",
             "products": "Products",
@@ -1128,7 +1128,7 @@
         },
         "layout": {
             "overview": "Overview",
-            "account-details": "Account Details",
+            "account-details": "Store Settings",
             "branches": "Branches",
             "employees": "Employees",
             "products": "Products",

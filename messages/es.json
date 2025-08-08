@@ -3,7 +3,7 @@
         "title": "Cuenta",
         "description": {
             "upgrade-plan": "Actualizar Plan",
-            "account-details": "Detalles de la Cuenta",
+            "account-details": "Configuración de la tienda",
             "membership": "Membresía",
             "first-name": "Nombre",
             "last-name": "Apellido",
@@ -540,7 +540,7 @@
         },
         "tabs": {
             "overview": "General",
-            "account": "Detalles de la Cuenta",
+            "account": "Configuración de la tienda",
             "branches": "Sucursales",
             "employees": "Empleados",
             "products": "Productos",
@@ -967,7 +967,7 @@
         },
         "layout": {
             "overview": "General",
-            "account-details": "Detalles de la cuenta",
+            "account-details": "Configuración",
             "branches": "Sucursales",
             "employees": "Empleados",
             "products": "Productos",
