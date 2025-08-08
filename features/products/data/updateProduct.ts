@@ -5,8 +5,21 @@ import { createServerSideClient } from "@/utils/supabase/server"
 import { prisma } from "@/utils/prisma"
 import { actionWrapper } from "@/utils/lib"
 
+type CategoryValue = { value: string; label: string }
 
-export async function updateProduct(productId: number, data: any) {
+type UpdateProductPayload = {
+    name: string
+    price: number
+    stock: number
+    description?: string
+    categories: CategoryValue[]
+    image?: File
+    is_active?: boolean
+    is_featured?: boolean
+    is_published?: boolean
+}
+
+export async function updateProduct(productId: number, data: UpdateProductPayload) {
     return actionWrapper(async () => {
 
         /* const prisma = new PrismaClient() */
@@ -16,52 +29,53 @@ export async function updateProduct(productId: number, data: any) {
             where: { id: productId },
             data: {
                 name: data.name,
-                price: data.price,
-                stock: data.stock,
+                price: Number(data.price),
+                stock: Number(data.stock),
                 description: data.description,
+                is_active: data.is_active,
+                is_featured: data.is_featured,
+                is_published: data.is_published,
                 categories: {
-                    set: data.categories.map((category: any) => ({ id: Number(category.value) }))
+                    set: data.categories.map((category: CategoryValue) => ({ id: Number(category.value) }))
                 }
 
             }
         })
 
         if (data.image) {
-            if (data.image !== updatedProduct.image) {
+            // Always upload new image if provided
+            const { data: payload, error } = await supabase.storage.from("product-images").upload(data.image.name, data.image)
 
-                const { data: payload, error } = await supabase.storage.from("product-images").upload(data.image.name, data.image)
-
-                // Validar errores que no sean de archivo ya existente
-                if (error && !error.message.includes("already exists") && !error.message.includes("Duplicate")) {
-                    throw new Error(error.message)
-                }
-
-                // Si el archivo ya existe (validar por mensaje de error)
-                if (error && (error.message.includes("already exists") || error.message.includes("Duplicate"))) {
-
-                    const { data: { publicUrl } } = supabase.storage.from("product-images").getPublicUrl(data.image.name)
-
-                    await prisma.product.update({
-                        where: { id: updatedProduct.id },
-                        data: {
-                            image: publicUrl
-                        }
-                    })
-                }
-
-                if (payload) {
-
-                    const { data: { publicUrl } } = supabase.storage.from("product-images").getPublicUrl(payload.path)
-
-                    await prisma.product.update({
-                        where: { id: updatedProduct.id },
-                        data: {
-                            image: publicUrl
-                        }
-                    })
-                }
-
+            // Validar errores que no sean de archivo ya existente
+            if (error && !error.message.includes("already exists") && !error.message.includes("Duplicate")) {
+                throw new Error(error.message)
             }
+
+            // Si el archivo ya existe (validar por mensaje de error)
+            if (error && (error.message.includes("already exists") || error.message.includes("Duplicate"))) {
+
+                const { data: { publicUrl } } = supabase.storage.from("product-images").getPublicUrl(data.image.name)
+
+                await prisma.product.update({
+                    where: { id: updatedProduct.id },
+                    data: {
+                        image: publicUrl
+                    }
+                })
+            }
+
+            if (payload) {
+
+                const { data: { publicUrl } } = supabase.storage.from("product-images").getPublicUrl(payload.path)
+
+                await prisma.product.update({
+                    where: { id: updatedProduct.id },
+                    data: {
+                        image: publicUrl
+                    }
+                })
+            }
+
         }
 
         return {
