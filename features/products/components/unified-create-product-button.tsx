@@ -12,21 +12,39 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
 import { useTranslations } from "next-intl"
 import { UnifiedCreateProductButtonProps } from "../type"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Form } from "@/features/layout/components"
 import { cn } from "@/lib/utils"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
 
+type CategoryValue = { value: string; label: string }
+
+type CreateProductPayload = {
+    name: string
+    price: number
+    stock: number
+    description?: string
+    categories: CategoryValue[]
+    image?: File
+    is_active?: boolean
+    is_featured?: boolean
+    is_published?: boolean
+}
+
 function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
-    const [categories, setCategories] = useState<string[]>([])
+    const [categories, setCategories] = useState<CategoryValue[]>([])
     const [files, setFiles] = useState<File[]>([])
     const [selectedStoreId, setSelectedStoreId] = useState<string>("")
     const [fileUploadError, setFileUploadError] = useState<string>("")
     const [open, setOpen] = useState(false)
+    const [isActive, setIsActive] = useState(true)
+    const [isFeatured, setIsFeatured] = useState(false)
+    const [isPublished, setIsPublished] = useState(true)
 
     const hasStoreId = 'storeId' in props
     const translationNamespace = hasStoreId ? "store.create-product" : "dashboard.create-product"
@@ -37,13 +55,16 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
             setCategories([])
             setFiles([])
             setFileUploadError("")
+            setIsActive(true)
+            setIsFeatured(false)
+            setIsPublished(true)
             if (!hasStoreId) {
                 setSelectedStoreId("")
             }
         }
     }, [open, hasStoreId])
 
-    const handleAddCategory = (value: any) => {
+    const handleAddCategory = (value: CategoryValue[]) => {
         console.log("🚀 ~ handleAddCategory ~ value:", value)
         setCategories(value)
     }
@@ -64,7 +85,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
         }
     }, [t, hasStoreId])
 
-    const handleCreateProduct = async (payload: any) => {
+    const handleCreateProduct = async (payload: CreateProductPayload) => {
         try {
             let targetStoreId: number
 
@@ -80,7 +101,10 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
             const data = {
                 ...payload,
                 categories,
-                image: files[0]
+                image: files[0],
+                is_active: isActive,
+                is_featured: isFeatured,
+                is_published: isPublished
             }
 
             const { error, message, payload: product } = await createProduct(data, targetStoreId, props.userId)
@@ -268,6 +292,47 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                         type="text"
                                         startContent={hasStoreId ? <FileText /> : undefined}
                                     />
+                                    <div className="space-y-4">
+                                        <div className="flex items-center justify-between">
+                                            <div className="space-y-0.5">
+                                                <Label htmlFor="is-active">Producto activo</Label>
+                                                <p className="text-sm text-muted-foreground">
+                                                    El producto estará disponible para la venta
+                                                </p>
+                                            </div>
+                                            <Switch
+                                                id="is-active"
+                                                checked={isActive}
+                                                onCheckedChange={setIsActive}
+                                            />
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <div className="space-y-0.5">
+                                                <Label htmlFor="is-featured">Producto destacado</Label>
+                                                <p className="text-sm text-muted-foreground">
+                                                    Aparecerá en la sección de productos destacados
+                                                </p>
+                                            </div>
+                                            <Switch
+                                                id="is-featured"
+                                                checked={isFeatured}
+                                                onCheckedChange={setIsFeatured}
+                                            />
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <div className="space-y-0.5">
+                                                <Label htmlFor="is-published">Producto publicado</Label>
+                                                <p className="text-sm text-muted-foreground">
+                                                    Será visible en la tienda pública
+                                                </p>
+                                            </div>
+                                            <Switch
+                                                id="is-published"
+                                                checked={isPublished}
+                                                onCheckedChange={setIsPublished}
+                                            />
+                                        </div>
+                                    </div>
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>

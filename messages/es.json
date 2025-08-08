@@ -858,6 +858,7 @@
                 "stock": "Stock",
                 "featured": "Destacado",
                 "active": "Activo",
+                "published": "Publicado",
                 "actions": "Acciones"
             },
             "categories": {

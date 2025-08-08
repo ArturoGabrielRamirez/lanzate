@@ -6,29 +6,47 @@ import { createServerSideClient } from "@/utils/supabase/server"
 import randomstring from "randomstring"
 import { prisma } from "@/utils/prisma"
 
-export async function insertProduct(payload: any, storeId: number, userId: number) {
+type CategoryValue = { value: string; label: string }
+
+type InsertProductPayload = {
+    name: string
+    price: number
+    stock: number
+    description?: string
+    categories: CategoryValue[]
+    image?: File
+    is_active?: boolean
+    is_featured?: boolean
+    is_published?: boolean
+}
+
+export async function insertProduct(payload: InsertProductPayload, storeId: number, userId: number) {
     return actionWrapper(async () => {
 
         const supabase = createServerSideClient()
 
         const result = await prisma.$transaction(async (tx) => {
-
+            console.log("1")
             const store = await tx.store.findUnique({
                 where: {
                     id: storeId
                 }
             })
+            console.log("2")
 
             if (!store) throw new Error("Store not found")
 
+            console.log("3")
             const mainBranch = await tx.branch.findFirst({
                 where: {
                     store_id: store.id,
                 }
             })
+            console.log("4")
 
             if (!mainBranch) throw new Error("Main branch not found")
 
+            console.log("5")
             let imageUrl: string | null = null
             if (payload.image) {
 
@@ -53,7 +71,7 @@ export async function insertProduct(payload: any, storeId: number, userId: numbe
                     imageUrl = publicUrl
                 }
             }
-
+            console.log("6")
             const product = await tx.product.create({
                 data: {
                     name: payload.name,
@@ -70,18 +88,18 @@ export async function insertProduct(payload: any, storeId: number, userId: numbe
                     },
                     categories: {
                         connect: [
-                            ...payload.categories.map((category: any) => ({ id: Number(category.value) }))
+                            ...payload.categories.map((category: CategoryValue) => ({ id: Number(category.value) }))
                         ]
                     },
                     owner_id: userId,
                     slug: randomstring.generate(8),
                     sku: randomstring.generate(8),
-                    is_active: true,
-                    is_published: true,
-                    is_featured: false,
+                    is_active: payload.is_active ?? true,
+                    is_published: payload.is_published ?? true,
+                    is_featured: payload.is_featured ?? false,
                 }
             })
-
+            console.log("7")
             return product
         })
 

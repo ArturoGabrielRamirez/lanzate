@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { DropdownMenu } from "@/components/ui/dropdown-menu"
 import { DataTable } from "@/features/layout/components/data-table"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, Crown, MoreHorizontal } from "lucide-react"
 import { Eye } from "lucide-react"
 import { Product, Category } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
@@ -149,11 +149,11 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Pro
             },
             cell: ({ row }) => {
                 const isFeatured = row.original.is_featured
-                return <Badge variant="outline" className={cn(isFeatured ? "border-green-500 text-green-500" : "border-red-500 text-red-500")}>{isFeatured ? t("boolean.yes") : t("boolean.no")}</Badge>
+                return <Crown className={cn("size-4 text-muted-foreground", isFeatured && "text-yellow-500")} />
             }
         },
         {
-            accessorKey: "is_published",
+            accessorKey: "is_active",
             header: ({ column }) => {
                 return (
                     <div className="flex items-center gap-2">
@@ -169,8 +169,29 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Pro
                 )
             },
             cell: ({ row }) => {
-                const isActive = row.original.is_published
+                const isActive = row.original.is_active
                 return <Badge variant="outline" className={cn(isActive && "text-accent-foreground border-accent-foreground")}>{isActive ? t("boolean.yes") : t("boolean.no")}</Badge>
+            }
+        },
+        {
+            accessorKey: "is_published",
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.published")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
+            cell: ({ row }) => {
+                const isPublished = row.original.is_published
+                return <Badge variant="outline" className={cn(isPublished && "text-accent-foreground border-accent-foreground")}>{isPublished ? t("boolean.yes") : t("boolean.no")}</Badge>
             }
         },
         {

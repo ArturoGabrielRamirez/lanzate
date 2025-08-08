@@ -834,6 +834,7 @@
                 "user": "User",
                 "role": "Role",
                 "active": "Active",
+                "published": "Published",
                 "hired": "Hired",
                 "department": "Department",
                 "actions": "Actions"
@@ -1019,6 +1020,7 @@
                 "stock": "Stock",
                 "featured": "Featured",
                 "active": "Active",
+                "published": "Published",
                 "actions": "Actions"
             },
             "categories": {
