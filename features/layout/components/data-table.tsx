@@ -4,6 +4,7 @@ import {
     ColumnDef,
     flexRender,
     SortingState,
+    VisibilityState,
     getCoreRowModel,
     useReactTable,
     getPaginationRowModel,
@@ -12,7 +13,7 @@ import {
     getFilteredRowModel,
     getSortedRowModel
 } from "@tanstack/react-table"
-
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import {
     Table,
     TableBody,
@@ -21,7 +22,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { ChevronRight, Search } from "lucide-react"
+import { ChevronRight, Filter, Search } from "lucide-react"
 import { ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
@@ -42,6 +43,8 @@ export function DataTable<TData, TValue>({
     topActions
 }: DataTableProps<TData, TValue>) {
 
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+
     const [sorting, setSorting] = useState<SortingState>([])
 
     const [pagination, setPagination] = useState<PaginationState>({
@@ -61,10 +64,12 @@ export function DataTable<TData, TValue>({
         getFilteredRowModel: getFilteredRowModel(),
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
         state: {
             pagination,
             columnFilters,
             sorting,
+            columnVisibility,
         },
     })
 
@@ -86,15 +91,45 @@ export function DataTable<TData, TValue>({
     return (
         <>
             <div className="flex items-center py-4 justify-between gap-2">
-                <Input
-                    placeholder="Filter..."
-                    value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn(filterKey)?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm grow"
-                    startContent={<Search />}
-                />
+                <div className="flex items-center gap-2">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline" size="lg">
+                                <Filter />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            {table
+                                .getAllColumns()
+                                .filter(
+                                    (column) => column.getCanHide()
+                                )
+                                .map((column) => {
+                                    return (
+                                        <DropdownMenuCheckboxItem
+                                            key={column.id}
+                                            className="capitalize"
+                                            checked={column.getIsVisible()}
+                                            onCheckedChange={(value) =>
+                                                column.toggleVisibility(!!value)
+                                            }
+                                        >
+                                            {column.id}
+                                        </DropdownMenuCheckboxItem>
+                                    )
+                                })}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <Input
+                        placeholder="Filter..."
+                        value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn(filterKey)?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm grow"
+                        startContent={<Search />}
+                    />
+                </div>
                 {topActions}
             </div>
             <div className="rounded-md border">
