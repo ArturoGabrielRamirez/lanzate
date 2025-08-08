@@ -29,6 +29,10 @@ export default function TopCategoriesChartClient({ data, pieData }: TopCategorie
     const [chartType, setChartType] = useState<'bar' | 'pie' | 'line'>('bar')
     const [timeRange, setTimeRange] = useState('30')
 
+    // Calculate max value for Y axis with some padding
+    const maxQuantity = Math.max(...data.map(item => item.quantity), 0)
+    const yAxisMax = Math.ceil(maxQuantity * 1.2) // Add 20% padding
+
     return (
         <Card>
             <CardHeader>
@@ -71,9 +75,9 @@ export default function TopCategoriesChartClient({ data, pieData }: TopCategorie
                                 height={100}
                                 fontSize={12}
                             />
-                            <YAxis />
+                            <YAxis domain={[0, yAxisMax]} />
                             <Tooltip />
-                            <Bar dataKey="quantity" fill="#8884d8" />
+                            <Bar dataKey="quantity" fill="#8884d8" radius={[2, 2, 0, 0]} />
                         </BarChart>
                     ) : chartType === 'pie' ? (
                         <PieChart>
@@ -103,10 +107,10 @@ export default function TopCategoriesChartClient({ data, pieData }: TopCategorie
                                 height={100}
                                 fontSize={12}
                             />
-                            <YAxis />
+                            <YAxis domain={[0, yAxisMax]} />
                             <Tooltip />
-                            <Line type="monotone" dataKey="quantity" stroke="#8884d8" strokeWidth={2} />
-                            <Line type="monotone" dataKey="productCount" stroke="#82ca9d" strokeWidth={2} />
+                            <Line type="monotone" dataKey="quantity" stroke="#8884d8" strokeWidth={3} dot={{ fill: '#8884d8', strokeWidth: 2, r: 4 }} />
+                            <Line type="monotone" dataKey="productCount" stroke="#82ca9d" strokeWidth={3} dot={{ fill: '#82ca9d', strokeWidth: 2, r: 4 }} />
                         </LineChart>
                     )}
                 </ResponsiveContainer>

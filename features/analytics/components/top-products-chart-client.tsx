@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, PieChart, Pie, Cell } from "recharts"
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, PieChart, Pie, Cell, LineChart, Line } from "recharts"
 import { useState } from "react"
 
 type ChartData = {
@@ -25,8 +25,12 @@ type TopProductsChartClientProps = {
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#FFC658', '#FF6B6B', '#4ECDC4', '#45B7D1']
 
 export default function TopProductsChartClient({ data, pieData }: TopProductsChartClientProps) {
-    const [chartType, setChartType] = useState<'bar' | 'pie'>('bar')
+    const [chartType, setChartType] = useState<'bar' | 'pie' | 'line'>('bar')
     const [timeRange, setTimeRange] = useState('30')
+
+    // Calculate max value for Y axis with some padding
+    const maxQuantity = Math.max(...data.map(item => item.quantity), 0)
+    const yAxisMax = Math.ceil(maxQuantity * 1.2) // Add 20% padding
 
     return (
         <Card>
@@ -47,9 +51,13 @@ export default function TopProductsChartClient({ data, pieData }: TopProductsCha
                         <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => setChartType(chartType === 'bar' ? 'pie' : 'bar')}
+                            onClick={() => {
+                                if (chartType === 'bar') setChartType('pie')
+                                else if (chartType === 'pie') setChartType('line')
+                                else setChartType('bar')
+                            }}
                         >
-                            {chartType === 'bar' ? 'Pie Chart' : 'Bar Chart'}
+                            {chartType === 'bar' ? 'Pie Chart' : chartType === 'pie' ? 'Line Chart' : 'Bar Chart'}
                         </Button>
                     </div>
                 </div>
@@ -66,11 +74,11 @@ export default function TopProductsChartClient({ data, pieData }: TopProductsCha
                                 height={100}
                                 fontSize={12}
                             />
-                            <YAxis />
+                            <YAxis domain={[0, yAxisMax]} />
                             <Tooltip />
-                            <Bar dataKey="quantity" fill="#8884d8" />
+                            <Bar dataKey="quantity" fill="#8884d8" radius={[2, 2, 0, 0]} />
                         </BarChart>
-                    ) : (
+                    ) : chartType === 'pie' ? (
                         <PieChart>
                             <Pie
                                 data={pieData}
@@ -88,6 +96,20 @@ export default function TopProductsChartClient({ data, pieData }: TopProductsCha
                             </Pie>
                             <Tooltip />
                         </PieChart>
+                    ) : (
+                        <LineChart data={data}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis 
+                                dataKey="name" 
+                                angle={-45}
+                                textAnchor="end"
+                                height={100}
+                                fontSize={12}
+                            />
+                            <YAxis domain={[0, yAxisMax]} />
+                            <Tooltip />
+                            <Line type="monotone" dataKey="quantity" stroke="#8884d8" strokeWidth={3} dot={{ fill: '#8884d8', strokeWidth: 2, r: 4 }} />
+                        </LineChart>
                     )}
                 </ResponsiveContainer>
             </CardContent>
