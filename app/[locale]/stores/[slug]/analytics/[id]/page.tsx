@@ -9,13 +9,14 @@ type Props = {
 }
 
 const AnalyticsOptionContainer = async ({ params }: Props) => {
+    const { slug, id } = await params
+
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)
     }
 
-    const { slug, id } = await params
 
     // Map analytics IDs to component names
     const analyticsComponents: Record<string, string> = {
@@ -26,7 +27,6 @@ const AnalyticsOptionContainer = async ({ params }: Props) => {
     }
 
     const componentName = analyticsComponents[id]
-    console.log("🚀 ~ AnalyticsOptionContainer ~ componentName:", componentName)
 
     if (!componentName) {
         return (
@@ -43,7 +43,7 @@ const AnalyticsOptionContainer = async ({ params }: Props) => {
         )
     }
 
-    const LazyComponent = lazy(() => import(`@/features/analytics/components/top-products`))
+    const LazyComponent = lazy(() => import(`@/features/analytics/components/${id}.tsx`))
 
     return (
         <Card>
