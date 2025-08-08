@@ -6,20 +6,10 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { User } from "lucide-react";
-import { ChangeEmailButton, EmailStatusBanner, ChangePasswordButton, /* syncEmailAfterConfirmation */  } from "@/features/auth/components/index"
+import { ChangeEmailButton, EmailStatusBanner, ChangePasswordButton } from "@/features/auth/components/index"
 
 
 export default async function AccountPage() {
-    
-    // Manejar la sincronización de email si viene el parámetro
-/*     if (searchParams.emailCompleted === 'true') {
-        const result = await syncEmailAfterConfirmation();
-        if (result.success) {
-
-            redirect('/account');
-        }
-        
-    } */
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
     const t = await getTranslations("account");

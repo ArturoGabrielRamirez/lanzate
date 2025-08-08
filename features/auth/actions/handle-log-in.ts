@@ -4,7 +4,7 @@ import { actionWrapper } from '@/utils/lib'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { HandleLoginAction } from '@/features/auth/types'
 import { insertLogEntry } from '@/features/layout/data'
-import { getLocalUser } from '@/features/auth/actions/get-locale-user' // 👈 CAMBIO
+import { getLocalUser } from '@/features/auth/actions/get-locale-user'
 
 export async function handleLogIn(formData: HandleLoginAction) {
   return actionWrapper(async () => {
@@ -20,7 +20,6 @@ export async function handleLogIn(formData: HandleLoginAction) {
       throw new Error('Invalid credentials')
     }
 
-    // 👈 USAR getLocalUser EN LUGAR DE getUserByEmail
     const { localUser, error } = await getLocalUser()
 
     if (error || !localUser) {

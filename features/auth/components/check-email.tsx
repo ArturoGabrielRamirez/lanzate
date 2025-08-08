@@ -14,7 +14,6 @@ export default function CheckEmail({ email, type = 'signup' }: CheckEmailProps) 
     const [isResending, setIsResending] = useState(false);
     const [hasResent, setHasResent] = useState(false);
 
-
     const handleResendEmail = async () => {
         if (!email) {
             toast.error("No email address available to resend");

@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
         const baseUrl = `${subdomain ? `https://${subdomain}.lanzate.app` : `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`}`;
 
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: `${baseUrl}/api/auth/check-email?email=${email}`,
+            redirectTo: `${baseUrl}/check-email?email=${email}`,
         });
 
         if (error) {

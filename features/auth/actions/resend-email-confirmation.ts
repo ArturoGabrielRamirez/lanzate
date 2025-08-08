@@ -33,10 +33,7 @@ export async function resendEmailConfirmation() {
         const baseUrl = `${subdomain ? `https://${subdomain}.lanzate.app` : `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`}`;
         const redirectTo = `${baseUrl}/account?emailCompleted=true`;
 
-        // Si hay un cambio de email en progreso, reenviar confirmación
         if (user.new_email) {
-            console.log('📧 Resending email change confirmation...');
-            
             const { error } = await supabase.auth.resend({
                 type: 'email_change',
                 email: user.new_email,
@@ -58,10 +55,7 @@ export async function resendEmailConfirmation() {
             };
         }
 
-        // Si no hay confirmación de email pendiente, reenviar confirmación normal
-        if (!user.email_confirmed_at) {
-            console.log('📧 Resending email confirmation...');
-            
+        if (!user.email_confirmed_at) {  
             const { error } = await supabase.auth.resend({
                 type: 'signup',
                 email: user.email!,

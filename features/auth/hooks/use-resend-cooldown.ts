@@ -20,7 +20,7 @@ export function useResendCooldown(onSuccess?: () => void) {
     const startResendCooldown = useCallback(() => {
         if (!mountedRef.current) return;
         
-        setResendCooldown(60); // 60 segundos de cooldown
+        setResendCooldown(60);
         clearCooldownInterval();
         
         cooldownIntervalRef.current = setInterval(() => {
@@ -53,7 +53,6 @@ export function useResendCooldown(onSuccess?: () => void) {
                 });
                 startResendCooldown();
                 
-                // Llamar callback con delay para dar tiempo al servidor
                 if (onSuccess) {
                     setTimeout(() => onSuccess(), 1500);
                 }

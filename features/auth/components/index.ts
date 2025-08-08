@@ -19,4 +19,3 @@ export { default as EmailChangeForm } from "./email-change-form";
 export { default as EmailChangeDialog } from "./email-change-dialog";
 export { default as ProgressButton } from "./progress-button";
 export { default as EmailStatusAlerts } from "./email-status-alerts";
-export { default as syncEmailAfterConfirmation } from "./sync-email-after-confirmation";

@@ -49,8 +49,6 @@ export function useEmailChange(currentEmail: string) {
                 setNewEmail(result.data.newEmail || '');
                 setPendingChangeData(pendingData);
 
-                // Si el proceso está completado pero aún hay cambio pendiente, 
-                // probablemente necesitemos refrescar la página
                 if (pendingData.processCompleted) {
                     setTimeout(() => {
                         window.location.reload();
@@ -73,7 +71,7 @@ export function useEmailChange(currentEmail: string) {
 
     useEffect(() => {
         checkPendingChange();
-    }, [currentEmail]); // Recheck cuando cambia el email actual
+    }, [currentEmail]);
 
     const changeEmailAction = async (formData: {
         currentPassword: string;
@@ -140,11 +138,10 @@ export function useEmailChange(currentEmail: string) {
     const handleMonitorComplete = () => {
         setShowMonitor(false);
         resetState();
-        
-        // Dar tiempo para que el usuario vea el estado de completado
+    
         setTimeout(() => {
             window.location.reload();
-        }, 500);
+        }, 20000);
     };
 
     const handleShowMonitor = () => {

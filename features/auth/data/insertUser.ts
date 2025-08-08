@@ -55,14 +55,13 @@ export async function insertUser(
             };
         }
 
-        // ✅ CORRECCIÓN: Pasar email como primer parámetro y provider como segundo
         const detectedProvider = detectOAuthProvider(email, provider);
 
         const newUser = await prisma.user.create({
             data: {
                 email,
                 supabase_user_id: finalSupabaseUserId,
-                password: detectedProvider, // ✅ Usar el provider detectado correctamente
+                password: detectedProvider,
                 created_at: new Date(),
                 updated_at: new Date(),
             },

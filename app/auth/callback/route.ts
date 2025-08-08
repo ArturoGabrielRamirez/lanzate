@@ -5,6 +5,7 @@ import { createServerSideClient } from '@/utils/supabase/server'
 import { NextResponse } from 'next/server'
 import { routing } from '@/i18n/routing'
 import { prisma } from '@/utils/prisma'
+import { toast } from 'sonner'
 
 export async function GET(request: Request) {
   const url = new URL(request.url)
@@ -20,19 +21,30 @@ export async function GET(request: Request) {
     ? preferredLocale
     : routing.defaultLocale
 
-  const baseUrl = subdomain 
-    ? `https://${subdomain}.lanzate.app` 
+  const baseUrl = subdomain
+    ? `https://${subdomain}.lanzate.app`
     : `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'}`
 
   if (error) {
-    // ... mismo manejo de errores ...
     console.error('OAuth error:', error, error_description)
     const errorParams = new URLSearchParams()
-    // ... resto del código de error igual ...
+    errorParams.set('error', error)
+    if (error_description) {
+      errorParams.set('error_description', error_description)
+    }
+
+    const errorRedirectPath = `/${locale}/auth/error?${errorParams.toString()}`
+    return NextResponse.redirect(`${baseUrl}${errorRedirectPath}`)
   }
 
   if (!code) {
-    // ... mismo manejo ...
+    console.error('No authorization code provided')
+    const errorParams = new URLSearchParams()
+    errorParams.set('error', 'missing_code')
+    errorParams.set('error_description', 'Authorization code not provided')
+
+    const errorRedirectPath = `/${locale}/auth/error?${errorParams.toString()}`
+    return NextResponse.redirect(`${baseUrl}${errorRedirectPath}`)
   }
 
   const supabase = await createServerSideClient()
@@ -40,28 +52,39 @@ export async function GET(request: Request) {
   try {
     const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code as string)
     if (exchangeError) {
-      // ... mismo manejo de error ...
+      console.error('Error exchanging code for session:', exchangeError)
+      const errorParams = new URLSearchParams()
+      errorParams.set('error', 'exchange_failed')
+      errorParams.set('error_description', exchangeError.message)
+
+      const errorRedirectPath = `/${locale}/auth/error?${errorParams.toString()}`
+      return NextResponse.redirect(`${baseUrl}${errorRedirectPath}`)
     }
 
     const { data: { user }, error: userError } = await supabase.auth.getUser()
     if (userError || !user) {
-      // ... mismo manejo de error ...
+      console.error('Error getting user after OAuth:', userError)
+      const errorParams = new URLSearchParams()
+      errorParams.set('error', 'user_fetch_failed')
+      errorParams.set('error_description', userError?.message || 'Unable to fetch user data')
+
+      const errorRedirectPath = `/${locale}/auth/error?${errorParams.toString()}`
+      return NextResponse.redirect(`${baseUrl}${errorRedirectPath}`)
     }
 
-    // 👈 CAMBIO IMPORTANTE: Buscar primero por supabase_user_id
     let existingUser = await prisma.user.findUnique({
       where: {
         supabase_user_id: user?.id
       }
     });
 
-    // Si no se encuentra por supabase_user_id, buscar por email (usuarios antiguos)
     if (!existingUser) {
       const { error: getUserError, payload: userByEmail } = await getUserByEmail(user?.email ?? "")
-      
+
       if (getUserError) {
-        console.error('Error fetching user by email:', getUserError)
-        // ... manejo de error ...
+        toast.error('Error fetching user by email', {
+          description: `Error fetching user by email ${user?.email}`
+        })
       }
 
       existingUser = userByEmail;
@@ -70,34 +93,55 @@ export async function GET(request: Request) {
     let userId = existingUser?.id
 
     if (!existingUser) {
-      // Crear nuevo usuario
       const provider = user?.app_metadata?.provider || 'oauth'
-      
-      // 👈 PASAR EL SUPABASE_USER_ID AL CREAR USUARIO
-      const { error: insertError, payload: newUser } = await insertUser(
-        user?.email ?? "", 
+
+      const insertResult = await insertUser(
+        user?.email ?? "",
         provider,
-        user?.id // 👈 NUEVO PARÁMETRO
+        user?.id
       )
-      
-      if (insertError || !newUser) {
-        console.error('Error inserting user into users:', insertError)
-        // ... manejo de error ...
+
+      if (insertResult.error || !insertResult.payload) {
+        toast.error('Error inserting user into database', {
+          description: `Error inserting user into database ${user?.email}`
+        })
+        const errorParams = new URLSearchParams()
+        errorParams.set('error', 'user_creation_failed')
+        errorParams.set('error_description', insertResult.message || 'Failed to create user record')
+
+        const errorRedirectPath = `/${locale}/auth/error?${errorParams.toString()}`
+        return NextResponse.redirect(`${baseUrl}${errorRedirectPath}`)
       }
-      
+
+      const newUser = insertResult.payload
+
       userId = newUser.id
+
     } else if (!existingUser.supabase_user_id) {
-      // Usuario existente sin supabase_user_id - actualizar
-      await prisma.user.update({
-        where: { id: existingUser.id },
-        data: {
-          supabase_user_id: user?.id,
-          email: user?.email!, // Sincronizar email también
-          updated_at: new Date()
-        }
-      });
-      
-      console.log(`✅ Usuario migrado en OAuth: ${existingUser.id} -> supabase_user_id: ${user?.id}`);
+      try {
+        await prisma.user.update({
+          where: { id: existingUser.id },
+          data: {
+            supabase_user_id: user?.id,
+            email: user?.email!,
+            updated_at: new Date()
+          }
+        });
+
+        toast.success('User migrated to supabase_user_id', {
+          description: `User ${existingUser.email} migrated to supabase_user_id: ${user?.id}`
+        })
+      } catch (error) {
+        console.error('Error migrating user', error)
+        toast.error('Error migrating user', {
+          description: `Error migrating user ${existingUser.email} to supabase_user_id: ${user?.id}`
+        })
+      }
+
+    } else {
+      toast.success('User already logged in', {
+        description: `User ${existingUser.email} already logged in`
+      })
     }
 
     if (userId) {
@@ -109,15 +153,21 @@ export async function GET(request: Request) {
         user_id: userId,
         action_initiator: `${provider} OAuth`,
         details: `User signed in using ${provider} OAuth`
-      }).catch(console.error)
+      }).catch(error => {
+        console.error('Error logging OAuth signin:', error)
+      })
     }
 
   } catch (unexpectedError) {
     console.error('Unexpected error in auth callback:', unexpectedError)
-    // ... manejo de error ...
+    const errorParams = new URLSearchParams()
+    errorParams.set('error', 'unexpected_error')
+    errorParams.set('error_description', 'An unexpected error occurred during authentication')
+
+    const errorRedirectPath = `/${locale}/auth/error?${errorParams.toString()}`
+    return NextResponse.redirect(`${baseUrl}${errorRedirectPath}`)
   }
 
-  // ... resto del código de redirección igual ...
   if (subdomain) {
     const redirectPath = next === '/' ? `/${locale}` : `/${locale}${next}`
     const intermediateURL = `${baseUrl}/${locale}/auth/redirect?subdomain=${subdomain}&path=${encodeURIComponent(redirectPath)}`

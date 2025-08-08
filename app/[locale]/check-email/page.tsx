@@ -16,21 +16,7 @@ export default async function CheckEmailPage({
 
     
     return (
-        <div>
-            {/* Debug temporal */}
-            <div style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                backgroundColor: 'red',
-                color: 'white',
-                padding: '10px',
-                zIndex: 9999,
-                fontSize: '12px'
-            }}>
-                DEBUG PAGE: email = {email || 'undefined'} | type = {type}
-            </div>
-            
+        <div>         
             <CheckEmail email={email} type={type} />
         </div>
     );

@@ -1,7 +1,6 @@
 "use server";
 
 import { createServerSideClient } from "@/utils/supabase/server";
-import { getCurrentUser } from "./get-user";
 import { prisma } from "@/utils/prisma";
 import { getLocalUser } from "./get-locale-user";
 
@@ -47,8 +46,6 @@ export async function getEmailChangeStatus() {
                 }
             };
         }
-
-        // Verificar si el proceso se completó en Supabase pero no en nuestra DB
         const supabaseCompleted = !freshUser.new_email;
 
         if (supabaseCompleted && !changeRequest.completed) {
@@ -62,7 +59,6 @@ export async function getEmailChangeStatus() {
                 }
             });
 
-            // Actualizar el email del usuario local también
             await prisma.user.update({
                 where: { id: localUser.id },
                 data: {

@@ -1,4 +1,4 @@
-'use client';
+/* 'use client';
 
 import { useEffect, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -17,13 +17,12 @@ export default function EmailSyncHandler() {
 
         if (emailCompleted === 'true' || emailStep) {
             processedRef.current = true;
-            
-            // Limpiar parámetros de la URL
+
             const url = new URL(window.location.href);
             url.searchParams.delete('emailCompleted');
             url.searchParams.delete('emailStep');
-            
-            // Limpiar también el hash si existe
+
+
             if (url.hash) {
                 const hashParams = new URLSearchParams(url.hash.substring(1));
                 if (hashParams.has('message')) {
@@ -33,7 +32,6 @@ export default function EmailSyncHandler() {
 
             window.history.replaceState({}, '', url.toString());
 
-            // Mostrar mensaje apropiado según el paso
             if (emailStep === '1') {
                 toast.success('Primer email confirmado', {
                     description: 'Ahora revisa tu nuevo email para completar el cambio.',
@@ -51,37 +49,11 @@ export default function EmailSyncHandler() {
                 });
             }
 
-            // Recargar después de un breve delay para permitir que se procesen los cambios
             setTimeout(() => {
                 window.location.reload();
             }, 2000);
         }
     }, [searchParams, router]);
 
-    return null; // No renderiza nada
-}
-
-
-/* 
-'use client';
-
-import { useEffect } from 'react';
-import { syncEmailAfterConfirmation } from './index'
-
-export default function EmailSyncHandler() {
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('emailCompleted') === 'true') {
-        
-            syncEmailAfterConfirmation().then((result) => {
-                if (result.success) {
-          
-                    window.history.replaceState({}, '', '/account');
-                    window.location.reload();
-                }
-            });
-        }
-    }, []);
-
-    return null; 
+    return null;
 } */
