@@ -69,16 +69,16 @@ export default async function Dashboard() {
     return (
         <section className="p-4 flex flex-col pt-13 md:pt-17">
             {/* Main Title */}
-            <div className="mb-2 md:mb-3 lg:mb-4">
+            {/* <div className="mb-2 md:mb-3 lg:mb-4">
                 <h1 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight hidden md:block">Dashboard</h1>
                 <p className="text-muted-foreground">
                     Welcome back! <span className="hidden xl:inline">Here&apos;s what&apos;s happening with your store.</span>
                 </p>
-            </div>
+            </div> */}
 
             <div className="grid grid-cols-1 grid-areas-[stores,search-bar,feed,quick-stats,steps,calendar] md:grid-areas-[stores_quick-stats,search-bar_search-bar,feed_feed,steps_calendar] lg:grid-areas-[search-bar_stores,feed_stores,feed_quick-stats,feed_steps,feed_calendar] lg:grid-cols-[1fr_35%] xl:grid-areas-[quick-stats_quick-stats_stores_stores,search-bar_search-bar_stores_stores,feed_feed_stores_stores,feed_feed_steps_steps,feed_feed_calendar_calendar,feed_feed_empty_empty] xl:grid-cols-[2fr_1fr_1fr_1fr] 2xl:grid-cols-[1fr_1fr_3fr_4fr_1fr_1fr] 3xl:grid-cols-[1fr_1fr_3fr_3fr_2fr_1fr] 2xl:grid-areas-[quick-stats_quick-stats_search-bar_search-bar_stores_stores,quick-stats_quick-stats_feed_feed_stores_stores,calendar_calendar_feed_feed_steps_steps] gap-4">
                 {/* Quick Stats */}
-                <div className="  grid grid-cols-2 xl:grid-cols-4 2xl:grid-cols-2 gap-4 area-[quick-stats]">
+                <div className="grid grid-cols-2 xl:grid-cols-4 2xl:grid-cols-2 gap-4 area-[quick-stats] opacity-50 hover:opacity-100 transition-opacity duration-300">
                     <Card className="!p-2 !gap-2">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
                             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
@@ -146,13 +146,13 @@ export default async function Dashboard() {
                 </div>
 
                 {/* Store Steps */}
-                <div className="area-[steps]">
+                <div className="area-[steps] opacity-50 hover:opacity-100 transition-opacity duration-300">
                     <DashboardSteps userId={user.id} dashboardData={dashboardData} />
                 </div>
 
                 {/* Store Management Section */}
                 {dashboardData.storeCount > 0 && (
-                    <div className="border-b md:border-b-0 pb-4 md:pb-0 area-[stores]">
+                    <div className="border-b md:border-b-0 pb-4 md:pb-0 area-[stores] opacity-50 hover:opacity-100 transition-opacity duration-300">
                         <div className="flex items-center justify-between mb-4 md:mb-6">
                             <h2 className="text-xl md:text-2xl font-bold leading-6">
                                 {t("your-stores.title", { count: dashboardData.storeCount })}
@@ -170,7 +170,7 @@ export default async function Dashboard() {
                                 <CreateStoreButton userId={user.id} />
                             </div>
                             <div className="md:grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4 flex overflow-x-auto md:overflow-x-visible">
-                                <Card className="border-dashed gap-2 md:gap-3 lg:gap-4 hidden sm:block shrink-0">
+                                {/* <Card className="border-dashed gap-2 md:gap-3 lg:gap-4 hidden sm:block shrink-0">
                                     <CardHeader>
                                         <CardTitle className="flex items-center gap-2">
                                             <Plus className="size-4 md:size-5 lg:size-6" />
@@ -179,19 +179,34 @@ export default async function Dashboard() {
                                     </CardHeader>
                                     <CardContent className="flex justify-center items-center grow">
                                         <CreateStoreButton userId={user.id} />
-                                    </CardContent>
-                                </Card>
+                                        </CardContent>
+                                        </Card> */}
                                 {dashboardData.stores.map((store) => (
                                     <StoreCard key={store.id} store={store} />
                                 ))}
+                                <Card className="border-dashed gap-2 md:gap-3 lg:gap-4 hidden sm:block shrink-0 bg-transparent">
+                                    <CardContent className="flex justify-center items-center grow flex-col">
+                                        <h3 className="text-sm font-medium">Empty</h3>
+                                        <p className="text-xs text-muted-foreground">Create a new store to get started</p>
+                                    </CardContent>
+                                </Card>
                             </div>
                         </section>
                     </div>
                 )}
 
                 {/* Calendar */}
-                <div className="area-[calendar]">
+                <div className="area-[calendar] opacity-50 hover:opacity-100 transition-opacity duration-300">
                     <DashboardCalendar />
+                </div>
+
+                {/* Create order button */}
+                <div className="">
+                    <Button asChild>
+                        <Link href="/sale">
+                            Create Order
+                        </Link>
+                    </Button>
                 </div>
             </div>
         </section >
