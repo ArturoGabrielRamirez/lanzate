@@ -29,7 +29,7 @@ async function TopProductsWidget({ data }: Props) {
                         {t("title")}
                     </CardTitle>
                 </div>
-                <Link href="" className="text-xs md:text-sm flex items-center gap-1 text-blue-500/50 group-hover:text-blue-500 transition-colors duration-200">
+                <Link href="analytics/top-products" className="text-xs md:text-sm flex items-center gap-1 text-blue-500/50 group-hover:text-blue-500 transition-colors duration-200">
                     ver mas
                     <ArrowRight className="size-4" />
                 </Link>
