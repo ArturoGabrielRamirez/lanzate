@@ -2,10 +2,9 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 
 type ProductsAndBranchesProps = {
     slug: string
-    userId: string
 }
 
-export default function ProductsAndBranches({ slug, userId }: ProductsAndBranchesProps) {
+export default function ProductsAndBranches({ slug }: ProductsAndBranchesProps) {
     return (
         <Card>
             <CardHeader>

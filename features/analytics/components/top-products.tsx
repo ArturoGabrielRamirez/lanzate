@@ -1,16 +1,27 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import { Suspense } from "react"
+import TopProductsServer from "./top-products-server"
+import TopCategoriesServer from "./top-categories-server"
+import TopProductsByBranchServer from "./top-products-by-branch-server"
+import ChartSkeleton from "./chart-skeleton"
 
 type TopProductsProps = {
     slug: string
-    userId: string
 }
 
-export default function TopProducts({ slug, userId }: TopProductsProps) {
+export default function TopProducts({ slug }: TopProductsProps) {
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Top Products Analytics</CardTitle>
-            </CardHeader>
-        </Card>
+        <div className="space-y-6 lg:grid lg:grid-cols-3 lg:gap-6">
+            <Suspense fallback={<ChartSkeleton />}>
+                <TopProductsServer slug={slug} />
+            </Suspense>
+            
+            <Suspense fallback={<ChartSkeleton />}>
+                <TopCategoriesServer slug={slug} />
+            </Suspense>
+            
+            <Suspense fallback={<ChartSkeleton />}>
+                <TopProductsByBranchServer slug={slug} />
+            </Suspense>
+        </div>
     )
 } 

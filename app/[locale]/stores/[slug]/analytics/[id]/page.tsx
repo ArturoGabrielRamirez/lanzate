@@ -26,6 +26,7 @@ const AnalyticsOptionContainer = async ({ params }: Props) => {
     }
 
     const componentName = analyticsComponents[id]
+    console.log("🚀 ~ AnalyticsOptionContainer ~ componentName:", componentName)
 
     if (!componentName) {
         return (
@@ -42,7 +43,7 @@ const AnalyticsOptionContainer = async ({ params }: Props) => {
         )
     }
 
-    const LazyComponent = lazy(() => import(`@/features/analytics/components/${componentName}`))
+    const LazyComponent = lazy(() => import(`@/features/analytics/components/top-products`))
 
     return (
         <Card>
@@ -56,7 +57,7 @@ const AnalyticsOptionContainer = async ({ params }: Props) => {
             </CardHeader>
             <CardContent>
                 <Suspense fallback={<div>Loading analytics...</div>}>
-                    <LazyComponent slug={slug} userId={user.id} />
+                    <LazyComponent slug={slug} />
                 </Suspense>
             </CardContent>
         </Card>

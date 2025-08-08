@@ -2,10 +2,9 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 
 type SalesByMonthProps = {
     slug: string
-    userId: string
 }
 
-export default function SalesByMonth({ slug, userId }: SalesByMonthProps) {
+export default function SalesByMonth({ slug }: SalesByMonthProps) {
     return (
         <Card>
             <CardHeader>
