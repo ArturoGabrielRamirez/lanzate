@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight, DollarSign, ShoppingCart, TrendingUp } from "lucide-react"
+import { /* ArrowRight, */ DollarSign, ShoppingCart, TrendingUp } from "lucide-react"
 import { SalesOverviewData } from "../types"
 import { getTranslations } from "next-intl/server"
-import Link from "next/link"
+/* import Link from "next/link" */
 
 type Props = {
     data: SalesOverviewData
@@ -28,10 +28,10 @@ async function SalesOverviewWidget({ data }: Props) {
                         {t("title")}
                     </CardTitle>
                 </div>
-                <Link href="analytics/sales-overview" className="text-xs md:text-sm flex items-center gap-1 text-blue-500/50 group-hover:text-blue-500 transition-colors duration-200">
+                {/* <Link href="analytics/sales-overview" className="text-xs md:text-sm flex items-center gap-1 text-blue-500/50 group-hover:text-blue-500 transition-colors duration-200">
                     ver mas
                     <ArrowRight className="size-4" />
-                </Link>
+                </Link> */}
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">

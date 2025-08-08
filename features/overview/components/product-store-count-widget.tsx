@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Package, Store, Eye, Activity, ArrowRight } from "lucide-react"
+import { Package, Store, Eye, Activity } from "lucide-react"
 import { ProductStoreCountData } from "../types"
 import { getTranslations } from "next-intl/server"
-import Link from "next/link"
 
 type Props = {
     data: ProductStoreCountData
@@ -21,10 +20,6 @@ async function ProductStoreCountWidget({ data }: Props) {
                         {t("title")}
                     </CardTitle>
                 </div>
-                <Link href="analytics/products-and-branches" className="text-xs md:text-sm flex items-center gap-1 text-blue-500/50 group-hover:text-blue-500 transition-colors duration-200">
-                    ver mas
-                    <ArrowRight className="size-4" />
-                </Link>
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
