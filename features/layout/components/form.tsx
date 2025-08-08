@@ -59,8 +59,6 @@ export default function Form<T extends FieldValues>({
         })
     }
 
-    console.log(methods.formState.errors)
-
     return (
         <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)} className={cn("flex flex-col gap-4", className)}>

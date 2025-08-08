@@ -3,36 +3,110 @@
 import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { useConfirmationEmailChangeStatus } from "@/features/auth/hooks/use-confirmation-email-change-status";
+import {EmailChangeStatus} from "@/features/auth/types";
 
 interface CheckEmailProps {
     email?: string;
-    type?: 'signup' | 'recovery';
+    type?: 'signup' | 'recovery' | 'smart';
 }
 
-export default function CheckEmail({ email, type = 'signup' }: CheckEmailProps) {
+const defaultStatus: EmailChangeStatus = {
+    hasEmailChange: false,
+    oldEmailConfirmed: false,
+    newEmailConfirmed: false,
+    newEmail: null,
+    currentEmail: '',
+    loading: false,
+    processCompleted: false,
+    requestId: undefined,
+    expiresAt: undefined,
+    oldEmailConfirmedAt: null,
+    newEmailConfirmedAt: null
+};
+
+export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
     const t = useTranslations("auth.check-email");
     const [isResending, setIsResending] = useState(false);
     const [hasResent, setHasResent] = useState(false);
+    const [cooldownTime, setCooldownTime] = useState(0);
+    const [lastResendInfo, setLastResendInfo] = useState<{
+        email: string;
+        type: string;
+        reason: string;
+    } | null>(null);
+
+    // Solo usar el hook para tipo 'smart' (cambio de email)
+    const emailChangeStatus: { status: EmailChangeStatus } =
+    type === 'smart'
+        ? useConfirmationEmailChangeStatus()
+        : { status: defaultStatus };
+
+    // Cooldown timer
+    useEffect(() => {
+        if (cooldownTime > 0) {
+            const timer = setTimeout(() => setCooldownTime(cooldownTime - 1), 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [cooldownTime]);
+
+   const getTargetEmailAndMessage = () => {
+    const { status } = emailChangeStatus;
+
+    if (type === 'smart' && status.hasEmailChange) {
+        if (!status.oldEmailConfirmed) {
+            return {
+                targetEmail: status.currentEmail,
+                message: `Confirma tu email actual (${status.currentEmail}) para continuar`,
+                step: '1/2'
+            };
+        } else if (status.oldEmailConfirmed && !status.newEmailConfirmed) {
+            return {
+                targetEmail: status.newEmail || '',
+                message: `Confirma tu nuevo email (${status.newEmail}) para completar el cambio`,
+                step: '2/2'
+            };
+        }
+    }
+
+    return {
+        targetEmail: email || '',
+        message: 'Te hemos enviado un enlace de confirmación',
+        step: null
+    };
+};
 
     const handleResendEmail = async () => {
-        if (!email) {
-            toast.error("No email address available to resend");
+        if (cooldownTime > 0) {
+            toast.error(`Please wait ${cooldownTime} seconds before resending`);
             return;
         }
 
         setIsResending(true);
 
         try {
-            const endpoint = type === 'recovery'
-                ? '/api/auth/resend-recovery'
-                : '/api/auth/resend-confirmation';
+            let endpoint: string;
+            let payload: any = {};
+
+            // Determinar endpoint y payload según el tipo
+            if (type === 'smart') {
+                endpoint = '/api/auth/resend-confirmation-smart';
+            } else if (type === 'recovery') {
+                endpoint = '/api/auth/resend-recovery';
+                payload = { email };
+            } else {
+                endpoint = '/api/auth/resend-confirmation';
+                payload = { email };
+            }
+
+            console.log('🔄 Resending email via:', endpoint, payload);
 
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, type })
+                body: JSON.stringify(payload)
             });
 
             const contentType = response.headers.get('content-type');
@@ -45,15 +119,38 @@ export default function CheckEmail({ email, type = 'signup' }: CheckEmailProps) 
             const data = await response.json();
 
             if (!response.ok || data.error) {
-                throw new Error(data.message || `HTTP error! status: ${response.status}`);
+                // Handle specific error cases
+                if (response.status === 404) {
+                    toast.error("No user found with this email address.");
+                } else if (response.status === 429) {
+                    toast.error("Too many requests. Please wait a moment.");
+                    setCooldownTime(300); // 5 minutes cooldown
+                } else if (data.message?.includes('already confirmed')) {
+                    toast.info("Email is already confirmed.");
+                } else if (data.message?.includes('No hay confirmaciones pendientes')) {
+                    toast.info("No pending confirmations.");
+                } else {
+                    throw new Error(data.message || `HTTP error! status: ${response.status}`);
+                }
+                return;
             }
 
-            const successMessage = type === 'recovery'
-                ? "Email de recuperación reenviado exitosamente"
-                : "Email de confirmación reenviado exitosamente";
-
+            // Success handling
+            const successMessage = data.message || "Email reenviado exitosamente";
             toast.success(successMessage);
+            
+            // Store resend information for display
+            if (data.data) {
+                setLastResendInfo({
+                    email: data.data.email,
+                    type: data.data.resendType || data.data.type,
+                    reason: data.data.reason || ''
+                });
+            }
+            
             setHasResent(true);
+            setCooldownTime(60); // 1 minute cooldown for successful sends
+
         } catch (error) {
             console.error('Error al reenviar:', error);
 
@@ -67,73 +164,119 @@ export default function CheckEmail({ email, type = 'signup' }: CheckEmailProps) 
         }
     };
 
-    const getMessages = () => {
-        if (type === 'recovery') {
-            return {
-                title: "Revisa tu email",
-                subtitle: "Te hemos enviado un enlace de recuperación de contraseña.",
-                notReceived: "¿No recibiste el email de recuperación?",
-                buttonText: "Reenviar recuperación",
-                sentTo: "Enlace enviado a:"
-            };
-        } else {
-            return {
-                title: "Revisa tu email",
-                subtitle: "Te hemos enviado un enlace de confirmación de cuenta.",
-                notReceived: "¿No recibiste el email de confirmación?",
-                buttonText: "Reenviar confirmación",
-                sentTo: "Confirmación enviada a:"
-            };
-        }
+    const { targetEmail, message, step } = getTargetEmailAndMessage();
+
+    const getButtonText = () => {
+        if (isResending) return 'Reenviando...';
+        if (hasResent && cooldownTime > 0) return `Espera ${cooldownTime}s`;
+        if (hasResent) return 'Reenviado ✓';
+        return 'Reenviar email';
     };
 
-    const messages = getMessages();
+    const isButtonDisabled = isResending || cooldownTime > 0;
+
+    // Si está cargando el estado del email, mostrar loading
+    if (type === 'smart' && emailChangeStatus.status.loading) {
+        return (
+            <div className="p-8 text-center grow --color-background text-white flex flex-col items-center justify-center">
+                <div className="animate-spin w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full mb-4"></div>
+                <p>Verificando estado del email...</p>
+            </div>
+        );
+    }
 
     return (
         <div className="p-8 text-center grow --color-background text-white flex flex-col items-center justify-center">
             <div className="max-w-md mx-auto space-y-6">
-                <h2 className="text-2xl font-bold mb-4">{messages.title}</h2>
-                <p className="mb-6">{messages.subtitle}</p>
+                <div className="mb-8">
+                    <div className="w-20 h-20 mx-auto mb-4 bg-blue-600 rounded-full flex items-center justify-center">
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 7.89a2 2 0 002.83 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    
+                    <h2 className="text-2xl font-bold mb-2">
+                        {type === 'recovery' ? 'Revisa tu email' : 'Confirma tu email'}
+                        {step && <span className="text-sm font-normal text-blue-300 ml-2">({step})</span>}
+                    </h2>
+                    
+                    <p className="text-gray-300">{message}</p>
+                </div>
+
+                <div className="bg-white/5 rounded-lg p-6 border border-white/10">
+                    <div className="space-y-4">
+                        <p className="text-sm opacity-80">
+                            Email enviado a:
+                        </p>
+                        <p className="font-medium text-blue-300 break-all">
+                            {targetEmail || 'Email no disponible'}
+                        </p>
+                        
+                        {lastResendInfo && (
+                            <div className="text-xs text-gray-400 bg-white/5 rounded p-3 mt-3">
+                                <p><strong>Último reenvío:</strong> {lastResendInfo.email}</p>
+                                <p><strong>Tipo:</strong> {lastResendInfo.type === 'old_email' ? 'Email actual' : lastResendInfo.type === 'new_email' ? 'Email nuevo' : lastResendInfo.type}</p>
+                                {lastResendInfo.reason && <p><strong>Razón:</strong> {lastResendInfo.reason}</p>}
+                            </div>
+                        )}
+                        
+                        <p className="text-xs text-gray-400 leading-relaxed">
+                            Haz clic en el enlace del email para continuar. Revisa también tu carpeta de spam.
+                        </p>
+                    </div>
+                </div>
+
                 <div className="space-y-4">
-                    <p className="text-sm opacity-80">
-                        {messages.sentTo} <span className="font-medium">{email || 'Email no disponible'}</span>
-                    </p>
                     <div className="pt-4 border-t border-white/20">
                         <p className="text-sm mb-4 opacity-80">
-                            {messages.notReceived}
+                            ¿No recibiste el email?
                         </p>
 
                         <button
                             onClick={handleResendEmail}
-                            disabled={isResending || hasResent || !email}
+                            disabled={isButtonDisabled}
                             className={`
-                                px-6 py-2 rounded-lg font-medium transition-all
-                                ${!email
-                                    ? 'bg-gray-800 text-gray-400 cursor-not-allowed'
-                                    : hasResent
-                                        ? 'bg-green-600 text-white cursor-not-allowed'
+                                px-6 py-3 rounded-lg font-medium transition-all w-full
+                                ${cooldownTime > 0
+                                    ? 'bg-yellow-600 text-white cursor-not-allowed'
+                                    : hasResent && cooldownTime === 0
+                                        ? 'bg-green-600 hover:bg-green-700 text-white'
                                         : isResending
                                             ? 'bg-gray-600 text-white cursor-not-allowed'
                                             : 'bg-blue-600 hover:bg-blue-700 text-white hover:scale-105'
                                 }
                             `}
                         >
-                            {!email
-                                ? 'Sin email'
-                                : isResending
-                                    ? 'Reenviando...'
-                                    : hasResent
-                                        ? 'Reenviado'
-                                        : messages.buttonText
-                            }
+                            {getButtonText()}
                         </button>
 
-                        {hasResent && (
-                            <p className="text-sm text-green-400 mt-2">
-                                Revisa tu bandeja de entrada nuevamente
+                        {hasResent && cooldownTime === 0 && (
+                            <p className="text-sm text-green-400 mt-3 flex items-center justify-center gap-2">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                                Email reenviado - Revisa tu bandeja de entrada
+                            </p>
+                        )}
+
+                        {cooldownTime > 0 && (
+                            <p className="text-sm text-yellow-400 mt-2">
+                                Puedes reenviar en {cooldownTime} segundos
                             </p>
                         )}
                     </div>
+                </div>
+
+                <div className="text-center mt-8">
+                    <p className="text-sm text-gray-400">
+                        ¿Problemas con el email?{" "}
+                        <a 
+                            href="mailto:soporte@lanzate.app" 
+                            className="text-blue-400 hover:text-blue-300 underline"
+                        >
+                            Contacta soporte
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>

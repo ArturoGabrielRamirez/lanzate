@@ -30,12 +30,11 @@ export default function EmailChangeMonitor({
     const stepStatus = getStepStatus();
 
     return (
-        <Card className="w-full max-w-md mx-auto">
+        <Card className="w-full max-w-md mx-auto bg-transparent border-none">
             <CardHeader className="text-center">
-                <CardTitle className="flex items-center justify-center gap-2">
-                    <Mail className="w-5 h-5" />
-                    Cambio de email
-                </CardTitle>
+              {/*   <CardTitle className="flex items-center justify-center gap-2">
+                    
+                </CardTitle> */}
             </CardHeader>
             <CardContent className="space-y-6">
                 <EmailStepProgress
