@@ -3,12 +3,14 @@
 import {
     ColumnDef,
     flexRender,
+    SortingState,
     getCoreRowModel,
     useReactTable,
     getPaginationRowModel,
     PaginationState,
     ColumnFiltersState,
-    getFilteredRowModel
+    getFilteredRowModel,
+    getSortedRowModel
 } from "@tanstack/react-table"
 
 import {
@@ -19,7 +21,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { ChevronRight, Search, X } from "lucide-react"
+import { ChevronRight, Search } from "lucide-react"
 import { ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
@@ -40,6 +42,8 @@ export function DataTable<TData, TValue>({
     topActions
 }: DataTableProps<TData, TValue>) {
 
+    const [sorting, setSorting] = useState<SortingState>([])
+
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize: 10,
@@ -55,9 +59,12 @@ export function DataTable<TData, TValue>({
         onPaginationChange: setPagination,
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
         state: {
             pagination,
             columnFilters,
+            sorting,
         },
     })
 

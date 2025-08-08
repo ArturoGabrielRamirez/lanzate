@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { DropdownMenu } from "@/components/ui/dropdown-menu"
 import { DataTable } from "@/features/layout/components/data-table"
-import { MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { Eye } from "lucide-react"
 import { Product, Category } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { CreateProductButton, DeleteProductButton, EditProductButton, ExportProductsButton } from "@/features/products/components"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
+import { cn } from "@/lib/utils"
 
 type EmployeePermissions = {
     isAdmin: boolean
@@ -45,51 +46,131 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Pro
             accessorKey: "id",
         },
         {
-            header: t("headers.name"),
             accessorKey: "name",
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.name")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
         },
         {
-            header: t("headers.price"),
             accessorKey: "price",
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.price")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             cell: ({ row }) => {
                 const price = row.original.price
                 return <span>{Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(price)}</span>
             }
         },
         {
-            header: t("headers.categories"),
             accessorKey: "categories",
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.categories")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             cell: ({ row }) => {
                 const categories = (row.original as Product & { categories: Category[] }).categories
-
-                if (!categories?.length)
-                    return <Badge variant="outline">{t("categories.none")}</Badge>
-
                 return (
                     <Badge variant="outline">
-                        {categories.map((category: Category) => category.name).join(", ")}
+                        {!categories?.length
+                            ? t("categories.none")
+                            : categories.map((category: Category) => category.name).join(", ")
+                        }
                     </Badge>
                 )
             },
         },
         {
-            header: t("headers.stock"),
             accessorKey: "stock",
-        },
-        {
-            header: t("headers.featured"),
-            accessorKey: "is_featured",
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.stock")}
+                        <Button
+                            variant="ghost"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             cell: ({ row }) => {
-                const isFeatured = row.original.is_featured
-                return <Badge variant="outline">{isFeatured ? t("boolean.yes") : t("boolean.no")}</Badge>
+                const stock = row.original.stock
+                return <span className={cn(stock < 10 && "text-red-500", stock < 25 && "text-yellow-500", stock >= 25 && "text-green-500")}>{stock}</span>
             }
         },
         {
-            header: t("headers.active"),
+            accessorKey: "is_featured",
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.featured")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
+            cell: ({ row }) => {
+                const isFeatured = row.original.is_featured
+                return <Badge variant="outline" className={cn(isFeatured ? "border-green-500 text-green-500" : "border-red-500 text-red-500")}>{isFeatured ? t("boolean.yes") : t("boolean.no")}</Badge>
+            }
+        },
+        {
             accessorKey: "is_published",
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.active")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             cell: ({ row }) => {
                 const isActive = row.original.is_published
-                return <Badge variant="outline">{isActive ? t("boolean.yes") : t("boolean.no")}</Badge>
+                return <Badge variant="outline" className={cn(isActive && "text-accent-foreground border-accent-foreground")}>{isActive ? t("boolean.yes") : t("boolean.no")}</Badge>
             }
         },
         {
@@ -141,7 +222,7 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Pro
 
     // Check if user can create products
     const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
-    
+
     // Check if user can update products
     const canUpdateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_update_products
 
