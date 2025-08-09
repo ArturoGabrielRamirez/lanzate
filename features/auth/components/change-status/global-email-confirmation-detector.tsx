@@ -1,6 +1,6 @@
 'use client'
 
-import { useEmailConfirmationDetector } from '../hooks/use-email-confirmation-detector';
+import { useEmailConfirmationDetector } from '../../hooks/use-email-confirmation-detector';
 import { useEffect, useState } from 'react';
 
 export default function GlobalEmailConfirmationDetector() {

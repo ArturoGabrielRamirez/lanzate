@@ -1,5 +1,5 @@
 'use client'
-import { EmailStepInstructionsProps } from "../types";
+import { EmailStepInstructionsProps } from "../../types";
 
 export default function EmailStepInstructions({ stepStatus, initialOldEmail, newEmail }: EmailStepInstructionsProps 
 ) {

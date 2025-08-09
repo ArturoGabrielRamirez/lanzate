@@ -1,26 +1,17 @@
 "use server";
 
 import { createServerSideClient } from "@/utils/supabase/server";
-import { getCurrentUser } from "./get-user";
 import { prisma } from "@/utils/prisma";
-
+import { getLocalUser } from "./index";
 
 export async function getEmailChangeStatus() {
-    const { user, error } = await getCurrentUser();
-    
-    if (error || !user) {
-        return { error: "Usuario no encontrado" };
+    const { localUser, error: localUserError } = await getLocalUser();
+
+    if (localUserError || !localUser) {
+        return { error: localUserError || "Usuario no encontrado" };
     }
 
     try {
-        const localUser = await prisma.user.findFirst({
-            where: { email: user.email }
-        });
-
-        if (!localUser) {
-            return { error: "Usuario no encontrado en la base de datos local" };
-        }
-
         const changeRequest = await prisma.email_change_requests.findFirst({
             where: {
                 user_id: localUser.id,
@@ -35,8 +26,11 @@ export async function getEmailChangeStatus() {
         });
 
         const supabase = await createServerSideClient();
-        const { data: { user: freshUser }, error: refreshError } = await supabase.auth.getUser();
-        
+
+        const {
+            data: { user: freshUser },
+            error: refreshError } = await supabase.auth.getUser();
+
         if (refreshError || !freshUser) {
             return { error: "Error al obtener estado del usuario" };
         }
@@ -55,7 +49,6 @@ export async function getEmailChangeStatus() {
                 }
             };
         }
-
         const supabaseCompleted = !freshUser.new_email;
 
         if (supabaseCompleted && !changeRequest.completed) {
@@ -66,6 +59,14 @@ export async function getEmailChangeStatus() {
                     completed_at: new Date(),
                     new_email_confirmed: true,
                     new_email_confirmed_at: new Date()
+                }
+            });
+
+            await prisma.user.update({
+                where: { id: localUser.id },
+                data: {
+                    email: changeRequest.new_email,
+                    updated_at: new Date()
                 }
             });
 
@@ -100,6 +101,7 @@ export async function getEmailChangeStatus() {
             }
         };
     } catch (error) {
+        console.error('Error getting email change status:', error);
         return { error: "Error interno del servidor" };
     }
 }
