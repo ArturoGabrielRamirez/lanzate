@@ -1,12 +1,11 @@
 'use client'
 
-import { useResendCooldown } from "../hooks/use-resend-cooldown";
-import { useEmailChangeStatus } from "../hooks/use-email-change-status";
-import { EmailChangeMonitorProps } from "../types";
-import { EmailChangeActions, EmailStepInstructions, EmailStepProgress } from "./index";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail } from "lucide-react";
-
+import { useResendCooldown } from "../../hooks/use-resend-cooldown";
+import { useEmailChangeStatus } from "../../hooks/use-email-change-status";
+import { EmailChangeMonitorProps } from "../../types";
+import { EmailChangeActions, EmailStepInstructions, EmailStepProgress } from "../index";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+/* import { Mail } from "lucide-react"; */
 
 export default function EmailChangeMonitor({
     onComplete,
@@ -15,7 +14,17 @@ export default function EmailChangeMonitor({
 }: EmailChangeMonitorProps) {
 
     const { status, isManuallyChecking, handleManualCheck } = useEmailChangeStatus(initialOldEmail, onComplete);
-    const { isResending, resendCooldown, handleResendEmails } = useResendCooldown(() => handleManualCheck());
+    
+    const resendParams = {
+        type: 'email_change' as const,
+        email: initialOldEmail,
+        step: status.oldEmailConfirmed ? 'new_email' as const : 'old_email' as const
+    };
+    
+    const { isResending, resendCooldown, handleResendEmails } = useResendCooldown(
+        resendParams,
+        handleManualCheck
+    );
 
     const getStepStatus = () => {
         if (!status.hasEmailChange) {
@@ -30,12 +39,11 @@ export default function EmailChangeMonitor({
     const stepStatus = getStepStatus();
 
     return (
-        <Card className="w-full max-w-md mx-auto">
+        <Card className="w-full max-w-md mx-auto bg-transparent border-none">
             <CardHeader className="text-center">
-                <CardTitle className="flex items-center justify-center gap-2">
-                    <Mail className="w-5 h-5" />
-                    Cambio de email
-                </CardTitle>
+              {/*   <CardTitle className="flex items-center justify-center gap-2">
+                                     
+                </CardTitle> */}
             </CardHeader>
             <CardContent className="space-y-6">
                 <EmailStepProgress
@@ -65,7 +73,8 @@ export default function EmailChangeMonitor({
                     {stepStatus.currentStep !== 'completed' && (
                         <p className="text-xs text-muted-foreground text-center">
                             {resendCooldown > 0
-                                ? `Podrás reenviar emails nuevamente en ${Math.floor(resendCooldown / 60)}:${(resendCooldown % 60).toString().padStart(2, '0')}`
+                                ? `Podrás reenviar emails nuevamente en 
+                                ${Math.floor(resendCooldown / 60)}:${(resendCooldown % 60).toString().padStart(2, '0')}`
                                 : 'Si no recibes los emails, verifica tu carpeta de spam o haz clic en "Reenviar emails"'
                             }
                         </p>

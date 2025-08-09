@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ProgressButtonProps } from "../types";
+import { ProgressButtonProps } from "../../types";
 
 export default function ProgressButton({
     hasPendingChange,

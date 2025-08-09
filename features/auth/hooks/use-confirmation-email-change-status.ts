@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react';
-import { getEmailChangeStatus } from '@/features/auth/actions/email-change-status';
+import { getEmailChangeStatus } from '../actions/index';
 import { EmailChangeStatus } from '../types';
 
 export function useConfirmationEmailChangeStatus() {
@@ -34,11 +34,14 @@ export function useConfirmationEmailChangeStatus() {
                     processCompleted: result.data.processCompleted || false,
                     requestId: result.data.requestId,
                     expiresAt: result.data.expiresAt ? new Date(result.data.expiresAt) : undefined,
-                    oldEmailConfirmedAt: result.data.oldEmailConfirmedAt ? new Date(result.data.oldEmailConfirmedAt) : null,
-                    newEmailConfirmedAt: result.data.newEmailConfirmedAt ? new Date(result.data.newEmailConfirmedAt) : null,
+                    oldEmailConfirmedAt: result.data.oldEmailConfirmedAt ?
+                     new Date(result.data.oldEmailConfirmedAt) : null,
+                    newEmailConfirmedAt: result.data.newEmailConfirmedAt ?
+                     new Date(result.data.newEmailConfirmedAt) : null,
                 };
 
-                const statusHash = `${newStatus.hasEmailChange}-${newStatus.oldEmailConfirmed}-${newStatus.newEmailConfirmed}-${newStatus.processCompleted}`;
+                const statusHash = `${newStatus.hasEmailChange}-${newStatus.oldEmailConfirmed}
+                -${newStatus.newEmailConfirmed}-${newStatus.processCompleted}`;
 
                 if (statusHash !== lastUpdateRef.current) {
                     setStatus(newStatus);
