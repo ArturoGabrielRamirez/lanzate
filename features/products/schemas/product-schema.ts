@@ -8,6 +8,11 @@ const productBaseSchema = {
     is_active: yup.boolean().optional(),
     is_featured: yup.boolean().optional(),
     is_published: yup.boolean().optional(),
+    categories: yup.array().of(yup.object({
+        value: yup.string().required('Category is required'),
+        label: yup.string().required('Category is required'),
+    })).optional(),
+    /* image: yup.mixed().optional(), */
 }
 
 export const productCreateSchema = yup.object({

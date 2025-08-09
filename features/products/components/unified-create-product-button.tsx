@@ -28,12 +28,12 @@ type CreateProductPayload = {
     name: string
     price: number
     stock: number
-    description?: string
-    categories: CategoryValue[]
-    image?: File
-    is_active?: boolean
-    is_featured?: boolean
-    is_published?: boolean
+    description?: string | undefined
+    categories: CategoryValue[] | undefined
+    image?: File | undefined
+    is_active: boolean | undefined
+    is_featured: boolean | undefined
+    is_published: boolean | undefined
 }
 
 function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
@@ -65,7 +65,6 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
     }, [open, hasStoreId])
 
     const handleAddCategory = (value: CategoryValue[]) => {
-        console.log("🚀 ~ handleAddCategory ~ value:", value)
         setCategories(value)
     }
 
@@ -131,7 +130,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
 
     const buttonIcon = hasStoreId ? <Plus /> : <ShoppingCart className="size-4" />
     const buttonClassName = hasStoreId ? undefined : "w-full"
-    const resolverConfig = productCreateSchema ? { resolver: yupResolver(productCreateSchema) } : {}
+    const resolverConfig = productCreateSchema ? { resolver: yupResolver(productCreateSchema) as import('react-hook-form').Resolver<CreateProductPayload> } : {}
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
