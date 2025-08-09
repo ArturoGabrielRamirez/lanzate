@@ -11,8 +11,7 @@ import { getCategories } from "@/features/store-landing/actions/getCategories"
 import { getProductsCountByCategoryAction } from "@/features/products/actions/getProductsCountByCategory"
 import { updateProductsPricesAction } from "@/features/products/actions/updateProductsPrices"
 import { formatErrorResponse } from "@/utils/lib"
-import { Product } from "@prisma/client"
-import { Category } from "@/features/store-landing/types"
+import { Category, Product } from "@prisma/client"
 
 type UpdatePricesButtonProps = {
     selectedRows: RowModel<Product & { categories: Category[] }>
