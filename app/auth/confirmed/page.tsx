@@ -1,6 +1,6 @@
-/* import { Suspense } from 'react'
+import { Suspense } from 'react'
 
-function ConfirmedContent() {
+function ConfirmedContent() { // chequear si se esta usando
     const searchParams = new URLSearchParams(window.location.search)
     const type = searchParams.get('type') || 'signup'
     
@@ -66,4 +66,4 @@ export default function ConfirmedPage() {
             <ConfirmedContent />
         </Suspense>
     )
-} */
+}
