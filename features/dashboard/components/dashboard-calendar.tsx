@@ -4,21 +4,10 @@ import { useState } from "react"
 import { Calendar } from "@/components/ui/calendar"
 import Link from "next/link"
 import { ArrowRight, CalendarIcon } from "lucide-react"
-/* import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { CalendarClock } from "lucide-react"
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog" */
-/* import { ButtonWithPopup, InputField } from "@/features/layout/components" */
 
 export default function DashboardCalendar() {
 
     const [date, setDate] = useState<Date | undefined>(new Date())
-    /* const [isReminderOpen, setIsReminderOpen] = useState(false) */
-
-
-    /* const handleReminderOpenChange = () => {
-        setIsReminderOpen(true)
-    } */
 
     return (
         <>

@@ -5,7 +5,6 @@ import { StoreCard } from "@/features/stores/components"
 import Link from "next/link"
 import { ArrowRight, Store } from "lucide-react"
 import { CreateStoreButton } from "@/features/stores/components"
-import { Card, CardContent } from "@/components/ui/card"
 
 const StoreList = async () => {
 
@@ -48,12 +47,6 @@ const StoreList = async () => {
                             {dashboardData.stores.map((store) => (
                                 <StoreCard key={store.id} store={store} />
                             ))}
-                            {/* <Card className="border-dashed gap-2 md:gap-3 lg:gap-4 hidden sm:block shrink-0 bg-transparent">
-                                <CardContent className="flex justify-center items-center grow flex-col">
-                                    <h3 className="text-sm font-medium">Empty</h3>
-                                    <p className="text-xs text-muted-foreground">Create a new store to get started</p>
-                                </CardContent>
-                            </Card> */}
                         </div>
                     </section>
                 </div>

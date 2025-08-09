@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { ArrowRight, Calendar, Rss, Store, Zap } from "lucide-react"
+import { Calendar, Rss, Store, Zap } from "lucide-react"
 import ActivityFeed from "@/features/dashboard/components/activity-feed"
 import ActivityFeedSkeleton from "@/features/dashboard/components/activity-feed-skeleton"
 import DashboardStats from "@/features/dashboard/components/dashboard-stats"
@@ -82,14 +82,6 @@ export default async function Dashboard() {
                     <DashboardCalendar />
                 </div>
 
-                {/* Create order button */}
-                {/* <div className="">
-                    <Button asChild>
-                        <Link href="/sale">
-                            Create Order
-                        </Link>
-                    </Button>
-                </div> */}
             </div>
         </section >
     )
