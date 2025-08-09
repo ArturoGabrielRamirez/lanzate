@@ -118,7 +118,8 @@ export async function GET(request: Request) {
           where: { id: existingUser.id },
           data: {
             supabase_user_id: user?.id || null,
-            email: user?.email!,
+            email: user?.email! || undefined,
+            created_at: new Date(),
             updated_at: new Date()
           }
         });
