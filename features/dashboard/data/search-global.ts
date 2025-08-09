@@ -1,6 +1,15 @@
 import { createServerSideClient } from "@/utils/supabase/server"
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 
+type SearchResult = {
+    id: string | number
+    type: 'product' | 'order' | 'customer'
+    title: string
+    subtitle: string
+    href: string | null
+    icon: string
+}
+
 export async function searchGlobal(query: string, userId: number) {
     return actionWrapper(async () => {
         if (!query.trim()) {
@@ -25,7 +34,7 @@ export async function searchGlobal(query: string, userId: number) {
             return formatSuccessResponse("No stores found", [])
         }
 
-        const results: any[] = []
+        const results: SearchResult[] = []
 
         // Search Products
         const { data: products, error: productsError } = await supabase
@@ -36,7 +45,7 @@ export async function searchGlobal(query: string, userId: number) {
                 sku,
                 price,
                 store_id,
-                stores (slug)
+                stores!inner (slug)
             `)
             .in('store_id', storeIds)
             .or(`name.ilike.${searchTerm},sku.ilike.${searchTerm},id.eq.${parseInt(query) || 0}`)
@@ -44,12 +53,13 @@ export async function searchGlobal(query: string, userId: number) {
 
         if (!productsError && products) {
             products.forEach(product => {
+                const store = Array.isArray(product.stores) ? product.stores[0] : product.stores
                 results.push({
                     id: product.id,
                     type: 'product',
                     title: product.name,
                     subtitle: `SKU: ${product.sku} - $${product.price}`,
-                    href: `/stores/${product.stores?.slug}/products/${product.id}`,
+                    href: `/stores/${store?.slug}/products/${product.id}`,
                     icon: '📦'
                 })
             })
@@ -65,7 +75,7 @@ export async function searchGlobal(query: string, userId: number) {
                 total_price,
                 status,
                 store_id,
-                stores (slug)
+                stores!inner (slug)
             `)
             .in('store_id', storeIds)
             .or(`customer_name.ilike.${searchTerm},customer_email.ilike.${searchTerm},id.eq.${parseInt(query) || 0}`)
@@ -73,12 +83,13 @@ export async function searchGlobal(query: string, userId: number) {
 
         if (!ordersError && orders) {
             orders.forEach(order => {
+                const store = Array.isArray(order.stores) ? order.stores[0] : order.stores
                 results.push({
                     id: order.id,
                     type: 'order',
                     title: `Order #${order.id}`,
                     subtitle: `${order.customer_name || order.customer_email} - $${order.total_price} (${order.status})`,
-                    href: `/stores/${order.stores?.slug}/orders/${order.id}`,
+                    href: `/stores/${store?.slug}/orders/${order.id}`,
                     icon: '🛒'
                 })
             })
@@ -91,7 +102,7 @@ export async function searchGlobal(query: string, userId: number) {
                 customer_name,
                 customer_email,
                 store_id,
-                stores (slug)
+                stores!inner (slug)
             `)
             .in('store_id', storeIds)
             .not('customer_name', 'is', null)
@@ -99,7 +110,7 @@ export async function searchGlobal(query: string, userId: number) {
             .limit(3)
 
         if (!customersError && customers) {
-            const uniqueCustomers = customers.reduce((acc: any[], customer) => {
+            const uniqueCustomers = customers.reduce((acc: typeof customers, customer) => {
                 const existingCustomer = acc.find(c => 
                     c.customer_email === customer.customer_email || 
                     c.customer_name === customer.customer_name
