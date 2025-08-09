@@ -16,6 +16,11 @@ async function AccountTab({ slug }: AccountTabProps) {
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
+    if (userError || !user) {
+        console.error(userMessage)
+        return null
+    }
+
     // Get user info and employee permissions
     const [
         { payload: store, error: storeError },
@@ -24,11 +29,6 @@ async function AccountTab({ slug }: AccountTabProps) {
         getStoresFromSlug(slug),
         getEmployeePermissions(user.id, slug)
     ])
-
-    if (userError || !user) {
-        console.error(userMessage)
-        return null
-    }
 
     if (storeError || !store) {
         console.error(storeError)
