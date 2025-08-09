@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { TabsContent } from "@/components/ui/tabs"
 import { TabLayoutProps } from "@/features/stores/types"
-import { BookOpenText, Building2, UsersRound, Box, Store, ShoppingCart, Settings, ChartLine, Clock } from "lucide-react"
+import { BookOpenText, Building2, UsersRound, Box, Store, ShoppingCart, Settings, ChartLine, Clock, Paintbrush } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 async function TabLayout({ children, params }: TabLayoutProps) {
@@ -19,17 +19,18 @@ async function TabLayout({ children, params }: TabLayoutProps) {
         settings: <><Settings className="w-4 h-4" />{t("settings")}</>,
         analytics: <><ChartLine className="w-4 h-4" />{t("analytics")}</>,
         history: <><Clock className="w-4 h-4" />{t("history")}</>,
+        styles: <><Paintbrush className="w-4 h-4" />{t("styles")}</>,
     }
 
     return (
         <TabsContent value={tab} className="flex flex-col">
-            <Card className="grow">
+            <Card className="grow !gap-2">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         {titles[tab as keyof typeof titles]}
                     </CardTitle>
                 </CardHeader>
-                <CardContent className="flex flex-col gap-4 grow">
+                <CardContent className="flex flex-col gap-2 grow">
                     {children}
                 </CardContent>
             </Card>

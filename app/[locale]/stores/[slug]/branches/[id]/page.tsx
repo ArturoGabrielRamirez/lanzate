@@ -174,7 +174,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                         )}
 
                         {/* Action Buttons */}
-                        <div className="flex justify-end mt-auto">
+                        <div className="flex justify-center md:justify-end mt-auto">
                             <div className="grid justify-end max-w-xs grid-cols-2 gap-4 mt-auto">
                                 {!branch.is_main && (
                                     <DeleteBranchButton

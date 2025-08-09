@@ -13,7 +13,8 @@ export async function handleGoogleLogIn() {
     const host = headersList.get('host') || ''
     const subdomain = extractSubdomainFromHost(host)
 
-    const redirectUrl = `https://lanzate.app/auth/callback${subdomain ? `?subdomain=${subdomain}` : ''}`
+    const redirectUrl = `https://lanzate.app/auth/callback${subdomain ?
+        `?subdomain=${subdomain}` : ''}`
 
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',

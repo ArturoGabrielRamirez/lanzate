@@ -45,7 +45,11 @@ const InputField = ({
 
   const controlls: Record<string, any> = {}
 
-  if (value) controlls.value = value
+  if (!defaultValue && value) {
+    controlls.value = value || ""
+  } else {
+    controlls.defaultValue = defaultValue
+  }
   if (onChange) controlls.onChange = onChange
 
   return (
@@ -53,7 +57,7 @@ const InputField = ({
       <Label htmlFor={name}>{label}</Label>
       <Input
         id={name}
-        type={type} 
+        type={type}
         placeholder={placeholder}
         {...register(name)}
         defaultValue={defaultValue}

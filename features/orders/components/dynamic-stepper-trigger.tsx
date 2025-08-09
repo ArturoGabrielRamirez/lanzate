@@ -36,6 +36,7 @@ function DynamicStepperTrigger({ config }: Props) {
         <InteractiveStepperTrigger className={cn(
             "opacity-50 scale-75 transition-all duration-300",
             currentStep === step && "opacity-100 scale-100",
+            "flex flex-col gap-2 md:gap-2 justify-center"
         )}>
             <InteractiveStepperIndicator 
                 className={cn(
@@ -47,6 +48,7 @@ function DynamicStepperTrigger({ config }: Props) {
             <div>
                 <InteractiveStepperTitle 
                     className={cn(
+                        "text-center",
                         completed && "text-green-500",
                         titleClassName
                     )}
@@ -54,7 +56,10 @@ function DynamicStepperTrigger({ config }: Props) {
                     {title}
                 </InteractiveStepperTitle>
                 <InteractiveStepperDescription 
-                    className={descriptionClassName}
+                    className={cn(
+                        "text-center hidden md:block",
+                        descriptionClassName
+                    )}
                 >
                     {description}
                 </InteractiveStepperDescription>

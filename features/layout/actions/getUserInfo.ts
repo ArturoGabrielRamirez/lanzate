@@ -1,33 +1,50 @@
-"use server"
+"use server";
 
-import { createServerSideClient } from "@/utils/supabase/server"
-import { getUserByEmail } from "../data/getUserByEmail"
-import { actionWrapper } from "@/utils/lib"
-import { Account, User , Order} from "@prisma/client"
+import { getLocalUser } from "../../auth/actions";
+import { prisma } from "@/utils/prisma";
 
-export async function getUserInfo(): Promise<{
-    payload: User & { Account: Account[], Order: Order[] } | null,
-    error: Boolean | null,
-    message: string
-}> {
-    return actionWrapper(async () => {
-        const supabase = await createServerSideClient()
-        const { data, error } = await supabase.auth.getUser()
+export async function getUserInfo() {
+    const { localUser, error } = await getLocalUser();
 
-        if (error) {
-            throw new Error(error.message)
-        }
+    if (error || !localUser) {
+        return {
+            payload: null,
+            error: true,
+            message: error || "Usuario no encontrado"
+        };
+    }
 
-        const { payload, error: userError, message: userMessage } = await getUserByEmail(data.user.email ?? "")
+    try {
+        // Obtener el usuario con sus relaciones
+        const userWithRelations = await prisma.user.findUnique({
+            where: { id: localUser.id },
+            include: {
+                Account: true,
+                Store: true,
+                // Agregar otras relaciones que necesites
+            }
+        });
 
-        if (userError) {
-            throw new Error(userMessage)
+        if (!userWithRelations) {
+            return {
+                payload: null,
+                error: true,
+                message: "Usuario no encontrado en base de datos"
+            };
         }
 
         return {
-            payload: payload,
+            payload: userWithRelations,
             error: false,
-            message: "User info fetched"
-        }
-    })
+            message: "Usuario encontrado correctamente"
+        };
+
+    } catch (error) {
+        console.error('Error in getUserInfo:', error);
+        return {
+            payload: null,
+            error: true,
+            message: "Error al obtener información del usuario"
+        };
+    }
 }

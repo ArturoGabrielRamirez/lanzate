@@ -2,7 +2,7 @@
 
 import { actionWrapper } from "@/utils/lib";
 import { selectAllCategories } from "../data/selectAllCategories";
-import { Category } from "../types";
+import { Category } from "@prisma/client";
 
 export async function getCategories(): Promise<{
   message: string;

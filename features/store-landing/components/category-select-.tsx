@@ -1,6 +1,4 @@
 "use client"
-import CreatableSelect from "react-select/creatable"
-import makeAnimated from 'react-select/animated';
 import { useState, useEffect } from "react";
 import { getCategories } from "../actions/getCategories";
 import { Label } from "@/components/ui/label";
@@ -10,8 +8,6 @@ import { searchCategories } from "@/features/categories/data/searchCategories";
 import { createCategoryDynamic } from "@/features/categories/actions/createCategoryDynamic";
 import { toast } from "sonner";
 
-const animatedComponents = makeAnimated();
-
 type CategorySelectProps = {
     onChange?: (value: any) => void
     defaultValue?: any
@@ -20,9 +16,9 @@ type CategorySelectProps = {
 }
 
 function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: CategorySelectProps) {
+console.log("🚀 ~ CategorySelect ~ defaultValue:", defaultValue)
 
     const [categories, setCategories] = useState<{ label: string, value: number }[]>([])
-    const [isLoading, setIsLoading] = useState(false)
     const [creatingCategories, setCreatingCategories] = useState<Set<string>>(new Set())
 
     const t = useTranslations("subdomain.sidebar.categories");
@@ -37,10 +33,6 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
         fetchCategories()
     }, [])
 
-    const handleChange = (value: any) => {
-        if (onChange && typeof onChange === "function") onChange(value)
-    }
-
     const formatedCategories = categories.map((cat) => ({
         label: cat.label,
         value: cat.value.toString(),
@@ -51,11 +43,10 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
     const handleSearch = async (searchTerm: string) => {
         if (!storeId) return []
 
-        setIsLoading(true)
         try {
             const { payload, error } = await searchCategories(storeId, searchTerm)
             if (error) {
-                toast.error('Error al buscar categorías')
+                toast.error(t("error-searching"))
                 return []
             }
 
@@ -64,18 +55,15 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
                 value: cat.id.toString()
             }))
         } catch (error) {
-            toast.error('Error al buscar categorías')
+            console.log(error)
+            toast.error(t("error-searching"))
             return []
-        } finally {
-            setIsLoading(false)
         }
     }
 
     // Detectar y crear categorías nuevas
     const handleChangeNew = async (selectedOptions: any[]) => {
         if (!storeId) return
-
-        const newCategories = []
 
         for (const option of selectedOptions) {
             // Verificar si es una categoría nueva (no existe en las categorías originales)
@@ -91,7 +79,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
                     // Crear la nueva categoría
                     const { payload, error } = await createCategoryDynamic(storeId, option.label)
                     if (error) {
-                        toast.error('Error al crear la categoría')
+                        toast.error(t("error-creating"))
                         continue
                     }
 
@@ -102,9 +90,9 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
                     // Actualizar el valor de la opción con el ID real
                     option.value = payload.id.toString()
 
-                    toast.success(`Categoría "${payload.name}" creada exitosamente`)
+                    toast.success(t("category-created", { name: payload.name }))
                 } catch (error) {
-                    toast.error('Error al crear la categoría')
+                    toast.error(t("error-creating"))
                 } finally {
                     // Remover de la lista de categorías en creación
                     setCreatingCategories(prev => {
@@ -116,7 +104,6 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
             }
         }
 
-        // Llamar al onChange original con las opciones actualizadas
         if (onChange && typeof onChange === "function") {
             onChange(selectedOptions)
         }
@@ -125,21 +112,6 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
     return (
         <div className="flex flex-col gap-1 w-full">
             {withLabel && <Label htmlFor="category">{t("category")}</Label>}
-            {/* <CreatableSelect
-                className="w-full"
-                classNames={{
-                    control: () => "!bg-input/30 !border-input",
-                    menu: () => "!bg-background rounded-md overflow-hidden",
-                    option: () => "!text-sm hover:!bg-accent",
-                    indicatorSeparator: () => "!hidden",
-                    dropdownIndicator: () => "!text-muted-foreground",
-                }}
-                isMulti
-                options={categories}
-                components={animatedComponents}
-                onChange={handleChange}
-                defaultValue={defaultValue}
-            /> */}
             <MultipleSelector
                 defaultOptions={formatedCategories}
                 placeholder={t("category")}
@@ -149,22 +121,21 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
                 onChange={handleChangeNew}
                 loadingIndicator={
                     <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                        Buscando categorías...
+                        {t("searching-categories")}
                     </p>
                 }
                 emptyIndicator={
                     <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                        No se encontraron categorías
+                        {t("no-categories-found")}
                     </p>
                 }
             />
-            {/* Indicador de categorías en creación */}
             {creatingCategories.size > 0 && (
                 <div className="mt-2 space-y-1">
                     {Array.from(creatingCategories).map((categoryName) => (
                         <div key={categoryName} className="flex items-center gap-2 text-sm text-muted-foreground">
                             <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-primary"></div>
-                            <span>Creando categoría "{categoryName}"...</span>
+                            <span>{t("creating-category", { name: categoryName })}</span>
                         </div>
                     ))}
                 </div>

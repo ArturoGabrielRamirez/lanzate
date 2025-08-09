@@ -9,6 +9,21 @@ import DynamicStepperTrigger from "./dynamic-stepper-trigger"
 import { Order } from "@prisma/client"
 import { Package, Settings, User } from "lucide-react"
 
+type EmployeePermissions = {
+    isAdmin: boolean
+    permissions?: {
+        can_create_orders: boolean
+        can_update_orders: boolean
+        can_create_products: boolean
+        can_update_products: boolean
+        can_manage_stock: boolean
+        can_process_refunds: boolean
+        can_view_reports: boolean
+        can_manage_employees: boolean
+        can_manage_store: boolean
+    }
+}
+
 type OrderItemWithProduct = {
     id: number
     quantity: number
@@ -27,9 +42,10 @@ type Props = {
             status: "PENDING" | "PAID"
         }
     }
+    employeePermissions: EmployeePermissions
 }
 
-function OrderSummarySteps({ order }: Props) {
+function OrderSummarySteps({ order, employeePermissions }: Props) {
     const isPickup = order.shipping_method === "PICKUP"
     const isCompleted = order.status === "COMPLETED"
     const isCancelled = order.status === "CANCELLED"
@@ -104,33 +120,33 @@ function OrderSummarySteps({ order }: Props) {
 
     return (
         <InteractiveStepper orientation="horizontal" className="grow">
-            <InteractiveStepperItem completed>
+            <InteractiveStepperItem completed key={0}>
                 <DynamicStepperTrigger config={stepTriggerConfigs[0]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
 
-            <InteractiveStepperItem completed={isProcessingCompleted}>
+            <InteractiveStepperItem completed={isProcessingCompleted} key={1}>
                 <DynamicStepperTrigger config={stepTriggerConfigs[1]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
 
-            <InteractiveStepperItem completed={isThirdStepCompleted}>
+            <InteractiveStepperItem completed={isThirdStepCompleted} key={2}>
                 <DynamicStepperTrigger config={stepTriggerConfigs[2]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
-
-            <InteractiveStepperContent step={1} className="grow flex flex-col">
+        
+            <InteractiveStepperContent step={1} className="grow flex flex-col" key={0}>
                 <OrderDetailsStep order={order} showFullDetails={showFullDetails} />
                 <StepNavigation />
             </InteractiveStepperContent>
 
-            <InteractiveStepperContent step={2} className="grow flex flex-col">
-                <OrderStatusStep order={order} />
+            <InteractiveStepperContent step={2} className="grow flex flex-col" key={1}>
+                <OrderStatusStep order={order} employeePermissions={employeePermissions} />
                 <StepNavigation />
             </InteractiveStepperContent>
 
-            <InteractiveStepperContent step={3} className="grow flex flex-col">
-                <CustomerInfoStep order={order} />
+            <InteractiveStepperContent step={3} className="grow flex flex-col" key={2}>
+                <CustomerInfoStep order={order} employeePermissions={employeePermissions} />
                 <StepNavigation />
             </InteractiveStepperContent>
         </InteractiveStepper>

@@ -3,6 +3,12 @@ import { LoginForm, ResetPasswordLink } from '@/features/auth/components'
 import { cn } from '@/lib/utils'
 import { getTranslations } from 'next-intl/server'
 import { LoginErrorDisplay, SocialLoginButtons } from '@/features/auth/components'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: "Login",
+    description: "Login to your account",
+}
 
 type LoginPageProps = {
     searchParams: Promise<{
@@ -19,8 +25,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 
     return (
         <section className="flex flex-col p-4 grow pt-17 relative">
-            <div className='flex flex-col justify-center items-center w-full max-w-4xl gap-4 mx-auto md:flex-row grow'>
-                <div className='w-full lg:pr-10'>
+            <div className='flex flex-col justify-center items-center w-full max-w-xl md:max-w-full lg:max-w-4xl gap-4 mx-auto md:flex-row grow'>
+                <div className='w-full flex flex-col gap-8'>
                     <LoginErrorDisplay
                         error={params.error}
                         message={params.message}

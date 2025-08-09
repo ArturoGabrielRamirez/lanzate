@@ -11,10 +11,10 @@ import ProductResults from './product-results'
 import BarcodeScannerUSB from './barcode-scanner-usb'
 import { useTranslations } from 'next-intl'
 import { createNewWalkInOrder } from '@/features/checkout/actions/createNewWalkInOrder'
-/* import { toast } from 'sonner' */
 import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
 import { CartItemType } from '@/features/cart/types'
 import { actionWrapper } from '@/utils/lib'
+import BarcodeScannerCammeraButton from './barcode-scanner-cammera-button'
 
 type SaleInterfaceProps = {
   storeName: string
@@ -23,6 +23,7 @@ type SaleInterfaceProps = {
   branchId: number
   subdomain: string
   processed_by_user_id: number
+  branchName?: string
 }
 
 type CustomerInfo = {
@@ -31,10 +32,10 @@ type CustomerInfo = {
   email: string
 }
 
-function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: SaleInterfaceProps) {
+function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, branchName }: SaleInterfaceProps) {
   /* const [scannedProducts, setScannedProducts] = useState<ScannedProduct[]>([]) */
   const [cartItems, setCartItems] = useState<CartItem[]>([])
-  console.log("🚀 ~ SaleInterface ~ cartItems:", cartItems)
+
   const [barcodeResult, setBarcodeResult] = useState<ProductSearchResult>({
     product: null,
     message: '',
@@ -60,9 +61,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
   const t = useTranslations('sale.messages')
 
   const handleProductScanned = async (barcode: string) => {
-    console.log('Producto escaneado:', barcode)
-
-    // Limpiar resultados de búsqueda por texto cuando se escanea algo
     setSearchResults({
       products: [],
       message: '',
@@ -70,7 +68,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
       error: false
     })
 
-    // Establecer estado de carga
     setBarcodeResult({
       product: null,
       message: t('searching-product'),
@@ -79,7 +76,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
     })
 
     try {
-      // Buscar producto por código de barras
       const { error, payload, message } = await searchProductByBarcode(barcode, storeId)
 
       if (error || !payload) {
@@ -90,7 +86,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
           error: true
         })
       } else {
-        // Producto encontrado
         setBarcodeResult({
           product: payload,
           message: t('product-found'),
@@ -98,8 +93,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
           error: false
         })
 
-        // Agregar a la lista de productos escaneados
-        /* setScannedProducts(prev => [payload, ...prev]) */
       }
     } catch (error) {
       console.error('Error buscando producto:', error)
@@ -115,7 +108,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
   const handleSearchResults = (results: ProductSearchByNameResult) => {
     setSearchResults(results)
 
-    // Limpiar resultados de código de barras cuando se busca por texto
     if (results.products.length > 0 || results.isLoading) {
       setBarcodeResult({
         product: null,
@@ -127,7 +119,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
   }
 
   const handleClearResults = () => {
-    // Limpiar resultados de búsqueda
     setSearchResults({
       products: [],
       message: '',
@@ -135,7 +126,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
       error: false
     })
 
-    // Limpiar resultados de código de barras
     setBarcodeResult({
       product: null,
       message: '',
@@ -143,7 +133,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
       error: false
     })
 
-    // Limpiar input de búsqueda
     searchSectionRef.current?.clearSearch()
   }
 
@@ -152,14 +141,12 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
       const existingItem = prev.find(item => item.product.id === product.id)
 
       if (existingItem) {
-        // Si el producto ya está en el carrito, aumentar cantidad
         return prev.map(item =>
           item.product.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         )
       } else {
-        // Si es un producto nuevo, agregarlo al carrito
         return [...prev, {
           product,
           quantity: 1,
@@ -192,14 +179,12 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
     setCartItems([])
   }
 
-  // Calcular totales del carrito
   const cartTotal = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0)
   const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
-  // Handlers para acciones
   const handleFinalizeSale = async (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => {
     return actionWrapper(async () => {
-
+      
       const { error, message, payload } = await createNewWalkInOrder({
         branch_id: branchId,
         subdomain: subdomain,
@@ -219,14 +204,21 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
           email: formData.customerInfo.email,
         },
       })
-
+      
       if (error) {
         throw new Error(message)
       }
 
       setCartItems([])
-      // Reset customer info after successful sale
       setCustomerInfo({ name: '', phone: '', email: '' })
+      setSelectedPaymentMethod('CASH')
+      setSearchResults({
+        products: [],
+        message: '',
+        isLoading: false,
+        error: false
+      })
+
 
       return {
         error: false,
@@ -279,6 +271,8 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
           ref={searchSectionRef}
         />
 
+        
+
         <BarcodeScannerUSB onProductScanned={handleProductScanned} />
       </div>
 
@@ -308,6 +302,7 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id }: S
         setSelectedPaymentMethod={setSelectedPaymentMethod}
         customerInfo={customerInfo}
         setCustomerInfo={setCustomerInfo}
+        branchName={branchName}
       />
 
     </div>

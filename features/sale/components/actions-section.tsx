@@ -27,6 +27,7 @@ type ActionsSectionProps = {
   setSelectedPaymentMethod: (method: PaymentMethod) => void
   customerInfo: CustomerInfo
   setCustomerInfo: (info: CustomerInfo) => void
+  branchName?: string
 }
 
 function ActionsSection({
@@ -39,7 +40,8 @@ function ActionsSection({
   selectedPaymentMethod,
   setSelectedPaymentMethod,
   customerInfo,
-  setCustomerInfo
+  setCustomerInfo,
+  branchName
 }: ActionsSectionProps) {
   const t = useTranslations('sale.actions')
 
@@ -80,6 +82,7 @@ function ActionsSection({
           setSelectedPaymentMethod={setSelectedPaymentMethod}
           customerInfo={customerInfo}
           setCustomerInfo={setCustomerInfo}
+          branchName={branchName}
         />
 
         <CalculateChangeButton

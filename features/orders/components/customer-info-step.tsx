@@ -1,13 +1,29 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { cn } from "@/lib/utils"
-import { User, Mail, Phone, MapPin, MessageCircle, Check, Package, Truck, Clock, CheckCircle2 } from "lucide-react"
-import { useState, useTransition } from "react"
+import { User, Mail, Phone, MapPin, MessageCircle, Check, Package, Truck, Clock, CheckCircle2, AlertTriangle } from "lucide-react"
+import { useTransition } from "react"
 import { updateOrderTrackingAction } from "../actions/updateOrderTrackingAction"
 import { finalizeOrderAction } from "../actions/finalizeOrderAction"
 import { toast } from "sonner"
 import { OrderTrackingStatus } from "@prisma/client"
+
+type EmployeePermissions = {
+    isAdmin: boolean
+    permissions?: {
+        can_create_orders: boolean
+        can_update_orders: boolean
+        can_create_products: boolean
+        can_update_products: boolean
+        can_manage_stock: boolean
+        can_process_refunds: boolean
+        can_view_reports: boolean
+        can_manage_employees: boolean
+        can_manage_store: boolean
+    }
+}
 
 type Order = {
     id: number
@@ -47,14 +63,18 @@ type Order = {
 
 type Props = {
     order: Order
+    employeePermissions: EmployeePermissions
 }
 
-function CustomerInfoStep({ order }: Props) {
+function CustomerInfoStep({ order, employeePermissions }: Props) {
     const [isPending, startTransition] = useTransition()
     const [isFinalizing, startFinalizeTransition] = useTransition()
     const isPickup = order.shipping_method === "PICKUP"
     const isCompleted = order.status === "COMPLETED"
     const currentTrackingStatus = order.tracking?.tracking_status
+
+    // Check if user can update orders
+    const canUpdateOrders = employeePermissions.isAdmin || employeePermissions.permissions?.can_update_orders
 
     const handleWhatsAppClick = () => {
         if (order.customer_phone) {
@@ -164,6 +184,17 @@ function CustomerInfoStep({ order }: Props) {
 
     const getTrackingButtons = () => {
         if (!currentTrackingStatus) return null
+
+        if (!canUpdateOrders) {
+            return (
+                <Alert>
+                    <AlertTriangle className="h-4 w-4" />
+                    <AlertDescription>
+                        You don&apos;t have sufficient permissions to update the status of this order. Please contact an administrator.
+                    </AlertDescription>
+                </Alert>
+            )
+        }
 
         if (isPickup) {
             return (
@@ -283,7 +314,6 @@ function CustomerInfoStep({ order }: Props) {
 
             {/* Order Tracking Status */}
 
-
             {/* Order Tracking Controls */}
             {currentTrackingStatus && !isCompleted && (
                 <div className="space-y-3">
@@ -349,7 +379,6 @@ function CustomerInfoStep({ order }: Props) {
                     )}
                 </div>
             </div>
-
 
             {isPickup ? (
                 <div className="space-y-3">

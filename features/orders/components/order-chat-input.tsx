@@ -112,6 +112,7 @@ function OrderChatInput({ orderId, user }: Props) {
                 onKeyDown={handleKeyDown}
                 disabled={isPending}
                 maxLength={1000}
+                minHeight={40}
             />
             <Button 
                 className="absolute right-2"

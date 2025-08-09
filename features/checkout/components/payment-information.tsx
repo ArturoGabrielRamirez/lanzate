@@ -7,6 +7,7 @@ import { InputField } from "@/features/layout/components"
 import { CreditCard, Banknote, Smartphone } from "lucide-react"
 import { useFormContext } from "react-hook-form"
 import { PaymentMethod } from "@prisma/client"
+import { useTranslations } from "next-intl"
 
 interface PaymentInformationProps {
     paymentMethod: PaymentMethod
@@ -15,6 +16,7 @@ interface PaymentInformationProps {
 
 export function PaymentInformation({ paymentMethod, onChange }: PaymentInformationProps) {
     const { setValue } = useFormContext()
+    const t = useTranslations("checkout.payment")
 
     const handlePaymentMethodChange = (value: PaymentMethod) => {
         onChange(value)
@@ -30,7 +32,7 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
             {/* Payment Method Selection */}
             <div>
                 <Label htmlFor="paymentMethod" className="text-base font-medium mb-2 block">
-                    Select Payment Method
+                    {t("method-selector.label")}
                 </Label>
                 <Select
                     value={paymentMethod}
@@ -38,25 +40,25 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
                     required
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder="Choose a payment method" />
+                        <SelectValue placeholder={t("method-selector.placeholder")} />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="CREDIT_CARD">
                             <div className="flex items-center gap-2">
                                 <CreditCard className="size-4" />
-                                Credit/Debit Card
+                                {t("method-selector.credit-debit-card")}
                             </div>
                         </SelectItem>
                         <SelectItem value="TRANSFER">
                             <div className="flex items-center gap-2">
                                 <Banknote className="size-4" />
-                                Bank Transfer
+                                {t("method-selector.bank-transfer")}
                             </div>
                         </SelectItem>
                         <SelectItem value="MERCADO_PAGO">
                             <div className="flex items-center gap-2">
                                 <Smartphone className="size-4" />
-                                Mercado Pago
+                                {t("method-selector.mercado-pago")}
                             </div>
                         </SelectItem>
                     </SelectContent>
@@ -66,32 +68,32 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
             {/* Conditional Payment Fields */}
             {(paymentMethod === "CREDIT_CARD" || paymentMethod === "DEBIT_CARD") && (
                 <div className="space-y-4">
-                    <Label className="text-base font-medium block">Card Information</Label>
+                    <Label className="text-base font-medium block">{t("card-info.label")}</Label>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <InputField
                             name="cardNumber"
-                            label="Card Number"
-                            placeholder="1234 5678 9012 3456"
+                            label={t("card-info.card-number")}
+                            placeholder={t("card-info.card-number-placeholder")}
                             onChange={(e) => handleCardFieldChange("cardNumber", e.target.value)}
                         />
                         <InputField
                             name="cardHolder"
-                            label="Cardholder Name"
-                            placeholder="John Doe"
+                            label={t("card-info.cardholder-name")}
+                            placeholder={t("card-info.cardholder-placeholder")}
                             onChange={(e) => handleCardFieldChange("cardHolder", e.target.value)}
                         />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <InputField
                             name="expiryDate"
-                            label="Expiry Date"
-                            placeholder="MM/YY"
+                            label={t("card-info.expiry-date")}
+                            placeholder={t("card-info.expiry-placeholder")}
                             onChange={(e) => handleCardFieldChange("expiryDate", e.target.value)}
                         />
                         <InputField
                             name="cvv"
-                            label="CVV"
-                            placeholder="123"
+                            label={t("card-info.cvv")}
+                            placeholder={t("card-info.cvv-placeholder")}
                             onChange={(e) => handleCardFieldChange("cvv", e.target.value)}
                         />
                     </div>
@@ -104,12 +106,11 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
                         <div className="flex items-start gap-3">
                             <Banknote className="h-5 w-5 text-blue-600 mt-0.5" />
                             <div className="space-y-2">
-                                <p className="font-medium text-blue-900">Bank Transfer Details:</p>
-                                <p className="text-sm text-accent"><strong>CVU:</strong> 0000003100061234567890</p>
-                                <p className="text-sm text-accent"><strong>Alias:</strong> MI.TIENDA.ONLINE</p>
+                                <p className="font-medium text-blue-900">{t("bank-transfer.title")}</p>
+                                <p className="text-sm text-accent"><strong>{t("bank-transfer.cvu")}</strong></p>
+                                <p className="text-sm text-accent"><strong>{t("bank-transfer.alias")}</strong></p>
                                 <p className="text-sm text-blue-700 mt-2">
-                                    Please include your order number in the transfer description.
-                                    Your order will be confirmed once the payment is received.
+                                    {t("bank-transfer.instructions")}
                                 </p>
                             </div>
                         </div>
@@ -123,11 +124,9 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
                         <div className="flex items-start gap-3">
                             <Smartphone className="h-5 w-5 text-orange-600 mt-0.5" />
                             <div className="space-y-2">
-                                <p className="font-medium text-orange-900">Mercado Pago Payment</p>
+                                <p className="font-medium text-orange-900">{t("mercado-pago.title")}</p>
                                 <p className="text-sm text-orange-700 max-w-xl">
-                                    When you click "Confirm Order", you will be redirected to Mercado Pago
-                                    to complete your payment securely. After payment, you will be brought
-                                    back to our site with your order confirmation.
+                                    {t("mercado-pago.description")}
                                 </p>
                             </div>
                         </div>

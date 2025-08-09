@@ -1,12 +1,28 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { CheckCircle, AlertCircle } from "lucide-react"
-import { useState, useTransition } from "react"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { CheckCircle, AlertCircle, AlertTriangle } from "lucide-react"
+import { useTransition } from "react"
 import { confirmOrderAction } from "../actions/confirmOrderAction"
 import { toast } from "sonner"
 import { OrderStatus } from "@prisma/client"
 import { cn } from "@/lib/utils"
+
+type EmployeePermissions = {
+    isAdmin: boolean
+    permissions?: {
+        can_create_orders: boolean
+        can_update_orders: boolean
+        can_create_products: boolean
+        can_update_products: boolean
+        can_manage_stock: boolean
+        can_process_refunds: boolean
+        can_view_reports: boolean
+        can_manage_employees: boolean
+        can_manage_store: boolean
+    }
+}
 
 type Order = {
     id: number
@@ -16,10 +32,14 @@ type Order = {
 
 type Props = {
     order: Order
+    employeePermissions: EmployeePermissions
 }
 
-function OrderStatusStep({ order }: Props) {
+function OrderStatusStep({ order, employeePermissions }: Props) {
     const [isPending, startTransition] = useTransition()
+
+    // Check if user can update orders
+    const canUpdateOrders = employeePermissions.isAdmin || employeePermissions.permissions?.can_update_orders
 
     const handleConfirmOrder = () => {
         startTransition(async () => {
@@ -73,18 +93,25 @@ function OrderStatusStep({ order }: Props) {
             </div>
 
             <div className="flex justify-center">
-                <Button
-                    onClick={handleConfirmOrder}
-                    disabled={isPending || isOrderReady || isOrderCompleted}
-                    size="lg"
-                    className="min-w-[200px]"
-                >
-                    <CheckCircle className="w-5 h-5 mr-2" />
-                    {isPending ? "Confirming..." : isOrderReady ? "Order Already Confirmed" : "Confirm Order"}
-                </Button>
+                {canUpdateOrders ? (
+                    <Button
+                        onClick={handleConfirmOrder}
+                        disabled={isPending || isOrderReady || isOrderCompleted}
+                        size="lg"
+                        className="min-w-[200px]"
+                    >
+                        <CheckCircle className="w-5 h-5 mr-2" />
+                        {isPending ? "Confirming..." : isOrderReady ? "Order Already Confirmed" : "Confirm Order"}
+                    </Button>
+                ) : (
+                    <Alert className="w-full max-w-md">
+                        <AlertTriangle className="h-4 w-4" />
+                        <AlertDescription>
+                            You don&apos;t have sufficient permissions to change the status of this order. Please contact an administrator.
+                        </AlertDescription>
+                    </Alert>
+                )}
             </div>
-
-
         </div>
     )
 }

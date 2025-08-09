@@ -19,6 +19,7 @@ model User {
   last_name                 String?
   password                  String
   updated_at                DateTime                @updatedAt
+  supabase_user_id          String?                 @unique
   Account                   Account[]
   ActionLog                 ActionLog[]
   contracts_assigned        ContractAssignment[]    @relation("ContractAssignedBy")
@@ -188,15 +189,15 @@ model DefaultCategory {
 }
 
 model Order {
-  id                   Int                  @id @default(autoincrement())
-  created_at           DateTime             @default(now())
-  updated_at           DateTime             @updatedAt
+  id                   Int            @id @default(autoincrement())
+  created_at           DateTime       @default(now())
+  updated_at           DateTime       @updatedAt
   store_id             Int
   branch_id            Int
   total_price          Float
   total_quantity       Int
-  status               OrderStatus          @default(PENDING)
-  is_paid              Boolean              @default(false)
+  status               OrderStatus    @default(PENDING)
+  is_paid              Boolean        @default(false)
   payment_date         DateTime?
   customer_email       String?
   customer_id          Int?
@@ -209,16 +210,16 @@ model Order {
   country              String?
   state                String?
   zip_code             String?
-  order_type           OrderType            @default(CASH_REGISTER)
-  payment_method       PaymentMethod?       @default(CASH)
-  shipping_method      ShippingMethod       @default(PICKUP)
+  order_type           OrderType      @default(CASH_REGISTER)
+  payment_method       PaymentMethod? @default(CASH)
+  shipping_method      ShippingMethod @default(PICKUP)
   items                OrderItem[]
   messages             OrderMessage[]
   payment              OrderPayment?
-  branch               Branch               @relation(fields: [branch_id], references: [id])
-  customer             User?                @relation("OrderCustomer", fields: [customer_id], references: [id])
-  processed_by         User?                @relation("OrderProcessedBy", fields: [processed_by_user_id], references: [id])
-  store                Store                @relation(fields: [store_id], references: [id])
+  branch               Branch         @relation(fields: [branch_id], references: [id])
+  customer             User?          @relation("OrderCustomer", fields: [customer_id], references: [id])
+  processed_by         User?          @relation("OrderProcessedBy", fields: [processed_by_user_id], references: [id])
+  store                Store          @relation(fields: [store_id], references: [id])
   tracking             OrderTracking?
 
   @@map("orders")
@@ -381,12 +382,48 @@ model StoreOperationalSettings {
 }
 
 model StoreCustomization {
-  id                     Int                  @id @default(autoincrement())
-  store_id               Int                  @unique
-  primary_color          String               @default("#000000")
-  secondary_color        String               @default("#ffffff")
-  accent_color           String               @default("#6366f1")
-  background_color       String               @default("#ffffff")
+  id              Int    @id @default(autoincrement())
+  store_id        Int    @unique
+  primary_color   String @default("#000000")
+  secondary_color String @default("#ffffff")
+  accent_color    String @default("#6366f1")
+
+  background_color            String @default("#ffffff")
+  background_foreground_color String @default("#000000")
+
+  header_color            String         @default("#000000")
+  header_foreground_color String         @default("#ffffff")
+  header_floating         Boolean        @default(true)
+  header_position         HeaderPosition @default(TOP)
+  header_size             HeaderSize     @default(SMALL)
+  header_rounded          HeaderRounded  @default(SMALL)
+
+  show_brand_logo Boolean @default(true)
+
+  show_brand_text  Boolean @default(true)
+  brand_text_color String  @default("#000000")
+
+  filter_background_color String         @default("#ffffff")
+  filter_text_color       String         @default("#000000")
+  filter_position         FilterPosition @default(LEFT)
+  filter_style            FilterStyle    @default(MODERN)
+  show_filters            Boolean        @default(true)
+  show_sorting_filter     Boolean        @default(true)
+  show_pagination_buttons Boolean        @default(true)
+  show_categories_filter  Boolean        @default(true)
+  show_price_filter       Boolean        @default(true)
+  show_searchbar_filter   Boolean        @default(true)
+
+  show_main_searchbar Boolean @default(true)
+
+  show_layout_switcher Boolean @default(true)
+
+  product_card_background_color String           @default("#ffffff")
+  product_card_text_color       String           @default("#000000")
+  product_card_style            ProductCardStyle @default(MODERN)
+
+
+  /* OLD */
   text_color             String               @default("#000000")
   secondary_text_color   String               @default("#6b7280")
   border_color           String               @default("#e5e7eb")
@@ -402,7 +439,6 @@ model StoreCustomization {
   show_navigation_menu   Boolean              @default(true)
   show_cart_icon         Boolean              @default(true)
   show_user_account      Boolean              @default(true)
-  header_position        HeaderPosition       @default(TOP)
   header_style           HeaderStyle          @default(MODERN)
   show_footer            Boolean              @default(true)
   footer_text            String?
@@ -419,7 +455,6 @@ model StoreCustomization {
   show_testimonials      Boolean              @default(false)
   show_about_section     Boolean              @default(false)
   products_per_page      Int                  @default(12)
-  product_card_style     ProductCardStyle     @default(MODERN)
   show_product_rating    Boolean              @default(true)
   show_product_stock     Boolean              @default(true)
   show_add_to_cart_btn   Boolean              @default(true)
@@ -639,7 +674,7 @@ model StoreReminder {
 }
 
 model email_change_requests {
-  id                     Int    @id @default(autoincrement())
+  id                     Int       @id @default(autoincrement())
   user_id                Int
   old_email              String
   new_email              String
@@ -771,8 +806,37 @@ enum PaymentMethod {
 
 enum HeaderPosition {
   TOP
+  BOTTOM
+  LEFT
+  RIGHT
   FIXED_TOP
-  STICKY
+  FIXED_BOTTOM
+}
+
+enum HeaderSize {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+enum HeaderRounded {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+enum FilterPosition {
+  LEFT
+  RIGHT
+  TOP
+  BOTTOM
+}
+
+enum FilterStyle {
+  MODERN
+  CLASSIC
+  MINIMAL
+  BOLD
 }
 
 enum HeaderStyle {

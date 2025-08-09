@@ -2,11 +2,11 @@
 
 import { updateStoreSettings } from "@/features/settings/data/updateStoreSettings"
 import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
-import { StoreCustomizationForm } from "@/features/settings/types"
+import { StoreCustomization } from "@prisma/client"
 import { ResponseType } from "@/features/layout/types"
 import { revalidatePath } from "next/cache"
 
-export async function updateStoreSettingsAction(slug: string, settings: StoreCustomizationForm): Promise<ResponseType<StoreCustomizationForm>> {
+export async function updateStoreSettingsAction(slug: string, settings: StoreCustomization): Promise<ResponseType<StoreCustomization>> {
     const { payload: store, error } = await getStoresFromSlug(slug)
     
     if (error || !store) {

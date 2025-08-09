@@ -12,9 +12,9 @@ const Title = ({ title, breadcrumbs, className, showDate, homePath }: TitleProps
     const locale = useCurrentLocale()
 
     return (
-        <div className={`flex flex-col gap-0 mb-6 ${className}`}>
+        <div className={`flex flex-col gap-0 mb-2 md:mb-4 lg:mb-6 ${className}`}>
             <div className="flex items-center gap-2 justify-between">
-                <h2 className='text-xl md:text-2xl xl:text-3xl dark:text-white font-bold flex items-center gap-2'>
+                <h2 className='text-xl md:text-2xl xl:text-3xl text-foreground font-bold flex items-center gap-2'>
                     {/* {canGoBack && (
                     <Link href="/" className="capitalize hover:text-primary">
                         <ArrowLeft />
@@ -39,17 +39,17 @@ const Title = ({ title, breadcrumbs, className, showDate, homePath }: TitleProps
             </div>
             {breadcrumbs && breadcrumbs?.length > 0 && (
                 <div className="flex items-end gap-2 text-muted-foreground/50">
-                    <Link href={homePath || "/dashboard"} className="capitalize hover:text-primary">
+                    <Link href={homePath || "/dashboard"} className="capitalize hover:text-primary text-xs md:text-sm lg:text-base">
                         {t("title")}
                     </Link>
-                    <span className="text-xl">/</span>
+                    <span className="text-xs md:text-sm lg:text-xl">/</span>
                     {breadcrumbs.map((breadcrumb, index) => (
                         <React.Fragment key={index}>
-                            <Link href={breadcrumb.href} className="capitalize hover:text-primary">
+                            <Link href={breadcrumb.href} className="capitalize hover:text-primary text-xs md:text-sm lg:text-base">
                                 {breadcrumb.label}
                             </Link>
                             {index !== breadcrumbs.length - 1 && (
-                                <span className="text-xl">/</span>
+                                <span className="text-xs md:text-sm lg:text-xl">/</span>
                             )}
                         </React.Fragment>
                     ))}

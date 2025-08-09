@@ -3,13 +3,14 @@
         "title": "Account",
         "description": {
             "upgrade-plan": "Upgrade Plan",
-            "account-details": "Account Details",
+            "account-details": "Store Settings",
             "membership": "Membership",
             "first-name": "First Name",
             "last-name": "Last Name",
             "email": "Email",
             "password": "Password",
             "change-password": "Change Password",
+            "change-email": "Change Email",
             "currently-not-available": "Currently not available"
         }
     },
@@ -52,7 +53,98 @@
         },
         "update-password": {
             "title": "Update Password"
-        }
+        },
+        "errors": {
+            "oauth": {
+                "cancelled": {
+                    "title": "Login cancelled",
+                    "description": "You can try again with the same method or use your email and password."
+                },
+                "failed": {
+                    "title": "Authentication error",
+                    "description": "There was a problem with authentication. Try again or use another method."
+                },
+                "temporary": {
+                    "title": "Service unavailable",
+                    "description": "The service is temporarily unavailable. Try again in a few minutes."
+                },
+                "invalid": {
+                    "title": "Invalid request",
+                    "description": "The request is invalid. Please try again."
+                },
+                "unexpected": {
+                    "title": "Unexpected error",
+                    "description": "An unexpected error occurred. Please try again."
+                },
+                "generic": {
+                    "title": "Authentication error",
+                    "description": "Try again or use your email and password."
+                }
+            }
+        },
+        "email-change": {
+            "title": "Email Change Confirmation",
+            "step1": {
+                "title": "Confirm current email",
+                "status": {
+                    "pending": "Waiting for confirmation...",
+                    "confirmed": "✓ Confirmed"
+                }
+            },
+            "step2": {
+                "title": "Confirm new email",
+                "status": {
+                    "waiting": "Waiting for current email confirmation...",
+                    "pending": "⏳ Check this email and confirm",
+                    "confirmed": "✓ Confirmed - Change completed!"
+                }
+            },
+            "instructions": {
+                "step1": "Step 1: Check your current email ({email}) and confirm the change.",
+                "step2": "Step 2: Now check your new email ({email}) and confirm to complete the change.",
+                "completed": "Completed! Your email has been updated successfully."
+            },
+            "actions": {
+                "back-to-account": "Back to my account",
+                "check-status": "Check status",
+                "checking": "Checking..."
+            },
+            "auto-refresh": "The page updates automatically every 3 seconds",
+            "current-email": "Current email:",
+            "new-email": "New email:",
+            "email-must-be-different": "The new email must be different from the current one",
+            "verification-emails-sent": "Verification emails sent",
+            "error-changing-email": "Error changing email",
+            "sending-verification": "Sending verification emails...",
+            "change-in-progress": "⚠️ There is a change in progress",
+            "complete-current-process": "Complete the current process before starting a new one.",
+            "change-completed": "✅ Change completed",
+            "email-updated-successfully": "Your email has been updated successfully. You can start a new change if necessary.",
+            "new-email-label": "New email",
+            "new-email-placeholder": "new-email@example.com",
+            "current-password-label": "Current password",
+            "current-password-placeholder": "Your current password",
+            "security-description": "For security, confirm your current password. We will send verification emails to both addresses."
+        },
+        "email-status": {
+            "updated-successfully": "Email updated successfully! You can now use {email}",
+            "last-step": "Last step: Check your new email ({email}) and confirm to complete the change.",
+            "change-in-progress": "Email change in progress: Confirm from your current email ({email}) to continue."
+        },
+        "password-change": {
+            "security-description": "For security, confirm your current password before changing it.",
+            "current-password-label": "Current password",
+            "current-password-placeholder": "Your current password",
+            "new-password-label": "New password",
+            "new-password-placeholder": "Minimum 6 characters",
+            "confirm-password-label": "Confirm new password",
+            "confirm-password-placeholder": "Confirm your new password",
+            "password-updated": "Password updated correctly",
+            "error-updating-password": "Error updating password",
+            "verifying-updating": "Verifying and updating password..."
+        },
+        "close": "Close",
+        "try-facebook-again": "Try with Facebook again"
     },
     "cart": {
         "title": "Cart",
@@ -110,6 +202,7 @@
             "button": "Create Product",
             "title": "Create new product",
             "description": "Select a store and create a new product to start selling!",
+            "popup-description": "Select a store and create a new product to start selling!",
             "select-store": "Select Store",
             "choose-store": "Choose a store...",
             "product-will-be-created": "Product will be created in: {storeName}",
@@ -218,6 +311,28 @@
             "title": "Your Store",
             "see-all": "See All",
             "new-store": "New Store"
+        },
+        "create-product": {
+            "button": "Create Product",
+            "title": "Create new product",
+            "description": "Select a store and create a new product to start selling!",
+            "popup-description": "Select a store and create a new product to start selling!",
+            "select-store": "Select Store",
+            "choose-store": "Choose a store...",
+            "product-will-be-created": "Product will be created in: {storeName}",
+            "drag-drop-image": "Drag & drop product image",
+            "click-browse": "Or click to browse (max 1 file, up to 2MB)",
+            "browse-files": "Browse files",
+            "product-name": "Product Name",
+            "price": "Price",
+            "stock": "Stock",
+            "description": "Description",
+            "messages": {
+                "select-store-first": "Please select a store first",
+                "success": "Product created successfully!",
+                "error": "Failed to create product",
+                "loading": "Creating product..."
+            }
         }
     },
     "error": {
@@ -586,14 +701,15 @@
         },
         "tabs": {
             "overview": "Overview",
-            "account": "Account Details",
+            "account": "Store Settings",
             "branches": "Branches",
             "employees": "Employees",
             "products": "Products",
             "orders": "Orders",
             "settings": "Settings",
             "analytics": "Analytics",
-            "history": "History"
+            "history": "History",
+            "styles": "Styles"
         },
         "account-tab": {
             "name": "Name",
@@ -642,6 +758,47 @@
                 "loading": "Deleting store..."
             }
         },
+        "update-prices": {
+            "button": "Update prices",
+            "title": "Update prices",
+            "description": "Update your product prices in bulk",
+            "selected-products": "{count} products selected",
+            "no-selection-disclaimer": "No products selected. Select products from the table or choose a category to update prices in bulk.",
+            "select-category": "Select category",
+            "choose-category": "Choose a category...",
+            "products-in-category": "{count} products in this category",
+            "amount": "Amount",
+            "amount-placeholder": "Enter the amount",
+            "update-type": "Update type",
+            "fixed": "Fixed",
+            "percentage": "Percentage",
+            "save": "Save",
+            "messages": {
+                "success": "Prices updated successfully",
+                "error": "Error updating prices",
+                "loading": "Updating prices..."
+            }
+        },
+        "edit-operational-settings": {
+            "button": "Edit settings",
+            "title": "Edit operational settings",
+            "description": "Configure your store's delivery options and payment methods",
+            "delivery-section": "Delivery Settings",
+            "payment-section": "Payment Settings",
+            "offers-delivery": "Offers delivery",
+            "offers-delivery-description": "Allows home delivery",
+            "delivery-price": "Delivery price",
+            "free-delivery-minimum": "Minimum for free delivery",
+            "free-delivery-minimum-placeholder": "Leave empty if you don't want free delivery",
+            "delivery-radius": "Delivery radius (km)",
+            "minimum-order-amount": "Minimum order amount",
+            "payment-methods": "Accepted payment methods",
+            "messages": {
+                "success": "Operational settings updated successfully",
+                "error": "Error updating operational settings",
+                "loading": "Updating settings..."
+            }
+        },
         "branches-tab": {
             "no-branches": "No branches found"
         },
@@ -672,6 +829,8 @@
             "address": "Address",
             "phone": "Phone",
             "email": "Email",
+            "basic-info": "Basic info",
+            "contact-info": "Contact info",
             "messages": {
                 "success": "Branch created successfully!",
                 "error": "Failed to create branch",
@@ -681,7 +840,7 @@
         "edit-branch": {
             "button": "Edit Branch",
             "title": "Edit branch",
-            "description": "Edit the branch details including name, address, phone, and email. You can also designate this branch as the main branch.",
+            "description-popup": "Edit the branch details including name, address, phone, and email. You can also designate this branch as the main branch.",
             "name": "Name",
             "description": "Description",
             "description-placeholder": "Branch description",
@@ -716,6 +875,7 @@
                 "user": "User",
                 "role": "Role",
                 "active": "Active",
+                "published": "Published",
                 "hired": "Hired",
                 "department": "Department",
                 "actions": "Actions"
@@ -901,6 +1061,7 @@
                 "stock": "Stock",
                 "featured": "Featured",
                 "active": "Active",
+                "published": "Published",
                 "actions": "Actions"
             },
             "categories": {
@@ -926,6 +1087,7 @@
             "button": "Create Product",
             "title": "Create new product",
             "description": "Create a new product to start selling your products! Choose a name for your product and click on the button below, you can continue to add more details of the product once it's created.",
+            "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
             "drag-drop": "Drag & drop files here",
             "click-browse": "Or click to browse (max 1 files, up to 2MB each)",
             "browse-files": "Browse files",
@@ -1009,7 +1171,7 @@
         },
         "layout": {
             "overview": "Overview",
-            "account-details": "Account Details",
+            "account-details": "Store Settings",
             "branches": "Branches",
             "employees": "Employees",
             "products": "Products",
@@ -1018,7 +1180,8 @@
             "analytics": "Analytics",
             "history": "History",
             "store-details": "Store Details",
-            "no-description": "No description available"
+            "no-description": "No description available",
+            "styles": "Customization"
         },
         "logs": {
             "log-details": "Log Details ",
@@ -1060,6 +1223,92 @@
             "no-categories": "No categories"
         }
     },
+    "checkout": {
+        "title": "Checkout",
+        "steps": {
+            "personal-information": {
+                "title": "Personal Information",
+                "description": "Provide your personal information"
+            },
+            "delivery-information": {
+                "title": "Delivery Information",
+                "description": "Choose how your order gets to you"
+            },
+            "payment-information": {
+                "title": "Payment Information",
+                "description": "Choose how you want to pay"
+            }
+        },
+        "navigation": {
+            "previous": "Previous",
+            "next": "Next",
+            "continue": "Continue"
+        },
+        "personal-info": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone"
+        },
+        "delivery": {
+            "title": "Delivery Information",
+            "method-selector": {
+                "label": "Choose your delivery method",
+                "delivery": {
+                    "title": "Delivery",
+                    "description": "Orders take 30 min to 2 hours"
+                },
+                "pickup": {
+                    "title": "Pickup",
+                    "description": "Orders take 5-10 minutes"
+                }
+            },
+            "address": {
+                "label": "Delivery Address",
+                "address": "Address",
+                "city": "City",
+                "state": "State",
+                "country": "Country"
+            },
+            "branch-selector": {
+                "label": "Select Branch",
+                "placeholder": "Choose a branch"
+            }
+        },
+        "payment": {
+            "title": "Payment Information",
+            "method-selector": {
+                "label": "Select Payment Method",
+                "placeholder": "Choose a payment method",
+                "credit-debit-card": "Credit/Debit Card",
+                "bank-transfer": "Bank Transfer",
+                "mercado-pago": "Mercado Pago"
+            },
+            "card-info": {
+                "label": "Card Information",
+                "card-number": "Card Number",
+                "card-number-placeholder": "1234 5678 9012 3456",
+                "cardholder-name": "Cardholder Name",
+                "cardholder-placeholder": "John Doe",
+                "expiry-date": "Expiry Date",
+                "expiry-placeholder": "MM/YY",
+                "cvv": "CVV",
+                "cvv-placeholder": "123"
+            },
+            "bank-transfer": {
+                "title": "Bank Transfer Details:",
+                "cvu": "CVU: 0000003100061234567890",
+                "alias": "Alias: MI.TIENDA.ONLINE",
+                "instructions": "Please include your order number in the transfer description. Your order will be confirmed once the payment is received."
+            },
+            "mercado-pago": {
+                "title": "Mercado Pago Payment",
+                "description": "When you click \"Confirm Order\", you will be redirected to Mercado Pago to complete your payment securely. After payment, you will be brought back to our site with your order confirmation."
+            }
+        },
+        "messages": {
+            "order-created": "Order created successfully"
+        }
+    },
     "subdomain": {
         "title": "My Products",
         "sidebar": {
@@ -1082,7 +1331,13 @@
                 "newest": "Newest"
             },
             "categories": {
-                "category": "Category"
+                "category": "Category",
+                "searching-categories": "Searching categories...",
+                "no-categories-found": "No categories found",
+                "creating-category": "Creating category \"{name}\"...",
+                "error-searching": "Error searching categories",
+                "error-creating": "Error creating category",
+                "category-created": "Category \"{name}\" created successfully"
             },
             "limit": {
                 "1": "Showing",

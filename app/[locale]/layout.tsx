@@ -5,8 +5,9 @@ import { Toaster } from "@/components/ui/sonner"
 import type { Metadata } from "next";
 import { LayoutProps } from "@/features/layout/types";
 import { NextIntlClientProvider } from 'next-intl';
-import "../globals.css";
 
+import "../globals.css";
+import { GlobalEmailConfirmationDetector } from "@/features/auth/components/index";
 
 export const metadata: Metadata = {
   title: {
@@ -22,7 +23,6 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children, params }: LayoutProps) {
-
   const { locale } = await params;
 
   return (
@@ -44,10 +44,17 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                       {children}
                     </main>
                     <Footer />
-                    <Toaster />
+                    <Toaster position="top-center"/>
+                    <GlobalEmailConfirmationDetector />
                   </>
                 )}
-                userLayout={children}
+                userLayout={(
+                  <>
+                    {children}
+                    <GlobalEmailConfirmationDetector />
+                    <Toaster position="top-center"/>
+                  </>
+                )}
               />
             </NextIntlClientProvider>
           </NuqsAdapter>

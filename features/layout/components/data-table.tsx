@@ -3,14 +3,18 @@
 import {
     ColumnDef,
     flexRender,
+    SortingState,
+    VisibilityState,
     getCoreRowModel,
     useReactTable,
     getPaginationRowModel,
     PaginationState,
     ColumnFiltersState,
-    getFilteredRowModel
+    getFilteredRowModel,
+    getSortedRowModel,
+    RowModel
 } from "@tanstack/react-table"
-
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import {
     Table,
     TableBody,
@@ -19,18 +23,19 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { ChevronRight, Search, X } from "lucide-react"
+import { ChevronRight, Filter, Search } from "lucide-react"
 import { ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
     filterKey: string
-    topActions?: React.ReactNode
+    topActions?: React.ReactNode | ((table: RowModel<TData>) => React.ReactNode)
 }
 
 export function DataTable<TData, TValue>({
@@ -39,6 +44,12 @@ export function DataTable<TData, TValue>({
     filterKey,
     topActions
 }: DataTableProps<TData, TValue>) {
+
+    const [rowSelection, setRowSelection] = useState({})
+
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+
+    const [sorting, setSorting] = useState<SortingState>([])
 
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
@@ -55,9 +66,16 @@ export function DataTable<TData, TValue>({
         onPaginationChange: setPagination,
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
         state: {
             pagination,
             columnFilters,
+            sorting,
+            columnVisibility,
+            rowSelection,
         },
     })
 
@@ -78,17 +96,54 @@ export function DataTable<TData, TValue>({
 
     return (
         <>
-            <div className="flex items-center py-4 justify-between">
-                <Input
-                    placeholder="Filter..."
-                    value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn(filterKey)?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm grow"
-                    startContent={<Search />}
-                />
-                {topActions}
+            <div className="flex items-center py-4 justify-between gap-2">
+                <div className="flex items-center gap-2">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline" size="lg">
+                                <Filter />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            {table
+                                .getAllColumns()
+                                .filter(
+                                    (column) => column.getCanHide()
+                                )
+                                .map((column) => {
+                                    return (
+                                        <DropdownMenuCheckboxItem
+                                            key={column.id}
+                                            className="capitalize"
+                                            checked={column.getIsVisible()}
+                                            onCheckedChange={(value) =>
+                                                column.toggleVisibility(!!value)
+                                            }
+                                        >
+                                            {column.id}
+                                        </DropdownMenuCheckboxItem>
+                                    )
+                                })}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <Input
+                        placeholder="Filter..."
+                        value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn(filterKey)?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm grow"
+                        startContent={<Search />}
+                    />
+                    {table.getFilteredSelectedRowModel().rows.length > 0 && (
+                        <>
+                            <div className={cn("text-muted-foreground flex-1 text-sm", table.getFilteredSelectedRowModel().rows.length === 0 && "text-muted-foreground/50")}>
+                                {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} selected.
+                            </div>
+                        </>
+                    )}
+                </div>
+                {typeof topActions === "function" ? topActions(table.getFilteredSelectedRowModel()) : topActions}
             </div>
             <div className="rounded-md border">
                 <Table>

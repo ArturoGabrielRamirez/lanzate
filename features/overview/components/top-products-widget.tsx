@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Crown } from "lucide-react"
+import { ArrowRight, Crown } from "lucide-react"
 import { TopProductData } from "../types"
 import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 type Props = {
     data: TopProductData[]
@@ -20,12 +21,18 @@ async function TopProductsWidget({ data }: Props) {
     }
 
     return (
-        <Card className="grow hover:bg-accent transition-colors duration-200">
+        <Card className="grow hover:bg-accent transition-colors duration-200 group">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                    {t("title")}
-                </CardTitle>
-                <Crown className="h-4 w-4 text-muted-foreground" />
+                <div className="flex items-center gap-2">
+                    <Crown className="h-4 w-4 text-muted-foreground" />
+                    <CardTitle className="text-sm md:text-base font-medium">
+                        {t("title")}
+                    </CardTitle>
+                </div>
+                <Link href="analytics/top-products" className="text-xs md:text-sm flex items-center gap-1 text-blue-500/50 group-hover:text-blue-500 transition-colors duration-200">
+                    ver mas
+                    <ArrowRight className="size-4" />
+                </Link>
             </CardHeader>
             <CardContent>
                 <div className="space-y-3">
@@ -34,11 +41,8 @@ async function TopProductsWidget({ data }: Props) {
                             {t("no-data")}
                         </p>
                     ) : (
-                        data.map((product, index) => (
+                        data.map((product) => (
                             <div key={product.productId} className="flex items-center space-x-3">
-                                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-muted text-xs font-medium">
-                                    {index + 1}
-                                </div>
 
                                 <Avatar className="h-8 w-8">
                                     <AvatarImage src={product.image} alt={product.productName} />

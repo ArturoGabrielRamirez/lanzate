@@ -190,8 +190,8 @@ function ExportProductsButton({ data }: Props) {
 
     return (
         <Button variant="outline" onClick={handleExport}>
-            <Download className="w-4 h-4 mr-2" />
-            {t("export.button")}
+            <Download className="w-4 h-4" />
+            <span className="hidden md:block">{t("export.button")}</span>
         </Button>
     )
 }

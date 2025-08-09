@@ -1,11 +1,16 @@
 import CreateStoreButton from "./create-store-button";
 import DeleteStoreButton from "./delete-store-button";
 import EditStoreButton from "./edit-store-button";
+import EditOperationalSettingsButton from "./edit-operational-settings-button";
+import { DeliverySwitch } from "./delivery-switch";
+import { PaymentMethodsSwitches } from "./payment-methods-switches";
 import ProductCard from "./product-card";
 import ProductDetail from "./product-detail";
 import StoreCard from "./store-card";
 import StoreHeader from "./store-header";
 import StoreHeaderSkeleton from "./store-header-skeleton";
+import StoresContainer from "./stores-container";
+import StoresSkeleton from "./stores-skeleton";
 import TabTriggerLink from "./tab-trigger-link";
 import TabsClientContainer from "./tabs-client-container";
 import AccountTab from "./tabs/account";
@@ -14,7 +19,7 @@ import BranchesTab from "./tabs/branches";
 import EmployeesTab from "./tabs/employees";
 import OrdersTab from "./tabs/orders";
 import ProductsTab from "./tabs/products";
-import SettingsTab from "./tabs/settings";
+import StylesTab from "./tabs/styles";
 import HistoryTab from "./tabs/history";
 import Overview from "./tabs/overview";
 import ChangeOrderStatusButton from "./change-order-status-button";
@@ -26,11 +31,16 @@ export {
     CreateStoreButton,
     DeleteStoreButton,
     EditStoreButton,
+    EditOperationalSettingsButton,
+    DeliverySwitch,
+    PaymentMethodsSwitches,
     ProductCard,
     ProductDetail,
     StoreCard,
     StoreHeader,
     StoreHeaderSkeleton,
+    StoresContainer,
+    StoresSkeleton,
     TabTriggerLink,
     TabsClientContainer,
     AccountTab,
@@ -39,7 +49,7 @@ export {
     EmployeesTab,
     OrdersTab,
     ProductsTab,
-    SettingsTab,
+    StylesTab,
     HistoryTab,
     Overview,
     ChangeOrderStatusButton,

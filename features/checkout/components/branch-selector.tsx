@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label"
 import { Branch } from "@prisma/client"
 import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
+import { useTranslations } from "next-intl"
 
 interface BranchSelectorProps {
     branches: Branch[]
@@ -14,6 +15,7 @@ interface BranchSelectorProps {
 
 export function BranchSelector({ branches, value, onChange }: BranchSelectorProps) {
     const { setValue } = useFormContext()
+    const t = useTranslations("checkout.delivery.branch-selector")
 
     useEffect(() => {
         setValue("branchId", value)
@@ -36,7 +38,7 @@ export function BranchSelector({ branches, value, onChange }: BranchSelectorProp
     return (
         <div>
             <Label htmlFor="branchId" className="text-base font-medium mb-2 block">
-                Select Branch
+                {t("label")}
             </Label>
             <Select
                 value={value?.toString() || ""}
@@ -44,7 +46,7 @@ export function BranchSelector({ branches, value, onChange }: BranchSelectorProp
                 required
             >
                 <SelectTrigger>
-                    <SelectValue placeholder="Choose a branch" />
+                    <SelectValue placeholder={t("placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
                     {branches.map((branch) => (

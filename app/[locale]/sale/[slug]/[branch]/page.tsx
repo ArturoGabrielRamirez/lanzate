@@ -50,6 +50,7 @@ async function SaleStorePage({ params }: Props) {
                 branchId={parseInt(branch)}
                 subdomain={store.subdomain}
                 processed_by_user_id={user.id}
+                branchName={store.branches.find(b => b.id === parseInt(branch))?.name}
             />
         </section>
     )

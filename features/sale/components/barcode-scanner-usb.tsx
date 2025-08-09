@@ -2,11 +2,13 @@
 
 import { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
-import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
 import { useBarcodeScanner } from '../lib/use-barcode-scanner'
 import type { ScannedData } from '../types'
 import { useTranslations } from 'next-intl'
+import BarcodeScannerCammeraButton from './barcode-scanner-cammera-button'
+import { ScanBarcode } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 type BarcodeScannerUSBProps = {
   onProductScanned?: (barcode: string) => void
@@ -58,19 +60,12 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
             </>
           )}
         </div>
-
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="scanner-enabled"
-            checked={enabled}
-            onCheckedChange={setEnabled}
-          />
-          <Label htmlFor="scanner-enabled" className="text-xs lg:text-sm">
-            <span className='lg:hidden'>USB</span>
-            {t('enabled')}
-          </Label>
+        <div className="flex items-center gap-2">
+          <BarcodeScannerCammeraButton onProductScanned={onProductScanned} />
+          <Button variant="outline" size="icon" className={cn(enabled ? '!bg-green-500/50 text-white' : '!bg-gray-400 text-muted-foreground')} onClick={() => setEnabled(!enabled)}>
+            <ScanBarcode />
+          </Button>
         </div>
-
       </CardContent>
     </Card>
   )

@@ -31,8 +31,8 @@ function MobileMenu({ user }: MobileMenuProps) {
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
-                    <Menu className="w-5 h-5" />
+                <Button variant="ghost" size="icon" className="md:hidden flex justify-end">
+                    <Menu className="size-5" />
                     <span className="sr-only">Toggle menu</span>
                 </Button>
             </DrawerTrigger>
@@ -41,8 +41,8 @@ function MobileMenu({ user }: MobileMenuProps) {
                     <div className="flex items-center justify-between">
                         <DrawerTitle>Menu</DrawerTitle>
                         <DrawerClose asChild>
-                            <Button variant="ghost" size="icon">
-                                <X className="w-5 h-5" />
+                            <Button variant="ghost" size="sm">
+                                <X className="size-5" />
                                 <span className="sr-only">Close menu</span>
                             </Button>
                         </DrawerClose>

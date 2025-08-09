@@ -42,24 +42,22 @@ export default function Form<T extends FieldValues>({
                 loading: loadingMessage,
                 success: (data: ResponseType<T>) => {
                     if (data && data.error) throw new Error(data.message)
-                    successRedirect && router.push(successRedirect)
-                    onSuccess && typeof onSuccess === 'function' && onSuccess()
+                    if (successRedirect) router.push(successRedirect)
+                    if (onSuccess && typeof onSuccess === 'function') onSuccess()
                     return successMessage
                 },
                 error: (error) => {
-                    onError && typeof onError === 'function' && onError()
+                    if (onError && typeof onError === 'function') onError()
                     reject(error)
                     return error.message
                 },
                 finally: () => {
                     resolve(true)
-                    onComplete && typeof onComplete === 'function' && onComplete()
+                    if (onComplete && typeof onComplete === 'function') onComplete()
                 }
             })
         })
     }
-
-    console.log(methods.formState.errors)
 
     return (
         <FormProvider {...methods}>

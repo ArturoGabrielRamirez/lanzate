@@ -1,6 +1,8 @@
 export { default as SaleInterface } from './sale-interface'
 export { default as BarcodeScannerUSB } from './barcode-scanner-usb'
 export { default as StoreSelector } from './store-selector'
+export { default as StoreSelectorContainer } from './store-selector-container'
+export { default as StoreSelectorSkeleton } from './store-selector-skeleton'
 export { default as CartSection } from './cart-section'
 export { default as SearchSection } from './search-section'
 export { default as ActionsSection } from './actions-section'

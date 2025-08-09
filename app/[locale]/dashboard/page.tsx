@@ -1,22 +1,21 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Suspense } from "react"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getDashboardStores } from "@/features/dashboard/actions/getDashboardStores"
-import { DashboardSteps, ActivityFeed, ActivityFeedSkeleton } from "@/features/dashboard/components"
-import { Title } from "@/features/layout/components"
-import { CreateStoreButton, StoreCard } from "@/features/stores/components"
-import { ArrowRight, Hand, Plus, ShoppingBasket } from "lucide-react"
-import Link from "next/link"
+import { Calendar, Rss, Store, Zap } from "lucide-react"
+import ActivityFeed from "@/features/dashboard/components/activity-feed"
+import ActivityFeedSkeleton from "@/features/dashboard/components/activity-feed-skeleton"
+import DashboardStats from "@/features/dashboard/components/dashboard-stats"
+import DashboardStatsSkeleton from "@/features/dashboard/components/dashboard-stats-skeleton"
+import GlobalSearch from "@/features/dashboard/components/global-search"
 import { Button } from "@/components/ui/button"
 import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
-import { getTranslations } from "next-intl/server"
-import { Suspense } from "react"
-import { Metadata } from "next"
+import { DotPattern } from "@/components/magicui/dot-pattern"
+import { cn } from "@/lib/utils"
+import StoreListContainer from "@/features/dashboard/components/store-list-container"
+import StoreList from "@/features/dashboard/components/store-list"
+import StoreListSkeleton from "@/features/dashboard/components/store-list-skeleton"
+import Link from "next/link"
 
-export const metadata: Metadata = {
-    title: "Dashboard"
-}
-
-async function DashboardPage() {
+export default async function Dashboard() {
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
@@ -24,111 +23,75 @@ async function DashboardPage() {
         return console.error(userMessage)
     }
 
-    const { payload: dashboardData, error: dashboardError } = await getDashboardStores(user.id)
-
-    if (dashboardError || !dashboardData) {
-        return console.error("Error loading dashboard data")
-    }
-
-
-    const t = await getTranslations("dashboard")
-
     return (
-        <section className="p-4 flex flex-col pt-13 md:pt-17">
-            <Title title={(
-                <div className="flex items-center gap-2">
-                    <Hand className="size-4 md:size-5 lg:size-6" />
-                    {t("title")}
-                </div>
-            )} showDate className="hidden md:block"/>
+        <section className="p-2 md:p-4 flex flex-col pt-13 md:pt-17 relative">
+            <div className="grid grid-cols-1 grid-areas-[search-bar,actions,feed] md:grid-areas-[search-bar_stores,feed_stores,feed_actions,feed_calendar] gap-2 md:grid-cols-[2fr_1fr] md:grid-rows-[min-content_auto_min-content_1fr] lg:grid-areas-[stats_search-bar_stores,stats_feed_stores,stats_feed_actions,stats_feed_calendar,empty_feed_calendar,empty_feed_calendar] lg:grid-rows-[min-content_min-content_min-content_min-content_1fr] lg:grid-cols-[1fr_2fr_1fr] md:gap-4 lg:gap-6 xl:gap-8">
+                {/* Quick Stats */}
+                <Suspense fallback={<DashboardStatsSkeleton />}>
+                    <DashboardStats userId={user.id} />
+                </Suspense>
 
-            <div className="grid grid-cols-1 
-                            grid-areas-[steps,stores,coming-soon,calendar,order]
-                           md:grid-areas-[order_steps,coming-soon_steps,coming-soon_stores,coming-soon_calendar] 
-                           md:grid-cols-[1fr_minmax(auto,300px)] 
-                           lg:grid-areas-[steps_coming-soon_order,steps_coming-soon_stores,calendar_coming-soon_stores,calendar_coming-soon_stores,empty_coming-soon_empty2] 
-                           lg:grid-cols-[minmax(auto,300px)_1fr_minmax(auto,300px)] 
-                           gap-4 mg:gap-3 lg:gap-4 lg:grid-rows-[min-content_auto_auto]">
-
-                {/* Dashboard Steps */}
-                <div className="area-steps md:area-[steps] lg:area-[steps]">
-                    <DashboardSteps userId={user.id} dashboardData={dashboardData} />
-                    {/* <div className="h-px bg-muted-foreground/20 my-2 md:my-4" /> */}
+                {/* Search Bar */}
+                <div className="flex gap-2 area-[search-bar] flex-col">
+                    <div className="md:flex items-center gap-2 mb-2 md:mb-4 hidden">
+                        <Rss className="size-4 xl:size-5" />
+                        <h2 className="text-lg lg:text-2xl font-bold leading-6">
+                            Your feed
+                        </h2>
+                    </div>
+                    <GlobalSearch userId={user.id} />
                 </div>
 
                 {/* Activity Feed */}
-                <div className="area-[coming-soon] md:area-[coming-soon] lg:area-[coming-soon] md:pt-0">
+                <div className="area-[feed]">
                     <Suspense fallback={<ActivityFeedSkeleton />}>
                         <ActivityFeed userId={user.id} />
                     </Suspense>
                 </div>
 
-                {/* Store Management Section */}
-                {dashboardData.storeCount > 0 && (
-                    <div className="area-[stores] md:area-[stores] lg:area-[stores] border-t md:border-t-0 pt-2 md:pt-0 border-b md:border-b-0 pb-4 md:pb-0">
-                        <div className="flex items-center justify-between mb-4 md:mb-6">
-                            <h2 className="text-xl md:text-2xl font-bold leading-6">
-                                {t("your-stores.title", { count: dashboardData.storeCount })}
-                            </h2>
-                            <Link
-                                href="/stores"
-                                className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
-                            >
-                                {t("your-stores.see-all")}
-                                <ArrowRight className="size-4" />
-                            </Link>
-                        </div>
-                        <section >
-                            <div className="sm:hidden mb-3">
-                                <CreateStoreButton userId={user.id} />
-                            </div>
-                            <div className="md:grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4 flex overflow-x-auto md:overflow-x-visible">
-                                <Card className="border-dashed gap-2 md:gap-3 lg:gap-4 hidden sm:block shrink-0">
-                                    <CardHeader>
-                                        <CardTitle className="flex items-center gap-2">
-                                            <Plus className="size-4 md:size-5 lg:size-6" />
-                                            <h2 className="text-lg md:text-xl lg:text-2xl font-bold">{t("your-stores.new-store")}</h2>
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="flex justify-center items-center grow">
-                                        <CreateStoreButton userId={user.id} />
-                                    </CardContent>
-                                </Card>
-                                {dashboardData.stores.map((store) => (
-                                    <StoreCard key={store.id} store={store} />
-                                ))}
-                            </div>
-                        </section>
+                <div className="area-[actions] opacity-50 hover:opacity-100 transition-opacity duration-300">
+                    <div className="md:flex items-center justify-between mb-2 md:mb-4 hidden">
+                        <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2">
+                            <Zap className="size-4 xl:size-5" />
+                            Quick Actions
+                        </h2>
                     </div>
-                )}
+                    <div className="flex items-center gap-2 ">
+                        <Button variant="outline" className="grow" size="icon" asChild>
+                            <Link href="/sale">
+                                <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}><path d="M21 15h-2.5a1.503 1.503 0 0 0-1.5 1.5a1.503 1.503 0 0 0 1.5 1.5h1a1.503 1.503 0 0 1 1.5 1.5a1.503 1.503 0 0 1-1.5 1.5H17m2 0v1m0-8v1m-6 6H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h2m12 3.12V9a2 2 0 0 0-2-2h-2"></path><path d="M16 10V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v6m8 0H8m8 0h1m-9 0H7m1 4v.01M8 17v.01m4-3.02V14m0 3v.01"></path></g></svg>
+                            </Link>
+                        </Button>
+                        <Button variant="outline" className="grow" size="icon" asChild>
+                            <Link href="/stores">
+                                <Store className="size-4" />
+                            </Link>
+                        </Button>
+                        <Button variant="outline" className="grow md:hidden" size="icon">
+                            <Calendar className="size-4" />
+                        </Button>
+                    </div>
+                </div>
+
+                {/* Store Management Section */}
+                <StoreListContainer>
+                    <Suspense fallback={<StoreListSkeleton />}>
+                        <StoreList />
+                    </Suspense>
+                </StoreListContainer>
 
                 {/* Calendar */}
-                <div className="md:area-[calendar] lg:area-[calendar]">
+                <div className="area-[calendar] opacity-50 hover:opacity-100 transition-opacity duration-300 hidden md:block">
                     <DashboardCalendar />
                 </div>
 
-                {/* New Order Card - Hidden on mobile */}
-                <Card className="md:area-[order] lg:area-[order] w-full h-fit hidden md:block">
-                    <CardHeader>
-                        <CardTitle>
-                            <h2 className="text-2xl font-bold">{t("new-order.title")}</h2>
-                        </CardTitle>
-                        <CardDescription>
-                            {t("new-order.description")}
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <Button className="w-full" asChild>
-                            <Link href="/sale">
-                                <ShoppingBasket />
-                                {t("new-order.title")}
-                            </Link>
-                        </Button>
-                    </CardContent>
-                </Card>
             </div>
+<DotPattern
+                width={30}
+                height={30}
+                className={cn(
+                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
+                )} />
         </section>
     )
 }
-
-export default DashboardPage
