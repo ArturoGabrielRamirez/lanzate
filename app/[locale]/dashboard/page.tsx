@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
 import StoreListContainer from "@/features/dashboard/components/store-list-container"
 import StoreList from "@/features/dashboard/components/store-list"
+import StoreListSkeleton from "@/features/dashboard/components/store-list-skeleton"
 import Link from "next/link"
 
 export default async function Dashboard() {
@@ -72,7 +73,7 @@ export default async function Dashboard() {
 
                 {/* Store Management Section */}
                 <StoreListContainer>
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<StoreListSkeleton />}>
                         <StoreList />
                     </Suspense>
                 </StoreListContainer>

@@ -13,13 +13,15 @@ const StoreList = async () => {
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
-        return console.error(userMessage)
+        console.error(userMessage)
+        return null
     }
 
     const { payload: dashboardData, error: dashboardError } = await getDashboardStores(user.id)
 
     if (dashboardError || !dashboardData) {
-        return console.error("Error loading dashboard data")
+        console.error("Error loading dashboard data")
+        return null
     }
 
     return (
