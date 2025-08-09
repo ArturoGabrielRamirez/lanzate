@@ -3,11 +3,12 @@
 import { useState, useEffect, useRef } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search, ExternalLink } from "lucide-react"
+import { Search, ExternalLink, Loader } from "lucide-react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "motion/react"
 import { searchGlobalAction } from "../actions/search-global-action"
 import { useDebounce } from "@/hooks/use-debounce"
+import { cn } from "@/lib/utils"
 
 type SearchResult = {
     id: string | number
@@ -80,15 +81,15 @@ export default function GlobalSearch({ userId }: GlobalSearchProps) {
     return (
         <div ref={searchRef} className="relative w-full">
             <div className="flex gap-2">
-                <Input 
-                    placeholder="Product ID/name, Order ID, Customer name..."
+                <Input
+                    placeholder="Search products, orders, customers..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onFocus={handleInputFocus}
-                    className="flex-1"
+                    className={cn("flex-1 p-1 h-8 md:h-9", isLoading && "animate-pulse")}
                 />
-                <Button variant="outline" disabled={isLoading}>
-                    <Search className="size-4" />
+                <Button variant="outline" disabled={isLoading} className={cn("size-8 md:size-9", isLoading && "animate-pulse")}>
+                    {isLoading ? <Loader className="size-4 animate-spin" /> : <Search className="size-4" />}
                 </Button>
             </div>
 
