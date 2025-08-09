@@ -4,7 +4,10 @@ import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useConfirmationEmailChangeStatus } from "@/features/auth/hooks/use-confirmation-email-change-status";
-import {EmailChangeStatus} from "@/features/auth/types";
+import { EmailChangeStatus } from "@/features/auth/types";
+import { Button } from "@/components/ui/button";
+import { DotPattern } from '@/components/magicui/dot-pattern';
+import { cn } from "@/lib/utils";
 
 interface CheckEmailProps {
     email?: string;
@@ -36,13 +39,11 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
         reason: string;
     } | null>(null);
 
-    // Solo usar el hook para tipo 'smart' (cambio de email)
     const emailChangeStatus: { status: EmailChangeStatus } =
-    type === 'smart'
-        ? useConfirmationEmailChangeStatus()
-        : { status: defaultStatus };
+        type === 'smart'
+            ? useConfirmationEmailChangeStatus()
+            : { status: defaultStatus };
 
-    // Cooldown timer
     useEffect(() => {
         if (cooldownTime > 0) {
             const timer = setTimeout(() => setCooldownTime(cooldownTime - 1), 1000);
@@ -50,31 +51,31 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
         }
     }, [cooldownTime]);
 
-   const getTargetEmailAndMessage = () => {
-    const { status } = emailChangeStatus;
+    const getTargetEmailAndMessage = () => {
+        const { status } = emailChangeStatus;
 
-    if (type === 'smart' && status.hasEmailChange) {
-        if (!status.oldEmailConfirmed) {
-            return {
-                targetEmail: status.currentEmail,
-                message: `Confirma tu email actual (${status.currentEmail}) para continuar`,
-                step: '1/2'
-            };
-        } else if (status.oldEmailConfirmed && !status.newEmailConfirmed) {
-            return {
-                targetEmail: status.newEmail || '',
-                message: `Confirma tu nuevo email (${status.newEmail}) para completar el cambio`,
-                step: '2/2'
-            };
+        if (type === 'smart' && status.hasEmailChange) {
+            if (!status.oldEmailConfirmed) {
+                return {
+                    targetEmail: status.currentEmail,
+                    message: `Confirma tu email actual (${status.currentEmail}) para continuar`,
+                    step: '1/2'
+                };
+            } else if (status.oldEmailConfirmed && !status.newEmailConfirmed) {
+                return {
+                    targetEmail: status.newEmail || '',
+                    message: `Confirma tu nuevo email (${status.newEmail}) para completar el cambio`,
+                    step: '2/2'
+                };
+            }
         }
-    }
 
-    return {
-        targetEmail: email || '',
-        message: 'Te hemos enviado un enlace de confirmación',
-        step: null
+        return {
+            targetEmail: email || '',
+            message: 'Te hemos enviado un enlace de confirmación',
+            step: null
+        };
     };
-};
 
     const handleResendEmail = async () => {
         if (cooldownTime > 0) {
@@ -85,21 +86,39 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
         setIsResending(true);
 
         try {
-            let endpoint: string;
+            const endpoint = '/api/auth/resend';
             let payload: any = {};
 
-            // Determinar endpoint y payload según el tipo
             if (type === 'smart') {
-                endpoint = '/api/auth/resend-confirmation-smart';
+                const { status } = emailChangeStatus;
+
+                let step: 'old_email' | 'new_email' | undefined;
+
+                if (status.hasEmailChange) {
+                    if (!status.oldEmailConfirmed) {
+                        step = 'old_email';
+                    } else if (status.oldEmailConfirmed && !status.newEmailConfirmed) {
+                        step = 'new_email';
+                    }
+                }
+
+                payload = {
+                    type: 'email_change',
+                    ...(step && { step })
+                };
             } else if (type === 'recovery') {
-                endpoint = '/api/auth/resend-recovery';
-                payload = { email };
+                payload = {
+                    type: 'recovery',
+                    email
+                };
             } else {
-                endpoint = '/api/auth/resend-confirmation';
-                payload = { email };
+                payload = {
+                    type: 'signup',
+                    email
+                };
             }
 
-            console.log('🔄 Resending email via:', endpoint, payload);
+            console.log('🔄 Resending email via unified API:', endpoint, payload);
 
             const response = await fetch(endpoint, {
                 method: 'POST',
@@ -119,13 +138,14 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
             const data = await response.json();
 
             if (!response.ok || data.error) {
-                // Handle specific error cases
                 if (response.status === 404) {
                     toast.error("No user found with this email address.");
                 } else if (response.status === 429) {
                     toast.error("Too many requests. Please wait a moment.");
                     setCooldownTime(300); // 5 minutes cooldown
-                } else if (data.message?.includes('already confirmed')) {
+                } else if (response.status === 401) {
+                    toast.error("Usuario no autenticado. Por favor, inicia sesión.");
+                } else if (data.message?.includes('already confirmed') || data.message?.includes('ya está confirmado')) {
                     toast.info("Email is already confirmed.");
                 } else if (data.message?.includes('No hay confirmaciones pendientes')) {
                     toast.info("No pending confirmations.");
@@ -135,11 +155,9 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                 return;
             }
 
-            // Success handling
             const successMessage = data.message || "Email reenviado exitosamente";
             toast.success(successMessage);
-            
-            // Store resend information for display
+
             if (data.data) {
                 setLastResendInfo({
                     email: data.data.email,
@@ -147,9 +165,9 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                     reason: data.data.reason || ''
                 });
             }
-            
+
             setHasResent(true);
-            setCooldownTime(60); // 1 minute cooldown for successful sends
+            setCooldownTime(60);
 
         } catch (error) {
             console.error('Error al reenviar:', error);
@@ -175,7 +193,6 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
 
     const isButtonDisabled = isResending || cooldownTime > 0;
 
-    // Si está cargando el estado del email, mostrar loading
     if (type === 'smart' && emailChangeStatus.status.loading) {
         return (
             <div className="p-8 text-center grow --color-background text-white flex flex-col items-center justify-center">
@@ -186,20 +203,20 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
     }
 
     return (
-        <div className="p-8 text-center grow --color-background text-white flex flex-col items-center justify-center">
+        <div className="p-8 text-center grow text-white flex flex-col items-center justify-center h-dvh relative">
             <div className="max-w-md mx-auto space-y-6">
                 <div className="mb-8">
-                    <div className="w-20 h-20 mx-auto mb-4 bg-blue-600 rounded-full flex items-center justify-center">
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center bg-gradient-to-t from-chart-5 to-primary">
                         <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 7.89a2 2 0 002.83 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                     </div>
-                    
-                    <h2 className="text-2xl font-bold mb-2">
+
+                    <h2 className="text-2xl font-bold mb-2 bg-color-red-500">
                         {type === 'recovery' ? 'Revisa tu email' : 'Confirma tu email'}
                         {step && <span className="text-sm font-normal text-blue-300 ml-2">({step})</span>}
                     </h2>
-                    
+
                     <p className="text-gray-300">{message}</p>
                 </div>
 
@@ -211,7 +228,7 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                         <p className="font-medium text-blue-300 break-all">
                             {targetEmail || 'Email no disponible'}
                         </p>
-                        
+
                         {lastResendInfo && (
                             <div className="text-xs text-gray-400 bg-white/5 rounded p-3 mt-3">
                                 <p><strong>Último reenvío:</strong> {lastResendInfo.email}</p>
@@ -219,7 +236,7 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                                 {lastResendInfo.reason && <p><strong>Razón:</strong> {lastResendInfo.reason}</p>}
                             </div>
                         )}
-                        
+
                         <p className="text-xs text-gray-400 leading-relaxed">
                             Haz clic en el enlace del email para continuar. Revisa también tu carpeta de spam.
                         </p>
@@ -232,23 +249,23 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                             ¿No recibiste el email?
                         </p>
 
-                        <button
+                        <Button
                             onClick={handleResendEmail}
                             disabled={isButtonDisabled}
                             className={`
-                                px-6 py-3 rounded-lg font-medium transition-all w-full
+                                px-6 py-3 rounded-lg font-medium transition-all w-full bg-gradient-to-t from-chart-5 to-primary
                                 ${cooldownTime > 0
                                     ? 'bg-yellow-600 text-white cursor-not-allowed'
                                     : hasResent && cooldownTime === 0
                                         ? 'bg-green-600 hover:bg-green-700 text-white'
                                         : isResending
-                                            ? 'bg-gray-600 text-white cursor-not-allowed'
-                                            : 'bg-blue-600 hover:bg-blue-700 text-white hover:scale-105'
+                                            ? 'bg-secondary-foreground text-white cursor-not-allowed'
+                                            : 'bg-gradient-to-t from-chart-5 to-primary hover:bg-chart-1 text-white hover:scale-105'
                                 }
                             `}
                         >
                             {getButtonText()}
-                        </button>
+                        </Button>
 
                         {hasResent && cooldownTime === 0 && (
                             <p className="text-sm text-green-400 mt-3 flex items-center justify-center gap-2">
@@ -270,8 +287,8 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                 <div className="text-center mt-8">
                     <p className="text-sm text-gray-400">
                         ¿Problemas con el email?{" "}
-                        <a 
-                            href="mailto:soporte@lanzate.app" 
+                        <a
+                            href="mailto:soporte@lanzate.app"
                             className="text-blue-400 hover:text-blue-300 underline"
                         >
                             Contacta soporte
@@ -279,6 +296,12 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                     </p>
                 </div>
             </div>
+            <DotPattern
+                width={30}
+                height={30}
+                className={cn(
+                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
+                )} />
         </div>
     );
 }

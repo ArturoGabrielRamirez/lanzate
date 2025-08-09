@@ -7,6 +7,8 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { User } from "lucide-react";
 import { ChangeEmailButton, EmailStatusBanner, ChangePasswordButton } from "@/features/auth/components/index"
+import { DotPattern } from "@/components/magicui/dot-pattern";
+import { cn } from "@/lib/utils";
 
 // Función para ocultar email con asteriscos
 function maskEmail(email: string): string {
@@ -28,7 +30,7 @@ export default async function AccountPage() {
     }
 
     return (
-        <div className="p-4 grow flex flex-col pt-17">
+        <div className="p-4 grow flex flex-col pt-17 relative">
             <Title title={(
                 <div className="flex items-center gap-2">
                     <User />
@@ -186,6 +188,12 @@ export default async function AccountPage() {
                     </TabsContent>
                 </Tabs>
             </section>
+            <DotPattern
+                width={30}
+                height={30}
+                className={cn(
+                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
+                )} />
         </div>
     );
 }

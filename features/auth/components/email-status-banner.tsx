@@ -15,13 +15,26 @@ export default function EmailStatusBanner() {
 
     const handleSmartResend = async () => {
         setIsResending(true);
-        
+
         try {
-            const response = await fetch('/api/auth/resend-confirmation-smart', {
+            let payload: any = {
+                type: 'email_change'
+            };
+
+            if (status.hasEmailChange) {
+                if (!status.oldEmailConfirmed) {
+                    payload.step = 'old_email';
+                } else if (status.oldEmailConfirmed && !status.newEmailConfirmed) {
+                    payload.step = 'new_email';
+                }
+            }
+
+            const response = await fetch('/api/auth/resend', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                }
+                },
+                body: JSON.stringify(payload)
             });
 
             const data = await response.json();
@@ -29,22 +42,22 @@ export default function EmailStatusBanner() {
             if (!response.ok || data.error) {
                 if (response.status === 429) {
                     toast.error("Demasiadas solicitudes. Espera 5 minutos.");
+                } else if (response.status === 401) {
+                    toast.error("Usuario no autenticado. Por favor, inicia sesión.");
                 } else {
                     toast.error(data.message || "Error al reenviar email");
                 }
                 return;
             }
 
-            // Success
             toast.success(data.message);
-            
-            // Show specific information about what was resent
+
             if (data.data) {
                 const { email, resendType, reason } = data.data;
-                const typeLabel = resendType === 'old_email' ? 'email actual' : 
-                                 resendType === 'new_email' ? 'email nuevo' : 
-                                 'email';
-                
+                const typeLabel = resendType === 'old_email' ? 'email actual' :
+                    resendType === 'new_email' ? 'email nuevo' :
+                        'email';
+
                 setTimeout(() => {
                     toast.info(`Reenviado a tu ${typeLabel}: ${email}`);
                 }, 1000);
@@ -86,7 +99,6 @@ export default function EmailStatusBanner() {
         );
     }
 
-    // Esperando confirmación del nuevo email (paso 2/2)
     if (status.oldEmailConfirmed && !status.newEmailConfirmed) {
         return (
             <Alert className="mb-4 border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950">
@@ -94,9 +106,9 @@ export default function EmailStatusBanner() {
                 <AlertDescription className="text-blue-700 dark:text-blue-300">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                         <div className="flex-1">
-                            <strong>Último paso (2/2):</strong> {t("last-step", { email: status.newEmail || '' })}
+                            <strong>Último paso (2/2):</strong> {/* {t("last-step", { email: status.newEmail || '' })} */}
                             <div className="text-sm opacity-75 mt-1">
-                                Tu email actual ya fue confirmado. Ahora confirma tu nuevo email.
+                                Tu antiguo email fue confirmado. Ahora confirma tu nuevo email: <strong>{status.newEmail}</strong>
                             </div>
                         </div>
                         <Button
@@ -119,16 +131,15 @@ export default function EmailStatusBanner() {
         );
     }
 
-    // Esperando confirmación del email actual (paso 1/2)
     return (
         <Alert className="mb-4 border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-950">
             <Clock className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
             <AlertDescription className="text-yellow-700 dark:text-yellow-300">
                 <div className="flex items-center justify-between flex-wrap gap-2">
                     <div className="flex-1">
-                        <strong>Cambio de email en progreso (1/2):</strong> {t("change-in-progress", { email: status.currentEmail })}
+                        <strong>Cambio de email en progreso (1/2):</strong>
                         <div className="text-sm opacity-75 mt-1">
-                            Confirma tu email actual para continuar con el cambio a: <strong>{status.newEmail}</strong>
+                            Confirma tu email actual para continuar con el cambio a: <strong>{status.currentEmail}</strong>
                         </div>
                     </div>
                     <Button

@@ -13,6 +13,8 @@ import DashboardCalendar from "@/features/dashboard/components/dashboard-calenda
 import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
 import { Metadata } from "next"
+import { DotPattern } from "@/components/magicui/dot-pattern"
+import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
     title: "Dashboard"
@@ -34,10 +36,10 @@ async function DashboardPage() {
 
     // Check if user has can_create_orders permission in any store
     let canCreateOrders = false
-    
+
     if (dashboardData.storeCount > 0) {
         const { payload: hasOrderPermissions, error: permissionsError } = await checkUserOrderPermissions(user.id)
-        
+
         if (!permissionsError) {
             canCreateOrders = hasOrderPermissions
         }
@@ -46,7 +48,7 @@ async function DashboardPage() {
     const t = await getTranslations("dashboard")
 
     return (
-        <section className="p-4 flex flex-col pt-13 md:pt-17">
+        <section className="p-4 flex flex-col pt-13 md:pt-17 relative">
             <Title title={(
                 <div className="flex items-center gap-2">
                     <Hand className="size-4 md:size-5 lg:size-6" />
@@ -148,6 +150,12 @@ async function DashboardPage() {
                     </CardContent>
                 </Card>
             </div>
+            <DotPattern
+                width={30}
+                height={30}
+                className={cn(
+                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
+                )} />
         </section>
     )
 }

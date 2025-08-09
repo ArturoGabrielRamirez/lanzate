@@ -5,7 +5,6 @@ import { createServerSideClient } from '@/utils/supabase/server'
 import { NextResponse } from 'next/server'
 import { routing } from '@/i18n/routing'
 import { prisma } from '@/utils/prisma'
-import { toast } from 'sonner'
 
 export async function GET(request: Request) {
   const url = new URL(request.url)
@@ -82,9 +81,7 @@ export async function GET(request: Request) {
       const { error: getUserError, payload: userByEmail } = await getUserByEmail(user?.email ?? "")
 
       if (getUserError) {
-        toast.error('Error fetching user by email', {
-          description: `Error fetching user by email ${user?.email}`
-        })
+        console.error('Error getting user by email:', getUserError)
       }
 
       existingUser = userByEmail;
@@ -102,9 +99,7 @@ export async function GET(request: Request) {
       )
 
       if (insertResult.error || !insertResult.payload) {
-        toast.error('Error inserting user into database', {
-          description: `Error inserting user into database ${user?.email}`
-        })
+        console.error('Error inserting user into database:', insertResult.message)
         const errorParams = new URLSearchParams()
         errorParams.set('error', 'user_creation_failed')
         errorParams.set('error_description', insertResult.message || 'Failed to create user record')
@@ -128,20 +123,14 @@ export async function GET(request: Request) {
           }
         });
 
-        toast.success('User migrated to supabase_user_id', {
-          description: `User ${existingUser.email} migrated to supabase_user_id: ${user?.id}`
-        })
+       console.error('User migrated to supabase_user_id:', existingUser.email)
       } catch (error) {
         console.error('Error migrating user', error)
-        toast.error('Error migrating user', {
-          description: `Error migrating user ${existingUser.email} to supabase_user_id: ${user?.id}`
-        })
+        console.error('Error migrating user:', existingUser.email)
       }
 
     } else {
-      toast.success('User already logged in', {
-        description: `User ${existingUser.email} already logged in`
-      })
+      console.error('User already logged in:', existingUser.email)
     }
 
     if (userId) {
