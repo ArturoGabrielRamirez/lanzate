@@ -1,9 +1,16 @@
 import { Suspense } from 'react'
 
-function ConfirmedContent() { // chequear si se esta usando
-    const searchParams = new URLSearchParams(window.location.search)
-    const type = searchParams.get('type') || 'signup'
-    
+interface ConfirmedPageProps {
+    searchParams: Promise<{
+        type?: string;
+    }>;
+}
+
+interface ConfirmedContentProps {
+    type?: string;
+}
+
+function ConfirmedContent({ type = 'signup' }: ConfirmedContentProps) {
     const getMessage = () => {
         switch (type) {
             case 'signup':
@@ -59,11 +66,13 @@ function ConfirmedContent() { // chequear si se esta usando
         </div>
     )
 }
-
-export default function ConfirmedPage() {
+export default async function ConfirmedPage({ searchParams }: ConfirmedPageProps) {
+    const params = await searchParams;
+    const type = params.type || 'signup';
+    
     return (
         <Suspense fallback={<div>Cargando...</div>}>
-            <ConfirmedContent />
+            <ConfirmedContent type={type} />
         </Suspense>
     )
 }
