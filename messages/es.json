@@ -3,7 +3,7 @@
         "title": "Cuenta",
         "description": {
             "upgrade-plan": "Actualizar Plan",
-            "account-details": "Detalles de la Cuenta",
+            "account-details": "Configuración de la tienda",
             "membership": "Membresía",
             "first-name": "Nombre",
             "last-name": "Apellido",
@@ -540,14 +540,15 @@
         },
         "tabs": {
             "overview": "General",
-            "account": "Detalles de la Cuenta",
+            "account": "Configuración de la tienda",
             "branches": "Sucursales",
             "employees": "Empleados",
             "products": "Productos",
             "orders": "Pedidos",
             "settings": "Configuración",
             "analytics": "Análisis",
-            "history": "Historial"
+            "history": "Historial",
+            "styles": "Estilos"
         },
         "account-tab": {
             "name": "Nombre",
@@ -594,6 +595,47 @@
                 "success": "Tienda eliminada exitosamente",
                 "error": "Error al eliminar tienda",
                 "loading": "Eliminando tienda..."
+            }
+        },
+        "update-prices": {
+            "button": "Actualizar precios",
+            "title": "Actualizar precios",
+            "description": "Actualizá los precios de tus productos de forma masiva",
+            "selected-products": "{count} productos seleccionados",
+            "no-selection-disclaimer": "No hay productos seleccionados. Seleccioná productos de la tabla o elegí una categoría para actualizar precios masivamente.",
+            "select-category": "Seleccionar categoría",
+            "choose-category": "Elegí una categoría...",
+            "products-in-category": "{count} productos en esta categoría",
+            "amount": "Monto",
+            "amount-placeholder": "Ingresá el monto",
+            "update-type": "Tipo de actualización",
+            "fixed": "Fijo",
+            "percentage": "Porcentaje",
+            "save": "Guardar",
+            "messages": {
+                "success": "Precios actualizados exitosamente",
+                "error": "Error al actualizar precios",
+                "loading": "Actualizando precios..."
+            }
+        },
+        "edit-operational-settings": {
+            "button": "Editar configuración",
+            "title": "Editar configuración operacional",
+            "description": "Configurá las opciones de delivery y métodos de pago de tu tienda",
+            "delivery-section": "Configuración de Delivery",
+            "payment-section": "Configuración de Pagos",
+            "offers-delivery": "Ofrece delivery",
+            "offers-delivery-description": "Permite entregas a domicilio",
+            "delivery-price": "Precio de delivery",
+            "free-delivery-minimum": "Mínimo para delivery gratis",
+            "free-delivery-minimum-placeholder": "Dejá vacío si no querés delivery gratis",
+            "delivery-radius": "Radio de entrega (km)",
+            "minimum-order-amount": "Monto mínimo de orden",
+            "payment-methods": "Métodos de pago aceptados",
+            "messages": {
+                "success": "Configuración operacional actualizada exitosamente",
+                "error": "Error al actualizar configuración operacional",
+                "loading": "Actualizando configuración..."
             }
         },
         "branches-tab": {
@@ -857,6 +899,7 @@
                 "stock": "Stock",
                 "featured": "Destacado",
                 "active": "Activo",
+                "published": "Publicado",
                 "actions": "Acciones"
             },
             "categories": {
@@ -966,7 +1009,7 @@
         },
         "layout": {
             "overview": "General",
-            "account-details": "Detalles de la cuenta",
+            "account-details": "Configuración",
             "branches": "Sucursales",
             "employees": "Empleados",
             "products": "Productos",
@@ -975,7 +1018,8 @@
             "analytics": "Análisis",
             "history": "Historial",
             "store-details": "Detalles de la tienda",
-            "no-description": "No hay descripción disponible"
+            "no-description": "No hay descripción disponible",
+            "styles": "Personalización"
         },
         "logs": {
             "log-details": "Detalles del registro ",

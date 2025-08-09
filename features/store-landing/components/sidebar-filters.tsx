@@ -10,11 +10,11 @@ async function SidebarFilters() {
     const t = await getTranslations("subdomain.sidebar.filters");
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex-col gap-4 [display:var(--show-filters)!important]">
             <div className="md:hidden">
                 <SidebarSearchInput />
             </div>
-            <Card className="w-full bg-accent hidden lg:block">
+            <Card className="w-full bg-[var(--filter-background)] text-[var(--filter-text)] max-lg:hidden [display:var(--show-searchbar-filter)!important]">
                 <CardHeader>
                     <CardTitle>{t("search")}</CardTitle>
                 </CardHeader>
@@ -22,7 +22,7 @@ async function SidebarFilters() {
                     <SidebarSearchInput />
                 </CardContent>
             </Card>
-            <Card className="w-full bg-accent hidden lg:block">
+            <Card className="w-full bg-[var(--filter-background)] text-[var(--filter-text)] max-lg:hidden lg:block [display:var(--show-sorting-filter)!important]">
                 <CardHeader>
                     <CardTitle>{t("sort-by")}</CardTitle>
                 </CardHeader>
@@ -32,7 +32,7 @@ async function SidebarFilters() {
                     </div>
                 </CardContent>
             </Card>
-            <Card className="w-full bg-accent hidden lg:block">
+            <Card className="w-full bg-[var(--filter-background)] text-[var(--filter-text)] max-lg:hidden lg:block [display:var(--show-categories-filter)!important]">
                 <CardHeader>
                     <CardTitle>{t("categories")}</CardTitle>
                 </CardHeader>
@@ -42,7 +42,7 @@ async function SidebarFilters() {
                     </div>
                 </CardContent>
             </Card>
-            <Card className="w-full bg-accent hidden lg:block">
+            <Card className="w-full bg-[var(--filter-background)] text-[var(--filter-text)] max-lg:hidden lg:block [display:var(--show-price-filter)!important]">
                 <CardHeader>
                     <CardTitle>{t("price-range")}</CardTitle>
                 </CardHeader>

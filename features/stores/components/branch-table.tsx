@@ -6,12 +6,13 @@ import DeleteBranchButton from "@/features/branches/components/delete-branch-but
 import { DataTable } from "@/features/layout/components/data-table"
 import { Branch } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal, Eye, Trash2, Crown } from "lucide-react"
+import { MoreHorizontal, Eye, Trash2, Crown, ArrowUpDown } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
+import { cn } from "@/lib/utils"
 
 type EmployeePermissions = {
     isAdmin: boolean
@@ -45,8 +46,22 @@ function BranchTable({ branches, storeId, userId, slug, employeePermissions }: P
 
     const columns: ColumnDef<Branch>[] = [
         {
-            header: t("headers.name"),
+            //header: t("headers.name"),
             accessorKey: "name",
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.name")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             cell: ({ row }) => {
                 const branch = row.original
                 return (
@@ -63,27 +78,69 @@ function BranchTable({ branches, storeId, userId, slug, employeePermissions }: P
             }
         },
         {
-            header: t("headers.address"),
+            //header: t("headers.address"), 
             accessorKey: "address",
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.address")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             cell: ({ row }) => {
                 const address = row.original.address
-                return <span>{address ? address : t("no-address")}</span>
+                return <span className={cn(!address && "text-muted-foreground/50")}>{address ? address : t("no-address")}</span>
             }
         },
         {
-            header: t("headers.phone"),
+            //header: t("headers.phone"),
             accessorKey: "phone",
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.phone")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             cell: ({ row }) => {
                 const phone = row.original.phone
-                return <span>{phone ? phone : t("no-phone")}</span>
+                return <span className={cn(!phone && "text-muted-foreground/50")}>{phone ? phone : t("no-phone")}</span>
             }
         },
         {
-            header: t("headers.email"),
+            //header: t("headers.email"),   
             accessorKey: "email",
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.email")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             cell: ({ row }) => {
                 const email = row.original.email
-                return <span>{email ? email : t("no-email")}</span>
+                return <span className={cn(email ? "text-blue-500" : "text-muted-foreground/50")}>{email ? email : t("no-email")}</span>
             }
         },
         {

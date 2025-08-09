@@ -31,11 +31,11 @@ export async function getEmployeePermissions(userId: number, slug: string): Prom
             where: { slug },
             select: { id: true, user_id: true }
         })
-
+        
         if (!store) {
             throw new Error("Store not found")
         }
-
+        
         // Check if user is the store owner (admin)
         if (store.user_id === userId) {
             return {

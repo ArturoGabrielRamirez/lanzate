@@ -7,12 +7,11 @@ import {
     ProductStoreCountWidget,
     SalesByMonthWidget,
     TopProductsWidget,
-    QuickActionsBar
 } from "./index"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getTranslations } from "next-intl/server"
 
-async function OverviewTab({ slug, userId }: OverviewTabProps) {
+async function OverviewTab({ slug }: OverviewTabProps) {
 
     const t = await getTranslations("overview")
 
@@ -46,12 +45,9 @@ async function OverviewTab({ slug, userId }: OverviewTabProps) {
 
     return (
         <div className="space-y-6">
-
-            {/* Second Row - Charts and Lists */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-6">
-                    {/* Quick Actions Bar */}
-                    <QuickActionsBar slug={slug} storeId={store.id} userId={userId} />
+                    <ProductStoreCountWidget data={data.productStoreCount} />
                     <TopProductsWidget data={data.topProducts} />
                 </div>
                 <div className="lg:col-span-1">
@@ -60,13 +56,9 @@ async function OverviewTab({ slug, userId }: OverviewTabProps) {
                     </Suspense>
                 </div>
             </div>
-            {/* Top Row - Main Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <SalesOverviewWidget data={data.salesOverview} />
-                <ProductStoreCountWidget data={data.productStoreCount} />
             </div>
-
-
         </div>
     )
 }

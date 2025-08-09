@@ -9,15 +9,20 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
 
     const t = await getTranslations("store.products-tab")
     
+    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+
+    if (userError || !user) {
+        return console.log(userMessage)
+    }   
+    
+    
     // Get user info and employee permissions
     const [
-        { payload: user, error: userError, message: userMessage },
         { payload: store, error: storeError },
         { payload: employeePermissions, error: permissionsError }
     ] = await Promise.all([
-        getUserInfo(),
         getStoresFromSlug(slug),
-        getEmployeePermissions(userId, slug)
+        getEmployeePermissions(user.id, slug)
     ])
 
     if (userError || !user) {
@@ -36,7 +41,7 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
         <>
             <ProductsTable 
                 data={store.products} 
-                userId={userId} 
+                userId={user.id} 
                 slug={slug} 
                 storeId={store.id}
                 employeePermissions={employeePermissions}

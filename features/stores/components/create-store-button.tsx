@@ -9,8 +9,9 @@ import { Plus } from "lucide-react"
 import { useState } from "react"
 import { CreateStoreButtonProps } from "@/features/stores/types"
 import { useTranslations } from "next-intl"
+import { cn } from "@/lib/utils"
 
-function CreateStoreButton({ userId, canCreate = true }: CreateStoreButtonProps) {
+function CreateStoreButton({ userId, canCreate = true, className }: CreateStoreButtonProps) {
 
     const [subdomain, setSubdomain] = useState(generate({ exactly: 1, minLength: 7, join: "" }))
     const t = useTranslations("store.create-store")
@@ -43,7 +44,7 @@ function CreateStoreButton({ userId, canCreate = true }: CreateStoreButtonProps)
                 error: t("messages.error"),
                 loading: t("messages.loading")
             }}
-            className="w-full"
+            className={cn("w-full", className)}
         >
             <InputField name="name" label={t("name")} type="text" />
             <InputField name="description" label={t("description-field")} type="text" />

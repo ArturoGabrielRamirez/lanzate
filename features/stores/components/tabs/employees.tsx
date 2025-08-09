@@ -8,18 +8,22 @@ import { getTranslations } from "next-intl/server"
 
 async function EmployeesTab({ slug, userId }: EmployeesTabProps) {
     const t = await getTranslations("store.employees-tab")
+
+    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+
+    if (userError || !user) {
+        return console.log(userMessage)
+    }
     
     // Get user info, employee permissions, employees, and store data
     const [
-        { payload: user, error: userError, message: userMessage },
         { payload: employees, error: employeesError, message: employeesMessage },
         { payload: store, error: storeError },
         { payload: employeePermissions, error: permissionsError }
     ] = await Promise.all([
-        getUserInfo(),
         getEmployeesFromStore(slug),
         getStoresFromSlug(slug),
-        getEmployeePermissions(userId, slug)
+        getEmployeePermissions(user.id, slug)
     ])
 
     if (userError || !user) {
@@ -41,7 +45,7 @@ async function EmployeesTab({ slug, userId }: EmployeesTabProps) {
     return (
         <EmployeesTable 
             data={employees} 
-            userId={userId} 
+            userId={user.id} 
             slug={slug} 
             storeId={store.id}
             employeePermissions={employeePermissions}

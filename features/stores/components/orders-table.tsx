@@ -6,7 +6,7 @@ import { DataTable } from "@/features/layout/components/data-table"
 import { cn } from "@/lib/utils"
 import { Order } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { Eye, MapPin, MoreHorizontal, Truck } from "lucide-react"
+import { ArrowUpDown, Eye, MapPin, MoreHorizontal, Truck } from "lucide-react"
 import Link from "next/link"
 import CancelOrderButton from "./cancel-order-button"
 import { ExportOrdersButton } from "@/features/orders/components"
@@ -28,7 +28,21 @@ function OrdersTable({ data, slug, userId }: Props) {
             accessorKey: "id",
         },
         {
-            header: t("headers.status"),
+            //header: t("headers.status"),
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.status")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             accessorKey: "status",
             cell: ({ row }) => {
                 const status = row.original.status
@@ -42,27 +56,39 @@ function OrdersTable({ data, slug, userId }: Props) {
                     "COMPLETED": t("statuses.completed")
                 }
                 return (
-                    <div className="flex justify-center">
-                        <Badge
-                            className={cn(
-                                "bg-transparent",
-                                status === "PENDING" && "border-yellow-500 text-yellow-500",
-                                status === "PROCESSING" && "border-orange-500 text-orange-500",
-                                status === "READY" && "border-blue-500 text-blue-500",
-                                status === "SHIPPED" && "border-violet-500 text-violet-500",
-                                status === "DELIVERED" && "border-green-500 text-green-500",
-                                status === "CANCELLED" && "border-red-500 text-red-500",
-                                status === "COMPLETED" && "border-green-500 text-green-500"
-                            )}
-                        >
-                            {statusMap[status as keyof typeof statusMap] || status}
-                        </Badge>
-                    </div>
+                    <Badge
+                        className={cn(
+                            "bg-transparent",
+                            status === "PENDING" && "border-yellow-500 text-yellow-500",
+                            status === "PROCESSING" && "border-orange-500 text-orange-500",
+                            status === "READY" && "border-blue-500 text-blue-500",
+                            status === "SHIPPED" && "border-violet-500 text-violet-500",
+                            status === "DELIVERED" && "border-green-500 text-green-500",
+                            status === "CANCELLED" && "border-red-500 text-red-500",
+                            status === "COMPLETED" && "border-green-500 text-green-500"
+                        )}
+                    >
+                        {statusMap[status as keyof typeof statusMap] || status}
+                    </Badge>
                 )
             }
         },
         {
-            header: t("headers.total"),
+            //header: t("headers.total"),
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.total")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             accessorKey: "total_price",
             cell: ({ row }) => {
                 const total = row.original.total_price
@@ -70,7 +96,21 @@ function OrdersTable({ data, slug, userId }: Props) {
             }
         },
         {
-            header: t("headers.customer"),
+            //header: t("headers.customer"),
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.customer")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             accessorKey: "user",
             cell: ({ row }) => {
                 console.log(row.original)
@@ -78,7 +118,21 @@ function OrdersTable({ data, slug, userId }: Props) {
             }
         },
         {
-            header: t("headers.date"),
+            //header: t("headers.date"),
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.date")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             accessorKey: "created_at",
             cell: ({ row }) => {
                 const createdAt = row.original.created_at
@@ -86,7 +140,21 @@ function OrdersTable({ data, slug, userId }: Props) {
             }
         },
         {
-            header: t("headers.items"),
+            //header: t("headers.items"),
+            header: ({ column }) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        {t("headers.items")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            <ArrowUpDown className="size-4" />
+                        </Button>
+                    </div>
+                )
+            },
             accessorKey: "total_quantity",
             cell: ({ row }) => {
                 const totalQuantity = row.original.total_quantity

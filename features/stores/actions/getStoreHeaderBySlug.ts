@@ -1,6 +1,6 @@
 "use server"
 
-import { formatErrorResponse } from "@/utils/lib"
+import { actionWrapper, formatErrorResponse } from "@/utils/lib"
 import { selectStoreHeaderBySlug } from "../data/selectStoreHeaderBySlug"
 
 type StoreHeader = {
@@ -18,7 +18,7 @@ type GetStoreHeaderBySlugReturn = {
 }
 
 export async function getStoreHeaderBySlug(slug: string): Promise<GetStoreHeaderBySlugReturn> {
-    try {
+    return actionWrapper(async () => {
         const { payload: store, error, message } = await selectStoreHeaderBySlug(slug)
 
         if (error) throw new Error(message)
@@ -32,7 +32,5 @@ export async function getStoreHeaderBySlug(slug: string): Promise<GetStoreHeader
             payload: store,
             error: false
         }
-    } catch (error) {
-        return formatErrorResponse("Error fetching store header", error, null)
-    }
+    })
 } 
