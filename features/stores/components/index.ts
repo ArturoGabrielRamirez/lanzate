@@ -9,6 +9,8 @@ import ProductDetail from "./product-detail";
 import StoreCard from "./store-card";
 import StoreHeader from "./store-header";
 import StoreHeaderSkeleton from "./store-header-skeleton";
+import StoresContainer from "./stores-container";
+import StoresSkeleton from "./stores-skeleton";
 import TabTriggerLink from "./tab-trigger-link";
 import TabsClientContainer from "./tabs-client-container";
 import AccountTab from "./tabs/account";
@@ -37,6 +39,8 @@ export {
     StoreCard,
     StoreHeader,
     StoreHeaderSkeleton,
+    StoresContainer,
+    StoresSkeleton,
     TabTriggerLink,
     TabsClientContainer,
     AccountTab,
