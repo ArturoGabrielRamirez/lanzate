@@ -137,9 +137,6 @@ export function DataTable<TData, TValue>({
                     />
                     {table.getFilteredSelectedRowModel().rows.length > 0 && (
                         <>
-                            {/* <Button variant="outline" size="sm">
-                                Actualizar precios
-                            </Button> */}
                             <div className={cn("text-muted-foreground flex-1 text-sm", table.getFilteredSelectedRowModel().rows.length === 0 && "text-muted-foreground/50")}>
                                 {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} selected.
                             </div>

@@ -618,6 +618,26 @@
                 "loading": "Actualizando precios..."
             }
         },
+        "edit-operational-settings": {
+            "button": "Editar configuración",
+            "title": "Editar configuración operacional",
+            "description": "Configurá las opciones de delivery y métodos de pago de tu tienda",
+            "delivery-section": "Configuración de Delivery",
+            "payment-section": "Configuración de Pagos",
+            "offers-delivery": "Ofrece delivery",
+            "offers-delivery-description": "Permite entregas a domicilio",
+            "delivery-price": "Precio de delivery",
+            "free-delivery-minimum": "Mínimo para delivery gratis",
+            "free-delivery-minimum-placeholder": "Dejá vacío si no querés delivery gratis",
+            "delivery-radius": "Radio de entrega (km)",
+            "minimum-order-amount": "Monto mínimo de orden",
+            "payment-methods": "Métodos de pago aceptados",
+            "messages": {
+                "success": "Configuración operacional actualizada exitosamente",
+                "error": "Error al actualizar configuración operacional",
+                "loading": "Actualizando configuración..."
+            }
+        },
         "branches-tab": {
             "no-branches": "No hay sucursales"
         },

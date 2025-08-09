@@ -779,6 +779,26 @@
                 "loading": "Updating prices..."
             }
         },
+        "edit-operational-settings": {
+            "button": "Edit settings",
+            "title": "Edit operational settings",
+            "description": "Configure your store's delivery options and payment methods",
+            "delivery-section": "Delivery Settings",
+            "payment-section": "Payment Settings",
+            "offers-delivery": "Offers delivery",
+            "offers-delivery-description": "Allows home delivery",
+            "delivery-price": "Delivery price",
+            "free-delivery-minimum": "Minimum for free delivery",
+            "free-delivery-minimum-placeholder": "Leave empty if you don't want free delivery",
+            "delivery-radius": "Delivery radius (km)",
+            "minimum-order-amount": "Minimum order amount",
+            "payment-methods": "Accepted payment methods",
+            "messages": {
+                "success": "Operational settings updated successfully",
+                "error": "Error updating operational settings",
+                "loading": "Updating settings..."
+            }
+        },
         "branches-tab": {
             "no-branches": "No branches found"
         },
