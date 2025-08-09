@@ -10,31 +10,34 @@ import { Switch } from "@/components/ui/switch"
 import { Checkbox } from "@/components/ui/checkbox"
 import { PaymentMethod } from "@prisma/client"
 
-async function AccountTab({ slug, userId }: AccountTabProps) {
+async function AccountTab({ slug }: AccountTabProps) {
 
     const t = await getTranslations("store.account-tab")
-    
+
+    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+
     // Get user info and employee permissions
     const [
-        { payload: user, error: userError, message: userMessage },
         { payload: store, error: storeError },
         { payload: employeePermissions, error: permissionsError }
     ] = await Promise.all([
-        getUserInfo(),
         getStoresFromSlug(slug),
-        getEmployeePermissions(userId, slug)
+        getEmployeePermissions(user.id, slug)
     ])
 
     if (userError || !user) {
-        return console.log(userMessage)
+        console.error(userMessage)
+        return null
     }
 
     if (storeError || !store) {
-        return console.log(storeError)
+        console.error(storeError)
+        return null
     }
 
     if (permissionsError || !employeePermissions) {
-        return console.log("Error loading employee permissions")
+        console.error("Error loading employee permissions")
+        return null
     }
 
     // Check if user can manage store
@@ -67,10 +70,10 @@ async function AccountTab({ slug, userId }: AccountTabProps) {
                         </div>
                         <div className="space-y-1">
                             <p className="font-medium text-sm text-muted-foreground">{t("website")}</p>
-                            <a 
-                                href={`http://${store.subdomain}.lanzate.app`} 
-                                className="text-blue-500 hover:underline text-base" 
-                                target="_blank" 
+                            <a
+                                href={`http://${store.subdomain}.lanzate.app`}
+                                className="text-blue-500 hover:underline text-base"
+                                target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 {`https://${store.subdomain}.lanzate.app`}
@@ -96,10 +99,10 @@ async function AccountTab({ slug, userId }: AccountTabProps) {
                                 {t("facebook")}
                             </p>
                             {operationalSettings?.facebook_url ? (
-                                <a 
-                                    href={operationalSettings.facebook_url} 
-                                    className="text-blue-500 hover:underline text-base" 
-                                    target="_blank" 
+                                <a
+                                    href={operationalSettings.facebook_url}
+                                    className="text-blue-500 hover:underline text-base"
+                                    target="_blank"
                                     rel="noopener noreferrer"
                                 >
                                     {operationalSettings.facebook_url}
@@ -114,10 +117,10 @@ async function AccountTab({ slug, userId }: AccountTabProps) {
                                 {t("instagram")}
                             </p>
                             {operationalSettings?.instagram_url ? (
-                                <a 
-                                    href={operationalSettings.instagram_url} 
-                                    className="text-blue-500 hover:underline text-base" 
-                                    target="_blank" 
+                                <a
+                                    href={operationalSettings.instagram_url}
+                                    className="text-blue-500 hover:underline text-base"
+                                    target="_blank"
                                     rel="noopener noreferrer"
                                 >
                                     {operationalSettings.instagram_url}
@@ -132,10 +135,10 @@ async function AccountTab({ slug, userId }: AccountTabProps) {
                                 {t("x-twitter")}
                             </p>
                             {operationalSettings?.x_url ? (
-                                <a 
-                                    href={operationalSettings.x_url} 
-                                    className="text-blue-500 hover:underline text-base" 
-                                    target="_blank" 
+                                <a
+                                    href={operationalSettings.x_url}
+                                    className="text-blue-500 hover:underline text-base"
+                                    target="_blank"
                                     rel="noopener noreferrer"
                                 >
                                     {operationalSettings.x_url}
@@ -145,11 +148,11 @@ async function AccountTab({ slug, userId }: AccountTabProps) {
                             )}
                         </div>
                     </div>
-                    
+
                     {canManageStore && (
                         <div className="mt-6 pt-6 border-t">
                             <EditStoreButton
-                                userId={userId}
+                                userId={user.id}
                                 slug={store.slug}
                                 store={store}
                             />
@@ -185,7 +188,7 @@ async function AccountTab({ slug, userId }: AccountTabProps) {
                                             Permite entregas a domicilio
                                         </p>
                                     </div>
-                                    <Switch 
+                                    <Switch
                                         checked={operationalSettings?.offers_delivery || false}
                                         disabled
                                     />
@@ -241,16 +244,16 @@ async function AccountTab({ slug, userId }: AccountTabProps) {
                                                 PAYPAL: 'PayPal',
                                                 CRYPTO: 'Criptomonedas'
                                             }
-                                            
+
                                             return (
                                                 <div key={method} className="flex items-center space-x-2">
-                                                    <Checkbox 
+                                                    <Checkbox
                                                         checked={isAccepted}
                                                         disabled
                                                         id={method}
                                                     />
-                                                    <label 
-                                                        htmlFor={method} 
+                                                    <label
+                                                        htmlFor={method}
                                                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                                     >
                                                         {methodLabels[method]}
@@ -263,7 +266,7 @@ async function AccountTab({ slug, userId }: AccountTabProps) {
                             </div>
                         </div>
                     </div>
-                    
+
                     {canManageStore && (
                         <div className="mt-6 pt-6 border-t">
                             <EditOperationalSettingsButton
@@ -285,7 +288,7 @@ async function AccountTab({ slug, userId }: AccountTabProps) {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <DeleteStoreButton storeId={store.id} userId={userId} />
+                        <DeleteStoreButton storeId={store.id} userId={user.id} />
                     </CardContent>
                 </Card>
             )}
