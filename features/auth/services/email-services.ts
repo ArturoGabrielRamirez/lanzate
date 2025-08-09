@@ -1,8 +1,7 @@
-// /features/auth/services/email-service.ts
 import { createServerSideClient } from '@/utils/supabase/server';
 import { extractSubdomainFromHost } from '@/features/auth/utils';
 import { prisma } from '@/utils/prisma';
-import { getCurrentUser } from '@/features/auth/actions/get-user';
+import { getCurrentUser } from '../actions';
 import { headers } from 'next/headers';
 import type { 
   ResendEmailParams, 

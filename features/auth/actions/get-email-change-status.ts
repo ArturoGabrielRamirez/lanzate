@@ -2,11 +2,11 @@
 
 import { createServerSideClient } from "@/utils/supabase/server";
 import { prisma } from "@/utils/prisma";
-import { getLocalUser } from "./get-locale-user";
+import { getLocalUser } from "./index";
 
 export async function getEmailChangeStatus() {
     const { localUser, error: localUserError } = await getLocalUser();
-    
+
     if (localUserError || !localUser) {
         return { error: localUserError || "Usuario no encontrado" };
     }
@@ -26,8 +26,11 @@ export async function getEmailChangeStatus() {
         });
 
         const supabase = await createServerSideClient();
-        const { data: { user: freshUser }, error: refreshError } = await supabase.auth.getUser();
-        
+
+        const {
+            data: { user: freshUser },
+            error: refreshError } = await supabase.auth.getUser();
+
         if (refreshError || !freshUser) {
             return { error: "Error al obtener estado del usuario" };
         }

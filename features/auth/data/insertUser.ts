@@ -2,7 +2,7 @@
 
 import { prisma } from '@/utils/prisma'
 import { ResponseType } from '@/features/layout/types'
-import { getCurrentUser } from '@/features/auth/actions/get-user'
+import { getCurrentUser } from '../actions'
 import { detectOAuthProvider } from "@/features/auth/utils/detect-provider";
 
 export async function insertUser(

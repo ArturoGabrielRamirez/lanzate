@@ -1,26 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from "@/utils/prisma";
-
-type UpdateData = {
-    old_email_confirmed?: boolean;
-    old_email_confirmed_at?: Date;
-    new_email_confirmed?: boolean;
-    new_email_confirmed_at?: Date;
-    completed?: boolean;
-    completed_at?: Date;
-}
+import { UpdateData } from '@/features/auth/types';
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
         const { type, record } = body;
 
-        // Verificar que sea un evento de autenticación relevante
         if (type !== 'INSERT' && type !== 'UPDATE') {
             return NextResponse.json({ status: 'ignored' });
         }
 
-        // Solo procesar eventos relacionados con cambios de email
         if (!record.new_email && !record.email_change_confirm_status) {
             return NextResponse.json({ status: 'ignored' });
         }
@@ -29,21 +19,18 @@ export async function POST(request: NextRequest) {
         const currentEmail = record.email;
         const newEmail = record.new_email;
 
-        // CAMBIO PRINCIPAL: Buscar por supabase_user_id primero
         let localUser = await prisma.user.findUnique({
             where: { 
                 supabase_user_id: supabaseUserId 
             }
         });
 
-        // Si no se encuentra por supabase_user_id, buscar por email y actualizar
         if (!localUser) {
             localUser = await prisma.user.findUnique({
                 where: { email: currentEmail }
             });
 
             if (localUser) {
-                // Actualizar el supabase_user_id para futuras consultas
                 localUser = await prisma.user.update({
                     where: { id: localUser.id },
                     data: { 
@@ -77,14 +64,12 @@ export async function POST(request: NextRequest) {
         const updateData: UpdateData = {};
         let shouldUpdate = false;
 
-        // Confirmar email anterior (cuando hay new_email pendiente)
         if (newEmail && !changeRequest.old_email_confirmed) {
             updateData.old_email_confirmed = true;
             updateData.old_email_confirmed_at = now;
             shouldUpdate = true;
         }
 
-        // Confirmar nuevo email y completar proceso (cuando new_email ya no existe)
         if (!newEmail && changeRequest.new_email && !changeRequest.completed) {
             updateData.new_email_confirmed = true;
             updateData.new_email_confirmed_at = now;
@@ -92,7 +77,6 @@ export async function POST(request: NextRequest) {
             updateData.completed_at = now;
             shouldUpdate = true;
 
-            // Actualizar el email en nuestra base de datos
             await prisma.user.update({
                 where: { id: localUser.id },
                 data: { 

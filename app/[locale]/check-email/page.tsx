@@ -1,11 +1,5 @@
-import CheckEmail from "@/features/auth/components/check-email";
-
-interface CheckEmailPageProps {
-    searchParams: Promise<{ 
-        email?: string;
-        type?: 'signup' | 'recovery' | 'smart';
-    }>;
-}
+import CheckEmail from "@/features/auth/components/change-status/check-email";
+import { CheckEmailPageProps } from "@/features/auth/types";
 
 export default async function CheckEmailPage({ 
     searchParams 

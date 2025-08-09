@@ -320,3 +320,19 @@ export interface ResendValidation {
   remainingCooldown: number;
   reason?: string;
 }
+
+export interface CheckEmailPageProps {
+    searchParams: Promise<{ 
+        email?: string;
+        type?: 'signup' | 'recovery' | 'smart';
+    }>;
+}
+
+export type UpdateData = {
+    old_email_confirmed?: boolean;
+    old_email_confirmed_at?: Date;
+    new_email_confirmed?: boolean;
+    new_email_confirmed_at?: Date;
+    completed?: boolean;
+    completed_at?: Date;
+}

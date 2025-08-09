@@ -118,8 +118,6 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                 };
             }
 
-            console.log('🔄 Resending email via unified API:', endpoint, payload);
-
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
@@ -206,14 +204,23 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
         <div className="p-8 text-center grow text-white flex flex-col items-center justify-center h-dvh relative">
             <div className="max-w-md mx-auto space-y-6">
                 <div className="mb-8">
-                    <div className="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center bg-gradient-to-t from-chart-5 to-primary">
-                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 7.89a2 2 0 002.83 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full flex items-center 
+                    justify-center bg-gradient-to-t from-chart-5 to-primary">
+                        <svg className="w-10 h-10"
+                            fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M3 8l7.89 7.89a2 2 0 002.83 0L21 8M5 19h14a2 2 0 002-2V7a2
+                             2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                     </div>
 
                     <h2 className="text-2xl font-bold mb-2 bg-color-red-500">
-                        {type === 'recovery' ? 'Revisa tu email' : 'Confirma tu email'}
+                        {type === 'recovery' ?
+                            'Revisa tu email' :
+                            'Confirma tu email'}
                         {step && <span className="text-sm font-normal text-blue-300 ml-2">({step})</span>}
                     </h2>
 
@@ -232,7 +239,11 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                         {lastResendInfo && (
                             <div className="text-xs text-gray-400 bg-white/5 rounded p-3 mt-3">
                                 <p><strong>Último reenvío:</strong> {lastResendInfo.email}</p>
-                                <p><strong>Tipo:</strong> {lastResendInfo.type === 'old_email' ? 'Email actual' : lastResendInfo.type === 'new_email' ? 'Email nuevo' : lastResendInfo.type}</p>
+                                <p><strong>Tipo:</strong> {lastResendInfo.type === 'old_email' ?
+                                    'Email actual' :
+                                    lastResendInfo.type === 'new_email' ?
+                                        'Email nuevo' :
+                                        lastResendInfo.type}</p>
                                 {lastResendInfo.reason && <p><strong>Razón:</strong> {lastResendInfo.reason}</p>}
                             </div>
                         )}

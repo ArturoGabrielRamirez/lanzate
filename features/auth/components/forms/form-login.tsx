@@ -2,7 +2,6 @@
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useTranslations } from 'next-intl'
-
 import { Form, InputField } from '@/features/layout/components'
 import { handleLogIn } from '@/features/auth/actions'
 import { loginUserSchema } from '@/features/auth/schemas'

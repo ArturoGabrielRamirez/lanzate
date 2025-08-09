@@ -1,5 +1,4 @@
-// /app/auth/error/page.tsx
-'use client'
+/* 'use client'
 
 import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
@@ -82,4 +81,4 @@ export default function AuthErrorPage() {
             <ErrorContent />
         </Suspense>
     )
-}
+} */

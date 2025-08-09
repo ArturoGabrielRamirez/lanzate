@@ -2,12 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
-
-interface ResendEmailParams {
-    type: 'signup' | 'recovery' | 'email_change';
-    email?: string;
-    step?: 'old_email' | 'new_email';
-}
+import { ResendEmailParams } from '../types';
 
 export function useResendCooldown(
     resendParams: ResendEmailParams,
@@ -55,7 +50,7 @@ export function useResendCooldown(
         try {
             console.log('🔄 Resending email via unified API with params:', resendParams);
 
-            const response = await fetch('/api/auth/resend', {
+            const response = await fetch('/auth/resend', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,9 +1,9 @@
 "use server";
 
 import { createServerSideClient } from "@/utils/supabase/server";
-import { getCurrentUser } from "./get-user";
+import { getCurrentUser } from "./index";
 import { prisma } from "@/utils/prisma";
-import { getLocalUser } from "./get-locale-user";
+import { getLocalUser } from "./index";
 import { extractSubdomainFromHost } from "../utils";
 import { headers } from "next/headers";
 
@@ -16,7 +16,10 @@ export async function handleEditEmail(email: string) {
     }
 
     if (localUserError || !localUser) {
-        return { error: localUserError || "Usuario no encontrado en la base de datos local" };
+
+        return { error: localUserError 
+            || "Usuario no encontrado en la base de datos local" };
+            
     }
 
     if (email === user.email) {

@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { getEmailChangeStatus } from '@/features/auth/actions/email-change-status';
-import { handleEditEmail } from "@/features/auth/actions/handle-edit-email";
+import { getEmailChangeStatus } from '../actions/index';
+import { handleEditEmail } from "../actions";
 import { PendingChangeData } from '../types';
 
 export function useEmailChange(currentEmail: string) {

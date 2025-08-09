@@ -67,7 +67,7 @@ export function useEmailConfirmationDetector({
 
     const handleFirstEmailConfirmation = async () => {
         try {
-            const response = await fetch('/api/auth/confirm-first-email', {
+            const response = await fetch('/auth/confirm-first-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

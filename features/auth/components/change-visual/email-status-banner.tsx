@@ -3,7 +3,7 @@
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, Clock, Mail, RefreshCw } from 'lucide-react';
-import { useConfirmationEmailChangeStatus } from '../hooks/use-confirmation-email-change-status';
+import { useConfirmationEmailChangeStatus } from '../../hooks/use-confirmation-email-change-status';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -29,7 +29,7 @@ export default function EmailStatusBanner() {
                 }
             }
 
-            const response = await fetch('/api/auth/resend', {
+            const response = await fetch('/auth/resend', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,7 +75,6 @@ export default function EmailStatusBanner() {
         return null;
     }
 
-    // Proceso completado
     if (status.processCompleted || (status.oldEmailConfirmed && status.newEmailConfirmed)) {
         return (
             <Alert className="mb-4 border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950">
@@ -106,7 +105,7 @@ export default function EmailStatusBanner() {
                 <AlertDescription className="text-blue-700 dark:text-blue-300">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                         <div className="flex-1">
-                            <strong>Último paso (2/2):</strong> {/* {t("last-step", { email: status.newEmail || '' })} */}
+                            <strong>Último paso (2/2):</strong>
                             <div className="text-sm opacity-75 mt-1">
                                 Tu antiguo email fue confirmado. Ahora confirma tu nuevo email: <strong>{status.newEmail}</strong>
                             </div>

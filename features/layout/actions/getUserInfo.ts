@@ -1,6 +1,6 @@
 "use server";
 
-import { getLocalUser } from "@/features/auth/actions/get-locale-user";
+import { getLocalUser } from "../../auth/actions";
 import { prisma } from "@/utils/prisma";
 
 export async function getUserInfo() {

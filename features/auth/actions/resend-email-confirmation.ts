@@ -1,7 +1,7 @@
-"use server";
+/* "use server";
 
-import { getCurrentUser } from "./get-user";
-import { getLocalUser } from "./get-locale-user";
+import { getCurrentUser } from "./index";
+import { getLocalUser } from "./index";
 import { createServerSideClient } from "@/utils/supabase/server";
 import { extractSubdomainFromHost } from "../utils";
 import { headers } from "next/headers";
@@ -89,4 +89,4 @@ export async function resendEmailConfirmation() {
             error: "Error interno del servidor"
         };
     }
-}
+} */

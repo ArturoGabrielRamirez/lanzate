@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+/* import { Suspense } from 'react'
 
 function ConfirmedContent() {
     const searchParams = new URLSearchParams(window.location.search)
@@ -66,4 +66,4 @@ export default function ConfirmedPage() {
             <ConfirmedContent />
         </Suspense>
     )
-}
+} */

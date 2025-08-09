@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/utils/prisma";
-import { getCurrentUser } from "./get-user";
+import { getCurrentUser } from "./index";
 
 export async function getLocalUser() {
   const { user, error: userError } = await getCurrentUser();
@@ -59,13 +59,23 @@ export async function getLocalUser() {
     }
 
     if (!localUser) {
-      return { localUser: null, error: "Usuario no encontrado en la base de datos local" };
+
+      return {
+        localUser: null,
+        error: "Usuario no encontrado en la base de datos local"
+      };
+
     }
 
     return { localUser, error: null };
 
   } catch (error) {
     console.error('Error getting local user:', error);
-    return { localUser: null, error: "Error al obtener usuario local" };
+
+    return {
+      localUser: null,
+      error: "Error al obtener usuario local"
+    };
+
   }
 }
