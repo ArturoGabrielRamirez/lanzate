@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowDown, ArrowRight, ArrowUp, ChartNoAxesCombined, DollarSign, Package, ShoppingCart, Store } from "lucide-react"
+import { ArrowDown, ArrowUp, ChartNoAxesCombined, DollarSign, Package, ShoppingCart, Store } from "lucide-react"
 import { getDashboardStats } from "../actions/getDashboardStats"
 import * as motion from "motion/react-client"
-import Link from "next/link"
 
 type Props = {
     userId: number
