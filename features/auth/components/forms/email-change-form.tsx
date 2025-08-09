@@ -1,6 +1,6 @@
 import { InputField } from "@/features/layout/components";
-import { EmailStatusAlerts } from "./index";
-import { EmailChangeFormProps } from "../types";
+import { EmailStatusAlerts } from "../index";
+import { EmailChangeFormProps } from "../../types";
 
 export default function EmailChangeForm({
     currentEmail,

@@ -1,10 +1,10 @@
 'use client'
 
 import { ButtonWithPopup } from "@/features/layout/components";
-import { emailSchema } from '../schemas/change-email-schema';
-import { ChangeEmailButtonProps } from '../types';
-import { useEmailChange } from "../hooks/use-email-change";
-import { EmailChangeForm, EmailChangeDialog, ProgressButton } from "./index";
+import { emailSchema } from '../../schemas/change-email-schema';
+import { ChangeEmailButtonProps } from '../../types';
+import { useEmailChange } from "../../hooks/use-email-change";
+import { EmailChangeForm, EmailChangeDialog, ProgressButton } from "../index";
 
 export default function ChangeEmailButton({
     buttonText,
@@ -30,7 +30,8 @@ export default function ChangeEmailButton({
                 <ButtonWithPopup
                     text={buttonText}
                     title={title}
-                    description="Por seguridad, confirma tu contraseña actual. Te enviaremos emails de verificación a ambas direcciones."
+                    description="Por seguridad, confirma tu contraseña actual.
+                     Te enviaremos emails de verificación a ambas direcciones."
                     action={changeEmailAction}
                     schema={emailSchema}
                     messages={{

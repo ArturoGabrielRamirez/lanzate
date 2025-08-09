@@ -1,113 +1,81 @@
-export type HandleLoginAction = {
-    email: string
-    password: string
-}
+// /features/auth/types/index.ts
 
-export interface ChangePasswordButtonProps {
-    buttonText: string;
-    title: string;
-    className?: string;
-}
+// =========================================
+// EXPORTS PRINCIPALES DE AUTH TYPES
+// =========================================
 
-export interface ChangeEmailButtonProps {
-    buttonText: string;
-    title: string;
-    className?: string;
-    currentEmail: string;
-}
+// Tipos base para servicios de email
+export type {
+  EmailResendType,
+  EmailConfirmationType,
+  EmailResendTarget,
+  ResendEmailParams,
+  ResendEmailResponse,
+  SmartResendResponse
+} from './types';
 
-export interface EmailChangeDialogProps {
-    showMonitor: boolean;
-    onOpenChange: (open: boolean) => void;
-    currentEmail: string;
-    newEmail: string;
-    onComplete: () => void;
-}
+// Tipos para estado de cambio de email
+export type {
+  EmailChangeStatus,
+  EmailChangeStatusResponse,
+  EmailChangeMonitorStatus
+} from './types';
 
-export interface EmailChangeActionsProps {
-    stepStatus: any,
-    isManuallyChecking: boolean,
-    handleManualCheck: () => void,
-    status: any,
-    isResending: boolean,
-    resendCooldown: number,
-    handleResendEmails: () => void,
-    onComplete: () => void
-}
+// Tipos para componentes
+export type {
+  CheckEmailProps,
+  CheckEmailPageProps,
+  EmailChangeMonitorProps,
+  EmailChangeDialogProps,
+  EmailChangeActionsProps,
+  EmailChangeFormProps,
+  EmailConfirmationDetectorProps,
+  EmailStatusAlertsProps,
+  EmailStepInstructionsProps,
+  EmailStepProgressProps,
+  ChangePasswordButtonProps,
+  ChangeEmailButtonProps,
+  GoogleLoginButtonProps,
+  ProgressButtonProps
+} from './types';
 
-export interface EmailChangeFormProps {
-    currentEmail: string;
-    hasPendingChange: boolean;
-    isProcessCompleted: boolean;
-}
+// Tipos para estado de pasos y control
+export type {
+  StepStatus,
+  ResendCooldownState,
+  PendingChangeData
+} from './types';
 
-export interface EmailChangeMonitorProps {
-    onComplete: () => void;
-    initialOldEmail: string;
-    newEmail: string;
-}
+// Tipos para API y respuestas
+export type {
+  ApiResponse,
+  ApiErrorResponse,
+  ApiSuccessResponse,
+  HandleLoginAction,
+  UpdateData
+} from './types';
 
-export interface EmailChangeStatus {
-    hasEmailChange: boolean;
-    oldEmailConfirmed: boolean;
-    newEmailConfirmed: boolean;
-    newEmail: string | null;
-    currentEmail: string;
-    loading: boolean;
-    processCompleted: boolean;
-    requestId?: number | undefined;
-    expiresAt?: Date;
-    oldEmailConfirmedAt?: Date | null;
-    newEmailConfirmedAt?: Date | null;
-}
+// Tipos para configuración y utilidades
+export type {
+  EmailConfig,
+  EmailServiceError,
+  EmailResendLog,
+  EmailValidation,
+  ResendValidation
+} from './types';
 
-export interface EmailConfirmationDetectorProps {
-    onFirstEmailConfirmed?: () => void;
-    onSecondEmailConfirmed?: () => void;
-}
+// Re-exports de otros archivos de tipos
+export type {
+  FacebookLogoProps,
+  GoogleLogoProps,
+  LoginErrorDisplayProps
+} from './types';
 
-export interface EmailStatusAlertsProps {
-    currentEmail: string;
-    hasPendingChange: boolean;
-    isProcessCompleted: boolean;
-}
+// =========================================
+// EXPORT DEFAULT PARA CONVENIENCIA
+// =========================================
 
-export interface EmailStepInstructionsProps {
-    stepStatus: {
-        currentStep: string,
-    }
-    initialOldEmail: string,
-    newEmail: string,
-}
+// Si necesitas importar todos los tipos a la vez:
+// import * as AuthTypes from '@/features/auth/types';
 
-export interface EmailStepProgressProps {
-    status: {
-        oldEmailConfirmed: boolean;
-        hasEmailChange: boolean;
-    },
-    initialOldEmail: string;
-    newEmail: string;
-}
-
-export interface GoogleLoginButtonProps {
-    orLoginWith: string
-}
-
-export interface PendingChangeData {
-    oldEmailConfirmed: boolean;
-    newEmailConfirmed: boolean;
-    newEmail: string;
-    processCompleted: boolean;
-}
-
-export interface ProgressButtonProps {
-    hasPendingChange: boolean;
-    isProcessCompleted: boolean;
-    progressText: string;
-    onShowMonitor: () => void;
-}
-
-
-export type { FacebookLogoProps } from "./facebook-logo";
-export type { GoogleLogoProps } from "./google-logo";
-export type { LoginErrorDisplayProps } from "./login-error-display";
+export * from './types';

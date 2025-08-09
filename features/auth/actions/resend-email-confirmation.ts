@@ -1,100 +1,92 @@
-"use server";
+/* "use server";
 
+import { getCurrentUser } from "./index";
+import { getLocalUser } from "./index";
 import { createServerSideClient } from "@/utils/supabase/server";
-import { getCurrentUser } from "./get-user";
-import { prisma } from "@/utils/prisma";
+import { extractSubdomainFromHost } from "../utils";
+import { headers } from "next/headers";
 
 export async function resendEmailConfirmation() {
     const { user, error: userError } = await getCurrentUser();
+    const { localUser, error: localUserError } = await getLocalUser();
 
     if (userError || !user) {
-        return { error: userError || "Usuario no encontrado" };
+        return { 
+            success: false, 
+            error: userError || "Usuario no autenticado" 
+        };
+    }
+
+    if (localUserError || !localUser) {
+        return { 
+            success: false, 
+            error: localUserError || "Usuario no encontrado en la base de datos local" 
+        };
     }
 
     try {
-        // Obtener el usuario local
-        const localUser = await prisma.user.findFirst({
-            where: { email: user.email }
-        });
-
-        if (!localUser) {
-            return { error: "Usuario local no encontrado" };
-        }
-
-        // Buscar la solicitud de cambio activa
-        const changeRequest = await prisma.email_change_requests.findFirst({
-            where: {
-                user_id: localUser.id,
-                completed: false,
-                expires_at: {
-                    gt: new Date()
-                }
-            },
-            orderBy: {
-                created_at: 'desc'
-            }
-        });
-
-        if (!changeRequest) {
-            return { error: "No hay solicitud de cambio activa" };
-        }
-
+        const headersList = await headers();
+        const host = headersList.get('host') || '';
+        const subdomain = extractSubdomainFromHost(host);
         const supabase = await createServerSideClient();
         
-        // Configurar la URL de redirección para el segundo email
-        const baseUrl = process.env.NEXTAUTH_URL || `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`;
+        const baseUrl = `${subdomain ? `https://${subdomain}.lanzate.app` : `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`}`;
         const redirectTo = `${baseUrl}/account?emailCompleted=true`;
 
-        // Reenviar la confirmación de cambio de email
-        const { error } = await supabase.auth.updateUser(
-            { email: changeRequest.new_email },
-            {
-                emailRedirectTo: redirectTo
-            }
-        );
-
-        if (error) {
-            console.error('Error resending email confirmation:', error);
-            return { error: "Error al reenviar emails: " + error.message };
-        }
-
-        // Actualizar timestamp de la solicitud para extender tiempo
-        await prisma.email_change_requests.update({
-            where: { id: changeRequest.id },
-            data: {
-                updated_at: new Date(),
-                // Opcional: extender el tiempo de expiración
-                expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000) // +24 horas
-            }
-        });
-
-        // Log del reenvío
-        try {
-            await prisma.actionLog.create({
-                data: {
-                    action: 'EMAIL_CONFIRMATION',
-                    entity_type: 'EMAIL_CHANGE_REQUEST',
-                    entity_id: changeRequest.id,
-                    user_id: localUser.id,
-                    action_initiator: 'USER',
-                    details: `Email confirmations resent for change from ${changeRequest.old_email} to ${changeRequest.new_email}`
+        if (user.new_email) {
+            const { error } = await supabase.auth.resend({
+                type: 'email_change',
+                email: user.new_email,
+                options: {
+                    emailRedirectTo: redirectTo
                 }
             });
-        } catch (logError) {
-            console.warn('⚠️ Failed to create action log:', logError);
+
+            if (error) {
+                return {
+                    success: false,
+                    error: `Error al reenviar email de cambio: ${error.message}`
+                };
+            }
+
+            return {
+                success: true,
+                message: "Email de confirmación de cambio reenviado"
+            };
+        }
+
+        if (!user.email_confirmed_at) {  
+            const { error } = await supabase.auth.resend({
+                type: 'signup',
+                email: user.email!,
+                options: {
+                    emailRedirectTo: redirectTo
+                }
+            });
+
+            if (error) {
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
+
+            return {
+                success: true,
+                message: "Email de confirmación reenviado"
+            };
         }
 
         return {
-            success: true,
-            message: "Emails de confirmación reenviados exitosamente",
-            data: {
-                oldEmail: changeRequest.old_email,
-                newEmail: changeRequest.new_email
-            }
+            success: false,
+            error: "No hay confirmaciones pendientes"
         };
 
     } catch (error) {
-        console.error("Error resending email confirmation:", error);
-        return { error: "Error interno del servidor" };
+        console.error('❌ Error in resendEmailConfirmation:', error);
+        return {
+            success: false,
+            error: "Error interno del servidor"
+        };
     }
-}
+} */

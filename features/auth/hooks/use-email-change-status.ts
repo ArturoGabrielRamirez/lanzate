@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react';
-import { getEmailChangeStatus } from '@/features/auth/actions/email-change-status';
+import { getEmailChangeStatus } from '../actions/index';
 
 export function useEmailChangeStatus(initialOldEmail: string,
   onComplete: () => void) {
@@ -41,7 +41,8 @@ export function useEmailChangeStatus(initialOldEmail: string,
                     processCompleted: result.data.processCompleted || false
                 };
 
-                const statusString = `${newStatus.hasEmailChange}-${newStatus.oldEmailConfirmed}-${newStatus.newEmailConfirmed}-${newStatus.processCompleted}`;
+                const statusString = `${newStatus.hasEmailChange}-${newStatus.oldEmailConfirmed}
+                -${newStatus.newEmailConfirmed}-${newStatus.processCompleted}`;
                 
                 if (statusString !== lastStatusRef.current) {
                     setStatus(newStatus);
