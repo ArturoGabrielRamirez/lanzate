@@ -1,14 +1,15 @@
 import { Suspense } from "react"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { ArrowDown, ArrowUp, Calendar, DollarSign, Package, ShoppingCart, Store, Users } from "lucide-react"
+import { Calendar, Store } from "lucide-react"
 import ActivityFeed from "@/features/dashboard/components/activity-feed"
 import ActivityFeedSkeleton from "@/features/dashboard/components/activity-feed-skeleton"
+import DashboardStats from "@/features/dashboard/components/dashboard-stats"
+import DashboardStatsSkeleton from "@/features/dashboard/components/dashboard-stats-skeleton"
 import GlobalSearch from "@/features/dashboard/components/global-search"
 import { Button } from "@/components/ui/button"
+import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
 import StoreListContainer from "@/features/dashboard/components/store-list-container"
 import StoreList from "@/features/dashboard/components/store-list"
-import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default async function Dashboard() {
 
@@ -22,60 +23,9 @@ export default async function Dashboard() {
         <section className="p-2 md:p-4 flex flex-col pt-13 md:pt-17">
             <div className="grid grid-cols-1 grid-areas-[search-bar,actions,feed] md:grid-areas-[search-bar_stores,feed_stores,feed_actions,feed_calendar] gap-2 md:grid-cols-[2fr_1fr] md:grid-rows-[min-content_auto_min-content_1fr] lg:grid-areas-[stats_search-bar_stores,stats_feed_stores,stats_feed_actions,stats_feed_calendar,empty_feed_calendar,empty_feed_calendar] lg:grid-rows-[min-content_min-content_min-content_min-content_1fr] lg:grid-cols-[1fr_2fr_1fr] md:gap-4">
                 {/* Quick Stats */}
-                <div className="grid-cols-2 xl:grid-cols-4 2xl:grid-cols-2 gap-4 area-[stats] opacity-50 hover:opacity-100 transition-opacity duration-300 hidden lg:grid">
-                    <Card className="!p-2 !gap-2">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
-                            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-                            <DollarSign className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent className="!px-2">
-                            <div className="text-2xl font-bold">$45,231.89</div>
-                            <p className="text-xs text-muted-foreground">
-                                <ArrowUp className="h-3 w-3 inline mr-1 text-green-500" />
-                                +20.1% from last month
-                            </p>
-                        </CardContent>
-                    </Card>
-                    <Card className="!p-2 !gap-2">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
-                            <CardTitle className="text-sm font-medium">Orders</CardTitle>
-                            <ShoppingCart className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent className="!px-2">
-                            <div className="text-2xl font-bold">+2350</div>
-                            <p className="text-xs text-muted-foreground">
-                                <ArrowUp className="h-3 w-3 inline mr-1 text-green-500" />
-                                +180.1% from last month
-                            </p>
-                        </CardContent>
-                    </Card>
-                    <Card className="!p-2 !gap-2">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
-                            <CardTitle className="text-sm font-medium">Products</CardTitle>
-                            <Package className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent className="!px-2">
-                            <div className="text-2xl font-bold">+12,234</div>
-                            <p className="text-xs text-muted-foreground">
-                                <ArrowDown className="h-3 w-3 inline mr-1 text-red-500" />
-                                -19% from last month
-                            </p>
-                        </CardContent>
-                    </Card>
-                    <Card className="!p-2 !gap-2">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
-                            <CardTitle className="text-sm font-medium">Active Now</CardTitle>
-                            <Users className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent className="!px-2">
-                            <div className="text-2xl font-bold">+573</div>
-                            <p className="text-xs text-muted-foreground">
-                                <ArrowUp className="h-3 w-3 inline mr-1 text-green-500" />
-                                +201 since last hour
-                            </p>
-                        </CardContent>
-                    </Card>
-                </div>
+                <Suspense fallback={<DashboardStatsSkeleton />}>
+                    <DashboardStats userId={user.id} />
+                </Suspense>
 
                 {/* Search Bar */}
                 <div className="  flex items-center gap-2 area-[search-bar]">
@@ -100,11 +50,6 @@ export default async function Dashboard() {
                         <Calendar className="size-4" />
                     </Button>
                 </div>
-
-                {/* Store Steps */}
-                {/* <div className="area-[steps] opacity-50 hover:opacity-100 transition-opacity duration-300">
-                    <DashboardSteps userId={user.id} dashboardData={dashboardData} />
-                </div> */}
 
                 {/* Store Management Section */}
                 <StoreListContainer>
