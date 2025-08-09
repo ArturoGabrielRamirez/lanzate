@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import { RowModel } from "@tanstack/react-table"
 import { getCategories } from "@/features/store-landing/actions/getCategories"
 import { getProductsCountByCategoryAction } from "@/features/products/actions/getProductsCountByCategory"
+import { updateProductsPricesAction } from "@/features/products/actions/updateProductsPrices"
 import { formatErrorResponse } from "@/utils/lib"
 import { Product } from "@prisma/client"
 import { Category } from "@/features/store-landing/types"
@@ -47,7 +48,7 @@ export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButton
                 setIsLoadingCount(true)
                 try {
                     const { payload, error } = await getProductsCountByCategoryAction(
-                        parseInt(selectedCategory), 
+                        parseInt(selectedCategory),
                         storeId
                     )
                     if (!error && payload !== null) {
@@ -70,15 +71,60 @@ export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButton
     }, [selectedCategory, storeId])
 
     const handleSave = async () => {
-        // TODO: Implement price update logic
-        console.log("Updating prices:", {
-            selectedRows: hasSelectedRows ? selectedRows.rows.length : 0,
-            category: selectedCategory,
-            amount,
-            updateType
-        })
+        try {
+            // Validate amount
+            const numericAmount = parseFloat(amount)
+            if (isNaN(numericAmount) || numericAmount <= 0) {
+                throw new Error("Por favor ingresa un monto válido mayor a 0")
+            }
 
-        return formatErrorResponse("Success", null, { success: true })
+            // Prepare payload based on selection type
+            let payload: {
+                storeId: number
+                amount: number
+                updateType: UpdateType
+                productIds?: number[]
+                categoryId?: number
+            }
+
+            if (hasSelectedRows) {
+                // Update selected products
+                const productIds = selectedRows.rows.map(row => row.original.id)
+                payload = {
+                    storeId,
+                    amount: numericAmount,
+                    updateType,
+                    productIds
+                }
+            } else if (selectedCategory) {
+                // Update products by category
+                payload = {
+                    storeId,
+                    amount: numericAmount,
+                    updateType,
+                    categoryId: parseInt(selectedCategory)
+                }
+            } else {
+                throw new Error("Debe seleccionar productos o una categoría")
+            }
+
+            console.log("Updating prices with payload:", payload)
+
+            const { error, message, payload: result } = await updateProductsPricesAction(payload)
+
+            if (error) {
+                throw new Error(message)
+            }
+
+            return {
+                error: false,
+                message: `${t("messages.success")} - ${result?.updatedCount || 0} productos actualizados`,
+                payload: result
+            }
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : t("messages.error")
+            return formatErrorResponse(errorMessage, error, null)
+        }
     }
 
     const renderContent = () => {
