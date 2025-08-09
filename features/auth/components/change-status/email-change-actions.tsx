@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Send, CheckCircle } from "lucide-react";
-import { EmailChangeActionsProps } from "../../types/index";
+import { EmailChangeActionsProps } from "../../types";
 
 export default function EmailChangeActions({
     stepStatus,

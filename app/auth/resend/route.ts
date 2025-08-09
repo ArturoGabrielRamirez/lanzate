@@ -6,7 +6,7 @@ import type {
   EmailServiceError,
   ApiErrorResponse,
   ApiSuccessResponse 
-} from '@/features/auth/types/index';
+} from '../../../features/auth/types';
 import { EmailService } from '@/features/auth/services/email-services';
 
 /**

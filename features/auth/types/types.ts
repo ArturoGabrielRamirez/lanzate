@@ -1,12 +1,11 @@
-// /features/auth/types/auth.types.ts
-
-// Tipos base para resend de emails
 export type EmailResendType = 'signup' | 'recovery' | 'email_change';
+export type EmailConfirmationType = 'signup' | 'recovery' | 'email_change'; // chequear que se este usando
+export type EmailResendTarget = 'old_email' | 'new_email' | 'single';
 
 export interface ResendEmailParams {
   type: EmailResendType;
-  email?: string; // Requerido para signup y recovery
-  step?: 'old_email' | 'new_email'; // Opcional para email_change
+  email?: string;
+  step?: 'old_email' | 'new_email';
 }
 
 export interface ResendEmailResponse {
@@ -18,86 +17,178 @@ export interface ResendEmailResponse {
     resendType?: 'old_email' | 'new_email';
     reason?: string;
     redirectTo?: string;
-    requestId?: string;
+    requestId?: number;
   };
 }
 
-// Tipos para estado de cambio de email
+export interface SmartResendResponse extends ResendEmailResponse {
+  data?: ResendEmailResponse['data'] & {
+    requestId?: number;
+  };
+}  // chequear que se este usando
+
 export interface EmailChangeStatus {
   hasEmailChange: boolean;
   oldEmailConfirmed: boolean;
   newEmailConfirmed: boolean;
-  newEmail: string | null;
+  newEmail?: string | null;
   currentEmail: string;
   loading: boolean;
   processCompleted: boolean;
-  requestId?: string;
+  requestId?: number;
   expiresAt?: Date;
   oldEmailConfirmedAt?: Date | null;
   newEmailConfirmedAt?: Date | null;
 }
 
-export interface EmailChangeStatusResponse extends EmailChangeStatus {}
+export interface EmailChangeStatusResponse extends EmailChangeStatus { }
 
-// Tipos para respuesta de resend inteligente
-export interface SmartResendResponse extends ResendEmailResponse {
-  data?: ResendEmailResponse['data'] & {
-    requestId?: string;
-  };
-}
+export interface EmailChangeMonitorStatus extends EmailChangeStatus { } // chequear que se este usando
 
-// Tipos para componentes
 export interface CheckEmailProps {
   email?: string;
   type?: 'signup' | 'recovery' | 'smart';
   onComplete?: () => void;
+} // chequear que se este usando
+
+export interface CheckEmailPageProps {
+  searchParams: Promise<{
+    email?: string;
+    type?: 'signup' | 'recovery' | 'smart';
+  }>;
 }
 
 export interface EmailChangeMonitorProps {
-  onComplete?: () => void;
-  initialOldEmail?: string;
-  newEmail?: string;
+  onComplete: () => void;
+  initialOldEmail: string;
+  newEmail: string;
 }
 
 export interface EmailChangeDialogProps {
   showMonitor: boolean;
   onOpenChange: (open: boolean) => void;
-  currentEmail?: string;
-  newEmail?: string;
-  onComplete?: () => void;
+  currentEmail: string;
+  newEmail: string;
+  onComplete: () => void;
 }
 
-// Tipos para estado de pasos
+export interface EmailChangeActionsProps {
+  stepStatus: StepStatus;
+  isManuallyChecking: boolean;
+  handleManualCheck: () => void;
+  status: EmailChangeStatus;
+  isResending: boolean;
+  resendCooldown: number;
+  handleResendEmails: () => void;
+  onComplete: () => void;
+}
+
+export interface EmailChangeFormProps {
+  currentEmail: string;
+  hasPendingChange: boolean;
+  isProcessCompleted: boolean;
+}
+
+export interface EmailConfirmationDetectorProps {
+  onFirstEmailConfirmed?: () => void;
+  onSecondEmailConfirmed?: () => void;
+}
+
+export interface EmailStatusAlertsProps {
+  currentEmail: string;
+  hasPendingChange: boolean;
+  isProcessCompleted: boolean;
+}
+
+export interface EmailStepInstructionsProps {
+  stepStatus: {
+    currentStep: string;
+  };
+  initialOldEmail: string;
+  newEmail: string;
+}
+
+export interface EmailStepProgressProps {
+  status: {
+    oldEmailConfirmed: boolean;
+    hasEmailChange: boolean;
+  };
+  initialOldEmail: string;
+  newEmail: string;
+}
+
+export interface ChangePasswordButtonProps {
+  buttonText: string;
+  title: string;
+  className?: string;
+}
+
+export interface ChangeEmailButtonProps {
+  buttonText: string;
+  title: string;
+  className?: string;
+  currentEmail: string;
+}
+
+export interface GoogleLoginButtonProps {
+  orLoginWith: string;
+}
+
+export interface ProgressButtonProps {
+  hasPendingChange: boolean;
+  isProcessCompleted: boolean;
+  progressText: string;
+  onShowMonitor: () => void;
+}
+
 export interface StepStatus {
-  step1: 'pending' | 'confirmed' | 'waiting';
-  step2: 'pending' | 'confirmed' | 'waiting';
-  currentStep: 'step1' | 'step2' | 'completed';
-}
+  step1: string;
+  step2: string;
+  currentStep: string;
+} // chequear que se este usando
 
-// Tipos para cooldown de resend
 export interface ResendCooldownState {
   isResending: boolean;
   resendCooldown: number;
   lastResendTime: number | null;
   canResend: boolean;
+} // chequear que se este usando
+
+export interface PendingChangeData {
+  oldEmailConfirmed: boolean;
+  newEmailConfirmed: boolean;
+  newEmail: string;
+  processCompleted: boolean;
 }
 
-// Tipos para respuestas de API
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = Record<string, unknown>> {
   error: boolean;
   message: string;
   data?: T;
-}
+} // chequear que se este usando
 
 export interface ApiErrorResponse extends ApiResponse {
   error: true;
-}
+} // chequear que se este usando
 
-export interface ApiSuccessResponse<T = any> extends ApiResponse<T> {
+export interface ApiSuccessResponse<T = Record<string, unknown>> extends ApiResponse<T> {
   error: false;
 }
 
-// Tipos para configuración de emails
+export type HandleLoginAction = {
+  email: string;
+  password: string;
+}
+
+export type UpdateData = {
+  old_email_confirmed?: boolean;
+  old_email_confirmed_at?: Date;
+  new_email_confirmed?: boolean;
+  new_email_confirmed_at?: Date;
+  completed?: boolean;
+  completed_at?: Date;
+}
+
 export interface EmailConfig {
   baseUrl: string;
   redirectPaths: {
@@ -105,43 +196,32 @@ export interface EmailConfig {
     recovery: string;
     emailChange: string;
   };
-}
+} // chequear que se este usando
 
-// Tipos para manejo de errores
 export interface EmailServiceError extends Error {
   status?: number;
   code?: string;
 }
 
-// Tipos para logs y debug
 export interface EmailResendLog {
   timestamp: Date;
   type: EmailResendType;
   email: string;
   success: boolean;
   error?: string;
-}
+} // chequear que se este usando
 
-// Union types útiles
-export type EmailConfirmationType = 'signup' | 'recovery' | 'email_change';
-export type EmailResendTarget = 'old_email' | 'new_email' | 'single';
-
-// Tipos extendidos para compatibilidad con código existente
-export interface EmailChangeMonitorStatus extends EmailChangeStatus {
-  // Compatibilidad con código existente
-}
-
-// Re-exports para mantener compatibilidad
-export type { EmailChangeStatus as EmailChangeMonitorStatus_Old };
-
-// Tipos para validación
 export interface EmailValidation {
   isValid: boolean;
   error?: string;
-}
+} // chequear que se este usando
 
 export interface ResendValidation {
   canResend: boolean;
   remainingCooldown: number;
   reason?: string;
-}
+} // chequear que se este usando
+
+export type { FacebookLogoProps } from "./facebook-logo";
+export type { GoogleLogoProps } from "./google-logo";
+export type { LoginErrorDisplayProps } from "./login-error-display";

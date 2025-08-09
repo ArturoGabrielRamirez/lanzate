@@ -7,7 +7,7 @@ import type {
   ResendEmailParams, 
   ResendEmailResponse, 
   EmailChangeStatusResponse
-} from '../types/index';
+} from '../types';
 
 export class EmailService {
   private static async getBaseUrl(): Promise<string> {

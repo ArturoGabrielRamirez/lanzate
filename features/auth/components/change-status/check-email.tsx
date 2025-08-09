@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useConfirmationEmailChangeStatus } from "@/features/auth/hooks/use-confirmation-email-change-status";
-import { EmailChangeStatus } from "@/features/auth/types";
+import { EmailChangeStatus } from "../../types";
 import { Button } from "@/components/ui/button";
 import { DotPattern } from '@/components/magicui/dot-pattern';
 import { cn } from "@/lib/utils";
