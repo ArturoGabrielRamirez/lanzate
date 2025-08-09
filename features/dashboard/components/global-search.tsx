@@ -80,7 +80,10 @@ export default function GlobalSearch({ userId }: GlobalSearchProps) {
 
     return (
         <div ref={searchRef} className="relative w-full">
-            <div className="flex gap-2">
+            {showResults && (results.length > 0 || isLoading) && (
+                <div className="fixed inset-0 z-40 bg-background/50 backdrop-blur-xs" onClick={() => setShowResults(false)}></div>
+            )}
+            <div className="flex gap-2 relative z-50">
                 <Input
                     placeholder="Search products, orders, customers..."
                     value={query}
