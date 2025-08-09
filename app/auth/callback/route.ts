@@ -117,14 +117,14 @@ export async function GET(request: Request) {
         await prisma.user.update({
           where: { id: existingUser.id },
           data: {
-            supabase_user_id: user?.id || null,
-            email: user?.email! || undefined,
+            supabase_user_id: user?.id || existingUser.supabase_user_id,
+            email: user?.email || existingUser.email,
             created_at: new Date(),
             updated_at: new Date()
           }
         });
 
-       console.error('User migrated to supabase_user_id:', existingUser.email)
+        console.error('User migrated to supabase_user_id:', existingUser.email)
       } catch (error) {
         console.error('Error migrating user', error)
         console.error('Error migrating user:', existingUser.email)
