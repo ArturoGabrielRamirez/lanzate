@@ -2,6 +2,8 @@ import CreateStoreButton from "./create-store-button";
 import DeleteStoreButton from "./delete-store-button";
 import EditStoreButton from "./edit-store-button";
 import EditOperationalSettingsButton from "./edit-operational-settings-button";
+import { DeliverySwitch } from "./delivery-switch";
+import { PaymentMethodsSwitches } from "./payment-methods-switches";
 import ProductCard from "./product-card";
 import ProductDetail from "./product-detail";
 import StoreCard from "./store-card";
@@ -28,6 +30,8 @@ export {
     DeleteStoreButton,
     EditStoreButton,
     EditOperationalSettingsButton,
+    DeliverySwitch,
+    PaymentMethodsSwitches,
     ProductCard,
     ProductDetail,
     StoreCard,

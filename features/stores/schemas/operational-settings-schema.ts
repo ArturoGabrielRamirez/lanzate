@@ -17,6 +17,6 @@ export const operationalSettingsSchema = yup.object({
         then: (schema) => schema.min(1, 'Delivery radius must be at least 1 km').max(100, 'Delivery radius cannot exceed 100 km').required('Delivery radius is required when delivery is enabled'),
         otherwise: (schema) => schema.notRequired()
     }),
-    minimum_order_amount: yup.number().min(0, 'Minimum order amount must be 0 or greater').required(),
+    minimum_order_amount: yup.number().min(0, 'Minimum order amount must be 0 or greater'),
     payment_methods: yup.array().of(yup.string()).min(1, 'At least one payment method must be selected').required()
 }) 

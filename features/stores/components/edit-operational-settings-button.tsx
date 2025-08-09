@@ -9,10 +9,9 @@ import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { Switch } from "@/components/ui/switch"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
 import { PaymentMethod, Store, StoreOperationalSettings } from "@prisma/client"
+import { DeliverySwitch } from "./delivery-switch"
+import { PaymentMethodsSwitches } from "./payment-methods-switches"
 
 type EditOperationalSettingsButtonProps = {
     storeId: number
@@ -22,30 +21,29 @@ type EditOperationalSettingsButtonProps = {
 }
 
 type OperationalSettingsFormPayload = {
+    offers_delivery: boolean
     delivery_price?: string
     free_delivery_minimum?: string
     delivery_radius_km?: string
     minimum_order_amount: string
+    payment_methods: PaymentMethod[]
 }
 
 function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettingsButtonProps) {
     const operationalSettings = store.operational_settings
     
     const [offersDelivery, setOffersDelivery] = useState(operationalSettings?.offers_delivery || false)
-    const [selectedPaymentMethods, setSelectedPaymentMethods] = useState<PaymentMethod[]>(
-        operationalSettings?.payment_methods || [PaymentMethod.CASH]
-    )
     
     const t = useTranslations("store.edit-operational-settings")
 
     const handleEditOperationalSettings = async (payload: OperationalSettingsFormPayload) => {
         try {
             const data = {
-                offers_delivery: offersDelivery,
-                delivery_price: offersDelivery ? (parseFloat(payload.delivery_price || "0") || 0) : 0,
-                free_delivery_minimum: offersDelivery ? (payload.free_delivery_minimum ? parseFloat(payload.free_delivery_minimum) : null) : null,
-                delivery_radius_km: offersDelivery ? (parseFloat(payload.delivery_radius_km || "5") || 5) : 5,
-                payment_methods: selectedPaymentMethods,
+                offers_delivery: payload.offers_delivery,
+                delivery_price: payload.offers_delivery ? (parseFloat(payload.delivery_price || "0") || 0) : 0,
+                free_delivery_minimum: payload.offers_delivery ? (payload.free_delivery_minimum ? parseFloat(payload.free_delivery_minimum) : null) : null,
+                delivery_radius_km: payload.offers_delivery ? (parseFloat(payload.delivery_radius_km || "5") || 5) : 5,
+                payment_methods: payload.payment_methods,
                 minimum_order_amount: parseFloat(payload.minimum_order_amount) || 0
             }
 
@@ -55,22 +53,8 @@ function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettin
         }
     }
 
-    const handlePaymentMethodChange = (method: PaymentMethod, checked: boolean) => {
-        if (checked) {
-            setSelectedPaymentMethods(prev => [...prev, method])
-        } else {
-            setSelectedPaymentMethods(prev => prev.filter(m => m !== method))
-        }
-    }
-
-    const paymentMethodLabels: Record<PaymentMethod, string> = {
-        CASH: 'Efectivo',
-        CREDIT_CARD: 'Tarjeta de Crédito',
-        DEBIT_CARD: 'Tarjeta de Débito',
-        TRANSFER: 'Transferencia',
-        MERCADO_PAGO: 'Mercado Pago',
-        PAYPAL: 'PayPal',
-        CRYPTO: 'Criptomonedas'
+    const handleDeliveryChange = (enabled: boolean) => {
+        setOffersDelivery(enabled)
     }
 
     return (
@@ -100,19 +84,10 @@ function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettin
                         </span>
                     </AccordionTriggerWithValidation>
                     <AccordionContent className="space-y-4">
-                        <div className="flex items-center justify-between">
-                            <div className="space-y-0.5">
-                                <Label htmlFor="offers-delivery">{t("offers-delivery")}</Label>
-                                <p className="text-xs text-muted-foreground">
-                                    {t("offers-delivery-description")}
-                                </p>
-                            </div>
-                            <Switch
-                                id="offers-delivery"
-                                checked={offersDelivery}
-                                onCheckedChange={setOffersDelivery}
-                            />
-                        </div>
+                        <DeliverySwitch 
+                            defaultValue={operationalSettings?.offers_delivery || false}
+                            onDeliveryChange={handleDeliveryChange}
+                        />
                         
                         <InputField
                             name="delivery_price"
@@ -126,7 +101,7 @@ function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettin
                             name="free_delivery_minimum"
                             label={t("free-delivery-minimum")}
                             type="number"
-                            defaultValue={operationalSettings?.free_delivery_minimum?.toString() || ""}
+                            defaultValue={operationalSettings?.free_delivery_minimum?.toString() || "0"}
                             placeholder={t("free-delivery-minimum-placeholder")}
                             disabled={!offersDelivery}
                         />
@@ -156,26 +131,10 @@ function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettin
                             defaultValue={operationalSettings?.minimum_order_amount?.toString() || "0"}
                         />
                         
-                        <div className="space-y-3">
-                            <Label>{t("payment-methods")}</Label>
-                            <div className="space-y-2">
-                                {Object.values(PaymentMethod).map((method) => (
-                                    <div key={method} className="flex items-center space-x-2">
-                                        <Checkbox
-                                            id={method}
-                                            checked={selectedPaymentMethods.includes(method)}
-                                            onCheckedChange={(checked) => handlePaymentMethodChange(method, checked as boolean)}
-                                        />
-                                        <label
-                                            htmlFor={method}
-                                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                        >
-                                            {paymentMethodLabels[method]}
-                                        </label>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                        <PaymentMethodsSwitches
+                            defaultMethods={operationalSettings?.payment_methods || [PaymentMethod.CASH]}
+                            onPaymentMethodsChange={() => {}}
+                        />
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
