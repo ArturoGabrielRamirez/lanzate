@@ -4,12 +4,20 @@ import QuickActionsBar from "@/features/overview/components/quick-actions-bar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Store, Sparkles, TrendingUp, Users, Package } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import { getUserInfo } from "@/features/layout/actions"
 
-async function Overview({ slug, userId }: OverviewTabProps) {
+async function Overview({ slug }: OverviewTabProps) {
     const t = await getTranslations("overview")
-    
+
+    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+
+    if (userError || !user) {
+        console.error(userMessage)
+        return null
+    }
+
     const { payload: store, error: storeError } = await getStoresFromSlug(slug)
-    
+
     if (storeError || !store) {
         return (
             <div className="text-center p-8">
@@ -43,10 +51,10 @@ async function Overview({ slug, userId }: OverviewTabProps) {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <p className="text-muted-foreground leading-relaxed">
-                            En este lugar vas a poder gestionar todos los aspectos de tu negocio de manera eficiente y organizada. 
+                            En este lugar vas a poder gestionar todos los aspectos de tu negocio de manera eficiente y organizada.
                             Desde el control de inventario hasta el análisis de ventas, todo está a tu alcance.
                         </p>
-                        
+
                         <div className="grid grid-cols-2 gap-4 pt-4">
                             <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                                 <TrendingUp className="h-5 w-5 text-green-600" />
@@ -55,7 +63,7 @@ async function Overview({ slug, userId }: OverviewTabProps) {
                                     <p className="text-xs text-muted-foreground">Monitorea tu rendimiento</p>
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                                 <Package className="h-5 w-5 text-blue-600" />
                                 <div>
@@ -63,7 +71,7 @@ async function Overview({ slug, userId }: OverviewTabProps) {
                                     <p className="text-xs text-muted-foreground">Gestiona tu catálogo</p>
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                                 <Users className="h-5 w-5 text-purple-600" />
                                 <div>
@@ -71,7 +79,7 @@ async function Overview({ slug, userId }: OverviewTabProps) {
                                     <p className="text-xs text-muted-foreground">Coordina tu personal</p>
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                                 <Sparkles className="h-5 w-5 text-orange-600" />
                                 <div>
@@ -84,7 +92,7 @@ async function Overview({ slug, userId }: OverviewTabProps) {
                 </Card>
 
                 {/* Quick Actions Bar */}
-                <QuickActionsBar slug={slug} storeId={store.id} userId={userId} />
+                <QuickActionsBar slug={slug} storeId={store.id} userId={user.id} />
             </div>
         </div>
     )

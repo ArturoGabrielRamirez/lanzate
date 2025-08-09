@@ -19,32 +19,28 @@ type SelectStoreHeaderBySlugReturn = {
 }
 
 export async function selectStoreHeaderBySlug(slug: string): Promise<SelectStoreHeaderBySlugReturn> {
-    return actionWrapper(async () => {
-
-        const store = await prisma.store.findUnique({
-            where: {
-                slug: slug
-            },
-            select: {
-                name: true,
-                description: true,
-                balance: {
-                    select: {
-                        current_balance: true
-                    }
+    const store = await prisma.store.findUnique({
+        where: {
+            slug: slug
+        },
+        select: {
+            name: true,
+            description: true,
+            balance: {
+                select: {
+                    current_balance: true
                 }
             }
-        })
-
-        if (!store) {
-            throw new Error("Store not found")
         }
-
-        return {
-            message: "Store header fetched successfully from db",
-            payload: store,
-            error: false
-        }
-
     })
+
+    if (!store) {
+        throw new Error("Store not found")
+    }
+
+    return {
+        message: "Store header fetched successfully from db",
+        payload: store,
+        error: false
+    }
 } 
