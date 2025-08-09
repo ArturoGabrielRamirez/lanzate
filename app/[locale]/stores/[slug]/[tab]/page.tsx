@@ -2,6 +2,7 @@ import TableSkeleton from "@/features/stores/components/tabs/table-skeleton"
 import OverviewSkeleton from "@/features/stores/components/tabs/overview-skeleton"
 import AccountSkeleton from "@/features/stores/components/tabs/account-skeleton"
 import StylesSkeleton from "@/features/stores/components/tabs/styles-skeleton"
+import AnalyticsSkeleton from "@/features/stores/components/tabs/analytics-skeleton"
 import { TabPageProps } from "@/features/stores/types"
 import { lazy, Suspense } from "react"
 
@@ -19,6 +20,8 @@ async function TabPage({ params }: TabPageProps) {
                 return AccountSkeleton
             case 'styles':
                 return StylesSkeleton
+            case 'analytics':
+                return AnalyticsSkeleton
             default:
                 return TableSkeleton
         }
