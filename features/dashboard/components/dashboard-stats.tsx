@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowDown, ArrowUp, DollarSign, Package, ShoppingCart, Store } from "lucide-react"
+import { ArrowDown, ArrowRight, ArrowUp, ChartNoAxesCombined, DollarSign, Package, ShoppingCart, Store } from "lucide-react"
 import { getDashboardStats } from "../actions/getDashboardStats"
 import * as motion from "motion/react-client"
+import Link from "next/link"
 
 type Props = {
     userId: number
@@ -29,7 +30,7 @@ function ChangeIndicator({ change }: { change: number }) {
     const isPositive = change >= 0
     const Icon = isPositive ? ArrowUp : ArrowDown
     const colorClass = isPositive ? 'text-green-500' : 'text-red-500'
-    
+
     return (
         <div className={`flex items-center ${colorClass}`}>
             <Icon className="h-3 w-3 mr-1" />
@@ -83,37 +84,42 @@ async function DashboardStats({ userId }: Props) {
     ]
 
     return (
-        <motion.div
-            className="grid-cols-2 gap-4 area-[stats] opacity-50 hover:opacity-100 transition-opacity duration-300 hidden lg:grid"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-        >
-            {statsData.map((stat, index) => {
-                const Icon = stat.icon
-                const baseDelay = index * 0.1
+        <div className="area-[stats] hidden lg:block opacity-50 hover:opacity-100 transition-opacity duration-300">
+            <div className="flex items-center justify-between mb-2 md:mb-4">
+                <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2">
+                    <ChartNoAxesCombined className="size-4 xl:size-5" />    
+                    Your stats
+                </h2>
+            </div>
+            <motion.div
+                className="grid-cols-2 gap-4 lg:grid lg:gap-6"
+            >
+                {statsData.map((stat, index) => {
+                    const Icon = stat.icon
+                    const baseDelay = index * 0.1
 
-                return (
-                    <motion.div
-                        key={stat.title}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: baseDelay }}
-                    >
-                        <Card className="!p-2 !gap-2 h-full">
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
-                                <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-                                <Icon className="h-4 w-4 text-muted-foreground" />
-                            </CardHeader>
-                            <CardContent className="!px-2">
-                                <div className="text-2xl font-bold">{stat.value}</div>
-                                <ChangeIndicator change={stat.change} />
-                            </CardContent>
-                        </Card>
-                    </motion.div>
-                )
-            })}
-        </motion.div>
+                    return (
+                        <motion.div
+                            key={stat.title}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3, delay: baseDelay }}
+                        >
+                            <Card className="!p-2 !gap-2 h-full">
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
+                                    <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
+                                    <Icon className="h-4 w-4 text-muted-foreground" />
+                                </CardHeader>
+                                <CardContent className="!px-2">
+                                    <div className="text-2xl font-bold">{stat.value}</div>
+                                    <ChangeIndicator change={stat.change} />
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+                    )
+                })}
+            </motion.div>
+        </div>
     )
 }
 

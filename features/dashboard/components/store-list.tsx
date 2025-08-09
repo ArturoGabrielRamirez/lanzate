@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server"
 import { getDashboardStores } from "../actions/getDashboardStores"
 import { StoreCard } from "@/features/stores/components"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Store } from "lucide-react"
 import { CreateStoreButton } from "@/features/stores/components"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -28,7 +28,8 @@ const StoreList = async () => {
             {dashboardData.storeCount > 0 && (
                 <div className="border-b md:border-b-0 pb-4 md:pb-0 area-[stores] opacity-50 hover:opacity-100 transition-opacity duration-300">
                     <div className="flex items-center justify-between mb-2 md:mb-4">
-                        <h2 className="text-lg lg:text-2xl font-bold leading-6">
+                        <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2">
+                            <Store className="size-4 xl:size-5" />
                             {t("your-stores.title", { count: dashboardData.storeCount })}
                         </h2>
                         <Link
