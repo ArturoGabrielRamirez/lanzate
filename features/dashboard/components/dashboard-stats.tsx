@@ -84,7 +84,7 @@ async function DashboardStats({ userId }: Props) {
 
     return (
         <motion.div
-            className="grid-cols-2 xl:grid-cols-4 2xl:grid-cols-2 gap-4 area-[stats] opacity-50 hover:opacity-100 transition-opacity duration-300 hidden lg:grid"
+            className="grid-cols-2 gap-4 area-[stats] opacity-50 hover:opacity-100 transition-opacity duration-300 hidden lg:grid"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
@@ -100,7 +100,7 @@ async function DashboardStats({ userId }: Props) {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.3, delay: baseDelay }}
                     >
-                        <Card className="!p-2 !gap-2">
+                        <Card className="!p-2 !gap-2 h-full">
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
                                 <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
                                 <Icon className="h-4 w-4 text-muted-foreground" />
