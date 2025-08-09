@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
 /**
  * Valida los parámetros de la solicitud de reenvío
  */
-function validateResendParams(params: any): string | null {
+function validateResendParams(params: ResendEmailParams): string | null {
   // Verificar que type esté presente
   if (!params.type) {
     return 'El campo "type" es requerido';

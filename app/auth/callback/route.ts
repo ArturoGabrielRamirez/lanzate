@@ -117,7 +117,7 @@ export async function GET(request: Request) {
         await prisma.user.update({
           where: { id: existingUser.id },
           data: {
-            supabase_user_id: user?.id,
+            supabase_user_id: user?.id || null,
             email: user?.email!,
             updated_at: new Date()
           }
