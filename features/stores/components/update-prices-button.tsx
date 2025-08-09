@@ -6,9 +6,9 @@ import { useState, useEffect } from "react"
 import { useTranslations } from "next-intl"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
 import { RowModel } from "@tanstack/react-table"
 import { getCategories } from "@/features/store-landing/actions/getCategories"
+import { getProductsCountByCategoryAction } from "@/features/products/actions/getProductsCountByCategory"
 import { formatErrorResponse } from "@/utils/lib"
 import { Product } from "@prisma/client"
 import { Category } from "@/features/store-landing/types"
@@ -20,12 +20,13 @@ type UpdatePricesButtonProps = {
 
 type UpdateType = "fijo" | "porcentaje"
 
-export function UpdatePricesButton({ selectedRows }: UpdatePricesButtonProps) {
+export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) {
     const [categories, setCategories] = useState<Category[]>([])
     const [selectedCategory, setSelectedCategory] = useState<string>("")
     const [amount, setAmount] = useState<string>("")
     const [updateType, setUpdateType] = useState<UpdateType>("fijo")
     const [productsInCategory, setProductsInCategory] = useState<number>(0)
+    const [isLoadingCount, setIsLoadingCount] = useState(false)
     const t = useTranslations("store.update-prices")
 
     const hasSelectedRows = selectedRows.rows.length > 0
@@ -41,15 +42,32 @@ export function UpdatePricesButton({ selectedRows }: UpdatePricesButtonProps) {
     }, [])
 
     useEffect(() => {
-        // TODO: Fetch products count for selected category
-        // This would need a new action to get products count by category
-        if (selectedCategory) {
-            // Placeholder - replace with actual API call
-            setProductsInCategory(10) // Mock data
-        } else {
-            setProductsInCategory(0)
+        const fetchProductsCount = async () => {
+            if (selectedCategory) {
+                setIsLoadingCount(true)
+                try {
+                    const { payload, error } = await getProductsCountByCategoryAction(
+                        parseInt(selectedCategory), 
+                        storeId
+                    )
+                    if (!error && payload !== null) {
+                        setProductsInCategory(payload)
+                    } else {
+                        setProductsInCategory(0)
+                    }
+                } catch (error) {
+                    console.error("Error fetching products count:", error)
+                    setProductsInCategory(0)
+                } finally {
+                    setIsLoadingCount(false)
+                }
+            } else {
+                setProductsInCategory(0)
+            }
         }
-    }, [selectedCategory])
+
+        fetchProductsCount()
+    }, [selectedCategory, storeId])
 
     const handleSave = async () => {
         // TODO: Implement price update logic
@@ -70,8 +88,8 @@ export function UpdatePricesButton({ selectedRows }: UpdatePricesButtonProps) {
                     <div className="text-sm text-muted-foreground">
                         {t("selected-products", { count: selectedRows.rows.length })}
                     </div>
-                    <div className="space-y-4">
-                        <div className="space-y-2">
+                    <div className="flex gap-2">
+                        <div className="w-full flex flex-col gap-1">
                             <Label htmlFor="amount">{t("amount")}</Label>
                             <InputField
                                 name="amount"
@@ -82,10 +100,10 @@ export function UpdatePricesButton({ selectedRows }: UpdatePricesButtonProps) {
                                 placeholder={t("amount-placeholder")}
                             />
                         </div>
-                        <div className="space-y-2">
+                        <div className="w-full flex flex-col gap-2">
                             <Label htmlFor="update-type">{t("update-type")}</Label>
                             <Select value={updateType} onValueChange={(value: UpdateType) => setUpdateType(value)}>
-                                <SelectTrigger>
+                                <SelectTrigger className="w-full min-h-10 mb-0">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -108,7 +126,7 @@ export function UpdatePricesButton({ selectedRows }: UpdatePricesButtonProps) {
                     <div className="space-y-2">
                         <Label htmlFor="category">{t("select-category")}</Label>
                         <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                            <SelectTrigger>
+                            <SelectTrigger className="w-full">
                                 <SelectValue placeholder={t("choose-category")} />
                             </SelectTrigger>
                             <SelectContent>
@@ -120,39 +138,42 @@ export function UpdatePricesButton({ selectedRows }: UpdatePricesButtonProps) {
                             </SelectContent>
                         </Select>
                     </div>
-                    {selectedCategory && productsInCategory > 0 && (
+                    {selectedCategory && (
                         <>
                             <div className="text-sm text-muted-foreground">
-                                {t("products-in-category", { count: productsInCategory })}
+                                {isLoadingCount ? (
+                                    "Cargando productos..."
+                                ) : (
+                                    t("products-in-category", { count: productsInCategory })
+                                )}
                             </div>
-                            <div className="space-y-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="amount">{t("amount")}</Label>
-                                    <InputField
-                                        name="amount"
-                                        label=""
-                                        type="number"
-                                        value={amount}
-                                        onChange={(e) => setAmount(e.target.value)}
-                                        placeholder={t("amount-placeholder")}
-                                    />
+                            {productsInCategory > 0 && (
+                                <div className="flex gap-2 items-end">
+                                    <div className="w-full flex flex-col gap-1">
+                                        <Label htmlFor="amount">{t("amount")}</Label>
+                                        <InputField
+                                            name="amount"
+                                            label=""
+                                            type="number"
+                                            value={amount}
+                                            onChange={(e) => setAmount(e.target.value)}
+                                            placeholder={t("amount-placeholder")}
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-2 w-full">
+                                        <Label htmlFor="update-type">{t("update-type")}</Label>
+                                        <Select value={updateType} onValueChange={(value: UpdateType) => setUpdateType(value)}>
+                                            <SelectTrigger className="w-full mb-0 min-h-10">
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="fijo">{t("fixed")}</SelectItem>
+                                                <SelectItem value="porcentaje">{t("percentage")}</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
                                 </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="update-type">{t("update-type")}</Label>
-                                    <Select value={updateType} onValueChange={(value: UpdateType) => setUpdateType(value)}>
-                                        <SelectTrigger>
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="fijo">{t("fixed")}</SelectItem>
-                                            <SelectItem value="porcentaje">{t("percentage")}</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <Button onClick={handleSave} className="w-full">
-                                    {t("save")}
-                                </Button>
-                            </div>
+                            )}
                         </>
                     )}
                 </div>
