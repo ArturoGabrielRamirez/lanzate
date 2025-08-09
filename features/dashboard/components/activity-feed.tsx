@@ -14,70 +14,6 @@ type Props = {
     userId: number
 }
 
-function renderActivityCard(item: ActivityFeedItem, index: number) {
-    const baseDelay = index * 0.1
-
-    switch (item.type) {
-        case 'like':
-            return (
-                <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: baseDelay }}
-                >
-                    <LikeActivityCard item={item as ActivityFeedItem & { type: 'like' }} />
-                </motion.div>
-            )
-        case 'comment':
-            return (
-                <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: baseDelay }}
-                >
-                    <CommentActivityCard item={item as ActivityFeedItem & { type: 'comment' }} />
-                </motion.div>
-            )
-        case 'order':
-            return (
-                <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: baseDelay }}
-                >
-                    <OrderActivityCard item={item as ActivityFeedItem & { type: 'order' }} />
-                </motion.div>
-            )
-        case 'contract_assignment_as_employee':
-            return (
-                <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: baseDelay }}
-                >
-                    <ContractEmployeeActivityCard item={item as ActivityFeedItem & { type: 'contract_assignment_as_employee' }} />
-                </motion.div>
-            )
-        case 'contract_assignment_as_owner':
-            return (
-                <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: baseDelay }}
-                >
-                    <ContractOwnerActivityCard item={item as ActivityFeedItem & { type: 'contract_assignment_as_owner' }} />
-                </motion.div>
-            )
-        default:
-            return null
-    }
-}
-
 async function ActivityFeed({ userId }: Props) {
     const { payload: activities, error } = await getUserStoreActivities(userId)
 
@@ -160,12 +96,74 @@ async function ActivityFeed({ userId }: Props) {
 
     return (
         <motion.div
-            className="space-y-2"
+            className="space-y-2 md:space-y-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
         >
-            {feedItems.slice(0, 10).map((item, index) => renderActivityCard(item, index))}
+            {feedItems.slice(0, 10).map((item, index) => {
+                const baseDelay = index * 0.1
+
+                switch (item.type) {
+                    case 'like':
+                        return (
+                            <motion.div
+                                key={item.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.3, delay: baseDelay }}
+                            >
+                                <LikeActivityCard item={item as ActivityFeedItem & { type: 'like' }} />
+                            </motion.div>
+                        )
+                    case 'comment':
+                        return (
+                            <motion.div
+                                key={item.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.3, delay: baseDelay }}
+                            >
+                                <CommentActivityCard item={item as ActivityFeedItem & { type: 'comment' }} />
+                            </motion.div>
+                        )
+                    case 'order':
+                        return (
+                            <motion.div
+                                key={item.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.3, delay: baseDelay }}
+                            >
+                                <OrderActivityCard item={item as ActivityFeedItem & { type: 'order' }} />
+                            </motion.div>
+                        )
+                    case 'contract_assignment_as_employee':
+                        return (
+                            <motion.div
+                                key={item.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.3, delay: baseDelay }}
+                            >
+                                <ContractEmployeeActivityCard item={item as ActivityFeedItem & { type: 'contract_assignment_as_employee' }} />
+                            </motion.div>
+                        )
+                    case 'contract_assignment_as_owner':
+                        return (
+                            <motion.div
+                                key={item.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.3, delay: baseDelay }}
+                            >
+                                <ContractOwnerActivityCard item={item as ActivityFeedItem & { type: 'contract_assignment_as_owner' }} />
+                            </motion.div>
+                        )
+                    default:
+                        return null
+                }
+            })}
         </motion.div>
     )
 }

@@ -83,7 +83,7 @@ export type UserStoreActivity = {
 export type ActivityFeedItem = {
     id: string
     type: 'like' | 'comment' | 'order' | 'contract_assignment_as_employee' | 'contract_assignment_as_owner'
-    user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'>
+    user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'email'>
     product?: Pick<Product, 'id' | 'name' | 'image'> & {
         store: Pick<Store, 'id' | 'name' | 'slug'>
     }
@@ -117,7 +117,7 @@ export type ActivityFeedItem = {
         store: Pick<Store, 'id' | 'name' | 'slug'>
         created_by_user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'>
     }
-    employee?: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'>
+    employee?: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'email'>
     content?: string
     status?: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
     created_at: Date

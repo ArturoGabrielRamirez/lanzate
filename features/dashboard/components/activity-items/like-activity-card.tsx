@@ -11,8 +11,8 @@ type Props = {
 
 function LikeActivityCard({ item }: Props) {
     return (
-        <Card className="p-4 space-y-3">
-            <CardContent className="p-0 space-y-3">
+        <Card className="py-2 md:py-4 space-y-3">
+            <CardContent className="space-y-3">
                 <div className="flex items-start space-x-3">
                     <Avatar className="h-10 w-10">
                         <AvatarImage
@@ -20,29 +20,31 @@ function LikeActivityCard({ item }: Props) {
                             alt={`${item.user.first_name} ${item.user.last_name}`}
                         />
                         <AvatarFallback>
-                            {getUserInitials(item.user.first_name, item.user.last_name)}
+                            {getUserInitials(item.user.email)}
                         </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 space-y-2">
-                        <div className="flex items-center space-x-2">
-                            <span className="font-medium">
-                                {item.user.first_name} {item.user.last_name}
-                            </span>
-                            <span className="flex items-center gap-1">
-                                <Flame className="size-3 text-red-500 fill-current" /> a
-                            </span>
-                            <span className="text-muted-foreground text-xs md:text-sm hidden md:block">le dio like a</span>
-                            <Link
-                                href={`/stores/${item.product?.store.slug}/products/${item.product?.id}`}
-                                className="font-medium text-primary hover:underline"
-                            >
-                                {item.product?.name}
-                            </Link>
+                        <div>
+                            <p className="text-muted-foreground text-xs">
+                                @userHandle
+                            </p>
+                            <div className="flex items-end gap-1">
+                                <p className="md:hidden flex items-center gap-1">
+                                    <Flame className="size-3 text-red-500 fill-current" />
+                                    a
+                                </p>
+                                <p className="text-muted-foreground text-xs md:text-sm hidden md:flex md:items-center gap-1">le dio <Flame className="size-3 text-red-500 fill-current" /> a</p>
+                                <Link
+                                    href={`/stores/${item.product?.store.slug}/products/${item.product?.id}`}
+                                    className="font-medium text-primary hover:underline text-sm md:text-base"
+                                >
+                                    {item.product?.name}
+                                </Link>
+                            </div>
                         </div>
 
                         <div className="flex items-center space-x-4 text-xs text-muted-foreground justify-between">
                             <div className="flex items-center space-x-1">
-                                <Flame className="h-3 w-3 text-red-500 fill-current" />
                                 <span className="text-muted-foreground">
                                     en{' '}
                                     <Link

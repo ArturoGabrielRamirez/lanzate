@@ -12,8 +12,8 @@ type Props = {
 
 function OrderActivityCard({ item }: Props) {
     return (
-        <Card className="p-4 space-y-3">
-            <CardContent className="p-0 space-y-3">
+        <Card className="py-2 md:py-4 space-y-3">
+            <CardContent className="space-y-3">
                 <div className="flex items-start space-x-3">
                     <Avatar className="h-10 w-10">
                         <AvatarImage
@@ -26,25 +26,28 @@ function OrderActivityCard({ item }: Props) {
                     </Avatar>
                     <div className="flex-1 space-y-2">
                         <div className="space-y-2">
-                            <div className="flex items-center space-x-2">
-                                <span className="font-medium text-sm md:text-base">
-                                    {item.user.first_name} {item.user.last_name}
-                                </span>
-                                <span className="text-muted-foreground text-xs md:text-sm">realizó la orden</span>
-                                <Link
-                                    href={`/stores/${item.order?.store.slug}/orders/${item.order?.id}`}
-                                    className="font-medium text-primary hover:underline"
-                                >
-                                    orden #{item.order?.id}
-                                </Link>
-                                <Badge variant={getOrderStatusBadgeVariant(item.order?.status || 'PENDING')} className="text-xs hidden md:block">
-                                    {item.order?.status}
-                                </Badge>
+                            <div className="flex items-center justify-between space-x-2">
+                                <div className="flex items-center gap-1">
+                                    <span className="font-medium text-sm md:text-base">
+                                        {item.user.first_name} {item.user.last_name}
+                                    </span>
+                                    <span className="text-muted-foreground text-xs md:text-sm">realizó la orden</span>
+                                    <Link
+                                        href={`/stores/${item.order?.store.slug}/orders/${item.order?.id}`}
+                                        className="font-medium text-primary hover:underline"
+                                    >
+                                        orden #{item.order?.id}
+                                    </Link>
+                                    <Badge variant={getOrderStatusBadgeVariant(item.order?.status || 'PENDING')} className="text-xs hidden md:block">
+                                        {item.order?.status}
+                                    </Badge>
+                                </div>
+                                {item.order?.shipping_method === "PICKUP" ? <MapPin className="size-4" /> : <Truck className="size-4" />}
                             </div>
                             <div className="text-sm text-muted-foreground flex items-center gap-1">
                                 ${item.order?.total_price.toFixed(2)} |
                                 <span className="font-medium ml-1">Items:</span> {item.order?.total_quantity} |
-                                {item.order?.shipping_method === "PICKUP" ? <MapPin className="size-4" /> : <Truck className="size-4" />}
+
                             </div>
                         </div>
 
