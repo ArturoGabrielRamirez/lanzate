@@ -17,7 +17,7 @@ model User {
   created_at                DateTime                @default(now())
   first_name                String?
   last_name                 String?
-  username                  String?                 @unique
+  username                  String                 @unique
   phone                     String?
   password                  String
   updated_at                DateTime                @updatedAt
