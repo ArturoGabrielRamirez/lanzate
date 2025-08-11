@@ -89,9 +89,9 @@ export default function GlobalSearch({ userId }: GlobalSearchProps) {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onFocus={handleInputFocus}
-                    className={cn("flex-1 p-1 h-8 md:h-9", isLoading && "animate-pulse")}
+                    className={cn("bg-background flex-1 p-1 h-8 md:h-9", isLoading && "animate-pulse")}
                 />
-                <Button variant="outline" disabled={isLoading} className={cn("size-8 md:size-9", isLoading && "animate-pulse")}>
+                <Button variant="outline" disabled={isLoading || query.trim() === ''} className={cn("!bg-background size-8 md:size-9", isLoading && "animate-pulse")}>
                     {isLoading ? <Loader className="size-4 animate-spin" /> : <Search className="size-4" />}
                 </Button>
             </div>

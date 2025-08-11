@@ -12,8 +12,9 @@ type Props = {
 
 function OrderActivityCard({ item }: Props) {
     return (
-        <Card className="py-2 md:py-4 space-y-3">
-            <CardContent className="space-y-3">
+        <Card className="py-2 md:py-4 space-y-3 bg-background hover:border-primary/20 border-primary/5 relative group transition-all duration-300">
+            <div className="absolute inset-0 bg-primary/10 blur-md -z-10 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
+            <CardContent className="space-y-3 relative z-10">
                 <div className="flex items-start space-x-3">
                     <Avatar className="h-10 w-10">
                         <AvatarImage
