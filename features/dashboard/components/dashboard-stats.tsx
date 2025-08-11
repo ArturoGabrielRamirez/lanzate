@@ -83,7 +83,7 @@ async function DashboardStats({ userId }: Props) {
     ]
 
     return (
-        <div className="area-[stats] hidden lg:block opacity-50 hover:opacity-100 transition-opacity duration-300">
+        <div className="area-[stats] hidden lg:block">
             <div className="flex items-center justify-between mb-2 md:mb-4">
                 <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2">
                     <ChartNoAxesCombined className="size-4 xl:size-5" />    
@@ -104,12 +104,12 @@ async function DashboardStats({ userId }: Props) {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.3, delay: baseDelay }}
                         >
-                            <Card className="!p-2 !gap-2 h-full">
-                                <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
+                            <Card className="!p-2 !gap-2 h-full bg-accent dark:bg-background group">
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2 opacity-50 group-hover:opacity-100 transition-opacity duration-300">
                                     <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
                                     <Icon className="h-4 w-4 text-muted-foreground" />
                                 </CardHeader>
-                                <CardContent className="!px-2">
+                                <CardContent className="!px-2 opacity-50 group-hover:opacity-100 transition-opacity duration-300">
                                     <div className="text-2xl font-bold">{stat.value}</div>
                                     <ChangeIndicator change={stat.change} />
                                 </CardContent>
