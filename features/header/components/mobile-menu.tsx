@@ -15,10 +15,11 @@ import { ThemeToggle, NotificationsIcon } from "@/features/header/components"
 import { Button } from "@/components/ui/button"
 import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
 import { IconButton } from "@/features/layout/components/universal-button"
+import { User } from "@prisma/client"
 
 
 type MobileMenuProps = {
-    user: any
+    user: User
 }
 
 function MobileMenu({ user }: MobileMenuProps) {
@@ -37,7 +38,7 @@ function MobileMenu({ user }: MobileMenuProps) {
                     <span className="sr-only">Toggle menu</span>
                 </IconButton>
             </DrawerTrigger>
-            <DrawerContent className="sm:w-[350px]">
+            <DrawerContent className="w-full">
                 <DrawerHeader className="border-b">
                     <div className="flex items-center justify-between">
                         <DrawerTitle>Menu</DrawerTitle>
