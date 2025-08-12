@@ -17,6 +17,9 @@ const config = {
                         primary: {
                             DEFAULT: "hsl(15.11 56.00000000000001% 52%)",
                         },
+                        danger : {
+                            DEFAULT : "hsl(0 84% 60%)"
+                        }
                     },
                 },
                 dark: {
@@ -24,6 +27,9 @@ const config = {
                         primary: {
                             DEFAULT: "hsl(15.11 56.00000000000001% 52%)",
                         },
+                        danger : {
+                            DEFAULT : "hsl(0 84% 60%)"
+                        }
                     },
                 }
             }

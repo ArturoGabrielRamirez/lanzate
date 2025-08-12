@@ -158,3 +158,56 @@ export const IconButton = forwardRef<React.ComponentRef<typeof IconButtonConfig>
 )
 
 IconButton.displayName = "IconButton"
+
+type DangerButtonProps = ButtonProps & {
+    tooltip?: string
+}
+
+export const DangerButtonConfig = extendVariants(CustomButton, {
+    variants: {
+        color: {
+            danger: `
+            bg-gradient-to-r
+            from-[oklch(from_hsla(var(--heroui-danger))_0.35_c_h/1)]
+            via-[oklch(from_hsla(var(--heroui-danger))_0.75_c_h/1)]
+            to-[oklch(from_hsla(var(--heroui-danger))_0.35_c_h/1)]
+            from-0%
+            via-50%
+            to-100%
+            [background-size:200%_auto]
+            hover:[background-position:right_center]
+            transition-all
+            duration-400
+            `
+        },
+        size: {
+            md: "text-sm md:text-base px-2 md:px-4 py-1 md:py-2 h-8 md:h-10"
+        }
+    }, 
+    defaultVariants : {
+        color : "danger",
+        size : "md"
+    }
+})
+
+export const DangerButton = forwardRef<React.ComponentRef<typeof DangerButtonConfig>, DangerButtonProps>(
+    ({ children, tooltip, ...props }, ref) => {
+        if (!tooltip) {
+            return (
+                <DangerButtonConfig ref={ref} {...props}>
+                    {children}
+                </DangerButtonConfig>
+            )
+        }
+
+        return (
+            <Tooltip content={tooltip}>
+                <DangerButtonConfig ref={ref} {...props}>
+                    {children}
+                </DangerButtonConfig>
+            </Tooltip>
+        )
+    }
+)
+
+DangerButton.displayName = "DangerButton"

@@ -1,5 +1,5 @@
-import { PrimaryButton, SecondaryButton, IconButton } from "@/features/layout/components/universal-button"
-import { Info } from "lucide-react"
+import { PrimaryButton, SecondaryButton, IconButton, DangerButton } from "@/features/layout/components/universal-button"
+import { Info, Trash2, X } from "lucide-react"
 
 function Swatches() {
     return (
@@ -39,6 +39,23 @@ function Swatches() {
                 </SecondaryButton>
             </div>
             <div className="flex gap-2 items-center flex-wrap">
+                <DangerButton>
+                    Danger Button
+                </DangerButton>
+                <DangerButton startContent={<Trash2 className="size-4 md:size-5" />}>
+                    Danger Button
+                </DangerButton>
+                <DangerButton isLoading>
+                    Loading Button
+                </DangerButton>
+                <DangerButton isDisabled>
+                    Disabled Button
+                </DangerButton>
+                <DangerButton tooltip="This is a tooltip">
+                    Tooltip Button
+                </DangerButton>
+            </div>
+            <div className="flex gap-2 items-center flex-wrap">
                 <IconButton isIconOnly>
                     <Info />
                 </IconButton>
@@ -47,6 +64,9 @@ function Swatches() {
                 </IconButton>
                 <IconButton isIconOnly tooltip="This is a tooltip">
                     <Info />
+                </IconButton>
+                <IconButton isIconOnly tooltip="This is a tooltip" color="danger">
+                    <Trash2 />
                 </IconButton>
             </div>
         </section>
