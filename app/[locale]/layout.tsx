@@ -9,6 +9,7 @@ import "../globals.css";
 import { GlobalEmailConfirmationDetector } from "@/features/auth/components/index";
 import { NextStepProvider } from "nextstepjs";
 import NextStepContainer from "@/features/layout/components/next-step-container";
+import FloatingDock from "@/features/header/components/floating-dock";
 
 
 export const metadata: Metadata = {
@@ -48,6 +49,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                         <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
                           {children}
                         </main>
+                        <FloatingDock />
                         <Footer />
                         <Toaster position="top-center" />
                         <GlobalEmailConfirmationDetector />
