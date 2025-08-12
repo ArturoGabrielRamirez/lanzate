@@ -168,9 +168,9 @@ export const DangerButtonConfig = extendVariants(CustomButton, {
         color: {
             danger: `
             bg-gradient-to-r
-            from-[oklch(from_hsla(var(--heroui-danger))_0.35_c_h/1)]
-            via-[oklch(from_hsla(var(--heroui-danger))_0.75_c_h/1)]
-            to-[oklch(from_hsla(var(--heroui-danger))_0.35_c_h/1)]
+            from-[oklch(from_hsla(var(--heroui-danger))_0.25_c_h/1)]
+            via-[oklch(from_hsla(var(--heroui-danger))_0.55_c_h/1)]
+            to-[oklch(from_hsla(var(--heroui-danger))_0.25_c_h/1)]
             from-0%
             via-50%
             to-100%
