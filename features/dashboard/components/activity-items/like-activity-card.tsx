@@ -1,9 +1,10 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+"use client"
+
 import { Flame, Clock } from "lucide-react"
 import { ActivityFeedItem } from "../../types"
 import Link from "next/link"
-import { getUserInitials, formatActivityDate } from "./shared-utils"
+import { formatActivityDate } from "./shared-utils"
+import { Avatar, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 
 type Props = {
     item: ActivityFeedItem & { type: 'like' }
@@ -11,59 +12,51 @@ type Props = {
 
 function LikeActivityCard({ item }: Props) {
     return (
-        <Card className="py-2 md:py-4 space-y-3 bg-background hover:border-primary/20 border-primary/5 relative group transition-all duration-300">
+        <Card isPressable className="w-full">
             <div className="absolute inset-0 bg-primary/10 blur-md -z-10 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-            <CardContent className="space-y-3 relative z-10">
-                <div className="flex items-start space-x-3">
-                    <Avatar className="h-10 w-10">
-                        <AvatarImage
-                            src={item.user.avatar || undefined}
-                            alt={`${item.user.first_name} ${item.user.last_name}`}
-                        />
-                        <AvatarFallback>
-                            {getUserInitials(item.user.email)}
-                        </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 space-y-2">
-                        <div>
-                            <p className="text-muted-foreground text-xs">
-                                @userHandle
-                            </p>
-                            <div className="flex items-end gap-1">
-                                <p className="md:hidden flex items-center gap-1">
-                                    <Flame className="size-3 text-red-500 fill-current" />
-                                    a
-                                </p>
-                                <p className="text-muted-foreground text-xs md:text-sm hidden md:flex md:items-center gap-1">le dio <Flame className="size-3 text-red-500 fill-current" /> a</p>
-                                <Link
-                                    href={`/stores/${item.product?.store.slug}/products/${item.product?.id}`}
-                                    className="font-medium text-primary hover:underline text-sm md:text-base"
-                                >
-                                    {item.product?.name}
-                                </Link>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center space-x-4 text-xs text-muted-foreground justify-between">
-                            <div className="flex items-center space-x-1">
-                                <span className="text-muted-foreground">
-                                    en{' '}
-                                    <Link
-                                        href={`/stores/${item.product?.store.slug}/overview`}
-                                        className="text-primary hover:underline"
-                                    >
-                                        {item.product?.store.name}
-                                    </Link>
-                                </span>
-                            </div>
-                            <div className="flex items-center space-x-1">
-                                <Clock className="h-3 w-3" />
-                                <span>{formatActivityDate(item.created_at)}</span>
-                            </div>
-                        </div>
-                    </div>
+            <CardHeader className="flex gap-3">
+                <Avatar
+                    showFallback
+                    src={item.user.avatar || undefined}
+                    alt={`${item.user.first_name} ${item.user.last_name}`}
+                    name={`${item.user.first_name} ${item.user.last_name}`}
+                />
+                <p className="text-muted-foreground text-sm">
+                    @{item.user.username}
+                </p>
+            </CardHeader>
+            <CardBody className="px-3 py-0 text-small text-default-400">
+                <div className="flex items-end gap-1 text-lg">
+                    <p className="md:hidden flex items-center gap-1 text-inherit">
+                        <Flame className="size-3 text-red-500 fill-current" />
+                        <span className="text-inherit">a</span>
+                    </p>
+                    <p className="text-muted-foreground/50 text-xs md:text-sm lg:text-lg hidden md:flex md:items-center gap-1">le dio <Flame className="size-3 text-red-500 fill-current" /> a</p>
+                    <Link
+                        href={`/stores/${item.product?.store.slug}/products/${item.product?.id}`}
+                        className="font-medium text-primary hover:underline text-sm md:text-base"
+                    >
+                        {item.product?.name}
+                    </Link>
                 </div>
-            </CardContent>
+            </CardBody>
+            <CardFooter className="flex justify-between">
+                <div className="flex items-center space-x-1">
+                    <span className="text-muted-foreground/50">
+                        en{' '}
+                        <Link
+                            href={`/stores/${item.product?.store.slug}/overview`}
+                            className="text-primary hover:underline"
+                        >
+                            {item.product?.store.name}
+                        </Link>
+                    </span>
+                </div>
+                <div className="flex items-center space-x-1 text-muted-foreground/50">
+                    <Clock className="h-3 w-3" />
+                    <span>{formatActivityDate(item.created_at)}</span>
+                </div>
+            </CardFooter>
         </Card>
     )
 }

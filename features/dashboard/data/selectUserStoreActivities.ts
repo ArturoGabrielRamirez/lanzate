@@ -48,7 +48,8 @@ export async function selectUserStoreActivities(userId: number) {
                         first_name: true,
                         last_name: true,
                         avatar: true,
-                        email: true
+                        email: true,
+                        username: true
                     }
                 },
                 products: {

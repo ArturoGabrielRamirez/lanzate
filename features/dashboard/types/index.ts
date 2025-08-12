@@ -83,7 +83,7 @@ export type UserStoreActivity = {
 export type ActivityFeedItem = {
     id: string
     type: 'like' | 'comment' | 'order' | 'contract_assignment_as_employee' | 'contract_assignment_as_owner'
-    user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'email'>
+    user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'email' | "username">
     product?: Pick<Product, 'id' | 'name' | 'image'> & {
         store: Pick<Store, 'id' | 'name' | 'slug'>
     }

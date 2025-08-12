@@ -6,6 +6,7 @@ import { Store } from "lucide-react"
 import { BookOpenText } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
+import { Tabs, Tab, Card, CardBody, Switch } from "@heroui/react";
 
 async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps) {
 
