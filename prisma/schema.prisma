@@ -11,17 +11,35 @@ datasource db {
 }
 
 model User {
-  id                        Int                     @id @default(autoincrement())
-  email                     String                  @unique
-  avatar                    String?
-  created_at                DateTime                @default(now())
-  first_name                String?
-  last_name                 String?
-  username                  String                 @unique
-  phone                     String?
-  password                  String
-  updated_at                DateTime                @updatedAt
-  supabase_user_id          String?                 @unique
+  id               Int      @id @default(autoincrement())
+  email            String   @unique
+  avatar           String?
+  created_at       DateTime @default(now())
+  first_name       String?
+  last_name        String?
+  username         String   @unique
+  phone            String?
+  password         String
+  updated_at       DateTime @updatedAt
+  supabase_user_id String?  @unique
+
+  deletion_requested_at     DateTime?
+  deletion_scheduled_at     DateTime? // Fecha cuando se eliminará definitivamente (ej: 30 días después)
+  deletion_reason           String?
+  deletion_ip_address       String?
+  deletion_user_agent       String?
+  is_deletion_cancelled     Boolean   @default(false)
+  deletion_cancelled_at     DateTime?
+  deletion_cancelled_reason String?
+
+  is_anonymized       Boolean   @default(false)
+  anonymized_at       DateTime?
+  original_email_hash String? // Hash del email original para evitar re-registros
+
+  last_login_at        DateTime?
+  login_attempts_count Int       @default(0)
+  account_locked_until DateTime?
+
   Account                   Account[]
   ActionLog                 ActionLog[]
   contracts_assigned        ContractAssignment[]    @relation("ContractAssignedBy")
@@ -39,8 +57,24 @@ model User {
   store_reminders_created   StoreReminder[]         @relation("StoreReminderCreatedBy")
   Store                     Store[]
   user_reminders            UserReminder[]
+  deletion_logs             UserDeletionLog[]
 
   @@map("users")
+}
+
+model UserDeletionLog {
+  id              Int      @id @default(autoincrement())
+  user_id         Int
+  action          String // 'REQUEST', 'CANCEL', 'EXECUTE', 'ANONYMIZE'
+  reason          String?
+  ip_address      String?
+  user_agent      String?
+  additional_data String? // JSON con datos adicionales
+  created_at      DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("user_deletion_logs")
 }
 
 model Notification {
