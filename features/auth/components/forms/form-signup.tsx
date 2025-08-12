@@ -5,12 +5,16 @@ import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { handleSignup } from '@/features/auth/actions'
-import { loginUserSchema } from '@/features/auth/schemas'
+import { signUpSchema } from '@/features/auth/schemas'
 import { Form, InputField } from '@/features/layout/components'
 
 interface SignupFormData {
     email: string;
     password: string;
+    username: string;
+    name?: string | undefined;
+    lastname?: string | undefined;
+    phone?: string | undefined;
 }
 
 const SignupForm = () => {
@@ -33,7 +37,7 @@ const SignupForm = () => {
         <>
             <h2 className='text-2xl font-bold'>{t("signup")}</h2>
             <Form<SignupFormData>
-                resolver={yupResolver(loginUserSchema)}
+                resolver={yupResolver(signUpSchema)}
                 formAction={(data) => {
                     submittedEmailRef.current = data.email;
                     return handleSignup(data);
@@ -46,6 +50,10 @@ const SignupForm = () => {
             >
                 <InputField name="email" label={t("email")} type="email" />
                 <InputField name="password" label={t("password")} type="password" />
+                <InputField name="username" label={t("username")} />
+                <InputField name="name" label={t("name")} />
+                <InputField name="lastname" label={t("lastname")} />
+                <InputField name="phone" label={t("phone")} />
             </Form>
         </>
     )

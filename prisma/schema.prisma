@@ -17,6 +17,8 @@ model User {
   created_at                DateTime                @default(now())
   first_name                String?
   last_name                 String?
+  username                  String                 @unique
+  phone                     String?
   password                  String
   updated_at                DateTime                @updatedAt
   supabase_user_id          String?                 @unique
@@ -110,6 +112,7 @@ model Product {
   sku              String             @unique
   slug             String             @unique
   video            String?
+  expiration_date  DateTime?
   is_active        Boolean            @default(true)
   is_featured      Boolean            @default(false)
   is_published     Boolean            @default(false)
@@ -422,8 +425,9 @@ model StoreCustomization {
   product_card_text_color       String           @default("#000000")
   product_card_style            ProductCardStyle @default(MODERN)
 
-
-  /* OLD */
+  /**
+   * OLD
+   */
   text_color             String               @default("#000000")
   secondary_text_color   String               @default("#6b7280")
   border_color           String               @default("#e5e7eb")

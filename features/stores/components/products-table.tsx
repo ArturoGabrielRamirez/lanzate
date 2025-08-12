@@ -6,9 +6,9 @@ import { DropdownMenu } from "@/components/ui/dropdown-menu"
 import { DataTable } from "@/features/layout/components/data-table"
 import { ArrowUpDown, Crown, MoreHorizontal } from "lucide-react"
 import { Eye } from "lucide-react"
-import { Product, Category } from "@prisma/client"
+import { Product, Category, Branch, ProductStock } from "@prisma/client"
 import { RowModel, ColumnDef } from "@tanstack/react-table"
-import { CreateProductButton, DeleteProductButton, EditProductButton, ExportProductsButton } from "@/features/products/components"
+import { CreateProductButton, DeleteProductButton, EditProductButton, ExportProductsButton, DistributeStockButton } from "@/features/products/components"
 import { UpdatePricesButton } from "./update-prices-button"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
@@ -36,9 +36,12 @@ type Props = {
     slug: string
     storeId: number
     employeePermissions: EmployeePermissions
+    branches: (Branch & {
+        stock: ProductStock[]
+    })[]
 }
 
-function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Props) {
+function ProductsTable({ data, userId, slug, storeId, employeePermissions, branches }: Props) {
 
     const t = useTranslations("store.products-table")
 
@@ -240,6 +243,19 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Pro
                                     </Link>
                                 </Button>
                             </DropdownMenuItem>
+                            {(employeePermissions.isAdmin || employeePermissions.permissions?.can_manage_stock) && (
+                                <>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem asChild>
+                                        <DistributeStockButton
+                                            productId={row.original.id}
+                                            productName={row.original.name}
+                                            availableStock={row.original.stock}
+                                            branches={branches}
+                                        />
+                                    </DropdownMenuItem>
+                                </>
+                            )}
                             {employeePermissions.isAdmin && (
                                 <>
                                     <DropdownMenuSeparator />
@@ -275,9 +291,9 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions }: Pro
                 (filteredSelectedRowModel: RowModel<Product & { categories: Category[] }>) => {
                     return (
                         <div className="flex items-center gap-2">
-                            <UpdatePricesButton 
-                                selectedRows={filteredSelectedRowModel} 
-                                storeId={storeId} 
+                            <UpdatePricesButton
+                                selectedRows={filteredSelectedRowModel}
+                                storeId={storeId}
                             />
                             <ExportProductsButton data={data} />
                             {canCreateProducts && (

@@ -45,6 +45,7 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
                 slug={slug} 
                 storeId={store.id}
                 employeePermissions={employeePermissions}
+                branches={store.branches}
             />
         </>
     )
