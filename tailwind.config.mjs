@@ -29,6 +29,9 @@ const config = {
                         },
                         danger : {
                             DEFAULT : "hsl(0 84% 60%)"
+                        },
+                        content1 : {
+                            DEFAULT : "hsl(0 100% 1%)"
                         }
                     },
                 }

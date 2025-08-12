@@ -13,7 +13,7 @@ async function Header() {
     const t = await getTranslations("auth.buttons")
 
     return (
-        <Navbar shouldHideOnScroll maxWidth="2xl">
+        <Navbar shouldHideOnScroll maxWidth="2xl" position="sticky" className="dark:bg-black/80 bg-content1">
             <NavbarBrand>
                 <Link href="/" className="flex items-center gap-2">
                     <Rocket className="text-primary size-5 md:size-5 xl:size-6" />

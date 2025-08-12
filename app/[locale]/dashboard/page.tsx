@@ -50,7 +50,7 @@ export default async function Dashboard() {
                     </Suspense>
                 </div>
 
-                <div className="area-[actions] opacity-50 hover:opacity-100 transition-opacity duration-300">
+                <div className="area-[actions]">
                     <div className="md:flex items-center justify-between mb-2 md:mb-4 hidden">
                         <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2">
                             <Zap className="size-4 xl:size-5" />
@@ -82,18 +82,37 @@ export default async function Dashboard() {
                 </StoreListContainer>
 
                 {/* Calendar */}
-                <div className="area-[calendar] opacity-50 hover:opacity-100 transition-opacity duration-300 hidden md:block">
+                <div className="area-[calendar] hidden md:block">
                     <DashboardCalendar />
                 </div>
 
             </div>
-            <DotPattern
-                glow
+            {/* <DotPattern
+                glowing
                 width={30}
                 height={30}
                 className={cn(
                     "[mask-image:linear-gradient(to_top,white,transparent_70%,transparent)] z-0",
-                )} />
+                )} />\ */}
+            <div className="gradient-bg fixed top-0 left-0 w-full h-full">
+                <svg xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <filter id="goo">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+                            <feBlend in="SourceGraphic" in2="goo" />
+                        </filter>
+                    </defs>
+                </svg>
+                <div className="gradients-container">
+                    <div className="g1"></div>
+                    {/* <div className="g2"></div> */}
+                    {/* <div className="g3"></div>
+                    <div className="g4"></div>
+                    <div className="g5"></div> */}
+                    <div className="interactive"></div>
+                </div>
+            </div>
         </section>
     )
 }

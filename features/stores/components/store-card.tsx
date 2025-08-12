@@ -19,7 +19,7 @@ function StoreCard({ store }: StoreCardProps) {
         <Card className="transition-all cursor-pointer bg-background gap-2 md:gap-3 lg:gap-4 shrink-0 relative border-primary/5 hover:border-primary/20 group" onClick={handleClick}>
             <div className="absolute inset-0 bg-primary/10 blur-md -z-10 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
             <CardHeader className="gap-0">
-                <CardTitle className="flex items-center gap-2 opacity-50 group-hover:opacity-100 transition-opacity duration-300">
+                <CardTitle className="flex items-center gap-2 ">
                     <StoreIcon className="size-4 md:size-5 lg:size-6" />
                     <h2 className="text-lg md:text-xl lg:text-2xl font-bold">{store.name}</h2>
                 </CardTitle>

@@ -105,11 +105,11 @@ async function DashboardStats({ userId }: Props) {
                             transition={{ duration: 0.3, delay: baseDelay }}
                         >
                             <Card className="!p-2 !gap-2 h-full bg-accent dark:bg-background group">
-                                <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2 opacity-50 group-hover:opacity-100 transition-opacity duration-300">
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2 ">
                                     <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
                                     <Icon className="h-4 w-4 text-muted-foreground" />
                                 </CardHeader>
-                                <CardContent className="!px-2 opacity-50 group-hover:opacity-100 transition-opacity duration-300">
+                                <CardContent className="!px-2 ">
                                     <div className="text-2xl font-bold">{stat.value}</div>
                                     <ChangeIndicator change={stat.change} />
                                 </CardContent>

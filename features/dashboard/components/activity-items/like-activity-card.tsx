@@ -5,15 +5,40 @@ import { ActivityFeedItem } from "../../types"
 import Link from "next/link"
 import { formatActivityDate } from "./shared-utils"
 import { Avatar, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
+import { useEffect } from "react"
 
 type Props = {
     item: ActivityFeedItem & { type: 'like' }
 }
 
 function LikeActivityCard({ item }: Props) {
+
+    useEffect(() => {
+        const interBubble = document.querySelector<HTMLDivElement>('.interactive')!;
+        let curX = 0;
+        let curY = 0;
+        let tgX = 0;
+        let tgY = 0;
+
+        function move() {
+            curX += (tgX - curX) / 20;
+            curY += (tgY - curY) / 20;
+            interBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+            requestAnimationFrame(() => {
+                move();
+            });
+        }
+
+        window.addEventListener('mousemove', (event) => {
+            tgX = event.clientX;
+            tgY = event.clientY;
+        });
+
+        move();
+    }, [])
+
     return (
-        <Card isPressable className="w-full">
-            <div className="absolute inset-0 bg-primary/10 blur-md -z-10 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
+        <Card isPressable isBlurred className="w-full !bg-background border-1 border-secondary/10">
             <CardHeader className="flex gap-3">
                 <Avatar
                     showFallback
@@ -42,7 +67,7 @@ function LikeActivityCard({ item }: Props) {
             </CardBody>
             <CardFooter className="flex justify-between">
                 <div className="flex items-center space-x-1">
-                    <span className="text-muted-foreground/50">
+                    <span className="text-muted-foreground">
                         en{' '}
                         <Link
                             href={`/stores/${item.product?.store.slug}/overview`}
@@ -52,7 +77,7 @@ function LikeActivityCard({ item }: Props) {
                         </Link>
                     </span>
                 </div>
-                <div className="flex items-center space-x-1 text-muted-foreground/50">
+                <div className="flex items-center space-x-1 text-muted-foreground">
                     <Clock className="h-3 w-3" />
                     <span>{formatActivityDate(item.created_at)}</span>
                 </div>
