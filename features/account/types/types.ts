@@ -49,7 +49,6 @@ export interface AvatarEditorProps {
     onAvatarUpdate: (newAvatarUrl: string | null) => void
 }
 
-
 export interface AccountHeaderProps {
     user: UserType
     translations: {
@@ -61,6 +60,7 @@ export interface AccountHeaderProps {
         username: string | null
         firstName: string | null
         lastName: string | null
+        phone: string | null
     }) => void
 }
 
@@ -75,6 +75,7 @@ export interface AccountDetailsTabProps {
         "description.password": string
         "description.change-email": string
         "description.change-password": string
+        "description.phone": string
     }
 }
 
@@ -93,6 +94,7 @@ export interface AccountPageClientProps {
         "description.change-password": string
         "description.currently-not-available": string
         "description.username": string
+        "description.phone": string
     }
 }
 
@@ -120,6 +122,6 @@ export interface AvatarPreviewProps {
 }
 
 export interface FileUploadSectionProps {
-  onFileSelect: (event: React.ChangeEvent<HTMLInputElement>) => void
-  onButtonClick: () => void
+    onFileSelect: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onButtonClick: () => void
 }

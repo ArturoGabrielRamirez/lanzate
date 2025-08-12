@@ -27,12 +27,15 @@ export default function AccountPageClient({ user: initialUser, translations: t }
         username: string | null
         firstName: string | null
         lastName: string | null
+        phone: string | null
     }) => {
         setUser(prevUser => ({
             ...prevUser,
             username: profile.username,
             first_name: profile.firstName,
-            last_name: profile.lastName
+            last_name: profile.lastName,
+            phone: profile.phone,
+            updated_at: new Date()
         }))
     }
 
