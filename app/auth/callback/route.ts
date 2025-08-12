@@ -91,11 +91,15 @@ export async function GET(request: Request) {
 
     if (!existingUser) {
       const provider = user?.app_metadata?.provider || 'oauth'
-
       const insertResult = await insertUser(
         user?.email ?? "",
         provider,
-        user?.id
+        user?.id ?? "",
+        user?.user_metadata?.avatar_url ?? null,
+        user?.user_metadata?.username ?? null,
+        user?.user_metadata?.name ?? null,
+        user?.user_metadata?.lastname ?? null,
+        user?.user_metadata?.phone ?? null
       )
 
       if (insertResult.error || !insertResult.payload) {
@@ -109,7 +113,6 @@ export async function GET(request: Request) {
       }
 
       const newUser = insertResult.payload
-
       userId = newUser.id
 
     } else if (!existingUser.supabase_user_id) {
@@ -117,14 +120,16 @@ export async function GET(request: Request) {
         await prisma.user.update({
           where: { id: existingUser.id },
           data: {
-            supabase_user_id: user?.id || existingUser.supabase_user_id,
             email: user?.email || existingUser.email,
+            supabase_user_id: user?.id || existingUser.supabase_user_id,
+            avatar: user?.user_metadata?.avatar_url || existingUser.avatar,
+            first_name: user?.user_metadata?.name || existingUser.first_name,
+            last_name: user?.user_metadata?.lastname || existingUser.last_name,
+            phone: user?.user_metadata?.phone || existingUser.phone,
             created_at: new Date(),
             updated_at: new Date()
           }
         });
-
-        console.error('User migrated to supabase_user_id:', existingUser.email)
       } catch (error) {
         console.error('Error migrating user', error)
         console.error('Error migrating user:', existingUser.email)
@@ -132,6 +137,23 @@ export async function GET(request: Request) {
 
     } else {
       console.error('User already logged in:', existingUser.email)
+      
+      if (user?.user_metadata?.avatar_url) {
+        try {
+          await prisma.user.update({
+            where: { id: existingUser.id },
+            data: {
+              avatar: user.user_metadata.avatar_url,
+              first_name: user.user_metadata.name || existingUser.first_name,
+              last_name: user.user_metadata.lastname || existingUser.last_name,
+              phone: user.user_metadata.phone || existingUser.phone,
+              updated_at: new Date()
+            }
+          });
+        } catch (error) {
+          console.error('Error updating user profile:', error)
+        }
+      }
     }
 
     if (userId) {

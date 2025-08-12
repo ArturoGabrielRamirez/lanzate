@@ -27,7 +27,12 @@ export const handleSignup = async (payload: any): Promise<ResponseType<any>> => 
         const { error: insertError, payload: user } = await insertUser(
             email,
             "email",
-            signUpData.user.id
+            signUpData.user.id,
+            payload.username,
+            payload.name,
+            payload.lastname,
+            payload.phone
+          
         )
         
         if (insertError) throw new Error('Error inserting user')

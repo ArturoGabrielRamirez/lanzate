@@ -1,27 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import AccountPageClient from "@/features/account/components/account-page-client";
 import { getUserInfo } from "@/features/layout/actions/getUserInfo";
-import { Title } from "@/features/layout/components";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { User } from "lucide-react";
-import { ChangeEmailButton, EmailStatusBanner, ChangePasswordButton } from "@/features/auth/components/index"
-import { DotPattern } from "@/components/magicui/dot-pattern";
-import { cn } from "@/lib/utils";
 
-// Función para ocultar email con asteriscos
-function maskEmail(email: string): string {
-    const [localPart, domain] = email.split('@');
-    if (localPart.length <= 2) {
-        return `${localPart[0]}*@${domain}`;
-    }
-    const maskedLocal = `${localPart[0]}${'*'.repeat(localPart.length - 2)}${localPart[localPart.length - 1]}`;
-    return `${maskedLocal}@${domain}`;
-}
 
 export default async function AccountPage() {
-
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
     const t = await getTranslations("account");
 
@@ -29,171 +11,20 @@ export default async function AccountPage() {
         return console.error(userMessage)
     }
 
-    return (
-        <div className="p-4 grow flex flex-col pt-17 relative">
-            <Title title={(
-                <div className="flex items-center gap-2">
-                    <User />
-                    {t("title")}
-                </div>
-            )} breadcrumbs={[
-                {
-                    label: t("title"),
-                    href: "/account"
-                }
-            ]} showDate />
-
-            <EmailStatusBanner />
-
-            <section className="flex items-center gap-4">
-                <Card className="w-full">
-                    <CardContent className="flex items-center gap-4 w-full">
-                        <img
-                            src={`https://api.dicebear.com/9.x/initials/svg?seed=${user.email}`}
-                            alt="User avatar"
-                            className="size-24 rounded-full"
-                        />
-                        <div className="flex flex-col gap-2">
-                            <p className="text-xl font-bold">{user.email}</p>
-                            <div>
-                                <p className="capitalize">
-                                    {user.Account[0].type.toLowerCase()} {t("title")}
-                                </p>
-                                {user.Account[0].type === "FREE" && (
-                                    <Button asChild size="sm">
-                                        <Link href="/upgrade">
-                                            {t("description.upgrade-plan")}
-                                        </Link>
-                                    </Button>
-                                )}
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
-            </section>
-
-            <section className="py-4 grow flex">
-                <Tabs defaultValue="account" className="grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4">
-                    <TabsList className="w-full h-full items-start">
-                        <div className="flex md:block w-full">
-                            <TabsTrigger value="account" className="w-full h-fit cursor-pointer py-3">{t("description.account-details")}</TabsTrigger>
-                            <TabsTrigger value="password" className="w-full h-fit cursor-pointer py-3">{t("description.membership")}</TabsTrigger>
-                        </div>
-                    </TabsList>
-                    <TabsContent value="account">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>{t("description.account-details")}</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                {/* Mobile/Tablet Layout (Vertical) */}
-                                <div className="space-y-6 lg:hidden">
-                                    {/* First Name */}
-                                    <div className="flex flex-col space-y-1">
-                                        <p className="text-sm font-medium text-muted-foreground">{t("description.first-name")}</p>
-                                        <p className="font-semibold">{user.first_name || "No set"}</p>
-                                    </div>
-
-                                    {/* Last Name */}
-                                    <div className="flex flex-col space-y-1">
-                                        <p className="text-sm font-medium text-muted-foreground">{t("description.last-name")}</p>
-                                        <p className="font-semibold">{user.last_name || "No set"}</p>
-                                    </div>
-
-                                    {/* Email */}
-                                    <div className="flex flex-col space-y-2">
-                                        <p className="text-sm font-medium text-muted-foreground">{t("description.email")}</p>
-                                        <div className="flex items-center justify-between gap-3">
-                                            <p className="font-semibold truncate flex-1 min-w-0" title={user.email}>
-                                                {maskEmail(user.email)}
-                                            </p>
-                                            <ChangeEmailButton
-                                                buttonText="Cambiar"
-                                                title={t("description.change-email") || "Cambiar email"}
-                                                currentEmail={user.email}
-                                                className="font-medium text-xs h-6 px-2 shrink-0"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    {/* Password */}
-                                    <div className="flex flex-col space-y-2">
-                                        <p className="text-sm font-medium text-muted-foreground">{t("description.password")}</p>
-                                        <div className="flex items-center justify-between gap-3">
-                                            <p className="font-semibold">*********</p>
-                                            <ChangePasswordButton
-                                                buttonText={t("description.change-password")}
-                                                title={t("description.change-password")}
-                                                className="font-medium text-xs h-6 px-2 shrink-0"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Desktop Layout (2 Columns) */}
-                                <div className="hidden lg:grid lg:grid-cols-2 lg:gap-x-16 lg:gap-y-6">
-                                    {/* First Name */}
-                                    <div className="flex flex-col space-y-1">
-                                        <p className="text-sm font-medium text-muted-foreground">{t("description.first-name")}</p>
-                                        <p className="font-semibold">{user.first_name || "No set"}</p>
-                                    </div>
-
-                                    {/* Last Name */}
-                                    <div className="flex flex-col space-y-1">
-                                        <p className="text-sm font-medium text-muted-foreground">{t("description.last-name")}</p>
-                                        <p className="font-semibold">{user.last_name || "No set"}</p>
-                                    </div>
-
-                                    {/* Email */}
-                                    <div className="flex flex-col space-y-2">
-                                        <p className="text-sm font-medium text-muted-foreground">{t("description.email")}</p>
-                                        <div className="flex items-center gap-3">
-                                            <p className="font-semibold truncate" title={user.email}>
-                                                {maskEmail(user.email)}
-                                            </p>
-                                            <ChangeEmailButton
-                                                buttonText="Cambiar"
-                                                title={t("description.change-email") || "Cambiar email"}
-                                                currentEmail={user.email}
-                                                className="font-medium text-xs h-6 px-2 shrink-0"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    {/* Password */}
-                                    <div className="flex flex-col space-y-2">
-                                        <p className="text-sm font-medium text-muted-foreground">{t("description.password")}</p>
-                                        <div className="flex items-center gap-3">
-                                            <p className="font-semibold">*********</p>
-                                            <ChangePasswordButton
-                                                buttonText={t("description.change-password")}
-                                                title={t("description.change-password")}
-                                                className="font-medium text-xs h-6 px-2 shrink-0"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
-                    <TabsContent value="password">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>{t("description.membership")}</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                {t("description.currently-not-available")}
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
-                </Tabs>
-            </section>
-            <DotPattern
-                width={30}
-                height={30}
-                className={cn(
-                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
-                )} />
-        </div>
-    );
+    const translations = {
+        title: t("title"),
+        "description.upgrade-plan": t("description.upgrade-plan"),
+        "description.account-details": t("description.account-details"),
+        "description.membership": t("description.membership"),
+        "description.username": t("description.username"),
+        "description.first-name": t("description.first-name"),
+        "description.last-name": t("description.last-name"),
+        "description.email": t("description.email"),
+        "description.password": t("description.password"),
+        "description.change-email": t("description.change-email"),
+        "description.change-password": t("description.change-password"),
+        "description.currently-not-available": t("description.currently-not-available"),
+    }
+    
+    return <AccountPageClient user={user} translations={translations} />
 }
