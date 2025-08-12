@@ -30,7 +30,7 @@ export async function PATCH(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE(/* request: NextRequest */) {
   try {
     const { user } = await getCurrentUser()
     

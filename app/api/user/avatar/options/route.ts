@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { /* NextRequest, */ NextResponse } from 'next/server'
 import { createServerSideClient } from '@/utils/supabase/server'
 
-export async function GET(request: NextRequest) {
+export async function GET(/* request: NextRequest */) {
   try {
     const supabase = await createServerSideClient()
     const { data: { user }, error: userError } = await supabase.auth.getUser()

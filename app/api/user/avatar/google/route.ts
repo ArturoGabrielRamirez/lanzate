@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { /* NextRequest, */ NextResponse } from 'next/server'
 import { prisma } from '@/utils/prisma'
 import { createServerSideClient } from '@/utils/supabase/server'
 
-export async function POST(request: NextRequest) {
+export async function POST(/* request: NextRequest */) {
   try {
     const supabase = await createServerSideClient()
     const { data: { user }, error: userError } = await supabase.auth.getUser()

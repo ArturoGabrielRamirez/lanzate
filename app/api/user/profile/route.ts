@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/utils/prisma'
 import { getCurrentUser } from '@/features/auth/actions'
+import { Prisma } from '@prisma/client'
 
 export async function PATCH(request: NextRequest) {
   try {
@@ -70,7 +71,7 @@ export async function PATCH(request: NextRequest) {
       }, { status: 400 })
     }
 
-    const updateData: any = {
+    const updateData:  Prisma.UserUpdateInput = {
       updated_at: new Date()
     }
 
