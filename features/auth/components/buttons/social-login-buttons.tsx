@@ -14,7 +14,7 @@ const SocialLoginButtons = ({ orLoginWith }: GoogleLoginButtonProps) => {
                 <form action={handleGoogleLogIn}>
                     <Button
                         type="submit"
-                        className="w-full"
+                        className="w-full bg-gradient-to-t from-chart-5 to-primary"
                     >
                         <GoogleLogo className='size-6' />
                         Google
@@ -23,7 +23,7 @@ const SocialLoginButtons = ({ orLoginWith }: GoogleLoginButtonProps) => {
                 <form action={handleFacebookLogin}>
                     <Button
                         type="submit"
-                        className="w-full"
+                        className="w-full bg-gradient-to-t from-chart-5 to-primary"
                     >
                         <FacebookLogo className='size-6' />
                         Facebook

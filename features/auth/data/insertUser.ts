@@ -8,7 +8,13 @@ import { detectOAuthProvider } from "@/features/auth/utils/detect-provider";
 export async function insertUser(
     email: string,
     provider?: string,
-    supabaseUserId?: string
+    supabaseUserId?: string,
+    avatar?: string,
+    username?: string,
+    name?: string,
+    lastname?: string,
+    phone?: string
+    
 ): Promise<ResponseType<any>> {
     try {
         let finalSupabaseUserId = supabaseUserId;
@@ -60,10 +66,15 @@ export async function insertUser(
         const newUser = await prisma.user.create({
             data: {
                 email,
-                supabase_user_id: finalSupabaseUserId,
-                password: detectedProvider,
+                avatar: avatar || null,
                 created_at: new Date(),
+                first_name: name || null,
+                last_name: lastname || null,
+                password: detectedProvider,
                 updated_at: new Date(),
+                supabase_user_id: finalSupabaseUserId,
+                phone: phone || null,
+                username: username || "",
             },
             include: {
                 Account: true
