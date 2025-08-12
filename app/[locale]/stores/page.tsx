@@ -7,7 +7,7 @@ async function StoresPage() {
     const t = await getTranslations("store")
 
     return (
-        <div className="p-4 pt-17 max-md:pb-12">
+        <div className="p-2 md:p-4 pt-13 md:pt-17 max-md:pb-12">
             <Title title={t("title")} breadcrumbs={[
                 {
                     label: t("title"),

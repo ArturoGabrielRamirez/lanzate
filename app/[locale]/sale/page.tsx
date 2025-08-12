@@ -8,7 +8,7 @@ async function SalePage() {
     const t = await getTranslations("sale")
 
     return (
-        <section className="p-4 flex flex-col pt-17">
+        <section className="p-2 md:p-4 flex flex-col pt-13 md:pt-17">
             <Title title={(
                 <div className="flex items-center gap-2">
                     <ShoppingBasket />
