@@ -33,9 +33,9 @@ export default async function Dashboard() {
 
                 {/* Search Bar */}
                 <div className="flex gap-2 area-[search-bar] flex-col">
-                    <div className="md:flex items-center gap-2 mb-2 md:mb-4 hidden">
+                    <div className="md:flex items-center gap-2 mb-2 md:mb-4 hidden text-muted-foreground/50">
                         <Rss className="size-4 xl:size-5" />
-                        <h2 className="text-lg lg:text-2xl font-bold leading-6">
+                        <h2 className="text-lg lg:text-2xl font-bold leading-6 ">
                             Your feed
                         </h2>
                     </div>
@@ -62,7 +62,7 @@ export default async function Dashboard() {
                 </StoreListContainer>
 
                 {/* Calendar */}
-                <div className="area-[calendar] opacity-50 hover:opacity-100 transition-opacity duration-300 hidden md:block" >
+                <div className="area-[calendar] hidden md:block" >
                     <DashboardCalendar />
                 </div>
 

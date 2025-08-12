@@ -11,14 +11,14 @@ export default function DashboardCalendar() {
 
     return (
         <>
-            <div className="flex items-center justify-between mb-2 md:mb-4">
+            <div className="flex items-center justify-between mb-2 md:mb-4 text-muted-foreground/50">
                 <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2">
                     <CalendarIcon className="size-4 xl:size-5" />
                     Your events
                 </h2>
                 <Link
                     href="/events"
-                    className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
+                    className="flex items-center gap-1 text-sm text-inherit hover:text-primary transition-colors"
                 >
                     See all
                     <ArrowRight className="size-4" />

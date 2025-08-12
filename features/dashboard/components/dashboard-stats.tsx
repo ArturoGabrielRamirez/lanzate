@@ -83,9 +83,9 @@ async function DashboardStats({ userId }: Props) {
     ]
 
     return (
-        <div className="area-[stats] hidden lg:block opacity-50 hover:opacity-100 transition-opacity duration-300">
+        <div className="area-[stats] hidden lg:block">
             <div className="flex items-center justify-between mb-2 md:mb-4">
-                <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2">
+                <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2 text-muted-foreground/50">
                     <ChartNoAxesCombined className="size-4 xl:size-5" />    
                     Your stats
                 </h2>
@@ -108,7 +108,7 @@ async function DashboardStats({ userId }: Props) {
                                 transition: { duration: 0.2 }
                             }}
                         >
-                            <Card className="!p-2 !gap-2 h-full group">
+                            <Card className="!p-2 !gap-2 h-full group bg-accent/50 backdrop-blur-xs hover:bg-accent/70 transition-all duration-200 ease-out hover:backdrop-blur-sm">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
                                     <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
                                     <Icon className="h-4 w-4 text-muted-foreground" />

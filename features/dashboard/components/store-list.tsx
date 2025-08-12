@@ -26,15 +26,15 @@ const StoreList = async () => {
 
     return (
         <>
-            <div className="border-b md:border-b-0 pb-4 md:pb-0 area-[stores] opacity-50 hover:opacity-100 transition-opacity duration-300" id="step2">
-                <div className="flex items-center justify-between mb-2 md:mb-4">
+            <div className="border-b md:border-b-0 pb-4 md:pb-0 area-[stores] " id="step2">
+                <div className="flex items-center justify-between mb-2 md:mb-4 text-muted-foreground/50">
                     <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2">
                         <Store className="size-4 xl:size-5" />
                         {t("your-stores.title", { count: dashboardData.storeCount })}
                     </h2>
                     <Link
                         href="/stores"
-                        className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
+                        className="flex items-center gap-1 text-sm text-inherit hover:text-primary transition-colors"
                     >
                         {t("your-stores.see-all")}
                         <ArrowRight className="size-4" />
