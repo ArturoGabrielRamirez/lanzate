@@ -25,6 +25,7 @@ export default function DashboardCalendar() {
                 </Link>
             </div>
             <Calendar
+                id="step4"
                 mode="single"
                 selected={date}
                 onSelect={setDate}

@@ -1,5 +1,6 @@
 "use client"
 
+import { useNextStep } from "nextstepjs";
 import { useEffect, useState } from "react";
 
 type Props = {
@@ -10,10 +11,12 @@ type Props = {
 function SubdomainProvider({ adminLayout, userLayout }: Props) {
 
     const [hasSubdomain, setHasSubdomain] = useState(false)
+    const { startNextStep } = useNextStep();
 
     useEffect(() => {
         const subdomain = getSubdomainRegex(window.location.href)
         setHasSubdomain(subdomain !== null)
+        startNextStep("mainTour");
     }, [])
 
     function getSubdomainRegex(url: string) {

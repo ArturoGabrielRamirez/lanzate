@@ -27,7 +27,7 @@ const StoreList = async () => {
     return (
         <>
             {dashboardData.storeCount > 0 && (
-                <div className="border-b md:border-b-0 pb-4 md:pb-0 area-[stores] opacity-50 hover:opacity-100 transition-opacity duration-300">
+                <div className="border-b md:border-b-0 pb-4 md:pb-0 area-[stores] opacity-50 hover:opacity-100 transition-opacity duration-300" id="step2">
                     <div className="flex items-center justify-between mb-2 md:mb-4">
                         <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2">
                             <Store className="size-4 xl:size-5" />

@@ -43,13 +43,13 @@ export default async function Dashboard() {
                 </div>
 
                 {/* Activity Feed */}
-                <div className="area-[feed]">
+                <div className="area-[feed]" id="step1">
                     <Suspense fallback={<ActivityFeedSkeleton />}>
                         <ActivityFeed userId={user.id} />
                     </Suspense>
                 </div>
 
-                <div className="area-[actions] opacity-50 hover:opacity-100 transition-opacity duration-300">
+                <div className="area-[actions] opacity-50 hover:opacity-100 transition-opacity duration-300" id="step3">
                     <div className="md:flex items-center justify-between mb-2 md:mb-4 hidden">
                         <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2">
                             <Zap className="size-4 xl:size-5" />
@@ -81,7 +81,7 @@ export default async function Dashboard() {
                 </StoreListContainer>
 
                 {/* Calendar */}
-                <div className="area-[calendar] opacity-50 hover:opacity-100 transition-opacity duration-300 hidden md:block">
+                <div className="area-[calendar] opacity-50 hover:opacity-100 transition-opacity duration-300 hidden md:block" >
                     <DashboardCalendar />
                 </div>
 
