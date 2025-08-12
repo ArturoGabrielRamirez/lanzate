@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { writeFile } from 'fs/promises'
+import fs from 'fs'
 import { join } from 'path'
 import { getCurrentUser } from '@/features/auth/actions'
 
@@ -34,7 +35,6 @@ export async function POST(request: NextRequest) {
     const uploadDir = join(process.cwd(), 'public', 'uploads')
     const path = join(uploadDir, fileName)
 
-    const fs = require('fs')
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true })
     }
