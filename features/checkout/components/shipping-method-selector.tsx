@@ -12,9 +12,11 @@ import { useTranslations } from "next-intl"
 interface ShippingMethodSelectorProps {
     value: ShippingMethod
     onChange: (method: ShippingMethod) => void
+    offersDelivery: boolean
+    deliveryPrice: number
 }
 
-export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelectorProps) {
+export function ShippingMethodSelector({ value, onChange, offersDelivery, deliveryPrice }: ShippingMethodSelectorProps) {
     const { setValue } = useFormContext()
     const t = useTranslations("checkout.delivery.method-selector")
 
@@ -41,18 +43,23 @@ export function ShippingMethodSelector({ value, onChange }: ShippingMethodSelect
                     variant="outline"
                     onClick={handleShippingMethodChange}
                     data-type="DELIVERY"
+                    disabled={!offersDelivery}
                     className={cn(
                         "h-auto p-4 flex flex-col items-center gap-2 transition-all duration-300",
                         value === "DELIVERY"
                             ? "!border-primary !bg-primary !text-primary-foreground !hover:bg-primary/90"
-                            : "hover:bg-muted"
+                            : "hover:bg-muted",
+                        !offersDelivery && "opacity-50 cursor-not-allowed"
                     )}
                 >
                     <Truck className="size-8" />
                     <div className="text-center">
                         <div className="font-semibold">{t("delivery.title")}</div>
                         <div className="text-sm opacity-80">
-                            {t("delivery.description")}
+                            {offersDelivery 
+                                ? `${t("delivery.description")} ${deliveryPrice > 0 ? `(+$${deliveryPrice})` : ''}`
+                                : t("delivery.not-available")
+                            }
                         </div>
                     </div>
                 </Button>

@@ -6,7 +6,7 @@ import { useState } from "react"
 import { deliveryOrderSchema, pickupOrderSchema } from "../schemas/order-schema"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { createNewCheckoutOrder } from "../actions/createNewCheckoutOrder"
-import { Branch, PaymentMethod, ShippingMethod } from "@prisma/client"
+import { Branch, PaymentMethod, StoreOperationalSettings } from "@prisma/client"
 import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem } from "@/components/expansion/interactive-stepper"
 import { ShippingMethodSelector } from "./shipping-method-selector"
 import { BranchSelector } from "./branch-selector"
@@ -17,15 +17,34 @@ import { Label } from "@/components/ui/label"
 import { useCart } from "@/features/cart/components/cart-provider"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { useCheckout } from "./checkout-context"
 
-function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, userId: string, branches: Branch[] }) {
+function CheckoutForm({ 
+    userId, 
+    branches, 
+    subdomain, 
+    operationalSettings 
+}: { 
+    subdomain: string
+    userId: string
+    branches: Branch[]
+    operationalSettings: StoreOperationalSettings | null
+}) {
 
-    const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("DELIVERY")
+    const { shippingMethod, setShippingMethod } = useCheckout()
     const [selectedBranchId, setSelectedBranchId] = useState<number | null>(null)
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("CASH")
-    const { quantity, total, cart , clearCart } = useCart()
+    const { quantity, total, cart, clearCart } = useCart()
     const router = useRouter()
     const t = useTranslations("checkout")
+
+    // Calculate delivery cost
+    const deliveryCost = operationalSettings?.offers_delivery && shippingMethod === "DELIVERY" 
+        ? (operationalSettings.delivery_price || 0) 
+        : 0
+
+    // Calculate final total including delivery
+    const finalTotal = total + deliveryCost
 
     const handleSubmit = async (formData: any) => {
 
@@ -39,7 +58,7 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
             payment_method: paymentMethod,
             shipping_method: shippingMethod,
             subdomain: subdomain,
-            total_price: total,
+            total_price: finalTotal,
             total_quantity: quantity,
             cart: cart,
             processed_by_user_id: Number(userId)
@@ -63,7 +82,7 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
             className="grow"
             contentButton={t("navigation.continue")}
             formAction={handleSubmit}
-            resolver={yupResolver(shippingMethod === "DELIVERY" ? deliveryOrderSchema : pickupOrderSchema)}
+            resolver={yupResolver(shippingMethod === "DELIVERY" ? deliveryOrderSchema : pickupOrderSchema) as any}
         >
             <InteractiveStepper defaultValue={1} className="grow">
                 <InteractiveStepperItem>
@@ -114,6 +133,8 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
                             <ShippingMethodSelector
                                 value={shippingMethod}
                                 onChange={setShippingMethod}
+                                offersDelivery={operationalSettings?.offers_delivery || false}
+                                deliveryPrice={operationalSettings?.delivery_price || 0}
                             />
 
                             <BranchSelector
@@ -149,6 +170,7 @@ function CheckoutForm({ userId, branches, subdomain }: { subdomain: string, user
                             <PaymentInformation
                                 paymentMethod={paymentMethod}
                                 onChange={setPaymentMethod}
+                                allowedPaymentMethods={operationalSettings?.payment_methods || ["CASH"]}
                             />
                             <div className="flex justify-between pt-4">
                                 <StepNavigation />
