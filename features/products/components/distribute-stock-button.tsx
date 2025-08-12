@@ -20,8 +20,6 @@ type Props = {
     branches: (Branch & { stock: ProductStock[] })[]
 }
 
-
-
 export default function DistributeStockButton({
     productId,
     productName,
@@ -31,6 +29,16 @@ export default function DistributeStockButton({
     const t = useTranslations("store.products-table")
     const [distributions, setDistributions] = useState<{ [branchId: number]: number }>({})
     const [totalDistributed, setTotalDistributed] = useState(0)
+
+    // Initialize distributions with current stock values
+    useEffect(() => {
+        const initialDistributions: { [branchId: number]: number } = {}
+        branches.forEach(branch => {
+            const currentStock = branch.stock.find(stock => stock.product_id === productId)?.quantity || 0
+            initialDistributions[branch.id] = currentStock
+        })
+        setDistributions(initialDistributions)
+    }, [branches, productId])
 
     useEffect(() => {
         const total = Object.values(distributions).reduce((sum, qty) => sum + (qty || 0), 0)
@@ -47,7 +55,7 @@ export default function DistributeStockButton({
 
     const handleDistributeStock = async () => {
         const distributionArray = Object.entries(distributions)
-            .filter(([_, quantity]) => quantity > 0)
+            .filter(([, quantity]) => quantity > 0)
             .map(([branchId, quantity]) => ({
                 branchId: parseInt(branchId),
                 quantity
@@ -77,7 +85,6 @@ export default function DistributeStockButton({
                 error: t("distribute-stock.error"),
                 loading: t("distribute-stock.loading")
             }}
-
             variant="ghost"
             className="w-full justify-start"
             formDisabled={!isValidDistribution}
@@ -107,7 +114,6 @@ export default function DistributeStockButton({
                     </Label>
 
                     {branches.map((branch) => {
-                        console.log(branch)
                         return (
                             <div key={branch.id} className="flex items-center gap-3">
                                 <div className="flex-1">
@@ -126,15 +132,10 @@ export default function DistributeStockButton({
                                         type="number"
                                         min="0"
                                         max={availableStock}
-                                        /* value={distributions[branch.id] || ""} */
+                                        value={distributions[branch.id] || 0}
                                         onChange={(e) => handleQuantityChange(branch.id, e.target.value)}
                                         placeholder="0"
                                         className="text-center"
-                                        defaultValue={branch.stock.find(stock => {
-                                            if (stock.product_id === productId) {
-                                                return true
-                                            }
-                                        })?.quantity || 0}
                                     />
                                 </div>
                             </div>

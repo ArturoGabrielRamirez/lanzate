@@ -915,20 +915,20 @@
                 "open-menu": "Abrir menú"
             },
             "actions": {
-                "distribute-stock": "Distribuir stock"
+                "distribute-stock": "Redistribuir stock"
             },
             "distribute-stock": {
-                "title": "Distribuir Stock",
-                "description": "Distribuir el stock disponible de \"{productName}\" entre las sucursales",
-                "available-stock": "Stock disponible",
-                "total-to-distribute": "Total a distribuir",
-                "branch-distribution": "Distribución por sucursal",
+                "title": "Redistribuir Stock",
+                "description": "Redistribuir el stock de \"{productName}\" entre las sucursales",
+                "available-stock": "Stock total disponible",
+                "total-to-distribute": "Total a redistribuir",
+                "branch-distribution": "Redistribución por sucursal",
                 "main-branch": "Principal",
                 "remaining-stock": "Stock restante",
-                "error-exceeds-stock": "La distribución total no puede exceder el stock disponible",
-                "success": "¡Stock distribuido exitosamente!",
-                "error": "Error al distribuir stock",
-                "loading": "Distribuyendo stock..."
+                "error-exceeds-stock": "La redistribución total no puede exceder el stock disponible",
+                "success": "¡Stock redistribuido exitosamente!",
+                "error": "Error al redistribuir stock",
+                "loading": "Redistribuyendo stock..."
             },
             "export": {
                 "button": "Exportar a Excel",

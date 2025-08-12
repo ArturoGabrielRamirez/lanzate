@@ -1,6 +1,5 @@
 "use server"
 
-
 import { ResponseType } from "@/features/layout/types"
 import { prisma } from "@/utils/prisma"
 import { revalidatePath } from "next/cache"
@@ -13,14 +12,20 @@ type DistributeStockData = {
     }[]
 }
 
-export async function distributeProductStock(data: DistributeStockData): Promise<ResponseType<any>> {
+export async function distributeProductStock(data: DistributeStockData): Promise<ResponseType<null>> {
     try {
         const { productId, distributions } = data
 
-        // Get current product stock
+        // Get current product and its stock distribution
         const product = await prisma.product.findUnique({
             where: { id: productId },
-            select: { stock: true, store_id: true }
+            include: {
+                stock_entries: {
+                    include: {
+                        branch: true
+                    }
+                }
+            }
         })
 
         if (!product) {
@@ -31,26 +36,24 @@ export async function distributeProductStock(data: DistributeStockData): Promise
             }
         }
 
-        // Calculate total distribution
-        const totalDistribution = distributions.reduce((sum, dist) => sum + dist.quantity, 0)
+        // Calculate total current stock across all branches
+        const totalCurrentStock = product.stock_entries.reduce((sum, entry) => sum + entry.quantity, 0)
+        
+        // Calculate total requested distribution
+        const totalRequestedDistribution = distributions.reduce((sum, dist) => sum + dist.quantity, 0)
 
-        if (totalDistribution > product.stock) {
+        // Validate that we're not creating stock out of thin air
+        if (totalRequestedDistribution > totalCurrentStock) {
             return {
                 error: true,
-                message: "Cannot distribute more stock than available",
+                message: "Cannot distribute more stock than currently available across all branches",
                 payload: null
             }
         }
 
         // Update stock in transaction
         await prisma.$transaction(async (tx) => {
-            // Update product stock
-            await tx.product.update({
-                where: { id: productId },
-                data: { stock: product.stock - totalDistribution }
-            })
-
-            // Update branch stocks
+            // Update branch stocks - this will redistribute existing stock
             for (const distribution of distributions) {
                 if (distribution.quantity > 0) {
                     await tx.productStock.upsert({
@@ -61,9 +64,7 @@ export async function distributeProductStock(data: DistributeStockData): Promise
                             }
                         },
                         update: {
-                            quantity: {
-                                increment: distribution.quantity
-                            }
+                            quantity: distribution.quantity
                         },
                         create: {
                             product_id: productId,
@@ -73,20 +74,31 @@ export async function distributeProductStock(data: DistributeStockData): Promise
                     })
                 }
             }
+
+            // Clear stock from branches that are not in the distribution
+            const branchIdsInDistribution = distributions.map(d => d.branchId)
+            await tx.productStock.deleteMany({
+                where: {
+                    product_id: productId,
+                    branch_id: {
+                        notIn: branchIdsInDistribution
+                    }
+                }
+            })
         })
 
         revalidatePath("/stores/[slug]/products", "page")
 
         return {
             error: false,
-            message: "Stock distributed successfully",
+            message: "Stock redistributed successfully",
             payload: null
         }
     } catch (error) {
-        console.error("Error distributing stock:", error)
+        console.error("Error redistributing stock:", error)
         return {
             error: true,
-            message: "Failed to distribute stock",
+            message: "Failed to redistribute stock",
             payload: null
         }
     }
