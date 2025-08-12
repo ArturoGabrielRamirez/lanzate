@@ -86,12 +86,13 @@ export default async function Dashboard() {
                 </div>
 
             </div>
-<DotPattern
+            <DotPattern
                 width={30}
                 height={30}
                 className={cn(
-                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
-                )} />
+                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] -z-10",
+                )}
+            />
         </section>
     )
 }

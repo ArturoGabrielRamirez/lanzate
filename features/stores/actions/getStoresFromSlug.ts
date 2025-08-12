@@ -2,13 +2,13 @@
 
 import { formatErrorResponse } from "@/utils/lib"
 import { selectStoreBySlug } from "../data/selectStoreBySlug"
-import { Branch, Store, Product, Category, StoreBalance, StoreOperationalSettings } from "@prisma/client"
+import { Branch, Store, Product, Category, StoreBalance, StoreOperationalSettings, ProductStock } from "@prisma/client"
 
 type GetStoresFromSlugReturn = {
     message: string
-    payload: Store & { 
-        branches: Branch[], 
-        products: (Product & { categories: Category[] })[], 
+    payload: Store & {
+        branches: (Branch & { stock: ProductStock[] })[],
+        products: (Product & { categories: Category[] })[],
         balance: StoreBalance,
         operational_settings: StoreOperationalSettings | null
     } | null
@@ -27,9 +27,9 @@ export async function getStoresFromSlug(slug: string): Promise<GetStoresFromSlug
 
         return {
             message: "Store fetched successfully from db",
-            payload: store as Store & { 
-                branches: Branch[], 
-                products: (Product & { categories: Category[] })[], 
+            payload: store as Store & {
+                branches: (Branch & { stock: ProductStock[] })[],
+                products: (Product & { categories: Category[] })[],
                 balance: StoreBalance,
                 operational_settings: StoreOperationalSettings | null
             },

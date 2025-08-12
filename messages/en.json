@@ -1076,6 +1076,22 @@
                 "view-details": "View details",
                 "open-menu": "Open menu"
             },
+            "actions": {
+                "distribute-stock": "Distribute stock"
+            },
+            "distribute-stock": {
+                "title": "Distribute Stock",
+                "description": "Distribute available stock of \"{productName}\" among branches",
+                "available-stock": "Available stock",
+                "total-to-distribute": "Total to distribute",
+                "branch-distribution": "Branch distribution",
+                "main-branch": "Main",
+                "remaining-stock": "Remaining stock",
+                "error-exceeds-stock": "Total distribution cannot exceed available stock",
+                "success": "Stock distributed successfully!",
+                "error": "Error distributing stock",
+                "loading": "Distributing stock..."
+            },
             "export": {
                 "button": "Export to Excel",
                 "description": "Description",
