@@ -178,6 +178,7 @@ export const DangerButtonConfig = extendVariants(CustomButton, {
             hover:[background-position:right_center]
             transition-all
             duration-400
+            dark:hover:[box-shadow:0_3px_6px_1px_oklch(from_hsla(var(--heroui-danger))_0.45_c_h/0.5)]
             `
         },
         size: {

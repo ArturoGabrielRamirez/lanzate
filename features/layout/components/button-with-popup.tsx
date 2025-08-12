@@ -8,6 +8,7 @@ import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, Dialog
 import { Form } from "@/features/layout/components"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { DangerButton, PrimaryButton } from "./universal-button"
 
 function ButtonWithPopup<T>({
     text,
@@ -30,7 +31,9 @@ function ButtonWithPopup<T>({
 
     const handleSuccess = async () => {
         setOpen(false)
-        onComplete && typeof onComplete === "function" && onComplete()
+        if (onComplete && typeof onComplete === "function") {
+            onComplete()
+        }
     }
 
     const resolverConfig = schema ? { resolver: yupResolver(schema) } : {}
@@ -38,7 +41,11 @@ function ButtonWithPopup<T>({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button disabled={disabled} variant={variant} type="button" className={cn(className)} size={size}>{text}</Button>
+                {variant == "destructive" ? (
+                    <DangerButton disabled={disabled} type="button" className={cn(className)}>{text}</DangerButton>
+                ) : (
+                    <PrimaryButton disabled={disabled} type="button" className={cn(className)}>{text}</PrimaryButton>
+                )}
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
