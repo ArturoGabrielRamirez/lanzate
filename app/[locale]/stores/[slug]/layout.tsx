@@ -14,7 +14,7 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
     const t = await getTranslations("store.layout")
 
     return (
-        <div className="flex flex-col p-4 grow pt-13 md:pt-17 max-md:pb-4">
+        <div className="flex flex-col p-4 grow max-md:pb-4 container mx-auto">
             <Suspense fallback={<StoreHeaderSkeleton />}>
                 <StoreHeader slug={slug} />
             </Suspense>

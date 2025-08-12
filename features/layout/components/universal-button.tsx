@@ -58,7 +58,7 @@ export const PrimaryButton = extendVariants(CustomButton, {
             hover:[background-position:right_center]
             transition-all
             duration-400
-            dark:[box-shadow:0_3px_6px_1px_oklch(from_hsla(var(--heroui-primary))_0.45_c_h/0.5)]
+            dark:hover:[box-shadow:0_3px_6px_1px_oklch(from_hsla(var(--heroui-primary))_0.45_c_h/0.5)]
             `,
         },
         size: {
