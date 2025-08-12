@@ -1,5 +1,5 @@
 import { PrimaryButton, SecondaryButton, IconButton, DangerButton } from "@/features/layout/components/universal-button"
-import { Info, Trash2, X } from "lucide-react"
+import { Info, Trash2 } from "lucide-react"
 
 function Swatches() {
     return (

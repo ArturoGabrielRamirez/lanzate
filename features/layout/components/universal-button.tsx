@@ -141,7 +141,7 @@ export const IconButton = forwardRef<React.ComponentRef<typeof IconButtonConfig>
     ({ children, tooltip, ...props }, ref) => {
         if (!tooltip) {
             return (
-                <IconButtonConfig ref={ref} {...props}>
+                <IconButtonConfig ref={ref} {...props} isIconOnly>
                     {children}
                 </IconButtonConfig>
             )
@@ -149,7 +149,7 @@ export const IconButton = forwardRef<React.ComponentRef<typeof IconButtonConfig>
 
         return (
             <Tooltip content={tooltip}>
-                <IconButtonConfig ref={ref} {...props}>
+                <IconButtonConfig ref={ref} {...props} isIconOnly>
                     {children}
                 </IconButtonConfig>
             </Tooltip>

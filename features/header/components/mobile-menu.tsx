@@ -14,6 +14,7 @@ import {
 import { ThemeToggle, NotificationsIcon } from "@/features/header/components"
 import { Button } from "@/components/ui/button"
 import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
+import { IconButton } from "@/features/layout/components/universal-button"
 
 
 type MobileMenuProps = {
@@ -31,10 +32,10 @@ function MobileMenu({ user }: MobileMenuProps) {
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden flex justify-end">
+                <IconButton className="md:hidden aspect-square">
                     <Menu className="size-5" />
                     <span className="sr-only">Toggle menu</span>
-                </Button>
+                </IconButton>
             </DrawerTrigger>
             <DrawerContent className="sm:w-[350px]">
                 <DrawerHeader className="border-b">
