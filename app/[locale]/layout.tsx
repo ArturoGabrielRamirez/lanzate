@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner"
 import type { Metadata } from "next";
 import { LayoutProps } from "@/features/layout/types";
 import { NextIntlClientProvider } from 'next-intl';
+import { HeroUIProvider } from "@heroui/system";
 
 import "../globals.css";
 import { GlobalEmailConfirmationDetector } from "@/features/auth/components/index";
@@ -36,26 +37,28 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         >
           <NuqsAdapter>
             <NextIntlClientProvider locale={locale}>
-              <SubdomainProvider
-                adminLayout={(
-                  <>
-                    <Header />
-                    <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
+              <HeroUIProvider>
+                <SubdomainProvider
+                  adminLayout={(
+                    <>
+                      <Header />
+                      <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
+                        {children}
+                      </main>
+                      <Footer />
+                      <Toaster position="top-center" />
+                      <GlobalEmailConfirmationDetector />
+                    </>
+                  )}
+                  userLayout={(
+                    <>
                       {children}
-                    </main>
-                    <Footer />
-                    <Toaster position="top-center"/>
-                    <GlobalEmailConfirmationDetector />
-                  </>
-                )}
-                userLayout={(
-                  <>
-                    {children}
-                    <GlobalEmailConfirmationDetector />
-                    <Toaster position="top-center"/>
-                  </>
-                )}
-              />
+                      <GlobalEmailConfirmationDetector />
+                      <Toaster position="top-center" />
+                    </>
+                  )}
+                />
+              </HeroUIProvider>
             </NextIntlClientProvider>
           </NuqsAdapter>
         </NextThemeProvider>

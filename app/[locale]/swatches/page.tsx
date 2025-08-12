@@ -1,24 +1,53 @@
-import Button from "@/features/layout/components/universal-button"
-import { Store } from "lucide-react"
+import { PrimaryButton, SecondaryButton, IconButton } from "@/features/layout/components/universal-button"
+import { Info } from "lucide-react"
 
 function Swatches() {
     return (
-        <section className="pt-17 px-4">
-            <div className="flex gap-2">
-                <Button />
-                <Button>Custom text</Button>
-                <Button iconAfter={<Store className="size-4 md:size-5"/>}>
-                    Icon after
-                </Button>
-                <Button iconBefore={<Store className="size-4 md:size-5"/>}>
-                    Icon before
-                </Button>
-                <Button variant="rounded" size="rounded">
-                    <Store/>
-                </Button>
-                <Button size="rounded">
-                    <Store/>
-                </Button>
+        <section className="pt-20 px-4 flex flex-col gap-4">
+            <div className="flex gap-2 items-center flex-wrap">
+                <PrimaryButton>
+                    Primary Button
+                </PrimaryButton>
+                <PrimaryButton startContent={<Info className="size-4 md:size-5" />}>
+                    Primary Button
+                </PrimaryButton>
+                <PrimaryButton isLoading>
+                    Loading Button
+                </PrimaryButton>
+                <PrimaryButton isDisabled>
+                    Disabled Button
+                </PrimaryButton>
+                <PrimaryButton tooltip="This is a tooltip">
+                    Tooltip Button
+                </PrimaryButton>
+            </div>
+            <div className="flex gap-2 items-center flex-wrap">
+                <SecondaryButton>
+                    Secondary Button
+                </SecondaryButton>
+                <SecondaryButton startContent={<Info className="size-4 md:size-5" />}>
+                    Secondary Button
+                </SecondaryButton>
+                <SecondaryButton isLoading>
+                    Loading Button
+                </SecondaryButton>
+                <SecondaryButton isDisabled>
+                    Disabled Button
+                </SecondaryButton>
+                <SecondaryButton tooltip="This is a tooltip">
+                    Tooltip Button
+                </SecondaryButton>
+            </div>
+            <div className="flex gap-2 items-center flex-wrap">
+                <IconButton isIconOnly>
+                    <Info />
+                </IconButton>
+                <IconButton isIconOnly isLoading>
+                    <Info />
+                </IconButton>
+                <IconButton isIconOnly tooltip="This is a tooltip">
+                    <Info />
+                </IconButton>
             </div>
         </section>
     )

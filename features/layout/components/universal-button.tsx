@@ -1,50 +1,160 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "@/lib/utils"
+"use client"
 
-type ButtonPropsType = React.ComponentProps<"button"> &
-    VariantProps<typeof buttonVariants> & {
-        asChild?: boolean
-        children?: React.ReactNode
-        iconBefore?: React.ReactNode
-        iconAfter?: React.ReactNode
-    }
+import { extendVariants, Button, ButtonProps } from "@heroui/react";
+import { Tooltip } from "@heroui/tooltip";
+import { forwardRef } from "react";
 
-const buttonVariants = cva(
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-xs md:text-sm lg:text-base font-medium transition-all disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed shrink-0 outline-none cursor-pointer",
-    {
-        variants: {
-            variant: {
-                default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
-                rounded: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 rounded-full"
-            },
-            size: {
-                default: "h-7 md:h-8 lg:h-9 px-3 lg:px-4 py-2 md:py-2",
-                rounded: "size-8 md:size-9 lg:size-10 p-1.5 md:p-2.5"
-            }
-        },
-        defaultVariants: {
-            variant: "default",
-            size: "default",
+
+export const CustomButtonConfig = extendVariants(Button, {
+    variants: {
+        radius: {
+            md: "rounded-md"
         }
+    },
+    defaultVariants: {
+        radius: "md"
+    }
+})
+
+type CustomButtonProps = ButtonProps & {
+    tooltip?: string
+}
+
+export const CustomButton = forwardRef<React.ComponentRef<typeof CustomButtonConfig>, CustomButtonProps>(
+    ({ children, tooltip, ...props }, ref) => {
+
+        if (!tooltip) {
+            return (
+                <CustomButtonConfig ref={ref} {...props}>
+                    {children}
+                </CustomButtonConfig>
+            )
+        }
+
+        return (
+            <Tooltip content={tooltip}>
+                <CustomButtonConfig ref={ref} {...props}>
+                    {children}
+                </CustomButtonConfig>
+            </Tooltip>
+        )
     }
 )
 
-function Button({ asChild, children, iconBefore, iconAfter, variant, size, ...props }: ButtonPropsType) {
+CustomButton.displayName = "CustomButton"
 
-    const Comp = asChild ? Slot : "button"
+export const PrimaryButton = extendVariants(CustomButton, {
+    variants: {
+        color: {
+            primary: `
+            bg-gradient-to-r
+            from-[oklch(from_hsla(var(--heroui-primary))_0.45_c_h/1)]
+            via-[oklch(from_hsla(var(--heroui-primary))_0.75_c_h/1)]
+            to-[oklch(from_hsla(var(--heroui-primary))_0.45_c_h/1)]
+            from-0%
+            via-50%
+            to-100%
+            [background-size:200%_auto]
+            hover:[background-position:right_center]
+            transition-all
+            duration-400
+            dark:[box-shadow:0_3px_6px_1px_oklch(from_hsla(var(--heroui-primary))_0.45_c_h/0.5)]
+            `,
+        },
+        size: {
+            md: "text-sm md:text-base px-2 md:px-4 py-1 md:py-2 h-8 md:h-10"
+        }
+    },
+    defaultVariants: {
+        color: "primary",
+        variant: "shadow",
+        size: "md"
+    }
+})
 
-    return (
-        <Comp
-            data-slot="button"
-            className={cn(buttonVariants({ variant, size }))}
-            {...props}
-        >
-            {iconBefore && iconBefore}
-            {children || "Button"}
-            {iconAfter && iconAfter}
-        </Comp>
-    )
+type SecondaryButtonProps = ButtonProps & {
+    tooltip?: string
 }
-export default Button
+
+export const SecondaryButtonConfig = extendVariants(CustomButton, {
+    variants: {
+        color: {
+            primary: `
+                border-[oklch(from_hsla(var(--heroui-primary))_0.45_c_h/1)]
+                text-[oklch(from_hsla(var(--heroui-primary))_0.45_c_h/1)]
+                hover:bg-[oklch(from_hsla(var(--heroui-primary))_0.45_c_h/1)]
+                hover:text-white
+            `
+        },
+        size: {
+            md: "text-sm md:text-base px-2 md:px-4 py-1 md:py-2 h-8 md:h-10"
+        }
+    },
+    defaultVariants: {
+        color: "primary",
+        variant: "ghost",
+        size: "md"
+    }
+})
+
+export const SecondaryButton = forwardRef<React.ComponentRef<typeof SecondaryButtonConfig>, SecondaryButtonProps>(
+    ({ children, tooltip, ...props }, ref) => {
+        if (!tooltip) {
+            return (
+                <SecondaryButtonConfig ref={ref} {...props}>
+                    {children}
+                </SecondaryButtonConfig>
+            )
+        }
+
+        return (
+            <Tooltip content={tooltip}>
+                <SecondaryButtonConfig ref={ref} {...props}>
+                    {children}
+                </SecondaryButtonConfig>
+            </Tooltip>
+        )
+    }
+)
+
+SecondaryButton.displayName = "SecondaryButton"
+
+type IconButtonProps = ButtonProps & {
+    tooltip?: string
+}
+
+export const IconButtonConfig = extendVariants(CustomButton, {
+    variants: {
+        color: {
+            icon: `
+            `
+        }
+    },
+    defaultVariants: {
+        color: "primary",
+        variant: "light"
+    },
+})
+
+
+export const IconButton = forwardRef<React.ComponentRef<typeof IconButtonConfig>, IconButtonProps>(
+    ({ children, tooltip, ...props }, ref) => {
+        if (!tooltip) {
+            return (
+                <IconButtonConfig ref={ref} {...props}>
+                    {children}
+                </IconButtonConfig>
+            )
+        }
+
+        return (
+            <Tooltip content={tooltip}>
+                <IconButtonConfig ref={ref} {...props}>
+                    {children}
+                </IconButtonConfig>
+            </Tooltip>
+        )
+    }
+)
+
+IconButton.displayName = "IconButton"
