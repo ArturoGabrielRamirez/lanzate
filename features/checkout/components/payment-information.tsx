@@ -12,9 +12,10 @@ import { useTranslations } from "next-intl"
 interface PaymentInformationProps {
     paymentMethod: PaymentMethod
     onChange: (method: PaymentMethod) => void
+    allowedPaymentMethods: PaymentMethod[]
 }
 
-export function PaymentInformation({ paymentMethod, onChange }: PaymentInformationProps) {
+export function PaymentInformation({ paymentMethod, onChange, allowedPaymentMethods }: PaymentInformationProps) {
     const { setValue } = useFormContext()
     const t = useTranslations("checkout.payment")
 
@@ -26,6 +27,17 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
     const handleCardFieldChange = (fieldName: string, value: string) => {
         setValue(fieldName, value)
     }
+
+    // Filter payment methods based on what the store allows
+    const availablePaymentMethods = [
+        { value: "CASH" as PaymentMethod, label: t("method-selector.cash"), icon: Banknote },
+        { value: "CREDIT_CARD" as PaymentMethod, label: t("method-selector.credit-debit-card"), icon: CreditCard },
+        { value: "DEBIT_CARD" as PaymentMethod, label: t("method-selector.credit-debit-card"), icon: CreditCard },
+        { value: "TRANSFER" as PaymentMethod, label: t("method-selector.bank-transfer"), icon: Banknote },
+        { value: "MERCADO_PAGO" as PaymentMethod, label: t("method-selector.mercado-pago"), icon: Smartphone },
+        { value: "PAYPAL" as PaymentMethod, label: t("method-selector.paypal"), icon: CreditCard },
+        { value: "CRYPTO" as PaymentMethod, label: t("method-selector.crypto"), icon: CreditCard },
+    ].filter(method => allowedPaymentMethods.includes(method.value))
 
     return (
         <div className="flex flex-col gap-6">
@@ -43,24 +55,17 @@ export function PaymentInformation({ paymentMethod, onChange }: PaymentInformati
                         <SelectValue placeholder={t("method-selector.placeholder")} />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="CREDIT_CARD">
-                            <div className="flex items-center gap-2">
-                                <CreditCard className="size-4" />
-                                {t("method-selector.credit-debit-card")}
-                            </div>
-                        </SelectItem>
-                        <SelectItem value="TRANSFER">
-                            <div className="flex items-center gap-2">
-                                <Banknote className="size-4" />
-                                {t("method-selector.bank-transfer")}
-                            </div>
-                        </SelectItem>
-                        <SelectItem value="MERCADO_PAGO">
-                            <div className="flex items-center gap-2">
-                                <Smartphone className="size-4" />
-                                {t("method-selector.mercado-pago")}
-                            </div>
-                        </SelectItem>
+                        {availablePaymentMethods.map((method) => {
+                            const IconComponent = method.icon
+                            return (
+                                <SelectItem key={method.value} value={method.value}>
+                                    <div className="flex items-center gap-2">
+                                        <IconComponent className="size-4" />
+                                        {method.label}
+                                    </div>
+                                </SelectItem>
+                            )
+                        })}
                     </SelectContent>
                 </Select>
             </div>

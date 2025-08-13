@@ -293,7 +293,7 @@ export const InteractiveStepperItem = React.forwardRef<HTMLDivElement, IStepperI
         );
 
         const itemClasses = cn(
-            orientation === 'horizontal' ? 'flex items-center w-full' : 'flex flex-col',
+            orientation === 'horizontal' ? 'flex items-center w-full justify-center' : 'flex flex-col',
             disabled ? 'opacity-50 cursor-not-allowed' : '',
             className,
         );

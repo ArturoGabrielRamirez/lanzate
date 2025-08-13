@@ -29,7 +29,7 @@ export type GetAllStoresReturn = {
 
 export type GetStoreBySubdomainReturn = {
     message: string;
-    payload: Store & { balance: StoreBalance, branches: Branch[] } | null;
+    payload: Store & { balance: StoreBalance, branches: Branch[], operational_settings: StoreOperationalSettings | null } | null;
     error: boolean;
 };
 

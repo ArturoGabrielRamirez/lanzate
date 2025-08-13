@@ -28,7 +28,7 @@ export async function selectStoreBySubdomain(subdomain: string): Promise<SelectS
                     }
                 },
                 balance: true,
-                operational_settings: true,
+                operational_settings: true
             }
         })
 
