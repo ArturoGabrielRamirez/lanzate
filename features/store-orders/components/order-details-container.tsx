@@ -30,7 +30,7 @@ async function OrderDetailsContainer({ orderId }: Props) {
     }
 
     return (
-        <div className="flex gap-6">
+        <div className="flex gap-6 flex-col md:flex-row">
             <div className="flex-1">
                 <CustomerOrderTracking order={order} />
             </div>

@@ -29,7 +29,8 @@ export async function getOrderById(orderId: number, userId: number): Promise<{
                     }
                 },
                 store: true,
-                branch: true
+                branch: true,
+                tracking: true
             }
         })
 
