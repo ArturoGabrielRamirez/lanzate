@@ -21,8 +21,6 @@ const FloatingDock = ({ showBackButton = false }: Props) => {
         router.back()
     }
 
-    
-
     return (
         <div className="fixed w-full bottom-0 px-8 z-50 flex justify-center items-center bg-background/85 backdrop-blur-[4px] rounded-lg py-4 shadow-2xl shadow-black drop-shadow-2xl md:hidden">
             {showBackButton && (
