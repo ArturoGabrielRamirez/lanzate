@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Title } from "@/features/layout/components"
-import { Calendar, Home, Store, User } from "lucide-react"
+import { User } from "lucide-react"
 import { EmailStatusBanner } from "@/features/auth/components/index"
 import { DotPattern } from "@/components/magicui/dot-pattern"
 import { cn } from "@/lib/utils"
@@ -12,9 +12,6 @@ import { AccountHeader } from "./index"
 import { AccountDetailsTab } from "./index"
 import { AccountPageClientProps } from "../types"
 import { UserType } from "../types/types"
-import FloatingDock from "@/features/header/components/floating-dock"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
 
 export default function AccountPageClient({ user: initialUser, translations: t }: AccountPageClientProps) {
     const [user, setUser] = useState<UserType>(initialUser)
@@ -40,7 +37,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
     }
 
     return (
-        <div className="p-4 grow flex flex-col pt-17 relative">
+        <div className="p-4 grow flex flex-col pt-13 md:pt-17 relative pb-20">
             <Title
                 title={(
                     <div className="flex items-center gap-2">
@@ -102,6 +99,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                 height={30}
                 className={cn(
                     "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
+                    "-z-10"
                 )}
             />
         </div>

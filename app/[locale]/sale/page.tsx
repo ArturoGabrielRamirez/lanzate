@@ -1,11 +1,8 @@
-import { Calendar, Home, ShoppingBasket, Store, User } from "lucide-react"
+import { ShoppingBasket } from "lucide-react"
 import { Title } from "@/features/layout/components"
 import { StoreSelectorContainer, StoreSelectorSkeleton } from "@/features/sale/components"
 import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
-import FloatingDock from "@/features/header/components/floating-dock"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
 
 async function SalePage() {
     const t = await getTranslations("sale")
@@ -20,16 +17,15 @@ async function SalePage() {
             )} breadcrumbs={[{
                 label: t("breadcrumbs.sale"),
                 href: "/sale"
-            }]} />
+            }]} showDate/>
 
             <div className="flex-1 flex items-center justify-center min-h-[400px]">
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 w-full max-w-md">
+                <div className="border-2 border-dashed border-muted-foreground/50 rounded-lg p-8 w-full max-w-md">
                     <Suspense fallback={<StoreSelectorSkeleton />}>
                         <StoreSelectorContainer />
                     </Suspense>
                 </div>
             </div>
-            {/* <FloatingDock showBackButton /> */}
         </section>
     )
 }
