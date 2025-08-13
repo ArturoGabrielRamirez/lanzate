@@ -31,7 +31,7 @@ function MobileMenu({ user }: MobileMenuProps) {
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden flex justify-end">
+                <Button variant="ghost" size="icon" className="hidden justify-end">
                     <Menu className="size-5" />
                     <span className="sr-only">Toggle menu</span>
                 </Button>

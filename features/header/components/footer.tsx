@@ -1,6 +1,6 @@
 "use client"
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import type { SVGProps } from "react";
 import { Facebook, InstagramIcon } from "lucide-react";
@@ -12,8 +12,9 @@ function Footer() {
 
     const t = useTranslations('home');
     const pathname = usePathname()
+    const locale = useLocale()
 
-    if(pathname.includes("stores")) {
+    if(pathname.includes(`/${locale}/stores`) || pathname.includes(`/${locale}/dashboard`) || pathname.includes(`/${locale}/sale`) || pathname.includes(`/${locale}/events`) || pathname.includes(`/${locale}/account`)) {
         return null
     }
 

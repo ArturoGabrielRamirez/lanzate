@@ -8,7 +8,7 @@ async function SalePage() {
     const t = await getTranslations("sale")
 
     return (
-        <section className="p-4 flex flex-col pt-17">
+        <section className="p-2 md:p-4 flex flex-col pt-13 md:pt-17">
             <Title title={(
                 <div className="flex items-center gap-2">
                     <ShoppingBasket />
@@ -17,10 +17,10 @@ async function SalePage() {
             )} breadcrumbs={[{
                 label: t("breadcrumbs.sale"),
                 href: "/sale"
-            }]} />
+            }]} showDate/>
 
             <div className="flex-1 flex items-center justify-center min-h-[400px]">
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 w-full max-w-md">
+                <div className="border-2 border-dashed border-muted-foreground/50 rounded-lg p-8 w-full max-w-md">
                     <Suspense fallback={<StoreSelectorSkeleton />}>
                         <StoreSelectorContainer />
                     </Suspense>

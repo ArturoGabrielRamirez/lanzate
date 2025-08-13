@@ -37,7 +37,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
     }
 
     return (
-        <div className="p-4 grow flex flex-col pt-17 relative">
+        <div className="p-4 grow flex flex-col pt-13 md:pt-17 relative pb-20">
             <Title
                 title={(
                     <div className="flex items-center gap-2">
@@ -91,6 +91,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                         </Card>
                     </TabsContent>
                 </Tabs>
+                {/* <FloatingDock showBackButton /> */}
             </section>
 
             <DotPattern
@@ -98,6 +99,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                 height={30}
                 className={cn(
                     "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
+                    "-z-10"
                 )}
             />
         </div>
