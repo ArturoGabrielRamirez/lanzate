@@ -16,7 +16,7 @@ export default async function AccountPage() {
         "description.upgrade-plan": t("description.upgrade-plan"),
         "description.account-details": t("description.account-details"),
         "description.membership": t("description.membership"),
-        "description.username": t("description.username"),
+        "description.username": "Usuario",
         "description.first-name": t("description.first-name"),
         "description.last-name": t("description.last-name"),
         "description.email": t("description.email"),
@@ -24,7 +24,8 @@ export default async function AccountPage() {
         "description.change-email": t("description.change-email"),
         "description.change-password": t("description.change-password"),
         "description.currently-not-available": t("description.currently-not-available"),
+        "description.phone": "Teléfono"
     }
-    
+
     return <AccountPageClient user={user} translations={translations} />
 }

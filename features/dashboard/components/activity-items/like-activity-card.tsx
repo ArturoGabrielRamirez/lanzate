@@ -10,6 +10,12 @@ type Props = {
 }
 
 function LikeActivityCard({ item }: Props) {
+    const displayName = item.user.username || `${item.user.first_name} ${item.user.last_name}`
+    const userName = item.user.first_name
+    const userLastName = item.user.last_name
+    /*  const userPhone = item.user.phone || 'Sin numero' */
+    /*   const userEmail = item.user.email */
+
     return (
         <Card className="py-2 md:py-4 space-y-3">
             <CardContent className="space-y-3">
@@ -17,7 +23,7 @@ function LikeActivityCard({ item }: Props) {
                     <Avatar className="h-10 w-10">
                         <AvatarImage
                             src={item.user.avatar || undefined}
-                            alt={`${item.user.first_name} ${item.user.last_name}`}
+                            alt={displayName}
                         />
                         <AvatarFallback>
                             {getUserInitials(item.user.email)}
@@ -26,14 +32,19 @@ function LikeActivityCard({ item }: Props) {
                     <div className="flex-1 space-y-2">
                         <div>
                             <p className="text-muted-foreground text-xs">
-                                @userHandle
+                                {"@" + displayName}
+                                {userName && (
+                                    <span className="ml-2 text-xs">({userName + " " + userLastName})</span>
+                                )}
                             </p>
                             <div className="flex items-end gap-1">
                                 <p className="md:hidden flex items-center gap-1">
                                     <Flame className="size-3 text-red-500 fill-current" />
                                     a
                                 </p>
-                                <p className="text-muted-foreground text-xs md:text-sm hidden md:flex md:items-center gap-1">le dio <Flame className="size-3 text-red-500 fill-current" /> a</p>
+                                <p className="text-muted-foreground text-xs md:text-sm hidden md:flex md:items-center gap-1">
+                                    le dio <Flame className="size-3 text-red-500 fill-current" /> a
+                                </p>
                                 <Link
                                     href={`/stores/${item.product?.store.slug}/products/${item.product?.id}`}
                                     className="font-medium text-primary hover:underline text-sm md:text-base"
@@ -67,4 +78,4 @@ function LikeActivityCard({ item }: Props) {
     )
 }
 
-export default LikeActivityCard 
+export default LikeActivityCard

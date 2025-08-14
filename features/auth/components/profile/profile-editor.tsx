@@ -12,10 +12,12 @@ interface ProfileEditorProps {
   currentUsername: string | null
   currentFirstName: string | null
   currentLastName: string | null
+  currentPhone: string | null
   onProfileUpdate: (profile: {
     username: string | null
     firstName: string | null
     lastName: string | null
+    phone: string | null
   }) => void
 }
 
@@ -23,6 +25,7 @@ export function ProfileEditor({
   currentUsername, 
   currentFirstName, 
   currentLastName, 
+  currentPhone,
   onProfileUpdate 
 }: ProfileEditorProps) {
   const [isOpen, setIsOpen] = useState(false)
@@ -30,7 +33,8 @@ export function ProfileEditor({
   const [formData, setFormData] = useState({
     username: currentUsername || '',
     firstName: currentFirstName || '',
-    lastName: currentLastName || ''
+    lastName: currentLastName || '',
+    phone: currentPhone || ''
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
 
@@ -56,6 +60,15 @@ export function ProfileEditor({
     
     if (formData.lastName && formData.lastName.length > 50) {
       newErrors.lastName = 'El apellido debe tener máximo 50 caracteres'
+    }
+
+    // Validar teléfono (opcional pero si se proporciona debe ser válido)
+    if (formData.phone) {
+      // Remover espacios, guiones y paréntesis para validar
+      const cleanPhone = formData.phone.replace(/[\s\-\(\)\+]/g, '')
+      if (!/^\d{8,15}$/.test(cleanPhone)) {
+        newErrors.phone = 'El teléfono debe tener entre 8 y 15 dígitos'
+      }
     }
 
     setErrors(newErrors)
@@ -95,7 +108,8 @@ export function ProfileEditor({
         body: JSON.stringify({
           username: formData.username.trim() || null,
           firstName: formData.firstName.trim() || null,
-          lastName: formData.lastName.trim() || null
+          lastName: formData.lastName.trim() || null,
+          phone: formData.phone.trim() || null
         }),
       })
 
@@ -111,7 +125,8 @@ export function ProfileEditor({
       onProfileUpdate({
         username: formData.username.trim() || null,
         firstName: formData.firstName.trim() || null,
-        lastName: formData.lastName.trim() || null
+        lastName: formData.lastName.trim() || null,
+        phone: formData.phone.trim() || null
       })
 
       toast.success('Perfil actualizado correctamente')
@@ -131,7 +146,8 @@ export function ProfileEditor({
       setFormData({
         username: currentUsername || '',
         firstName: currentFirstName || '',
-        lastName: currentLastName || ''
+        lastName: currentLastName || '',
+        phone: currentPhone || ''
       })
       setErrors({})
     }
@@ -160,7 +176,7 @@ export function ProfileEditor({
           <div className="space-y-2">
             <Label htmlFor="username">
               Nombre de usuario
-              <span className="text-xs text-muted-foreground ml-2">(opcional)</span>
+              <span className="text-xs text-muted-foreground ml-2">(requerido)</span>
             </Label>
             <Input
               id="username"
@@ -211,6 +227,28 @@ export function ProfileEditor({
             {errors.lastName && (
               <p className="text-xs text-red-500">{errors.lastName}</p>
             )}
+          </div>
+
+          {/* Phone */}
+          <div className="space-y-2">
+            <Label htmlFor="phone">
+              Teléfono
+              <span className="text-xs text-muted-foreground ml-2">(opcional)</span>
+            </Label>
+            <Input
+              id="phone"
+              type="tel"
+              placeholder="ej: +54 11 1234-5678"
+              value={formData.phone}
+              onChange={(e) => handleInputChange('phone', e.target.value)}
+              className={errors.phone ? 'border-red-500' : ''}
+            />
+            {errors.phone && (
+              <p className="text-xs text-red-500">{errors.phone}</p>
+            )}
+            <p className="text-xs text-muted-foreground">
+              Formato: código de país + número (8-15 dígitos)
+            </p>
           </div>
 
           {/* Botones */}
