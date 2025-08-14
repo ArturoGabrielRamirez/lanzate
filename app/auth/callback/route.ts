@@ -144,7 +144,7 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${baseUrl}${errorRedirectPath}`)
     }
 
-    let existingUser = await prisma.user.findFirst({
+    const existingUser = await prisma.user.findFirst({
       where: {
         supabase_user_id: user.id,
         is_anonymized: false,
