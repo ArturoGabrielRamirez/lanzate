@@ -1,9 +1,11 @@
-import { createServerClient } from '@supabase/ssr'
+// middleware.ts - VERSIÓN SIMPLIFICADA
+import { createServerClient} from '@supabase/ssr'
 import createIntlMiddleware from 'next-intl/middleware'
 import { NextResponse, type NextRequest } from 'next/server'
 import { extractSubdomain } from '@/features/subdomain/middleware/middleware'
 import { validateSubdomain } from '@/features/subdomain/actions/validateSubdomain'
 import { routing } from '@/i18n/routing'
+import type { User } from '@supabase/supabase-js'
 
 const intlMiddleware = createIntlMiddleware(routing)
 
@@ -90,7 +92,7 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  let user = null
+  let user: User | null = null
   try {
     const { data } = await supabase.auth.getUser()
     user = data.user
@@ -98,9 +100,11 @@ export async function updateSession(request: NextRequest) {
     console.error('Error getting user:', error)
   }
 
-  if (subdomain) {
-    const { locale, pathWithoutLocale } = extractLocaleFromPath(pathname)
+  const { locale, pathWithoutLocale } = extractLocaleFromPath(pathname)
+  const currentLocale = locale || routing.defaultLocale
 
+  // Manejar subdominios
+  if (subdomain) {
     if (pathWithoutLocale.startsWith('/s/')) {
       return response
     }
@@ -114,8 +118,6 @@ export async function updateSession(request: NextRequest) {
     } catch (error) {
       console.error('Error validating subdomain:', error)
     }
-
-    const currentLocale = locale || routing.defaultLocale
 
     const subdomainRoutes = {
       '/': `/${currentLocale}/s/${subdomain}`,
@@ -150,9 +152,7 @@ export async function updateSession(request: NextRequest) {
     return response
   }
 
-  const { locale, pathWithoutLocale } = extractLocaleFromPath(pathname)
-  const currentLocale = locale || routing.defaultLocale
-
+  // Redirecciones de autenticación simples
   if (!user && (pathWithoutLocale === '/account' || pathWithoutLocale.includes('/dashboard'))) {
     const url = new URL(`/${currentLocale}/login`, `https://${rootDomain}`)
     return NextResponse.redirect(url)
@@ -164,4 +164,10 @@ export async function updateSession(request: NextRequest) {
   }
 
   return response
+}
+
+export const config = {
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
 }
