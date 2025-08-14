@@ -125,3 +125,25 @@ export interface FileUploadSectionProps {
     onFileSelect: (event: React.ChangeEvent<HTMLInputElement>) => void
     onButtonClick: () => void
 }
+
+
+export interface UserDeletionRequest {
+    reason: string;
+    confirmPassword: string;
+}
+
+export interface UserDeletionStatus {
+    isDeletionRequested: boolean;
+    deletionRequestedAt: Date | null;
+    deletionScheduledAt: Date | null;
+    deletionReason: string | null;
+    canCancel: boolean;
+    daysRemaining: number;
+    minutesRemaining: number;
+    timeRemaining: number | null;
+}
+
+export interface DangerZoneProps {
+    userId: number;
+    onStatusChange?: () => void;
+}
