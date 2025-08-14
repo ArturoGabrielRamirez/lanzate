@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json().catch(() => ({}))
-    const { force = false, action = 'all' } = body
+    const { action = 'all' } = body
 
     let result
 
