@@ -66,6 +66,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
         }))
     }
 
+
     // Si está en proceso de eliminación, mostrar solo la zona de peligro
     if (isLoading) {
         return (
@@ -113,6 +114,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                                 </p>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -198,6 +200,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                         </div>
                     </TabsContent>
                 </Tabs>
+                {/* <FloatingDock showBackButton /> */}
             </section>
 
             {/* Pattern de fondo */}
@@ -206,6 +209,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                 height={30}
                 className={cn(
                     "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
+                    "-z-10"
                 )}
             />
         </div>

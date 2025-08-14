@@ -3,7 +3,7 @@
 import React from "react"
 import { cn } from "@/lib/utils"
 import { Order } from "@prisma/client"
-import { CheckCircle, Clock, Package, Truck, MapPin, AlertCircle, Check } from "lucide-react"
+import { CheckCircle, Package, Truck, MapPin, Check } from "lucide-react"
 
 type OrderItemWithProduct = {
     id: number
@@ -147,6 +147,7 @@ function CustomerOrderTrackingStep({ order }: Props) {
 
     const getTrackingTimeline = () => {
         const timeline = []
+        const trackingStatus = order.tracking?.tracking_status
 
         // Always show order placed
         timeline.push({
@@ -164,27 +165,27 @@ function CustomerOrderTrackingStep({ order }: Props) {
                 icon: Package,
                 title: "Order Preparation",
                 description: "Your order is being prepared",
-                completed: order.status !== "PENDING",
-                color: order.status !== "PENDING" ? "text-green-600" : "text-gray-400",
-                bgColor: order.status !== "PENDING" ? "bg-green-100" : "bg-gray-100"
+                completed: trackingStatus === "PREPARING_ORDER" || trackingStatus === "WAITING_FOR_PICKUP" || trackingStatus === "PICKED_UP",
+                color: (trackingStatus === "PREPARING_ORDER" || trackingStatus === "WAITING_FOR_PICKUP" || trackingStatus === "PICKED_UP") ? "text-green-600" : "text-gray-400",
+                bgColor: (trackingStatus === "PREPARING_ORDER" || trackingStatus === "WAITING_FOR_PICKUP" || trackingStatus === "PICKED_UP") ? "bg-green-100" : "bg-gray-100"
             })
 
             timeline.push({
                 icon: CheckCircle,
                 title: "Ready for Pickup",
                 description: "Your order is ready for pickup",
-                completed: order.status === "READY" || order.status === "COMPLETED",
-                color: (order.status === "READY" || order.status === "COMPLETED") ? "text-green-600" : "text-gray-400",
-                bgColor: (order.status === "READY" || order.status === "COMPLETED") ? "bg-green-100" : "bg-gray-100"
+                completed: trackingStatus === "WAITING_FOR_PICKUP" || trackingStatus === "PICKED_UP",
+                color: (trackingStatus === "WAITING_FOR_PICKUP" || trackingStatus === "PICKED_UP") ? "text-green-600" : "text-gray-400",
+                bgColor: (trackingStatus === "WAITING_FOR_PICKUP" || trackingStatus === "PICKED_UP") ? "bg-green-100" : "bg-gray-100"
             })
 
             timeline.push({
                 icon: CheckCircle,
                 title: "Order Picked Up",
                 description: "You have picked up your order",
-                completed: order.status === "COMPLETED",
-                color: order.status === "COMPLETED" ? "text-green-600" : "text-gray-400",
-                bgColor: order.status === "COMPLETED" ? "bg-green-100" : "bg-gray-100"
+                completed: trackingStatus === "PICKED_UP",
+                color: trackingStatus === "PICKED_UP" ? "text-green-600" : "text-gray-400",
+                bgColor: trackingStatus === "PICKED_UP" ? "bg-green-100" : "bg-gray-100"
             })
         } else {
             // Delivery timeline
@@ -192,36 +193,36 @@ function CustomerOrderTrackingStep({ order }: Props) {
                 icon: Package,
                 title: "Order Preparation",
                 description: "Your order is being prepared",
-                completed: order.status !== "PENDING",
-                color: order.status !== "PENDING" ? "text-green-600" : "text-gray-400",
-                bgColor: order.status !== "PENDING" ? "bg-green-100" : "bg-gray-100"
+                completed: trackingStatus === "PREPARING_ORDER" || trackingStatus === "WAITING_FOR_DELIVERY" || trackingStatus === "ON_THE_WAY" || trackingStatus === "DELIVERED",
+                color: (trackingStatus === "PREPARING_ORDER" || trackingStatus === "WAITING_FOR_DELIVERY" || trackingStatus === "ON_THE_WAY" || trackingStatus === "DELIVERED") ? "text-green-600" : "text-gray-400",
+                bgColor: (trackingStatus === "PREPARING_ORDER" || trackingStatus === "WAITING_FOR_DELIVERY" || trackingStatus === "ON_THE_WAY" || trackingStatus === "DELIVERED") ? "bg-green-100" : "bg-gray-100"
             })
 
             timeline.push({
                 icon: CheckCircle,
                 title: "Ready for Delivery",
                 description: "Your order is ready for delivery",
-                completed: order.status === "READY" || order.status === "SHIPPED" || order.status === "DELIVERED" || order.status === "COMPLETED",
-                color: (order.status === "READY" || order.status === "SHIPPED" || order.status === "DELIVERED" || order.status === "COMPLETED") ? "text-green-600" : "text-gray-400",
-                bgColor: (order.status === "READY" || order.status === "SHIPPED" || order.status === "DELIVERED" || order.status === "COMPLETED") ? "bg-green-100" : "bg-gray-100"
+                completed: trackingStatus === "WAITING_FOR_DELIVERY" || trackingStatus === "ON_THE_WAY" || trackingStatus === "DELIVERED",
+                color: (trackingStatus === "WAITING_FOR_DELIVERY" || trackingStatus === "ON_THE_WAY" || trackingStatus === "DELIVERED") ? "text-green-600" : "text-gray-400",
+                bgColor: (trackingStatus === "WAITING_FOR_DELIVERY" || trackingStatus === "ON_THE_WAY" || trackingStatus === "DELIVERED") ? "bg-green-100" : "bg-gray-100"
             })
 
             timeline.push({
                 icon: Truck,
                 title: "On the Way",
                 description: "Your order is being delivered",
-                completed: order.status === "SHIPPED" || order.status === "DELIVERED" || order.status === "COMPLETED",
-                color: (order.status === "SHIPPED" || order.status === "DELIVERED" || order.status === "COMPLETED") ? "text-green-600" : "text-gray-400",
-                bgColor: (order.status === "SHIPPED" || order.status === "DELIVERED" || order.status === "COMPLETED") ? "bg-green-100" : "bg-gray-100"
+                completed: trackingStatus === "ON_THE_WAY" || trackingStatus === "DELIVERED",
+                color: (trackingStatus === "ON_THE_WAY" || trackingStatus === "DELIVERED") ? "text-green-600" : "text-gray-400",
+                bgColor: (trackingStatus === "ON_THE_WAY" || trackingStatus === "DELIVERED") ? "bg-green-100" : "bg-gray-100"
             })
 
             timeline.push({
                 icon: CheckCircle,
                 title: "Delivered",
                 description: "Your order has been delivered",
-                completed: order.status === "DELIVERED" || order.status === "COMPLETED",
-                color: (order.status === "DELIVERED" || order.status === "COMPLETED") ? "text-green-600" : "text-gray-400",
-                bgColor: (order.status === "DELIVERED" || order.status === "COMPLETED") ? "bg-green-100" : "bg-gray-100"
+                completed: trackingStatus === "DELIVERED",
+                color: trackingStatus === "DELIVERED" ? "text-green-600" : "text-gray-400",
+                bgColor: trackingStatus === "DELIVERED" ? "bg-green-100" : "bg-gray-100"
             })
         }
 
