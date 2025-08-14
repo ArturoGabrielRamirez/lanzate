@@ -1,10 +1,11 @@
 import { insertUser } from '@/features/auth/data/insertUser'
-import { getUserByEmail } from '@/features/layout/data/getUserByEmail'
 import { insertLogEntry } from '@/features/layout/data/insertLogEntry'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { NextResponse } from 'next/server'
 import { routing } from '@/i18n/routing'
 import { prisma } from '@/utils/prisma'
+import { UserDeletionSystem } from '@/features/account/utils/user-deletion-system'
+import { CryptoUtils } from '@/features/account/utils/crypto-utils'
 
 export async function GET(request: Request) {
   const url = new URL(request.url)
@@ -13,7 +14,6 @@ export async function GET(request: Request) {
   const error_description = url.searchParams.get('error_description')
   const next = url.searchParams.get('next') ?? '/'
   const subdomain = url.searchParams.get('subdomain')
-
   const acceptLanguage = request.headers.get('accept-language')
   const preferredLocale = acceptLanguage?.split(',')[0]?.split('-')[0]
   const locale = routing.locales.includes(preferredLocale as typeof routing.locales[number])
@@ -71,25 +71,117 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${baseUrl}${errorRedirectPath}`)
     }
 
-    let existingUser = await prisma.user.findUnique({
+    const emailHash = user.email ? CryptoUtils.hashEmail(user.email) : null
+
+    const anonymizedUser = await prisma.user.findFirst({
       where: {
-        supabase_user_id: user?.id
+        AND: [
+          {
+            OR: [
+              { supabase_user_id: user.id },
+              ...(emailHash ? [{ 
+                AND: [
+                  { original_email_hash: emailHash },
+                  { supabase_user_id: null }
+                ]
+              }] : [])
+            ]
+          },
+          { is_anonymized: true }
+        ]
+      },
+      select: {
+        id: true,
+        email: true,
+        supabase_user_id: true,
+        anonymized_at: true,
+        original_email_hash: true,
       }
     });
 
-    if (!existingUser) {
-      const { error: getUserError, payload: userByEmail } = await getUserByEmail(user?.email ?? "")
-
-      if (getUserError) {
-        console.error('Error getting user by email:', getUserError)
+    if (anonymizedUser) {
+      console.error(`🚫 Intento de acceso a cuenta anonimizada: ${user.email} (Usuario ID: ${anonymizedUser.id})`);
+    
+      if (anonymizedUser.supabase_user_id === user.id) {
+        try {
+          await supabase.auth.admin.deleteUser(anonymizedUser.supabase_user_id);
+          await prisma.user.update({
+            where: { id: anonymizedUser.id },
+            data: { supabase_user_id: null }
+          });
+          
+          console.log(`🧹 Conexión huérfana limpiada para usuario ${anonymizedUser.id}`);
+        } catch (cleanupError) {
+          console.error('❌ Error limpiando conexión huérfana:', cleanupError);
+        }
       }
 
-      existingUser = userByEmail;
+      try {
+        await prisma.userDeletionLog.create({
+          data: {
+            user_id: anonymizedUser.id,
+            action: 'BLOCKED_ACCESS',
+            reason: 'Attempted access to anonymized account',
+            ip_address: request.headers.get('x-forwarded-for') || 'unknown',
+            user_agent: request.headers.get('user-agent') || 'unknown',
+            additional_data: JSON.stringify({
+              supabase_user_id: user.id,
+              email: user.email,
+              blocked_at: new Date().toISOString(),
+              match_type: anonymizedUser.supabase_user_id === user.id ? 'supabase_id' : 'email_hash',
+            }),
+          },
+        });
+      } catch (logError) {
+        console.error('Error logging blocked access:', logError);
+      }
+
+      const errorParams = new URLSearchParams()
+      errorParams.set('error', 'account_deleted')
+      errorParams.set('error_description', 'This account has been permanently deleted and cannot be recovered. You can create a new account with the same email if needed.')
+
+      const errorRedirectPath = `/${locale}/auth/error?${errorParams.toString()}`
+      return NextResponse.redirect(`${baseUrl}${errorRedirectPath}`)
     }
+
+    let existingUser = await prisma.user.findFirst({
+      where: {
+        supabase_user_id: user.id,
+        is_anonymized: false,
+      }
+    });
 
     let userId = existingUser?.id
 
-    if (!existingUser) {
+    if (!existingUser && user?.email) {
+      try {
+        const validation = await UserDeletionSystem.validateNewUserCreation(user.email)
+
+        if (!validation.canCreate && validation.conflict) {
+          console.error(`❌ Email ${user.email} ya está en uso por cuenta activa`)
+          const errorParams = new URLSearchParams()
+          errorParams.set('error', 'email_in_use')
+          errorParams.set('error_description', 'Email already in use by another active account')
+
+          const errorRedirectPath = `/${locale}/auth/error?${errorParams.toString()}`
+          return NextResponse.redirect(`${baseUrl}${errorRedirectPath}`)
+        }
+
+        if (validation.previouslyAnonymized) {
+          console.log(`ℹ️ Creando nueva cuenta para email previamente anonimizado: ${user.email}`);
+        }
+      } catch (validationError) {
+        console.error('❌ Error en validación:', validationError)
+        if (validationError instanceof Error && validationError.message.includes('already exists')) {
+          const errorParams = new URLSearchParams()
+          errorParams.set('error', 'validation_failed')
+          errorParams.set('error_description', validationError.message)
+
+          const errorRedirectPath = `/${locale}/auth/error?${errorParams.toString()}`
+          return NextResponse.redirect(`${baseUrl}${errorRedirectPath}`)
+        }
+      }
+
       const provider = user?.app_metadata?.provider || 'oauth'
       const insertResult = await insertUser(
         user?.email ?? "",
@@ -103,7 +195,7 @@ export async function GET(request: Request) {
       )
 
       if (insertResult.error || !insertResult.payload) {
-        console.error('Error inserting user into database:', insertResult.message)
+        console.error('❌ Error inserting user into database:', insertResult.message)
         const errorParams = new URLSearchParams()
         errorParams.set('error', 'user_creation_failed')
         errorParams.set('error_description', insertResult.message || 'Failed to create user record')
@@ -111,11 +203,10 @@ export async function GET(request: Request) {
         const errorRedirectPath = `/${locale}/auth/error?${errorParams.toString()}`
         return NextResponse.redirect(`${baseUrl}${errorRedirectPath}`)
       }
-
       const newUser = insertResult.payload
       userId = newUser.id
 
-    } else if (!existingUser.supabase_user_id) {
+    } else if (existingUser && !existingUser.supabase_user_id) {
       try {
         await prisma.user.update({
           where: { id: existingUser.id },
@@ -126,18 +217,16 @@ export async function GET(request: Request) {
             first_name: user?.user_metadata?.name || existingUser.first_name,
             last_name: user?.user_metadata?.lastname || existingUser.last_name,
             phone: user?.user_metadata?.phone || existingUser.phone,
-            created_at: new Date(),
+            created_at: existingUser.created_at,
             updated_at: new Date()
           }
         });
       } catch (error) {
-        console.error('Error migrating user', error)
+        console.error('❌ Error migrating user', error)
         console.error('Error migrating user:', existingUser.email)
       }
 
-    } else {
-      console.error('User already logged in:', existingUser.email)
-      
+    } else if (existingUser) {
       if (user?.user_metadata?.avatar_url) {
         try {
           await prisma.user.update({
@@ -151,27 +240,30 @@ export async function GET(request: Request) {
             }
           });
         } catch (error) {
-          console.error('Error updating user profile:', error)
+          console.error('❌ Error updating user profile:', error)
         }
       }
     }
 
     if (userId) {
       const provider = user?.app_metadata?.provider || 'oauth'
+      const wasNewAccount = !existingUser
+      const wasMigrated = existingUser && !existingUser.supabase_user_id
+
       insertLogEntry({
         action: "LOGIN",
         entity_type: "USER",
         entity_id: userId,
         user_id: userId,
         action_initiator: `${provider} OAuth`,
-        details: `User signed in using ${provider} OAuth`
+        details: `User signed in using ${provider} OAuth${wasNewAccount ? ' (new account)' : ''}${wasMigrated ? ' (migrated account)' : ''}`
       }).catch(error => {
-        console.error('Error logging OAuth signin:', error)
+        console.error('❌ Error logging OAuth signin:', error)
       })
     }
 
   } catch (unexpectedError) {
-    console.error('Unexpected error in auth callback:', unexpectedError)
+    console.error('❌ Unexpected error in auth callback:', unexpectedError)
     const errorParams = new URLSearchParams()
     errorParams.set('error', 'unexpected_error')
     errorParams.set('error_description', 'An unexpected error occurred during authentication')
