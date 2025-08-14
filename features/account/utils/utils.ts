@@ -5,4 +5,4 @@ export function maskEmail(email: string): string {
   }
   const maskedLocal = `${localPart[0]}${'*'.repeat(localPart.length - 2)}${localPart[localPart.length - 1]}`
   return `${maskedLocal}@${domain}`
-}
+} //usar esto
