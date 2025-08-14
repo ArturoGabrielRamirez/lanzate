@@ -6,7 +6,6 @@ import { prisma } from "@/utils/prisma"
 export async function selectUserStoreActivities(userId: number) {
     return actionWrapper(async () => {
 
-        // Get all stores owned by the user
         const userStores = await prisma.store.findMany({
             where: {
                 user_id: userId
@@ -16,7 +15,6 @@ export async function selectUserStoreActivities(userId: number) {
             }
         })
 
-        // Get all stores where user is an employee
         const userEmployeeStores = await prisma.employee.findMany({
             where: {
                 user_id: userId,
@@ -32,7 +30,6 @@ export async function selectUserStoreActivities(userId: number) {
             ...userEmployeeStores.map(emp => emp.store_id)
         ]
 
-        // Get all likes for products in user's stores
         const likes = await prisma.product_likes.findMany({
             where: {
                 products: {
@@ -48,7 +45,9 @@ export async function selectUserStoreActivities(userId: number) {
                         first_name: true,
                         last_name: true,
                         avatar: true,
-                        email: true
+                        email: true,
+                        username: true,
+                        phone: true
                     }
                 },
                 products: {
@@ -72,7 +71,6 @@ export async function selectUserStoreActivities(userId: number) {
             take: 50
         })
 
-        // Get all comments for products in user's stores  
         const comments = await prisma.product_comments.findMany({
             where: {
                 products: {
@@ -88,7 +86,10 @@ export async function selectUserStoreActivities(userId: number) {
                         id: true,
                         first_name: true,
                         last_name: true,
-                        avatar: true
+                        avatar: true,
+                        email: true,
+                        username: true,
+                        phone: true
                     }
                 },
                 products: {
@@ -112,7 +113,6 @@ export async function selectUserStoreActivities(userId: number) {
             take: 50
         })
 
-        // Get orders from stores where user is owner or employee
         const orders = await prisma.order.findMany({
             where: {
                 store_id: {
@@ -132,7 +132,10 @@ export async function selectUserStoreActivities(userId: number) {
                         id: true,
                         first_name: true,
                         last_name: true,
-                        avatar: true
+                        avatar: true,
+                        email: true,
+                        username: true,
+                        phone: true
                     }
                 },
                 processed_by: {
@@ -140,7 +143,10 @@ export async function selectUserStoreActivities(userId: number) {
                         id: true,
                         first_name: true,
                         last_name: true,
-                        avatar: true
+                        avatar: true,
+                        email: true,
+                        username: true,
+                        phone: true
                     }
                 },
                 items: {
@@ -161,7 +167,6 @@ export async function selectUserStoreActivities(userId: number) {
             take: 50
         })
 
-        // Get contract assignments where the user is the employee (assigned to them)
         const contractAssignmentsAsEmployee = await prisma.contractAssignment.findMany({
             where: {
                 employee: {
@@ -183,7 +188,10 @@ export async function selectUserStoreActivities(userId: number) {
                                 id: true,
                                 first_name: true,
                                 last_name: true,
-                                avatar: true
+                                avatar: true,
+                                email: true,
+                                username: true,
+                                phone: true
                             }
                         }
                     }
@@ -195,7 +203,10 @@ export async function selectUserStoreActivities(userId: number) {
                                 id: true,
                                 first_name: true,
                                 last_name: true,
-                                avatar: true
+                                avatar: true,
+                                email: true,
+                                username: true,
+                                phone: true
                             }
                         }
                     }
@@ -205,7 +216,10 @@ export async function selectUserStoreActivities(userId: number) {
                         id: true,
                         first_name: true,
                         last_name: true,
-                        avatar: true
+                        avatar: true,
+                        email: true,
+                        username: true,
+                        phone: true
                     }
                 }
             },
@@ -215,7 +229,6 @@ export async function selectUserStoreActivities(userId: number) {
             take: 50
         })
 
-        // Get contract assignments where the user is the store owner (they assigned contracts to others)
         const contractAssignmentsAsOwner = await prisma.contractAssignment.findMany({
             where: {
                 contract: {
@@ -239,7 +252,10 @@ export async function selectUserStoreActivities(userId: number) {
                                 id: true,
                                 first_name: true,
                                 last_name: true,
-                                avatar: true
+                                avatar: true,
+                                email: true,
+                                username: true,
+                                phone: true
                             }
                         }
                     }
@@ -251,7 +267,10 @@ export async function selectUserStoreActivities(userId: number) {
                                 id: true,
                                 first_name: true,
                                 last_name: true,
-                                avatar: true
+                                avatar: true,
+                                email: true,
+                                username: true,
+                                phone: true
                             }
                         }
                     }
@@ -261,7 +280,10 @@ export async function selectUserStoreActivities(userId: number) {
                         id: true,
                         first_name: true,
                         last_name: true,
-                        avatar: true
+                        avatar: true,
+                        email: true,
+                        username: true,
+                        phone: true
                     }
                 }
             },
@@ -284,4 +306,4 @@ export async function selectUserStoreActivities(userId: number) {
         }
 
     })
-} 
+}

@@ -35,7 +35,6 @@ async function ActivityFeed({ userId }: Props) {
         )
     }
 
-    // Combine and sort activities
     const feedItems: ActivityFeedItem[] = [
         ...activities.likes.map((like: UserStoreActivity['likes'][0]) => ({
             id: `like-${like.user_id}-${like.product_id}`,
@@ -55,7 +54,15 @@ async function ActivityFeed({ userId }: Props) {
         ...activities.orders.map((order: UserStoreActivity['orders'][0]) => ({
             id: `order-${order.id}`,
             type: 'order' as const,
-            user: order.customer || { id: 0, first_name: order.customer_name || 'Cliente', last_name: '', avatar: null },
+            user: order.customer || { 
+                id: 0, 
+                first_name: order.customer_name || 'Cliente', 
+                last_name: '', 
+                avatar: null,
+                email: order.customer_email || '',
+                username: order.customer_name || 'Cliente',
+                phone: order.customer_phone || ''
+            },
             order: order,
             created_at: order.created_at
         })),
@@ -194,4 +201,4 @@ async function ActivityFeed({ userId }: Props) {
     )
 }
 
-export default ActivityFeed 
+export default ActivityFeed

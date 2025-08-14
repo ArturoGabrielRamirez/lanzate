@@ -29,9 +29,12 @@ function OrderActivityCard({ item }: Props) {
                             <div className="flex items-center justify-between space-x-2">
                                 <div className="flex items-center gap-1">
                                     <span className="font-medium text-sm md:text-base">
-                                        {item.user.first_name} {item.user.last_name}
+                                        {(item.user.first_name || item.user.last_name)
+                                            ? `@${item.user.username} (${`${item.user.first_name || ''} ${item.user.last_name || ''}`.trim()})`
+                                            : `@${item.user.username}`
+                                        }
                                     </span>
-                                    <span className="text-muted-foreground text-xs md:text-sm">realizó la orden</span>
+                                    <span className="text-muted-foreground text-xs md:text-sm">realizó la</span>
                                     <Link
                                         href={`/stores/${item.order?.store.slug}/orders/${item.order?.id}`}
                                         className="font-medium text-primary hover:underline"
@@ -47,7 +50,9 @@ function OrderActivityCard({ item }: Props) {
                             <div className="text-sm text-muted-foreground flex items-center gap-1">
                                 ${item.order?.total_price.toFixed(2)} |
                                 <span className="font-medium ml-1">Items:</span> {item.order?.total_quantity} |
-
+                            </div>
+                            <div className="text-sm text-muted-foreground flex items-center gap-1">
+                                {item.user?.phone}
                             </div>
                         </div>
 
