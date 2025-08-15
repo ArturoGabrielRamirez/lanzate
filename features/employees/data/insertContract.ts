@@ -71,6 +71,18 @@ export async function insertContract(payload: any, storeId: number, userId: numb
                 }
             })
 
+            await prisma.socialActivity.create({
+                data: {
+                    user_id: userId,
+                    activity_type: "CONTRACT_ASSIGNED",
+                    entity_type: "EMPLOYEE",
+                    entity_id: contract.id,
+                    title: `Contract ${contract.title} assigned`,
+                    description: `Contract ${contract.title} assigned to @${contract.responses[0].employee.user.username}`,
+                    store_id: store.id,
+                }
+            })
+
             return contract
         })
 
