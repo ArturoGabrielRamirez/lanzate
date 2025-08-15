@@ -14,17 +14,25 @@ export default function CancelDeletionModal({
 }: {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: () => void;
+    onConfirm: () => Promise<void>; // ✅ CAMBIO: Acepta funciones async
     cancelReason: string;
     setCancelReason: (value: string) => void;
     isLoading: boolean;
 }) {
     if (!isOpen) return null;
 
+    // ✅ FUNCIÓN PARA MANEJAR CLICK ASYNC
+    const handleConfirm = async () => {
+        try {
+            await onConfirm();
+        } catch (error) {
+            console.error('Error en confirmación:', error);
+        }
+    };
+
     return (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
             <div className="bg-gray-800 border border-gray-700 rounded-lg max-w-md w-full">
-
                 <div className="flex items-center justify-between p-6 border-b border-gray-700">
                     <h3 className="text-lg font-semibold text-blue-400">Cancelar eliminación</h3>
                     <Button
@@ -38,7 +46,6 @@ export default function CancelDeletionModal({
                 </div>
 
                 <div className="p-6 space-y-4">
-                 
                     <Alert className="bg-blue-500/10 border-blue-500/30">
                         <CheckCircle className="h-4 w-4 text-blue-400" />
                         <AlertDescription className="text-gray-300">
@@ -70,7 +77,7 @@ export default function CancelDeletionModal({
                             Cerrar
                         </Button>
                         <Button
-                            onClick={onConfirm}
+                            onClick={handleConfirm} // ✅ USAR handleConfirm
                             disabled={isLoading}
                             className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
                         >
@@ -81,4 +88,4 @@ export default function CancelDeletionModal({
             </div>
         </div>
     );
-};
+}

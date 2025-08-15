@@ -56,14 +56,24 @@ export default function DeletionStatusCard({
                 )}
             </div>
 
-            {status.canCancel && (
-                <Button
-                    onClick={onCancelClick}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                >
-                    <ShieldUser className="h-4 w-4 mr-2" />
-                    Cancelar eliminación
-                </Button>
+            {/* BOTÓN SIEMPRE HABILITADO */}
+            <Button
+                onClick={onCancelClick}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+            >
+                <ShieldUser className="h-4 w-4 mr-2" />
+                Cancelar eliminación
+            </Button>
+
+            {/* Mensaje informativo cuando normalmente no se podría cancelar */}
+            {!status.canCancel && (
+                <Alert className="bg-amber-500/10 border-amber-500/30 mt-3">
+                    <AlertTriangle className="h-4 w-4 text-amber-400" />
+                    <AlertDescription className="text-gray-300">
+                        <span className="font-semibold text-amber-400">Nota:</span>{' '}
+                        El período de gracia estándar ha expirado, pero aún puedes intentar cancelar la eliminación.
+                    </AlertDescription>
+                </Alert>
             )}
         </div>
     );

@@ -133,14 +133,15 @@ export interface UserDeletionRequest {
 }
 
 export interface UserDeletionStatus {
-    isDeletionRequested: boolean;
-    deletionRequestedAt: Date | null;
-    deletionScheduledAt: Date | null;
-    deletionReason: string | null;
-    canCancel: boolean;
-    daysRemaining: number;
-    minutesRemaining: number;
-    timeRemaining: number | null;
+  isDeletionRequested: boolean;
+  deletionRequestedAt: Date | null;
+  deletionScheduledAt: Date | null;  
+  displayScheduledAt: Date | null;  
+  deletionReason: string | null;
+  canCancel: boolean;
+  daysRemaining: number;
+  minutesRemaining: number;
+  timeRemaining: number | null;
 }
 
 export interface DangerZoneProps {

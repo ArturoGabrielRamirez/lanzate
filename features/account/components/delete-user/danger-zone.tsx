@@ -7,19 +7,17 @@ import DeleteConfirmationModal from "./delete-confirmation-modal";
 import CancelDeletionModal from "./cancel-deletion-modal";
 import DeletionStatusCard from "./deletion-status-card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { 
+  fetchDeletionStatus, 
+  createDeleteRequestHandler, 
+  createCancelDeletionHandler,
+  createAccountDeletedHandler,
+  initialDeletionStatus 
+} from "../../utils/utils";
 
 export default function DangerZone({ userId, onStatusChange }: DangerZoneProps) {
-  const [deletionStatus, setDeletionStatus] = useState<UserDeletionStatus>({
-    isDeletionRequested: false,
-    deletionRequestedAt: null,
-    deletionScheduledAt: null,
-    deletionReason: null,
-    canCancel: false,
-    daysRemaining: 0,
-    minutesRemaining: 0,
-    timeRemaining: null,
-  });
-
+  // ✅ ESTADOS SIMPLIFICADOS - Solo UI state
+  const [deletionStatus, setDeletionStatus] = useState<UserDeletionStatus>(initialDeletionStatus);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,95 +25,50 @@ export default function DangerZone({ userId, onStatusChange }: DangerZoneProps) 
   const [password, setPassword] = useState('');
   const [cancelReason, setCancelReason] = useState('');
 
+  // ✅ CARGAR ESTADO INICIAL
   useEffect(() => {
-    fetchDeletionStatus();
-  }, [userId]);
+    fetchDeletionStatus(setDeletionStatus, onStatusChange);
+  }, [userId, onStatusChange]);
 
-  const fetchDeletionStatus = async () => {
-    try {
-      const response = await fetch('/api/user/deletion-status');
-      if (response.ok) {
-        const status = await response.json();
-        setDeletionStatus(status);
-        onStatusChange?.();
-      }
-    } catch (error) {
-      console.error('Error fetching deletion status:', error);
-    }
-  };
+  // ✅ HANDLERS CREADOS CON FACTORY FUNCTIONS
+  const handleDeleteRequest = createDeleteRequestHandler({
+    reason,
+    password,
+    setIsLoading,
+    setShowDeleteDialog,
+    setReason,
+    setPassword,
+    setDeletionStatus,
+    onStatusChange,
+  });
 
-  const handleDeleteRequest = async () => {
-    if (!reason.trim() || reason.length < 10) {
-      alert('El motivo debe tener al menos 10 caracteres');
-      return;
-    }
+  const handleCancelDeletion = createCancelDeletionHandler({
+    setShowCancelDialog,
+    setCancelReason,
+    setDeletionStatus,
+    onStatusChange,
+    cancelReason,
+    setIsLoading,
+  });
 
-    if (!password.trim()) {
-      alert('La contraseña es requerida');
-      return;
-    }
+  const handleAccountDeleted = createAccountDeletedHandler({
+    onStatusChange,
+    setDeletionStatus,
+  });
 
-    setIsLoading(true);
-    try {
-      const response = await fetch('/api/user/request-deletion', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reason, confirmPassword: password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('Solicitud de eliminación enviada correctamente.');
-        setShowDeleteDialog(false);
-        setReason('');
-        setPassword('');
-        fetchDeletionStatus();
-      } else {
-        alert(data.error || 'Error al procesar la solicitud');
-      }
-    } catch (error) {
-      alert('Error de conexión');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleCancelDeletion = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch('/api/user/cancel-deletion', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reason: cancelReason }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('Eliminación cancelada correctamente');
-        setShowCancelDialog(false);
-        setCancelReason('');
-        fetchDeletionStatus();
-      } else {
-        alert(data.error || 'Error al cancelar la eliminación');
-      }
-    } catch (error) {
-      alert('Error de conexión');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  // ✅ RENDER - Solo lógica de UI
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      {deletionStatus.isDeletionRequested && deletionStatus.deletionScheduledAt && (
+      {/* ⏰ COUNTDOWN COMPONENT */}
+      {deletionStatus.isDeletionRequested && deletionStatus.displayScheduledAt && (
         <DeletionCountdown
-          scheduledDate={new Date(deletionStatus.deletionScheduledAt)}
+          displayScheduledDate={new Date(deletionStatus.displayScheduledAt)}
           timeRemaining={deletionStatus.timeRemaining}
+        /*   onAccountDeleted={handleAccountDeleted} */
         />
       )}
 
+      {/* 📊 STATUS CARD */}
       {deletionStatus.isDeletionRequested && (
         <DeletionStatusCard
           status={deletionStatus}
@@ -123,7 +76,9 @@ export default function DangerZone({ userId, onStatusChange }: DangerZoneProps) 
         />
       )}
 
+      {/* ⚠️ DANGER ZONE PANEL */}
       <div className="bg-gray-800 border border-red-500/30 rounded-lg">
+        {/* Header */}
         <div className="p-6 border-b border-gray-700">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-red-500/10 rounded-lg">
@@ -133,14 +88,18 @@ export default function DangerZone({ userId, onStatusChange }: DangerZoneProps) 
           </div>
         </div>
 
+        {/* Content */}
         <div className="p-6 space-y-4">
           <div>
-            <h4 className="font-semibold text-gray-200 mb-2">Eliminar cuenta permanentemente</h4>
+            <h4 className="font-semibold text-gray-200 mb-2">
+              Eliminar cuenta permanentemente
+            </h4>
             <p className="text-gray-400 mb-4">
               Esta acción eliminará permanentemente tu cuenta y todos los datos asociados.
               No podrás recuperar tu información una vez completado el proceso.
             </p>
 
+            {/* Info Alert */}
             <Alert className="bg-blue-500/10 border-blue-500/30 mb-6">
               <Info className="h-4 w-4 text-blue-400" />
               <AlertDescription className="text-gray-300">
@@ -151,6 +110,7 @@ export default function DangerZone({ userId, onStatusChange }: DangerZoneProps) 
             </Alert>
           </div>
 
+          {/* Action Button or Status */}
           {!deletionStatus.isDeletionRequested ? (
             <Button
               onClick={() => setShowDeleteDialog(true)}
@@ -173,6 +133,7 @@ export default function DangerZone({ userId, onStatusChange }: DangerZoneProps) 
         </div>
       </div>
 
+      {/* 🗑️ DELETE CONFIRMATION MODAL */}
       <DeleteConfirmationModal
         isOpen={showDeleteDialog}
         onClose={() => setShowDeleteDialog(false)}
@@ -184,6 +145,7 @@ export default function DangerZone({ userId, onStatusChange }: DangerZoneProps) 
         isLoading={isLoading}
       />
 
+      {/* ❌ CANCEL DELETION MODAL */}
       <CancelDeletionModal
         isOpen={showCancelDialog}
         onClose={() => setShowCancelDialog(false)}

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { UserDeletionSystem } from '@/features/account/utils/user-deletion-system';
+import DeletionHelpers from '@/features/account/utils/deletion-helpers';
 
 
 export async function GET(request: NextRequest) {
@@ -31,10 +32,23 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 });
     }
 
-    // ✅ OBTENER ESTADO
+    // ✅ OBTENER ESTADO ORIGINAL
     const deletionStatus = await UserDeletionSystem.getDeletionStatus(userData.id);
 
-    return NextResponse.json(deletionStatus);
+    // ✅ AGREGAR FECHA REDONDEADA PARA EL DISPLAY
+    const enhancedStatus = {
+      ...deletionStatus,
+      // Agregar la fecha redondeada para mostrar al usuario
+      displayScheduledAt: deletionStatus.deletionScheduledAt 
+        ? DeletionHelpers.getDisplayScheduledDate(new Date(deletionStatus.deletionScheduledAt))
+        : null,
+      // Recalcular timeRemaining con la fecha redondeada si es necesario
+      timeRemaining: deletionStatus.deletionScheduledAt
+        ? DeletionHelpers.getTimeRemaining(new Date(deletionStatus.deletionScheduledAt))
+        : null
+    };
+
+    return NextResponse.json(enhancedStatus);
 
   } catch (error) {
     console.error('Error obteniendo estado de eliminación:', error);
