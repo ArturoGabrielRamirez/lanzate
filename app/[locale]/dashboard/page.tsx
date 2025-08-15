@@ -14,6 +14,7 @@ import StoreList from "@/features/dashboard/components/store-list"
 import StoreListSkeleton from "@/features/dashboard/components/store-list-skeleton"
 import QuickActions from "@/features/dashboard/components/quick-actions"
 import QuickActionsSkeleton from "@/features/dashboard/components/quick-actions-skeleton"
+import NewActivityFeed from "@/features/dashboard/components/new-activity-feed"
 /* import FloatingDock from "@/features/header/components/floating-dock"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -49,6 +50,7 @@ export default async function Dashboard() {
                 <div className="area-[feed]" id="step1">
                     <Suspense fallback={<ActivityFeedSkeleton />}>
                         <ActivityFeed userId={user.id} />
+                        {/* <NewActivityFeed /> */}
                     </Suspense>
                 </div>
 
@@ -77,7 +79,7 @@ export default async function Dashboard() {
                     "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] -z-10",
                 )}
             />
-           {/*  <FloatingDock /> */}
+            {/*  <FloatingDock /> */}
         </section>
     )
 }

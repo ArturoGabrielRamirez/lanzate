@@ -25,14 +25,14 @@ function NotificationsIcon() {
                 return console.error(userMessage)
             }
 
-            const channel = supabase.channel("schema-db-changes")
+            /* const channel = supabase.channel("schema-db-changes")
 
             channel.on("postgres_changes", {
                 event: "INSERT",
                 schema: "public",
                 table: "notifications",
                 filter: `user_id=eq.${user?.id}`
-            }, handleShout).subscribe()
+            }, handleShout).subscribe() */
         }
 
         suscribe()

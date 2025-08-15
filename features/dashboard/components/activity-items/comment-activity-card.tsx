@@ -20,14 +20,14 @@ function CommentActivityCard({ item }: Props) {
                             alt={`${item.user.first_name} ${item.user.last_name}`}
                         />
                         <AvatarFallback>
-                            {getUserInitials(item.user.first_name, item.user.last_name)}
+                            {getUserInitials(item.user?.first_name || '', item.user?.last_name || '')}
                         </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 space-y-2">
                         <div className="space-y-1">
                             <div className="flex items-center space-x-2">
-                                <span className="font-medium">
-                                    {item.user.first_name} {item.user.last_name}
+                                <span className="font-medium text-primary">
+                                    @{item.user?.username}
                                 </span>
                                 <span className="text-muted-foreground text-xs md:text-sm">comentó en</span>
                                 <Link

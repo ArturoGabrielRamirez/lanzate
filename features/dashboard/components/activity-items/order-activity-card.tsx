@@ -11,6 +11,7 @@ type Props = {
 }
 
 function OrderActivityCard({ item }: Props) {
+    console.log("🚀 ~ OrderActivityCard ~ item:", item)
     return (
         <Card className="py-2 md:py-4 space-y-3">
             <CardContent className="space-y-3">
@@ -28,15 +29,15 @@ function OrderActivityCard({ item }: Props) {
                         <div className="space-y-2">
                             <div className="flex items-center justify-between space-x-2">
                                 <div className="flex items-center gap-1">
-                                    <span className="font-medium text-sm md:text-base">
-                                        {item.user.first_name} {item.user.last_name}
+                                    <span className="font-medium text-primary">
+                                        @{item.user.username}
                                     </span>
                                     <span className="text-muted-foreground text-xs md:text-sm">realizó la orden</span>
                                     <Link
-                                        href={`/stores/${item.order?.store.slug}/orders/${item.order?.id}`}
+                                        href={`/stores/${item?.store?.slug}/orders/${item?.order?.id}`}
                                         className="font-medium text-primary hover:underline"
                                     >
-                                        orden #{item.order?.id}
+                                        orden #{item?.order?.id}
                                     </Link>
                                     <Badge variant={getOrderStatusBadgeVariant(item.order?.status || 'PENDING')} className="text-xs hidden md:block">
                                         {item.order?.status}
@@ -57,10 +58,10 @@ function OrderActivityCard({ item }: Props) {
                                 <span className="text-muted-foreground">
                                     en{' '}
                                     <Link
-                                        href={`/stores/${item.order?.store.slug}/overview`}
+                                        href={`/stores/${item?.store?.slug}/overview`}
                                         className="text-primary hover:underline"
                                     >
-                                        {item.order?.store.name}
+                                        {item?.store?.name}
                                     </Link>
                                 </span>
                             </div>

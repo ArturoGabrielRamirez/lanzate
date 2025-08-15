@@ -1,5 +1,11 @@
-import { User, Product, Store } from "@prisma/client"
+import { User, Product, Store, SocialActivity } from "@prisma/client"
 
+export type SocialActivityWithRelations = SocialActivity & {
+    user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'email'>
+    store?: Pick<Store, 'id' | 'name' | 'slug'> | null
+}
+
+// Legacy type for backward compatibility during transition
 export type UserStoreActivity = {
     likes: {
         user_id: number
@@ -83,7 +89,7 @@ export type UserStoreActivity = {
 export type ActivityFeedItem = {
     id: string
     type: 'like' | 'comment' | 'order' | 'contract_assignment_as_employee' | 'contract_assignment_as_owner'
-    user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'email'>
+    user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'email' | 'username'>
     product?: Pick<Product, 'id' | 'name' | 'image'> & {
         store: Pick<Store, 'id' | 'name' | 'slug'>
     }
@@ -121,4 +127,7 @@ export type ActivityFeedItem = {
     content?: string
     status?: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
     created_at: Date
-} 
+}
+
+// New type for social activity feed items - using the same structure as SocialActivityWithRelations
+export type SocialActivityFeedItem = SocialActivityWithRelations 

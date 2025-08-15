@@ -16,17 +16,17 @@ function LikeActivityCard({ item }: Props) {
                 <div className="flex items-start space-x-3">
                     <Avatar className="h-10 w-10">
                         <AvatarImage
-                            src={item.user.avatar || undefined}
-                            alt={`${item.user.first_name} ${item.user.last_name}`}
+                            src={item.user?.avatar || undefined}
+                            alt={`${item.user?.first_name} ${item.user?.last_name}`}
                         />
                         <AvatarFallback>
-                            {getUserInitials(item.user.email)}
+                            {getUserInitials(item.user?.email || '')}
                         </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 space-y-2">
                         <div>
-                            <p className="text-muted-foreground text-xs">
-                                @userHandle
+                            <p className="font-medium text-primary">
+                                @{item.user?.username}
                             </p>
                             <div className="flex items-end gap-1">
                                 <p className="md:hidden flex items-center gap-1">
