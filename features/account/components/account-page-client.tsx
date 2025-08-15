@@ -17,6 +17,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
         isDeletionRequested: false,
         deletionRequestedAt: null,
         deletionScheduledAt: null,
+         displayScheduledAt: null,
         deletionReason: null,
         canCancel: false,
         daysRemaining: 0,
