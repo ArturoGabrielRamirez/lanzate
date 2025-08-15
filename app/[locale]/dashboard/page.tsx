@@ -14,7 +14,7 @@ import StoreList from "@/features/dashboard/components/store-list"
 import StoreListSkeleton from "@/features/dashboard/components/store-list-skeleton"
 import QuickActions from "@/features/dashboard/components/quick-actions"
 import QuickActionsSkeleton from "@/features/dashboard/components/quick-actions-skeleton"
-import NewActivityFeed from "@/features/dashboard/components/new-activity-feed"
+/* import NewActivityFeed from "@/features/dashboard/components/new-activity-feed" */
 /* import FloatingDock from "@/features/header/components/floating-dock"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"

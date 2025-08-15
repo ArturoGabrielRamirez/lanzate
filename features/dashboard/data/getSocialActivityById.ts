@@ -16,7 +16,8 @@ export async function getSocialActivityById(activityId: number) {
                         first_name: true,
                         last_name: true,
                         avatar: true,
-                        email: true
+                        email: true,
+                        username: true
                     }
                 },
                 store: {
@@ -25,7 +26,9 @@ export async function getSocialActivityById(activityId: number) {
                         name: true,
                         slug: true
                     }
-                }
+                },
+                order: true,
+                product: true,
             }
         })
 

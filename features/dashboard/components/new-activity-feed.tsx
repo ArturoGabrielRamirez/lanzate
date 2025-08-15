@@ -8,7 +8,7 @@ import {
     CommentActivityCard,
     OrderActivityCard,
     ContractEmployeeActivityCard,
-    ContractOwnerActivityCard
+    /* ContractOwnerActivityCard */
 } from "./activity-items"
 import * as motion from "motion/react-client"
 import { createClient } from "@/utils/supabase/client"
@@ -39,12 +39,10 @@ type SocialActivityRecord = {
 
 function NewActivityFeed({ initialActivities }: Props) {
     const [activities, setActivities] = useState<SocialActivityFeedItem[]>(initialActivities)
-    console.log("🚀 ~ NewActivityFeed ~ activities:", activities)
 
     // Function to handle new activity updates
     const handleActivity = async (payload: RealtimePostgresChangesPayload<SocialActivityRecord>) => {
         try {
-            console.log("New activity received:", payload)
 
             if (payload.eventType !== 'INSERT' || !payload.new) {
                 return
@@ -52,6 +50,7 @@ function NewActivityFeed({ initialActivities }: Props) {
 
             // Fetch the complete activity data with relations
             const { payload: completeActivity, error } = await getSocialActivityByIdAction(payload.new.id)
+            console.log("🚀 ~ handleActivity ~ completeActivity:", completeActivity)
 
             if (error || !completeActivity) {
                 console.error("Failed to fetch complete activity data:", error)
@@ -146,7 +145,7 @@ function NewActivityFeed({ initialActivities }: Props) {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3, delay: baseDelay }}
                             >
-                                <LikeActivityCard item={item as ActivityFeedItem & { type: 'like' }} />
+                                <LikeActivityCard item={item as ActivityFeedItem & { type: 'PRODUCT_LIKE' }} />
                             </motion.div>
                         )
                     case 'PRODUCT_COMMENT':
@@ -157,7 +156,7 @@ function NewActivityFeed({ initialActivities }: Props) {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3, delay: baseDelay }}
                             >
-                                <CommentActivityCard item={item as ActivityFeedItem & { type: 'comment' }} />
+                                <CommentActivityCard item={item as ActivityFeedItem & { type: 'PRODUCT_COMMENT' }} />
                             </motion.div>
                         )
                     case 'ORDER_CREATED':
@@ -168,7 +167,7 @@ function NewActivityFeed({ initialActivities }: Props) {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3, delay: baseDelay }}
                             >
-                                <OrderActivityCard item={item as ActivityFeedItem & { type: 'order' }} />
+                                <OrderActivityCard item={item as ActivityFeedItem & { type: 'ORDER_CREATED' }} />
                             </motion.div>
                         )
                     case 'CONTRACT_REJECTED':
@@ -179,7 +178,7 @@ function NewActivityFeed({ initialActivities }: Props) {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3, delay: baseDelay }}
                             >
-                                <ContractEmployeeActivityCard item={item as ActivityFeedItem & { type: 'contract_assignment_as_employee' }} />
+                                <ContractEmployeeActivityCard item={item as ActivityFeedItem & { type: 'CONTRACT_REJECTED' }} />
                             </motion.div>
                         )
                     default:

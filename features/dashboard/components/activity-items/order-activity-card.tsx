@@ -2,16 +2,15 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { ShoppingCart, Clock, MapPin, Truck } from "lucide-react"
-import { ActivityFeedItem } from "../../types"
 import Link from "next/link"
 import { getUserInitials, formatActivityDate, getOrderStatusBadgeVariant } from "./shared-utils"
+import { Store, User, Order, SocialActivity } from "@prisma/client"
 
 type Props = {
-    item: ActivityFeedItem & { type: 'order' }
+    item: SocialActivity & { user: User, store: Store, order: Order }
 }
 
 function OrderActivityCard({ item }: Props) {
-    console.log("🚀 ~ OrderActivityCard ~ item:", item)
     return (
         <Card className="py-2 md:py-4 space-y-3">
             <CardContent className="space-y-3">

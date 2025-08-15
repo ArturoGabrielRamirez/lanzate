@@ -1,12 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MessageCircle, Clock } from "lucide-react"
-import { ActivityFeedItem } from "../../types"
 import Link from "next/link"
 import { getUserInitials, formatActivityDate } from "./shared-utils"
+import { Store, User, Product, SocialActivity } from "@prisma/client"
 
 type Props = {
-    item: ActivityFeedItem & { type: 'comment' }
+    item: SocialActivity & { user: User, store: Store, product: Product }
 }
 
 function CommentActivityCard({ item }: Props) {

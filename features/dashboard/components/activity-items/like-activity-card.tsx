@@ -1,12 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Flame, Clock } from "lucide-react"
-import { ActivityFeedItem } from "../../types"
 import Link from "next/link"
 import { getUserInitials, formatActivityDate } from "./shared-utils"
+import { SocialActivity, Store, User, Product } from "@prisma/client"
 
 type Props = {
-    item: ActivityFeedItem & { type: 'like' }
+    item: SocialActivity & { user: User, store: Store, product: Product }
 }
 
 function LikeActivityCard({ item }: Props) {
@@ -35,7 +35,7 @@ function LikeActivityCard({ item }: Props) {
                                 </p>
                                 <p className="text-muted-foreground text-xs md:text-sm hidden md:flex md:items-center gap-1">le dio <Flame className="size-3 text-red-500 fill-current" /> a</p>
                                 <Link
-                                    href={`/stores/${item.product?.store.slug}/products/${item.product?.id}`}
+                                    href={`/stores/${item.store.slug}/products/${item.product?.id}`}
                                     className="font-medium text-primary hover:underline text-sm md:text-base"
                                 >
                                     {item.product?.name}
@@ -48,10 +48,10 @@ function LikeActivityCard({ item }: Props) {
                                 <span className="text-muted-foreground">
                                     en{' '}
                                     <Link
-                                        href={`/stores/${item.product?.store.slug}/overview`}
+                                        href={`/stores/${item?.store?.slug}/overview`}
                                         className="text-primary hover:underline"
                                     >
-                                        {item.product?.store.name}
+                                        {item?.store?.name}
                                     </Link>
                                 </span>
                             </div>
