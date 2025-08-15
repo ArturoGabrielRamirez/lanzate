@@ -1,187 +1,92 @@
-import { useEffect, useState } from "react";
-import { UserDeletionStatus, DangerZoneProps } from "../../types";
-import DeletionCountdown from "./deletion-countdown";
-import { AlertTriangle, Info, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import DeleteConfirmationModal from "./delete-confirmation-modal";
-import CancelDeletionModal from "./cancel-deletion-modal";
-import DeletionStatusCard from "./deletion-status-card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useState, useEffect } from 'react';
+import { UserDeletionStatus } from '../../types/types';
+import { createAccountDeletedHandler, createCancelDeletionHandler, createDeleteRequestHandler, fetchDeletionStatus, initialDeletionStatus } from '../../utils/utils';
+import DeleteConfirmationModal from './delete-confirmation-modal';
+import DeletionCountdown from './deletion-countdown';
+import DeletionStatusCard from './deletion-status-card';
+import CancelDeletionModal from './cancel-deletion-modal';
 
-export default function DangerZone({ userId, onStatusChange }: DangerZoneProps) {
-  const [deletionStatus, setDeletionStatus] = useState<UserDeletionStatus>({
-    isDeletionRequested: false,
-    deletionRequestedAt: null,
-    deletionScheduledAt: null,
-    deletionReason: null,
-    canCancel: false,
-    daysRemaining: 0,
-    minutesRemaining: 0,
-    timeRemaining: null,
-  });
-
+export default function DangerZone({ userId, onStatusChange }: { userId: number; onStatusChange?: () => void }) {
+  const [deletionStatus, setDeletionStatus] = useState<UserDeletionStatus>(initialDeletionStatus);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [reason, setReason] = useState('');
   const [password, setPassword] = useState('');
   const [cancelReason, setCancelReason] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetchDeletionStatus();
-  }, [userId]);
+    fetchDeletionStatus(setDeletionStatus, onStatusChange);
+  }, [onStatusChange]);
 
-  const fetchDeletionStatus = async () => {
-    try {
-      const response = await fetch('/api/user/deletion-status');
-      if (response.ok) {
-        const status = await response.json();
-        setDeletionStatus(status);
-        onStatusChange?.();
-      }
-    } catch (error) {
-      console.error('Error fetching deletion status:', error);
-    }
-  };
+  const handleDeleteRequest = createDeleteRequestHandler({
+    reason,
+    password,
+    setIsLoading,
+    setShowDeleteDialog,
+    setReason,
+    setPassword,
+    setDeletionStatus,
+    onStatusChange,
+  });
 
-  const handleDeleteRequest = async () => {
-    if (!reason.trim() || reason.length < 10) {
-      alert('El motivo debe tener al menos 10 caracteres');
-      return;
-    }
+  const handleCancelDeletion = createCancelDeletionHandler({
+    setShowCancelDialog,
+    setCancelReason,
+    setDeletionStatus,
+    onStatusChange,
+    cancelReason,
+    setIsLoading,
+  });
 
-    if (!password.trim()) {
-      alert('La contraseña es requerida');
-      return;
-    }
+  const handleAccountDeleted = createAccountDeletedHandler({
+    onStatusChange,
+    setDeletionStatus,
+  });
 
-    setIsLoading(true);
-    try {
-      const response = await fetch('/api/user/request-deletion', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reason, confirmPassword: password }),
-      });
+  if (!deletionStatus.isDeletionRequested) {
+    return (
+      <div className="bg-gray-800 border border-red-500/30 rounded-lg p-6">
+        <h3 className="text-red-400 font-semibold text-lg mb-4">Zona de Peligro</h3>
+        <p className="text-gray-300 mb-4">
+          Eliminar tu cuenta es una acción irreversible. Todos tus datos serán eliminados permanentemente.
+        </p>
+        <button
+          onClick={() => setShowDeleteDialog(true)}
+          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+        >
+          Eliminar Cuenta
+        </button>
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('Solicitud de eliminación enviada correctamente.');
-        setShowDeleteDialog(false);
-        setReason('');
-        setPassword('');
-        fetchDeletionStatus();
-      } else {
-        alert(data.error || 'Error al procesar la solicitud');
-      }
-    } catch (error) {
-      alert('Error de conexión');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleCancelDeletion = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch('/api/user/cancel-deletion', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reason: cancelReason }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('Eliminación cancelada correctamente');
-        setShowCancelDialog(false);
-        setCancelReason('');
-        fetchDeletionStatus();
-      } else {
-        alert(data.error || 'Error al cancelar la eliminación');
-      }
-    } catch (error) {
-      alert('Error de conexión');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        <DeleteConfirmationModal
+          isOpen={showDeleteDialog}
+          onClose={() => setShowDeleteDialog(false)}
+          onConfirm={handleDeleteRequest}
+          reason={reason}
+          setReason={setReason}
+          password={password}
+          setPassword={setPassword}
+          isLoading={isLoading}
+        />
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
-      {deletionStatus.isDeletionRequested && deletionStatus.deletionScheduledAt && (
+    <div className="space-y-6">
+      {deletionStatus.displayScheduledAt && (
         <DeletionCountdown
-          scheduledDate={new Date(deletionStatus.deletionScheduledAt)}
+          displayScheduledDate={new Date(deletionStatus.displayScheduledAt)}
           timeRemaining={deletionStatus.timeRemaining}
+          canCancelUntil={deletionStatus.canCancelUntil ? new Date(deletionStatus.canCancelUntil) : undefined}
+          isWithinActionWindow={deletionStatus.isWithinActionWindow}
+          onAccountDeleted={handleAccountDeleted}
         />
       )}
 
-      {deletionStatus.isDeletionRequested && (
-        <DeletionStatusCard
-          status={deletionStatus}
-          onCancelClick={() => setShowCancelDialog(true)}
-        />
-      )}
-
-      <div className="bg-gray-800 border border-red-500/30 rounded-lg">
-        <div className="p-6 border-b border-gray-700">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-red-500/10 rounded-lg">
-              <AlertTriangle className="h-5 w-5 text-red-400" />
-            </div>
-            <h2 className="text-xl font-bold text-red-400">Zona de Peligro</h2>
-          </div>
-        </div>
-
-        <div className="p-6 space-y-4">
-          <div>
-            <h4 className="font-semibold text-gray-200 mb-2">Eliminar cuenta permanentemente</h4>
-            <p className="text-gray-400 mb-4">
-              Esta acción eliminará permanentemente tu cuenta y todos los datos asociados.
-              No podrás recuperar tu información una vez completado el proceso.
-            </p>
-
-            <Alert className="bg-blue-500/10 border-blue-500/30 mb-6">
-              <Info className="h-4 w-4 text-blue-400" />
-              <AlertDescription className="text-gray-300">
-                <span className="font-semibold text-blue-400">Período de gracia:</span>{' '}
-                Tendrás 30 días para cancelar la eliminación de tu cuenta.
-                Después del período de gracia, la eliminación se realizará automáticamente.
-              </AlertDescription>
-            </Alert>
-          </div>
-
-          {!deletionStatus.isDeletionRequested ? (
-            <Button
-              onClick={() => setShowDeleteDialog(true)}
-              className="w-full bg-red-600 hover:bg-red-700 text-white"
-            >
-              <Trash2 className="h-4 w-4 mr-2" />
-              Solicitar eliminación de cuenta
-            </Button>
-          ) : (
-            <Alert className="bg-gray-900/50 border-gray-600">
-              <AlertDescription className="text-gray-400 text-center">
-                Ya has solicitado la eliminación de tu cuenta.
-                {deletionStatus.canCancel
-                  ? ' Puedes cancelarla usando el botón de arriba.'
-                  : ' El período de cancelación ha expirado.'
-                }
-              </AlertDescription>
-            </Alert>
-          )}
-        </div>
-      </div>
-
-      <DeleteConfirmationModal
-        isOpen={showDeleteDialog}
-        onClose={() => setShowDeleteDialog(false)}
-        onConfirm={handleDeleteRequest}
-        reason={reason}
-        setReason={setReason}
-        password={password}
-        setPassword={setPassword}
-        isLoading={isLoading}
+      <DeletionStatusCard
+        status={deletionStatus}
+        onCancelClick={() => setShowCancelDialog(true)}
       />
 
       <CancelDeletionModal

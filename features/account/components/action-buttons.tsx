@@ -14,7 +14,6 @@ export default function ActionButtons({
 }: ActionButtonsProps) {
     return (
         <div className="flex flex-col gap-2">
-            {/* Guardar opción seleccionada */}
             {selectedOption && (
                 <Button
                     onClick={onUseSelectedOption}
@@ -35,7 +34,6 @@ export default function ActionButtons({
                 </Button>
             )}
 
-            {/* Subir archivo seleccionado */}
             {selectedFile && (
                 <Button
                     onClick={onUpload}
@@ -55,8 +53,6 @@ export default function ActionButtons({
                     )}
                 </Button>
             )}
-
-            {/* Remover avatar */}
             {currentAvatar && (
                 <Button
                     onClick={onRemoveAvatar}
@@ -78,7 +74,6 @@ export default function ActionButtons({
                 </Button>
             )}
 
-            {/* Botón cancelar */}
             <div className="flex justify-end gap-2 pt-2">
                 <Button
                     variant="outline"

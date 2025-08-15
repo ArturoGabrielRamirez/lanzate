@@ -1,3 +1,4 @@
+
 export interface Account {
     id: number
     created_at: string | Date
@@ -126,7 +127,6 @@ export interface FileUploadSectionProps {
     onButtonClick: () => void
 }
 
-
 export interface UserDeletionRequest {
     reason: string;
     confirmPassword: string;
@@ -135,12 +135,62 @@ export interface UserDeletionRequest {
 export interface UserDeletionStatus {
     isDeletionRequested: boolean;
     deletionRequestedAt: Date | null;
-    deletionScheduledAt: Date | null;
+    deletionScheduledAt: Date | null;  
+    displayScheduledAt: Date | null;  
     deletionReason: string | null;
     canCancel: boolean;
     daysRemaining: number;
     minutesRemaining: number;
     timeRemaining: number | null;
+    
+    canDeleteUntil?: Date | null;
+    canCancelUntil?: Date | null;
+    isWithinActionWindow?: boolean;
+    
+    isAnonymized?: boolean;
+    anonymizedAt?: Date | null;
+    legalRetentionUntil?: Date | null;
+    legalStatus?: 'active' | 'pending_deletion' | 'legally_processed';
+    processingMethod?: string;
+    cronFrequency?: string;
+    testingMode?: boolean;
+    
+    calculationInfo?: {
+        requestedAt?: Date | null;
+        scheduledAt?: Date | null;
+        displayScheduledAt?: Date | null;
+        currentTime: string; 
+        roundedActionLimit: string | null;
+        withinWindow: boolean;
+    };
+}
+
+export interface DeletionActionResponse {
+    success: boolean;
+    message: string;
+    deletionInfo?: {
+        requestedAt: Date;
+        scheduledAt: Date;
+        displayScheduledAt: Date | null;
+        canDeleteUntil: Date;
+        canCancelUntil: Date;
+        actionWindowMinutes: number;
+        processingMethod?: string;
+        testingMode?: boolean;
+    };
+    cancellationInfo?: {
+        cancelledAt: Date;
+        reason: string;
+        originalRequestAt: Date;
+        actionLimitWas: Date;
+        cancelledWithMinutesToSpare: number;
+        processingMethod?: string;
+        automaticProcessing?: boolean;
+    };
+    error?: string;
+    expiredAt?: Date;
+    currentTime?: Date;
+    minutesPastDeadline?: number;
 }
 
 export interface DangerZoneProps {

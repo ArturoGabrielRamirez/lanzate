@@ -1,21 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { UserDeletionSystem } from '@/features/account/utils/user-deletion-system';
-
+import DeletionHelpers from '@/features/account/utils/deletion-helpers';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { reason, confirmPassword } = body;
 
-    if (!reason || reason.length < 10) {
+    if (!reason?.trim() || reason.length < 10) {
       return NextResponse.json(
         { error: 'El motivo debe tener al menos 10 caracteres' },
         { status: 400 }
       );
     }
 
-    if (!confirmPassword) {
+    if (!confirmPassword?.trim()) {
       return NextResponse.json(
         { error: 'La contraseña es requerida' },
         { status: 400 }
@@ -44,6 +44,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (signInError) {
+      console.log('❌ Error de verificación de contraseña:', signInError.message);
       return NextResponse.json({ error: 'Contraseña incorrecta' }, { status: 400 });
     }
 
@@ -57,31 +58,63 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 });
     }
 
-    const currentStatus = await UserDeletionSystem.getDeletionStatus(userData.id);
-    if (currentStatus.isDeletionRequested && !currentStatus.isAnonymized) {
-      return NextResponse.json(
-        { error: 'Ya existe una solicitud de eliminación activa' },
-        { status: 400 }
-      );
+    const existingStatus = await UserDeletionSystem.getDeletionStatus(userData.id);
+
+    if (existingStatus.isDeletionRequested) {
+      if (existingStatus.deletionRequestedAt) {
+        const requestedAt = new Date(existingStatus.deletionRequestedAt);
+        const actionLimit = DeletionHelpers.roundScheduledDateToNextHour(requestedAt);
+        const now = new Date();
+
+        if (now <= actionLimit) {
+          return NextResponse.json({
+            error: 'Ya tienes una solicitud de eliminación pendiente. Puedes cancelarla o esperar a que se procese.',
+            existingRequest: {
+              requestedAt: existingStatus.deletionRequestedAt,
+              canCancelUntil: actionLimit,
+              isWithinActionWindow: true
+            }
+          }, { status: 409 });
+        }
+      }
     }
-    const ipAddress = request.headers.get('x-forwarded-for') ||
-      request.headers.get('x-real-ip') || '127.0.0.1';
+
+    const forwardedFor = request.headers.get('x-forwarded-for');
+    const realIp = request.headers.get('x-real-ip');
+    const ipAddress = forwardedFor?.split(',')[0] || realIp || '127.0.0.1';
     const userAgent = request.headers.get('user-agent') || 'Unknown';
+
     const result = await UserDeletionSystem.requestDeletion({
       userId: userData.id,
-      reason,
+      reason: reason.trim(),
       ipAddress,
       userAgent,
     });
 
+    const actionLimit = DeletionHelpers.roundScheduledDateToNextHour(result.deletionRequestedAt);
+
     return NextResponse.json({
       success: true,
       message: 'Solicitud de eliminación procesada correctamente',
-      data: result,
+      deletionInfo: {
+        requestedAt: result.deletionRequestedAt,
+        scheduledAt: result.deletionScheduledAt,
+        displayScheduledAt: DeletionHelpers.getDisplayScheduledDate(result.deletionScheduledAt),
+
+        canDeleteUntil: actionLimit,
+        canCancelUntil: actionLimit,
+        actionWindowMinutes: Math.ceil((actionLimit.getTime() - result.deletionRequestedAt.getTime()) / (1000 * 60)),
+
+        processingMethod: result.processingMethod,
+        testingMode: result.testingMode,
+      }
     });
 
   } catch (error) {
     console.error('Error procesando solicitud de eliminación:', error);
-    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Error interno del servidor' },
+      { status: 500 }
+    );
   }
 }
