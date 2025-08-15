@@ -1,3 +1,5 @@
+// Mantengo todas las interfaces existentes y agrego las nuevas propiedades
+
 export interface Account {
     id: number
     created_at: string | Date
@@ -126,22 +128,75 @@ export interface FileUploadSectionProps {
     onButtonClick: () => void
 }
 
-
 export interface UserDeletionRequest {
     reason: string;
     confirmPassword: string;
 }
 
+// ✅ INTERFACE ACTUALIZADA: UserDeletionStatus
 export interface UserDeletionStatus {
-  isDeletionRequested: boolean;
-  deletionRequestedAt: Date | null;
-  deletionScheduledAt: Date | null;  
-  displayScheduledAt: Date | null;  
-  deletionReason: string | null;
-  canCancel: boolean;
-  daysRemaining: number;
-  minutesRemaining: number;
-  timeRemaining: number | null;
+    isDeletionRequested: boolean;
+    deletionRequestedAt: Date | null;
+    deletionScheduledAt: Date | null;  
+    displayScheduledAt: Date | null;  
+    deletionReason: string | null;
+    canCancel: boolean;
+    daysRemaining: number;
+    minutesRemaining: number;
+    timeRemaining: number | null;
+    
+    // ✅ PROPIEDADES para ventana de acción (ahora parte de la interface base)
+    canDeleteUntil?: Date | null;
+    canCancelUntil?: Date | null;
+    isWithinActionWindow?: boolean;
+    
+    // ✅ INFORMACIÓN ADICIONAL del sistema
+    isAnonymized?: boolean;
+    anonymizedAt?: Date | null;
+    legalRetentionUntil?: Date | null;
+    legalStatus?: 'active' | 'pending_deletion' | 'legally_processed';
+    processingMethod?: string;
+    cronFrequency?: string;
+    testingMode?: boolean;
+    
+    // ✅ INFORMACIÓN DE CÁLCULO UNIFICADA
+    calculationInfo?: {
+        requestedAt?: Date | null;
+        scheduledAt?: Date | null;
+        displayScheduledAt?: Date | null;
+        currentTime: string; // ✅ REQUERIDO para coincidir con el componente
+        roundedActionLimit: string | null; // ✅ REQUERIDO para coincidir con el componente  
+        withinWindow: boolean; // ✅ REQUERIDO para coincidir con el componente
+    };
+}
+
+// ✅ NUEVA INTERFACE: Para respuestas de eliminación/cancelación
+export interface DeletionActionResponse {
+    success: boolean;
+    message: string;
+    deletionInfo?: {
+        requestedAt: Date;
+        scheduledAt: Date;
+        displayScheduledAt: Date | null;
+        canDeleteUntil: Date;
+        canCancelUntil: Date;
+        actionWindowMinutes: number;
+        processingMethod?: string;
+        testingMode?: boolean;
+    };
+    cancellationInfo?: {
+        cancelledAt: Date;
+        reason: string;
+        originalRequestAt: Date;
+        actionLimitWas: Date;
+        cancelledWithMinutesToSpare: number;
+        processingMethod?: string;
+        automaticProcessing?: boolean;
+    };
+    error?: string;
+    expiredAt?: Date;
+    currentTime?: Date;
+    minutesPastDeadline?: number;
 }
 
 export interface DangerZoneProps {
