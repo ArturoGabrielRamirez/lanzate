@@ -1,26 +1,22 @@
-// features/account/utils/user-deletion-system.ts
-// 🎯 SISTEMA ACTUALIZADO PARA TRABAJAR CON SUPABASE pg_cron
-
 import { prisma } from '@/utils/prisma';
 import { CryptoUtils } from './crypto-utils';
-import { createServerSideClient } from '@/utils/supabase/server';
+/* import { createServerSideClient } from '@/utils/supabase/server'; */
 
 export class UserDeletionSystem {
   // ✅ CONFIGURACIÓN ADAPTADA PARA SUPABASE CRON
   private static readonly CONFIG = {
     // Para testing con cron cada minuto
     GRACE_PERIOD_MINUTES: 2,
-    
+
     // Para producción
     GRACE_PERIOD_DAYS: 30,
-    
+
     RETENTION: {
       LEGAL_RETENTION_YEARS: 7,
       LEGAL_RETENTION_MINUTES: 10, // Solo para testing
     },
-    
-    // 🎯 Modo que se ajusta según el entorno
-    IS_TESTING_MODE: process.env.NODE_ENV !== 'production',
+
+    IS_TESTING_MODE: true,
   };
 
   // ================================
@@ -98,7 +94,7 @@ export class UserDeletionSystem {
   }) {
     const { userId, reason, ipAddress, userAgent } = params;
     const deletionRequestedAt = new Date();
-    
+
     // Calcular fecha de eliminación según el modo
     const deletionScheduledAt = new Date();
     if (this.CONFIG.IS_TESTING_MODE) {
@@ -207,7 +203,7 @@ export class UserDeletionSystem {
         },
       });
 
-      return { 
+      return {
         cancelledAt,
         processingMethod: 'supabase_pg_cron',
         automaticProcessing: false, // Ya no se procesará automáticamente
@@ -244,7 +240,7 @@ export class UserDeletionSystem {
       pendingDeletions,
       anonymizedAccounts,
       expiredLegalRetention: expiredRetention,
-      
+
       // 🆕 Información del sistema actualizado
       systemInfo: {
         processingMethod: 'supabase_pg_cron',
@@ -252,7 +248,7 @@ export class UserDeletionSystem {
         automaticProcessing: true,
         manualInterventionRequired: false,
       },
-      
+
       gracePeriodDays: this.GRACE_PERIOD_DAYS,
       gracePeriodMinutes: this.GRACE_PERIOD_MINUTES,
       legalRetentionYears: this.LEGAL_RETENTION_YEARS,
@@ -267,22 +263,22 @@ export class UserDeletionSystem {
    */
   static async getSystemStatus() {
     const stats = await this.getDeletionStats();
-    
+
     return {
       ...stats,
       systemHealthy: stats.pendingDeletions < 100 && stats.expiredLegalRetention === 0,
-      
+
       // 🆕 Estado específico de pg_cron
       cronSystemStatus: {
         enabled: true,
         method: 'supabase_pg_cron',
         frequency: this.CONFIG.IS_TESTING_MODE ? 'every_minute' : 'daily_3am',
-        nextExecution: this.CONFIG.IS_TESTING_MODE 
-          ? 'Within next minute' 
+        nextExecution: this.CONFIG.IS_TESTING_MODE
+          ? 'Within next minute'
           : 'Tomorrow at 3:00 AM',
         requiresManualTrigger: false,
       },
-      
+
       timestamp: new Date().toISOString(),
       testingMode: this.CONFIG.IS_TESTING_MODE,
     };
@@ -336,7 +332,7 @@ export class UserDeletionSystem {
    */
   static async manualHealthCheck() {
     const stats = await this.getDeletionStats();
-    
+
     return {
       ...stats,
       manualCheck: true,
@@ -355,20 +351,20 @@ export class UserDeletionSystem {
   // 🎯 GETTERS PÚBLICOS - Mantenidos por compatibilidad
   // ================================
 
-  static get GRACE_PERIOD_DAYS() { 
-    return this.CONFIG.IS_TESTING_MODE ? 0 : 30; 
+  static get GRACE_PERIOD_DAYS() {
+    return this.CONFIG.IS_TESTING_MODE ? 0 : 30;
   }
-  
-  static get GRACE_PERIOD_MINUTES() { 
-    return this.CONFIG.IS_TESTING_MODE ? this.CONFIG.GRACE_PERIOD_MINUTES : 0; 
+
+  static get GRACE_PERIOD_MINUTES() {
+    return this.CONFIG.IS_TESTING_MODE ? this.CONFIG.GRACE_PERIOD_MINUTES : 0;
   }
-  
-  static get LEGAL_RETENTION_YEARS() { 
-    return this.CONFIG.IS_TESTING_MODE ? 0 : 7; 
+
+  static get LEGAL_RETENTION_YEARS() {
+    return this.CONFIG.IS_TESTING_MODE ? 0 : 7;
   }
-  
-  static get LEGAL_RETENTION_MINUTES() { 
-    return this.CONFIG.IS_TESTING_MODE ? this.CONFIG.RETENTION.LEGAL_RETENTION_MINUTES : 0; 
+
+  static get LEGAL_RETENTION_MINUTES() {
+    return this.CONFIG.IS_TESTING_MODE ? this.CONFIG.RETENTION.LEGAL_RETENTION_MINUTES : 0;
   }
 }
 

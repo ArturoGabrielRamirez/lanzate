@@ -17,7 +17,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
         isDeletionRequested: false,
         deletionRequestedAt: null,
         deletionScheduledAt: null,
-         displayScheduledAt: null,
+        displayScheduledAt: null,
         deletionReason: null,
         canCancel: false,
         daysRemaining: 0,
@@ -67,8 +67,6 @@ export default function AccountPageClient({ user: initialUser, translations: t }
         }))
     }
 
-
-    // Si está en proceso de eliminación, mostrar solo la zona de peligro
     if (isLoading) {
         return (
             <div className="h-screen flex items-center justify-center">
@@ -83,7 +81,6 @@ export default function AccountPageClient({ user: initialUser, translations: t }
     if (deletionStatus.isDeletionRequested) {
         return (
             <div className="h-screen flex flex-col overflow-hidden relative">
-                {/* Header fijo */}
                 <div className="flex-shrink-0 p-4 pt-17">
                     <Title
                         title={(
@@ -101,7 +98,6 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                         showDate
                     />
 
-                    {/* Banner de advertencia */}
                     <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
                         <div className="flex items-start space-x-3">
                             <AlertTriangle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
@@ -141,10 +137,9 @@ export default function AccountPageClient({ user: initialUser, translations: t }
         )
     }
 
-    // Comportamiento normal cuando no hay eliminación pendiente
     return (
         <div className="h-screen flex flex-col overflow-hidden relative">
-            {/* Header fijo */}
+
             <div className="flex-shrink-0 p-4 pt-17">
                 <Title
                     title={(
@@ -172,7 +167,6 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                 />
             </div>
 
-            {/* Contenido con scroll solo en los tabs */}
             <section className="flex-1 px-4 pb-4 overflow-hidden">
                 <Tabs defaultValue="account" className="h-full grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4">
                     <TabsList className="w-full h-fit items-start flex-shrink-0">
@@ -201,10 +195,8 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                         </div>
                     </TabsContent>
                 </Tabs>
-                {/* <FloatingDock showBackButton /> */}
             </section>
 
-            {/* Pattern de fondo */}
             <DotPattern
                 width={30}
                 height={30}

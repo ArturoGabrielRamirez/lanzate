@@ -14,14 +14,13 @@ export default function CancelDeletionModal({
 }: {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: () => Promise<void>; // ✅ CAMBIO: Acepta funciones async
+    onConfirm: () => Promise<void>;
     cancelReason: string;
     setCancelReason: (value: string) => void;
     isLoading: boolean;
 }) {
     if (!isOpen) return null;
 
-    // ✅ FUNCIÓN PARA MANEJAR CLICK ASYNC
     const handleConfirm = async () => {
         try {
             await onConfirm();
@@ -77,7 +76,7 @@ export default function CancelDeletionModal({
                             Cerrar
                         </Button>
                         <Button
-                            onClick={handleConfirm} // ✅ USAR handleConfirm
+                            onClick={handleConfirm}
                             disabled={isLoading}
                             className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
                         >

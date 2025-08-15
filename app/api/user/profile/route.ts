@@ -14,7 +14,6 @@ export async function PATCH(request: NextRequest) {
     const body = await request.json()
     const { username, firstName, lastName, phone } = body
 
-    // Validación de username
     if (username !== null && username !== undefined) {
       const trimmedUsername = username.trim()
       
@@ -58,7 +57,6 @@ export async function PATCH(request: NextRequest) {
       }
     }
 
-    // Validación de firstName
     if (firstName && firstName.trim().length > 50) {
       return NextResponse.json({ 
         field: 'firstName',
@@ -66,7 +64,6 @@ export async function PATCH(request: NextRequest) {
       }, { status: 400 })
     }
 
-    // Validación de lastName
     if (lastName && lastName.trim().length > 50) {
       return NextResponse.json({ 
         field: 'lastName',
@@ -74,11 +71,9 @@ export async function PATCH(request: NextRequest) {
       }, { status: 400 })
     }
 
-    // Validación de phone
     if (phone !== null && phone !== undefined) {
       const trimmedPhone = phone.trim()
       if (trimmedPhone) {
-        // Remover espacios, guiones y paréntesis para validar
         const cleanPhone = trimmedPhone.replace(/[\s\-\(\)\+]/g, '')
         if (!/^\d{8,15}$/.test(cleanPhone)) {
           return NextResponse.json({ 

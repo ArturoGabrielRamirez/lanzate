@@ -1,4 +1,3 @@
-// /api/user/deletion-status/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { UserDeletionSystem } from '@/features/account/utils/user-deletion-system';
@@ -12,18 +11,16 @@ export async function GET(request: NextRequest) {
       {
         cookies: {
           getAll: () => request.cookies.getAll(),
-          setAll: () => {},
+          setAll: () => { },
         },
       }
     );
 
-    // Verificar autenticación
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
     }
 
-    // Obtener usuario de la base de datos
     const { data: userData, error: userError } = await supabase
       .from('users')
       .select('id, email')
@@ -34,44 +31,36 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 });
     }
 
-    // Obtener estado de eliminación
     const deletionStatus = await UserDeletionSystem.getDeletionStatus(userData.id);
 
-    // ✅ NUEVA LÓGICA: Calcular límites basados en hora redondeada
     let canDeleteUntil: Date | null = null;
     let canCancelUntil: Date | null = null;
     let isWithinActionWindow = false;
 
     if (deletionStatus.deletionScheduledAt) {
-      // Calcular hasta cuándo se puede actuar (próxima hora redondeada desde la solicitud)
       const requestedAt = new Date(deletionStatus.deletionRequestedAt!);
       canDeleteUntil = DeletionHelpers.roundScheduledDateToNextHour(requestedAt);
-      canCancelUntil = canDeleteUntil; // Mismo límite para ambas acciones
+      canCancelUntil = canDeleteUntil;
 
-      // Verificar si aún estamos dentro del período de acción
       const now = new Date();
       isWithinActionWindow = now <= canDeleteUntil;
     }
 
-    // ✅ RESPUESTA MEJORADA: Incluir información de ventana de acción
     const response = {
       ...deletionStatus,
-      
-      // Información de ventana de acción
+
       canDeleteUntil,
       canCancelUntil,
       isWithinActionWindow,
-      
-      // Sobrescribir canCancel con la nueva lógica
-      canCancel: deletionStatus.isDeletionRequested && 
-                 isWithinActionWindow && 
-                 !deletionStatus.isAnonymized,
-      
-      // Información adicional para debugging
+
+      canCancel: deletionStatus.isDeletionRequested &&
+        isWithinActionWindow &&
+        !deletionStatus.isAnonymized,
+
       calculationInfo: {
         requestedAt: deletionStatus.deletionRequestedAt,
         scheduledAt: deletionStatus.deletionScheduledAt,
-        displayScheduledAt: deletionStatus.deletionScheduledAt ? 
+        displayScheduledAt: deletionStatus.deletionScheduledAt ?
           DeletionHelpers.getDisplayScheduledDate(new Date(deletionStatus.deletionScheduledAt)) : null,
         currentTime: new Date(),
         roundedActionLimit: canDeleteUntil,

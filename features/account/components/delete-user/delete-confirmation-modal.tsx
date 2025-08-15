@@ -30,7 +30,6 @@ export default function DeleteConfirmationModal({
 
     if (!isOpen) return null;
 
-    // ✅ VALIDAR FORMULARIO ANTES DE ENVIAR
     const handleConfirm = async () => {
         const reasonValidation = validators.deletionReason(reason);
         const passwordValidation = validators.password(password);
@@ -46,7 +45,6 @@ export default function DeleteConfirmationModal({
 
         setErrors(newErrors);
 
-        // Solo proceder si no hay errores
         if (Object.keys(newErrors).length === 0) {
             try {
                 await onConfirm();
@@ -56,7 +54,6 @@ export default function DeleteConfirmationModal({
         }
     };
 
-    // ✅ LIMPIAR ERRORES CUANDO EL USUARIO ESCRIBE
     const handleReasonChange = (value: string) => {
         setReason(value);
         if (errors.reason) {
@@ -74,7 +71,7 @@ export default function DeleteConfirmationModal({
     return (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
             <div className="bg-gray-800 border border-gray-700 rounded-lg max-w-md w-full">
-                {/* Header */}
+
                 <div className="flex items-center justify-between p-6 border-b border-gray-700">
                     <h3 className="text-lg font-semibold text-red-400">
                         Confirmar eliminación de cuenta
@@ -89,9 +86,9 @@ export default function DeleteConfirmationModal({
                     </Button>
                 </div>
 
-                {/* Content */}
+        
                 <div className="p-6 space-y-4">
-                    {/* Warning Alert */}
+           
                     <Alert className="bg-red-500/10 border-red-500/30">
                         <AlertTriangle className="h-4 w-4 text-red-400" />
                         <AlertDescription className="text-red-400">
@@ -101,7 +98,7 @@ export default function DeleteConfirmationModal({
                         </AlertDescription>
                     </Alert>
 
-                    {/* Reason Field */}
+       
                     <div className="space-y-2">
                         <Label htmlFor="reason" className="text-gray-300">
                             Motivo de eliminación *
@@ -125,7 +122,6 @@ export default function DeleteConfirmationModal({
                         </p>
                     </div>
 
-                    {/* Password Field */}
                     <div className="space-y-2">
                         <Label htmlFor="password" className="text-gray-300">
                             Confirma tu contraseña *
@@ -145,7 +141,6 @@ export default function DeleteConfirmationModal({
                         )}
                     </div>
 
-                    {/* Info */}
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                         <p className="text-blue-300 text-sm">
                             💡 <span className="font-semibold">Período de gracia:</span> Tendrás {DELETION_CONSTANTS.GRACE_PERIOD_DAYS} días 
@@ -153,7 +148,6 @@ export default function DeleteConfirmationModal({
                         </p>
                     </div>
 
-                    {/* Actions */}
                     <div className="flex gap-3 pt-4">
                         <Button
                             variant="outline"

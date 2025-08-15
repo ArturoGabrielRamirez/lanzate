@@ -35,7 +35,7 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
 
     return (
         <div className="space-y-4">
-            {/* Información básica */}
+
             <Card>
                 <CardHeader className="pb-3">
                     <CardTitle className="flex items-center gap-2 text-lg">
@@ -98,7 +98,6 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
                 </CardContent>
             </Card>
 
-            {/* Configuraciones de seguridad */}
             <Card>
                 <CardHeader className="pb-3">
                     <CardTitle className="flex items-center gap-2 text-lg">
@@ -177,7 +176,6 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
                 </CardContent>
             </Card>
 
-            {/* Estadísticas de la cuenta */}
             <Card>
                 <CardHeader className="pb-3">
                     <CardTitle className="flex items-center gap-2 text-lg">

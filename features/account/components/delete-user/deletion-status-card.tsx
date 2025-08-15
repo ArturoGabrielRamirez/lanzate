@@ -9,7 +9,6 @@ export default function DeletionStatusCard({
     onCancelClick
 }: {
     status: UserDeletionStatus & {
-        // ✅ NUEVAS PROPIEDADES del backend actualizado
         canDeleteUntil?: Date | null;
         canCancelUntil?: Date | null;
         isWithinActionWindow?: boolean;
@@ -21,22 +20,21 @@ export default function DeletionStatusCard({
     };
     onCancelClick: () => void;
 }) {
-    // ✅ USAR LA LÓGICA DEL BACKEND para determinar si se puede cancelar
+
     const canActuallyCancelNow = status.isWithinActionWindow && status.canCancel;
-    
-    // ✅ CALCULAR TIEMPO RESTANTE para la ventana de acción
+
     const getTimeUntilActionLimit = () => {
         if (!status.canCancelUntil) return null;
-        
+
         const now = new Date();
         const limit = new Date(status.canCancelUntil);
         const diff = limit.getTime() - now.getTime();
-        
+
         if (diff <= 0) return null;
-        
+
         const minutes = Math.floor(diff / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        
+
         return { minutes, seconds, totalMinutes: minutes };
     };
 
@@ -75,7 +73,6 @@ export default function DeletionStatusCard({
                     </span>
                 </div>
 
-                {/* ✅ NUEVA SECCIÓN: Ventana de acción */}
                 {status.canCancelUntil && (
                     <div className="flex items-center justify-between">
                         <span className="text-gray-300 font-medium">Puedes actuar hasta:</span>
@@ -85,7 +82,6 @@ export default function DeletionStatusCard({
                     </div>
                 )}
 
-                {/* ✅ MOSTRAR TIEMPO RESTANTE para acción si es urgente */}
                 {timeUntilLimit && timeUntilLimit.totalMinutes <= 30 && (
                     <div className="flex items-center justify-between">
                         <span className="text-gray-300 font-medium">Tiempo para actuar:</span>
@@ -107,21 +103,18 @@ export default function DeletionStatusCard({
                 )}
             </div>
 
-            {/* ✅ BOTÓN DE CANCELAR - Actualizado con nueva lógica */}
             <Button
                 onClick={onCancelClick}
                 disabled={!canActuallyCancelNow}
-                className={`w-full ${
-                    canActuallyCancelNow 
-                        ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                className={`w-full ${canActuallyCancelNow
+                        ? 'bg-blue-600 hover:bg-blue-700 text-white'
                         : 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                }`}
+                    }`}
             >
                 <ShieldUser className="h-4 w-4 mr-2" />
                 {canActuallyCancelNow ? 'Cancelar eliminación' : 'Período de cancelación expirado'}
             </Button>
 
-            {/* ✅ MENSAJES INFORMATIVOS actualizados */}
             {!status.isWithinActionWindow && status.isDeletionRequested && (
                 <Alert className="bg-red-500/10 border-red-500/30 mt-3">
                     <X className="h-4 w-4 text-red-400" />
@@ -142,7 +135,6 @@ export default function DeletionStatusCard({
                 </Alert>
             )}
 
-            {/* ✅ INFO de período de gracia estándar */}
             {canActuallyCancelNow && (
                 <Alert className="bg-blue-500/10 border-blue-500/30 mt-3">
                     <AlertDescription className="text-gray-300">
@@ -152,16 +144,6 @@ export default function DeletionStatusCard({
                 </Alert>
             )}
 
-            {/* ✅ DEBUG INFO - Solo en desarrollo */}
-            {process.env.NODE_ENV === 'development' && status.calculationInfo && (
-                <Alert className="bg-gray-900/50 border-gray-600 mt-3">
-                    <AlertDescription className="text-xs text-gray-500 font-mono">
-                        DEBUG - Ventana: {status.calculationInfo.withinWindow ? 'ABIERTA' : 'CERRADA'} | 
-                        Límite: {status.calculationInfo.roundedActionLimit ? 
-                            new Date(status.calculationInfo.roundedActionLimit).toLocaleTimeString() : 'N/A'}
-                    </AlertDescription>
-                </Alert>
-            )}
         </div>
     );
 }

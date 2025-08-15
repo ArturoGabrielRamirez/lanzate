@@ -1,4 +1,3 @@
-// Mantengo todas las interfaces existentes y agrego las nuevas propiedades
 
 export interface Account {
     id: number
@@ -133,7 +132,6 @@ export interface UserDeletionRequest {
     confirmPassword: string;
 }
 
-// ✅ INTERFACE ACTUALIZADA: UserDeletionStatus
 export interface UserDeletionStatus {
     isDeletionRequested: boolean;
     deletionRequestedAt: Date | null;
@@ -145,12 +143,10 @@ export interface UserDeletionStatus {
     minutesRemaining: number;
     timeRemaining: number | null;
     
-    // ✅ PROPIEDADES para ventana de acción (ahora parte de la interface base)
     canDeleteUntil?: Date | null;
     canCancelUntil?: Date | null;
     isWithinActionWindow?: boolean;
     
-    // ✅ INFORMACIÓN ADICIONAL del sistema
     isAnonymized?: boolean;
     anonymizedAt?: Date | null;
     legalRetentionUntil?: Date | null;
@@ -159,18 +155,16 @@ export interface UserDeletionStatus {
     cronFrequency?: string;
     testingMode?: boolean;
     
-    // ✅ INFORMACIÓN DE CÁLCULO UNIFICADA
     calculationInfo?: {
         requestedAt?: Date | null;
         scheduledAt?: Date | null;
         displayScheduledAt?: Date | null;
-        currentTime: string; // ✅ REQUERIDO para coincidir con el componente
-        roundedActionLimit: string | null; // ✅ REQUERIDO para coincidir con el componente  
-        withinWindow: boolean; // ✅ REQUERIDO para coincidir con el componente
+        currentTime: string; 
+        roundedActionLimit: string | null;
+        withinWindow: boolean;
     };
 }
 
-// ✅ NUEVA INTERFACE: Para respuestas de eliminación/cancelación
 export interface DeletionActionResponse {
     success: boolean;
     message: string;
