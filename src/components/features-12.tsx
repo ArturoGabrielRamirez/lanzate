@@ -1,6 +1,6 @@
 'use client'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { ChartBarIncreasingIcon, Database, Fingerprint, Home, IdCard, Settings, TabletSmartphone } from 'lucide-react'
+import { ChartBarIncreasingIcon, Home, Settings, TabletSmartphone } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
@@ -33,12 +33,12 @@ export default function Features() {
     }
 
     return (
-        <section className="py-12 md:py-20 lg:py-32 relative">
-            <div className="bg-linear-to-b absolute inset-0 -z-10  sm:rounded-b-3xl dark:block dark:to-[color-mix(in_oklab,var(--color-background),var(--color-black)_55%)] w-full backdrop-blur-xl"></div>
+        <div className="py-12 md:py-20 lg:py-32 relative pb-0">
+            <div className="bg-linear-to-b absolute inset-0 -z-10   dark:block dark:to-[color-mix(in_oklab,var(--color-background),var(--color-background))] to-background w-full backdrop-blur-xl"></div>
             <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
                 <div className="relative z-10 mx-auto space-y-6 text-center">
                     <h2 className="text-balance text-4xl font-semibold lg:text-6xl text-primary">How it works</h2>
-                    <p className='text-balance'>With <span className="text-primary">Lanzate</span> you can easily create and manage your stores, products, orders, and more. We provide you with the tools to help you grow your business.
+                    <p className='text-balance text-lg lg:text-xl'>With <span className="text-primary">Lanzate</span> you can easily create and manage your stores, products, orders, and more. We provide you with the tools to help you grow your business.
                     </p>
                 </div>
 
@@ -55,7 +55,7 @@ export default function Features() {
                                     {t('description.centralize.title')}
                                 </div>
                             </AccordionTrigger>
-                            <AccordionContent>{t('description.centralize.description')}</AccordionContent>
+                            <AccordionContent>{t('description.centralize.description')} Just log into your account and start creating your stores and products straigth from your bed!</AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-2">
                             <AccordionTrigger className={cn(activeItem === 'item-2' && 'text-primary')}>
@@ -64,7 +64,7 @@ export default function Features() {
                                     {t('description.ship-easily.title')}
                                 </div>
                             </AccordionTrigger>
-                            <AccordionContent>{t('description.ship-easily.description')}</AccordionContent>
+                            <AccordionContent>{t('description.ship-easily.description')} Same information in every device for your convenience.</AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-3">
                             <AccordionTrigger className={cn(activeItem === 'item-3' && 'text-primary')}>
@@ -73,7 +73,7 @@ export default function Features() {
                                     {t('description.sell.title')}
                                 </div>
                             </AccordionTrigger>
-                            <AccordionContent>{t('description.sell.description')}</AccordionContent>
+                            <AccordionContent>{t('description.sell.description')} Customize your store to your liking and see the magic happen.</AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-4">
                             <AccordionTrigger className={cn(activeItem === 'item-4' && 'text-primary')}>
@@ -86,7 +86,7 @@ export default function Features() {
                         </AccordionItem>
                     </Accordion>
 
-                    <div className="bg-background relative flex overflow-hidden rounded-3xl border p-2">
+                    <div className="bg-black/50 relative flex overflow-hidden rounded-3xl border p-2">
                         <div className="w-15 absolute inset-0 right-0 ml-auto border-l bg-[repeating-linear-gradient(-45deg,var(--color-border),var(--color-border)_1px,transparent_1px,transparent_8px)]"></div>
                         <div className="aspect-76/59 bg-background relative w-[calc(3/4*100%+3rem)] rounded-2xl">
                             <AnimatePresence mode="wait">
@@ -115,6 +115,6 @@ export default function Features() {
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     )
 }

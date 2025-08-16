@@ -1,13 +1,15 @@
 import { useTranslations } from "next-intl";
 import { Marquee } from "@/components/magicui/marquee";
+import IntegrationsSection from "@/src/components/integrations-3";
 
 function StatsSection() {
 
     const t = useTranslations('home');
 
     return (
-        <section className="p-6 my-6 ">
-            <Marquee className="container mx-auto mask-l-from-60% mask-l-to-90% mask-r-from-60% mask-r-to-90%" pauseOnHover>
+        <section className="p-6 my-6 px-0 py-0 mt-0 container mx-auto z-10">
+            <IntegrationsSection/>
+            {/* <Marquee className="container mx-auto mask-l-from-60% mask-l-to-90% mask-r-from-60% mask-r-to-90%" pauseOnHover>
                 <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent text-primary-foreground">
                     <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" className="h-9 w-9 text-gray-800 dark:text-gray-100">
@@ -62,7 +64,7 @@ function StatsSection() {
                         <p className="capitalize">{t('description.analytics.bounce-rate')}</p>
                     </div>
                 </div>
-            </Marquee>
+            </Marquee> */}
         </section>
     )
 }
