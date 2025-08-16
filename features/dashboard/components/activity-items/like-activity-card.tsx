@@ -14,8 +14,9 @@ function LikeActivityCard({ item }: Props) {
     return (
         <motion.div
             whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
         >
-            <Card className="py-2 md:py-4 space-y-3 transition-discrete transition-all duration-400 ease-in from-transparent to-background/40 bg-radial-[circle_at_center_center] hover:[background-size:200%_50%] [background-size:100%_300%] [background-position:bottom_left] hover:[background-position:top_right] border-white/5">
+            <Card className="py-2 md:py-4 space-y-3 transition-all bg-gradient-to-br from-primary/20 dark:from-primary/10 to-transparent border-white/5 backdrop-blur-xs hover:from-primary/20 hover:to-transparent hover:!shadow-2xl">
                 <CardContent className="space-y-3">
                     <div className="flex items-start space-x-3">
                         <Avatar className="h-10 w-10">

@@ -29,7 +29,7 @@ export default function DashboardCalendar() {
                 mode="single"
                 selected={date}
                 onSelect={setDate}
-                className="rounded-lg border w-full"
+                className="rounded-lg border w-full bg-gradient-to-br from-background to-transparent border-white/5 backdrop-blur-xs hover:from-primary/20 hover:to-transparent hover:!shadow-2xl transition-all"
             /* components={{
                 DayButton: ({ day, modifiers }) => {
                     return (

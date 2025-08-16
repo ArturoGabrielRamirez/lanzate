@@ -108,7 +108,7 @@ async function DashboardStats({ userId }: Props) {
                                 transition: { duration: 0.2 }
                             }}
                         >
-                            <Card className="!p-2 !gap-2 h-full group transition-discrete transition-all duration-200 from-transparent to-background/90 bg-radial-[circle_at_center_center] hover:[background-size:200%_100%] [background-size:100%_300%] [background-position:bottom_left] hover:[background-position:top_right] border-white/5">
+                            <Card className="!p-2 !gap-2 h-full group bg-gradient-to-br from-background to-transparent border-white/5 backdrop-blur-xs hover:from-primary/20 hover:to-transparent hover:!shadow-2xl">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
                                     <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
                                     <Icon className="h-4 w-4 text-muted-foreground" />
