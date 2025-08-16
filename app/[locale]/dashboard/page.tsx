@@ -7,8 +7,6 @@ import DashboardStats from "@/features/dashboard/components/dashboard-stats"
 import DashboardStatsSkeleton from "@/features/dashboard/components/dashboard-stats-skeleton"
 import GlobalSearch from "@/features/dashboard/components/global-search"
 import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
-import { DotPattern } from "@/components/magicui/dot-pattern"
-import { cn } from "@/lib/utils"
 import StoreListContainer from "@/features/dashboard/components/store-list-container"
 import StoreList from "@/features/dashboard/components/store-list"
 import StoreListSkeleton from "@/features/dashboard/components/store-list-skeleton"
@@ -28,7 +26,7 @@ export default async function Dashboard() {
     }
 
     return (
-        <section className="p-2 md:p-4 flex flex-col pt-13 md:pt-17 relative pb-20 container mx-auto">
+        <section className="p-2 md:p-4 flex flex-col pt-13 md:pt-24 relative pb-20 container mx-auto z-10">
             <div className="grid grid-cols-1 grid-areas-[search-bar,actions,feed] md:grid-areas-[search-bar_stores,feed_stores,feed_actions,feed_calendar] gap-2 md:grid-cols-[2fr_1fr] md:grid-rows-[min-content_auto_min-content_1fr] lg:grid-areas-[stats_search-bar_stores,stats_feed_stores,stats_feed_actions,stats_feed_calendar,empty_feed_calendar,empty_feed_calendar] lg:grid-rows-[min-content_min-content_min-content_min-content_1fr] lg:grid-cols-[1fr_2fr_1fr] md:gap-4 lg:gap-6 xl:gap-8">
                 {/* Quick Stats */}
                 <Suspense fallback={<DashboardStatsSkeleton />}>

@@ -34,7 +34,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className="min-h-dvh flex flex-col">
+      <body className="min-h-dvh flex flex-col overflow-x-hidden">
         <NextThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -50,7 +50,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                       adminLayout={(
                         <>
                           <Header />
-                          <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
+                          <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow min-h-[calc(100dvh-85px)]'>
                             {children}
                           </main>
                           <FloatingDock />

@@ -353,7 +353,7 @@ body {
 }
 
 [data-name="nextstep-wrapper"], [data-name="nextstep-site"] {
-  min-height: 100dvh;
+  /* min-height: 100vh; */
   display: flex !important;
   flex-direction: column;
 }

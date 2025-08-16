@@ -18,7 +18,7 @@ async function Header() {
                 <h1 className="text-xl md:text-2xl xl:text-3xl">Lanzate</h1>
             </Link>
 
-            <nav className="items-center hidden gap-4 md:flex">
+            <nav className="items-center hidden gap-4 lg:flex">
                 {!user && <NavbarLink href='/login'>{t("login")}</NavbarLink>}
                 {!user && <NavbarLink href='/signup'>{t("sign-up")}</NavbarLink>}
                 {user && <NavbarLink href='/dashboard'>Dashboard</NavbarLink>}

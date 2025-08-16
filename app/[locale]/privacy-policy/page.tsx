@@ -1,6 +1,3 @@
-import { DotPattern } from "@/components/magicui/dot-pattern"
-import { cn } from "@/lib/utils"
-
 function PrivacyPolicy() {
     return (
         <section className="max-w-4xl mx-auto px-4 py-8 pt-17 relative">
@@ -494,12 +491,6 @@ function PrivacyPolicy() {
                     </div>
                 </section>
             </div>
-              <DotPattern
-                            width={30}
-                            height={30}
-                            className={cn(
-                                "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
-                            )} />
         </section>
     )
 }

@@ -24,7 +24,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     const params = await searchParams
 
     return (
-        <section className="flex flex-col p-4 grow pt-17 relative">
+        <section className="flex flex-col p-4 grow pt-17 relative z-10">
             <div className='flex flex-col justify-center items-center w-full max-w-xl md:max-w-full lg:max-w-4xl gap-4 mx-auto md:flex-row grow'>
                 <div className='w-full flex flex-col gap-8'>
                     <LoginErrorDisplay

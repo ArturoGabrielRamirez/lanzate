@@ -6,8 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Title } from "@/features/layout/components"
 import { User } from "lucide-react"
 import { EmailStatusBanner } from "@/features/auth/components/index"
-import { DotPattern } from "@/components/magicui/dot-pattern"
-import { cn } from "@/lib/utils"
 import { AccountHeader } from "./index"
 import { AccountDetailsTab } from "./index"
 import { AccountPageClientProps } from "../types"
@@ -91,17 +89,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                         </Card>
                     </TabsContent>
                 </Tabs>
-                {/* <FloatingDock showBackButton /> */}
             </section>
-
-            <DotPattern
-                width={30}
-                height={30}
-                className={cn(
-                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
-                    "-z-10"
-                )}
-            />
         </div>
     )
 }
