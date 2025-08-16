@@ -87,13 +87,13 @@ function PricingSection() {
                     className="mx-auto lg:max-w-full"
                 />
             </div>
-            <DotPattern
+            {/* <DotPattern
                 width={30}
                 height={30}
                 className={cn(
                     "[mask-image:linear-gradient(to_bottom_left,white,transparent_70%,transparent)] ",
                 )}
-            />
+            /> */}
         </section>
     )
 }
