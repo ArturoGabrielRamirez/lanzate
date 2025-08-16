@@ -37,7 +37,7 @@ export default function Features() {
             <div className="bg-linear-to-b absolute inset-0 -z-10 dark:block dark:to-[color-mix(in_oklab,var(--color-black),var(--color-black))] to-background w-full backdrop-blur-xl"></div>
             <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
                 <div className="relative z-10 mx-auto space-y-6 text-center">
-                    <h2 className="text-balance text-4xl font-semibold lg:text-6xl text-primary">How it works</h2>
+                    <h2 className="text-balance text-4xl font-semibold lg:text-6xl"><span className="text-primary">How</span> it works</h2>
                     <p className='text-balance text-lg lg:text-xl'>With <span className="text-primary">Lanzate</span> you can easily create and manage your stores, products, orders, and more. We provide you with the tools to help you grow your business.
                     </p>
                 </div>

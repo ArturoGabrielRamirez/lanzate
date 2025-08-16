@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 export default function IntegrationsSection() {
     return (
-        <div className="dark:bg-black bg-background py-24 md:pt-0 md:py-32 sm:rounded-b-3xl">
+        <div className="dark:bg-black bg-background py-24 md:pt-12 md:py-32 sm:rounded-b-3xl">
             <div className="mx-auto max-w-5xl px-6">
                 <div className="grid items-center sm:grid-cols-2">
                     <div className="dark:bg-black/20 relative mx-auto w-fit mask-t-from-80% mask-l-from-80% mask-b-from-80% mask-r-from-80%">
@@ -46,7 +46,7 @@ export default function IntegrationsSection() {
                         </div>
                     </div>
                     <div className="mx-auto mt-6 max-w-lg space-y-6 text-center sm:mt-0 sm:text-left">
-                        <h2 className="text-balance text-3xl font-semibold md:text-4xl">Integrate with your favorite tools</h2>
+                        <h2 className="md:text-4xl text-balance text-4xl font-semibold lg:text-6xl"><span className="text-primary">Integrate</span> with your favorite tools</h2>
                         <p className="text-muted-foreground">Connect seamlessly with popular platforms and services to enhance your workflow.</p>
 
                         <Button
