@@ -50,7 +50,7 @@ function IconButton({
       {...props}
     >
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 stroke-muted-foreground group-hover/icon-button:stroke-[var(--primary)]"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover/icon-button:stroke-[var(--primary)]"
         aria-hidden="true"
       >
         <Icon

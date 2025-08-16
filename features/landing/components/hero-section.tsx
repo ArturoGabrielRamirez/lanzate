@@ -30,7 +30,7 @@ async function HeroSection() {
                             duration={4000}
                         />
                     </span>
-                    <span className="text-primary flex gap-4">
+                    <span className="text-primary flex gap-4 justify-center md:justify-start">
                         Lanzate
                     </span>
                     <span className="text-foreground">

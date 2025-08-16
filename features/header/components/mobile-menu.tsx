@@ -19,7 +19,7 @@ import { User } from "@prisma/client"
 
 
 type MobileMenuProps = {
-    user: User
+    user?: User | null
 }
 
 function MobileMenu({ user }: MobileMenuProps) {
