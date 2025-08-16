@@ -21,9 +21,9 @@ async function QuickActions({ userId }: QuickActionsProps) {
     const hasStores = storeCount > 0
 
     return (
-        <div className="area-[actions] hidden md:block" id="step3">
+        <div className="area-[actions] hidden md:block group/actions" id="step3">
             <div className="md:flex items-center justify-between mb-2 md:mb-4 hidden">
-                <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2 text-muted-foreground/50">
+                <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2 text-primary/50 group-hover/actions:text-primary transition-all">
                     <Zap className="size-4 xl:size-5" />
                     Quick Actions
                 </h2>

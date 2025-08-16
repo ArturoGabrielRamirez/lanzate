@@ -83,9 +83,9 @@ async function DashboardStats({ userId }: Props) {
     ]
 
     return (
-        <div className="area-[stats] hidden lg:block">
+        <div className="area-[stats] hidden lg:block group/stats">
             <div className="flex items-center justify-between mb-2 md:mb-4">
-                <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2 text-muted-foreground/50">
+                <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2 text-primary/50 group-hover/stats:text-primary transition-all">
                     <ChartNoAxesCombined className="size-4 xl:size-5" />
                     Your stats
                 </h2>
@@ -104,16 +104,18 @@ async function DashboardStats({ userId }: Props) {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.3, delay: baseDelay }}
                             whileHover={{
-                                scale: 1.02,
+                                scale: 1.05,
                                 transition: { duration: 0.2 }
                             }}
+                            className="relative group"
                         >
-                            <Card className="!p-2 !gap-2 h-full group bg-gradient-to-br from-background to-transparent border-white/5 backdrop-blur-xs hover:from-primary/20 hover:to-transparent hover:!shadow-2xl">
-                                <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2">
-                                    <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-                                    <Icon className="h-4 w-4 text-muted-foreground" />
+                            <div className="absolute inset-0 border-primary group-hover:border-1 rounded-lg blur-xl"></div>
+                            <Card className="!p-2 !gap-2 h-full group bg-gradient-to-br to-background from-transparent to-120% border-white/5 backdrop-blur-sm hover:!shadow-2xl dark:via-background dark:from-background hover:border-primary/20 dark:to-primary/10 relative dark:hover:to-primary/20">
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 !px-2 z-10">
+                                    <CardTitle className="text-sm font-medium text-muted-foreground">{stat.title}</CardTitle>
+                                    <Icon className="h-4 w-4 text-primary/50 group-hover:text-primary transition-all" />
                                 </CardHeader>
-                                <CardContent className="!px-2">
+                                <CardContent className="!px-2 z-10">
                                     <div className="text-2xl font-bold">{stat.value}</div>
                                     <div className="transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 ease-out">
                                         <ChangeIndicator change={stat.change} />
