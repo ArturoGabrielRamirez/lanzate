@@ -34,7 +34,7 @@ export default function Features() {
 
     return (
         <div className="py-12 md:py-20 lg:py-32 relative pb-0">
-            <div className="bg-linear-to-b absolute inset-0 -z-10   dark:block dark:to-[color-mix(in_oklab,var(--color-background),var(--color-background))] to-background w-full backdrop-blur-xl"></div>
+            <div className="bg-linear-to-b absolute inset-0 -z-10 dark:block dark:to-[color-mix(in_oklab,var(--color-black),var(--color-black))] to-background w-full backdrop-blur-xl"></div>
             <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
                 <div className="relative z-10 mx-auto space-y-6 text-center">
                     <h2 className="text-balance text-4xl font-semibold lg:text-6xl text-primary">How it works</h2>
@@ -50,7 +50,7 @@ export default function Features() {
                         className="w-full">
                         <AccordionItem value="item-1">
                             <AccordionTrigger className={cn(activeItem === 'item-1' && 'text-primary')}>
-                                <div className="flex items-center gap-2 text-base">
+                                <div className="flex items-center gap-2 text-lg">
                                     <Home className="size-4" />
                                     {t('description.centralize.title')}
                                 </div>
@@ -59,7 +59,7 @@ export default function Features() {
                         </AccordionItem>
                         <AccordionItem value="item-2">
                             <AccordionTrigger className={cn(activeItem === 'item-2' && 'text-primary')}>
-                                <div className="flex items-center gap-2 text-base">
+                                <div className="flex items-center gap-2 text-lg">
                                     <TabletSmartphone className="size-4" />
                                     {t('description.ship-easily.title')}
                                 </div>
@@ -68,7 +68,7 @@ export default function Features() {
                         </AccordionItem>
                         <AccordionItem value="item-3">
                             <AccordionTrigger className={cn(activeItem === 'item-3' && 'text-primary')}>
-                                <div className="flex items-center gap-2 text-base">
+                                <div className="flex items-center gap-2 text-lg">
                                     <Settings className="size-4" />
                                     {t('description.sell.title')}
                                 </div>
@@ -77,7 +77,7 @@ export default function Features() {
                         </AccordionItem>
                         <AccordionItem value="item-4">
                             <AccordionTrigger className={cn(activeItem === 'item-4' && 'text-primary')}>
-                                <div className="flex items-center gap-2 text-base">
+                                <div className="flex items-center gap-2 text-lg">
                                     <ChartBarIncreasingIcon className="size-4" />
                                     Analytics Dashboard
                                 </div>
