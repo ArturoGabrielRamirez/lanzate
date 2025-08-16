@@ -12,14 +12,14 @@ function HeaderContainer({ children }: Props) {
 
     useMotionValueEvent(scrollYProgress, "change", (latest) => {
         if (latest > scrollYProgress.getPrevious()!) {
-            animateHeader(headerScope.current, { backgroundColor: "rgba(0, 0, 0, 0.8)" })
+            animateHeader(headerScope.current, { backgroundColor: "rgba(0, 0, 0, 0.9)", boxShadow: "0 3px 5px 0 rgba(0, 0, 0, 0.5)" })
             if (latest > 0.15) {
                 animateHeader(headerScope.current, { opacity: 0, y: -100 })
             }
         } else {
             animateHeader(headerScope.current, { opacity: 1, y: 0 })
             if (latest < 0.15) {
-                animateHeader(headerScope.current, { backgroundColor: "rgba(0, 0, 0, 0)" })
+                animateHeader(headerScope.current, { backgroundColor: "rgba(0, 0, 0, 0)", boxShadow: "none" })
             }
         }
     })
