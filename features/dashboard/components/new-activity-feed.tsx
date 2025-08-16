@@ -48,17 +48,14 @@ function NewActivityFeed({ initialActivities }: Props) {
                 return
             }
 
-            // Fetch the complete activity data with relations
             const { payload: completeActivity, error } = await getSocialActivityByIdAction(payload.new.id)
-            console.log("🚀 ~ handleActivity ~ completeActivity:", completeActivity)
 
             if (error || !completeActivity) {
                 console.error("Failed to fetch complete activity data:", error)
-                return
+                throw error
             }
 
-            // Add the new activity to the beginning of the list
-            setActivities(prev => [completeActivity, ...prev.slice(0, 9)]) // Keep only 10 items
+            setActivities(prev => [completeActivity, ...prev])
         } catch (error) {
             console.error("Error handling new activity:", error)
         }

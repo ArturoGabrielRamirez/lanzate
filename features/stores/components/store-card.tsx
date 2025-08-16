@@ -16,7 +16,7 @@ function StoreCard({ store }: StoreCardProps) {
     }
 
     return (
-        <Card className="hover:scale-105 transition-all cursor-pointer hover:bg-primary hover:text-primary-foreground gap-2 md:gap-3 lg:gap-4 shrink-0" onClick={handleClick}>
+        <Card className="hover:scale-105 cursor-pointer transition-discrete transition-all duration-200 from-transparent to-background/90 bg-radial-[circle_at_center_center] hover:[background-size:200%_100%] [background-size:100%_300%] [background-position:bottom_left] hover:[background-position:top_right] border-white/5 hover:text-primary-foreground gap-2 md:gap-3 lg:gap-4 shrink-0" onClick={handleClick}>
             <CardHeader className="gap-0">
                 <CardTitle className="flex items-center gap-2">
                     <StoreIcon className="size-4 md:size-5 lg:size-6" />

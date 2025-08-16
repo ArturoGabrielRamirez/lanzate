@@ -12,7 +12,7 @@ type Props = {
 
 function OrderActivityCard({ item }: Props) {
     return (
-        <Card className="py-2 md:py-4 space-y-3">
+        <Card className="py-2 md:py-4 space-y-3 transition-discrete transition-all duration-200 from-transparent to-background/90 bg-radial-[circle_at_center_center] hover:[background-size:200%_100%] [background-size:100%_300%] [background-position:bottom_left] hover:[background-position:top_right] border-white/5">
             <CardContent className="space-y-3">
                 <div className="flex items-start space-x-3">
                     <Avatar className="h-10 w-10">

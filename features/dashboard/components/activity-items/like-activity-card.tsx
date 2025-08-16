@@ -4,6 +4,7 @@ import { Flame, Clock } from "lucide-react"
 import Link from "next/link"
 import { getUserInitials, formatActivityDate } from "./shared-utils"
 import { SocialActivity, Store, User, Product } from "@prisma/client"
+import * as motion from "motion/react-client"
 
 type Props = {
     item: SocialActivity & { user: User, store: Store, product: Product }
@@ -11,59 +12,63 @@ type Props = {
 
 function LikeActivityCard({ item }: Props) {
     return (
-        <Card className="py-2 md:py-4 space-y-3">
-            <CardContent className="space-y-3">
-                <div className="flex items-start space-x-3">
-                    <Avatar className="h-10 w-10">
-                        <AvatarImage
-                            src={item.user?.avatar || undefined}
-                            alt={`${item.user?.first_name} ${item.user?.last_name}`}
-                        />
-                        <AvatarFallback>
-                            {getUserInitials(item.user?.email || '')}
-                        </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 space-y-2">
-                        <div>
-                            <p className="font-medium text-primary">
-                                @{item.user?.username}
-                            </p>
-                            <div className="flex items-end gap-1">
-                                <p className="md:hidden flex items-center gap-1">
-                                    <Flame className="size-3 text-red-500 fill-current" />
-                                    a
+        <motion.div
+            whileHover={{ scale: 1.02 }}
+        >
+            <Card className="py-2 md:py-4 space-y-3 transition-discrete transition-all duration-400 ease-in from-transparent to-background/40 bg-radial-[circle_at_center_center] hover:[background-size:200%_50%] [background-size:100%_300%] [background-position:bottom_left] hover:[background-position:top_right] border-white/5">
+                <CardContent className="space-y-3">
+                    <div className="flex items-start space-x-3">
+                        <Avatar className="h-10 w-10">
+                            <AvatarImage
+                                src={item.user?.avatar || undefined}
+                                alt={`${item.user?.first_name} ${item.user?.last_name}`}
+                            />
+                            <AvatarFallback>
+                                {getUserInitials(item.user?.email || '')}
+                            </AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 space-y-2">
+                            <div>
+                                <p className="font-medium text-primary">
+                                    @{item.user?.username}
                                 </p>
-                                <p className="text-muted-foreground text-xs md:text-sm hidden md:flex md:items-center gap-1">le dio <Flame className="size-3 text-red-500 fill-current" /> a</p>
-                                <Link
-                                    href={`/stores/${item.store.slug}/products/${item.product?.id}`}
-                                    className="font-medium text-primary hover:underline text-sm md:text-base"
-                                >
-                                    {item.product?.name}
-                                </Link>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center space-x-4 text-xs text-muted-foreground justify-between">
-                            <div className="flex items-center space-x-1">
-                                <span className="text-muted-foreground">
-                                    en{' '}
+                                <div className="flex items-end gap-1">
+                                    <p className="md:hidden flex items-center gap-1">
+                                        <Flame className="size-3 text-red-500 fill-current" />
+                                        a
+                                    </p>
+                                    <p className="text-muted-foreground text-xs md:text-sm hidden md:flex md:items-center gap-1">le dio <Flame className="size-3 text-red-500 fill-current" /> a</p>
                                     <Link
-                                        href={`/stores/${item?.store?.slug}/overview`}
-                                        className="text-primary hover:underline"
+                                        href={`/stores/${item.store.slug}/products/${item.product?.id}`}
+                                        className="font-medium text-primary hover:underline text-sm md:text-base"
                                     >
-                                        {item?.store?.name}
+                                        {item.product?.name}
                                     </Link>
-                                </span>
+                                </div>
                             </div>
-                            <div className="flex items-center space-x-1">
-                                <Clock className="h-3 w-3" />
-                                <span>{formatActivityDate(item.created_at)}</span>
+
+                            <div className="flex items-center space-x-4 text-xs text-muted-foreground justify-between">
+                                <div className="flex items-center space-x-1">
+                                    <span className="text-muted-foreground">
+                                        en{' '}
+                                        <Link
+                                            href={`/stores/${item?.store?.slug}/overview`}
+                                            className="text-primary hover:underline"
+                                        >
+                                            {item?.store?.name}
+                                        </Link>
+                                    </span>
+                                </div>
+                                <div className="flex items-center space-x-1">
+                                    <Clock className="h-3 w-3" />
+                                    <span>{formatActivityDate(item.created_at)}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </CardContent>
-        </Card>
+                </CardContent>
+            </Card>
+        </motion.div>
     )
 }
 

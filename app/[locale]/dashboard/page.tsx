@@ -50,7 +50,6 @@ export default async function Dashboard() {
                 <div className="area-[feed]" id="step1">
                     <Suspense fallback={<ActivityFeedSkeleton />}>
                         <ActivityFeed userId={user.id} />
-                        {/* <NewActivityFeed /> */}
                     </Suspense>
                 </div>
 
