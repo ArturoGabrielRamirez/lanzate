@@ -1,9 +1,10 @@
-import { AccountDropdown, NotificationsIcon, ThemeToggle, MobileMenu, LanguageSwitch } from "@/features/header/components"
+import { NotificationsIcon, ThemeToggle, MobileMenu, LanguageSwitch } from "@/features/header/components"
 import Link from "next/link"
 import { Rocket } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { getUserInfo } from "@/features/layout/actions"
 import HeaderContainer from "./header-container"
+import NavbarLink from "./navbar-link"
 
 async function Header() {
 
@@ -18,13 +19,16 @@ async function Header() {
             </Link>
 
             <nav className="items-center hidden gap-4 md:flex">
+                {!user && <NavbarLink href='/login'>{t("login")}</NavbarLink>}
+                {!user && <NavbarLink href='/signup'>{t("sign-up")}</NavbarLink>}
+                {user && <NavbarLink href='/dashboard'>Dashboard</NavbarLink>}
+                {user && <NavbarLink href='/stores'>Stores</NavbarLink>}
+                {user && <NavbarLink href='/events'>Events</NavbarLink>}
                 <LanguageSwitch />
-                {!user && <Link href='/login' className='p-2 hover:underline hover:!text-primary'>{t("login")}</Link>}
-                {!user && <Link href='/signup' className='p-2 hover:underline hover:text-primary'>{t("sign-up")}</Link>}
                 <ThemeToggle />
 
                 {user && <NotificationsIcon />}
-                {user && <AccountDropdown />}
+                {/* {user && <AccountDropdown />} */}
             </nav>
 
             <MobileMenu user={user} />
