@@ -35,7 +35,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
     }
 
     return (
-        <div className="p-4 grow flex flex-col pt-13 md:pt-17 relative pb-20">
+        <div className="p-4 grow flex flex-col pt-13 md:pt-24 relative pb-20 container mx-auto z-10">
             <Title
                 title={(
                     <div className="flex items-center gap-2">
