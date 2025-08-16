@@ -1,4 +1,4 @@
-import { NotificationsIcon, ThemeToggle, MobileMenu, LanguageSwitch } from "@/features/header/components"
+import { NotificationsIcon, ThemeToggle, MobileMenu, LanguageSwitch, AccountDropdown } from "@/features/header/components"
 import Link from "next/link"
 import { Rocket } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -28,7 +28,7 @@ async function Header() {
                 <ThemeToggle />
 
                 {user && <NotificationsIcon />}
-                {/* {user && <AccountDropdown />} */}
+                {user && <AccountDropdown image={user.avatar || ""} />}
             </nav>
 
             <MobileMenu user={user} />

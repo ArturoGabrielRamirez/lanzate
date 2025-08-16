@@ -1,29 +1,31 @@
 "use client"
 
 import { Notification } from "@prisma/client"
-import { createClient } from "@/utils/supabase/client"
+/* import { createClient } from "@/utils/supabase/client" */
 import { useEffect, useState } from "react"
 import { getNotifications } from "../actions/getNotifications"
 /* import { markNotificationAsRead } from "../actions/markNotificationAsRead" */
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Bell, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+/* import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge" */
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+/* import { getUserInfo } from "@/features/layout/actions/getUserInfo" */
 
 function NotificationsIcon() {
 
     const [notifications, setNotifications] = useState<Notification[]>([])
+    const [active, setActive] = useState(false)
 
     useEffect(() => {
         const suscribe = async () => {
-            const supabase = createClient()
-            const { payload: user, error: userError, message: userMessage } = await getUserInfo()
-
-            if (userError) {
-                return console.error(userMessage)
-            }
+            /* const supabase = createClient() */
+            /* const { payload: user, error: userError, message: userMessage } = await getUserInfo() */
+            /* 
+                        if (userError) {
+                            return console.error(userMessage)
+                        } */
 
             /* const channel = supabase.channel("schema-db-changes")
 
@@ -43,11 +45,11 @@ function NotificationsIcon() {
 
     }, [])
 
-    const handleShout = (payload: any) => {
+    /* const handleShout = (payload: any) => {
         setNotifications(notifications => {
             return [...notifications, payload.new]
         })
-    }
+    } */
 
     const handleViewNotification = async (/* id: number */) => {
         /* const { error } = await markNotificationAsRead(id, user?.id)
@@ -61,18 +63,27 @@ function NotificationsIcon() {
         }) */
     }
 
+    const handleClick = () => {
+        setActive(!active)
+    }
+
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button size="icon" variant={"outline"} className={cn(notifications.length > 0 && "!bg-red-500 relative")}>
+                {/* <Button size="icon" variant={"outline"} className={cn(notifications.length > 0 && "!bg-red-500 relative")}>
                     <Bell />
                     {notifications.length > 0 && (
                         <Badge className="absolute -top-2 -right-2">
                             {notifications.length}
                         </Badge>
                     )}
-                </Button>
+                </Button> */}
+                <IconButton
+                    icon={Bell}
+                    active={active}
+                    onClick={handleClick}
+                />
             </DropdownMenuTrigger>
             <DropdownMenuContent side="bottom" align="end">
                 {notifications.map((notification) => (
