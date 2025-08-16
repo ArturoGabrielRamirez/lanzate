@@ -351,3 +351,9 @@ body {
     transform: scale(1.25);
   }
 }
+
+[data-name="nextstep-wrapper"], [data-name="nextstep-site"] {
+  min-height: 100dvh;
+  display: flex !important;
+  flex-direction: column;
+}

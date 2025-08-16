@@ -38,13 +38,6 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 <div className='w-full h-1 md:w-1 md:h-100 bg-primary/50'></div>
                 <SocialLoginButtons orLoginWith={t("description.or-login-with")} />
             </div>
-            <DotPattern
-                width={30}
-                height={30}
-                className={cn(
-                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
-                )}
-            />
         </section>
     )
 }

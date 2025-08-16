@@ -19,7 +19,7 @@ function Footer() {
     }
 
     return (
-        <footer className="relative bg-background">
+        <footer className="relative z-50">
             <div className="container px-4 pb-4 lg:pb-8 mx-auto sm:px-6 lg:px-8 lg:pt-0">
 
                 <div className="flex flex-col items-center gap-4 pt-4 lg:pt-8 border-t border-gray-100 sm:flex sm:items-center sm:justify-between dark:border-gray-800 md:flex-row md:items-start">
