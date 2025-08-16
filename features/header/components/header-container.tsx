@@ -17,7 +17,7 @@ function HeaderContainer({ children }: Props) {
                 animateHeader(headerScope.current, { opacity: 0, y: -100 })
             }
         } else {
-            animateHeader(headerScope.current, { opacity: 1, y: 0 })
+            animateHeader(headerScope.current, { opacity: 1, y: 0, transition: { bounce: 0 } })
             if (latest < 0.15) {
                 animateHeader(headerScope.current, { backgroundColor: "rgba(0, 0, 0, 0)", boxShadow: "none" })
             }

@@ -10,6 +10,7 @@ import { GlobalEmailConfirmationDetector } from "@/features/auth/components/inde
 import { NextStepProvider } from "nextstepjs";
 import NextStepContainer from "@/features/layout/components/next-step-container";
 import FloatingDock from "@/features/header/components/floating-dock";
+import { BProgressProvider } from "@/src/components/bprogress-provider";
 
 
 export const metadata: Metadata = {
@@ -42,27 +43,29 @@ export default async function RootLayout({ children, params }: LayoutProps) {
             <NextIntlClientProvider locale={locale}>
               <NextStepProvider>
                 <NextStepContainer>
-                  <SubdomainProvider
-                    adminLayout={(
-                      <>
-                        <Header />
-                        <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
+                  <BProgressProvider>
+                    <SubdomainProvider
+                      adminLayout={(
+                        <>
+                          <Header />
+                          <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
+                            {children}
+                          </main>
+                          <FloatingDock />
+                          <Footer />
+                          <Toaster position="top-center" />
+                          <GlobalEmailConfirmationDetector />
+                        </>
+                      )}
+                      userLayout={(
+                        <>
                           {children}
-                        </main>
-                        <FloatingDock />
-                        <Footer />
-                        <Toaster position="top-center" />
-                        <GlobalEmailConfirmationDetector />
-                      </>
-                    )}
-                    userLayout={(
-                      <>
-                        {children}
-                        <GlobalEmailConfirmationDetector />
-                        <Toaster position="top-center" />
-                      </>
-                    )}
-                  />
+                          <GlobalEmailConfirmationDetector />
+                          <Toaster position="top-center" />
+                        </>
+                      )}
+                    />
+                  </BProgressProvider>
                 </NextStepContainer>
               </NextStepProvider>
             </NextIntlClientProvider>

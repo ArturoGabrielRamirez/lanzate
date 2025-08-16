@@ -19,22 +19,22 @@ async function HeroSection() {
                         <ArrowUpRightIcon className="shrink-0 text-muted-foreground" size={16} />
                     </AnnouncementTitle>
                 </Announcement>
-                <h1 className="flex flex-col justify-end gap-1 mb-0 text-4xl font-bold leading-none text-center sm:text-7xl md:mb-8 md:text-left text-foreground">
+                <h1 className="flex flex-col justify-end gap-1 mb-0 text-4xl font-bold leading-none text-center sm:text-8xl md:mb-8 md:text-left text-foreground">
                     <span className="flex flex-col items-center gap-2 md:flex-row md:gap-4">
                         <span className="md:relative md:top-1 lg:static pb-2">
                             {t("slogan.1")}
                         </span>
                         <RotatingText
-                            className="text-7xl text-primary pb-2"
+                            className="text-primary pb-2"
                             text={words}
                             duration={4000}
                         />
                     </span>
                     <span className="text-primary flex gap-4">
                         Lanzate
-                        <span className="text-foreground">
-                            makes it happen
-                        </span>
+                    </span>
+                    <span className="text-foreground">
+                        makes it happen
                     </span>
                 </h1>
                 <HeroDescription className="hidden md:block" />
