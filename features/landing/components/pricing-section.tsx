@@ -64,14 +64,15 @@ function PricingSection() {
     ];
 
     return (
-        <section className="py-6 relative">
+        <section className="py-6 relative container mx-auto z-10">
             <div className="container mx-auto p-4 sm:p-10">
                 <div className="mb-16 space-y-4 text-center">
-                    <SectionTitle title={t('description.plan.title')} />
+                    {/* <SectionTitle title={t('description.plan.title')} /> */}
+                    <h2 className="text-balance text-4xl font-semibold lg:text-6xl"><span className="text-primary">Pricing</span> that scales with you</h2>
                     <motion.p
                         initial={{ opacity: 0, y: 100 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="block mb-2 text-xs font-medium tracking-widest text-center uppercase text-muted-foreground/50 max-w-3xl mx-auto"
+                        className="block mb-2 font-medium text-center max-w-3xl mx-auto text-lg lg:text-xl"
                     >
                         {t('description.plan.description')}
                     </motion.p>

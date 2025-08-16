@@ -108,7 +108,7 @@ export const PricingCard = ({
   return (
     <div
       className={cn(
-        "relative z-0 flex flex-col items-center p-8 border rounded-md h-full bg-background group-hover:border-primary transition-colors duration-200",
+        "relative z-0 flex flex-col items-center p-8 border rounded-md h-full bg-background group-hover:border-primary duration-200 hover:scale-110 transition-all hover:bg-black",
         className
       )}
     >

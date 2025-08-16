@@ -47,7 +47,7 @@ export default function IntegrationsSection() {
                     </div>
                     <div className="mx-auto mt-6 max-w-lg space-y-6 text-center sm:mt-0 sm:text-left">
                         <h2 className="md:text-4xl text-balance text-4xl font-semibold lg:text-6xl"><span className="text-primary">Integrate</span> with your favorite tools</h2>
-                        <p className="text-muted-foreground">Connect seamlessly with popular platforms and services to enhance your workflow.</p>
+                        <p className="text-balance text-lg lg:text-xl">Connect seamlessly with popular platforms and services to enhance your workflow.</p>
 
                         <Button
                             variant="outline"
