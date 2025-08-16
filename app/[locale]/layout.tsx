@@ -11,6 +11,8 @@ import { NextStepProvider } from "nextstepjs";
 import NextStepContainer from "@/features/layout/components/next-step-container";
 import FloatingDock from "@/features/header/components/floating-dock";
 import { BProgressProvider } from "@/src/components/bprogress-provider";
+import { Particles } from "@/components/ui/shadcn-io/particles";
+import { BubbleBackground } from "@/components/ui/shadcn-io/bubble-background";
 
 
 export const metadata: Metadata = {
@@ -54,6 +56,40 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                           <FloatingDock />
                           <Footer />
                           <Toaster position="top-center" />
+                          <Particles
+                            className="absolute inset-0 blur-xs"
+                            quantity={100}
+                            ease={300}
+                            staticity={50}
+                            color="#ea580c"
+                            size={1.5}
+                          />
+                          <Particles
+                            className="absolute inset-0 blur-[1px]"
+                            quantity={250}
+                            ease={200}
+                            staticity={40}
+                            color="#ea580c"
+                            size={1}
+                          />
+                          <Particles
+                            className="absolute inset-0"
+                            quantity={100}
+                            ease={150}
+                            staticity={10}
+                            color="#ea580c"
+                            size={0.8}
+                          />
+                          <BubbleBackground
+                            interactive
+                            className="absolute inset-0 flex items-center justify-center opacity-30"
+                            colors={{
+                              fourth: "50, 12, 0",
+                              second: "50, 12, 0",
+                              sixth: "50, 12, 0",
+                              fifth: "50, 12, 0",
+                            }}
+                          />
                           <GlobalEmailConfirmationDetector />
                         </>
                       )}

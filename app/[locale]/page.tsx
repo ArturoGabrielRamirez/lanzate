@@ -16,7 +16,7 @@ export default function Home() {
       <PricingSection />
       <CustomSection />
 
-      <Particles
+      {/* <Particles
         className="absolute inset-0 blur-xs"
         quantity={100}
         ease={300}
@@ -39,8 +39,8 @@ export default function Home() {
         staticity={10}
         color="#ea580c"
         size={0.8}
-      />
-      <BubbleBackground
+      /> */}
+      {/* <BubbleBackground
         interactive
         className="absolute inset-0 flex items-center justify-center opacity-30"
         colors={{
@@ -49,7 +49,7 @@ export default function Home() {
           sixth: "50, 12, 0",
           fifth: "50, 12, 0",
         }}
-      />
+      /> */}
     </>
   );
 }
