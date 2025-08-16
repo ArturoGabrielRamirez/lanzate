@@ -3,6 +3,7 @@ import { Announcement, AnnouncementTitle, AnnouncementTag } from "@/components/u
 import { ArrowUpRightIcon } from "lucide-react";
 import { RotatingText } from "@/components/ui/shadcn-io/rotating-text";
 import { getTranslations } from "next-intl/server";
+import { AnimatedBeamMultipleOutputDemo } from "@/features/layout/components/hero-image";
 
 async function HeroSection() {
 
@@ -40,6 +41,7 @@ async function HeroSection() {
                 <HeroDescription className="hidden md:block" />
             </div>
             <HeroDescription className="block md:hidden" />
+            <AnimatedBeamMultipleOutputDemo />
         </section>
     )
 }
