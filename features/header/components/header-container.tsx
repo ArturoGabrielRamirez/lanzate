@@ -13,7 +13,7 @@ function HeaderContainer({ children }: Props) {
     const { theme } = useTheme()
 
     useMotionValueEvent(scrollYProgress, "change", (latest) => {
-        if (latest > scrollYProgress.getPrevious()!) {
+        if (latest > scrollYProgress.getPrevious()! && latest != 1) {
             animateHeader(headerScope.current, { backgroundColor: theme === "dark" ? "rgba(0, 0, 0, 0.9)" : "rgba(255, 255, 255, 0.5)", boxShadow: "0 3px 5px 0 rgba(0, 0, 0, 0.5)" })
             if (latest > 0.15) {
                 animateHeader(headerScope.current, { opacity: 0, y: -100 })
