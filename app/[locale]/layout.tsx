@@ -45,7 +45,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
             <NextIntlClientProvider locale={locale}>
               <NextStepProvider>
                 <NextStepContainer>
-                  <BProgressProvider>
+                  <BProgressProvider options={{ showSpinner: true }} startOnLoad spinnerPosition="bottom-right" shallowRouting>
                     <SubdomainProvider
                       adminLayout={(
                         <>
