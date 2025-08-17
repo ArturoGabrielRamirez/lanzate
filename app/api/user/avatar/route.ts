@@ -5,7 +5,7 @@ import { getCurrentUser } from '@/features/auth/actions'
 export async function PATCH(request: NextRequest) {
   try {
     const { user } = await getCurrentUser()
-    
+
     if (!user) {
       return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
     }
@@ -13,44 +13,59 @@ export async function PATCH(request: NextRequest) {
     const body = await request.json()
     const { avatarUrl } = body
 
-    await prisma.user.update({
-      where: {
-        supabase_user_id: user.id
-      },
-      data: {
+    if (!avatarUrl) {
+      return NextResponse.json({ error: 'URL del avatar requerida' }, { status: 400 })
+    }
+
+    try {
+      new URL(avatarUrl)
+    } catch {
+      return NextResponse.json({ error: 'URL inválida' }, { status: 400 })
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { supabase_user_id: user.id },
+      data: { 
         avatar: avatarUrl,
         updated_at: new Date()
       }
     })
 
-    return NextResponse.json({ success: true })
+    return NextResponse.json({
+      success: true,
+      avatar: updatedUser.avatar
+    })
+
   } catch (error) {
     console.error('Error updating avatar:', error)
-    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 })
+    return NextResponse.json({ 
+      error: 'Error interno del servidor' 
+    }, { status: 500 })
   }
 }
 
-export async function DELETE(/* request: NextRequest */) {
+export async function DELETE(request: NextRequest) {
   try {
     const { user } = await getCurrentUser()
-    
+
     if (!user) {
       return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
     }
 
     await prisma.user.update({
-      where: {
-        supabase_user_id: user.id
-      },
-      data: {
+      where: { supabase_user_id: user.id },
+      data: { 
         avatar: null,
         updated_at: new Date()
       }
     })
 
     return NextResponse.json({ success: true })
+
   } catch (error) {
     console.error('Error removing avatar:', error)
-    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 })
+    return NextResponse.json({ 
+      error: 'Error interno del servidor' 
+    }, { status: 500 })
   }
 }

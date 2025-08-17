@@ -1,51 +1,107 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { writeFile } from 'fs/promises'
-import fs from 'fs'
-import { join } from 'path'
 import { getCurrentUser } from '@/features/auth/actions'
+import { createServerSideClient } from '@/utils/supabase/server'
+import { prisma } from '@/utils/prisma'
+
 
 export async function POST(request: NextRequest) {
   try {
     const { user } = await getCurrentUser()
-    
     if (!user) {
       return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
     }
 
+    // Buscar usuario en la DB (Prisma)
+    const dbUser = await prisma.user.findUnique({
+      where: { email: user.email },
+      select: { id: true }
+    })
+
+    if (!dbUser) {
+      return NextResponse.json({ error: 'Usuario no encontrado en DB' }, { status: 404 })
+    }
+
     const data = await request.formData()
     const file: File | null = data.get('file') as unknown as File
-    const type: string = data.get('type') as string
+    const type: string = (data.get('type') as string) || 'avatar'
 
     if (!file) {
       return NextResponse.json({ error: 'No se encontró archivo' }, { status: 400 })
     }
 
-    if (!file.type.startsWith('image/')) {
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
+    if (!allowedTypes.includes(file.type)) {
       return NextResponse.json({ error: 'Tipo de archivo no válido' }, { status: 400 })
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: 'Archivo muy grande' }, { status: 400 })
+      return NextResponse.json({ error: 'Archivo muy grande. Máximo 5MB' }, { status: 400 })
     }
 
-    const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
+    const arrayBuffer = await file.arrayBuffer()
+    const buffer = new Uint8Array(arrayBuffer)
 
-    const fileName = `${user.id}-${type}-${Date.now()}.${file.name.split('.').pop()}`
-    const uploadDir = join(process.cwd(), 'public', 'uploads')
-    const path = join(uploadDir, fileName)
+    const fileExtension =
+      file.type.split('/')[1] || file.name.split('.').pop() || 'jpg'
 
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true })
+    // 🔑 Usamos SIEMPRE el dbUser.id en el nombre
+    const fileName = `${dbUser.id}-${type}-${Date.now()}.${fileExtension}`
+    const filePath = `avatars/${fileName}`
+
+    const supabase = await createServerSideClient()
+
+    const { error: uploadError } = await supabase.storage
+      .from('user-uploads')
+      .upload(filePath, buffer, {
+        contentType: file.type,
+        upsert: true
+      })
+
+    if (uploadError) {
+      return NextResponse.json({ error: 'Error subiendo archivo', details: uploadError.message }, { status: 500 })
     }
 
-    await writeFile(path, buffer)
-    
-    const url = `/uploads/${fileName}`
-    
-    return NextResponse.json({ url })
+    const { data: publicUrlData } = supabase.storage
+      .from('user-uploads')
+      .getPublicUrl(filePath)
+
+    if (!publicUrlData?.publicUrl) {
+      return NextResponse.json({ error: 'No se pudo generar URL pública' }, { status: 500 })
+    }
+
+    // Opcional: limpieza de archivos viejos
+    cleanupOldUploads(supabase, dbUser.id.toString(), type).catch(console.error)
+
+    return NextResponse.json({
+      success: true,
+      url: publicUrlData.publicUrl,
+      fileName,
+      size: file.size,
+      type: file.type,
+      path: filePath
+    })
   } catch (error) {
-    console.error('Error uploading file:', error)
-    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Error interno del servidor', details: error instanceof Error ? error.message : String(error) },
+      { status: 500 }
+    )
+  }
+}
+
+async function cleanupOldUploads(supabase: any, userId: string, type: string) {
+  try {
+    const { data: files } = await supabase.storage
+      .from('user-uploads')
+      .list('avatars', { search: `${userId}-${type}`, sortBy: { column: 'updated_at', order: 'desc' } })
+
+    if (!files) return
+
+    const filesToDelete = files.slice(3)
+    if (filesToDelete.length > 0) {
+      const pathsToDelete = filesToDelete.map((f: { name: string }) => `avatars/${f.name}`)
+      await supabase.storage.from('user-uploads').remove(pathsToDelete)
+    }
+  } catch (err) {
+    console.error('Error limpiando uploads antiguos:', err)
   }
 }
