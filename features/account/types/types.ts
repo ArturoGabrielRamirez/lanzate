@@ -42,6 +42,10 @@ export interface AvatarOption {
     provider: string
     label: string
     icon?: string
+    isExternal?: boolean
+    fileName?: string
+    size?: number
+    uploadedAt?: string | Date
 }
 
 export interface AvatarEditorProps {

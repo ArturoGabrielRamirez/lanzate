@@ -2,6 +2,7 @@
 import { /* NextRequest, */ NextResponse } from 'next/server'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { prisma } from '@/utils/prisma'
+import { AvatarOption } from '@/features/account/types'
 
 export async function GET(/* request: NextRequest */) {
   try {
@@ -21,7 +22,7 @@ export async function GET(/* request: NextRequest */) {
       return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 })
     }
 
-    const options: any[] = []
+    const options: AvatarOption[] = []
 
     // --- 1. Avatares OAuth ---
     const googleAvatar = user.user_metadata?.avatar_url || user.user_metadata?.picture
