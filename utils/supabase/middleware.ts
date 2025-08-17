@@ -166,8 +166,8 @@ export async function updateSession(request: NextRequest) {
   return response
 }
 
-export const config = {
+/* export const config = {
   matcher: [
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
-}
+} */
