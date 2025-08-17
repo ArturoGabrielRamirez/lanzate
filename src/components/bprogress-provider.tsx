@@ -7,7 +7,7 @@ export function BProgressProvider({
   color = "var(--primary)",
   height = "calc(var(--spacing) * 0.75)",
   options = { showSpinner: false },
-  shallowRouting = true,
+  shallowRouting = false,
   ...props
 }: React.ComponentProps<typeof ProgressProvider>) {
   return (
