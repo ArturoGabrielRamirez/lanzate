@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/features/auth/actions'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { prisma } from '@/utils/prisma'
+import { SupabaseClient } from '@supabase/supabase-js'
 
 
 export async function POST(request: NextRequest) {
@@ -88,7 +89,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function cleanupOldUploads(supabase: any, userId: string, type: string) {
+async function cleanupOldUploads(supabase: SupabaseClient, userId: string, type: string) {
   try {
     const { data: files } = await supabase.storage
       .from('user-uploads')
