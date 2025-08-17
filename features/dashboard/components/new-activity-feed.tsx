@@ -138,9 +138,6 @@ function NewActivityFeed({ initialActivities }: Props) {
                         return (
                             <motion.div
                                 key={item.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.3, delay: baseDelay }}
                             >
                                 <LikeActivityCard item={item as ActivityFeedItem & { type: 'PRODUCT_LIKE' }} />
                             </motion.div>
@@ -149,9 +146,6 @@ function NewActivityFeed({ initialActivities }: Props) {
                         return (
                             <motion.div
                                 key={item.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.3, delay: baseDelay }}
                             >
                                 <CommentActivityCard item={item as ActivityFeedItem & { type: 'PRODUCT_COMMENT' }} />
                             </motion.div>
@@ -160,9 +154,6 @@ function NewActivityFeed({ initialActivities }: Props) {
                         return (
                             <motion.div
                                 key={item.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.3, delay: baseDelay }}
                             >
                                 <OrderActivityCard item={item as ActivityFeedItem & { type: 'ORDER_CREATED' }} />
                             </motion.div>
@@ -171,9 +162,6 @@ function NewActivityFeed({ initialActivities }: Props) {
                         return (
                             <motion.div
                                 key={item.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.3, delay: baseDelay }}
                             >
                                 <ContractEmployeeActivityCard item={item as ActivityFeedItem & { type: 'CONTRACT_REJECTED' }} />
                             </motion.div>
