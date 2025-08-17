@@ -6,7 +6,7 @@ import { getUserInitials, formatActivityDate } from "./shared-utils"
 import { Store, User, Product, SocialActivity } from "@prisma/client"
 
 type Props = {
-    item: SocialActivity & { user: User, store: Store, product: Product }
+    item: SocialActivity & { user: User, store: Store, product: Product & { store: Store } }
 }
 
 function CommentActivityCard({ item }: Props) {
@@ -37,7 +37,7 @@ function CommentActivityCard({ item }: Props) {
                                     {item.product?.name}
                                 </Link>
                             </div>
-                            <p className="text-sm text-muted-foreground">{item.content}</p>
+                            <p className="text-sm text-muted-foreground">{item.description}</p>
                         </div>
 
                         <div className="flex items-center space-x-4 text-xs text-muted-foreground justify-between">
