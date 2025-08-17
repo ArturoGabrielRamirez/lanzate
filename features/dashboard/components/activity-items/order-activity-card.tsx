@@ -56,6 +56,7 @@ function OrderActivityCard({ item }: Props) {
                                     <span className="font-medium ml-1">Items:</span> {item.order?.total_quantity} |
 
                                 </div>
+
                             </div>
 
                             <div className="flex items-center space-x-4 text-xs text-muted-foreground justify-between">

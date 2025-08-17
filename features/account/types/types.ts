@@ -1,3 +1,4 @@
+
 export interface Account {
     id: number
     created_at: string | Date
@@ -41,6 +42,10 @@ export interface AvatarOption {
     provider: string
     label: string
     icon?: string
+    isExternal?: boolean
+    fileName?: string
+    size?: number
+    uploadedAt?: string | Date
 }
 
 export interface AvatarEditorProps {
@@ -48,7 +53,6 @@ export interface AvatarEditorProps {
     userEmail: string
     onAvatarUpdate: (newAvatarUrl: string | null) => void
 }
-
 
 export interface AccountHeaderProps {
     user: UserType
@@ -61,6 +65,7 @@ export interface AccountHeaderProps {
         username: string | null
         firstName: string | null
         lastName: string | null
+        phone: string | null
     }) => void
 }
 
@@ -75,6 +80,7 @@ export interface AccountDetailsTabProps {
         "description.password": string
         "description.change-email": string
         "description.change-password": string
+        "description.phone": string
     }
 }
 
@@ -93,6 +99,7 @@ export interface AccountPageClientProps {
         "description.change-password": string
         "description.currently-not-available": string
         "description.username": string
+        "description.phone": string
     }
 }
 
@@ -120,6 +127,77 @@ export interface AvatarPreviewProps {
 }
 
 export interface FileUploadSectionProps {
-  onFileSelect: (event: React.ChangeEvent<HTMLInputElement>) => void
-  onButtonClick: () => void
+    onFileSelect: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onButtonClick: () => void
+}
+
+export interface UserDeletionRequest {
+    reason: string;
+    confirmPassword: string;
+}
+
+export interface UserDeletionStatus {
+    isDeletionRequested: boolean;
+    deletionRequestedAt: Date | null;
+    deletionScheduledAt: Date | null;  
+    displayScheduledAt: Date | null;  
+    deletionReason: string | null;
+    canCancel: boolean;
+    daysRemaining: number;
+    minutesRemaining: number;
+    timeRemaining: number | null;
+    
+    canDeleteUntil?: Date | null;
+    canCancelUntil?: Date | null;
+    isWithinActionWindow?: boolean;
+    
+    isAnonymized?: boolean;
+    anonymizedAt?: Date | null;
+    legalRetentionUntil?: Date | null;
+    legalStatus?: 'active' | 'pending_deletion' | 'legally_processed';
+    processingMethod?: string;
+    cronFrequency?: string;
+    testingMode?: boolean;
+    
+    calculationInfo?: {
+        requestedAt?: Date | null;
+        scheduledAt?: Date | null;
+        displayScheduledAt?: Date | null;
+        currentTime: string; 
+        roundedActionLimit: string | null;
+        withinWindow: boolean;
+    };
+}
+
+export interface DeletionActionResponse {
+    success: boolean;
+    message: string;
+    deletionInfo?: {
+        requestedAt: Date;
+        scheduledAt: Date;
+        displayScheduledAt: Date | null;
+        canDeleteUntil: Date;
+        canCancelUntil: Date;
+        actionWindowMinutes: number;
+        processingMethod?: string;
+        testingMode?: boolean;
+    };
+    cancellationInfo?: {
+        cancelledAt: Date;
+        reason: string;
+        originalRequestAt: Date;
+        actionLimitWas: Date;
+        cancelledWithMinutesToSpare: number;
+        processingMethod?: string;
+        automaticProcessing?: boolean;
+    };
+    error?: string;
+    expiredAt?: Date;
+    currentTime?: Date;
+    minutesPastDeadline?: number;
+}
+
+export interface DangerZoneProps {
+    userId: number;
+    onStatusChange?: () => void;
 }

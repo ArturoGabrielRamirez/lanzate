@@ -27,12 +27,13 @@ async function ActivityFeed({ userId }: Props) {
         )
     }
 
+
     if (activities.length === 0) {
         return <EmptyFeedItem userId={userId} />
+
     }
 
     return <NewActivityFeed initialActivities={activities} userId={userId} />
 }
 
 export default ActivityFeed
-

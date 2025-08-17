@@ -11,6 +11,12 @@ type Props = {
 }
 
 function LikeActivityCard({ item }: Props) {
+    const displayName = item.user.username || `${item.user.first_name} ${item.user.last_name}`
+    const userName = item.user.first_name
+    const userLastName = item.user.last_name
+    /*  const userPhone = item.user.phone || 'Sin numero' */
+    /*   const userEmail = item.user.email */
+
     return (
         <motion.div
             whileHover={{ scale: 1.02 }}
@@ -41,6 +47,7 @@ function LikeActivityCard({ item }: Props) {
                                         a
                                     </p>
                                     <p className="text-muted-foreground text-xs md:text-sm hidden md:flex md:items-center gap-1">le dio <Flame className="size-3 text-red-500 fill-current" /> a</p>
+
                                     <Link
                                         href={`/stores/${item.store.slug}/products/${item.product?.id}`}
                                         className="font-medium text-primary hover:underline text-sm md:text-base"
@@ -75,4 +82,4 @@ function LikeActivityCard({ item }: Props) {
     )
 }
 
-export default LikeActivityCard 
+export default LikeActivityCard

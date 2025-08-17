@@ -12,7 +12,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { username, firstName, lastName } = body
+    const { username, firstName, lastName, phone } = body
 
     if (username !== null && username !== undefined) {
       const trimmedUsername = username.trim()
@@ -71,7 +71,20 @@ export async function PATCH(request: NextRequest) {
       }, { status: 400 })
     }
 
-    const updateData:  Prisma.UserUpdateInput = {
+    if (phone !== null && phone !== undefined) {
+      const trimmedPhone = phone.trim()
+      if (trimmedPhone) {
+        const cleanPhone = trimmedPhone.replace(/[\s\-\(\)\+]/g, '')
+        if (!/^\d{8,15}$/.test(cleanPhone)) {
+          return NextResponse.json({ 
+            field: 'phone',
+            message: 'El teléfono debe tener entre 8 y 15 dígitos' 
+          }, { status: 400 })
+        }
+      }
+    }
+
+    const updateData: Prisma.UserUpdateInput = {
       updated_at: new Date()
     }
 
@@ -85,6 +98,10 @@ export async function PATCH(request: NextRequest) {
     
     if (lastName !== undefined) {
       updateData.last_name = lastName?.trim() || null
+    }
+
+    if (phone !== undefined) {
+      updateData.phone = phone?.trim() || null
     }
 
     await prisma.user.update({

@@ -5,7 +5,6 @@ import { prisma } from "@/utils/prisma"
 
 export async function selectUserStoreActivities(userId: number) {
     return actionWrapper(async () => {
-        // Get all stores owned by the user
         const userStores = await prisma.store.findMany({
             where: {
                 user_id: userId
@@ -15,7 +14,6 @@ export async function selectUserStoreActivities(userId: number) {
             }
         })
 
-        // Get all stores where user is an employee
         const userEmployeeStores = await prisma.employee.findMany({
             where: {
                 user_id: userId,
@@ -56,6 +54,7 @@ export async function selectUserStoreActivities(userId: number) {
                         username: true
                     }
                 },
+
                 store: {
                     select: {
                         id: true,
@@ -72,6 +71,7 @@ export async function selectUserStoreActivities(userId: number) {
             },
             orderBy: {
                 created_at: 'desc'
+
             },
             take: 5
         })
@@ -82,4 +82,4 @@ export async function selectUserStoreActivities(userId: number) {
             error: false
         }
     })
-} 
+}

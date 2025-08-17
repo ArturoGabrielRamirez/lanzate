@@ -11,7 +11,7 @@ export type UserStoreActivity = {
         user_id: number
         product_id: number
         created_at: Date
-        users: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'>
+        users: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'>
         products: Pick<Product, 'id' | 'name' | 'image'> & {
             store: Pick<Store, 'id' | 'name' | 'slug'>
         }
@@ -22,7 +22,7 @@ export type UserStoreActivity = {
         product_id: number
         content: string
         created_at: Date
-        users: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'>
+        users: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'>
         products: Pick<Product, 'id' | 'name' | 'image'> & {
             store: Pick<Store, 'id' | 'name' | 'slug'>
         }
@@ -41,8 +41,8 @@ export type UserStoreActivity = {
         shipping_method: string
         created_at: Date
         store: Pick<Store, 'id' | 'name' | 'slug'>
-        customer?: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'> | null
-        processed_by?: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'> | null
+        customer?: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'> | null
+        processed_by?: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'> | null
         items: {
             id: number
             quantity: number
@@ -60,12 +60,12 @@ export type UserStoreActivity = {
             file_url: string
             comments?: string | null
             store: Pick<Store, 'id' | 'name' | 'slug'>
-            created_by_user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'>
+            created_by_user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'>
         }
         employee: {
-            user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'>
+            user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'>
         }
-        assigned_by_user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'>
+        assigned_by_user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'>
     }[]
     contractAssignmentsAsOwner: {
         id: number
@@ -77,19 +77,19 @@ export type UserStoreActivity = {
             file_url: string
             comments?: string | null
             store: Pick<Store, 'id' | 'name' | 'slug'>
-            created_by_user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'>
+            created_by_user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'>
         }
         employee: {
-            user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'>
+            user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'>
         }
-        assigned_by_user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'>
+        assigned_by_user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'>
     }[]
 }
 
 export type ActivityFeedItem = {
     id: string
     type: 'like' | 'comment' | 'order' | 'contract_assignment_as_employee' | 'contract_assignment_as_owner'
-    user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'email' | 'username'>
+    user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'email' | 'username' | 'phone'>
     product?: Pick<Product, 'id' | 'name' | 'image'> & {
         store: Pick<Store, 'id' | 'name' | 'slug'>
     }
@@ -106,8 +106,8 @@ export type ActivityFeedItem = {
         payment_method?: string | null
         shipping_method: string
         store: Pick<Store, 'id' | 'name' | 'slug'>
-        customer?: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'> | null
-        processed_by?: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'> | null
+        customer?: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'> | null
+        processed_by?: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'> | null
         items: {
             id: number
             quantity: number
@@ -121,9 +121,9 @@ export type ActivityFeedItem = {
         file_url: string
         comments?: string | null
         store: Pick<Store, 'id' | 'name' | 'slug'>
-        created_by_user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar'>
+        created_by_user: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'username' | 'phone'>
     }
-    employee?: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'email'>
+    employee?: Pick<User, 'id' | 'first_name' | 'last_name' | 'avatar' | 'email' | 'username' | 'phone'>
     content?: string
     status?: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
     created_at: Date

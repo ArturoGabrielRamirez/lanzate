@@ -7,8 +7,7 @@ import Link from "next/link"
 import { ProfileEditor } from "@/features/auth/components/profile/profile-editor"
 import { AccountHeaderProps } from "../types"
 import { UserType } from "../types/types"
-import {AvatarEditor} from "./index"
-
+import { AvatarEditor } from "./index"
 
 function getDisplayName(user: UserType): string {
     if (user.username?.trim()) {
@@ -51,6 +50,7 @@ export default function AccountHeader({ user, translations: t, onAvatarUpdate, o
                                 currentUsername={user.username}
                                 currentFirstName={user.first_name}
                                 currentLastName={user.last_name}
+                                currentPhone={user.phone}
                                 onProfileUpdate={onProfileUpdate}
                             />
                         </div>
