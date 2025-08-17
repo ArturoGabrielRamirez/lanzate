@@ -33,9 +33,9 @@ export async function selectUserStoreActivities(userId: number) {
         const socialActivities = await prisma.socialActivity.findMany({
             where: {
                 OR: [
-                    {
+                    /* {
                         user_id: userId
-                    },
+                    }, */
                     {
                         store_id: {
                             in: storeIds
