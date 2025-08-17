@@ -10,6 +10,7 @@ import FloatingDock from "@/features/header/components/floating-dock";
 import { BProgressProvider } from "@/src/components/bprogress-provider";
 import LayoutBackgroundEffects from "@/features/layout/components/layout-background-effects";
 import "../globals.css";
+import FloatingDockContainer from "@/features/header/components/foating-dock-container";
 
 
 export const metadata: Metadata = {
@@ -48,9 +49,9 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                       <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
                         {children}
                       </main>
-                      <FloatingDock />
+                      <FloatingDockContainer />
                       <Footer />
-                      <Toaster position="top-center" />
+                      <Toaster position="top-center" richColors/>
                       <LayoutBackgroundEffects />
                       <GlobalEmailConfirmationDetector />
                     </>

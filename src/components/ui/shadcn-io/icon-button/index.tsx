@@ -55,7 +55,7 @@ function IconButton({
       >
         <Icon
           className={
-            active ? 'fill-[var(--primary)]' : 'fill-transparent'
+            cn(active ? 'fill-[var(--primary)]' : 'fill-transparent', "size-24")
           }
         />
       </motion.div>
@@ -70,7 +70,7 @@ function IconButton({
             exit={{ opacity: 0, scale: 0 }}
             transition={transition}
           >
-            <Icon />
+            <Icon className='size-24'/>
           </motion.div>
         )}
       </AnimatePresence>
