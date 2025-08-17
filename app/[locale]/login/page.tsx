@@ -1,6 +1,4 @@
-import { DotPattern } from '@/components/magicui/dot-pattern'
 import { LoginForm, ResetPasswordLink } from '@/features/auth/components'
-import { cn } from '@/lib/utils'
 import { getTranslations } from 'next-intl/server'
 import { LoginErrorDisplay, SocialLoginButtons } from '@/features/auth/components'
 import { Metadata } from 'next'
