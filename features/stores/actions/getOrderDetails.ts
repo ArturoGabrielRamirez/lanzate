@@ -2,10 +2,10 @@
 
 import { actionWrapper } from "@/utils/lib"
 import { selectOrderById } from "../data/selectOrderById"
-import { Order } from "@prisma/client"
+import { Order, OrderItem, OrderPayment, OrderTracking, Product } from "@prisma/client"
 
 type GetOrderDetailsResponse = {
-    payload: Order | null
+    payload: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } | null
     error: boolean
     message: string
 }

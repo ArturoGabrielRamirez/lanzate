@@ -3,11 +3,11 @@
 /* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
-import { Order } from "@prisma/client"
+import { Order, Product, OrderItem, OrderTracking, OrderPayment } from "@prisma/client"
 
 type SelectOrderByIdResponse = {
     message: string
-    payload: Order | null
+    payload: Order & { items: (OrderItem & { product: Product })[] } & { tracking: OrderTracking | null } & { payment: OrderPayment } | null
     error: boolean
 }
 
