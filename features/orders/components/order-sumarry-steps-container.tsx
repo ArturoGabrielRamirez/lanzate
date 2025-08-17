@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { getEmployeePermissions } from "@/features/stores/actions/getEmployeePermissions"
 import { getOrderDetails } from "@/features/stores/actions/getOrderDetails"
 import { cn } from "@/lib/utils"
-import { AlertCircle, Box, ShoppingCart, User } from "lucide-react"
+import { AlertCircle, Box, Calendar, ShoppingCart, User } from "lucide-react"
 /* import OrderSummarySteps from "./order-summary-steps" */
 
 type Props = {
@@ -75,8 +75,8 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
                 <AccordionItem value="item-1">
                     <AccordionTrigger>
                         <AlertTitle className="flex items-center gap-2">
-                            <AlertCircle className="size-4" />
-                            Order Status
+                            <User className="size-4" />
+                            Customer Info
                         </AlertTitle>
                     </AccordionTrigger>
                     <AccordionContent>
@@ -88,8 +88,8 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
                 <AccordionItem value="item-2">
                     <AccordionTrigger>
                         <AlertTitle className="flex items-center gap-2">
-                            <ShoppingCart className="size-4" />
-                            Order Details
+                            <Box className="size-4" />
+                            Order Items
                         </AlertTitle>
                     </AccordionTrigger>
                     <AccordionContent>
@@ -104,8 +104,24 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
                 <AccordionItem value="item-3">
                     <AccordionTrigger>
                         <AlertTitle className="flex items-center gap-2">
-                            <User className="size-4" />
-                            Customer Info
+                            <ShoppingCart className="size-4" />
+                            Order Details
+                        </AlertTitle>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        <Alert className={cn(alertClasses)}>
+                            <AlertTitle className="flex items-center gap-2">
+                                <AlertCircle className="size-4" />
+                                Customer Info
+                            </AlertTitle>
+                        </Alert>
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>
+                        <AlertTitle className="flex items-center gap-2">
+                            <Calendar className="size-4" />
+                            Order Timeline
                         </AlertTitle>
                     </AccordionTrigger>
                     <AccordionContent>
