@@ -24,7 +24,6 @@ function DashboardStatCardSkeleton({ index, stat }: { index: number, stat: { tit
                         <Skeleton className="h-8 w-24 text-2xl font-bold translate-y-5 group-hover:translate-y-0 transition-all duration-200 ease-out group-hover:text-xl" />
                         <div className="flex items-center space-x-2 pb-3">
                             <Skeleton className="h-3 w-3 rounded" />
-                            {/* <Skeleton className="h-3 w-32" /> */}
                         </div>
                     </div>
                 </CardContent>

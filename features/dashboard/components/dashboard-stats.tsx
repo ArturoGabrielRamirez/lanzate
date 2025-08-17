@@ -93,15 +93,12 @@ async function DashboardStats({ userId }: Props) {
             <motion.div
                 className="grid-cols-2 gap-4 lg:grid lg:gap-6"
             >
-                {statsData.map((stat, index) => {
+                {statsData.map((stat) => {
                     const Icon = stat.icon
-                    const baseDelay = index * 0.1
 
                     return (
                         <motion.div
                             key={stat.title}
-                            /* initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }} */
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             className="relative group"
