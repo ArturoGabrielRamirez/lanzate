@@ -1,8 +1,6 @@
 'use client'
 import { useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { cn } from '@/lib/utils'
-import { DotPattern } from '@/components/magicui/dot-pattern'
 
 export default function AuthRedirect() {
     const searchParams = useSearchParams()
@@ -25,12 +23,6 @@ export default function AuthRedirect() {
                 <div className="w-8 h-8 mx-auto mb-4 border-b-2 rounded-full animate-spin border-primary"></div>
                 <p>Redirecting...</p>
             </div>
-            <DotPattern
-                width={30}
-                height={30}
-                className={cn(
-                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
-                )} />
         </div>
     )
 }

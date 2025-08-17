@@ -11,6 +11,7 @@ import { EmailStatusBanner } from "@/features/auth/components/index"
 import { AccountPageClientProps, UserDeletionStatus, UserType } from "../types"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+
 export default function AccountPageClient({ user: initialUser, translations: t }: AccountPageClientProps) {
     const [user, setUser] = useState<UserType>(initialUser)
     const [deletionStatus, setDeletionStatus] = useState<UserDeletionStatus>({
@@ -138,7 +139,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
     }
 
     return (
-        <div className="h-screen flex flex-col overflow-hidden relative">
+        <div className="p-4 grow flex flex-col pt-13 md:pt-24 relative pb-20 container mx-auto z-10">
 
             <div className="flex-shrink-0 p-4 pt-17">
                 <Title
@@ -196,15 +197,6 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                     </TabsContent>
                 </Tabs>
             </section>
-
-            <DotPattern
-                width={30}
-                height={30}
-                className={cn(
-                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
-                    "-z-10"
-                )}
-            />
         </div>
     )
 }

@@ -14,7 +14,7 @@ export async function insertNotification(message: string) {
             data: {
                 message: message,
                 title: "Nueva notificacion nenita!",
-                type: "notification",
+                type: "BRANCH_CREATED",
                 user_id: 1
             }
         })

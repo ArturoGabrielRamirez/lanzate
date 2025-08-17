@@ -5,6 +5,7 @@ import { StoreCard } from "@/features/stores/components"
 import Link from "next/link"
 import { ArrowRight, Store } from "lucide-react"
 import { CreateStoreButton } from "@/features/stores/components"
+import * as motion from "motion/react-client"
 
 const StoreList = async () => {
 
@@ -26,8 +27,8 @@ const StoreList = async () => {
 
     return (
         <>
-            <div className="border-b md:border-b-0 pb-4 md:pb-0 area-[stores] " id="step2">
-                <div className="flex items-center justify-between mb-2 md:mb-4 text-muted-foreground/50">
+            <div className="border-b md:border-b-0 pb-4 md:pb-0 area-[stores] group/stores" id="step2">
+                <div className="flex items-center justify-between mb-2 md:mb-4 text-primary/50 group-hover/stores:text-primary transition-all">
                     <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2">
                         <Store className="size-4 xl:size-5" />
                         {t("your-stores.title", { count: dashboardData.storeCount })}
@@ -45,8 +46,12 @@ const StoreList = async () => {
                         <CreateStoreButton userId={user.id} />
                     </div>
                     <div className="md:grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4 flex overflow-x-auto md:overflow-x-visible">
+
                         {dashboardData.stores.map((store) => (
-                            <StoreCard key={store.id} store={store} />
+                            <motion.div className="relative group" key={store.id} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                                <div className="absolute inset-0 border-primary group-hover:border-1 rounded-lg blur-sm"></div>
+                                <StoreCard key={store.id} store={store} />
+                            </motion.div>
                         ))}
                         {dashboardData.stores.length === 0 && (
                             <div className="col-span-full flex flex-col items-center justify-center gap-2">

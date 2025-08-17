@@ -2,21 +2,18 @@
 
 import { useTheme } from "next-themes"
 import { Moon, Sun } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 function ThemeToggle() {
 
     const { theme, setTheme } = useTheme()
 
     return (
-        <Button
-            variant="outline"
-            size="icon"
+        <IconButton
+            className="text-primary"
+            icon={theme === "dark" ? Moon : Sun}
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="cursor-pointer"
-        >
-            {theme === "dark" ? <Sun /> : <Moon />}
-        </Button>
+        />
     )
 }
 export default ThemeToggle

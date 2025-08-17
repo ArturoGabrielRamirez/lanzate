@@ -242,6 +242,18 @@ export async function insertOrder({
 
             if (!transaction) throw new Error("Transaction not created")
 
+            await tx.socialActivity.create({
+                data: {
+                    order_id: order.id,
+                    user_id: user.id,
+                    activity_type: "ORDER_CREATED",
+                    entity_type: "ORDER",
+                    entity_id: order.id,
+                    title: `Order ${order.id} created`,
+                    store_id: store.id,
+                }
+            })
+
             return order
         })
 

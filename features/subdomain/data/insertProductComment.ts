@@ -29,6 +29,28 @@ export async function insertProductComment(userId: number, productId: number, co
             }
         })
 
+        const product = await prisma.product.findUnique({
+            where: {
+                id: productId
+            },
+            select: {
+                store: true,
+                name: true
+            }
+        })
+
+        await prisma.socialActivity.create({
+            data: {
+                user_id: userId,
+                activity_type: "PRODUCT_COMMENT",
+                entity_type: "PRODUCT",
+                entity_id: productId,
+                title: `Product ${product?.name} commented`,
+                store_id: product?.store.id,
+                product_id: productId
+            }
+        })
+
         return {
             error: false,
             message: "Comment added successfully",

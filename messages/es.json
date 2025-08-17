@@ -175,7 +175,7 @@
     "dashboard": {
         "title": "¡Bienvenido!",
         "your-stores": {
-            "title": "Tus Tiendas ({count})",
+            "title": "Tus tiendas ({count})",
             "see-all": "ver todas",
             "new-store": "Nueva tienda"
         },

@@ -64,7 +64,7 @@ export const HoverEffect = ({
           {/* <AnimatePresence> */}
           {hoveredIndex === idx && (
             <motion.span
-              className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-primary/[0.8] block  rounded-xl -z-10"
+              className="absolute inset-0 h-full w-full bg-primary dark:bg-primary/[0.8] block  rounded-xl -z-10"
               layoutId="hoverBackground"
               /* initial={{ opacity: 0 }} */
               animate={{
@@ -76,7 +76,7 @@ export const HoverEffect = ({
                 transition: { duration: 0.15, delay: 0.2 },
               }}
             >
-              <span className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-primary/[0.8] block  rounded-xl -z-10 blur-xl" />
+              <span className="absolute inset-0 h-full w-full bg-primary dark:bg-primary/[0.8] block  rounded-xl -z-10 blur-xl" />
             </motion.span>
           )}
           {/* </AnimatePresence> */}
@@ -108,7 +108,7 @@ export const PricingCard = ({
   return (
     <div
       className={cn(
-        "relative z-0 flex flex-col items-center p-8 border rounded-md h-full bg-background group-hover:border-primary transition-colors duration-200",
+        "relative z-0 flex flex-col items-center p-8 border rounded-md h-full bg-background group-hover:border-primary duration-200 hover:scale-110 transition-all dark:hover:bg-black",
         className
       )}
     >
