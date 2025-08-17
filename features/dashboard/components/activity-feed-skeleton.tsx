@@ -70,7 +70,7 @@ function ActivityFeedSkeleton() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
         >
-            {[...Array(8)].map((_, index) => (
+            {[...Array(5)].map((_, index) => (
                 <ActivityFeedItemSkeleton key={index} index={index} />
             ))}
         </motion.div>

@@ -73,9 +73,8 @@ export async function selectUserStoreActivities(userId: number) {
             orderBy: {
                 created_at: 'desc'
             },
-            take: 50
+            take: 5
         })
-        console.log("🚀 ~ selectUserStoreActivities ~ socialActivities:", socialActivities)
 
         return {
             message: "User store activities fetched successfully",

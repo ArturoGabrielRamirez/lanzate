@@ -15,8 +15,10 @@ function LikeActivityCard({ item }: Props) {
         <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            className="relative group"
         >
-            <Card className="py-2 md:py-4 space-y-3 transition-all bg-gradient-to-br from-primary/20 dark:from-background/80 to-background/10 border-white/5 backdrop-blur-sm hover:from-primary/20 hover:to-transparent hover:!shadow-2xl  mix-blend-color-dodge">
+            <div className="absolute inset-0 border-primary group-hover:border-1 rounded-lg blur-sm"></div>
+            <Card className="h-full group not-dark:bg-gradient-to-br not-dark:to-background not-dark:from-transparent not-dark:to-120% border-white/5 backdrop-blur-sm hover:!shadow-2xl dark:via-background hover:border-white/40 relative dark:hover:to-primary/20 dark:bg-card">
                 <CardContent className="space-y-3">
                     <div className="flex items-start space-x-3">
                         <Avatar className="h-10 w-10">

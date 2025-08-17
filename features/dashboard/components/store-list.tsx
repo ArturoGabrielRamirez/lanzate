@@ -5,6 +5,7 @@ import { StoreCard } from "@/features/stores/components"
 import Link from "next/link"
 import { ArrowRight, Store } from "lucide-react"
 import { CreateStoreButton } from "@/features/stores/components"
+import * as motion from "motion/react-client"
 
 const StoreList = async () => {
 
@@ -45,8 +46,12 @@ const StoreList = async () => {
                         <CreateStoreButton userId={user.id} />
                     </div>
                     <div className="md:grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4 flex overflow-x-auto md:overflow-x-visible">
+
                         {dashboardData.stores.map((store) => (
-                            <StoreCard key={store.id} store={store} />
+                            <motion.div className="relative group" key={store.id} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                                <div className="absolute inset-0 border-primary group-hover:border-1 rounded-lg blur-sm"></div>
+                                <StoreCard key={store.id} store={store} />
+                            </motion.div>
                         ))}
                         {dashboardData.stores.length === 0 && (
                             <div className="col-span-full flex flex-col items-center justify-center gap-2">
