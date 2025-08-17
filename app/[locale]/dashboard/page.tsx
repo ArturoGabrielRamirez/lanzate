@@ -32,6 +32,7 @@ export default async function Dashboard() {
             <NextStepProvider>
                 <NextStepContainer>
                     <div className="grid grid-cols-1 grid-areas-[search-bar,actions,feed] md:grid-areas-[search-bar_stores,feed_stores,feed_actions,feed_calendar] gap-2 md:grid-cols-[2fr_1fr] md:grid-rows-[min-content_auto_min-content_1fr] lg:grid-areas-[stats_search-bar_stores,stats_feed_stores,stats_feed_actions,stats_feed_calendar,empty_feed_calendar,empty_feed_calendar] lg:grid-rows-[min-content_min-content_min-content_min-content_1fr] lg:grid-cols-[1fr_2fr_1fr] md:gap-4 lg:gap-6 xl:gap-8">
+
                         {/* Quick Stats */}
                         <Suspense fallback={<DashboardStatsSkeleton />}>
                             <DashboardStats userId={user.id} />
@@ -45,7 +46,9 @@ export default async function Dashboard() {
                                     Your feed
                                 </h2>
                             </div>
-                            <GlobalSearch userId={user.id} />
+                            <Suspense>
+                                <GlobalSearch userId={user.id} />
+                            </Suspense>
                         </div>
 
                         {/* Activity Feed */}
@@ -68,9 +71,9 @@ export default async function Dashboard() {
                         </StoreListContainer>
 
                         {/* Calendar */}
-                        <div className="area-[calendar] hidden md:block group">
+                        <Suspense fallback={<div className="area-[calendar] hidden md:block group" />}>
                             <DashboardCalendar />
-                        </div>
+                        </Suspense>
                     </div>
                 </NextStepContainer>
             </NextStepProvider>
