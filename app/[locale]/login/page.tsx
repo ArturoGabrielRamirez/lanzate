@@ -24,7 +24,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     const params = await searchParams
 
     return (
-        <section className="flex flex-col p-4 grow pt-17 relative">
+        <section className="flex flex-col p-4 grow pt-17 relative z-10">
             <div className='flex flex-col justify-center items-center w-full max-w-xl md:max-w-full lg:max-w-4xl gap-4 mx-auto md:flex-row grow'>
                 <div className='w-full flex flex-col gap-8'>
                     <LoginErrorDisplay
@@ -38,13 +38,6 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 <div className='w-full h-1 md:w-1 md:h-100 bg-primary/50'></div>
                 <SocialLoginButtons orLoginWith={t("description.or-login-with")} />
             </div>
-            <DotPattern
-                width={30}
-                height={30}
-                className={cn(
-                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
-                )}
-            />
         </section>
     )
 }

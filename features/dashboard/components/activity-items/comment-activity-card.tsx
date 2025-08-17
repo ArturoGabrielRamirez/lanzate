@@ -1,17 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MessageCircle, Clock } from "lucide-react"
-import { ActivityFeedItem } from "../../types"
 import Link from "next/link"
 import { getUserInitials, formatActivityDate } from "./shared-utils"
+import { Store, User, Product, SocialActivity } from "@prisma/client"
 
 type Props = {
-    item: ActivityFeedItem & { type: 'comment' }
+    item: SocialActivity & { user: User, store: Store, product: Product }
 }
 
 function CommentActivityCard({ item }: Props) {
     return (
-        <Card className="p-4 space-y-3">
+        <Card className="p-4 space-y-3 transition-discrete transition-all duration-200 from-transparent to-background/90 bg-radial-[circle_at_center_center] hover:[background-size:200%_100%] [background-size:100%_300%] [background-position:bottom_left] hover:[background-position:top_right] border-white/5">
             <CardContent className="p-0 space-y-3">
                 <div className="flex items-start space-x-3">
                     <Avatar className="h-10 w-10">
@@ -20,14 +20,14 @@ function CommentActivityCard({ item }: Props) {
                             alt={`${item.user.first_name} ${item.user.last_name}`}
                         />
                         <AvatarFallback>
-                            {getUserInitials(item.user.first_name, item.user.last_name)}
+                            {getUserInitials(item.user?.first_name || '', item.user?.last_name || '')}
                         </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 space-y-2">
                         <div className="space-y-1">
                             <div className="flex items-center space-x-2">
-                                <span className="font-medium">
-                                    {item.user.first_name} {item.user.last_name}
+                                <span className="font-medium text-primary">
+                                    @{item.user?.username}
                                 </span>
                                 <span className="text-muted-foreground text-xs md:text-sm">comentó en</span>
                                 <Link

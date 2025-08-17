@@ -1,6 +1,4 @@
-import { DotPattern } from '@/components/magicui/dot-pattern'
 import { SignupForm, SocialLoginButtons } from '@/features/auth/components'
-import { cn } from '@/lib/utils'
 import { getTranslations } from 'next-intl/server'
 import { Metadata } from 'next'
 
@@ -18,13 +16,6 @@ export default async function SignupPage() {
                 <SignupForm />
                 <SocialLoginButtons orLoginWith={t("description.or-login-with")} />
             </section>
-            <DotPattern
-                width={30}
-                height={30}
-                className={cn(
-                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
-                )}
-            />
         </div>
     )
 }

@@ -31,6 +31,27 @@ export async function toggleProductLike(userId: number, productId: number) {
                 VALUES (${userId}, ${productId}, NOW())
             `
             isLiked = true
+
+            const product = await prisma.product.findUnique({
+                where: {
+                    id: productId
+                },
+                select: {
+                    store: true
+                }
+            })
+
+            await prisma.socialActivity.create({
+                data: {
+                    user_id: userId,
+                    activity_type: "PRODUCT_LIKE",
+                    entity_type: "PRODUCT",
+                    entity_id: productId,
+                    title: `Product ${productId} liked`,
+                    store_id: product?.store.id,
+                    product_id: productId
+                }
+            })
         }
 
         // Obtener el conteo actualizado
@@ -40,6 +61,7 @@ export async function toggleProductLike(userId: number, productId: number) {
         ` as any[]
 
         const count = Number(result[0]?.count || 0)
+
 
         return {
             error: false,

@@ -299,10 +299,10 @@ export function AnimatedBeamMultipleOutputDemo({
     }, [devices.length, salesData.length]);
 
     return (
-        <div className="relative">
+        <div className="relative min-w-full">
             <div
                 className={cn(
-                    "relative flex lg:h-[500px] w-full items-center justify-center p-10 z-10 ",
+                    "relative flex lg:h-[500px] w-full items-center justify-center py-10 z-10 ",
                     className,
                 )}
                 ref={containerRef}

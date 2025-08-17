@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Store, Branch } from "@prisma/client"
 import { useTranslations } from "next-intl"
+import Link from "next/link"
 
 type StoreSelectorProps = {
     stores: (Store & { branches: Branch[] })[]
@@ -28,12 +29,6 @@ function StoreSelector({ stores }: StoreSelectorProps) {
             setSelectedBranch(null)
         }
     }, [selectedStoreData])
-
-    const handleConfirm = () => {
-        if (selectedStore && selectedBranch) {
-            router.push(`/sale/${selectedStore}/${selectedBranch}`)
-        }
-    }
 
     const canProceed = selectedStore && selectedBranch
 
@@ -61,8 +56,8 @@ function StoreSelector({ stores }: StoreSelectorProps) {
                 </Select>
 
                 {selectedStoreData && selectedStoreData.branches.length > 1 && (
-                    <Select 
-                        value={selectedBranch?.toString() || ""} 
+                    <Select
+                        value={selectedBranch?.toString() || ""}
                         onValueChange={(value) => setSelectedBranch(parseInt(value))}
                     >
                         <SelectTrigger className="w-full">
@@ -85,11 +80,13 @@ function StoreSelector({ stores }: StoreSelectorProps) {
                 )}
 
                 <Button
-                    onClick={handleConfirm}
                     disabled={!canProceed}
                     className="w-full"
+                    asChild
                 >
-                    {t("confirm")}
+                    <Link href={`/sale/${selectedStore}/${selectedBranch}`}>
+                        {t("confirm")}
+                    </Link>
                 </Button>
             </div>
         </div>

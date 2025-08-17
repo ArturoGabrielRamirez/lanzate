@@ -1,13 +1,16 @@
 "use client"
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { User } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
 import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 
-function AccountDropdown() {
+type AccountDropdownProps = {
+    image?: string
+}
+
+function AccountDropdown({ image }: AccountDropdownProps) {
     const [open, setOpen] = useState(false)
 
     const handleClick = () => {
@@ -21,28 +24,18 @@ function AccountDropdown() {
     return (
         <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger asChild>
-                <Button size="icon" variant={"outline"} onClick={handleClick}>
-                    <User />
-                </Button>
+                <Avatar className="ring-primary ring-2 cursor-pointer">
+                    <AvatarImage src={image} />
+                    <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent side="bottom" align="end">
-                <DropdownMenuItem onClick={handleClick}>
-                    <Link href="/dashboard">Dashboard</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleClick}>
+                <DropdownMenuItem onClick={handleClick} className="cursor-pointer" asChild>
                     <Link href="/account">Account</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleClick}>
-                    <Link href="/stores">Stores</Link>
-                </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                    <Button
-                        onClick={handleSignOut}
-                        className="w-full text-left cursor-pointer"
-                    >
-                        Sign out
-                    </Button>
+                <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer" asChild>
+                    <Link href="#" >Sign out</Link>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

@@ -46,24 +46,24 @@ function StoreListSkeleton() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
         >
-            <div className="flex items-center justify-between mb-2 md:mb-4">
-                <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between mb-2 md:mb-4 text-primary/50 group-hover/stores:text-primary transition-all">
+                <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2">
                     <Store className="size-4 xl:size-5" />
-                    <Skeleton className="h-6 lg:h-8 w-32 lg:w-48" />
-                </div>
-                <div className="flex items-center gap-1">
-                    <Skeleton className="h-4 w-16" />
-                    <ArrowRight className="size-4 text-muted-foreground" />
-                </div>
+                    Tus tiendas
+                </h2>
+                <p
+                    className="flex items-center gap-1 text-sm text-inherit hover:text-primary transition-colors"
+                >
+                    Ver todas
+                    <ArrowRight className="size-4" />
+                </p>
             </div>
-            
+
             <section>
-                {/* Mobile create button skeleton */}
                 <div className="sm:hidden mb-3">
                     <Skeleton className="h-10 w-full" />
                 </div>
-                
-                {/* Store cards grid */}
+
                 <motion.div
                     className="md:grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4 flex overflow-x-auto md:overflow-x-visible"
                     initial={{ opacity: 0 }}
@@ -73,21 +73,6 @@ function StoreListSkeleton() {
                     {[...Array(1)].map((_, index) => (
                         <StoreCardSkeleton key={index} index={index} />
                     ))}
-                    
-                    {/* Create store card skeleton (desktop) */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: 0.3 }}
-                        className="shrink-0 hidden sm:block"
-                    >
-                        <Card className="border-dashed gap-2 md:gap-3 lg:gap-4 bg-transparent">
-                            <CardContent className="flex justify-center items-center grow flex-col min-h-[160px]">
-                                <Skeleton className="h-4 w-16 mb-2" />
-                                <Skeleton className="h-3 w-32" />
-                            </CardContent>
-                        </Card>
-                    </motion.div>
                 </motion.div>
             </section>
         </motion.div>

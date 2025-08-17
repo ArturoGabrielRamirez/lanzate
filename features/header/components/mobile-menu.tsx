@@ -14,10 +14,12 @@ import {
 import { ThemeToggle, NotificationsIcon } from "@/features/header/components"
 import { Button } from "@/components/ui/button"
 import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { User } from "@prisma/client"
 
 
 type MobileMenuProps = {
-    user: any
+    user?: User | null
 }
 
 function MobileMenu({ user }: MobileMenuProps) {
@@ -31,12 +33,13 @@ function MobileMenu({ user }: MobileMenuProps) {
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                <Button variant="ghost" size="icon" className="hidden justify-end">
-                    <Menu className="size-5" />
-                    <span className="sr-only">Toggle menu</span>
-                </Button>
+                <IconButton
+                    active={open}
+                    icon={Menu}
+                    className="justify-end lg:hidden"
+                />
             </DrawerTrigger>
-            <DrawerContent className="sm:w-[350px]">
+            <DrawerContent className="">
                 <DrawerHeader className="border-b">
                     <div className="flex items-center justify-between">
                         <DrawerTitle>Menu</DrawerTitle>

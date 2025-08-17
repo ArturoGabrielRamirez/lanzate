@@ -6,8 +6,6 @@ import { toast } from "sonner";
 import { useConfirmationEmailChangeStatus } from "@/features/auth/hooks/use-confirmation-email-change-status";
 import { EmailChangeStatus } from "../../types";
 import { Button } from "@/components/ui/button";
-import { DotPattern } from '@/components/magicui/dot-pattern';
-import { cn } from "@/lib/utils";
 
 interface CheckEmailProps {
     email?: string;
@@ -307,12 +305,6 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                     </p>
                 </div>
             </div>
-            <DotPattern
-                width={30}
-                height={30}
-                className={cn(
-                    "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
-                )} />
         </div>
     );
 }
