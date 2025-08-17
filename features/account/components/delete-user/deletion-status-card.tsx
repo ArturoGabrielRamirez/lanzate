@@ -68,8 +68,8 @@ export default function DeletionStatusCard({
                 <div className="flex items-center justify-between">
                     <span className="text-gray-300 font-medium">Programada para:</span>
                     <span className="text-gray-400">
-                        {status.deletionScheduledAt &&
-                            new Date(status.deletionScheduledAt).toLocaleString('es-ES')}
+                        {status.canCancelUntil &&
+                            new Date(status.canCancelUntil).toLocaleString('es-ES')}
                     </span>
                 </div>
 

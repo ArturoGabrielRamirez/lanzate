@@ -1,4 +1,4 @@
-// features/layout/data/getUserByEmail.ts
+/* // features/layout/data/getUserByEmail.ts
 // MODIFICAR tu función existente para incluir validación de usuarios anonimizados
 
 import { prisma } from '@/utils/prisma'
@@ -68,4 +68,4 @@ export const getUserByEmailIncludingAnonymized = async (email: string): Promise<
       payload: null
     }
   }
-}
+} */

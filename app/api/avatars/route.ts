@@ -1,102 +1,97 @@
-// app/api/user/avatar/options/route.ts
+// app/api/avatars/route.ts
 import { /* NextRequest, */ NextResponse } from 'next/server'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { prisma } from '@/utils/prisma'
+import { AvatarOption } from '@/features/account/types'
 
 export async function GET(/* request: NextRequest */) {
   try {
     const supabase = await createServerSideClient()
     const { data: { user }, error: userError } = await supabase.auth.getUser()
-    
+
     if (userError || !user) {
       return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
     }
 
-    console.log('🔵 Usuario autenticado:', user.id)
-    console.log('🔵 User metadata:', user.user_metadata)
-    console.log('🔵 Identities:', user.identities)
-
-    // Obtener usuario de la base de datos
+    // Usuario en DB
     const dbUser = await prisma.user.findFirst({
       where: { supabase_user_id: user.id },
       select: { id: true, email: true, avatar: true }
     })
-
     if (!dbUser) {
       return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 })
     }
 
-    const options = []
+    const options: AvatarOption[] = []
 
-    // 1. Avatar desde user_metadata (Google, etc.)
+    // --- 1. Avatares OAuth ---
     const googleAvatar = user.user_metadata?.avatar_url || user.user_metadata?.picture
     if (googleAvatar) {
-      console.log('✅ Avatar de Google encontrado:', googleAvatar)
       options.push({
-        id: 'google-original',
+        id: 'google-metadata',
         url: googleAvatar,
         provider: 'Google',
-        label: 'Avatar de Google (Original)',
-        icon: '🟦',
-        isExternal: true
+        label: 'Avatar de Google',
+        icon: '🟦'
       })
     }
 
-    // 2. Avatares de identities OAuth
-    if (user.identities && user.identities.length > 0) {
-      console.log('🔵 Procesando identities:', user.identities.length)
-      
+    if (user.identities?.length) {
       for (const identity of user.identities) {
-        console.log(`🔵 Identity ${identity.provider}:`, identity.identity_data)
-        
-        let avatarUrl = null
+        let avatarUrl: string | null = null
         let label = ''
         let icon = ''
 
         switch (identity.provider) {
           case 'google':
-            avatarUrl = identity.identity_data?.avatar_url || identity.identity_data?.picture
-            label = 'Avatar de Google'
+            avatarUrl = identity.identity_data?.avatar_url ||
+                        identity.identity_data?.picture ||
+                        identity.identity_data?.image_url
+            label = 'Google'
             icon = '🟦'
             break
           case 'facebook':
-            avatarUrl = identity.identity_data?.avatar_url
-            label = 'Avatar de Facebook'
+            avatarUrl = identity.identity_data?.avatar_url ||
+                        identity.identity_data?.picture?.data?.url
+            label = 'Facebook'
             icon = '📘'
             break
-          case 'github':
+   /*        case 'github':
             avatarUrl = identity.identity_data?.avatar_url
-            label = 'Avatar de GitHub'
+            label = 'GitHub'
             icon = '🐙'
             break
           case 'discord':
-            avatarUrl = identity.identity_data?.avatar_url
-            label = 'Avatar de Discord'
+            if (identity.identity_data?.id && identity.identity_data?.avatar) {
+              avatarUrl = `https://cdn.discordapp.com/avatars/${identity.identity_data.id}/${identity.identity_data.avatar}.png`
+            } else {
+              avatarUrl = identity.identity_data?.avatar_url
+            }
+            label = 'Discord'
             icon = '🎮'
             break
           case 'twitter':
-            avatarUrl = identity.identity_data?.avatar_url
-            label = 'Avatar de Twitter'
+            avatarUrl = identity.identity_data?.avatar_url ||
+                        identity.identity_data?.profile_image_url
+            label = 'Twitter'
             icon = '🐦'
-            break
+            break */
         }
 
-        if (avatarUrl) {
-          console.log(`✅ Avatar de ${identity.provider} encontrado:`, avatarUrl)
+        if (avatarUrl?.startsWith('http')) {
           options.push({
-            id: identity.provider,
+            id: `${identity.provider}-identity`,
             url: avatarUrl,
-            provider: identity.provider.charAt(0).toUpperCase() + identity.provider.slice(1),
-            label,
-            icon,
-            isExternal: true
+            provider: label,
+            label: `Avatar de ${label}`,
+            icon
           })
         }
       }
     }
 
-    // 3. Avatares generados con DiceBear
-   const diceBearStyles = [
+    // --- 2. DiceBear ---
+    const diceBearStyles = [
   { style: 'adventurer', label: 'Aventurero', icon: '⚔️' },
   { style: 'adventurer-neutral', label: 'Aventurero Neutral', icon: '🛡️' },
   { style: 'avataaars', label: 'Avataaars', icon: '👤' },
@@ -131,7 +126,6 @@ export async function GET(/* request: NextRequest */) {
 
 for (const { style, label, icon } of diceBearStyles) {
   const diceBearUrl = `https://api.dicebear.com/9.x/${style}/svg?seed=${encodeURIComponent(dbUser.email)}&backgroundColor=transparent`;
-  
   options.push({
     id: `dicebear-${style}`,
     url: diceBearUrl,
@@ -142,60 +136,63 @@ for (const { style, label, icon } of diceBearStyles) {
   });
 }
 
-    // 4. Buscar avatares subidos a Supabase Storage
-    try {
-      const { data: files, error: listError } = await supabase.storage
-        .from('user-uploads')
-        .list('avatars', {
-          search: `${dbUser.id}`,
-          sortBy: { column: 'updated_at', order: 'desc' }
-        })
 
-      if (!listError && files && files.length > 0) {
-        console.log(`📁 Encontrados ${files.length} archivos en storage`)
-        
-        for (const file of files) {
-          const { data: publicUrlData } = supabase.storage
-            .from('user-uploads')
-            .getPublicUrl(`avatars/${file.name}`)
+    // --- 3. Storage personalizado ---
+    const { data: files } = await supabase.storage
+      .from('user-uploads')
+      .list('avatars', { limit: 50, sortBy: { column: 'updated_at', order: 'desc' } })
 
-          if (publicUrlData?.publicUrl) {
-            options.push({
-              id: `storage-${file.name}`,
-              url: publicUrlData.publicUrl,
-              provider: 'Subido',
-              label: 'Avatar Personalizado',
-              icon: '📸',
-              isExternal: false,
-              fileName: file.name,
-              uploadedAt: file.updated_at
-            })
-          }
+    if (files?.length) {
+      const userFiles = files.filter(file =>
+        file.name.includes(user.id) || file.name.includes(dbUser.id.toString())
+      )
+
+      for (const file of userFiles) {
+        const { data: publicUrlData } = supabase.storage
+          .from('user-uploads')
+          .getPublicUrl(`avatars/${file.name}`)
+
+        if (publicUrlData?.publicUrl) {
+          options.push({
+            id: `storage-${file.name}`,
+            url: publicUrlData.publicUrl,
+            provider: 'Personalizado',
+            label: 'Avatar Subido',
+            icon: '📸',
+            fileName: file.name,
+            size: file.metadata?.size,
+            uploadedAt: file.updated_at || file.created_at
+          })
         }
-      } else if (listError) {
-        console.log('❌ Error listando archivos de storage:', listError)
       }
-    } catch (storageError) {
-      console.log('❌ Error accediendo a storage:', storageError)
     }
 
-    // 5. Marcar cuál está actualmente en uso
-    const optionsWithStatus = options.map(option => ({
-      ...option,
-      isCurrentlyUsed: dbUser.avatar === option.url
+    // --- 4. Normalizar ---
+    const uniqueOptions = options.filter(
+      (opt, i, arr) => i === arr.findIndex(o => o.url === opt.url)
+    )
+
+    const optionsWithStatus = uniqueOptions.map(opt => ({
+      ...opt,
+      isCurrentlyUsed: dbUser.avatar === opt.url
     }))
 
-    console.log(`✅ Total de opciones generadas: ${optionsWithStatus.length}`)
+    optionsWithStatus.sort((a, b) => {
+      if (a.isCurrentlyUsed && !b.isCurrentlyUsed) return -1
+      if (!a.isCurrentlyUsed && b.isCurrentlyUsed) return 1
+      const order = ['Google', 'Facebook', 'GitHub', 'Discord', 'Twitter', 'Personalizado', 'DiceBear']
+      return order.indexOf(a.provider) - order.indexOf(b.provider)
+    })
 
-    return NextResponse.json({ 
+    return NextResponse.json({
+      success: true,
       options: optionsWithStatus,
       total: optionsWithStatus.length,
       currentAvatar: dbUser.avatar
     })
-
   } catch (error) {
-    console.error('❌ Error getting avatar options:', error)
-    return NextResponse.json({ 
+    console.error('❌ Error en GET /api/avatars:', error)
+    return NextResponse.json({
       error: 'Error interno del servidor',
       details: error instanceof Error ? error.message : 'Error desconocido'
     }, { status: 500 })

@@ -1,11 +1,10 @@
 'use server'
 
 import { createServerSideClient } from '@/utils/supabase/server'
-import { getUserByEmail, insertLogEntry } from '@/features/layout/data'
+import {/*  getUserByEmail, */ insertLogEntry } from '@/features/layout/data'
 import { insertUser } from '@/features/auth/data'
 import { actionWrapper } from '@/utils/lib'
 import { ResponseType } from '@/features/layout/types'
-
 import { prisma } from '@/utils/prisma'
 import { UserDeletionSystem } from '@/features/account/utils/user-deletion-system'
 
@@ -15,21 +14,13 @@ export const handleSignup = async (payload: any): Promise<ResponseType<any>> => 
         const supabase = createServerSideClient()
         const { email, password, name, lastname, phone, username } = payload
 
-        console.log(`📧 Validando creación de cuenta para ${email}...`)
-        
         try {
             const validation = await UserDeletionSystem.validateNewUserCreation(email)
-            
+
             if (!validation.canCreate && validation.conflict) {
                 throw new Error('User already exists')
             }
-            
-            if (validation.previouslyAnonymized) {
-                console.log(`ℹ️ Email ${email} fue anonimizado el ${validation.anonymizedAt}. Creando nueva cuenta desde cero...`)
-            } else {
-                console.log(`✅ Email ${email} disponible para nueva cuenta`)
-            }
-            
+      
         } catch (validationError) {
             console.error('❌ Error en validación:', validationError)
             if (validationError instanceof Error && validationError.message.includes('User already exists')) {
@@ -43,7 +34,7 @@ export const handleSignup = async (payload: any): Promise<ResponseType<any>> => 
                 is_anonymized: false,
             }
         })
-        
+
         if (activeUser) {
             throw new Error('User already exists')
         }
@@ -60,12 +51,13 @@ export const handleSignup = async (payload: any): Promise<ResponseType<any>> => 
             email,
             "email",
             signUpData.user.id,
+            undefined,
             username,
             name,
             lastname,
             phone
         )
-        
+
         if (insertError) throw new Error('Error inserting user')
 
         insertLogEntry({
@@ -76,8 +68,6 @@ export const handleSignup = async (payload: any): Promise<ResponseType<any>> => 
             action_initiator: "Signup form",
             details: `User signed up using sign up form${activeUser ? ' (email previously anonymized)' : ''}`
         }).catch(error => console.error('Log error after signup:', error))
-
-        console.log(`✅ Nueva cuenta creada exitosamente para ${email} (ID: ${user.id})`)
 
         return {
             error: false,
