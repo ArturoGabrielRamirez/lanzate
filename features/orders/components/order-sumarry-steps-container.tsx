@@ -1,15 +1,13 @@
 /* import { getUserStoreActivities } from "@/features/dashboard/actions/getUserStoreActivities" */
 import { Accordion, AccordionTrigger, AccordionItem, AccordionContent } from "@/components/ui/accordion"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { getEmployeePermissions } from "@/features/stores/actions/getEmployeePermissions"
 import { getOrderDetails } from "@/features/stores/actions/getOrderDetails"
 import { cn } from "@/lib/utils"
-import { AlertCircle, Box, Calendar, Check, MapPin, Package, ShoppingCart, Truck, User } from "lucide-react"
-import ConfirmOrderButton from "./confirm-order-button"
+import { Box, Calendar, Check, MapPin, Package, ShoppingCart, Truck, User } from "lucide-react"
 /* import { Button } from "@/components/ui/button" */
-import OrderActionButtons from "./order-action-buttons"
-import { CancelOrderButton } from "@/features/stores/components"
+import OrderTimeline from "./order-timeline"
 /* import OrderSummarySteps from "./order-summary-steps" */
 
 type Props = {
@@ -40,7 +38,7 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
 
 
 
-    const alertClasses = cn(
+    /* const alertClasses = cn(
         order.status === "PENDING" && "border-yellow-500 text-yellow-500",
         order.status === "PROCESSING" && "border-blue-500 text-blue-500",
         order.status === "READY" && "border-green-500 text-green-500",
@@ -48,9 +46,9 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
         order.status === "DELIVERED" && "border-red-500 text-red-500",
         order.status === "CANCELLED" && "border-red-500 text-red-500",
         order.status === "COMPLETED" && "border-green-500 text-green-500",
-    )
+    ) */
 
-    const statusTexts = {
+    /* const statusTexts = {
         PENDING: "This order is currently pending and should be confirmed to continue with the next step.",
         PROCESSING: "This order is currently being processed and should be confirmed to continue with the next step.",
         READY: "This order is currently ready and the customer should have been notified.",
@@ -58,7 +56,7 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
         DELIVERED: "This order has been delivered to the customer.",
         CANCELLED: "This order has been cancelled.",
         COMPLETED: "This order has been completed.",
-    }
+    } */
 
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('en-US', {
@@ -67,30 +65,28 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
         }).format(amount)
     }
 
-    console.log(order.status !== "PROCESSING" && order.status !== "COMPLETED")
-
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-8 w-full">
-            <div className="flex flex-col gap-2 md:min-w-sm border p-4 rounded-md md:max-w-md w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr] gap-8 w-full">
+            <div className="flex flex-col gap-2 md:min-w-sm border p-4 rounded-md md:max-w-md w-full xl:max-w-full">
                 <h3 className="text-2xl font-bold text-center flex items-center justify-center gap-2">Order #{order.id} {order.shipping_method === "PICKUP" ? <MapPin className="size-4 md:size-6" /> : <Truck className="size-4 md:size-6" />}</h3>
                 <p className="text-sm text-muted-foreground text-center">
                     {Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short" }).format(order.created_at)}
                 </p>
-                <Alert className={cn(alertClasses, "text-lg lg:text-xl mx-auto my-4 w-full")}>
+                {/* <Alert className={cn(alertClasses, "text-lg lg:text-xl mx-auto my-4 w-full")}>
                     <AlertTitle className="flex items-center gap-2">
                         <AlertCircle className="size-4 lg:size-6" />
                         {order.status}
                     </AlertTitle>
                     <AlertDescription className="text-balance">
                         {statusTexts[order.status as keyof typeof statusTexts]}
-                        {order.status === "PROCESSING" && <ConfirmOrderButton order={order} employeePermissions={employeePermissions} />}
+                        {order.status === "PROCESSING" && <ConfirmOrderButton order={order} canUpdateOrders={employeePermissions.permissions?.can_update_orders} />}
                         {order.status !== "PROCESSING" && order.status !== "COMPLETED" && order.status !== "CANCELLED" && (<OrderActionButtons order={order} />)}
                         {order.status !== "CANCELLED" && (
                             <CancelOrderButton order={order} slug={storeSlug} userId={userId} className="w-full bg-red-400 text-primary-foreground hover:bg-red-600/50 hover:text-primary-foreground mt-4" />
                         )}
                     </AlertDescription>
-                </Alert>
-
+                </Alert> */}
+                <OrderTimeline order={order} />
             </div>
             <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
                 <AccordionItem value="item-1">
