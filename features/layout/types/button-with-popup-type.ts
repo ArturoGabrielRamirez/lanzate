@@ -20,4 +20,5 @@ export type ButtonWithPopupPropsType<T> = {
     formDisabled?: boolean
     size?: "default" | "sm" | "lg" | "icon"
     contentButton?: string
+    onlyIcon?: boolean
 }

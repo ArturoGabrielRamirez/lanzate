@@ -2,12 +2,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Contract, ContractAssignment, Order, OrderTracking, Product, SocialActivity, Store, User } from "@prisma/client"
 import { extractLink, formatActivityDate, getUserInitials } from "./shared-utils"
-import { FileCheck, Flame, MapPin, MessageCircle, ShoppingBag, Truck } from "lucide-react"
+import { FileCheck, Flame, MapPin, MessageCircle, ShoppingBag, Trash2, Truck } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import Link from "next/link"
 import ConfirmOrderButton from "@/features/orders/components/confirm-order-button"
 import { Badge } from "@/components/ui/badge"
 import { CancelOrderButton } from "@/features/stores/components"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import ConfirmOrderButtonIcon from "@/features/orders/components/confirm-order-button-icon"
 
 type Props = {
     item: SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } }
@@ -122,10 +124,10 @@ const FeedItem = ({ item }: Props) => {
             </CardContent>
             <CardFooter className="flex justify-end items-center gap-2">
                 {item.activity_type === "ORDER_CREATED" && item.order.status === "PROCESSING" && (
-                    <ConfirmOrderButton order={item.order} canUpdateOrders size="sm" />
+                    <ConfirmOrderButtonIcon orderId={item.order?.id || 0} />
                 )}
                 {item.activity_type === "ORDER_CREATED" && (
-                    <CancelOrderButton order={item.order} slug={item.store.slug} size="sm" />
+                    <CancelOrderButton order={item.order} slug={item.store.slug} size="sm" onlyIcon className=""/>
                 )}
             </CardFooter>
         </Card>
