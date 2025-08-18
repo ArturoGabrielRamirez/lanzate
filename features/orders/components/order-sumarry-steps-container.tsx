@@ -84,8 +84,8 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
                     <AlertDescription className="text-balance">
                         {statusTexts[order.status as keyof typeof statusTexts]}
                         {order.status === "PROCESSING" && <ConfirmOrderButton order={order} employeePermissions={employeePermissions} />}
-                        {order.status !== "PROCESSING" && order.status !== "COMPLETED" && (<OrderActionButtons order={order} />)}
-                        {order.status === "COMPLETED" && (
+                        {order.status !== "PROCESSING" && order.status !== "COMPLETED" && order.status !== "CANCELLED" && (<OrderActionButtons order={order} />)}
+                        {order.status !== "CANCELLED" && (
                             <CancelOrderButton order={order} slug={storeSlug} userId={userId} className="w-full bg-red-400 text-primary-foreground hover:bg-red-600/50 hover:text-primary-foreground mt-4" />
                         )}
                     </AlertDescription>
