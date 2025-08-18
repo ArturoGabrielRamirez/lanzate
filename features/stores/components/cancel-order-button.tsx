@@ -58,25 +58,18 @@ function CancelOrderButton({ order, slug, onComplete, className, size = "default
 
     const isOrderCancellable = order.status !== 'DELIVERED' && order.status !== 'CANCELLED'
 
-    if (!isOrderCancellable) {
-        return (
-            <div className="flex items-center gap-2 w-full p-2 text-muted-foreground text-sm cursor-not-allowed">
-                <Trash2 className="w-4 h-4" />
-                {t("cannot-cancel")}
-            </div>
-        )
-    }
 
     return (
         <ButtonWithPopup
             onlyIcon={onlyIcon}
+            disabled={!isOrderCancellable}
             text={(
                 <>
                     {onlyIcon ? <Trash2 className="size-4 text-current" /> : t("button")}
                 </>
             )}
-            title={t("title")}
-            description={t("description")}
+            title={isOrderCancellable ? t("title") : t("cannot-cancel")}
+            description={isOrderCancellable ? t("description") : ""}
             action={handleCancelOrder}
             onComplete={onComplete}
             messages={{

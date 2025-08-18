@@ -2,14 +2,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Contract, ContractAssignment, Order, OrderTracking, Product, SocialActivity, Store, User } from "@prisma/client"
 import { extractLink, formatActivityDate, getUserInitials } from "./shared-utils"
-import { FileCheck, Flame, MapPin, MessageCircle, ShoppingBag, Trash2, Truck } from "lucide-react"
+import { FileCheck, Flame, MapPin, MessageCircle, ShoppingBag, Truck } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import Link from "next/link"
-import ConfirmOrderButton from "@/features/orders/components/confirm-order-button"
 import { Badge } from "@/components/ui/badge"
 import { CancelOrderButton } from "@/features/stores/components"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import ConfirmOrderButtonIcon from "@/features/orders/components/confirm-order-button-icon"
+import { cn } from "@/lib/utils"
 
 type Props = {
     item: SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } }
@@ -74,7 +73,12 @@ const FeedItem = ({ item }: Props) => {
                     {item.activity_type === "ORDER_CREATED" && (
                         <Tooltip>
                             <TooltipTrigger>
-                                <Badge variant="outline">
+                                <Badge variant="outline" className={cn(
+                                    item.order.status === "PROCESSING" && "border-yellow-500 text-yellow-500",
+                                    item.order.status === "READY" && "border-blue-500 text-blue-500",
+                                    item.order.status === "COMPLETED" && "border-green-500 text-green-500",
+                                    item.order.status === "CANCELLED" && "border-red-500 text-red-500",
+                                )}>
                                     {item.order.status === "READY" ? "CONFIRMED" : item.order.status}
                                 </Badge>
                             </TooltipTrigger>
@@ -89,7 +93,7 @@ const FeedItem = ({ item }: Props) => {
                     {item.activity_type === "ORDER_CREATED" && item.order.tracking && (
                         <Tooltip>
                             <TooltipTrigger>
-                                <Badge variant="outline">
+                                <Badge variant="outline" >
                                     {item.order.tracking.tracking_status === "PREPARING_ORDER" && "PREPARING ORDER"}
                                     {item.order.tracking.tracking_status === "WAITING_FOR_PICKUP" && "WAITING FOR PICKUP"}
                                     {item.order.tracking.tracking_status === "ON_THE_WAY" && "IN TRANSIT"}

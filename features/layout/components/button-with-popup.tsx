@@ -9,6 +9,7 @@ import { Form } from "@/features/layout/components"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 function ButtonWithPopup<T>({
     text,
@@ -44,7 +45,14 @@ function ButtonWithPopup<T>({
             <DialogTrigger asChild>
                 <div>
                     {onlyIcon ? (
-                        <IconButton disabled={disabled} type="button" className={cn(className)} icon={() => text} />
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <IconButton disabled={disabled} type="button" className={cn(disabled && "cursor-not-allowed text-muted-foreground", className)} icon={() => text} />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                {title}
+                            </TooltipContent>
+                        </Tooltip>
                     ) : (
                         <Button disabled={disabled} variant={variant} type="button" className={cn(className)} size={size}>{text}</Button>
                     )}
