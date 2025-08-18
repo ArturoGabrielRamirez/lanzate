@@ -1,4 +1,3 @@
-/* import { getUserStoreActivities } from "@/features/dashboard/actions/getUserStoreActivities" */
 import { Accordion, AccordionTrigger, AccordionItem, AccordionContent } from "@/components/ui/accordion"
 import { AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
@@ -6,9 +5,7 @@ import { getEmployeePermissions } from "@/features/stores/actions/getEmployeePer
 import { getOrderDetails } from "@/features/stores/actions/getOrderDetails"
 import { cn } from "@/lib/utils"
 import { Box, Calendar, Check, MapPin, Package, ShoppingCart, Truck, User } from "lucide-react"
-/* import { Button } from "@/components/ui/button" */
 import OrderTimeline from "./order-timeline"
-/* import OrderSummarySteps from "./order-summary-steps" */
 
 type Props = {
     userId: number
@@ -37,27 +34,6 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
     }
 
 
-
-    /* const alertClasses = cn(
-        order.status === "PENDING" && "border-yellow-500 text-yellow-500",
-        order.status === "PROCESSING" && "border-blue-500 text-blue-500",
-        order.status === "READY" && "border-green-500 text-green-500",
-        order.status === "SHIPPED" && "border-purple-500 text-purple-500",
-        order.status === "DELIVERED" && "border-red-500 text-red-500",
-        order.status === "CANCELLED" && "border-red-500 text-red-500",
-        order.status === "COMPLETED" && "border-green-500 text-green-500",
-    ) */
-
-    /* const statusTexts = {
-        PENDING: "This order is currently pending and should be confirmed to continue with the next step.",
-        PROCESSING: "This order is currently being processed and should be confirmed to continue with the next step.",
-        READY: "This order is currently ready and the customer should have been notified.",
-        SHIPPED: "This order is currently being shipped and the customer should have been notified.",
-        DELIVERED: "This order has been delivered to the customer.",
-        CANCELLED: "This order has been cancelled.",
-        COMPLETED: "This order has been completed.",
-    } */
-
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -72,20 +48,6 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
                 <p className="text-sm text-muted-foreground text-center">
                     {Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short" }).format(order.created_at)}
                 </p>
-                {/* <Alert className={cn(alertClasses, "text-lg lg:text-xl mx-auto my-4 w-full")}>
-                    <AlertTitle className="flex items-center gap-2">
-                        <AlertCircle className="size-4 lg:size-6" />
-                        {order.status}
-                    </AlertTitle>
-                    <AlertDescription className="text-balance">
-                        {statusTexts[order.status as keyof typeof statusTexts]}
-                        {order.status === "PROCESSING" && <ConfirmOrderButton order={order} canUpdateOrders={employeePermissions.permissions?.can_update_orders} />}
-                        {order.status !== "PROCESSING" && order.status !== "COMPLETED" && order.status !== "CANCELLED" && (<OrderActionButtons order={order} />)}
-                        {order.status !== "CANCELLED" && (
-                            <CancelOrderButton order={order} slug={storeSlug} userId={userId} className="w-full bg-red-400 text-primary-foreground hover:bg-red-600/50 hover:text-primary-foreground mt-4" />
-                        )}
-                    </AlertDescription>
-                </Alert> */}
                 <OrderTimeline order={order} />
             </div>
             <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
@@ -213,7 +175,6 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
-            {/* <OrderSummarySteps order={order} employeePermissions={employeePermissions} /> */}
         </div>
     )
 }
