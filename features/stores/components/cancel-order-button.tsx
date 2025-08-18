@@ -10,12 +10,13 @@ import { cn } from "@/lib/utils"
 type Props = {
     order: Order
     slug: string
-    userId: number
+    userId?: number
     onComplete?: () => void
     className?: string
+    size?: "default" | "sm" | "lg"
 }
 
-function CancelOrderButton({ order, slug, userId, onComplete, className }: Props) {
+function CancelOrderButton({ order, slug, onComplete, className, size = "default" }: Props) {
 
     const t = useTranslations("store.cancel-order")
 
@@ -26,7 +27,7 @@ function CancelOrderButton({ order, slug, userId, onComplete, className }: Props
             confirmStockRestore: true // Auto-confirm for direct cancellation
         }
 
-        return changeOrderStatus(order.id, data, slug, userId)
+        return changeOrderStatus(order.id, data, slug)
     }
 
     const isOrderCancellable = order.status !== 'DELIVERED' && order.status !== 'CANCELLED'
@@ -57,7 +58,9 @@ function CancelOrderButton({ order, slug, userId, onComplete, className }: Props
                 error: t("messages.error"),
                 loading: t("messages.loading")
             }}
-            className={cn("bg-transparent w-full justify-start text-red-600 hover:text-red-700", className)}
+            //className={cn("bg-transparent w-full justify-start text-red-600 hover:text-red-700", className)}
+            className={cn(className)}
+            size={size}
         />
     )
 }

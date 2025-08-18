@@ -67,7 +67,11 @@ export async function selectUserStoreActivities(userId: number) {
                         store: true
                     }
                 },
-                order: true
+                order: {
+                    include : {
+                        tracking : true
+                    }
+                }
             },
             orderBy: {
                 created_at: 'desc'

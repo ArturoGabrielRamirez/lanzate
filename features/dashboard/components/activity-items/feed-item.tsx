@@ -7,6 +7,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import Link from "next/link"
 import ConfirmOrderButton from "@/features/orders/components/confirm-order-button"
 import { Badge } from "@/components/ui/badge"
+import { CancelOrderButton } from "@/features/stores/components"
 
 type Props = {
     item: SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } }
@@ -52,7 +53,7 @@ const FeedItem = ({ item }: Props) => {
                     </Tooltip>
                 </div>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="flex flex-col gap-2 md:flex-row md:items-center">
                 <p className="flex items-center gap-2">
                     <span className="text-muted-foreground">
                         {item.activity_type === "PRODUCT_LIKE" && "Le dio me gusta a"}
@@ -66,19 +67,42 @@ const FeedItem = ({ item }: Props) => {
                         {item.activity_type === "ORDER_CREATED" && `#${item.order.id}`}
                         {item.activity_type === "CONTRACT_ASSIGNED" && `@${item.contract.contract.title}`}
                     </Link>
+                </p>
+                <div className="flex items-center gap-2">
                     {item.activity_type === "ORDER_CREATED" && (
                         <Tooltip>
                             <TooltipTrigger>
-
                                 <Badge variant="outline">
-                                    {item.order.status}
+                                    {item.order.status === "READY" ? "CONFIRMED" : item.order.status}
                                 </Badge>
                             </TooltipTrigger>
                             <TooltipContent>
                                 {item.order.status === "PROCESSING" && "Orden en proceso"}
-                                {item.order.status === "READY" && "Orden lista para entrega"}
+                                {item.order.status === "READY" && "Orden confirmada"}
                                 {item.order.status === "COMPLETED" && "Orden completada"}
                                 {item.order.status === "CANCELLED" && "Orden cancelada"}
+                            </TooltipContent>
+                        </Tooltip>
+                    )}
+                    {item.activity_type === "ORDER_CREATED" && item.order.tracking && (
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <Badge variant="outline">
+                                    {item.order.tracking.tracking_status === "PREPARING_ORDER" && "PREPARING ORDER"}
+                                    {item.order.tracking.tracking_status === "WAITING_FOR_PICKUP" && "WAITING FOR PICKUP"}
+                                    {item.order.tracking.tracking_status === "ON_THE_WAY" && "IN TRANSIT"}
+                                    {item.order.tracking.tracking_status === "DELIVERED" && "DELIVERED"}
+                                    {item.order.tracking.tracking_status === "CANCELLED" && "CANCELLED ORDER"}
+                                    {item.order.tracking.tracking_status === "PICKED_UP" && "PICKED UP"}
+                                </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                {item.order.tracking.tracking_status === "PREPARING_ORDER" && "The order was confirmed and should be preparing"}
+                                {item.order.tracking.tracking_status === "WAITING_FOR_PICKUP" && "The order is ready to be picked up"}
+                                {item.order.tracking.tracking_status === "ON_THE_WAY" && "The order is on the way to the customer"}
+                                {item.order.tracking.tracking_status === "DELIVERED" && "The order was delivered to the customer"}
+                                {item.order.tracking.tracking_status === "CANCELLED" && "The order was cancelled"}
+                                {item.order.tracking.tracking_status === "PICKED_UP" && "The order was picked up"}
                             </TooltipContent>
                         </Tooltip>
                     )}
@@ -94,11 +118,14 @@ const FeedItem = ({ item }: Props) => {
                             </TooltipContent>
                         </Tooltip>
                     )}
-                </p>
+                </div>
             </CardContent>
-            <CardFooter className="flex justify-end">
+            <CardFooter className="flex justify-end items-center gap-2">
                 {item.activity_type === "ORDER_CREATED" && item.order.status === "PROCESSING" && (
-                    <ConfirmOrderButton order={item.order} canUpdateOrders />
+                    <ConfirmOrderButton order={item.order} canUpdateOrders size="sm" />
+                )}
+                {item.activity_type === "ORDER_CREATED" && (
+                    <CancelOrderButton order={item.order} slug={item.store.slug} size="sm" />
                 )}
             </CardFooter>
         </Card>

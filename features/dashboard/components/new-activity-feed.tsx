@@ -1,50 +1,20 @@
 "use client"
 
 import { useEffect, useState } from "react"
-/* import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ActivityFeedItem } from "../types"
-import {
-    LikeActivityCard,
-    CommentActivityCard,
-    OrderActivityCard,
-    ContractEmployeeActivityCard,
-    ContractOwnerActivityCard
-} from "./activity-items" */
 import * as motion from "motion/react-client"
-/* import { createClient } from "@/utils/supabase/client" */
-/* import { getSocialActivityByIdAction } from "../actions/getSocialActivityById"
-import { RealtimePostgresChangesPayload } from "@supabase/supabase-js" */
 import FeedItem from "./activity-items/feed-item"
-import { Contract, ContractAssignment, Order, Product, SocialActivity, Store, User } from "@prisma/client"
+import { Contract, ContractAssignment, Order, OrderTracking, Product, SocialActivity, Store, User } from "@prisma/client"
 import EmptyFeedItem from "./empty-feed-item"
 
 type Props = {
-    initialActivities: (SocialActivity & { user: User, store: Store, product: Product, order: Order, contract: ContractAssignment & { contract: Contract } })[]
+    initialActivities: (SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } })[]
     userId: number
 }
 
-// Type for the social activity record from Supabase
-/* type SocialActivityRecord = {
-    id: number
-    user_id: number
-    store_id: number | null
-    activity_type: string
-    entity_type: string
-    entity_id: number
-    title: string
-    description: string | null
-    metadata: string | null
-    is_public: boolean
-    is_featured: boolean
-    created_at: string
-    updated_at: string
-} */
 
 function NewActivityFeed({ initialActivities }: Props) {
-    console.log("🚀 ~ NewActivityFeed ~ initialActivities:", initialActivities)
     const [activities/* , setActivities */] = useState(initialActivities)
 
-    // Function to handle new activity updates
     /* const handleActivity = async (payload: RealtimePostgresChangesPayload<SocialActivityRecord>) => {
         try {
 
