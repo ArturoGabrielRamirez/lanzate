@@ -1,13 +1,15 @@
-import { getOrderDetails } from "@/features/stores/actions/getOrderDetails"
-import { getEmployeePermissions } from "@/features/stores/actions/getEmployeePermissions"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { OrderDetailPageProps } from "@/features/stores/types/order-detail-page-type"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getTranslations } from "next-intl/server"
+/* import { getTranslations } from "next-intl/server"
 import OrderChat from "@/features/orders/components/order-chat"
-import OrderSummarySteps from "@/features/orders/components/order-summary-steps"
+import OrderSummarySteps from "@/features/orders/components/order-summary-steps" */
+import OrderSummaryStepsContainer from "@/features/orders/components/order-sumarry-steps-container"
+import { Suspense } from "react"
+import OrderSummarySkeleton from "@/features/orders/components/order-summary-skeleton"
 
 async function OrderDetailPage({ params }: OrderDetailPageProps) {
 
@@ -21,7 +23,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
     }
 
     // Get order details and employee permissions
-    const [
+    /* const [
         { payload: order, error: orderError },
         { payload: employeePermissions, error: permissionsError }
     ] = await Promise.all([
@@ -35,27 +37,31 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
 
     if (permissionsError || !employeePermissions) {
         return console.log("Error loading employee permissions")
-    }
+    } */
 
-    const t = await getTranslations("store")
+    // const t = await getTranslations("store")
 
     return (
-        <Card>
+        <Card className="!gap-0">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     <Link href={`/stores/${slug}/orders`}>
                         <ArrowLeft className="size-4" />
                     </Link>
-                    {t("orders.order-details")}#{order.id}
+                    {/* {t("orders.order-details")}#{order.id} */}
+                    Order Details
                 </CardTitle>
             </CardHeader>
             <CardContent className="flex grow gap-4 flex-col md:flex-row">
-                <Card className="w-full">
-                    <CardContent className="flex flex-col gap-4 grow">
-                        <OrderSummarySteps order={order} employeePermissions={employeePermissions} />
-                    </CardContent>
-                </Card>
-                <OrderChat storeSlug={slug} orderId={id} />
+                <Suspense fallback={<OrderSummarySkeleton />}>
+                    <OrderSummaryStepsContainer userId={user.id} orderId={id} storeSlug={slug} />
+                </Suspense>
+                {/* <Card className="w-full">
+                    <CardContent className="flex flex-col gap-4 grow"> */}
+                {/* <OrderSummarySteps order={order} employeePermissions={employeePermissions} /> */}
+                {/* </CardContent>
+                </Card> */}
+                {/* <OrderChat storeSlug={slug} orderId={id} /> */}
             </CardContent>
         </Card>
     )

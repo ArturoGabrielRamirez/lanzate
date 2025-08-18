@@ -1,3 +1,4 @@
+import { AvatarEditor } from "@/features/account/components"
 import { getStoreHeaderBySlug } from "../actions/getStoreHeaderBySlug"
 import { Card, CardContent } from "@/components/ui/card"
 import { Title } from "@/features/layout/components"
@@ -40,10 +41,27 @@ async function StoreHeader({ slug }: StoreHeaderProps) {
                 ]}
                 showDate
             />
-            <section className="items-center gap-4 hidden md:flex">
+            <section className="items-center gap-4 flex mb-2 md:mb-0">
                 <Card className="w-full">
-                    <CardContent className="flex flex-col justify-between w-full gap-4 md:items-center xs:flex-row">
-                        <div className="flex items-center gap-4">
+                    <CardContent className="flex items-center gap-4 w-full">
+                        <div className="relative">
+                            <img
+                                src={`https://api.dicebear.com/9.x/initials/svg?seed=${store.name}`}
+                                alt="User avatar"
+                                className="size-24 rounded-full object-cover"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2 flex-1 min-w-0">
+                            <div className="flex items-center gap-3 flex-wrap">
+                                <h2 className="text-xl font-bold truncate">
+                                    {store.name}
+                                </h2>
+                            </div>
+                            <p className="text-sm text-muted-foreground truncate">
+                                {store.description || t("no-description")}
+                            </p>
+                        </div>
+                        {/* <div className="flex items-center gap-4">
                             <img
                                 src={`https://api.dicebear.com/9.x/initials/svg?seed=${store.name}`}
                                 alt="User avatar"
@@ -66,7 +84,7 @@ async function StoreHeader({ slug }: StoreHeaderProps) {
                                     : "N/A"
                                 }
                             </p>
-                        </div>
+                        </div> */}
                     </CardContent>
                 </Card>
             </section>

@@ -5,18 +5,20 @@ import { Trash2 } from "lucide-react"
 import { Order } from "@prisma/client"
 import { changeOrderStatus } from "../actions/changeOrderStatus"
 import { useTranslations } from "next-intl"
+import { cn } from "@/lib/utils"
 
 type Props = {
     order: Order
     slug: string
     userId: number
     onComplete?: () => void
+    className?: string
 }
 
-function CancelOrderButton({ order, slug, userId, onComplete }: Props) {
-    
+function CancelOrderButton({ order, slug, userId, onComplete, className }: Props) {
+
     const t = useTranslations("store.cancel-order")
-    
+
     const handleCancelOrder = async () => {
         const data = {
             newStatus: "CANCELLED",
@@ -42,7 +44,7 @@ function CancelOrderButton({ order, slug, userId, onComplete }: Props) {
         <ButtonWithPopup
             text={(
                 <>
-                    <Trash2 className="text-muted-foreground size-4" />
+                    <Trash2 className="size-4 text-current" />
                     {t("button")}
                 </>
             )}
@@ -55,7 +57,7 @@ function CancelOrderButton({ order, slug, userId, onComplete }: Props) {
                 error: t("messages.error"),
                 loading: t("messages.loading")
             }}
-            className="bg-transparent w-full justify-start text-red-600 hover:text-red-700"
+            className={cn("bg-transparent w-full justify-start text-red-600 hover:text-red-700", className)}
         />
     )
 }

@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button"
 import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { User } from "@prisma/client"
+import { redirect } from "next/navigation"
+import { toast } from "sonner"
 
 
 type MobileMenuProps = {
@@ -26,8 +28,12 @@ function MobileMenu({ user }: MobileMenuProps) {
     const [open, setOpen] = useState(false)
 
     const handleSignOut = async () => {
+        toast.loading('Please wait, we are signing you out of your account...', { richColors: true })
         await handleSignOutAction()
         setOpen(false)
+        toast.success('You have been signed out of your account successfully and you will be redirected to the login page', { richColors: true })
+        toast.dismiss()
+        redirect('/login')
     }
 
     return (
@@ -55,8 +61,17 @@ function MobileMenu({ user }: MobileMenuProps) {
                 <div className="flex flex-col p-4 space-y-4">
                     {!user && (
                         <Link
+                            href="/"
+                            className="transition-colors rounded-md hover:bg-accent"
+                            onClick={() => setOpen(false)}
+                        >
+                            Home
+                        </Link>
+                    )}
+                    {!user && (
+                        <Link
                             href="/login"
-                            className="p-3 transition-colors rounded-md hover:bg-accent"
+                            className="transition-colors rounded-md hover:bg-accent"
                             onClick={() => setOpen(false)}
                         >
                             Log In
@@ -66,7 +81,7 @@ function MobileMenu({ user }: MobileMenuProps) {
                     {!user && (
                         <Link
                             href="/signup"
-                            className="p-3 transition-colors rounded-md hover:bg-accent"
+                            className="transition-colors rounded-md hover:bg-accent"
                             onClick={() => setOpen(false)}
                         >
                             Sign Up
@@ -75,8 +90,18 @@ function MobileMenu({ user }: MobileMenuProps) {
 
                     {user && (
                         <Link
+                            href="/dashboard"
+                            className="transition-colors rounded-md hover:bg-accent"
+                            onClick={() => setOpen(false)}
+                        >
+                            Dashboard
+                        </Link>
+                    )}
+
+                    {user && (
+                        <Link
                             href="/stores"
-                            className="p-3 transition-colors rounded-md hover:bg-accent"
+                            className="transition-colors rounded-md hover:bg-accent"
                             onClick={() => setOpen(false)}
                         >
                             Stores
@@ -85,8 +110,28 @@ function MobileMenu({ user }: MobileMenuProps) {
 
                     {user && (
                         <Link
+                            href="/sale"
+                            className="transition-colors rounded-md hover:bg-accent"
+                            onClick={() => setOpen(false)}
+                        >
+                            New Sale
+                        </Link>
+                    )}
+
+                    {user && (
+                        <Link
+                            href="/events"
+                            className="transition-colors rounded-md hover:bg-accent"
+                            onClick={() => setOpen(false)}
+                        >
+                            Events
+                        </Link>
+                    )}
+
+                    {user && (
+                        <Link
                             href="/account"
-                            className="p-3 transition-colors rounded-md hover:bg-accent"
+                            className="transition-colors rounded-md hover:bg-accent"
                             onClick={() => setOpen(false)}
                         >
                             Account
@@ -94,13 +139,13 @@ function MobileMenu({ user }: MobileMenuProps) {
                     )}
 
                     {user && (
-                        <Button
+                        <Link
+                            href="#"
+                            className="justify-start w-full transition-colors rounded-md hover:bg-accent"
                             onClick={handleSignOut}
-                            className="justify-start w-full p-3 transition-colors rounded-md hover:bg-accent"
-                            variant="ghost"
                         >
                             Sign out
-                        </Button>
+                        </Link>
                     )}
 
                     <div className="flex items-center justify-end gap-4 pt-4 border-t">
