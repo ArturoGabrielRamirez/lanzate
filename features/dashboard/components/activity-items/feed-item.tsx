@@ -1,13 +1,15 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Contract, ContractAssignment, Order, Product, SocialActivity, Store, User } from "@prisma/client"
+import { Contract, ContractAssignment, Order, OrderTracking, Product, SocialActivity, Store, User } from "@prisma/client"
 import { extractLink, formatActivityDate, getUserInitials } from "./shared-utils"
-import { FileCheck, Flame, MessageCircle, ShoppingBag } from "lucide-react"
+import { FileCheck, Flame, MapPin, MessageCircle, ShoppingBag, Truck } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import Link from "next/link"
+import ConfirmOrderButton from "@/features/orders/components/confirm-order-button"
+import { Badge } from "@/components/ui/badge"
 
 type Props = {
-    item: SocialActivity & { user: User, store: Store, product: Product, order: Order, contract: ContractAssignment & { contract: Contract } }
+    item: SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } }
 }
 const FeedItem = ({ item }: Props) => {
 
@@ -64,10 +66,40 @@ const FeedItem = ({ item }: Props) => {
                         {item.activity_type === "ORDER_CREATED" && `#${item.order.id}`}
                         {item.activity_type === "CONTRACT_ASSIGNED" && `@${item.contract.contract.title}`}
                     </Link>
+                    {item.activity_type === "ORDER_CREATED" && (
+                        <Tooltip>
+                            <TooltipTrigger>
+
+                                <Badge variant="outline">
+                                    {item.order.status}
+                                </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                {item.order.status === "PROCESSING" && "Orden en proceso"}
+                                {item.order.status === "READY" && "Orden lista para entrega"}
+                                {item.order.status === "COMPLETED" && "Orden completada"}
+                                {item.order.status === "CANCELLED" && "Orden cancelada"}
+                            </TooltipContent>
+                        </Tooltip>
+                    )}
+                    {item.activity_type === "ORDER_CREATED" && (
+                        <Tooltip>
+                            <TooltipTrigger className="text-muted-foreground group-hover:text-primary transition-colors">
+                                {item.order.shipping_method === "DELIVERY" && <Truck />}
+                                {item.order.shipping_method === "PICKUP" && <MapPin />}
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                {item.order.shipping_method === "DELIVERY" && "Delivery to customer's address"}
+                                {item.order.shipping_method === "PICKUP" && "Pick up at store"}
+                            </TooltipContent>
+                        </Tooltip>
+                    )}
                 </p>
             </CardContent>
-            <CardFooter>
-                
+            <CardFooter className="flex justify-end">
+                {item.activity_type === "ORDER_CREATED" && item.order.status === "PROCESSING" && (
+                    <ConfirmOrderButton order={item.order} canUpdateOrders />
+                )}
             </CardFooter>
         </Card>
     )

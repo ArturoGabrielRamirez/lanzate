@@ -25,12 +25,12 @@ type EmployeePermissions = {
 
 type Props = {
     order: Order
-    employeePermissions: EmployeePermissions
+    employeePermissions?: EmployeePermissions
+    canUpdateOrders: boolean
 }
 
-const ConfirmOrderButton = ({ order, employeePermissions }: Props) => {
+const ConfirmOrderButton = ({ order, canUpdateOrders }: Props) => {
 
-    const canUpdateOrders = employeePermissions.isAdmin || employeePermissions.permissions?.can_update_orders
     const isOrderReady = order.status === "READY"
     const isOrderCompleted = order.status === "COMPLETED"
     const [isPending, startTransition] = useTransition()
