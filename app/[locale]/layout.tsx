@@ -6,7 +6,6 @@ import type { Metadata } from "next";
 import { LayoutProps } from "@/features/layout/types";
 import { NextIntlClientProvider } from 'next-intl';
 import { GlobalEmailConfirmationDetector } from "@/features/auth/components/index";
-import FloatingDock from "@/features/header/components/floating-dock";
 import { BProgressProvider } from "@/src/components/bprogress-provider";
 import LayoutBackgroundEffects from "@/features/layout/components/layout-background-effects";
 import "../globals.css";
