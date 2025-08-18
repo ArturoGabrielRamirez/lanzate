@@ -3,8 +3,15 @@
 /* import { PrismaClient } from '@prisma/client' */
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
+import { Order, Product, OrderItem, OrderTracking, OrderPayment } from "@prisma/client"
 
-export async function selectOrderById(orderId: number) {
+type SelectOrderByIdResponse = {
+    message: string
+    payload: Order & { items: (OrderItem & { product: Product })[] } & { tracking: OrderTracking | null } & { payment: OrderPayment } | null
+    error: boolean
+}
+
+export async function selectOrderById(orderId: number): Promise<SelectOrderByIdResponse> {
     return actionWrapper(async () => {
 
         /* const client = new PrismaClient() */
@@ -20,7 +27,7 @@ export async function selectOrderById(orderId: number) {
                         email: true,
                         first_name: true,
                         last_name: true,
-                        avatar: true, 
+                        avatar: true,
                     },
                 },
                 items: {
@@ -59,7 +66,7 @@ export async function selectOrderById(orderId: number) {
                         slug: true
                     }
                 },
-                messages : true,
+                messages: true,
                 tracking: true
             }
         })

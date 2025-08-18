@@ -30,7 +30,11 @@ async function Header() {
                 {user && <AccountDropdown image={user.avatar || ""} />}
             </nav>
 
-            <MobileMenu user={user} />
+            <nav className="flex items-center gap-2 lg:hidden">
+                <LanguageSwitch />
+                <ThemeToggle />
+                <MobileMenu user={user} />
+            </nav>
         </HeaderContainer >
     )
 }

@@ -13,28 +13,28 @@ async function HeroSection() {
     return (
         <section className="flex flex-col md:grid md:grid-cols-[1fr_auto] md:gap-0 xl:gap-20 2xl:gap- min-h-dvh justify-center items-center relative pt-17 px-4 lg:px-0 container mx-auto">
             <div className="flex flex-col items-center pt-4 md:items-start md:pt-0 z-10">
-                <Announcement className="border-primary">
+                <Announcement className="border-primary mb-4">
                     <AnnouncementTag className="bg-primary/20">Last update</AnnouncementTag>
                     <AnnouncementTitle>
                         New cash register added
                         <ArrowUpRightIcon className="shrink-0 text-muted-foreground" size={16} />
                     </AnnouncementTitle>
                 </Announcement>
-                <h1 className="flex flex-col justify-end gap-1 mb-0 text-4xl font-bold leading-none text-center sm:text-8xl md:mb-8 md:text-left text-foreground">
-                    <span className="flex flex-col items-center gap-2 md:flex-row md:gap-4">
-                        <span className="md:relative md:top-1 lg:static pb-2">
+                <h1 className="flex flex-col justify-end gap-1 mb-8 text-5xl font-bold leading-none text-center sm:text-6xl lg:text-7xl xl:text-8xl md:text-left text-foreground">
+                    <span className="flex items-center gap-2 md:flex-row md:gap-4 justify-center md:justify-start">
+                        <span className="pb-3">
                             {t("slogan.1")}
                         </span>
                         <RotatingText
-                            className="text-primary pb-2"
+                            className="text-primary pb-3"
                             text={words}
                             duration={4000}
                         />
                     </span>
-                    <span className="text-primary flex gap-4 justify-center md:justify-start">
+                    <span className="text-primary flex gap-4 justify-center md:justify-start pb-3">
                         Lanzate
                     </span>
-                    <span className="text-foreground">
+                    <span className="text-foreground leading-normal md:leading-none">
                         makes it happen
                     </span>
                 </h1>

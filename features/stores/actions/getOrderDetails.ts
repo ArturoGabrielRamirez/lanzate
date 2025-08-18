@@ -2,8 +2,15 @@
 
 import { actionWrapper } from "@/utils/lib"
 import { selectOrderById } from "../data/selectOrderById"
+import { Order, OrderItem, OrderPayment, OrderTracking, Product } from "@prisma/client"
 
-export async function getOrderDetails(id: string) {
+type GetOrderDetailsResponse = {
+    payload: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } | null
+    error: boolean
+    message: string
+}
+
+export async function getOrderDetails(id: string): Promise<GetOrderDetailsResponse> {
     return actionWrapper(async () => {
 
         const parsedId = parseInt(id)

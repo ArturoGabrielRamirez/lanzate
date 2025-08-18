@@ -10,7 +10,7 @@ export function StepNavigation() {
     const t = useTranslations("checkout.navigation")
 
     return (
-        <div className="flex justify-between pt-4">
+        <div className="flex justify-between pt-4 w-full">
             {currentStep > 1 && (
                 <Button
                     type="button"

@@ -18,7 +18,7 @@ function HeroDescription({ className }: Props) {
             <p className="text-lg lg:text-xl mb-8 text-center md:text-left">
                 {t("description.slogan")}
             </p>
-            <ul className="flex flex-col gap-2 self-start mb-8">
+            <ul className="flex flex-col gap-2 self-start mb-8 items-center md:items-start">
                 <li className="flex items-center gap-2">
                     <Check className="size-4" />
                     <span>{t("description.slogan-items.1")}</span>

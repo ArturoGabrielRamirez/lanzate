@@ -49,11 +49,11 @@ function OrderSummarySteps({ order, employeePermissions }: Props) {
     const isPickup = order.shipping_method === "PICKUP"
     const isCompleted = order.status === "COMPLETED"
     const isCancelled = order.status === "CANCELLED"
-    
+
     // Determine third step title and description based on completion status
     let thirdStepTitle: string
     let thirdStepDescription: string
-    
+
     if (isCompleted) {
         if (isPickup) {
             thirdStepTitle = "Order Picked Up"
@@ -120,22 +120,23 @@ function OrderSummarySteps({ order, employeePermissions }: Props) {
 
     return (
         <InteractiveStepper orientation="horizontal" className="grow">
-            <InteractiveStepperItem completed key={0}>
+            <InteractiveStepperItem completed key={0} className="hidden">
                 <DynamicStepperTrigger config={stepTriggerConfigs[0]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
 
-            <InteractiveStepperItem completed={isProcessingCompleted} key={1}>
+            <InteractiveStepperItem completed={isProcessingCompleted} key={1} className="hidden">
                 <DynamicStepperTrigger config={stepTriggerConfigs[1]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
 
-            <InteractiveStepperItem completed={isThirdStepCompleted} key={2}>
+            <InteractiveStepperItem completed={isThirdStepCompleted} key={2} className="hidden">
                 <DynamicStepperTrigger config={stepTriggerConfigs[2]} />
                 <InteractiveStepperSeparator />
             </InteractiveStepperItem>
-        
+
             <InteractiveStepperContent step={1} className="grow flex flex-col" key={0}>
+                <StepNavigation />
                 <OrderDetailsStep order={order} showFullDetails={showFullDetails} />
                 <StepNavigation />
             </InteractiveStepperContent>

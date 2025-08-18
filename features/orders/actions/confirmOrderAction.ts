@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { confirmOrderData } from "../data/confirmOrderData"
 
 type ConfirmOrderActionProps = {
@@ -11,6 +12,8 @@ export async function confirmOrderAction({ orderId }: ConfirmOrderActionProps) {
         const result = await confirmOrderData({ 
             orderId: parseInt(orderId) 
         })
+
+        revalidatePath("/stores")
 
         return result
     } catch (error) {
