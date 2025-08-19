@@ -25,12 +25,13 @@ type EmployeePermissions = {
 
 type Props = {
     order: Order
-    employeePermissions: EmployeePermissions
+    employeePermissions?: EmployeePermissions
+    canUpdateOrders: boolean
+    size?: "default" | "sm" | "lg"
 }
 
-const ConfirmOrderButton = ({ order, employeePermissions }: Props) => {
+const ConfirmOrderButton = ({ order, canUpdateOrders, size = "default" }: Props) => {
 
-    const canUpdateOrders = employeePermissions.isAdmin || employeePermissions.permissions?.can_update_orders
     const isOrderReady = order.status === "READY"
     const isOrderCompleted = order.status === "COMPLETED"
     const [isPending, startTransition] = useTransition()
@@ -58,12 +59,12 @@ const ConfirmOrderButton = ({ order, employeePermissions }: Props) => {
 
 
     return (
-        <div className="flex justify-center w-full lg:w-fit mt-8">
+        <div className="flex justify-center w-full lg:w-fit">
             {canUpdateOrders ? (
                 <Button
                     onClick={handleConfirmOrder}
                     disabled={isPending || isOrderReady || isOrderCompleted}
-                    size="lg"
+                    size={size || "default"}
                     className="min-w-[200px] w-full"
                 >
                     <CheckCircle className="w-5 h-5 mr-2" />

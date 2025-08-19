@@ -1,3 +1,4 @@
+import { Order, Product, SocialActivity, Store } from "@prisma/client"
 import { formatDistance } from "date-fns"
 import { es } from "date-fns/locale"
 
@@ -7,6 +8,17 @@ export function getUserInitials(firstName?: string | null, lastName?: string | n
 
 export function formatActivityDate(date: Date) {
     return formatDistance(new Date(date), new Date(), { addSuffix: true, locale: es })
+}
+
+export function extractLink(item: SocialActivity & { store: Store, product: Product, order: Order }) {
+    switch (item.activity_type) {
+        case 'PRODUCT_LIKE':
+            return `/stores/${item.store.slug}/products/${item.product.id}`
+        case 'PRODUCT_COMMENT':
+            return `/stores/${item.store.slug}/products/${item.product.id}`
+        case 'ORDER_CREATED':
+            return `/stores/${item.store.slug}/orders/${item.order.id}`
+    }
 }
 
 export function getStatusBadgeVariant(status: string) {

@@ -13,6 +13,7 @@ export async function confirmOrderAction({ orderId }: ConfirmOrderActionProps) {
             orderId: parseInt(orderId) 
         })
 
+        revalidatePath("/dashboard")
         revalidatePath("/stores")
 
         return result

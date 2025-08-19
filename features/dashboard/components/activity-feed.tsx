@@ -5,10 +5,14 @@ import EmptyFeedItem from "./empty-feed-item"
 
 type Props = {
     userId: number
+    type: string
+    page: number
 }
 
-async function ActivityFeed({ userId }: Props) {
-    const { payload: activities, error } = await getUserStoreActivities(userId)
+async function ActivityFeed({ userId, type, page }: Props) {
+
+    const { payload: activities, error } = await getUserStoreActivities(userId, type, page)
+
 
     if (error || !activities) {
         return (
@@ -29,11 +33,11 @@ async function ActivityFeed({ userId }: Props) {
 
 
     if (activities.length === 0) {
-        return <EmptyFeedItem userId={userId} />
+        return <EmptyFeedItem />
 
     }
 
-    return <NewActivityFeed initialActivities={activities} userId={userId} />
+    return <NewActivityFeed initialActivities={activities} userId={userId} type={type} />
 }
 
 export default ActivityFeed

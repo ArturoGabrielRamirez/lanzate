@@ -8,6 +8,8 @@ import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, Dialog
 import { Form } from "@/features/layout/components"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 function ButtonWithPopup<T>({
     text,
@@ -23,14 +25,17 @@ function ButtonWithPopup<T>({
     className,
     size = "default",
     formDisabled = false,
-    contentButton
+    contentButton,
+    onlyIcon
 }: ButtonWithPopupPropsType<T>) {
 
     const [open, setOpen] = useState(false)
 
     const handleSuccess = async () => {
         setOpen(false)
-        onComplete && typeof onComplete === "function" && onComplete()
+        if (onComplete && typeof onComplete === "function") {
+            onComplete()
+        }
     }
 
     const resolverConfig = schema ? { resolver: yupResolver(schema) } : {}
@@ -38,7 +43,20 @@ function ButtonWithPopup<T>({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button disabled={disabled} variant={variant} type="button" className={cn(className)} size={size}>{text}</Button>
+                <div className="w-full">
+                    {onlyIcon ? (
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <IconButton disabled={disabled} type="button" className={cn(disabled && "cursor-not-allowed text-muted-foreground", className)} icon={() => text} />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                {title}
+                            </TooltipContent>
+                        </Tooltip>
+                    ) : (
+                        <Button disabled={disabled} variant={variant} type="button" className={cn(className)} size={size}>{text}</Button>
+                    )}
+                </div>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

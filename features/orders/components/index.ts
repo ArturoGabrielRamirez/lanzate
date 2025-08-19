@@ -5,6 +5,7 @@ import OrderDetailsStep from "./order-details-step";
 import OrderStatusStep from "./order-status-step";
 import CustomerInfoStep from "./customer-info-step";
 import DynamicStepperTrigger from "./dynamic-stepper-trigger";
+import PickedUpOrderButton from "./picked-up-order-button";
 
 export {
     ExportOrdersButton,
@@ -13,5 +14,6 @@ export {
     OrderDetailsStep,
     OrderStatusStep,
     CustomerInfoStep,
-    DynamicStepperTrigger
+    DynamicStepperTrigger,
+    PickedUpOrderButton
 } 

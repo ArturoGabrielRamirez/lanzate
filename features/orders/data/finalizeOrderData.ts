@@ -6,9 +6,9 @@ type FinalizeOrderDataProps = {
     shippingMethod: "PICKUP" | "DELIVERY"
 }
 
-export async function finalizeOrderData({ 
-    orderId, 
-    shippingMethod 
+export async function finalizeOrderData({
+    orderId,
+    shippingMethod
 }: FinalizeOrderDataProps) {
     return actionWrapper(async () => {
         // Determine the final tracking status based on shipping method
@@ -17,15 +17,22 @@ export async function finalizeOrderData({
         // Update order status to COMPLETED
         const updatedOrder = await prisma.order.update({
             where: { id: orderId },
-            data: { status: "COMPLETED" }
-        })
-
-        // Update order tracking status
-        const updatedTracking = await prisma.orderTracking.update({
-            where: { order_id: orderId },
-            data: { 
-                tracking_status: finalTrackingStatus,
-                updated_at: new Date()
+            data: {
+                status: "COMPLETED",
+                tracking: {
+                    update: {
+                        where: {
+                            order_id: orderId
+                        },
+                        data: {
+                            tracking_status: finalTrackingStatus,
+                            updated_at: new Date()
+                        }
+                    }
+                }
+            },
+            include: {
+                tracking: true
             }
         })
 
@@ -34,7 +41,7 @@ export async function finalizeOrderData({
             message: "Order finalized successfully",
             payload: {
                 order: updatedOrder,
-                tracking: updatedTracking
+                tracking: updatedOrder.tracking
             }
         }
     })

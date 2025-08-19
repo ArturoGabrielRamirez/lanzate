@@ -2,8 +2,9 @@
 
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
+import { SocialActivityType } from "@prisma/client"
 
-export async function selectUserStoreActivities(userId: number) {
+export async function selectUserStoreActivities(userId: number, type: string, page: number) {
     return actionWrapper(async () => {
         const userStores = await prisma.store.findMany({
             where: {
@@ -29,19 +30,26 @@ export async function selectUserStoreActivities(userId: number) {
             ...userEmployeeStores.map(emp => emp.store_id)
         ]
 
+        let activityType: SocialActivityType | "" = ""
+        if (type === "likes") {
+            activityType = "PRODUCT_LIKE"
+        } else if (type === "comments") {
+            activityType = "PRODUCT_COMMENT"
+        } else if (type === "orders") {
+            activityType = "ORDER_CREATED"
+        }
+
         // Get social activities for stores where user is owner or employee
         const socialActivities = await prisma.socialActivity.findMany({
             where: {
                 OR: [
-                    /* {
-                        user_id: userId
-                    }, */
                     {
                         store_id: {
                             in: storeIds
                         }
                     }
-                ]
+                ],
+                ...(activityType && { activity_type: activityType })
             },
             include: {
                 user: {
@@ -67,13 +75,18 @@ export async function selectUserStoreActivities(userId: number) {
                         store: true
                     }
                 },
-                order: true
+                order: {
+                    include: {
+                        tracking: true
+                    }
+                }
             },
             orderBy: {
                 created_at: 'desc'
 
             },
-            take: 5
+            take: 5,
+            skip: (page - 1) * 5
         })
 
         return {

@@ -196,7 +196,7 @@ function OrdersTable({ data, slug, userId }: Props) {
                                 <CancelOrderButton
                                     order={order}
                                     slug={slug}
-                                    userId={userId}
+                                    className="bg-transparent w-full justify-start text-red-600 hover:text-red-700"
                                 />
                             </DropdownMenuItem>
                         </DropdownMenuContent>
