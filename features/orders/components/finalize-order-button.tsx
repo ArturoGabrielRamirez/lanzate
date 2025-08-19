@@ -15,6 +15,8 @@ const FinalizeOrderButton = ({ order }: Props) => {
 
     const handleFinalize = () => {
 
+        const isPickup = order.shipping_method === "DELIVERY"
+
         if (isFinalizing) return
 
         toast.loading("Finalizing order...")
