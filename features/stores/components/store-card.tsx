@@ -27,7 +27,7 @@ async function StoreCard({ store }: StoreCardProps) {
                         {store.created_at.toLocaleDateString()}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                        0 {t("products")}
+                        {store._count?.products || 0} {t("products")}
                     </p>
                 </CardFooter>
             </Card>

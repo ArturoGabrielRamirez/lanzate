@@ -9,6 +9,9 @@ export type DashboardStore = {
     created_at: Date
     updated_at: Date
     user_id: number
+    _count: {
+        products: number
+    }
 }
 
 export type DashboardStoreStats = {

@@ -1,5 +1,5 @@
 'use client'
-import { ButtonWithPopup } from "@/features/layout/components"
+import { ButtonWithPopup, InputField, TextareaField } from "@/features/layout/components"
 
 const HelpDialogButton = () => {
 
@@ -24,7 +24,10 @@ const HelpDialogButton = () => {
                 loading: "Sending message..."
             }}
             className="w-full"
-        />
+        >
+            <InputField type="email" name="email" label="Email" placeholder="Email" />
+            <TextareaField name="message" label="Message" placeholder="Message" />
+        </ButtonWithPopup>
     )
 }
 export default HelpDialogButton

@@ -18,7 +18,7 @@ const StoreList = async () => {
         return null
     }
 
-    const { payload: dashboardData, error: dashboardError } = await getDashboardStores(user.id)
+    const { payload: dashboardData, error: dashboardError } = await getDashboardStores(user.id, 2)
 
     if (dashboardError || !dashboardData) {
         console.error("Error loading dashboard data")

@@ -6,7 +6,7 @@ import { prisma } from "@/utils/prisma"
 
 type GetStoresFromUserReturn = {
     message: string
-    payload: (Store & { branches: Branch[] })[]
+    payload: (Store & { branches: Branch[], _count: { products: number } })[]
     error: boolean
 }
 
@@ -29,7 +29,12 @@ export async function getStoresFromUser(userId: number): Promise<GetStoresFromUs
                 ]
             },
             include: {
-                branches: true
+                branches: true,
+                _count: {
+                    select: {
+                        products: true
+                    }
+                }
             }
         })
 
