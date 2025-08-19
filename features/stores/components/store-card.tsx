@@ -26,9 +26,13 @@ async function StoreCard({ store }: StoreCardProps) {
                         <Calendar className="size-4" />
                         {store.created_at.toLocaleDateString()}
                     </p>
-               {/*      <p className="text-sm text-muted-foreground">
-                        {store._count?.products || 0} {t("products")}
-                    </p> */}
+                    <p className="text-xl text-red-500">
+                        ALTO AHÍ HUMAN O! ESTA SECCIÓN REQUIERE DE SU INCOMPETENCIA.
+                        <span>
+                            store._count?.products, no existe.
+                        </span>
+                       {/*  {store._count?.products || 0} {t("products")} */}
+                    </p>
                 </CardFooter>
             </Card>
         </Link>
