@@ -2,8 +2,9 @@
 
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
+import { SocialActivityType } from "@prisma/client"
 
-export async function selectUserStoreActivities(userId: number) {
+export async function selectUserStoreActivities(userId: number, type: string) {
     return actionWrapper(async () => {
         const userStores = await prisma.store.findMany({
             where: {
@@ -13,7 +14,7 @@ export async function selectUserStoreActivities(userId: number) {
                 id: true
             }
         })
-
+        
         const userEmployeeStores = await prisma.employee.findMany({
             where: {
                 user_id: userId,
@@ -23,12 +24,22 @@ export async function selectUserStoreActivities(userId: number) {
                 store_id: true
             }
         })
-
+        
         const storeIds = [
             ...userStores.map(store => store.id),
             ...userEmployeeStores.map(emp => emp.store_id)
         ]
-
+        
+        let activityType: SocialActivityType | "" = ""
+        if (type === "likes") {
+            activityType = "PRODUCT_LIKE"
+        } else if (type === "comments") {
+            activityType = "PRODUCT_COMMENT"
+        } else if (type === "orders") {
+            activityType = "ORDER_CREATED"
+        }
+        console.log("🚀 ~ selectUserStoreActivities ~ activityType:", activityType)
+        
         // Get social activities for stores where user is owner or employee
         const socialActivities = await prisma.socialActivity.findMany({
             where: {
@@ -41,7 +52,8 @@ export async function selectUserStoreActivities(userId: number) {
                             in: storeIds
                         }
                     }
-                ]
+                ],
+                ...(activityType && { activity_type: activityType })
             },
             include: {
                 user: {
@@ -68,8 +80,8 @@ export async function selectUserStoreActivities(userId: number) {
                     }
                 },
                 order: {
-                    include : {
-                        tracking : true
+                    include: {
+                        tracking: true
                     }
                 }
             },
@@ -79,6 +91,7 @@ export async function selectUserStoreActivities(userId: number) {
             },
             take: 5
         })
+        console.log("🚀 ~ selectUserStoreActivities ~ socialActivities:", socialActivities)
 
         return {
             message: "User store activities fetched successfully",

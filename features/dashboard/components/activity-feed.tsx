@@ -5,10 +5,16 @@ import NewActivityFeed from "./new-activity-feed"
 
 type Props = {
     userId: number
+    type: string
 }
 
-async function ActivityFeed({ userId }: Props) {
-    const { payload: activities, error } = await getUserStoreActivities(userId)
+async function ActivityFeed({ userId, type }: Props) {
+
+    const { payload: activities, error , message} = await getUserStoreActivities(userId, type)
+    console.log("🚀 ~ ActivityFeed ~ message:", message)
+    console.log("🚀 ~ ActivityFeed ~ error:", error)
+    console.log("🚀 ~ ActivityFeed ~ activities:", activities)
+
 
     if (error || !activities) {
         return (

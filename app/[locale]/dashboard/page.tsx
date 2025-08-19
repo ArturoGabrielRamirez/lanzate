@@ -14,18 +14,22 @@ import QuickActions from "@/features/dashboard/components/quick-actions"
 import QuickActionsSkeleton from "@/features/dashboard/components/quick-actions-skeleton"
 import { NextStepProvider } from "nextstepjs"
 import NextStepContainer from "@/features/layout/components/next-step-container"
-/* import NewActivityFeed from "@/features/dashboard/components/new-activity-feed" */
-/* import FloatingDock from "@/features/header/components/floating-dock"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
- */
-export default async function Dashboard() {
+import FeedFilters from "@/features/dashboard/components/feed-filters"
+import { loadFeedParams } from "@/features/dashboard/utils/load-feed-params"
+
+export default async function Dashboard({ searchParams }: { searchParams: Promise<{ type: string }> }) {
+
+    //const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams)
+    const { type } = await loadFeedParams(searchParams)
+
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)
     }
+
+
 
     return (
         <section className="p-2 md:p-4 xl:px-0 flex flex-col pt-13 md:pt-24 relative pb-20 container mx-auto z-10">
@@ -40,11 +44,14 @@ export default async function Dashboard() {
 
                         {/* Search Bar */}
                         <div className="flex gap-2 area-[search-bar] flex-col group/search-bar">
-                            <div className="md:flex items-center gap-2 mb-2 md:mb-4 hidden text-primary/50 group-hover/search-bar:text-primary transition-all">
-                                <Rss className="size-4 xl:size-5" />
-                                <h2 className="text-lg lg:text-2xl font-bold leading-6 ">
-                                    Your feed
-                                </h2>
+                            <div className="md:flex gap-2 mb-2 md:mb-4 hidden text-primary/50 group-hover/search-bar:text-primary transition-all justify-between items-end">
+                                <div className="flex items-center gap-2">
+                                    <Rss className="size-4 xl:size-5" />
+                                    <h2 className="text-lg lg:text-2xl font-bold leading-6 ">
+                                        Your feed
+                                    </h2>
+                                </div>
+                                <FeedFilters />
                             </div>
                             <Suspense>
                                 <GlobalSearch userId={user.id} />
@@ -53,8 +60,8 @@ export default async function Dashboard() {
 
                         {/* Activity Feed */}
                         <div className="area-[feed] group/search-bar" id="step1">
-                            <Suspense fallback={<ActivityFeedSkeleton />}>
-                                <ActivityFeed userId={user.id} />
+                            <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
+                                <ActivityFeed userId={user.id} type={type} />
                             </Suspense>
                         </div>
 
