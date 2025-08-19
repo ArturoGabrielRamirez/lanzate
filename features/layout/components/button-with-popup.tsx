@@ -43,7 +43,7 @@ function ButtonWithPopup<T>({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <div>
+                <div className="w-full">
                     {onlyIcon ? (
                         <Tooltip>
                             <TooltipTrigger asChild>

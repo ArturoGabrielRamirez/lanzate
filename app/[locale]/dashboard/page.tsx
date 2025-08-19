@@ -16,6 +16,7 @@ import { NextStepProvider } from "nextstepjs"
 import NextStepContainer from "@/features/layout/components/next-step-container"
 import FeedFilters from "@/features/dashboard/components/feed-filters"
 import { loadFeedParams } from "@/features/dashboard/utils/load-feed-params"
+import HelpCard from "@/features/dashboard/components/help-card"
 
 export default async function Dashboard({ searchParams }: { searchParams: Promise<{ type: string }> }) {
 
@@ -35,12 +36,15 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
         <section className="p-2 md:p-4 xl:px-0 flex flex-col pt-13 md:pt-24 relative pb-20 container mx-auto z-10">
             <NextStepProvider>
                 <NextStepContainer>
-                    <div className="grid grid-cols-1 grid-areas-[search-bar,actions,feed] md:grid-areas-[search-bar_stores,feed_stores,feed_actions,feed_calendar] gap-2 md:grid-cols-[2fr_1fr] md:grid-rows-[min-content_auto_min-content_1fr] lg:grid-areas-[stats_search-bar_stores,stats_feed_stores,stats_feed_actions,stats_feed_calendar,empty_feed_calendar,empty_feed_calendar] lg:grid-rows-[min-content_min-content_min-content_min-content_1fr] lg:grid-cols-[1fr_2fr_1fr] md:gap-4 lg:gap-6 xl:gap-8">
+                    <div className="grid grid-cols-1 grid-areas-[search-bar,actions,feed] md:grid-areas-[search-bar_stores,feed_stores,feed_actions,feed_calendar] gap-2 md:grid-cols-[2fr_1fr] md:grid-rows-[min-content_auto_min-content_1fr] lg:grid-areas-[stats_search-bar_stores,stats_feed_stores,stats_feed_actions,help_feed_calendar,empty_feed_calendar,empty_feed_calendar] lg:grid-rows-[min-content_min-content_min-content_min-content_1fr] lg:grid-cols-[1fr_2fr_1fr] md:gap-4 lg:gap-6 xl:gap-8">
 
                         {/* Quick Stats */}
                         <Suspense fallback={<DashboardStatsSkeleton />}>
                             <DashboardStats userId={user.id} />
                         </Suspense>
+                        
+                        {/* Help Card */}
+                        <HelpCard />
 
                         {/* Search Bar */}
                         <div className="flex gap-2 area-[search-bar] flex-col group/search-bar">
