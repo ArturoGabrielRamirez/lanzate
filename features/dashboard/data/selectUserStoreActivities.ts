@@ -4,7 +4,7 @@ import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 import { SocialActivityType } from "@prisma/client"
 
-export async function selectUserStoreActivities(userId: number, type: string) {
+export async function selectUserStoreActivities(userId: number, type: string, page: number) {
     return actionWrapper(async () => {
         const userStores = await prisma.store.findMany({
             where: {
@@ -14,7 +14,7 @@ export async function selectUserStoreActivities(userId: number, type: string) {
                 id: true
             }
         })
-        
+
         const userEmployeeStores = await prisma.employee.findMany({
             where: {
                 user_id: userId,
@@ -24,12 +24,12 @@ export async function selectUserStoreActivities(userId: number, type: string) {
                 store_id: true
             }
         })
-        
+
         const storeIds = [
             ...userStores.map(store => store.id),
             ...userEmployeeStores.map(emp => emp.store_id)
         ]
-        
+
         let activityType: SocialActivityType | "" = ""
         if (type === "likes") {
             activityType = "PRODUCT_LIKE"
@@ -38,15 +38,11 @@ export async function selectUserStoreActivities(userId: number, type: string) {
         } else if (type === "orders") {
             activityType = "ORDER_CREATED"
         }
-        console.log("🚀 ~ selectUserStoreActivities ~ activityType:", activityType)
-        
+
         // Get social activities for stores where user is owner or employee
         const socialActivities = await prisma.socialActivity.findMany({
             where: {
                 OR: [
-                    /* {
-                        user_id: userId
-                    }, */
                     {
                         store_id: {
                             in: storeIds
@@ -89,9 +85,9 @@ export async function selectUserStoreActivities(userId: number, type: string) {
                 created_at: 'desc'
 
             },
-            take: 5
+            take: 5,
+            skip: (page - 1) * 5
         })
-        console.log("🚀 ~ selectUserStoreActivities ~ socialActivities:", socialActivities)
 
         return {
             message: "User store activities fetched successfully",

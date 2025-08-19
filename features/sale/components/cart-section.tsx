@@ -26,7 +26,7 @@ function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
   const totalPrice = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0)
 
   return (
-    <Card className='lg:area-[cart] h-full'>
+    <Card className='lg:area-[cart] h-full row-span-2'>
       <CardHeader>
         <CardTitle className='flex items-center gap-2'>
           <ShoppingBasket />

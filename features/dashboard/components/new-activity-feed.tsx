@@ -5,15 +5,23 @@ import * as motion from "motion/react-client"
 import FeedItem from "./activity-items/feed-item"
 import { Contract, ContractAssignment, Order, OrderTracking, Product, SocialActivity, Store, User } from "@prisma/client"
 import EmptyFeedItem from "./empty-feed-item"
+import InfiniteScroll from "./infinite-scroll"
+import { getUserStoreActivities } from "../actions/getUserStoreActivities"
 
 type Props = {
     initialActivities: (SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } })[]
     userId: number
+    type: string
 }
 
 
-function NewActivityFeed({ initialActivities }: Props) {
-    const [activities/* , setActivities */] = useState(initialActivities)
+function NewActivityFeed({ initialActivities, userId, type }: Props) {
+
+    const [isLoading, setIsLoading] = useState(false)
+    const [hasMore, setHasMore] = useState(true)
+    const [currentPage, setCurrentPage] = useState(1)
+
+    const [activities, setActivities] = useState(initialActivities)
 
     /* const handleActivity = async (payload: RealtimePostgresChangesPayload<SocialActivityRecord>) => {
         try {
@@ -56,6 +64,27 @@ function NewActivityFeed({ initialActivities }: Props) {
         } */
     }, [])
 
+    const handleGetMoreActivities = async () => {
+        setIsLoading(true)
+        const { payload: newActivities, error } = await getUserStoreActivities(userId, type, currentPage)
+
+        if (error || !newActivities) {
+            setHasMore(false)
+            setIsLoading(false)
+            return
+        }
+
+        if (newActivities.length === 0) {
+            setHasMore(false)
+            setIsLoading(false)
+            return
+        }
+
+        setActivities(prev => [...prev, ...newActivities])
+        setCurrentPage(prev => prev + 1)
+        setIsLoading(false)
+    }
+
     if (activities.length === 0) {
         return (
             <EmptyFeedItem />
@@ -69,10 +98,16 @@ function NewActivityFeed({ initialActivities }: Props) {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
         >
-            {activities.map((item) => {
+            {activities.map((item, index) => {
 
-                return <FeedItem item={item} key={item.id} />
+                return <FeedItem item={item} key={index} />
             })}
+
+            <InfiniteScroll
+                isLoading={isLoading}
+                hasMore={hasMore}
+                next={handleGetMoreActivities}
+            />
         </motion.div>
     )
 }

@@ -20,7 +20,7 @@ import { loadFeedParams } from "@/features/dashboard/utils/load-feed-params"
 export default async function Dashboard({ searchParams }: { searchParams: Promise<{ type: string }> }) {
 
     //const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams)
-    const { type } = await loadFeedParams(searchParams)
+    const { type, page } = await loadFeedParams(searchParams)
 
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
@@ -60,8 +60,8 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
 
                         {/* Activity Feed */}
                         <div className="area-[feed] group/search-bar" id="step1">
-                            <Suspense fallback={<ActivityFeedSkeleton />} key={type} unstable_expectedLoadTime={5000}>
-                                <ActivityFeed userId={user.id} type={type} />
+                            <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
+                                <ActivityFeed userId={user.id} type={type} page={page || 1} />
                             </Suspense>
                         </div>
 
