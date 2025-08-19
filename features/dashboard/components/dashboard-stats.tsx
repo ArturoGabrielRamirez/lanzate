@@ -110,7 +110,9 @@ async function DashboardStats({ userId }: Props) {
                                     <Icon className="h-4 w-4 text-primary/50 group-hover:text-primary transition-all" />
                                 </CardHeader>
                                 <CardContent className="!px-2">
-                                    <div className="text-2xl font-bold translate-y-5 group-hover:translate-y-0 transition-all duration-200 ease-out group-hover:text-xl">{stat.value}</div>
+                                    <div className="text-2xl font-bold translate-y-5 group-hover:translate-y-0 transition-all duration-200 ease-out group-hover:text-xl truncate">
+                                        {stat.value}
+                                    </div>
                                     <div className="transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 ease-out group-hover:delay-100">
                                         <ChangeIndicator change={stat.change} />
                                     </div>

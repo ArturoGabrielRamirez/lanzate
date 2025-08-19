@@ -1,7 +1,7 @@
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getUserStoreActivities } from "../actions/getUserStoreActivities"
 import NewActivityFeed from "./new-activity-feed"
-/* import EmptyFeedItem from "./empty-feed-item" */
+import EmptyFeedItem from "./empty-feed-item"
 
 type Props = {
     userId: number
@@ -10,10 +10,7 @@ type Props = {
 
 async function ActivityFeed({ userId, type }: Props) {
 
-    const { payload: activities, error , message} = await getUserStoreActivities(userId, type)
-    console.log("🚀 ~ ActivityFeed ~ message:", message)
-    console.log("🚀 ~ ActivityFeed ~ error:", error)
-    console.log("🚀 ~ ActivityFeed ~ activities:", activities)
+    const { payload: activities, error } = await getUserStoreActivities(userId, type)
 
 
     if (error || !activities) {
@@ -34,10 +31,10 @@ async function ActivityFeed({ userId, type }: Props) {
     }
 
 
-    /* if (activities.length === 0) {
-        return <EmptyFeedItem userId={userId} />
+    if (activities.length === 0) {
+        return <EmptyFeedItem />
 
-    } */
+    }
 
     return <NewActivityFeed initialActivities={activities} userId={userId} />
 }
