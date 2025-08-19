@@ -60,7 +60,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
 
                         {/* Activity Feed */}
                         <div className="area-[feed] group/search-bar" id="step1">
-                            <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
+                            <Suspense fallback={<ActivityFeedSkeleton />} key={type} unstable_expectedLoadTime={5000}>
                                 <ActivityFeed userId={user.id} type={type} />
                             </Suspense>
                         </div>
