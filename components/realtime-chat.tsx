@@ -11,12 +11,15 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Send } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { createNewOrderMessage } from '@/features/chat/actions/createNewOrderMessage'
+import { MessageType } from '@prisma/client'
 
 interface RealtimeChatProps {
   roomName: string
   username: string
   onMessage?: (messages: ChatMessage[]) => void
   messages?: ChatMessage[]
+  messageType: MessageType
 }
 
 /**
@@ -32,6 +35,7 @@ export const RealtimeChat = ({
   username,
   onMessage,
   messages: initialMessages = [],
+  messageType,
 }: RealtimeChatProps) => {
   const { containerRef, scrollToBottom } = useChatScroll()
 
@@ -75,6 +79,8 @@ export const RealtimeChat = ({
       if (!newMessage.trim() || !isConnected) return
 
       sendMessage(newMessage)
+      //add a new action function to store the message in the database
+      createNewOrderMessage(Number(roomName), newMessage, messageType)
       setNewMessage('')
     },
     [newMessage, isConnected, sendMessage]

@@ -10,17 +10,28 @@ import { ChatMessage } from "@/hooks/use-realtime-chat"
 
 const ChatDoc = () => {
 
-    const { 
-        isOpen, 
-        rooms, 
-        handleCloseChat, 
-        handleMaximizeChat, 
-        handleMinimizeChat, 
-        isChatMaximized 
+    const {
+        isOpen,
+        rooms,
+        handleCloseChat,
+        handleMaximizeChat,
+        handleMinimizeChat,
+        isChatMaximized
     } = useChat()
 
     const handleMessage = (messages: ChatMessage[]) => {
         console.log(messages)
+        /* 
+        Each message looks like this:
+        {
+            "id": "a20676ba-e1b4-45c7-87bf-5741077acfa8",
+            "content": "test",
+            "user": {
+                "name": "Store"
+            },
+            "createdAt": "2025-08-20T23:28:21.709Z"
+        }
+        */
     }
 
     return (
@@ -30,7 +41,7 @@ const ChatDoc = () => {
                     <>
                         {rooms.map((roomId) => {
                             const isMaximized = isChatMaximized(roomId)
-                            
+
                             return (
                                 <motion.div
                                     key={roomId}
@@ -41,8 +52,8 @@ const ChatDoc = () => {
                                 >
                                     <div className={`flex items-center justify-between bg-background border rounded-t-lg p-2 ${!isMaximized ? 'rounded-b-lg' : ''}`}>
                                         <button
-                                            onClick={() => isMaximized 
-                                                ? handleMinimizeChat(roomId) 
+                                            onClick={() => isMaximized
+                                                ? handleMinimizeChat(roomId)
                                                 : handleMaximizeChat(roomId)
                                             }
                                             className="flex-1 text-left font-medium hover:text-primary transition-colors cursor-pointer"
@@ -57,8 +68,8 @@ const ChatDoc = () => {
                                         <div className="flex gap-1">
                                             <IconButton
                                                 icon={isMaximized ? Minimize2 : Maximize2}
-                                                onClick={() => isMaximized 
-                                                    ? handleMinimizeChat(roomId) 
+                                                onClick={() => isMaximized
+                                                    ? handleMinimizeChat(roomId)
                                                     : handleMaximizeChat(roomId)
                                                 }
                                                 size="sm"
@@ -71,14 +82,14 @@ const ChatDoc = () => {
                                         </div>
                                     </div>
                                     {isMaximized && (
-                                        <motion.div 
+                                        <motion.div
                                             className="bg-background border-x border-b rounded-b-lg"
                                             initial={{ height: 0, opacity: 0 }}
                                             animate={{ height: "auto", opacity: 1 }}
                                             exit={{ height: 0, opacity: 0 }}
                                             transition={{ duration: 0.2 }}
                                         >
-                                            <RealtimeChat roomName={roomId} username="Store" onMessage={handleMessage}/>
+                                            <RealtimeChat roomName={roomId} username="Store" onMessage={handleMessage} messageType="STORE_TO_CUSTOMER" />
                                         </motion.div>
                                     )}
                                 </motion.div>
