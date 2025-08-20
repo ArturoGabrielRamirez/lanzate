@@ -176,7 +176,7 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
-            <RealtimeChat roomName={`order-${order.id}`} username={"Store"} />
+            
         </div>
     )
 }

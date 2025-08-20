@@ -7,6 +7,7 @@ import PickedUpOrderButton from "./picked-up-order-button"
 import FinalizeOrderButton from "./finalize-order-button"
 import { CancelOrderButton } from "@/features/stores/components"
 import OrderTimelineIcons from "./order-timeline-icons"
+import OpenChatButton from "./open-chat-button"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
@@ -62,6 +63,7 @@ const OrderTimeline = ({ order }: Props) => {
                     )}
                 </div>
                 <CancelOrderButton order={order} slug={order.store.slug} className="w-full" />
+                <OpenChatButton roomId={String(order.id)} />
             </div>
         </div>
     )
