@@ -76,7 +76,7 @@ export function MainCountdownDisplay({
     );
 }
 
-export function ActionCountdownDisplay({ 
+/* export function ActionCountdownDisplay({ 
     actionTimeLeft, 
     canCancelUntil, 
     urgencyColors 
@@ -133,7 +133,7 @@ export function ActionCountdownDisplay({
             </div>
         </div>
     );
-}
+} */
 
 function TimeBlock({ value, label }: { value: number; label: string }) {
     return (
@@ -148,7 +148,7 @@ function TimeBlock({ value, label }: { value: number; label: string }) {
     );
 }
 
-function ActionTimeBlock({ 
+/* function ActionTimeBlock({ 
     value, 
     label, 
     urgencyColors 
@@ -167,4 +167,4 @@ function ActionTimeBlock({
             </div>
         </div>
     );
-}
+} */

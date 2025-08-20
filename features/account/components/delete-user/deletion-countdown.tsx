@@ -1,14 +1,15 @@
 import { useEffect } from "react";
-import { getUrgencyLevel, getUrgencyColors } from "../../utils/utils";
 import { useAccountDeletion } from "../../hooks/use-account-deletion";
 import { AccountDeletedAlert, ActionNearExpirationAlert, ExplanationAlert, NearExpirationAlert } from "./account-delete-alert";
-import { ActionCountdownDisplay, MainCountdownDisplay } from "./main-countdown-display";
+import { /* ActionCountdownDisplay,  */MainCountdownDisplay } from "./main-countdown-display";
 import { useCountdown } from "../../hooks/use-countdown";
-
+import DeletionHelpers from "../../utils/deletion-helpers";
 
 export default function DeletionCountdown({
     displayScheduledDate,
+    timeRemaining, // ← AÑADIR AQUÍ
     canCancelUntil,
+    isWithinActionWindow, // ← TAMBIÉN AÑADIR ESTA
     onAccountDeleted
 }: {
     displayScheduledDate: Date;
@@ -46,12 +47,15 @@ export default function DeletionCountdown({
         return <AccountDeletedAlert />;
     }
 
-    const actionUrgency = actionTimeLeft ? getUrgencyLevel(actionTimeLeft.totalMinutes) : 'expired';
-    const actionColors = getUrgencyColors(actionUrgency);
+    // ✅ USAR DeletionHelpers con el método correcto
+    const actionUrgency = actionTimeLeft 
+        ? DeletionHelpers.getUrgencyLevelFromMinutes(actionTimeLeft.totalMinutes)
+        : 'critical';
+    const actionColors = DeletionHelpers.getUrgencyColors(actionUrgency);
 
     return (
         <div className="bg-gray-800 border border-red-500/30 rounded-lg p-6 mb-6 space-y-6">
-            {canCancelUntil && (
+           {/*  {canCancelUntil && (
                 <>
                     <ActionCountdownDisplay
                         actionTimeLeft={actionTimeLeft}
@@ -62,14 +66,14 @@ export default function DeletionCountdown({
                         <ActionNearExpirationAlert totalMinutes={actionTimeLeft.totalMinutes} />
                     )}
                 </>
-            )}
+            )} */}
 
+
+            {isNearExpiration && <NearExpirationAlert />}
             <MainCountdownDisplay
                 timeLeft={timeLeft}
                 scheduledDate={displayScheduledDate}
             />
-
-            {isNearExpiration && <NearExpirationAlert />}
 
             <ExplanationAlert />
         </div>

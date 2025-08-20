@@ -83,32 +83,47 @@ export default class DeletionHelpers {
     return 'low';
   }
 
-  static getUrgencyColor(urgencyLevel: ReturnType<typeof DeletionHelpers.getUrgencyLevel>): string {
-    const colors = {
-      low: 'text-yellow-600 bg-yellow-50 border-yellow-200',
-      medium: 'text-orange-600 bg-orange-50 border-orange-200',
-      high: 'text-red-600 bg-red-50 border-red-200',
-      critical: 'text-red-800 bg-red-100 border-red-300',
+  // ✅ NUEVA VERSION: Retorna objeto estructurado
+  static getUrgencyColors(urgencyLevel: ReturnType<typeof DeletionHelpers.getUrgencyLevel>): {
+    bg: string;
+    text: string;
+    border: string;
+  } {
+    const colorMap = {
+      low: {
+        bg: 'bg-yellow-50',
+        text: 'text-yellow-600',
+        border: 'border-yellow-200',
+      },
+      medium: {
+        bg: 'bg-orange-50',
+        text: 'text-orange-600',
+        border: 'border-orange-200',
+      },
+      high: {
+        bg: 'bg-red-50',
+        text: 'text-red-600',
+        border: 'border-red-200',
+      },
+      critical: {
+        bg: 'bg-red-100',
+        text: 'text-red-800',
+        border: 'border-red-300',
+      },
     };
     
-    return colors[urgencyLevel];
+    return colorMap[urgencyLevel];
   }
-}
 
-// Ejemplo de uso en tu API:
-export function calculateDeletionSchedule(requestDate: Date): {
-  scheduledAt: Date;
-  displayScheduledAt: Date;
-} {
-  // Fecha real de eliminación (30 días exactos)
-  const scheduledAt = new Date(requestDate);
-  scheduledAt.setDate(scheduledAt.getDate() + 30);
-  
-  // Fecha que se muestra al usuario (redondeada hacia arriba)
-  const displayScheduledAt = DeletionHelpers.roundScheduledDateToNextHour(scheduledAt);
-  
-  return {
-    scheduledAt,        // Para guardar en BD y usar en el cron
-    displayScheduledAt  // Para mostrar al usuario
-  };
+  // ✅ MANTENER compatibilidad con código existente
+  static getUrgencyColor(urgencyLevel: ReturnType<typeof DeletionHelpers.getUrgencyLevel>): string {
+    const colors = this.getUrgencyColors(urgencyLevel);
+    return `${colors.text} ${colors.bg} ${colors.border}`;
+  }
+
+  // ✅ NUEVO: Helper para convertir minutos a días (para ActionCountdown)
+  static getUrgencyLevelFromMinutes(totalMinutes: number): 'low' | 'medium' | 'high' | 'critical' {
+    const daysRemaining = Math.ceil(totalMinutes / (24 * 60));
+    return this.getUrgencyLevel(daysRemaining);
+  }
 }

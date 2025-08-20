@@ -81,7 +81,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
 
     if (deletionStatus.isDeletionRequested) {
         return (
-            <div className="h-screen flex flex-col overflow-hidden relative">
+            <div className="h-screen flex flex-col overflow-hidden relative z-10">
                 <div className="flex-shrink-0 p-4 pt-17">
                     <Title
                         title={(

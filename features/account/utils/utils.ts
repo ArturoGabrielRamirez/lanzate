@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { UserDeletionStatus, DeletionActionResponse } from "../types/types";
 
 // ✅ FUNCIÓN PARA ENMASCARAR EMAIL - Sin cambios
@@ -198,7 +199,7 @@ export function createAccountDeletedHandler(params: AccountDeletedParams) {
       setDeletionStatus(initialDeletionStatus);
 
       // Log para debugging
-      console.log(DELETION_CONSTANTS.MESSAGES.ACCOUNT_DELETED);
+     /*  console.log(DELETION_CONSTANTS.MESSAGES.ACCOUNT_DELETED); */
 
     } catch (error) {
       console.error('Error en callback de eliminación:', error);
@@ -250,12 +251,12 @@ export const validators = {
 export const notifications = {
   success: (message: string) => {
     // TODO: Reemplazar con sistema de toast
-    alert(message);
+    toast.success(message);
   },
   
   error: (message: string) => {
-    // TODO: Reemplazar con sistema de toast  
-    alert(message);
+    // TODO: Reemplazar con sistema de toast
+    toast.error(message);
   }
 };
 
@@ -287,7 +288,7 @@ export const DELETION_CONSTANTS = {
 /**
  * Calcula minutos restantes hasta una fecha límite
  */
-export function getMinutesUntil(targetDate: Date | string | null): number | null {
+/* export function getMinutesUntil(targetDate: Date | string | null): number | null {
   if (!targetDate) return null;
   
   const now = new Date();
@@ -295,12 +296,12 @@ export function getMinutesUntil(targetDate: Date | string | null): number | null
   const diff = target.getTime() - now.getTime();
   
   return Math.max(0, Math.floor(diff / (1000 * 60)));
-}
+} */
 
 /**
  * Formatea tiempo restante en formato legible
  */
-export function formatTimeRemaining(minutes: number | null): string {
+/* export function formatTimeRemaining(minutes: number | null): string {
   if (minutes === null || minutes <= 0) return 'Expirado';
   
   if (minutes < 60) {
@@ -318,23 +319,23 @@ export function formatTimeRemaining(minutes: number | null): string {
   const remainingHours = hours % 24;
   
   return remainingHours > 0 ? `${days}d ${remainingHours}h` : `${days}d`;
-}
+} */
 
 /**
  * Determina la urgencia basada en tiempo restante
  */
-export function getUrgencyLevel(minutesRemaining: number | null): 'low' | 'medium' | 'high' | 'critical' | 'expired' {
+/* export function getUrgencyLevel(minutesRemaining: number | null): 'low' | 'medium' | 'high' | 'critical' | 'expired' {
   if (minutesRemaining === null || minutesRemaining <= 0) return 'expired';
   if (minutesRemaining <= 5) return 'critical';
   if (minutesRemaining <= 30) return 'high';
   if (minutesRemaining <= 60) return 'medium';
   return 'low';
-}
+} */
 
 /**
  * Obtiene colores CSS basados en urgencia
  */
-export function getUrgencyColors(urgency: ReturnType<typeof getUrgencyLevel>): {
+/* export function getUrgencyColors(urgency: ReturnType<typeof getUrgencyLevel>): {
   text: string;
   bg: string;
   border: string;
@@ -348,4 +349,4 @@ export function getUrgencyColors(urgency: ReturnType<typeof getUrgencyLevel>): {
   };
 
   return colors[urgency];
-}
+} */

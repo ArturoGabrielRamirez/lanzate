@@ -6,7 +6,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function DeletionStatusCard({
     status,
-    onCancelClick
+    onCancelClick,
+    scheduledDate
 }: {
     status: UserDeletionStatus & {
         canDeleteUntil?: Date | null;
@@ -19,6 +20,7 @@ export default function DeletionStatusCard({
         };
     };
     onCancelClick: () => void;
+    scheduledDate: Date | null;
 }) {
 
     const canActuallyCancelNow = status.isWithinActionWindow && status.canCancel;
@@ -73,11 +75,11 @@ export default function DeletionStatusCard({
                     </span>
                 </div>
 
-                {status.canCancelUntil && (
+                {scheduledDate && (
                     <div className="flex items-center justify-between">
                         <span className="text-gray-300 font-medium">Puedes actuar hasta:</span>
                         <span className="text-blue-400 font-medium">
-                            {new Date(status.canCancelUntil).toLocaleString('es-ES')}
+                            {scheduledDate.toLocaleString('es-ES')}
                         </span>
                     </div>
                 )}

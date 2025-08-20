@@ -87,6 +87,7 @@ export default function DangerZone({ userId, onStatusChange }: { userId: number;
       <DeletionStatusCard
         status={deletionStatus}
         onCancelClick={() => setShowCancelDialog(true)}
+        scheduledDate={new Date(deletionStatus.displayScheduledAt || deletionStatus.canCancelUntil || Date.now())}
       />
 
       <CancelDeletionModal
