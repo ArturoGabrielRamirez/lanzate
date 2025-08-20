@@ -23,7 +23,7 @@ const CopyLink = ({ stores }: Props) => {
     const handleCopyLink = async () => {
         setIsCopying(true)
         await new Promise(resolve => setTimeout(resolve, 1000))
-        await navigator.clipboard.writeText(`https://${foundStore?.subdomain}.vercel.app`)
+        await navigator.clipboard.writeText(`https://${foundStore?.subdomain}.lanzate.app`)
         toast.success("Link copied to clipboard")
         setIsCopying(false)
     }
