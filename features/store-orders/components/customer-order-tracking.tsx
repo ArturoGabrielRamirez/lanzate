@@ -152,24 +152,34 @@ function CustomerOrderTracking({ order }: Props) {
         <div>
             <div className="flex items-center gap-2">
                 <IconButton
-                    className={cn("text-muted-foreground", order.status === "PROCESSING" && "text-accent")}
-                    icon={() => <Clock />}
+                    active={order.status === "PROCESSING"}
+                    size={order.status === "PROCESSING" ? "lg" : "default"}
+                    className={cn("text-muted-foreground", order.status === "PROCESSING" && "text-green-500 animate-pulse")}
+                    icon={() => <Clock className="!text-green-500"/>}
+                    animate={order.status === "PROCESSING"}
+
                 />
                 <div className="w-10 h-1 bg-muted" />
                 <IconButton
-                    className={cn("text-muted-foreground", order.status === "READY" && "text-accent")}
+                    active={order.status === "READY"}
+                    size={order.status === "READY" ? "lg" : "default"}
+                    className={cn("text-muted-foreground", order.status === "READY" && "text-green-500 animate-pulse")}
                     icon={() => <CircleCheck />}
                 />
                 <div className="w-10 h-1 bg-muted" />
                 <IconButton
-                    className={cn("text-muted-foreground", order.status === "READY" && order.tracking?.tracking_status === "PREPARING_ORDER" && "text-accent")}
+                    active={order.status === "READY" && order.tracking?.tracking_status === "PREPARING_ORDER"}
+                    size={order.status === "READY" && order.tracking?.tracking_status === "PREPARING_ORDER" ? "lg" : "default"}
+                    className={cn("text-muted-foreground", order.status === "READY" && order.tracking?.tracking_status === "PREPARING_ORDER" && "text-green-500 animate-pulse")}
                     icon={() => <ShoppingBag />}
                 />
                 <div className="w-10 h-1 bg-muted" />
                 {order.shipping_method === "PICKUP" && (
                     <>
                         <IconButton
-                            className={cn("text-muted-foreground", order.tracking?.tracking_status === "WAITING_FOR_PICKUP" && "text-accent")}
+                            active={order.tracking?.tracking_status === "WAITING_FOR_PICKUP"}
+                            size={order.tracking?.tracking_status === "WAITING_FOR_PICKUP" ? "lg" : "default"}
+                            className={cn("text-muted-foreground", order.tracking?.tracking_status === "WAITING_FOR_PICKUP" && "text-green-500 animate-pulse")}
                             icon={() => <MapPin />}
                         />
                     </>
@@ -177,7 +187,9 @@ function CustomerOrderTracking({ order }: Props) {
                 {order.shipping_method === "DELIVERY" && (
                     <>
                         <IconButton
-                            className={cn("text-muted-foreground", order.tracking?.tracking_status === "ON_THE_WAY" && "text-accent")}
+                            active={order.tracking?.tracking_status === "ON_THE_WAY"}
+                            size={order.tracking?.tracking_status === "ON_THE_WAY" ? "lg" : "default"}
+                            className={cn("text-muted-foreground", order.tracking?.tracking_status === "ON_THE_WAY" && "text-green-500 animate-pulse")}
                             icon={() => <Truck />}
                         />
                     </>

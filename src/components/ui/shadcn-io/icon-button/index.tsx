@@ -55,7 +55,7 @@ function IconButton({
       >
         <Icon
           className={
-            cn(active ? 'fill-[var(--primary)]' : 'fill-transparent', "size-24")
+            cn(active ? '' : 'fill-transparent', "size-24")
           }
         />
       </motion.div>
@@ -63,7 +63,7 @@ function IconButton({
       <AnimatePresence mode="wait">
         {active && (
           <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[var(--primary)] fill-[var(--primary)]"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[var(--primary)] "
             aria-hidden="true"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
