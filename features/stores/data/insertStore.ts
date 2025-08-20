@@ -70,6 +70,11 @@ export async function insertStore(payload: any, userId: number): Promise<InsertS
                         sort_order: cat.sort_order,
                         is_active: cat.is_active
                     }))
+                }, 
+                customization : {
+                    create : {
+                        
+                    }
                 }
             }
         })

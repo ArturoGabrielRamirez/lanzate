@@ -1295,9 +1295,12 @@
             "method-selector": {
                 "label": "Select Payment Method",
                 "placeholder": "Choose a payment method",
+                "cash": "Cash",
                 "credit-debit-card": "Credit/Debit Card",
                 "bank-transfer": "Bank Transfer",
-                "mercado-pago": "Mercado Pago"
+                "mercado-pago": "Mercado Pago",
+                "paypal": "Paypal",
+                "crypto": "Crypto"
             },
             "card-info": {
                 "label": "Card Information",

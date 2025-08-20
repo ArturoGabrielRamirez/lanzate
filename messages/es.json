@@ -1269,9 +1269,12 @@
             "method-selector": {
                 "label": "Seleccionar Método de Pago",
                 "placeholder": "Elegí un método de pago",
+                "cash": "Efectivo",
                 "credit-debit-card": "Tarjeta de Crédito/Débito",
                 "bank-transfer": "Transferencia Bancaria",
-                "mercado-pago": "Mercado Pago"
+                "mercado-pago": "Mercado Pago",
+                "paypal": "Paypal",
+                "crypto": "Crypto"
             },
             "card-info": {
                 "label": "Información de la Tarjeta",
