@@ -6,6 +6,7 @@ import { useChat } from "./chat-provider"
 import { RealtimeChat } from "@/components/realtime-chat"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { X, Minimize2, Maximize2 } from "lucide-react"
+import { ChatMessage } from "@/hooks/use-realtime-chat"
 
 const ChatDoc = () => {
 
@@ -18,8 +19,12 @@ const ChatDoc = () => {
         isChatMaximized 
     } = useChat()
 
+    const handleMessage = (messages: ChatMessage[]) => {
+        console.log(messages)
+    }
+
     return (
-        <div className="fixed bottom-0 w-full min-h-20 z-50 flex gap-2 items-end justify-end container right-1/2 translate-x-1/2">
+        <div className="fixed bottom-0 w-fit min-h-20 z-50 flex gap-2 items-end justify-end container right-4">
             <AnimatePresence>
                 {isOpen && rooms.length > 0 && (
                     <>
@@ -73,7 +78,7 @@ const ChatDoc = () => {
                                             exit={{ height: 0, opacity: 0 }}
                                             transition={{ duration: 0.2 }}
                                         >
-                                            <RealtimeChat roomName={roomId} username="Store" />
+                                            <RealtimeChat roomName={roomId} username="Store" onMessage={handleMessage}/>
                                         </motion.div>
                                     )}
                                 </motion.div>
