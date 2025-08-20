@@ -8,7 +8,7 @@ async function StoresPage() {
     const t = await getTranslations("store")
 
     return (
-        <div className="p-2 md:p-4 pt-13 md:pt-24 max-md:pb-12 container mx-auto z-10">
+        <div className="p-2 md:p-4 xl:px-0 flex flex-col pt-13 md:pt-24 relative pb-24 container mx-auto z-10">
             <Title title={<div className="flex items-center gap-2">
                 <Store />
                 {t("title")}

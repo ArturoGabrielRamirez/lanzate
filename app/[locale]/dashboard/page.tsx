@@ -18,6 +18,7 @@ import FeedFilters from "@/features/dashboard/components/feed-filters"
 import { loadFeedParams } from "@/features/dashboard/utils/load-feed-params"
 import HelpCard from "@/features/dashboard/components/help-card"
 import AccountSetup from "@/features/dashboard/components/account-setup"
+import AccountSetupSkeleton from "@/features/dashboard/components/account-setup-skeleton"
 
 export default async function Dashboard({ searchParams }: { searchParams: Promise<{ type: string }> }) {
 
@@ -48,7 +49,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
                         <HelpCard />
 
                         {/* Account Setup */}
-                        <Suspense fallback={<div className="area-[setup] hidden lg:block group/setup" />}>
+                        <Suspense fallback={<AccountSetupSkeleton />}>
                             <AccountSetup />
                         </Suspense>
 
