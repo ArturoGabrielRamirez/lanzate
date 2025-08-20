@@ -1,13 +1,15 @@
 "use client"
 
-import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem, InteractiveStepperSeparator } from "@/components/expansion/interactive-stepper"
 import { Order } from "@prisma/client"
-import { Package, CheckCircle, Truck } from "lucide-react"
-import DynamicStepperTrigger from "@/features/orders/components/dynamic-stepper-trigger"
+import { Truck, Clock, CircleCheck, ShoppingBag, MapPin } from "lucide-react"
+/* import DynamicStepperTrigger from "@/features/orders/components/dynamic-stepper-trigger"
 import { StepNavigation } from "@/features/checkout/components/step-navigation"
 import CustomerOrderDetailsStep from "./customer-order-details-step"
 import CustomerOrderConfirmationStep from "./customer-order-confirmation-step"
-import CustomerOrderTrackingStep from "./customer-order-tracking-step"
+import CustomerOrderTrackingStep from "./customer-order-tracking-step" */
+/* import HorizontalEventTimelineCarousel from "@/src/components/horizontal-event-timeline-carousel" */
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { cn } from "@/lib/utils"
 
 type OrderItemWithProduct = {
     id: number
@@ -36,12 +38,11 @@ type Props = {
     }
 }
 
-function CustomerOrderTracking({ order }: Props) {
+/* function CustomerOrderTrackingOld({ order }: Props) {
     const isPickup = order.shipping_method === "PICKUP"
     const isCompleted = order.status === "COMPLETED"
     const isCancelled = order.status === "CANCELLED"
 
-    // Determine third step title and description based on completion status
     let thirdStepTitle: string
     let thirdStepDescription: string
 
@@ -58,11 +59,9 @@ function CustomerOrderTracking({ order }: Props) {
         thirdStepDescription = isPickup ? "Your order is ready for pickup" : "Track your order delivery"
     }
 
-    // Determine which steps should be completed
     const isProcessingCompleted = isCompleted || order.status === "READY" || order.status === "DELIVERED" || order.status === "SHIPPED"
     const isThirdStepCompleted = isCompleted || order.status === "DELIVERED"
 
-    // Configuration for each step trigger
     const stepTriggerConfigs = [
         {
             title: "Order Placed",
@@ -142,6 +141,49 @@ function CustomerOrderTracking({ order }: Props) {
                 <StepNavigation />
             </InteractiveStepperContent>
         </InteractiveStepper>
+    )
+} */
+
+function CustomerOrderTracking({ order }: Props) {
+
+
+
+    return (
+        <div>
+            <div className="flex items-center gap-2">
+                <IconButton
+                    className={cn("text-muted-foreground", order.status === "PROCESSING" && "text-accent")}
+                    icon={() => <Clock />}
+                />
+                <div className="w-10 h-1 bg-muted" />
+                <IconButton
+                    className={cn("text-muted-foreground", order.status === "READY" && "text-accent")}
+                    icon={() => <CircleCheck />}
+                />
+                <div className="w-10 h-1 bg-muted" />
+                <IconButton
+                    className={cn("text-muted-foreground", order.status === "READY" && order.tracking?.tracking_status === "PREPARING_ORDER" && "text-accent")}
+                    icon={() => <ShoppingBag />}
+                />
+                <div className="w-10 h-1 bg-muted" />
+                {order.shipping_method === "PICKUP" && (
+                    <>
+                        <IconButton
+                            className={cn("text-muted-foreground", order.tracking?.tracking_status === "WAITING_FOR_PICKUP" && "text-accent")}
+                            icon={() => <MapPin />}
+                        />
+                    </>
+                )}
+                {order.shipping_method === "DELIVERY" && (
+                    <>
+                        <IconButton
+                            className={cn("text-muted-foreground", order.tracking?.tracking_status === "ON_THE_WAY" && "text-accent")}
+                            icon={() => <Truck />}
+                        />
+                    </>
+                )}
+            </div>
+        </div>
     )
 }
 

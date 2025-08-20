@@ -13,7 +13,7 @@ export default async function OrderDetailsPage({ params }: Props) {
     const { id } = await params
 
     return (
-        <section className="p-4 grow flex flex-col pb-8">
+        <section className="p-4 grow flex flex-col pb-8 container mx-auto">
             <Title
                 title={`Order #${id}`}
                 breadcrumbs={[

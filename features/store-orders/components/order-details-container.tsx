@@ -35,7 +35,7 @@ async function OrderDetailsContainer({ orderId }: Props) {
                 <CustomerOrderTracking order={order} />
             </div>
             
-            <div className="w-80 flex-shrink-0">
+            {/* <div className="w-80 flex-shrink-0">
                 <div className="sticky top-6">
                     <h4 className="font-medium mb-3">Need Help?</h4>
                     <div className="bg-muted/30 border rounded-lg p-4">
@@ -55,7 +55,7 @@ async function OrderDetailsContainer({ orderId }: Props) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
