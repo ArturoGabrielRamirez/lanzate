@@ -6,6 +6,7 @@ import { getOrderDetails } from "@/features/stores/actions/getOrderDetails"
 import { cn } from "@/lib/utils"
 import { Box, Calendar, Check, MapPin, Package, ShoppingCart, Truck, User } from "lucide-react"
 import OrderTimeline from "./order-timeline"
+import { RealtimeChat } from "@/components/realtime-chat"
 
 type Props = {
     userId: number
@@ -175,6 +176,7 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
+            <RealtimeChat roomName={`order-${order.id}`} username={"Store"} />
         </div>
     )
 }

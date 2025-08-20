@@ -1,199 +1,182 @@
 "use client"
 
-import { Order } from "@prisma/client"
-import { Truck, Clock, CircleCheck, ShoppingBag, MapPin } from "lucide-react"
-/* import DynamicStepperTrigger from "@/features/orders/components/dynamic-stepper-trigger"
-import { StepNavigation } from "@/features/checkout/components/step-navigation"
-import CustomerOrderDetailsStep from "./customer-order-details-step"
-import CustomerOrderConfirmationStep from "./customer-order-confirmation-step"
-import CustomerOrderTrackingStep from "./customer-order-tracking-step" */
-/* import HorizontalEventTimelineCarousel from "@/src/components/horizontal-event-timeline-carousel" */
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { cn } from "@/lib/utils"
-
-type OrderItemWithProduct = {
-    id: number
-    quantity: number
-    price: number
-    product: {
-        id: number
-        name: string
-        image: string | null
-    }
-}
+import { Order, Store, OrderPayment, Product, OrderItem, OrderTracking } from "@prisma/client"
+import OrderTimelineIcons from "@/features/orders/components/order-timeline-icons"
+import { CircleCheck, Clock, ShoppingBag, MapPin, PartyPopper } from "lucide-react"
+import { RealtimeChat } from "@/components/realtime-chat"
 
 type Props = {
-    order: Order & {
-        items: OrderItemWithProduct[]
-        store: {
-            name: string
-        }
-        branch: {
-            name: string
-            address: string
-        }
-        tracking?: {
-            tracking_status: string
-        } | null
-    }
+    order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
 }
 
-/* function CustomerOrderTrackingOld({ order }: Props) {
-    const isPickup = order.shipping_method === "PICKUP"
-    const isCompleted = order.status === "COMPLETED"
-    const isCancelled = order.status === "CANCELLED"
 
-    let thirdStepTitle: string
-    let thirdStepDescription: string
-
-    if (isCompleted) {
-        if (isPickup) {
-            thirdStepTitle = "Order Picked Up"
-            thirdStepDescription = "Your order has been successfully picked up"
-        } else {
-            thirdStepTitle = "Order Delivered"
-            thirdStepDescription = "Your order has been delivered successfully"
-        }
-    } else {
-        thirdStepTitle = isPickup ? "Ready for Pickup" : "Delivery Tracking"
-        thirdStepDescription = isPickup ? "Your order is ready for pickup" : "Track your order delivery"
-    }
-
-    const isProcessingCompleted = isCompleted || order.status === "READY" || order.status === "DELIVERED" || order.status === "SHIPPED"
-    const isThirdStepCompleted = isCompleted || order.status === "DELIVERED"
-
-    const stepTriggerConfigs = [
-        {
-            title: "Order Placed",
-            description: "Your order has been received",
-            completed: true,
-            icon: Package,
-            step: 1
-        },
-        {
-            title: "Order Confirmed",
-            description: "Your order has been confirmed and is being prepared",
-            completed: isProcessingCompleted,
-            icon: CheckCircle,
-            step: 2
-        },
-        {
-            title: thirdStepTitle,
-            description: thirdStepDescription,
-            completed: isThirdStepCompleted,
-            icon: Truck,
-            step: 3
-        }
-    ]
-
-    if (isCancelled) {
-        return (
-            <InteractiveStepper orientation="horizontal">
-                <InteractiveStepperItem completed>
-                    <DynamicStepperTrigger
-                        config={{
-                            title: "Order Cancelled",
-                            description: "This order has been cancelled",
-                            completed: true
-                        }}
-                    />
-                </InteractiveStepperItem>
-                <InteractiveStepperContent step={1}>
-                    <CustomerOrderDetailsStep order={order} />
-                </InteractiveStepperContent>
-            </InteractiveStepper>
-        )
-    }
-
-    return (
-        <InteractiveStepper orientation="horizontal" className="grow" defaultValue={
-            isCompleted ? 1 : isProcessingCompleted ? 3 : 2
-        }>
-            <InteractiveStepperItem completed>
-                <DynamicStepperTrigger config={stepTriggerConfigs[0]} />
-                <InteractiveStepperSeparator />
-            </InteractiveStepperItem>
-
-            <InteractiveStepperItem completed={isProcessingCompleted}>
-                <DynamicStepperTrigger config={stepTriggerConfigs[1]} />
-                <InteractiveStepperSeparator />
-            </InteractiveStepperItem>
-
-            <InteractiveStepperItem completed={isThirdStepCompleted} disabled={!isProcessingCompleted}>
-                <DynamicStepperTrigger config={stepTriggerConfigs[2]} />
-            </InteractiveStepperItem>
-
-            <InteractiveStepperContent step={1} className="grow flex flex-col">
-                <StepNavigation />
-                <CustomerOrderDetailsStep order={order} />
-                <StepNavigation />
-            </InteractiveStepperContent>
-
-            <InteractiveStepperContent step={2} className="grow flex flex-col">
-                <StepNavigation />
-                <CustomerOrderConfirmationStep order={order} />
-                <StepNavigation />
-            </InteractiveStepperContent>
-
-            <InteractiveStepperContent step={3} className="grow flex flex-col">
-                <StepNavigation />
-                <CustomerOrderTrackingStep order={order} />
-                <StepNavigation />
-            </InteractiveStepperContent>
-        </InteractiveStepper>
-    )
-} */
 
 function CustomerOrderTracking({ order }: Props) {
+    const isProcessing = order.status === "PROCESSING"
+    const isReady = order.status === "READY"
+    const isCompleted = order.status === "COMPLETED"
+    const isDelivery = order.shipping_method === "DELIVERY"
+    const isPickup = order.shipping_method === "PICKUP"
 
+    const isPreparingOrder = isReady && order.tracking?.tracking_status === "PREPARING_ORDER"
+    const isWaitingForDelivery = isReady && order.tracking?.tracking_status === "WAITING_FOR_DELIVERY"
+    const isOnTheWay = order.tracking?.tracking_status === "ON_THE_WAY"
+    const isWaitingForPickup = isReady && order.tracking?.tracking_status === "WAITING_FOR_PICKUP"
 
+    // Determine which steps are completed
+    const isOrderPlacedCompleted = isReady || isCompleted
+    const isOrderConfirmedCompleted = isPreparingOrder || isWaitingForDelivery || isWaitingForPickup || isOnTheWay || isCompleted
+    const isOrderPackedCompleted = isWaitingForDelivery || isWaitingForPickup || isOnTheWay || isCompleted
+    const isDeliveryReadyCompleted = isOnTheWay || isCompleted
+    const isOnTheWayCompleted = isCompleted
+    const isPickupReadyCompleted = isCompleted
+    const isOrderCompletedCompleted = isCompleted
+
+    // Determine which steps are future (not yet reached)
+    const isOrderPlacedFuture = !isProcessing && !isOrderPlacedCompleted
+    const isOrderConfirmedFuture = !isReady && !isOrderConfirmedCompleted
+    const isOrderPackedFuture = !isPreparingOrder && !isOrderPackedCompleted
+    const isDeliveryReadyFuture = isDelivery && !isWaitingForDelivery && !isDeliveryReadyCompleted
+    const isOnTheWayFuture = isDelivery && !isOnTheWay && !isOnTheWayCompleted
+    const isPickupReadyFuture = isPickup && !isWaitingForPickup && !isPickupReadyCompleted
+    const isOrderCompletedFuture = !isCompleted
 
     return (
-        <div>
-            <div className="flex items-center gap-2">
-                <IconButton
-                    active={order.status === "PROCESSING"}
-                    size={order.status === "PROCESSING" ? "lg" : "default"}
-                    className={cn("text-muted-foreground", order.status === "PROCESSING" && "text-green-500 animate-pulse")}
-                    icon={() => <Clock className="!text-green-500"/>}
-                    animate={order.status === "PROCESSING"}
+        <div className="flex flex-col gap-4 md:flex-row">
+            <div className="flex gap-8 flex-col">
+                <OrderTimelineIcons order={order} />
+                <div className="flex flex-col gap-4">
+                    {/* Order Placed */}
+                    <div className="flex items-start gap-3">
+                        <div className={`flex-shrink-0 rounded-full p-2 ${isProcessing ? 'bg-green-600' : 'bg-muted'}`}>
+                            <Clock className={`w-4 h-4 ${isProcessing ? 'text-white' : 'text-muted-foreground'}`} />
+                        </div>
+                        <div className="flex-1">
+                            <h5 className={`font-medium ${isProcessing ? 'text-base' : 'text-sm'} ${isProcessing ? 'text-foreground' : 'text-muted-foreground'} ${isOrderPlacedCompleted && !isProcessing ? 'line-through' : ''} ${isOrderPlacedFuture ? 'opacity-50' : ''}`}>
+                                Order Placed
+                            </h5>
+                            <p className={`${isProcessing ? 'text-sm' : 'text-xs'} ${isProcessing ? 'text-muted-foreground' : 'text-muted-foreground/70'} ${isOrderPlacedCompleted && !isProcessing ? 'line-through' : ''} ${isOrderPlacedFuture ? 'opacity-50' : ''}`}>
+                                Your order has been received
+                            </p>
+                        </div>
+                    </div>
 
-                />
-                <div className="w-10 h-1 bg-muted" />
-                <IconButton
-                    active={order.status === "READY"}
-                    size={order.status === "READY" ? "lg" : "default"}
-                    className={cn("text-muted-foreground", order.status === "READY" && "text-green-500 animate-pulse")}
-                    icon={() => <CircleCheck />}
-                />
-                <div className="w-10 h-1 bg-muted" />
-                <IconButton
-                    active={order.status === "READY" && order.tracking?.tracking_status === "PREPARING_ORDER"}
-                    size={order.status === "READY" && order.tracking?.tracking_status === "PREPARING_ORDER" ? "lg" : "default"}
-                    className={cn("text-muted-foreground", order.status === "READY" && order.tracking?.tracking_status === "PREPARING_ORDER" && "text-green-500 animate-pulse")}
-                    icon={() => <ShoppingBag />}
-                />
-                <div className="w-10 h-1 bg-muted" />
-                {order.shipping_method === "PICKUP" && (
-                    <>
-                        <IconButton
-                            active={order.tracking?.tracking_status === "WAITING_FOR_PICKUP"}
-                            size={order.tracking?.tracking_status === "WAITING_FOR_PICKUP" ? "lg" : "default"}
-                            className={cn("text-muted-foreground", order.tracking?.tracking_status === "WAITING_FOR_PICKUP" && "text-green-500 animate-pulse")}
-                            icon={() => <MapPin />}
-                        />
-                    </>
-                )}
-                {order.shipping_method === "DELIVERY" && (
-                    <>
-                        <IconButton
-                            active={order.tracking?.tracking_status === "ON_THE_WAY"}
-                            size={order.tracking?.tracking_status === "ON_THE_WAY" ? "lg" : "default"}
-                            className={cn("text-muted-foreground", order.tracking?.tracking_status === "ON_THE_WAY" && "text-green-500 animate-pulse")}
-                            icon={() => <Truck />}
-                        />
-                    </>
-                )}
+                    {/* Order Confirmed */}
+                    <div className="flex items-start gap-3">
+                        <div className={`flex-shrink-0 rounded-full p-2 ${isReady ? 'bg-green-600' : 'bg-muted'}`}>
+                            <CircleCheck className={`w-4 h-4 ${isReady ? 'text-white' : 'text-muted-foreground'}`} />
+                        </div>
+                        <div className="flex-1">
+                            <h5 className={`font-medium ${isReady ? 'text-base' : 'text-sm'} ${isReady ? 'text-foreground' : 'text-muted-foreground'} ${isOrderConfirmedCompleted && !isReady ? 'line-through' : ''} ${isOrderConfirmedFuture ? 'opacity-50' : ''}`}>
+                                Order Confirmed
+                            </h5>
+                            <p className={`${isReady ? 'text-sm' : 'text-xs'} ${isReady ? 'text-muted-foreground' : 'text-muted-foreground/70'} ${isOrderConfirmedCompleted && !isReady ? 'line-through' : ''} ${isOrderConfirmedFuture ? 'opacity-50' : ''}`}>
+                                Your order has been confirmed and is being prepared
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Order Being Packed */}
+                    <div className="flex items-start gap-3">
+                        <div className={`flex-shrink-0 rounded-full p-2 ${isPreparingOrder ? 'bg-green-600' : 'bg-muted'}`}>
+                            <ShoppingBag className={`w-4 h-4 ${isPreparingOrder ? 'text-white' : 'text-muted-foreground'}`} />
+                        </div>
+                        <div className="flex-1">
+                            <h5 className={`font-medium ${isPreparingOrder ? 'text-base' : 'text-sm'} ${isPreparingOrder ? 'text-foreground' : 'text-muted-foreground'} ${isOrderPackedCompleted && !isPreparingOrder ? 'line-through' : ''} ${isOrderPackedFuture ? 'opacity-50' : ''}`}>
+                                Order Being Packed
+                            </h5>
+                            <p className={`${isPreparingOrder ? 'text-sm' : 'text-xs'} ${isPreparingOrder ? 'text-muted-foreground' : 'text-muted-foreground/70'} ${isOrderPackedCompleted && !isPreparingOrder ? 'line-through' : ''} ${isOrderPackedFuture ? 'opacity-50' : ''}`}>
+                                The order is being packed. Once it&apos;s done, it will be ready for {isDelivery ? 'delivery' : 'pickup'}
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Delivery/Pickup Ready */}
+                    {isDelivery && (
+                        <div className="flex items-start gap-3">
+                            <div className={`flex-shrink-0 rounded-full p-2 ${isWaitingForDelivery ? 'bg-green-600' : 'bg-muted'}`}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className={`w-4 h-4 ${isWaitingForDelivery ? 'text-white' : 'text-muted-foreground'}`}
+                                    width={16}
+                                    height={16}
+                                    viewBox="0 0 24 24">
+                                    <g fill="none" stroke="currentColor" strokeWidth={1.5}><path d="M19.5 19.5a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0Z"></path><path strokeLinecap="round" strokeLinejoin="round" d="M14.5 19.5h-5m10 0h.763c.22 0 .33 0 .422-.012a1.5 1.5 0 0 0 1.303-1.302c.012-.093.012-.203.012-.423V15a6.5 6.5 0 0 0-6.5-6.5M11 6h1c1.414 0 2.121 0 2.56.44C15 6.878 15 7.585 15 9v8.5M2 12v5c0 .935 0 1.402.201 1.75a1.5 1.5 0 0 0 .549.549c.348.201.815.201 1.75.201M7.85 7.85l-1.35-.9V4.7M2 6.5a4.5 4.5 0 1 0 9 0a4.5 4.5 0 0 0-9 0"></path></g>
+                                </svg>
+                            </div>
+                            <div className="flex-1">
+                                <h5 className={`font-medium ${isWaitingForDelivery ? 'text-base' : 'text-sm'} ${isWaitingForDelivery ? 'text-foreground' : 'text-muted-foreground'} ${isDeliveryReadyCompleted && !isWaitingForDelivery ? 'line-through' : ''} ${isDeliveryReadyFuture ? 'opacity-50' : ''}`}>
+                                    Ready for Delivery
+                                </h5>
+                                <p className={`${isWaitingForDelivery ? 'text-sm' : 'text-xs'} ${isWaitingForDelivery ? 'text-muted-foreground' : 'text-muted-foreground/70'} ${isDeliveryReadyCompleted && !isWaitingForDelivery ? 'line-through' : ''} ${isDeliveryReadyFuture ? 'opacity-50' : ''}`}>
+                                    The order is ready for delivery and is waiting for the delivery driver to pick it up
+                                </p>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* On the Way (Delivery) */}
+                    {isDelivery && (
+                        <div className="flex items-start gap-3">
+                            <div className={`flex-shrink-0 rounded-full p-2 ${isOnTheWay ? 'bg-green-600' : 'bg-muted'}`}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className={`w-4 h-4 ${isOnTheWay ? 'text-white' : 'text-muted-foreground'}`}
+                                    width={16}
+                                    height={16}
+                                    viewBox="0 0 24 24">
+                                    <g fill="none" stroke="currentColor" strokeWidth={1.5}>
+                                        <path d="M19.5 17.5a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0Z"></path>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M14.5 17.5h-5m10 0h.763c.22 0 .33 0 .422-.012a1.5 1.5 0 0 0 1.303-1.302c.012-.093.012-.203.012-.423V13a6.5 6.5 0 0 0-6.5-6.5M2 4h10c1.414 0 2.121 0 2.56.44C15 4.878 15 5.585 15 7v8.5M2 12.75V15c0 .935 0 1.402.201 1.75a1.5 1.5 0 0 0 .549.549c.348.201.815.201 1.75.201M2 7h6m-6 3h4"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div className="flex-1">
+                                <h5 className={`font-medium ${isOnTheWay ? 'text-base' : 'text-sm'} ${isOnTheWay ? 'text-foreground' : 'text-muted-foreground'} ${isOnTheWayCompleted && !isOnTheWay ? 'line-through' : ''} ${isOnTheWayFuture ? 'opacity-50' : ''}`}>
+                                    On the Way
+                                </h5>
+                                <p className={`${isOnTheWay ? 'text-sm' : 'text-xs'} ${isOnTheWay ? 'text-muted-foreground' : 'text-muted-foreground/70'} ${isOnTheWayCompleted && !isOnTheWay ? 'line-through' : ''} ${isOnTheWayFuture ? 'opacity-50' : ''}`}>
+                                    The order is on the way to your address
+                                </p>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Ready for Pickup */}
+                    {isPickup && (
+                        <div className="flex items-start gap-3">
+                            <div className={`flex-shrink-0 rounded-full p-2 ${isWaitingForPickup ? 'bg-green-600' : 'bg-muted'}`}>
+                                <MapPin className={`w-4 h-4 ${isWaitingForPickup ? 'text-white' : 'text-muted-foreground'}`} />
+                            </div>
+                            <div className="flex-1">
+                                <h5 className={`font-medium ${isWaitingForPickup ? 'text-base' : 'text-sm'} ${isWaitingForPickup ? 'text-foreground' : 'text-muted-foreground'} ${isPickupReadyCompleted && !isWaitingForPickup ? 'line-through' : ''} ${isPickupReadyFuture ? 'opacity-50' : ''}`}>
+                                    Ready for Pickup
+                                </h5>
+                                <p className={`${isWaitingForPickup ? 'text-sm' : 'text-xs'} ${isWaitingForPickup ? 'text-muted-foreground' : 'text-muted-foreground/70'} ${isPickupReadyCompleted && !isWaitingForPickup ? 'line-through' : ''} ${isPickupReadyFuture ? 'opacity-50' : ''}`}>
+                                    The order is ready for pickup and is waiting for you to pick it up
+                                </p>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Order Completed */}
+                    <div className="flex items-start gap-3">
+                        <div className={`flex-shrink-0 rounded-full p-2 ${isCompleted ? 'bg-green-600' : 'bg-muted'}`}>
+                            <PartyPopper className={`w-4 h-4 ${isCompleted ? 'text-white' : 'text-muted-foreground'}`} />
+                        </div>
+                        <div className="flex-1">
+                            <h5 className={`font-medium ${isCompleted ? 'text-base' : 'text-sm'} ${isCompleted ? 'text-foreground' : 'text-muted-foreground'} ${isOrderCompletedCompleted && !isCompleted ? 'line-through' : ''} ${isOrderCompletedFuture ? 'opacity-50' : ''}`}>
+                                Order Completed
+                            </h5>
+                            <p className={`${isCompleted ? 'text-sm' : 'text-xs'} ${isCompleted ? 'text-muted-foreground' : 'text-muted-foreground/70'} ${isOrderCompletedCompleted && !isCompleted ? 'line-through' : ''} ${isOrderCompletedFuture ? 'opacity-50' : ''}`}>
+                                The order was completed. Enjoy your purchase!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="w-full">
+                <RealtimeChat roomName={`order-${order.id}`} username={"Customer"} />
             </div>
         </div>
     )

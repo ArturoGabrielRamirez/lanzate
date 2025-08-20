@@ -14,7 +14,7 @@ const sizes = {
   default: 'size-8 [&_svg]:size-5',
   sm: 'size-6 [&_svg]:size-4',
   md: 'size-10 [&_svg]:size-6',
-  lg: 'size-12 [&_svg]:size-7',
+  lg: 'size-14 [&_svg]:size-9',
 };
 
 type IconButtonProps = Omit<HTMLMotionProps<'button'>, 'color'> & {
