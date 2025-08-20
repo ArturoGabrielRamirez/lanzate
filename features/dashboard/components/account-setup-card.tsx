@@ -5,6 +5,9 @@ import { getAccountSetupDataAction } from "@/features/dashboard/actions/getAccou
 import { CreateStoreButton } from "@/features/stores/components"
 import { getUserInfo } from "@/features/layout/actions"
 import UnifiedCreateProductButton from "@/features/products/components/unified-create-product-button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import SettingsLinks from "./settings-links"
+import CopyLink from "./copy-link"
 /* import UnifiedCreateProductButton from "@/features/products/components/unified-create-product-button" */
 
 const AccountSetupCard = async () => {
@@ -22,6 +25,7 @@ const AccountSetupCard = async () => {
     const completedSteps = [storeDone, productDone, settingsDone].filter(Boolean).length || 1
     const progress = (completedSteps / totalSteps) * 100
 
+    console.log("🚀 ~ productDone:", productDone)
     return (
         <Card className="!gap-2">
             <CardHeader>
@@ -66,6 +70,12 @@ const AccountSetupCard = async () => {
             <CardFooter>
                 {!storeDone && <CreateStoreButton userId={user?.id} canCreate={!storeDone} />}
                 {!productDone && storeDone && <UnifiedCreateProductButton userId={user?.id} storeId={payload?.stores[0]?.id} stores={payload?.stores} />}
+                {productDone && !settingsDone && (
+                    <SettingsLinks stores={payload?.stores || []} />
+                )}
+                {settingsDone && (
+                    <CopyLink stores={payload?.stores || []}/>
+                )}
             </CardFooter>
         </Card>
     )
