@@ -10,6 +10,7 @@ import { DotPattern } from "@/components/magicui/dot-pattern"
 import { EmailStatusBanner } from "@/features/auth/components/index"
 import { AccountPageClientProps, UserDeletionStatus, UserType } from "../types"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import PageContainer from "@/features/layout/components/page-container"
 
 
 export default function AccountPageClient({ user: initialUser, translations: t }: AccountPageClientProps) {
@@ -139,9 +140,9 @@ export default function AccountPageClient({ user: initialUser, translations: t }
     }
 
     return (
-        <div className="p-2 md:p-4 grow flex flex-col pt-13 md:pt-24 relative pb-20 container mx-auto z-10">
+        <PageContainer>
 
-            <div className="flex-shrink-0 p-0 md:p-4 mb-2 md:mb-0">
+            <div className="flex-shrink-0 mb-2 md:mb-4">
                 <Title
                     title={(
                         <div className="flex items-center gap-2">
@@ -168,7 +169,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                 />
             </div>
 
-            <section className="flex-1 px-0 md:px-4 pb-4 overflow-hidden">
+            <div className="flex-1  overflow-hidden">
                 <Tabs defaultValue="account" className="h-full grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4">
                     <TabsList className="w-full h-fit items-start flex-shrink-0">
                         <div className="flex md:block w-full">
@@ -196,7 +197,8 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                         </div>
                     </TabsContent>
                 </Tabs>
-            </section>
-        </div>
+            </div>
+
+        </PageContainer>
     )
 }

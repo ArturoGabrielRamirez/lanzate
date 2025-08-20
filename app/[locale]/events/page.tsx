@@ -1,9 +1,10 @@
 import { Title } from "@/features/layout/components"
+import PageContainer from "@/features/layout/components/page-container"
 import { Calendar } from "lucide-react"
 
 const EventsPage = () => {
     return (
-        <div className="p-2 md:p-4 pt-13 md:pt-24 max-md:pb-12 container mx-auto z-10">
+        <PageContainer>
             <Title title={<div className="flex items-center gap-2">
                 <Calendar />
                 Events
@@ -13,7 +14,7 @@ const EventsPage = () => {
                     href: "/events"
                 }
             ]} showDate />
-        </div>
+        </PageContainer>
     )
 }
 
