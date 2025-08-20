@@ -1,4 +1,4 @@
-import { DashboardStore } from "@/features/dashboard/types/types"
+import { Store } from "@prisma/client"
 
 export type Props = {
     storeId: number
@@ -7,13 +7,13 @@ export type Props = {
 
 // Discriminated union types for unified component
 type WithStoreId = {
-    storeId: number
+    storeId?: number
     userId: number
 }
 
 type WithStoreSelection = {
     userId: number
-    stores: DashboardStore[]
+    stores: Store[]
 }
 
 export type UnifiedCreateProductButtonProps = WithStoreId | WithStoreSelection

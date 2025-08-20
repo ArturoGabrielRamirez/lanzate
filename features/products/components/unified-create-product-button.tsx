@@ -87,9 +87,10 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
     const handleCreateProduct = async (payload: CreateProductPayload) => {
         try {
             let targetStoreId: number
+            console.log("🚀 ~ handleCreateProduct ~ targetStoreId:", targetStoreId)
 
             if (hasStoreId) {
-                targetStoreId = props.storeId
+                targetStoreId = props.storeId!
             } else {
                 if (!selectedStoreId) {
                     throw new Error(t("messages.select-store-first"))
@@ -135,7 +136,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button disabled={false} variant="default" type="button" className={cn(buttonClassName)}>
+                <Button disabled={false} variant="default" type="button" className={cn("w-full", buttonClassName)}>
                     {buttonIcon}
                     <span className="hidden md:block">{t("button")}</span>
                 </Button>

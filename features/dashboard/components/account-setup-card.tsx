@@ -4,6 +4,7 @@ import { CheckCircle, Circle } from "lucide-react"
 import { getAccountSetupDataAction } from "@/features/dashboard/actions/getAccountSetupDataAction"
 import { CreateStoreButton } from "@/features/stores/components"
 import { getUserInfo } from "@/features/layout/actions"
+import UnifiedCreateProductButton from "@/features/products/components/unified-create-product-button"
 /* import UnifiedCreateProductButton from "@/features/products/components/unified-create-product-button" */
 
 const AccountSetupCard = async () => {
@@ -64,7 +65,7 @@ const AccountSetupCard = async () => {
             </CardContent>
             <CardFooter>
                 {!storeDone && <CreateStoreButton userId={user?.id} canCreate={!storeDone} />}
-                {/* <UnifiedCreateProductButton /> */}
+                {!productDone && storeDone && <UnifiedCreateProductButton userId={user?.id} storeId={payload?.stores[0]?.id} stores={payload?.stores} />}
             </CardFooter>
         </Card>
     )

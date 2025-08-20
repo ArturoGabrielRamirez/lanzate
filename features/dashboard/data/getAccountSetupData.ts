@@ -2,11 +2,13 @@
 
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
+import { Store } from "@prisma/client"
 
 export type AccountSetupData = {
 	storeCount: number
 	productCount: number
 	hasOperationalSettings: boolean
+	stores: Store[]
 }
 
 export type GetAccountSetupDataReturn = {
@@ -17,7 +19,7 @@ export type GetAccountSetupDataReturn = {
 
 export async function getAccountSetupData(userId: number): Promise<GetAccountSetupDataReturn> {
 	return actionWrapper(async () => {
-		const storeCount = await prisma.store.count({
+		const stores = await prisma.store.findMany({
 			where: {
 				OR: [
 					{ user_id: userId },
@@ -44,9 +46,10 @@ export async function getAccountSetupData(userId: number): Promise<GetAccountSet
 		return {
 			message: "Account setup data fetched successfully",
 			payload: {
-				storeCount,
+				storeCount: stores.length,
 				productCount,
 				hasOperationalSettings: operationalSettingsCount > 0,
+				stores,
 			},
 			error: false,
 		}
