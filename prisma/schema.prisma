@@ -91,7 +91,7 @@ model Notification {
   message    String
   link       String?
   user       User     @relation(fields: [user_id], references: [id])
-  store      Store?   @relation(fields: [store_id], references: [id])
+  store      Store?   @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
   @@map("notifications")
 }
@@ -194,7 +194,7 @@ model Product {
   product_likes    product_likes[]
   stock_entries    ProductStock[]
   owner            User               @relation(fields: [owner_id], references: [id])
-  store            Store              @relation(fields: [store_id], references: [id])
+  store            Store              @relation(fields: [store_id], references: [id], onDelete: Cascade)
   categories       Category[]         @relation("CategoryToProduct")
   social_activities SocialActivity[]
 
@@ -296,7 +296,7 @@ model Order {
   branch               Branch         @relation(fields: [branch_id], references: [id])
   customer             User?          @relation("OrderCustomer", fields: [customer_id], references: [id])
   processed_by         User?          @relation("OrderProcessedBy", fields: [processed_by_user_id], references: [id])
-  store                Store          @relation(fields: [store_id], references: [id])
+  store                Store          @relation(fields: [store_id], references: [id], onDelete: Cascade)
   tracking             OrderTracking?
   social_activities    SocialActivity[]
   @@map("orders")

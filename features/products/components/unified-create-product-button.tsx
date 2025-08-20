@@ -87,7 +87,6 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
     const handleCreateProduct = async (payload: CreateProductPayload) => {
         try {
             let targetStoreId: number
-            console.log("🚀 ~ handleCreateProduct ~ targetStoreId:", targetStoreId)
 
             if (hasStoreId) {
                 targetStoreId = props.storeId!
