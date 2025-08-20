@@ -1,10 +1,7 @@
-// /features/auth/types/index.ts
+import type { ResendEmailParams } from '@/features/auth/types';
+import { VALID_STEPS, VALID_TYPES } from '../actions/resend/constants';
+import { EmailChangeStatus } from './types';
 
-// =========================================
-// EXPORTS PRINCIPALES DE AUTH TYPES
-// =========================================
-
-// Tipos base para servicios de email
 export type {
   EmailResendType,
   EmailConfirmationType,
@@ -14,14 +11,12 @@ export type {
   SmartResendResponse
 } from './types';
 
-// Tipos para estado de cambio de email
 export type {
   EmailChangeStatus,
   EmailChangeStatusResponse,
   EmailChangeMonitorStatus
 } from './types';
 
-// Tipos para componentes
 export type {
   CheckEmailProps,
   CheckEmailPageProps,
@@ -39,14 +34,12 @@ export type {
   ProgressButtonProps
 } from './types';
 
-// Tipos para estado de pasos y control
 export type {
   StepStatus,
   ResendCooldownState,
   PendingChangeData
 } from './types';
 
-// Tipos para API y respuestas
 export type {
   ApiResponse,
   ApiErrorResponse,
@@ -55,7 +48,6 @@ export type {
   UpdateData
 } from './types';
 
-// Tipos para configuración y utilidades
 export type {
   EmailConfig,
   EmailServiceError,
@@ -64,18 +56,59 @@ export type {
   ResendValidation
 } from './types';
 
-// Re-exports de otros archivos de tipos
 export type {
   FacebookLogoProps,
   GoogleLogoProps,
   LoginErrorDisplayProps
 } from './types';
 
-// =========================================
-// EXPORT DEFAULT PARA CONVENIENCIA
-// =========================================
 
-// Si necesitas importar todos los tipos a la vez:
-// import * as AuthTypes from '@/features/auth/types';
+
+
+export interface ResendRequestContext {
+  params: ResendEmailParams;
+  timestamp: Date;
+  ip?: string;
+}
+
+export interface ValidationResult {
+  isValid: boolean;
+  error?: string;
+}
+
+export type ResendType = typeof VALID_TYPES[number];
+export type ResendStep = typeof VALID_STEPS[number];
+
+export interface UseResendEmailProps {
+  email?: string;
+  type: 'signup' | 'recovery' | 'smart';
+  emailChangeStatus: { status: EmailChangeStatus };
+}
+
+export interface LastResendInfo {
+  email: string;
+  type: string;
+  reason: string;
+}
+
+export interface EmailTargetInfo {
+  targetEmail: string;
+  message: string;
+  step: string | null;
+}
+
+export interface EmailConfirmationCardProps {
+  type: 'signup' | 'recovery' | 'smart';
+  emailTargetInfo: EmailTargetInfo;
+  lastResendInfo: LastResendInfo | null;
+  isResending: boolean;
+  cooldownTime: number;
+  onResendEmail: () => Promise<void>;
+}
+
+export interface EmailInfoProps {
+    targetEmail: string;
+    lastResendInfo: LastResendInfo | null;
+}
 
 export * from './types';

@@ -1,4 +1,3 @@
-// app/api/user/avatar/options/route.ts
 import { /* NextRequest, */ NextResponse } from 'next/server'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { prisma } from '@/utils/prisma'
@@ -31,7 +30,6 @@ export async function GET(/* request: NextRequest */) {
     // 1. Avatar desde user_metadata (Google, etc.)
     const googleAvatar = user.user_metadata?.avatar_url || user.user_metadata?.picture
     if (googleAvatar) {
-      console.log('✅ Avatar de Google encontrado:', googleAvatar)
       options.push({
         id: 'google-original',
         url: googleAvatar,
@@ -64,7 +62,7 @@ export async function GET(/* request: NextRequest */) {
             label = 'Avatar de Facebook'
             icon = '📘'
             break
-          case 'github':
+        /*   case 'github':
             avatarUrl = identity.identity_data?.avatar_url
             label = 'Avatar de GitHub'
             icon = '🐙'
@@ -78,11 +76,10 @@ export async function GET(/* request: NextRequest */) {
             avatarUrl = identity.identity_data?.avatar_url
             label = 'Avatar de Twitter'
             icon = '🐦'
-            break
+            break */
         }
 
         if (avatarUrl) {
-          console.log(`✅ Avatar de ${identity.provider} encontrado:`, avatarUrl)
           options.push({
             id: identity.provider,
             url: avatarUrl,
@@ -184,8 +181,6 @@ for (const { style, label, icon } of diceBearStyles) {
       ...option,
       isCurrentlyUsed: dbUser.avatar === option.url
     }))
-
-    console.log(`✅ Total de opciones generadas: ${optionsWithStatus.length}`)
 
     return NextResponse.json({ 
       options: optionsWithStatus,

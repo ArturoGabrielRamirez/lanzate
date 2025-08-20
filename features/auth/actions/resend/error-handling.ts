@@ -1,13 +1,9 @@
 import { NextResponse } from 'next/server';
 import type { EmailServiceError, ApiErrorResponse } from '@/features/auth/types';
 
-/**
- * Maneja todos los errores del servicio de resend
- */
 export function handleResendError(error: unknown): NextResponse {
   console.error('❌ Resend error:', error);
 
-  // Si es un EmailServiceError con status específico
   if (isEmailServiceError(error)) {
     return NextResponse.json<ApiErrorResponse>(
       { error: true, message: error.message },
@@ -15,12 +11,10 @@ export function handleResendError(error: unknown): NextResponse {
     );
   }
 
-  // Si es un Error normal
   if (error instanceof Error) {
     return handleKnownErrors(error);
   }
 
-  // Error desconocido
   return NextResponse.json<ApiErrorResponse>(
     { error: true, message: 'Error interno del servidor' },
     { status: 500 }
@@ -70,16 +64,13 @@ function handleKnownErrors(error: Error): NextResponse {
     );
   }
 
-  // Error genérico
   return NextResponse.json<ApiErrorResponse>(
     { error: true, message: error.message },
     { status: 400 }
   );
 }
 
-/**
- * Type guard para EmailServiceError
- */
+
 function isEmailServiceError(error: unknown): error is EmailServiceError {
   return error instanceof Error && 'status' in error;
 }

@@ -1,10 +1,10 @@
-import { /* NextRequest, */ NextResponse } from 'next/server'
+/* import {  NextResponse } from 'next/server'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { prisma } from '@/utils/prisma'
 import { AvatarStorageUtils } from '@/features/auth/components/avatar/avatar-storage-utils'
 
 
-export async function GET(/* request: NextRequest */) {
+export async function GET() {
   try {
     const supabase = await createServerSideClient()
     const { data: { user }, error: userError } = await supabase.auth.getUser()
@@ -57,4 +57,4 @@ export async function GET(/* request: NextRequest */) {
       details: error instanceof Error ? error.message : 'Error desconocido'
     }, { status: 500 })
   }
-}
+} */

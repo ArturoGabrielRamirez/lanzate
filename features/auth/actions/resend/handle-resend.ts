@@ -3,17 +3,11 @@ import type { ResendEmailParams, ApiErrorResponse, ApiSuccessResponse } from '@/
 import { validateResendParams } from './validation';
 import { handleResendError } from './error-handling';
 import { EmailService } from '@/features/auth/services/email-services';
-import { logResendRequest, logResendSuccess } from './logging';
 
-/**
- * Maneja las solicitudes de reenvío de email
- */
 export async function handleResend(request: NextRequest): Promise<NextResponse> {
   try {
-    // Parsear el body de la request
     const body = await parseRequestBody(request);
     
-    // Validar parámetros
     const validationError = validateResendParams(body);
     if (validationError) {
       return NextResponse.json<ApiErrorResponse>(
@@ -22,16 +16,8 @@ export async function handleResend(request: NextRequest): Promise<NextResponse> 
       );
     }
 
-    // Log de la solicitud
-    logResendRequest(body);
-
-    // Procesar el reenvío
     const result = await EmailService.resendConfirmation(body);
 
-    // Log de éxito
-    logResendSuccess(body.type);
-
-    // Respuesta exitosa
     return NextResponse.json<ApiSuccessResponse>(
       {
         error: false,
@@ -46,9 +32,6 @@ export async function handleResend(request: NextRequest): Promise<NextResponse> 
   }
 }
 
-/**
- * Proporciona información sobre la API
- */
 export function getApiInfo(): NextResponse {
   return NextResponse.json({
     api: 'Unified Email Resend API',
@@ -66,9 +49,7 @@ export function getApiInfo(): NextResponse {
   });
 }
 
-/**
- * Parsea el body de la request con manejo de errores
- */
+
 async function parseRequestBody(request: NextRequest): Promise<ResendEmailParams> {
   try {
     return await request.json();
