@@ -29,7 +29,6 @@ const defaultStatus: EmailChangeStatus = {
 export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
     const t = useTranslations("auth.check-email");
     const [isResending, setIsResending] = useState(false);
-    const [hasResent, setHasResent] = useState(false);
     const [cooldownTime, setCooldownTime] = useState(0);
     const [lastResendInfo, setLastResendInfo] = useState<{
         email: string;
@@ -84,7 +83,7 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
         setIsResending(true);
 
         try {
-            const endpoint = '/api/auth/resend';
+            const endpoint = '/auth/resend';
             let payload: any = {};
 
             if (type === 'smart') {
@@ -162,7 +161,7 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                 });
             }
 
-            setHasResent(true);
+            // Iniciar countdown después del envío exitoso
             setCooldownTime(60);
 
         } catch (error) {
@@ -182,8 +181,7 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
 
     const getButtonText = () => {
         if (isResending) return 'Reenviando...';
-        if (hasResent && cooldownTime > 0) return `Espera ${cooldownTime}s`;
-        if (hasResent) return 'Reenviado ✓';
+        if (cooldownTime > 0) return `${cooldownTime}s para solicitar nuevamente`;
         return 'Reenviar email';
     };
 
@@ -199,7 +197,7 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
     }
 
     return (
-        <div className="p-8 text-center grow text-white flex flex-col items-center justify-center h-dvh relative">
+        <div className="p-8 text-center grow text-white flex flex-col items-center justify-center h-dvh relative z-10">
             <div className="max-w-md mx-auto space-y-6">
                 <div className="mb-8">
                     <div className="w-20 h-20 mx-auto mb-4 rounded-full flex items-center 
@@ -230,19 +228,18 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                         <p className="text-sm opacity-80">
                             Email enviado a:
                         </p>
-                        <p className="font-medium text-blue-300 break-all">
-                            {targetEmail || 'Email no disponible'}
-                        </p>
-
                         {lastResendInfo && (
                             <div className="text-xs text-gray-400 bg-white/5 rounded p-3 mt-3">
-                                <p><strong>Último reenvío:</strong> {lastResendInfo.email}</p>
-                                <p><strong>Tipo:</strong> {lastResendInfo.type === 'old_email' ?
+                                <p className="font-medium text-blue-300 break-all">
+                                    {targetEmail || 'Email no disponible'}
+                                </p>
+                                {/*        <p><strong>Último reenvío:</strong> {lastResendInfo.email}</p> */}
+                                {/*  <p><strong>Tipo:</strong> {lastResendInfo.type === 'old_email' ?
                                     'Email actual' :
                                     lastResendInfo.type === 'new_email' ?
                                         'Email nuevo' :
-                                        lastResendInfo.type}</p>
-                                {lastResendInfo.reason && <p><strong>Razón:</strong> {lastResendInfo.reason}</p>}
+                                        lastResendInfo.type}</p> */}
+                                {/*   {lastResendInfo.reason && <p><strong>Razón:</strong> {lastResendInfo.reason}</p>} */}
                             </div>
                         )}
 
@@ -262,28 +259,17 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
                             onClick={handleResendEmail}
                             disabled={isButtonDisabled}
                             className={`
-                                px-6 py-3 rounded-lg font-medium transition-all w-full bg-gradient-to-t from-chart-5 to-primary
+                                px-6 py-3 rounded-lg font-medium transition-all w-full
                                 ${cooldownTime > 0
-                                    ? 'bg-yellow-600 text-white cursor-not-allowed'
-                                    : hasResent && cooldownTime === 0
-                                        ? 'bg-green-600 hover:bg-green-700 text-white'
-                                        : isResending
-                                            ? 'bg-secondary-foreground text-white cursor-not-allowed'
-                                            : 'bg-gradient-to-t from-chart-5 to-primary hover:bg-chart-1 text-white hover:scale-105'
+                                    ? 'bg-yellow-600 text-gray-300 cursor-not-allowed'
+                                    : isResending
+                                        ? 'bg-secondary-foreground text-white cursor-not-allowed'
+                                        : 'bg-gradient-to-t from-chart-5 to-primary hover:bg-chart-1 text-white hover:scale-105'
                                 }
                             `}
                         >
                             {getButtonText()}
                         </Button>
-
-                        {hasResent && cooldownTime === 0 && (
-                            <p className="text-sm text-green-400 mt-3 flex items-center justify-center gap-2">
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                                Email reenviado - Revisa tu bandeja de entrada
-                            </p>
-                        )}
 
                         {cooldownTime > 0 && (
                             <p className="text-sm text-yellow-400 mt-2">
