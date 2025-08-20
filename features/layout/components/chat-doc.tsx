@@ -5,7 +5,7 @@ import * as motion from "motion/react-client"
 import { useChat } from "./chat-provider"
 import { RealtimeChat } from "@/components/realtime-chat"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { X, Minimize2, Maximize2 } from "lucide-react"
+import { X, Minimize2, Maximize2, Loader2 } from "lucide-react"
 import { ChatMessage } from "@/hooks/use-realtime-chat"
 
 const ChatDoc = () => {
@@ -16,7 +16,9 @@ const ChatDoc = () => {
         handleCloseChat,
         handleMaximizeChat,
         handleMinimizeChat,
-        isChatMaximized
+        isChatMaximized,
+        getChatMessages,
+        isChatLoading
     } = useChat()
 
     const handleMessage = (messages: ChatMessage[]) => {
@@ -41,6 +43,8 @@ const ChatDoc = () => {
                     <>
                         {rooms.map((roomId) => {
                             const isMaximized = isChatMaximized(roomId)
+                            const messages = getChatMessages(roomId)
+                            const isLoading = isChatLoading(roomId)
 
                             return (
                                 <motion.div
@@ -56,8 +60,11 @@ const ChatDoc = () => {
                                                 ? handleMinimizeChat(roomId)
                                                 : handleMaximizeChat(roomId)
                                             }
-                                            className="flex-1 text-left font-medium hover:text-primary transition-colors cursor-pointer"
+                                            className="flex-1 text-left font-medium hover:text-primary transition-colors cursor-pointer flex items-center gap-2"
                                         >
+                                            {isLoading && (
+                                                <Loader2 className="size-4 animate-spin" />
+                                            )}
                                             Order {roomId}
                                             {!isMaximized && (
                                                 <span className="ml-2 text-xs text-muted-foreground">
@@ -89,7 +96,22 @@ const ChatDoc = () => {
                                             exit={{ height: 0, opacity: 0 }}
                                             transition={{ duration: 0.2 }}
                                         >
-                                            <RealtimeChat roomName={roomId} username="Store" onMessage={handleMessage} messageType="STORE_TO_CUSTOMER" />
+                                            {isLoading ? (
+                                                <div className="flex items-center justify-center p-8">
+                                                    <div className="flex items-center gap-2 text-muted-foreground">
+                                                        <Loader2 className="size-4 animate-spin" />
+                                                        <span className="text-sm">Loading messages...</span>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <RealtimeChat 
+                                                    roomName={roomId} 
+                                                    username="Store" 
+                                                    onMessage={handleMessage} 
+                                                    messageType="STORE_TO_CUSTOMER"
+                                                    messages={messages}
+                                                />
+                                            )}
                                         </motion.div>
                                     )}
                                 </motion.div>

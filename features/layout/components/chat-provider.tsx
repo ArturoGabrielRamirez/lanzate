@@ -1,10 +1,14 @@
 "use client"
 
 import { createContext, useContext, useState } from "react"
+import { fetchOrderMessages } from "@/features/chat/actions/getOrderMessages"
+import { ChatMessage } from "@/hooks/use-realtime-chat"
 
 type ChatState = {
     roomId: string
     isMaximized: boolean
+    messages: ChatMessage[]
+    isLoading: boolean
 }
 
 type Props = {
@@ -16,20 +20,24 @@ const ChatContext = createContext<{
     rooms: string[]
     chatStates: ChatState[]
     selectedRoom: string | null
-    handleOpenChat: (roomId: string) => void
+    handleOpenChat: (roomId: string) => Promise<void>
     handleCloseChat: (roomId: string) => void
     handleToggleChat: () => void
     handleMaximizeChat: (roomId: string) => void
     handleMinimizeChat: (roomId: string) => void
     isChatMaximized: (roomId: string) => boolean
+    getChatMessages: (roomId: string) => ChatMessage[]
+    isChatLoading: (roomId: string) => boolean
 }>({
     isOpen: false,
-    handleOpenChat: () => { },
+    handleOpenChat: async () => { },
     handleCloseChat: () => { },
     handleToggleChat: () => { },
     handleMaximizeChat: () => { },
     handleMinimizeChat: () => { },
     isChatMaximized: () => false,
+    getChatMessages: () => [],
+    isChatLoading: () => false,
     rooms: [],
     chatStates: [],
     selectedRoom: null
@@ -41,14 +49,48 @@ export const ChatProvider = ({ children }: Props) => {
     const [chatStates, setChatStates] = useState<ChatState[]>([])
     const [selectedRoom, setSelectedRoom] = useState<string | null>(null)
 
-    const handleOpenChat = (roomId: string) => {
+    const handleOpenChat = async (roomId: string) => {
         setIsOpen(true)
         setSelectedRoom(roomId)
         
-        // Si el chat no existe, agregarlo maximizado
+        // Si el chat no existe, agregarlo maximizado y cargar mensajes
         if (!rooms.includes(roomId)) {
+            // Agregar el chat inmediatamente con estado de carga
             setRooms([...rooms, roomId])
-            setChatStates([...chatStates, { roomId, isMaximized: true }])
+            setChatStates([...chatStates, { 
+                roomId, 
+                isMaximized: true,
+                messages: [],
+                isLoading: true
+            }])
+
+            try {
+                // Cargar mensajes previos de la base de datos
+                const { payload: messages, error } = await fetchOrderMessages(Number(roomId))
+                
+                if (error) {
+                    console.error('Error loading messages:', error)
+                }
+
+                // Actualizar el estado del chat con los mensajes cargados
+                setChatStates(prevStates => 
+                    prevStates.map(chat => 
+                        chat.roomId === roomId 
+                            ? { ...chat, messages: messages || [], isLoading: false }
+                            : chat
+                    )
+                )
+            } catch (error) {
+                console.error('Error opening chat:', error)
+                // Si hay error, mantener el chat pero sin mensajes
+                setChatStates(prevStates => 
+                    prevStates.map(chat => 
+                        chat.roomId === roomId 
+                            ? { ...chat, messages: [], isLoading: false }
+                            : chat
+                    )
+                )
+            }
         } else {
             // Si ya existe, maximizarlo
             handleMaximizeChat(roomId)
@@ -92,6 +134,14 @@ export const ChatProvider = ({ children }: Props) => {
         return chatStates.find((chat) => chat.roomId === roomId)?.isMaximized ?? false
     }
 
+    const getChatMessages = (roomId: string) => {
+        return chatStates.find((chat) => chat.roomId === roomId)?.messages ?? []
+    }
+
+    const isChatLoading = (roomId: string) => {
+        return chatStates.find((chat) => chat.roomId === roomId)?.isLoading ?? false
+    }
+
     return (
         <ChatContext.Provider value={{ 
             isOpen, 
@@ -101,6 +151,8 @@ export const ChatProvider = ({ children }: Props) => {
             handleMaximizeChat,
             handleMinimizeChat,
             isChatMaximized,
+            getChatMessages,
+            isChatLoading,
             rooms, 
             chatStates,
             selectedRoom 
