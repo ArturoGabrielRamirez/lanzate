@@ -20,6 +20,9 @@ interface RealtimeChatProps {
   onMessage?: (messages: ChatMessage[]) => void
   messages?: ChatMessage[]
   messageType: MessageType
+  disabled?: boolean
+  emptyStateText?: string
+  completedOrderText?: string
 }
 
 /**
@@ -28,6 +31,9 @@ interface RealtimeChatProps {
  * @param username - The username of the user
  * @param onMessage - The callback function to handle the messages. Useful if you want to store the messages in a database.
  * @param messages - The messages to display in the chat. Useful if you want to display messages from a database.
+ * @param disabled - Whether the chat is disabled (e.g., order completed)
+ * @param emptyStateText - Custom text to show when there are no messages
+ * @param completedOrderText - Custom text to show when order is completed
  * @returns The chat component
  */
 export const RealtimeChat = ({
@@ -36,6 +42,9 @@ export const RealtimeChat = ({
   onMessage,
   messages: initialMessages = [],
   messageType,
+  disabled = false,
+  emptyStateText = "No messages yet. Start the conversation!",
+  completedOrderText = "This order has been completed and you can no longer send messages to the store.",
 }: RealtimeChatProps) => {
   const { containerRef, scrollToBottom } = useChatScroll()
 
@@ -76,24 +85,43 @@ export const RealtimeChat = ({
   const handleSendMessage = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault()
-      if (!newMessage.trim() || !isConnected) return
+      if (!newMessage.trim() || !isConnected || disabled) return
 
       sendMessage(newMessage)
       //add a new action function to store the message in the database
       createNewOrderMessage(Number(roomName), newMessage, messageType)
       setNewMessage('')
     },
-    [newMessage, isConnected, sendMessage]
+    [newMessage, isConnected, sendMessage, disabled, roomName, messageType]
   )
+
+  // Determine what text to show when there are no messages
+  const getEmptyStateText = () => {
+    if (disabled) {
+      return (
+        <div className="text-center space-y-2">
+          <div className="text-sm text-muted-foreground">
+            {emptyStateText}
+          </div>
+          <div className="text-xs text-muted-foreground/70">
+            {completedOrderText}
+          </div>
+        </div>
+      )
+    }
+    return (
+      <div className="text-center text-sm text-muted-foreground">
+        {emptyStateText}
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col h-full w-full bg-background text-foreground antialiased">
       {/* Messages */}
       <div ref={containerRef} className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[350px]">
         {allMessages.length === 0 ? (
-          <div className="text-center text-sm text-muted-foreground">
-            No messages yet. Start the conversation!
-          </div>
+          getEmptyStateText()
         ) : null}
         <div className="space-y-1">
           {allMessages.map((message, index) => {
@@ -120,19 +148,19 @@ export const RealtimeChat = ({
         <Input
           className={cn(
             'rounded-full bg-background text-sm transition-all duration-300',
-            isConnected && newMessage.trim() ? 'w-[calc(100%-36px)]' : 'w-full'
+            isConnected && newMessage.trim() && !disabled ? 'w-[calc(100%-36px)]' : 'w-full'
           )}
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type a message..."
-          disabled={!isConnected}
+          placeholder={disabled ? "Chat disabled - Order completed" : "Type a message..."}
+          disabled={!isConnected || disabled}
         />
-        {isConnected && newMessage.trim() && (
+        {isConnected && newMessage.trim() && !disabled && (
           <Button
             className="aspect-square rounded-full animate-in fade-in slide-in-from-right-4 duration-300"
             type="submit"
-            disabled={!isConnected}
+            disabled={!isConnected || disabled}
           >
             <Send className="size-4" />
           </Button>

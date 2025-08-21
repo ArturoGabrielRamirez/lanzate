@@ -18,7 +18,8 @@ const ChatDoc = () => {
         handleMinimizeChat,
         isChatMaximized,
         getChatMessages,
-        isChatLoading
+        isChatLoading,
+        isOrderCompleted
     } = useChat()
 
     const handleMessage = (messages: ChatMessage[]) => {
@@ -110,6 +111,9 @@ const ChatDoc = () => {
                                                     onMessage={handleMessage} 
                                                     messageType="STORE_TO_CUSTOMER"
                                                     messages={messages}
+                                                    emptyStateText="No hay mensajes aún. ¡Inicia la conversación con el cliente!"
+                                                    completedOrderText="Esta orden ha sido completada y ya no puedes enviar más mensajes al cliente."
+                                                    disabled={isOrderCompleted(roomId)}
                                                 />
                                             )}
                                         </motion.div>

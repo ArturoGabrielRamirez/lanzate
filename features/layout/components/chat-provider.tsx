@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState } from "react"
 import { fetchOrderMessages } from "@/features/chat/actions/getOrderMessages"
+import { fetchOrderStatus } from "@/features/chat/actions/getOrderStatus"
 import { ChatMessage } from "@/hooks/use-realtime-chat"
 
 type ChatState = {
@@ -9,6 +10,7 @@ type ChatState = {
     isMaximized: boolean
     messages: ChatMessage[]
     isLoading: boolean
+    isOrderCompleted: boolean
 }
 
 type Props = {
@@ -28,6 +30,7 @@ const ChatContext = createContext<{
     isChatMaximized: (roomId: string) => boolean
     getChatMessages: (roomId: string) => ChatMessage[]
     isChatLoading: (roomId: string) => boolean
+    isOrderCompleted: (roomId: string) => boolean
 }>({
     isOpen: false,
     handleOpenChat: async () => { },
@@ -38,6 +41,7 @@ const ChatContext = createContext<{
     isChatMaximized: () => false,
     getChatMessages: () => [],
     isChatLoading: () => false,
+    isOrderCompleted: () => false,
     rooms: [],
     chatStates: [],
     selectedRoom: null
@@ -61,22 +65,37 @@ export const ChatProvider = ({ children }: Props) => {
                 roomId, 
                 isMaximized: true,
                 messages: [],
-                isLoading: true
+                isLoading: true,
+                isOrderCompleted: false
             }])
 
             try {
-                // Cargar mensajes previos de la base de datos
-                const { payload: messages, error } = await fetchOrderMessages(Number(roomId))
+                // Cargar mensajes previos y estado de la orden en paralelo
+                const [messagesResult, orderStatusResult] = await Promise.all([
+                    fetchOrderMessages(Number(roomId)),
+                    fetchOrderStatus(Number(roomId))
+                ])
                 
-                if (error) {
-                    console.error('Error loading messages:', error)
+                if (messagesResult.error) {
+                    console.error('Error loading messages:', messagesResult.error)
                 }
 
-                // Actualizar el estado del chat con los mensajes cargados
+                if (orderStatusResult.error) {
+                    console.error('Error loading order status:', orderStatusResult.error)
+                }
+
+                const isCompleted = orderStatusResult.payload?.status === "COMPLETED"
+
+                // Actualizar el estado del chat con los mensajes cargados y el estado de la orden
                 setChatStates(prevStates => 
                     prevStates.map(chat => 
                         chat.roomId === roomId 
-                            ? { ...chat, messages: messages || [], isLoading: false }
+                            ? { 
+                                ...chat, 
+                                messages: messagesResult.payload || [], 
+                                isLoading: false,
+                                isOrderCompleted: isCompleted
+                            }
                             : chat
                     )
                 )
@@ -86,7 +105,12 @@ export const ChatProvider = ({ children }: Props) => {
                 setChatStates(prevStates => 
                     prevStates.map(chat => 
                         chat.roomId === roomId 
-                            ? { ...chat, messages: [], isLoading: false }
+                            ? { 
+                                ...chat, 
+                                messages: [], 
+                                isLoading: false,
+                                isOrderCompleted: false
+                            }
                             : chat
                     )
                 )
@@ -142,6 +166,10 @@ export const ChatProvider = ({ children }: Props) => {
         return chatStates.find((chat) => chat.roomId === roomId)?.isLoading ?? false
     }
 
+    const isOrderCompleted = (roomId: string) => {
+        return chatStates.find((chat) => chat.roomId === roomId)?.isOrderCompleted ?? false
+    }
+
     return (
         <ChatContext.Provider value={{ 
             isOpen, 
@@ -153,6 +181,7 @@ export const ChatProvider = ({ children }: Props) => {
             isChatMaximized,
             getChatMessages,
             isChatLoading,
+            isOrderCompleted,
             rooms, 
             chatStates,
             selectedRoom 

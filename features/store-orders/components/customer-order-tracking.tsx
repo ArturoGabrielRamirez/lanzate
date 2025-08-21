@@ -69,7 +69,7 @@ function CustomerOrderTracking({ order }: Props) {
 
     return (
         <div className="flex flex-col gap-4 md:flex-row">
-            <div className="flex gap-8 flex-col">
+            <div className="flex gap-8 flex-col w-full items-start">
                 <OrderTimelineIcons order={order} />
                 <div className="flex flex-col gap-4">
                     {/* Order Placed */}
@@ -215,6 +215,9 @@ function CustomerOrderTracking({ order }: Props) {
                         username="Customer" 
                         messageType="CUSTOMER_TO_STORE"
                         messages={messages}
+                        disabled={order.status === "COMPLETED"}
+                        emptyStateText="No hay mensajes aún. ¡Inicia la conversación!"
+                        completedOrderText="Esta orden ha sido completada y ya no puedes enviar más mensajes a la tienda."
                     />
                 )}
             </div>
