@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 import { fetchOrderMessages } from "@/features/chat/actions/getOrderMessages"
 import { ChatMessage } from "@/hooks/use-realtime-chat"
 import { Loader2 } from "lucide-react"
+import { createClient } from "@/utils/supabase/client"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
@@ -17,12 +18,64 @@ function CustomerOrderTracking({ order }: Props) {
     const [messages, setMessages] = useState<ChatMessage[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
+    useEffect(() => {
+        const suscribe = async () => {
+            const supabase = createClient()
+            
+            const channel = supabase.channel("public-order-changes")
+
+            // Suscribirse a cambios en orders (sin filtro por ahora)
+            channel.on("postgres_changes", {
+                event: "*",
+                schema: "public",
+                table: "orders",
+            }, (payload) => {
+                console.log("📦 Order change received:", payload)
+            })
+
+            // Suscribirse a cambios en order_tracking (sin filtro por ahora)
+            channel.on("postgres_changes", {
+                event: "*",
+                schema: "public",
+                table: "order_tracking",
+            }, (payload) => {
+                console.log("🚚 Order tracking change received:", payload)
+            })
+
+            console.log("🔌 Attempting to subscribe...")
+            
+            // Suscribirse al canal y manejar errores
+            channel.subscribe((status) => {
+                console.log("📡 Subscription status:", status)
+                
+                if (status === 'SUBSCRIBED') {
+                    console.log("✅ Successfully subscribed to realtime channel")
+                } else if (status === 'CHANNEL_ERROR') {
+                    console.error("❌ Channel error occurred")
+                    console.error("🔍 Channel details:", channel)
+                } else if (status === 'TIMED_OUT') {
+                    console.error("⏰ Channel subscription timed out")
+                } else if (status === 'CLOSED') {
+                    console.error("🚪 Channel was closed")
+                }
+            })
+
+            // Cleanup function
+            return () => {
+                console.log("🧹 Cleaning up channel...")
+                channel.unsubscribe()
+            }
+        }
+
+        suscribe()
+    }, [order.id])
+
     // Cargar mensajes previos cuando el componente se monta
     useEffect(() => {
         const loadMessages = async () => {
             try {
                 const { payload: orderMessages, error } = await fetchOrderMessages(order.id)
-                
+
                 if (error) {
                     console.error('Error loading messages:', error)
                 }
@@ -37,6 +90,8 @@ function CustomerOrderTracking({ order }: Props) {
 
         loadMessages()
     }, [order.id])
+
+
 
     const isProcessing = order.status === "PROCESSING"
     const isReady = order.status === "READY"
@@ -210,9 +265,9 @@ function CustomerOrderTracking({ order }: Props) {
                         </div>
                     </div>
                 ) : (
-                    <RealtimeChat 
-                        roomName={String(order.id)} 
-                        username="Customer" 
+                    <RealtimeChat
+                        roomName={String(order.id)}
+                        username="Customer"
                         messageType="CUSTOMER_TO_STORE"
                         messages={messages}
                         disabled={order.status === "COMPLETED"}

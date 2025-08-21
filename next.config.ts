@@ -5,7 +5,7 @@ const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin')
 
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ["lanzate.app"],
+  allowedDevOrigins: ["lanzate.app","lodemauri.lanzate.app"],
   experimental: {
     serverActions: {
       bodySizeLimit: '3mb',
