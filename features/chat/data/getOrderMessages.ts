@@ -4,7 +4,6 @@ import { prisma } from "@/utils/prisma"
 import { ChatMessage } from "@/hooks/use-realtime-chat"
 
 export async function getOrderMessages(orderId: number): Promise<ChatMessage[]> {
-    console.log("🚀 ~ getOrderMessages ~ orderId:", orderId)
     try {
         const messages = await prisma.orderMessage.findMany({
             where: {

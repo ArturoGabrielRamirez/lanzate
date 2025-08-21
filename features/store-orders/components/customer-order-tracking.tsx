@@ -4,14 +4,40 @@ import { Order, Store, OrderPayment, Product, OrderItem, OrderTracking } from "@
 import OrderTimelineIcons from "@/features/orders/components/order-timeline-icons"
 import { CircleCheck, Clock, ShoppingBag, MapPin, PartyPopper } from "lucide-react"
 import { RealtimeChat } from "@/components/realtime-chat"
+import { useEffect, useState } from "react"
+import { fetchOrderMessages } from "@/features/chat/actions/getOrderMessages"
+import { ChatMessage } from "@/hooks/use-realtime-chat"
+import { Loader2 } from "lucide-react"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
 }
 
-
-
 function CustomerOrderTracking({ order }: Props) {
+    const [messages, setMessages] = useState<ChatMessage[]>([])
+    const [isLoading, setIsLoading] = useState(true)
+
+    // Cargar mensajes previos cuando el componente se monta
+    useEffect(() => {
+        const loadMessages = async () => {
+            try {
+                const { payload: orderMessages, error } = await fetchOrderMessages(order.id)
+                
+                if (error) {
+                    console.error('Error loading messages:', error)
+                }
+
+                setMessages(orderMessages || [])
+            } catch (error) {
+                console.error('Error loading messages:', error)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        loadMessages()
+    }, [order.id])
+
     const isProcessing = order.status === "PROCESSING"
     const isReady = order.status === "READY"
     const isCompleted = order.status === "COMPLETED"
@@ -176,7 +202,21 @@ function CustomerOrderTracking({ order }: Props) {
                 </div>
             </div>
             <div className="w-full">
-                <RealtimeChat roomName={`order-${order.id}`} username={"Customer"} />
+                {isLoading ? (
+                    <div className="flex items-center justify-center p-8 border rounded-lg">
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <Loader2 className="size-4 animate-spin" />
+                            <span className="text-sm">Loading chat messages...</span>
+                        </div>
+                    </div>
+                ) : (
+                    <RealtimeChat 
+                        roomName={String(order.id)} 
+                        username="Customer" 
+                        messageType="CUSTOMER_TO_STORE"
+                        messages={messages}
+                    />
+                )}
             </div>
         </div>
     )
