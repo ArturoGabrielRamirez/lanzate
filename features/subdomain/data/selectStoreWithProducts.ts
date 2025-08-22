@@ -15,7 +15,14 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
             ? category.split(',').map(id => id.trim())
             : undefined;
 
-        const orderBy: { name?: 'asc' | 'desc', price?: 'asc' | 'desc', created_at?: 'asc' | 'desc' } = {}
+        const orderBy: {
+            name?: 'asc' | 'desc',
+            price?: 'asc' | 'desc',
+            created_at?: 'asc' | 'desc',
+            is_featured?: 'asc' | 'desc'
+        } = {
+            is_featured: 'desc'
+        }
 
         if (sort?.includes('name')) {
             orderBy.name = sort.includes('-desc') ? 'desc' : 'asc'

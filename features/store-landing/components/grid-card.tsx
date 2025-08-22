@@ -8,7 +8,8 @@ import { useState } from "react"
 import * as motion from "motion/react-client"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Heart, Share, ShoppingCart } from "lucide-react"
+import { Crown, Heart, Share, ShoppingCart } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
 
 type Props = {
     product: Product
@@ -42,7 +43,7 @@ function GridCard({ product }: Props) {
             <motion.div
                 className="relative w-full h-full"
                 animate={{ rotateY: isFlipped ? 180 : 0 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
                 style={{
                     transformStyle: "preserve-3d",
                     width: '100%',
@@ -64,8 +65,24 @@ function GridCard({ product }: Props) {
                                     src={product.image || "/public-store/avatar.svg"}
                                     alt={product.name}
                                     fill
-                                    className="rounded-md object-cover group-hover:scale-110 transition-all duration-300"
+                                    className={cn(
+                                        "object-cover group-hover:scale-110 transition-all duration-300 contrast-50 group-hover:contrast-100",
+                                        !product.is_active && "grayscale"
+                                    )}
                                 />
+                                <div className="absolute top-2 left-2 flex gap-2">
+                                    {product.is_featured && <Crown className="text-yellow-500" />}
+                                    {!product.is_active && (
+                                        <Badge className="text-blue-500 border-blue-500 bg-black/30 backdrop-blur-sm text-sm">
+                                            Próximamente
+                                        </Badge>
+                                    )}
+                                    {product.created_at > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) && (
+                                        <Badge className="text-green-500 border-green-500 bg-black/30 backdrop-blur-sm text-sm">
+                                            Nuevo
+                                        </Badge>
+                                    )}
+                                </div>
                             </div>
                         </CardHeader>
                         <CardContent className="grow">

@@ -290,7 +290,7 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
             topActions={
                 (filteredSelectedRowModel: RowModel<Product & { categories: Category[] }>) => {
                     return (
-                        <div className="flex items-center gap-2">
+                        <div className="grid grid-cols-3 gap-2">
                             <UpdatePricesButton
                                 selectedRows={filteredSelectedRowModel}
                                 storeId={storeId}
