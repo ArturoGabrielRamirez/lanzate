@@ -1,10 +1,7 @@
-import { Accordion, AccordionTrigger, AccordionItem, AccordionContent } from "@/components/ui/accordion"
-import { AlertTitle } from "@/components/ui/alert"
-import { Badge } from "@/components/ui/badge"
 import { getEmployeePermissions } from "@/features/stores/actions/getEmployeePermissions"
 import { getOrderDetails } from "@/features/stores/actions/getOrderDetails"
-import { cn } from "@/lib/utils"
-import { Box, Calendar, Check, MapPin, Package, ShoppingCart, Truck, User } from "lucide-react"
+import { formatDate } from "@/lib/utils"
+import { MapPin, Truck } from "lucide-react"
 import OrderTimeline from "./order-timeline"
 import OrderDetailsAccordions from "./order-details-accordions"
 
@@ -35,13 +32,12 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
         return <div>Error loading employee permissions</div>
     }
 
-
     return (
         <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr] gap-8 w-full">
             <div className="flex flex-col gap-2 md:min-w-sm border p-4 rounded-md md:max-w-md w-full xl:max-w-full">
                 <h3 className="text-2xl font-bold text-center flex items-center justify-center gap-2">Order #{order.id} {order.shipping_method === "PICKUP" ? <MapPin className="size-4 md:size-6" /> : <Truck className="size-4 md:size-6" />}</h3>
                 <p className="text-sm text-muted-foreground text-center">
-                    {Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short" }).format(order.created_at)}
+                    {formatDate(order.created_at)}
                 </p>
                 <OrderTimeline order={order} />
             </div>

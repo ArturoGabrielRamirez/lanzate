@@ -63,7 +63,7 @@ const OrderTimeline = ({ order }: Props) => {
                     )}
                 </div>
                 <CancelOrderButton order={order} slug={order.store.slug} className="w-full" />
-                <OpenChatButton roomId={String(order.id)} />
+                <OpenChatButton roomId={String(order.id)} username="Store" messageType="STORE_TO_CUSTOMER" />
             </div>
         </div>
     )

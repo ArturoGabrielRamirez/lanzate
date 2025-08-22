@@ -11,6 +11,8 @@ type ChatState = {
     messages: ChatMessage[]
     isLoading: boolean
     isOrderCompleted: boolean
+    username: string
+    messageType: "STORE_TO_CUSTOMER" | "CUSTOMER_TO_STORE"
 }
 
 type Props = {
@@ -22,7 +24,7 @@ const ChatContext = createContext<{
     rooms: string[]
     chatStates: ChatState[]
     selectedRoom: string | null
-    handleOpenChat: (roomId: string) => Promise<void>
+    handleOpenChat: (roomId: string, username?: string, messageType?: "STORE_TO_CUSTOMER" | "CUSTOMER_TO_STORE") => Promise<void>
     handleCloseChat: (roomId: string) => void
     handleToggleChat: () => void
     handleMaximizeChat: (roomId: string) => void
@@ -31,6 +33,8 @@ const ChatContext = createContext<{
     getChatMessages: (roomId: string) => ChatMessage[]
     isChatLoading: (roomId: string) => boolean
     isOrderCompleted: (roomId: string) => boolean
+    getChatUsername: (roomId: string) => string
+    getChatMessageType: (roomId: string) => "STORE_TO_CUSTOMER" | "CUSTOMER_TO_STORE"
 }>({
     isOpen: false,
     handleOpenChat: async () => { },
@@ -42,6 +46,8 @@ const ChatContext = createContext<{
     getChatMessages: () => [],
     isChatLoading: () => false,
     isOrderCompleted: () => false,
+    getChatUsername: () => "Store",
+    getChatMessageType: () => "STORE_TO_CUSTOMER",
     rooms: [],
     chatStates: [],
     selectedRoom: null
@@ -53,7 +59,11 @@ export const ChatProvider = ({ children }: Props) => {
     const [chatStates, setChatStates] = useState<ChatState[]>([])
     const [selectedRoom, setSelectedRoom] = useState<string | null>(null)
 
-    const handleOpenChat = async (roomId: string) => {
+    const handleOpenChat = async (
+        roomId: string, 
+        username: string = "Store", 
+        messageType: "STORE_TO_CUSTOMER" | "CUSTOMER_TO_STORE" = "STORE_TO_CUSTOMER"
+    ) => {
         setIsOpen(true)
         setSelectedRoom(roomId)
         
@@ -66,7 +76,9 @@ export const ChatProvider = ({ children }: Props) => {
                 isMaximized: true,
                 messages: [],
                 isLoading: true,
-                isOrderCompleted: false
+                isOrderCompleted: false,
+                username,
+                messageType
             }])
 
             try {
@@ -170,6 +182,14 @@ export const ChatProvider = ({ children }: Props) => {
         return chatStates.find((chat) => chat.roomId === roomId)?.isOrderCompleted ?? false
     }
 
+    const getChatUsername = (roomId: string) => {
+        return chatStates.find((chat) => chat.roomId === roomId)?.username ?? "Store"
+    }
+
+    const getChatMessageType = (roomId: string) => {
+        return chatStates.find((chat) => chat.roomId === roomId)?.messageType ?? "STORE_TO_CUSTOMER"
+    }
+
     return (
         <ChatContext.Provider value={{ 
             isOpen, 
@@ -182,6 +202,8 @@ export const ChatProvider = ({ children }: Props) => {
             getChatMessages,
             isChatLoading,
             isOrderCompleted,
+            getChatUsername,
+            getChatMessageType,
             rooms, 
             chatStates,
             selectedRoom 

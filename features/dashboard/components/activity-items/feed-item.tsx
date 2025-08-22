@@ -148,7 +148,7 @@ const FeedItem = ({ item }: Props) => {
                     {item.activity_type === "ORDER_CREATED" && (
                         <CancelOrderButton order={item.order} slug={item.store.slug} size="sm" onlyIcon className="" />
                     )}
-                    {item.activity_type === "ORDER_CREATED" && <OpenChatButton roomId={String(item.order.id)} onlyIcon />}
+                    {item.activity_type === "ORDER_CREATED" && <OpenChatButton roomId={String(item.order.id)} onlyIcon username="Store" messageType="STORE_TO_CUSTOMER" />}
                 </CardFooter>
             </Card>
 

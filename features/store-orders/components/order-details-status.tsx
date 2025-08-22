@@ -20,11 +20,11 @@ const OrderDetailsStatus = ({ order }: Props) => {
     return (
         <Card className="w-full">
             <CardHeader>
-                <CardTitle>
-                    <h3 className="flex items-center gap-2 text-lg font-medium">
-                        <span>Order #{order.id} - </span>
-                        {order.shipping_method === "DELIVERY" ? <Truck className="size-4" /> : <MapPin className="size-4" />}
+                <CardTitle className="flex items-center gap-2 justify-between">
+                    <h3 className="text-xl font-medium">
+                        Order #{order.id}
                     </h3>
+                    {order.shipping_method === "DELIVERY" ? <Truck className="size-4" /> : <MapPin className="size-4" />}
                 </CardTitle>
                 <CardDescription>
                     <p className="text-base">{orderDescriptions[order.status as keyof typeof orderDescriptions]}</p>

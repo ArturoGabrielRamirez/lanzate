@@ -62,6 +62,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                     userLayout={(
                       <>
                         {children}
+                        <ChatDoc />
                         <GlobalEmailConfirmationDetector />
                         <Toaster position="top-center" />
                       </>

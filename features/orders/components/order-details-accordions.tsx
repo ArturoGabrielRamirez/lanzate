@@ -1,7 +1,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
-import { cn } from "@/lib/utils"
+import { cn, formatDate } from "@/lib/utils"
 import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
 import { Box, Calendar, Check, MapPin, Package, ShoppingCart, Truck, User } from "lucide-react"
 
@@ -128,7 +128,7 @@ const OrderDetailsAccordions = ({ order }: Props) => {
                     </div>
                     <div className="flex justify-between items-center">
                         <span className="text-xs md:text-sm text-muted-foreground">Order Date</span>
-                        <span className="text-sm md:text-base font-medium">{new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short" }).format(order.created_at)}</span>
+                        <span className="text-sm md:text-base font-medium">{formatDate(order.created_at)}</span>
                     </div>
                 </AccordionContent>
             </AccordionItem>

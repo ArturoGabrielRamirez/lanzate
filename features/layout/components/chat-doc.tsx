@@ -19,7 +19,9 @@ const ChatDoc = () => {
         isChatMaximized,
         getChatMessages,
         isChatLoading,
-        isOrderCompleted
+        isOrderCompleted,
+        getChatUsername,
+        getChatMessageType
     } = useChat()
 
     const handleMessage = (messages: ChatMessage[]) => {
@@ -46,6 +48,8 @@ const ChatDoc = () => {
                             const isMaximized = isChatMaximized(roomId)
                             const messages = getChatMessages(roomId)
                             const isLoading = isChatLoading(roomId)
+                            const username = getChatUsername(roomId)
+                            const messageType = getChatMessageType(roomId)
 
                             return (
                                 <motion.div
@@ -107,9 +111,9 @@ const ChatDoc = () => {
                                             ) : (
                                                 <RealtimeChat 
                                                     roomName={roomId} 
-                                                    username="Store" 
+                                                    username={username} 
                                                     onMessage={handleMessage} 
-                                                    messageType="STORE_TO_CUSTOMER"
+                                                    messageType={messageType}
                                                     messages={messages}
                                                     emptyStateText="No hay mensajes aún. ¡Inicia la conversación con el cliente!"
                                                     completedOrderText="Esta orden ha sido completada y ya no puedes enviar más mensajes al cliente."
