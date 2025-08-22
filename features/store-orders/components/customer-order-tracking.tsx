@@ -12,6 +12,8 @@ import { createClient } from "@/utils/supabase/client"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
+import OrderDetailsStatus from "./order-details-status"
+import OrderDetailsAccordions from "@/features/orders/components/order-details-accordions"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
@@ -124,61 +126,20 @@ function CustomerOrderTracking({ order }: Props) {
     const isPickupReadyFuture = isPickup && !isWaitingForPickup && !isPickupReadyCompleted
     const isOrderCompletedFuture = !isCompleted
 
-    const orderDescriptions = {
-        PROCESSING: "Be patient, your order is being processed.",
-        READY: "Be patient, your order was confirmed and is being prepared.",
-        COMPLETED: "Enjoy your purchase!",
-    }
+
 
     return (
         <div className="">
-            <Card className="w-fit">
-                <CardHeader>
-                    <CardTitle>
-                        <h3 className="flex items-center gap-2 text-lg font-medium">
-                            <span>Order #{currentOrder.id} - </span>
-                            {currentOrder.shipping_method === "DELIVERY" ? <Truck className="size-4" /> : <MapPin className="size-4" />}
-                        </h3>
-                    </CardTitle>
-                    <CardDescription>
-                        <p className="text-base">{orderDescriptions[currentOrder.status as keyof typeof orderDescriptions]}</p>
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <OrderTimelineIcons order={currentOrder} />
-                </CardContent>
-                <CardFooter className="flex flex-col gap-2">
-                    <div className="flex items-center gap-2 w-full">
-                        <Badge variant="outline">
-                            <StoreIcon />
-                            {currentOrder.store.name}
-                        </Badge>
-                        <div className="flex items-center justify-between flex-1">
-                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
-                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
-                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
-                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
-                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
-                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
-                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
-                        </div>
-                        <Badge variant="outline">
-                            {currentOrder.shipping_method === "DELIVERY" ? (
-                                <>
-                                    <Truck />
-                                    {currentOrder.address_one}
-                                </>
-                            ) : (
-                                <>
-                                    <MapPin />
-                                    at store
-                                </>
-                            )}
-                        </Badge>
-                    </div>
-                    <Progress value={50} className="bg-green-600/10" indicatorClassName="bg-green-600" />
-                </CardFooter>
-            </Card>
+            <div className="lg:grid lg:grid-cols-[2fr_1fr_1fr] gap-4 mb-4">
+                <OrderDetailsStatus order={currentOrder} />
+                <Card className="hidden lg:block">
+                    
+                </Card>
+                <Card className="hidden lg:block">
+                    
+                </Card>
+            </div>
+            <OrderDetailsAccordions order={currentOrder} />
             {/* <div className="flex gap-8 flex-col w-full items-start">
                 <OrderTimelineIcons order={currentOrder} />
                 <div className="flex flex-col gap-4">

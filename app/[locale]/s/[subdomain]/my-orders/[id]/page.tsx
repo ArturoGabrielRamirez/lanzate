@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import { Title } from "@/features/layout/components"
 import OrderDetailsContainer from "@/features/store-orders/components/order-details-container"
 import OrderDetailsSkeleton from "@/features/store-orders/components/order-details-skeleton"
+import PageContainer from "@/features/layout/components/page-container"
 
 type Props = {
     params: Promise<{
@@ -13,7 +14,7 @@ export default async function OrderDetailsPage({ params }: Props) {
     const { id } = await params
 
     return (
-        <section className="p-4 grow flex flex-col pb-8 container mx-auto">
+        <PageContainer className="!pt-8">
             <Title
                 title={`Order #${id}`}
                 breadcrumbs={[
@@ -28,6 +29,6 @@ export default async function OrderDetailsPage({ params }: Props) {
                     <OrderDetailsContainer orderId={id} />
                 </Suspense>
             </div>
-        </section>
+        </PageContainer>
     )
 }

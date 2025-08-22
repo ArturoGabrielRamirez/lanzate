@@ -47,7 +47,7 @@ async function MyOrdersContainer() {
                 <Package className="w-12 h-12 text-muted-foreground mb-4" />
                 <h3 className="text-lg font-medium mb-2">No Orders Found</h3>
                 <p className="text-muted-foreground">
-                    You haven't placed any orders yet.
+                    You haven&apos;t placed any orders yet.
                 </p>
             </div>
         )
