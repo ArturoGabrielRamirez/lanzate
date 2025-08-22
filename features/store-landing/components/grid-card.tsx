@@ -36,7 +36,7 @@ function GridCard({ product }: Props) {
 
 
     return (
-        <div className="relative w-full h-fit" style={{ perspective: '1000px' }}>
+        <div className="relative w-full h-full" style={{ perspective: '1000px' }}>
             <motion.div
                 className="relative w-full h-full"
                 animate={{ rotateY: isFlipped ? 180 : 0 }}
@@ -55,19 +55,15 @@ function GridCard({ product }: Props) {
                         height: '100%'
                     }}
                 >
-                    <Card className={cn("aspect-9/12 bg-[var(--product-card-background)] text-[var(--product-card-text)] w-full h-fit gap-2 !pt-0 group cursor-pointer")} onClick={handleFlip}>
+                    <Card className={cn("bg-[var(--product-card-background)] text-[var(--product-card-text)] w-full h-full gap-2 !pt-0 group cursor-pointer")} onClick={handleFlip}>
                         <CardHeader className="gap-0 !px-0">
-                            <div className="relative h-full overflow-hidden rounded-md rounded-b-none max-h-[200px]">
-                                {product.image ? (
-                                    <Image
-                                        src={product.image}
-                                        alt={product.name}
-                                        fill
-                                        className="rounded-md object-cover group-hover:scale-110 transition-all duration-300"
-                                    />
-                                ) : (
-                                    <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className=" group-hover:scale-110 transition-all duration-300 opacity-50 group-hover:opacity-100 object-cover bg-center" />
-                                )}
+                            <div className="relative h-[250px] overflow-hidden rounded-md rounded-b-none">
+                                <Image
+                                    src={product.image || "/public-store/avatar.svg"}
+                                    alt={product.name}
+                                    fill
+                                    className="rounded-md object-cover group-hover:scale-110 transition-all duration-300"
+                                />
                             </div>
                         </CardHeader>
                         <CardContent className="grow">
@@ -98,7 +94,7 @@ function GridCard({ product }: Props) {
                         height: '100%'
                     }}
                 >
-                    <Card className={cn("aspect-9/12 bg-[var(--product-card-background)] text-[var(--product-card-text)] w-full h-fit gap-2 !pt-0 cursor-pointer")} onClick={handleFlip}>
+                    <Card className={cn("bg-[var(--product-card-background)] text-[var(--product-card-text)] w-full h-full gap-2 !pt-0 cursor-pointer")} onClick={handleFlip}>
                         <div className="flex items-center justify-center h-full">
                             <div className="flex flex-col items-center justify-center gap-4">
                                 <h3 className="text-lg font-medium text-center mb-4">{product.name}</h3>
