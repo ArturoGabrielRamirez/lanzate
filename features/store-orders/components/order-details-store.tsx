@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
 import OpenChatButton from "@/features/orders/components/open-chat-button"
+import { cn } from "@/lib/utils"
 import { Order, OrderTracking, OrderItem, Product, OrderPayment, Store, Branch } from "@prisma/client"
 import { MapPin, Phone, StoreIcon } from "lucide-react"
 
@@ -31,11 +32,13 @@ const OrderDetailsStore = ({ order }: Props) => {
                 </div>
             </CardContent>
             <CardFooter className="flex justify-end">
-                <OpenChatButton 
-                    roomId={String(order.id)} 
-                    username="Customer"
-                    messageType="CUSTOMER_TO_STORE"
-                />
+                <div className={cn(order.status === "COMPLETED" && "opacity-50 pointer-events-none cursor-not-allowed")}>
+                    <OpenChatButton
+                        roomId={String(order.id)}
+                        username="Customer"
+                        messageType="CUSTOMER_TO_STORE"
+                    />
+                </div>
             </CardFooter>
         </Card>
     )

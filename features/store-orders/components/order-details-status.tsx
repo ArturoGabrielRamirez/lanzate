@@ -4,6 +4,7 @@ import OrderTimelineIcons from "@/features/orders/components/order-timeline-icon
 import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
+import { useMemo } from "react"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
@@ -16,6 +17,31 @@ const OrderDetailsStatus = ({ order }: Props) => {
         READY: "Be patient, your order was confirmed and is being prepared.",
         COMPLETED: "Enjoy your purchase!",
     }
+
+    const progress = useMemo(() => {
+        if (order.status === "PROCESSING") {
+            return 10
+        }
+        if (order.tracking && order.tracking.tracking_status === "PREPARING_ORDER") {
+            return 30
+        }
+        if (order.tracking && order.tracking.tracking_status === "WAITING_FOR_DELIVERY") {
+            return 40
+        }
+        if (order.tracking && order.tracking.tracking_status === "ON_THE_WAY") {
+            return 60
+        }
+        if (order.tracking && order.tracking.tracking_status === "WAITING_FOR_PICKUP") {
+            return 80
+        }
+        if (order.status === "COMPLETED") {
+            return 100
+        }
+        if (order.status === "READY") {
+            return 25
+        }
+        return 0
+    }, [order.status, order.tracking])
 
     return (
         <Card className="w-full">
@@ -62,7 +88,7 @@ const OrderDetailsStatus = ({ order }: Props) => {
                         )}
                     </Badge>
                 </div>
-                <Progress value={50} className="bg-green-600/10" indicatorClassName="bg-green-600" />
+                <Progress value={progress} className="bg-green-600/10" indicatorClassName="bg-green-600" />
             </CardFooter>
         </Card>
     )
