@@ -68,7 +68,7 @@ function CustomerOrderTracking({ order }: Props) {
 
     return (
         <div className="">
-            <div className="lg:grid lg:grid-cols-[2fr_1fr_1fr] gap-4 mb-4">
+            <div className="grid lg:grid-cols-[2fr_1fr_1fr] gap-4 mb-4">
                 <OrderDetailsStatus order={currentOrder} />
                 <OrderDetailsArrival order={currentOrder} />
                 <OrderDetailsStore order={currentOrder} />
