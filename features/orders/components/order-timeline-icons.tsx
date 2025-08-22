@@ -19,7 +19,7 @@ const OrderTimelineIcons = ({ order }: Props) => {
     const isWaitingForPickup = isReady && order.tracking?.tracking_status === "WAITING_FOR_PICKUP"
 
     return (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center flex-wrap gap-2">
             <Tooltip>
                 <TooltipTrigger>
                     <IconButton

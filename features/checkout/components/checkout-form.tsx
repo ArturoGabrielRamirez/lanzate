@@ -54,6 +54,11 @@ function CheckoutForm({
                 name: formData.name,
                 email: formData.email,
                 phone: formData.phone,
+                address_one: formData.address,
+                city: formData.city,
+                state: formData.state,
+                country: formData.country,
+                zip_code: formData.zip_code
             },
             payment_method: paymentMethod,
             shipping_method: shippingMethod,

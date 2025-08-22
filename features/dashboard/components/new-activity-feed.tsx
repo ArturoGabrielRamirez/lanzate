@@ -7,7 +7,7 @@ import { Contract, ContractAssignment, Order, OrderTracking, Product, SocialActi
 import EmptyFeedItem from "./empty-feed-item"
 import InfiniteScroll from "./infinite-scroll"
 import { getUserStoreActivities } from "../actions/getUserStoreActivities"
-import { createClient } from "@/utils/supabase/client"
+/* import { createClient } from "@/utils/supabase/client" */
 
 type Props = {
     initialActivities: (SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } })[]
@@ -47,11 +47,10 @@ function NewActivityFeed({ initialActivities, userId, type }: Props) {
     } */
 
     useEffect(() => {
-        const supabase = createClient()
+        /* const supabase = createClient()
 
         const changes = supabase
-            /* .channel('social-activities-changes') */
-            .channel('public-order-changes')
+            .channel('social-activities-changes')
             .on(
                 'postgres_changes',
                 {
@@ -69,7 +68,7 @@ function NewActivityFeed({ initialActivities, userId, type }: Props) {
 
         return () => {
             changes.unsubscribe()
-        }
+        } */
     }, [])
 
     const handleGetMoreActivities = async () => {

@@ -2,13 +2,16 @@
 
 import { Order, Store, OrderPayment, Product, OrderItem, OrderTracking } from "@prisma/client"
 import OrderTimelineIcons from "@/features/orders/components/order-timeline-icons"
-import { CircleCheck, Clock, ShoppingBag, MapPin, PartyPopper } from "lucide-react"
+import { CircleCheck, Clock, ShoppingBag, MapPin, PartyPopper, Truck, Store as StoreIcon } from "lucide-react"
 import { RealtimeChat } from "@/components/realtime-chat"
 import { useEffect, useState } from "react"
 import { fetchOrderMessages } from "@/features/chat/actions/getOrderMessages"
 import { ChatMessage } from "@/hooks/use-realtime-chat"
 import { Loader2 } from "lucide-react"
 import { createClient } from "@/utils/supabase/client"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import { Badge } from "@/components/ui/badge"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
@@ -48,7 +51,7 @@ function CustomerOrderTracking({ order }: Props) {
                     table: "order_tracking"
                 },
                 (payload) => {
-                    
+
                     if (payload.new && payload.new.order_id === order.id) {
                         setCurrentOrder(prevOrder => ({
                             ...prevOrder,
@@ -121,12 +124,64 @@ function CustomerOrderTracking({ order }: Props) {
     const isPickupReadyFuture = isPickup && !isWaitingForPickup && !isPickupReadyCompleted
     const isOrderCompletedFuture = !isCompleted
 
+    const orderDescriptions = {
+        PROCESSING: "Be patient, your order is being processed.",
+        READY: "Be patient, your order was confirmed and is being prepared.",
+        COMPLETED: "Enjoy your purchase!",
+    }
+
     return (
-        <div className="flex flex-col gap-4 md:flex-row">
-            <div className="flex gap-8 flex-col w-full items-start">
+        <div className="">
+            <Card className="w-fit">
+                <CardHeader>
+                    <CardTitle>
+                        <h3 className="flex items-center gap-2 text-lg font-medium">
+                            <span>Order #{currentOrder.id} - </span>
+                            {currentOrder.shipping_method === "DELIVERY" ? <Truck className="size-4" /> : <MapPin className="size-4" />}
+                        </h3>
+                    </CardTitle>
+                    <CardDescription>
+                        <p className="text-base">{orderDescriptions[currentOrder.status as keyof typeof orderDescriptions]}</p>
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <OrderTimelineIcons order={currentOrder} />
+                </CardContent>
+                <CardFooter className="flex flex-col gap-2">
+                    <div className="flex items-center gap-2 w-full">
+                        <Badge variant="outline">
+                            <StoreIcon />
+                            {currentOrder.store.name}
+                        </Badge>
+                        <div className="flex items-center justify-between flex-1">
+                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
+                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
+                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
+                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
+                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
+                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
+                            <div className="h-1 w-1 bg-green-600/50 rounded-full animate-pulse" />
+                        </div>
+                        <Badge variant="outline">
+                            {currentOrder.shipping_method === "DELIVERY" ? (
+                                <>
+                                    <Truck />
+                                    {currentOrder.address_one}
+                                </>
+                            ) : (
+                                <>
+                                    <MapPin />
+                                    at store
+                                </>
+                            )}
+                        </Badge>
+                    </div>
+                    <Progress value={50} className="bg-green-600/10" indicatorClassName="bg-green-600" />
+                </CardFooter>
+            </Card>
+            {/* <div className="flex gap-8 flex-col w-full items-start">
                 <OrderTimelineIcons order={currentOrder} />
                 <div className="flex flex-col gap-4">
-                    {/* Order Placed */}
                     <div className="flex items-start gap-3">
                         <div className={`flex-shrink-0 rounded-full p-2 ${isProcessing ? 'bg-green-600' : 'bg-muted'}`}>
                             <Clock className={`w-4 h-4 ${isProcessing ? 'text-white' : 'text-muted-foreground'}`} />
@@ -141,7 +196,6 @@ function CustomerOrderTracking({ order }: Props) {
                         </div>
                     </div>
 
-                    {/* Order Confirmed */}
                     <div className="flex items-start gap-3">
                         <div className={`flex-shrink-0 rounded-full p-2 ${isReady ? 'bg-green-600' : 'bg-muted'}`}>
                             <CircleCheck className={`w-4 h-4 ${isReady ? 'text-white' : 'text-muted-foreground'}`} />
@@ -156,7 +210,6 @@ function CustomerOrderTracking({ order }: Props) {
                         </div>
                     </div>
 
-                    {/* Order Being Packed */}
                     <div className="flex items-start gap-3">
                         <div className={`flex-shrink-0 rounded-full p-2 ${isPreparingOrder ? 'bg-green-600' : 'bg-muted'}`}>
                             <ShoppingBag className={`w-4 h-4 ${isPreparingOrder ? 'text-white' : 'text-muted-foreground'}`} />
@@ -171,7 +224,6 @@ function CustomerOrderTracking({ order }: Props) {
                         </div>
                     </div>
 
-                    {/* Delivery/Pickup Ready */}
                     {isDelivery && (
                         <div className="flex items-start gap-3">
                             <div className={`flex-shrink-0 rounded-full p-2 ${isWaitingForDelivery ? 'bg-green-600' : 'bg-muted'}`}>
@@ -195,7 +247,6 @@ function CustomerOrderTracking({ order }: Props) {
                         </div>
                     )}
 
-                    {/* On the Way (Delivery) */}
                     {isDelivery && (
                         <div className="flex items-start gap-3">
                             <div className={`flex-shrink-0 rounded-full p-2 ${isOnTheWay ? 'bg-green-600' : 'bg-muted'}`}>
@@ -222,7 +273,6 @@ function CustomerOrderTracking({ order }: Props) {
                         </div>
                     )}
 
-                    {/* Ready for Pickup */}
                     {isPickup && (
                         <div className="flex items-start gap-3">
                             <div className={`flex-shrink-0 rounded-full p-2 ${isWaitingForPickup ? 'bg-green-600' : 'bg-muted'}`}>
@@ -239,7 +289,6 @@ function CustomerOrderTracking({ order }: Props) {
                         </div>
                     )}
 
-                    {/* Order Completed */}
                     <div className="flex items-start gap-3">
                         <div className={`flex-shrink-0 rounded-full p-2 ${isCompleted ? 'bg-green-600' : 'bg-muted'}`}>
                             <PartyPopper className={`w-4 h-4 ${isCompleted ? 'text-white' : 'text-muted-foreground'}`} />
@@ -254,8 +303,8 @@ function CustomerOrderTracking({ order }: Props) {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="w-full">
+            </div> */}
+            {/* <div className="w-full">
                 {isLoading ? (
                     <div className="flex items-center justify-center p-8 border rounded-lg">
                         <div className="flex items-center gap-2 text-muted-foreground">
@@ -274,7 +323,7 @@ function CustomerOrderTracking({ order }: Props) {
                         completedOrderText="Esta orden ha sido completada y ya no puedes enviar más mensajes a la tienda."
                     />
                 )}
-            </div>
+            </div> */}
         </div>
     )
 }

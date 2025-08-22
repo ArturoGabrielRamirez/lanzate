@@ -5,7 +5,7 @@ import { getAccountSetupDataAction } from "@/features/dashboard/actions/getAccou
 import { CreateStoreButton } from "@/features/stores/components"
 import { getUserInfo } from "@/features/layout/actions"
 import UnifiedCreateProductButton from "@/features/products/components/unified-create-product-button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+/* import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select" */
 import SettingsLinks from "./settings-links"
 import CopyLink from "./copy-link"
 /* import UnifiedCreateProductButton from "@/features/products/components/unified-create-product-button" */
