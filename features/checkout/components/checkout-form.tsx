@@ -115,7 +115,7 @@ function CheckoutForm({
                     />
                 </InteractiveStepperItem>
 
-                <InteractiveStepperContent step={1}>
+                <InteractiveStepperContent step={1} className="mt-8">
                     <Card>
                         <CardHeader>
                             <CardTitle>{t("steps.personal-information.title")}</CardTitle>
@@ -128,7 +128,7 @@ function CheckoutForm({
                         </CardContent>
                     </Card>
                 </InteractiveStepperContent>
-                <InteractiveStepperContent step={2}>
+                <InteractiveStepperContent step={2} className="mt-8">
                     <Card>
                         <CardHeader>
                             <CardTitle>{t("steps.delivery-information.title")}</CardTitle>
@@ -166,7 +166,7 @@ function CheckoutForm({
                         </CardContent>
                     </Card>
                 </InteractiveStepperContent>
-                <InteractiveStepperContent step={3}>
+                <InteractiveStepperContent step={3} className="mt-8">
                     <Card>
                         <CardHeader>
                             <CardTitle>{t("steps.payment-information.title")}</CardTitle>

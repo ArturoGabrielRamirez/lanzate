@@ -1,4 +1,5 @@
 import { Title } from "@/features/layout/components";
+import PageContainer from "@/features/layout/components/page-container";
 import PaginationNav from "@/features/store-landing/components/pagination-nav";
 import ProductAmountDisplay from "@/features/store-landing/components/product-amount-display";
 import ProductCardLoader from "@/features/store-landing/components/product-card-loader";
@@ -25,7 +26,7 @@ export default async function StorePage({ params, searchParams }: Props) {
     const t = await getTranslations("subdomain");
 
     return (
-        <SectionContainer>
+        <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
             <Title title={t("title")} />
 
             <div className="flex gap-4 grow grid-rows-[min-content_1fr_min-content]">
@@ -50,6 +51,6 @@ export default async function StorePage({ params, searchParams }: Props) {
                     <PaginationNav productAmount={productAmount || 0} limit={limit} />
                 </div>
             </div>
-        </SectionContainer>
+        </PageContainer>
     );
 }

@@ -1,8 +1,9 @@
 import { Title } from "@/features/layout/components"
+import PageContainer from "@/features/layout/components/page-container"
 
 async function AccountPage() {
     return (
-        <section className="p-4 grow flex flex-col pb-8">
+        <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
             <Title
                 title="Account"
                 breadcrumbs={[
@@ -10,7 +11,7 @@ async function AccountPage() {
                 ]}
                 homePath={`/`}
             />
-        </section>
+        </PageContainer>
     )
 }
 export default AccountPage

@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Title } from "@/features/layout/components"
+import PageContainer from "@/features/layout/components/page-container"
 import AddToCartButton from "@/features/store-landing/components/add-to-cart-button"
 import LikeButton from "@/features/store-landing/components/like-button"
 import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"
@@ -21,19 +22,19 @@ async function ProductDetailsPage({ params }: Props) {
 
     if (error || !product) {
         return (
-            <section className="p-4">
+            <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
                 <Title
                     title="Product Not Found"
                     breadcrumbs={[{ label: "Product Not Found", href: `/item/${id}` }]}
                     homePath={`/`}
                 />
                 <p className="text-red-500 mt-4">{message}</p>
-            </section>
+            </PageContainer>
         )
     }
 
     return (
-        <section className="p-4 grow flex flex-col pb-8">
+        <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
             <Title
                 title={product.name}
                 breadcrumbs={[
@@ -129,7 +130,7 @@ async function ProductDetailsPage({ params }: Props) {
                     </div>
                 </div>
             </div>
-        </section>
+        </PageContainer>
     )
 }
 export default ProductDetailsPage
