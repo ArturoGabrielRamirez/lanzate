@@ -11,9 +11,10 @@ type Props = {
     product: Product
     withText?: boolean
     className?: string
+    canBeAddedToCart: boolean
 }
 
-function AddToCartButton({ product }: Props) {
+function AddToCartButton({ product, canBeAddedToCart }: Props) {
     const { addToCart } = useCart()
     const [isAdded, setIsAdded] = useState(false)
 
@@ -36,16 +37,17 @@ function AddToCartButton({ product }: Props) {
         <Tooltip>
             <TooltipTrigger asChild>
                 <IconButton
+                    disabled={!canBeAddedToCart}
                     animate
                     active={isAdded}
                     icon={ShoppingCart}
                     size="md"
                     onClick={handleAddToCart}
-                    iconClassName="text-foreground"
+                    iconClassName={!canBeAddedToCart ? "text-muted-foreground/50" : "text-foreground"}
                 />
             </TooltipTrigger>
             <TooltipContent>
-                <p>Add to Cart</p>
+                <p>{canBeAddedToCart ? "Add to Cart" : "Product not available"}</p>
             </TooltipContent>
         </Tooltip>
     )

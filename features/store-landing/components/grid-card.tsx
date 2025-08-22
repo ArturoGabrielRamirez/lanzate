@@ -8,7 +8,7 @@ import { useState } from "react"
 import * as motion from "motion/react-client"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Eye, Heart, Share, ShoppingCart } from "lucide-react"
+import { Heart, Share, ShoppingCart } from "lucide-react"
 
 type Props = {
     product: Product
@@ -17,6 +17,8 @@ type Props = {
 function GridCard({ product }: Props) {
 
     const [isFlipped, setIsFlipped] = useState(false)
+
+    const canBeAddedToCart = product.stock > 0 && product.stock !== null && product.is_active && product.is_published
 
     const handleFlip = () => {
         setIsFlipped(!isFlipped)
@@ -79,7 +81,7 @@ function GridCard({ product }: Props) {
                         <CardFooter className="flex justify-between items-center">
                             <p className="font-bold text-xl">${product.price}</p>
                             <div className="flex gap-2">
-                                <AddToCartButton product={product} />
+                                <AddToCartButton product={product} canBeAddedToCart={canBeAddedToCart} />
                             </div>
                         </CardFooter>
                     </Card>
