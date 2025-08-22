@@ -19,7 +19,7 @@ function ProductListContainer({ children }: Props) {
         )
     }
     return (
-        <div className={cn("grid grid-cols-2 @sm:grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-3", displayType === "grid" && "grid-cols-2")}>
+        <div className={cn("grid grid-cols-2 @sm:grid-cols-[repeat(auto-fill,minmax(min(250px,100%),1fr))] gap-3 grow", displayType === "grid" && "grid-cols-2")}>
             {children}
         </div>
     )
