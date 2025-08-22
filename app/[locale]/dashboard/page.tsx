@@ -34,7 +34,6 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
     }
 
 
-
     return (
         <PageContainer>
             <NextStepProvider>

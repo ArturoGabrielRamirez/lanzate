@@ -17,57 +17,53 @@ type Props = {
 function CustomerOrderTracking({ order }: Props) {
     const [messages, setMessages] = useState<ChatMessage[]>([])
     const [isLoading, setIsLoading] = useState(true)
+    const [currentOrder, setCurrentOrder] = useState(order)
 
     useEffect(() => {
-        const suscribe = async () => {
-            const supabase = createClient()
-            
-            const channel = supabase.channel("public-order-changes")
+        const supabase = createClient()
 
-            // Suscribirse a cambios en orders (sin filtro por ahora)
-            channel.on("postgres_changes", {
-                event: "*",
-                schema: "public",
-                table: "orders",
-            }, (payload) => {
-                console.log("📦 Order change received:", payload)
-            })
-
-            // Suscribirse a cambios en order_tracking (sin filtro por ahora)
-            channel.on("postgres_changes", {
-                event: "*",
-                schema: "public",
-                table: "order_tracking",
-            }, (payload) => {
-                console.log("🚚 Order tracking change received:", payload)
-            })
-
-            console.log("🔌 Attempting to subscribe...")
-            
-            // Suscribirse al canal y manejar errores
-            channel.subscribe((status) => {
-                console.log("📡 Subscription status:", status)
-                
-                if (status === 'SUBSCRIBED') {
-                    console.log("✅ Successfully subscribed to realtime channel")
-                } else if (status === 'CHANNEL_ERROR') {
-                    console.error("❌ Channel error occurred")
-                    console.error("🔍 Channel details:", channel)
-                } else if (status === 'TIMED_OUT') {
-                    console.error("⏰ Channel subscription timed out")
-                } else if (status === 'CLOSED') {
-                    console.error("🚪 Channel was closed")
+        const changes = supabase
+            .channel('public-order-changes')
+            .on(
+                'postgres_changes',
+                {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: "orders"
+                },
+                (payload) => {
+                    if (payload.new && payload.new.id === order.id) {
+                        setCurrentOrder(prevOrder => ({
+                            ...prevOrder,
+                            ...payload.new
+                        }))
+                    }
                 }
+            )
+            .on(
+                'postgres_changes',
+                {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: "order_tracking"
+                },
+                (payload) => {
+                    
+                    if (payload.new && payload.new.order_id === order.id) {
+                        setCurrentOrder(prevOrder => ({
+                            ...prevOrder,
+                            tracking: payload.new as OrderTracking
+                        }))
+                    }
+                }
+            )
+            .subscribe((status) => {
+                console.log("📡 Subscription status:", status)
             })
 
-            // Cleanup function
-            return () => {
-                console.log("🧹 Cleaning up channel...")
-                channel.unsubscribe()
-            }
+        return () => {
+            changes.unsubscribe()
         }
-
-        suscribe()
     }, [order.id])
 
     // Cargar mensajes previos cuando el componente se monta
@@ -91,18 +87,21 @@ function CustomerOrderTracking({ order }: Props) {
         loadMessages()
     }, [order.id])
 
+    // Update currentOrder when the prop order changes
+    useEffect(() => {
+        setCurrentOrder(order)
+    }, [order])
 
+    const isProcessing = currentOrder.status === "PROCESSING"
+    const isReady = currentOrder.status === "READY"
+    const isCompleted = currentOrder.status === "COMPLETED"
+    const isDelivery = currentOrder.shipping_method === "DELIVERY"
+    const isPickup = currentOrder.shipping_method === "PICKUP"
 
-    const isProcessing = order.status === "PROCESSING"
-    const isReady = order.status === "READY"
-    const isCompleted = order.status === "COMPLETED"
-    const isDelivery = order.shipping_method === "DELIVERY"
-    const isPickup = order.shipping_method === "PICKUP"
-
-    const isPreparingOrder = isReady && order.tracking?.tracking_status === "PREPARING_ORDER"
-    const isWaitingForDelivery = isReady && order.tracking?.tracking_status === "WAITING_FOR_DELIVERY"
-    const isOnTheWay = order.tracking?.tracking_status === "ON_THE_WAY"
-    const isWaitingForPickup = isReady && order.tracking?.tracking_status === "WAITING_FOR_PICKUP"
+    const isPreparingOrder = isReady && currentOrder.tracking?.tracking_status === "PREPARING_ORDER"
+    const isWaitingForDelivery = isReady && currentOrder.tracking?.tracking_status === "WAITING_FOR_DELIVERY"
+    const isOnTheWay = currentOrder.tracking?.tracking_status === "ON_THE_WAY"
+    const isWaitingForPickup = isReady && currentOrder.tracking?.tracking_status === "WAITING_FOR_PICKUP"
 
     // Determine which steps are completed
     const isOrderPlacedCompleted = isReady || isCompleted
@@ -125,7 +124,7 @@ function CustomerOrderTracking({ order }: Props) {
     return (
         <div className="flex flex-col gap-4 md:flex-row">
             <div className="flex gap-8 flex-col w-full items-start">
-                <OrderTimelineIcons order={order} />
+                <OrderTimelineIcons order={currentOrder} />
                 <div className="flex flex-col gap-4">
                     {/* Order Placed */}
                     <div className="flex items-start gap-3">
@@ -266,11 +265,11 @@ function CustomerOrderTracking({ order }: Props) {
                     </div>
                 ) : (
                     <RealtimeChat
-                        roomName={String(order.id)}
+                        roomName={String(currentOrder.id)}
                         username="Customer"
                         messageType="CUSTOMER_TO_STORE"
                         messages={messages}
-                        disabled={order.status === "COMPLETED"}
+                        disabled={currentOrder.status === "COMPLETED"}
                         emptyStateText="No hay mensajes aún. ¡Inicia la conversación!"
                         completedOrderText="Esta orden ha sido completada y ya no puedes enviar más mensajes a la tienda."
                     />
