@@ -1,10 +1,11 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useCart } from "@/features/cart/components/cart-provider"
-import { cn } from "@/lib/utils"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Product } from "@prisma/client"
 import { ShoppingCart } from "lucide-react"
+import { useState } from "react"
 
 type Props = {
     product: Product
@@ -12,8 +13,9 @@ type Props = {
     className?: string
 }
 
-function AddToCartButton({ product, withText = false, className }: Props) {
+function AddToCartButton({ product }: Props) {
     const { addToCart } = useCart()
+    const [isAdded, setIsAdded] = useState(false)
 
     const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()
@@ -24,13 +26,28 @@ function AddToCartButton({ product, withText = false, className }: Props) {
             quantity: 1,
             image: product.image || ""
         })
+        setIsAdded(true)
+        setTimeout(() => {
+            setIsAdded(false)
+        }, 300)
     }
 
     return (
-        <Button variant="outline" size={withText ? "default" : "icon"} onClick={handleAddToCart} className={cn("border-none", className)}>
-            <ShoppingCart />
-            {withText && <span>Add to Cart</span>}
-        </Button>
+        <Tooltip>
+            <TooltipTrigger asChild>
+                <IconButton
+                    animate
+                    active={isAdded}
+                    icon={ShoppingCart}
+                    size="md"
+                    onClick={handleAddToCart}
+                    iconClassName="text-foreground"
+                />
+            </TooltipTrigger>
+            <TooltipContent>
+                <p>Add to Cart</p>
+            </TooltipContent>
+        </Tooltip>
     )
 }
 

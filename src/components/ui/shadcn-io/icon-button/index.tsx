@@ -25,6 +25,7 @@ type IconButtonProps = Omit<HTMLMotionProps<'button'>, 'color'> & {
   size?: keyof typeof sizes;
   color?: [number, number, number];
   transition?: Transition;
+  iconClassName?: string;
 };
 
 function IconButton({
@@ -35,6 +36,7 @@ function IconButton({
   size = 'default',
   color = [80, 40, 0],
   transition = { type: 'spring', stiffness: 300, damping: 15 },
+  iconClassName,
   ...props
 }: IconButtonProps) {
   return (
@@ -55,7 +57,7 @@ function IconButton({
       >
         <Icon
           className={
-            cn(active ? '' : 'fill-transparent', "size-24")
+            cn(active ? '' : 'fill-transparent', "size-24", iconClassName)
           }
         />
       </motion.div>
@@ -70,7 +72,7 @@ function IconButton({
             exit={{ opacity: 0, scale: 0 }}
             transition={transition}
           >
-            <Icon className='size-24'/>
+            <Icon className={cn('size-24', iconClassName)}/>
           </motion.div>
         )}
       </AnimatePresence>
