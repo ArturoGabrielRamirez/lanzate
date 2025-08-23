@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import CartProvider from "@/features/cart/components/cart-provider";
 import { Header } from "@/features/store-landing/components"
+import Footer from "@/features/store-landing/components/footer";
 import MainContainer from "@/features/store-landing/components/main-container";
 import StoreProvider from "@/features/store-landing/components/store-provider";
 import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
@@ -79,6 +80,11 @@ export default async function Layout({ children, params }: LayoutProps) {
                     <MainContainer>
                         {children}
                     </MainContainer>
+                    <Footer
+                        title={storeData.name}
+                        socialMedia={storeData.operational_settings}
+                        showSocialLinks={storeData.customization?.show_social_links ?? true}
+                    />
                     <Toaster />
                 </div>
             </StoreProvider>
