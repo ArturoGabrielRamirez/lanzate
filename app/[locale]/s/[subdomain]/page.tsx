@@ -9,6 +9,7 @@ import SectionContainer from "@/features/store-landing/components/section-contai
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters";
 import { loadFilterParams } from "@/features/store-landing/utils/load-filter-params";
 import { getStoreProductAmount } from "@/features/subdomain/actions/getStoreProductAmount";
+import { BadgeAlert, Clock, Crown, Home, Trophy } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { SearchParams } from "nuqs";
@@ -28,26 +29,31 @@ export default async function StorePage({ params, searchParams }: Props) {
 
     return (
         <>
-            <PageContainer className="max-w-full lg:pt-17">
+            <PageContainer className="max-w-full md:pt-20">
                 <div className="bg-primary/50 w-full">
                     <div className="container mx-auto flex flex-wrap items-center">
-                        <Link href="#" className="text-sm text-primary-foreground grow text-center py-2 hover:bg-primary transition-colors">
+                        <Link href="#" className="text-sm text-primary-foreground grow text-center py-2 hover:bg-primary transition-colors flex items-center gap-2 justify-center">
+                            <Home className="size-4" />
                             All
                         </Link>
                         <div className="w-px h-4 bg-primary-foreground/20 mx" />
-                        <Link href="#" className="text-sm text-primary-foreground grow text-center py-2 hover:bg-primary transition-colors">
+                        <Link href="#" className="text-sm text-primary-foreground grow text-center py-2 hover:bg-primary transition-colors flex items-center gap-2 justify-center">
+                            <BadgeAlert className="size-4" />
                             New
                         </Link>
                         <div className="w-px h-4 bg-primary-foreground/20" />
-                        <Link href="#" className="text-sm text-primary-foreground grow text-center py-2 hover:bg-primary transition-colors">
+                        <Link href="#" className="text-sm text-primary-foreground grow text-center py-2 hover:bg-primary transition-colors flex items-center gap-2 justify-center">
+                            <Trophy className="size-4" />
                             Best Sellers
                         </Link>
                         <div className="w-px h-4 bg-primary-foreground/20" />
-                        <Link href="#" className="text-sm text-primary-foreground grow text-center py-2 hover:bg-primary transition-colors">
+                        <Link href="#" className="text-sm text-primary-foreground grow text-center py-2 hover:bg-primary transition-colors flex items-center gap-2 justify-center">
+                            <Crown className="size-4" />
                             Featured
                         </Link>
                         <div className="w-px h-4 bg-primary-foreground/20" />
-                        <Link href="#" className="text-sm text-primary-foreground grow text-center py-2 hover:bg-primary transition-colors">
+                        <Link href="#" className="text-sm text-primary-foreground grow text-center py-2 hover:bg-primary transition-colors flex items-center gap-2 justify-center">
+                            <Clock className="size-4" />
                             Coming Soon
                         </Link>
                     </div>
