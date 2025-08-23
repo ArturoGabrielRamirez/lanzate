@@ -24,7 +24,7 @@ function CartIcon() {
 
 
     return (
-        <Link href="/cart" className="relative">
+        <Link href="/cart" className="relative h-[40px]">
             <IconButton
                 icon={ShoppingCart}
                 active={active}

@@ -6,6 +6,7 @@ import { User } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
 import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 function LandingAccountDropdown() {
     const [open, setOpen] = useState(false)
@@ -21,9 +22,14 @@ function LandingAccountDropdown() {
     return (
         <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger asChild>
-                <Button size="icon" variant={"outline"} onClick={handleClick}>
+                <IconButton
+                    size="md"
+                    icon={() => <User />}
+                    onClick={handleClick}
+                />
+                {/* <Button size="icon" variant={"outline"} onClick={handleClick}>
                     <User />
-                </Button>
+                </Button> */}
             </DropdownMenuTrigger>
             <DropdownMenuContent side="bottom" align="end">
                 <DropdownMenuItem onClick={handleClick}>

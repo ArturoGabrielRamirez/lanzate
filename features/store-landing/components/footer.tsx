@@ -43,6 +43,9 @@ const Footer = ({ title, socialMedia, showSocialLinks }: Props) => {
                         <Link href="/cart" className="text-muted-foreground hover:text-primary block duration-150 text-center">
                             <span>Carrito</span>
                         </Link>
+                        <Link href="/my-orders" className="text-muted-foreground hover:text-primary block duration-150 text-center">
+                            <span>Mis pedidos</span>
+                        </Link>
                     </div>
                     <div className="flex gap-2 items-end justify-start flex-col">
                         <p className="text-muted-foreground text-center">Seguinos en </p>
