@@ -123,26 +123,37 @@ export default async function StorePage({ params, searchParams }: Props) {
                 </div>
                 {/* <Title title={t("title")} /> */}
 
-                <div className="flex gap-4 grow grid-rows-[min-content_1fr_min-content] container mx-auto pt-4">
-                    {/* <SidebarFilters /> */}
-                    <div className="flex flex-col gap-4 relative @container w-full">
-                        <div className="flex gap-2 justify-between">
+                <div className="container mx-auto py-8 group">
+                    <div className="flex justify-between items-center mb-8">
+                        <h2 className="text-2xl font-bold text-primary-foreground/50 group-hover:text-primary-foreground transition-all duration-300">
+                            Best Sellers
+                        </h2>
+                        <Link href="#" className="flex items-center gap-2 text-sm text-primary-foreground/50 hover:text-primary transition-all duration-300">
+                            <ArrowRight className="size-4" />
+                            View All
+                        </Link>
+                    </div>
+                    <div className="flex gap-4 grid-rows-[min-content_1fr_min-content] container mx-auto pt-4">
+                        {/* <SidebarFilters /> */}
+                        <div className="flex flex-col gap-4 relative @container w-full">
+                            {/* <div className="flex gap-2 justify-between">
                             <ProductListDisplay />
                             <ProductAmountDisplay amount={productAmount || 0} />
+                        </div> */}
+                            <Suspense fallback={<ProductCardLoader />} key={category}>
+                                <ProductList
+                                    subdomain={subdomain}
+                                    category={category}
+                                    sort={sort}
+                                    search={search}
+                                    min={min}
+                                    max={max}
+                                    limit={limit}
+                                    page={page}
+                                />
+                            </Suspense>
+                            {/* <PaginationNav productAmount={productAmount || 0} limit={limit} /> */}
                         </div>
-                        <Suspense fallback={<ProductCardLoader />} key={category}>
-                            <ProductList
-                                subdomain={subdomain}
-                                category={category}
-                                sort={sort}
-                                search={search}
-                                min={min}
-                                max={max}
-                                limit={limit}
-                                page={page}
-                            />
-                        </Suspense>
-                        <PaginationNav productAmount={productAmount || 0} limit={limit} />
                     </div>
                 </div>
             </PageContainer>

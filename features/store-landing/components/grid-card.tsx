@@ -58,15 +58,16 @@ function GridCard({ product }: Props) {
                         height: '100%'
                     }}
                 >
-                    <Card className={cn("bg-[var(--product-card-background)] text-[var(--product-card-text)] w-full h-full gap-2 !pt-0 group cursor-pointer")} onClick={handleFlip}>
-                        <CardHeader className="gap-0 !px-0">
-                            <div className="relative h-[250px] overflow-hidden rounded-md rounded-b-none">
+                    {/* <Card className={cn("bg-[var(--product-card-background)] text-[var(--product-card-text)] w-full h-full gap-2 !pt-0 group cursor-pointer")} onClick={handleFlip}> */}
+                    <Card className={cn("rounded-none hover:rounded-2xl hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 w-full h-full gap-2 !pt-0 group/card cursor-pointer")} onClick={handleFlip}>
+                        <CardHeader className="gap-0 !px-0 ">
+                            <div className="relative h-[250px] overflow-hidden rounded-none group-hover/card:rounded-md rounded-b-none transition-all duration-300 group-hover/card:rounded-b-none">
                                 <Image
                                     src={product.image || "/public-store/avatar.svg"}
                                     alt={product.name}
                                     fill
                                     className={cn(
-                                        "object-cover group-hover:scale-110 transition-all duration-300 contrast-50 group-hover:contrast-100",
+                                        "object-cover group-hover/card:scale-110 transition-all duration-300 contrast-50 group-hover/card:contrast-100",
                                         !product.is_active && "grayscale"
                                     )}
                                 />
@@ -88,7 +89,7 @@ function GridCard({ product }: Props) {
                         <CardContent className="grow">
                             <div className="flex justify-between items-center text-foreground">
                                 <Link href={`/item/${product.id}`}>
-                                    <h3 className="text-lg font-medium group-hover:underline">{product.name}</h3>
+                                    <h3 className="text-lg font-medium group-hover/card:underline">{product.name}</h3>
                                 </Link>
                             </div>
                             <p className="text-sm text-muted-foreground">
