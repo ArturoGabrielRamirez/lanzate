@@ -41,7 +41,7 @@ export default async function Layout({ children, params }: LayoutProps) {
             <StoreProvider>
                 <div
                     style={{
-                        "--background": storeData.customization?.background_color,
+                        /* "--background": storeData.customization?.background_color,
                         "--foreground": storeData.customization?.background_foreground_color,
                         "--header": storeData.customization?.header_color,
                         "--header-foreground": storeData.customization?.header_foreground_color,
@@ -67,7 +67,7 @@ export default async function Layout({ children, params }: LayoutProps) {
                         "--show-searchbar-filter": storeData.customization?.show_searchbar_filter ? "block" : "none",
                         "--primary": storeData.customization?.primary_color,
                         "--accent": storeData.customization?.accent_color,
-                        "--secondary": storeData.customization?.secondary_color,
+                        "--secondary": storeData.customization?.secondary_color, */
                     } as React.CSSProperties}
                     className="contents"
                 >
