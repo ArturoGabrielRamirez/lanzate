@@ -5,7 +5,7 @@ import { Suspense } from "react"
 
 async function MyOrdersPage() {
     return (
-        <PageContainer className="!pt-8">
+        <PageContainer>
             <Title
                 title="My orders"
                 breadcrumbs={[

@@ -1,15 +1,15 @@
 /* import { Title } from "@/features/layout/components"; */
 import { Card, CardContent } from "@/components/ui/card";
 import PageContainer from "@/features/layout/components/page-container";
-import PaginationNav from "@/features/store-landing/components/pagination-nav";
-import ProductAmountDisplay from "@/features/store-landing/components/product-amount-display";
+/* import PaginationNav from "@/features/store-landing/components/pagination-nav";
+import ProductAmountDisplay from "@/features/store-landing/components/product-amount-display"; */
 import ProductCardLoader from "@/features/store-landing/components/product-card-loader";
 import ProductList from "@/features/store-landing/components/product-list";
-import ProductListDisplay from "@/features/store-landing/components/product-list-display";
+/* import ProductListDisplay from "@/features/store-landing/components/product-list-display"; */
 /* import SectionContainer from "@/features/store-landing/components/section-container";
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters"; */
 import { loadFilterParams } from "@/features/store-landing/utils/load-filter-params";
-import { getStoreProductAmount } from "@/features/subdomain/actions/getStoreProductAmount";
+/* import { getStoreProductAmount } from "@/features/subdomain/actions/getStoreProductAmount"; */
 import { ArrowRight, BadgeAlert, BookA, Candy, Clock, Crown, Eye, Home, Milk, Trophy, Utensils } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,7 +25,7 @@ export default async function StorePage({ params, searchParams }: Props) {
     const { subdomain } = await params
     const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams)
 
-    const { payload: productAmount } = await getStoreProductAmount(subdomain);
+    /* const { payload: productAmount } = await getStoreProductAmount(subdomain); */
     /* const t = await getTranslations("subdomain"); */
 
     return (

@@ -3,7 +3,7 @@ import PageContainer from "@/features/layout/components/page-container"
 
 async function AccountPage() {
     return (
-        <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
+        <PageContainer>
             <Title
                 title="Account"
                 breadcrumbs={[

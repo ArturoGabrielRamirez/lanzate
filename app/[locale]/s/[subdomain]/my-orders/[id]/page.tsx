@@ -14,10 +14,11 @@ export default async function OrderDetailsPage({ params }: Props) {
     const { id } = await params
 
     return (
-        <PageContainer className="!pt-8">
+        <PageContainer>
             <Title
                 title={`Order #${id}`}
                 breadcrumbs={[
+                    { label: "Account", href: "/account" },
                     { label: "My Orders", href: "/my-orders" },
                     { label: `Order #${id}`, href: `/my-orders/${id}` }
                 ]}

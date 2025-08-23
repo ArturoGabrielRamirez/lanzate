@@ -9,7 +9,7 @@ function CartPage() {
     const t = useTranslations("cart");
     return (
         <CheckoutProvider>
-            <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
+            <PageContainer>
                 <Title title={t("title")} breadcrumbs={[{ label: t("title"), href: "/cart" }]} homePath="/" />
                 <div className="flex flex-col gap-4 lg:flex-row">
                     <CartList />

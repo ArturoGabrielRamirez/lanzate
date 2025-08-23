@@ -34,7 +34,7 @@ async function ProductDetailsPage({ params }: Props) {
     }
 
     return (
-        <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
+        <PageContainer>
             <Title
                 title={product.name}
                 breadcrumbs={[
@@ -115,7 +115,7 @@ async function ProductDetailsPage({ params }: Props) {
                                 <p className="text-sm text-gray-500 mt-1">SKU: {product.sku}</p>
                             )}
                             <div className="flex gap-2 justify-end">
-                                <AddToCartButton product={product} withText className="text-lg p-6 !px-8 !bg-accent text-accent-foreground" />
+                                <AddToCartButton product={product} withText className="text-lg p-6 !px-8 !bg-accent text-accent-foreground" canBeAddedToCart={true} />
                                 <Button variant="outline" size="lg" className="text-lg p-6 !px-8" asChild>
                                     <Link href="/checkout">
                                         <ShoppingBag />

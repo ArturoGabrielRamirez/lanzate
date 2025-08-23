@@ -88,7 +88,7 @@ function GridCard({ product }: Props) {
                         </CardHeader>
                         <CardContent className="grow">
                             <div className="flex justify-between items-center text-foreground">
-                                <Link href={`/item/${product.id}`}>
+                                <Link href={`/item/${product.id}`} onClick={(evt) => { evt.stopPropagation() }}>
                                     <h3 className="text-lg font-medium group-hover/card:underline">{product.name}</h3>
                                 </Link>
                             </div>
