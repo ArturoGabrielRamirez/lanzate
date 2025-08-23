@@ -125,6 +125,7 @@ export async function updateSession(request: NextRequest) {
       '/checkout': `/${currentLocale}/s/${subdomain}/checkout`,
       '/my-orders': `/${currentLocale}/s/${subdomain}/my-orders`,
       '/account': `/${currentLocale}/s/${subdomain}/account`,
+      '/products': `/${currentLocale}/s/${subdomain}/products`,
     }
     
     if (subdomainRoutes[pathWithoutLocale as keyof typeof subdomainRoutes]) {

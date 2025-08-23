@@ -16,7 +16,6 @@ type CategorySelectProps = {
 }
 
 function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: CategorySelectProps) {
-console.log("🚀 ~ CategorySelect ~ defaultValue:", defaultValue)
 
     const [categories, setCategories] = useState<{ label: string, value: number }[]>([])
     const [creatingCategories, setCreatingCategories] = useState<Set<string>>(new Set())

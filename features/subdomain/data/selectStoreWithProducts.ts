@@ -6,6 +6,7 @@ import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 
 export async function selectStoreWithProducts(subdomain: string, category: string | undefined, sort: string | undefined, search: string | undefined, min: string | undefined, max: string | undefined, limit: number = 10, page: number = 1): Promise<SelectStoreWithProductsReturn> {
+    console.log("🚀 ~ selectStoreWithProducts ~ category:", category)
     return actionWrapper(async () => {
 
         const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
@@ -14,6 +15,7 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
         const categoryIds = category
             ? category.split(',').map(id => id.trim())
             : undefined;
+        console.log("🚀 ~ selectStoreWithProducts ~ categoryIds:", categoryIds)
 
         const orderBy: {
             name?: 'asc' | 'desc',
@@ -56,8 +58,8 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
                         ? {
                             categories: {
                                 some: {
-                                    id: {
-                                        in: categoryIds.map(Number)
+                                    name: {
+                                        in: categoryIds
                                     }
                                 }
                             },
