@@ -32,9 +32,9 @@ export default async function StorePage({ params, searchParams }: Props) {
 
     return (
         <>
-            <PageContainer className="max-w-full md:pt-20">
-                <TopCategoriesNavbar />
+            <PageContainer className="max-w-full !pt-0">
                 <StoreBanner />
+                <TopCategoriesNavbar />
                 <div className="container mx-auto py-8 group">
                     <div className="flex justify-between items-center mb-8">
                         <h2 className="text-2xl font-bold text-primary-foreground/50 group-hover:text-primary-foreground transition-all duration-300">

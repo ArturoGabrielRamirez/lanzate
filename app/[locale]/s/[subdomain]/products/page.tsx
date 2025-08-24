@@ -22,9 +22,9 @@ const ProductsPage = async ({ params, searchParams }: Props) => {
     console.log("🚀 ~ ProductsPage ~ category:", category)
 
     return (
-        <PageContainer className="max-w-full md:pt-20">
-            <TopCategoriesNavbar />
+        <PageContainer className="max-w-full !pt-0">
             <StoreBanner />
+            <TopCategoriesNavbar />
             <div className="container mx-auto py-8">
                 <div>
                     <SidebarCategorySelect />
