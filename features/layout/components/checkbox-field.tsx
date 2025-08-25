@@ -5,6 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 import { useEffect } from "react"
+import { Switch } from "@/components/ui/switch"
 
 interface CheckboxFieldProps {
   name: string
@@ -51,7 +52,7 @@ const CheckboxField = ({
   return (
     <div className={cn("flex flex-col gap-1", containerClassName)}>
       <div className="flex items-center space-x-2">
-        <Checkbox
+        <Switch
           id={name}
           checked={currentValue}
           onCheckedChange={handleChange}

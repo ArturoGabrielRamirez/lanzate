@@ -69,34 +69,38 @@ const EditAddressButton = ({ store, userId, className }: EditAddressButtonProps)
                         setIsPhysicalStore(checked)
                     }}
                 />
-                <InputField
-                    name="address"
-                    label={t("address")}
-                    type="text"
-                    defaultValue={isPhysicalStore ? mainBranch?.address || "" : ""}
-                    disabled={!isPhysicalStore}
-                />
-                <InputField
-                    name="city"
-                    label={t("city")}
-                    type="text"
-                    defaultValue={isPhysicalStore ? mainBranch?.city || "" : ""}
-                    disabled={!isPhysicalStore}
-                />
-                <InputField
-                    name="province"
-                    label={t("province")}
-                    type="text"
-                    defaultValue={isPhysicalStore ? mainBranch?.province || "" : ""}
-                    disabled={!isPhysicalStore}
-                />
-                <InputField
-                    name="country"
-                    label={t("country")}
-                    type="text"
-                    defaultValue={isPhysicalStore ? mainBranch?.country || "" : ""}
-                    disabled={!isPhysicalStore}
-                />
+                {isPhysicalStore && (
+                    <>
+                        <InputField
+                            name="address"
+                            label={t("address")}
+                            type="text"
+                            defaultValue={isPhysicalStore ? mainBranch?.address || "" : ""}
+                            disabled={!isPhysicalStore}
+                        />
+                        <InputField
+                            name="city"
+                            label={t("city")}
+                            type="text"
+                            defaultValue={isPhysicalStore ? mainBranch?.city || "" : ""}
+                            disabled={!isPhysicalStore}
+                        />
+                        <InputField
+                            name="province"
+                            label={t("province")}
+                            type="text"
+                            defaultValue={isPhysicalStore ? mainBranch?.province || "" : ""}
+                            disabled={!isPhysicalStore}
+                        />
+                        <InputField
+                            name="country"
+                            label={t("country")}
+                            type="text"
+                            defaultValue={isPhysicalStore ? mainBranch?.country || "" : ""}
+                            disabled={!isPhysicalStore}
+                        />
+                    </>
+                )}
             </div>
         </ButtonWithPopup>
     )
