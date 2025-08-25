@@ -61,7 +61,7 @@ function GridCard({ product }: Props) {
                     {/* <Card className={cn("bg-[var(--product-card-background)] text-[var(--product-card-text)] w-full h-full gap-2 !pt-0 group cursor-pointer")} onClick={handleFlip}> */}
                     <Card className={cn("rounded-none hover:rounded-2xl hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 w-full h-full gap-2 !pt-0 group/card cursor-pointer")} onClick={handleFlip}>
                         <CardHeader className="gap-0 !px-0 ">
-                            <div className="relative h-[250px] overflow-hidden rounded-none group-hover/card:rounded-md rounded-b-none transition-all duration-300 group-hover/card:rounded-b-none">
+                            <div className="relative w-full aspect-[1/0.7] overflow-hidden rounded-none group-hover/card:rounded-md rounded-b-none transition-all duration-300 group-hover/card:rounded-b-none">
                                 <Image
                                     src={product.image || "/public-store/avatar.svg"}
                                     alt={product.name}

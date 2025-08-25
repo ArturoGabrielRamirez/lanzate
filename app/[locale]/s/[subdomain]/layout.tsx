@@ -6,6 +6,7 @@ import MainContainer from "@/features/store-landing/components/main-container";
 import StoreProvider from "@/features/store-landing/components/store-provider";
 import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
 import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 
 type LayoutProps = {
     children: React.ReactNode;
@@ -72,11 +73,13 @@ export default async function Layout({ children, params }: LayoutProps) {
                     } as React.CSSProperties}
                     className="contents"
                 >
-                    <Header
-                        title={storeData.name}
-                        socialMedia={storeData.operational_settings}
-                        showSocialLinks={storeData.customization?.show_social_links ?? true}
-                    />
+                    <Suspense>
+                        <Header
+                            title={storeData.name}
+                            socialMedia={storeData.operational_settings}
+                            showSocialLinks={storeData.customization?.show_social_links ?? true}
+                        />
+                    </Suspense>
                     <MainContainer>
                         {children}
                     </MainContainer>

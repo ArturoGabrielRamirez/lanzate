@@ -1,6 +1,9 @@
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import PageContainer from "@/features/layout/components/page-container"
+import FiltersIcon from "@/features/store-landing/components/filters-icon"
 import ProductCardLoader from "@/features/store-landing/components/product-card-loader"
 import ProductList from "@/features/store-landing/components/product-list"
+import ProductListDisplay from "@/features/store-landing/components/product-list-display"
 import SidebarCategorySelect from "@/features/store-landing/components/sidebar-category-select"
 import SidebarPriceRange from "@/features/store-landing/components/sidebar-price-range"
 import SidebarOrderBySelect from "@/features/store-landing/components/sidebar-price-select"
@@ -19,30 +22,52 @@ const ProductsPage = async ({ params, searchParams }: Props) => {
 
     const { subdomain } = await params
     const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams)
-    console.log("🚀 ~ ProductsPage ~ category:", category)
 
     return (
         <PageContainer className="max-w-full !pt-0">
             <StoreBanner />
             <TopCategoriesNavbar />
-            <div className="container mx-auto py-8">
-                <div>
-                    <SidebarCategorySelect />
-                    <SidebarOrderBySelect />
-                    <SidebarPriceRange />
+            <div className="container mx-auto py-8 md:grid md:grid-cols-[300px_1fr] lg:grid-cols-[400px_1fr] gap-4">
+                <div className="hidden md:flex flex-col gap-4">
+                    <Accordion type="single" collapsible>
+                        <AccordionItem value="category">
+                            <AccordionTrigger>
+                                <span className="text-xl font-medium">Categorías</span>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="price">
+                            <AccordionTrigger>
+                                <span className="text-xl font-medium">Precios</span>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        {/* <SidebarCategorySelect /> */}
+                        {/* <SidebarPriceRange /> */}
+                    </Accordion>
                 </div>
-                <Suspense fallback={<ProductCardLoader />} key={category}>
-                    <ProductList
-                        subdomain={subdomain}
-                        category={category}
-                        sort={sort}
-                        search={search}
-                        min={min}
-                        max={max}
-                        limit={limit}
-                        page={page}
-                    />
-                </Suspense>
+                <div className="flex flex-col gap-4">
+                    <div className="flex items-center gap-2 justify-between">
+                        {/* <FiltersIcon /> */}
+                        {/* <ProductListDisplay /> */}
+                        <SidebarOrderBySelect />
+                    </div>
+                    <Suspense fallback={<ProductCardLoader />} key={category}>
+                        <ProductList
+                            subdomain={subdomain}
+                            category={category}
+                            sort={sort}
+                            search={search}
+                            min={min}
+                            max={max}
+                            limit={limit}
+                            page={page}
+                        />
+                    </Suspense>
+                </div>
             </div>
         </PageContainer>
     )

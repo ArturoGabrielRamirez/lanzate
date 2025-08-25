@@ -1,4 +1,4 @@
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { Product } from "@prisma/client"
 import Image from "next/image"
 import AddToCartButton from "./add-to-cart-button"
@@ -42,8 +42,8 @@ function ListCard({ product }: Props) {
                 <div className="flex flex-col justify-between items-end flex-shrink-0">
                     <p className="text-lg font-bold">${product.price}</p>
                     <div className="flex gap-1">
-                        <AddToCartButton product={product} />
-                        <LikeButton productId={product.id} />
+                        <AddToCartButton product={product} canBeAddedToCart={true} />
+                        {/* <LikeButton productId={product.id} /> */}
                     </div>
                 </div>
             </Card>

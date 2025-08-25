@@ -7,30 +7,52 @@ import MultipleSelector from "@/components/expansion/multiple-selector";
 import { searchCategories } from "@/features/categories/data/searchCategories";
 import { createCategoryDynamic } from "@/features/categories/actions/createCategoryDynamic";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 type CategorySelectProps = {
-    onChange?: (value: any) => void
-    defaultValue?: any
+    onChange?: (value: { label: string, value: string }[]) => void
+    defaultValue?: { label: string, value: string }[]
     withLabel?: boolean
     storeId?: number
+    className?: string
 }
 
-function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: CategorySelectProps) {
+function CategorySelect({ onChange, defaultValue, withLabel = true, storeId, className }: CategorySelectProps) {
+console.log("🚀 ~ CategorySelect ~ defaultValue:", defaultValue)
 
     const [categories, setCategories] = useState<{ label: string, value: number }[]>([])
     const [creatingCategories, setCreatingCategories] = useState<Set<string>>(new Set())
+    const [defaultSelectedCategories, setDefaultSelectedCategories] = useState<{ label: string, value: string }[]>([])
 
     const t = useTranslations("subdomain.sidebar.categories");
 
     useEffect(() => {
         const fetchCategories = async () => {
-            const { payload, error } = await getCategories()
+            const { payload, error } = await getCategories(storeId)
             if (error) return console.log(error)
-            setCategories(payload.map((cat) => ({ label: cat.name, value: cat.id })))
+            const fetchedCategories = payload.map((cat) => ({ label: cat.name, value: cat.id }))
+            setCategories(fetchedCategories)
+            
+            // Process defaultValue after categories are loaded
+            if (defaultValue && Array.isArray(defaultValue) && defaultValue.length > 0) {
+                console.log("Processing defaultValue:", defaultValue)
+                console.log("Available categories:", fetchedCategories)
+                const processedDefaults = defaultValue.map((item: { label: string, value: string }) => {
+                    const category = fetchedCategories.find(cat => cat.value.toString() === item.value)
+                    console.log(`Looking for category with value ${item.value}, found:`, category)
+                    return {
+                        label: category?.label || item.label,
+                        value: item.value
+                    }
+                })
+                console.log("Processed defaults:", processedDefaults)
+                setDefaultSelectedCategories(processedDefaults)
+            }
         }
-
-        fetchCategories()
-    }, [])
+        if (storeId) {
+            fetchCategories()
+        }
+    }, [storeId, defaultValue])
 
     const formatedCategories = categories.map((cat) => ({
         label: cat.label,
@@ -49,7 +71,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
                 return []
             }
 
-            return payload.map((cat: any) => ({
+            return payload.map((cat: { name: string; id: number }) => ({
                 label: cat.name,
                 value: cat.id.toString()
             }))
@@ -61,7 +83,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
     }
 
     // Detectar y crear categorías nuevas
-    const handleChangeNew = async (selectedOptions: any[]) => {
+    const handleChangeNew = async (selectedOptions: { label: string, value: string }[]) => {
         if (!storeId) return
 
         for (const option of selectedOptions) {
@@ -90,7 +112,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
                     option.value = payload.id.toString()
 
                     toast.success(t("category-created", { name: payload.name }))
-                } catch (error) {
+                } catch {
                     toast.error(t("error-creating"))
                 } finally {
                     // Remover de la lista de categorías en creación
@@ -112,7 +134,9 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId }: C
         <div className="flex flex-col gap-1 w-full">
             {withLabel && <Label htmlFor="category">{t("category")}</Label>}
             <MultipleSelector
+                className={cn(className)}
                 defaultOptions={formatedCategories}
+                value={defaultSelectedCategories}
                 placeholder={t("category")}
                 creatable
                 onSearch={handleSearch}
