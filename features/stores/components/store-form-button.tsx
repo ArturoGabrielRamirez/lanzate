@@ -2,7 +2,7 @@
 
 import { ButtonWithPopup, InputField, CheckboxField } from "@/features/layout/components"
 import { generate } from "random-words"
-import { Plus, Pencil, Phone, MessageCircle, User, MapPin } from "lucide-react"
+import { Plus, Pencil, Phone, MessageCircle, MapPin, Store as StoreIcon } from "lucide-react"
 import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion"
@@ -27,6 +27,7 @@ type StoreFormData = {
     city?: string
     province?: string
     country?: string
+    isEdit?: boolean
 }
 
 type StoreFormButtonProps = {
@@ -57,7 +58,8 @@ function StoreFormButton({
     messages,
     canCreate = true,
     className,
-    store
+    store,
+    isEdit = false
 }: StoreFormButtonProps) {
 
     const [subdomain, setSubdomain] = useState(
@@ -110,7 +112,7 @@ function StoreFormButton({
                 <AccordionItem value="item-1">
                     <AccordionTriggerWithValidation keys={["name", "description", "subdomain"]}>
                         <span className="flex items-center gap-2">
-                            <User className="size-4" />
+                            <StoreIcon className="size-4" />
                             Basic info
                         </span>
                     </AccordionTriggerWithValidation>
@@ -139,56 +141,6 @@ function StoreFormButton({
                                 .lanzate.com
                             </span>
                         </div>
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-2">
-                    <AccordionTriggerWithValidation keys={["contact_phone", "contact_whatsapp"]}>
-                        <span className="flex items-center gap-2">
-                            <Phone className="size-4" />
-                            {t("contact-section")}
-                        </span>
-                    </AccordionTriggerWithValidation>
-                    <AccordionContent className="space-y-4">
-                        <InputField
-                            name="contact_phone"
-                            label={t("contact-phone")}
-                            type="tel"
-                            defaultValue={store?.operational_settings?.contact_phone || ""}
-                        />
-                        <InputField
-                            name="contact_whatsapp"
-                            label={t("contact-whatsapp")}
-                            type="tel"
-                            defaultValue={store?.operational_settings?.contact_whatsapp || ""}
-                        />
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-3">
-                    <AccordionTriggerWithValidation keys={["facebook_url", "instagram_url", "x_url"]}>
-                        <span className="flex items-center gap-2">
-                            <MessageCircle className="size-4" />
-                            {t("social-media-section")}
-                        </span>
-                    </AccordionTriggerWithValidation>
-                    <AccordionContent className="space-y-4">
-                        <InputField
-                            name="facebook_url"
-                            label={t("facebook-url")}
-                            type="url"
-                            defaultValue={store?.operational_settings?.facebook_url || ""}
-                        />
-                        <InputField
-                            name="instagram_url"
-                            label={t("instagram-url")}
-                            type="url"
-                            defaultValue={store?.operational_settings?.instagram_url || ""}
-                        />
-                        <InputField
-                            name="x_url"
-                            label={t("x-url")}
-                            type="url"
-                            defaultValue={store?.operational_settings?.x_url || ""}
-                        />
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">
@@ -237,6 +189,57 @@ function StoreFormButton({
                         />
                     </AccordionContent>
                 </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTriggerWithValidation keys={["contact_phone", "contact_email"]}>
+                        <span className="flex items-center gap-2">
+                            <Phone className="size-4" />
+                            {t("contact-section")}
+                        </span>
+                    </AccordionTriggerWithValidation>
+                    <AccordionContent className="space-y-4">
+                        <InputField
+                            name="contact_phone"
+                            label={t("contact-phone")}
+                            type="tel"
+                            defaultValue={isEdit ? store?.branches[0]?.phone || "" : ""}
+                        />
+                        <InputField
+                            name="contact_email"
+                            label={"Email"}
+                            type="email"
+                            defaultValue={isEdit ? store?.branches[0]?.email || "" : ""}
+                        />
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTriggerWithValidation keys={["facebook_url", "instagram_url", "x_url"]}>
+                        <span className="flex items-center gap-2">
+                            <MessageCircle className="size-4" />
+                            {t("social-media-section")}
+                        </span>
+                    </AccordionTriggerWithValidation>
+                    <AccordionContent className="space-y-4">
+                        <InputField
+                            name="facebook_url"
+                            label={t("facebook-url")}
+                            type="url"
+                            defaultValue={store?.operational_settings?.facebook_url || ""}
+                        />
+                        <InputField
+                            name="instagram_url"
+                            label={t("instagram-url")}
+                            type="url"
+                            defaultValue={store?.operational_settings?.instagram_url || ""}
+                        />
+                        <InputField
+                            name="x_url"
+                            label={t("x-url")}
+                            type="url"
+                            defaultValue={store?.operational_settings?.x_url || ""}
+                        />
+                    </AccordionContent>
+                </AccordionItem>
+
             </Accordion>
         </ButtonWithPopup>
     )
