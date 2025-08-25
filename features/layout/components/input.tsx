@@ -61,7 +61,7 @@ const InputField = ({
         placeholder={placeholder}
         {...register(name)}
         defaultValue={defaultValue}
-        className={className}
+        className={cn(className, disabled && "opacity-50 bg-muted")}
         onKeyDown={onKeyDown}
         startContent={startContent}
         endContent={endContent}

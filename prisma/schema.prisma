@@ -141,6 +141,7 @@ model Store {
   user_id              Int
   slug                 String                    @unique
   subdomain            String                    @unique
+  is_physical_store    Boolean                   @default(false)
   branches             Branch[]
   categories           Category[]
   contracts            Contract[]
@@ -206,6 +207,9 @@ model Branch {
   name        String
   description String?
   address     String?
+  city        String?
+  province    String?
+  country     String?
   phone       String?
   email       String?
   created_at  DateTime       @default(now())

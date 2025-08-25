@@ -5,11 +5,13 @@ import ButtonWithPopup from "./button-with-popup";
 import NextThemeProvider from "./theme-provider";
 import TextareaField from "./textarea-field";
 import InputField from "./input";
+import CheckboxField from "./checkbox-field";
 import Title from "./title";
 import Form from "./form";
 
 export {
     ButtonWithPopup,
+    CheckboxField,
     Form,
     InputField,
     LoadingSubmitButton,

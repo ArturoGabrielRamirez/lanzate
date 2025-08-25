@@ -11,7 +11,18 @@ type InsertStoreReturn = {
     error: boolean
 }
 
-export async function insertStore(payload: any, userId: number): Promise<InsertStoreReturn> {
+type StorePayload = {
+    name: string
+    description?: string
+    subdomain: string
+    is_physical_store?: boolean
+    address?: string
+    city?: string
+    province?: string
+    country?: string
+}
+
+export async function insertStore(payload: StorePayload, userId: number): Promise<InsertStoreReturn> {
 
     return actionWrapper(async () => {
 
@@ -51,7 +62,12 @@ export async function insertStore(payload: any, userId: number): Promise<InsertS
                 branches: {
                     create: {
                         name: "Main Branch",
-                        description: "Main starter branch"
+                        description: "Main starter branch",
+                        is_physical_store: payload.is_physical_store || false,
+                        address: payload.address || null,
+                        city: payload.city || null,
+                        province: payload.province || null,
+                        country: payload.country || null
                     }
                 },
                 balance: {
