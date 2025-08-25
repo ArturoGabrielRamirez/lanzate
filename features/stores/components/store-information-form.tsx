@@ -1,7 +1,7 @@
 "use client"
 
 import { Store, StoreOperationalSettings, Branch } from "@prisma/client"
-import { BasicInfoDisplay, AddressDisplay, ContactDisplay, SocialMediaDisplay } from "./form-sections"
+import { BasicInfoDisplay, AddressDisplay, ContactDisplay, SocialMediaDisplay, OperationalSettingsDisplay } from "./form-sections"
 
 interface StoreInformationFormProps {
     store: Store & {
@@ -32,6 +32,9 @@ const StoreInformationForm = ({
             />
             <ContactDisplay store={store} />
             <SocialMediaDisplay
+                store={store}
+            />
+            <OperationalSettingsDisplay
                 store={store}
             />
             {canManageStore && children}
