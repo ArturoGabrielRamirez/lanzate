@@ -1,7 +1,7 @@
 "use client"
 
 import { ButtonWithPopup, InputField, CheckboxField } from "@/features/layout/components"
-import { MapPin } from "lucide-react"
+import { Edit, MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Store, Branch } from "@prisma/client"
 import { editAddressSchema } from "@/features/stores/schemas/address-schema"
@@ -39,8 +39,7 @@ const EditAddressButton = ({ store, userId, className }: EditAddressButtonProps)
         <ButtonWithPopup
             text={
                 <>
-                    <MapPin className="size-4" />
-                    Edit Address
+                    <Edit />
                 </>
             }
             title="Edit Store Address"
@@ -53,6 +52,7 @@ const EditAddressButton = ({ store, userId, className }: EditAddressButtonProps)
                 loading: "Updating address information..."
             }}
             className={className}
+            onlyIcon
         >
             <div className="space-y-4">
                 <CheckboxField

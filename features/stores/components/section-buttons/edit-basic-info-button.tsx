@@ -1,7 +1,7 @@
 "use client"
 
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
-import { StoreIcon } from "lucide-react"
+import { Edit, StoreIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { useState } from "react"
@@ -34,8 +34,7 @@ const EditBasicInfoButton = ({ store, userId, className }: EditBasicInfoButtonPr
         <ButtonWithPopup
             text={
                 <>
-                    <StoreIcon className="size-4" />
-                    Edit Basic Info
+                    <Edit />
                 </>
             }
             title="Edit Basic Information"
@@ -48,6 +47,7 @@ const EditBasicInfoButton = ({ store, userId, className }: EditBasicInfoButtonPr
                 loading: "Updating basic information..."
             }}
             className={className}
+            onlyIcon
         >
             <div className="space-y-4">
                 <InputField

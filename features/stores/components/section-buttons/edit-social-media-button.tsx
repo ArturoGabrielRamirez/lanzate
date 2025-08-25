@@ -1,6 +1,6 @@
 "use client"
 
-import { Facebook, Instagram, Twitter } from "lucide-react"
+import { Edit, Facebook, Instagram, Twitter } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { ButtonWithPopup } from "@/features/layout/components"
 import { InputField } from "@/features/layout/components"
@@ -30,8 +30,7 @@ const EditSocialMediaButton = ({ store, className }: EditSocialMediaButtonProps)
         <ButtonWithPopup
             text={
                 <>
-                    <Facebook className="size-4" />
-                    {t("edit-social-media")}
+                    <Edit/>
                 </>
             }
             title={t("edit-social-media-title")}
@@ -40,6 +39,7 @@ const EditSocialMediaButton = ({ store, className }: EditSocialMediaButtonProps)
             action={handleEditSocialMedia}
             messages={messages}
             className={className}
+            onlyIcon
         >
             <div className="space-y-4">
                 <InputField

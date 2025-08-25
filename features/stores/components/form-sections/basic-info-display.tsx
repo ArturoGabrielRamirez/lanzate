@@ -2,9 +2,9 @@
 
 import { StoreIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Store } from "@prisma/client"
 import { EditBasicInfoButton } from "../section-buttons"
+import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface BasicInfoDisplayProps {
     store: Store
@@ -15,14 +15,22 @@ const BasicInfoDisplay = ({ store, userId }: BasicInfoDisplayProps) => {
     const t = useTranslations("store.edit-store")
 
     return (
-        <AccordionItem value="item-1">
-            <AccordionTrigger>
-                <span className="flex items-center gap-2">
-                    <StoreIcon className="size-4" />
-                    Basic info
-                </span>
-            </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-4 items-end">
+        <Card>
+            <CardHeader>
+                <CardTitle>
+                    <span className="flex items-center gap-2">
+                        <StoreIcon className="size-4" />
+                        Basic info
+                    </span>
+                </CardTitle>
+                <CardAction>
+                    <EditBasicInfoButton
+                        store={store}
+                        userId={userId}
+                    />
+                </CardAction>
+            </CardHeader>
+            <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                     <div className="space-y-1">
                         <p className="font-medium text-sm text-muted-foreground">{t("name")}</p>
@@ -44,12 +52,8 @@ const BasicInfoDisplay = ({ store, userId }: BasicInfoDisplayProps) => {
                         </a>
                     </div>
                 </div>
-                <EditBasicInfoButton
-                    store={store}
-                    userId={userId}
-                />
-            </AccordionContent>
-        </AccordionItem>
+            </CardContent>
+        </Card>
     )
 }
 

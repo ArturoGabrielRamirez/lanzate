@@ -38,9 +38,6 @@ export async function updateStoreAddress(slug: string, payload: UpdateAddressPay
             throw new Error("Main branch not found")
         }
         
-        console.log("🚀 ~ updateStoreAddress ~ payload:", payload)
-        console.log("🚀 ~ updateStoreAddress ~ mainBranch:", mainBranch)
-        // Actualizar la rama principal con la información de dirección
         const updatedBranch = await prisma.branch.update({
             where: {
                 id: mainBranch.id

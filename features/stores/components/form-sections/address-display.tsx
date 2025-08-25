@@ -2,9 +2,9 @@
 
 import { MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Store, Branch } from "@prisma/client"
 import { EditAddressButton } from "../section-buttons"
+import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface AddressDisplayProps {
     store: Store & { branches: Branch[] }
@@ -14,17 +14,25 @@ interface AddressDisplayProps {
 const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
     const t = useTranslations("store.edit-store")
     const mainBranch = store.branches?.find((branch) => branch.is_main)
-    console.log("🚀 ~ AddressDisplay ~ mainBranch:", mainBranch)
+
 
     return (
-        <AccordionItem value="item-4">
-            <AccordionTrigger>
-                <span className="flex items-center gap-2">
-                    <MapPin className="size-4" />
-                    {t("address-section")}
-                </span>
-            </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-4 items-end">
+        <Card>
+            <CardHeader>
+                <CardTitle>
+                    <span className="flex items-center gap-2">
+                        <MapPin className="size-4" />
+                        {t("address-section")}
+                    </span>
+                </CardTitle>
+                <CardAction>
+                    <EditAddressButton
+                        store={store}
+                        userId={userId}
+                    />
+                </CardAction>
+            </CardHeader>
+            <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                     <div className="space-y-1">
                         <p className="font-medium text-sm text-muted-foreground">{t("is-physical-store")}</p>
@@ -51,12 +59,8 @@ const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
                         </>
                     )}
                 </div>
-                <EditAddressButton
-                    store={store}
-                    userId={userId}
-                />
-            </AccordionContent>
-        </AccordionItem>
+            </CardContent>
+        </Card>
     )
 }
 

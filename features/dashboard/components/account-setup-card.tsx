@@ -25,7 +25,6 @@ const AccountSetupCard = async () => {
     const completedSteps = [storeDone, productDone, settingsDone].filter(Boolean).length || 1
     const progress = (completedSteps / totalSteps) * 100
 
-    console.log("🚀 ~ productDone:", productDone)
     return (
         <Card className="!gap-2">
             <CardHeader>

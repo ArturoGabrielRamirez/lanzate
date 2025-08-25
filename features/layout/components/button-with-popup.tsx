@@ -43,18 +43,20 @@ function ButtonWithPopup<T>({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                {onlyIcon ? (
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <IconButton disabled={disabled} type="button" className={cn(disabled && "cursor-not-allowed text-muted-foreground", className)} icon={() => text} />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            {title}
-                        </TooltipContent>
-                    </Tooltip>
-                ) : (
-                    <Button disabled={disabled} variant={variant} type="button" className={cn(className)} size={size}>{text}</Button>
-                )}
+                <div>
+                    {onlyIcon ? (
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <IconButton disabled={disabled} type="button" className={cn(disabled && "cursor-not-allowed text-muted-foreground", className)} icon={() => text} />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                {title}
+                            </TooltipContent>
+                        </Tooltip>
+                    ) : (
+                        <Button disabled={disabled} variant={variant} type="button" className={cn(className)} size={size}>{text}</Button>
+                    )}
+                </div>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

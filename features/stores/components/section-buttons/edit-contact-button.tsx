@@ -1,6 +1,6 @@
 "use client"
 
-import { Phone } from "lucide-react"
+import { Edit, Phone } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { ButtonWithPopup } from "@/features/layout/components"
 import { InputField } from "@/features/layout/components"
@@ -30,8 +30,7 @@ const EditContactButton = ({ store, className }: EditContactButtonProps) => {
         <ButtonWithPopup
             text={
                 <>
-                    <Phone className="size-4" />
-                    {t("edit-contact")}
+                    <Edit />
                 </>
             }
             title={t("edit-contact-title")}
@@ -40,6 +39,7 @@ const EditContactButton = ({ store, className }: EditContactButtonProps) => {
             action={handleEditContact}
             messages={messages}
             className={className}
+            onlyIcon
         >
             <div className="space-y-4">
                 <InputField

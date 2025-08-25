@@ -1,13 +1,7 @@
 "use client"
 
 import { Store, StoreOperationalSettings, Branch } from "@prisma/client"
-import { Accordion } from "@/components/ui/accordion"
-import {
-    BasicInfoDisplay,
-    AddressDisplay,
-    ContactDisplay,
-    SocialMediaDisplay
-} from "./form-sections"
+import { BasicInfoDisplay, AddressDisplay, ContactDisplay, SocialMediaDisplay } from "./form-sections"
 
 interface StoreInformationFormProps {
     store: Store & {
@@ -28,23 +22,19 @@ const StoreInformationForm = ({
 
     return (
         <>
-            <Accordion type="single" collapsible defaultValue="item-1">
-                <BasicInfoDisplay
-                    store={store}
-                    userId={userId}
-                />
-                <AddressDisplay
-                    store={store}
-                    userId={userId}
-                />
-                <ContactDisplay store={store} />
-                <SocialMediaDisplay
-                    store={store}
-                />
-            </Accordion>
-
+            <BasicInfoDisplay
+                store={store}
+                userId={userId}
+            />
+            <AddressDisplay
+                store={store}
+                userId={userId}
+            />
+            <ContactDisplay store={store} />
+            <SocialMediaDisplay
+                store={store}
+            />
             {canManageStore && children}
-
         </>
     )
 }

@@ -60,13 +60,8 @@ async function AccountTab({ slug }: AccountTabProps) {
                 /*  onSubmit={handleSubmit} */
                 canManageStore={canManageStore}
                 userId={user.id}
-            >
-                <EditStoreButton
-                    userId={user.id}
-                    slug={store.slug}
-                    store={store}
-                />
-            </StoreInformationForm>
+            />
+
             {/* Operational Settings Card */}
             {/* <Card>
                 <CardHeader>
