@@ -4,7 +4,7 @@ import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { DeleteStoreButton, EditStoreButton, EditOperationalSettingsButton } from "@/features/stores/components"
 import { AccountTabProps } from "@/features/stores/types"
 import { getTranslations } from "next-intl/server"
-import { Phone, MessageCircle, Facebook, Instagram, Twitter, Store, Settings, DollarSign, Truck } from "lucide-react"
+import { Phone, Facebook, Instagram, Twitter, Store, Settings, DollarSign, Truck, Mail } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -84,28 +84,28 @@ async function AccountTab({ slug }: AccountTabProps) {
                                 <Phone className="size-4" />
                                 {t("contact-phone")}
                             </p>
-                            <p className="text-base">{operationalSettings?.contact_phone || t("not-provided")}</p>
+                            <p className="text-base">{store.phone || t("not-provided")}</p>
                         </div>
                         <div className="space-y-1">
                             <p className="font-medium text-sm text-muted-foreground flex items-center gap-2">
-                                <MessageCircle className="size-4" />
-                                {t("contact-whatsapp")}
+                                <Mail className="size-4" />
+                                Email
                             </p>
-                            <p className="text-base">{operationalSettings?.contact_whatsapp || t("not-provided")}</p>
+                            <p className="text-base">{store.email || t("not-provided")}</p>
                         </div>
                         <div className="space-y-1">
                             <p className="font-medium text-sm text-muted-foreground flex items-center gap-2">
                                 <Facebook className="size-4" />
                                 {t("facebook")}
                             </p>
-                            {operationalSettings?.facebook_url ? (
+                            {store.facebook_url ? (
                                 <a
-                                    href={operationalSettings.facebook_url}
+                                    href={store.facebook_url}
                                     className="text-blue-500 hover:underline text-base"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    {operationalSettings.facebook_url}
+                                    {store.facebook_url}
                                 </a>
                             ) : (
                                 <p className="text-base">{t("not-provided")}</p>
@@ -116,14 +116,14 @@ async function AccountTab({ slug }: AccountTabProps) {
                                 <Instagram className="size-4" />
                                 {t("instagram")}
                             </p>
-                            {operationalSettings?.instagram_url ? (
+                            {store.instagram_url ? (
                                 <a
-                                    href={operationalSettings.instagram_url}
+                                    href={store.instagram_url}
                                     className="text-blue-500 hover:underline text-base"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    {operationalSettings.instagram_url}
+                                    {store.instagram_url}
                                 </a>
                             ) : (
                                 <p className="text-base">{t("not-provided")}</p>
@@ -134,14 +134,14 @@ async function AccountTab({ slug }: AccountTabProps) {
                                 <Twitter className="size-4" />
                                 {t("x-twitter")}
                             </p>
-                            {operationalSettings?.x_url ? (
+                            {store.x_url ? (
                                 <a
-                                    href={operationalSettings.x_url}
+                                    href={store.x_url}
                                     className="text-blue-500 hover:underline text-base"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    {operationalSettings.x_url}
+                                    {store.x_url}
                                 </a>
                             ) : (
                                 <p className="text-base">{t("not-provided")}</p>

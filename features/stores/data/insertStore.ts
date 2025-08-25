@@ -20,6 +20,11 @@ type StorePayload = {
     city?: string
     province?: string
     country?: string
+    contact_phone?: string
+    contact_email?: string
+    facebook_url?: string
+    instagram_url?: string
+    x_url?: string
 }
 
 export async function insertStore(payload: StorePayload, userId: number): Promise<InsertStoreReturn> {
@@ -59,15 +64,23 @@ export async function insertStore(payload: StorePayload, userId: number): Promis
                 subdomain: payload.subdomain,
                 description: payload.description,
                 user_id: userId,
+                is_physical_store: payload.is_physical_store || false,
+                facebook_url: payload.facebook_url || null,
+                instagram_url: payload.instagram_url || null,
+                x_url: payload.x_url || null,
+                email: payload.contact_email || null,
+                phone: payload.contact_phone || null,
                 branches: {
                     create: {
                         name: "Main Branch",
                         description: "Main starter branch",
-                        is_physical_store: payload.is_physical_store || false,
                         address: payload.address || null,
                         city: payload.city || null,
                         province: payload.province || null,
-                        country: payload.country || null
+                        country: payload.country || null,
+                        email: payload.contact_email || null,
+                        phone: payload.contact_phone || null,
+                        is_main: true
                     }
                 },
                 balance: {
@@ -86,12 +99,12 @@ export async function insertStore(payload: StorePayload, userId: number): Promis
                         sort_order: cat.sort_order,
                         is_active: cat.is_active
                     }))
-                }, 
-                customization : {
-                    create : {
-                        
+                },
+                customization: {
+                    create: {
+
                     }
-                }
+                },
             }
         })
 

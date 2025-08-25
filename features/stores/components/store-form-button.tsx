@@ -27,7 +27,6 @@ type StoreFormData = {
     city?: string
     province?: string
     country?: string
-    isEdit?: boolean
 }
 
 type StoreFormButtonProps = {
@@ -49,6 +48,7 @@ type StoreFormButtonProps = {
         operational_settings: StoreOperationalSettings | null
         branches: Branch[]
     }
+    isEdit?: boolean
 }
 
 function StoreFormButton({
