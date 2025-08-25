@@ -75,6 +75,7 @@ export default async function Layout({ children, params }: LayoutProps) {
                 >
                     <Suspense>
                         <Header
+                            logo={storeData.logo}
                             title={storeData.name}
                             socialMedia={storeData.operational_settings}
                             showSocialLinks={storeData.customization?.show_social_links ?? true}

@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server"
 import LandingAccountDropdown from "@/features/header/components/landing-account-dropdown"
 import { getUserInfo } from "@/features/layout/actions"
 import HeaderContainer from "@/features/header/components/header-container"
+import Image from "next/image"
 
 type Props = {
     title?: string
@@ -14,9 +15,11 @@ type Props = {
         x_url?: string | null
     } | null
     showSocialLinks?: boolean
+    logo?: string | null
 }
 
-async function Header({ title = "Store Name", socialMedia, showSocialLinks = true }: Props) {
+async function Header({ title = "Store Name", socialMedia, showSocialLinks = true, logo }: Props) {
+    console.log("🚀 ~ Header ~ logo:", logo)
 
     const t = await getTranslations("auth.buttons");
 
@@ -45,7 +48,11 @@ async function Header({ title = "Store Name", socialMedia, showSocialLinks = tru
         <HeaderContainer>
             <div className="container mx-auto flex items-center justify-between ">
                 <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
-                    <Rocket className="text-primary [display:var(--show-brand-logo)]" />
+                    {logo ? (
+                        <img src={logo} alt={title} width={32} height={32} />
+                    ) : (
+                        <Rocket className="text-primary [display:var(--show-brand-logo)]" />
+                    )}
                     <h1 className="[display:var(--show-brand-text)]">{title}</h1>
                 </Link>
                 <div className="flex items-center gap-2">

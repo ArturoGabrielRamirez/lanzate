@@ -48,7 +48,7 @@ const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
                             <p className="text-base">Not provided</p>
                         )}
                     </div>
-                    <div className="space-y-1">
+                    <div className="space-y-1 truncate">
                         <p className="font-medium text-sm text-muted-foreground flex items-center gap-2">
                             <Instagram className="size-4" />
                             {t("instagram-url")}
@@ -56,7 +56,7 @@ const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
                         {store.instagram_url ? (
                             <a
                                 href={store.instagram_url}
-                                className="text-blue-500 hover:underline text-base"
+                                className="text-blue-500 hover:underline text-base truncate"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
