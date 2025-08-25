@@ -19,12 +19,12 @@ const EditAddressButton = ({ store, userId, className }: EditAddressButtonProps)
 
     const [isPhysicalStore, setIsPhysicalStore] = useState(store.is_physical_store || false)
 
-    const handleSubmit = async (payload: { 
-        is_physical_store: boolean; 
-        address?: string; 
-        city?: string; 
-        province?: string; 
-        country?: string 
+    const handleSubmit = async (payload: {
+        is_physical_store: boolean;
+        address?: string;
+        city?: string;
+        province?: string;
+        country?: string
     }) => {
         return updateStoreAddress(store.slug, payload, userId)
     }
@@ -53,6 +53,12 @@ const EditAddressButton = ({ store, userId, className }: EditAddressButtonProps)
             }}
             className={className}
             onlyIcon
+            contentButton={(
+                <>
+                    <Edit />
+                    Edit
+                </>
+            )}
         >
             <div className="space-y-4">
                 <CheckboxField

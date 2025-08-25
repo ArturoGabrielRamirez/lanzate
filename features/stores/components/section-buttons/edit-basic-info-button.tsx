@@ -48,6 +48,12 @@ const EditBasicInfoButton = ({ store, userId, className }: EditBasicInfoButtonPr
             }}
             className={className}
             onlyIcon
+            contentButton={(
+                <>
+                    <Edit />
+                    Edit
+                </>
+            )}
         >
             <div className="space-y-4">
                 <InputField

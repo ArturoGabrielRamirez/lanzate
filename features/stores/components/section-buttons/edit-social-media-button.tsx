@@ -40,6 +40,12 @@ const EditSocialMediaButton = ({ store, className }: EditSocialMediaButtonProps)
             messages={messages}
             className={className}
             onlyIcon
+            contentButton={(
+                <>
+                    <Edit />
+                    Edit
+                </>
+            )}
         >
             <div className="space-y-4">
                 <InputField

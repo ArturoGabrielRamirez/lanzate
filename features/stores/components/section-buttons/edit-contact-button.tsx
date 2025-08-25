@@ -40,6 +40,12 @@ const EditContactButton = ({ store, className }: EditContactButtonProps) => {
             messages={messages}
             className={className}
             onlyIcon
+            contentButton={(
+                <>
+                    <Edit />
+                    Edit
+                </>
+            )}
         >
             <div className="space-y-4">
                 <InputField

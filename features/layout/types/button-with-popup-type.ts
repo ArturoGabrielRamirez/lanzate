@@ -19,6 +19,6 @@ export type ButtonWithPopupPropsType<T> = {
     className?: string
     formDisabled?: boolean
     size?: "default" | "sm" | "lg" | "icon"
-    contentButton?: string
+    contentButton?: string | React.ReactNode
     onlyIcon?: boolean
 }
