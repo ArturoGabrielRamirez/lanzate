@@ -1,10 +1,16 @@
 "use client"
 
-import { Phone, Mail } from "lucide-react"
+import { Phone, Edit as EditIcon, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Store, Branch } from "@prisma/client"
 import { EditContactButton } from "../section-buttons"
-import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Form, InputField } from "@/features/layout/components"
+import { useState } from "react"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { editContactSchema, type EditContactData } from "../../schemas/contact-schema"
+import { useFormContext } from "react-hook-form"
 
 interface ContactDisplayProps {
     store: Store & { branches: Branch[] }
@@ -12,40 +18,83 @@ interface ContactDisplayProps {
 
 const ContactDisplay = ({ store }: ContactDisplayProps) => {
     const t = useTranslations("store.edit-store")
+    const [isEditing, setIsEditing] = useState(false)
+
+    const handleOpenEdit = () => {
+        setIsEditing(true)
+    }
+
+    const handleCloseEdit = () => {
+        setIsEditing(false)
+    }
+
+    function ToggleEditButton() {
+        const { reset } = useFormContext<EditContactData>()
+
+        const initialValues: EditContactData = {
+            contact_phone: store.phone || "",
+            contact_email: store.email || "",
+        }
+
+        const onClick = () => {
+            if (isEditing) {
+                reset(initialValues)
+                handleCloseEdit()
+                return
+            }
+            handleOpenEdit()
+        }
+
+        return (
+            <IconButton
+                icon={isEditing ? X : EditIcon}
+                onClick={onClick}
+            />
+        )
+    }
 
     return (
         <Card>
-            <CardHeader>
-                <CardTitle>
-                    <span className="flex items-center gap-2">
-                        <Phone className="size-4" />
-                        {t("contact-section")}
-                    </span>
-                </CardTitle>
-                <CardAction>
-                    <EditContactButton
-                        store={store}
-                    />
-                </CardAction>
-            </CardHeader>
-            <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-1">
-                        <p className="font-medium text-sm text-muted-foreground flex items-center gap-2">
-                            <Phone className="size-4" />
-                            {t("contact-phone")}
-                        </p>
-                        <p className="text-base">{store.phone || "Not provided"}</p>
+            <Form submitButton={false} contentButton={false} resolver={yupResolver(editContactSchema)}>
+                <CardHeader>
+                    <CardTitle>
+                        <span className="flex items-center gap-2 text-lg md:text-xl">
+                            <Phone className="size-5" />
+                            {t("contact-section")}
+                        </span>
+                    </CardTitle>
+                    <CardAction>
+                        {isEditing && (
+                            <EditContactButton
+                                store={store}
+                                onSuccess={handleCloseEdit}
+                            />
+                        )}
+                        <ToggleEditButton />
+                    </CardAction>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                            <InputField
+                                name="contact_phone"
+                                label={t("contact-phone")}
+                                defaultValue={store.phone || ""}
+                                disabled={!isEditing}
+                            />
+                        </div>
+                        <div className="space-y-1">
+                            <InputField
+                                name="contact_email"
+                                label="Email"
+                                type="email"
+                                defaultValue={store.email || ""}
+                                disabled={!isEditing}
+                            />
+                        </div>
                     </div>
-                    <div className="space-y-1">
-                        <p className="font-medium text-sm text-muted-foreground flex items-center gap-2">
-                            <Mail className="size-4" />
-                            Email
-                        </p>
-                        <p className="text-base">{store.email || "Not provided"}</p>
-                    </div>
-                </div>
-            </CardContent>
+                </CardContent>
+            </Form>
         </Card>
     )
 }

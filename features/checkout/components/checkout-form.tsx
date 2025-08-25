@@ -87,7 +87,7 @@ function CheckoutForm({
             className="grow"
             contentButton={t("navigation.continue")}
             formAction={handleSubmit}
-            resolver={yupResolver(shippingMethod === "DELIVERY" ? deliveryOrderSchema : pickupOrderSchema) as any}
+            resolver={yupResolver(shippingMethod === "DELIVERY" ? deliveryOrderSchema : pickupOrderSchema)}
         >
             <InteractiveStepper defaultValue={1} className="grow">
                 <InteractiveStepperItem>

@@ -1,87 +1,66 @@
 "use client"
 
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
-import { Edit, StoreIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
-
-import { useState } from "react"
+import { CheckIcon, Loader2 } from "lucide-react"
 import { Store } from "@prisma/client"
-import { editBasicInfoSchema } from "@/features/stores/schemas/basic-info-schema"
 import { updateStoreBasicInfo } from "@/features/stores/actions/updateStoreBasicInfo"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { useFormContext } from "react-hook-form"
+import { toast } from "sonner"
+import { useState } from "react"
+import { cn } from "@/lib/utils"
 
 interface EditBasicInfoButtonProps {
     store: Store
     userId: number
     className?: string
+    onSuccess?: () => void
 }
 
-const EditBasicInfoButton = ({ store, userId, className }: EditBasicInfoButtonProps) => {
-    const t = useTranslations("store.edit-store")
-    const [subdomain, setSubdomain] = useState(store.subdomain)
+const EditBasicInfoButton = ({ store, userId, onSuccess }: EditBasicInfoButtonProps) => {
+    const { getValues, formState: { isValid } } = useFormContext()
+    const [isLoading, setIsLoading] = useState(false)
 
-    const handleSubdomainChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSubdomain(e.target.value.replace(/[^a-zA-Z0-9-]/g, ""))
-    }
+    const handleSubmit = async () => {
 
-    const handleSubmit = async (payload: { name: string; description?: string; subdomain: string }) => {
-        return updateStoreBasicInfo(store.slug, {
-            ...payload,
-            subdomain,
-        }, userId)
+        const values = getValues()
+        const payload = {
+            name: values.name,
+            description: values.description,
+            subdomain: values.subdomain
+        }
+
+        try {
+            setIsLoading(true)
+            toast.loading("Updating basic information...")
+            const { error, message } = await updateStoreBasicInfo(store.slug, payload, userId)
+
+            if (error) {
+                throw new Error(message)
+            }
+            toast.dismiss()
+            toast.success("Basic information updated successfully!")
+            if (onSuccess) onSuccess()
+
+        } catch (error) {
+            console.error(error)
+            toast.dismiss()
+            if (error instanceof Error) {
+                toast.error(error.message)
+            } else {
+                toast.error("Failed to update basic information")
+            }
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
-        <ButtonWithPopup
-            text={
-                <>
-                    <Edit />
-                </>
-            }
-            title="Edit Basic Information"
-            schema={editBasicInfoSchema}
-            description="Update your store's basic information"
-            action={handleSubmit}
-            messages={{
-                success: "Basic information updated successfully!",
-                error: "Failed to update basic information",
-                loading: "Updating basic information..."
-            }}
-            className={className}
-            onlyIcon
-            contentButton={(
-                <>
-                    <Edit />
-                    Edit
-                </>
-            )}
-        >
-            <div className="space-y-4">
-                <InputField
-                    name="name"
-                    label={t("name")}
-                    type="text"
-                    defaultValue={store.name}
-                />
-                <InputField
-                    name="description"
-                    label={t("description-field")}
-                    type="text"
-                    defaultValue={store.description || ""}
-                />
-                <div className="relative grid grid-cols-[1fr_auto] gap-2 items-end">
-                    <InputField
-                        name="subdomain"
-                        label={t("subdomain")}
-                        type="text"
-                        onChange={handleSubdomainChange}
-                        value={subdomain}
-                    />
-                    <span className="text-muted-foreground pointer-events-none select-none">
-                        .lanzate.com
-                    </span>
-                </div>
-            </div>
-        </ButtonWithPopup>
+        <IconButton
+            icon={isLoading ? Loader2 : CheckIcon}
+            onClick={handleSubmit}
+            disabled={isLoading || !isValid}
+            className={cn(isLoading && "animate-spin", !isValid && "opacity-50 cursor-not-allowed")}
+        />
     )
 }
 

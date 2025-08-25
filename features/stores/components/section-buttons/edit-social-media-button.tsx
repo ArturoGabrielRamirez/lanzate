@@ -1,76 +1,60 @@
 "use client"
 
-import { Edit, Facebook, Instagram, Twitter } from "lucide-react"
-import { useTranslations } from "next-intl"
-import { ButtonWithPopup } from "@/features/layout/components"
-import { InputField } from "@/features/layout/components"
-import { editSocialMediaSchema } from "../../schemas/social-media-schema"
+import { CheckIcon, Loader2 } from "lucide-react"
 import { updateStoreSocialMedia } from "../../actions/updateStoreSocialMedia"
 import { Store, StoreOperationalSettings } from "@prisma/client"
+import { useFormContext } from "react-hook-form"
+import { useState } from "react"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { toast } from "sonner"
+import { cn } from "@/lib/utils"
 
 interface EditSocialMediaButtonProps {
     store: Store & { operational_settings: StoreOperationalSettings | null }
     className?: string
+    onSuccess?: () => void
 }
 
-const EditSocialMediaButton = ({ store, className }: EditSocialMediaButtonProps) => {
-    const t = useTranslations("store.edit-store")
+const EditSocialMediaButton = ({ store, onSuccess }: EditSocialMediaButtonProps) => {
+    const { getValues, formState: { isValid } } = useFormContext()
+    const [isLoading, setIsLoading] = useState(false)
 
-    const handleEditSocialMedia = async (payload: { facebook_url?: string; instagram_url?: string; x_url?: string }) => {
-        return updateStoreSocialMedia(store.id, payload)
-    }
+    const handleSubmit = async () => {
+        const values = getValues()
+        const payload = {
+            facebook_url: values.facebook_url || undefined,
+            instagram_url: values.instagram_url || undefined,
+            x_url: values.x_url || undefined
+        }
 
-    const messages = {
-        success: t("social-media-updated-success"),
-        error: t("social-media-updated-error"),
-        loading: t("social-media-updating")
+        try {
+            setIsLoading(true)
+            toast.loading("Updating social media...")
+            const { error, message } = await updateStoreSocialMedia(store.id, payload)
+
+            if (error) {
+                throw new Error(message)
+            }
+            toast.dismiss()
+            toast.success("Social media updated successfully!")
+            if (onSuccess) onSuccess()
+
+        } catch (error) {
+            console.error(error)
+            toast.dismiss()
+            toast.error("Failed to update social media")
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
-        <ButtonWithPopup
-            text={
-                <>
-                    <Edit/>
-                </>
-            }
-            title={t("edit-social-media-title")}
-            description={t("edit-social-media-description")}
-            schema={editSocialMediaSchema}
-            action={handleEditSocialMedia}
-            messages={messages}
-            className={className}
-            onlyIcon
-            contentButton={(
-                <>
-                    <Edit />
-                    Edit
-                </>
-            )}
-        >
-            <div className="space-y-4">
-                <InputField
-                    name="facebook_url"
-                    label="Facebook"
-                    placeholder={t("facebook-url-placeholder")}
-                    defaultValue={store.facebook_url || ""}
-                    type="url"
-                />
-                <InputField
-                    name="instagram_url"
-                    label="Instagram"
-                    placeholder={t("instagram-url-placeholder")}
-                    defaultValue={store.instagram_url || ""}
-                    type="url"
-                />
-                <InputField
-                    name="x_url"
-                    label="X (Twitter)"
-                    placeholder={t("x-url-placeholder")}
-                    defaultValue={store.x_url || ""}
-                    type="url"
-                />
-            </div>
-        </ButtonWithPopup>
+        <IconButton
+            icon={isLoading ? Loader2 : CheckIcon}
+            onClick={handleSubmit}
+            disabled={isLoading || !isValid}
+            className={cn(isLoading && "animate-spin", !isValid && "opacity-50 cursor-not-allowed")}
+        />
     )
 }
 

@@ -1,65 +1,148 @@
 "use client"
 
-import { MapPin } from "lucide-react"
+import { MapPin, Edit as EditIcon, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Store, Branch } from "@prisma/client"
 import { EditAddressButton } from "../section-buttons"
-import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Form, InputField, CheckboxField } from "@/features/layout/components"
+import { useEffect, useState } from "react"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { editAddressSchema } from "../../schemas/address-schema"
+import { useFormContext } from "react-hook-form"
 
 interface AddressDisplayProps {
     store: Store & { branches: Branch[] }
     userId: number
 }
 
+type AddressFormValues = {
+    is_physical_store: boolean
+    address?: string
+    city?: string
+    province?: string
+    country?: string
+}
+
 const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
     const t = useTranslations("store.edit-store")
     const mainBranch = store.branches?.find((branch) => branch.is_main)
+    const [isEditing, setIsEditing] = useState(false)
+    const [isPhysicalStore, setIsPhysicalStore] = useState(store.is_physical_store || false)
 
+    useEffect(() => {
+        setIsPhysicalStore(store.is_physical_store || false)
+    }, [store.is_physical_store])
+
+    const handleOpenEdit = () => {
+        setIsEditing(true)
+    }
+
+    const handleCloseEdit = () => {
+        setIsEditing(false)
+    }
+
+    function ToggleEditButton() {
+        const { reset } = useFormContext<AddressFormValues>()
+
+        const initialValues: AddressFormValues = {
+            is_physical_store: Boolean(store.is_physical_store),
+            address: mainBranch?.address || "",
+            city: mainBranch?.city || "",
+            province: mainBranch?.province || "",
+            country: mainBranch?.country || "",
+        }
+
+        const onClick = () => {
+            if (isEditing) {
+                reset(initialValues)
+                setIsPhysicalStore(initialValues.is_physical_store)
+                handleCloseEdit()
+                return
+            }
+            handleOpenEdit()
+        }
+
+        return (
+            <IconButton
+                icon={isEditing ? X : EditIcon}
+                onClick={onClick}
+            />
+        )
+    }
 
     return (
         <Card>
-            <CardHeader>
-                <CardTitle>
-                    <span className="flex items-center gap-2">
-                        <MapPin className="size-4" />
-                        {t("address-section")}
-                    </span>
-                </CardTitle>
-                <CardAction>
-                    <EditAddressButton
-                        store={store}
-                        userId={userId}
-                    />
-                </CardAction>
-            </CardHeader>
-            <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                    <div className="space-y-1">
-                        <p className="font-medium text-sm text-muted-foreground">{t("is-physical-store")}</p>
-                        <p className="text-base">{store?.is_physical_store ? "Yes" : "No"}</p>
+            <Form submitButton={false} contentButton={false} resolver={yupResolver(editAddressSchema)}>
+                <CardHeader>
+                    <CardTitle>
+                        <span className="flex items-center gap-2 text-lg md:text-xl">
+                            <MapPin className="size-5" />
+                            {t("address-section")}
+                        </span>
+                    </CardTitle>
+                    <CardAction>
+                        {isEditing && (
+                            <EditAddressButton
+                                store={store}
+                                userId={userId}
+                                onSuccess={handleCloseEdit}
+                            />
+                        )}
+                        <ToggleEditButton />
+                    </CardAction>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                        <div className="space-y-1 md:col-span-2">
+                            <CheckboxField
+                                name="is_physical_store"
+                                label={t("is-physical-store")}
+                                defaultValue={isPhysicalStore}
+                                onChange={(checked) => setIsPhysicalStore(checked)}
+                                disabled={!isEditing}
+                            />
+                        </div>
+                        {isPhysicalStore && (
+                            <>
+                                <div className="space-y-1">
+                                    <InputField
+                                        name="address"
+                                        label={t("address")}
+                                        defaultValue={mainBranch?.address || ""}
+                                        disabled={!isEditing || !isPhysicalStore}
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <InputField
+                                        name="city"
+                                        label={t("city")}
+                                        defaultValue={mainBranch?.city || ""}
+                                        disabled={!isEditing || !isPhysicalStore}
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <InputField
+                                        name="province"
+                                        label={t("province")}
+                                        defaultValue={mainBranch?.province || ""}
+                                        disabled={!isEditing || !isPhysicalStore}
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <InputField
+                                        name="country"
+                                        label={t("country")}
+                                        defaultValue={mainBranch?.country || ""}
+                                        disabled={!isEditing || !isPhysicalStore}
+                                    />
+                                </div>
+                            </>
+                        )}
                     </div>
-                    {store?.is_physical_store && (
-                        <>
-                            <div className="space-y-1">
-                                <p className="font-medium text-sm text-muted-foreground">{t("address")}</p>
-                                <p className="text-base">{mainBranch?.address || "Not provided"}</p>
-                            </div>
-                            <div className="space-y-1">
-                                <p className="font-medium text-sm text-muted-foreground">{t("city")}</p>
-                                <p className="text-base">{mainBranch?.city || "Not provided"}</p>
-                            </div>
-                            <div className="space-y-1">
-                                <p className="font-medium text-sm text-muted-foreground">{t("province")}</p>
-                                <p className="text-base">{mainBranch?.province || "Not provided"}</p>
-                            </div>
-                            <div className="space-y-1">
-                                <p className="font-medium text-sm text-muted-foreground">{t("country")}</p>
-                                <p className="text-base">{mainBranch?.country || "Not provided"}</p>
-                            </div>
-                        </>
-                    )}
-                </div>
-            </CardContent>
+                </CardContent>
+            </Form>
         </Card>
     )
 }

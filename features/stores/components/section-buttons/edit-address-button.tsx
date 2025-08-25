@@ -1,108 +1,63 @@
 "use client"
 
-import { ButtonWithPopup, InputField, CheckboxField } from "@/features/layout/components"
-import { Edit, MapPin } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { CheckIcon, Loader2 } from "lucide-react"
 import { Store, Branch } from "@prisma/client"
-import { editAddressSchema } from "@/features/stores/schemas/address-schema"
 import { updateStoreAddress } from "@/features/stores/actions/updateStoreAddress"
-import { useState, useEffect } from "react"
+import { useState } from "react"
+import { useFormContext } from "react-hook-form"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { toast } from "sonner"
+import { cn } from "@/lib/utils"
 
 interface EditAddressButtonProps {
     store: Store & { branches: Branch[] }
     userId: number
     className?: string
+    onSuccess?: () => void
 }
 
-const EditAddressButton = ({ store, userId, className }: EditAddressButtonProps) => {
-    const t = useTranslations("store.edit-store")
+const EditAddressButton = ({ store, userId, onSuccess }: EditAddressButtonProps) => {
+    const { getValues, formState: { isValid } } = useFormContext()
+    const [isLoading, setIsLoading] = useState(false)
 
-    const [isPhysicalStore, setIsPhysicalStore] = useState(store.is_physical_store || false)
+    const handleSubmit = async () => {
+        const values = getValues()
+        const payload = {
+            is_physical_store: Boolean(values.is_physical_store),
+            address: values.address || undefined,
+            city: values.city || undefined,
+            province: values.province || undefined,
+            country: values.country || undefined
+        }
 
-    const handleSubmit = async (payload: {
-        is_physical_store: boolean;
-        address?: string;
-        city?: string;
-        province?: string;
-        country?: string
-    }) => {
-        return updateStoreAddress(store.slug, payload, userId)
+        try {
+            setIsLoading(true)
+            toast.loading("Updating address information...")
+            const { error, message } = await updateStoreAddress(store.slug, payload, userId)
+
+            if (error) {
+                throw new Error(message)
+            }
+            toast.dismiss()
+            toast.success("Address information updated successfully!")
+            if (onSuccess) onSuccess()
+
+        } catch (error) {
+            console.error(error)
+            toast.dismiss()
+            toast.error("Failed to update address information")
+        } finally {
+            setIsLoading(false)
+        }
     }
 
-    useEffect(() => {
-        setIsPhysicalStore(store.is_physical_store || false)
-    }, [store.is_physical_store])
-
-    const mainBranch = store.branches?.find((branch) => branch.is_main)
-
     return (
-        <ButtonWithPopup
-            text={
-                <>
-                    <Edit />
-                </>
-            }
-            title="Edit Store Address"
-            schema={editAddressSchema}
-            description="Update your store's address information"
-            action={handleSubmit}
-            messages={{
-                success: "Address information updated successfully!",
-                error: "Failed to update address information",
-                loading: "Updating address information..."
-            }}
-            className={className}
-            onlyIcon
-            contentButton={(
-                <>
-                    <Edit />
-                    Edit
-                </>
-            )}
-        >
-            <div className="space-y-4">
-                <CheckboxField
-                    name="is_physical_store"
-                    label={t("is-physical-store")}
-                    defaultValue={isPhysicalStore}
-                    onChange={(checked) => {
-                        setIsPhysicalStore(checked)
-                    }}
-                />
-                {isPhysicalStore && (
-                    <>
-                        <InputField
-                            name="address"
-                            label={t("address")}
-                            type="text"
-                            defaultValue={isPhysicalStore ? mainBranch?.address || "" : ""}
-                            disabled={!isPhysicalStore}
-                        />
-                        <InputField
-                            name="city"
-                            label={t("city")}
-                            type="text"
-                            defaultValue={isPhysicalStore ? mainBranch?.city || "" : ""}
-                            disabled={!isPhysicalStore}
-                        />
-                        <InputField
-                            name="province"
-                            label={t("province")}
-                            type="text"
-                            defaultValue={isPhysicalStore ? mainBranch?.province || "" : ""}
-                            disabled={!isPhysicalStore}
-                        />
-                        <InputField
-                            name="country"
-                            label={t("country")}
-                            type="text"
-                            defaultValue={isPhysicalStore ? mainBranch?.country || "" : ""}
-                            disabled={!isPhysicalStore}
-                        />
-                    </>
-                )}
-            </div>
-        </ButtonWithPopup>
+        <IconButton
+            icon={isLoading ? Loader2 : CheckIcon}
+            onClick={handleSubmit}
+            disabled={isLoading || !isValid}
+            className={cn(isLoading && "animate-spin", !isValid && "opacity-50 cursor-not-allowed")}
+        />
     )
 }
 

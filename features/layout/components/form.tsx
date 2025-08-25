@@ -1,6 +1,6 @@
 'use client'
 
-import { FormProvider, useForm, UseFormProps, type SubmitHandler } from 'react-hook-form'
+import { FormProvider, Resolver, useForm, UseFormProps, type SubmitHandler } from 'react-hook-form'
 import { FieldValues } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -30,7 +30,7 @@ export default function Form<T extends FieldValues>({
 
     const config: UseFormProps<T> = { mode: 'onChange' }
 
-    if (resolver) config.resolver = resolver
+    if (resolver) config.resolver = resolver as Resolver<T, unknown, T>
 
     const router = useRouter()
     const methods = useForm<T>(config)
