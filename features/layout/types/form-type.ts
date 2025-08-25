@@ -6,7 +6,7 @@ export type FormPropsType<T extends FieldValues> = {
     children: React.ReactNode
     resolver?: Resolver<T>
     contentButton: string | React.ReactNode
-    formAction: (formData: T) => Promise<ResponseType<T>> | (() => Promise<ResponseType<T>>)
+    formAction?: (formData: T) => Promise<ResponseType<T>> | (() => Promise<ResponseType<T>>)
     successRedirect?: string
     successMessage?: string
     loadingMessage?: string
@@ -15,4 +15,5 @@ export type FormPropsType<T extends FieldValues> = {
     onSuccess?: () => void
     onError?: () => void
     disabled?: boolean
+    submitButton?: boolean
 }

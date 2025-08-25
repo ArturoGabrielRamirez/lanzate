@@ -4,11 +4,13 @@ import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { DeleteStoreButton, EditStoreButton, EditOperationalSettingsButton } from "@/features/stores/components"
 import { AccountTabProps } from "@/features/stores/types"
 import { getTranslations } from "next-intl/server"
-import { Phone, Facebook, Instagram, Twitter, Store, Settings, DollarSign, Truck, Mail } from "lucide-react"
+import { Settings, DollarSign, Truck } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
 import { Checkbox } from "@/components/ui/checkbox"
 import { PaymentMethod } from "@prisma/client"
+import StoreInformationForm from "../store-information-form"
+/* import { FieldValues } from "react-hook-form" */
 
 async function AccountTab({ slug }: AccountTabProps) {
 
@@ -45,122 +47,25 @@ async function AccountTab({ slug }: AccountTabProps) {
 
     const operationalSettings = store.operational_settings
 
+    /* const handleSubmit = async (formData: FieldValues) => {
+        return { message: "Store information updated successfully", error: false, payload: formData }
+    } */
+
     return (
         <div className="space-y-6">
             {/* Store Information Card */}
-            <Card>
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                        <Store className="size-5" />
-                        Información de la Tienda
-                    </CardTitle>
-                    <CardDescription>
-                        Detalles básicos y contacto de tu tienda
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-1">
-                            <p className="font-medium text-sm text-muted-foreground">{t("name")}</p>
-                            <p className="text-base">{store.name}</p>
-                        </div>
-                        <div className="space-y-1">
-                            <p className="font-medium text-sm text-muted-foreground">{t("description")}</p>
-                            <p className="text-base">{store.description || t("no-description")}</p>
-                        </div>
-                        <div className="space-y-1">
-                            <p className="font-medium text-sm text-muted-foreground">{t("website")}</p>
-                            <a
-                                href={`http://${store.subdomain}.lanzate.app`}
-                                className="text-blue-500 hover:underline text-base"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {`https://${store.subdomain}.lanzate.app`}
-                            </a>
-                        </div>
-                        <div className="space-y-1">
-                            <p className="font-medium text-sm text-muted-foreground flex items-center gap-2">
-                                <Phone className="size-4" />
-                                {t("contact-phone")}
-                            </p>
-                            <p className="text-base">{store.phone || t("not-provided")}</p>
-                        </div>
-                        <div className="space-y-1">
-                            <p className="font-medium text-sm text-muted-foreground flex items-center gap-2">
-                                <Mail className="size-4" />
-                                Email
-                            </p>
-                            <p className="text-base">{store.email || t("not-provided")}</p>
-                        </div>
-                        <div className="space-y-1">
-                            <p className="font-medium text-sm text-muted-foreground flex items-center gap-2">
-                                <Facebook className="size-4" />
-                                {t("facebook")}
-                            </p>
-                            {store.facebook_url ? (
-                                <a
-                                    href={store.facebook_url}
-                                    className="text-blue-500 hover:underline text-base"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {store.facebook_url}
-                                </a>
-                            ) : (
-                                <p className="text-base">{t("not-provided")}</p>
-                            )}
-                        </div>
-                        <div className="space-y-1">
-                            <p className="font-medium text-sm text-muted-foreground flex items-center gap-2">
-                                <Instagram className="size-4" />
-                                {t("instagram")}
-                            </p>
-                            {store.instagram_url ? (
-                                <a
-                                    href={store.instagram_url}
-                                    className="text-blue-500 hover:underline text-base"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {store.instagram_url}
-                                </a>
-                            ) : (
-                                <p className="text-base">{t("not-provided")}</p>
-                            )}
-                        </div>
-                        <div className="space-y-1">
-                            <p className="font-medium text-sm text-muted-foreground flex items-center gap-2">
-                                <Twitter className="size-4" />
-                                {t("x-twitter")}
-                            </p>
-                            {store.x_url ? (
-                                <a
-                                    href={store.x_url}
-                                    className="text-blue-500 hover:underline text-base"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {store.x_url}
-                                </a>
-                            ) : (
-                                <p className="text-base">{t("not-provided")}</p>
-                            )}
-                        </div>
-                    </div>
-
-                    {canManageStore && (
-                        <div className="mt-6 pt-6 border-t">
-                            <EditStoreButton
-                                userId={user.id}
-                                slug={store.slug}
-                                store={store}
-                            />
-                        </div>
-                    )}
-                </CardContent>
-            </Card>
-
+            <StoreInformationForm
+                store={store}
+                /*  onSubmit={handleSubmit} */
+                canManageStore={canManageStore}
+                userId={user.id}
+            >
+                <EditStoreButton
+                    userId={user.id}
+                    slug={store.slug}
+                    store={store}
+                />
+            </StoreInformationForm>
             {/* Operational Settings Card */}
             <Card>
                 <CardHeader>

@@ -24,7 +24,8 @@ export default function Form<T extends FieldValues>({
     onComplete,
     onSuccess,
     onError,
-    disabled = false
+    disabled = false,
+    submitButton = true
 }: FormPropsType<T>) {
 
     const config: UseFormProps<T> = { mode: 'onChange' }
@@ -37,6 +38,9 @@ export default function Form<T extends FieldValues>({
     const { handleSubmit } = methods
 
     const onSubmit: SubmitHandler<T> = async (data) => {
+
+        if (!formAction) return
+
         return new Promise(async (resolve, reject) => {
             toast.promise(formAction(data), {
                 loading: loadingMessage,
@@ -63,10 +67,12 @@ export default function Form<T extends FieldValues>({
         <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)} className={cn("flex flex-col gap-4", className)}>
                 {children}
-                <LoadingSubmitButtonContext
-                    text={contentButton}
-                    disabled={disabled}
-                />
+                {submitButton && (
+                    <LoadingSubmitButtonContext
+                        text={contentButton}
+                        disabled={disabled}
+                    />
+                )}
             </form>
         </FormProvider>
     )

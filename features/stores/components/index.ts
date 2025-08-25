@@ -26,6 +26,7 @@ import ChangeOrderStatusButton from "./change-order-status-button";
 import CancelOrderButton from "./cancel-order-button";
 import OrdersTable from "./orders-table";
 import HistoryTable from "./history-table";
+import StoreInformationForm from "./store-information-form";
 
 export {
     CreateStoreButton,
@@ -55,5 +56,6 @@ export {
     ChangeOrderStatusButton,
     CancelOrderButton,
     OrdersTable,
-    HistoryTable
+    HistoryTable,
+    StoreInformationForm
 }
