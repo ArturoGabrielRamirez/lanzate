@@ -4,8 +4,10 @@ import { actionWrapper, formatErrorResponse } from "@/utils/lib"
 import { selectStoreHeaderBySlug } from "../data/selectStoreHeaderBySlug"
 
 type StoreHeader = {
+    id: number
     name: string
     description: string | null
+    logo: string | null
     balance: {
         current_balance: number
     } | null
