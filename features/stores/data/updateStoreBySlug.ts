@@ -7,7 +7,7 @@ export async function updateStoreBySlug(slug: string, data: any) {
     try {
 
         // Separar los campos de operational_settings de los campos del store
-        const { contact_phone, contact_whatsapp, facebook_url, instagram_url, x_url, ...storeData } = data
+        const { contact_phone, contact_whatsapp, facebook_url, instagram_url, x_url, address, city, province, country, ...storeData } = data
 
         // Usar todos los campos de operational_settings que ahora existen en la base de datos
         const operationalData = {
@@ -26,19 +26,42 @@ export async function updateStoreBySlug(slug: string, data: any) {
         // Primero obtener el store para tener el ID
         const existingStore = await prisma.store.findUnique({
             where: { slug },
-            select: { id: true, operational_settings: true }
+            select: { id: true, operational_settings: true, branches: true }
         })
 
         if (!existingStore) {
             throw new Error("Store not found")
         }
 
+        const mainBranch = existingStore.branches?.find((branch) => branch.is_main)
+
         // Actualizar el store principal
         await prisma.store.update({
             where: {
                 slug: slug
             },
-            data: storeData
+            data: {
+                ...storeData,
+                phone : storeData.contact_phone,
+                email : storeData.contact_email,
+                facebook_url : facebook_url,
+                instagram_url : instagram_url,
+                x_url : x_url,
+                is_physical_store : storeData.is_physical_store,
+                branches : {
+                    update : {
+                        where : {
+                            id : mainBranch?.id
+                        },
+                        data : {
+                            address : address,
+                            city : city,
+                            province : province,
+                            country : country,
+                        }
+                    }
+                }
+            }
         })
 
         // Actualizar operational_settings - siempre procesar si hay campos en operationalData

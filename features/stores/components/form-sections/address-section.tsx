@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl"
 import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
 import { Store, Branch } from "@prisma/client"
+import { useState } from "react"
 
 interface AddressSectionProps {
     store?: Store & { branches: Branch[] }
@@ -15,6 +16,8 @@ interface AddressSectionProps {
 const AddressSection = ({ store, mode }: AddressSectionProps) => {
     
     const t = useTranslations(mode === 'create' ? "store.create-store" : "store.edit-store")
+    const [isPhysicalStore, setIsPhysicalStore] = useState(store?.is_physical_store || false)
+    const mainBranch = store?.branches?.find((branch) => branch.is_main)
 
     return (
         <AccordionItem value="item-4">
@@ -28,31 +31,38 @@ const AddressSection = ({ store, mode }: AddressSectionProps) => {
                 <CheckboxField
                     name="is_physical_store"
                     label={t("is-physical-store")}
-                    defaultValue={store?.is_physical_store || false}
+                    defaultValue={isPhysicalStore}
+                    onChange={(checked) => {
+                        setIsPhysicalStore(checked)
+                    }}
                 />
                 <InputField
                     name="address"
                     label={t("address")}
                     type="text"
-                    defaultValue={store?.branches?.[0]?.address || ""}
+                    defaultValue={mainBranch?.address || ""}
+                    disabled={!isPhysicalStore}
                 />
                 <InputField
                     name="city"
                     label={t("city")}
                     type="text"
-                    defaultValue={store?.branches?.[0]?.city || ""}
+                    defaultValue={mainBranch?.city || ""}
+                    disabled={!isPhysicalStore}
                 />
                 <InputField
                     name="province"
                     label={t("province")}
                     type="text"
-                    defaultValue={store?.branches?.[0]?.province || ""}
+                    defaultValue={mainBranch?.province || ""}
+                    disabled={!isPhysicalStore}
                 />
                 <InputField
                     name="country"
                     label={t("country")}
                     type="text"
-                    defaultValue={store?.branches?.[0]?.country || ""}
+                    defaultValue={mainBranch?.country || ""}
+                    disabled={!isPhysicalStore}
                 />
             </AccordionContent>
         </AccordionItem>

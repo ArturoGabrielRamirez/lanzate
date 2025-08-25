@@ -28,19 +28,19 @@ const SocialMediaSection = ({ store, mode }: SocialMediaSectionProps) => {
                     name="facebook_url"
                     label={t("facebook-url")}
                     type="url"
-                    defaultValue={store?.operational_settings?.facebook_url || ""}
+                    defaultValue={store?.facebook_url || ""}
                 />
                 <InputField
                     name="instagram_url"
                     label={t("instagram-url")}
                     type="url"
-                    defaultValue={store?.operational_settings?.instagram_url || ""}
+                    defaultValue={store?.instagram_url || ""}
                 />
                 <InputField
                     name="x_url"
                     label={t("x-url")}
                     type="url"
-                    defaultValue={store?.operational_settings?.x_url || ""}
+                    defaultValue={store?.x_url || ""}
                 />
             </AccordionContent>
         </AccordionItem>
