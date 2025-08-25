@@ -4,7 +4,7 @@ import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { updateOperationalSettingsAction } from "../actions/updateOperationalSettings"
 import { operationalSettingsSchema } from "../schemas/operational-settings-schema"
 import { formatErrorResponse } from "@/utils/lib"
-import { Settings, Truck, DollarSign } from "lucide-react"
+import { Settings, Truck, DollarSign, Edit } from "lucide-react"
 import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion"
@@ -61,8 +61,7 @@ function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettin
         <ButtonWithPopup
             text={(
                 <>
-                    <Settings className="size-4" />
-                    {t("button")}
+                    <Edit/>
                 </>
             )}
             title={t("title")}
@@ -74,6 +73,13 @@ function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettin
                 error: t("messages.error"),
                 loading: t("messages.loading")
             }}
+            contentButton={(
+                <>
+                    <Settings className="size-4" />
+                    {t("button")}
+                </>
+            )}
+            onlyIcon
         >
             <Accordion type="single" collapsible defaultValue="item-1">
                 <AccordionItem value="item-1">

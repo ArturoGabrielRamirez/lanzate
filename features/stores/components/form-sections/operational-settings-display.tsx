@@ -35,7 +35,6 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
             currency: 'USD'
         }).format(amount)
     }
-    console.log("🚀 ~ operationalSettings?.minimum_order_amount && operationalSettings.minimum_order_amount > 0 &&:", operationalSettings?.minimum_order_amount && operationalSettings.minimum_order_amount > 0 ? "true" : "false")
 
     return (
         <Card>
@@ -101,37 +100,31 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
                             <CreditCard className="size-3" />
                             Payment Methods
                         </h4>
-                        <div className="space-y-1">
-                            <p className="font-medium text-sm text-muted-foreground">Accepted Payment Methods</p>
-                            <div className="flex flex-wrap gap-2">
-                                {operationalSettings?.payment_methods && operationalSettings.payment_methods.length > 0 ? (
-                                    operationalSettings.payment_methods.map((method) => (
-                                        <Badge key={method} variant="outline">
-                                            {getPaymentMethodLabel(method)}
-                                        </Badge>
-                                    ))
-                                ) : (
-                                    <p className="text-sm text-muted-foreground">No payment methods configured</p>
-                                )}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <p className="font-medium text-sm text-muted-foreground">Accepted Payment Methods</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {operationalSettings?.payment_methods && operationalSettings.payment_methods.length > 0 ? (
+                                        operationalSettings.payment_methods.map((method) => (
+                                            <Badge key={method} variant="outline">
+                                                {getPaymentMethodLabel(method)}
+                                            </Badge>
+                                        ))
+                                    ) : (
+                                        <p className="text-sm text-muted-foreground">No payment methods configured</p>
+                                    )}
+                                </div>
                             </div>
+                            {operationalSettings?.minimum_order_amount && operationalSettings.minimum_order_amount > 0 ? (
+                                <div className="space-y-1">
+                                    <p className="font-medium text-sm text-muted-foreground">Minimum Order Amount</p>
+                                    <p className="text-base flex items-center gap-1">
+                                        {formatCurrency(operationalSettings.minimum_order_amount)}
+                                    </p>
+                                </div>
+                            ) : null}
                         </div>
                     </div>
-
-                    {/* Minimum Order Amount */}
-                    {operationalSettings?.minimum_order_amount && operationalSettings.minimum_order_amount > 0 ? (
-                        <div className="space-y-3">
-                            <h4 className="font-medium text-sm text-muted-foreground flex items-center gap-2">
-                                <DollarSign className="size-3" />
-                                Order Requirements
-                            </h4>
-                            <div className="space-y-1">
-                                <p className="font-medium text-sm text-muted-foreground">Minimum Order Amount</p>
-                                <p className="text-base flex items-center gap-1">
-                                    {formatCurrency(operationalSettings.minimum_order_amount)}
-                                </p>
-                            </div>
-                        </div>
-                    ) : null}
                 </div>
             </CardContent>
         </Card>

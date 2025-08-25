@@ -22,18 +22,22 @@ const StoreInformationForm = ({
 
     return (
         <>
-            <BasicInfoDisplay
-                store={store}
-                userId={userId}
-            />
-            <AddressDisplay
-                store={store}
-                userId={userId}
-            />
-            <ContactDisplay store={store} />
-            <SocialMediaDisplay
-                store={store}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <BasicInfoDisplay
+                    store={store}
+                    userId={userId}
+                />
+                <AddressDisplay
+                    store={store}
+                    userId={userId}
+                />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <ContactDisplay store={store} />
+                <SocialMediaDisplay
+                    store={store}
+                />
+            </div>
             <OperationalSettingsDisplay
                 store={store}
             />
