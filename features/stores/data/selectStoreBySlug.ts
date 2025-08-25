@@ -35,7 +35,7 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
             }
         })
 
-        const aggregate = await prisma.productStock.groupBy({
+        /* const aggregate = await prisma.productStock.groupBy({
             by: ["branch_id"],
             _sum: {
                 quantity: true
@@ -47,7 +47,7 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
             },
         })
 
-        console.log(aggregate)
+        console.log(aggregate) */
 
         return {
             message: "Store fetched successfully from db",

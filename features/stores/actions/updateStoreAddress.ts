@@ -2,6 +2,7 @@
 
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
+import { revalidatePath } from "next/cache"
 
 type UpdateAddressPayload = {
     is_physical_store: boolean
@@ -27,16 +28,18 @@ export async function updateStoreAddress(slug: string, payload: UpdateAddressPay
                 }
             }
         })
-
+        
         if (!existingStore) {
             throw new Error("Store not found or you don't have permission to edit it")
         }
-
+        
         const mainBranch = existingStore.branches[0]
         if (!mainBranch) {
             throw new Error("Main branch not found")
         }
-
+        
+        console.log("🚀 ~ updateStoreAddress ~ payload:", payload)
+        console.log("🚀 ~ updateStoreAddress ~ mainBranch:", mainBranch)
         // Actualizar la rama principal con la información de dirección
         const updatedBranch = await prisma.branch.update({
             where: {
@@ -54,6 +57,8 @@ export async function updateStoreAddress(slug: string, payload: UpdateAddressPay
                 }
             }
         })
+
+        revalidatePath(`/stores/${existingStore.slug}`, "page")
 
         return {
             message: "Address information updated successfully",

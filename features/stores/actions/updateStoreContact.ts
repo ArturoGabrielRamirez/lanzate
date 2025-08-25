@@ -7,18 +7,36 @@ import { revalidatePath } from "next/cache"
 export async function updateStoreContact(storeId: number, data: EditContactData) {
     try {
         // Update the main branch with contact information
-        await prisma.branch.updateMany({
+
+        const mainBranch = await prisma.branch.findFirst({
             where: {
                 store_id: storeId,
                 is_main: true
-            },
-            data: {
-                phone: data.contact_phone,
-                email: data.contact_email
             }
         })
 
-        revalidatePath(`/dashboard/stores/[slug]`, "page")
+        const store = await prisma.store.update({
+            where: {
+                id: storeId
+            },
+            data: {
+                phone: data.contact_phone,
+                email: data.contact_email,
+                branches: {
+                    update: {
+                        where: {
+                            id: mainBranch?.id
+                        },
+                        data: {
+                            phone: data.contact_phone,
+                            email: data.contact_email
+                        }
+                    }
+                }
+            }
+        })
+
+        revalidatePath(`/stores/${store.slug}`, "page")
 
         return {
             message: "Contact information updated successfully",

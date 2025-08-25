@@ -2,8 +2,7 @@
 
 import { MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
+import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Store, Branch } from "@prisma/client"
 import { EditAddressButton } from "../section-buttons"
 
@@ -14,18 +13,19 @@ interface AddressDisplayProps {
 
 const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
     const t = useTranslations("store.edit-store")
-    const mainBranch = store.branches?.[0]
+    const mainBranch = store.branches?.find((branch) => branch.is_main)
+    console.log("🚀 ~ AddressDisplay ~ mainBranch:", mainBranch)
 
     return (
         <AccordionItem value="item-4">
-            <AccordionTriggerWithValidation keys={["is_physical_store", "address", "city", "province", "country"]}>
+            <AccordionTrigger>
                 <span className="flex items-center gap-2">
                     <MapPin className="size-4" />
                     {t("address-section")}
                 </span>
-            </AccordionTriggerWithValidation>
-            <AccordionContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            </AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-4 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                     <div className="space-y-1">
                         <p className="font-medium text-sm text-muted-foreground">{t("is-physical-store")}</p>
                         <p className="text-base">{store?.is_physical_store ? "Yes" : "No"}</p>

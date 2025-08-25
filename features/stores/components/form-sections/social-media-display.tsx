@@ -2,8 +2,7 @@
 
 import { MessageCircle, Facebook, Instagram, Twitter } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
+import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Store, StoreOperationalSettings } from "@prisma/client"
 import { EditSocialMediaButton } from "../section-buttons"
 
@@ -16,12 +15,12 @@ const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
 
     return (
         <AccordionItem value="item-3">
-            <AccordionTriggerWithValidation keys={["facebook_url", "instagram_url", "x_url"]}>
+            <AccordionTrigger>
                 <span className="flex items-center gap-2">
                     <MessageCircle className="size-4" />
                     {t("social-media-section")}
                 </span>
-            </AccordionTriggerWithValidation>
+            </AccordionTrigger>
             <AccordionContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1">

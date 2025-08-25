@@ -31,6 +31,7 @@ async function AccountTab({ slug }: AccountTabProps) {
         getStoresFromSlug(slug),
         getEmployeePermissions(user.id, slug)
     ])
+    console.log("🚀 ~ AccountTab ~ store:", store)
 
     if (storeError || !store) {
         console.error(storeError)
@@ -45,14 +46,14 @@ async function AccountTab({ slug }: AccountTabProps) {
     // Check if user can manage store
     const canManageStore = employeePermissions.isAdmin || employeePermissions.permissions?.can_manage_store
 
-    const operationalSettings = store.operational_settings
+    //const operationalSettings = store.operational_settings
 
     /* const handleSubmit = async (formData: FieldValues) => {
         return { message: "Store information updated successfully", error: false, payload: formData }
     } */
 
     return (
-        <div className="space-y-6">
+        <div className="flex flex-col gap-6">
             {/* Store Information Card */}
             <StoreInformationForm
                 store={store}
@@ -182,7 +183,7 @@ async function AccountTab({ slug }: AccountTabProps) {
             </Card> */}
 
             {/* Danger Zone Card */}
-            {canManageStore && (
+            {/* {canManageStore && (
                 <Card className="border-destructive">
                     <CardHeader>
                         <CardTitle className="text-destructive">{t("danger-zone")}</CardTitle>
@@ -194,7 +195,7 @@ async function AccountTab({ slug }: AccountTabProps) {
                         <DeleteStoreButton storeId={store.id} userId={user.id} />
                     </CardContent>
                 </Card>
-            )}
+            )} */}
         </div>
     )
 }

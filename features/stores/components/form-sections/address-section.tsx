@@ -13,6 +13,7 @@ interface AddressSectionProps {
 }
 
 const AddressSection = ({ store, mode }: AddressSectionProps) => {
+    
     const t = useTranslations(mode === 'create' ? "store.create-store" : "store.edit-store")
 
     return (

@@ -1,8 +1,7 @@
 "use client"
 
-import { Phone, Mail } from "lucide-react"
+import { Phone } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useState } from "react"
 import { ButtonWithPopup } from "@/features/layout/components"
 import { InputField } from "@/features/layout/components"
 import { editContactSchema } from "../../schemas/contact-schema"
@@ -16,7 +15,6 @@ interface EditContactButtonProps {
 
 const EditContactButton = ({ store, className }: EditContactButtonProps) => {
     const t = useTranslations("store.edit-store")
-    const mainBranch = store.branches?.[0]
 
     const handleEditContact = async (payload: { contact_phone: string; contact_email: string }) => {
         return updateStoreContact(store.id, payload)
@@ -48,15 +46,13 @@ const EditContactButton = ({ store, className }: EditContactButtonProps) => {
                     name="contact_phone"
                     label={t("contact-phone")}
                     placeholder={t("contact-phone-placeholder")}
-                    defaultValue={mainBranch?.phone || ""}
-                    icon={<Phone className="size-4" />}
+                    defaultValue={store.phone || ""}
                 />
                 <InputField
                     name="contact_email"
                     label="Email"
                     placeholder={t("contact-email-placeholder")}
-                    defaultValue={mainBranch?.email || ""}
-                    icon={<Mail className="size-4" />}
+                    defaultValue={store.email || ""}
                     type="email"
                 />
             </div>

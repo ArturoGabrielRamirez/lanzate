@@ -51,6 +51,7 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
             store={store}
             schema={editSchema}
             action={handleEditStore}
+            className="w-fit"
             messages={{
                 success: t("messages.success"),
                 error: t("messages.error"),

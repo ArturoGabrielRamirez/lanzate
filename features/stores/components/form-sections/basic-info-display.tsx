@@ -2,8 +2,7 @@
 
 import { StoreIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
+import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Store } from "@prisma/client"
 import { EditBasicInfoButton } from "../section-buttons"
 
@@ -17,14 +16,14 @@ const BasicInfoDisplay = ({ store, userId }: BasicInfoDisplayProps) => {
 
     return (
         <AccordionItem value="item-1">
-            <AccordionTriggerWithValidation keys={["name", "description", "subdomain"]}>
+            <AccordionTrigger>
                 <span className="flex items-center gap-2">
                     <StoreIcon className="size-4" />
                     Basic info
                 </span>
-            </AccordionTriggerWithValidation>
-            <AccordionContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            </AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-4 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                     <div className="space-y-1">
                         <p className="font-medium text-sm text-muted-foreground">{t("name")}</p>
                         <p className="text-base">{store.name}</p>

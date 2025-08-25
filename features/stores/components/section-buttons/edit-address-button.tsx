@@ -33,6 +33,8 @@ const EditAddressButton = ({ store, userId, className }: EditAddressButtonProps)
         setIsPhysicalStore(store.is_physical_store || false)
     }, [store.is_physical_store])
 
+    const mainBranch = store.branches?.find((branch) => branch.is_main)
+
     return (
         <ButtonWithPopup
             text={
@@ -65,28 +67,28 @@ const EditAddressButton = ({ store, userId, className }: EditAddressButtonProps)
                     name="address"
                     label={t("address")}
                     type="text"
-                    defaultValue={isPhysicalStore ? store.branches?.[0]?.address || "" : ""}
+                    defaultValue={isPhysicalStore ? mainBranch?.address || "" : ""}
                     disabled={!isPhysicalStore}
                 />
                 <InputField
                     name="city"
                     label={t("city")}
                     type="text"
-                    defaultValue={isPhysicalStore ? store.branches?.[0]?.city || "" : ""}
+                    defaultValue={isPhysicalStore ? mainBranch?.city || "" : ""}
                     disabled={!isPhysicalStore}
                 />
                 <InputField
                     name="province"
                     label={t("province")}
                     type="text"
-                    defaultValue={isPhysicalStore ? store.branches?.[0]?.province || "" : ""}
+                    defaultValue={isPhysicalStore ? mainBranch?.province || "" : ""}
                     disabled={!isPhysicalStore}
                 />
                 <InputField
                     name="country"
                     label={t("country")}
                     type="text"
-                    defaultValue={isPhysicalStore ? store.branches?.[0]?.country || "" : ""}
+                    defaultValue={isPhysicalStore ? mainBranch?.country || "" : ""}
                     disabled={!isPhysicalStore}
                 />
             </div>
