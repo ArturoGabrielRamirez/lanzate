@@ -5,13 +5,13 @@ import { useTranslations } from "next-intl"
 import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
 import { Store, Branch } from "@prisma/client"
+import { EditContactButton } from "../section-buttons"
 
 interface ContactDisplayProps {
     store: Store & { branches: Branch[] }
-    userId: number
 }
 
-const ContactDisplay = ({ store, userId }: ContactDisplayProps) => {
+const ContactDisplay = ({ store }: ContactDisplayProps) => {
     const t = useTranslations("store.edit-store")
     const mainBranch = store.branches?.[0]
 
@@ -41,6 +41,11 @@ const ContactDisplay = ({ store, userId }: ContactDisplayProps) => {
                     </div>
                 </div>
                 
+                <div className="mt-4 pt-4 border-t">
+                    <EditContactButton
+                        store={store}
+                    />
+                </div>
             </AccordionContent>
         </AccordionItem>
     )

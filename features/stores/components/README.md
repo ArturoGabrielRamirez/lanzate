@@ -15,6 +15,8 @@ components/
 ├── section-buttons/         # Botones popup para editar secciones individuales
 │   ├── edit-basic-info-button.tsx
 │   ├── edit-address-button.tsx
+│   ├── edit-contact-button.tsx
+│   ├── edit-social-media-button.tsx
 │   └── index.ts
 ├── store-form-button.tsx    # Formulario completo (crear/editar)
 ├── store-information-form.tsx # Formulario de información de tienda (cliente)
@@ -75,6 +77,14 @@ Cada botón abre un popup con un formulario específico para editar solo esa sec
 ### EditAddressButton
 - Permite editar solo la información de dirección
 - Incluye validación condicional para campos de dirección
+
+### EditContactButton
+- Permite editar solo la información de contacto
+- Incluye validación para teléfono y email
+
+### EditSocialMediaButton
+- Permite editar solo los enlaces de redes sociales
+- Incluye validación para URLs de Facebook, Instagram y X (Twitter)
 
 ## Formulario Completo (`store-form-button.tsx`)
 
@@ -145,6 +155,8 @@ Cada sección tiene su propio esquema de validación:
 
 - `basic-info-schema.ts`: Validación para información básica
 - `address-schema.ts`: Validación para dirección (con validación condicional)
+- `contact-schema.ts`: Validación para información de contacto
+- `social-media-schema.ts`: Validación para enlaces de redes sociales
 - `store-schema.ts`: Esquema completo para crear/editar tienda
 
 ## Acciones del Servidor
@@ -153,6 +165,8 @@ Cada sección tiene su propia acción del servidor:
 
 - `updateStoreBasicInfo.ts`: Actualiza información básica
 - `updateStoreAddress.ts`: Actualiza información de dirección
+- `updateStoreContact.ts`: Actualiza información de contacto
+- `updateStoreSocialMedia.ts`: Actualiza enlaces de redes sociales
 - `updateStore.ts`: Actualiza toda la tienda
 
 ## Ejemplo de Uso
@@ -173,6 +187,8 @@ import {
 // Botones individuales para editar
 <EditBasicInfoButton store={store} userId={userId} />
 <EditAddressButton store={store} userId={userId} />
+<EditContactButton store={store} userId={userId} />
+<EditSocialMediaButton store={store} />
 
 // Visualización en modo solo lectura
 <Accordion type="single" collapsible defaultValue="item-1">

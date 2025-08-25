@@ -67,7 +67,7 @@ async function AccountTab({ slug }: AccountTabProps) {
                 />
             </StoreInformationForm>
             {/* Operational Settings Card */}
-            <Card>
+            {/* <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Settings className="size-5" />
@@ -79,7 +79,6 @@ async function AccountTab({ slug }: AccountTabProps) {
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-6">
-                        {/* Delivery Settings */}
                         <div className="space-y-4">
                             <div className="flex items-center gap-2">
                                 <Truck className="size-4" />
@@ -121,7 +120,6 @@ async function AccountTab({ slug }: AccountTabProps) {
                             </div>
                         </div>
 
-                        {/* Payment Settings */}
                         <div className="space-y-4">
                             <div className="flex items-center gap-2">
                                 <DollarSign className="size-4" />
@@ -181,7 +179,7 @@ async function AccountTab({ slug }: AccountTabProps) {
                         </div>
                     )}
                 </CardContent>
-            </Card>
+            </Card> */}
 
             {/* Danger Zone Card */}
             {canManageStore && (

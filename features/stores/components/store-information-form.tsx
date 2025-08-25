@@ -1,11 +1,9 @@
 "use client"
 
 import { Store, StoreOperationalSettings, Branch } from "@prisma/client"
-/* import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card" */
 import { Accordion } from "@/components/ui/accordion"
 import { Form } from "@/features/layout/components"
 import { Button } from "@/components/ui/button"
-/* import { Store as StoreIcon } from "lucide-react" */
 import { FieldValues } from "react-hook-form"
 import {
     BasicInfoDisplay,
@@ -24,9 +22,9 @@ interface StoreInformationFormProps {
     userId: number
 }
 
-const StoreInformationForm = ({ 
-    store, 
-    canManageStore = false, 
+const StoreInformationForm = ({
+    store,
+    canManageStore = false,
     children,
     userId
 }: StoreInformationFormProps) => {
@@ -41,39 +39,23 @@ const StoreInformationForm = ({
             formAction={handleSubmit}
             submitButton={false}
         >
-            {/* <Card>
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                        <StoreIcon className="size-5" />
-                        Información de la Tienda
-                    </CardTitle>
-                    <CardDescription>
-                        Detalles básicos y contacto de tu tienda
-                    </CardDescription>
-                </CardHeader>
-                <CardContent> */}
-                    <Accordion type="single" collapsible defaultValue="item-1">
-                        <BasicInfoDisplay
-                            store={store}
-                            userId={userId}
-                        />
-                        <AddressDisplay
-                            store={store}
-                            userId={userId}
-                        />
-                        <ContactDisplay
-                            store={store}
-                            userId={userId}
-                        />
-                        <SocialMediaDisplay
-                            store={store}
-                            userId={userId}
-                        />
-                    </Accordion>
+            <Accordion type="single" collapsible defaultValue="item-1">
+                <BasicInfoDisplay
+                    store={store}
+                    userId={userId}
+                />
+                <AddressDisplay
+                    store={store}
+                    userId={userId}
+                />
+                <ContactDisplay store={store} />
+                <SocialMediaDisplay
+                    store={store}
+                />
+            </Accordion>
 
-                    {canManageStore && children}
-                {/* </CardContent>
-            </Card> */}
+            {canManageStore && children}
+
         </Form>
     )
 }

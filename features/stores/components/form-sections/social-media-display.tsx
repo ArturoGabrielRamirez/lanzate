@@ -5,13 +5,13 @@ import { useTranslations } from "next-intl"
 import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
 import { Store, StoreOperationalSettings } from "@prisma/client"
+import { EditSocialMediaButton } from "../section-buttons"
 
 interface SocialMediaDisplayProps {
     store: Store & { operational_settings: StoreOperationalSettings | null }
-    userId: number
 }
 
-const SocialMediaDisplay = ({ store, userId }: SocialMediaDisplayProps) => {
+const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
     const t = useTranslations("store.edit-store")
 
     return (
@@ -29,14 +29,14 @@ const SocialMediaDisplay = ({ store, userId }: SocialMediaDisplayProps) => {
                             <Facebook className="size-4" />
                             {t("facebook-url")}
                         </p>
-                        {store.operational_settings?.facebook_url ? (
+                        {store.facebook_url ? (
                             <a
-                                href={store.operational_settings.facebook_url}
+                                href={store.facebook_url}
                                 className="text-blue-500 hover:underline text-base"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                {store.operational_settings.facebook_url}
+                                {store.facebook_url}
                             </a>
                         ) : (
                             <p className="text-base">Not provided</p>
@@ -47,14 +47,14 @@ const SocialMediaDisplay = ({ store, userId }: SocialMediaDisplayProps) => {
                             <Instagram className="size-4" />
                             {t("instagram-url")}
                         </p>
-                        {store.operational_settings?.instagram_url ? (
+                        {store.instagram_url ? (
                             <a
-                                href={store.operational_settings.instagram_url}
+                                href={store.instagram_url}
                                 className="text-blue-500 hover:underline text-base"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                {store.operational_settings.instagram_url}
+                                {store.instagram_url}
                             </a>
                         ) : (
                             <p className="text-base">Not provided</p>
@@ -65,14 +65,14 @@ const SocialMediaDisplay = ({ store, userId }: SocialMediaDisplayProps) => {
                             <Twitter className="size-4" />
                             {t("x-url")}
                         </p>
-                        {store.operational_settings?.x_url ? (
+                        {store.x_url ? (
                             <a
-                                href={store.operational_settings.x_url}
+                                href={store.x_url}
                                 className="text-blue-500 hover:underline text-base"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                {store.operational_settings.x_url}
+                                {store.x_url}
                             </a>
                         ) : (
                             <p className="text-base">Not provided</p>
@@ -80,6 +80,9 @@ const SocialMediaDisplay = ({ store, userId }: SocialMediaDisplayProps) => {
                     </div>
                     
                 </div>
+                <EditSocialMediaButton
+                    store={store}
+                />
             </AccordionContent>
         </AccordionItem>
     )
