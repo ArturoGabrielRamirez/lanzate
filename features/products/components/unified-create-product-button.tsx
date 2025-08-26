@@ -5,13 +5,14 @@ import { createProduct } from "../actions/createProduct"
 import { productCreateSchema } from "../schemas/product-schema"
 import { formatErrorResponse } from "@/utils/lib"
 import { DollarSign, FileText, Package, Plus, Tag, Upload, X, ShoppingCart, Box } from "lucide-react"
-import { useCallback, useState, useEffect, useRef } from "react"
+import { useCallback, useState, useEffect, useRef, useMemo } from "react"
 import CategorySelect from "@/features/store-landing/components/category-select-"
 import { FileUpload, FileUploadCameraTrigger, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/components/ui/file-upload"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { useTranslations } from "next-intl"
 import { UnifiedCreateProductButtonProps } from "../type"
@@ -21,6 +22,8 @@ import { cn } from "@/lib/utils"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
+import MultipleSelector from "@/components/expansion/multiple-selector"
+import type { Option as MultiOption } from "@/components/expansion/multiple-selector"
 // Uploads and media attachment are performed via API routes to allow pre-product uploads from the client
 
 type CategoryValue = { value: string; label: string }
@@ -50,6 +53,13 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
     const [isActive, setIsActive] = useState(true)
     const [isFeatured, setIsFeatured] = useState(false)
     const [isPublished, setIsPublished] = useState(true)
+    const [isUniqueSize, setIsUniqueSize] = useState<boolean>(false)
+    const [selectedSizes, setSelectedSizes] = useState<MultiOption[]>([])
+    const sizeOptions = useMemo<MultiOption[]>(() => {
+        const letters = ["XS","S","M","L","XL","XXL"].map((label) => ({ label, value: label, group: "Letras" }))
+        const numbers = Array.from({ length: 44 - 20 + 1 }, (_, i) => String(20 + i)).map((label) => ({ label, value: label, group: "Números" }))
+        return [...letters, ...numbers]
+    }, [])
 
     const hasStoreId = 'storeId' in props
     const translationNamespace = hasStoreId ? "store.create-product" : "dashboard.create-product"
@@ -427,6 +437,155 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                                 onCheckedChange={setIsPublished}
                                             />
                                         </div>
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-3">
+                                <AccordionTriggerWithValidation keys={[]}>
+                                    <span className="flex items-center gap-2">
+                                        <Box className="size-4" />
+                                        Dimensiones (visual)
+                                    </span>
+                                </AccordionTriggerWithValidation>
+                                <AccordionContent className="space-y-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <Label>Alto</Label>
+                                            <div className="flex items-center gap-2">
+                                                <Input type="number" placeholder="0" />
+                                                <Select>
+                                                    <SelectTrigger className="w-28">
+                                                        <SelectValue placeholder="MM" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectItem value="MM">MM</SelectItem>
+                                                        <SelectItem value="CM">CM</SelectItem>
+                                                        <SelectItem value="M">M</SelectItem>
+                                                        <SelectItem value="KG">KG</SelectItem>
+                                                        <SelectItem value="G">G</SelectItem>
+                                                        <SelectItem value="MG">MG</SelectItem>
+                                                        <SelectItem value="ML">ML</SelectItem>
+                                                        <SelectItem value="L">L</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label>Ancho</Label>
+                                            <div className="flex items-center gap-2">
+                                                <Input type="number" placeholder="0" />
+                                                <Select>
+                                                    <SelectTrigger className="w-28">
+                                                        <SelectValue placeholder="MM" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectItem value="MM">MM</SelectItem>
+                                                        <SelectItem value="CM">CM</SelectItem>
+                                                        <SelectItem value="M">M</SelectItem>
+                                                        <SelectItem value="KG">KG</SelectItem>
+                                                        <SelectItem value="G">G</SelectItem>
+                                                        <SelectItem value="MG">MG</SelectItem>
+                                                        <SelectItem value="ML">ML</SelectItem>
+                                                        <SelectItem value="L">L</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label>Profundidad</Label>
+                                            <div className="flex items-center gap-2">
+                                                <Input type="number" placeholder="0" />
+                                                <Select>
+                                                    <SelectTrigger className="w-28">
+                                                        <SelectValue placeholder="MM" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectItem value="MM">MM</SelectItem>
+                                                        <SelectItem value="CM">CM</SelectItem>
+                                                        <SelectItem value="M">M</SelectItem>
+                                                        <SelectItem value="KG">KG</SelectItem>
+                                                        <SelectItem value="G">G</SelectItem>
+                                                        <SelectItem value="MG">MG</SelectItem>
+                                                        <SelectItem value="ML">ML</SelectItem>
+                                                        <SelectItem value="L">L</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label>Diámetro</Label>
+                                            <div className="flex items-center gap-2">
+                                                <Input type="number" placeholder="0" />
+                                                <Select>
+                                                    <SelectTrigger className="w-28">
+                                                        <SelectValue placeholder="MM" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectItem value="MM">MM</SelectItem>
+                                                        <SelectItem value="CM">CM</SelectItem>
+                                                        <SelectItem value="M">M</SelectItem>
+                                                        <SelectItem value="KG">KG</SelectItem>
+                                                        <SelectItem value="G">G</SelectItem>
+                                                        <SelectItem value="MG">MG</SelectItem>
+                                                        <SelectItem value="ML">ML</SelectItem>
+                                                        <SelectItem value="L">L</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label>Peso</Label>
+                                            <div className="flex items-center gap-2">
+                                                <Input type="number" placeholder="0" />
+                                                <Select>
+                                                    <SelectTrigger className="w-28">
+                                                        <SelectValue placeholder="KG" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectItem value="MM">MM</SelectItem>
+                                                        <SelectItem value="CM">CM</SelectItem>
+                                                        <SelectItem value="M">M</SelectItem>
+                                                        <SelectItem value="KG">KG</SelectItem>
+                                                        <SelectItem value="G">G</SelectItem>
+                                                        <SelectItem value="MG">MG</SelectItem>
+                                                        <SelectItem value="ML">ML</SelectItem>
+                                                        <SelectItem value="L">L</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-4">
+                                <AccordionTriggerWithValidation keys={[]}>
+                                    <span className="flex items-center gap-2">
+                                        <Box className="size-4" />
+                                        Talles (visual)
+                                    </span>
+                                </AccordionTriggerWithValidation>
+                                <AccordionContent className="space-y-6">
+                                    <div className="flex items-center justify-between">
+                                        <div className="space-y-0.5">
+                                            <Label htmlFor="unique-size">Talle único</Label>
+                                            <p className="text-sm text-muted-foreground">Si está habilitado, no se pueden seleccionar talles</p>
+                                        </div>
+                                        <Switch id="unique-size" checked={isUniqueSize} onCheckedChange={setIsUniqueSize} />
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <Label>Talles (letras y números)</Label>
+                                        <MultipleSelector
+                                            className="w-full"
+                                            defaultOptions={sizeOptions}
+                                            value={selectedSizes}
+                                            onChange={(opts) => setSelectedSizes(opts)}
+                                            placeholder="Selecciona o crea talles"
+                                            creatable
+                                            groupBy="group"
+                                            disabled={isUniqueSize}
+                                            hidePlaceholderWhenSelected
+                                        />
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>
