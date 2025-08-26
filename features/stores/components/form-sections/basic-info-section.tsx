@@ -12,9 +12,10 @@ interface BasicInfoSectionProps {
     subdomain: string
     onSubdomainChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     mode: 'create' | 'edit'
+    onNameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const BasicInfoSection = ({ store, subdomain, onSubdomainChange, mode }: BasicInfoSectionProps) => {
+const BasicInfoSection = ({ store, subdomain, onSubdomainChange, mode, onNameChange }: BasicInfoSectionProps) => {
     const t = useTranslations(mode === 'create' ? "store.create-store" : "store.edit-store")
 
     return (
@@ -31,6 +32,7 @@ const BasicInfoSection = ({ store, subdomain, onSubdomainChange, mode }: BasicIn
                     label={t("name")}
                     type="text"
                     defaultValue={store?.name}
+                    onChange={onNameChange ?? undefined}
                 />
                 <InputField
                     name="description"

@@ -15,6 +15,7 @@ type StorePayload = {
     name: string
     description?: string
     subdomain: string
+    logo?: string
     is_physical_store?: boolean
     address?: string
     city?: string
@@ -64,6 +65,7 @@ export async function insertStore(payload: StorePayload, userId: number): Promis
                 subdomain: payload.subdomain,
                 description: payload.description,
                 user_id: userId,
+                logo: payload.logo || null,
                 is_physical_store: payload.is_physical_store || false,
                 facebook_url: payload.facebook_url || null,
                 instagram_url: payload.instagram_url || null,

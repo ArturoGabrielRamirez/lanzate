@@ -39,6 +39,7 @@ const InputField = ({
   const {
     register,
     formState: { errors },
+    setValue,
   } = useFormContext()
 
   const error = errors[name]?.message as string | undefined
@@ -50,7 +51,10 @@ const InputField = ({
   } else {
     controlls.defaultValue = defaultValue
   }
-  if (onChange) controlls.onChange = onChange
+  if (onChange) controlls.onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(name, e.target.value)
+    if (onChange) onChange(e)
+  }
 
   return (
     <div className={cn("flex flex-col gap-1", containerClassName)}>

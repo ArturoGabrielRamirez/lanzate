@@ -16,12 +16,14 @@ import {
     ContactSection, 
     SocialMediaSection 
 } from "./form-sections"
+import StoreLogoInlineEditor from "./store-logo-inline-editor"
 
 
 type StoreFormData = {
     name: string
     description?: string
     subdomain: string
+    logo?: string
     contact_phone?: string
     contact_whatsapp?: string
     facebook_url?: string
@@ -71,6 +73,8 @@ function StoreFormButton({
             ? generate({ exactly: 1, minLength: 7, join: "" })
             : store?.subdomain || ""
     )
+    const [logoUrl, setLogoUrl] = useState<string | null>(store?.logo ?? null)
+    const [name, setName] = useState(store?.name || "")
 
     const t = useTranslations(mode === 'create' ? "store.create-store" : "store.edit-store")
 
@@ -78,6 +82,7 @@ function StoreFormButton({
         const formData = {
             ...payload,
             subdomain,
+            logo: logoUrl || undefined,
         }
 
         return action(formData)
@@ -85,6 +90,10 @@ function StoreFormButton({
 
     const handleSubdomainChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSubdomain(e.target.value.replace(/[^a-zA-Z0-9-]/g, ""))
+    }
+
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setName(e.target.value)
     }
 
     const buttonText = mode === 'create' ? (
@@ -99,6 +108,8 @@ function StoreFormButton({
         </>
     )
 
+    const currentLogo = store?.logo || null
+
     return (
         <ButtonWithPopup
             text={buttonText}
@@ -108,14 +119,22 @@ function StoreFormButton({
             description={t("description")}
             action={handleSubmit}
             messages={messages}
-            className={cn("w-full", className)}
+            className={cn("w-full max-h-[500px] overflow-y-auto", className)}
         >
+            <div className="mb-4">
+                <StoreLogoInlineEditor
+                    currentLogo={logoUrl ?? currentLogo}
+                    storeName={name}
+                    onLogoUpdate={(url) => setLogoUrl(url)}
+                />
+            </div>
             <Accordion type="single" collapsible defaultValue="item-1">
                 <BasicInfoSection
                     store={store}
                     subdomain={subdomain}
                     onSubdomainChange={handleSubdomainChange}
                     mode={mode}
+                    onNameChange={handleNameChange}
                 />
                 <AddressSection
                     store={store}
