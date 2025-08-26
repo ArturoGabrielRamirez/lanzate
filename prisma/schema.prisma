@@ -207,6 +207,11 @@ model Product {
   categories        Category[]         @relation("CategoryToProduct")
   social_activities SocialActivity[]
 
+  // New relations for multiple media support
+  primary_media_id Int?              @unique
+  primary_media    ProductMedia?       @relation("ProductPrimaryMedia", fields: [primary_media_id], references: [id])
+  media            ProductMedia[]
+
   @@map("products")
 }
 
@@ -1051,6 +1056,12 @@ enum ContractStatus {
   EXPIRED
 }
 
+// New enum for product media types
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
 enum OrderType {
   CASH_REGISTER
   PUBLIC_STORE
@@ -1072,6 +1083,25 @@ enum ReminderStatus {
   PENDING
   COMPLETED
   OVERDUE
+}
+
+// New model for product media (images/videos)
+model ProductMedia {
+  id          Int        @id @default(autoincrement())
+  product_id  Int
+  type        MediaType
+  url         String
+  alt_text    String?
+  sort_order  Int        @default(0)
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+
+  // Relations
+  product             Product   @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  primary_for_product Product?  @relation("ProductPrimaryMedia")
+
+  @@index([product_id, sort_order])
+  @@map("product_medias")
 }
 
 enum SocialActivityType {

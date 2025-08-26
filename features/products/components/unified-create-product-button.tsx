@@ -195,7 +195,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                 <AccordionContent className="space-y-4">
                                     <div className="space-y-2">
                                         <FileUpload
-                                            maxFiles={1}
+                                            maxFiles={5}
                                             maxSize={2 * 1024 * 1024}
                                             className={hasStoreId ? "w-full" : "w-full"}
                                             value={files}
@@ -207,10 +207,10 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                             }}
                                             onFileReject={onFileReject}
                                             multiple={false}
-                                            disabled={files.length > 0}
+                                            disabled={files.length >= 5}
                                             accept="image/jpg, image/png, image/jpeg"
                                         >
-                                            {files.length === 0 && (
+                                            {/* {files.length === 0 && ( */}
                                                 <FileUploadDropzone>
                                                     <div className="flex flex-col items-center gap-1 text-center">
                                                         <div className="flex items-center justify-center rounded-full border p-2.5">
@@ -229,7 +229,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                                         </Button>
                                                     </FileUploadTrigger>
                                                 </FileUploadDropzone>
-                                            )}
+                                            {/* )} */}
                                             <FileUploadList className="w-full">
                                                 {files.map((file, index) => (
                                                     <FileUploadItem key={index} value={file}>
