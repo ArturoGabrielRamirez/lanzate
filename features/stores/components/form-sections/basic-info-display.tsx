@@ -10,6 +10,7 @@ import { EditBasicInfoButton } from "../section-buttons"
 import { editBasicInfoSchema } from "../../schemas/basic-info-schema"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useFormContext } from "react-hook-form"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface BasicInfoDisplayProps {
     store: Store
@@ -53,15 +54,23 @@ const BasicInfoDisplay = ({ store, userId }: BasicInfoDisplayProps) => {
         }
 
         return (
-            <IconButton
-                icon={isEditing ? X : EditIcon}
-                onClick={onClick}
-            />
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <IconButton
+                        icon={isEditing ? X : EditIcon}
+                        onClick={onClick}
+                        className="opacity-0 group-hover/basic-info-display:opacity-100 transition-opacity duration-300"
+                    />
+                </TooltipTrigger>
+                <TooltipContent>
+                    Editar información básica
+                </TooltipContent>
+            </Tooltip>
         )
     }
 
     return (
-        <Card>
+        <Card className="group/basic-info-display">
             <Form
                 submitButton={false}
                 contentButton={false}

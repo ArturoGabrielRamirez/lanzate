@@ -11,6 +11,7 @@ import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { editSocialMediaSchema, type EditSocialMediaData } from "../../schemas/social-media-schema"
 import { useFormContext } from "react-hook-form"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface SocialMediaDisplayProps {
     store: Store & { operational_settings: StoreOperationalSettings | null, branches: Branch[] }
@@ -47,15 +48,23 @@ const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
         }
 
         return (
-            <IconButton
-                icon={isEditing ? X : EditIcon}
-                onClick={onClick}
-            />
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <IconButton
+                        icon={isEditing ? X : EditIcon}
+                        onClick={onClick}
+                        className="opacity-0 group-hover/social-media-display:opacity-100 transition-opacity duration-300"
+                    />
+                </TooltipTrigger>
+                <TooltipContent>
+                    Editar información de redes sociales
+                </TooltipContent>
+            </Tooltip>
         )
     }
 
     return (
-        <Card>
+        <Card className="group/social-media-display">
             <Form submitButton={false} contentButton={false} resolver={yupResolver(editSocialMediaSchema)}>
                 <CardHeader>
                     <CardTitle>

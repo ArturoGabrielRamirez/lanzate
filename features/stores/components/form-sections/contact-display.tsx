@@ -11,6 +11,7 @@ import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { editContactSchema, type EditContactData } from "../../schemas/contact-schema"
 import { useFormContext } from "react-hook-form"
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 
 interface ContactDisplayProps {
     store: Store & { branches: Branch[] }
@@ -47,15 +48,23 @@ const ContactDisplay = ({ store }: ContactDisplayProps) => {
         }
 
         return (
-            <IconButton
-                icon={isEditing ? X : EditIcon}
-                onClick={onClick}
-            />
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <IconButton
+                        icon={isEditing ? X : EditIcon}
+                        onClick={onClick}
+                        className="opacity-0 group-hover/contact-display:opacity-100 transition-opacity duration-300"
+                    />
+                </TooltipTrigger>
+                <TooltipContent>
+                    Editar información de contacto
+                </TooltipContent>
+            </Tooltip>
         )
     }
 
     return (
-        <Card>
+        <Card className="group/contact-display">
             <Form submitButton={false} contentButton={false} resolver={yupResolver(editContactSchema)}>
                 <CardHeader>
                     <CardTitle>

@@ -11,6 +11,7 @@ import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { editAddressSchema } from "../../schemas/address-schema"
 import { useFormContext } from "react-hook-form"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface AddressDisplayProps {
     store: Store & { branches: Branch[] }
@@ -65,15 +66,23 @@ const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
         }
 
         return (
-            <IconButton
-                icon={isEditing ? X : EditIcon}
-                onClick={onClick}
-            />
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <IconButton
+                        icon={isEditing ? X : EditIcon}
+                        onClick={onClick}
+                        className="opacity-0 group-hover/address-display:opacity-100 transition-opacity duration-300"
+                    />
+                </TooltipTrigger>
+                <TooltipContent>
+                    Editar información de dirección
+                </TooltipContent>
+            </Tooltip>
         )
     }
 
     return (
-        <Card>
+        <Card className="group/address-display">
             <Form submitButton={false} contentButton={false} resolver={yupResolver(editAddressSchema)}>
                 <CardHeader>
                     <CardTitle>

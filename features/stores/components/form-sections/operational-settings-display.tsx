@@ -12,6 +12,7 @@ import { PaymentMethodsSwitches } from "../payment-methods-switches"
 import { useFormContext } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { editOperationalSettingsSchema, type EditOperationalSettingsData } from "../../schemas/operational-settings-schema"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface OperationalSettingsDisplayProps {
     store: Store & {
@@ -71,12 +72,23 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
         }
 
         return (
-            <IconButton icon={isEditing ? X : EditIcon} onClick={onClick} />
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <IconButton
+                        icon={isEditing ? X : EditIcon}
+                        onClick={onClick}
+                        className="opacity-0 group-hover/operational-settings-display:opacity-100 transition-opacity duration-300"
+                    />
+                </TooltipTrigger>
+                <TooltipContent>
+                    Editar información de operacionales
+                </TooltipContent>
+            </Tooltip>
         )
     }
 
     return (
-        <Card>
+        <Card className="group/operational-settings-display">
             <Form submitButton={false} contentButton={false} resolver={yupResolver(editOperationalSettingsSchema)}>
                 <CardHeader>
                     <CardTitle>
