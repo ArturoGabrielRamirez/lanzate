@@ -9,6 +9,7 @@ type StoreHeader = {
     name: string
     description: string | null
     logo: string | null
+    banner: string | null
     balance: {
         current_balance: number
     } | null
@@ -30,6 +31,7 @@ export async function selectStoreHeaderBySlug(slug: string): Promise<SelectStore
             name: true,
             description: true,
             logo: true,
+            banner: true,
             balance: {
                 select: {
                     current_balance: true
