@@ -289,7 +289,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                                 }
                                             }}
                                             onFileReject={onFileReject}
-                                            multiple={false}
+                                            multiple={true}
                                             disabled={files.length >= 5}
                                             accept="image/jpg, image/png, image/jpeg"
                                         >
