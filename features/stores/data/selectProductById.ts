@@ -14,7 +14,8 @@ export async function selectProductById(id: number) {
                 id: id
             },
             include: {
-                categories: true
+                categories: true,
+                media: true
             }
         })
 

@@ -5,9 +5,9 @@ import { createProduct } from "../actions/createProduct"
 import { productCreateSchema } from "../schemas/product-schema"
 import { formatErrorResponse } from "@/utils/lib"
 import { DollarSign, FileText, Package, Plus, Tag, Upload, X, ShoppingCart, Box } from "lucide-react"
-import { useCallback, useState, useEffect } from "react"
+import { useCallback, useState, useEffect, useRef } from "react"
 import CategorySelect from "@/features/store-landing/components/category-select-"
-import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/components/ui/file-upload"
+import { FileUpload, FileUploadCameraTrigger, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/components/ui/file-upload"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
+// Uploads and media attachment are performed via API routes to allow pre-product uploads from the client
 
 type CategoryValue = { value: string; label: string }
 
@@ -39,6 +40,10 @@ type CreateProductPayload = {
 function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
     const [categories, setCategories] = useState<CategoryValue[]>([])
     const [files, setFiles] = useState<File[]>([])
+    const [primaryIndex, setPrimaryIndex] = useState<number | null>(null)
+    const uploadedUrlsRef = useRef<Map<File, string>>(new Map())
+    const prevFilesRef = useRef<File[]>([])
+    const isUploadingRef = useRef(false)
     const [selectedStoreId, setSelectedStoreId] = useState<string>("")
     const [fileUploadError, setFileUploadError] = useState<string>("")
     const [open, setOpen] = useState(false)
@@ -54,10 +59,13 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
         if (!open) {
             setCategories([])
             setFiles([])
+            setPrimaryIndex(null)
             setFileUploadError("")
             setIsActive(true)
             setIsFeatured(false)
             setIsPublished(true)
+            uploadedUrlsRef.current = new Map()
+            prevFilesRef.current = []
             if (!hasStoreId) {
                 setSelectedStoreId("")
             }
@@ -84,6 +92,57 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
         }
     }, [t, hasStoreId])
 
+    async function uploadNewFilesSequential(newFiles: File[], targetStoreId: number) {
+        if (isUploadingRef.current) return
+        isUploadingRef.current = true
+        try {
+            for (const file of newFiles) {
+                try {
+                    const form = new FormData()
+                    form.append("file", file)
+                    form.append("storeId", String(targetStoreId))
+                    const res = await fetch("/api/product-images", { method: "POST", body: form })
+                    if (!res.ok) throw new Error((await res.json()).error || "Upload failed")
+                    const data = await res.json()
+                    uploadedUrlsRef.current.set(file, data.url as string)
+                } catch (err) {
+                    const msg = err instanceof Error ? err.message : "Error subiendo imagen"
+                    toast.error(msg)
+                }
+            }
+        } finally {
+            isUploadingRef.current = false
+        }
+    }
+
+    useEffect(() => {
+        // Maintain primary index
+        if (files.length === 1) setPrimaryIndex(0)
+        if (files.length === 0) setPrimaryIndex(null)
+        if (primaryIndex !== null && primaryIndex >= files.length) setPrimaryIndex(files.length ? 0 : null)
+
+        // Upload files when we know the storeId
+        const targetStoreId = hasStoreId ? props.storeId! : (selectedStoreId ? parseInt(selectedStoreId) : null)
+        if (targetStoreId) {
+            const prev = prevFilesRef.current
+            const added = files.filter(f => !prev.includes(f))
+
+            // Upload newly added files
+            if (added.length > 0) void uploadNewFilesSequential(added, targetStoreId)
+
+            // Upload any pending files that were selected before store selection
+            const pending = files.filter(f => !uploadedUrlsRef.current.has(f))
+            if (pending.length > 0 && added.length !== pending.length) void uploadNewFilesSequential(pending, targetStoreId)
+        }
+
+        // Cleanup uploaded urls for removed files
+        for (const key of Array.from(uploadedUrlsRef.current.keys())) {
+            if (!files.includes(key)) uploadedUrlsRef.current.delete(key)
+        }
+
+        prevFilesRef.current = files
+    }, [files, primaryIndex, selectedStoreId, hasStoreId])
+
     const handleCreateProduct = async (payload: CreateProductPayload) => {
         try {
             let targetStoreId: number
@@ -109,6 +168,30 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
             const { error, message, payload: product } = await createProduct(data, targetStoreId, props.userId)
 
             if (error) throw new Error(message)
+
+            // Ensure any pending uploads are finished and attach media
+            const missing = files.filter(f => !uploadedUrlsRef.current.has(f))
+            if (missing.length > 0) {
+                await uploadNewFilesSequential(missing, targetStoreId)
+            }
+
+            const media = files
+                .map((file, idx) => ({ file, idx }))
+                .filter(({ file }) => uploadedUrlsRef.current.has(file))
+                .map(({ file, idx }) => ({
+                    url: uploadedUrlsRef.current.get(file)!,
+                    type: "IMAGE" as const,
+                    sortOrder: idx,
+                }))
+
+            const primary = primaryIndex === null ? (files.length ? 0 : null) : primaryIndex
+            if (media.length > 0) {
+                await fetch(`/api/products/${product.id}/media`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ media, primaryIndex: primary })
+                })
+            }
 
             return {
                 error: false,
@@ -228,6 +311,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                                             {t("browse-files")}
                                                         </Button>
                                                     </FileUploadTrigger>
+                                                    <FileUploadCameraTrigger />
                                                 </FileUploadDropzone>
                                             {/* )} */}
                                             <FileUploadList className="w-full">
@@ -235,6 +319,18 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                                     <FileUploadItem key={index} value={file}>
                                                         <FileUploadItemPreview />
                                                         <FileUploadItemMetadata />
+                                                        <div className="ml-auto flex items-center gap-2">
+                                                            <Label htmlFor={`primary-${index}`} className="text-xs">Primaria</Label>
+                                                            <Switch
+                                                                id={`primary-${index}`}
+                                                                checked={primaryIndex === index || (files.length === 1 && index === 0)}
+                                                                disabled={files.length === 1}
+                                                                onCheckedChange={(checked) => {
+                                                                    if (checked) setPrimaryIndex(index)
+                                                                    else if (primaryIndex === index && files.length > 1) setPrimaryIndex(null)
+                                                                }}
+                                                            />
+                                                        </div>
                                                         <FileUploadItemDelete asChild>
                                                             <Button variant="ghost" size="icon" className="size-7">
                                                                 <X />

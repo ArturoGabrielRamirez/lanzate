@@ -24,6 +24,7 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
     }
 
     const { payload: product, error } = await getProductDetails(id)
+    console.log("🚀 ~ ProductDetailPage ~ product:", product)
 
     if (error || !product) {
         return console.log(error)
@@ -45,7 +46,7 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
                 <div className="grid grid-cols-1 lg:grid-cols-[max-content_1fr] grid-rows-[auto_1fr] lg:grid-rows-1 gap-4 w-full">
                     <div className="w-full h-35 lg:h-full lg:w-60 xl:w-80 overflow-hidden rounded-md group bg-secondary relative">
                         {product.image ? (
-                            <Image
+                            <img
                                 src={product.image}
                                 alt={`${product.name} image`}
                                 fill
