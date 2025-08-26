@@ -7,6 +7,7 @@ import { useCamera } from '@/features/auth/hooks/use-camera'
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 import { toast } from "sonner"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 type StoreLogoOption = {
   id: string
@@ -209,47 +210,47 @@ export default function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUp
             </div>
           )}
 
-          {!camera.capturedFile && (
-            <div className="flex gap-2">
-              <Button type="button" onClick={() => { camera.openCamera(); }} variant="outline" className="flex-1" disabled={camera.isUploading}>
-                <Smartphone className="h-4 w-4 mr-2" /> Tomar Foto
-              </Button>
-            </div>
-          )}
 
-          <div className="space-y-3">
-            <Label>Logos sugeridos</Label>
-            {isLoadingOptions ? (
-              <div className="flex justify-center py-4">
-                <Loader2 className="h-6 w-6 animate-spin" />
-              </div>
-            ) : (
-              <div className="grid grid-cols-3 gap-3">
-                {logoOptions.map((option) => (
-                  <div key={option.id} className={cn("relative cursor-pointer rounded-lg border-2 p-2 transition-all hover:bg-accent", selectedOption === option.id ? "border-primary bg-accent" : "border-muted")} onClick={() => handleOptionSelect(option.id)}>
-                    <div className="flex flex-col items-center gap-2">
-                      <img src={option.url} alt={`${option.provider} logo`} className="h-12 w-12 rounded-full object-cover" />
-                      <div className="text-center">
-                        <p className="text-xs font-medium">{option.label}</p>
-                        <p className="text-xs text-muted-foreground">{option.provider}</p>
-                      </div>
-                      {selectedOption === option.id && (
-                        <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground rounded-full p-1">
-                          <Check className="h-3 w-3" />
-                        </div>
-                      )}
+
+          <Accordion type="single" collapsible>
+            <AccordionItem value="logos-sugeridos">
+              <AccordionTrigger>Logos sugeridos</AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-3">
+                  <Label>Logos sugeridos</Label>
+                  {isLoadingOptions ? (
+                    <div className="flex justify-center py-4">
+                      <Loader2 className="h-6 w-6 animate-spin" />
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
-            {!isLoadingOptions && logoOptions.length === 0 && (
-              <Button variant="ghost" size="sm" onClick={loadLogoOptions}>Cargar opciones sugeridas</Button>
-            )}
-          </div>
-
+                  ) : (
+                    <div className="grid grid-cols-3 gap-3">
+                      {logoOptions.map((option) => (
+                        <div key={option.id} className={cn("relative cursor-pointer rounded-lg border-2 p-2 transition-all hover:bg-accent", selectedOption === option.id ? "border-primary bg-accent" : "border-muted")} onClick={() => handleOptionSelect(option.id)}>
+                          <div className="flex flex-col items-center gap-2">
+                            <img src={option.url} alt={`${option.provider} logo`} className="h-12 w-12 rounded-full object-cover" />
+                            <div className="text-center">
+                              <p className="text-xs font-medium">{option.label}</p>
+                              <p className="text-xs text-muted-foreground">{option.provider}</p>
+                            </div>
+                            {selectedOption === option.id && (
+                              <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground rounded-full p-1">
+                                <Check className="h-3 w-3" />
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {!isLoadingOptions && logoOptions.length === 0 && (
+                    <Button variant="ghost" size="sm" onClick={loadLogoOptions}>Cargar opciones sugeridas</Button>
+                  )}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
           <div className="space-y-3">
-            <Label>Subir imagen</Label>
+            {/* <Label>Subir imagen</Label> */}
             <div className="flex gap-2">
               <Button type="button" onClick={() => fileInputRef.current?.click()} variant="outline" className="flex-1" disabled={camera.isUploading}>
                 <Upload className="h-4 w-4 mr-2" /> Seleccionar archivo
@@ -257,11 +258,18 @@ export default function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUp
             </div>
             <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileSelect} className="hidden" />
           </div>
-
+          {!camera.capturedFile && (
+            <div className="flex gap-2">
+              <Button type="button" onClick={() => { camera.openCamera(); }} variant="outline" className="flex-1" disabled={camera.isUploading}>
+                <Smartphone className="h-4 w-4 mr-2" /> Tomar Foto
+              </Button>
+            </div>
+          )}
           <div className="flex gap-2">
             <Button type="button" onClick={() => { handleUseSelectedOption(); const option = logoOptions.find(o => o.id === selectedOption); if (option) { setCurrentLogoUrl(option.url); onLogoUpdate(option.url) } }} disabled={!selectedOption || camera.isUploading} className="flex-1">Usar Logo Seleccionado</Button>
             <Button type="button" onClick={async () => { await handleUpload(); if (previewUrl) { setCurrentLogoUrl(previewUrl) } }} disabled={!selectedFile || camera.isUploading} variant="outline" className="flex-1">Subir Archivo</Button>
           </div>
+
         </>
       )}
     </div>
