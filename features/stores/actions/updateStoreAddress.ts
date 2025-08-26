@@ -33,7 +33,8 @@ export async function updateStoreAddress(slug: string, payload: UpdateAddressPay
             throw new Error("Store not found or you don't have permission to edit it")
         }
         
-        const mainBranch = existingStore.branches[0]
+        const mainBranch = existingStore.branches.find((branch) => branch.is_main)
+        
         if (!mainBranch) {
             throw new Error("Main branch not found")
         }

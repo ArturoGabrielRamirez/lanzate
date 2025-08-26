@@ -2,7 +2,7 @@
 
 import { MessageCircle, Edit as EditIcon, X } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { Store, StoreOperationalSettings } from "@prisma/client"
+import { Branch, Store, StoreOperationalSettings } from "@prisma/client"
 import { EditSocialMediaButton } from "../section-buttons"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, InputField } from "@/features/layout/components"
@@ -13,13 +13,13 @@ import { editSocialMediaSchema, type EditSocialMediaData } from "../../schemas/s
 import { useFormContext } from "react-hook-form"
 
 interface SocialMediaDisplayProps {
-    store: Store & { operational_settings: StoreOperationalSettings | null }
+    store: Store & { operational_settings: StoreOperationalSettings | null, branches: Branch[] }
 }
 
 const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
     const t = useTranslations("store.edit-store")
     const [isEditing, setIsEditing] = useState(false)
-
+    const mainBranch = store.branches?.find((branch) => branch.is_main)
     const handleOpenEdit = () => {
         setIsEditing(true)
     }
@@ -32,9 +32,9 @@ const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
         const { reset } = useFormContext<EditSocialMediaData>()
 
         const initialValues: EditSocialMediaData = {
-            facebook_url: store.facebook_url || "",
-            instagram_url: store.instagram_url || "",
-            x_url: store.x_url || "",
+            facebook_url: mainBranch?.facebook_url || "",
+            instagram_url: mainBranch?.instagram_url || "",
+            x_url: mainBranch?.x_url || "",
         }
 
         const onClick = () => {
@@ -80,7 +80,7 @@ const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
                             <InputField
                                 name="facebook_url"
                                 label={t("facebook-url")}
-                                defaultValue={store.facebook_url || ""}
+                                defaultValue={mainBranch?.facebook_url || ""}
                                 disabled={!isEditing}
                             />
                         </div>
@@ -88,7 +88,7 @@ const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
                             <InputField
                                 name="instagram_url"
                                 label={t("instagram-url")}
-                                defaultValue={store.instagram_url || ""}
+                                defaultValue={mainBranch?.instagram_url || ""}
                                 disabled={!isEditing}
                             />
                         </div>
@@ -96,7 +96,7 @@ const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
                             <InputField
                                 name="x_url"
                                 label={t("x-url")}
-                                defaultValue={store.x_url || ""}
+                                defaultValue={mainBranch?.x_url || ""}
                                 disabled={!isEditing}
                             />
                         </div>

@@ -19,6 +19,7 @@ interface ContactDisplayProps {
 const ContactDisplay = ({ store }: ContactDisplayProps) => {
     const t = useTranslations("store.edit-store")
     const [isEditing, setIsEditing] = useState(false)
+    const mainBranch = store.branches?.find((branch) => branch.is_main)
 
     const handleOpenEdit = () => {
         setIsEditing(true)
@@ -32,8 +33,8 @@ const ContactDisplay = ({ store }: ContactDisplayProps) => {
         const { reset } = useFormContext<EditContactData>()
 
         const initialValues: EditContactData = {
-            contact_phone: store.phone || "",
-            contact_email: store.email || "",
+            contact_phone: mainBranch?.phone || "",
+            contact_email: mainBranch?.email || "",
         }
 
         const onClick = () => {
@@ -79,7 +80,7 @@ const ContactDisplay = ({ store }: ContactDisplayProps) => {
                             <InputField
                                 name="contact_phone"
                                 label={t("contact-phone")}
-                                defaultValue={store.phone || ""}
+                                defaultValue={mainBranch?.phone || ""}
                                 disabled={!isEditing}
                             />
                         </div>
@@ -88,7 +89,7 @@ const ContactDisplay = ({ store }: ContactDisplayProps) => {
                                 name="contact_email"
                                 label="Email"
                                 type="email"
-                                defaultValue={store.email || ""}
+                                defaultValue={mainBranch?.email || ""}
                                 disabled={!isEditing}
                             />
                         </div>

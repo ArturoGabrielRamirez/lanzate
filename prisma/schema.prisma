@@ -223,6 +223,12 @@ model Branch {
   updated_at  DateTime       @updatedAt
   store_id    Int
   is_main     Boolean        @default(false)
+  
+  instagram_url String?
+  x_url String?
+  facebook_url String?
+
+  
   store       Store          @relation(fields: [store_id], references: [id], onDelete: Cascade)
   orders      Order[]
   stock       ProductStock[]

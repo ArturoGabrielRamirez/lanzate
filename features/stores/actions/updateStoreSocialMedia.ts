@@ -8,6 +8,13 @@ export async function updateStoreSocialMedia(storeId: number, data: EditSocialMe
     try {
         // Update the store's operational settings with social media information
 
+        const mainBranch = await prisma.branch.findFirst({
+            where: {
+                store_id: storeId,
+                is_main: true
+            }
+        })
+
         const store = await prisma.store.update({
             where: {
                 id: storeId
@@ -16,6 +23,18 @@ export async function updateStoreSocialMedia(storeId: number, data: EditSocialMe
                 facebook_url: data.facebook_url || null,
                 instagram_url: data.instagram_url || null,
                 x_url: data.x_url || null,
+                branches: {
+                    update: {
+                        where: {
+                            id: mainBranch?.id
+                        },
+                        data: {
+                            facebook_url: data.facebook_url || null,
+                            instagram_url: data.instagram_url || null,
+                            x_url: data.x_url || null
+                        }
+                    }
+                }
             }
         })
 
