@@ -135,6 +135,7 @@ model Store {
   name                 String
   description          String?
   logo                 String?
+  banner               String?
   slogan               String?
   created_at           DateTime                  @default(now())
   updated_at           DateTime                  @updatedAt
