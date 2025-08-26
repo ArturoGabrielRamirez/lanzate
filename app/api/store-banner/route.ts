@@ -39,7 +39,6 @@ export async function POST(request: NextRequest) {
       .upload(fileName, buffer, { contentType: file.type, upsert: true })
 
       if (uploadError) {
-      console.log("🚀 ~ POST ~ uploadError:", uploadError)
       return NextResponse.json({ error: 'Error subiendo archivo', details: uploadError.message }, { status: 500 })
     }
 
