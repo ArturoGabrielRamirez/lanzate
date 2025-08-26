@@ -1,16 +1,20 @@
 "use server";
-
 import { prisma } from "@/utils/prisma";
 import { getCurrentUser } from "./index";
+import { actionWrapper } from "@/utils/lib";
 
 export async function getLocalUser() {
-  const { user, error: userError } = await getCurrentUser();
+  return actionWrapper(async () => {
+    const { payload: user, error: userError, message: userMessage } = await getCurrentUser();
+    
+    if (userError || !user) {
+      return {
+        error: true,
+        message: userMessage || "Usuario no autenticado",
+        payload: null
+      };
+    }
 
-  if (userError || !user) {
-    return { localUser: null, error: userError || "User not found" };
-  }
-
-  try {
     let localUser = await prisma.user.findUnique({
       where: {
         supabase_user_id: user.id
@@ -59,23 +63,17 @@ export async function getLocalUser() {
     }
 
     if (!localUser) {
-
       return {
-        localUser: null,
-        error: "Usuario no encontrado en la base de datos local"
+        error: true,
+        message: "Usuario no encontrado en la base de datos local",
+        payload: null
       };
-
     }
 
-    return { localUser, error: null };
-
-  } catch (error) {
-    console.error('Error getting local user:', error);
-
     return {
-      localUser: null,
-      error: "Error al obtener usuario local"
+      error: false,
+      message: "Usuario local obtenido exitosamente",
+      payload: localUser
     };
-
-  }
+  });
 }

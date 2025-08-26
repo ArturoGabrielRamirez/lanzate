@@ -30,19 +30,21 @@ const defaultStatus: EmailChangeStatus = {
 
 export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
     const t = useTranslations("auth.check-email");
+
     
     const emailChangeStatus: { status: EmailChangeStatus } =
-        type === 'smart'
-            ? useConfirmationEmailChangeStatus()
-            : { status: defaultStatus };
+    type === 'smart'
+    ? useConfirmationEmailChangeStatus()
+    : { status: defaultStatus };
 
-    const { 
-        isResending, 
-        cooldownTime, 
-        lastResendInfo, 
-        handleResendEmail 
+    const {
+        isResending,
+        cooldownTime,
+        lastResendInfo,
+        handleResendEmail
     } = useResendEmail({ email, type, emailChangeStatus });
-
+    
+    console.log(emailChangeStatus.status);
     // Mostrar loading si estamos en modo smart y está cargando
     if (type === 'smart' && emailChangeStatus.status.loading) {
         return <LoadingState />;

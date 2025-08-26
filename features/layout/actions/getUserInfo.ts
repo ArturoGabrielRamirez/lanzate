@@ -4,13 +4,13 @@ import { getLocalUser } from "../../auth/actions";
 import { prisma } from "@/utils/prisma";
 
 export async function getUserInfo() {
-    const { localUser, error } = await getLocalUser();
+    const { payload: localUser, error: errorUser, message: messageUser } = await getLocalUser();
 
-    if (error || !localUser) {
+    if (errorUser || !localUser) {
         return {
             payload: null,
             error: true,
-            message: error || "Usuario no encontrado"
+            message: messageUser || "Usuario no encontrado"
         };
     }
 

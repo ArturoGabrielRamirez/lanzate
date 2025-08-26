@@ -10,7 +10,11 @@ export async function handleEditPassword(currentPassword: string, newPassword: s
     const { data: { user }, error: userError } = await supabase.auth.getUser();
 
     if (userError || !user) {
-      throw new Error("Usuario no autenticado");
+      return {
+        error: true,
+        message: "Usuario no autenticado",
+        payload: null
+      };
     }
 
     const { error: signInError } = await supabase.auth.signInWithPassword({
@@ -19,7 +23,11 @@ export async function handleEditPassword(currentPassword: string, newPassword: s
     });
 
     if (signInError) {
-      throw new Error("La contraseña actual es incorrecta");
+      return {
+        error: true,
+        message: "La contraseña actual es incorrecta",
+        payload: null
+      };
     }
 
     const { data, error } = await supabase.auth.updateUser({
@@ -27,7 +35,11 @@ export async function handleEditPassword(currentPassword: string, newPassword: s
     });
 
     if (error) {
-      throw new Error(error.message);
+      return {
+        error: true,
+        message: error?.message || "Error al actualizar la contraseña",
+        payload: null
+      };
     }
 
     return {

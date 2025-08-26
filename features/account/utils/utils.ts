@@ -1,47 +1,28 @@
-import { toast } from "sonner";
-import { UserDeletionStatus, DeletionActionResponse } from "../types/types";
+// utils/deletionUtils.ts - CORREGIDO para actionWrapper
+import { UserDeletionStatus, DeleteRequestParams, CancelDeletionParams, AccountDeletedParams } from "../types/types";
+import { notifyError, handleDeletionResponse, handleDeletionError } from "./notification-service";
+import { cancelDeletionAction, fetchDeletionStatusAction, requestDeletionAction } from "../actions/fetch-deletion-status";
 
-// ✅ FUNCIÓN PARA ENMASCARAR EMAIL - Sin cambios
-export function maskEmail(email: string): string {
-  const [localPart, domain] = email.split('@')
-  if (localPart.length <= 2) {
-    return `${localPart[0]}*@${domain}`
-  }
-  const maskedLocal = `${localPart[0]}${'*'.repeat(localPart.length - 2)}${localPart[localPart.length - 1]}`
-  return `${maskedLocal}@${domain}`
-}
-
-// ✅ FUNCIÓN PARA OBTENER ESTADO DE ELIMINACIÓN - Actualizada
+// ✅ FUNCIÓN PARA OBTENER ESTADO DE ELIMINACIÓN - CORREGIDA
 export async function fetchDeletionStatus(
-  setDeletionStatus: React.Dispatch<React.SetStateAction<UserDeletionStatus>>, 
+  setDeletionStatus: React.Dispatch<React.SetStateAction<UserDeletionStatus>>,
   onStatusChange?: () => void
 ): Promise<void> {
   try {
-    const response = await fetch('/api/user/deletion-status');
-    if (response.ok) {
-      const status = await response.json();
-      // ✅ El backend ahora incluye isWithinActionWindow y otros campos
-      setDeletionStatus(status);
+    // ✅ FORMATO CORRECTO: actionWrapper devuelve { error, message, payload }
+    const result = await fetchDeletionStatusAction();
+    
+    if (result.error === false && result.payload) {
+      setDeletionStatus(result.payload);
       onStatusChange?.();
     }
   } catch (error) {
     console.error('Error fetching deletion status:', error);
+    notifyError('Error obteniendo estado de eliminación');
   }
 }
 
-// ✅ INTERFAZ PARA PARÁMETROS DE SOLICITUD DE ELIMINACIÓN - Sin cambios
-interface DeleteRequestParams {
-  reason: string;
-  password: string;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowDeleteDialog: React.Dispatch<React.SetStateAction<boolean>>;
-  setReason: React.Dispatch<React.SetStateAction<string>>;
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
-  setDeletionStatus: React.Dispatch<React.SetStateAction<UserDeletionStatus>>;
-  onStatusChange?: () => void;
-}
-
-// ✅ FUNCIÓN FACTORY PARA SOLICITAR ELIMINACIÓN - Mejorada
+// ✅ FUNCIÓN FACTORY PARA SOLICITAR ELIMINACIÓN - CORREGIDA
 export function createDeleteRequestHandler(params: DeleteRequestParams) {
   const {
     reason,
@@ -55,75 +36,49 @@ export function createDeleteRequestHandler(params: DeleteRequestParams) {
   } = params;
 
   return async (): Promise<void> => {
-    // Validaciones
-    if (!reason.trim() || reason.length < DELETION_CONSTANTS.MIN_REASON_LENGTH) {
-      notifications.error(`El motivo debe tener al menos ${DELETION_CONSTANTS.MIN_REASON_LENGTH} caracteres`);
+    // Validaciones usando validators existentes
+    const reasonValidation = validators.deletionReason(reason);
+    if (!reasonValidation.isValid) {
+      notifyError(reasonValidation.error!);
       return;
     }
 
-    if (!password.trim()) {
-      notifications.error('La contraseña es requerida');
+    const passwordValidation = validators.password(password);
+    if (!passwordValidation.isValid) {
+      notifyError(passwordValidation.error!);
       return;
     }
 
     setIsLoading(true);
+
     try {
-      const response = await fetch('/api/user/request-deletion', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reason, confirmPassword: password }),
-      });
+      // ✅ FORMATO CORRECTO: actionWrapper devuelve { error, message, payload }
+      const result = await requestDeletionAction(reason, password);
 
-      const data: DeletionActionResponse = await response.json();
+      if (result.error === false && result.payload) {
+        // ✅ Usar funciones de notificaciones para manejar respuesta exitosa
+        handleDeletionResponse(result.payload, 'request');
 
-      if (response.ok) {
-        notifications.success(DELETION_CONSTANTS.MESSAGES.DELETION_REQUESTED);
-        
-        // ✅ MOSTRAR INFO ADICIONAL sobre ventana de acción
-        if (data.deletionInfo?.actionWindowMinutes) {
-          notifications.success(
-            `Tienes ${data.deletionInfo.actionWindowMinutes} minutos para cambiar de opinión y cancelar la eliminación.`
-          );
-        }
-        
+        // Limpiar formulario
         setShowDeleteDialog(false);
         setReason('');
         setPassword('');
+
+        // Actualizar estado
         await fetchDeletionStatus(setDeletionStatus, onStatusChange);
-      } else {
-        // ✅ MANEJAR CASOS ESPECIALES
-        if (response.status === 409 && data.error?.includes('solicitud de eliminación pendiente')) {
-          const existingRequest = (data as any).existingRequest;
-          if (existingRequest?.isWithinActionWindow) {
-            notifications.error(
-              `Ya tienes una solicitud pendiente. Puedes cancelarla hasta las ${new Date(existingRequest.canCancelUntil).toLocaleTimeString()}.`
-            );
-          } else {
-            notifications.error(data.error);
-          }
-        } else {
-          notifications.error(data.error || 'Error al procesar la solicitud');
-        }
       }
+      
     } catch (error) {
-      notifications.error(DELETION_CONSTANTS.MESSAGES.CONNECTION_ERROR);
+      // ✅ Los errores del actionWrapper llegan aquí
+      const errorMessage = error instanceof Error ? error.message : 'Error desconocido';
+      notifyError(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
 }
 
-// ✅ INTERFAZ PARA PARÁMETROS DE CANCELACIÓN - Sin cambios
-interface CancelDeletionParams {
-  setShowCancelDialog: React.Dispatch<React.SetStateAction<boolean>>;
-  setCancelReason: React.Dispatch<React.SetStateAction<string>>;
-  setDeletionStatus: React.Dispatch<React.SetStateAction<UserDeletionStatus>>;
-  onStatusChange?: () => void;
-  cancelReason: string;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-// ✅ FUNCIÓN FACTORY PARA CANCELAR ELIMINACIÓN - Mejorada
+// ✅ FUNCIÓN FACTORY PARA CANCELAR ELIMINACIÓN - CORREGIDA
 export function createCancelDeletionHandler(params: CancelDeletionParams) {
   const {
     setShowCancelDialog,
@@ -136,54 +91,31 @@ export function createCancelDeletionHandler(params: CancelDeletionParams) {
 
   return async (): Promise<void> => {
     setIsLoading(true);
+
     try {
-      const response = await fetch('/api/user/cancel-deletion', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reason: cancelReason }),
-      });
+      // ✅ FORMATO CORRECTO: actionWrapper devuelve { error, message, payload }
+      const result = await cancelDeletionAction(cancelReason);
 
-      const data: DeletionActionResponse = await response.json();
+      if (result.error === false && result.payload) {
+        // ✅ Usar funciones de notificaciones para manejar respuesta exitosa
+        handleDeletionResponse(result.payload, 'cancel');
 
-      if (response.ok) {
-        notifications.success(DELETION_CONSTANTS.MESSAGES.DELETION_CANCELLED);
-        
-        // ✅ MOSTRAR INFO ADICIONAL sobre la cancelación
-        if (data.cancellationInfo?.cancelledWithMinutesToSpare) {
-          notifications.success(
-            `Cancelación exitosa con ${data.cancellationInfo.cancelledWithMinutesToSpare} minutos de margen.`
-          );
-        }
-        
+        // Limpiar formulario
         setShowCancelDialog(false);
         setCancelReason('');
+
+        // Actualizar estado
         await fetchDeletionStatus(setDeletionStatus, onStatusChange);
-      } else {
-        // ✅ MANEJAR CASOS ESPECIALES de expiración
-        if (response.status === 409) {
-          if (data.error?.includes('período') && data.minutesPastDeadline) {
-            notifications.error(
-              `El período de cancelación expiró hace ${data.minutesPastDeadline} minutos.`
-            );
-          } else {
-            notifications.error(data.error || 'No se puede cancelar la eliminación');
-          }
-        } else {
-          notifications.error(data.error || 'Error al cancelar la eliminación');
-        }
       }
+      
     } catch (error) {
-      notifications.error(DELETION_CONSTANTS.MESSAGES.CONNECTION_ERROR);
+      // ✅ Los errores del actionWrapper llegan aquí
+      const errorMessage = error instanceof Error ? error.message : 'Error al cancelar';
+      notifyError(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
-}
-
-// ✅ INTERFAZ PARA PARÁMETROS DE CALLBACK DE ELIMINACIÓN - Sin cambios
-interface AccountDeletedParams {
-  onStatusChange?: () => void;
-  setDeletionStatus: React.Dispatch<React.SetStateAction<UserDeletionStatus>>;
 }
 
 // ✅ FUNCIÓN FACTORY PARA MANEJAR CUENTA ELIMINADA - Sin cambios
@@ -192,22 +124,15 @@ export function createAccountDeletedHandler(params: AccountDeletedParams) {
 
   return async (): Promise<void> => {
     try {
-      // Notificar al componente padre
       onStatusChange?.();
-
-      // Limpiar estado local
       setDeletionStatus(initialDeletionStatus);
-
-      // Log para debugging
-     /*  console.log(DELETION_CONSTANTS.MESSAGES.ACCOUNT_DELETED); */
-
     } catch (error) {
       console.error('Error en callback de eliminación:', error);
     }
   };
 }
 
-// ✅ ESTADO INICIAL PARA DELETION STATUS - Actualizado
+// ✅ ESTADO INICIAL PARA DELETION STATUS - Sin cambios
 export const initialDeletionStatus: UserDeletionStatus = {
   isDeletionRequested: false,
   deletionRequestedAt: null,
@@ -218,8 +143,6 @@ export const initialDeletionStatus: UserDeletionStatus = {
   daysRemaining: 0,
   minutesRemaining: 0,
   timeRemaining: null,
-  
-  // ✅ NUEVAS PROPIEDADES
   canDeleteUntil: null,
   canCancelUntil: null,
   isWithinActionWindow: false,
@@ -247,27 +170,11 @@ export const validators = {
   }
 };
 
-// ✅ FUNCIÓN PARA MOSTRAR NOTIFICACIONES - Sin cambios
-export const notifications = {
-  success: (message: string) => {
-    // TODO: Reemplazar con sistema de toast
-    toast.success(message);
-  },
-  
-  error: (message: string) => {
-    // TODO: Reemplazar con sistema de toast
-    toast.error(message);
-  }
-};
-
-// ✅ CONSTANTES REUTILIZABLES - Actualizadas
+// ✅ CONSTANTES REUTILIZABLES - Sin cambios
 export const DELETION_CONSTANTS = {
   MIN_REASON_LENGTH: 10,
   GRACE_PERIOD_DAYS: 30,
-  
-  // ✅ NUEVAS CONSTANTES para ventana de acción
-  ACTION_WINDOW_CALCULATION: 'round_to_next_hour',
-  
+
   MESSAGES: {
     DELETION_REQUESTED: 'Solicitud de eliminación enviada correctamente.',
     DELETION_CANCELLED: 'Eliminación cancelada correctamente',
@@ -275,19 +182,22 @@ export const DELETION_CONSTANTS = {
     REASON_TOO_SHORT: 'El motivo debe tener al menos 10 caracteres',
     CONNECTION_ERROR: 'Error de conexión',
     ACCOUNT_DELETED: 'Cuenta eliminada - limpiando estado y redirigiendo...',
-    
-    // ✅ NUEVOS MENSAJES
     ACTION_WINDOW_EXPIRED: 'El período para realizar esta acción ha expirado',
     ACTION_WINDOW_CLOSING: 'Últimos minutos para realizar esta acción',
     PENDING_REQUEST_EXISTS: 'Ya tienes una solicitud de eliminación pendiente',
   }
 } as const;
 
-// ✅ NUEVAS FUNCIONES UTILITARIAS para tiempo
+// ✅ FUNCIONES COMENTADAS se mantienen como estaban
+/* export function maskEmail(email: string): string {
+  const [localPart, domain] = email.split('@')
+  if (localPart.length <= 2) {
+    return `${localPart[0]}*@${domain}`
+  }
+  const maskedLocal = `${localPart[0]}${'*'.repeat(localPart.length - 2)}${localPart[localPart.length - 1]}`
+  return `${maskedLocal}@${domain}`
+} */
 
-/**
- * Calcula minutos restantes hasta una fecha límite
- */
 /* export function getMinutesUntil(targetDate: Date | string | null): number | null {
   if (!targetDate) return null;
   
@@ -298,9 +208,6 @@ export const DELETION_CONSTANTS = {
   return Math.max(0, Math.floor(diff / (1000 * 60)));
 } */
 
-/**
- * Formatea tiempo restante en formato legible
- */
 /* export function formatTimeRemaining(minutes: number | null): string {
   if (minutes === null || minutes <= 0) return 'Expirado';
   
@@ -321,9 +228,6 @@ export const DELETION_CONSTANTS = {
   return remainingHours > 0 ? `${days}d ${remainingHours}h` : `${days}d`;
 } */
 
-/**
- * Determina la urgencia basada en tiempo restante
- */
 /* export function getUrgencyLevel(minutesRemaining: number | null): 'low' | 'medium' | 'high' | 'critical' | 'expired' {
   if (minutesRemaining === null || minutesRemaining <= 0) return 'expired';
   if (minutesRemaining <= 5) return 'critical';
@@ -332,9 +236,6 @@ export const DELETION_CONSTANTS = {
   return 'low';
 } */
 
-/**
- * Obtiene colores CSS basados en urgencia
- */
 /* export function getUrgencyColors(urgency: ReturnType<typeof getUrgencyLevel>): {
   text: string;
   bg: string;

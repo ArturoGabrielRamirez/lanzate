@@ -39,6 +39,8 @@ export interface EmailChangeStatus {
   expiresAt?: Date;
   oldEmailConfirmedAt?: Date | null;
   newEmailConfirmedAt?: Date | null;
+ /*  nextEmailConfirmedAt?: Date | null;
+  nextStepEmail?: { email: string; type: 'old_email' | 'new_email' } | null; */
 }
 
 export interface EmailChangeStatusResponse extends EmailChangeStatus { }
