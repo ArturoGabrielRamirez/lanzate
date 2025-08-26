@@ -134,7 +134,7 @@ function StoreHeader({ slug }: StoreHeaderProps) {
                 showDate
             />
             <section className="items-center gap-4 flex mb-2 md:mb-0">
-                <Card className="w-full relative overflow-hidden">
+                <Card className="w-full relative overflow-hidden group/store-banner">
                     <img
                         src={store.banner || `https://api.dicebear.com/9.x/shapes/svg?seed=${store.name}&backgroundColor=transparent`}
                         alt="Store banner"
@@ -163,7 +163,7 @@ function StoreHeader({ slug }: StoreHeaderProps) {
                                 {store.description || "No description"}
                             </p>
                         </div>
-                        <CardAction>
+                        <CardAction className="group-hover/store-banner:opacity-100 opacity-0 transition-opacity duration-300">
                             <StoreBannerEditor
                                 currentBanner={store.banner}
                                 storeName={store.name}
