@@ -3,11 +3,14 @@ import { getEmployeePermissions } from "../../actions/getEmployeePermissions"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { AccountTabProps } from "@/features/stores/types"
 import StoreInformationForm from "../store-information-form"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import DeleteStoreButton from "../delete-store-button"
+import { getTranslations } from "next-intl/server"
 
 async function AccountTab({ slug }: AccountTabProps) {
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
-
+    const t = await getTranslations("store.account")
     if (userError || !user) {
         console.error(userMessage)
         return null
@@ -42,7 +45,7 @@ async function AccountTab({ slug }: AccountTabProps) {
             />
 
             {/* Danger Zone Card */}
-            {/* {canManageStore && (
+            {canManageStore && (
                 <Card className="border-destructive">
                     <CardHeader>
                         <CardTitle className="text-destructive">{t("danger-zone")}</CardTitle>
@@ -54,7 +57,7 @@ async function AccountTab({ slug }: AccountTabProps) {
                         <DeleteStoreButton storeId={store.id} userId={user.id} />
                     </CardContent>
                 </Card>
-            )} */}
+            )}
         </div>
     )
 }
