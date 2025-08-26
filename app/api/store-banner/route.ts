@@ -38,7 +38,8 @@ export async function POST(request: NextRequest) {
       .from('store-banners')
       .upload(fileName, buffer, { contentType: file.type, upsert: true })
 
-    if (uploadError) {
+      if (uploadError) {
+      console.log("🚀 ~ POST ~ uploadError:", uploadError)
       return NextResponse.json({ error: 'Error subiendo archivo', details: uploadError.message }, { status: 500 })
     }
 

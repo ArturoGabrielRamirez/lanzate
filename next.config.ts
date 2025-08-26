@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
       },
       {
         hostname: "ugsxvnqkbxihxjxchckw.supabase.co"
+      },
+      {
+        hostname: "picsum.photos"
       }
     ]
   },

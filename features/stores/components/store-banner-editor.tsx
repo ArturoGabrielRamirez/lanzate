@@ -9,6 +9,7 @@ import { useCamera } from '@/features/auth/hooks/use-camera'
 import { TooltipContent } from '@/components/ui/tooltip'
 import { IconButton } from '@/src/components/ui/shadcn-io/icon-button'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 type StoreBannerEditorProps = {
     currentBanner: string | null
     storeName: string
@@ -21,7 +22,7 @@ export function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: 
     const [previewUrl, setPreviewUrl] = useState<string | null>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [isUploading, setIsUploading] = useState(false)
-    console.log("🚀 ~ StoreBannerEditor ~ isUploading:", isUploading)
+    const [suggestedIds, setSuggestedIds] = useState<number[]>([])
 
     const camera = useCamera({
         uploadPath: 'store-banners',
@@ -90,6 +91,45 @@ export function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: 
         )
     }
 
+    async function handleUploadSuggested(id: number) {
+        const url = `https://picsum.photos/id/${id}/1200/400`
+        setIsUploading(true)
+        toast.promise(
+            (async () => {
+                const res = await fetch(url, { cache: 'no-store' })
+                if (!res.ok) throw new Error('No se pudo descargar la imagen')
+                const blob = await res.blob()
+                const mimeType = blob.type || 'image/jpeg'
+                const extension = mimeType.split('/')[1] || 'jpg'
+                const file = new File([blob], `suggested-${id}.${extension}`, { type: mimeType })
+
+                const formData = new FormData()
+                formData.append('file', file)
+                formData.append('type', 'store-banner')
+
+                const response = await fetch('/api/store-banner', { method: 'POST', body: formData })
+                if (!response.ok) {
+                    let message = 'Error uploading file'
+                    try {
+                        const err = await response.json()
+                        if (err?.error) message = err.error
+                    } catch {}
+                    throw new Error(message)
+                }
+                const data = await response.json()
+                onBannerUpdate(data.url)
+                setIsOpen(false)
+                resetState()
+            })(),
+            {
+                loading: 'Subiendo banner...',
+                success: 'Banner subido correctamente',
+                error: (error) => error.message,
+                finally: () => setIsUploading(false)
+            }
+        )
+    }
+
     function getPreview() {
         if (camera.capturedFile) return camera.capturedFile.preview
         if (previewUrl) return previewUrl
@@ -102,8 +142,15 @@ export function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: 
         if (!isOpen) {
             resetState()
             camera.discardPhoto()
+            return
         }
-    }, [isOpen, camera])
+        const ids: number[] = []
+        while (ids.length < 5) {
+            const id = Math.floor(Math.random() * 300) + 1
+            if (!ids.includes(id)) ids.push(id)
+        }
+        setSuggestedIds(ids)
+    }, [isOpen])
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -176,6 +223,35 @@ export function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: 
                             <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileSelect} className="hidden" />
                         </div>
                     )}
+
+                    <div>
+                        <Accordion type="single" collapsible>
+                            <AccordionItem value="upload">
+                                <AccordionTrigger>
+                                    Opciones sugeridas
+                                </AccordionTrigger>
+                                <AccordionContent>
+                                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                                        {suggestedIds.map((id) => (
+                                            <button
+                                                key={id}
+                                                type="button"
+                                                onClick={() => handleUploadSuggested(id)}
+                                                disabled={isUploading || camera.isUploading}
+                                                className="relative rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+                                            >
+                                                <img
+                                                    src={`https://picsum.photos/id/${id}/200/300`}
+                                                    alt={`Sugerencia ${id}`}
+                                                    className="w-full h-24 object-cover"
+                                                />
+                                            </button>
+                                        ))}
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+                    </div>
 
                     <div className="flex gap-2">
                         <Button onClick={handleUpload} disabled={!selectedFile || camera.isUploading || isUploading} className="flex-1">

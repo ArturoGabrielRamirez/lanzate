@@ -10,7 +10,7 @@ import { getTranslations } from "next-intl/server"
 async function AccountTab({ slug }: AccountTabProps) {
 
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
-    const t = await getTranslations("store.account")
+    const t = await getTranslations("store.account-tab")
     if (userError || !user) {
         console.error(userMessage)
         return null
