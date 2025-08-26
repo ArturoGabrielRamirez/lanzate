@@ -43,19 +43,22 @@ export async function GET(request: NextRequest) {
       const scheduledAt = new Date(deletionStatus.deletionScheduledAt);
       const displayScheduledAt = DeletionHelpers.getDisplayScheduledDate(scheduledAt);
       
-      // Para cancelación: dar 1 día desde la solicitud para cancelar
+      // Para cancelación: dar 2 minutos desde la solicitud para cancelar
       if (deletionStatus.deletionRequestedAt) {
         const requestedAt = new Date(deletionStatus.deletionRequestedAt);
-        canCancelUntil = new Date(requestedAt.getTime() + (24 * 60 * 60 * 1000)); // +1 día
+        const rawCancelUntil = new Date(requestedAt.getTime() + (2 * 60 * 1000)); // +2 minutos
+        
+        // ✅ CORREGIDO: Redondear también la fecha de cancelación
+        canCancelUntil = DeletionHelpers.roundScheduledDateToNextHour(rawCancelUntil);
       }
 
-      // Para eliminación: usar la fecha programada
+      // Para eliminación: usar la fecha programada (ya redondeada)
       canDeleteUntil = displayScheduledAt;
 
       const now = new Date();
       isWithinActionWindow = canCancelUntil ? now <= canCancelUntil : false;
       
-      // ✅ AÑADIR: Calcular tiempo restante hasta la eliminación
+      // ✅ Calcular tiempo restante hasta la eliminación (usa redondeo interno)
       if (displayScheduledAt) {
         timeRemaining = DeletionHelpers.getTimeRemaining(scheduledAt);
       }
@@ -64,13 +67,13 @@ export async function GET(request: NextRequest) {
     const response = {
       ...deletionStatus,
       
-      // ✅ AÑADIR: timeRemaining al response
+      // ✅ Campos calculados
       timeRemaining,
       canDeleteUntil,
       canCancelUntil,
       isWithinActionWindow,
       
-      // ✅ MEJORAR: displayScheduledAt usando el helper
+      // ✅ Fecha de display usando el helper
       displayScheduledAt: deletionStatus.deletionScheduledAt ? 
         DeletionHelpers.getDisplayScheduledDate(new Date(deletionStatus.deletionScheduledAt)) : null,
 
@@ -83,11 +86,19 @@ export async function GET(request: NextRequest) {
         scheduledAt: deletionStatus.deletionScheduledAt,
         displayScheduledAt: deletionStatus.deletionScheduledAt ?
           DeletionHelpers.getDisplayScheduledDate(new Date(deletionStatus.deletionScheduledAt)) : null,
-        currentTime: new Date(),
-        canCancelUntil,
-        canDeleteUntil,
+        currentTime: new Date().toISOString(),
+        canCancelUntil: canCancelUntil?.toISOString(),
+        canDeleteUntil: canDeleteUntil?.toISOString(),
         withinWindow: isWithinActionWindow,
         timeRemaining,
+        // ✅ Debug adicional
+        debugInfo: {
+          requestedAtRaw: deletionStatus.deletionRequestedAt,
+          cancelWindowMinutes: 2,
+          rawCancelUntil: deletionStatus.deletionRequestedAt ? 
+            new Date(new Date(deletionStatus.deletionRequestedAt).getTime() + (2 * 60 * 1000)).toISOString() : null,
+          roundedCancelUntil: canCancelUntil?.toISOString(),
+        }
       }
     };
 

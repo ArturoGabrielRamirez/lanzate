@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAccountDeletion } from "../../hooks/use-account-deletion";
 import { AccountDeletedAlert, ActionNearExpirationAlert, ExplanationAlert, NearExpirationAlert } from "./account-delete-alert";
-import { /* ActionCountdownDisplay,  */MainCountdownDisplay } from "./main-countdown-display";
+import {MainCountdownDisplay } from "./main-countdown-display";
 import { useCountdown } from "../../hooks/use-countdown";
 import DeletionHelpers from "../../utils/deletion-helpers";
 
@@ -55,20 +55,6 @@ export default function DeletionCountdown({
 
     return (
         <div className="bg-gray-800 border border-red-500/30 rounded-lg p-6 mb-6 space-y-6">
-           {/*  {canCancelUntil && (
-                <>
-                    <ActionCountdownDisplay
-                        actionTimeLeft={actionTimeLeft}
-                        canCancelUntil={canCancelUntil}
-                        urgencyColors={actionColors}
-                    />
-                    {isActionNearExpiration && actionTimeLeft && (
-                        <ActionNearExpirationAlert totalMinutes={actionTimeLeft.totalMinutes} />
-                    )}
-                </>
-            )} */}
-
-
             {isNearExpiration && <NearExpirationAlert />}
             <MainCountdownDisplay
                 timeLeft={timeLeft}

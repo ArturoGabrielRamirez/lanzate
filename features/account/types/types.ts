@@ -201,3 +201,27 @@ export interface DangerZoneProps {
     userId: number;
     onStatusChange?: () => void;
 }
+
+export interface AccountDeletedParams {
+  onStatusChange?: () => void;
+  setDeletionStatus: React.Dispatch<React.SetStateAction<UserDeletionStatus>>;
+}
+
+export interface DeleteRequestParams {
+  reason: string;
+  password: string;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowDeleteDialog: React.Dispatch<React.SetStateAction<boolean>>;
+  setReason: React.Dispatch<React.SetStateAction<string>>;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  setDeletionStatus: React.Dispatch<React.SetStateAction<UserDeletionStatus>>;
+  onStatusChange?: () => void;
+}
+export interface CancelDeletionParams {
+  setShowCancelDialog: React.Dispatch<React.SetStateAction<boolean>>;
+  setCancelReason: React.Dispatch<React.SetStateAction<string>>;
+  setDeletionStatus: React.Dispatch<React.SetStateAction<UserDeletionStatus>>;
+  onStatusChange?: () => void;
+  cancelReason: string;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}

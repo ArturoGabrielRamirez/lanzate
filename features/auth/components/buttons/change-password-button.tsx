@@ -19,13 +19,13 @@ export default function ChangePasswordButton({
         password: string;
         confirmPassword: string;
     }) {
-        const result = await handleEditPassword(
+        const { payload: data } = await handleEditPassword(
             formData.currentPassword, formData.password);
 
-        if (result.error) {
+        if (data.error) {
             return {
                 error: true,
-                message: result.error,
+                message: data.error,
                 payload: null
             };
         }
@@ -33,43 +33,45 @@ export default function ChangePasswordButton({
         return {
             error: false,
             message: t("password-updated"),
-            payload: result.data || null
+            payload: data.data || null
         };
     }
 
     return (
-        <ButtonWithPopup
-            text={buttonText}
-            title={title}
-            description={t("security-description")}
-            action={changePasswordAction}
-            schema={passwordSchema}
-            messages={{
-                success: t("password-updated"),
-                error: t("error-updating-password"),
-                loading: t("verifying-updating")
-            }}
-            className={className}
-            variant="default"
-        >
-            <InputField
-                name="currentPassword"
-                label={t("current-password-label")}
-                type="password"
-                placeholder={t("current-password-placeholder")}
-            />
-            <InputField
-                name="password"
-                label={t("new-password-label")}
-                type="password"
-                placeholder={t("new-password-placeholder")}
-            />
-            <InputField
-                name="confirmPassword"
-                label={t("confirm-password-label")}
-                type="password"
-                placeholder={t("confirm-password-placeholder")}
-            />
-        </ButtonWithPopup>
+        <div className="flex items-center gap-2">
+            <ButtonWithPopup
+                text={buttonText}
+                title={title}
+                description={t("security-description")}
+                action={changePasswordAction}
+                schema={passwordSchema}
+                messages={{
+                    success: t("password-updated"),
+                    error: t("error-updating-password"),
+                    loading: t("verifying-updating")
+                }}
+                className={className}
+                variant="default"
+            >
+                <InputField
+                    name="currentPassword"
+                    label={t("current-password-label")}
+                    type="password"
+                    placeholder={t("current-password-placeholder")}
+                />
+                <InputField
+                    name="password"
+                    label={t("new-password-label")}
+                    type="password"
+                    placeholder={t("new-password-placeholder")}
+                />
+                <InputField
+                    name="confirmPassword"
+                    label={t("confirm-password-label")}
+                    type="password"
+                    placeholder={t("confirm-password-placeholder")}
+                />
+            </ButtonWithPopup>
+        </div>
     );
 }

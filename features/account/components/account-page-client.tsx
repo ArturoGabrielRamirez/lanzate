@@ -1,16 +1,19 @@
 'use client'
-
 import { cn } from "@/lib/utils"
 import { useState, useEffect } from "react"
 import { User, AlertTriangle } from "lucide-react"
-import DangerZone from "./delete-user/danger-zone"
 import { Title } from "@/features/layout/components"
-import { AccountHeader, AccountDetailsTab } from "./index"
-import { DotPattern } from "@/components/magicui/dot-pattern"
 import { EmailStatusBanner } from "@/features/auth/components/index"
 import { AccountPageClientProps, UserDeletionStatus, UserType } from "../types"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+// Componentes internos modularizados
+import { LoadingSkeleton } from "./loading-skeleton"
+import { DeletionRequestedView } from "./deletion-requested-view"
+
+import { DangerZoneTab } from "./danger-zone-tab"
+import AccountHeader from "./account-header"
+import AccountDetailsTab from "./account-details-tab"
 
 export default function AccountPageClient({ user: initialUser, translations: t }: AccountPageClientProps) {
     const [user, setUser] = useState<UserType>(initialUser)
@@ -25,7 +28,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
         minutesRemaining: 0,
         timeRemaining: null,
     })
-    const [isLoading, setIsLoading] = useState(true)
+    const [isDeletionLoading, setIsDeletionLoading] = useState(true)
 
     useEffect(() => {
         fetchDeletionStatus()
@@ -41,7 +44,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
         } catch (error) {
             console.error('Error fetching deletion status:', error)
         } finally {
-            setIsLoading(false)
+            setIsDeletionLoading(false)
         }
     }
 
@@ -68,79 +71,25 @@ export default function AccountPageClient({ user: initialUser, translations: t }
         }))
     }
 
-    if (isLoading) {
-        return (
-            <div className="h-screen flex items-center justify-center">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-                    <p className="text-muted-foreground">Cargando estado de la cuenta...</p>
-                </div>
-            </div>
-        )
+    // Mostrar skeleton solo mientras carga el estado de eliminación
+    if (isDeletionLoading) {
+        return <LoadingSkeleton />
     }
 
+    // Si hay solicitud de eliminación, mostrar vista especial
     if (deletionStatus.isDeletionRequested) {
         return (
-            <div className="h-screen flex flex-col overflow-hidden relative z-10">
-                <div className="flex-shrink-0 p-4 pt-17">
-                    <Title
-                        title={(
-                            <div className="flex items-center gap-2 text-red-600">
-                                <AlertTriangle />
-                                Cuenta en proceso de eliminación
-                            </div>
-                        )}
-                        breadcrumbs={[
-                            {
-                                label: "Cuenta",
-                                href: "/account"
-                            }
-                        ]}
-                        showDate
-                    />
-
-                    <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                        <div className="flex items-start space-x-3">
-                            <AlertTriangle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
-                            <div>
-                                <h3 className="font-semibold text-red-800">
-                                    Tu cuenta está programada para ser eliminada
-                                </h3>
-                                <p className="text-red-700 mt-1 text-sm">
-                                    Solo tienes acceso a la zona de peligro para gestionar la eliminación de tu cuenta.
-                                    {deletionStatus.canCancel && " Aún puedes cancelar la eliminación."}
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                {/* Solo mostrar DangerZone */}
-                <section className="flex-1 px-4 pb-4 overflow-hidden">
-                    <div className="h-full overflow-y-auto">
-                        <DangerZone
-                            userId={user.id}
-                            onStatusChange={fetchDeletionStatus}
-                        />
-                    </div>
-                </section>
-
-                {/* Pattern de fondo */}
-                <DotPattern
-                    width={30}
-                    height={30}
-                    className={cn(
-                        "[mask-image:linear-gradient(to_bottom_right,white,transparent_70%,transparent)] ",
-                    )}
-                />
-            </div>
+            <DeletionRequestedView
+                user={user}
+                deletionStatus={deletionStatus}
+                onStatusChange={fetchDeletionStatus}
+            />
         )
     }
 
+    // Vista normal de la cuenta
     return (
         <div className="p-2 md:p-4 grow flex flex-col pt-13 md:pt-24 relative pb-20 container mx-auto z-10">
-
             <div className="flex-shrink-0 p-0 md:p-4 mb-2 md:mb-0">
                 <Title
                     title={(
@@ -157,9 +106,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                     ]}
                     showDate
                 />
-
                 <EmailStatusBanner />
-
                 <AccountHeader
                     user={user}
                     translations={t}
@@ -167,7 +114,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                     onProfileUpdate={handleProfileUpdate}
                 />
             </div>
-
+            
             <section className="flex-1 px-0 md:px-4 pb-4 overflow-hidden">
                 <Tabs defaultValue="account" className="h-full grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4">
                     <TabsList className="w-full h-fit items-start flex-shrink-0">
@@ -180,16 +127,16 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                             </TabsTrigger>
                         </div>
                     </TabsList>
-
+                    
                     <TabsContent value="account" className="h-full overflow-hidden">
                         <div className="h-full overflow-y-auto">
                             <AccountDetailsTab user={user} translations={t} />
                         </div>
                     </TabsContent>
-
+                    
                     <TabsContent value="danger-zone" className="h-full overflow-hidden">
                         <div className="h-full overflow-y-auto">
-                            <DangerZone
+                            <DangerZoneTab
                                 userId={user.id}
                                 onStatusChange={fetchDeletionStatus}
                             />

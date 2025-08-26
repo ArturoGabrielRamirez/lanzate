@@ -6,3 +6,14 @@ export { default as AvatarEditor } from './avatar-editor'
 export { default as AvatarOptions } from './avatar-options'
 export { default as AvatarPreview } from './avatar-preview'
 export { FileUploadSection } from './file-upload-section'
+
+
+
+export { default } from './account-page-client'
+
+// Componentes modulares
+export { LoadingSkeleton } from './loading-skeleton'
+export { DeletionRequestedView } from './deletion-requested-view'
+/* export { AccountHeader } from './account-header'
+export { AccountDetailsTab } from './account-details-tab'
+export { DangerZoneTab } from './danger-zone-tab' */

@@ -20,9 +20,9 @@ export async function handleLogIn(formData: HandleLoginAction) {
       throw new Error('Invalid credentials')
     }
 
-    const { localUser, error } = await getLocalUser()
+    const { payload: localUser, error: localUserError } = await getLocalUser()
 
-    if (error || !localUser) {
+    if (localUserError || !localUser) {
       throw new Error("There was an error after logging in")
     }
 

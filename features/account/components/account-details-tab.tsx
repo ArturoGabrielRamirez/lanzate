@@ -1,5 +1,4 @@
 'use client'
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -13,7 +12,6 @@ import {
     Smartphone,
     Monitor,
 } from "lucide-react"
-
 import { UserType } from "../types/types"
 import { ChangeEmailButton, ChangePasswordButton } from "@/features/auth/components"
 
@@ -35,7 +33,6 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
 
     return (
         <div className="space-y-4">
-
             <Card>
                 <CardHeader className="pb-3">
                     <CardTitle className="flex items-center gap-2 text-lg">
@@ -54,7 +51,6 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
                                 {user.username || <span className="text-muted-foreground italic">No establecido</span>}
                             </div>
                         </div>
-
                         <div className="space-y-1">
                             <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                                 <User className="h-3 w-3" />
@@ -64,7 +60,6 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
                                 {user.first_name || <span className="text-muted-foreground italic">No establecido</span>}
                             </div>
                         </div>
-
                         <div className="space-y-1">
                             <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                                 <User className="h-3 w-3" />
@@ -74,7 +69,6 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
                                 {user.last_name || <span className="text-muted-foreground italic">No establecido</span>}
                             </div>
                         </div>
-
                         <div className="space-y-1">
                             <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                                 <Phone className="h-3 w-3" />
@@ -84,7 +78,6 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
                                 {user.phone || <span className="text-muted-foreground italic">No establecido</span>}
                             </div>
                         </div>
-
                         <div className="space-y-1">
                             <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                                 <Calendar className="h-3 w-3" />
@@ -106,7 +99,7 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         <div className="flex items-center justify-between p-3 border rounded">
                             <div className="flex items-center gap-2">
                                 <Mail className="h-4 w-4 text-muted-foreground" />
@@ -120,7 +113,7 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
                             <ChangeEmailButton
                                 buttonText="cambiar"
                                 title="Cambiar email"
-                                className="flex gap-2 items-center"
+                                className="bg-gradient-to-b from-primary/95 to-chart-5/65 text-white hover:from-primary/100 hover:to-chart-5/90"
                                 currentEmail={user.email}
                             />
                         </div>
@@ -136,8 +129,7 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
                             <ChangePasswordButton
                                 buttonText="cambiar"
                                 title="Cambiar contraseña"
-                                className="flex gap-2 items-center"
-
+                                className="bg-gradient-to-b from-primary/95 to-chart-5/65 text-white hover:from-primary/100 hover:to-chart-5/90"
                             />
                         </div>
 
@@ -193,7 +185,6 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
                                 Planes activos
                             </div>
                         </div>
-
                         <div className="text-center p-4 border rounded-lg">
                             <div className="text-2xl font-bold text-primary">
                                 {user.Store?.length || 0}
@@ -202,7 +193,6 @@ export default function AccountDetailsTab({ user, translations: t }: AccountDeta
                                 Tiendas creadas
                             </div>
                         </div>
-
                         <div className="text-center p-4 border rounded-lg">
                             <div className="text-2xl font-bold text-primary">
                                 {user.Account?.[0]?.type || 'FREE'}

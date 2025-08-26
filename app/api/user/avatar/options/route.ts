@@ -11,10 +11,6 @@ export async function GET(/* request: NextRequest */) {
       return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
     }
 
-    console.log('🔵 Usuario autenticado:', user.id)
-    console.log('🔵 User metadata:', user.user_metadata)
-    console.log('🔵 Identities:', user.identities)
-
     // Obtener usuario de la base de datos
     const dbUser = await prisma.user.findFirst({
       where: { supabase_user_id: user.id },
@@ -42,10 +38,7 @@ export async function GET(/* request: NextRequest */) {
 
     // 2. Avatares de identities OAuth
     if (user.identities && user.identities.length > 0) {
-      console.log('🔵 Procesando identities:', user.identities.length)
-      
       for (const identity of user.identities) {
-        console.log(`🔵 Identity ${identity.provider}:`, identity.identity_data)
         
         let avatarUrl = null
         let label = ''
@@ -149,8 +142,6 @@ for (const { style, label, icon } of diceBearStyles) {
         })
 
       if (!listError && files && files.length > 0) {
-        console.log(`📁 Encontrados ${files.length} archivos en storage`)
-        
         for (const file of files) {
           const { data: publicUrlData } = supabase.storage
             .from('user-uploads')
@@ -170,10 +161,10 @@ for (const { style, label, icon } of diceBearStyles) {
           }
         }
       } else if (listError) {
-        console.log('❌ Error listando archivos de storage:', listError)
+        console.error('❌ Error listando archivos de storage:', listError)
       }
     } catch (storageError) {
-      console.log('❌ Error accediendo a storage:', storageError)
+      console.error('❌ Error accediendo a storage:', storageError)
     }
 
     // 5. Marcar cuál está actualmente en uso

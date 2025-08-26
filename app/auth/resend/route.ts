@@ -6,6 +6,6 @@ export async function POST(request: NextRequest) {
   return handleResend(request);
 }
 
-export async function GET() {
+export async function GET( ) {
   return getApiInfo();
 }

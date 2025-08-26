@@ -38,7 +38,7 @@ export default function AvatarOptions({
             onClick={() => onOptionSelect(option.id)}
           >
             <div className="flex flex-col items-center gap-2">
-              <Avatar className="h-12 w-12">
+              <Avatar className="h-12 w-12 bg-chart-4">
                 <AvatarImage src={option.url} alt={`${option.provider} avatar`} />
                 <AvatarFallback>{option.provider[0].toUpperCase()}</AvatarFallback>
               </Avatar>

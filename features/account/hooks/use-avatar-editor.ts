@@ -36,7 +36,6 @@ export function useAvatarEditor({
   const loadAvatarOptions = useCallback(async () => {
     // Verificar cache
     if (optionsCache && (Date.now() - optionsCache.timestamp) < CACHE_DURATION) {
-      console.log('✅ Usando opciones de avatar desde cache')
       setAvatarOptions(optionsCache.data)
       
       // Verificar avatar actual
@@ -49,7 +48,6 @@ export function useAvatarEditor({
       return
     }
 
-    console.log('🔄 Cargando opciones de avatar desde API...')
     setIsLoadingOptions(true)
     
     // Cancelar petición anterior si existe
@@ -80,8 +78,6 @@ export function useAvatarEditor({
       }
 
       const options = data.options || []
-      console.log(`✅ Cargadas ${options.length} opciones de avatar`)
-      console.log('📊 Desglose por proveedor:', data.breakdown)
       
       // Actualizar cache
       setOptionsCache({
@@ -98,9 +94,8 @@ export function useAvatarEditor({
         )
         if (matchingOption) {
           setSelectedOption(matchingOption.id)
-          console.log(`🎯 Avatar actual encontrado: ${matchingOption.provider} - ${matchingOption.label}`)
         } else {
-          console.log('⚠️ Avatar actual no encontrado en las opciones disponibles')
+          console.warn('⚠️ Avatar actual no encontrado en las opciones disponibles')
         }
       }
 
@@ -109,16 +104,13 @@ export function useAvatarEditor({
       } else {
         toast.info('No se encontraron opciones de avatar adicionales')
       }
-      
-    } catch (error: any) {
-      if (error.name === 'AbortError') {
-        console.log('🚫 Petición de avatares cancelada')
+
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
         return
       }
-      
       console.error('❌ Error loading avatar options:', error)
-      toast.error(`Error cargando avatares: ${error.message}`)
-      
+
       // En caso de error, al menos cargar avatares generados básicos
       const fallbackOptions = [
         {
