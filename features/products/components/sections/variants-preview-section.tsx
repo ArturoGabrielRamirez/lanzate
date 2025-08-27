@@ -27,10 +27,13 @@ export function VariantsPreviewSection() {
             : (sizes.length > 0 ? sizes : measures))
     const colorList = colors && colors.length > 0 ? colors : [undefined]
 
+    const exclusions = (watch('variantExclusions') as string[] | undefined) ?? []
     const variants: Variant[] = []
     for (const size of dimensionList) {
         for (const color of colorList) {
-            variants.push({ id: `${size ?? 'one'}-${color ? color.id : 'one'}`, size, color })
+            const id = `${size ?? 'one'}-${color ? color.id : 'one'}`
+            if (exclusions.includes(id)) continue
+            variants.push({ id, size, color })
         }
     }
 
@@ -57,8 +60,40 @@ export function VariantsPreviewSection() {
         }
 
         if (hasCombination) {
-            // For combinations, do not remove attributes; nothing to persist here for now
-            // You may implement an exclusions list in the future
+            const exclusions = (watch('variantExclusions') as string[] | undefined) ?? []
+            const key = `${v.size ?? 'one'}-${v.color?.id ?? 'one'}`
+            const next = Array.from(new Set([...exclusions, key]))
+            setValue('variantExclusions', next, { shouldValidate: false, shouldDirty: true })
+
+            // After excluding this pair, if the size/measures value is no longer used by any combination, remove it
+            if (v.size) {
+                const stillUsesSize = (colorList || []).some((c) => {
+                    const id = `${v.size}-${c ? c.id : 'one'}`
+                    return !next.includes(id)
+                })
+                if (!stillUsesSize) {
+                    const currentSizes = (watch('sizes') as { label: string; value: string }[] | undefined) ?? []
+                    const currentMeasures = (watch('measures') as { label: string; value: string }[] | undefined) ?? []
+                    const nextSizes = currentSizes.filter(s => s.value !== v.size)
+                    const nextMeasures = currentMeasures.filter(m => m.value !== v.size)
+                    setValue('sizes', nextSizes, { shouldValidate: true, shouldDirty: true })
+                    setValue('measures', nextMeasures, { shouldValidate: true, shouldDirty: true })
+                }
+            }
+
+            // After excluding, if the color is no longer used by any combination, remove it
+            if (v.color) {
+                const baseSizes: string[] = isUniqueSize ? [undefined as unknown as string] : (sizes.length > 0 && measures.length > 0 ? [...sizes, ...measures] : (sizes.length > 0 ? sizes : measures))
+                const stillUsesColor = baseSizes.some((s) => {
+                    const id = `${s ?? 'one'}-${v.color!.id}`
+                    return !next.includes(id)
+                })
+                if (!stillUsesColor) {
+                    const currentColors = (watch('colors') as ProductColor[] | undefined) ?? []
+                    const nextColors = currentColors.filter(c => c.id !== v.color!.id)
+                    setValue('colors', nextColors, { shouldValidate: true, shouldDirty: true })
+                }
+            }
             return
         }
     }

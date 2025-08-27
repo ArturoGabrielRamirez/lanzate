@@ -4,12 +4,11 @@ import { Button } from "@/components/ui/button"
 import { ProductColorRow } from "@/features/products/components/product-color-row"
 import type { ColorsSectionData } from "@/features/products/type/create-form-extra"
 import type { ProductColor } from "@/features/products/type/product-color"
-import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 
 export function ColorsSection({ value, onChange }: { value?: ColorsSectionData; onChange?: (data: ColorsSectionData) => void }) {
-    const [colors, setColors] = useState<ProductColor[]>(value?.colors ?? [])
-    const { formState: { errors }, setValue } = useFormContext()
+    const { formState: { errors }, setValue, watch } = useFormContext()
+    const colors = (watch('colors') as ProductColor[] | undefined) ?? (value?.colors ?? [])
 
     type NameFieldError = { message?: string }
     type ColorsErrors = Array<{ name?: NameFieldError }>
@@ -19,22 +18,16 @@ export function ColorsSection({ value, onChange }: { value?: ColorsSectionData; 
     }
 
     function handleRowChange(index: number, updated: ProductColor) {
-        setColors((prev) => {
-            const next = [...prev]
-            next[index] = updated
-            onChange?.({ colors: next })
-            setValue('colors', next, { shouldValidate: true, shouldDirty: true })
-            return next
-        })
+        const next = [...colors]
+        next[index] = updated
+        onChange?.({ colors: next })
+        setValue('colors', next, { shouldValidate: true, shouldDirty: true })
     }
 
     function handleRowDelete(index: number) {
-        setColors((prev) => {
-            const next = prev.filter((_, i) => i !== index)
-            onChange?.({ colors: next })
-            setValue('colors', next, { shouldValidate: true, shouldDirty: true })
-            return next
-        })
+        const next = colors.filter((_, i) => i !== index)
+        onChange?.({ colors: next })
+        setValue('colors', next, { shouldValidate: true, shouldDirty: true })
     }
 
     return (
@@ -56,12 +49,11 @@ export function ColorsSection({ value, onChange }: { value?: ColorsSectionData; 
             <Button
                 type="button"
                 variant="outline"
-                onClick={() => setColors((prev) => {
-                    const next: ProductColor[] = [...prev, { id: `${Date.now()}-${Math.random()}`, name: "", rgba: [0, 0, 0, 1] }]
+                onClick={() => {
+                    const next: ProductColor[] = [...colors, { id: `${Date.now()}-${Math.random()}`, name: "", rgba: [0, 0, 0, 1] }]
                     onChange?.({ colors: next })
                     setValue('colors', next, { shouldValidate: true, shouldDirty: true })
-                    return next
-                })}
+                }}
             >
                 Agregar color
             </Button>

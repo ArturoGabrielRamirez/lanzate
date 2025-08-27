@@ -59,7 +59,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
     const settingsRef = useRef<SettingsSectionData>({ isActive: true, isFeatured: false, isPublished: true })
     const dimensionsRef = useRef<DimensionsSectionData>({})
     const [showAdvanced, setShowAdvanced] = useState<boolean>(false)
-    const [advancedChanged, setAdvancedChanged] = useState<number>(0)
+    const [, setAdvancedChanged] = useState<number>(0)
 
     const hasStoreId = 'storeId' in props
     const translationNamespace = hasStoreId ? "store.create-product" : "dashboard.create-product"
@@ -86,13 +86,18 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                     ? [...sizes, ...measures]
                     : (sizes.length > 0 ? sizes : measures))
             const colorList: (ProductColor | undefined)[] = (colors?.length ?? 0) > 0 ? colors as ProductColor[] : [undefined]
+            const exclusions: string[] = (payload as unknown as { variantExclusions?: string[] }).variantExclusions ?? []
             const variants = dimensionList.length === 0 && colorList[0] === undefined
                 ? []
-                : dimensionList.flatMap((dim) => colorList.map((c: ProductColor | undefined) => ({
-                    id: `${dim ?? 'one'}-${c ? c.id : 'one'}`,
-                    sizeOrMeasure: dim,
-                    color: c ? { id: c.id, name: c.name, rgba: c.rgba } : undefined,
-                })))
+                : dimensionList.flatMap((dim) => colorList.map((c: ProductColor | undefined) => {
+                    const id = `${dim ?? 'one'}-${c ? c.id : 'one'}`
+                    if (exclusions.includes(id)) return null
+                    return {
+                        id,
+                        sizeOrMeasure: dim,
+                        color: c ? { id: c.id, name: c.name, rgba: c.rgba } : undefined,
+                    }
+                })).filter(Boolean)
 
             const collected = {
                 form: payload,
