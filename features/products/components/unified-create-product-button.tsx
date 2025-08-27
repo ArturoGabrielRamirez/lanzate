@@ -111,7 +111,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
 
     const buttonIcon = hasStoreId ? <Plus /> : <ShoppingCart className="size-4" />
     const buttonClassName = hasStoreId ? undefined : "w-full"
-    const resolverConfig = productCreateSchema ? { resolver: yupResolver(productCreateSchema) as import('react-hook-form').Resolver<CreateProductPayload> } : {}
+    const resolverConfig = productCreateSchema ? { resolver: yupResolver(productCreateSchema) as unknown as import('react-hook-form').Resolver<CreateProductPayload> } : {}
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
