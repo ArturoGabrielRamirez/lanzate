@@ -28,6 +28,7 @@ import SizesSection from "./sections/sizes-section"
 import SettingsSection from "./sections/settings-section"
 import ColorsSection from "./sections/colors-section"
 import DimensionsSection from "./sections/dimensions-section"
+import VariantsPreviewSection from "./sections/variants-preview-section"
 import type { MediaSectionData, CategoriesSectionData, SizesSectionData, ColorsSectionData, SettingsSectionData, CategoryValue, DimensionsSectionData } from "../type/create-form-extra"
 
 type CreateProductPayload = {
@@ -279,6 +280,18 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                 </AccordionTriggerWithValidation>
                                 <AccordionContent className="space-y-4">
                                     <SettingsSection onChange={(d) => { settingsRef.current = d }} />
+                                </AccordionContent>
+                            </AccordionItem>
+
+                            <AccordionItem value="item-9">
+                                <AccordionTriggerWithValidation keys={["variants-preview"]}>
+                                    <span className="flex items-center gap-2">
+                                        <Boxes className="size-4" />
+                                        Variantes (vista previa)
+                                    </span>
+                                </AccordionTriggerWithValidation>
+                                <AccordionContent className="space-y-4">
+                                    <VariantsPreviewSection />
                                 </AccordionContent>
                             </AccordionItem>
                             

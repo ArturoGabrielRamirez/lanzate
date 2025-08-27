@@ -4,7 +4,8 @@ import MultipleSelector from "@/components/expansion/multiple-selector"
 import type { Option as MultiOption } from "@/components/expansion/multiple-selector"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
+import { useFormContext } from "react-hook-form"
 import type { SizesSectionData } from "@/features/products/type/create-form-extra"
 
 type Props = {
@@ -13,8 +14,9 @@ type Props = {
 }
 
 export function SizesSection({ value, onChange }: Props) {
-    const [isUniqueSize, setIsUniqueSize] = useState<boolean>(value?.isUniqueSize ?? false)
-    const [selectedSizes, setSelectedSizes] = useState<MultiOption[]>(value?.sizes as MultiOption[] ?? [])
+    const { watch, setValue } = useFormContext()
+    const isUniqueSize = (watch('isUniqueSize') as boolean | undefined) ?? (value?.isUniqueSize ?? false)
+    const selectedSizes = (watch('sizes') as MultiOption[] | undefined) ?? (value?.sizes as MultiOption[] ?? [])
 
     const sizeOptions = useMemo<MultiOption[]>(() => {
         const letters = ["XS", "S", "M", "L", "XL", "XXL"].map((label) => ({ label, value: label, group: "Letras" }))
@@ -23,12 +25,12 @@ export function SizesSection({ value, onChange }: Props) {
     }, [])
 
     function handleToggleUnique(v: boolean) {
-        setIsUniqueSize(v)
+        setValue('isUniqueSize', v, { shouldValidate: true, shouldDirty: true })
         onChange?.({ isUniqueSize: v, sizes: selectedSizes })
     }
 
     function handleChangeSizes(opts: MultiOption[]) {
-        setSelectedSizes(opts)
+        setValue('sizes', opts, { shouldValidate: true, shouldDirty: true })
         onChange?.({ isUniqueSize, sizes: opts })
     }
 
