@@ -59,6 +59,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
     const settingsRef = useRef<SettingsSectionData>({ isActive: true, isFeatured: false, isPublished: true })
     const dimensionsRef = useRef<DimensionsSectionData>({})
     const [showAdvanced, setShowAdvanced] = useState<boolean>(false)
+    const [advancedChanged, setAdvancedChanged] = useState<number>(0)
 
     const hasStoreId = 'storeId' in props
     const translationNamespace = hasStoreId ? "store.create-product" : "dashboard.create-product"
@@ -151,9 +152,9 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                         </TooltipContent>
                     </Tooltip>
                 ) : (
-                    <Button disabled={false} variant="default" type="button" className={cn("w-full", buttonClassName)}>
-                        {buttonIcon}
-                        <span className="hidden md:block">{t("button")}</span>
+                <Button disabled={false} variant="default" type="button" className={cn("w-full", buttonClassName)}>
+                    {buttonIcon}
+                    <span className="hidden md:block">{t("button")}</span>
                     </Button>)}
             </DialogTrigger>
             <DialogContent className="max-h-[80vh] overflow-y-auto">
@@ -274,12 +275,12 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                         </Accordion>
 
                         <div className="flex items-center justify-between rounded-md border p-3">
-                            <div className="space-y-0.5">
+                                            <div className="space-y-0.5">
                                 <Label htmlFor="advanced-options">Opciones avanzadas</Label>
                                 <p className="text-xs text-muted-foreground">Dimensiones, talles/tamaños y colores</p>
-                            </div>
+                                            </div>
                             <Switch id="advanced-options" checked={showAdvanced} onCheckedChange={setShowAdvanced} />
-                        </div>
+                                        </div>
 
                         <Accordion type="single" collapsible>
                             {showAdvanced && (
@@ -291,7 +292,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                     </span>
                                 </AccordionTriggerWithValidation>
                                 <AccordionContent className="space-y-4">
-                                    <DimensionsSection onChange={(d) => { dimensionsRef.current = d }} />
+                                    <DimensionsSection onChange={(d) => { dimensionsRef.current = d; setAdvancedChanged((v) => v + 1) }} />
                                 </AccordionContent>
                             </AccordionItem>
                             )}
@@ -305,7 +306,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                     </span>
                                 </AccordionTriggerWithValidation>
                                 <AccordionContent className="space-y-4">
-                                    <SizesSection onChange={(d) => { sizesRef.current = d }} />
+                                    <SizesSection onChange={(d) => { sizesRef.current = d; setAdvancedChanged((v) => v + 1) }} />
                                 </AccordionContent>
                             </AccordionItem>
                             )}
@@ -319,7 +320,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                     </span>
                                 </AccordionTriggerWithValidation>
                                 <AccordionContent className="space-y-4">
-                                    <ColorsSection onChange={(d) => { colorsRef.current = d }} />
+                                    <ColorsSection onChange={(d) => { colorsRef.current = d; setAdvancedChanged((v) => v + 1) }} />
                                 </AccordionContent>
                             </AccordionItem>
                             )}

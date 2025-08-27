@@ -12,7 +12,7 @@ type Variant = {
 }
 
 export function VariantsPreviewSection() {
-    const { watch } = useFormContext()
+    const { watch, setValue } = useFormContext()
     const isUniqueSize = (watch('isUniqueSize') as boolean | undefined) ?? false
     const sizes = (watch('sizes') as { label: string; value: string }[] | undefined)?.map(s => s.value) ?? []
     const measures = (watch('measures') as { label: string; value: string }[] | undefined)?.map(m => m.value) ?? []
@@ -34,6 +34,35 @@ export function VariantsPreviewSection() {
         }
     }
 
+    function handleDeleteVariant(v: Variant) {
+        const hasOnlySize = (!!v.size && !v.color)
+        const hasOnlyColor = (!v.size && !!v.color)
+        const hasCombination = (!!v.size && !!v.color)
+
+        if (hasOnlySize) {
+            const currentSizes = (watch('sizes') as { label: string; value: string }[] | undefined) ?? []
+            const currentMeasures = (watch('measures') as { label: string; value: string }[] | undefined) ?? []
+            const nextSizes = currentSizes.filter(s => s.value !== v.size)
+            const nextMeasures = currentMeasures.filter(m => m.value !== v.size)
+            setValue('sizes', nextSizes, { shouldValidate: true, shouldDirty: true })
+            setValue('measures', nextMeasures, { shouldValidate: true, shouldDirty: true })
+            return
+        }
+
+        if (hasOnlyColor) {
+            const currentColors = (watch('colors') as ProductColor[] | undefined) ?? []
+            const nextColors = currentColors.filter(c => c.id !== v.color!.id)
+            setValue('colors', nextColors, { shouldValidate: true, shouldDirty: true })
+            return
+        }
+
+        if (hasCombination) {
+            // For combinations, do not remove attributes; nothing to persist here for now
+            // You may implement an exclusions list in the future
+            return
+        }
+    }
+
     return (
         <div className="space-y-4">
             <div className="text-sm text-muted-foreground">Variantes generadas: {variants.length}</div>
@@ -52,7 +81,7 @@ export function VariantsPreviewSection() {
                             </div>
                             <div className="flex items-center gap-2">
                                 <Button size="sm" variant="secondary" type="button" disabled>Editar</Button>
-                                <Button size="sm" variant="destructive" type="button">Eliminar</Button>
+                                <Button size="sm" variant="destructive" type="button" onClick={() => handleDeleteVariant(v)}>Eliminar</Button>
                             </div>
                         </li>
                     ))}
