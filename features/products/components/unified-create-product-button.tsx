@@ -178,7 +178,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                         <Accordion type="single" collapsible defaultValue="item-1">
 
                             <AccordionItem value="item-1">
-                                <AccordionTriggerWithValidation keys={["name", "price", "categories"]}>
+                                <AccordionTriggerWithValidation keys={["name", "slug", "description", "sku", "barcode"]}>
                                     <span className="flex items-center gap-2">
                                         <Box className="size-4" />
                                         Informacion básica
@@ -190,7 +190,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             </AccordionItem>
 
                             <AccordionItem value="item-2">
-                                <AccordionTriggerWithValidation keys={["name", "price", "categories"]}>
+                                <AccordionTriggerWithValidation keys={["primary-image", "images", "videos"]}>
                                     <span className="flex items-center gap-2">
                                         <ImageIcon className="size-4" />
                                         Imagenes y videos
@@ -208,7 +208,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             </AccordionItem>
 
                             <AccordionItem value="item-3">
-                                <AccordionTriggerWithValidation keys={["name", "price", "categories"]}>
+                                <AccordionTriggerWithValidation keys={["price", "stock"]}>
                                     <span className="flex items-center gap-2">
                                         <DollarSign className="size-4" />
                                         Precio y stock
@@ -220,7 +220,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             </AccordionItem>
 
                             <AccordionItem value="item-4">
-                                <AccordionTriggerWithValidation keys={["name", "price", "categories"]}>
+                                <AccordionTriggerWithValidation keys={["categories"]}>
                                     <span className="flex items-center gap-2">
                                         <Boxes className="size-4" />
                                         Categorias
@@ -235,7 +235,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             </AccordionItem>
 
                             <AccordionItem value="item-5">
-                                <AccordionTriggerWithValidation keys={["name", "price", "categories"]}>
+                                <AccordionTriggerWithValidation keys={["weight", "height", "width", "depth", "diameter"]}>
                                     <span className="flex items-center gap-2">
                                         <Ruler className="size-4" />
                                         Dimensiones y peso
@@ -247,7 +247,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             </AccordionItem>
 
                             <AccordionItem value="item-6">
-                                <AccordionTriggerWithValidation keys={["name", "price", "categories"]}>
+                                <AccordionTriggerWithValidation keys={["unique-size", "sizes"]}>
                                     <span className="flex items-center gap-2">
                                         <Tags className="size-4" />
                                         Talles disponibles
@@ -259,7 +259,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             </AccordionItem>
 
                             <AccordionItem value="item-7">
-                                <AccordionTriggerWithValidation keys={["name", "price", "categories"]}>
+                                <AccordionTriggerWithValidation keys={["colors"]}>
                                     <span className="flex items-center gap-2">
                                         <Palette className="size-4" />
                                         Colores disponibles
@@ -271,7 +271,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             </AccordionItem>
 
                             <AccordionItem value="item-8">
-                                <AccordionTriggerWithValidation keys={["name", "price", "categories"]}>
+                                <AccordionTriggerWithValidation keys={["is-active", "is-featured", "is-published"]}>
                                     <span className="flex items-center gap-2">
                                         <Settings className="size-4" />
                                         Configuracion
@@ -281,164 +281,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                     <SettingsSection onChange={(d) => { settingsRef.current = d }} />
                                 </AccordionContent>
                             </AccordionItem>
-                            {/*
-                            <AccordionItem value="item-3">
-                                <AccordionTriggerWithValidation keys={[]}>
-                                    <span className="flex items-center gap-2">
-                                        <Box className="size-4" />
-                                        Dimensiones (visual)
-                                    </span>
-                                </AccordionTriggerWithValidation>
-                                <AccordionContent className="space-y-4">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <Label>Alto</Label>
-                                            <div className="flex items-center gap-2">
-                                                <Input type="number" placeholder="0" />
-                                                <Select>
-                                                    <SelectTrigger className="w-28">
-                                                        <SelectValue placeholder="MM" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="MM">MM</SelectItem>
-                                                        <SelectItem value="CM">CM</SelectItem>
-                                                        <SelectItem value="M">M</SelectItem>
-                                                        <SelectItem value="KG">KG</SelectItem>
-                                                        <SelectItem value="G">G</SelectItem>
-                                                        <SelectItem value="MG">MG</SelectItem>
-                                                        <SelectItem value="ML">ML</SelectItem>
-                                                        <SelectItem value="L">L</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </div>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label>Ancho</Label>
-                                            <div className="flex items-center gap-2">
-                                                <Input type="number" placeholder="0" />
-                                                <Select>
-                                                    <SelectTrigger className="w-28">
-                                                        <SelectValue placeholder="MM" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="MM">MM</SelectItem>
-                                                        <SelectItem value="CM">CM</SelectItem>
-                                                        <SelectItem value="M">M</SelectItem>
-                                                        <SelectItem value="KG">KG</SelectItem>
-                                                        <SelectItem value="G">G</SelectItem>
-                                                        <SelectItem value="MG">MG</SelectItem>
-                                                        <SelectItem value="ML">ML</SelectItem>
-                                                        <SelectItem value="L">L</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </div>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label>Profundidad</Label>
-                                            <div className="flex items-center gap-2">
-                                                <Input type="number" placeholder="0" />
-                                                <Select>
-                                                    <SelectTrigger className="w-28">
-                                                        <SelectValue placeholder="MM" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="MM">MM</SelectItem>
-                                                        <SelectItem value="CM">CM</SelectItem>
-                                                        <SelectItem value="M">M</SelectItem>
-                                                        <SelectItem value="KG">KG</SelectItem>
-                                                        <SelectItem value="G">G</SelectItem>
-                                                        <SelectItem value="MG">MG</SelectItem>
-                                                        <SelectItem value="ML">ML</SelectItem>
-                                                        <SelectItem value="L">L</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </div>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label>Diámetro</Label>
-                                            <div className="flex items-center gap-2">
-                                                <Input type="number" placeholder="0" />
-                                                <Select>
-                                                    <SelectTrigger className="w-28">
-                                                        <SelectValue placeholder="MM" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="MM">MM</SelectItem>
-                                                        <SelectItem value="CM">CM</SelectItem>
-                                                        <SelectItem value="M">M</SelectItem>
-                                                        <SelectItem value="KG">KG</SelectItem>
-                                                        <SelectItem value="G">G</SelectItem>
-                                                        <SelectItem value="MG">MG</SelectItem>
-                                                        <SelectItem value="ML">ML</SelectItem>
-                                                        <SelectItem value="L">L</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </div>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label>Peso</Label>
-                                            <div className="flex items-center gap-2">
-                                                <Input type="number" placeholder="0" />
-                                                <Select>
-                                                    <SelectTrigger className="w-28">
-                                                        <SelectValue placeholder="KG" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="MM">MM</SelectItem>
-                                                        <SelectItem value="CM">CM</SelectItem>
-                                                        <SelectItem value="M">M</SelectItem>
-                                                        <SelectItem value="KG">KG</SelectItem>
-                                                        <SelectItem value="G">G</SelectItem>
-                                                        <SelectItem value="MG">MG</SelectItem>
-                                                        <SelectItem value="ML">ML</SelectItem>
-                                                        <SelectItem value="L">L</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
-
-                            <AccordionItem value="item-4">
-                                <AccordionTriggerWithValidation keys={[]}>
-                                    <span className="flex items-center gap-2">
-                                        <Box className="size-4" />
-                                        Talles (visual)
-                                    </span>
-                                </AccordionTriggerWithValidation>
-                                <AccordionContent className="space-y-6">
-                                    
-                                </AccordionContent>
-                            </AccordionItem>
-
-                            <AccordionItem value="item-5">
-                                <AccordionTriggerWithValidation keys={[]}>
-                                    <span className="flex items-center gap-2">
-                                        <Box className="size-4" />
-                                        Colores (visual)
-                                    </span>
-                                </AccordionTriggerWithValidation>
-                                <AccordionContent className="space-y-4">
-                                    {colors.map((c, idx) => (
-                                        <ProductColorRow
-                                            key={c.id}
-                                            color={c}
-                                            index={idx}
-                                            onChange={handleRowChange}
-                                            onDelete={handleRowDelete}
-                                            canDelete={colors.length > 1}
-                                        />
-                                    ))}
-                                    <Button
-                                        type="button"
-                                        variant="outline"
-                                        onClick={() => setColors((prev) => [...prev, { id: `${Date.now()}-${Math.random()}`, name: "", rgba: [0, 0, 0, 1] }])}
-                                    >
-                                        Agregar color
-                                    </Button>
-                                </AccordionContent>
-                            </AccordionItem> */}
+                            
                         </Accordion>
 
                     </div>
