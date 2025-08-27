@@ -248,10 +248,10 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             </AccordionItem>
 
                             <AccordionItem value="item-6">
-                                <AccordionTriggerWithValidation keys={["unique-size", "sizes"]}>
+                                <AccordionTriggerWithValidation keys={["unique-size", "sizes", "measures"]}>
                                     <span className="flex items-center gap-2">
                                         <Tags className="size-4" />
-                                        Talles disponibles
+                                        Talles y tamaños
                                     </span>
                                 </AccordionTriggerWithValidation>
                                 <AccordionContent className="space-y-4">

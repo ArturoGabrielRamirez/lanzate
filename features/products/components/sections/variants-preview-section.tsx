@@ -15,13 +15,20 @@ export function VariantsPreviewSection() {
     const { watch } = useFormContext()
     const isUniqueSize = (watch('isUniqueSize') as boolean | undefined) ?? false
     const sizes = (watch('sizes') as { label: string; value: string }[] | undefined)?.map(s => s.value) ?? []
+    const measures = (watch('measures') as { label: string; value: string }[] | undefined)?.map(m => m.value) ?? []
     const colors = watch('colors') as ProductColor[] | undefined
 
-    const sizeList = isUniqueSize ? [undefined] : (sizes.length > 0 ? sizes : [])
+    // Dimension principal: si es talle único -> [undefined]
+    // Caso contrario: usar talles si hay, si no hay usar tamaños; si ambos existen, combinarlos en una sola lista (misma dimensión)
+    const dimensionList: (string | undefined)[] = isUniqueSize
+        ? [undefined]
+        : (sizes.length > 0 && measures.length > 0
+            ? [...sizes, ...measures]
+            : (sizes.length > 0 ? sizes : measures))
     const colorList = colors && colors.length > 0 ? colors : [undefined]
 
     const variants: Variant[] = []
-    for (const size of sizeList) {
+    for (const size of dimensionList) {
         for (const color of colorList) {
             variants.push({ id: `${size ?? 'one'}-${color ? color.id : 'one'}`, size, color })
         }

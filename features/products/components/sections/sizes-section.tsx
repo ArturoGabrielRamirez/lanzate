@@ -17,11 +17,18 @@ export function SizesSection({ value, onChange }: Props) {
     const { watch, setValue } = useFormContext()
     const isUniqueSize = (watch('isUniqueSize') as boolean | undefined) ?? (value?.isUniqueSize ?? false)
     const selectedSizes = (watch('sizes') as MultiOption[] | undefined) ?? (value?.sizes as MultiOption[] ?? [])
+    const selectedMeasures = (watch('measures') as MultiOption[] | undefined) ?? (value?.measures as MultiOption[] ?? [])
 
     const sizeOptions = useMemo<MultiOption[]>(() => {
         const letters = ["XS", "S", "M", "L", "XL", "XXL"].map((label) => ({ label, value: label, group: "Letras" }))
         const numbers = Array.from({ length: 44 - 20 + 1 }, (_, i) => String(20 + i)).map((label) => ({ label, value: label, group: "Números" }))
         return [...letters, ...numbers]
+    }, [])
+
+    const measureOptions = useMemo<MultiOption[]>(() => {
+        const volume = ["500ml", "1.5L"].map((label) => ({ label, value: label, group: "Volumen" }))
+        const generic = ["chico", "mediano", "grande"].map((label) => ({ label, value: label, group: "Genéricos" }))
+        return [...volume, ...generic]
     }, [])
 
     function handleToggleUnique(v: boolean) {
@@ -32,6 +39,11 @@ export function SizesSection({ value, onChange }: Props) {
     function handleChangeSizes(opts: MultiOption[]) {
         setValue('sizes', opts, { shouldValidate: true, shouldDirty: true })
         onChange?.({ isUniqueSize, sizes: opts })
+    }
+
+    function handleChangeMeasures(opts: MultiOption[]) {
+        setValue('measures', opts, { shouldValidate: true, shouldDirty: true })
+        onChange?.({ isUniqueSize, sizes: selectedSizes, measures: opts })
     }
 
     return (
@@ -55,6 +67,21 @@ export function SizesSection({ value, onChange }: Props) {
                     creatable
                     groupBy="group"
                     disabled={isUniqueSize}
+                    hidePlaceholderWhenSelected
+                />
+            </div>
+
+            <div className="space-y-3">
+                <Label>Tamaños (volúmenes o genéricos)</Label>
+                <MultipleSelector
+                    className="w-full"
+                    defaultOptions={measureOptions}
+                    value={selectedMeasures}
+                    onChange={handleChangeMeasures}
+                    placeholder="Selecciona o crea tamaños"
+                    creatable
+                    groupBy="group"
+                    disabled={false}
                     hidePlaceholderWhenSelected
                 />
             </div>

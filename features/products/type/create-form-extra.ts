@@ -12,6 +12,7 @@ export type CategoriesSectionData = {
 export type SizesSectionData = {
     isUniqueSize: boolean
     sizes: { label: string; value: string; group?: string }[]
+    measures?: { label: string; value: string; group?: string }[]
 }
 
 export type ColorsSectionData = {
