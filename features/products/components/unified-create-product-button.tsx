@@ -31,6 +31,7 @@ import ColorsSection from "./sections/colors-section"
 import DimensionsSection from "./sections/dimensions-section"
 import VariantsPreviewSection from "./sections/variants-preview-section"
 import type { MediaSectionData, CategoriesSectionData, SizesSectionData, ColorsSectionData, SettingsSectionData, CategoryValue, DimensionsSectionData } from "../type/create-form-extra"
+import type { ProductColor } from "../type/product-color"
 
 type CreateProductPayload = {
     name: string
@@ -72,6 +73,26 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
             const targetStoreId = hasStoreId ? props.storeId! : (selectedStoreId ? parseInt(selectedStoreId) : undefined)
             if (!targetStoreId) throw new Error(t("messages.select-store-first"))
 
+            // Build variants snapshot (same logic as preview)
+            type Option = { label: string; value: string }
+            const sizes = (sizesRef.current?.sizes ?? []).map((s: Option) => s.value)
+            const measures = (sizesRef.current?.measures ?? []).map((m: Option) => m.value)
+            const isUniqueSize = sizesRef.current?.isUniqueSize === true
+            const colors = colorsRef.current?.colors ?? []
+            const dimensionList: (string | undefined)[] = isUniqueSize
+                ? [undefined]
+                : ((sizes.length > 0 && measures.length > 0)
+                    ? [...sizes, ...measures]
+                    : (sizes.length > 0 ? sizes : measures))
+            const colorList: (ProductColor | undefined)[] = (colors?.length ?? 0) > 0 ? colors as ProductColor[] : [undefined]
+            const variants = dimensionList.length === 0 && colorList[0] === undefined
+                ? []
+                : dimensionList.flatMap((dim) => colorList.map((c: ProductColor | undefined) => ({
+                    id: `${dim ?? 'one'}-${c ? c.id : 'one'}`,
+                    sizeOrMeasure: dim,
+                    color: c ? { id: c.id, name: c.name, rgba: c.rgba } : undefined,
+                })))
+
             const collected = {
                 form: payload,
                 media: mediaRef.current,
@@ -80,6 +101,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                 colors: colorsRef.current,
                 dimensions: dimensionsRef.current,
                 settings: settingsRef.current,
+                variants,
                 targetStoreId,
                 userId: props.userId,
             }
@@ -178,15 +200,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                 )}
                             </div>
                         )}
-                        <div className="flex items-center justify-between rounded-md border p-3">
-                            <div className="space-y-0.5">
-                                <Label htmlFor="advanced-options">Opciones avanzadas</Label>
-                                <p className="text-xs text-muted-foreground">Dimensiones, talles/tamaños y colores</p>
-                            </div>
-                            <Switch id="advanced-options" checked={showAdvanced} onCheckedChange={setShowAdvanced} />
-                        </div>
-
-                        <Accordion type="single" collapsible defaultValue="item-1">
+                        <Accordion type="single" collapsible>
 
                             <AccordionItem value="item-1">
                                 <AccordionTriggerWithValidation keys={["name", "slug", "description", "sku", "barcode"]}>
@@ -245,8 +259,31 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                 </AccordionContent>
                             </AccordionItem>
 
-                            {showAdvanced && (
                             <AccordionItem value="item-5">
+                                <AccordionTriggerWithValidation keys={["is-active", "is-featured", "is-published"]}>
+                                    <span className="flex items-center gap-2">
+                                        <Settings className="size-4" />
+                                        Configuracion
+                                    </span>
+                                </AccordionTriggerWithValidation>
+                                <AccordionContent className="space-y-4">
+                                    <SettingsSection onChange={(d) => { settingsRef.current = d }} />
+                                </AccordionContent>
+                            </AccordionItem>
+
+                        </Accordion>
+
+                        <div className="flex items-center justify-between rounded-md border p-3">
+                            <div className="space-y-0.5">
+                                <Label htmlFor="advanced-options">Opciones avanzadas</Label>
+                                <p className="text-xs text-muted-foreground">Dimensiones, talles/tamaños y colores</p>
+                            </div>
+                            <Switch id="advanced-options" checked={showAdvanced} onCheckedChange={setShowAdvanced} />
+                        </div>
+
+                        <Accordion type="single" collapsible>
+                            {showAdvanced && (
+                            <AccordionItem value="adv-1">
                                 <AccordionTriggerWithValidation keys={["weight", "height", "width", "depth", "diameter"]}>
                                     <span className="flex items-center gap-2">
                                         <Ruler className="size-4" />
@@ -260,7 +297,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             )}
 
                             {showAdvanced && (
-                            <AccordionItem value="item-6">
+                            <AccordionItem value="adv-2">
                                 <AccordionTriggerWithValidation keys={["unique-size", "sizes", "measures"]}>
                                     <span className="flex items-center gap-2">
                                         <Tags className="size-4" />
@@ -274,7 +311,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             )}
 
                             {showAdvanced && (
-                            <AccordionItem value="item-7">
+                            <AccordionItem value="adv-3">
                                 <AccordionTriggerWithValidation keys={["colors"]}>
                                     <span className="flex items-center gap-2">
                                         <Palette className="size-4" />
@@ -287,17 +324,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             </AccordionItem>
                             )}
 
-                            <AccordionItem value="item-8">
-                                <AccordionTriggerWithValidation keys={["is-active", "is-featured", "is-published"]}>
-                                    <span className="flex items-center gap-2">
-                                        <Settings className="size-4" />
-                                        Configuracion
-                                    </span>
-                                </AccordionTriggerWithValidation>
-                                <AccordionContent className="space-y-4">
-                                    <SettingsSection onChange={(d) => { settingsRef.current = d }} />
-                                </AccordionContent>
-                            </AccordionItem>
+                            
 
                             {(() => {
                                 const dimsUsed = Object.values(dimensionsRef.current).some((v) => v !== undefined && v !== null && v !== "")
@@ -305,7 +332,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                 const colorsUsed = (colorsRef.current?.colors?.length ?? 0) > 0
                                 const showVariants = showAdvanced && (dimsUsed || sizesUsed || colorsUsed)
                                 return showVariants ? (
-                            <AccordionItem value="item-9">
+                            <AccordionItem value="adv-5">
                                 <AccordionTriggerWithValidation keys={["variants-preview"]}>
                                     <span className="flex items-center gap-2">
                                         <Boxes className="size-4" />
@@ -318,7 +345,6 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             </AccordionItem>
                                 ) : null
                             })()}
-                            
                         </Accordion>
 
                     </div>
