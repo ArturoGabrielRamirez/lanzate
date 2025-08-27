@@ -221,7 +221,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             </AccordionItem>
 
                             <AccordionItem value="item-4">
-                                <AccordionTriggerWithValidation keys={["categories"]}>
+                                <AccordionTriggerWithValidation keys={["categories"]} completeKeys={["categories"]}>
                                     <span className="flex items-center gap-2">
                                         <Boxes className="size-4" />
                                         Categorias

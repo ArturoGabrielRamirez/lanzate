@@ -45,10 +45,9 @@ export function VariantsPreviewSection() {
                         <li key={v.id} className="flex items-center justify-between rounded-md border p-2">
                             <div className="flex items-center gap-2">
                                 {v.color && <span className="inline-block size-4 rounded-sm border" style={{ backgroundColor: `rgba(${v.color.rgba[0]}, ${v.color.rgba[1]}, ${v.color.rgba[2]}, ${v.color.rgba[3]})` }} />}
-                                <span className="text-sm">
+                                <span className="text-sm flex items-center gap-2">
                                     {v.size ? <Badge variant="secondary">{v.size}</Badge> : <Badge variant="outline">Talle único</Badge>}
-                                    {" "}
-                                    {v.color ? <Badge variant="secondary">{v.color.name || 'Color'}</Badge> : <Badge variant="outline">Sin color</Badge>}
+                                    {v.color ? <Badge variant="secondary">{v.color.name || 'Color'}</Badge> : null}
                                 </span>
                             </div>
                             <div className="flex items-center gap-2">
