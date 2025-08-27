@@ -35,6 +35,15 @@ const productBaseSchema = {
     })).optional(),
     /* image: yup.mixed().optional(), */
 
+    // Optional product colors; if present, each must have a name
+    colors: yup.array().of(
+        yup.object({
+            id: yup.string().optional(),
+            name: yup.string().trim().required('El nombre del color es obligatorio'),
+            rgba: yup.array().of(yup.number()).length(4).optional(),
+        })
+    ).optional(),
+
     // Optional dimensions (non-negative)
     height: yup.number()
         .transform((v, o) => (o === '' || o === null ? undefined : v))

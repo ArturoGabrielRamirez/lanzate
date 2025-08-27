@@ -16,6 +16,7 @@ type ProductColorRowProps = {
     onChange?: (index: number, color: ProductColor) => void
     onDelete?: (index: number) => void
     canDelete: boolean
+    error?: string
 }
 
 function rgbaToHex(rgba: [number, number, number, number]) {
@@ -24,7 +25,7 @@ function rgbaToHex(rgba: [number, number, number, number]) {
     return hex
 }
 
-export function ProductColorRow({ color, index, onChange, onDelete, canDelete }: ProductColorRowProps) {
+export function ProductColorRow({ color, index, onChange, onDelete, canDelete, error }: ProductColorRowProps) {
     const [name, setName] = useState<string>("")
     const [hexColor, setHexColor] = useState<string>(() => rgbaToHex(color.rgba))
     const [selectedColor, setSelectedColor] = useState<string>("#ef4444")
@@ -84,13 +85,14 @@ export function ProductColorRow({ color, index, onChange, onDelete, canDelete }:
                     value={name}
                     onChange={(e) => handleNameChange(e.target.value)}
                 />
+                {error && <p className="text-sm text-red-500">{error}</p>}
             </div>
             <div className="md:col-span-1 flex md:justify-end">
                 <Button
                     type="button"
                     variant="ghost"
                     size="icon"
-                    onClick={() => onDelete(index)}
+                    onClick={() => onDelete?.(index)}
                     disabled={!canDelete}
                     aria-label="Eliminar color"
                 >
