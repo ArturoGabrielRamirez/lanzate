@@ -6,9 +6,7 @@ import type { ColorsSectionData } from "@/features/products/type/create-form-ext
 import { useState } from "react"
 
 export function ColorsSection({ value, onChange }: { value?: ColorsSectionData; onChange?: (data: ColorsSectionData) => void }) {
-    const [colors, setColors] = useState(value?.colors ?? [
-        { id: `${Date.now()}-${Math.random()}`, name: "", rgba: [0, 0, 0, 1] }
-    ])
+    const [colors, setColors] = useState(value?.colors ?? [])
 
     function handleRowChange(index: number, updated: any) {
         setColors((prev) => {
@@ -29,6 +27,9 @@ export function ColorsSection({ value, onChange }: { value?: ColorsSectionData; 
 
     return (
         <div className="space-y-4">
+            {colors.length === 0 && (
+                <p className="text-sm text-muted-foreground">Aún no agregaste colores.</p>
+            )}
             {colors.map((c, idx) => (
                 <ProductColorRow
                     key={c.id}

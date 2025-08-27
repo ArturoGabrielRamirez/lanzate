@@ -1,5 +1,8 @@
 import * as yup from 'yup'
 
+const lengthUnits = ["MM", "CM", "M", "IN", "FT"] as const
+const weightUnits = ["MG", "G", "KG", "OZ", "LB"] as const
+
 const productBaseSchema = {
     name: yup.string().min(3, 'Name must be at least 3 characters long').max(50, 'Name must be less than 50 characters long').matches(/^[a-zA-Z0-9\s\.\-\_\,]+$/, 'Name must contain only letters, numbers, spaces, dots, dashes and underscores'),
     slug: yup.string()
@@ -31,6 +34,48 @@ const productBaseSchema = {
         label: yup.string().required('Category is required'),
     })).optional(),
     /* image: yup.mixed().optional(), */
+
+    // Optional dimensions (non-negative)
+    height: yup.number()
+        .transform((v, o) => (o === '' || o === null ? undefined : v))
+        .min(0, 'Height must be greater than or equal to 0')
+        .optional(),
+    heightUnit: yup.string()
+        .transform((v) => (v === '' ? undefined : v))
+        .oneOf(lengthUnits as unknown as string[], 'Invalid height unit')
+        .optional(),
+    width: yup.number()
+        .transform((v, o) => (o === '' || o === null ? undefined : v))
+        .min(0, 'Width must be greater than or equal to 0')
+        .optional(),
+    widthUnit: yup.string()
+        .transform((v) => (v === '' ? undefined : v))
+        .oneOf(lengthUnits as unknown as string[], 'Invalid width unit')
+        .optional(),
+    depth: yup.number()
+        .transform((v, o) => (o === '' || o === null ? undefined : v))
+        .min(0, 'Depth must be greater than or equal to 0')
+        .optional(),
+    depthUnit: yup.string()
+        .transform((v) => (v === '' ? undefined : v))
+        .oneOf(lengthUnits as unknown as string[], 'Invalid depth unit')
+        .optional(),
+    diameter: yup.number()
+        .transform((v, o) => (o === '' || o === null ? undefined : v))
+        .min(0, 'Diameter must be greater than or equal to 0')
+        .optional(),
+    diameterUnit: yup.string()
+        .transform((v) => (v === '' ? undefined : v))
+        .oneOf(lengthUnits as unknown as string[], 'Invalid diameter unit')
+        .optional(),
+    weight: yup.number()
+        .transform((v, o) => (o === '' || o === null ? undefined : v))
+        .min(0, 'Weight must be greater than or equal to 0')
+        .optional(),
+    weightUnit: yup.string()
+        .transform((v) => (v === '' ? undefined : v))
+        .oneOf(weightUnits as unknown as string[], 'Invalid weight unit')
+        .optional(),
 }
 
 export const productCreateSchema = yup.object({
