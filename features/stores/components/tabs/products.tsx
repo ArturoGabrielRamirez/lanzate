@@ -4,18 +4,22 @@ import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { ProductsTabProps } from "@/features/stores/types"
 import ProductsTable from "../products-table"
 import { getTranslations } from "next-intl/server"
+import { Card, CardTitle, CardHeader, CardContent, CardAction } from "@/components/ui/card"
+import { Box } from "lucide-react"
+import { CreateProductButton } from "@/features/products/components"
+import { ExportProductsButton } from "@/features/products/components"
 
 async function ProductsTab({ slug, userId }: ProductsTabProps) {
 
     const t = await getTranslations("store.products-tab")
-    
+
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.log(userMessage)
-    }   
-    
-    
+    }
+
+
     // Get user info and employee permissions
     const [
         { payload: store, error: storeError },
@@ -37,17 +41,33 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
         return console.log("Error loading employee permissions")
     }
 
+    const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
+
     return (
-        <>
-            <ProductsTable 
-                data={store.products} 
-                userId={user.id} 
-                slug={slug} 
-                storeId={store.id}
-                employeePermissions={employeePermissions}
-                branches={store.branches}
-            />
-        </>
+        <Card className="grow !gap-2">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <Box className="w-4 h-4" />
+                    Productos
+                </CardTitle>
+                <CardAction>
+                    <ExportProductsButton data={store.products} onlyIcon />
+                    {canCreateProducts && (
+                        <CreateProductButton storeId={store.id} userId={user.id} onlyIcon />
+                    )}
+                </CardAction>
+            </CardHeader>
+            <CardContent>
+                <ProductsTable
+                    data={store.products}
+                    userId={user.id}
+                    slug={slug}
+                    storeId={store.id}
+                    employeePermissions={employeePermissions}
+                    branches={store.branches}
+                />
+            </CardContent>
+        </Card>
     )
 }
 

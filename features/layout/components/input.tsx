@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
+import { Textarea } from '@/components/ui/textarea'
 
 type InputFieldProps = {
   name: string
@@ -14,11 +15,12 @@ type InputFieldProps = {
   value?: string
   className?: string
   containerClassName?: string
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   startContent?: React.ReactNode
   endContent?: React.ReactNode
   placeholder?: string,
   disabled?: boolean
+  isTextArea?: boolean
 }
 
 const InputField = ({
@@ -35,6 +37,7 @@ const InputField = ({
   endContent,
   placeholder,
   disabled = false,
+  isTextArea = false,
 }: InputFieldProps) => {
   const {
     register,
@@ -59,19 +62,31 @@ const InputField = ({
   return (
     <div className={cn("flex flex-col gap-1", containerClassName)}>
       <Label htmlFor={name}>{label}</Label>
-      <Input
-        id={name}
-        type={type}
-        placeholder={placeholder}
-        {...register(name)}
-        defaultValue={defaultValue}
-        className={cn(className, disabled && "opacity-50 bg-muted cursor-not-allowed")}
-        onKeyDown={onKeyDown}
-        startContent={startContent}
-        endContent={endContent}
-        {...controlls}
-        disabled={disabled}
-      />
+      {isTextArea ? (
+        <Textarea
+          id={name}
+          placeholder={placeholder}
+          {...register(name)}
+          defaultValue={defaultValue}
+          className={cn(className, disabled && "opacity-50 bg-muted cursor-not-allowed")}
+          onKeyDown={onKeyDown}
+          {...controlls}
+          disabled={disabled}
+        />) : (
+        <Input
+          id={name}
+          type={type}
+          placeholder={placeholder}
+          {...register(name)}
+          defaultValue={defaultValue}
+          className={cn(className, disabled && "opacity-50 bg-muted cursor-not-allowed")}
+          onKeyDown={onKeyDown}
+          startContent={startContent}
+          endContent={endContent}
+          {...controlls}
+          disabled={disabled}
+        />
+      )}
       {error && <p className="text-sm text-red-500">{error}</p>}
     </div>
   )

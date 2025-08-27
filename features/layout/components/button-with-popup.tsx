@@ -47,7 +47,7 @@ function ButtonWithPopup<T>({
                     {onlyIcon ? (
                         <Tooltip>
                             <TooltipTrigger asChild>
-                                <IconButton disabled={disabled} type="button" className={cn(disabled && "cursor-not-allowed text-muted-foreground", className)} icon={() => text} />
+                                <IconButton disabled={disabled} type="button" className={cn(disabled && "cursor-not-allowed text-muted-foreground", className)} icon={() => text} size={"md"}/>
                             </TooltipTrigger>
                             <TooltipContent>
                                 {title}

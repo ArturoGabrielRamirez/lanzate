@@ -46,7 +46,7 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
     const t = useTranslations("store.products-table")
 
     // Check if user can create products
-    const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
+    //const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
 
     const columns: ColumnDef<Product & { categories: Category[] }>[] = [
         {
@@ -287,7 +287,7 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
             columns={columns}
             data={data}
             filterKey="name"
-            topActions={
+            /* topActions={
                 (filteredSelectedRowModel: RowModel<Product & { categories: Category[] }>) => {
                     return (
                         <div className="grid grid-cols-3 gap-2">
@@ -295,14 +295,10 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
                                 selectedRows={filteredSelectedRowModel}
                                 storeId={storeId}
                             />
-                            <ExportProductsButton data={data} />
-                            {canCreateProducts && (
-                                <CreateProductButton storeId={storeId} userId={userId} />
-                            )}
                         </div>
                     )
                 }
-            }
+            } */
         />
     )
 }

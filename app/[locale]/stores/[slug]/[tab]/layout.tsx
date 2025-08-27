@@ -27,7 +27,7 @@ async function TabLayout({ children, params }: TabLayoutProps) {
         account: { title: <><Store className="w-4 h-4" />{t("account")}</>, hasCard: false },
         branches: { title: <><Building2 className="w-4 h-4" />{t("branches")}</>, hasCard: true },
         employees: { title: <><UsersRound className="w-4 h-4" />{t("employees")}</>, hasCard: true },
-        products: { title: <><Box className="w-4 h-4" />{t("products")}</>, hasCard: true },
+        products: { title: <><Box className="w-4 h-4" />{t("products")}</>, hasCard: false },
         orders: { title: <><ShoppingCart className="w-4 h-4" />{t("orders")}</>, hasCard: true },
         settings: { title: <><Settings className="w-4 h-4" />{t("settings")}</>, hasCard: true },
         analytics: { title: <><ChartLine className="w-4 h-4" />{t("analytics")}</>, hasCard: true },
