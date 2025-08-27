@@ -20,6 +20,7 @@ import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/acco
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { AnimatePresence, motion } from "framer-motion"
 
 import BasicInfoSection from "./sections/basic-info-section"
 import MediaSection from "./sections/media-section"
@@ -287,71 +288,75 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                             <Switch id="advanced-options" checked={showAdvanced} onCheckedChange={setShowAdvanced} />
                                         </div>
 
-                        <Accordion type="single" collapsible>
+                        <AnimatePresence initial={false} mode="wait">
                             {showAdvanced && (
-                            <AccordionItem value="adv-1">
-                                <AccordionTriggerWithValidation keys={["weight", "height", "width", "depth", "diameter"]}>
-                                    <span className="flex items-center gap-2">
-                                        <Ruler className="size-4" />
-                                        Dimensiones y peso
-                                    </span>
-                                </AccordionTriggerWithValidation>
-                                <AccordionContent className="space-y-4">
-                                    <DimensionsSection onChange={(d) => { dimensionsRef.current = d; setAdvancedChanged((v) => v + 1) }} />
-                                </AccordionContent>
-                            </AccordionItem>
+                                <motion.div
+                                    key="advanced-accordion"
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: "auto", opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                                >
+                                    <Accordion type="single" collapsible>
+                                        <AccordionItem value="adv-1">
+                                            <AccordionTriggerWithValidation keys={["weight", "height", "width", "depth", "diameter"]}>
+                                                <span className="flex items-center gap-2">
+                                                    <Ruler className="size-4" />
+                                                    Dimensiones y peso
+                                                </span>
+                                            </AccordionTriggerWithValidation>
+                                            <AccordionContent className="space-y-4">
+                                                <DimensionsSection onChange={(d) => { dimensionsRef.current = d; setAdvancedChanged((v) => v + 1) }} />
+                                            </AccordionContent>
+                                        </AccordionItem>
+
+                                        <AccordionItem value="adv-2">
+                                            <AccordionTriggerWithValidation keys={["unique-size", "sizes", "measures"]}>
+                                                <span className="flex items-center gap-2">
+                                                    <Tags className="size-4" />
+                                                    Talles y tamaños
+                                                </span>
+                                            </AccordionTriggerWithValidation>
+                                            <AccordionContent className="space-y-4">
+                                                <SizesSection onChange={(d) => { sizesRef.current = d; setAdvancedChanged((v) => v + 1) }} />
+                                            </AccordionContent>
+                                        </AccordionItem>
+
+                                        <AccordionItem value="adv-3">
+                                            <AccordionTriggerWithValidation keys={["colors"]}>
+                                                <span className="flex items-center gap-2">
+                                                    <Palette className="size-4" />
+                                                    Colores disponibles
+                                                </span>
+                                            </AccordionTriggerWithValidation>
+                                            <AccordionContent className="space-y-4">
+                                                <ColorsSection onChange={(d) => { colorsRef.current = d; setAdvancedChanged((v) => v + 1) }} />
+                                            </AccordionContent>
+                                        </AccordionItem>
+
+                                        {(() => {
+                                            const dimsUsed = Object.values(dimensionsRef.current).some((v) => v !== undefined && v !== null && v !== "")
+                                            const sizesUsed = (sizesRef.current?.isUniqueSize === true) || (sizesRef.current?.sizes?.length ?? 0) > 0 || (sizesRef.current?.measures?.length ?? 0) > 0
+                                            const colorsUsed = (colorsRef.current?.colors?.length ?? 0) > 0
+                                            const showVariants = (dimsUsed || sizesUsed || colorsUsed)
+                                            return showVariants ? (
+                                                <AccordionItem value="adv-5">
+                                                    <AccordionTriggerWithValidation keys={["variants-preview"]}>
+                                                        <span className="flex items-center gap-2">
+                                                            <Boxes className="size-4" />
+                                                            Variantes (vista previa)
+                                                        </span>
+                                                    </AccordionTriggerWithValidation>
+                                                    <AccordionContent className="space-y-4">
+                                                        <VariantsPreviewSection />
+                                                    </AccordionContent>
+                                                </AccordionItem>
+                                            ) : null
+                                        })()}
+                                    </Accordion>
+                                </motion.div>
                             )}
-
-                            {showAdvanced && (
-                            <AccordionItem value="adv-2">
-                                <AccordionTriggerWithValidation keys={["unique-size", "sizes", "measures"]}>
-                                    <span className="flex items-center gap-2">
-                                        <Tags className="size-4" />
-                                        Talles y tamaños
-                                    </span>
-                                </AccordionTriggerWithValidation>
-                                <AccordionContent className="space-y-4">
-                                    <SizesSection onChange={(d) => { sizesRef.current = d; setAdvancedChanged((v) => v + 1) }} />
-                                </AccordionContent>
-                            </AccordionItem>
-                            )}
-
-                            {showAdvanced && (
-                            <AccordionItem value="adv-3">
-                                <AccordionTriggerWithValidation keys={["colors"]}>
-                                    <span className="flex items-center gap-2">
-                                        <Palette className="size-4" />
-                                        Colores disponibles
-                                    </span>
-                                </AccordionTriggerWithValidation>
-                                <AccordionContent className="space-y-4">
-                                    <ColorsSection onChange={(d) => { colorsRef.current = d; setAdvancedChanged((v) => v + 1) }} />
-                                </AccordionContent>
-                            </AccordionItem>
-                            )}
-
-                            
-
-                            {(() => {
-                                const dimsUsed = Object.values(dimensionsRef.current).some((v) => v !== undefined && v !== null && v !== "")
-                                const sizesUsed = (sizesRef.current?.isUniqueSize === true) || (sizesRef.current?.sizes?.length ?? 0) > 0 || (sizesRef.current?.measures?.length ?? 0) > 0
-                                const colorsUsed = (colorsRef.current?.colors?.length ?? 0) > 0
-                                const showVariants = showAdvanced && (dimsUsed || sizesUsed || colorsUsed)
-                                return showVariants ? (
-                            <AccordionItem value="adv-5">
-                                <AccordionTriggerWithValidation keys={["variants-preview"]}>
-                                    <span className="flex items-center gap-2">
-                                        <Boxes className="size-4" />
-                                        Variantes (vista previa)
-                                    </span>
-                                </AccordionTriggerWithValidation>
-                                <AccordionContent className="space-y-4">
-                                    <VariantsPreviewSection />
-                                </AccordionContent>
-                            </AccordionItem>
-                                ) : null
-                            })()}
-                        </Accordion>
+                        </AnimatePresence>
 
                     </div>
                 </Form>
