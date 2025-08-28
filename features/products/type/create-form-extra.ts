@@ -40,4 +40,10 @@ export type DimensionsSectionData = {
 
 export type TFunction = (key: string, values?: Record<string, string | number | boolean | Date | undefined>) => string
 
+export type VariantPreview = {
+    id: string
+    size?: string
+    color?: import("../type/product-color").ProductColor
+}
+
 

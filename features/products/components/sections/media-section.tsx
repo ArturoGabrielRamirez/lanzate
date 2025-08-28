@@ -5,7 +5,8 @@ import { FileUpload, FileUploadCameraTrigger, FileUploadDropzone, FileUploadItem
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Upload, X } from "lucide-react"
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useState, useEffect } from "react"
+import { useFormContext } from "react-hook-form"
 import type { MediaSectionData } from "@/features/products/type/create-form-extra"
 
 type Props = {
@@ -15,17 +16,22 @@ type Props = {
 }
 
 export function MediaSection({ value, onChange, onFileReject }: Props) {
+    const { setValue } = useFormContext()
     const [files, setFiles] = useState<File[]>(value?.files ?? [])
     const [primaryIndex, setPrimaryIndex] = useState<number | null>(value?.primaryIndex ?? null)
     const [error, setError] = useState("")
-    const hasFiles = files.length > 0
-    const prevRef = useRef<File[]>(files)
+    // no-op ref (reserved for future diff logic)
 
     const handleChange = useCallback((next: File[]) => {
         setFiles(next)
         if (next.length > 0) setError("")
         onChange?.({ files: next, primaryIndex })
     }, [onChange, primaryIndex])
+
+    useEffect(() => {
+        setValue("images", files, { shouldDirty: true, shouldTouch: true })
+        setValue("primary-image", primaryIndex, { shouldDirty: true, shouldTouch: true })
+    }, [files, primaryIndex, setValue])
 
     return (
         <div className="space-y-4">

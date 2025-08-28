@@ -155,6 +155,7 @@ model Store {
   employees            Employee[]
   orders               Order[]
   products             Product[]
+  colors               Color[]
   balance              StoreBalance?
   customization        StoreCustomization?
   operational_settings StoreOperationalSettings?
@@ -211,6 +212,19 @@ model Product {
   primary_media_id Int?              @unique
   primary_media    ProductMedia?       @relation("ProductPrimaryMedia", fields: [primary_media_id], references: [id])
   media            ProductMedia[]
+  variants         ProductVariant[]
+
+  // Product-level dimensions (optional)
+  height        Float?
+  height_unit   LengthUnit?
+  width         Float?
+  width_unit    LengthUnit?
+  depth         Float?
+  depth_unit    LengthUnit?
+  diameter      Float?
+  diameter_unit LengthUnit?
+  weight        Float?
+  weight_unit   WeightUnit?
 
   @@map("products")
 }
@@ -238,6 +252,7 @@ model Branch {
   store       Store          @relation(fields: [store_id], references: [id], onDelete: Cascade)
   orders      Order[]
   stock       ProductStock[]
+  variant_stock ProductVariantStock[]
 
   @@map("branches")
 }
@@ -272,6 +287,66 @@ model Category {
 
   @@unique([store_id, slug])
   @@map("categories")
+}
+
+// Catalog of colors (optional, scoped by store)
+model Color {
+  id         Int       @id @default(autoincrement())
+  store_id   Int?
+  name       String
+  rgba       Json?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  store      Store?    @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  variants   ProductVariant[]
+
+  @@map("colors")
+}
+
+// Variants generated from sizes/measures/colors
+model ProductVariant {
+  id               Int       @id @default(autoincrement())
+  product_id       Int
+  sku              String?   @unique
+  size_or_measure  String?
+  dimension_group  String?
+  color_id         Int?
+  price            Float?
+  is_active        Boolean   @default(true)
+  barcode          String?
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+
+  product          Product   @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  color            Color?    @relation(fields: [color_id], references: [id])
+
+  // Variant-specific media (optional)
+  primary_media_id Int?      @unique
+  primary_media    ProductMedia? @relation("VariantPrimaryMedia", fields: [primary_media_id], references: [id])
+  media            ProductMedia[] @relation("VariantMedia")
+
+  stocks           ProductVariantStock[]
+  order_items      OrderItem[]
+
+  @@unique([product_id, size_or_measure, color_id])
+  @@index([product_id])
+  @@map("product_variants")
+}
+
+// Stock per variant and branch
+model ProductVariantStock {
+  variant_id Int
+  branch_id  Int
+  quantity   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  branch     Branch         @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+  variant    ProductVariant @relation(fields: [variant_id], references: [id], onDelete: Cascade)
+
+  @@id([variant_id, branch_id])
+  @@map("product_variant_stocks")
 }
 
 model DefaultCategory {
@@ -334,6 +409,12 @@ model OrderItem {
   price      Float
   order      Order   @relation(fields: [order_id], references: [id])
   product    Product @relation(fields: [product_id], references: [id])
+
+  // Optional exact variant sold
+  variant_id Int?
+  variant    ProductVariant? @relation(fields: [variant_id], references: [id])
+
+  @@index([variant_id])
 
   @@map("order_items")
 }
@@ -1062,6 +1143,22 @@ enum MediaType {
   VIDEO
 }
 
+// Units for product dimensions
+enum LengthUnit {
+  MM
+  CM
+  M
+  IN
+  FT
+}
+
+enum WeightUnit {
+  G
+  KG
+  LB
+  OZ
+}
+
 enum OrderType {
   CASH_REGISTER
   PUBLIC_STORE
@@ -1100,7 +1197,13 @@ model ProductMedia {
   product             Product   @relation(fields: [product_id], references: [id], onDelete: Cascade)
   primary_for_product Product?  @relation("ProductPrimaryMedia")
 
+  // Optional relation to a specific variant
+  product_variant_id  Int?
+  variant             ProductVariant? @relation("VariantMedia", fields: [product_variant_id], references: [id])
+  primary_for_variant ProductVariant? @relation("VariantPrimaryMedia")
+
   @@index([product_id, sort_order])
+  @@index([product_variant_id, sort_order])
   @@map("product_medias")
 }
 

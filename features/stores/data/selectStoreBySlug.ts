@@ -24,9 +24,16 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
                     }
                 },
                 products: {
+                    where: {
+                        NOT: { id: { in: [1, 2,3, 5] } }
+                    },
                     include: {
                         categories: true,
-                        stock_entries: true
+                        variants: {
+                            include: {
+                                stocks: true
+                            }
+                        }
                     }
                 },
                 balance: true,
@@ -49,9 +56,20 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
 
         console.log(aggregate) */
 
+        // Derive product stock from variant stocks
+        const enriched = store && {
+            ...store,
+            products: store.products.map((p: any) => {
+                const total = (p.variants ?? [])
+                    .flatMap((v: any) => (v.stocks ?? []))
+                    .reduce((sum: number, s: any) => sum + (s.quantity ?? 0), 0)
+                return { ...p, stock: total }
+            })
+        }
+
         return {
             message: "Store fetched successfully from db",
-            payload: store,
+            payload: enriched as any,
             error: false
         }
 

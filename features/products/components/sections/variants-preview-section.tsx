@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import type { ProductColor } from "@/features/products/type/product-color"
 import { useFormContext } from "react-hook-form"
+import type { VariantPreview } from "@/features/products/type/create-form-extra"
 
 type Variant = {
     id: string
@@ -11,7 +12,7 @@ type Variant = {
     color?: ProductColor
 }
 
-export function VariantsPreviewSection() {
+export function VariantsPreviewSection({ onEditVariant }: { onEditVariant?: (v: VariantPreview) => void }) {
     const { watch, setValue } = useFormContext()
     const isUniqueSize = (watch('isUniqueSize') as boolean | undefined) ?? false
     const sizes = (watch('sizes') as { label: string; value: string }[] | undefined)?.map(s => s.value) ?? []
@@ -115,7 +116,7 @@ export function VariantsPreviewSection() {
                                 </span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <Button size="sm" variant="secondary" type="button" disabled>Editar</Button>
+                                <Button size="sm" variant="secondary" type="button" onClick={() => onEditVariant?.(v)}>Editar</Button>
                                 <Button size="sm" variant="destructive" type="button" onClick={() => handleDeleteVariant(v)}>Eliminar</Button>
                             </div>
                         </li>

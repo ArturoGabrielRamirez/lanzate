@@ -4,7 +4,6 @@ import { getCategories } from "../actions/getCategories";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
 import MultipleSelector from "@/components/expansion/multiple-selector";
-import { searchCategories } from "@/features/categories/data/searchCategories";
 import { createCategoryDynamic } from "@/features/categories/actions/createCategoryDynamic";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -15,44 +14,50 @@ type CategorySelectProps = {
     withLabel?: boolean
     storeId?: number
     className?: string
+    initialCategories?: { label: string, value: number }[]
 }
 
-function CategorySelect({ onChange, defaultValue, withLabel = true, storeId, className }: CategorySelectProps) {
-console.log("🚀 ~ CategorySelect ~ defaultValue:", defaultValue)
+function CategorySelect({ onChange, defaultValue, withLabel = true, storeId, className, initialCategories }: CategorySelectProps) {
 
-    const [categories, setCategories] = useState<{ label: string, value: number }[]>([])
+    const [categories, setCategories] = useState<{ label: string, value: number }[]>(initialCategories ?? [])
     const [creatingCategories, setCreatingCategories] = useState<Set<string>>(new Set())
     const [defaultSelectedCategories, setDefaultSelectedCategories] = useState<{ label: string, value: string }[]>([])
 
     const t = useTranslations("subdomain.sidebar.categories");
 
+    // Seed categories from initialCategories when provided
+    useEffect(() => {
+        if (initialCategories && initialCategories.length > 0) {
+            setCategories(initialCategories)
+        }
+    }, [initialCategories])
+
+    // Fetch categories if not preloaded
     useEffect(() => {
         const fetchCategories = async () => {
             const { payload, error } = await getCategories(storeId)
             if (error) return console.log(error)
             const fetchedCategories = payload.map((cat) => ({ label: cat.name, value: cat.id }))
             setCategories(fetchedCategories)
-            
-            // Process defaultValue after categories are loaded
-            if (defaultValue && Array.isArray(defaultValue) && defaultValue.length > 0) {
-                console.log("Processing defaultValue:", defaultValue)
-                console.log("Available categories:", fetchedCategories)
-                const processedDefaults = defaultValue.map((item: { label: string, value: string }) => {
-                    const category = fetchedCategories.find(cat => cat.value.toString() === item.value)
-                    console.log(`Looking for category with value ${item.value}, found:`, category)
-                    return {
-                        label: category?.label || item.label,
-                        value: item.value
-                    }
-                })
-                console.log("Processed defaults:", processedDefaults)
-                setDefaultSelectedCategories(processedDefaults)
-            }
         }
-        if (storeId) {
+        if (storeId && categories.length === 0) {
             fetchCategories()
         }
-    }, [storeId, defaultValue])
+    }, [storeId, categories.length])
+
+    // Process defaultValue whenever categories are available
+    useEffect(() => {
+        if (defaultValue && Array.isArray(defaultValue) && defaultValue.length > 0 && categories.length > 0) {
+            const processedDefaults = defaultValue.map((item: { label: string, value: string }) => {
+                const category = categories.find(cat => cat.value.toString() === item.value)
+                return {
+                    label: category?.label || item.label,
+                    value: item.value
+                }
+            })
+            setDefaultSelectedCategories(processedDefaults)
+        }
+    }, [defaultValue, categories])
 
     const formatedCategories = categories.map((cat) => ({
         label: cat.label,
@@ -62,24 +67,12 @@ console.log("🚀 ~ CategorySelect ~ defaultValue:", defaultValue)
 
     // Función de búsqueda para MultipleSelector
     const handleSearch = async (searchTerm: string) => {
-        if (!storeId) return []
+        const term = (searchTerm ?? "").trim().toLowerCase()
+        if (term.length === 0) return formatedCategories
 
-        try {
-            const { payload, error } = await searchCategories(storeId, searchTerm)
-            if (error) {
-                toast.error(t("error-searching"))
-                return []
-            }
-
-            return payload.map((cat: { name: string; id: number }) => ({
-                label: cat.name,
-                value: cat.id.toString()
-            }))
-        } catch (error) {
-            console.log(error)
-            toast.error(t("error-searching"))
-            return []
-        }
+        return formatedCategories.filter((opt) =>
+            opt.label.toLowerCase().includes(term)
+        )
     }
 
     // Detectar y crear categorías nuevas
@@ -134,6 +127,7 @@ console.log("🚀 ~ CategorySelect ~ defaultValue:", defaultValue)
         <div className="flex flex-col gap-1 w-full">
             {withLabel && <Label htmlFor="category">{t("category")}</Label>}
             <MultipleSelector
+            delay={100}
                 className={cn(className)}
                 defaultOptions={formatedCategories}
                 value={defaultSelectedCategories}

@@ -15,14 +15,29 @@ export async function selectProductById(id: number) {
             },
             include: {
                 categories: true,
-                media: true
+                media: true,
+                primary_media: true,
+                variants: {
+                    include: {
+                        color: true,
+                        stocks: true,
+                        media: true,
+                        primary_media: true,
+                    }
+                }
             }
         })
 
         if (!product) throw new Error("Product not found")
 
+        // derive total stock from variants
+        const enriched = product && {
+            ...product,
+            stock: (product.variants ?? []).flatMap((v: any) => v.stocks ?? []).reduce((s: number, x: any) => s + (x.quantity ?? 0), 0)
+        }
+
         return {
-            payload: product,
+            payload: enriched as any,
             error: false,
             message: "Product details fetched successfully"
         }

@@ -1187,6 +1187,16 @@
                 "loading": "Deleting product..."
             }
         },
+        "delete-variant": {
+            "button": "Delete Variant",
+            "title": "Delete Variant",
+            "description": "Are you sure you want to delete this variant? This action is irreversible.",
+            "messages": {
+                "success": "Variant deleted successfully",
+                "error": "Error deleting variant",
+                "loading": "Deleting variant..."
+            }
+        },
         "history-tab": {
             "error-loading-logs": "Error loading logs"
         },

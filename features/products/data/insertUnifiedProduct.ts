@@ -1,0 +1,173 @@
+"use server"
+
+import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
+import randomstring from "randomstring"
+import { createServerSideClient } from "@/utils/supabase/server"
+import type { MediaType, LengthUnit, WeightUnit } from "@prisma/client"
+
+type UnifiedArgs = {
+    form: {
+        name: string
+        slug?: string
+        description?: string
+        price: number
+        stock: number
+        categories: { label: string; value: string }[]
+        images?: File[]
+        [key: string]: unknown
+    }
+    media?: { files: File[]; primaryIndex: number | null }
+    categories?: { categories: { label: string; value: string }[] }
+    sizes?: { isUniqueSize: boolean; sizes: { label: string; value: string }[]; measures?: { label: string; value: string; group?: string }[] }
+    colors?: { colors: { id: string; name: string; rgba: [number, number, number, number] }[] }
+    dimensions?: { [key: string]: unknown }
+    settings?: { isActive: boolean; isFeatured: boolean; isPublished: boolean }
+    variants?: { id: string; sizeOrMeasure?: string; color?: { id: string; name: string; rgba: [number, number, number, number] } }[]
+    targetStoreId: number
+    userId: number
+}
+
+export async function insertUnifiedProduct(args: UnifiedArgs) {
+    return actionWrapper(async () => {
+        const supabase = createServerSideClient()
+
+        const result = await prisma.$transaction(async (tx) => {
+            // 1) Validate store and main branch
+            const store = await tx.store.findUnique({ where: { id: args.targetStoreId } })
+            if (!store) throw new Error("Store not found")
+            const mainBranch = await tx.branch.findFirst({ where: { store_id: store.id } })
+            if (!mainBranch) throw new Error("Main branch not found")
+
+            // 2) Create product
+            const slug = (args.form.slug && args.form.slug.length > 0) ? args.form.slug : randomstring.generate(8)
+            const skuBase = randomstring.generate(8)
+
+            // Resolve categories from form or section and filter invalid values
+            const categoryIds: number[] = ((args.form.categories && args.form.categories.length > 0)
+                ? args.form.categories
+                : (args.categories?.categories ?? [])
+            ).map((c) => Number.parseInt(String(c.value), 10)).filter((id) => Number.isFinite(id))
+
+            const product = await tx.product.create({
+                data: {
+                    name: args.form.name,
+                    description: (args.form.description as string | undefined) ?? null,
+                    price: args.form.price,
+                    // product-level stock will be derived after creating variant stocks
+                    stock: 0,
+                    store_id: store.id,
+                    owner_id: args.userId,
+                    slug,
+                    sku: skuBase,
+                    is_active: args.settings?.isActive ?? true,
+                    is_featured: args.settings?.isFeatured ?? false,
+                    is_published: args.settings?.isPublished ?? true,
+                    // dimensions
+                    height: (args.dimensions?.height as number | undefined) ?? null,
+                    height_unit: (args.dimensions?.heightUnit as LengthUnit | undefined) ?? null,
+                    width: (args.dimensions?.width as number | undefined) ?? null,
+                    width_unit: (args.dimensions?.widthUnit as LengthUnit | undefined) ?? null,
+                    depth: (args.dimensions?.depth as number | undefined) ?? null,
+                    depth_unit: (args.dimensions?.depthUnit as LengthUnit | undefined) ?? null,
+                    diameter: (args.dimensions?.diameter as number | undefined) ?? null,
+                    diameter_unit: (args.dimensions?.diameterUnit as LengthUnit | undefined) ?? null,
+                    weight: (args.dimensions?.weight as number | undefined) ?? null,
+                    weight_unit: (args.dimensions?.weightUnit as WeightUnit | undefined) ?? null,
+                    // categories (optional)
+                    ...(categoryIds.length > 0 ? {
+                        categories: {
+                            connect: categoryIds.map((id) => ({ id }))
+                        }
+                    } : {})
+                }
+            })
+
+            // 3) Upload media (if provided) and create ProductMedia
+            const files = args.media?.files ?? []
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    const f = files[i]
+                    const { data: existing } = supabase.storage.from("product-images").getPublicUrl(f.name)
+                    let url = existing?.publicUrl
+                    if (!url) {
+                        const up = await supabase.storage.from("product-images").upload(f.name, f)
+                        if (up.error) throw new Error(up.error.message)
+                        const { data: after } = supabase.storage.from("product-images").getPublicUrl(up.data.path)
+                        url = after.publicUrl
+                    }
+                    await tx.productMedia.create({
+                        data: {
+                            product_id: product.id,
+                            type: "IMAGE" as MediaType,
+                            url,
+                            sort_order: i,
+                        }
+                    })
+                }
+                const pIndex = args.media?.primaryIndex ?? null
+                if (pIndex !== null && pIndex >= 0) {
+                    const primary = await tx.productMedia.findFirst({ where: { product_id: product.id, sort_order: pIndex } })
+                    if (primary) await tx.product.update({ data: { primary_media_id: primary.id }, where: { id: product.id } })
+                }
+            }
+
+            // 4) Create variants
+            const variantsInput = args.variants ?? []
+            const effectiveVariants = variantsInput.length > 0
+                ? variantsInput
+                : [{ id: "one-one", sizeOrMeasure: undefined as string | undefined, color: undefined }]
+
+            function distribute(total: number, n: number): number[] {
+                if (!Number.isFinite(total) || total <= 0 || n <= 0) return Array.from({ length: n }, () => 0)
+                const base = Math.floor(total / n)
+                const rem = total % n
+                return Array.from({ length: n }, (_, i) => base + (i < rem ? 1 : 0))
+            }
+
+            const quantities = distribute(args.form.stock ?? 0, effectiveVariants.length)
+            let derivedTotalStock = 0
+
+            for (let i = 0; i < effectiveVariants.length; i++) {
+                const v = effectiveVariants[i]
+                const qty = quantities[i] ?? 0
+                derivedTotalStock += qty
+
+                // optional color lookup/creation: link by name if exists
+                let colorId: number | null = null
+                if (v.color?.name) {
+                    let existing = await tx.color.findFirst({ where: { store_id: store.id, name: v.color.name } })
+                    if (!existing) {
+                        // store rgba as JSON array
+                        existing = await tx.color.create({ data: { store_id: store.id, name: v.color.name, rgba: JSON.stringify(v.color.rgba) as unknown as object } })
+                    }
+                    colorId = existing.id
+                }
+
+                await tx.productVariant.create({
+                    data: {
+                        product_id: product.id,
+                        size_or_measure: v.sizeOrMeasure ?? null,
+                        dimension_group: null,
+                        color_id: colorId,
+                        is_active: true,
+                        stocks: {
+                            create: [{ branch_id: mainBranch.id, quantity: qty }]
+                        }
+                    }
+                })
+            }
+
+            // Update product.stock as derived sum of variant stocks
+            if (derivedTotalStock !== product.stock) {
+                await tx.product.update({ where: { id: product.id }, data: { stock: derivedTotalStock } })
+            }
+
+            return product
+        })
+
+        return { error: false, message: "ok", payload: result }
+    })
+}
+
+

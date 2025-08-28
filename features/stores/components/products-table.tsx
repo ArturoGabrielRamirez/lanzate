@@ -7,9 +7,10 @@ import { DataTable } from "@/features/layout/components/data-table"
 import { ArrowUpDown, Crown, MoreHorizontal } from "lucide-react"
 import { Eye } from "lucide-react"
 import { Product, Category, Branch, ProductStock } from "@prisma/client"
-import { RowModel, ColumnDef } from "@tanstack/react-table"
-import { CreateProductButton, DeleteProductButton, EditProductButton, ExportProductsButton, DistributeStockButton } from "@/features/products/components"
-import { UpdatePricesButton } from "./update-prices-button"
+import { useMemo } from "react"
+import { ColumnDef } from "@tanstack/react-table"
+import { DeleteProductButton, EditProductButton, DistributeStockButton } from "@/features/products/components"
+import DeleteVariantButton from "@/features/products/components/delete-variant-button"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
@@ -41,14 +42,34 @@ type Props = {
     })[]
 }
 
-function ProductsTable({ data, userId, slug, storeId, employeePermissions, branches }: Props) {
+function ProductsTable({ data, userId, slug, employeePermissions, branches }: Props) {
 
     const t = useTranslations("store.products-table")
 
     // Check if user can create products
     //const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
 
-    const columns: ColumnDef<Product & { categories: Category[] }>[] = [
+    type VariantRow = (Product & { categories: Category[] }) & { variant_id?: number; variant_label?: string }
+
+    const rows: VariantRow[] = useMemo(() => {
+        const list = data as unknown as (Product & { categories: Category[]; variants?: { id: number; size_or_measure: string | null; color_id: number | null; color?: { name: string } | null; stocks?: { quantity: number }[] }[] })[]
+        const flattened: VariantRow[] = []
+        for (const p of list) {
+            const variants = p.variants ?? []
+            if (variants.length === 0) {
+                flattened.push({ ...p, variant_id: undefined, variant_label: undefined })
+                continue
+            }
+            for (const v of variants) {
+                const vStock = (v.stocks ?? []).reduce((sum, s) => sum + (s.quantity ?? 0), 0)
+                const label = [v.size_or_measure, v.color?.name].filter(Boolean).join(" · ")
+                flattened.push({ ...p, stock: vStock, variant_id: v.id, variant_label: label || "Variante" })
+            }
+        }
+        return flattened
+    }, [data])
+
+    const columns: ColumnDef<VariantRow>[] = [
         {
             id: "select",
             header: ({ table }) => (
@@ -72,6 +93,10 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
         {
             header: t("headers.id"),
             accessorKey: "id",
+            cell: ({ row }) => {
+                const r = row.original
+                return <span>{r.variant_id ? `${r.id}-${r.variant_id}` : r.id}</span>
+            }
         },
         {
             accessorKey: "name",
@@ -89,6 +114,10 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
                     </div>
                 )
             },
+            cell: ({ row }) => {
+                const r = row.original
+                return <span>{r.name}{r.variant_label ? ` (${r.variant_label})` : ""}</span>
+            }
         },
         {
             accessorKey: "price",
@@ -238,7 +267,7 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
                             <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">{t("dropdown.actions")}</DropdownMenuLabel>
                             <DropdownMenuItem asChild>
                                 <Button variant="ghost" className="w-full justify-start cursor-pointer hover:!bg-primary" asChild>
-                                    <Link href={`/stores/${slug}/products/${row.original.id}`} >
+                                    <Link href={`/stores/${slug}/products/${row.original.id}${row.original.variant_id ? `/${row.original.variant_id}` : ""}`} >
                                         <Eye className="w-4 h-4" />{t("dropdown.view-details")}
                                     </Link>
                                 </Button>
@@ -266,6 +295,15 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
                                             userId={userId}
                                         />
                                     </DropdownMenuItem>
+                                    {row.original.variant_id && (
+                                        <DropdownMenuItem asChild>
+                                            <DeleteVariantButton
+                                                variantId={row.original.variant_id}
+                                                slug={slug}
+                                                productId={row.original.id}
+                                            />
+                                        </DropdownMenuItem>
+                                    )}
                                     <DropdownMenuItem asChild>
                                         <DeleteProductButton
                                             productId={row.original.id}
@@ -285,7 +323,7 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
     return (
         <DataTable
             columns={columns}
-            data={data}
+            data={rows}
             filterKey="name"
             /* topActions={
                 (filteredSelectedRowModel: RowModel<Product & { categories: Category[] }>) => {
