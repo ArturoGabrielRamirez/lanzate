@@ -315,6 +315,23 @@
             "title": "Tu tienda",
             "see-all": "Ver todo",
             "new-store": "Nueva tienda"
+        },
+        "help": {
+            "title": "¿Necesitas ayuda?",
+            "contact-us": "Contáctanos",
+            "description": "Nuestros expertos están aquí para ayudarte.",
+            "send-message": "Enviar mensaje",
+            "dialog": {
+                "title": "Contáctanos",
+                "description": "Envíanos un mensaje y te responderemos lo antes posible.",
+                "email": "Email",
+                "message": "Mensaje",
+                "messages": {
+                    "success": "Mensaje enviado",
+                    "error": "Error al enviar mensaje",
+                    "loading": "Enviando mensaje..."
+                }
+            }
         }
     },
     "error": {
