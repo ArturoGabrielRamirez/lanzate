@@ -22,6 +22,9 @@ export async function selectStoreById(storeId: number): Promise<SelectStoreByIdR
             include: {
                 branches: true,
                 products: {
+                    where: {
+                        is_deleted: false
+                    },
                     include: {
                         categories: true,
                         stock_entries: true

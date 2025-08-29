@@ -22,25 +22,24 @@ export async function deleteProduct(productId: number) {
             const variantIds = product.variants.map(v => v.id)
 
             if (variantIds.length > 0) {
-                // Delete stocks for variants
-                await tx.productVariantStock.deleteMany({ where: { variant_id: { in: variantIds } } })
-                // Delete media linked to variants
-                await tx.productMedia.deleteMany({ where: { product_variant_id: { in: variantIds } } })
-                // Delete variants
-                await tx.productVariant.deleteMany({ where: { id: { in: variantIds } } })
+                // Soft delete variants by setting is_deleted to true
+                await tx.productVariant.updateMany({ 
+                    where: { id: { in: variantIds } },
+                    data: { is_deleted: true }
+                })
             }
 
-            // Delete product media
-            await tx.productMedia.deleteMany({ where: { product_id: productId } })
-
-            // Finally delete product
-            await tx.product.delete({ where: { id: productId } })
+            // Soft delete product by setting is_deleted to true
+            await tx.product.update({ 
+                where: { id: productId },
+                data: { is_deleted: true }
+            })
 
             return product
         })
 
         return {
-            message: "Product deleted successfully from db",
+            message: "Product soft deleted successfully from db",
             payload: result,
             error: false
         }

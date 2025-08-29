@@ -11,13 +11,17 @@ export async function selectProductById(id: number) {
 
         const product = await prisma.product.findUnique({
             where: {
-                id: id
+                id: id,
+                is_deleted: false
             },
             include: {
                 categories: true,
                 media: true,
                 primary_media: true,
                 variants: {
+                    where: {
+                        is_deleted: false
+                    },
                     include: {
                         color: true,
                         stocks: true,

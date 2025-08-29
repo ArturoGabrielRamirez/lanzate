@@ -15,6 +15,7 @@ export async function updateProductsPrices(payload: UpdatePricesPayload) {
         // Build the where clause based on what we're updating
         const baseWhereClause = {
             store_id: storeId,
+            is_deleted: false
         }
 
         let whereClause

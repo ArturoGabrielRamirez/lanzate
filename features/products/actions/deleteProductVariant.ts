@@ -9,7 +9,7 @@ export async function deleteProductVariant(variantId: number, slug: string) {
         const { payload, error, message } = await deleteVariantFromDb(variantId)
         if (error) throw new Error(message)
         revalidatePath(`/stores/${slug}`)
-        return { error: false, message: "Variant deleted successfully", payload }
+        return { error: false, message: "Variant soft deleted successfully", payload }
     })
 }
 

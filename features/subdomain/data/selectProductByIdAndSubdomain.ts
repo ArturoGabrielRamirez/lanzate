@@ -14,6 +14,7 @@ export async function selectProductByIdAndSubdomain(id: number, subdomain: strin
                 id: id,
                 is_active: true,
                 is_published: true,
+                is_deleted: false,
                 store: {
                     subdomain: sanitizedSubdomain
                 }

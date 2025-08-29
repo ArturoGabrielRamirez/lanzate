@@ -52,66 +52,76 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
             },
             include: {
                 products: {
-                    where: categoryIds
-                        ? {
-                            categories: {
-                                some: {
-                                    id: {
-                                        in: categoryIds.map(id => parseInt(id))
-                                    }
-                                }
-                            },
-                            OR: [
-                                {
-                                    name: {
-                                        search: search
+                    where: {
+                        is_deleted: false,
+                        ...(categoryIds
+                            ? {
+                                categories: {
+                                    some: {
+                                        id: {
+                                            in: categoryIds.map(id => parseInt(id))
+                                        }
                                     }
                                 },
-                                {
-                                    name: {
-                                        contains: search,
-                                        mode: "insensitive"
-                                    }
-                                },
-                                {
-                                    description: {
-                                        search: search
-                                    }
-                                },
-                                {
-                                    description: {
-                                        contains: search, mode: "insensitive"
-                                    }
-                                },
-                            ],
-                            price: priceRange
+                                OR: [
+                                    {
+                                        name: {
+                                            search: search
+                                        }
+                                    },
+                                    {
+                                        name: {
+                                            contains: search,
+                                            mode: "insensitive"
+                                        }
+                                    },
+                                    {
+                                        description: {
+                                            search: search
+                                        }
+                                    },
+                                    {
+                                        description: {
+                                            contains: search, mode: "insensitive"
+                                        }
+                                    },
+                                ],
+                                price: priceRange
+                            }
+                            : {
+                                OR: [
+                                    {
+                                        name: {
+                                            search: search
+                                        }
+                                    },
+                                    {
+                                        name: {
+                                            contains: search,
+                                            mode: "insensitive"
+                                        }
+                                    },
+                                    {
+                                        description: {
+                                            search: search
+                                        }
+                                    },
+                                    {
+                                        description: {
+                                            contains: search, mode: "insensitive"
+                                        }
+                                    },
+                                ],
+                                price: priceRange
+                            })
+                    },
+                    include: {
+                        variants: {
+                            where: {
+                                is_deleted: false
+                            }
                         }
-                        : {
-                            OR: [
-                                {
-                                    name: {
-                                        search: search
-                                    }
-                                },
-                                {
-                                    name: {
-                                        contains: search,
-                                        mode: "insensitive"
-                                    }
-                                },
-                                {
-                                    description: {
-                                        search: search
-                                    }
-                                },
-                                {
-                                    description: {
-                                        contains: search, mode: "insensitive"
-                                    }
-                                },
-                            ],
-                            price: priceRange
-                        },
+                    },
                     orderBy: orderBy,
                     take: limit,
                     skip: limit * (page - 1)

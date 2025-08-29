@@ -12,21 +12,28 @@ export async function deleteProductVariant(variantId: number) {
             })
             if (!variant) throw new Error("Variant not found")
 
-            await tx.productVariantStock.deleteMany({ where: { variant_id: variantId } })
-            await tx.productMedia.deleteMany({ where: { product_variant_id: variantId } })
-            await tx.productVariant.delete({ where: { id: variantId } })
+            // Soft delete variant by setting is_deleted to true
+            await tx.productVariant.update({ 
+                where: { id: variantId },
+                data: { is_deleted: true }
+            })
 
-            // derive product stock after deletion
+            // derive product stock after deletion (only from non-deleted variants)
             const total = await tx.productVariantStock.aggregate({
                 _sum: { quantity: true },
-                where: { variant: { product_id: variant.product_id } }
+                where: { 
+                    variant: { 
+                        product_id: variant.product_id,
+                        is_deleted: false
+                    } 
+                }
             })
             await tx.product.update({ where: { id: variant.product_id }, data: { stock: total._sum.quantity ?? 0 } })
 
             return { deletedVariantId: variantId, productId: variant.product_id }
         })
 
-        return { error: false, message: "Variant deleted", payload: result }
+        return { error: false, message: "Variant soft deleted", payload: result }
     })
 }
 
