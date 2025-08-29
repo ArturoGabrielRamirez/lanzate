@@ -36,7 +36,7 @@ function StoreBannerEditorWrapper({ currentBanner, storeName, storeId }: StoreBa
     }
 
     return (
-        <CardAction className="group-hover/store-banner:opacity-100 opacity-0 transition-opacity duration-300 absolute top-0 right-0">
+        <CardAction className="group-hover/store-banner:opacity-100 opacity-0 transition-opacity duration-300">
             <StoreBannerEditor
                 currentBanner={banner}
                 storeName={storeName}

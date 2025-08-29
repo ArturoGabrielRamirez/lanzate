@@ -113,7 +113,7 @@ export function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: 
                     try {
                         const err = await response.json()
                         if (err?.error) message = err.error
-                    } catch {}
+                    } catch { }
                     throw new Error(message)
                 }
                 const data = await response.json()
@@ -159,6 +159,7 @@ export function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: 
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <IconButton
+                                size='md'
                                 icon={ImageIcon}
                             />
                         </TooltipTrigger>

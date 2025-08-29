@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Title } from "@/features/layout/components"
 import { Store } from "lucide-react"
 import { getStoreHeaderBySlug } from "../actions/getStoreHeaderBySlug"
@@ -67,12 +67,12 @@ async function StoreHeaderServer({ slug }: StoreHeaderServerProps) {
                                 {store.description || "No description"}
                             </p>
                         </div>
+                        <StoreBannerEditorWrapper
+                            currentBanner={store.banner}
+                            storeName={store.name}
+                            storeId={store.id}
+                        />
                     </CardContent>
-                    <StoreBannerEditorWrapper
-                        currentBanner={store.banner}
-                        storeName={store.name}
-                        storeId={store.id}
-                    />
                 </Card>
             </section>
         </>
