@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowDown, ArrowUp, ChartNoAxesCombined, DollarSign, Package, ShoppingCart, Store } from "lucide-react"
 import { getDashboardStats } from "../actions/getDashboardStats"
 import * as motion from "motion/react-client"
+import { getTranslations } from "next-intl/server"
 
 type Props = {
     userId: number
@@ -41,6 +42,7 @@ function ChangeIndicator({ change }: { change: number }) {
 }
 
 async function DashboardStats({ userId }: Props) {
+    const t = await getTranslations("dashboard.stats")
     const { payload: stats, error } = await getDashboardStats(userId)
 
     if (error || !stats) {
@@ -87,7 +89,7 @@ async function DashboardStats({ userId }: Props) {
             <div className="flex items-center justify-between mb-2 md:mb-4">
                 <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2 text-primary/50 group-hover/stats:text-primary transition-all">
                     <ChartNoAxesCombined className="size-4 xl:size-5" />
-                    Your stats
+                    {t("title")}
                 </h2>
             </div>
             <motion.div
