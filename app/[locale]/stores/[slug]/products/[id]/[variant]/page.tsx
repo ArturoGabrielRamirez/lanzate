@@ -1,92 +1,124 @@
 import { getProductDetails } from "@/features/stores/actions/getProductDetails"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft } from "lucide-react"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ArrowLeft, Boxes } from "lucide-react"
 import DeleteVariantButton from "@/features/products/components/delete-variant-button"
+import { VariantDetailForm } from "@/features/products/components/variant-detail-display"
 import Link from "next/link"
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
-import { Badge } from "@/components/ui/badge"
-import { Category } from "@prisma/client"
-import { DeleteProductButton, EditProductButton } from "@/features/products/components"
 
 type Props = { params: Promise<{ slug: string; id: string; variant: string }> }
 
 export default async function ProductVariantDetailPage({ params }: Props) {
     const { slug, id, variant } = await params
-    const t = await getTranslations("store.products")
+
+    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    if (userError || !user) {
+        return console.error(userMessage)
+    }
+
     const { payload: product, error } = await getProductDetails(id)
     if (error || !product) return null
+
     const variantId = Number(variant)
-    const list = (product.variants ?? []).filter((v: { id: number }) => v.id === variantId)
-    const primaryUrl = product.primary_media?.url || product.media?.[0]?.url || "https://api.dicebear.com/9.x/icons/svg?seed=boxes"
+    const variantData = (product.variants ?? []).find((v: { id: number }) => v.id === variantId)
+
+    if (!variantData) {
+        return (
+            <Card>
+                <CardContent className="p-6">
+                    <p className="text-center text-muted-foreground">Variante no encontrada</p>
+                </CardContent>
+            </Card>
+        )
+    }
+
+    const t = await getTranslations("store.products")
+    
+    // Filtrar otras variantes (excluyendo la actual)
+    const otherVariants = (product.variants ?? []).filter((v: { id: number }) => v.id !== variantId)
+
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Link href={`/stores/${slug}/products`}>
-                        <ArrowLeft className="size-4" />
-                    </Link>
-                    {t("product-details")}
-                </CardTitle>
-            </CardHeader>
-            <CardContent className="grow flex">
-                <div className="grid grid-cols-1 lg:grid-cols-[max-content_1fr] grid-rows-[auto_1fr] lg:grid-rows-1 gap-4 w-full">
-                    <div className="w-full h-35 lg:h-full lg:w-60 xl:w-80 overflow-hidden rounded-md group bg-secondary relative">
-                        <img src={primaryUrl} alt={`${product.name} image`} className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 scale-y-95 scale-x-93 rounded-md" />
-                    </div>
-                    <div className="flex flex-col gap-4">
-                        <h3 className="text-4xl font-bold">{product.name}</h3>
-                        <div className="flex gap-2 flex-wrap">
-                            {product.categories.length === 0 && (
-                                <Badge variant="outline">{t("no-categories")}</Badge>
-                            )}
-                            {product.categories.map((category: Category) => (
-                                <Badge key={category.id} variant="outline">{category.name}</Badge>
-                            ))}
-                        </div>
-                        <p className="text-muted-foreground text-lg">${product.price}</p>
-                        {product.media && product.media.length > 1 && (
-                            <div className="flex gap-2 overflow-x-auto py-1">
-                                {product.media.map((m: { id: number; url: string }, idx: number) => (
-                                    <img key={m.id ?? idx} src={m.url} alt={`image-${idx}`} className="h-16 w-16 rounded object-cover border" />
-                                ))}
-                            </div>
-                        )}
-                        {list.length > 0 && (
-                            <div className="space-y-2">
-                                <h4 className="font-semibold">Variantes</h4>
+        <div className="space-y-6">
+            {/* Header */}
+            {/* <Card>
+                <CardHeader>
+                    <CardTitle>
+                        {t("product-details")}
+                    </CardTitle>
+                </CardHeader>
+            </Card> */}
+
+            {/* Contenido principal con las cards */}
+            <VariantDetailForm
+                variant={variantData}
+                productPrice={product.price}
+                slug={slug}
+                productId={Number(id)}
+                product={product}
+            />
+
+            {/* Otras variantes del producto */}
+            <Card>
+                <CardHeader>
+                    <CardTitle>
+                        <span className="flex items-center gap-2 text-lg">
+                            <Boxes className="size-5" />
+                            Otras variantes del producto
+                        </span>
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">
+                                {otherVariants.length === 0 
+                                    ? "No hay otras variantes" 
+                                    : `${otherVariants.length} variante${otherVariants.length > 1 ? 's' : ''} adicional${otherVariants.length > 1 ? 'es' : ''}`
+                                }
+                            </label>
+                            {otherVariants.length === 0 ? (
+                                <p className="text-sm text-muted-foreground">Esta es la única variante de este producto</p>
+                            ) : (
                                 <div className="grid gap-2 sm:grid-cols-2">
-                                    {list.map((v: { id: number; size_or_measure: string | null; color?: { name: string } | null; stocks?: { quantity: number }[]; primary_media?: { url: string } | null }) => {
-                                        const total = (v.stocks ?? []).reduce((s: number, x: { quantity: number }) => s + (x.quantity ?? 0), 0)
-                                        const label = [v.size_or_measure, v.color?.name].filter(Boolean).join(" · ") || `Variante ${v.id}`
+                                    {otherVariants.map((variant: any) => {
+                                        const total = (variant.stocks ?? []).reduce((s: number, x: { quantity: number }) => s + (x.quantity ?? 0), 0)
+                                        const label = [variant.size_or_measure, variant.color?.name].filter(Boolean).join(" · ") || `Variante ${variant.id}`
+                                        
                                         return (
-                                            <div key={v.id} className="rounded-md border p-2 flex items-center gap-3">
-                                                {v.primary_media?.url ? (
-                                                    <img src={v.primary_media.url} alt={label} className="h-10 w-10 rounded object-cover" />
-                                                ) : null}
-                                                <div className="flex flex-col">
+                                            <Link 
+                                                key={variant.id} 
+                                                href={`/stores/${slug}/products/${id}/${variant.id}`}
+                                                className="rounded-md border p-3 flex items-center gap-3 hover:bg-secondary/50 transition-colors"
+                                            >
+                                                {variant.primary_media?.url ? (
+                                                    <img 
+                                                        src={variant.primary_media.url} 
+                                                        alt={label} 
+                                                        className="h-12 w-12 rounded object-cover" 
+                                                    />
+                                                ) : (
+                                                    <div className="h-12 w-12 rounded bg-secondary flex items-center justify-center">
+                                                        <Boxes className="size-6 text-muted-foreground" />
+                                                    </div>
+                                                )}
+                                                <div className="flex flex-col flex-1">
                                                     <span className="text-sm font-medium">{label}</span>
-                                                    <span className="text-xs text-muted-foreground">Stock: {total}</span>
+                                                    <span className="text-xs text-muted-foreground">Stock: {total} unidades</span>
+                                                    {variant.price && variant.price !== product.price && (
+                                                        <span className="text-xs text-muted-foreground">Precio: ${variant.price}</span>
+                                                    )}
                                                 </div>
-                                                <div className="ml-auto">
-                                                    <DeleteVariantButton variantId={v.id} slug={slug} productId={Number(id)} />
-                                                </div>
-                                            </div>
+                                            </Link>
                                         )
                                     })}
                                 </div>
-                            </div>
-                        )}
-                        <p>{product.description || "No description available"}</p>
-                        <div className="flex justify-center md:justify-end mt-auto">
-                            <div className="grid grid-cols-2 gap-4 mt-auto justify-end max-w-xs">
-                                <DeleteProductButton productId={Number(id)} slug={slug} userId={0} />
-                                <EditProductButton product={product} slug={slug} userId={0} />
-                            </div>
+                            )}
                         </div>
                     </div>
-                </div>
-            </CardContent>
-        </Card>
+                </CardContent>
+            </Card>
+        </div>
     )
 }
 

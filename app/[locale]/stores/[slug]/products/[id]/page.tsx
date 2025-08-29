@@ -1,17 +1,15 @@
 import { getProductDetails } from "@/features/stores/actions/getProductDetails"
 
-import { DeleteProductButton, EditProductButton } from "@/features/products/components"
+import { DeleteProductButton } from "@/features/products/components"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ProductDetailForm } from "@/features/products/components/product-detail-display"
 
 import { ProductDetailPageProps } from "@/features/products/type"
-// Variant-specific routing now lives under /products/[id]/[variant]
 
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
-import { Category } from "@prisma/client"
 
 async function ProductDetailPage({ params }: ProductDetailPageProps) {
 
@@ -33,73 +31,36 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
     const t = await getTranslations("store.products")
 
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Link href={`/stores/${slug}/products`}>
-                        <ArrowLeft className="size-4" />
-                    </Link>
-                    {t("product-details")}
-                </CardTitle>
-            </CardHeader>
-            <CardContent className="grow flex">
-                <div className="grid grid-cols-1 lg:grid-cols-[max-content_1fr] grid-rows-[auto_1fr] lg:grid-rows-1 gap-4 w-full">
-                    <div className="w-full h-35 lg:h-full lg:w-60 xl:w-80 overflow-hidden rounded-md group bg-secondary relative">
-                        {product.primary_media?.url ? (
-                            <img
-                                src={product.primary_media.url}
-                                alt={`${product.name} image`}
-                                className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 scale-y-95 scale-x-93 rounded-md"
-                            />
-                        ) : (
-                            <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 scale-y-95 scale-x-93 rounded-md" />
-                        )}
-                    </div>
-                    <div className="flex flex-col gap-4">
-                        <h3 className="text-4xl font-bold">{product.name}</h3>
+        <div className="space-y-6">
+            {/* Header con navegación y botones de acción */}
+            <Card>
+                <CardHeader>
+                    <div className="flex items-center justify-between">
+                        <CardTitle className="flex items-center gap-2">
+                            <Link href={`/stores/${slug}/products`}>
+                                <ArrowLeft className="size-4" />
+                            </Link>
+                            {t("product-details")}
+                        </CardTitle>
                         <div className="flex gap-2">
-                            {product.categories.length === 0 && (
-                                <Badge variant="outline">{t("no-categories")}</Badge>
-                            )}
-                            {product.categories.map((category: Category) => (
-                                <Badge key={category.id} variant="outline">{category.name}</Badge>
-                            ))}
-                        </div>
-                        <p className="text-muted-foreground text-lg">${product.price}</p>
-                        <div className="text-sm text-muted-foreground">Stock total: {product.stock}</div>
-                        {product.variants?.length > 0 && (
-                            <div className="space-y-2">
-                                <h4 className="font-semibold">Variantes</h4>
-                                <div className="grid gap-2 sm:grid-cols-2">
-                                    {product.variants.map((v: { id: number; size_or_measure: string | null; color?: { name: string } | null; stocks?: { quantity: number }[]; primary_media?: { url: string } | null }) => {
-                                        const total = (v.stocks ?? []).reduce((s: number, x: { quantity: number }) => s + (x.quantity ?? 0), 0)
-                                        const label = [v.size_or_measure, v.color?.name].filter(Boolean).join(" · ") || `Variante ${v.id}`
-                                        return (
-                                            <div key={v.id} className="rounded-md border p-2 flex items-center gap-3">
-                                                {v.primary_media?.url ? (
-                                                    <img src={v.primary_media.url} alt={label} className="h-10 w-10 rounded object-cover" />
-                                                ) : null}
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-medium">{label}</span>
-                                                    <span className="text-xs text-muted-foreground">Stock: {total}</span>
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            </div>
-                        )}
-                        <p>{product.description || "No description available"}</p>
-                        <div className="flex justify-center md:justify-end mt-auto">
-                            <div className="grid grid-cols-2 gap-4 mt-auto justify-end max-w-xs">
-                                <DeleteProductButton productId={product.id} slug={slug} userId={user.id} />
-                                <EditProductButton product={product} slug={slug} userId={user.id} />
-                            </div>
+                            <DeleteProductButton
+                                productId={product.id}
+                                slug={slug}
+                                userId={user.id}
+                            />
                         </div>
                     </div>
-                </div>
-            </CardContent>
-        </Card>
+                </CardHeader>
+            </Card>
+
+            {/* Contenido principal con las cards */}
+            <ProductDetailForm
+                product={product}
+                slug={slug}
+                userId={user.id}
+            />
+        </div>
     )
 }
+
 export default ProductDetailPage

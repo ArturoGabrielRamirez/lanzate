@@ -1135,6 +1135,16 @@
         "products": {
             "product-details": "Detalles del producto ",
             "no-categories": "No hay categorías"
+        },
+        "delete-variant": {
+            "button": "Eliminar variante",
+            "title": "Eliminar variante",
+            "description": "¿Estás seguro de que quieres eliminar esta variante? Esta acción no se puede deshacer.",
+            "messages": {
+                "success": "Variante eliminada exitosamente",
+                "error": "Error al eliminar la variante",
+                "loading": "Eliminando variante..."
+            }
         }
     },
     "sale": {

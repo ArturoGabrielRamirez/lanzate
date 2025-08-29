@@ -97,3 +97,20 @@ export const productCreateSchema = yup.object({
 export const productUpdateSchema = yup.object({
     ...productBaseSchema,
 })
+
+export const editProductSchema = yup.object({
+    name: productBaseSchema.name.required('Name is required'),
+    description: productBaseSchema.description,
+    sku: productBaseSchema.sku,
+    barcode: productBaseSchema.barcode,
+    price: productBaseSchema.price.required('Price is required'),
+    stock: productBaseSchema.stock.required('Stock is required'),
+})
+
+export const editVariantSchema = yup.object({
+    size_or_measure: yup.string().optional(),
+    sku: yup.string().optional(),
+    barcode: yup.string().optional(),
+    price: yup.number().min(0, 'Price must be greater than or equal to 0').optional(),
+    stock: yup.number().min(0, 'Stock must be greater than or equal to 0').optional(),
+})
