@@ -8,7 +8,10 @@ import ProductCard from "./product-card";
 import ProductDetail from "./product-detail";
 import StoreCard from "./store-card";
 import StoreHeader from "./store-header";
+import StoreHeaderServer from "./store-header-server";
 import StoreHeaderSkeleton from "./store-header-skeleton";
+import StoreLogoEditorWrapper from "./store-logo-editor-wrapper";
+import StoreBannerEditorWrapper from "./store-banner-editor-wrapper";
 import StoresContainer from "./stores-container";
 import StoresSkeleton from "./stores-skeleton";
 import TabTriggerLink from "./tab-trigger-link";
@@ -39,7 +42,10 @@ export {
     ProductDetail,
     StoreCard,
     StoreHeader,
+    StoreHeaderServer,
     StoreHeaderSkeleton,
+    StoreLogoEditorWrapper,
+    StoreBannerEditorWrapper,
     StoresContainer,
     StoresSkeleton,
     TabTriggerLink,
