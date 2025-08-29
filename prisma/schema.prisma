@@ -329,6 +329,7 @@ model ProductVariant {
 
   stocks      ProductVariantStock[]
   order_items OrderItem[]
+  is_deleted  Boolean               @default(false)
 
   @@unique([product_id, size_or_measure, color_id])
   @@index([product_id])

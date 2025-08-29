@@ -25,13 +25,16 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
                 },
                 products: {
                     where: {
-                        NOT: { id: { in: [1, 2, 3, 5] } }
+                        is_deleted: false
                     },
                     include: {
                         categories: true,
                         variants: {
                             include: {
-                                stocks: true
+                                stocks: true,
+                            },
+                            where: {
+                                is_deleted: false
                             }
                         }
                     }
