@@ -325,18 +325,6 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
             columns={columns}
             data={rows}
             filterKey="name"
-            /* topActions={
-                (filteredSelectedRowModel: RowModel<Product & { categories: Category[] }>) => {
-                    return (
-                        <div className="grid grid-cols-3 gap-2">
-                            <UpdatePricesButton
-                                selectedRows={filteredSelectedRowModel}
-                                storeId={storeId}
-                            />
-                        </div>
-                    )
-                }
-            } */
         />
     )
 }

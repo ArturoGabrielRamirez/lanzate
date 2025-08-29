@@ -57,7 +57,7 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
                     )}
                 </CardAction>
             </CardHeader>
-            <CardContent>
+            <CardContent className="grow flex flex-col">
                 <ProductsTable
                     data={store.products}
                     userId={user.id}
