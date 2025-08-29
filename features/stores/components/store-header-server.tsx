@@ -2,8 +2,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Title } from "@/features/layout/components"
 import { Store } from "lucide-react"
 import { getStoreHeaderBySlug } from "../actions/getStoreHeaderBySlug"
-import StoreLogoEditorWrapper from "./store-logo-editor-wrapper"
 import StoreBannerEditorWrapper from "./store-banner-editor-wrapper"
+import StoreLogoEditorWrapper from "./store-logo-editor-wrapper"
 
 type StoreHeaderServerProps = {
     slug: string
