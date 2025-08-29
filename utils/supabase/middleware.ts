@@ -167,12 +167,12 @@ export async function updateSession(request: NextRequest) {
   // Redirecciones de autenticación simples
   if (!user && !publicRoutes.includes(pathWithoutLocale)) {
     const url = new URL(`/${currentLocale}/login`, `https://${rootDomain}`)
-    return NextResponse.redirect(url, response)
+    return NextResponse.redirect(url)
   }
 
   if (user && publicRoutes.includes(pathWithoutLocale)) {
     const url = new URL(`/${currentLocale}/dashboard`, `https://${rootDomain}`)
-    return NextResponse.redirect(url, response)
+    return NextResponse.redirect(url)
   }
 
   return response
