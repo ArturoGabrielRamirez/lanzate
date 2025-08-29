@@ -175,7 +175,11 @@
     "dashboard": {
         "title": "Welcome!",
         "stats": {
-            "title": "Your Stats"
+            "title": "Your Stats",
+            "total-revenue": "Total Revenue",
+            "orders": "Orders",
+            "products": "Products",
+            "active-stores": "Active Stores"
         },
         "your-stores": {
             "title": "Your Stores ({count})",

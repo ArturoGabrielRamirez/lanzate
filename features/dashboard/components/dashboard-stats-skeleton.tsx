@@ -32,27 +32,26 @@ function DashboardStatCardSkeleton({ index, stat }: { index: number, stat: { tit
 }
 
 function DashboardStatsSkeleton() {
+    const t = useTranslations("dashboard.stats")
 
     const statsData = [
         {
-            title: "Total Revenue",
+            title: t("total-revenue"),
             icon: DollarSign
         },
         {
-            title: "Orders",
+            title: t("orders"),
             icon: ShoppingCart
         },
         {
-            title: "Products",
+            title: t("products"),
             icon: Package
         },
         {
-            title: "Active Stores",
+            title: t("active-stores"),
             icon: Store
         }
     ]
-
-    const t = useTranslations("dashboard.stats")
 
     return (
         <div className="area-[stats] hidden lg:block group/stats">

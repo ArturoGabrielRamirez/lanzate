@@ -59,25 +59,25 @@ async function DashboardStats({ userId }: Props) {
 
     const statsData = [
         {
-            title: "Total Revenue",
+            title: t("total-revenue"),
             value: formatCurrency(stats.totalRevenue),
             change: stats.revenueChange,
             icon: DollarSign
         },
         {
-            title: "Orders",
+            title: t("orders"),
             value: formatNumber(stats.totalOrders),
             change: stats.ordersChange,
             icon: ShoppingCart
         },
         {
-            title: "Products",
+            title: t("products"),
             value: formatNumber(stats.totalProducts),
             change: stats.productsChange,
             icon: Package
         },
         {
-            title: "Active Stores",
+            title: t("active-stores"),
             value: formatNumber(stats.activeStores),
             change: stats.activeStoresChange,
             icon: Store
