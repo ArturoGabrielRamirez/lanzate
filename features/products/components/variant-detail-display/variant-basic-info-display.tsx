@@ -3,6 +3,7 @@
 import { Box, EditIcon, X, ArrowLeft, Check } from "lucide-react"
 import { Product, ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { VariantLinkCard } from "./variant-link-card"
 import { Form, InputField } from "@/features/layout/components"
 import { useState } from "react"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
@@ -18,7 +19,13 @@ interface VariantBasicInfoDisplayProps {
     }
     slug: string
     productId: number
-    product: Product
+    product: Product & {
+        variants: Array<ProductVariant & {
+            color?: { name: string } | null
+            stocks?: Array<{ quantity: number }>
+            primary_media?: { url: string } | null
+        }>
+    }
 }
 
 const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantBasicInfoDisplayProps) => {
@@ -107,7 +114,11 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantB
                         </CardAction>
                     </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-6">
+                    {/* Lista de variantes */}
+                    
+
+                    {/* Formulario de información básica */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         <div className="space-y-1">
                             <InputField
@@ -144,6 +155,39 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantB
                                 placeholder="Ej. Camiseta de algodón"
                                 disabled={!isEditing}
                             />
+                        </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Otras variantes del producto</label>
+                            <div className="grid gap-2 sm:grid-cols-2">
+                                {product.variants
+                                    .filter((v: any) => v.id !== variant.id)
+                                    .map((otherVariant: any) => (
+                                        <VariantLinkCard
+                                            key={otherVariant.id}
+                                            variant={otherVariant}
+                                            slug={slug}
+                                            productId={productId}
+                                            productPrice={product.price}
+                                        />
+                                    ))
+                                }
+                                <Link 
+                                    href={`/stores/${slug}/products/${productId}`}
+                                    className="rounded-md border p-3 flex items-center gap-3 hover:bg-secondary/50 transition-colors"
+                                >
+                                    <div className="h-12 w-12 rounded bg-secondary flex items-center justify-center">
+                                        <Box className="size-6 text-muted-foreground" />
+                                    </div>
+                                    <div className="flex flex-col flex-1">
+                                        <span className="text-sm font-medium">Producto Principal</span>
+                                        <span className="text-xs text-muted-foreground">{product.name}</span>
+                                        <span className="text-xs text-muted-foreground">Precio base: ${product.price}</span>
+                                    </div>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </CardContent>
