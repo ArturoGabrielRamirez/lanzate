@@ -1,17 +1,16 @@
 "use client"
 
-import { Box, EditIcon, X, ArrowLeft } from "lucide-react"
-import { ProductVariant } from "@prisma/client"
+import { Box, EditIcon, X, ArrowLeft, Check } from "lucide-react"
+import { Product, ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, InputField } from "@/features/layout/components"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useFormContext } from "react-hook-form"
 import { editVariantSchema } from "../../schemas/product-schema"
 import DeleteVariantButton from "../delete-variant-button"
 import Link from "next/link"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface VariantBasicInfoDisplayProps {
     variant: ProductVariant & {
@@ -19,17 +18,10 @@ interface VariantBasicInfoDisplayProps {
     }
     slug: string
     productId: number
+    product: Product
 }
 
-type VariantBasicInfoFormValues = {
-    name: string
-    sku: string
-    barcode: string
-    description: string
-}
-
-const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoDisplayProps) => {
-    console.log("🚀 ~ VariantBasicInfoDisplay ~ variant:", variant)
+const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantBasicInfoDisplayProps) => {
     const [isEditing, setIsEditing] = useState(false)
 
     const handleOpenEdit = () => {
@@ -40,41 +32,6 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoD
         setIsEditing(false)
     }
 
-    function ToggleEditButton() {
-        const { reset } = useFormContext<VariantBasicInfoFormValues>()
-
-        const initialValues = {
-            name: variant.name || "",
-            sku: variant.sku || "",
-            barcode: variant.barcode || "",
-            description: variant.description || "",
-        }
-
-        const onClick = () => {
-            if (isEditing) {
-                reset(initialValues)
-                handleCloseEdit()
-                return
-            }
-            handleOpenEdit()
-        }
-
-        return (
-            <Tooltip>
-                <TooltipTrigger asChild>
-                    <IconButton
-                        icon={isEditing ? X : EditIcon}
-                        onClick={onClick}
-                        className="opacity-0 group-hover/variant-basic-info-display:opacity-100 transition-opacity duration-300"
-                    />
-                </TooltipTrigger>
-                <TooltipContent>
-                    Editar información básica de la variante
-                </TooltipContent>
-            </Tooltip>
-        )
-    }
-
     return (
         <Card className="group/variant-basic-info-display">
             <Form
@@ -82,12 +39,6 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoD
                 contentButton={false}
                 resolver={yupResolver(editVariantSchema)}
                 onSuccess={handleCloseEdit}
-                defaultValues={{
-                    name: variant.name || "",
-                    sku: variant.sku || "",
-                    barcode: variant.barcode || "",
-                    description: variant.description || "",
-                }}
             >
                 <CardHeader>
                     <div className="flex items-center justify-between">
@@ -101,56 +52,98 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoD
                             </span>
                         </CardTitle>
                         <CardAction>
-                            {isEditing && (
-                                <button
-                                    type="submit"
-                                    className="text-sm bg-primary text-primary-foreground hover:bg-primary/90 px-3 py-1 rounded-md"
-                                >
-                                    Guardar
-                                </button>
+                            {isEditing ? (
+                                <div className="flex items-center gap-2">
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <IconButton
+                                                icon={Check}
+                                                type="submit"
+                                                color={[99, 102, 241]} // color indigo del tema
+                                                className="opacity-0 group-hover/variant-basic-info-display:opacity-100 transition-opacity duration-300"
+                                            />
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            Guardar cambios
+                                        </TooltipContent>
+                                    </Tooltip>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <IconButton
+                                                icon={X}
+                                                onClick={handleCloseEdit}
+                                                color={[161, 161, 170]} // color zinc del tema
+                                                className="opacity-0 group-hover/variant-basic-info-display:opacity-100 transition-opacity duration-300"
+                                            />
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            Cancelar edición
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </div>
+                            ) : (
+                                <div className="flex items-center gap-2">
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <IconButton
+                                                icon={EditIcon}
+                                                onClick={handleOpenEdit}
+                                                color={[161, 161, 170]} // color zinc del tema
+                                                className="opacity-0 group-hover/variant-basic-info-display:opacity-100 transition-opacity duration-300"
+                                            />
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            Editar información
+                                        </TooltipContent>
+                                    </Tooltip>
+                                    <DeleteVariantButton
+                                        variantId={variant.id}
+                                        slug={slug}
+                                        productId={productId}
+                                        onlyIcon
+                                    />
+                                </div>
                             )}
-                            <DeleteVariantButton
-                                variantId={variant.id}
-                                slug={slug}
-                                productId={productId}
-                            />
-                            <ToggleEditButton />
                         </CardAction>
                     </div>
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         <div className="space-y-1">
-                            <label className="text-sm font-medium">Nombre</label>
-                            {isEditing ? (
-                                <InputField name="name" type="text" label="Nombre" />
-                            ) : (
-                                <p className="text-sm text-muted-foreground">{variant.name || "No especificado"}</p>
-                            )}
+                            <InputField
+                                name="name"
+                                label="Nombre"
+                                defaultValue={variant.name || product.name || undefined}
+                                placeholder="Ej. Camiseta"
+                                disabled={!isEditing}
+                            />
                         </div>
                         <div className="space-y-1">
-                            <label className="text-sm font-medium">SKU</label>
-                            {isEditing ? (
-                                <InputField name="sku" type="text" label="SKU" />
-                            ) : (
-                                <p className="text-sm text-muted-foreground">{variant.sku || "No especificado"}</p>
-                            )}
+                            <InputField
+                                name="sku"
+                                label="SKU"
+                                defaultValue={variant.sku || product.sku || undefined}
+                                placeholder="Ej. SKU123"
+                                disabled={!isEditing}
+                            />
                         </div>
                         <div className="space-y-1">
-                            <label className="text-sm font-medium">Código de barras</label>
-                            {isEditing ? (
-                                <InputField name="barcode" type="text" label="Código de barras" />
-                            ) : (
-                                <p className="text-sm text-muted-foreground">{variant.barcode || "No especificado"}</p>
-                            )}
+                            <InputField
+                                name="barcode"
+                                label="Código de barras"
+                                defaultValue={variant.barcode || product.barcode || undefined}
+                                placeholder="Ej. 1234567890123"
+                                disabled={!isEditing}
+                            />
                         </div>
                         <div className="space-y-1">
-                            <label className="text-sm font-medium">Descripción</label>
-                            {isEditing ? (
-                                <InputField name="description" type="text" label="Descripción" />
-                            ) : (
-                                <p className="text-sm text-muted-foreground">{variant.description || "No especificado"}</p>
-                            )}
+                            <InputField
+                                name="description"
+                                label="Descripción"
+                                defaultValue={variant.description || product.description || undefined}
+                                placeholder="Ej. Camiseta de algodón"
+                                disabled={!isEditing}
+                            />
                         </div>
                     </div>
                 </CardContent>

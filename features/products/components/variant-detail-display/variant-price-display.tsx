@@ -1,6 +1,6 @@
 "use client"
 
-import { DollarSign, EditIcon, X } from "lucide-react"
+import { DollarSign, EditIcon, X, Check } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, InputField } from "@/features/layout/components"
@@ -86,12 +86,19 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
                     </CardTitle>
                     <CardAction>
                         {isEditing && (
-                            <button
-                                type="submit"
-                                className="text-sm bg-primary text-primary-foreground hover:bg-primary/90 px-3 py-1 rounded-md"
-                            >
-                                Guardar
-                            </button>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <IconButton
+                                        icon={Check}
+                                        type="submit"
+                                        color={[99, 102, 241]}
+                                        className="opacity-0 group-hover/variant-price-display:opacity-100 transition-opacity duration-300"
+                                    />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    Guardar cambios
+                                </TooltipContent>
+                            </Tooltip>
                         )}
                         <ToggleEditButton />
                     </CardAction>

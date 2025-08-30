@@ -1,6 +1,6 @@
 "use client"
 
-import { ImageIcon, EditIcon, X } from "lucide-react"
+import { ImageIcon, EditIcon, X, Check } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useState } from "react"
@@ -62,13 +62,19 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                 </CardTitle>
                 <CardAction>
                     {isEditing && (
-                        <button
-                            type="button"
-                            onClick={handleCloseEdit}
-                            className="text-sm bg-primary text-primary-foreground hover:bg-primary/90 px-3 py-1 rounded-md"
-                        >
-                            Guardar
-                        </button>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <IconButton
+                                    icon={Check}
+                                    onClick={handleCloseEdit}
+                                    color={[99, 102, 241]}
+                                    className="opacity-0 group-hover/variant-media-display:opacity-100 transition-opacity duration-300"
+                                />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                Guardar cambios
+                            </TooltipContent>
+                        </Tooltip>
                     )}
                     <ToggleEditButton />
                 </CardAction>

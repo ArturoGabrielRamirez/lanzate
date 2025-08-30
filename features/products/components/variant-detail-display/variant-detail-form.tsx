@@ -25,6 +25,7 @@ const VariantDetailForm = ({ variant, productPrice, slug, productId, product }: 
                     variant={variant}
                     slug={slug}
                     productId={productId}
+                    product={product}
                 />
                 <VariantMediaDisplay
                     variant={variant}
