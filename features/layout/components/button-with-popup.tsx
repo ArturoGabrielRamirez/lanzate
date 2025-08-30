@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { yupResolverFlexible } from "@/features/employees/types/yup-resolver-flexible"
 
 function ButtonWithPopup<T, P extends FieldValues>({
   text,
@@ -28,16 +29,16 @@ function ButtonWithPopup<T, P extends FieldValues>({
   onlyIcon,
 }: ButtonWithPopupPropsType<T, P>) {
   const [open, setOpen] = useState(false)
-  
+
   const handleSuccess = async () => {
     setOpen(false)
     if (onComplete && typeof onComplete === "function") {
       onComplete()
     }
   }
-  
-  const resolver = schema ? yupResolver(schema) as Resolver<P> : undefined
-  
+
+  /*   const resolver = schema ? yupResolver(schema) as Resolver<P> : undefined */
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -67,7 +68,7 @@ function ButtonWithPopup<T, P extends FieldValues>({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <Form<P>
-          resolver={resolver}
+          resolver={yupResolverFlexible(schema)}
           formAction={action}
           contentButton={contentButton || text}
           successMessage={messages.success}

@@ -1,8 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import type { AnyObjectSchema } from "yup"
-import type { Resolver } from "react-hook-form"
-import { InferFormValues } from "./yup-types"
+import { ObjectSchema } from "yup"
+import { Resolver, FieldValues } from "react-hook-form"
 
-export const yupResolverFlexible = <T extends AnyObjectSchema>(schema: T): Resolver<InferFormValues<T>> => {
-    return yupResolver(schema as unknown as AnyObjectSchema) as Resolver<InferFormValues<T>>
+export function yupResolverFlexible<P extends FieldValues>(
+    schema?: ObjectSchema<Partial<P>>
+): Resolver<P> | undefined {
+    if (!schema) return undefined
+    return yupResolver(schema) as unknown as Resolver<P>
 }

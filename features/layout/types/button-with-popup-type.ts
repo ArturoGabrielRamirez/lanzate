@@ -14,7 +14,7 @@ export type ButtonWithPopupPropsType<T, P extends FieldValues> = {
     loading: string
   }
   disabled?: boolean
-   schema?: ObjectSchema<Partial<P>>
+  schema?: ObjectSchema<Partial<P>>
   onComplete?: () => void
   variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link"
   className?: string
