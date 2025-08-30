@@ -40,7 +40,19 @@ export async function insertUnifiedProduct(args: UnifiedArgs) {
             if (!mainBranch) throw new Error("Main branch not found")
 
             // 2) Create product
-            const slug = (args.form.slug && args.form.slug.length > 0) ? args.form.slug : randomstring.generate(8)
+            // Generar un slug base y verificar si existe
+            let slug = (args.form.slug && args.form.slug.length > 0) 
+                ? args.form.slug 
+                : args.form.name.toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-') // reemplazar caracteres especiales con guiones
+                    .replace(/^-+|-+$/g, '') // remover guiones del inicio y final
+
+            // Verificar si el slug existe y agregar sufijo si es necesario
+            const existingProduct = await tx.product.findUnique({ where: { slug } })
+            if (existingProduct) {
+                slug = `${slug}-${randomstring.generate(6)}`
+            }
+
             const skuBase = randomstring.generate(8)
 
             // Resolve categories from form or section and filter invalid values
@@ -147,10 +159,35 @@ export async function insertUnifiedProduct(args: UnifiedArgs) {
                 await tx.productVariant.create({
                     data: {
                         product_id: product.id,
-                        size_or_measure: v.sizeOrMeasure ?? null,
-                        dimension_group: null,
+                        // Datos heredados del producto
+                        name: product.name + (v.sizeOrMeasure ? ` - ${v.sizeOrMeasure}` : '') + (v.color?.name ? ` - ${v.color.name}` : ''),
+                        description: product.description,
+                        price: product.price,
+                        barcode: product.barcode,
+                        is_active: product.is_active,
+                        sku: skuBase + "-" + randomstring.generate(4),
+                        // Configuraciones de variante
+                        is_visible: true,
+                        available_for_sale: true,
+                        requires_shipping: true,
+                        // Dimensiones heredadas del producto
+                        ...(product.height ? { height: product.height, height_unit: product.height_unit } : {}),
+                        ...(product.width ? { width: product.width, width_unit: product.width_unit } : {}),
+                        ...(product.depth ? { depth: product.depth, depth_unit: product.depth_unit } : {}),
+                        ...(product.diameter ? { diameter: product.diameter, diameter_unit: product.diameter_unit } : {}),
+                        ...(product.weight ? { weight: product.weight, weight_unit: product.weight_unit } : {}),
+                        // Detalles específicos de la variante
+                        size: v.sizeOrMeasure ?? null,
                         color_id: colorId,
-                        is_active: true,
+                        // Precios adicionales
+                        compare_price: null,
+                        cost_price: null,
+                        wholesale_price: null,
+                        min_wholesale_qty: null,
+                        // Límites y alertas
+                        low_stock_alert: null,
+                        max_per_order: null,
+                        // Crear el stock inicial
                         stocks: {
                             create: [{ branch_id: mainBranch.id, quantity: qty }]
                         }

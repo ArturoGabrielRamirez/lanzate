@@ -28,6 +28,7 @@ type VariantBasicInfoFormValues = {
 }
 
 const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoDisplayProps) => {
+    console.log("🚀 ~ VariantBasicInfoDisplay ~ variant:", variant)
     const [isEditing, setIsEditing] = useState(false)
 
     const handleOpenEdit = () => {
@@ -42,7 +43,7 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoD
         const { reset } = useFormContext<VariantBasicInfoFormValues>()
 
         const initialValues = {
-            size_or_measure: variant.size_or_measure || "",
+            size: variant.size || "",
             sku: variant.sku || "",
             barcode: variant.barcode || "",
         }
@@ -80,7 +81,7 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoD
                 resolver={yupResolver(editVariantSchema)}
                 onSuccess={handleCloseEdit}
                 defaultValues={{
-                    size_or_measure: variant.size_or_measure || "",
+                    size: variant.size || "",
                     sku: variant.sku || "",
                     barcode: variant.barcode || "",
                 }}
@@ -119,9 +120,9 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoD
                         <div className="space-y-1">
                             <label className="text-sm font-medium">Talle/Tamaño</label>
                             {isEditing ? (
-                                <InputField name="size_or_measure" type="text" label="Talle/Tamaño" />
+                                <InputField name="size" type="text" label="Talle/Tamaño" />
                             ) : (
-                                <p className="text-sm text-muted-foreground">{variant.size_or_measure || "No especificado"}</p>
+                                <p className="text-sm text-muted-foreground">{variant.size || "No especificado"}</p>
                             )}
                         </div>
                         <div className="space-y-1">

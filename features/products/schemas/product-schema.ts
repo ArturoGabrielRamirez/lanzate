@@ -108,7 +108,7 @@ export const editProductSchema = yup.object({
 })
 
 export const editVariantSchema = yup.object({
-    size_or_measure: yup.string().optional(),
+    size: yup.string().optional(),
     sku: yup.string().optional(),
     barcode: yup.string().optional(),
     price: yup.number().min(0, 'Price must be greater than or equal to 0').optional(),

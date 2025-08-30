@@ -11,36 +11,32 @@ datasource db {
 }
 
 model User {
-  id               Int      @id @default(autoincrement())
-  email            String   @unique
-  avatar           String?
-  created_at       DateTime @default(now())
-  first_name       String?
-  last_name        String?
-  username         String   @unique
-  phone            String?
-  password         String
-  updated_at       DateTime @updatedAt
-  supabase_user_id String?  @unique
-  government_id    String?  @unique
-
-  deletion_requested_at     DateTime?
-  deletion_scheduled_at     DateTime? // Fecha cuando se eliminará definitivamente (ej: 30 días después)
-  deletion_reason           String?
-  deletion_ip_address       String?
-  deletion_user_agent       String?
-  is_deletion_cancelled     Boolean   @default(false)
+  id                        Int                     @id @default(autoincrement())
+  email                     String                  @unique
+  avatar                    String?
+  created_at                DateTime                @default(now())
+  first_name                String?
+  last_name                 String?
+  password                  String
+  updated_at                DateTime                @updatedAt
+  supabase_user_id          String?                 @unique
+  phone                     String?
+  username                  String                  @unique
+  account_locked_until      DateTime?
+  anonymized_at             DateTime?
   deletion_cancelled_at     DateTime?
   deletion_cancelled_reason String?
-
-  is_anonymized       Boolean   @default(false)
-  anonymized_at       DateTime?
-  original_email_hash String? // Hash del email original para evitar re-registros
-
-  last_login_at        DateTime?
-  login_attempts_count Int       @default(0)
-  account_locked_until DateTime?
-
+  deletion_ip_address       String?
+  deletion_reason           String?
+  deletion_requested_at     DateTime?
+  deletion_scheduled_at     DateTime?
+  deletion_user_agent       String?
+  is_anonymized             Boolean                 @default(false)
+  is_deletion_cancelled     Boolean                 @default(false)
+  last_login_at             DateTime?
+  login_attempts_count      Int                     @default(0)
+  original_email_hash       String?
+  government_id             String?                 @unique
   Account                   Account[]
   ActionLog                 ActionLog[]
   contracts_assigned        ContractAssignment[]    @relation("ContractAssignedBy")
@@ -54,12 +50,12 @@ model User {
   product_comments          product_comments[]
   product_likes             product_likes[]
   Product                   Product[]
+  social_activities         SocialActivity[]
   store_reminders_completed StoreReminder[]         @relation("StoreReminderCompletedBy")
   store_reminders_created   StoreReminder[]         @relation("StoreReminderCreatedBy")
   Store                     Store[]
-  user_reminders            UserReminder[]
   deletion_logs             UserDeletionLog[]
-  social_activities         SocialActivity[]
+  user_reminders            UserReminder[]
 
   @@map("users")
 }
@@ -67,14 +63,13 @@ model User {
 model UserDeletionLog {
   id              Int      @id @default(autoincrement())
   user_id         Int
-  action          String // 'REQUEST', 'CANCEL', 'EXECUTE', 'ANONYMIZE'
+  action          String
   reason          String?
   ip_address      String?
   user_agent      String?
-  additional_data String? // JSON con datos adicionales
+  additional_data String?
   created_at      DateTime @default(now())
-
-  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user            User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("user_deletion_logs")
 }
@@ -84,50 +79,16 @@ model Notification {
   created_at DateTime         @default(now())
   updated_at DateTime         @updatedAt
   user_id    Int
-  store_id   Int?
-  type       NotificationType
   read       Boolean          @default(false)
   title      String
   message    String
   link       String?
-  user       User             @relation(fields: [user_id], references: [id])
+  store_id   Int?
+  type       NotificationType
   store      Store?           @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  user       User             @relation(fields: [user_id], references: [id])
 
   @@map("notifications")
-}
-
-enum NotificationType {
-  SYSTEM
-  PRODUCT_LIKE
-  PRODUCT_COMMENT
-  PRODUCT_DELETED
-  ORDER_CREATED
-  ORDER_COMPLETED
-  ORDER_FAILED
-  ORDER_CANCELLED
-  ORDER_REFUNDED
-  ORDER_SHIPPED
-  ORDER_PREPARING
-  ORDER_READY
-  ORDER_DELIVERED
-  ORDER_PICKED_UP
-  ORDER_ON_THE_WAY
-  CONTRACT_ASSIGNED
-  CONTRACT_APPROVED
-  CONTRACT_REJECTED
-  EMPLOYEE_HIRED
-  EMPLOYEE_FIRED
-  PRODUCT_CREATED
-  PRODUCT_UPDATED
-  STORE_CREATED
-  STORE_UPDATED
-  STORE_DELETED
-  BRANCH_CREATED
-  BRANCH_UPDATED
-  BRANCH_DELETED
-  CATEGORY_CREATED
-  CATEGORY_UPDATED
-  CATEGORY_DELETED
 }
 
 model Store {
@@ -135,7 +96,6 @@ model Store {
   name                 String
   description          String?
   logo                 String?
-  banner               String?
   slogan               String?
   created_at           DateTime                  @default(now())
   updated_at           DateTime                  @updatedAt
@@ -143,27 +103,28 @@ model Store {
   slug                 String                    @unique
   subdomain            String                    @unique
   is_physical_store    Boolean                   @default(false)
-  is_active            Boolean                   @default(true)
+  email                String?
   facebook_url         String?
   instagram_url        String?
-  x_url                String?
-  email                String?
+  is_active            Boolean                   @default(true)
   phone                String?
+  x_url                String?
+  banner               String?
   branches             Branch[]
   categories           Category[]
+  colors               Color[]
   contracts            Contract[]
   employees            Employee[]
+  notifications        Notification[]
   orders               Order[]
   products             Product[]
-  colors               Color[]
+  social_activities    SocialActivity[]
   balance              StoreBalance?
   customization        StoreCustomization?
   operational_settings StoreOperationalSettings?
   store_reminders      StoreReminder[]
   user                 User                      @relation(fields: [user_id], references: [id])
   transactions         Transaction[]
-  social_activities    SocialActivity[]
-  notifications        Notification[]
 
   @@map("stores")
 }
@@ -195,61 +156,54 @@ model Product {
   sku               String             @unique
   slug              String             @unique
   video             String?
-  expiration_date   DateTime?
   is_active         Boolean            @default(true)
   is_featured       Boolean            @default(false)
   is_published      Boolean            @default(false)
+  expiration_date   DateTime?
+  primary_media_id  Int?               @unique
+  depth             Float?
+  depth_unit        LengthUnit?
+  diameter          Float?
+  diameter_unit     LengthUnit?
+  height            Float?
+  height_unit       LengthUnit?
+  weight            Float?
+  weight_unit       WeightUnit?
+  width             Float?
+  width_unit        LengthUnit?
+  is_deleted        Boolean            @default(false)
   order_items       OrderItem[]
   product_comments  product_comments[]
   product_likes     product_likes[]
+  media             ProductMedia[]
   stock_entries     ProductStock[]
+  variants          ProductVariant[]
   owner             User               @relation(fields: [owner_id], references: [id])
+  primary_media     ProductMedia?      @relation("ProductPrimaryMedia", fields: [primary_media_id], references: [id])
   store             Store              @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  categories        Category[]         @relation("CategoryToProduct")
   social_activities SocialActivity[]
-
-  // New relations for multiple media support
-  primary_media_id Int?             @unique
-  primary_media    ProductMedia?    @relation("ProductPrimaryMedia", fields: [primary_media_id], references: [id])
-  media            ProductMedia[]
-  variants         ProductVariant[]
-
-  // Product-level dimensions (optional)
-  height        Float?
-  height_unit   LengthUnit?
-  width         Float?
-  width_unit    LengthUnit?
-  depth         Float?
-  depth_unit    LengthUnit?
-  diameter      Float?
-  diameter_unit LengthUnit?
-  weight        Float?
-  weight_unit   WeightUnit?
-
-  is_deleted Boolean @default(false)
+  categories        Category[]         @relation("CategoryToProduct")
 
   @@map("products")
 }
 
 model Branch {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String?
-  address     String?
-  city        String?
-  province    String?
-  country     String?
-  phone       String?
-  email       String?
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  store_id    Int
-  is_main     Boolean  @default(false)
-
+  id            Int                   @id @default(autoincrement())
+  name          String
+  description   String?
+  address       String?
+  phone         String?
+  email         String?
+  created_at    DateTime              @default(now())
+  updated_at    DateTime              @updatedAt
+  store_id      Int
+  is_main       Boolean               @default(false)
+  city          String?
+  country       String?
+  province      String?
+  facebook_url  String?
   instagram_url String?
   x_url         String?
-  facebook_url  String?
-
   store         Store                 @relation(fields: [store_id], references: [id], onDelete: Cascade)
   orders        Order[]
   stock         ProductStock[]
@@ -290,62 +244,90 @@ model Category {
   @@map("categories")
 }
 
-// Catalog of colors (optional, scoped by store)
 model Color {
-  id         Int      @id @default(autoincrement())
+  id         Int              @id @default(autoincrement())
   store_id   Int?
   name       String
   rgba       Json?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  store    Store?           @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  variants ProductVariant[]
+  created_at DateTime         @default(now())
+  updated_at DateTime         @updatedAt
+  store      Store?           @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  variants   ProductVariant[]
 
   @@map("colors")
 }
 
-// Variants generated from sizes/measures/colors
 model ProductVariant {
-  id              Int      @id @default(autoincrement())
-  product_id      Int
-  sku             String?  @unique
-  size_or_measure String?
-  dimension_group String?
-  color_id        Int?
-  price           Float?
-  is_active       Boolean  @default(true)
-  barcode         String?
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
+  id                 Int                   @id @default(autoincrement())
+  product_id         Int
+  sku                String?               @unique
+  color_id           Int?
+  price              Float?
+  is_active          Boolean               @default(true)
+  barcode            String?
+  created_at         DateTime              @default(now())
+  updated_at         DateTime              @updatedAt
+  primary_media_id   Int?                  @unique
+  is_deleted         Boolean               @default(false)
+  available_for_sale Boolean               @default(true)
+  available_from     DateTime?
+  available_until    DateTime?
+  compare_price      Float?
+  cost_price         Float?
+  country_of_origin  String?
+  custom_attributes  Json?
+  depth              Float?
+  depth_unit         LengthUnit?
+  description        String?
+  diameter           Float?
+  diameter_unit      LengthUnit?
+  digital_file_url   String?
+  discount_amount    Float?
+  discount_end       DateTime?
+  discount_start     DateTime?
+  discount_type      DiscountType?
+  height             Float?
+  height_unit        LengthUnit?
+  is_digital         Boolean               @default(false)
+  is_visible         Boolean               @default(true)
+  low_stock_alert    Int?
+  material           String?
+  max_per_order      Int?
+  min_wholesale_qty  Int?
+  name               String?
+  pattern            String?
+  requires_shipping  Boolean               @default(true)
+  shipping_depth     Float?
+  shipping_height    Float?
+  shipping_weight    Float?
+  shipping_width     Float?
+  size               String?
+  style              String?
+  weight             Float?
+  weight_unit        WeightUnit?
+  wholesale_price    Float?
+  width              Float?
+  width_unit         LengthUnit?
+  order_items        OrderItem[]
+  media              ProductMedia[]        @relation("VariantMedia")
+  stocks             ProductVariantStock[]
+  color              Color?                @relation(fields: [color_id], references: [id])
+  primary_media      ProductMedia?         @relation("VariantPrimaryMedia", fields: [primary_media_id], references: [id])
+  product            Product               @relation(fields: [product_id], references: [id], onDelete: Cascade)
 
-  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
-  color   Color?  @relation(fields: [color_id], references: [id])
-
-  // Variant-specific media (optional)
-  primary_media_id Int?           @unique
-  primary_media    ProductMedia?  @relation("VariantPrimaryMedia", fields: [primary_media_id], references: [id])
-  media            ProductMedia[] @relation("VariantMedia")
-
-  stocks      ProductVariantStock[]
-  order_items OrderItem[]
-  is_deleted  Boolean               @default(false)
-
-  @@unique([product_id, size_or_measure, color_id])
+  @@unique([product_id, size, color_id])
   @@index([product_id])
   @@map("product_variants")
 }
 
-// Stock per variant and branch
 model ProductVariantStock {
   variant_id Int
   branch_id  Int
   quantity   Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  branch  Branch         @relation(fields: [branch_id], references: [id], onDelete: Cascade)
-  variant ProductVariant @relation(fields: [variant_id], references: [id], onDelete: Cascade)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  branch     Branch         @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+  variant    ProductVariant @relation(fields: [variant_id], references: [id], onDelete: Cascade)
 
   @@id([variant_id, branch_id])
   @@map("product_variant_stocks")
@@ -393,27 +375,25 @@ model Order {
   items                OrderItem[]
   messages             OrderMessage[]
   payment              OrderPayment?
+  tracking             OrderTracking?
   branch               Branch           @relation(fields: [branch_id], references: [id])
   customer             User?            @relation("OrderCustomer", fields: [customer_id], references: [id])
   processed_by         User?            @relation("OrderProcessedBy", fields: [processed_by_user_id], references: [id])
   store                Store            @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  tracking             OrderTracking?
   social_activities    SocialActivity[]
 
   @@map("orders")
 }
 
 model OrderItem {
-  id         Int     @id @default(autoincrement())
+  id         Int             @id @default(autoincrement())
   order_id   Int
   product_id Int
   quantity   Int
   price      Float
-  order      Order   @relation(fields: [order_id], references: [id])
-  product    Product @relation(fields: [product_id], references: [id])
-
-  // Optional exact variant sold
   variant_id Int?
+  order      Order           @relation(fields: [order_id], references: [id])
+  product    Product         @relation(fields: [product_id], references: [id])
   variant    ProductVariant? @relation(fields: [variant_id], references: [id])
 
   @@index([variant_id])
@@ -508,9 +488,9 @@ model Employee {
   contract_responses   ContractResponse[]
   store                Store                @relation(fields: [store_id], references: [id], onDelete: Cascade)
   user                 User                 @relation(fields: [user_id], references: [id])
+  social_activities    SocialActivity[]
   assigned_reminders   StoreReminder[]
   transactions         Transaction[]
-  social_activities    SocialActivity[]
 
   @@unique([user_id, store_id])
   @@map("employees")
@@ -560,104 +540,93 @@ model StoreOperationalSettings {
   facebook_url                String?
   instagram_url               String?
   x_url                       String?
+  country_tax_amount          Float?          @default(0)
   store                       Store           @relation(fields: [store_id], references: [id], onDelete: Cascade)
-
-  country_tax_amount Float? @default(0)
 
   @@map("store_operational_settings")
 }
 
 model StoreCustomization {
-  id              Int    @id @default(autoincrement())
-  store_id        Int    @unique
-  primary_color   String @default("#000000")
-  secondary_color String @default("#ffffff")
-  accent_color    String @default("#6366f1")
-
-  background_color            String @default("#ffffff")
-  background_foreground_color String @default("#000000")
-
-  header_color            String         @default("#000000")
-  header_foreground_color String         @default("#ffffff")
-  header_floating         Boolean        @default(true)
-  header_position         HeaderPosition @default(TOP)
-  header_size             HeaderSize     @default(SMALL)
-  header_rounded          HeaderRounded  @default(SMALL)
-
-  show_brand_logo Boolean @default(true)
-
-  show_brand_text  Boolean @default(true)
-  brand_text_color String  @default("#000000")
-
-  filter_background_color String         @default("#ffffff")
-  filter_text_color       String         @default("#000000")
-  filter_position         FilterPosition @default(LEFT)
-  filter_style            FilterStyle    @default(MODERN)
-  show_filters            Boolean        @default(true)
-  show_sorting_filter     Boolean        @default(true)
-  show_pagination_buttons Boolean        @default(true)
-  show_categories_filter  Boolean        @default(true)
-  show_price_filter       Boolean        @default(true)
-  show_searchbar_filter   Boolean        @default(true)
-
-  show_main_searchbar Boolean @default(true)
-
-  show_layout_switcher Boolean @default(true)
-
-  product_card_background_color String           @default("#ffffff")
-  product_card_text_color       String           @default("#000000")
-  product_card_style            ProductCardStyle @default(MODERN)
-
-  /**
-   * OLD
-   */
-  text_color             String               @default("#000000")
-  secondary_text_color   String               @default("#6b7280")
-  border_color           String               @default("#e5e7eb")
-  success_color          String               @default("#10b981")
-  warning_color          String               @default("#f59e0b")
-  error_color            String               @default("#ef4444")
-  primary_font           String               @default("Inter")
-  secondary_font         String               @default("Inter")
-  font_size_base         String               @default("16px")
-  show_header            Boolean              @default(true)
-  show_logo              Boolean              @default(true)
-  show_search_bar        Boolean              @default(true)
-  show_navigation_menu   Boolean              @default(true)
-  show_cart_icon         Boolean              @default(true)
-  show_user_account      Boolean              @default(true)
-  header_style           HeaderStyle          @default(MODERN)
-  show_footer            Boolean              @default(true)
-  footer_text            String?
-  show_social_links      Boolean              @default(true)
-  show_contact_info      Boolean              @default(true)
-  show_store_info        Boolean              @default(true)
-  layout_style           LayoutStyle          @default(MODERN)
-  container_max_width    String               @default("1200px")
-  border_radius          String               @default("8px")
-  spacing_unit           String               @default("1rem")
-  show_hero_section      Boolean              @default(true)
-  show_featured_products Boolean              @default(true)
-  show_categories        Boolean              @default(true)
-  show_testimonials      Boolean              @default(false)
-  show_about_section     Boolean              @default(false)
-  products_per_page      Int                  @default(12)
-  show_product_rating    Boolean              @default(true)
-  show_product_stock     Boolean              @default(true)
-  show_add_to_cart_btn   Boolean              @default(true)
-  custom_css             String?
-  custom_js              String?
-  favicon_url            String?
-  meta_title             String?
-  meta_description       String?
-  google_analytics_id    String?
-  facebook_pixel_id      String?
-  google_tag_manager_id  String?
-  created_at             DateTime             @default(now())
-  updated_at             DateTime             @updatedAt
-  store                  Store                @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  sections               StoreSectionConfig[]
-  widgets                StoreWidgetConfig[]
+  id                            Int                  @id @default(autoincrement())
+  store_id                      Int                  @unique
+  primary_color                 String               @default("#000000")
+  secondary_color               String               @default("#ffffff")
+  accent_color                  String               @default("#6366f1")
+  background_color              String               @default("#ffffff")
+  /// *
+  ///    * OLD
+  text_color                    String               @default("#000000")
+  secondary_text_color          String               @default("#6b7280")
+  border_color                  String               @default("#e5e7eb")
+  success_color                 String               @default("#10b981")
+  warning_color                 String               @default("#f59e0b")
+  error_color                   String               @default("#ef4444")
+  primary_font                  String               @default("Inter")
+  secondary_font                String               @default("Inter")
+  font_size_base                String               @default("16px")
+  show_header                   Boolean              @default(true)
+  show_logo                     Boolean              @default(true)
+  show_search_bar               Boolean              @default(true)
+  show_navigation_menu          Boolean              @default(true)
+  show_cart_icon                Boolean              @default(true)
+  show_user_account             Boolean              @default(true)
+  header_position               HeaderPosition       @default(TOP)
+  header_style                  HeaderStyle          @default(MODERN)
+  show_footer                   Boolean              @default(true)
+  footer_text                   String?
+  show_social_links             Boolean              @default(true)
+  show_contact_info             Boolean              @default(true)
+  show_store_info               Boolean              @default(true)
+  layout_style                  LayoutStyle          @default(MODERN)
+  container_max_width           String               @default("1200px")
+  border_radius                 String               @default("8px")
+  spacing_unit                  String               @default("1rem")
+  show_hero_section             Boolean              @default(true)
+  show_featured_products        Boolean              @default(true)
+  show_categories               Boolean              @default(true)
+  show_testimonials             Boolean              @default(false)
+  show_about_section            Boolean              @default(false)
+  products_per_page             Int                  @default(12)
+  product_card_style            ProductCardStyle     @default(MODERN)
+  show_product_rating           Boolean              @default(true)
+  show_product_stock            Boolean              @default(true)
+  show_add_to_cart_btn          Boolean              @default(true)
+  custom_css                    String?
+  custom_js                     String?
+  favicon_url                   String?
+  meta_title                    String?
+  meta_description              String?
+  google_analytics_id           String?
+  facebook_pixel_id             String?
+  google_tag_manager_id         String?
+  created_at                    DateTime             @default(now())
+  updated_at                    DateTime             @updatedAt
+  background_foreground_color   String               @default("#000000")
+  brand_text_color              String               @default("#000000")
+  filter_background_color       String               @default("#ffffff")
+  filter_position               FilterPosition       @default(LEFT)
+  filter_style                  FilterStyle          @default(MODERN)
+  filter_text_color             String               @default("#000000")
+  header_color                  String               @default("#000000")
+  header_floating               Boolean              @default(true)
+  header_foreground_color       String               @default("#ffffff")
+  header_rounded                HeaderRounded        @default(SMALL)
+  header_size                   HeaderSize           @default(SMALL)
+  product_card_background_color String               @default("#ffffff")
+  product_card_text_color       String               @default("#000000")
+  show_brand_logo               Boolean              @default(true)
+  show_brand_text               Boolean              @default(true)
+  show_categories_filter        Boolean              @default(true)
+  show_filters                  Boolean              @default(true)
+  show_layout_switcher          Boolean              @default(true)
+  show_main_searchbar           Boolean              @default(true)
+  show_pagination_buttons       Boolean              @default(true)
+  show_price_filter             Boolean              @default(true)
+  show_searchbar_filter         Boolean              @default(true)
+  show_sorting_filter           Boolean              @default(true)
+  store                         Store                @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  sections                      StoreSectionConfig[]
+  widgets                       StoreWidgetConfig[]
 
   @@map("store_customizations")
 }
@@ -861,7 +830,6 @@ model StoreReminder {
 }
 
 model email_change_requests {
-  id                     Int       @id @default(autoincrement())
   user_id                Int
   old_email              String
   new_email              String
@@ -874,6 +842,7 @@ model email_change_requests {
   expires_at             DateTime
   created_at             DateTime  @default(now())
   updated_at             DateTime
+  id                     Int       @id @default(autoincrement())
   users                  User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([completed])
@@ -882,16 +851,12 @@ model email_change_requests {
 }
 
 model OrderTracking {
-  id Int @id @default(autoincrement())
-
-  order_id Int @unique
-
+  id              Int                 @id @default(autoincrement())
+  order_id        Int                 @unique
   tracking_status OrderTrackingStatus @default(PREPARING_ORDER)
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  order Order @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  created_at      DateTime            @default(now())
+  updated_at      DateTime            @updatedAt
+  order           Order               @relation(fields: [order_id], references: [id], onDelete: Cascade)
 
   @@map("order_tracking")
 }
@@ -905,21 +870,19 @@ model SocialActivity {
   entity_id     Int
   title         String
   description   String?
-  metadata      String? // JSON con datos adicionales específicos de la actividad
+  metadata      String?
   is_public     Boolean            @default(true)
   is_featured   Boolean            @default(false)
   created_at    DateTime           @default(now())
   updated_at    DateTime           @updatedAt
-
-  product_id  Int?
-  employee_id Int?
-  order_id    Int?
-  // Relaciones
-  user        User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  store       Store?    @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  product     Product?  @relation(fields: [product_id], references: [id], onDelete: Cascade)
-  employee    Employee? @relation(fields: [employee_id], references: [id], onDelete: Cascade)
-  order       Order?    @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  employee_id   Int?
+  product_id    Int?
+  order_id      Int?
+  employee      Employee?          @relation(fields: [employee_id], references: [id], onDelete: Cascade)
+  order         Order?             @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  product       Product?           @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  store         Store?             @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  user          User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
   @@index([store_id])
@@ -928,6 +891,60 @@ model SocialActivity {
   @@index([is_public])
   @@index([is_featured])
   @@map("social_activities")
+}
+
+model ProductMedia {
+  id                  Int             @id @default(autoincrement())
+  product_id          Int
+  type                MediaType
+  url                 String
+  alt_text            String?
+  sort_order          Int             @default(0)
+  created_at          DateTime        @default(now())
+  updated_at          DateTime        @updatedAt
+  product_variant_id  Int?
+  product             Product         @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  variant             ProductVariant? @relation("VariantMedia", fields: [product_variant_id], references: [id])
+  primary_for_variant ProductVariant? @relation("VariantPrimaryMedia")
+  primary_for_product Product?        @relation("ProductPrimaryMedia")
+
+  @@index([product_id, sort_order])
+  @@index([product_variant_id, sort_order])
+  @@map("product_medias")
+}
+
+enum NotificationType {
+  SYSTEM
+  PRODUCT_LIKE
+  PRODUCT_COMMENT
+  PRODUCT_DELETED
+  ORDER_CREATED
+  ORDER_COMPLETED
+  ORDER_FAILED
+  ORDER_CANCELLED
+  ORDER_REFUNDED
+  ORDER_SHIPPED
+  ORDER_PREPARING
+  ORDER_READY
+  ORDER_DELIVERED
+  ORDER_PICKED_UP
+  ORDER_ON_THE_WAY
+  CONTRACT_ASSIGNED
+  CONTRACT_APPROVED
+  CONTRACT_REJECTED
+  EMPLOYEE_HIRED
+  EMPLOYEE_FIRED
+  PRODUCT_CREATED
+  PRODUCT_UPDATED
+  STORE_CREATED
+  STORE_UPDATED
+  STORE_DELETED
+  BRANCH_CREATED
+  BRANCH_UPDATED
+  BRANCH_DELETED
+  CATEGORY_CREATED
+  CATEGORY_UPDATED
+  CATEGORY_DELETED
 }
 
 enum OrderTrackingStatus {
@@ -1138,13 +1155,11 @@ enum ContractStatus {
   EXPIRED
 }
 
-// New enum for product media types
 enum MediaType {
   IMAGE
   VIDEO
 }
 
-// Units for product dimensions
 enum LengthUnit {
   MM
   CM
@@ -1183,31 +1198,6 @@ enum ReminderStatus {
   OVERDUE
 }
 
-// New model for product media (images/videos)
-model ProductMedia {
-  id         Int       @id @default(autoincrement())
-  product_id Int
-  type       MediaType
-  url        String
-  alt_text   String?
-  sort_order Int       @default(0)
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-
-  // Relations
-  product             Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
-  primary_for_product Product? @relation("ProductPrimaryMedia")
-
-  // Optional relation to a specific variant
-  product_variant_id  Int?
-  variant             ProductVariant? @relation("VariantMedia", fields: [product_variant_id], references: [id])
-  primary_for_variant ProductVariant? @relation("VariantPrimaryMedia")
-
-  @@index([product_id, sort_order])
-  @@index([product_variant_id, sort_order])
-  @@map("product_medias")
-}
-
 enum SocialActivityType {
   PRODUCT_LIKE
   PRODUCT_COMMENT
@@ -1230,4 +1220,10 @@ enum SocialActivityType {
   PRODUCT_REVIEW
   ACHIEVEMENT_UNLOCKED
   MILESTONE_REACHED
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+  SPECIAL
 }
