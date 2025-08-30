@@ -1,13 +1,14 @@
-import { /* Resolver, */ FieldValues } from "react-hook-form"
-import { ResponseType } from "./"
+import { FieldValues } from "react-hook-form"
 import { ObjectSchema } from "yup"
+import { ReactNode } from "react"
+import { ResponseType } from "./" // tu tipo de respuesta
 
-export type ButtonWithPopupPropsType<T, P extends FieldValues> = {
-  text: string | React.ReactNode
-  children?: React.ReactNode
+export type ButtonWithPopupPropsType<P extends FieldValues> = {
+  text: ReactNode
+  children?: ReactNode
   title?: string
   description?: string
-  action: (payload: P) => Promise<ResponseType<T> | undefined>
+  action: (payload: P) => Promise<ResponseType<unknown> | undefined>
   messages: {
     success: string
     error: string
@@ -20,6 +21,6 @@ export type ButtonWithPopupPropsType<T, P extends FieldValues> = {
   className?: string
   size?: "default" | "sm" | "lg" | "icon"
   formDisabled?: boolean
-  contentButton?: string | React.ReactNode
+  contentButton?: string | ReactNode
   onlyIcon?: boolean
 }

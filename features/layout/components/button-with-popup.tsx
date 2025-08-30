@@ -1,8 +1,7 @@
 "use client"
-import { yupResolver } from "@hookform/resolvers/yup"
+
 import { useState } from "react"
-import { Resolver, FieldValues } from "react-hook-form"
-import { ButtonWithPopupPropsType } from "@/features/layout/types"
+import { FieldValues } from "react-hook-form"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Form } from "@/features/layout/components"
 import { Button } from "@/components/ui/button"
@@ -10,8 +9,9 @@ import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { yupResolverFlexible } from "@/features/employees/types/yup-resolver-flexible"
+import { ButtonWithPopupPropsType } from "@/features/layout/types"
 
-function ButtonWithPopup<T, P extends FieldValues>({
+function ButtonWithPopup<P extends FieldValues>({
   text,
   children,
   title = "Popup title",
@@ -27,17 +27,13 @@ function ButtonWithPopup<T, P extends FieldValues>({
   formDisabled = false,
   contentButton,
   onlyIcon,
-}: ButtonWithPopupPropsType<T, P>) {
+}: ButtonWithPopupPropsType<P>) {
   const [open, setOpen] = useState(false)
 
   const handleSuccess = async () => {
     setOpen(false)
-    if (onComplete && typeof onComplete === "function") {
-      onComplete()
-    }
+    if (onComplete) onComplete()
   }
-
-  /*   const resolver = schema ? yupResolver(schema) as Resolver<P> : undefined */
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -62,11 +58,13 @@ function ButtonWithPopup<T, P extends FieldValues>({
           )}
         </div>
       </DialogTrigger>
+
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
+
         <Form<P>
           resolver={yupResolverFlexible(schema)}
           formAction={action}
