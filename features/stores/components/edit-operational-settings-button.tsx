@@ -29,23 +29,25 @@ type OperationalSettingsFormPayload = {
     payment_methods: PaymentMethod[]
 }
 
+
 function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettingsButtonProps) {
     const operationalSettings = store.operational_settings
-    
+
     const [offersDelivery, setOffersDelivery] = useState(operationalSettings?.offers_delivery || false)
-    
+
     const t = useTranslations("store.edit-operational-settings")
 
     const handleEditOperationalSettings = async (payload: OperationalSettingsFormPayload) => {
         try {
             const data = {
                 offers_delivery: payload.offers_delivery,
-                delivery_price: payload.offers_delivery ? (parseFloat(payload.delivery_price || "0") || 0) : 0,
-                free_delivery_minimum: payload.offers_delivery ? (payload.free_delivery_minimum ? parseFloat(payload.free_delivery_minimum) : null) : null,
-                delivery_radius_km: payload.offers_delivery ? (parseFloat(payload.delivery_radius_km || "5") || 5) : 5,
-                payment_methods: payload.payment_methods,
-                minimum_order_amount: parseFloat(payload.minimum_order_amount) || 0
+                delivery_price: payload.delivery_price ? parseFloat(payload.delivery_price) : 0,
+                free_delivery_minimum: payload.free_delivery_minimum ? parseFloat(payload.free_delivery_minimum) : null,
+                delivery_radius_km: payload.delivery_radius_km ? parseFloat(payload.delivery_radius_km) : 5,
+                minimum_order_amount: parseFloat(payload.minimum_order_amount),
+                payment_methods: payload.payment_methods
             }
+
 
             return await updateOperationalSettingsAction(storeId, data)
         } catch (error) {
@@ -84,11 +86,11 @@ function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettin
                         </span>
                     </AccordionTriggerWithValidation>
                     <AccordionContent className="space-y-4">
-                        <DeliverySwitch 
+                        <DeliverySwitch
                             defaultValue={operationalSettings?.offers_delivery || false}
                             onDeliveryChange={handleDeliveryChange}
                         />
-                        
+
                         <InputField
                             name="delivery_price"
                             label={t("delivery-price")}
@@ -96,7 +98,7 @@ function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettin
                             defaultValue={operationalSettings?.delivery_price?.toString() || "0"}
                             disabled={!offersDelivery}
                         />
-                        
+
                         <InputField
                             name="free_delivery_minimum"
                             label={t("free-delivery-minimum")}
@@ -105,7 +107,7 @@ function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettin
                             placeholder={t("free-delivery-minimum-placeholder")}
                             disabled={!offersDelivery}
                         />
-                        
+
                         <InputField
                             name="delivery_radius_km"
                             label={t("delivery-radius")}
@@ -115,7 +117,7 @@ function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettin
                         />
                     </AccordionContent>
                 </AccordionItem>
-                
+
                 <AccordionItem value="item-2">
                     <AccordionTriggerWithValidation keys={["minimum_order_amount"]}>
                         <span className="flex items-center gap-2">
@@ -130,10 +132,10 @@ function EditOperationalSettingsButton({ storeId, store }: EditOperationalSettin
                             type="number"
                             defaultValue={operationalSettings?.minimum_order_amount?.toString() || "0"}
                         />
-                        
+
                         <PaymentMethodsSwitches
                             defaultMethods={operationalSettings?.payment_methods || [PaymentMethod.CASH]}
-                            onPaymentMethodsChange={() => {}}
+                            onPaymentMethodsChange={() => { }}
                         />
                     </AccordionContent>
                 </AccordionItem>
