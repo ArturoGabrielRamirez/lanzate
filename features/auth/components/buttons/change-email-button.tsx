@@ -4,13 +4,18 @@ import { emailSchema } from '../../schemas/change-email-schema';
 import { ChangeEmailButtonProps } from '../../types';
 import { useEmailChange } from "../../hooks/use-email-change";
 import { EmailChangeDialog, EmailChangeForm, ProgressButton } from "../index";
+import { SetupPasswordPrompt } from "../change-visual/setup-password-prompt";
+import usePasswordGuard from "../../hooks/use-password-guard";
+import { Skeleton } from "@/components/ui/skeleton";
+
 
 export default function ChangeEmailButton({
     buttonText,
     title,
-    className,
+    /* className, */
     currentEmail
 }: ChangeEmailButtonProps) {
+    const { hasPassword, loading, refreshPasswordStatus } = usePasswordGuard()
     const {
         showMonitor,
         setShowMonitor,
@@ -36,6 +41,21 @@ export default function ChangeEmailButton({
         };
     }
 
+    if (loading) {
+        return <Skeleton className="size-6 rounded" />
+    }
+
+    // Si no tiene contraseña, mostrar prompt para configurarla
+    if (!hasPassword) {
+        return (
+            <SetupPasswordPrompt
+                operationName="cambiar tu email"
+                onPasswordSet={refreshPasswordStatus}
+            />
+        )
+    }
+
+    // Si tiene contraseña, mostrar el cambio normal
     return (
         <>
             <div className="flex items-center gap-2">
@@ -50,10 +70,11 @@ export default function ChangeEmailButton({
                         error: "Error al cambiar el email",
                         loading: "Enviando emails de verificación..."
                     }}
-                    className={className}
+                    /*  className={className} */
                     variant="default"
                     onComplete={() => { }}
                     disabled={hasPendingChange && !isProcessCompleted}
+                    onlyIcon={true}
                 >
                     <EmailChangeForm
                         currentEmail={currentEmail}

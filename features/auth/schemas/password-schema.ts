@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 
 // Schema base para contraseña
 export const passwordSchema = Yup.object().shape({
-  currentPassword: Yup.string().required('Required'),
+  currentPassword: Yup.string().required('Requerido'),
   password: Yup.string()
     .min(6, "La contraseña debe tener al menos 6 caracteres")
     .required("La contraseña es requerida")
@@ -16,7 +16,7 @@ export const passwordSchema = Yup.object().shape({
 });
 
 // Schema extendido con código de verificación
-export const passwordWithVerificationSchema = Yup.object().shape({
+/* export const passwordWithVerificationSchema = Yup.object().shape({
   verificationCode: Yup.string()
     .min(6, 'El código debe tener al menos 6 caracteres')
     .max(6, 'El código debe tener exactamente 6 caracteres')
@@ -30,4 +30,4 @@ export const passwordWithVerificationSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir')
     .required("Confirma tu contraseña")
-});
+}); */

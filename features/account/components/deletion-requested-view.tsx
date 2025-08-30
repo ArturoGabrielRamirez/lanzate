@@ -1,9 +1,9 @@
 import { Suspense } from "react"
 import { AlertTriangle } from "lucide-react"
 import { Title } from "@/features/layout/components"
-import { Skeleton } from "@/components/ui/skeleton"
 import { UserType, UserDeletionStatus } from "../types"
-import { DangerZoneTab } from "./danger-zone-tab"
+import DangerZoneTab from "./danger-zone-tab"
+import DangerDeepZoneSkeleton from "./danger-deep-zone-skeleton"
 
 interface DeletionRequestedViewProps {
     user: UserType
@@ -11,10 +11,10 @@ interface DeletionRequestedViewProps {
     onStatusChange: () => void
 }
 
-export function DeletionRequestedView({ 
-    user, 
-    deletionStatus, 
-    onStatusChange 
+export function DeletionRequestedView({
+    user,
+    deletionStatus,
+    onStatusChange
 }: DeletionRequestedViewProps) {
     return (
         <div className="h-screen flex flex-col overflow-hidden relative z-10">
@@ -49,10 +49,10 @@ export function DeletionRequestedView({
                     </div>
                 </div>
             </div>
-            
+
             <section className="flex-1 px-4 pb-4 overflow-hidden">
                 <div className="h-full overflow-y-auto">
-                    <Suspense fallback={<DangerZoneSkeleton />}>
+                    <Suspense fallback={<DangerDeepZoneSkeleton />}>
                         <DangerZoneTab
                             userId={user.id}
                             onStatusChange={onStatusChange}
@@ -60,20 +60,6 @@ export function DeletionRequestedView({
                     </Suspense>
                 </div>
             </section>
-        </div>
-    )
-}
-
-function DangerZoneSkeleton() {
-    return (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-            <div className="flex items-center gap-2 mb-4">
-                <Skeleton className="h-5 w-5" />
-                <Skeleton className="h-6 w-32" />
-            </div>
-            <Skeleton className="h-4 w-full mb-2" />
-            <Skeleton className="h-4 w-3/4 mb-4" />
-            <Skeleton className="h-10 w-40" />
         </div>
     )
 }

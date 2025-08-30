@@ -1,4 +1,3 @@
-import { User } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
 
 export function LoadingSkeleton() {
@@ -13,14 +12,14 @@ export function LoadingSkeleton() {
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                         <Skeleton className="h-4 w-16" />
-                        <span>/</span>
+                        <span className="text-muted-foreground text-xs">/</span>
                         <Skeleton className="h-4 w-20" />
                         <div className="ml-auto">
                             <Skeleton className="h-4 w-32" />
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Skeleton para AccountHeader */}
                 <div className="flex items-center gap-4 p-6 bg-card rounded-lg border mb-6">
                     <Skeleton className="h-20 w-20 rounded-full" />
@@ -46,7 +45,7 @@ export function LoadingSkeleton() {
                             <Skeleton className="h-10 w-full rounded-md" />
                         </div>
                     </div>
-                    
+
                     {/* Skeleton para el contenido de las tabs */}
                     <div className="h-full space-y-4">
                         {/* Información básica */}
@@ -82,20 +81,20 @@ export function LoadingSkeleton() {
                         {/* Seguridad */}
                         <div className="bg-card rounded-lg border p-6">
                             <div className="flex items-center gap-2 mb-4">
-                                <Skeleton className="h-5 w-5" />
+                                <Skeleton className="size-5" />
                                 <Skeleton className="h-6 w-24" />
                             </div>
                             <div className="space-y-4">
                                 {Array.from({ length: 4 }).map((_, index) => (
                                     <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
                                         <div className="flex items-center gap-3">
-                                            <Skeleton className="h-5 w-5" />
+                                            <Skeleton className="size-5" />
                                             <div>
                                                 <Skeleton className="h-5 w-28 mb-1" />
                                                 <Skeleton className="h-4 w-48" />
                                             </div>
                                         </div>
-                                        <Skeleton className="h-8 w-16 rounded-md" />
+                                        <Skeleton className="size-6 rounded-md" />
                                     </div>
                                 ))}
                             </div>

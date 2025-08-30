@@ -120,13 +120,13 @@ export interface EmailStepProgressProps {
 }
 
 export interface ChangePasswordButtonProps {
-  buttonText: string;
+  buttonText: string | React.ReactNode;
   title: string;
   className?: string;
 }
 
 export interface ChangeEmailButtonProps {
-  buttonText: string;
+  buttonText: string | React.ReactNode;
   title: string;
   className?: string;
   currentEmail: string;

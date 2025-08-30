@@ -5,41 +5,41 @@ import { insertUser } from '@/features/auth/data/insertUser'
 
 export function detectOAuthCancellation(error: string | null, errorDescription: string | null): boolean {
   if (!error) return false
-  
+
   const cancellationErrors = [
     'access_denied',
     'user_cancelled_authorize',
     'user_cancelled_login'
   ]
-  
+
   const cancellationDescriptions = [
     'user denied',
     'user cancelled',
-    'user canceled', 
+    'user canceled',
     'permissions error',
     'authorization denied',
     'the user denied the request'
   ]
-  
+
   if (cancellationErrors.includes(error.toLowerCase())) return true
-  
+
   if (errorDescription) {
     const lowerDesc = errorDescription.toLowerCase()
     return cancellationDescriptions.some(phrase => lowerDesc.includes(phrase))
   }
-  
+
   return false
 }
 
 export function buildErrorRedirectUrl(
-  baseUrl: string, 
-  locale: string, 
+  baseUrl: string,
+  locale: string,
   errorType: 'oauth_error' | 'missing_code' | 'exchange_failed' | 'user_fetch_failed' | 'account_deleted' | 'email_in_use' | 'validation_failed' | 'user_creation_failed' | 'unexpected_error',
   errorMessage?: string,
   originalError?: string
 ): string {
   const errorParams = new URLSearchParams()
-  
+
   switch (errorType) {
     case 'missing_code':
       errorParams.set('error', 'missing_code')
@@ -75,7 +75,7 @@ export function buildErrorRedirectUrl(
         errorParams.set('error_description', errorMessage)
       }
   }
-  
+
   return `${baseUrl}/${locale}/auth/error?${errorParams.toString()}`
 }
 
@@ -101,16 +101,16 @@ export function extractRequestParams(request: Request) {
 
 export async function handleAnonymizedUserCheck(user: any, request: Request, supabase: any, prisma: any) {
   if (!user.email) return { isAnonymized: false, shouldBlock: false }
-  
+
   const emailHash = CryptoUtils.hashEmail(user.email)
-  
+
   const anonymizedUser = await prisma.user.findFirst({
     where: {
       AND: [
         {
           OR: [
             { supabase_user_id: user.id },
-            { 
+            {
               AND: [
                 { original_email_hash: emailHash },
                 { supabase_user_id: null }
@@ -142,7 +142,7 @@ export async function handleAnonymizedUserCheck(user: any, request: Request, sup
         where: { id: anonymizedUser.id },
         data: { supabase_user_id: null }
       })
-      console.log(`🧹 Conexión huérfana limpiada para usuario ${anonymizedUser.id}`)
+      console.error(`🧹 Conexión huérfana limpiada para usuario ${anonymizedUser.id}`)
     } catch (cleanupError) {
       console.error('❌ Error limpiando conexión huérfana:', cleanupError)
     }
@@ -185,7 +185,6 @@ export async function handleUserCreationOrUpdate(user: any, prisma: any) {
   let wasMigrated = false
 
   if (!existingUser && user?.email) {
-    // Crear nuevo usuario
     try {
       const validation = await UserDeletionSystem.validateNewUserCreation(user.email)
 
@@ -198,9 +197,6 @@ export async function handleUserCreationOrUpdate(user: any, prisma: any) {
         }
       }
 
-      if (validation.previouslyAnonymized) {
-        console.log(`ℹ️ Creando nueva cuenta para email previamente anonimizado: ${user.email}`)
-      }
     } catch (validationError) {
       console.error('❌ Error en validación:', validationError)
       if (validationError instanceof Error && validationError.message.includes('already exists')) {

@@ -49,12 +49,6 @@ export default function AccountHeader({ user, translations: t, onAvatarUpdate, o
                                 onProfileUpdate={onProfileUpdate}
                             />
                         </div>
-                        {/* Mostrar email si el nombre principal no es el email */}
-                    {/*     {getDisplayName(user) !== user.email && (
-                            <p className="text-sm text-muted-foreground truncate">
-                                {user.email}
-                            </p>
-                        )} */}
                         <div className="flex flex-col items-start gap-2 pl-2">
                             <p className="capitalize text-sm">
                                 {user.Account[0].type.toLowerCase()} {t.title}
