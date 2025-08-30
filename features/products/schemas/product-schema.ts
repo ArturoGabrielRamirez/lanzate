@@ -108,9 +108,20 @@ export const editProductSchema = yup.object({
 })
 
 export const editVariantSchema = yup.object({
-    size: yup.string().optional(),
-    sku: yup.string().optional(),
-    barcode: yup.string().optional(),
-    price: yup.number().min(0, 'Price must be greater than or equal to 0').optional(),
-    stock: yup.number().min(0, 'Stock must be greater than or equal to 0').optional(),
+    name: yup.string().required('El nombre es obligatorio').min(3, 'El nombre debe tener al menos 3 caracteres').max(50, 'El nombre debe tener menos de 50 caracteres'),
+    sku: yup.string()
+        .trim()
+        .transform((v) => (v === '' ? undefined : v))
+        .matches(/^[A-Za-z0-9\-\_\.]+$/, { message: 'SKU debe ser alfanumérico y puede incluir - _ .', excludeEmptyString: true })
+        .max(64, 'SKU debe tener menos de 64 caracteres')
+        .optional(),
+    barcode: yup.string()
+        .trim()
+        .transform((v) => (v === '' ? undefined : v))
+        .matches(/^[0-9]*$/, { message: 'El código de barras debe contener solo números', excludeEmptyString: true })
+        .max(64, 'El código de barras debe tener menos de 64 caracteres')
+        .optional(),
+    description: yup.string()
+        .max(255, 'La descripción debe tener menos de 255 caracteres')
+        .optional(),
 })

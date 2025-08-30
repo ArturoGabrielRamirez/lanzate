@@ -22,9 +22,10 @@ interface VariantBasicInfoDisplayProps {
 }
 
 type VariantBasicInfoFormValues = {
-    size_or_measure: string
+    name: string
     sku: string
     barcode: string
+    description: string
 }
 
 const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoDisplayProps) => {
@@ -43,9 +44,10 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoD
         const { reset } = useFormContext<VariantBasicInfoFormValues>()
 
         const initialValues = {
-            size: variant.size || "",
+            name: variant.name || "",
             sku: variant.sku || "",
             barcode: variant.barcode || "",
+            description: variant.description || "",
         }
 
         const onClick = () => {
@@ -81,9 +83,10 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoD
                 resolver={yupResolver(editVariantSchema)}
                 onSuccess={handleCloseEdit}
                 defaultValues={{
-                    size: variant.size || "",
+                    name: variant.name || "",
                     sku: variant.sku || "",
                     barcode: variant.barcode || "",
+                    description: variant.description || "",
                 }}
             >
                 <CardHeader>
@@ -94,7 +97,7 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoD
                             </Link>
                             <span className="flex items-center gap-2 text-lg md:text-xl">
                                 <Box className="size-5" />
-                                Información básica de la variante
+                                Información básica
                             </span>
                         </CardTitle>
                         <CardAction>
@@ -118,16 +121,12 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoD
                 <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         <div className="space-y-1">
-                            <label className="text-sm font-medium">Talle/Tamaño</label>
+                            <label className="text-sm font-medium">Nombre</label>
                             {isEditing ? (
-                                <InputField name="size" type="text" label="Talle/Tamaño" />
+                                <InputField name="name" type="text" label="Nombre" />
                             ) : (
-                                <p className="text-sm text-muted-foreground">{variant.size || "No especificado"}</p>
+                                <p className="text-sm text-muted-foreground">{variant.name || "No especificado"}</p>
                             )}
-                        </div>
-                        <div className="space-y-1">
-                            <label className="text-sm font-medium">Color</label>
-                            <p className="text-sm text-muted-foreground">{variant.color?.name || "No especificado"}</p>
                         </div>
                         <div className="space-y-1">
                             <label className="text-sm font-medium">SKU</label>
@@ -143,6 +142,14 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId }: VariantBasicInfoD
                                 <InputField name="barcode" type="text" label="Código de barras" />
                             ) : (
                                 <p className="text-sm text-muted-foreground">{variant.barcode || "No especificado"}</p>
+                            )}
+                        </div>
+                        <div className="space-y-1">
+                            <label className="text-sm font-medium">Descripción</label>
+                            {isEditing ? (
+                                <InputField name="description" type="text" label="Descripción" />
+                            ) : (
+                                <p className="text-sm text-muted-foreground">{variant.description || "No especificado"}</p>
                             )}
                         </div>
                     </div>
