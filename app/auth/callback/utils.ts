@@ -2,6 +2,8 @@ import { routing } from '@/i18n/routing'
 import { UserDeletionSystem } from '@/features/account/utils/user-deletion-system'
 import { CryptoUtils } from '@/features/account/utils/crypto-utils'
 import { insertUser } from '@/features/auth/data/insertUser'
+import { SupabaseClient, User } from '@supabase/supabase-js'
+import { PrismaClient } from '@prisma/client'
 
 export function detectOAuthCancellation(error: string | null, errorDescription: string | null): boolean {
   if (!error) return false
@@ -99,7 +101,8 @@ export function extractRequestParams(request: Request) {
   return { url, code, error, error_description, next, subdomain, locale, baseUrl }
 }
 
-export async function handleAnonymizedUserCheck(user: any, request: Request, supabase: any, prisma: any) {
+
+export async function handleAnonymizedUserCheck(user: User, request: Request, supabase: SupabaseClient, prisma: PrismaClient) {
   if (!user.email) return { isAnonymized: false, shouldBlock: false }
 
   const emailHash = CryptoUtils.hashEmail(user.email)
@@ -172,7 +175,7 @@ export async function handleAnonymizedUserCheck(user: any, request: Request, sup
   return { isAnonymized: true, shouldBlock: true }
 }
 
-export async function handleUserCreationOrUpdate(user: any, prisma: any) {
+export async function handleUserCreationOrUpdate(user: User, prisma: PrismaClient) {
   const existingUser = await prisma.user.findFirst({
     where: {
       supabase_user_id: user.id,

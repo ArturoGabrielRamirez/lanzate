@@ -72,6 +72,7 @@ export async function GET(request: Request) {
       }).catch(error => console.error('❌ Error logging OAuth signin:', error))
     }
 
+
     const successUrl = buildSuccessRedirectUrl(baseUrl, locale as string, next, subdomain)
     return NextResponse.redirect(successUrl)
 
