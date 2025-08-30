@@ -1,7 +1,14 @@
 "use client"
 
 import { ProductVariant } from "@prisma/client"
-import { VariantBasicInfoDisplay, VariantMediaDisplay, VariantStockDisplay, VariantPriceDisplay } from "./index"
+import { 
+    VariantBasicInfoDisplay, 
+    VariantMediaDisplay, 
+    VariantStockDisplay, 
+    VariantPriceDisplay,
+    VariantDimensionsDisplay,
+    VariantSizesDisplay
+} from "./index"
 
 interface VariantDetailFormProps {
     variant: ProductVariant & {
@@ -41,6 +48,18 @@ const VariantDetailForm = ({ variant, productPrice, slug, productId, product }: 
                 <VariantPriceDisplay
                     variant={variant}
                     productPrice={productPrice}
+                />
+            </div>
+
+            {/* Tercera fila: Dimensiones y Tamaños */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <VariantDimensionsDisplay
+                    variant={variant}
+                    product={product}
+                />
+                <VariantSizesDisplay
+                    variant={variant}
+                    product={product}
                 />
             </div>
         </div>
