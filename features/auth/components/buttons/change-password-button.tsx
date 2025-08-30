@@ -71,7 +71,7 @@ export default function ChangePasswordButton({
         <p className="text-gray-400 text-sm">Actualiza tu contraseña</p>
       </div> */}
 
-      <ButtonWithPopup<any, { currentPassword: string; password: string; confirmPassword: string }>
+      <ButtonWithPopup<{ currentPassword: string; password: string; confirmPassword: string }>
         text={buttonText}
         title={title}
         description={t("security-description")}
