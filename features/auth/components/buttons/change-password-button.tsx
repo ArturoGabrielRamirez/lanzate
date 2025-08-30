@@ -5,25 +5,10 @@ import { ChangePasswordButtonProps } from '../../types';
 import { ButtonWithPopup, InputField } from "@/features/layout/components";
 import { SetupPasswordPrompt } from '../change-visual/setup-password-prompt';
 import usePasswordGuard from '../../hooks/use-password-guard';
-import { Key, Lock } from "lucide-react";
-import * as yup from 'yup'
+import { Lock } from "lucide-react";
 import { passwordSchema } from '../../schemas/password-schema';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Schema de Yup para compatibilidad con ButtonWithPopup
-/* const yupChangePasswordSchema = yup.object({
-  currentPassword: yup
-    .string()
-    .required('La contraseña actual es requerida'),
-  password: yup
-    .string()
-    .required('La nueva contraseña es requerida')
-    .min(8, 'La contraseña debe tener al menos 8 caracteres'),
-  confirmPassword: yup
-    .string()
-    .required('Confirmar contraseña es requerido')
-    .oneOf([yup.ref('password')], 'Las contraseñas no coinciden')
-}) */
 
 export default function ChangePasswordButton({
   buttonText,
@@ -62,14 +47,8 @@ export default function ChangePasswordButton({
     )
   }
 
-  // Si tiene contraseña, mostrar el cambio normal
   return (
     <div className="flex items-center gap-3">
-      {/* <Key className="w-5 h-5 text-gray-400" /> */}
-      {/*   <div className="flex-1">
-        <h4 className="text-white font-medium">Cambiar contraseña</h4>
-        <p className="text-gray-400 text-sm">Actualiza tu contraseña</p>
-      </div> */}
 
       <ButtonWithPopup<{ currentPassword: string; password: string; confirmPassword: string }>
         text={buttonText}
