@@ -1,4 +1,4 @@
-import { Resolver, FieldValues } from "react-hook-form"
+import { /* Resolver, */ FieldValues } from "react-hook-form"
 import { ResponseType } from "./"
 import { ObjectSchema } from "yup"
 
@@ -14,7 +14,7 @@ export type ButtonWithPopupPropsType<T, P extends FieldValues> = {
     loading: string
   }
   disabled?: boolean
-  schema?: ObjectSchema<P>
+   schema?: ObjectSchema<Partial<P>>
   onComplete?: () => void
   variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link"
   className?: string
