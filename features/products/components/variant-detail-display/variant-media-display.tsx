@@ -83,27 +83,37 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                 <div className="space-y-4">
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Imagen principal</label>
-                        <div className="w-full h-48 overflow-hidden rounded-md bg-secondary relative">
-                            {variant.primary_media?.url ? (
-                                <img
-                                    src={variant.primary_media.url}
-                                    alt="Variant image"
-                                    className="object-cover h-full w-full"
-                                />
-                            ) : (
-                                <div className="flex items-center justify-center h-full">
-                                    <ImageIcon className="size-12 text-muted-foreground" />
+                        <div className="flex items-start gap-4 flex-col">
+                            <div className="w-48 h-48 flex-shrink-0 overflow-hidden rounded-md bg-secondary relative">
+                                {variant.primary_media?.url ? (
+                                    <img
+                                        src={variant.primary_media.url}
+                                        alt="Variant image"
+                                        className="object-cover h-full w-full"
+                                    />
+                                ) : (
+                                    <div className="flex flex-col items-center justify-center h-full p-4">
+                                        <ImageIcon className="size-8 text-muted-foreground mb-2" />
+                                        <p className="text-sm text-muted-foreground text-center">
+                                            Sin imagen principal
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                            {!variant.primary_media?.url && (
+                                <div className="flex-1 flex items-center">
+                                    <p className="text-sm text-muted-foreground">
+                                        La variante no tiene una imagen principal asignada. 
+                                        {isEditing && ' Selecciona una imagen de las disponibles abajo para establecerla como principal.'}
+                                    </p>
                                 </div>
                             )}
                         </div>
                     </div>
                     
-                    {product.media && product.media.length > 0 && (
+                    {isEditing && product.media && product.media.length > 0 && (
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Imágenes disponibles del producto</label>
-                            <p className="text-xs text-muted-foreground mb-2">
-                                Selecciona una imagen para establecerla como imagen principal de esta variante
-                            </p>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                                 {product.media.map((media: any) => (
                                     <div 
@@ -114,8 +124,14 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                                                 : 'border-transparent hover:border-primary/50'
                                         }`}
                                         onClick={() => {
-                                            // TODO: Implementar función para establecer como primary media
-                                            console.log('Seleccionar imagen:', media.id)
+                                            // Temporalmente actualizamos solo el estado local
+                                            variant.primary_media = {
+                                                id: media.id,
+                                                url: media.url,
+                                                type: media.type
+                                            };
+                                            // Forzar re-render
+                                            setIsEditing(true);
                                         }}
                                     >
                                         <img

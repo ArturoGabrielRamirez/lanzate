@@ -73,9 +73,6 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
                 contentButton={false}
                 resolver={yupResolver(editVariantSchema)}
                 onSuccess={handleCloseEdit}
-                defaultValues={{
-                    price: variant.price || productPrice,
-                }}
             >
                 <CardHeader>
                     <CardTitle>
@@ -106,28 +103,29 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
                 <CardContent>
                     <div className="space-y-4">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium">Precio de la variante</label>
-                            {isEditing ? (
-                                <InputField name="price" type="number" label="Precio" />
-                            ) : (
-                                <div className="flex items-center gap-2">
-                                    <DollarSign className="size-4 text-muted-foreground" />
-                                    <p className="text-sm text-muted-foreground">${variantPrice}</p>
-                                    {hasCustomPrice && (
-                                        <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                                            Precio personalizado
-                                        </span>
-                                    )}
+                            <InputField
+                                name="price"
+                                label="Precio de la variante"
+                                type="number"
+                                defaultValue={String(variant.price || productPrice)}
+                                disabled={!isEditing}
+                                placeholder="Ingrese el precio"
+                            />
+                            {hasCustomPrice && (
+                                <div className="flex items-center gap-2 mt-1">
+                                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                        Precio personalizado
+                                    </span>
                                 </div>
                             )}
                         </div>
                         
-                        {hasCustomPrice && (
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">Precio del producto base</label>
-                                <p className="text-sm text-muted-foreground">${productPrice}</p>
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-2 text-muted-foreground/50">
+                                <DollarSign className="size-4" />
+                                <p className="text-sm">Precio base del producto: ${productPrice}</p>
                             </div>
-                        )}
+                        </div>
                     </div>
                 </CardContent>
             </Form>
