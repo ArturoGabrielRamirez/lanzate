@@ -131,9 +131,17 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
             cell: ({ row }) => {
                 const r = row.original
                 if (r.variant_id) {
-                    return <span>{r.variant_label || r.name}</span>
+                    return (
+                        <Link href={`/stores/${slug}/products/${r.id}/${r.variant_id}`} className="hover:underline">
+                            {r.variant_label || r.name}
+                        </Link>
+                    )
                 }
-                return <span>{r.name}</span>
+                return (
+                    <Link href={`/stores/${slug}/products/${r.id}`} className="hover:underline">
+                        {r.name}
+                    </Link>
+                )
             }
         },
         {
@@ -292,16 +300,33 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
                                     </Link>
                                 </Button>
                             </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Button variant="ghost" className="w-full justify-start cursor-pointer hover:!bg-primary" asChild>
+                                    <Link href={`/stores/${slug}/products/${row.original.id}`}>
+                                        <Eye className="w-4 h-4" />Ver producto / View product
+                                    </Link>
+                                </Button>
+                            </DropdownMenuItem>
                             {(employeePermissions.isAdmin || employeePermissions.permissions?.can_manage_stock) && (
                                 <>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem asChild>
-                                        <DistributeStockButton
-                                            productId={row.original.id}
-                                            productName={row.original.name}
-                                            availableStock={row.original.stock}
-                                            branches={branches}
-                                        />
+                                        {(() => {
+                                            const currentVariantStocks = row.original.variant_id
+                                                ? (row.original as any).variants?.find((v: any) => v.id === row.original.variant_id)?.stocks as
+                                                    | { branch_id: number; quantity: number }[]
+                                                    | undefined
+                                                : undefined
+                                            return (
+                                                <DistributeStockButton
+                                                    productId={row.original.id}
+                                                    productName={row.original.name}
+                                                    availableStock={row.original.stock}
+                                                    branches={branches}
+                                                    variantStocks={currentVariantStocks}
+                                                />
+                                            )
+                                        })()}
                                     </DropdownMenuItem>
                                 </>
                             )}

@@ -18,27 +18,37 @@ type Props = {
     productName: string
     availableStock: number
     branches: (Branch & { stock: ProductStock[] })[]
+    variantStocks?: { branch_id: number; quantity: number }[]
 }
 
 export default function DistributeStockButton({
     productId,
     productName,
     availableStock,
-    branches
+    branches,
+    variantStocks
 }: Props) {
     const t = useTranslations("store.products-table")
     const [distributions, setDistributions] = useState<{ [branchId: number]: number }>({})
     const [totalDistributed, setTotalDistributed] = useState(0)
 
-    // Initialize distributions with current stock values
+    // Initialize distributions with current stock values (prefer variant stocks if provided)
     useEffect(() => {
         const initialDistributions: { [branchId: number]: number } = {}
-        branches.forEach(branch => {
-            const currentStock = branch.stock.find(stock => stock.product_id === productId)?.quantity || 0
-            initialDistributions[branch.id] = currentStock
-        })
+
+        if (variantStocks && variantStocks.length > 0) {
+            variantStocks.forEach(s => {
+                initialDistributions[s.branch_id] = s.quantity
+            })
+        } else {
+            branches.forEach(branch => {
+                const currentStock = branch.stock.find(stock => stock.product_id === productId)?.quantity || 0
+                initialDistributions[branch.id] = currentStock
+            })
+        }
+
         setDistributions(initialDistributions)
-    }, [branches, productId])
+    }, [branches, productId, variantStocks])
 
     useEffect(() => {
         const total = Object.values(distributions).reduce((sum, qty) => sum + (qty || 0), 0)
