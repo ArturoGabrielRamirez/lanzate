@@ -98,25 +98,36 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
             const measures = (sizesRef.current?.measures ?? []).map((m: Option) => m.value)
             const isUniqueSize = sizesRef.current?.isUniqueSize === true
             const colors = colorsRef.current?.colors ?? []
-            let dimensionList: (string | undefined)[] = isUniqueSize
-                ? [undefined]
-                : ((sizes.length > 0 && measures.length > 0)
-                    ? [...sizes, ...measures]
-                    : (sizes.length > 0 ? sizes : measures))
-            if (!isUniqueSize && sizes.length === 0 && measures.length === 0) {
-                // Allow color-only variants
-                dimensionList = [undefined]
+            
+            let variantsList: { size?: string, measure?: string }[] = []
+            
+            if (isUniqueSize) {
+                variantsList = [{ size: undefined, measure: undefined }]
+            } else {
+                if (sizes.length > 0) {
+                    variantsList = sizes.map(size => ({ size, measure: undefined }))
+                }
+                if (measures.length > 0) {
+                    variantsList = [...variantsList, ...measures.map(measure => ({ size: undefined, measure }))]
+                }
+                if (sizes.length === 0 && measures.length === 0) {
+                    // Allow color-only variants
+                    variantsList = [{ size: undefined, measure: undefined }]
+                }
             }
+
             const colorList: (ProductColor | undefined)[] = (colors?.length ?? 0) > 0 ? colors as ProductColor[] : [undefined]
             const exclusions: string[] = (payload as unknown as { variantExclusions?: string[] }).variantExclusions ?? []
-            const variants = dimensionList.length === 0 && colorList[0] === undefined
+            
+            const variants = variantsList.length === 0 && colorList[0] === undefined
                 ? []
-                : dimensionList.flatMap((dim) => colorList.map((c: ProductColor | undefined) => {
-                    const id = `${dim ?? 'one'}-${c ? c.id : 'one'}`
+                : variantsList.flatMap((variant) => colorList.map((c: ProductColor | undefined) => {
+                    const id = `${variant.size ?? variant.measure ?? 'one'}-${c ? c.id : 'one'}`
                     if (exclusions.includes(id)) return null
                     return {
                         id,
-                        sizeOrMeasure: dim,
+                        size: variant.size,
+                        measure: variant.measure,
                         color: c ? { id: c.id, name: c.name, rgba: c.rgba } : undefined,
                     }
                 })).filter(Boolean)
@@ -138,7 +149,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                     colors: colorsRef.current,
                     dimensions: dimensionsRef.current,
                     settings: settingsRef.current,
-                    variants: variants as { id: string; sizeOrMeasure?: string; color?: ProductColor }[],
+                    variants: variants as { id: string; size?: string; measure?: string; color?: ProductColor }[],
                 },
                 targetStoreId,
                 props.userId,

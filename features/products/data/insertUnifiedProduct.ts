@@ -23,7 +23,7 @@ type UnifiedArgs = {
     colors?: { colors: { id: string; name: string; rgba: [number, number, number, number] }[] }
     dimensions?: { [key: string]: unknown }
     settings?: { isActive: boolean; isFeatured: boolean; isPublished: boolean }
-    variants?: { id: string; sizeOrMeasure?: string; color?: { id: string; name: string; rgba: [number, number, number, number] } }[]
+    variants?: { id: string; size?: string; measure?: string; color?: { id: string; name: string; rgba: [number, number, number, number] } }[]
     targetStoreId: number
     userId: number
 }
@@ -128,7 +128,7 @@ export async function insertUnifiedProduct(args: UnifiedArgs) {
             const variantsInput = args.variants ?? []
             const effectiveVariants = variantsInput.length > 0
                 ? variantsInput
-                : [{ id: "one-one", sizeOrMeasure: undefined as string | undefined, color: undefined }]
+                : [{ id: "one-one", size: undefined as string | undefined, measure: undefined as string | undefined, color: undefined }]
 
             function distribute(total: number, n: number): number[] {
                 if (!Number.isFinite(total) || total <= 0 || n <= 0) return Array.from({ length: n }, () => 0)
@@ -160,7 +160,7 @@ export async function insertUnifiedProduct(args: UnifiedArgs) {
                     data: {
                         product_id: product.id,
                         // Datos heredados del producto
-                        name: product.name + (v.sizeOrMeasure ? ` - ${v.sizeOrMeasure}` : '') + (v.color?.name ? ` - ${v.color.name}` : ''),
+                        name: product.name + (v.size ? ` - ${v.size}` : '') + (v.measure ? ` - ${v.measure}` : '') + (v.color?.name ? ` - ${v.color.name}` : ''),
                         description: product.description,
                         price: product.price,
                         barcode: product.barcode,
@@ -177,7 +177,8 @@ export async function insertUnifiedProduct(args: UnifiedArgs) {
                         ...(product.diameter ? { diameter: product.diameter, diameter_unit: product.diameter_unit } : {}),
                         ...(product.weight ? { weight: product.weight, weight_unit: product.weight_unit } : {}),
                         // Detalles específicos de la variante
-                        size: v.sizeOrMeasure ?? null,
+                        size: v.size ?? null,
+                        measure: v.measure ?? null,
                         color_id: colorId,
                         // Precios adicionales
                         compare_price: null,
