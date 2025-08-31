@@ -5,17 +5,15 @@ import PageContainer from "@/features/layout/components/page-container"
 import AddToCartButton from "@/features/store-landing/components/add-to-cart-button"
 import LikeButton from "@/features/store-landing/components/like-button"
 import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"
-import Comments from "@/features/subdomain/components/comments"
 import { Category } from "@prisma/client"
 import { Image, Share, ShoppingBag } from "lucide-react"
 import Link from "next/link"
 
 type Props = {
-    params: Promise<{ id: string; subdomain: string; variant?: string }>
+    params: Promise<{ id: string; subdomain: string; variant: string }>
 }
 
-async function ProductDetailsPage({ params }: Props) {
-
+export default async function ProductVariantDetailsPage({ params }: Props) {
     const { id, subdomain, variant } = await params
 
     const { payload: product, error, message } = await getProductDetails(id, subdomain, variant)
@@ -25,7 +23,7 @@ async function ProductDetailsPage({ params }: Props) {
             <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
                 <Title
                     title="Product Not Found"
-                    breadcrumbs={[{ label: "Product Not Found", href: `/item/${id}` }]}
+                    breadcrumbs={[{ label: "Product Not Found", href: `/item/${id}/${variant}` }]}
                     homePath={`/`}
                 />
                 <p className="text-red-500 mt-4">{message}</p>
@@ -42,7 +40,7 @@ async function ProductDetailsPage({ params }: Props) {
                         label: category.name,
                         href: `/category/${category.id}`
                     })),
-                    { label: product.name, href: variant ? `/item/${id}/${variant}` : `/item/${id}` }
+                    { label: product.name, href: `/item/${id}/${variant}` }
                 ]}
                 homePath={`/`}
             />
@@ -50,7 +48,6 @@ async function ProductDetailsPage({ params }: Props) {
             <div className="grow flex flex-col">
                 <div className="grid grid-cols-1 md:grid-cols-[minmax(min(400px,100%),1fr)_1fr] gap-12 grow">
                     <div className="flex gap-8 border-r pr-12 border-muted-foreground">
-                        {/* Product Image */}
                         <div className="flex flex-col gap-4 max-w-28 w-full">
                             <div className="flex flex-col gap-4 bg-gray-100 rounded-lg p-2">
                                 <div className="text-gray-400 flex flex-col items-center justify-center gap-2 aspect-square">
@@ -81,7 +78,6 @@ async function ProductDetailsPage({ params }: Props) {
                         </div>
                     </div>
 
-                    {/* Product Details */}
                     <div className="space-y-4 text-primary overflow-y-auto max-h-[calc(100vh-205px)] pr-4 relative">
                         <div className="flex flex-col gap-2 sticky top-0 left-0 w-full bg-background">
                             <p className="text-sm text-muted-foreground">Sin marca</p>
@@ -95,9 +91,7 @@ async function ProductDetailsPage({ params }: Props) {
                                     ))}
                                 </div>
                             )}
-
                         </div>
-
 
                         <div className="text-3xl font-bold border-b border-muted-foreground pb-4">
                             ${product.price}
@@ -124,13 +118,11 @@ async function ProductDetailsPage({ params }: Props) {
                                 </Button>
                             </div>
                         </div>
-
-                        <Comments productId={product.id} />
-
                     </div>
                 </div>
             </div>
         </PageContainer>
     )
 }
-export default ProductDetailsPage
+
+

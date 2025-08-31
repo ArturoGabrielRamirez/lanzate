@@ -22,15 +22,20 @@ async function ProductList({ subdomain, category, sort, search, min, max, limit,
         return <div>Tienda no encontrada</div>;
     }
 
-    const items: Product[] = storeData.products.flatMap((p: Product & { variants?: ProductVariant[] }) => {
+    const items: (Product & { __href: string })[] = storeData.products.flatMap((p: Product & { variants?: ProductVariant[] }) => {
         if (p.variants && p.variants.length > 0) {
-            return p.variants.map((v) => ({
+            return p.variants.map((v: ProductVariant) => ({
                 ...p,
                 id: v.id,
                 price: v.price ?? p.price,
-            } as Product));
+                name: v.name ?? p.name,
+                description: v.description ?? p.description,
+                sku: v.sku ?? p.sku,
+                barcode: v.barcode ?? p.barcode,
+                __href: `/item/${p.id}/${v.id}`,
+            } as Product & { __href: string }));
         }
-        return [p];
+        return [{ ...p, __href: `/item/${p.id}/${p.id}` } as Product & { __href: string }];
     });
 
     return (
@@ -38,7 +43,7 @@ async function ProductList({ subdomain, category, sort, search, min, max, limit,
             {items.length > 0 && (
                 <ProductListContainer>
                     {items.map((product) => (
-                        <ProductCard key={product.id} product={product} />
+                        <ProductCard key={product.id} product={product} href={product.__href} />
                     ))}
                 </ProductListContainer>
             )}

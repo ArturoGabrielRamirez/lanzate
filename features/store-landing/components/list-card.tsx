@@ -7,11 +7,12 @@ import LikeButton from "./like-button"
 
 type Props = {
     product: Product
+    href: string
 }
 
-function ListCard({ product }: Props) {
+function ListCard({ product, href }: Props) {
     return (
-        <Link href={`/item/${product.id}`} className="block w-full">
+        <Link href={href} className="block w-full">
             <Card className="flex flex-row gap-3 p-3 h-24 hover:shadow-md transition-shadow">
                 <div className="relative h-16 w-16 flex-shrink-0">
                     {product.image ? (

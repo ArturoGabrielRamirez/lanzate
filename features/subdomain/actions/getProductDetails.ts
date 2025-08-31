@@ -2,15 +2,19 @@
 
 import { formatErrorResponse } from "@/utils/lib"
 import { selectProductByIdAndSubdomain } from "../data/selectProductByIdAndSubdomain"
+import { selectProductByIdsAndSubdomain } from "../data/selectProductByIdsAndSubdomain"
 import { GetProductDetailsReturn } from "../types/types"
 
-export async function getProductDetails(id: string, subdomain: string): Promise<GetProductDetailsReturn> {
+export async function getProductDetails(productId: string, subdomain: string, variantId?: string): Promise<GetProductDetailsReturn> {
     try {
-        const parsedId = parseInt(id)
+        const parsedProductId = parseInt(productId)
+        const parsedVariantId = variantId ? parseInt(variantId) : undefined
 
-        if (isNaN(parsedId)) throw new Error("Invalid product id")
+        if (isNaN(parsedProductId)) throw new Error("Invalid product id")
 
-        const { payload: product, error, message } = await selectProductByIdAndSubdomain(parsedId, subdomain)
+        const { payload: product, error, message } = parsedVariantId
+            ? await selectProductByIdsAndSubdomain(parsedProductId, parsedVariantId, subdomain)
+            : await selectProductByIdAndSubdomain(parsedProductId, subdomain)
 
         if (error) throw new Error(message)
 

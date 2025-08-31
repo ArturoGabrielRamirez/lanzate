@@ -13,9 +13,10 @@ import { Badge } from "@/components/ui/badge"
 
 type Props = {
     product: Product
+    href: string
 }
 
-function GridCard({ product }: Props) {
+function GridCard({ product, href }: Props) {
 
     const [isFlipped, setIsFlipped] = useState(false)
 
@@ -88,7 +89,7 @@ function GridCard({ product }: Props) {
                         </CardHeader>
                         <CardContent className="grow">
                             <div className="flex justify-between items-center text-foreground">
-                                <Link href={`/item/${product.id}`} onClick={(evt) => { evt.stopPropagation() }}>
+                                <Link href={href} onClick={(evt) => { evt.stopPropagation() }}>
                                     <h3 className="text-lg font-medium group-hover/card:underline">{product.name}</h3>
                                 </Link>
                             </div>
