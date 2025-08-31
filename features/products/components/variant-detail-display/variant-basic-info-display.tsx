@@ -9,6 +9,9 @@ import { useState } from "react"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { editVariantSchema } from "../../schemas/product-schema"
+import { updateVariantBasicInfo } from "../../data/updateVariantBasicInfo"
+import { toast } from "sonner"
+import { useFormContext } from "react-hook-form"
 import DeleteVariantButton from "../delete-variant-button"
 import Link from "next/link"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
@@ -26,6 +29,48 @@ interface VariantBasicInfoDisplayProps {
             primary_media?: { url: string } | null
         }>
     }
+}
+
+function ToggleEditButton({ isEditing, onToggle, onCancel, variant }: {
+    isEditing: boolean
+    onToggle: () => void
+    onCancel: () => void
+    variant: ProductVariant
+}) {
+    const { reset } = useFormContext()
+
+    const initialValues = {
+        name: variant.name,
+        sku: variant.sku,
+        barcode: variant.barcode,
+        description: variant.description
+    }
+
+    const handleClick = () => {
+        if (isEditing) {
+            reset(initialValues)
+            onCancel()
+            return
+        }
+        onToggle()
+    }
+
+    return (
+        <Tooltip>
+            <TooltipTrigger asChild>
+                <IconButton
+                    type="button"
+                    icon={isEditing ? X : EditIcon}
+                    onClick={handleClick}
+                    color={[161, 161, 170]} // color zinc del tema
+                    className="opacity-0 group-hover/variant-basic-info-display:opacity-100 transition-opacity duration-300"
+                />
+            </TooltipTrigger>
+            <TooltipContent>
+                {isEditing ? "Cancelar edición" : "Editar información"}
+            </TooltipContent>
+        </Tooltip>
+    )
 }
 
 const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantBasicInfoDisplayProps) => {
@@ -46,6 +91,28 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantB
                 contentButton={false}
                 resolver={yupResolver(editVariantSchema)}
                 onSuccess={handleCloseEdit}
+                formAction={async (data: any) => {
+                    try {
+                        const result = await updateVariantBasicInfo(variant.id, {
+                            name: data.name || null,
+                            sku: data.sku || null,
+                            barcode: data.barcode || null,
+                            description: data.description || null
+                        })
+                        if (result.error) {
+                            toast.error("Error al actualizar la variante", {
+                                description: result.message
+                            })
+                            return result
+                        }
+                        toast.success("Variante actualizada correctamente")
+                        return result
+                    } catch (error) {
+                        console.error("Error updating variant:", error)
+                        toast.error("Error al actualizar la variante")
+                        return { error: true, message: "Error al actualizar la variante", payload: null }
+                    }
+                }}
             >
                 <CardHeader>
                     <div className="flex items-center justify-between">
@@ -59,8 +126,8 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantB
                             </span>
                         </CardTitle>
                         <CardAction>
-                            {isEditing ? (
-                                <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2">
+                                {isEditing && (
                                     <Tooltip>
                                         <TooltipTrigger asChild>
                                             <IconButton
@@ -74,49 +141,28 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantB
                                             Guardar cambios
                                         </TooltipContent>
                                     </Tooltip>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <IconButton
-                                                icon={X}
-                                                onClick={handleCloseEdit}
-                                                color={[161, 161, 170]} // color zinc del tema
-                                                className="opacity-0 group-hover/variant-basic-info-display:opacity-100 transition-opacity duration-300"
-                                            />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            Cancelar edición
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </div>
-                            ) : (
-                                <div className="flex items-center gap-2">
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <IconButton
-                                                icon={EditIcon}
-                                                onClick={handleOpenEdit}
-                                                color={[161, 161, 170]} // color zinc del tema
-                                                className="opacity-0 group-hover/variant-basic-info-display:opacity-100 transition-opacity duration-300"
-                                            />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            Editar información
-                                        </TooltipContent>
-                                    </Tooltip>
+                                )}
+                                <ToggleEditButton
+                                    isEditing={isEditing}
+                                    onToggle={handleOpenEdit}
+                                    onCancel={handleCloseEdit}
+                                    variant={variant}
+                                />
+                                {!isEditing && (
                                     <DeleteVariantButton
                                         variantId={variant.id}
                                         slug={slug}
                                         productId={productId}
                                         onlyIcon
                                     />
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </CardAction>
                     </div>
                 </CardHeader>
                 <CardContent className="space-y-6">
                     {/* Lista de variantes */}
-                    
+
 
                     {/* Formulario de información básica */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
@@ -174,7 +220,7 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantB
                                         />
                                     ))
                                 }
-                                <Link 
+                                <Link
                                     href={`/stores/${slug}/products/${productId}`}
                                     className="rounded-md border p-3 flex items-center gap-3 hover:bg-secondary/50 transition-colors"
                                 >
