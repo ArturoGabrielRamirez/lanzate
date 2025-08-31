@@ -2,6 +2,7 @@
 
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
+import { revalidatePath } from "next/cache"
 
 type UpdateVariantFlagsPayload = {
     is_active: boolean
@@ -19,6 +20,14 @@ export async function updateVariantFlags(variantId: number, data: UpdateVariantF
                 is_featured: data.is_featured,
             }
         })
+
+        const ref = await prisma.productVariant.findUnique({
+            where: { id: variantId },
+            select: { product: { select: { id: true, store: { select: { slug: true } } } } }
+        })
+        if (ref?.product?.store?.slug && ref.product.id) {
+            revalidatePath(`/stores/${ref.product.store.slug}/products/${ref.product.id}/${variantId}`, "page")
+        }
 
         return {
             error: false,

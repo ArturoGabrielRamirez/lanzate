@@ -4,6 +4,7 @@ import { prisma } from "@/utils/prisma"
 import { actionWrapper } from "@/utils/lib"
 import { uploadProductImage } from "@/features/products/actions/uploadProductImage"
 import { MediaType } from "@prisma/client"
+import { revalidatePath } from "next/cache"
 
 type UpdateVariantMediaPayload = {
     primary_media_id?: number | null
@@ -45,6 +46,9 @@ export async function updateVariantMedia(variantId: number, data: UpdateVariantM
                 data: { primary_media_id: createdMedia.id }
             })
 
+            const slug = variantWithProduct.product ? (await prisma.store.findFirst({ where: { id: variantWithProduct.product.store_id }, select: { slug: true } }))?.slug : undefined
+            if (slug) revalidatePath(`/stores/${slug}/products/${variantWithProduct.product.id}/${variantId}`, "page")
+
             return { error: false, message: "Imagen subida y asignada correctamente", payload: updatedVariant }
         }
 
@@ -56,6 +60,14 @@ export async function updateVariantMedia(variantId: number, data: UpdateVariantM
                     primary_media_id: data.primary_media_id
                 }
             })
+
+            const ref = await prisma.productVariant.findUnique({
+                where: { id: variantId },
+                select: { product: { select: { id: true, store: { select: { slug: true } } } } }
+            })
+            if (ref?.product?.store?.slug && ref.product.id) {
+                revalidatePath(`/stores/${ref.product.store.slug}/products/${ref.product.id}/${variantId}`, "page")
+            }
 
             return {
                 error: false,

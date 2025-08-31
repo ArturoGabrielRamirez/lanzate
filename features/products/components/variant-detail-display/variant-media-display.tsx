@@ -124,11 +124,11 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                 </CardAction>
             </CardHeader>
             <CardContent>
-                <div className="space-y-4">
-                    <div className="space-y-2">
+                <div className="grid gap-6 md:grid-cols-2">
+                    <div className="space-y-2 md:col-span-1">
                         <label className="text-sm font-medium">Imagen principal</label>
                         <div className="flex items-start gap-4 flex-col">
-                            <div className="w-48 h-48 flex-shrink-0 overflow-hidden rounded-md bg-secondary relative">
+                            <div className="relative w-full max-w-sm aspect-[3/4] overflow-hidden rounded-lg border bg-secondary">
                                 {effectivePrimaryUrl ? (
                                     <img
                                         src={effectivePrimaryUrl}
@@ -156,15 +156,15 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                     </div>
 
                     {product.media && product.media.length > 0 && (
-                        <div className="space-y-2">
+                        <div className="space-y-3 md:col-span-1">
                             <label className="text-sm font-medium">Imágenes disponibles del producto</label>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                                 {product.media.map((media) => (
                                     <div
                                         key={media.id}
-                                        className={`aspect-square overflow-hidden rounded-md bg-secondary ${isEditing ? 'cursor-pointer' : 'pointer-events-none'} border-2 transition-colors relative ${(effectivePrimaryId === media.id)
-                                            ? 'border-primary'
-                                            : 'border-transparent hover:border-primary/50'
+                                        className={`relative aspect-square overflow-hidden rounded-md bg-secondary ${isEditing ? 'cursor-pointer' : 'pointer-events-none'} border transition shadow-sm ${(effectivePrimaryId === media.id)
+                                            ? 'border-primary ring-2 ring-primary'
+                                            : 'border-border hover:border-primary/50'
                                             }`}
                                         onClick={() => {
                                             if (!isEditing) return
@@ -177,8 +177,8 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                                             className="object-cover h-full w-full"
                                         />
                                         {effectivePrimaryId === media.id && (
-                                            <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
-                                                <div className="bg-primary text-primary-foreground text-xs px-2 py-1 rounded">
+                                            <div className="absolute inset-0 bg-primary/15 flex items-center justify-center">
+                                                <div className="bg-primary text-primary-foreground text-[10px] px-2 py-0.5 rounded">
                                                     Principal
                                                 </div>
                                             </div>
@@ -189,25 +189,10 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                         </div>
                     )}
 
-                    {variant.media && variant.media.length > 0 && (
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium">Imágenes específicas de la variante</label>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                                {variant.media.map((media) => (
-                                    <div key={media.id} className="aspect-square overflow-hidden rounded-md bg-secondary">
-                                        <img
-                                            src={media.url}
-                                            alt="Variant media"
-                                            className="object-cover h-full w-full"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+                    
 
                     {isEditing && (
-                        <div className="space-y-2">
+                        <div className="space-y-2 md:col-span-2">
                             <label className="text-sm font-medium">Subir nueva imagen</label>
                             <FileUpload
                                 maxFiles={1}
