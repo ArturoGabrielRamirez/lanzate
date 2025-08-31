@@ -7,7 +7,9 @@ import {
     VariantStockDisplay, 
     VariantPriceDisplay,
     VariantDimensionsDisplay,
-    VariantSizesDisplay
+    VariantSizesDisplay,
+    VariantConfigDisplay,
+    VariantColorDisplay
 } from "./index"
 
 interface VariantDetailFormProps {
@@ -24,6 +26,7 @@ interface VariantDetailFormProps {
 }
 
 const VariantDetailForm = ({ variant, productPrice, slug, productId, product }: VariantDetailFormProps) => {
+    console.log("🚀 ~ VariantDetailForm ~ variant:", variant)
     return (
         <div className="space-y-6">
             {/* Primera fila: Información básica y Medios */}
@@ -58,6 +61,18 @@ const VariantDetailForm = ({ variant, productPrice, slug, productId, product }: 
                     product={product}
                 />
                 <VariantSizesDisplay
+                    variant={variant}
+                    product={product}
+                />
+            </div>
+
+            {/* Cuarta fila: Configuración y Color */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <VariantConfigDisplay
+                    variant={variant}
+                    product={product}
+                />
+                <VariantColorDisplay
                     variant={variant}
                     product={product}
                 />

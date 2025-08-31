@@ -24,7 +24,11 @@ export async function selectProductById(id: number) {
                     },
                     include: {
                         color: true,
-                        stocks: true,
+                        stocks: {
+                            include : {
+                                branch: true
+                            }
+                        },
                         media: true,
                         primary_media: true,
                     }

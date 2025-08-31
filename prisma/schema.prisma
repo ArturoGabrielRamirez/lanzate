@@ -302,6 +302,7 @@ model ProductVariant {
   shipping_weight    Float?
   shipping_width     Float?
   size               String?
+  measure            String?
   style              String?
   weight             Float?
   weight_unit        WeightUnit?

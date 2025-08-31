@@ -1,21 +1,23 @@
 "use client"
 
-import { Scale, EditIcon, X, Check } from "lucide-react"
+import { Settings2, EditIcon, X, Check } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, InputField } from "@/features/layout/components"
+import { Form } from "@/features/layout/components"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { editVariantSchema } from "../../schemas/product-schema"
+import { Switch } from "@/components/ui/switch"
+import { Label } from "@/components/ui/label"
 
-interface VariantDimensionsDisplayProps {
+interface VariantConfigDisplayProps {
     variant: ProductVariant
     product: any
 }
 
-const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplayProps) => {
+const VariantConfigDisplay = ({ variant, product }: VariantConfigDisplayProps) => {
     const [isEditing, setIsEditing] = useState(false)
 
     const handleOpenEdit = () => {
@@ -27,7 +29,7 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
     }
 
     return (
-        <Card className="group/variant-dimensions-display">
+        <Card className="group/variant-config-display">
             <Form
                 submitButton={false}
                 contentButton={false}
@@ -37,8 +39,8 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
                 <CardHeader>
                     <CardTitle>
                         <span className="flex items-center gap-2 text-lg md:text-xl">
-                            <Scale className="size-5" />
-                            Dimensiones y peso
+                            <Settings2 className="size-5" />
+                            Configuración
                         </span>
                     </CardTitle>
                     <CardAction>
@@ -50,7 +52,7 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
                                             icon={Check}
                                             type="submit"
                                             color={[99, 102, 241]}
-                                            className="opacity-0 group-hover/variant-dimensions-display:opacity-100 transition-opacity duration-300"
+                                            className="opacity-0 group-hover/variant-config-display:opacity-100 transition-opacity duration-300"
                                         />
                                     </TooltipTrigger>
                                     <TooltipContent>
@@ -63,7 +65,7 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
                                             icon={X}
                                             onClick={handleCloseEdit}
                                             color={[161, 161, 170]}
-                                            className="opacity-0 group-hover/variant-dimensions-display:opacity-100 transition-opacity duration-300"
+                                            className="opacity-0 group-hover/variant-config-display:opacity-100 transition-opacity duration-300"
                                         />
                                     </TooltipTrigger>
                                     <TooltipContent>
@@ -78,69 +80,59 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
                                         icon={EditIcon}
                                         onClick={handleOpenEdit}
                                         color={[161, 161, 170]}
-                                        className="opacity-0 group-hover/variant-dimensions-display:opacity-100 transition-opacity duration-300"
+                                        className="opacity-0 group-hover/variant-config-display:opacity-100 transition-opacity duration-300"
                                     />
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    Editar dimensiones
+                                    Editar configuración
                                 </TooltipContent>
                             </Tooltip>
                         )}
                     </CardAction>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-1">
-                            <InputField
-                                name="weight"
-                                label="Peso (kg)"
-                                type="number"
-                                defaultValue={variant.weight?.toString() || product.weight?.toString()}
-                                placeholder="Ej. 0.5"
+                    <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                            <Label htmlFor="is_active" className="flex flex-col gap-1 items-start">
+                                <span>Variante activa</span>
+                                <span className="font-normal text-sm text-muted-foreground">
+                                    La variante estará visible y disponible para la venta
+                                </span>
+                            </Label>
+                            <Switch
+                                id="is_active"
+                                name="is_active"
+                                defaultChecked={variant.is_active}
                                 disabled={!isEditing}
                             />
-                            <p className="text-xs text-muted-foreground/50">
-                                Peso base del producto: {product.weight || "No especificado"}
-                            </p>
                         </div>
-                        <div className="space-y-1">
-                            <InputField
-                                name="height"
-                                label="Alto (cm)"
-                                type="number"
-                                defaultValue={variant.height?.toString() || product.height?.toString()}
-                                placeholder="Ej. 10"
+                        <div className="flex items-center justify-between">
+                            <Label htmlFor="is_default" className="flex flex-col gap-1 items-start">
+                                <span>Variante por defecto</span>
+                                <span className="font-normal text-sm text-muted-foreground">
+                                    Esta será la variante principal del producto
+                                </span>
+                            </Label>
+                            <Switch
+                                id="is_default"
+                                name="is_default"
+                                defaultChecked={variant.is_default || false}
                                 disabled={!isEditing}
                             />
-                            <p className="text-xs text-muted-foreground/50">
-                                Alto base del producto: {product.height || "No especificado"}
-                            </p>
                         </div>
-                        <div className="space-y-1">
-                            <InputField
-                                name="width"
-                                label="Ancho (cm)"
-                                type="number"
-                                defaultValue={variant.width?.toString() || product.width?.toString()}
-                                placeholder="Ej. 15"
+                        <div className="flex items-center justify-between">
+                            <Label htmlFor="track_inventory" className="flex flex-col gap-1 items-start">
+                                <span>Control de inventario</span>
+                                <span className="font-normal text-sm text-muted-foreground">
+                                    Activar el seguimiento del stock de esta variante
+                                </span>
+                            </Label>
+                            <Switch
+                                id="track_inventory"
+                                name="track_inventory"
+                                defaultChecked={variant.track_inventory || false}
                                 disabled={!isEditing}
                             />
-                            <p className="text-xs text-muted-foreground/50">
-                                Ancho base del producto: {product.width || "No especificado"}
-                            </p>
-                        </div>
-                        <div className="space-y-1">
-                            <InputField
-                                name="length"
-                                label="Largo (cm)"
-                                type="number"
-                                defaultValue={variant.length?.toString() || product.length?.toString()}
-                                placeholder="Ej. 20"
-                                disabled={!isEditing}
-                            />
-                            <p className="text-xs text-muted-foreground/50">
-                                Largo base del producto: {product.length || "No especificado"}
-                            </p>
                         </div>
                     </div>
                 </CardContent>
@@ -149,4 +141,4 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
     )
 }
 
-export default VariantDimensionsDisplay
+export default VariantConfigDisplay
