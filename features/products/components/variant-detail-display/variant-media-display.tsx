@@ -1,7 +1,7 @@
 "use client"
 
 import { ImageIcon, EditIcon, X, Check, Upload } from "lucide-react"
-import { ProductVariant } from "@prisma/client"
+import { Product, ProductMedia, ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
@@ -13,10 +13,13 @@ import { updateVariantMedia } from "../../data/updateVariantMedia"
 
 interface VariantMediaDisplayProps {
     variant: ProductVariant & {
-        primary_media?: { id: number; url: string; type: string } | null
-        media?: { id: number; url: string; type: string }[]
+        primary_media?: ProductMedia | null
+        media?: ProductMedia[]
     }
-    product: any
+    product: Product & {
+        media?: ProductMedia[]
+        primary_media?: ProductMedia | null
+    }
 }
 
 const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => {
@@ -107,26 +110,25 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                             {!variant.primary_media?.url && (
                                 <div className="flex-1 flex items-center">
                                     <p className="text-sm text-muted-foreground">
-                                        La variante no tiene una imagen principal asignada. 
+                                        La variante no tiene una imagen principal asignada.
                                         {isEditing && ' Selecciona una imagen de las disponibles abajo o sube una nueva.'}
                                     </p>
                                 </div>
                             )}
                         </div>
                     </div>
-                    
+
                     {product.media && product.media.length > 0 && (
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Imágenes disponibles del producto</label>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                                {product.media.map((media: any) => (
-                                    <div 
-                                        key={media.id} 
-                                        className={`aspect-square overflow-hidden rounded-md bg-secondary ${isEditing ? 'cursor-pointer' : ''} border-2 transition-colors relative ${
-                                            variant.primary_media?.id === media.id 
-                                                ? 'border-primary' 
-                                                : 'border-transparent hover:border-primary/50'
-                                        }`}
+                                {product.media.map((media) => (
+                                    <div
+                                        key={media.id}
+                                        className={`aspect-square overflow-hidden rounded-md bg-secondary ${isEditing ? 'cursor-pointer' : ''} border-2 transition-colors relative ${variant.primary_media?.id === media.id
+                                            ? 'border-primary'
+                                            : 'border-transparent hover:border-primary/50'
+                                            }`}
                                         onClick={async () => {
                                             if (!isEditing) return
                                             const response = await updateVariantMedia(variant.id, {
@@ -174,7 +176,7 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                             </div>
                         </div>
                     )}
-                    
+
                     {isEditing && (
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Subir nueva imagen</label>
