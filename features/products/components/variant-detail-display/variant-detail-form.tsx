@@ -1,6 +1,6 @@
 "use client"
 
-import { ProductVariant } from "@prisma/client"
+import { Product, ProductMedia, ProductVariant } from "@prisma/client"
 import { 
     VariantBasicInfoDisplay, 
     VariantMediaDisplay, 
@@ -14,15 +14,23 @@ import {
 
 interface VariantDetailFormProps {
     variant: ProductVariant & {
-        color?: { name: string } | null
+        color?: { name: string; hex: string } | null
         stocks?: { quantity: number; branch_id: number }[]
-        primary_media?: { id: number; url: string; type: string } | null
-        media?: { id: number; url: string; type: string }[]
+        primary_media?: ProductMedia | null
+        media?: ProductMedia[]
     }
     productPrice: number
     slug: string
     productId: number
-    product: any
+    product: Product & {
+        media?: ProductMedia[]
+        primary_media?: ProductMedia | null
+        variants: (ProductVariant & {
+            color?: { name: string } | null
+            stocks?: { quantity: number; branch_id: number }[]
+            primary_media?: ProductMedia | null
+        })[]
+    }
 }
 
 const VariantDetailForm = ({ variant, productPrice, slug, productId, product }: VariantDetailFormProps) => {

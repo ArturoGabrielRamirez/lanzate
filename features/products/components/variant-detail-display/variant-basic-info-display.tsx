@@ -1,7 +1,7 @@
 "use client"
 
 import { Box, EditIcon, X, ArrowLeft, Check } from "lucide-react"
-import { Product, ProductVariant } from "@prisma/client"
+import { Product, ProductMedia, ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { VariantLinkCard } from "./variant-link-card"
 import { Form, InputField } from "@/features/layout/components"
@@ -23,11 +23,11 @@ interface VariantBasicInfoDisplayProps {
     slug: string
     productId: number
     product: Product & {
-        variants: Array<ProductVariant & {
+        variants: (ProductVariant & {
             color?: { name: string } | null
-            stocks?: Array<{ quantity: number }>
-            primary_media?: { url: string } | null
-        }>
+            stocks?: { quantity: number }[]
+            primary_media?: ProductMedia | null
+        })[]
     }
 }
 
