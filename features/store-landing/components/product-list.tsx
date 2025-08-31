@@ -1,5 +1,6 @@
 import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
 import ProductCard from "./product-card";
+import type { Product, ProductVariant } from "@prisma/client";
 import ProductListContainer from "./product-list-container";
 
 type Props = {
@@ -21,16 +22,27 @@ async function ProductList({ subdomain, category, sort, search, min, max, limit,
         return <div>Tienda no encontrada</div>;
     }
 
+    const items: Product[] = storeData.products.flatMap((p: Product & { variants?: ProductVariant[] }) => {
+        if (p.variants && p.variants.length > 0) {
+            return p.variants.map((v) => ({
+                ...p,
+                id: v.id,
+                price: v.price ?? p.price,
+            } as Product));
+        }
+        return [p];
+    });
+
     return (
         <>
-            {storeData.products.length > 0 && (
+            {items.length > 0 && (
                 <ProductListContainer>
-                    {storeData.products.map((product) => (
+                    {items.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
                 </ProductListContainer>
             )}
-            {storeData.products.length === 0 && (
+            {items.length === 0 && (
                 <div className="border-muted-foreground/50 border-2 rounded-md p-4 border-dashed">
                     <p className="text-center text-muted-foreground">No products found</p>
                 </div>
