@@ -82,7 +82,9 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
                     ...p,
                     stock: vStock,
                     variant_id: v.id,
-                    variant_label: label
+                    variant_label: label,
+                    variants: p.variants,
+                    price: v.price || p.price
                 })
             }
         }
@@ -159,7 +161,10 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
                 )
             },
             cell: ({ row }) => {
-                const price = row.original.price
+                const variant = row.original as unknown as { variant_id?: number; price: number } & { variants?: { id: number; price: number | null }[] }
+                const price = variant.variant_id
+                    ? variant.variants?.find(v => v.id === variant.variant_id)?.price ?? variant.price
+                    : variant.price
                 return <span>{Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(price)}</span>
             }
         },

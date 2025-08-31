@@ -3,27 +3,27 @@
 import { DollarSign, EditIcon, X, Check } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, InputField } from "@/features/layout/components"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { useFormContext } from "react-hook-form"
-import { editVariantSchema } from "../../schemas/product-schema"
+import { toast } from "sonner"
+import { updateVariantPrice } from "../../data/updateVariantPrice"
 
 interface VariantPriceDisplayProps {
     variant: ProductVariant
     productPrice: number
 }
 
-type VariantPriceFormValues = {
-    price: number
-}
-
 const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps) => {
     const [isEditing, setIsEditing] = useState(false)
+    const [priceInput, setPriceInput] = useState<string>(
+        variant.price?.toString() || productPrice.toString()
+    )
 
     const handleOpenEdit = () => {
+        setPriceInput(variant.price?.toString() || productPrice.toString())
         setIsEditing(true)
     }
 
@@ -31,48 +31,27 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
         setIsEditing(false)
     }
 
-    function ToggleEditButton() {
-        const { reset } = useFormContext<VariantPriceFormValues>()
-
-        const initialValues = {
-            price: variant.price || productPrice,
-        }
-
-        const onClick = () => {
-            if (isEditing) {
-                reset(initialValues)
-                handleCloseEdit()
-                return
-            }
-            handleOpenEdit()
-        }
-
-        return (
-            <Tooltip>
-                <TooltipTrigger asChild>
-                    <IconButton
-                        icon={isEditing ? X : EditIcon}
-                        onClick={onClick}
-                        className="opacity-0 group-hover/variant-price-display:opacity-100 transition-opacity duration-300"
-                    />
-                </TooltipTrigger>
-                <TooltipContent>
-                    Editar precio de la variante
-                </TooltipContent>
-            </Tooltip>
-        )
+    const handleCancel = () => {
+        setPriceInput(variant.price?.toString() || productPrice.toString())
+        handleCloseEdit()
     }
 
-    const variantPrice = variant.price || productPrice
     const hasCustomPrice = variant.price && variant.price !== productPrice
 
     return (
         <Card className="group/variant-price-display">
-            <Form
-                submitButton={false}
-                contentButton={false}
-                resolver={yupResolver(editVariantSchema)}
-                onSuccess={handleCloseEdit}
+            <form
+                onSubmit={async (e) => {
+                    e.preventDefault()
+                    const price = priceInput ? Number(priceInput) : null
+                    const response = await updateVariantPrice(variant.id, { price })
+                    if (response.error) {
+                        toast.error(response.message || "Error al actualizar el precio")
+                        return
+                    }
+                    toast.success(response.message)
+                    handleCloseEdit()
+                }}
             >
                 <CardHeader>
                     <CardTitle>
@@ -82,35 +61,68 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
                         </span>
                     </CardTitle>
                     <CardAction>
-                        {isEditing && (
+                        {isEditing ? (
+                            <div className="flex items-center gap-2">
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <IconButton
+                                            icon={Check}
+                                            type="submit"
+                                            color={[99, 102, 241]}
+                                            className="opacity-0 group-hover/variant-price-display:opacity-100 transition-opacity duration-300"
+                                        />
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        Guardar cambios
+                                    </TooltipContent>
+                                </Tooltip>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <IconButton
+                                            icon={X}
+                                            onClick={handleCancel}
+                                            color={[161, 161, 170]}
+                                            className="opacity-0 group-hover/variant-price-display:opacity-100 transition-opacity duration-300"
+                                        />
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        Cancelar edición
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
+                        ) : (
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <IconButton
-                                        icon={Check}
-                                        type="submit"
-                                        color={[99, 102, 241]}
+                                        icon={EditIcon}
+                                        onClick={handleOpenEdit}
+                                        color={[161, 161, 170]}
                                         className="opacity-0 group-hover/variant-price-display:opacity-100 transition-opacity duration-300"
                                     />
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    Guardar cambios
+                                    Editar precio
                                 </TooltipContent>
                             </Tooltip>
                         )}
-                        <ToggleEditButton />
                     </CardAction>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">
                         <div className="space-y-2">
-                            <InputField
-                                name="price"
-                                label="Precio de la variante"
-                                type="number"
-                                defaultValue={String(variant.price || productPrice)}
-                                disabled={!isEditing}
-                                placeholder="Ingrese el precio"
-                            />
+                            <Label>Precio de la variante</Label>
+                            <div className="relative">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                                <Input
+                                    type="number"
+                                    value={priceInput}
+                                    onChange={(e) => setPriceInput(e.target.value)}
+                                    className="pl-7"
+                                    disabled={!isEditing}
+                                    placeholder="Ingrese el precio"
+                                    step="0.01"
+                                />
+                            </div>
                             {hasCustomPrice && (
                                 <div className="flex items-center gap-2 mt-1">
                                     <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
@@ -128,7 +140,7 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
                         </div>
                     </div>
                 </CardContent>
-            </Form>
+            </form>
         </Card>
     )
 }

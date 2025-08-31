@@ -1,0 +1,56 @@
+"use server"
+
+import { prisma } from "@/utils/prisma"
+import { actionWrapper } from "@/utils/lib"
+import type { WeightUnit, LengthUnit } from "@prisma/client"
+
+const validateWeightUnit = (unit: string | null | undefined): WeightUnit | null => {
+    if (!unit) return null
+    if (["MG", "G", "KG", "OZ", "LB"].includes(unit)) {
+        return unit as WeightUnit
+    }
+    return "KG"
+}
+
+const validateLengthUnit = (unit: string | null | undefined): LengthUnit | null => {
+    if (!unit) return null
+    if (["MM", "CM", "M", "IN", "FT"].includes(unit)) {
+        return unit as LengthUnit
+    }
+    return "CM"
+}
+
+type UpdateVariantDimensionsPayload = {
+    weight?: number | null
+    weight_unit?: string | null
+    height?: number | null
+    height_unit?: string | null
+    width?: number | null
+    width_unit?: string | null
+    depth?: number | null
+    depth_unit?: string | null
+    diameter?: number | null
+    diameter_unit?: string | null
+}
+
+export async function updateVariantDimensions(variantId: number, data: UpdateVariantDimensionsPayload) {
+    return actionWrapper(async () => {
+        const variant = await prisma.productVariant.update({
+            where: { id: variantId },
+            data: {
+                weight: data.weight,
+                weight_unit: validateWeightUnit(data.weight_unit),
+                height: data.height,
+                height_unit: validateLengthUnit(data.height_unit),
+                width: data.width,
+                width_unit: validateLengthUnit(data.width_unit),
+                depth: data.depth,
+                depth_unit: validateLengthUnit(data.depth_unit),
+                diameter: data.diameter,
+                diameter_unit: validateLengthUnit(data.diameter_unit)
+            }
+        })
+
+        return { error: false, message: "Dimensiones actualizadas correctamente", payload: variant }
+    })
+}
