@@ -1,6 +1,6 @@
 "use client"
 
-import { Package, EditIcon, X, Check, Plus, Trash2 } from "lucide-react"
+import { Package, EditIcon, X, Check, Plus, Trash2, Loader2 } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form } from "@/features/layout/components"
@@ -29,6 +29,7 @@ const VariantStockDisplay = ({ variant }: VariantStockDisplayProps) => {
     const [isEditing, setIsEditing] = useState(false)
     const [branches, setBranches] = useState<{ id: number; name: string }[]>([])
     const [rows, setRows] = useState<{ branch_id: number | ""; quantity: number | "" }[]>([])
+    const [isSaving, setIsSaving] = useState(false)
     const branchNameById = useMemo(() => {
         const map = new Map<number, string>()
         for (const b of branches) map.set(b.id, b.name)
@@ -85,13 +86,16 @@ const VariantStockDisplay = ({ variant }: VariantStockDisplayProps) => {
             return
         }
 
+        setIsSaving(true)
         const { error, message } = await updateVariantStocks(variant.id, updates)
         if (error) {
             toast.error(message || "Error al actualizar stock")
+            setIsSaving(false)
             return
         }
         toast.success("Stock actualizado correctamente")
         setIsEditing(false)
+        setIsSaving(false)
     }
 
     function ToggleEditButton() {
@@ -145,10 +149,12 @@ const VariantStockDisplay = ({ variant }: VariantStockDisplayProps) => {
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <IconButton
-                                        icon={Check}
+                                        icon={isSaving ? Loader2 : Check}
+                                        iconClassName={isSaving ? "animate-spin" : undefined}
                                         onClick={handleSave}
                                         color={[99, 102, 241]}
                                         className="opacity-0 group-hover/variant-stock-display:opacity-100 transition-opacity duration-300"
+                                        disabled={isSaving}
                                     />
                                 </TooltipTrigger>
                                 <TooltipContent>

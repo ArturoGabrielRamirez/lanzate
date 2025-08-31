@@ -1,24 +1,35 @@
 "use client"
 
-import { Settings2, EditIcon, X, Check } from "lucide-react"
-import { ProductVariant } from "@prisma/client"
+import { Settings2, EditIcon, X, Check, Loader2 } from "lucide-react"
+import { ProductMedia, Product, ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form } from "@/features/layout/components"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { editVariantSchema } from "../../schemas/product-schema"
+// removed unused resolver/schema
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
+import { updateVariantFlags } from "../../actions/updateVariantFlags"
+import { toast } from "sonner"
 
 interface VariantConfigDisplayProps {
     variant: ProductVariant
-    product: any
+    product: Product & {
+        variants: (ProductVariant & {
+            color?: { name: string } | null
+            stocks?: { quantity: number; branch_id: number }[]
+            primary_media?: ProductMedia | null
+        })[]
+    }
 }
 
-const VariantConfigDisplay = ({ variant, product }: VariantConfigDisplayProps) => {
+const VariantConfigDisplay = ({ variant }: VariantConfigDisplayProps) => {
     const [isEditing, setIsEditing] = useState(false)
+    const [isSaving, setIsSaving] = useState(false)
+    const [active, setActive] = useState<boolean>(!!variant.is_active)
+    const [published, setPublished] = useState<boolean>(!!variant.is_published)
+    const [featured, setFeatured] = useState<boolean>(!!variant.is_featured)
 
     const handleOpenEdit = () => {
         setIsEditing(true)
@@ -30,12 +41,7 @@ const VariantConfigDisplay = ({ variant, product }: VariantConfigDisplayProps) =
 
     return (
         <Card className="group/variant-config-display">
-            <Form
-                submitButton={false}
-                contentButton={false}
-                resolver={yupResolver(editVariantSchema)}
-                onSuccess={handleCloseEdit}
-            >
+            <Form submitButton={false} contentButton={false}>
                 <CardHeader>
                     <CardTitle>
                         <span className="flex items-center gap-2 text-lg md:text-xl">
@@ -49,10 +55,28 @@ const VariantConfigDisplay = ({ variant, product }: VariantConfigDisplayProps) =
                                 <Tooltip>
                                     <TooltipTrigger asChild>
                                         <IconButton
-                                            icon={Check}
-                                            type="submit"
+                                            onClick={async () => {
+                                                try {
+                                                    setIsSaving(true)
+                                                    const payload = { is_active: active, is_published: published, is_featured: featured }
+                                                    const { error, message } = await updateVariantFlags(variant.id, payload)
+                                                    if (error) {
+                                                        toast.error(message || "Error al guardar configuración")
+                                                        setIsSaving(false)
+                                                        return
+                                                    }
+                                                    toast.success("Configuración guardada")
+                                                    handleCloseEdit()
+                                                    setIsSaving(false)
+                                                } catch {
+                                                    toast.error("Error al guardar configuración")
+                                                }
+                                            }}
                                             color={[99, 102, 241]}
                                             className="opacity-0 group-hover/variant-config-display:opacity-100 transition-opacity duration-300"
+                                            icon={isSaving ? Loader2 : Check}
+                                            iconClassName={isSaving ? "animate-spin" : undefined}
+                                            disabled={isSaving}
                                         />
                                     </TooltipTrigger>
                                     <TooltipContent>
@@ -99,40 +123,21 @@ const VariantConfigDisplay = ({ variant, product }: VariantConfigDisplayProps) =
                                     La variante estará visible y disponible para la venta
                                 </span>
                             </Label>
-                            <Switch
-                                id="is_active"
-                                name="is_active"
-                                defaultChecked={variant.is_active}
-                                disabled={!isEditing}
-                            />
+                            <Switch id="is_active" checked={active} onCheckedChange={setActive} disabled={!isEditing} />
                         </div>
                         <div className="flex items-center justify-between">
-                            <Label htmlFor="is_default" className="flex flex-col gap-1 items-start">
-                                <span>Variante por defecto</span>
-                                <span className="font-normal text-sm text-muted-foreground">
-                                    Esta será la variante principal del producto
-                                </span>
+                            <Label htmlFor="is_published" className="flex flex-col gap-1 items-start">
+                                <span>Publicada</span>
+                                <span className="font-normal text-sm text-muted-foreground">Visible públicamente</span>
                             </Label>
-                            <Switch
-                                id="is_default"
-                                name="is_default"
-                                defaultChecked={variant.is_default || false}
-                                disabled={!isEditing}
-                            />
+                            <Switch id="is_published" checked={published} onCheckedChange={setPublished} disabled={!isEditing} />
                         </div>
                         <div className="flex items-center justify-between">
-                            <Label htmlFor="track_inventory" className="flex flex-col gap-1 items-start">
-                                <span>Control de inventario</span>
-                                <span className="font-normal text-sm text-muted-foreground">
-                                    Activar el seguimiento del stock de esta variante
-                                </span>
+                            <Label htmlFor="is_featured" className="flex flex-col gap-1 items-start">
+                                <span>Destacada</span>
+                                <span className="font-normal text-sm text-muted-foreground">Mostrar como destacada</span>
                             </Label>
-                            <Switch
-                                id="track_inventory"
-                                name="track_inventory"
-                                defaultChecked={variant.track_inventory || false}
-                                disabled={!isEditing}
-                            />
+                            <Switch id="is_featured" checked={featured} onCheckedChange={setFeatured} disabled={!isEditing} />
                         </div>
                     </div>
                 </CardContent>

@@ -1,6 +1,6 @@
 "use client"
 
-import { Ruler, EditIcon, X, Check } from "lucide-react"
+import { Ruler, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useState } from "react"
@@ -44,6 +44,7 @@ const measureOptions: MultiOption[] = [
 
 const VariantSizesDisplay = ({ variant, product }: VariantSizesDisplayProps) => {
     const [isEditing, setIsEditing] = useState(false)
+    const [isSaving, setIsSaving] = useState(false)
     const [selectedSize, setSelectedSize] = useState<MultiOption | null>(
         variant.size ? { label: variant.size, value: variant.size, group: "Custom" } : null
     )
@@ -74,16 +75,19 @@ const VariantSizesDisplay = ({ variant, product }: VariantSizesDisplayProps) => 
             <form
                 onSubmit={async (e) => {
                     e.preventDefault()
+                    setIsSaving(true)
                     const response = await updateVariantSizes(variant.id, {
                         size: selectedSize?.value!,
                         measure: selectedMeasure?.value!
                     })
                     if (response.error) {
                         toast.error(response.message || "Error al actualizar los tamaños")
+                        setIsSaving(false)
                         return
                     }
                     toast.success(response.message || "Tamaños actualizados correctamente")
                     handleCloseEdit()
+                    setIsSaving(false)
                 }}
             >
                 <CardHeader>
@@ -99,10 +103,12 @@ const VariantSizesDisplay = ({ variant, product }: VariantSizesDisplayProps) => 
                                 <Tooltip>
                                     <TooltipTrigger asChild>
                                         <IconButton
-                                            icon={Check}
+                                            icon={isSaving ? Loader2 : Check}
+                                            iconClassName={isSaving ? "animate-spin" : undefined}
                                             type="submit"
                                             color={[99, 102, 241]}
                                             className="opacity-0 group-hover/variant-sizes-display:opacity-100 transition-opacity duration-300"
+                                            disabled={isSaving}
                                         />
                                     </TooltipTrigger>
                                     <TooltipContent>

@@ -34,7 +34,6 @@ interface VariantDetailFormProps {
 }
 
 const VariantDetailForm = ({ variant, productPrice, slug, productId, product }: VariantDetailFormProps) => {
-    console.log("🚀 ~ VariantDetailForm ~ variant:", variant)
     return (
         <div className="space-y-6">
             {/* Primera fila: Información básica y Medios */}

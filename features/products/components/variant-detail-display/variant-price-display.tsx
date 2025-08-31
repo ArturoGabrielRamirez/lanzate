@@ -1,6 +1,6 @@
 "use client"
 
-import { DollarSign, EditIcon, X, Check } from "lucide-react"
+import { DollarSign, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -18,6 +18,7 @@ interface VariantPriceDisplayProps {
 
 const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps) => {
     const [isEditing, setIsEditing] = useState(false)
+    const [isSaving, setIsSaving] = useState(false)
     const [priceInput, setPriceInput] = useState<string>(
         variant.price?.toString() || productPrice.toString()
     )
@@ -44,13 +45,16 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
                 onSubmit={async (e) => {
                     e.preventDefault()
                     const price = priceInput ? Number(priceInput) : null
+                    setIsSaving(true)
                     const response = await updateVariantPrice(variant.id, { price })
                     if (response.error) {
                         toast.error(response.message || "Error al actualizar el precio")
+                        setIsSaving(false)
                         return
                     }
                     toast.success(response.message)
                     handleCloseEdit()
+                    setIsSaving(false)
                 }}
             >
                 <CardHeader>
@@ -66,10 +70,12 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
                                 <Tooltip>
                                     <TooltipTrigger asChild>
                                         <IconButton
-                                            icon={Check}
+                                            icon={isSaving ? Loader2 : Check}
+                                            iconClassName={isSaving ? "animate-spin" : undefined}
                                             type="submit"
                                             color={[99, 102, 241]}
                                             className="opacity-0 group-hover/variant-price-display:opacity-100 transition-opacity duration-300"
+                                            disabled={isSaving}
                                         />
                                     </TooltipTrigger>
                                     <TooltipContent>

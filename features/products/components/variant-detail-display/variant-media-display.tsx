@@ -1,6 +1,6 @@
 "use client"
 
-import { ImageIcon, EditIcon, X, Check, Upload } from "lucide-react"
+import { ImageIcon, EditIcon, X, Check, Upload, Loader2 } from "lucide-react"
 import { Product, ProductMedia, ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useState } from "react"
@@ -25,6 +25,7 @@ interface VariantMediaDisplayProps {
 const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => {
     const [isEditing, setIsEditing] = useState(false)
     const [pendingPrimaryId, setPendingPrimaryId] = useState<number | null>(null)
+    const [isSaving, setIsSaving] = useState(false)
 
     function getMediaUrlById(id: number | null | undefined) {
         if (!id) return undefined
@@ -50,6 +51,7 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
     }
 
     const handleSave = async () => {
+        setIsSaving(true)
         try {
             if (pendingPrimaryId !== null && pendingPrimaryId !== variant.primary_media?.id) {
                 const response = await updateVariantMedia(variant.id, { primary_media_id: pendingPrimaryId })
@@ -62,6 +64,7 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
         } finally {
             setPendingPrimaryId(null)
             setIsEditing(false)
+            setIsSaving(false)
         }
     }
 
@@ -104,10 +107,12 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <IconButton
-                                    icon={Check}
+                                    icon={isSaving ? Loader2 : Check}
+                                    iconClassName={isSaving ? "animate-spin" : undefined}
                                     onClick={handleSave}
                                     color={[99, 102, 241]}
                                     className="opacity-0 group-hover/variant-media-display:opacity-100 transition-opacity duration-300"
+                                    disabled={isSaving}
                                 />
                             </TooltipTrigger>
                             <TooltipContent>

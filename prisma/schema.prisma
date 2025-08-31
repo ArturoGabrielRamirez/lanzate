@@ -264,6 +264,8 @@ model ProductVariant {
   color_id           Int?
   price              Float?
   is_active          Boolean               @default(true)
+  is_featured        Boolean               @default(false)
+  is_published       Boolean               @default(false)
   barcode            String?
   created_at         DateTime              @default(now())
   updated_at         DateTime              @updatedAt

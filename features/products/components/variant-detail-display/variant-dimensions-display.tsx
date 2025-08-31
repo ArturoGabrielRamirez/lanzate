@@ -1,6 +1,6 @@
 "use client"
 
-import { Scale, EditIcon, X, Check } from "lucide-react"
+import { Scale, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -22,6 +22,7 @@ interface VariantDimensionsDisplayProps {
 
 const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplayProps) => {
     const [isEditing, setIsEditing] = useState(false)
+    const [isSaving, setIsSaving] = useState(false)
 
     const handleOpenEdit = () => {
         setIsEditing(true)
@@ -49,13 +50,16 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
                         diameter: formData.get('diameter') ? Number(formData.get('diameter')) : null,
                         diameter_unit: formData.get('diameterUnit') as string || "CM"
                     }
+                    setIsSaving(true)
                     const response = await updateVariantDimensions(variant.id, data)
                     if (response.error) {
                         toast.error(response.message || "Error al actualizar las dimensiones")
+                        setIsSaving(false)
                         return
                     }
                     toast.success(response.message || "Dimensiones actualizadas correctamente")
                     handleCloseEdit()
+                    setIsSaving(false)
                 }}
             >
                 <CardHeader>
@@ -71,10 +75,12 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
                                 <Tooltip>
                                     <TooltipTrigger asChild>
                                         <IconButton
-                                            icon={Check}
+                                            icon={isSaving ? Loader2 : Check}
+                                            iconClassName={isSaving ? "animate-spin" : undefined}
                                             type="submit"
                                             color={[99, 102, 241]}
                                             className="opacity-0 group-hover/variant-dimensions-display:opacity-100 transition-opacity duration-300"
+                                            disabled={isSaving}
                                         />
                                     </TooltipTrigger>
                                     <TooltipContent>
