@@ -3,17 +3,20 @@
 import { DollarSign, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+import { Form, InputField } from "@/features/layout/components"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { toast } from "sonner"
 import { updateVariantPrice } from "../../data/updateVariantPrice"
 
 interface VariantPriceDisplayProps {
     variant: ProductVariant
     productPrice: number
+}
+
+type VariantPriceFormValues = {
+    "variant-price"?: string
 }
 
 const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps) => {
@@ -41,20 +44,24 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
 
     return (
         <Card className="group/variant-price-display">
-            <form
-                onSubmit={async (e) => {
-                    e.preventDefault()
-                    const price = priceInput ? Number(priceInput) : null
-                    setIsSaving(true)
-                    const response = await updateVariantPrice(variant.id, { price })
-                    if (response.error) {
-                        toast.error(response.message || "Error al actualizar el precio")
+            <Form<VariantPriceFormValues>
+                submitButton={false}
+                contentButton="Guardar"
+                loadingMessage="Guardando..."
+                successMessage="Precio actualizado"
+                onSuccess={handleCloseEdit}
+                formAction={async (data: VariantPriceFormValues) => {
+                    try {
+                        setIsSaving(true)
+                        const raw = data?.["variant-price"]
+                        const price = raw && raw !== "" ? Number(raw) : null
+                        const response = await updateVariantPrice(variant.id, { price })
                         setIsSaving(false)
-                        return
+                        return response
+                    } catch (error) {
+                        setIsSaving(false)
+                        throw error
                     }
-                    toast.success(response.message)
-                    handleCloseEdit()
-                    setIsSaving(false)
                 }}
             >
                 <CardHeader>
@@ -117,18 +124,16 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
                     <div className="space-y-4">
                         <div className="space-y-2">
                             <Label>Precio de la variante</Label>
-                            <div className="relative">
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
-                                <Input
-                                    type="number"
-                                    value={priceInput}
-                                    onChange={(e) => setPriceInput(e.target.value)}
-                                    className="pl-7"
-                                    disabled={!isEditing}
-                                    placeholder="Ingrese el precio"
-                                    step="0.01"
-                                />
-                            </div>
+                            <InputField
+                                name="variant-price"
+                                label="Precio"
+                                type="number"
+                                defaultValue={priceInput}
+                                onChange={(e) => setPriceInput(e.target.value)}
+                                disabled={!isEditing}
+                                startContent={<span className="text-gray-500">$</span>}
+                                placeholder="Ingrese el precio"
+                            />
                             {hasCustomPrice && (
                                 <div className="flex items-center gap-2 mt-1">
                                     <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
@@ -146,7 +151,7 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
                         </div>
                     </div>
                 </CardContent>
-            </form>
+            </Form>
         </Card>
     )
 }

@@ -42,22 +42,30 @@ function ButtonWithPopup<T>({
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <div>
-                    {onlyIcon ? (
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <IconButton disabled={disabled} type="button" className={cn(disabled && "cursor-not-allowed text-muted-foreground", className)} icon={() => text} size={"md"}/>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                {title}
-                            </TooltipContent>
-                        </Tooltip>
-                    ) : (
-                        <Button disabled={disabled} variant={variant} type="button" className={cn(className)} size={size}>{text}</Button>
-                    )}
-                </div>
-            </DialogTrigger>
+            {onlyIcon ? (
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                            <IconButton
+                                disabled={disabled}
+                                type="button"
+                                className={cn(disabled && "cursor-not-allowed text-muted-foreground", className)}
+                                icon={() => text}
+                                size={"md"}
+                            />
+                        </DialogTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        {title}
+                    </TooltipContent>
+                </Tooltip>
+            ) : (
+                <DialogTrigger asChild>
+                    <Button disabled={disabled} variant={variant} type="button" className={cn(className)} size={size}>
+                        {text}
+                    </Button>
+                </DialogTrigger>
+            )}
             <DialogContent className="max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
