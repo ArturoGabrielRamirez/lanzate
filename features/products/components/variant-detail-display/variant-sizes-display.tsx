@@ -3,20 +3,53 @@
 import { Ruler, EditIcon, X, Check } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, InputField } from "@/features/layout/components"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { editVariantSchema } from "../../schemas/product-schema"
+import MultipleSelector from "@/components/expansion/multiple-selector"
+import type { Option as MultiOption } from "@/components/expansion/multiple-selector"
+import { Label } from "@/components/ui/label"
+import { toast } from "sonner"
+import { updateVariantSizes } from "../../data/updateVariantSizes"
 
 interface VariantSizesDisplayProps {
     variant: ProductVariant
     product: any
 }
 
+const sizeOptions: MultiOption[] = [
+    { label: "XS", value: "XS", group: "Letras" },
+    { label: "S", value: "S", group: "Letras" },
+    { label: "M", value: "M", group: "Letras" },
+    { label: "L", value: "L", group: "Letras" },
+    { label: "XL", value: "XL", group: "Letras" },
+    { label: "XXL", value: "XXL", group: "Letras" },
+    { label: "36", value: "36", group: "Números" },
+    { label: "38", value: "38", group: "Números" },
+    { label: "40", value: "40", group: "Números" },
+    { label: "42", value: "42", group: "Números" },
+    { label: "44", value: "44", group: "Números" },
+    { label: "46", value: "46", group: "Números" },
+]
+
+const measureOptions: MultiOption[] = [
+    { label: "250ml", value: "250ml", group: "Volumen" },
+    { label: "500ml", value: "500ml", group: "Volumen" },
+    { label: "1L", value: "1L", group: "Volumen" },
+    { label: "2L", value: "2L", group: "Volumen" },
+    { label: "Pequeño", value: "small", group: "Genérico" },
+    { label: "Mediano", value: "medium", group: "Genérico" },
+    { label: "Grande", value: "large", group: "Genérico" },
+]
+
 const VariantSizesDisplay = ({ variant, product }: VariantSizesDisplayProps) => {
     const [isEditing, setIsEditing] = useState(false)
+    const [selectedSize, setSelectedSize] = useState<MultiOption | null>(
+        variant.size ? { label: variant.size, value: variant.size, group: "Custom" } : null
+    )
+    const [selectedMeasure, setSelectedMeasure] = useState<MultiOption | null>(
+        variant.measure ? { label: variant.measure, value: variant.measure, group: "Custom" } : null
+    )
 
     const handleOpenEdit = () => {
         setIsEditing(true)
@@ -26,13 +59,32 @@ const VariantSizesDisplay = ({ variant, product }: VariantSizesDisplayProps) => 
         setIsEditing(false)
     }
 
+    const handleChangeSize = (options: MultiOption[]) => {
+        const selected = options[0] || null
+        setSelectedSize(selected)
+    }
+
+    const handleChangeMeasure = (options: MultiOption[]) => {
+        const selected = options[0] || null
+        setSelectedMeasure(selected)
+    }
+
     return (
         <Card className="group/variant-sizes-display">
-            <Form
-                submitButton={false}
-                contentButton={false}
-                resolver={yupResolver(editVariantSchema)}
-                onSuccess={handleCloseEdit}
+            <form
+                onSubmit={async (e) => {
+                    e.preventDefault()
+                    const response = await updateVariantSizes(variant.id, {
+                        size: selectedSize?.value!,
+                        measure: selectedMeasure?.value!
+                    })
+                    if (response.error) {
+                        toast.error(response.message || "Error al actualizar los tamaños")
+                        return
+                    }
+                    toast.success(response.message || "Tamaños actualizados correctamente")
+                    handleCloseEdit()
+                }}
             >
                 <CardHeader>
                     <CardTitle>
@@ -89,31 +141,39 @@ const VariantSizesDisplay = ({ variant, product }: VariantSizesDisplayProps) => 
                     </CardAction>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-1">
-                            <InputField
-                                name="size_or_measure"
-                                label="Talle o medida"
-                                defaultValue={variant.size || ""}
-                                placeholder="Ej. M, L, XL"
+                    <div className="space-y-4">
+                        <div className="space-y-3">
+                            <Label>Talles (letras y números)</Label>
+                            <MultipleSelector
+                                className="w-full"
+                                defaultOptions={sizeOptions}
+                                value={selectedSize ? [selectedSize] : []}
+                                onChange={handleChangeSize}
+                                placeholder="Selecciona o crea talle"
+                                creatable
+                                groupBy="group"
                                 disabled={!isEditing}
+                                hidePlaceholderWhenSelected
                             />
                         </div>
-                        <div className="space-y-1">
-                            <InputField
-                                name="size"
-                                label="Tamaño"
-                                defaultValue={variant.size || ""}
-                                placeholder="Ej. 42, 44, 46"
+
+                        <div className="space-y-3">
+                            <Label>Tamaños (volúmenes o genéricos)</Label>
+                            <MultipleSelector
+                                className="w-full"
+                                defaultOptions={measureOptions}
+                                value={selectedMeasure ? [selectedMeasure] : []}
+                                onChange={handleChangeMeasure}
+                                placeholder="Selecciona o crea tamaño"
+                                creatable
+                                groupBy="group"
                                 disabled={!isEditing}
+                                hidePlaceholderWhenSelected
                             />
-                            <p className="text-xs text-muted-foreground/50">
-                                Tamaño base del producto: {product.size || "No especificado"}
-                            </p>
                         </div>
                     </div>
                 </CardContent>
-            </Form>
+            </form>
         </Card>
     )
 }
