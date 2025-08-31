@@ -5,10 +5,10 @@ import { Prisma } from '@prisma/client'
 
 export async function PATCH(request: NextRequest) {
   try {
-    const { user } = await getCurrentUser()
-    
-    if (!user) {
-      return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
+    const { payload: user, error: userError } = await getCurrentUser()
+
+    if (userError || !user) {
+      return NextResponse.json({ error: userError || 'No autenticado' }, { status: 401 })
     }
 
     const body = await request.json()

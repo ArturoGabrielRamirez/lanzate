@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { getEmailChangeStatus } from '../actions/index';
 
 export function useEmailChangeStatus(initialOldEmail: string,
-  onComplete: () => void) {
+    onComplete: () => void) {
     const [status, setStatus] = useState({
         oldEmailConfirmed: false,
         newEmailConfirmed: false,
@@ -28,33 +28,36 @@ export function useEmailChangeStatus(initialOldEmail: string,
             setIsManuallyChecking(true);
         }
 
+        console.log('Checking email change status...');
+
         try {
             const result = await getEmailChangeStatus();
-            
-            if (result.success && result.data) {
+            console.log('Email change status result:', result);
+
+            if (result.payload && !result.error) {
                 const newStatus = {
-                    oldEmailConfirmed: result.data.oldEmailConfirmed || false,
-                    newEmailConfirmed: result.data.newEmailConfirmed || false,
-                    currentEmail: result.data.currentEmail ?? initialOldEmail,
+                    oldEmailConfirmed: result.payload.oldEmailConfirmed || false,
+                    newEmailConfirmed: result.payload.newEmailConfirmed || false,
+                    currentEmail: result.payload.currentEmail ?? initialOldEmail,
                     loading: false,
-                    hasEmailChange: result.data.hasEmailChange ?? false,
-                    processCompleted: result.data.processCompleted || false
+                    hasEmailChange: result.payload.hasEmailChange ?? false,
+                    processCompleted: result.payload.processCompleted || false
                 };
 
                 const statusString = `${newStatus.hasEmailChange}-${newStatus.oldEmailConfirmed}
                 -${newStatus.newEmailConfirmed}-${newStatus.processCompleted}`;
-                
+
                 if (statusString !== lastStatusRef.current) {
                     setStatus(newStatus);
                     lastStatusRef.current = statusString;
                 } else {
                     setStatus(prev => ({ ...prev, loading: false }));
                 }
-                
+
                 if (!newStatus.hasEmailChange || newStatus.processCompleted) {
                     if (!hasCompletedRef.current) {
                         hasCompletedRef.current = true;
-                        
+
                         if (intervalRef.current) {
                             clearInterval(intervalRef.current);
                             intervalRef.current = null;
@@ -69,7 +72,7 @@ export function useEmailChangeStatus(initialOldEmail: string,
             setStatus(prev => ({ ...prev, loading: false }));
         } finally {
             isCheckingRef.current = false;
-            
+
             if (isManual) {
                 setTimeout(() => {
                     setIsManuallyChecking(false);
@@ -91,14 +94,14 @@ export function useEmailChangeStatus(initialOldEmail: string,
                 }
             }, 3000);
         }
-        
+
         return () => {
             if (intervalRef.current) {
                 clearInterval(intervalRef.current);
                 intervalRef.current = null;
             }
         };
-    }, []);
+    }, [initialOldEmail]);
 
     useEffect(() => {
         if (!status.hasEmailChange || status.processCompleted) {

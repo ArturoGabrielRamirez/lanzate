@@ -24,7 +24,7 @@ function AccountDropdown({ image }: AccountDropdownProps) {
     return (
         <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger asChild>
-                <Avatar className="ring-primary ring-2 cursor-pointer">
+                <Avatar className="ring-primary ring-1 cursor-pointer size-10">
                     <AvatarImage src={image} />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>

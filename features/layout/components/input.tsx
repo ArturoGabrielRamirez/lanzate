@@ -19,6 +19,7 @@ type InputFieldProps = {
   endContent?: React.ReactNode
   placeholder?: string,
   disabled?: boolean
+  maxLength?: number
 }
 
 const InputField = ({
@@ -35,6 +36,7 @@ const InputField = ({
   endContent,
   placeholder,
   disabled = false,
+  maxLength
 }: InputFieldProps) => {
   const {
     register,
@@ -67,6 +69,7 @@ const InputField = ({
         endContent={endContent}
         {...controlls}
         disabled={disabled}
+        maxLength={maxLength}
       />
       {error && <p className="text-sm text-red-500">{error}</p>}
     </div>

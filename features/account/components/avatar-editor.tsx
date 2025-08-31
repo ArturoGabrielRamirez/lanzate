@@ -71,7 +71,7 @@ export default function AvatarEditor({ currentAvatar, userEmail, onAvatarUpdate 
           <Button
             variant="ghost"
             size="sm"
-            className="absolute bottom-0 right-0 rounded-full bg-background border-2 border-background shadow-md hover:bg-accent"
+            className="absolute bottom-0 right-0 rounded-full bg-primary"
           >
             <Camera className="h-4 w-4" />
           </Button>

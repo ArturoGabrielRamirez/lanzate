@@ -1,4 +1,3 @@
-// /api/auth/check-user/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
@@ -10,18 +9,16 @@ export async function GET(request: NextRequest) {
       {
         cookies: {
           getAll: () => request.cookies.getAll(),
-          setAll: () => {},
+          setAll: () => { },
         },
       }
     );
 
-    // Verificar autenticación
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
     }
 
-    // Verificar si el usuario existe en la base de datos
     const { data: userData, error: userError } = await supabase
       .from('users')
       .select('id, email, created_at')
@@ -29,11 +26,9 @@ export async function GET(request: NextRequest) {
       .single();
 
     if (userError || !userData) {
-      // El usuario fue eliminado de la base de datos
       return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 });
     }
 
-    // Usuario existe y está activo
     return NextResponse.json({
       exists: true,
       user: {

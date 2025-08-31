@@ -16,6 +16,7 @@ export default function EmailStatusBanner() {
     const handleSmartResend = async () => {
         setIsResending(true);
 
+        console.log('Resending email for status en EmailStatusBanner:', status);
         try {
             let payload: any = {
                 type: 'email_change'

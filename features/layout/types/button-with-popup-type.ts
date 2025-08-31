@@ -1,24 +1,25 @@
-import * as Yup from "yup"
-import { ResponseType } from "./"
+import { FieldValues } from "react-hook-form";
+import { ObjectSchema } from "yup";
+import { ResponseType } from ".";
 
-export type ButtonWithPopupPropsType<T> = {
-    text: string | React.ReactNode
-    children?: React.ReactNode
-    title: string
-    description: string
-    action: (payload: any) => Promise<ResponseType<T>>
-    disabled?: boolean
-    messages: {
-        success: string
-        error: string
-        loading: string
-    }
-    schema?: Yup.ObjectSchema<any>
-    onComplete?: () => void
-    variant?: "default" | "destructive" | "ghost"
-    className?: string
-    formDisabled?: boolean
-    size?: "default" | "sm" | "lg" | "icon"
-    contentButton?: string
-    onlyIcon?: boolean
-}
+export type ButtonWithPopupPropsType<P extends FieldValues> = {
+  text: React.ReactNode;
+  children?: React.ReactNode;
+  title?: string;
+  description?: string;
+  action: (payload: P) => Promise<ResponseType<any> | undefined>;
+  messages: {
+    success: string;
+    error: string;
+    loading: string;
+  };
+  disabled?: boolean;
+  schema?: ObjectSchema<Partial<P>>;
+  onComplete?: () => void;
+  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+  className?: string;
+  size?: "default" | "sm" | "lg" | "icon";
+  formDisabled?: boolean;
+  contentButton?: string | React.ReactNode;
+  onlyIcon?: boolean;
+};

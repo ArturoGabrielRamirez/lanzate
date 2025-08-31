@@ -1,92 +1,3 @@
-CREATE EXTENSION IF NOT EXISTS http;
-
-CREATE OR REPLACE FUNCTION notify_email_change_selective()
-RETURNS TRIGGER AS $$
-DECLARE
-    has_active_request BOOLEAN := false;
-    local_user_id INTEGER;
-BEGIN
-    SELECT id INTO local_user_id
-    FROM public.users
-    WHERE email = NEW.email;
-
-    IF local_user_id IS NOT NULL THEN
-        SELECT EXISTS(
-            SELECT 1 FROM public.email_change_requests
-            WHERE user_id = local_user_id
-            AND completed = false
-            AND expires_at > NOW()
-        ) INTO has_active_request;
-
-        IF has_active_request AND (
-            (OLD.new_email IS DISTINCT FROM NEW.new_email) OR
-            (OLD.email_confirmed_at IS DISTINCT FROM NEW.email_confirmed_at)
-        ) THEN
-            PERFORM net.http_post(
-                url := 'https://lanzate.app/api/webhooks/supabase-auth',
-                headers := '{"Content-Type": "application/json"}'::jsonb,
-                body := jsonb_build_object(
-                    'type', TG_OP,
-                    'table', TG_TABLE_NAME,
-                    'record', row_to_json(NEW),
-                    'old_record', row_to_json(OLD),
-                    'timestamp', NOW(),
-                    'source', 'email_change_system',
-                    'local_user_id', local_user_id
-                )
-            );
-            RAISE NOTICE 'Email change webhook sent for user: %, has_active_request: %', NEW.email, has_active_request;
-        END IF;
-    END IF;
-
-    RETURN NEW;
-EXCEPTION
-    WHEN OTHERS THEN
-        RAISE NOTICE 'Error in email change webhook: %', SQLERRM;
-        RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS email_change_system_webhook ON auth.users;
-
-CREATE TRIGGER email_change_system_webhook
-    AFTER UPDATE ON auth.users
-    FOR EACH ROW
-    EXECUTE FUNCTION notify_email_change_selective();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- Función mejorada para detectar confirmaciones de email
 CREATE OR REPLACE FUNCTION notify_email_change_selective() RETURNS TRIGGER AS $$
 DECLARE
@@ -204,3 +115,101 @@ CREATE TRIGGER email_change_system_webhook
     AFTER INSERT OR UPDATE ON auth.users 
     FOR EACH ROW 
     EXECUTE FUNCTION notify_email_change_selective();
+
+
+
+
+
+
+
+
+    
+-- ====== GESTIÓN DEL CRON JOB ======
+
+-- 1. Ver todos los jobs programados
+SELECT jobid, jobname, schedule, command, active 
+FROM cron.job 
+ORDER BY jobname;
+
+-- 2. Ejecutar manualmente el job para testing
+SELECT cleanup_legal_retention();
+
+-- 3. Ver el historial de ejecuciones recientes
+SELECT 
+    jobid, 
+    runid, 
+    job_pid, 
+    database, 
+    username,
+    command,
+    status,
+    return_message,
+    start_time,
+    end_time,
+    end_time - start_time as duration
+FROM cron.job_run_details 
+WHERE jobid = (SELECT jobid FROM cron.job WHERE jobname = 'cleanup-legal-retention')
+ORDER BY start_time DESC 
+LIMIT 5;
+
+-- 4. Pausar el job temporalmente
+UPDATE cron.job SET active = false WHERE jobname = 'cleanup-legal-retention';
+
+-- 5. Reactivar el job
+UPDATE cron.job SET active = true WHERE jobname = 'cleanup-legal-retention';
+
+-- 6. Modificar el horario del job (ejemplo: cambiar a 3:00 AM)
+SELECT cron.alter_job(
+    job_id := (SELECT jobid FROM cron.job WHERE jobname = 'cleanup-legal-retention'),
+    schedule := '0 3 * * *'
+);
+
+-- 7. Eliminar el job completamente
+SELECT cron.unschedule('cleanup-legal-retention');
+
+-- ====== MONITOREO Y LOGS ======
+
+-- 8. Ver usuarios que serán eliminados en la próxima ejecución (preview)
+SELECT 
+    u.id,
+    u.username,
+    u.email,
+    u.anonymized_at,
+    u.account_locked_until,
+    CASE 
+        WHEN u.account_locked_until <= NOW() THEN 'LISTO PARA ELIMINAR'
+        ELSE 'PENDIENTE'
+    END as status,
+    CASE 
+        WHEN u.account_locked_until <= NOW() THEN 
+            EXTRACT(DAY FROM (NOW() - u.account_locked_until)) || ' días pasada la fecha límite'
+        ELSE 
+            EXTRACT(DAY FROM (u.account_locked_until - NOW())) || ' días restantes'
+    END as time_info
+FROM users u
+WHERE u.is_anonymized = true
+    AND u.account_locked_until IS NOT NULL
+    AND u.email LIKE 'deleted_%@deleted.local'
+ORDER BY u.account_locked_until;
+
+-- 9. Ver estadísticas de eliminaciones definitivas
+SELECT 
+    DATE(created_at) as deletion_date,
+    COUNT(*) as users_deleted,
+    action,
+    reason
+FROM user_deletion_logs 
+WHERE action IN ('LEGAL_RETENTION_DELETE', 'LEGAL_RETENTION_DELETE_ERROR')
+GROUP BY DATE(created_at), action, reason
+ORDER BY deletion_date DESC;
+
+-- 10. Ver últimas ejecuciones exitosas del cleanup
+SELECT 
+    created_at,
+    additional_data::json->'deleted_users_count' as deleted_count,
+    reason
+FROM user_deletion_logs 
+WHERE action = 'LEGAL_RETENTION_DELETE'
+    AND additional_data::json->'deleted_by_system' = 'true'::json
+ORDER BY created_at DESC
+LIMIT 10;

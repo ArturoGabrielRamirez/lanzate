@@ -18,26 +18,27 @@ export function useConfirmationEmailChangeStatus() {
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const mountedRef = useRef(true);
     const lastUpdateRef = useRef<string>('');
-
+    
     const checkStatus = async () => {
         try {
             const result = await getEmailChangeStatus();
+            console.log('Email change status en useConfirmationEmailChangeStatus:', result);
 
-            if (result.success && result.data && mountedRef.current) {
+            if (result.payload.success && result.payload && mountedRef.current) {
                 const newStatus: EmailChangeStatus = {
-                    hasEmailChange: result.data.hasEmailChange,
-                    oldEmailConfirmed: result.data.oldEmailConfirmed,
-                    newEmailConfirmed: result.data.newEmailConfirmed,
-                    newEmail: result.data.newEmail,
-                    currentEmail: result.data.currentEmail || '',
+                    hasEmailChange: result.payload?.hasEmailChange,
+                    oldEmailConfirmed: result.payload?.oldEmailConfirmed,
+                    newEmailConfirmed: result.payload?.newEmailConfirmed,
+                    newEmail: result.payload?.newEmail,
+                    currentEmail: result.payload?.currentEmail || '',
                     loading: false,
-                    processCompleted: result.data.processCompleted || false,
-                    requestId: result.data.requestId,
-                    expiresAt: result.data.expiresAt ? new Date(result.data.expiresAt) : undefined,
-                    oldEmailConfirmedAt: result.data.oldEmailConfirmedAt ?
-                     new Date(result.data.oldEmailConfirmedAt) : null,
-                    newEmailConfirmedAt: result.data.newEmailConfirmedAt ?
-                     new Date(result.data.newEmailConfirmedAt) : null,
+                    processCompleted: result.payload?.processCompleted || false,
+                    requestId: result.payload?.requestId,
+                    expiresAt: result.payload?.expiresAt ? new Date(result.payload.expiresAt) : undefined,
+                    oldEmailConfirmedAt: result.payload?.oldEmailConfirmedAt ?
+                     new Date(result.payload.oldEmailConfirmedAt) : null,
+                    newEmailConfirmedAt: result.payload?.newEmailConfirmedAt ?
+                     new Date(result.payload.newEmailConfirmedAt) : null,
                 };
 
                 const statusHash = `${newStatus.hasEmailChange}-${newStatus.oldEmailConfirmed}
@@ -98,6 +99,8 @@ export function useConfirmationEmailChangeStatus() {
 
         return clearPolling;
     }, [status.hasEmailChange, status.processCompleted, status.loading]);
+
+    console.log('Email change status:', status);
 
     const getProgress = () => {
         if (!status.hasEmailChange || status.processCompleted) {
