@@ -52,18 +52,38 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
     type VariantRow = (Product & { categories: Category[] }) & { variant_id?: number; variant_label?: string }
 
     const rows: VariantRow[] = useMemo(() => {
-        const list = data as unknown as (Product & { categories: Category[]; variants?: { id: number; size_or_measure: string | null; color_id: number | null; color?: { name: string } | null; stocks?: { quantity: number }[] }[] })[]
+        const list = data as unknown as (Product & {
+            categories: Category[];
+            variants?: {
+                id: number;
+                name: string | null;
+                size: string | null;
+                measure: string | null;
+                color_id: number | null;
+                color?: { name: string } | null;
+                stocks?: { quantity: number }[]
+            }[]
+        })[]
+
         const flattened: VariantRow[] = []
+
         for (const p of list) {
             const variants = p.variants ?? []
             if (variants.length === 0) {
                 flattened.push({ ...p, variant_id: undefined, variant_label: undefined })
                 continue
             }
+
             for (const v of variants) {
                 const vStock = (v.stocks ?? []).reduce((sum, s) => sum + (s.quantity ?? 0), 0)
-                const label = [v.size_or_measure, v.color?.name].filter(Boolean).join(" · ")
-                flattened.push({ ...p, stock: vStock, variant_id: v.id, variant_label: label || "Variante" })
+                const variantAttributes = [v.size, v.measure, v.color?.name].filter(Boolean).join(" · ")
+                const label = v.name || (variantAttributes || "Variante")
+                flattened.push({
+                    ...p,
+                    stock: vStock,
+                    variant_id: v.id,
+                    variant_label: label
+                })
             }
         }
         return flattened
@@ -116,7 +136,10 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
             },
             cell: ({ row }) => {
                 const r = row.original
-                return <span>{r.name}{r.variant_label ? ` (${r.variant_label})` : ""}</span>
+                if (r.variant_id) {
+                    return <span>{r.variant_label || r.name}</span>
+                }
+                return <span>{r.name}</span>
             }
         },
         {
