@@ -28,6 +28,11 @@ export async function selectProductByIdAndSubdomain(id: number, subdomain: strin
                         subdomain: true,
                         customization: true
                     }
+                },
+                variants: {
+                    where: { is_deleted: false },
+                    include: { color: true },
+                    orderBy: { id: 'asc' }
                 }
             }
         })

@@ -32,6 +32,24 @@ export async function insertUnifiedProduct(args: UnifiedArgs) {
     return actionWrapper(async () => {
         const supabase = createServerSideClient()
 
+        // PREP: Upload media first, outside of the DB transaction to avoid timeouts
+        const files = args.media?.files ?? []
+        const uploadedUrls: string[] = []
+        if (files.length > 0) {
+            for (let i = 0; i < files.length; i++) {
+                const f = files[i]
+                const { data: existing } = supabase.storage.from("product-images").getPublicUrl(f.name)
+                let url = existing?.publicUrl
+                if (!url) {
+                    const up = await supabase.storage.from("product-images").upload(f.name, f)
+                    if (up.error) throw new Error(up.error.message)
+                    const { data: after } = supabase.storage.from("product-images").getPublicUrl(up.data.path)
+                    url = after.publicUrl
+                }
+                uploadedUrls.push(url)
+            }
+        }
+
         const result = await prisma.$transaction(async (tx) => {
             // 1) Validate store and main branch
             const store = await tx.store.findUnique({ where: { id: args.targetStoreId } })
@@ -95,24 +113,14 @@ export async function insertUnifiedProduct(args: UnifiedArgs) {
                 }
             })
 
-            // 3) Upload media (if provided) and create ProductMedia
-            const files = args.media?.files ?? []
-            if (files.length > 0) {
-                for (let i = 0; i < files.length; i++) {
-                    const f = files[i]
-                    const { data: existing } = supabase.storage.from("product-images").getPublicUrl(f.name)
-                    let url = existing?.publicUrl
-                    if (!url) {
-                        const up = await supabase.storage.from("product-images").upload(f.name, f)
-                        if (up.error) throw new Error(up.error.message)
-                        const { data: after } = supabase.storage.from("product-images").getPublicUrl(up.data.path)
-                        url = after.publicUrl
-                    }
+            // 3) Create ProductMedia with pre-uploaded URLs
+            if (uploadedUrls.length > 0) {
+                for (let i = 0; i < uploadedUrls.length; i++) {
                     await tx.productMedia.create({
                         data: {
                             product_id: product.id,
                             type: "IMAGE" as MediaType,
-                            url,
+                            url: uploadedUrls[i],
                             sort_order: i,
                         }
                     })
@@ -130,7 +138,7 @@ export async function insertUnifiedProduct(args: UnifiedArgs) {
                 ? variantsInput
                 : [{ id: "one-one", size: undefined as string | undefined, measure: undefined as string | undefined, color: undefined }]
 
-            const derivedTotalStock = 0
+            let derivedTotalStock = 0
 
             for (let i = 0; i < effectiveVariants.length; i++) {
                 const v = effectiveVariants[i]
@@ -184,6 +192,9 @@ export async function insertUnifiedProduct(args: UnifiedArgs) {
                         stocks: { create: initialStocks }
                     }
                 })
+                // accumulate stock after variant creation if needed later
+                const sum = initialStocks.reduce((acc, s) => acc + s.quantity, 0)
+                derivedTotalStock += sum
             }
 
             // Update product.stock as derived sum of variant stocks

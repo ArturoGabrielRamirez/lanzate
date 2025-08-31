@@ -24,18 +24,24 @@ async function ProductList({ subdomain, category, sort, search, min, max, limit,
 
     const items: (Product & { __href: string })[] = storeData.products.flatMap((p: Product & { variants?: ProductVariant[] }) => {
         if (p.variants && p.variants.length > 0) {
-            return p.variants.map((v: ProductVariant) => ({
-                ...p,
-                id: v.id,
-                price: v.price ?? p.price,
-                name: v.name ?? p.name,
-                description: v.description ?? p.description,
-                sku: v.sku ?? p.sku,
-                barcode: v.barcode ?? p.barcode,
-                __href: `/item/${p.id}/${v.id}`,
-            } as Product & { __href: string }));
+            return p.variants.map((v: ProductVariant) => {
+                const search = new URLSearchParams()
+                if (v.size) search.set("size", v.size)
+                if (v.measure) search.set("measure", v.measure)
+                if (v.color_id) search.set("color", String(v.color_id))
+                return ({
+                    ...p,
+                    id: v.id,
+                    price: v.price ?? p.price,
+                    name: v.name ?? p.name,
+                    description: v.description ?? p.description,
+                    sku: v.sku ?? p.sku,
+                    barcode: v.barcode ?? p.barcode,
+                    __href: `/item/${p.id}?${search.toString()}`,
+                } as Product & { __href: string })
+            });
         }
-        return [{ ...p, __href: `/item/${p.id}/${p.id}` } as Product & { __href: string }];
+        return [{ ...p, __href: `/item/${p.id}` } as Product & { __href: string }];
     });
 
     return (
