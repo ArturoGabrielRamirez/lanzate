@@ -1,11 +1,15 @@
 "use client"
 
-import { ImageIcon, EditIcon, X, Check } from "lucide-react"
+import { ImageIcon, EditIcon, X, Check, Upload } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { FileUpload, FileUploadDropzone, FileUploadTrigger } from "@/components/ui/file-upload"
+import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
+import { updateVariantMedia } from "../../data/updateVariantMedia"
 
 interface VariantMediaDisplayProps {
     variant: ProductVariant & {
@@ -104,34 +108,36 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                                 <div className="flex-1 flex items-center">
                                     <p className="text-sm text-muted-foreground">
                                         La variante no tiene una imagen principal asignada. 
-                                        {isEditing && ' Selecciona una imagen de las disponibles abajo para establecerla como principal.'}
+                                        {isEditing && ' Selecciona una imagen de las disponibles abajo o sube una nueva.'}
                                     </p>
                                 </div>
                             )}
                         </div>
                     </div>
                     
-                    {isEditing && product.media && product.media.length > 0 && (
+                    {product.media && product.media.length > 0 && (
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Imágenes disponibles del producto</label>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                                 {product.media.map((media: any) => (
                                     <div 
                                         key={media.id} 
-                                        className={`aspect-square overflow-hidden rounded-md bg-secondary cursor-pointer border-2 transition-colors relative ${
+                                        className={`aspect-square overflow-hidden rounded-md bg-secondary ${isEditing ? 'cursor-pointer' : ''} border-2 transition-colors relative ${
                                             variant.primary_media?.id === media.id 
                                                 ? 'border-primary' 
                                                 : 'border-transparent hover:border-primary/50'
                                         }`}
-                                        onClick={() => {
-                                            // Temporalmente actualizamos solo el estado local
-                                            variant.primary_media = {
-                                                id: media.id,
-                                                url: media.url,
-                                                type: media.type
-                                            };
-                                            // Forzar re-render
-                                            setIsEditing(true);
+                                        onClick={async () => {
+                                            if (!isEditing) return
+                                            const response = await updateVariantMedia(variant.id, {
+                                                primary_media_id: media.id
+                                            })
+                                            if (response.error) {
+                                                toast.error(response.message || "Error al actualizar la imagen")
+                                                return
+                                            }
+                                            toast.success(response.message)
+                                            // La UI se actualizará automáticamente cuando el servidor revalide los datos
                                         }}
                                     >
                                         <img
@@ -171,13 +177,39 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                     
                     {isEditing && (
                         <div className="space-y-2">
-                            <label className="text-sm font-medium">Subir nuevas imágenes</label>
-                            <div className="border-2 border-dashed border-muted-foreground/25 rounded-md p-4 text-center">
-                                <ImageIcon className="size-8 mx-auto text-muted-foreground mb-2" />
-                                <p className="text-sm text-muted-foreground">
-                                    Arrastra imágenes aquí o haz clic para seleccionar
-                                </p>
-                            </div>
+                            <label className="text-sm font-medium">Subir nueva imagen</label>
+                            <FileUpload
+                                maxFiles={1}
+                                maxSize={2 * 1024 * 1024}
+                                className="w-full"
+                                onFileReject={(file, message) => toast.error(message)}
+                                accept="image/jpg, image/png, image/jpeg"
+                                onValueChange={async (files) => {
+                                    if (files.length === 0) return
+                                    const response = await updateVariantMedia(variant.id, { files })
+                                    if (response.error) {
+                                        toast.error(response.message || "Error al subir la imagen")
+                                        return
+                                    }
+                                    toast.success(response.message)
+                                    // La UI se actualizará automáticamente cuando el servidor revalide los datos
+                                }}
+                            >
+                                <FileUploadDropzone>
+                                    <div className="flex flex-col items-center gap-1 text-center">
+                                        <div className="flex items-center justify-center rounded-full border p-2.5">
+                                            <Upload className="size-6 text-muted-foreground" />
+                                        </div>
+                                        <p className="font-medium text-sm">Arrastra y suelta una imagen aquí</p>
+                                        <p className="text-muted-foreground text-xs">O haz click para explorar</p>
+                                    </div>
+                                    <FileUploadTrigger asChild>
+                                        <Button variant="outline" size="sm" className="mt-2 w-fit">
+                                            Explorar archivos
+                                        </Button>
+                                    </FileUploadTrigger>
+                                </FileUploadDropzone>
+                            </FileUpload>
                         </div>
                     )}
                 </div>
