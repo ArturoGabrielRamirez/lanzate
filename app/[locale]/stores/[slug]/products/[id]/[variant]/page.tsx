@@ -1,9 +1,6 @@
 import { getProductDetails } from "@/features/stores/actions/getProductDetails"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, Boxes } from "lucide-react"
-import DeleteVariantButton from "@/features/products/components/delete-variant-button"
+import { Card, CardContent } from "@/components/ui/card"
 import { VariantDetailForm } from "@/features/products/components/variant-detail-display"
-import Link from "next/link"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
 

@@ -112,14 +112,6 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
                 />
             ),
         },
-        /* {
-            header: t("headers.id"),
-            accessorKey: "id",
-            cell: ({ row }) => {
-                const r = row.original
-                return <span>{r.variant_id ? `${r.id}-${r.variant_id}` : r.id}</span>
-            }
-        }, */
         {
             accessorKey: "name",
             header: ({ column }) => {
