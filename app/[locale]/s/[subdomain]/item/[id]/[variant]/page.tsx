@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Title } from "@/features/layout/components"
 import PageContainer from "@/features/layout/components/page-container"
@@ -8,6 +7,8 @@ import { getProductDetails } from "@/features/subdomain/actions/getProductDetail
 import { Category } from "@prisma/client"
 import { Image, Share, ShoppingBag } from "lucide-react"
 import Link from "next/link"
+import VariantDetailClient from "@/features/subdomain/components/variant-detail-client"
+import type { Product, ProductVariant, Color } from "@prisma/client"
 
 type Props = {
     params: Promise<{ id: string; subdomain: string; variant: string }>
@@ -58,6 +59,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                         </div>
                         <div className="bg-gray-100 rounded-lg flex items-center justify-center grow">
                             {product.image ? (
+                                // eslint-disable-next-line @next/next/no-img-element
                                 <img
                                     src={product.image}
                                     alt={product.name}
@@ -79,23 +81,10 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                     </div>
 
                     <div className="space-y-4 text-primary overflow-y-auto max-h-[calc(100vh-205px)] pr-4 relative">
-                        <div className="flex flex-col gap-2 sticky top-0 left-0 w-full bg-background">
-                            <p className="text-sm text-muted-foreground">Sin marca</p>
-                            <h2 className="text-4xl font-bold leading-[0.8]">{product.name}</h2>
-                            {product.categories && product.categories.length > 0 && (
-                                <div className="flex flex-wrap gap-2">
-                                    {product.categories.map((category: Category) => (
-                                        <Badge key={category.id} variant="secondary" className="bg-accent text-accent-foreground">
-                                            {category.name}
-                                        </Badge>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="text-3xl font-bold border-b border-muted-foreground pb-4">
-                            ${product.price}
-                        </div>
+                        <VariantDetailClient
+                            product={product as unknown as Product & { variants?: (ProductVariant & { color: Color | null })[] }}
+                            initialVariantId={parseInt(variant)}
+                        />
 
                         <div className="flex flex-col gap-2 border-b border-muted-foreground pb-4">
                             {product.description && (
@@ -109,7 +98,16 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                                 <p className="text-sm text-gray-500 mt-1">SKU: {product.sku}</p>
                             )}
                             <div className="flex gap-2 justify-end">
-                                <AddToCartButton product={product} withText className="text-lg p-6 !px-8 !bg-accent text-accent-foreground" canBeAddedToCart={true} />
+                                <AddToCartButton
+                                    product={product}
+                                    withText
+                                    className="text-lg p-6 !px-8 !bg-accent text-accent-foreground"
+                                    canBeAddedToCart={true}
+                                    overrideId={parseInt(variant)}
+                                    overrideName={product.variants?.find(v => v.id === parseInt(variant))?.name ?? product.name}
+                                    overridePrice={product.variants?.find(v => v.id === parseInt(variant))?.price ?? product.price}
+                                    overrideImage={product.image ?? undefined}
+                                />
                                 <Button variant="outline" size="lg" className="text-lg p-6 !px-8" asChild>
                                     <Link href="/checkout">
                                         <ShoppingBag />

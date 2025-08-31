@@ -12,21 +12,23 @@ type Props = {
     withText?: boolean
     className?: string
     canBeAddedToCart: boolean
+    overrideId?: string | number
+    overrideName?: string
+    overridePrice?: number
+    overrideImage?: string
 }
 
-function AddToCartButton({ product, canBeAddedToCart }: Props) {
+function AddToCartButton({ product, canBeAddedToCart, overrideId, overrideName, overridePrice, overrideImage }: Props) {
     const { addToCart } = useCart()
     const [isAdded, setIsAdded] = useState(false)
 
     const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()
-        addToCart({
-            id: product.id.toString(),
-            name: product.name,
-            price: product.price,
-            quantity: 1,
-            image: product.image || ""
-        })
+        const id = (overrideId ?? product.id).toString()
+        const name = overrideName ?? product.name
+        const price = overridePrice ?? product.price
+        const image = overrideImage ?? product.image ?? ""
+        addToCart({ id, name, price, quantity: 1, image })
         setIsAdded(true)
         setTimeout(() => {
             setIsAdded(false)

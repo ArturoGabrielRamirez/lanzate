@@ -29,8 +29,9 @@ export async function selectProductByIdsAndSubdomain(productId: number, variantI
                     }
                 },
                 variants: {
-                    where: { id: variantId, is_deleted: false },
-                    take: 1
+                    where: { is_deleted: false },
+                    include: { color: true },
+                    orderBy: { id: 'asc' }
                 }
             }
         })

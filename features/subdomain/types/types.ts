@@ -1,4 +1,4 @@
-import { Product as PrismaProduct, ProductVariant, Store, StoreBalance, StoreCustomization, Category, StoreOperationalSettings, Branch } from "@prisma/client";
+import { Product as PrismaProduct, ProductVariant, Store, StoreBalance, StoreCustomization, Category, StoreOperationalSettings, Branch, Color } from "@prisma/client";
 
 export type Product = PrismaProduct;
 
@@ -73,6 +73,7 @@ export type GetProductDetailsReturn = {
             subdomain: string;
             customization: StoreCustomization | null;
         };
+        variants?: (ProductVariant & { color: Color | null })[];
     }) | null;
     error: boolean;
 };
