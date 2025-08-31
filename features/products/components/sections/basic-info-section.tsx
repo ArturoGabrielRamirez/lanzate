@@ -5,7 +5,15 @@ import { InputField } from "@/features/layout/components"
 import { useRef } from "react"
 import { useFormContext } from "react-hook-form"
 
-export function BasicInfoSection() {
+type Defaults = {
+    name?: string
+    slug?: string
+    description?: string
+    sku?: string
+    barcode?: string
+}
+
+export function BasicInfoSection({ defaults }: { defaults?: Defaults }) {
     const { setValue } = useFormContext()
     const slugEditedRef = useRef(false)
 
@@ -42,6 +50,7 @@ export function BasicInfoSection() {
                     placeholder={"Ej: Coca Cola"}
                     startContent={<Box />}
                     onChange={handleNameChange}
+                    defaultValue={defaults?.name}
                 />
                 <InputField
                     name="slug"
@@ -50,6 +59,7 @@ export function BasicInfoSection() {
                     placeholder={"Ej: coca-cola"}
                     startContent={<Link />}
                     onChange={handleSlugChange}
+                    defaultValue={defaults?.slug}
                 />
             </div>
             <InputField
@@ -58,6 +68,7 @@ export function BasicInfoSection() {
                 isTextArea={true}
                 placeholder={"Ej: Este producto es una bebida gaseosa..."}
                 startContent={<FileText />}
+                defaultValue={defaults?.description}
             />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <InputField
@@ -66,6 +77,7 @@ export function BasicInfoSection() {
                     type="text"
                     placeholder="Ej: 1234567890"
                     startContent={<Tag />}
+                    defaultValue={defaults?.sku}
                 />
                 <InputField
                     name="barcode"
@@ -73,6 +85,7 @@ export function BasicInfoSection() {
                     type="text"
                     placeholder="Ej: 1234567890"
                     startContent={<Barcode />}
+                    defaultValue={defaults?.barcode}
                 />
             </div>
         </div>
