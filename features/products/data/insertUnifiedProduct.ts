@@ -36,8 +36,8 @@ export async function insertUnifiedProduct(args: UnifiedArgs) {
             // 1) Validate store and main branch
             const store = await tx.store.findUnique({ where: { id: args.targetStoreId } })
             if (!store) throw new Error("Store not found")
-            const mainBranch = await tx.branch.findFirst({ where: { store_id: store.id } })
-            if (!mainBranch) throw new Error("Main branch not found")
+            const branches = await tx.branch.findMany({ where: { store_id: store.id } })
+            if (!branches || branches.length === 0) throw new Error("No branches found for store")
 
             // 2) Create product
             // Generar un slug base y verificar si existe
@@ -130,20 +130,12 @@ export async function insertUnifiedProduct(args: UnifiedArgs) {
                 ? variantsInput
                 : [{ id: "one-one", size: undefined as string | undefined, measure: undefined as string | undefined, color: undefined }]
 
-            function distribute(total: number, n: number): number[] {
-                if (!Number.isFinite(total) || total <= 0 || n <= 0) return Array.from({ length: n }, () => 0)
-                const base = Math.floor(total / n)
-                const rem = total % n
-                return Array.from({ length: n }, (_, i) => base + (i < rem ? 1 : 0))
-            }
-
-            const quantities = distribute(args.form.stock ?? 0, effectiveVariants.length)
-            let derivedTotalStock = 0
+            const derivedTotalStock = 0
 
             for (let i = 0; i < effectiveVariants.length; i++) {
                 const v = effectiveVariants[i]
-                const qty = quantities[i] ?? 0
-                derivedTotalStock += qty
+                // Initial stock: 0 for each branch
+                const initialStocks = branches.map((b) => ({ branch_id: b.id, quantity: 0 }))
 
                 // optional color lookup/creation: link by name if exists
                 let colorId: number | null = null
@@ -189,9 +181,7 @@ export async function insertUnifiedProduct(args: UnifiedArgs) {
                         low_stock_alert: null,
                         max_per_order: null,
                         // Crear el stock inicial
-                        stocks: {
-                            create: [{ branch_id: mainBranch.id, quantity: qty }]
-                        }
+                        stocks: { create: initialStocks }
                     }
                 })
             }
