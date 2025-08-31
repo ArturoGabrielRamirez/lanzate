@@ -24,13 +24,45 @@ interface VariantMediaDisplayProps {
 
 const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => {
     const [isEditing, setIsEditing] = useState(false)
+    const [pendingPrimaryId, setPendingPrimaryId] = useState<number | null>(null)
+
+    function getMediaUrlById(id: number | null | undefined) {
+        if (!id) return undefined
+        if (variant.primary_media?.id === id) return variant.primary_media.url
+        const inProduct = product.media?.find(m => m.id === id)?.url
+        if (inProduct) return inProduct
+        const inVariant = variant.media?.find(m => m.id === id)?.url
+        if (inVariant) return inVariant
+        if (product.primary_media?.id === id) return product.primary_media.url
+        return undefined
+    }
+
+    const effectivePrimaryId = pendingPrimaryId ?? variant.primary_media?.id ?? null
+    const effectivePrimaryUrl = getMediaUrlById(effectivePrimaryId)
 
     const handleOpenEdit = () => {
         setIsEditing(true)
     }
 
     const handleCloseEdit = () => {
+        setPendingPrimaryId(null)
         setIsEditing(false)
+    }
+
+    const handleSave = async () => {
+        try {
+            if (pendingPrimaryId !== null && pendingPrimaryId !== variant.primary_media?.id) {
+                const response = await updateVariantMedia(variant.id, { primary_media_id: pendingPrimaryId })
+                if (response.error) {
+                    toast.error(response.message || "Error al actualizar la imagen")
+                    return
+                }
+                toast.success(response.message)
+            }
+        } finally {
+            setPendingPrimaryId(null)
+            setIsEditing(false)
+        }
     }
 
     function ToggleEditButton() {
@@ -73,7 +105,7 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                             <TooltipTrigger asChild>
                                 <IconButton
                                     icon={Check}
-                                    onClick={handleCloseEdit}
+                                    onClick={handleSave}
                                     color={[99, 102, 241]}
                                     className="opacity-0 group-hover/variant-media-display:opacity-100 transition-opacity duration-300"
                                 />
@@ -92,9 +124,9 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                         <label className="text-sm font-medium">Imagen principal</label>
                         <div className="flex items-start gap-4 flex-col">
                             <div className="w-48 h-48 flex-shrink-0 overflow-hidden rounded-md bg-secondary relative">
-                                {variant.primary_media?.url ? (
+                                {effectivePrimaryUrl ? (
                                     <img
-                                        src={variant.primary_media.url}
+                                        src={effectivePrimaryUrl}
                                         alt="Variant image"
                                         className="object-cover h-full w-full"
                                     />
@@ -107,7 +139,7 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                                     </div>
                                 )}
                             </div>
-                            {!variant.primary_media?.url && (
+                            {!effectivePrimaryUrl && (
                                 <div className="flex-1 flex items-center">
                                     <p className="text-sm text-muted-foreground">
                                         La variante no tiene una imagen principal asignada.
@@ -125,21 +157,13 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                                 {product.media.map((media) => (
                                     <div
                                         key={media.id}
-                                        className={`aspect-square overflow-hidden rounded-md bg-secondary ${isEditing ? 'cursor-pointer' : ''} border-2 transition-colors relative ${variant.primary_media?.id === media.id
+                                        className={`aspect-square overflow-hidden rounded-md bg-secondary ${isEditing ? 'cursor-pointer' : 'pointer-events-none'} border-2 transition-colors relative ${(effectivePrimaryId === media.id)
                                             ? 'border-primary'
                                             : 'border-transparent hover:border-primary/50'
                                             }`}
-                                        onClick={async () => {
+                                        onClick={() => {
                                             if (!isEditing) return
-                                            const response = await updateVariantMedia(variant.id, {
-                                                primary_media_id: media.id
-                                            })
-                                            if (response.error) {
-                                                toast.error(response.message || "Error al actualizar la imagen")
-                                                return
-                                            }
-                                            toast.success(response.message)
-                                            // La UI se actualizará automáticamente cuando el servidor revalide los datos
+                                            setPendingPrimaryId(media.id)
                                         }}
                                     >
                                         <img
@@ -147,7 +171,7 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
                                             alt="Product media"
                                             className="object-cover h-full w-full"
                                         />
-                                        {variant.primary_media?.id === media.id && (
+                                        {effectivePrimaryId === media.id && (
                                             <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
                                                 <div className="bg-primary text-primary-foreground text-xs px-2 py-1 rounded">
                                                     Principal
