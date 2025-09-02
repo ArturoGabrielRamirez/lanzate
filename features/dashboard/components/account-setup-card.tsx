@@ -2,12 +2,13 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Progress } from "@/components/ui/progress"
 import { CheckCircle, Circle } from "lucide-react"
 import { getAccountSetupDataAction } from "@/features/dashboard/actions/getAccountSetupDataAction"
-import { CreateStoreButton } from "@/features/stores/components"
+/* import { CreateStoreButton } from "@/features/stores/components" */
 import { getUserInfo } from "@/features/layout/actions"
 import UnifiedCreateProductButton from "@/features/products/components/unified-create-product-button"
 /* import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select" */
 import SettingsLinks from "./settings-links"
 import CopyLink from "./copy-link"
+import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new"
 /* import UnifiedCreateProductButton from "@/features/products/components/unified-create-product-button" */
 
 const AccountSetupCard = async () => {
@@ -67,7 +68,8 @@ const AccountSetupCard = async () => {
                 </ul>
             </CardContent>
             <CardFooter>
-                {!storeDone && <CreateStoreButton userId={user?.id} canCreate={!storeDone} />}
+                {/* {!storeDone && <CreateStoreButton userId={user?.id} canCreate={!storeDone} />} */}
+                {!storeDone && <CreateStoreButtonNew userId={user?.id} />}
                 {!productDone && storeDone && <UnifiedCreateProductButton userId={user?.id} storeId={payload?.stores[0]?.id} stores={payload?.stores} />}
                 {productDone && !settingsDone && (
                     <SettingsLinks stores={payload?.stores || []} />

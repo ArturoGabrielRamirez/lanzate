@@ -1107,9 +1107,9 @@ const CreateStoreFormStepsNavigator = ({
                     <IconButton
                         type="button"
                         icon={ArrowRight}
-                        onClick={goToNextStep}
-                        disabled={!canGoToNextStep}
-                        className={cn("ml-auto", canGoToNextStep ? "" : "cursor-not-allowed opacity-50")}
+                        onClick={() => { if (step < 5) { goToNextStep() } }}
+                        disabled={!(canGoToNextStep && step < 5)}
+                        className={cn("ml-auto", canGoToNextStep && step < 5 ? "" : "cursor-not-allowed opacity-50")}
                     />
                 </TooltipTrigger>
                 <TooltipContent>

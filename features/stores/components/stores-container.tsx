@@ -1,11 +1,10 @@
 import { getStoresFromUser } from "@/features/stores/actions/getStoresFromUser"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { canCreateStore } from "@/features/stores/access/canCreateStore"
+/* import { canCreateStore } from "@/features/stores/access/canCreateStore" */
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CreateStoreButton, StoreCard } from "@/features/stores/components"
+import { StoreCard } from "@/features/stores/components"
 import { Plus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import CreateProductButtonNew from "@/features/products/components/create-product-button-new"
 import CreateStoreButtonNew from "./create-store-button-new"
 
 async function StoresContainer() {
@@ -23,7 +22,6 @@ async function StoresContainer() {
         return null
     }
 
-    const canCreate = await canCreateStore(user.id)
     const t = await getTranslations("store")
 
     return (
@@ -38,7 +36,7 @@ async function StoresContainer() {
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="flex justify-center items-center grow flex-col gap-2">
-                            <CreateStoreButton userId={user.id} canCreate={canCreate} />
+                            {/* <CreateStoreButton userId={user.id} canCreate={canCreate} /> */}
                             <CreateStoreButtonNew userId={user.id} />
                         </CardContent>
                     </Card>
@@ -49,7 +47,8 @@ async function StoresContainer() {
             ) : (
                 <div className="flex flex-col justify-center items-center h-full border-dashed border-2 border-secondary rounded-md p-6 gap-4">
                     <p className="text-xl font-bold">{t("no-stores")}</p>
-                    <CreateStoreButton userId={user.id} canCreate={canCreate} />
+                    {/* <CreateStoreButton userId={user.id} canCreate={canCreate} /> */}
+                    <CreateStoreButtonNew userId={user.id} />
                 </div>
             )}
         </>

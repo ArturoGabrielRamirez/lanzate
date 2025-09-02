@@ -1,4 +1,4 @@
-import CreateStoreButton from "./create-store-button";
+/* import CreateStoreButton from "./create-store-button"; */
 import DeleteStoreButton from "./delete-store-button";
 import EditStoreButton from "./edit-store-button";
 import EditOperationalSettingsButton from "./edit-operational-settings-button";
@@ -32,7 +32,7 @@ import HistoryTable from "./history-table";
 import StoreInformationForm from "./store-information-form";
 
 export {
-    CreateStoreButton,
+    /* CreateStoreButton, */
     DeleteStoreButton,
     EditStoreButton,
     EditOperationalSettingsButton,

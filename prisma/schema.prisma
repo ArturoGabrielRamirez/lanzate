@@ -11,17 +11,19 @@ datasource db {
 }
 
 model User {
-  id                        Int                     @id @default(autoincrement())
-  email                     String                  @unique
+  id                        Int       @id @default(autoincrement())
+  email                     String    @unique
+  
   avatar                    String?
-  created_at                DateTime                @default(now())
+  banner                    String?
+  created_at                DateTime  @default(now())
   first_name                String?
   last_name                 String?
   password                  String
-  updated_at                DateTime                @updatedAt
-  supabase_user_id          String?                 @unique
+  updated_at                DateTime  @updatedAt
+  supabase_user_id          String?   @unique
   phone                     String?
-  username                  String                  @unique
+  username                  String    @unique
   account_locked_until      DateTime?
   anonymized_at             DateTime?
   deletion_cancelled_at     DateTime?
@@ -31,12 +33,21 @@ model User {
   deletion_requested_at     DateTime?
   deletion_scheduled_at     DateTime?
   deletion_user_agent       String?
-  is_anonymized             Boolean                 @default(false)
-  is_deletion_cancelled     Boolean                 @default(false)
+  is_anonymized             Boolean   @default(false)
+  is_deletion_cancelled     Boolean   @default(false)
   last_login_at             DateTime?
-  login_attempts_count      Int                     @default(0)
+  login_attempts_count      Int       @default(0)
   original_email_hash       String?
-  government_id             String?                 @unique
+  government_id             String?   @unique
+
+  profile_bio         String?
+  profile_is_public   Boolean @default(true)
+  show_liked_products Boolean @default(true)
+  show_comments       Boolean @default(true)
+  show_activity       Boolean @default(true)
+  location            String?
+  show_location       Boolean @default(false)
+
   Account                   Account[]
   ActionLog                 ActionLog[]
   contracts_assigned        ContractAssignment[]    @relation("ContractAssignedBy")
@@ -56,8 +67,22 @@ model User {
   Store                     Store[]
   deletion_logs             UserDeletionLog[]
   user_reminders            UserReminder[]
-
+  user_follows              UserFollow[] @relation("UserFollower")
+  user_follows_following    UserFollow[] @relation("UserFollowing")
   @@map("users")
+}
+
+model UserFollow {
+  id           Int      @id @default(autoincrement())
+  follower_id  Int // Quien sigue
+  following_id Int // A quien sigue
+  created_at   DateTime @default(now())
+
+  follower  User @relation("UserFollower", fields: [follower_id], references: [id])
+  following User @relation("UserFollowing", fields: [following_id], references: [id])
+
+  @@unique([follower_id, following_id])
+  @@map("user_follows")
 }
 
 model UserDeletionLog {
@@ -183,51 +208,51 @@ model Product {
 }
 
 model Branch {
-  id            Int                   @id @default(autoincrement())
-  name          String
-  description   String?
-  address       String?
-  phone         String?
-  email         String?
-  created_at    DateTime              @default(now())
-  updated_at    DateTime              @updatedAt
-  store_id      Int
-  is_main       Boolean               @default(false)
-  city          String?
-  country       String?
-  province      String?
-  facebook_url  String?
-  instagram_url String?
-  x_url         String?
-  store         Store                 @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  orders        Order[]
-  stock         ProductStock[]
-  variant_stock ProductVariantStock[]
+  id                   Int                        @id @default(autoincrement())
+  name                 String
+  description          String?
+  address              String?
+  phone                String?
+  email                String?
+  created_at           DateTime                   @default(now())
+  updated_at           DateTime                   @updatedAt
+  store_id             Int
+  is_main              Boolean                    @default(false)
+  city                 String?
+  country              String?
+  province             String?
+  facebook_url         String?
+  instagram_url        String?
+  x_url                String?
+  store                Store                      @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  orders               Order[]
+  stock                ProductStock[]
+  variant_stock        ProductVariantStock[]
   operational_settings BranchOperationalSettings?
-  opening_hours BranchOpeningHour[]
-  shipping_methods BranchShippingMethod[]
+  opening_hours        BranchOpeningHour[]
+  shipping_methods     BranchShippingMethod[]
 
   @@map("branches")
 }
 
 model BranchOperationalSettings {
-  id                         Int             @id @default(autoincrement())
-  branch_id                  Int             @unique
-  is_open_24_hours           Boolean         @default(true)
-  offers_delivery            Boolean         @default(false)
-  payment_methods            PaymentMethod[] @default([CASH])
-  delivery_time_min          Int?            @default(30)
-  delivery_time_max          Int?            @default(60)
-  pickup_time_min            Int?            @default(15)
-  pickup_time_max            Int?            @default(30)
-  requires_phone_for_delivery Boolean        @default(true)
-  minimum_order_amount       Float?          @default(0)
-  preparation_time_buffer    Int?            @default(10)
-  is_temporarily_closed      Boolean         @default(false)
-  temporary_closure_reason   String?
-  created_at                 DateTime        @default(now())
-  updated_at                 DateTime        @updatedAt
-  branch                     Branch          @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+  id                          Int             @id @default(autoincrement())
+  branch_id                   Int             @unique
+  is_open_24_hours            Boolean         @default(true)
+  offers_delivery             Boolean         @default(false)
+  payment_methods             PaymentMethod[] @default([CASH])
+  delivery_time_min           Int?            @default(30)
+  delivery_time_max           Int?            @default(60)
+  pickup_time_min             Int?            @default(15)
+  pickup_time_max             Int?            @default(30)
+  requires_phone_for_delivery Boolean         @default(true)
+  minimum_order_amount        Float?          @default(0)
+  preparation_time_buffer     Int?            @default(10)
+  is_temporarily_closed       Boolean         @default(false)
+  temporary_closure_reason    String?
+  created_at                  DateTime        @default(now())
+  updated_at                  DateTime        @updatedAt
+  branch                      Branch          @relation(fields: [branch_id], references: [id], onDelete: Cascade)
 
   @@map("branch_operational_settings")
 }
@@ -235,9 +260,9 @@ model BranchOperationalSettings {
 model BranchOpeningHour {
   id         Int      @id @default(autoincrement())
   branch_id  Int
-  day        Int      // 0..6
-  start      String   // HH:mm
-  end        String   // HH:mm
+  day        Int // 0..6
+  start      String // HH:mm
+  end        String // HH:mm
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
