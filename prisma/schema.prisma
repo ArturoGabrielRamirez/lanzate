@@ -253,6 +253,7 @@ model BranchShippingMethod {
   provider          String
   min_order_amount  Float?
   free_shipping_min Float?
+  delivery_price    Float?
   eta_minutes       Int?
   active            Boolean  @default(true)
   created_at        DateTime @default(now())

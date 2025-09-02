@@ -50,6 +50,7 @@ type ShippingMethod = {
     minPurchase: string
     freeShippingMin: string
     estimatedTime: string
+    deliveryPrice?: string
 }
 
 type AttentionDateFormPanelProps = {
@@ -124,6 +125,7 @@ const createStoreSchema = yup.object().shape({
             minPurchase: yup.string(),
             freeShippingMin: yup.string(),
             estimatedTime: yup.string(),
+            deliveryPrice: yup.string().matches(/^\d*$/, "Debe ser un número").required("Precio del delivery es requerido"),
         })).when("offers_delivery", (offers, schema) => offers ? schema.min(1, "Agregue al menos un modo de envío") : schema.notRequired())
     }),
     payment_info: yup.object().shape({
@@ -200,7 +202,7 @@ const ShippingFormPanel = () => {
     const handleDeleteMethod = (index: number) => {
         const next = shippingMethods.filter((_m, i) => i !== index)
         setShippingMethods(next)
-        setValue("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
+        setValueAny("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         if (editingIndex !== null && index === editingIndex) setEditingIndex(null)
     }
 
@@ -274,6 +276,7 @@ const ShippingFormPanel = () => {
                                                     {m.freeShippingMin ? `Envío gratis desde: $${m.freeShippingMin}` : 'Sin gratis'}
                                                     {" • "}
                                                     {m.estimatedTime ? `ETA: ${m.estimatedTime}` : 'ETA no establecido'}
+                                                    {m.deliveryPrice ? ` • Precio: $${m.deliveryPrice}` : ''}
                                                 </p>
                                             </div>
                                             <Tooltip>
@@ -389,6 +392,7 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
     const [minPurchase, setMinPurchase] = useState<string>(() => (method.minPurchase || (getValues(`shipping_info.methods.${index}.minPurchase`) as string) || ""))
     const [freeShippingMin, setFreeShippingMin] = useState<string>(() => (method.freeShippingMin || (getValues(`shipping_info.methods.${index}.freeShippingMin`) as string) || ""))
     const [estimatedTime, setEstimatedTime] = useState<string>(() => (method.estimatedTime || (getValues(`shipping_info.methods.${index}.estimatedTime`) as string) || ""))
+    const [deliveryPrice, setDeliveryPrice] = useState<string>(() => (method.deliveryPrice || (getValues(`shipping_info.methods.${index}.deliveryPrice`) as string) || ""))
 
     const formBase = `shipping_info.methods.${index}`
 
@@ -402,6 +406,7 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
             minPurchase,
             freeShippingMin,
             estimatedTime,
+            deliveryPrice,
         }
         if (onSave) onSave(index, payload)
     }
@@ -445,6 +450,19 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
                     placeholder="Ej: 20000"
                     value={freeShippingMin}
                     onChange={(e) => setFreeShippingMin(e.target.value.replace(/[^0-9]/g, ""))}
+                />
+                <InputField
+                    label="Precio $ del delivery"
+                    name={`${formBase}.deliveryPrice`}
+                    inputMode="numeric"
+                    type="number"
+                    placeholder="Ej: 1500"
+                    value={deliveryPrice}
+                    onChange={(e) => {
+                        const v = e.target.value.replace(/[^0-9]/g, "")
+                        setDeliveryPrice(v)
+                        setValueAny(`${formBase}.deliveryPrice`, v, { shouldValidate: true, shouldDirty: true })
+                    }}
                 />
             </div>
             <div className="mb-4">
@@ -1234,7 +1252,7 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
         const processedData = {
             ...data,
             processedOpeningHours: processOpeningHours(data.settings?.attention_dates as { days?: string[]; startTime?: string; endTime?: string }[] | undefined),
-            processedShippingMethods: processShippingMethods(data.shipping_info?.methods as { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string }[] | undefined),
+            processedShippingMethods: processShippingMethods(data.shipping_info?.methods as { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice?: string }[] | undefined),
             processedPaymentMethods: processPaymentMethods(data.payment_info?.payment_methods as string[] | undefined),
         }
 

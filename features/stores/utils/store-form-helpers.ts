@@ -46,6 +46,7 @@ export type ProcessedShippingMethod = {
   min_order_amount: number | null
   free_shipping_min: number | null
   eta_minutes: number | null
+  delivery_price: number | null
   active: boolean
 }
 
@@ -72,12 +73,14 @@ export function processShippingMethods(methods?: Array<{
   minPurchase?: string
   freeShippingMin?: string
   estimatedTime?: string
+  deliveryPrice?: string
 }>): ProcessedShippingMethod[] {
   if (!methods) return []
   return methods.flatMap((m) => {
     const eta = parseTimeToMinutes(m.estimatedTime)
     const min = parseMoneyValue(m.minPurchase)
     const free = parseMoneyValue(m.freeShippingMin)
+    const price = parseMoneyValue(m.deliveryPrice)
     return (m.providers || [])
       .filter((p): p is string => typeof p === 'string')
       .map((provider) => ({
@@ -85,6 +88,7 @@ export function processShippingMethods(methods?: Array<{
         min_order_amount: min,
         free_shipping_min: free,
         eta_minutes: eta,
+        delivery_price: price,
         active: true,
       }))
   })
