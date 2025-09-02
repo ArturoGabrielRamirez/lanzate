@@ -23,6 +23,7 @@ import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { TimePicker } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import { processOpeningHours, processShippingMethods, processPaymentMethods } from "../utils/store-form-helpers"
+import { useRouter } from "next/navigation"
 
 type CreateStoreFormStepsNavigatorProps = {
     canGoToNextStep: boolean;
@@ -909,7 +910,7 @@ const BasicInfoFormPanel = () => {
                     </FileUpload>
                     {isUploading && <Progress value={uploadProgress} />}
                     {(logo.length > 0 || logoUrl) && (
-                        <div className="text-sm text-muted-foreground flex items-center gap-2">
+                        <div className="text-sm text-muted-foreground flex items-center gap-2 justify-center">
                             <p className="truncate">{logo.length > 0 ? logo[0].name : 'Logo cargado'}</p>
                             <Tooltip>
                                 <TooltipTrigger asChild>
@@ -938,6 +939,8 @@ const BasicInfoFormPanel = () => {
                         name="basic_info.subdomain"
                         label="URL"
                         placeholder="Ej: my-store"
+                        type="url"
+                        inputMode="url"
                         startContent={<Globe />}
                         endContent={(
                             <span>
@@ -1129,14 +1132,40 @@ const CreateStoreForm = ({ step }: { step: number }) => {
                         <ShippingFormPanel />
                     </FormPane>
                 )}
+                {step === 6 && (
+                    <FormPane key="step-6">
+                        <SuccessPanel />
+                    </FormPane>
+                )}
             </AnimatePresence>
         </fieldset>
     )
 }
 
+const SuccessPanel = () => {
+    return (
+        <div className="flex flex-col items-center gap-4 py-8 text-center">
+            <Check className="size-10 text-green-600" />
+            <h3 className="text-lg font-semibold">Tienda creada con éxito</h3>
+            <p className="text-sm text-muted-foreground">Serás redirigido a la administración de tu tienda en unos segundos…</p>
+        </div>
+    )
+}
+
 const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
 
-    const [step, { goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, setStep }] = useStep(5)
+    const [step, { goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, setStep }] = useStep(6)
+    const [createdSlug, setCreatedSlug] = useState<string | null>(null)
+    const router = useRouter()
+
+    useEffect(() => {
+        if (step === 6 && createdSlug) {
+            const t = setTimeout(() => {
+                router.push(`/stores/${createdSlug}/account`)
+            }, 1500)
+            return () => clearTimeout(t)
+        }
+    }, [step, createdSlug, router])
 
     const handleCreateStore = async (data: CreateStoreFormValues) => {
 
@@ -1204,15 +1233,9 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
 
         const processedData = {
             ...data,
-            processedOpeningHours: processOpeningHours(
-                data.settings?.attention_dates as { days?: string[]; startTime?: string; endTime?: string }[] | undefined
-            ),
-            processedShippingMethods: processShippingMethods(
-                data.shipping_info?.methods as { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string }[] | undefined
-            ),
-            processedPaymentMethods: processPaymentMethods(
-                data.payment_info?.payment_methods as string[] | undefined
-            ),
+            processedOpeningHours: processOpeningHours(data.settings?.attention_dates as { days?: string[]; startTime?: string; endTime?: string }[] | undefined),
+            processedShippingMethods: processShippingMethods(data.shipping_info?.methods as { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string }[] | undefined),
+            processedPaymentMethods: processPaymentMethods(data.payment_info?.payment_methods as string[] | undefined),
         }
 
         const { error, message, payload } = await createStore(processedData, userId)
@@ -1223,6 +1246,11 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
                 payload: null
             }
         }
+
+        // On success: move to success step and redirect shortly
+        setCreatedSlug(payload.slug)
+        setStep(6)
+
         return {
             error: false,
             message: "Store created successfully",
@@ -1236,6 +1264,7 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
         3: "Add your contact information and social media links so customers can contact you.",
         4: "Choose attention dates and hours so customers know when you are open.",
         5: "Choose your shipping methods and add your payment methods so customers can buy your products.",
+        6: "All set! Redirecting…",
     }
 
     const titleSlugs = {
@@ -1244,6 +1273,7 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
         3: "Contact",
         4: "Hours",
         5: "Delivery",
+        6: "Success",
     }
 
     return (
@@ -1269,14 +1299,16 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
                 >
                     <CreateStoreForm step={step} />
                     <DialogFooter>
-                        <CreateStoreFormStepsNavigator
-                            canGoToNextStep={canGoToNextStep}
-                            canGoToPrevStep={canGoToPrevStep}
-                            goToNextStep={goToNextStep}
-                            goToPrevStep={goToPrevStep}
-                            setStep={setStep}
-                            step={step}
-                        />
+                        {step !== 6 && (
+                            <CreateStoreFormStepsNavigator
+                                canGoToNextStep={canGoToNextStep}
+                                canGoToPrevStep={canGoToPrevStep}
+                                goToNextStep={goToNextStep}
+                                goToPrevStep={goToPrevStep}
+                                setStep={setStep}
+                                step={step}
+                            />
+                        )}
                     </DialogFooter>
                 </Form>
             </DialogContent>
