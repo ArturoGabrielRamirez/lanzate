@@ -13,7 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { ArrowLeft, ArrowRight, Calendar, Camera, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Loader2, Mail, MapPin, Phone, Plus, Settings, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 import * as yup from "yup"
 import CameraComponent from "@/features/auth/components/avatar/camera-component"
@@ -133,12 +133,21 @@ export type CreateStoreFormValues = yup.InferType<typeof createStoreSchema>;
 
 const ShippingFormPanel = () => {
 
-    const { setValue } = useFormContext()
+    const { setValue, getValues } = useFormContext()
     const [offersDelivery, setOffersDelivery] = useState(false)
     const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([])
     const [isAddingMethod, setIsAddingMethod] = useState(false)
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
     const [paymentMethods, setPaymentMethods] = useState<string[]>([])
+
+    useEffect(() => {
+        const offers = getValues("shipping_info.offers_delivery") || false
+        setOffersDelivery(!!offers)
+        const existingMethods = getValues("shipping_info.methods") || []
+        setShippingMethods(existingMethods as ShippingMethod[])
+        const existingPayments = getValues("payment_info.payment_methods") || []
+        setPaymentMethods(existingPayments as string[])
+    }, [getValues])
 
     const handleOffersDelivery = () => {
         setOffersDelivery(true)
@@ -162,7 +171,9 @@ const ShippingFormPanel = () => {
             estimatedTime: ""
         }
         const newIndex = shippingMethods.length
-        setShippingMethods([...shippingMethods, newMethod])
+        const next = [...shippingMethods, newMethod]
+        setShippingMethods(next)
+        setValue("shipping_info.methods", next)
         setIsAddingMethod(true)
         setEditingIndex(newIndex)
     }
@@ -366,11 +377,11 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
         "Otros",
     ]
 
-    const { setValue } = useFormContext()
-    const [selectedProviders, setSelectedProviders] = useState<string[]>(method.providers || [])
-    const [minPurchase, setMinPurchase] = useState<string>(method.minPurchase || "")
-    const [freeShippingMin, setFreeShippingMin] = useState<string>(method.freeShippingMin || "")
-    const [estimatedTime, setEstimatedTime] = useState<string>(method.estimatedTime || "")
+    const { setValue, getValues } = useFormContext()
+    const [selectedProviders, setSelectedProviders] = useState<string[]>(() => (method.providers || (getValues(`shipping_info.methods[${index}].providers`) as string[]) || []))
+    const [minPurchase, setMinPurchase] = useState<string>(() => (method.minPurchase || (getValues(`shipping_info.methods[${index}].minPurchase`) as string) || ""))
+    const [freeShippingMin, setFreeShippingMin] = useState<string>(() => (method.freeShippingMin || (getValues(`shipping_info.methods[${index}].freeShippingMin`) as string) || ""))
+    const [estimatedTime, setEstimatedTime] = useState<string>(() => (method.estimatedTime || (getValues(`shipping_info.methods[${index}].estimatedTime`) as string) || ""))
 
     const formBase = `shipping_info.methods[${index}]`
 
@@ -456,11 +467,20 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
 
 const SettingsFormPanel = () => {
 
-    const { setValue } = useFormContext()
-    const [attentionDates, setAttentionDates] = useState<AttentionDateType[]>([])
+    const { setValue, getValues } = useFormContext()
+    const [attentionDates, setAttentionDates] = useState<AttentionDateType[]>(() => {
+        const existing = getValues("settings.attention_dates") as { days: string[], startTime: string, endTime: string }[] | undefined
+        if (!existing || existing.length === 0) return []
+        return existing.map((d) => ({
+            date: dayjs().format("YYYY-MM-DD"),
+            days: d.days || [],
+            startTime: dayjs(d.startTime, "HH:mm"),
+            endTime: dayjs(d.endTime, "HH:mm"),
+        }))
+    })
     const [isAddingDate, setIsAddingDate] = useState(false)
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
-    const [isOpen24Hours, setIsOpen24Hours] = useState(true)
+    const [isOpen24Hours, setIsOpen24Hours] = useState(() => !!(getValues("settings.is_open_24_hours") ?? true))
 
 
     const handleIsOpen24Hours = () => {
