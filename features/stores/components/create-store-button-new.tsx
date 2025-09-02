@@ -763,6 +763,7 @@ const BasicInfoFormPanel = () => {
 
     const { setValue, watch } = useFormContext()
     const [logo, setLogo] = useState<File[]>([])
+    const [logoUrl, setLogoUrl] = useState<string | null>(null)
     const [isUploading, setIsUploading] = useState(false)
     const [uploadProgress, setUploadProgress] = useState(0)
     const [isSubdomainTouched, setIsSubdomainTouched] = useState(false)
@@ -780,6 +781,7 @@ const BasicInfoFormPanel = () => {
     }
 
     const nameValue = watch('basic_info.name') as string | undefined
+    const logoValue = watch('basic_info.logo') as unknown
 
     useEffect(() => {
         if (!isSubdomainTouched) {
@@ -787,6 +789,19 @@ const BasicInfoFormPanel = () => {
             setValue('basic_info.subdomain', next, { shouldValidate: true, shouldDirty: true })
         }
     }, [nameValue, isSubdomainTouched, setValue])
+
+    useEffect(() => {
+        if (logoValue instanceof File) {
+            setLogo([logoValue])
+            setLogoUrl(null)
+        } else if (typeof logoValue === 'string' && logoValue.length > 0) {
+            setLogo([])
+            setLogoUrl(logoValue)
+        } else {
+            setLogo([])
+            setLogoUrl(null)
+        }
+    }, [logoValue])
 
     const handleUpload = async (file: File) => {
         try {
@@ -848,6 +863,7 @@ const BasicInfoFormPanel = () => {
 
     const handleDeleteLogo = () => {
         setLogo([])
+        setLogoUrl(null)
         setValue("basic_info.logo", "")
     }
 
@@ -861,6 +877,8 @@ const BasicInfoFormPanel = () => {
                                 <FileUploadItem value={logo[0]} className="absolute p-0 w-full h-full border-none">
                                     <FileUploadItemPreview className="w-full h-full rounded-full" />
                                 </FileUploadItem>
+                            ) : logoUrl ? (
+                                <img src={logoUrl} alt="Logo" className="w-full h-full rounded-full object-cover absolute" />
                             ) : (
                                 <div className="group-hover/dropzone:hidden flex flex-col items-center gap-1 text-center">
                                     <ImageIcon className="text-muted-foreground" />
@@ -890,9 +908,9 @@ const BasicInfoFormPanel = () => {
                         </FileUploadDropzone>
                     </FileUpload>
                     {isUploading && <Progress value={uploadProgress} />}
-                    {logo.length > 0 && (
+                    {(logo.length > 0 || logoUrl) && (
                         <div className="text-sm text-muted-foreground flex items-center gap-2">
-                            <p className="truncate">{logo[0].name}</p>
+                            <p className="truncate">{logo.length > 0 ? logo[0].name : 'Logo cargado'}</p>
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <IconButton icon={Trash} onClick={handleDeleteLogo} />
