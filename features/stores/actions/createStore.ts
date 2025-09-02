@@ -33,9 +33,10 @@ import { insertStore } from "../data/insertStore"
 import { actionWrapper } from "@/utils/lib"
 import { canCreateStore } from "../access/canCreateStore"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { CreateStoreFormValues } from "../components/create-store-button-new"
 
 
-export async function createStore(payload: any, userId: number) {
+export async function createStore(payload: CreateStoreFormValues, userId: number) {
     return actionWrapper(async () => {
 
         //Check user is authenticated

@@ -3,13 +3,13 @@ import { Button } from "@/components/ui/button"
 import { Title } from "@/features/layout/components"
 import PageContainer from "@/features/layout/components/page-container"
 import AddToCartButton from "@/features/store-landing/components/add-to-cart-button"
-import LikeButton from "@/features/store-landing/components/like-button"
+// import LikeButton from "@/features/store-landing/components/like-button"
 import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"
 import Comments from "@/features/subdomain/components/comments"
 import { Category } from "@prisma/client"
 import VariantDetailClient from "@/features/subdomain/components/variant-detail-client"
 import type { Product, ProductVariant, Color } from "@prisma/client"
-import { Image, Share, ShoppingBag } from "lucide-react"
+import { ShoppingBag } from "lucide-react"
 import Link from "next/link"
 import RelatedProducts from "@/features/subdomain/components/related-products"
 
@@ -53,73 +53,33 @@ async function ProductDetailsPage({ params, searchParams }: Props) {
             />
 
             <div className="grow flex flex-col">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 grow">
-                    <div className="flex gap-6 lg:gap-8 border-r pr-0 lg:pr-12 border-muted-foreground/30">
-                        {/* Product Image */}
-                        <div className="flex flex-col gap-4 max-w-28 w-full">
-                            <div className="flex flex-col gap-4 bg-gray-100 rounded-lg p-2">
-                                <div className="text-gray-400 flex flex-col items-center justify-center gap-2 aspect-square">
-                                    <Image className="size-10" />
-                                    <p className="text-sm text-muted-foreground text-center">No image</p>
-                                </div>
+                <div className="space-y-6 text-primary overflow-y-auto max-h-[calc(100vh-205px)] pr-0 lg:pr-4 relative">
+                    <VariantDetailClient product={product as unknown as Product & { variants?: (ProductVariant & { color: Color | null })[] }} />
+
+                    <div className="flex flex-col gap-4 border-b border-muted-foreground/30 pb-6">
+                        {product.description && (
+                            <div>
+                                <h3 className="text-lg font-semibold text-foreground mb-2">Descripción</h3>
+                                <p className="text-muted-foreground leading-relaxed">{product.description}</p>
                             </div>
-                        </div>
-                        <div className="bg-muted rounded-lg flex items-center justify-center grow aspect-square">
-                            {product.image ? (
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    className="w-full h-full object-cover rounded-lg"
-                                />
-                            ) : (
-                                <div className="text-gray-400 flex flex-col items-center justify-center gap-2">
-                                    <Image className="size-16" />
-                                    <p className="text-sm text-muted-foreground">No image available</p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="hidden lg:flex flex-col gap-4">
-                            <Button variant="outline" size="icon">
-                                <Share />
+                        )}
+
+                        {product.sku && (
+                            <p className="text-sm text-muted-foreground">SKU: {product.sku}</p>
+                        )}
+                        <div className="flex gap-2 justify-end">
+                            <AddToCartButton product={product} withText className="text-lg p-6 !px-8 !bg-accent text-accent-foreground" canBeAddedToCart={true} />
+                            <Button variant="outline" size="lg" className="text-lg p-6 !px-8" asChild>
+                                <Link href="/checkout">
+                                    <ShoppingBag />
+                                    <span>Checkout</span>
+                                </Link>
                             </Button>
-                            <LikeButton productId={product.id} />
                         </div>
                     </div>
 
-                    {/* Product Details */}
-                    <div className="space-y-6 text-primary overflow-y-auto max-h-[calc(100vh-205px)] pr-0 lg:pr-4 relative">
-                        <VariantDetailClient product={product as unknown as Product & { variants?: (ProductVariant & { color: Color | null })[] }} />
+                    <Comments productId={product.id} />
 
-
-                        <div className="text-3xl font-bold border-b border-muted-foreground pb-4">
-                            ${product.price}
-                        </div>
-
-                        <div className="flex flex-col gap-4 border-b border-muted-foreground/30 pb-6">
-                            {product.description && (
-                                <div>
-                                    <h3 className="text-lg font-semibold text-foreground mb-2">Descripción</h3>
-                                    <p className="text-muted-foreground leading-relaxed">{product.description}</p>
-                                </div>
-                            )}
-
-                            {product.sku && (
-                                <p className="text-sm text-muted-foreground">SKU: {product.sku}</p>
-                            )}
-                            <div className="flex gap-2 justify-end">
-                                <AddToCartButton product={product} withText className="text-lg p-6 !px-8 !bg-accent text-accent-foreground" canBeAddedToCart={true} />
-                                <Button variant="outline" size="lg" className="text-lg p-6 !px-8" asChild>
-                                    <Link href="/checkout">
-                                        <ShoppingBag />
-                                        <span>Checkout</span>
-                                    </Link>
-                                </Button>
-                            </div>
-                        </div>
-
-                        <Comments productId={product.id} />
-
-                    </div>
                 </div>
             </div>
             <div className="container mx-auto mt-10">

@@ -1,6 +1,6 @@
 'use client'
 
-import { useFormContext } from 'react-hook-form'
+import { useFormContext, get } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
@@ -21,6 +21,7 @@ type InputFieldProps = {
   placeholder?: string,
   disabled?: boolean
   isTextArea?: boolean
+  isRequired?: boolean
 }
 
 const InputField = ({
@@ -38,6 +39,7 @@ const InputField = ({
   placeholder,
   disabled = false,
   isTextArea = false,
+  isRequired = false,
 }: InputFieldProps) => {
   const {
     register,
@@ -45,23 +47,42 @@ const InputField = ({
     setValue,
   } = useFormContext()
 
-  const error = errors[name]?.message as string | undefined
+  const error = get(errors, name)?.message as string | undefined
 
-  const controlls: Record<string, any> = {}
+  const inputControls: Partial<{
+    value: string
+    defaultValue: string
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  }> = {}
+
+  const textareaControls: Partial<{
+    value: string
+    defaultValue: string
+    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+  }> = {}
 
   if (!defaultValue && value) {
-    controlls.value = value || ""
+    inputControls.value = value || ""
+    textareaControls.value = value || ""
   } else {
-    controlls.defaultValue = defaultValue
+    inputControls.defaultValue = defaultValue
+    textareaControls.defaultValue = defaultValue
   }
-  if (onChange) controlls.onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(name, e.target.value)
-    if (onChange) onChange(e)
+  if (onChange) {
+    inputControls.onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(name, e.target.value)
+      onChange(e)
+    }
+    textareaControls.onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setValue(name, e.target.value)
+      // Cast to satisfy consumer signature if they passed an input onChange
+      onChange(e as unknown as React.ChangeEvent<HTMLInputElement>)
+    }
   }
 
   return (
     <div className={cn("flex flex-col gap-1", containerClassName)}>
-      <Label htmlFor={name}>{label}</Label>
+      <Label htmlFor={name}>{label}{isRequired && <span className="text-red-500">*</span>}</Label>
       {isTextArea ? (
         <Textarea
           id={name}
@@ -70,7 +91,7 @@ const InputField = ({
           defaultValue={defaultValue}
           className={cn(className, disabled && "opacity-50 bg-muted cursor-not-allowed")}
           onKeyDown={onKeyDown}
-          {...controlls}
+          {...textareaControls}
           disabled={disabled}
         />) : (
         <Input
@@ -83,7 +104,7 @@ const InputField = ({
           onKeyDown={onKeyDown}
           startContent={startContent}
           endContent={endContent}
-          {...controlls}
+          {...inputControls}
           disabled={disabled}
         />
       )}

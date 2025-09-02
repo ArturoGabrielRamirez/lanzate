@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { CreateStoreButton, StoreCard } from "@/features/stores/components"
 import { Plus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import CreateProductButtonNew from "@/features/products/components/create-product-button-new"
+import CreateStoreButtonNew from "./create-store-button-new"
 
 async function StoresContainer() {
     const { payload: user, error: userError, message: userMessage } = await getUserInfo()
@@ -35,8 +37,9 @@ async function StoresContainer() {
                                 <h2 className="text-2xl font-bold">{t("buttons.new-store")}</h2>
                             </CardTitle>
                         </CardHeader>
-                        <CardContent className="flex justify-center items-center grow">
+                        <CardContent className="flex justify-center items-center grow flex-col gap-2">
                             <CreateStoreButton userId={user.id} canCreate={canCreate} />
+                            <CreateStoreButtonNew userId={user.id} />
                         </CardContent>
                     </Card>
                     {stores.map((store) => (

@@ -29,9 +29,15 @@ export async function selectProductByIdAndSubdomain(id: number, subdomain: strin
                         customization: true
                     }
                 },
+                primary_media: true,
+                media: { orderBy: { sort_order: 'asc' }, take: 12 },
                 variants: {
                     where: { is_deleted: false },
-                    include: { color: true },
+                    include: {
+                        color: true,
+                        primary_media: true,
+                        media: { orderBy: { sort_order: 'asc' }, take: 12 }
+                    },
                     orderBy: { id: 'asc' }
                 }
             }

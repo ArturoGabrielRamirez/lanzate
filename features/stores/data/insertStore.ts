@@ -4,6 +4,7 @@ import { /* PrismaClient, */ Store } from '@prisma/client'
 import { actionWrapper } from "@/utils/lib"
 import randomstring from "randomstring"
 import { prisma } from "@/utils/prisma"
+import { CreateStoreFormValues } from '../components/create-store-button-new'
 
 type InsertStoreReturn = {
     message: string
@@ -11,24 +12,7 @@ type InsertStoreReturn = {
     error: boolean
 }
 
-type StorePayload = {
-    name: string
-    description?: string
-    subdomain: string
-    logo?: string
-    is_physical_store?: boolean
-    address?: string
-    city?: string
-    province?: string
-    country?: string
-    contact_phone?: string
-    contact_email?: string
-    facebook_url?: string
-    instagram_url?: string
-    x_url?: string
-}
-
-export async function insertStore(payload: StorePayload, userId: number): Promise<InsertStoreReturn> {
+export async function insertStore(payload: CreateStoreFormValues, userId: number): Promise<InsertStoreReturn> {
 
     return actionWrapper(async () => {
 
@@ -46,7 +30,7 @@ export async function insertStore(payload: StorePayload, userId: number): Promis
 
         const existingSubdomain = await prisma.store.findUnique({
             where: {
-                subdomain: payload.subdomain
+                subdomain: payload.basic_info.subdomain
             }
         })
 
@@ -60,28 +44,28 @@ export async function insertStore(payload: StorePayload, userId: number): Promis
 
         const store = await prisma.store.create({
             data: {
-                name: payload.name,
+                name: payload.basic_info.name,
                 slug: randomstring.generate(8),
-                subdomain: payload.subdomain,
-                description: payload.description,
+                subdomain: payload.basic_info.subdomain,
+                description: payload.basic_info.description,
                 user_id: userId,
-                logo: payload.logo || null,
-                is_physical_store: payload.is_physical_store || false,
-                facebook_url: payload.facebook_url || null,
-                instagram_url: payload.instagram_url || null,
-                x_url: payload.x_url || null,
-                email: payload.contact_email || null,
-                phone: payload.contact_phone || null,
+                logo: payload.basic_info.logo as string || null,
+                is_physical_store: payload.address_info.is_physical_store || false,
+                facebook_url: payload.contact_info.facebook_url || null,
+                instagram_url: payload.contact_info.instagram_url || null,
+                x_url: payload.contact_info.x_url || null,
+                email: payload.contact_info.contact_email || null,
+                phone: payload.contact_info.contact_phone || null,
                 branches: {
                     create: {
                         name: "Main Branch",
                         description: "Main starter branch",
-                        address: payload.address || null,
-                        city: payload.city || null,
-                        province: payload.province || null,
-                        country: payload.country || null,
-                        email: payload.contact_email || null,
-                        phone: payload.contact_phone || null,
+                        address: payload.address_info.address || null,
+                        city: payload.address_info.city || null,
+                        province: payload.address_info.province || null,
+                        country: payload.address_info.country || null,
+                        email: payload.contact_info.contact_email || null,
+                        phone: payload.contact_info.contact_phone || null,
                         is_main: true
                     }
                 },

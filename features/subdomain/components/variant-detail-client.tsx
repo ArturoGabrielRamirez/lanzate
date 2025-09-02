@@ -3,11 +3,11 @@
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
-import { Product, ProductVariant, Color } from "@prisma/client"
+import { Product, ProductVariant, Color, ProductMedia } from "@prisma/client"
 import { useMemo, useState, useEffect } from "react"
 import { useQueryState } from "nuqs"
 
-type VariantWithColor = ProductVariant & { color: Color | null }
+type VariantWithColor = ProductVariant & { color: Color | null; primary_media?: ProductMedia | null; media?: ProductMedia[] }
 
 type Props = {
   product: Product & { variants?: VariantWithColor[] }
@@ -65,8 +65,35 @@ function VariantDetailClient({ product, initialVariantId }: Props) {
     else if (nextColorId === undefined) setColorParam(null)
   }
 
+  const galleryImages: string[] = useMemo(() => {
+    const variantMedia = selectedVariant?.media?.map((m: ProductMedia) => m.url) ?? []
+    const variantPrimary = selectedVariant?.primary_media?.url
+    const productPrimary = (product as unknown as { primary_media?: ProductMedia | null })?.primary_media?.url
+    const productMedia = ((product as unknown as { media?: ProductMedia[] })?.media ?? []).map((m: ProductMedia) => m.url)
+    const list = [variantPrimary, ...variantMedia, productPrimary, ...productMedia].filter(Boolean) as string[]
+    const dedup = Array.from(new Set(list))
+    return dedup.slice(0, 6)
+  }, [selectedVariant, product])
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      {/* Gallery: main left, thumbs right */}
+      <div className="grid grid-cols-[minmax(240px,380px)_minmax(64px,96px)] gap-4 items-start">
+        <div className="bg-muted rounded-md overflow-hidden aspect-square flex items-center justify-center">
+          {galleryImages[0] ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={galleryImages[0]} alt={displayName} className="object-cover w-full h-full" />
+          ) : (
+            <div className="text-muted-foreground/60">No image available</div>
+          )}
+        </div>
+        <div className="flex flex-col gap-2 max-h-[380px] overflow-auto pr-1">
+          {galleryImages.slice(1).map((src) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={src} src={src} alt={displayName} className="rounded-md object-cover aspect-square w-full cursor-pointer hover:opacity-90" />
+          ))}
+        </div>
+      </div>
       <div className="space-y-2 mt-1">
         <h2 className="text-3xl md:text-4xl font-bold leading-tight">{displayName}</h2>
         <div className="text-3xl font-semibold tracking-tight">${displayPrice}</div>
