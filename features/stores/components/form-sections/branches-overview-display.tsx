@@ -4,6 +4,7 @@ import { Branch, BranchOperationalSettings, BranchOpeningHour, PaymentMethod } f
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Truck } from "lucide-react"
+import Link from "next/link"
 
 type BranchWithSettings = Branch & {
   operational_settings: BranchOperationalSettings | null
@@ -12,6 +13,7 @@ type BranchWithSettings = Branch & {
 
 type Props = {
   branches: BranchWithSettings[]
+  slug: string
 }
 
 function getPaymentLabel(method: PaymentMethod): string {
@@ -36,7 +38,7 @@ function formatHours(openingHours: BranchOpeningHour[]): string {
     .join(" • ")
 }
 
-const BranchesOverviewDisplay = ({ branches }: Props) => {
+const BranchesOverviewDisplay = ({ branches, slug }: Props) => {
   if (!branches || branches.length === 0) return null
 
   return (
@@ -55,7 +57,7 @@ const BranchesOverviewDisplay = ({ branches }: Props) => {
           const shown = methods.slice(0, 3)
           const more = methods.length > 3
           return (
-            <div key={branch.id} className="border rounded-md p-3">
+            <Link key={branch.id} href={`/stores/${slug}/branches/${branch.id}`} className="border rounded-md p-3 block hover:bg-muted/30 transition-colors">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
                   <h4 className="font-semibold text-sm">{branch.name}</h4>
@@ -71,7 +73,7 @@ const BranchesOverviewDisplay = ({ branches }: Props) => {
                   {formatHours(branch.opening_hours)}
                 </div>
               </div>
-            </div>
+            </Link>
           )
         })}
       </CardContent>

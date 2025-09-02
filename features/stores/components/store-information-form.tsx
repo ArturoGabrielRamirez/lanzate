@@ -38,7 +38,10 @@ const StoreInformationForm = ({
                     store={store}
                 />
             </div>
-            <BranchesOverviewDisplay branches={store.branches as (Branch & { operational_settings: BranchOperationalSettings | null, opening_hours: BranchOpeningHour[] })[]} />
+            <BranchesOverviewDisplay
+                branches={store.branches as (Branch & { operational_settings: BranchOperationalSettings | null, opening_hours: BranchOpeningHour[] })[]}
+                slug={store.slug}
+            />
             {canManageStore && children}
         </>
     )
