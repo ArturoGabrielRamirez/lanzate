@@ -43,12 +43,27 @@ type AttentionDateType = {
     days: string[]
 }
 
+type ShippingMethod = {
+    providers: string[]
+    minPurchase: string
+    freeShippingMin: string
+    estimatedTime: string
+}
+
 type AttentionDateFormPanelProps = {
     date: AttentionDateType
     onCancel: (index: number) => void
     onSave: (index: number, startTime: dayjs.Dayjs, endTime: dayjs.Dayjs, days: string[]) => void
     index: number
 }
+
+type ShippingMethodFormPanelProps = {
+    method: ShippingMethod
+    index: number
+    onCancel: (index: number) => void
+    onSave: (index: number, method: ShippingMethod) => void
+}
+
 
 const createStoreSchema = yup.object().shape({
     basic_info: yup.object().shape({
@@ -100,6 +115,9 @@ export type CreateStoreFormValues = yup.InferType<typeof createStoreSchema>;
 const ShippingFormPanel = () => {
 
     const [offersDelivery, setOffersDelivery] = useState(false)
+    const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([])
+    const [isAddingMethod, setIsAddingMethod] = useState(false)
+    const [editingIndex, setEditingIndex] = useState<number | null>(null)
 
     const handleOffersDelivery = () => {
         setOffersDelivery(true)
@@ -107,6 +125,38 @@ const ShippingFormPanel = () => {
 
     const handleNotOffersDelivery = () => {
         setOffersDelivery(false)
+        setIsAddingMethod(false)
+        setEditingIndex(null)
+    }
+
+    const handleAddMethod = () => {
+        const newMethod: ShippingMethod = {
+            providers: [],
+            minPurchase: "",
+            freeShippingMin: "",
+            estimatedTime: ""
+        }
+        const newIndex = shippingMethods.length
+        setShippingMethods([...shippingMethods, newMethod])
+        setIsAddingMethod(true)
+        setEditingIndex(newIndex)
+    }
+
+    const handleCancelMethod = (index: number) => {
+        setIsAddingMethod(false)
+        setShippingMethods(shippingMethods.filter((_m, i) => i !== index))
+        setEditingIndex(null)
+    }
+
+    const handleSaveMethod = (index: number, method: ShippingMethod) => {
+        setShippingMethods(shippingMethods.map((m, i) => i === index ? method : m))
+        setIsAddingMethod(false)
+        setEditingIndex(null)
+    }
+
+    const handleDeleteMethod = (index: number) => {
+        setShippingMethods(shippingMethods.filter((_m, i) => i !== index))
+        if (editingIndex !== null && index === editingIndex) setEditingIndex(null)
     }
 
     return (
@@ -125,6 +175,65 @@ const ShippingFormPanel = () => {
                     <p className="text-sm text-muted-foreground text-balance">This store does not offer delivery service; only pickup.</p>
                 </div>
             </div>
+            <AnimatePresence>
+                {offersDelivery && (
+                    <motion.div
+                        initial={{ opacity: 0, x: 100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -100, position: "absolute" }}
+                        className="space-y-4"
+                    >
+                        <h3 className="text-muted-foreground text-base font-medium">Modos de envío</h3>
+                        {shippingMethods.length === 0 && !isAddingMethod && (
+                            <div className="text-sm text-muted-foreground border border-muted-foreground/50 p-6 rounded-md text-center border-dashed">
+                                <p>No configuraste ninguna forma de envío</p>
+                            </div>
+                        )}
+                        {isAddingMethod && editingIndex !== null && shippingMethods[editingIndex] && (
+                            <ShippingMethodFormPanel
+                                method={shippingMethods[editingIndex]}
+                                index={editingIndex}
+                                onCancel={handleCancelMethod}
+                                onSave={handleSaveMethod}
+                            />
+                        )}
+                        {shippingMethods.length > 0 && (
+                            <div className="space-y-2">
+                                {shippingMethods.map((m, i) => (
+                                    (isAddingMethod && editingIndex === i) ? null : (
+                                        <div key={i} className="flex justify-between items-center border rounded-md p-3 text-sm">
+                                            <div className="space-y-1">
+                                                <p className="font-medium">{m.providers.length ? m.providers.join(', ') : 'Sin proveedor seleccionado'}</p>
+                                                <p className="text-muted-foreground">
+                                                    {m.minPurchase ? `Mín compra: $${m.minPurchase}` : 'Sin mínimo'}
+                                                    {" • "}
+                                                    {m.freeShippingMin ? `Envío gratis desde: $${m.freeShippingMin}` : 'Sin gratis'}
+                                                    {" • "}
+                                                    {m.estimatedTime ? `ETA: ${m.estimatedTime}` : 'ETA no establecido'}
+                                                </p>
+                                            </div>
+                                            <Tooltip>
+                                                <TooltipTrigger asChild>
+                                                    <IconButton type="button" icon={Trash} onClick={() => handleDeleteMethod(i)} />
+                                                </TooltipTrigger>
+                                                <TooltipContent>
+                                                    Eliminar
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </div>
+                                    )
+                                ))}
+                            </div>
+                        )}
+                        {!isAddingMethod && (
+                            <Button className="w-full" onClick={handleAddMethod} type="button">
+                                <Plus />
+                                Agregar modo de envío
+                            </Button>
+                        )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     )
 }
@@ -193,6 +302,88 @@ const AttentionDateFormPanel = ({ date, onCancel, onSave, index }: AttentionDate
                 <Button className="grow" type="button" onClick={handleSave}>
                     <Check />
                     Save
+                </Button>
+            </div>
+        </>
+    )
+}
+
+const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMethodFormPanelProps) => {
+
+    const initialTags = [
+        "Delivery propio",
+        "OCA",
+        "Correo Argentino",
+        "Otros",
+    ]
+
+    const [selectedProviders, setSelectedProviders] = useState<string[]>(method.providers || [])
+    const [minPurchase, setMinPurchase] = useState<string>(method.minPurchase || "")
+    const [freeShippingMin, setFreeShippingMin] = useState<string>(method.freeShippingMin || "")
+    const [estimatedTime, setEstimatedTime] = useState<string>(method.estimatedTime || "")
+
+    const handleCancel = () => {
+        if (onCancel) onCancel(index)
+    }
+
+    const handleSave = () => {
+        const payload: ShippingMethod = {
+            providers: selectedProviders,
+            minPurchase,
+            freeShippingMin,
+            estimatedTime,
+        }
+        if (onSave) onSave(index, payload)
+    }
+
+    return (
+        <>
+            <AnimatedTags
+                initialTags={initialTags}
+                selectedTags={selectedProviders}
+                onChange={setSelectedProviders}
+            />
+            <div className="grid grid-cols-1 gap-3 mt-10">
+                <InputField
+                    label="Mínimo $ para delivery"
+                    name="min_purchase"
+                    inputMode="numeric"
+                    type="number"
+                    placeholder="Ej: 10000"
+                    value={minPurchase}
+                    onChange={(e) => setMinPurchase(e.target.value.replace(/[^0-9]/g, ""))}
+                />
+                <InputField
+                    label="Mínimo $ envío gratis"
+                    name="free_shipping_min"
+                    inputMode="numeric"
+                    type="number"
+                    placeholder="Ej: 20000"
+                    value={freeShippingMin}
+                    onChange={(e) => setFreeShippingMin(e.target.value.replace(/[^0-9]/g, ""))}
+                />
+            </div>
+            <div className="mb-4">
+                <p className="text-sm font-medium">Tiempo de entrega aproximado</p>
+                <TimePicker
+                    format="HH:mm"
+                    hourStep={1}
+                    minuteStep={15}
+                    variant="outlined"
+                    size="large"
+                    className="!bg-transparent !text-primary-foreground !border-muted-foreground/50 w-full"
+                    placeholder="Ej: 24-48 hs"
+                /* onChange={handleTimeChange} */
+                />
+            </div>
+            <div className="flex gap-2">
+                <Button className="grow" type="button" onClick={handleCancel}>
+                    <Trash />
+                    Cancelar
+                </Button>
+                <Button className="grow" type="button" onClick={handleSave}>
+                    <Check />
+                    Guardar
                 </Button>
             </div>
         </>
@@ -278,7 +469,6 @@ const SettingsFormPanel = () => {
                                 <p>No hay dias de atencion configurados</p>
                             </div>
                         )}
-                        {/* Editor solo para el item en edición */}
                         {isAddingDate && editingIndex !== null && attentionDates[editingIndex] && (
                             <AttentionDateFormPanel
                                 date={attentionDates[editingIndex]}
@@ -288,7 +478,6 @@ const SettingsFormPanel = () => {
                                 index={editingIndex}
                             />
                         )}
-                        {/* Listado siempre visible */}
                         {attentionDates.length > 0 && (
                             <div className="space-y-2">
                                 {attentionDates.map((d, i) => (

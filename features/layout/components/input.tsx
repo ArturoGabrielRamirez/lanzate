@@ -22,6 +22,7 @@ type InputFieldProps = {
   disabled?: boolean
   isTextArea?: boolean
   isRequired?: boolean
+  inputMode?: "search" | "text" | "numeric" | "none" | "tel" | "url" | "email" | "decimal" | undefined
 }
 
 const InputField = ({
@@ -40,6 +41,7 @@ const InputField = ({
   disabled = false,
   isTextArea = false,
   isRequired = false,
+  inputMode = "text",
 }: InputFieldProps) => {
   const {
     register,
@@ -97,6 +99,7 @@ const InputField = ({
         <Input
           id={name}
           type={type}
+          inputMode={inputMode}
           placeholder={placeholder}
           {...register(name)}
           defaultValue={defaultValue}
