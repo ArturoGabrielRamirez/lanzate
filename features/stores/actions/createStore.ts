@@ -34,9 +34,16 @@ import { actionWrapper } from "@/utils/lib"
 import { canCreateStore } from "../access/canCreateStore"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { CreateStoreFormValues } from "../components/create-store-button-new"
+import type { ProcessedOpeningHour, ProcessedPaymentMethod, ProcessedShippingMethod } from "../utils/store-form-helpers"
 
 
-export async function createStore(payload: CreateStoreFormValues, userId: number) {
+type ProcessedCreateStoreData = CreateStoreFormValues & {
+    processedOpeningHours: ProcessedOpeningHour[]
+    processedShippingMethods: ProcessedShippingMethod[]
+    processedPaymentMethods: ProcessedPaymentMethod[]
+}
+
+export async function createStore(payload: ProcessedCreateStoreData, userId: number) {
     return actionWrapper(async () => {
 
         //Check user is authenticated

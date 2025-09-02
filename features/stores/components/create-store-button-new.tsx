@@ -22,6 +22,7 @@ import { createStore } from "../actions/createStore"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { TimePicker } from "antd";
 import dayjs, { Dayjs } from "dayjs";
+import { processOpeningHours, processShippingMethods, processPaymentMethods } from "../utils/store-form-helpers"
 
 type CreateStoreFormStepsNavigatorProps = {
     canGoToNextStep: boolean;
@@ -1156,7 +1157,20 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
 }
         */
 
-        const { error, message, payload } = await createStore(data, userId)
+        const processedData = {
+            ...data,
+            processedOpeningHours: processOpeningHours(
+                data.settings?.attention_dates as { days?: string[]; startTime?: string; endTime?: string }[] | undefined
+            ),
+            processedShippingMethods: processShippingMethods(
+                data.shipping_info?.methods as { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string }[] | undefined
+            ),
+            processedPaymentMethods: processPaymentMethods(
+                data.payment_info?.payment_methods as string[] | undefined
+            ),
+        }
+
+        const { error, message, payload } = await createStore(processedData, userId)
         if (error) {
             return {
                 error: true,
@@ -1199,7 +1213,7 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
                 <DialogHeader>
                     <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
                 </DialogHeader>
-                <DialogDescription>
+                <DialogDescription asChild>
                     <p>{descriptions[step as keyof typeof descriptions]}</p>
                 </DialogDescription>
                 <Form<CreateStoreFormValues>

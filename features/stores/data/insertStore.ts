@@ -5,6 +5,7 @@ import { actionWrapper } from "@/utils/lib"
 import randomstring from "randomstring"
 import { prisma } from "@/utils/prisma"
 import { CreateStoreFormValues } from '../components/create-store-button-new'
+import type { ProcessedOpeningHour, ProcessedPaymentMethod, ProcessedShippingMethod } from '../utils/store-form-helpers'
 
 type InsertStoreReturn = {
     message: string
@@ -12,7 +13,13 @@ type InsertStoreReturn = {
     error: boolean
 }
 
-export async function insertStore(payload: CreateStoreFormValues, userId: number): Promise<InsertStoreReturn> {
+type ProcessedCreateStoreData = CreateStoreFormValues & {
+    processedOpeningHours: ProcessedOpeningHour[]
+    processedShippingMethods: ProcessedShippingMethod[]
+    processedPaymentMethods: ProcessedPaymentMethod[]
+}
+
+export async function insertStore(payload: ProcessedCreateStoreData, userId: number): Promise<InsertStoreReturn> {
 
     return actionWrapper(async () => {
 
@@ -42,72 +49,10 @@ export async function insertStore(payload: CreateStoreFormValues, userId: number
             orderBy: { sort_order: 'asc' }
         })
 
-        // Helpers
-        const mapPayment = (label: string): PaymentMethod | null => {
-            switch (label) {
-                case 'Efectivo': return 'CASH'
-                case 'Credito': return 'CREDIT_CARD'
-                case 'Debito': return 'DEBIT_CARD'
-                case 'Mercado Pago': return 'MERCADO_PAGO'
-                case 'Transferencia': return 'TRANSFER'
-                default: return null
-            }
-        }
-
-        const dayIndex = (day?: string): number | null => {
-            if (!day) return null
-            const d = day.toLowerCase()
-            if (d === 'lunes') return 0
-            if (d === 'martes') return 1
-            if (d === 'miercoles') return 2
-            if (d === 'jueves') return 3
-            if (d === 'viernes') return 4
-            if (d === 'sabado') return 5
-            if (d === 'domingo') return 6
-            return null
-        }
-
-        const parseMoney = (v?: string | null) => {
-            if (!v) return null
-            const n = Number(v)
-            return Number.isFinite(n) ? n : null
-        }
-
-        const parseEtaToMinutes = (hhmm?: string | null) => {
-            if (!hhmm) return null
-            const [hh, mm] = hhmm.split(':').map(Number)
-            if (!Number.isFinite(hh) || !Number.isFinite(mm)) return null
-            return (hh * 60) + mm
-        }
-
-        const openingHoursData = (payload.settings?.attention_dates || []).flatMap((slot) => {
-            const start = slot.startTime ?? "00:00"
-            const end = slot.endTime ?? "00:00"
-            return (slot.days || [])
-                .map(dayIndex)
-                .filter((d): d is number => d !== null)
-                .map((d) => ({ day: d, start, end }))
-        })
-
-        const shippingMethodsData = (payload.shipping_info?.methods || []).flatMap((m) => {
-            const eta = parseEtaToMinutes(m.estimatedTime)
-            const min = parseMoney(m.minPurchase)
-            const free = parseMoney(m.freeShippingMin)
-            return (m.providers || [])
-                .filter((p): p is string => typeof p === 'string')
-                .map((provider) => ({
-                    provider,
-                    min_order_amount: min,
-                    free_shipping_min: free,
-                    eta_minutes: eta,
-                    active: true,
-                }))
-        })
-
-        const paymentMethods = (payload.payment_info?.payment_methods || [])
-            .filter((v): v is string => typeof v === 'string')
-            .map((v) => mapPayment(v))
-            .filter((m): m is PaymentMethod => m !== null)
+        // All data should come pre-processed from the frontend helpers
+        const openingHoursData = payload.processedOpeningHours
+        const shippingMethodsData = payload.processedShippingMethods
+        const paymentMethods = payload.processedPaymentMethods as PaymentMethod[]
 
         // Build branch nested data to satisfy Prisma types
         type ExtendedBranchCreate = Prisma.BranchCreateWithoutStoreInput & {
@@ -116,8 +61,8 @@ export async function insertStore(payload: CreateStoreFormValues, userId: number
         }
 
         const branchData: ExtendedBranchCreate = {
-            name: `${payload.basic_info.name} (Main Branch)`,
-            description: `Main starter branch for the ${payload.basic_info.name} store`,
+            name: "Main Branch",
+            description: "Main starter branch",
             address: payload.address_info.address || null,
             city: payload.address_info.city || null,
             province: payload.address_info.province || null,
