@@ -1,12 +1,12 @@
 "use client"
 
-import { Store, StoreOperationalSettings, Branch } from "@prisma/client"
-import { BasicInfoDisplay, AddressDisplay, ContactDisplay, SocialMediaDisplay, OperationalSettingsDisplay } from "./form-sections"
+import { Store, StoreOperationalSettings, Branch, BranchOperationalSettings, BranchOpeningHour } from "@prisma/client"
+import { BasicInfoDisplay, AddressDisplay, ContactDisplay, SocialMediaDisplay, BranchesOverviewDisplay } from "./form-sections"
 
 interface StoreInformationFormProps {
     store: Store & {
         operational_settings: StoreOperationalSettings | null
-        branches: Branch[]
+        branches: (Branch & { operational_settings: BranchOperationalSettings | null, opening_hours: BranchOpeningHour[] })[]
     }
     canManageStore?: boolean
     children?: React.ReactNode
@@ -38,9 +38,7 @@ const StoreInformationForm = ({
                     store={store}
                 />
             </div>
-            <OperationalSettingsDisplay
-                store={store}
-            />
+            <BranchesOverviewDisplay branches={store.branches as (Branch & { operational_settings: BranchOperationalSettings | null, opening_hours: BranchOpeningHour[] })[]} />
             {canManageStore && children}
         </>
     )

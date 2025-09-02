@@ -20,7 +20,10 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
             include: {
                 branches: {
                     include: {
-                        stock: true
+                        stock: true,
+                        shipping_methods: true,
+                        operational_settings: true,
+                        opening_hours: true,
                     }
                 },
                 products: {

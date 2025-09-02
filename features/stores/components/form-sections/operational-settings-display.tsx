@@ -1,6 +1,6 @@
 "use client"
 
-import { Store, StoreOperationalSettings, PaymentMethod } from "@prisma/client"
+import { Store, StoreOperationalSettings, PaymentMethod, Branch, BranchOperationalSettings, BranchShippingMethod } from "@prisma/client"
 import { Truck, CreditCard, Edit as EditIcon, X } from "lucide-react"
 import { EditOperationalSettingsButton } from "../section-buttons"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -17,17 +17,29 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 interface OperationalSettingsDisplayProps {
     store: Store & {
         operational_settings: StoreOperationalSettings | null
+        branches?: (Branch & {
+            operational_settings: BranchOperationalSettings | null
+            shipping_methods: BranchShippingMethod[]
+        })[]
     }
 }
 
 const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) => {
-    const operationalSettings = store.operational_settings
+    const storeOperationalSettings = store.operational_settings
+
+    const mainBranch = store.branches?.find(b => b.is_main)
+    /* mainBranch?.shipping_methods */
+    const branchOperationalSettings = mainBranch?.operational_settings || null
+
+    const effectiveOffersDelivery = Boolean(branchOperationalSettings?.offers_delivery ?? storeOperationalSettings?.offers_delivery)
+    const effectivePaymentMethods = branchOperationalSettings?.payment_methods ?? storeOperationalSettings?.payment_methods ?? []
+
     const [isEditing, setIsEditing] = useState(false)
-    const [offersDelivery, setOffersDelivery] = useState(operationalSettings?.offers_delivery || false)
+    const [offersDelivery, setOffersDelivery] = useState(effectiveOffersDelivery)
 
     useEffect(() => {
-        setOffersDelivery(operationalSettings?.offers_delivery || false)
-    }, [operationalSettings?.offers_delivery])
+        setOffersDelivery(effectiveOffersDelivery)
+    }, [effectiveOffersDelivery])
 
     const handleOpenEdit = () => {
         setIsEditing(true)
@@ -54,11 +66,12 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
         const { reset } = useFormContext<EditOperationalSettingsData>()
 
         const initialValues: EditOperationalSettingsData = {
-            offers_delivery: Boolean(operationalSettings?.offers_delivery),
-            delivery_price: operationalSettings?.delivery_price?.toString() || "0",
-            free_delivery_minimum: operationalSettings?.free_delivery_minimum?.toString() || "",
-            delivery_radius_km: operationalSettings?.delivery_radius_km?.toString() || "5",
-            minimum_order_amount: operationalSettings?.minimum_order_amount?.toString() || "0",
+            offers_delivery: Boolean(effectiveOffersDelivery),
+            // The following remain store-level while we migrate UI to per-method settings
+            delivery_price: storeOperationalSettings?.delivery_price?.toString() || "0",
+            free_delivery_minimum: storeOperationalSettings?.free_delivery_minimum?.toString() || "",
+            delivery_radius_km: storeOperationalSettings?.delivery_radius_km?.toString() || "5",
+            minimum_order_amount: branchOperationalSettings?.minimum_order_amount?.toString() || storeOperationalSettings?.minimum_order_amount?.toString() || "0",
         }
 
         const onClick = () => {
@@ -120,7 +133,7 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
                                     <CheckboxField
                                         name="offers_delivery"
                                         label="Delivery Available"
-                                        defaultValue={operationalSettings?.offers_delivery || false}
+                                        defaultValue={effectiveOffersDelivery}
                                         onChange={(checked) => setOffersDelivery(checked)}
                                         disabled={!isEditing}
                                     />
@@ -132,7 +145,7 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
                                                 name="delivery_price"
                                                 label="Delivery Price"
                                                 type="number"
-                                                defaultValue={operationalSettings?.delivery_price?.toString() || "0"}
+                                                defaultValue={storeOperationalSettings?.delivery_price?.toString() || "0"}
                                                 disabled={!isEditing || !offersDelivery}
                                             />
                                         </div>
@@ -141,7 +154,7 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
                                                 name="free_delivery_minimum"
                                                 label="Free Delivery Minimum"
                                                 type="number"
-                                                defaultValue={operationalSettings?.free_delivery_minimum?.toString() || "0"}
+                                                defaultValue={storeOperationalSettings?.free_delivery_minimum?.toString() || "0"}
                                                 disabled={!isEditing || !offersDelivery}
                                             />
                                         </div>
@@ -150,7 +163,7 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
                                                 name="delivery_radius_km"
                                                 label="Delivery Radius (km)"
                                                 type="number"
-                                                defaultValue={operationalSettings?.delivery_radius_km?.toString() || "5"}
+                                                defaultValue={storeOperationalSettings?.delivery_radius_km?.toString() || "5"}
                                                 disabled={!isEditing || !offersDelivery}
                                             />
                                         </div>
@@ -168,14 +181,14 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
                                 <div className="space-y-1">
                                     {isEditing ? (
                                         <PaymentMethodsSwitches
-                                            defaultMethods={operationalSettings?.payment_methods || [PaymentMethod.CASH]}
+                                            defaultMethods={effectivePaymentMethods as PaymentMethod[]}
                                         />
                                     ) : (
                                         <div className="flex flex-wrap gap-2">
-                                            {operationalSettings?.payment_methods && operationalSettings.payment_methods.length > 0 ? (
-                                                operationalSettings.payment_methods.map((method) => (
+                                            {effectivePaymentMethods && effectivePaymentMethods.length > 0 ? (
+                                                effectivePaymentMethods.map((method) => (
                                                     <Badge key={method} variant="outline">
-                                                        {getPaymentMethodLabel(method)}
+                                                        {getPaymentMethodLabel(String(method))}
                                                     </Badge>
                                                 ))
                                             ) : (
@@ -189,7 +202,7 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
                                         name="minimum_order_amount"
                                         label="Minimum Order Amount"
                                         type="number"
-                                        defaultValue={operationalSettings?.minimum_order_amount?.toString() || "0"}
+                                        defaultValue={branchOperationalSettings?.minimum_order_amount?.toString() || storeOperationalSettings?.minimum_order_amount?.toString() || "0"}
                                         disabled={!isEditing}
                                     />
                                 </div>
