@@ -85,13 +85,6 @@ const createStoreSchema = yup.object().shape({
                 return true
             }).nullable().optional(),
     }),
-    contact_info: yup.object().shape({
-        contact_phone: yup.string().max(20, "Phone must be less than 20 characters long").required("Phone is required"),
-        contact_email: yup.string().email("Must be a valid email").max(255, "Email must be less than 255 characters long").required("Email is required"),
-        facebook_url: yup.string().url("Must be a valid URL").max(255, "Facebook URL must be less than 255 characters long"),
-        instagram_url: yup.string().url("Must be a valid URL").max(255, "Instagram URL must be less than 255 characters long"),
-        x_url: yup.string().url("Must be a valid URL").max(255, "X URL must be less than 255 characters long"),
-    }),
     address_info: yup.object().shape({
         is_physical_store: yup.boolean().default(false),
         address: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
@@ -106,6 +99,13 @@ const createStoreSchema = yup.object().shape({
         country: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
             isPhysicalStore ? schema.required("Country is required when store is physical") : schema.max(100, "Country must be less than 100 characters long")
         ),
+    }),
+    contact_info: yup.object().shape({
+        contact_phone: yup.string().max(20, "Phone must be less than 20 characters long").required("Phone is required"),
+        contact_email: yup.string().email("Must be a valid email").max(255, "Email must be less than 255 characters long").required("Email is required"),
+        facebook_url: yup.string().url("Must be a valid URL").max(255, "Facebook URL must be less than 255 characters long"),
+        instagram_url: yup.string().url("Must be a valid URL").max(255, "Instagram URL must be less than 255 characters long"),
+        x_url: yup.string().url("Must be a valid URL").max(255, "X URL must be less than 255 characters long"),
     }),
     settings: yup.object().shape({
         is_open_24_hours: yup.boolean().default(true),
@@ -133,7 +133,8 @@ export type CreateStoreFormValues = yup.InferType<typeof createStoreSchema>;
 
 const ShippingFormPanel = () => {
 
-    const { setValue, getValues } = useFormContext()
+    const { setValue, getValues, formState: { errors } } = useFormContext<CreateStoreFormValues>()
+    const setValueAny = setValue as unknown as (name: string, value: unknown, options?: { shouldValidate?: boolean; shouldDirty?: boolean }) => void
     const [offersDelivery, setOffersDelivery] = useState(false)
     const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([])
     const [isAddingMethod, setIsAddingMethod] = useState(false)
@@ -151,7 +152,7 @@ const ShippingFormPanel = () => {
 
     const handleOffersDelivery = () => {
         setOffersDelivery(true)
-        setValue("shipping_info.offers_delivery", true)
+        setValueAny("shipping_info.offers_delivery", true, { shouldValidate: true, shouldDirty: true })
     }
 
     const handleNotOffersDelivery = () => {
@@ -159,8 +160,8 @@ const ShippingFormPanel = () => {
         setIsAddingMethod(false)
         setEditingIndex(null)
         setShippingMethods([])
-        setValue("shipping_info.offers_delivery", false)
-        setValue("shipping_info.methods", [])
+        setValueAny("shipping_info.offers_delivery", false, { shouldValidate: true, shouldDirty: true })
+        setValueAny("shipping_info.methods", [], { shouldValidate: true, shouldDirty: true })
     }
 
     const handleAddMethod = () => {
@@ -173,7 +174,7 @@ const ShippingFormPanel = () => {
         const newIndex = shippingMethods.length
         const next = [...shippingMethods, newMethod]
         setShippingMethods(next)
-        setValue("shipping_info.methods", next)
+        setValueAny("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         setIsAddingMethod(true)
         setEditingIndex(newIndex)
     }
@@ -182,14 +183,14 @@ const ShippingFormPanel = () => {
         setIsAddingMethod(false)
         const next = shippingMethods.filter((_m, i) => i !== index)
         setShippingMethods(next)
-        setValue("shipping_info.methods", next)
+        setValueAny("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         setEditingIndex(null)
     }
 
     const handleSaveMethod = (index: number, method: ShippingMethod) => {
         const next = shippingMethods.map((m, i) => i === index ? method : m)
         setShippingMethods(next)
-        setValue("shipping_info.methods", next)
+        setValueAny("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         setIsAddingMethod(false)
         setEditingIndex(null)
     }
@@ -197,13 +198,13 @@ const ShippingFormPanel = () => {
     const handleDeleteMethod = (index: number) => {
         const next = shippingMethods.filter((_m, i) => i !== index)
         setShippingMethods(next)
-        setValue("shipping_info.methods", next)
+        setValue("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         if (editingIndex !== null && index === editingIndex) setEditingIndex(null)
     }
 
     const handlePaymentTagsChange = (tags: string[]) => {
         setPaymentMethods(tags)
-        setValue("payment_info.payment_methods", tags)
+        setValueAny("payment_info.payment_methods", tags, { shouldValidate: true, shouldDirty: true })
     }
 
     return (
@@ -216,6 +217,9 @@ const ShippingFormPanel = () => {
                     title="Metodos de pago"
                     emptyMessage="No hay metodos de pago seleccionados"
                 />
+                {errors.payment_info?.payment_methods?.message && (
+                    <p className="text-sm text-red-500">{errors.payment_info.payment_methods.message as string}</p>
+                )}
             </div>
             <p className="text-sm font-medium mb-2">Metodos de envio</p>
             <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 text-center justify-center mb-8">
@@ -377,13 +381,14 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
         "Otros",
     ]
 
-    const { setValue, getValues } = useFormContext()
-    const [selectedProviders, setSelectedProviders] = useState<string[]>(() => (method.providers || (getValues(`shipping_info.methods[${index}].providers`) as string[]) || []))
-    const [minPurchase, setMinPurchase] = useState<string>(() => (method.minPurchase || (getValues(`shipping_info.methods[${index}].minPurchase`) as string) || ""))
-    const [freeShippingMin, setFreeShippingMin] = useState<string>(() => (method.freeShippingMin || (getValues(`shipping_info.methods[${index}].freeShippingMin`) as string) || ""))
-    const [estimatedTime, setEstimatedTime] = useState<string>(() => (method.estimatedTime || (getValues(`shipping_info.methods[${index}].estimatedTime`) as string) || ""))
+    const { setValue, getValues, formState: { errors } } = useFormContext<CreateStoreFormValues>()
+    const setValueAny = setValue as unknown as (name: string, value: unknown, options?: { shouldValidate?: boolean; shouldDirty?: boolean }) => void
+    const [selectedProviders, setSelectedProviders] = useState<string[]>(() => (method.providers || (getValues(`shipping_info.methods.${index}.providers`) as string[]) || []))
+    const [minPurchase, setMinPurchase] = useState<string>(() => (method.minPurchase || (getValues(`shipping_info.methods.${index}.minPurchase`) as string) || ""))
+    const [freeShippingMin, setFreeShippingMin] = useState<string>(() => (method.freeShippingMin || (getValues(`shipping_info.methods.${index}.freeShippingMin`) as string) || ""))
+    const [estimatedTime, setEstimatedTime] = useState<string>(() => (method.estimatedTime || (getValues(`shipping_info.methods.${index}.estimatedTime`) as string) || ""))
 
-    const formBase = `shipping_info.methods[${index}]`
+    const formBase = `shipping_info.methods.${index}`
 
     const handleCancel = () => {
         if (onCancel) onCancel(index)
@@ -401,13 +406,13 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
 
     const handleProvidersChange = (tags: string[]) => {
         setSelectedProviders(tags)
-        setValue(`${formBase}.providers`, tags)
+        setValueAny(`${formBase}.providers`, tags, { shouldValidate: true, shouldDirty: true })
     }
 
     const handleETAChange = (value: Dayjs | null) => {
         const formatted = value ? dayjs(value).format("HH:mm") : ""
         setEstimatedTime(formatted)
-        setValue(`${formBase}.estimatedTime`, formatted)
+        setValueAny(`${formBase}.estimatedTime`, formatted, { shouldValidate: true, shouldDirty: true })
     }
 
     return (
@@ -417,6 +422,9 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
                 selectedTags={selectedProviders}
                 onChange={handleProvidersChange}
             />
+            {errors.shipping_info?.methods?.[index]?.providers && (
+                <p className="text-sm text-red-500">Seleccioná al menos un proveedor</p>
+            )}
             <div className="grid grid-cols-1 gap-3 mt-10">
                 <InputField
                     label="Mínimo $ para delivery"
@@ -467,7 +475,8 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
 
 const SettingsFormPanel = () => {
 
-    const { setValue, getValues } = useFormContext()
+    const { setValue, getValues, formState: { errors } } = useFormContext()
+    console.log("🚀 ~ SettingsFormPanel ~ errors:", errors)
     const [attentionDates, setAttentionDates] = useState<AttentionDateType[]>(() => {
         const existing = getValues("settings.attention_dates") as { days: string[], startTime: string, endTime: string }[] | undefined
         if (!existing || existing.length === 0) return []
@@ -1006,7 +1015,7 @@ const CreateStoreFormStepsNavigator = ({
                     active={step === 5}
                     className={cn(
                         step === 5 ? "text-primary" : "text-muted-foreground",
-                        errors.settings ? "text-destructive" : ""
+                        errors.shipping_info || errors.payment_info ? "text-destructive" : ""
                     )}
                 />
                 {isValid && (
@@ -1084,6 +1093,69 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
     const [step, { goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, setStep }] = useStep(5)
 
     const handleCreateStore = async (data: CreateStoreFormValues) => {
+
+        /* 
+        
+        {
+    "basic_info": {
+        "name": "test",
+        "subdomain": "test",
+        "description": "test",
+        "logo": "https://ugsxvnqkbxihxjxchckw.supabase.co/storage/v1/object/public/store-logos/2-store-logo-1756838158118.jpeg"
+    },
+    "contact_info": {
+        "contact_phone": "5555555",
+        "contact_email": "horacio.estevez@gmail.com",
+        "facebook_url": "",
+        "instagram_url": "",
+        "x_url": ""
+    },
+    "address_info": {
+        "is_physical_store": true,
+        "address": "Las Palmas 735",
+        "city": "Atlantida, Santa Clara del Mar",
+        "province": "Buenos Aires",
+        "country": "Argentina"
+    },
+    "settings": {
+        "is_open_24_hours": false,
+        "attention_dates": [
+            {
+                "days": [
+                    "lunes",
+                    "martes",
+                    "miercoles",
+                    "jueves",
+                    "viernes"
+                ],
+                "startTime": "10:00",
+                "endTime": "18:00"
+            }
+        ]
+    },
+    "payment_info": {
+        "payment_methods": [
+            "Efectivo",
+            "Mercado Pago",
+            "Transferencia"
+        ]
+    },
+    "shipping_info": {
+        "offers_delivery": true,
+        "methods": [
+            {
+                "providers": [
+                    "Delivery propio"
+                ],
+                "minPurchase": "",
+                "freeShippingMin": "",
+                "estimatedTime": "00:30"
+            }
+        ]
+    }
+}
+        */
+
         const { error, message, payload } = await createStore(data, userId)
         if (error) {
             return {

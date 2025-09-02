@@ -103,12 +103,7 @@ model Store {
   slug                 String                    @unique
   subdomain            String                    @unique
   is_physical_store    Boolean                   @default(false)
-  email                String?
-  facebook_url         String?
-  instagram_url        String?
   is_active            Boolean                   @default(true)
-  phone                String?
-  x_url                String?
   banner               String?
   branches             Branch[]
   categories           Category[]
@@ -208,8 +203,65 @@ model Branch {
   orders        Order[]
   stock         ProductStock[]
   variant_stock ProductVariantStock[]
+  operational_settings BranchOperationalSettings?
+  opening_hours BranchOpeningHour[]
+  shipping_methods BranchShippingMethod[]
 
   @@map("branches")
+}
+
+model BranchOperationalSettings {
+  id                         Int             @id @default(autoincrement())
+  branch_id                  Int             @unique
+  is_open_24_hours           Boolean         @default(true)
+  offers_delivery            Boolean         @default(false)
+  payment_methods            PaymentMethod[] @default([CASH])
+  delivery_time_min          Int?            @default(30)
+  delivery_time_max          Int?            @default(60)
+  pickup_time_min            Int?            @default(15)
+  pickup_time_max            Int?            @default(30)
+  requires_phone_for_delivery Boolean        @default(true)
+  minimum_order_amount       Float?          @default(0)
+  preparation_time_buffer    Int?            @default(10)
+  is_temporarily_closed      Boolean         @default(false)
+  temporary_closure_reason   String?
+  created_at                 DateTime        @default(now())
+  updated_at                 DateTime        @updatedAt
+  branch                     Branch          @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+
+  @@map("branch_operational_settings")
+}
+
+model BranchOpeningHour {
+  id         Int      @id @default(autoincrement())
+  branch_id  Int
+  day        Int      // 0..6
+  start      String   // HH:mm
+  end        String   // HH:mm
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  branch Branch @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+
+  @@index([branch_id, day])
+  @@map("branch_opening_hours")
+}
+
+model BranchShippingMethod {
+  id                Int      @id @default(autoincrement())
+  branch_id         Int
+  provider          String
+  min_order_amount  Float?
+  free_shipping_min Float?
+  eta_minutes       Int?
+  active            Boolean  @default(true)
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+
+  branch Branch @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+
+  @@index([branch_id, provider])
+  @@map("branch_shipping_methods")
 }
 
 model ProductStock {
