@@ -9,6 +9,8 @@ export interface AnimatedTagsProps {
   selectedTags?: string[]
   onChange?: (selected: string[]) => void
   className?: string
+  title?: string
+  emptyMessage?: string
 }
 
 export default function AnimatedTags({
@@ -16,6 +18,8 @@ export default function AnimatedTags({
   selectedTags: controlledSelectedTags,
   onChange,
   className = "",
+  title = "Dias de atencion",
+  emptyMessage = "No hay dias de atencion seleccionados"
 }: AnimatedTagsProps) {
   const [internalSelected, setInternalSelected] = useState<string[]>([])
   /* const [internalTags, setInternalTags] = useState<string[]>(initialTags) */
@@ -42,7 +46,7 @@ export default function AnimatedTags({
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
       <div className="flex flex-col items-start justify-center gap-1">
-        <p className="text-sm font-medium">Dias de atencion</p>
+        <p className="text-sm font-medium">{title}</p>
         <AnimatePresence>
           <div className="bg-background flex min-h-10 w-full flex-wrap items-center gap-1 rounded-md border p-2">
             {selectedTag?.map((tag) => (
@@ -68,7 +72,7 @@ export default function AnimatedTags({
               </motion.div>
             ))}
             {selectedTag.length === 0 && (
-              <p className="text-sm text-muted-foreground">No hay dias de atencion seleccionados</p>
+              <p className="text-sm text-muted-foreground">{emptyMessage}</p>
             )}
           </div>
         </AnimatePresence>

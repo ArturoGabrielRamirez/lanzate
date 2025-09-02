@@ -64,7 +64,6 @@ type ShippingMethodFormPanelProps = {
     onSave: (index: number, method: ShippingMethod) => void
 }
 
-
 const createStoreSchema = yup.object().shape({
     basic_info: yup.object().shape({
         name: yup.string().required("Name is required"),
@@ -107,26 +106,52 @@ const createStoreSchema = yup.object().shape({
         country: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
             isPhysicalStore ? schema.required("Country is required when store is physical") : schema.max(100, "Country must be less than 100 characters long")
         ),
-    })
+    }),
+    settings: yup.object().shape({
+        is_open_24_hours: yup.boolean().default(true),
+        attention_dates: yup.array().of(yup.object({
+            days: yup.array().of(yup.string()),
+            startTime: yup.string(),
+            endTime: yup.string(),
+        }))
+    }),
+    shipping_info: yup.object().shape({
+        offers_delivery: yup.boolean().default(false),
+        methods: yup.array().of(yup.object({
+            providers: yup.array().of(yup.string()).min(1, "Seleccione al menos un proveedor"),
+            minPurchase: yup.string(),
+            freeShippingMin: yup.string(),
+            estimatedTime: yup.string(),
+        })).when("offers_delivery", (offers, schema) => offers ? schema.min(1, "Agregue al menos un modo de envío") : schema.notRequired())
+    }),
+    payment_info: yup.object().shape({
+        payment_methods: yup.array().of(yup.string()).min(1, "Seleccione al menos un método de pago").required(),
+    }),
 })
 
 export type CreateStoreFormValues = yup.InferType<typeof createStoreSchema>;
 
 const ShippingFormPanel = () => {
 
+    const { setValue } = useFormContext()
     const [offersDelivery, setOffersDelivery] = useState(false)
     const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([])
     const [isAddingMethod, setIsAddingMethod] = useState(false)
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
+    const [paymentMethods, setPaymentMethods] = useState<string[]>([])
 
     const handleOffersDelivery = () => {
         setOffersDelivery(true)
+        setValue("shipping_info.offers_delivery", true)
     }
 
     const handleNotOffersDelivery = () => {
         setOffersDelivery(false)
         setIsAddingMethod(false)
         setEditingIndex(null)
+        setShippingMethods([])
+        setValue("shipping_info.offers_delivery", false)
+        setValue("shipping_info.methods", [])
     }
 
     const handleAddMethod = () => {
@@ -144,23 +169,44 @@ const ShippingFormPanel = () => {
 
     const handleCancelMethod = (index: number) => {
         setIsAddingMethod(false)
-        setShippingMethods(shippingMethods.filter((_m, i) => i !== index))
+        const next = shippingMethods.filter((_m, i) => i !== index)
+        setShippingMethods(next)
+        setValue("shipping_info.methods", next)
         setEditingIndex(null)
     }
 
     const handleSaveMethod = (index: number, method: ShippingMethod) => {
-        setShippingMethods(shippingMethods.map((m, i) => i === index ? method : m))
+        const next = shippingMethods.map((m, i) => i === index ? method : m)
+        setShippingMethods(next)
+        setValue("shipping_info.methods", next)
         setIsAddingMethod(false)
         setEditingIndex(null)
     }
 
     const handleDeleteMethod = (index: number) => {
-        setShippingMethods(shippingMethods.filter((_m, i) => i !== index))
+        const next = shippingMethods.filter((_m, i) => i !== index)
+        setShippingMethods(next)
+        setValue("shipping_info.methods", next)
         if (editingIndex !== null && index === editingIndex) setEditingIndex(null)
+    }
+
+    const handlePaymentTagsChange = (tags: string[]) => {
+        setPaymentMethods(tags)
+        setValue("payment_info.payment_methods", tags)
     }
 
     return (
         <>
+            <div className="space-y-3 mb-8">
+                <AnimatedTags
+                    initialTags={["Efectivo", "Credito", "Debito", "Mercado Pago", "Transferencia"]}
+                    selectedTags={paymentMethods}
+                    onChange={handlePaymentTagsChange}
+                    title="Metodos de pago"
+                    emptyMessage="No hay metodos de pago seleccionados"
+                />
+            </div>
+            <p className="text-sm font-medium mb-2">Metodos de envio</p>
             <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 text-center justify-center mb-8">
                 <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow", offersDelivery ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleOffersDelivery}>
                     <h3 className="text-lg font-medium text-primary flex justify-center">
@@ -175,6 +221,7 @@ const ShippingFormPanel = () => {
                     <p className="text-sm text-muted-foreground text-balance">This store does not offer delivery service; only pickup.</p>
                 </div>
             </div>
+
             <AnimatePresence>
                 {offersDelivery && (
                     <motion.div
@@ -231,9 +278,11 @@ const ShippingFormPanel = () => {
                                 Agregar modo de envío
                             </Button>
                         )}
+
                     </motion.div>
                 )}
             </AnimatePresence>
+
         </>
     )
 }
@@ -317,10 +366,13 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
         "Otros",
     ]
 
+    const { setValue } = useFormContext()
     const [selectedProviders, setSelectedProviders] = useState<string[]>(method.providers || [])
     const [minPurchase, setMinPurchase] = useState<string>(method.minPurchase || "")
     const [freeShippingMin, setFreeShippingMin] = useState<string>(method.freeShippingMin || "")
     const [estimatedTime, setEstimatedTime] = useState<string>(method.estimatedTime || "")
+
+    const formBase = `shipping_info.methods[${index}]`
 
     const handleCancel = () => {
         if (onCancel) onCancel(index)
@@ -336,17 +388,28 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
         if (onSave) onSave(index, payload)
     }
 
+    const handleProvidersChange = (tags: string[]) => {
+        setSelectedProviders(tags)
+        setValue(`${formBase}.providers`, tags)
+    }
+
+    const handleETAChange = (value: Dayjs | null) => {
+        const formatted = value ? dayjs(value).format("HH:mm") : ""
+        setEstimatedTime(formatted)
+        setValue(`${formBase}.estimatedTime`, formatted)
+    }
+
     return (
         <>
             <AnimatedTags
                 initialTags={initialTags}
                 selectedTags={selectedProviders}
-                onChange={setSelectedProviders}
+                onChange={handleProvidersChange}
             />
             <div className="grid grid-cols-1 gap-3 mt-10">
                 <InputField
                     label="Mínimo $ para delivery"
-                    name="min_purchase"
+                    name={`${formBase}.minPurchase`}
                     inputMode="numeric"
                     type="number"
                     placeholder="Ej: 10000"
@@ -355,7 +418,7 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
                 />
                 <InputField
                     label="Mínimo $ envío gratis"
-                    name="free_shipping_min"
+                    name={`${formBase}.freeShippingMin`}
                     inputMode="numeric"
                     type="number"
                     placeholder="Ej: 20000"
@@ -373,7 +436,8 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
                     size="large"
                     className="!bg-transparent !text-primary-foreground !border-muted-foreground/50 w-full"
                     placeholder="Ej: 24-48 hs"
-                /* onChange={handleTimeChange} */
+                    value={estimatedTime ? dayjs(estimatedTime, "HH:mm") : null}
+                    onChange={handleETAChange}
                 />
             </div>
             <div className="flex gap-2">
@@ -392,6 +456,7 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
 
 const SettingsFormPanel = () => {
 
+    const { setValue } = useFormContext()
     const [attentionDates, setAttentionDates] = useState<AttentionDateType[]>([])
     const [isAddingDate, setIsAddingDate] = useState(false)
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
@@ -400,10 +465,13 @@ const SettingsFormPanel = () => {
 
     const handleIsOpen24Hours = () => {
         setIsOpen24Hours(true)
+        setValue("settings.is_open_24_hours", true)
+        setValue("settings.attention_dates", [])
     }
 
     const handleIsNotOpen24Hours = () => {
         setIsOpen24Hours(false)
+        setValue("settings.is_open_24_hours", false)
     }
 
     const handleAddDate = () => {
@@ -423,18 +491,36 @@ const SettingsFormPanel = () => {
 
     const handleCancelDate = (index: number) => {
         setIsAddingDate(false)
-        setAttentionDates(attentionDates.filter((_date, i) => i !== index))
+        const next = attentionDates.filter((_date, i) => i !== index)
+        setAttentionDates(next)
+        setValue("settings.attention_dates", next.map(d => ({
+            days: d.days,
+            startTime: dayjs(d.startTime).format("HH:mm"),
+            endTime: dayjs(d.endTime).format("HH:mm"),
+        })))
         setEditingIndex(null)
     }
 
     const handleSaveDate = (index: number, startTime: dayjs.Dayjs, endTime: dayjs.Dayjs, days: string[]) => {
-        setAttentionDates(attentionDates.map((date, i) => i === index ? { ...date, startTime, endTime, days } : date))
+        const next = attentionDates.map((date, i) => i === index ? { ...date, startTime, endTime, days } : date)
+        setAttentionDates(next)
+        setValue("settings.attention_dates", next.map(d => ({
+            days: d.days,
+            startTime: dayjs(d.startTime).format("HH:mm"),
+            endTime: dayjs(d.endTime).format("HH:mm"),
+        })))
         setIsAddingDate(false)
         setEditingIndex(null)
     }
 
     const handleDeleteDate = (index: number) => {
-        setAttentionDates(attentionDates.filter((_date, i) => i !== index))
+        const next = attentionDates.filter((_date, i) => i !== index)
+        setAttentionDates(next)
+        setValue("settings.attention_dates", next.map(d => ({
+            days: d.days,
+            startTime: dayjs(d.startTime).format("HH:mm"),
+            endTime: dayjs(d.endTime).format("HH:mm"),
+        })))
         if (editingIndex !== null && index === editingIndex) setEditingIndex(null)
     }
 
