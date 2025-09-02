@@ -761,10 +761,32 @@ const AddressFormPanel = () => {
 
 const BasicInfoFormPanel = () => {
 
-    const { setValue } = useFormContext()
+    const { setValue, watch } = useFormContext()
     const [logo, setLogo] = useState<File[]>([])
     const [isUploading, setIsUploading] = useState(false)
     const [uploadProgress, setUploadProgress] = useState(0)
+    const [isSubdomainTouched, setIsSubdomainTouched] = useState(false)
+
+    function slugify(input: string): string {
+        return (input || "")
+            .toString()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')
+            .replace(/-{2,}/g, '-')
+            .slice(0, 63)
+    }
+
+    const nameValue = watch('basic_info.name') as string | undefined
+
+    useEffect(() => {
+        if (!isSubdomainTouched) {
+            const next = slugify(nameValue || '')
+            setValue('basic_info.subdomain', next, { shouldValidate: true, shouldDirty: true })
+        }
+    }, [nameValue, isSubdomainTouched, setValue])
 
     const handleUpload = async (file: File) => {
         try {
@@ -905,6 +927,11 @@ const BasicInfoFormPanel = () => {
                             </span>
                         )}
                         isRequired
+                        onChange={(e) => {
+                            setIsSubdomainTouched(true)
+                            const sanitized = slugify(e.target.value)
+                            setValue('basic_info.subdomain', sanitized, { shouldValidate: true, shouldDirty: true })
+                        }}
                     />
                 </div>
             </div>
