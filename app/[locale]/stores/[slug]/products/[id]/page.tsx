@@ -1,7 +1,7 @@
 import { getProductDetails } from "@/features/stores/actions/getProductDetails"
 
 import { DeleteProductButton } from "@/features/products/components"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import { ProductDetailForm } from "@/features/products/components/product-detail-display"
 
 import { ProductDetailPageProps } from "@/features/products/type"

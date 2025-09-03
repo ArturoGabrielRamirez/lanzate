@@ -30,10 +30,10 @@ export default async function ProductVariantDetailPage({ params }: Props) {
         )
     }
 
-    const t = await getTranslations("store.products")
+ /*    const t = await getTranslations("store.products") */
     
     // Filtrar otras variantes (excluyendo la actual)
-    const otherVariants = (product.variants ?? []).filter((v: { id: number }) => v.id !== variantId)
+   /*  const otherVariants = (product.variants ?? []).filter((v: { id: number }) => v.id !== variantId) */
 
     return (
         <div className="space-y-6">
