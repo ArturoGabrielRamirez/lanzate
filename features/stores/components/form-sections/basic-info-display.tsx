@@ -74,7 +74,7 @@ const BasicInfoDisplay = ({ store, userId }: BasicInfoDisplayProps) => {
             <Form
                 submitButton={false}
                 contentButton={false}
-                resolver={yupResolver(editBasicInfoSchema)}
+                resolver={yupResolver(editBasicInfoSchema as never)}
                 onSuccess={handleCloseEdit}
             >
                 <CardHeader>
