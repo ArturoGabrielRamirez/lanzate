@@ -48,6 +48,7 @@ export async function searchGlobal(query: string, userId: number) {
                 stores!inner (slug)
             `)
             .in('store_id', storeIds)
+            .eq('is_deleted', false)
             .or(`name.ilike.${searchTerm},sku.ilike.${searchTerm},id.eq.${parseInt(query) || 0}`)
             .limit(5)
 

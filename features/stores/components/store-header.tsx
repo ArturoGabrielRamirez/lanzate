@@ -1,24 +1,116 @@
-import { AvatarEditor } from "@/features/account/components"
-import { getStoreHeaderBySlug } from "../actions/getStoreHeaderBySlug"
-import { Card, CardContent } from "@/components/ui/card"
+"use client"
+
+import { Card, CardAction, CardContent } from "@/components/ui/card"
 import { Title } from "@/features/layout/components"
 import { Store } from "lucide-react"
-import { getTranslations } from "next-intl/server"
+import StoreLogoEditor from "./store-logo-editor"
+import { useEffect, useState } from "react"
+import { getStoreHeaderBySlug } from "../actions/getStoreHeaderBySlug"
+import { updateStoreLogo } from "../actions/updateStoreLogo"
+import { toast } from "sonner"
+import { StoreBannerEditor } from "./store-banner-editor"
+import { updateStoreBanner } from "../actions/updateStoreBanner"
 
 type StoreHeaderProps = {
     slug: string
 }
 
-async function StoreHeader({ slug }: StoreHeaderProps) {
+function StoreHeader({ slug }: StoreHeaderProps) {
+    type StoreHeaderData = {
+        id: number
+        name: string
+        description: string | null
+        logo: string | null
+        banner: string | null
+    }
+    const [store, setStore] = useState<StoreHeaderData | null>(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
 
-    const { payload: store, error } = await getStoreHeaderBySlug(slug)
+    useEffect(() => {
+        const loadStore = async () => {
+            try {
+                const { payload, error: hasError, message } = await getStoreHeaderBySlug(slug)
+                if (hasError) setError(message)
+                else setStore(payload)
+            } catch {
+                setError('Error loading store')
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        loadStore()
+    }, [slug])
+
+    const handleLogoUpdate = async (newLogoUrl: string | null) => {
+        if (store) {
+            if (!store.id) {
+                toast.error('Missing store id')
+                return
+            }
+            try {
+                // Actualizar estado local
+                setStore({
+                    ...store,
+                    logo: newLogoUrl
+                })
+
+                // Actualizar en la base de datos
+                if (newLogoUrl) {
+                    toast.loading('Updating store logo...')
+                    const { error, message } = await updateStoreLogo(store.id, newLogoUrl)
+                    if (error) {
+                        toast.dismiss()
+                        toast.error(message)
+                    } else {
+                        toast.dismiss()
+                        toast.success(message)
+                    }
+                }
+            } catch (error) {
+                console.error('Error updating store logo:', error)
+                toast.error('Error updating store logo')
+            }
+        }
+    }
+
+    const handleBannerUpdate = async (newBannerUrl: string | null) => {
+        if (store) {
+            if (!store.id) {
+                toast.error('Missing store id')
+                return
+            }
+            try {
+                setStore({
+                    ...store,
+                    banner: newBannerUrl
+                })
+                if (newBannerUrl) {
+                    toast.loading('Updating store banner...')
+                    const { error, message } = await updateStoreBanner(store.id, newBannerUrl)
+                    if (error) {
+                        toast.dismiss()
+                        toast.error(message)
+                    } else {
+                        toast.dismiss()
+                        toast.success(message)
+                    }
+                }
+            } catch (error) {
+                console.error('Error updating store banner:', error)
+                toast.error('Error updating store banner')
+            }
+        }
+    }
+
+    if (loading) {
+        return <div>Loading store header...</div>
+    }
 
     if (error || !store) {
         return <div>Error loading store header</div>
     }
-
-    const t = await getTranslations("store.layout")
-    const t2 = await getTranslations("store")
 
     return (
         <>
@@ -26,12 +118,12 @@ async function StoreHeader({ slug }: StoreHeaderProps) {
                 title={(
                     <div className="flex items-center gap-2">
                         <Store />
-                        {t2("store-details")}
+                        Store Details
                     </div>
                 )}
                 breadcrumbs={[
                     {
-                        label: t2("plural-title"),
+                        label: "Stores",
                         href: "/stores"
                     },
                     {
@@ -42,13 +134,25 @@ async function StoreHeader({ slug }: StoreHeaderProps) {
                 showDate
             />
             <section className="items-center gap-4 flex mb-2 md:mb-0">
-                <Card className="w-full">
-                    <CardContent className="flex items-center gap-4 w-full">
+                <Card className="w-full relative overflow-hidden group/store-banner">
+                    <img
+                        src={store.banner || `https://api.dicebear.com/9.x/shapes/svg?seed=${store.name}&backgroundColor=transparent`}
+                        alt="Store banner"
+                        className="w-full h-40 object-cover absolute top-0 left-0 brightness-[30%]"
+                    />
+                    <CardContent className="flex items-center gap-4 w-full z-10">
                         <div className="relative">
                             <img
-                                src={`https://api.dicebear.com/9.x/initials/svg?seed=${store.name}`}
-                                alt="User avatar"
-                                className="size-24 rounded-full object-cover "
+
+                                src={store.logo || `https://api.dicebear.com/9.x/initials/svg?seed=${store.name}`}
+                                alt="Store logo"
+                                className="size-24 rounded-full object-cover"
+
+                            />
+                            <StoreLogoEditor
+                                currentLogo={store.logo}
+                                storeName={store.name}
+                                onLogoUpdate={handleLogoUpdate}
                             />
                         </div>
                         <div className="flex flex-col gap-2 flex-1 min-w-0">
@@ -58,33 +162,16 @@ async function StoreHeader({ slug }: StoreHeaderProps) {
                                 </h2>
                             </div>
                             <p className="text-sm text-muted-foreground truncate">
-                                {store.description || t("no-description")}
+                                {store.description || "No description"}
                             </p>
                         </div>
-                        {/* <div className="flex items-center gap-4">
-                            <img
-                                src={`https://api.dicebear.com/9.x/initials/svg?seed=${store.name}`}
-                                alt="User avatar"
-                                className="rounded-full size-16 md:size-20 lg:size-24"
+                        <CardAction className="group-hover/store-banner:opacity-100 opacity-0 transition-opacity duration-300">
+                            <StoreBannerEditor
+                                currentBanner={store.banner}
+                                storeName={store.name}
+                                onBannerUpdate={handleBannerUpdate}
                             />
-                            <div className="flex flex-col gap-2">
-                                <p className="text-xl font-bold">{store.name}</p>
-                                <div>
-                                    <p className="capitalize text-muted-foreground">
-                                        {store.description || t("no-description")}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <p>{t2("current-balance")}</p>
-                            <p className="text-lg font-bold lg:text-2xl">
-                                {store.balance 
-                                    ? Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(store.balance.current_balance)
-                                    : "N/A"
-                                }
-                            </p>
-                        </div> */}
+                        </CardAction>
                     </CardContent>
                 </Card>
             </section>

@@ -1,12 +1,15 @@
 "use server"
 
 /* import { PrismaClient } from '@prisma/client' */
-import { actionWrapper } from "@/utils/lib"
+/* import { actionWrapper } from "@/utils/lib" */
 import { prisma } from "@/utils/prisma"
 
 type StoreHeader = {
+    id: number
     name: string
     description: string | null
+    logo: string | null
+    banner: string | null
     balance: {
         current_balance: number
     } | null
@@ -24,8 +27,11 @@ export async function selectStoreHeaderBySlug(slug: string): Promise<SelectStore
             slug: slug
         },
         select: {
+            id: true,
             name: true,
             description: true,
+            logo: true,
+            banner: true,
             balance: {
                 select: {
                     current_balance: true

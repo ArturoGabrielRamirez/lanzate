@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getUserInfo } from "@/features/layout/actions";
-import CreateStoreButton from "@/features/stores/components/create-store-button";
+/* import CreateStoreButton from "@/features/stores/components/create-store-button"; */
+import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new";
 
 
 async function EmptyFeedItem() {
@@ -41,7 +42,8 @@ async function EmptyFeedItem() {
                     <p className="text-sm text-muted-foreground mb-6">
                         Cuando tengas actividad, aparecerá aquí automáticamente.
                     </p>
-                    <CreateStoreButton userId={user?.id || 0} className="w-full" />
+                    {/* <CreateStoreButton userId={user?.id || 0} className="w-full" /> */}
+                    <CreateStoreButtonNew userId={user?.id || 0} />
                 </div>
             </CardContent>
         </Card>

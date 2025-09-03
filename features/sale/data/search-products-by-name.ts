@@ -21,6 +21,7 @@ export async function searchProductsByName(searchTerm: string, storeId: number) 
                 store_id: storeId,
                 is_active: true,
                 is_published: true,
+                is_deleted: false,
                 OR: [
                     {
                         name: {
@@ -60,7 +61,7 @@ export async function searchProductsByName(searchTerm: string, storeId: number) 
         }))
 
         return {
-            message: `Se encontraron ${productsWithTotalStock.length} productos`,
+            message: "Productos encontrados exitosamente",
             payload: productsWithTotalStock,
             error: false
         }

@@ -1,7 +1,9 @@
 'use client'
 import { ButtonWithPopup, InputField, TextareaField } from "@/features/layout/components"
+import { useTranslations } from "next-intl"
 
 const HelpDialogButton = () => {
+    const t = useTranslations("dashboard.help")
 
     const handleContactUs = async () => {
         console.log("Contact us")
@@ -14,19 +16,19 @@ const HelpDialogButton = () => {
 
     return (
         <ButtonWithPopup
-            title="Contact us"
+            title={t("dialog.title")}
             action={handleContactUs}
-            description="Send us a message and we will get back to you as soon as possible."
-            text="Send message"
+            description={t("dialog.description")}
+            text={t("send-message")}
             messages={{
-                success: "Message sent",
-                error: "Error sending message",
-                loading: "Sending message..."
+                success: t("dialog.messages.success"),
+                error: t("dialog.messages.error"),
+                loading: t("dialog.messages.loading")
             }}
             className="w-full"
         >
-            <InputField type="email" name="email" label="Email" placeholder="Email" />
-            <TextareaField name="message" label="Message" placeholder="Message" />
+            <InputField type="email" name="email" label={t("dialog.email")} placeholder={t("dialog.email")} />
+            <TextareaField name="message" label={t("dialog.message")} placeholder={t("dialog.message")} />
         </ButtonWithPopup>
     )
 }

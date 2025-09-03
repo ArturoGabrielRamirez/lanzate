@@ -2,13 +2,14 @@ import CartList from "@/features/cart/components/cart-list"
 import CartResume from "@/features/cart/components/cart-resume"
 import { CheckoutProvider } from "@/features/checkout/components/checkout-context";
 import { Title } from "@/features/layout/components"
+import PageContainer from "@/features/layout/components/page-container"
 import { useTranslations } from "next-intl";
 
 function CartPage() {
     const t = useTranslations("cart");
     return (
         <CheckoutProvider>
-            <section className="p-4 grow flex flex-col">
+            <PageContainer>
                 <Title title={t("title")} breadcrumbs={[{ label: t("title"), href: "/cart" }]} homePath="/" />
                 <div className="flex flex-col gap-4 lg:flex-row">
                     <CartList />
@@ -20,7 +21,7 @@ function CartPage() {
                         <p className="text-muted-foreground text-center">{t("description.coming-soon")}</p>
                     </div>
                 </div>
-            </section>
+            </PageContainer>
         </CheckoutProvider>
     )
 }

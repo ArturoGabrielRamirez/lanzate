@@ -20,13 +20,26 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
             include: {
                 branches: {
                     include: {
-                        stock: true
+                        stock: true,
+                        shipping_methods: true,
+                        operational_settings: true,
+                        opening_hours: true,
                     }
                 },
                 products: {
+                    where: {
+                        is_deleted: false
+                    },
                     include: {
                         categories: true,
-                        stock_entries: true
+                        variants: {
+                            include: {
+                                stocks: true,
+                            },
+                            where: {
+                                is_deleted: false
+                            }
+                        }
                     }
                 },
                 balance: true,
@@ -34,20 +47,6 @@ export async function selectStoreBySlug(slug: string): Promise<SelectStoreBySlug
                 customization: true
             }
         })
-
-        const aggregate = await prisma.productStock.groupBy({
-            by: ["branch_id"],
-            _sum: {
-                quantity: true
-            },
-            where: {
-                product_id: {
-                    in: store?.products.map((product) => product.id)
-                }
-            },
-        })
-
-        console.log(aggregate)
 
         return {
             message: "Store fetched successfully from db",

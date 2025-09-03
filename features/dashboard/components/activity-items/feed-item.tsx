@@ -10,26 +10,27 @@ import { Badge } from "@/components/ui/badge"
 import { CancelOrderButton } from "@/features/stores/components"
 import ConfirmOrderButtonIcon from "@/features/orders/components/confirm-order-button-icon"
 import { cn } from "@/lib/utils"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { useState } from "react"
+/* import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { useState } from "react" */
+import OpenChatButton from "@/features/orders/components/open-chat-button"
 
 type Props = {
     item: SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } }
 }
 const FeedItem = ({ item }: Props) => {
 
-    const [open, setOpen] = useState(false)
+    /* const [open, setOpen] = useState(false)
 
     const handleOpen = () => {
         setOpen(true)
-    }
+    } */
 
     return (
         <>
 
             <Card
                 className="h-full group not-dark:bg-gradient-to-br not-dark:to-background not-dark:from-transparent not-dark:to-120% border-white/5 backdrop-blur-sm hover:!shadow-2xl dark:via-background hover:border-white/40 relative dark:hover:to-primary/20 dark:bg-card group"
-                onClick={handleOpen}
+                // onClick={handleOpen}
             >
                 <CardHeader className="flex gap-2">
                     <Avatar className="h-10 w-10">
@@ -147,14 +148,15 @@ const FeedItem = ({ item }: Props) => {
                     {item.activity_type === "ORDER_CREATED" && (
                         <CancelOrderButton order={item.order} slug={item.store.slug} size="sm" onlyIcon className="" />
                     )}
+                    {item.activity_type === "ORDER_CREATED" && <OpenChatButton roomId={String(item.order.id)} onlyIcon username="Store" messageType="STORE_TO_CUSTOMER" />}
                 </CardFooter>
             </Card>
 
-            <Dialog open={open} onOpenChange={setOpen}>
+            {/* <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent>
                     Soy un dialog
                 </DialogContent>
-            </Dialog>
+            </Dialog> */}
         </>
     )
 }

@@ -7,6 +7,7 @@ import { Contract, ContractAssignment, Order, OrderTracking, Product, SocialActi
 import EmptyFeedItem from "./empty-feed-item"
 import InfiniteScroll from "./infinite-scroll"
 import { getUserStoreActivities } from "../actions/getUserStoreActivities"
+/* import { createClient } from "@/utils/supabase/client" */
 
 type Props = {
     initialActivities: (SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } })[]
@@ -22,6 +23,8 @@ function NewActivityFeed({ initialActivities, userId, type }: Props) {
     const [currentPage, setCurrentPage] = useState(1)
 
     const [activities, setActivities] = useState(initialActivities)
+
+
 
     /* const handleActivity = async (payload: RealtimePostgresChangesPayload<SocialActivityRecord>) => {
         try {
@@ -51,13 +54,17 @@ function NewActivityFeed({ initialActivities, userId, type }: Props) {
             .on(
                 'postgres_changes',
                 {
-                    event: 'INSERT',
+                    event: 'UPDATE',
                     schema: 'public',
-                    table: "social_activities"
+                    table: "orders"
                 },
-                handleActivity
+                (payload) => {
+                    console.log("📦 Activity change received:", payload)
+                }
             )
-            .subscribe()
+            .subscribe((status) => {
+                console.log("📡 Subscription status:", status)
+            })
 
         return () => {
             changes.unsubscribe()

@@ -54,6 +54,11 @@ function CheckoutForm({
                 name: formData.name,
                 email: formData.email,
                 phone: formData.phone,
+                address_one: formData.address,
+                city: formData.city,
+                state: formData.state,
+                country: formData.country,
+                zip_code: formData.zip_code
             },
             payment_method: paymentMethod,
             shipping_method: shippingMethod,
@@ -82,7 +87,7 @@ function CheckoutForm({
             className="grow"
             contentButton={t("navigation.continue")}
             formAction={handleSubmit}
-            resolver={yupResolver(shippingMethod === "DELIVERY" ? deliveryOrderSchema : pickupOrderSchema) as any}
+            resolver={yupResolver(shippingMethod === "DELIVERY" ? deliveryOrderSchema : pickupOrderSchema)}
         >
             <InteractiveStepper defaultValue={1} className="grow">
                 <InteractiveStepperItem>
@@ -110,7 +115,7 @@ function CheckoutForm({
                     />
                 </InteractiveStepperItem>
 
-                <InteractiveStepperContent step={1}>
+                <InteractiveStepperContent step={1} className="mt-8">
                     <Card>
                         <CardHeader>
                             <CardTitle>{t("steps.personal-information.title")}</CardTitle>
@@ -123,7 +128,7 @@ function CheckoutForm({
                         </CardContent>
                     </Card>
                 </InteractiveStepperContent>
-                <InteractiveStepperContent step={2}>
+                <InteractiveStepperContent step={2} className="mt-8">
                     <Card>
                         <CardHeader>
                             <CardTitle>{t("steps.delivery-information.title")}</CardTitle>
@@ -161,7 +166,7 @@ function CheckoutForm({
                         </CardContent>
                     </Card>
                 </InteractiveStepperContent>
-                <InteractiveStepperContent step={3}>
+                <InteractiveStepperContent step={3} className="mt-8">
                     <Card>
                         <CardHeader>
                             <CardTitle>{t("steps.payment-information.title")}</CardTitle>

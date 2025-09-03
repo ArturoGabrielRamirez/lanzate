@@ -1,17 +1,15 @@
 import { getProductDetails } from "@/features/stores/actions/getProductDetails"
 
-import { DeleteProductButton, EditProductButton } from "@/features/products/components"
+import { DeleteProductButton } from "@/features/products/components"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ProductDetailForm } from "@/features/products/components/product-detail-display"
 
 import { ProductDetailPageProps } from "@/features/products/type"
 
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import Image from "next/image"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
-import { Category } from "@prisma/client"
 
 async function ProductDetailPage({ params }: ProductDetailPageProps) {
 
@@ -24,6 +22,7 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
     }
 
     const { payload: product, error } = await getProductDetails(id)
+    console.log("🚀 ~ ProductDetailPage ~ product:", product)
 
     if (error || !product) {
         return console.log(error)
@@ -32,51 +31,36 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
     const t = await getTranslations("store.products")
 
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Link href={`/stores/${slug}/products`}>
-                        <ArrowLeft className="size-4" />
-                    </Link>
-                    {t("product-details")}
-                </CardTitle>
-            </CardHeader>
-            <CardContent className="grow flex">
-                <div className="grid grid-cols-1 lg:grid-cols-[max-content_1fr] grid-rows-[auto_1fr] lg:grid-rows-1 gap-4 w-full">
-                    <div className="w-full h-35 lg:h-full lg:w-60 xl:w-80 overflow-hidden rounded-md group bg-secondary relative">
-                        {product.image ? (
-                            <Image
-                                src={product.image}
-                                alt={`${product.name} image`}
-                                fill
-                                className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 scale-y-95 scale-x-93 rounded-md"
-                            />
-                        ) : (
-                            <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 scale-y-95 scale-x-93 rounded-md" />
-                        )}
-                    </div>
-                    <div className="flex flex-col gap-4">
-                        <h3 className="text-4xl font-bold">{product.name}</h3>
+        <div className="space-y-6">
+            {/* Header con navegación y botones de acción */}
+            <Card>
+                <CardHeader>
+                    <div className="flex items-center justify-between">
+                        <CardTitle className="flex items-center gap-2">
+                            <Link href={`/stores/${slug}/products`}>
+                                <ArrowLeft className="size-4" />
+                            </Link>
+                            {t("product-details")}
+                        </CardTitle>
                         <div className="flex gap-2">
-                            {product.categories.length === 0 && (
-                                <Badge variant="outline">{t("no-categories")}</Badge>
-                            )}
-                            {product.categories.map((category: Category) => (
-                                <Badge key={category.id} variant="outline">{category.name}</Badge>
-                            ))}
-                        </div>
-                        <p className="text-muted-foreground text-lg">${product.price}</p>
-                        <p>{product.description || "No description available"}</p>
-                        <div className="flex justify-center md:justify-end mt-auto">
-                            <div className="grid grid-cols-2 gap-4 mt-auto justify-end max-w-xs">
-                                <DeleteProductButton productId={product.id} slug={slug} userId={user.id} />
-                                <EditProductButton product={product} slug={slug} userId={user.id} />
-                            </div>
+                            <DeleteProductButton
+                                productId={product.id}
+                                slug={slug}
+                                userId={user.id}
+                            />
                         </div>
                     </div>
-                </div>
-            </CardContent>
-        </Card>
+                </CardHeader>
+            </Card>
+
+            {/* Contenido principal con las cards */}
+            <ProductDetailForm
+                product={product}
+                slug={slug}
+                userId={user.id}
+            />
+        </div>
     )
 }
+
 export default ProductDetailPage

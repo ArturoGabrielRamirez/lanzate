@@ -1,6 +1,7 @@
 "use client"
 
-import CreateStoreButton from "@/features/stores/components/create-store-button"
+/* import CreateStoreButton from "@/features/stores/components/create-store-button" */
+import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new"
 
 type QuickActionsClientProps = {
     userId: number
@@ -9,7 +10,8 @@ type QuickActionsClientProps = {
 function QuickActionsClient({ userId }: QuickActionsClientProps) {
     return (
         <div className="grow">
-            <CreateStoreButton userId={userId} />
+            {/* <CreateStoreButton userId={userId} /> */}
+            <CreateStoreButtonNew userId={userId} />
         </div>
     )
 }

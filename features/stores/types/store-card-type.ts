@@ -1,5 +1,5 @@
 import { Store } from "@prisma/client"
 
 export type Props = {
-    store: Store
+    store: Store & { _count: { products: number } }
 }

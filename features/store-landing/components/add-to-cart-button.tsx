@@ -1,36 +1,57 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useCart } from "@/features/cart/components/cart-provider"
-import { cn } from "@/lib/utils"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Product } from "@prisma/client"
 import { ShoppingCart } from "lucide-react"
+import { useState } from "react"
 
 type Props = {
     product: Product
     withText?: boolean
     className?: string
+    canBeAddedToCart: boolean
+    overrideId?: string | number
+    overrideName?: string
+    overridePrice?: number
+    overrideImage?: string
 }
 
-function AddToCartButton({ product, withText = false, className }: Props) {
+function AddToCartButton({ product, canBeAddedToCart, overrideId, overrideName, overridePrice, overrideImage }: Props) {
     const { addToCart } = useCart()
+    const [isAdded, setIsAdded] = useState(false)
 
     const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()
-        addToCart({
-            id: product.id.toString(),
-            name: product.name,
-            price: product.price,
-            quantity: 1,
-            image: product.image || ""
-        })
+        const id = (overrideId ?? product.id).toString()
+        const name = overrideName ?? product.name
+        const price = overridePrice ?? product.price
+        const image = overrideImage ?? product.image ?? ""
+        addToCart({ id, name, price, quantity: 1, image })
+        setIsAdded(true)
+        setTimeout(() => {
+            setIsAdded(false)
+        }, 300)
     }
 
     return (
-        <Button variant="outline" size={withText ? "default" : "icon"} onClick={handleAddToCart} className={cn("border-none", className)}>
-            <ShoppingCart />
-            {withText && <span>Add to Cart</span>}
-        </Button>
+        <Tooltip>
+            <TooltipTrigger asChild>
+                <IconButton
+                    disabled={!canBeAddedToCart}
+                    animate
+                    active={isAdded}
+                    icon={ShoppingCart}
+                    size="md"
+                    onClick={handleAddToCart}
+                    iconClassName={!canBeAddedToCart ? "text-muted-foreground/50" : "text-foreground"}
+                />
+            </TooltipTrigger>
+            <TooltipContent>
+                <p>{canBeAddedToCart ? "Add to Cart" : "Product not available"}</p>
+            </TooltipContent>
+        </Tooltip>
     )
 }
 

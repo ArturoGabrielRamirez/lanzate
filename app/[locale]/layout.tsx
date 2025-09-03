@@ -10,6 +10,8 @@ import { BProgressProvider } from "@/src/components/bprogress-provider";
 import LayoutBackgroundEffects from "@/features/layout/components/layout-background-effects";
 import "../globals.css";
 import FloatingDockContainer from "@/features/header/components/foating-dock-container";
+import { ChatProvider } from "@/features/layout/components/chat-provider";
+import ChatDoc from "@/features/layout/components/chat-doc";
 
 
 export const metadata: Metadata = {
@@ -41,28 +43,32 @@ export default async function RootLayout({ children, params }: LayoutProps) {
           <NuqsAdapter>
             <NextIntlClientProvider locale={locale}>
               <BProgressProvider options={{ showSpinner: true }} startOnLoad spinnerPosition="bottom-right" shallowRouting={false}>
-                <SubdomainProvider
-                  adminLayout={(
-                    <>
-                      <Header />
-                      <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
+                <ChatProvider>
+                  <SubdomainProvider
+                    adminLayout={(
+                      <>
+                        <Header />
+                        <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
+                          {children}
+                        </main>
+                        <FloatingDockContainer />
+                        <Footer />
+                        <ChatDoc />
+                        <Toaster position="top-center" richColors />
+                        <LayoutBackgroundEffects />
+                        <GlobalEmailConfirmationDetector />
+                      </>
+                    )}
+                    userLayout={(
+                      <>
                         {children}
-                      </main>
-                      <FloatingDockContainer />
-                      <Footer />
-                      <Toaster position="top-center" richColors/>
-                      <LayoutBackgroundEffects />
-                      <GlobalEmailConfirmationDetector />
-                    </>
-                  )}
-                  userLayout={(
-                    <>
-                      {children}
-                      <GlobalEmailConfirmationDetector />
-                      <Toaster position="top-center" />
-                    </>
-                  )}
-                />
+                        <ChatDoc />
+                        <GlobalEmailConfirmationDetector />
+                        <Toaster position="top-center" />
+                      </>
+                    )}
+                  />
+                </ChatProvider>
               </BProgressProvider>
             </NextIntlClientProvider>
           </NuqsAdapter>

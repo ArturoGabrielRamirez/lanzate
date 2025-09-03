@@ -3,6 +3,7 @@ import { CartResume } from "@/features/cart/components"
 import { Title } from "@/features/layout/components"
 import { getUserInfo } from "@/features/layout/actions"
 import { getStoreBySubdomain } from "@/features/subdomain/actions"
+import PageContainer from "@/features/layout/components/page-container"
 
 async function CheckoutPage({ params }: { params: Promise<{ subdomain: string }> }) {
 
@@ -25,7 +26,7 @@ async function CheckoutPage({ params }: { params: Promise<{ subdomain: string }>
 
     return (
         <CheckoutProvider>
-            <section className="p-4 grow flex flex-col">
+            <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
                 <Title title="Checkout" breadcrumbs={breadcrumbs} homePath="/"/>
                 <div className="flex flex-col gap-4 lg:flex-row">
                     <CheckoutForm 
@@ -36,7 +37,7 @@ async function CheckoutPage({ params }: { params: Promise<{ subdomain: string }>
                     />
                     <CartResume operationalSettings={store.operational_settings} />
                 </div>
-            </section>
+            </PageContainer>
         </CheckoutProvider>
     )
 }

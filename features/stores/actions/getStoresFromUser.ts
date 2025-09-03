@@ -6,7 +6,7 @@ import { Branch, Store } from "@prisma/client"
 
 type GetStoresFromUserReturn = {
     message: string
-    payload: (Store & { branches: Branch[] })[]
+    payload: (Store & { branches: Branch[] } & { _count: { products: number } })[]
     error: boolean
 }
 

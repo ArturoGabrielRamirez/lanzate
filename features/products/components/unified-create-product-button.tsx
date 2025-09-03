@@ -1,13 +1,10 @@
 "use client"
 
-import { InputField } from "@/features/layout/components"
-import { createProduct } from "../actions/createProduct"
+// import { createProduct } from "../actions/createProduct"
 import { productCreateSchema } from "../schemas/product-schema"
 import { formatErrorResponse } from "@/utils/lib"
-import { DollarSign, FileText, Package, Plus, Tag, Upload, X, ShoppingCart, Box } from "lucide-react"
-import { useCallback, useState, useEffect } from "react"
-import CategorySelect from "@/features/store-landing/components/category-select-"
-import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/components/ui/file-upload"
+import { Plus, ShoppingCart, Box, ImageIcon, Boxes, Ruler, Tags, Palette, Settings, DollarSign } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -21,100 +18,146 @@ import { cn } from "@/lib/utils"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { AnimatePresence, motion } from "framer-motion"
 
-type CategoryValue = { value: string; label: string }
+import BasicInfoSection from "./sections/basic-info-section"
+import MediaSection from "./sections/media-section"
+import PriceStockSection from "./sections/price-stock-section"
+import CategoriesSection from "./sections/categories-section"
+import SizesSection from "./sections/sizes-section"
+import SettingsSection from "./sections/settings-section"
+import ColorsSection from "./sections/colors-section"
+import DimensionsSection from "./sections/dimensions-section"
+import VariantsPreviewSection from "./sections/variants-preview-section"
+import VariantsEditor from "./sections/variants-editor"
+import type { MediaSectionData, CategoriesSectionData, SizesSectionData, ColorsSectionData, SettingsSectionData, CategoryValue, DimensionsSectionData } from "../type/create-form-extra"
+import type { ProductColor } from "../type/product-color"
+import { mapUnifiedCreatePayload } from "../utils/mapUnifiedCreatePayload"
+import { createUnifiedProduct, type CreateUnifiedProductArgs } from "../actions/createUnifiedProduct"
 
 type CreateProductPayload = {
     name: string
     price: number
     stock: number
     description?: string | undefined
-    categories: CategoryValue[] | undefined
+    slug?: string | undefined
+    sku?: string | undefined
+    categories?: CategoryValue[] | undefined
     image?: File | undefined
-    is_active: boolean | undefined
-    is_featured: boolean | undefined
-    is_published: boolean | undefined
+    is_active?: boolean | undefined
+    is_featured?: boolean | undefined
+    is_published?: boolean | undefined
 }
 
 function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
-    const [categories, setCategories] = useState<CategoryValue[]>([])
-    const [files, setFiles] = useState<File[]>([])
+    // Local dialog/store selection state
     const [selectedStoreId, setSelectedStoreId] = useState<string>("")
-    const [fileUploadError, setFileUploadError] = useState<string>("")
     const [open, setOpen] = useState(false)
-    const [isActive, setIsActive] = useState(true)
-    const [isFeatured, setIsFeatured] = useState(false)
-    const [isPublished, setIsPublished] = useState(true)
+    // Section data refs (children own their state; we capture latest snapshot here)
+    const mediaRef = useRef<MediaSectionData>({ files: [], primaryIndex: null })
+    const categoriesRef = useRef<CategoriesSectionData>({ categories: [] })
+    const sizesRef = useRef<SizesSectionData>({ isUniqueSize: false, sizes: [], measures: [] })
+    const colorsRef = useRef<ColorsSectionData>({ colors: [] })
+    const settingsRef = useRef<SettingsSectionData>({ isActive: true, isFeatured: false, isPublished: true })
+    const dimensionsRef = useRef<DimensionsSectionData>({})
+    const [showAdvanced, setShowAdvanced] = useState<boolean>(false)
+    const [editingVariant, setEditingVariant] = useState<{ id: string, size?: string, color?: ProductColor } | null>(null)
+    const [, setAdvancedChanged] = useState<number>(0)
 
     const hasStoreId = 'storeId' in props
     const translationNamespace = hasStoreId ? "store.create-product" : "dashboard.create-product"
     const t = useTranslations(translationNamespace)
 
+    // Reset on close
+    // Ensure refs are cleared so reopening starts fresh
     useEffect(() => {
         if (!open) {
-            setCategories([])
-            setFiles([])
-            setFileUploadError("")
-            setIsActive(true)
-            setIsFeatured(false)
-            setIsPublished(true)
-            if (!hasStoreId) {
-                setSelectedStoreId("")
-            }
+            mediaRef.current = { files: [], primaryIndex: null }
+            categoriesRef.current = { categories: [] }
+            sizesRef.current = { isUniqueSize: false, sizes: [], measures: [] }
+            colorsRef.current = { colors: [] }
+            settingsRef.current = { isActive: true, isFeatured: false, isPublished: true }
+            dimensionsRef.current = {}
+            setShowAdvanced(false)
+            setEditingVariant(null)
+            setAdvancedChanged(0)
         }
-    }, [open, hasStoreId])
-
-    const handleAddCategory = (value: CategoryValue[]) => {
-        setCategories(value)
-    }
-
-    const onFileReject = useCallback((file: File, message: string) => {
-        const filename = file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name
-
-        setFileUploadError(message)
-
-        if (hasStoreId) {
-            toast(message, {
-                description: t("file-rejected", { filename }),
-            })
-        } else {
-            toast(message, {
-                description: `"${filename}" has been rejected`,
-            })
-        }
-    }, [t, hasStoreId])
+    }, [open])
 
     const handleCreateProduct = async (payload: CreateProductPayload) => {
         try {
-            let targetStoreId: number
+            // For now only log collected data and return success
+            const targetStoreId = hasStoreId ? props.storeId! : (selectedStoreId ? parseInt(selectedStoreId) : undefined)
+            if (!targetStoreId) throw new Error(t("messages.select-store-first"))
 
-            if (hasStoreId) {
-                targetStoreId = props.storeId
+            // Build variants snapshot (same logic as preview)
+            type Option = { label: string; value: string }
+            const sizes = (sizesRef.current?.sizes ?? []).map((s: Option) => s.value)
+            const measures = (sizesRef.current?.measures ?? []).map((m: Option) => m.value)
+            const isUniqueSize = sizesRef.current?.isUniqueSize === true
+            const colors = colorsRef.current?.colors ?? []
+            
+            let variantsList: { size?: string, measure?: string }[] = []
+            
+            if (isUniqueSize) {
+                variantsList = [{ size: undefined, measure: undefined }]
             } else {
-                if (!selectedStoreId) {
-                    throw new Error(t("messages.select-store-first"))
+                if (sizes.length > 0) {
+                    variantsList = sizes.map(size => ({ size, measure: undefined }))
                 }
-                targetStoreId = parseInt(selectedStoreId)
+                if (measures.length > 0) {
+                    variantsList = [...variantsList, ...measures.map(measure => ({ size: undefined, measure }))]
+                }
+                if (sizes.length === 0 && measures.length === 0) {
+                    // Allow color-only variants
+                    variantsList = [{ size: undefined, measure: undefined }]
+                }
             }
 
-            const data = {
-                ...payload,
-                categories,
-                image: files[0],
-                is_active: isActive,
-                is_featured: isFeatured,
-                is_published: isPublished
-            }
+            const colorList: (ProductColor | undefined)[] = (colors?.length ?? 0) > 0 ? colors as ProductColor[] : [undefined]
+            const exclusions: string[] = (payload as unknown as { variantExclusions?: string[] }).variantExclusions ?? []
+            
+            const variants = variantsList.length === 0 && colorList[0] === undefined
+                ? []
+                : variantsList.flatMap((variant) => colorList.map((c: ProductColor | undefined) => {
+                    const id = `${variant.size ?? variant.measure ?? 'one'}-${c ? c.id : 'one'}`
+                    if (exclusions.includes(id)) return null
+                    return {
+                        id,
+                        size: variant.size,
+                        measure: variant.measure,
+                        color: c ? { id: c.id, name: c.name, rgba: c.rgba } : undefined,
+                    }
+                })).filter(Boolean)
 
-            const { error, message, payload: product } = await createProduct(data, targetStoreId, props.userId)
+            const args = mapUnifiedCreatePayload(
+                payload as unknown as {
+                    name: string
+                    slug?: string
+                    description?: string
+                    price: number
+                    stock: number
+                    categories: { label: string; value: string }[]
+                    images?: File[]
+                },
+                {
+                    media: mediaRef.current,
+                    categories: categoriesRef.current,
+                    sizes: sizesRef.current,
+                    colors: colorsRef.current,
+                    dimensions: dimensionsRef.current,
+                    settings: settingsRef.current,
+                    variants: variants as { id: string; size?: string; measure?: string; color?: ProductColor }[],
+                },
+                targetStoreId,
+                props.userId,
+            )
 
+            const { error, message, payload: created } = await createUnifiedProduct(args as CreateUnifiedProductArgs)
             if (error) throw new Error(message)
-
-            return {
-                error: false,
-                message: t("messages.success"),
-                payload: product
-            }
+            return { error: false, message: t("messages.success"), payload: created }
         } catch (error) {
             return formatErrorResponse(t("messages.error"), error, null)
         }
@@ -130,17 +173,27 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
 
     const buttonIcon = hasStoreId ? <Plus /> : <ShoppingCart className="size-4" />
     const buttonClassName = hasStoreId ? undefined : "w-full"
-    const resolverConfig = productCreateSchema ? { resolver: yupResolver(productCreateSchema) as import('react-hook-form').Resolver<CreateProductPayload> } : {}
+    const resolverConfig = productCreateSchema ? { resolver: yupResolver(productCreateSchema) as unknown as import('react-hook-form').Resolver<CreateProductPayload> } : {}
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button disabled={false} variant="default" type="button" className={cn(buttonClassName)}>
+                {props.onlyIcon ? (
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <IconButton icon={() => buttonIcon} size="md" onClick={() => setOpen(true)} />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            {t("button")}
+                        </TooltipContent>
+                    </Tooltip>
+                ) : (
+                <Button disabled={false} variant="default" type="button" className={cn("w-full", buttonClassName)}>
                     {buttonIcon}
                     <span className="hidden md:block">{t("button")}</span>
-                </Button>
+                    </Button>)}
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>{t("title")}</DialogTitle>
                     <DialogDescription>
@@ -184,162 +237,166 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                                 )}
                             </div>
                         )}
-                        <Accordion type="single" collapsible defaultValue="item-1">
-                            <AccordionItem value="item-1">
-                                <AccordionTriggerWithValidation keys={["name", "price", "categories"]}>
-                                    <span className="flex items-center gap-2">
-                                        <Box className="size-4" />
-                                        Informacion básica
-                                    </span>
-                                </AccordionTriggerWithValidation>
-                                <AccordionContent className="space-y-4">
-                                    <div className="space-y-2">
-                                        <FileUpload
-                                            maxFiles={1}
-                                            maxSize={2 * 1024 * 1024}
-                                            className={hasStoreId ? "w-full" : "w-full"}
-                                            value={files}
-                                            onValueChange={(newFiles) => {
-                                                setFiles(newFiles)
-                                                if (newFiles.length > 0) {
-                                                    setFileUploadError("")
-                                                }
-                                            }}
-                                            onFileReject={onFileReject}
-                                            multiple={false}
-                                            disabled={files.length > 0}
-                                            accept="image/jpg, image/png, image/jpeg"
-                                        >
-                                            {files.length === 0 && (
-                                                <FileUploadDropzone>
-                                                    <div className="flex flex-col items-center gap-1 text-center">
-                                                        <div className="flex items-center justify-center rounded-full border p-2.5">
-                                                            <Upload className="size-6 text-muted-foreground" />
-                                                        </div>
-                                                        <p className="font-medium text-sm">
-                                                            {hasStoreId ? t("drag-drop") : t("drag-drop-image")}
-                                                        </p>
-                                                        <p className="text-muted-foreground text-xs">
-                                                            {t("click-browse")}
-                                                        </p>
-                                                    </div>
-                                                    <FileUploadTrigger asChild>
-                                                        <Button variant="outline" size="sm" className="mt-2 w-fit">
-                                                            {t("browse-files")}
-                                                        </Button>
-                                                    </FileUploadTrigger>
-                                                </FileUploadDropzone>
-                                            )}
-                                            <FileUploadList className="w-full">
-                                                {files.map((file, index) => (
-                                                    <FileUploadItem key={index} value={file}>
-                                                        <FileUploadItemPreview />
-                                                        <FileUploadItemMetadata />
-                                                        <FileUploadItemDelete asChild>
-                                                            <Button variant="ghost" size="icon" className="size-7">
-                                                                <X />
-                                                            </Button>
-                                                        </FileUploadItemDelete>
-                                                    </FileUploadItem>
-                                                ))}
-                                            </FileUploadList>
-                                        </FileUpload>
+                        <AnimatePresence initial={false} mode="wait">
+                            {!editingVariant ? (
+                                <motion.div key="main-content" initial={{ x: 0, opacity: 1 }} animate={{ x: 0, opacity: 1 }} exit={{ x: "-100%", opacity: 0 }} transition={{ duration: 0.2, ease: "easeInOut" }}>
+                                    <Accordion type="single" collapsible>
 
-                                        {fileUploadError && (
-                                            <p className="text-destructive text-sm">
-                                                {fileUploadError}
-                                            </p>
+                                        <AccordionItem value="item-1">
+                                            <AccordionTriggerWithValidation keys={["name", "slug", "description", "sku", "barcode"]}>
+                                                <span className="flex items-center gap-2">
+                                                    <Box className="size-4" />
+                                                    Informacion básica
+                                                </span>
+                                            </AccordionTriggerWithValidation>
+                                            <AccordionContent className="space-y-4">
+                                                <BasicInfoSection />
+                                            </AccordionContent>
+                                        </AccordionItem>
+
+                                        <AccordionItem value="item-2">
+                                            <AccordionTriggerWithValidation keys={["primary-image", "images", "videos"]}>
+                                                <span className="flex items-center gap-2">
+                                                    <ImageIcon className="size-4" />
+                                                    Imagenes y videos
+                                                </span>
+                                            </AccordionTriggerWithValidation>
+                                            <AccordionContent className="space-y-4">
+                                                <MediaSection
+                                                    value={mediaRef.current}
+                                                    onChange={(d) => { mediaRef.current = d }}
+                                                    onFileReject={(file, message) => {
+                                                        const filename = file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name
+                                                        toast(message, { description: `"${filename}" has been rejected` })
+                                                    }}
+                                                />
+                                            </AccordionContent>
+                                        </AccordionItem>
+
+                                        <AccordionItem value="item-3">
+                                            <AccordionTriggerWithValidation keys={["price", "stock"]}>
+                                                <span className="flex items-center gap-2">
+                                                    <DollarSign className="size-4" />
+                                                    Precio y stock
+                                                </span>
+                                            </AccordionTriggerWithValidation>
+                                            <AccordionContent className="space-y-4">
+                                                <PriceStockSection />
+                                            </AccordionContent>
+                                        </AccordionItem>
+
+                                        <AccordionItem value="item-4">
+                                            <AccordionTriggerWithValidation keys={["categories"]} completeKeys={["categories"]}>
+                                                <span className="flex items-center gap-2">
+                                                    <Boxes className="size-4" />
+                                                    Categorias
+                                                </span>
+                                            </AccordionTriggerWithValidation>
+                                            <AccordionContent className="space-y-4">
+                                                <CategoriesSection
+                                                    storeId={hasStoreId ? props.storeId : (selectedStoreId ? parseInt(selectedStoreId) : undefined)}
+                                                    onChange={(d) => { categoriesRef.current = d }}
+                                                />
+                                            </AccordionContent>
+                                        </AccordionItem>
+
+                                        <AccordionItem value="item-5">
+                                            <AccordionTriggerWithValidation keys={["is-active", "is-featured", "is-published"]}>
+                                                <span className="flex items-center gap-2">
+                                                    <Settings className="size-4" />
+                                                    Configuracion
+                                                </span>
+                                            </AccordionTriggerWithValidation>
+                                            <AccordionContent className="space-y-4">
+                                                <SettingsSection onChange={(d) => { settingsRef.current = d }} />
+                                            </AccordionContent>
+                                        </AccordionItem>
+
+                                    </Accordion>
+
+                                    <div className="flex items-center justify-between rounded-md border p-3">
+                                        <div className="space-y-0.5">
+                                            <Label htmlFor="advanced-options">Opciones avanzadas</Label>
+                                            <p className="text-xs text-muted-foreground">Dimensiones, talles/tamaños y colores</p>
+                                        </div>
+                                        <Switch id="advanced-options" checked={showAdvanced} onCheckedChange={setShowAdvanced} />
+                                    </div>
+
+                                    <AnimatePresence initial={false} mode="wait">
+                                        {showAdvanced && (
+                                            <motion.div key="advanced-accordion" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2, ease: "easeInOut" }}>
+                                                <Accordion type="single" collapsible>
+                                                    <AccordionItem value="adv-1">
+                                                        <AccordionTriggerWithValidation keys={["weight", "height", "width", "depth", "diameter"]}>
+                                                            <span className="flex items-center gap-2">
+                                                                <Ruler className="size-4" />
+                                                                Dimensiones y peso
+                                                            </span>
+                                                        </AccordionTriggerWithValidation>
+                                                        <AccordionContent className="space-y-4">
+                                                            <DimensionsSection onChange={(d) => { dimensionsRef.current = d; setAdvancedChanged((v) => v + 1) }} />
+                                                        </AccordionContent>
+                                                    </AccordionItem>
+
+                                                    <AccordionItem value="adv-2">
+                                                        <AccordionTriggerWithValidation keys={["unique-size", "sizes", "measures"]}>
+                                                            <span className="flex items-center gap-2">
+                                                                <Tags className="size-4" />
+                                                                Talles y tamaños
+                                                            </span>
+                                                        </AccordionTriggerWithValidation>
+                                                        <AccordionContent className="space-y-4">
+                                                            <SizesSection onChange={(d) => { sizesRef.current = d; setAdvancedChanged((v) => v + 1) }} />
+                                                        </AccordionContent>
+                                                    </AccordionItem>
+
+                                                    <AccordionItem value="adv-3">
+                                                        <AccordionTriggerWithValidation keys={["colors"]}>
+                                                            <span className="flex items-center gap-2">
+                                                                <Palette className="size-4" />
+                                                                Colores disponibles
+                                                            </span>
+                                                        </AccordionTriggerWithValidation>
+                                                        <AccordionContent className="space-y-4">
+                                                            <ColorsSection onChange={(d) => { colorsRef.current = d; setAdvancedChanged((v) => v + 1) }} />
+                                                        </AccordionContent>
+                                                    </AccordionItem>
+
+                                                    {(() => {
+                                                        const dimsUsed = Object.values(dimensionsRef.current).some((v) => v !== undefined && v !== null && v !== "")
+                                                        const sizesUsed = (sizesRef.current?.isUniqueSize === true) || (sizesRef.current?.sizes?.length ?? 0) > 0 || (sizesRef.current?.measures?.length ?? 0) > 0
+                                                        const colorsUsed = (colorsRef.current?.colors?.length ?? 0) > 0
+                                                        const showVariants = (dimsUsed || sizesUsed || colorsUsed)
+                                                        return showVariants ? (
+                                                            <AccordionItem value="adv-5">
+                                                                <AccordionTriggerWithValidation keys={["variants-preview"]}>
+                                                                    <span className="flex items-center gap-2">
+                                                                        <Boxes className="size-4" />
+                                                                        Variantes (vista previa)
+                                                                    </span>
+                                                                </AccordionTriggerWithValidation>
+                                                                <AccordionContent className="space-y-4">
+                                                                    <VariantsPreviewSection onEditVariant={(v) => setEditingVariant(v)} />
+                                                                </AccordionContent>
+                                                            </AccordionItem>
+                                                        ) : null
+                                                    })()}
+                                                </Accordion>
+                                            </motion.div>
                                         )}
-                                    </div>
-                                    <InputField
-                                        name="name"
-                                        label={hasStoreId ? t("name") : t("product-name")}
-                                        type="text"
-                                        startContent={hasStoreId ? <Tag /> : undefined}
-                                    />
-                                    <InputField
-                                        name="price"
-                                        label={t("price")}
-                                        type="number"
-                                        defaultValue="0"
-                                        startContent={hasStoreId ? <DollarSign /> : undefined}
-                                    />
-                                    <CategorySelect
-                                        onChange={handleAddCategory}
-                                        storeId={hasStoreId ? props.storeId : (selectedStoreId ? parseInt(selectedStoreId) : undefined)}
-                                    />
-                                </AccordionContent>
-                            </AccordionItem>
-                            <AccordionItem value="item-2">
-                                <AccordionTriggerWithValidation keys={["stock", "description"]}>
-                                    <span className="flex items-center gap-2">
-                                        <Package className="size-4" />
-                                        Informacion adicional
-                                    </span>
-                                </AccordionTriggerWithValidation>
-                                <AccordionContent className="space-y-4">
-                                    <InputField
-                                        name="stock"
-                                        label={t("stock")}
-                                        type="number"
-                                        defaultValue="0"
-                                        startContent={hasStoreId ? <Package /> : undefined}
-                                    />
-                                    <InputField
-                                        name="description"
-                                        label={t("description")}
-                                        type="text"
-                                        startContent={hasStoreId ? <FileText /> : undefined}
-                                    />
-                                    <div className="space-y-4">
-                                        <div className="flex items-center justify-between">
-                                            <div className="space-y-0.5">
-                                                <Label htmlFor="is-active">Producto activo</Label>
-                                                <p className="text-sm text-muted-foreground">
-                                                    El producto estará disponible para la venta
-                                                </p>
-                                            </div>
-                                            <Switch
-                                                id="is-active"
-                                                checked={isActive}
-                                                onCheckedChange={setIsActive}
-                                            />
-                                        </div>
-                                        <div className="flex items-center justify-between">
-                                            <div className="space-y-0.5">
-                                                <Label htmlFor="is-featured">Producto destacado</Label>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Aparecerá en la sección de productos destacados
-                                                </p>
-                                            </div>
-                                            <Switch
-                                                id="is-featured"
-                                                checked={isFeatured}
-                                                onCheckedChange={setIsFeatured}
-                                            />
-                                        </div>
-                                        <div className="flex items-center justify-between">
-                                            <div className="space-y-0.5">
-                                                <Label htmlFor="is-published">Producto publicado</Label>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Será visible en la tienda pública
-                                                </p>
-                                            </div>
-                                            <Switch
-                                                id="is-published"
-                                                checked={isPublished}
-                                                onCheckedChange={setIsPublished}
-                                            />
-                                        </div>
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
-                        </Accordion>
+                                    </AnimatePresence>
+                                </motion.div>
+                            ) : (
+                                <motion.div key="editor" initial={{ x: "100%", opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: "100%", opacity: 0 }} transition={{ duration: 0.2, ease: "easeInOut" }}>
+                                    <VariantsEditor variant={editingVariant!} onClose={() => setEditingVariant(null)} />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
                     </div>
                 </Form>
             </DialogContent>
-        </Dialog>
+        </Dialog >
     )
 }
 

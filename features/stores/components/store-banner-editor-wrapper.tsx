@@ -1,0 +1,49 @@
+"use client"
+
+import { useState } from "react"
+import { CardAction } from "@/components/ui/card"
+import { StoreBannerEditor } from "./store-banner-editor"
+import { updateStoreBanner } from "../actions/updateStoreBanner"
+import { toast } from "sonner"
+
+type StoreBannerEditorWrapperProps = {
+    currentBanner: string | null
+    storeName: string
+    storeId: number
+}
+
+function StoreBannerEditorWrapper({ currentBanner, storeName, storeId }: StoreBannerEditorWrapperProps) {
+    const [banner, setBanner] = useState<string | null>(currentBanner)
+
+    const handleBannerUpdate = async (newBannerUrl: string | null) => {
+        try {
+            setBanner(newBannerUrl)
+            if (newBannerUrl) {
+                toast.loading('Updating store banner...')
+                const { error, message } = await updateStoreBanner(storeId, newBannerUrl)
+                if (error) {
+                    toast.dismiss()
+                    toast.error(message)
+                } else {
+                    toast.dismiss()
+                    toast.success(message)
+                }
+            }
+        } catch (error) {
+            console.error('Error updating store banner:', error)
+            toast.error('Error updating store banner')
+        }
+    }
+
+    return (
+        <CardAction className="group-hover/store-banner:opacity-100 opacity-0 transition-opacity duration-300">
+            <StoreBannerEditor
+                currentBanner={banner}
+                storeName={storeName}
+                onBannerUpdate={handleBannerUpdate}
+            />
+        </CardAction>
+    )
+}
+
+export default StoreBannerEditorWrapper

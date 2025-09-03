@@ -14,6 +14,7 @@ export async function selectProductByIdAndSubdomain(id: number, subdomain: strin
                 id: id,
                 is_active: true,
                 is_published: true,
+                is_deleted: false,
                 store: {
                     subdomain: sanitizedSubdomain
                 }
@@ -27,6 +28,17 @@ export async function selectProductByIdAndSubdomain(id: number, subdomain: strin
                         subdomain: true,
                         customization: true
                     }
+                },
+                primary_media: true,
+                media: { orderBy: { sort_order: 'asc' }, take: 12 },
+                variants: {
+                    where: { is_deleted: false },
+                    include: {
+                        color: true,
+                        primary_media: true,
+                        media: { orderBy: { sort_order: 'asc' }, take: 12 }
+                    },
+                    orderBy: { id: 'asc' }
                 }
             }
         })

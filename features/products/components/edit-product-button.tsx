@@ -1,22 +1,24 @@
 "use client"
-import { InputField } from "@/features/layout/components"
 import { editProduct } from "../actions/editProduct"
 import { formatErrorResponse } from "@/utils/lib"
-import { Pencil, Upload, X, Box, Package } from "lucide-react"
-import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/components/ui/file-upload";
+import { Pencil, Box, Settings } from "lucide-react"
 import { EditProductButtonProps } from "@/features/products/type"
-import CategorySelect from "@/features/store-landing/components/category-select-"
 import { useCallback, useState, useEffect } from "react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
 import { useTranslations } from "next-intl"
 import { getStoreIdBySlug } from "@/features/categories/data/getStoreIdBySlug"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Form } from "@/features/layout/components"
 import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
+import BasicInfoSection from "./sections/basic-info-section"
+import MediaSection from "./sections/media-section"
+import PriceStockSection from "./sections/price-stock-section"
+import CategoriesSection from "./sections/categories-section"
+import SettingsSection from "./sections/settings-section"
+import { getProductDetails } from "@/features/stores/actions/getProductDetails"
+
 
 type CategoryValue = { value: string; label: string }
 
@@ -41,6 +43,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
     const [isFeatured, setIsFeatured] = useState(product.is_featured)
     const [isPublished, setIsPublished] = useState(product.is_published)
     const [open, setOpen] = useState(false)
+    const [productDetails, setProductDetails] = useState<{ media?: { id: number; url: string }[]; primary_media?: { id: number; url: string } | null } | null>(null)
     const t = useTranslations("store.edit-product")
 
     // Obtener el storeId a partir del slug
@@ -72,6 +75,16 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
             setIsPublished(product.is_published)
         }
     }, [open, product.is_active, product.is_featured, product.is_published])
+
+    // Load product media when dialog opens
+    useEffect(() => {
+        const load = async () => {
+            if (!open) return
+            const { payload } = await getProductDetails(String(product.id))
+            if (payload) setProductDetails({ media: payload.media as { id: number; url: string }[] | undefined, primary_media: payload.primary_media as { id: number; url: string } | null })
+        }
+        load()
+    }, [open, product.id])
 
     const handleAddCategory = (value: CategoryValue[]) => {
         setCategories(value)
@@ -113,7 +126,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                     {t("button")}
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>{t("title")}</DialogTitle>
                     <DialogDescription>
@@ -129,139 +142,59 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                     disabled={false}
                 >
                     <div className="space-y-4">
-                        <Accordion type="single" collapsible defaultValue="item-1">
+                        <Accordion type="single" collapsible>
                             <AccordionItem value="item-1">
-                                <AccordionTriggerWithValidation keys={["name", "price", "categories"]}>
+                                <AccordionTriggerWithValidation keys={["name", "slug", "description", "sku", "barcode"]}>
                                     <span className="flex items-center gap-2">
                                         <Box className="size-4" />
                                         Informacion básica
                                     </span>
                                 </AccordionTriggerWithValidation>
                                 <AccordionContent className="space-y-4">
-                                    <div className="space-y-2">
-                                        <FileUpload
-                                            maxFiles={1}
-                                            maxSize={2 * 1024 * 1024}
-                                            className="w-full"
-                                            value={files}
-                                            onValueChange={setFiles}
-                                            onFileReject={onFileReject}
-                                            multiple={false}
-                                            disabled={files.length > 0}
-                                            accept="image/jpg, image/png, image/jpeg"
-                                        >
-                                            {files.length === 0 && (
-                                                <FileUploadDropzone>
-                                                    <div className="flex flex-col items-center gap-1 text-center">
-                                                        <div className="flex items-center justify-center rounded-full border p-2.5">
-                                                            <Upload className="size-6 text-muted-foreground" />
-                                                        </div>
-                                                        <p className="font-medium text-sm">{t("drag-drop")}</p>
-                                                        <p className="text-muted-foreground text-xs">
-                                                            {t("click-browse")}
-                                                        </p>
+                                    {productDetails && (
+                                        <div className="grid gap-6 md:grid-cols-2">
+                                            <div className="space-y-2 md:col-span-1">
+                                                <label className="text-sm font-medium">Imagen principal</label>
+                                                <div className="relative w-full max-w-sm aspect-[3/4] overflow-hidden rounded-lg border bg-secondary">
+                                                    {productDetails.primary_media?.url ? (
+                                                        // eslint-disable-next-line @next/next/no-img-element
+                                                        <img src={productDetails.primary_media.url} alt="Primary image" className="object-cover h-full w-full" />
+                                                    ) : (
+                                                        <div className="flex flex-col items-center justify-center h-full p-4 text-sm text-muted-foreground">Sin imagen principal</div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            {productDetails.media && productDetails.media.length > 0 && (
+                                                <div className="space-y-3 md:col-span-1">
+                                                    <label className="text-sm font-medium">Imágenes del producto</label>
+                                                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                                                        {productDetails.media.map((m) => (
+                                                            <div key={m.id} className={`relative aspect-square overflow-hidden rounded-md bg-secondary border ${productDetails.primary_media?.id === m.id ? 'border-primary ring-2 ring-primary' : 'border-border'}`}>
+                                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                                <img src={m.url} alt="Product media" className="object-cover h-full w-full" />
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                    <FileUploadTrigger asChild>
-                                                        <Button variant="outline" size="sm" className="mt-2 w-fit">
-                                                            {t("browse-files")}
-                                                        </Button>
-                                                    </FileUploadTrigger>
-                                                </FileUploadDropzone>
+                                                </div>
                                             )}
-                                            <FileUploadList className="w-full">
-                                                {files.map((file, index) => (
-                                                    <FileUploadItem key={index} value={file}>
-                                                        <FileUploadItemPreview />
-                                                        <FileUploadItemMetadata />
-                                                        <FileUploadItemDelete asChild>
-                                                            <Button variant="ghost" size="icon" className="size-7">
-                                                                <X />
-                                                            </Button>
-                                                        </FileUploadItemDelete>
-                                                    </FileUploadItem>
-                                                ))}
-                                            </FileUploadList>
-                                        </FileUpload>
-                                    </div>
-                                    <InputField 
-                                        name="name" 
-                                        label={t("name")} 
-                                        type="text" 
-                                        defaultValue={product.name} 
-                                    />
-                                    <InputField 
-                                        name="price" 
-                                        label={t("price")} 
-                                        type="number" 
-                                        defaultValue={String(product.price)} 
-                                    />
-                                    <CategorySelect 
-                                        onChange={handleAddCategory} 
-                                        storeId={storeId || undefined}
-                                    />
+                                        </div>
+                                    )}
+                                    <MediaSection value={{ files, primaryIndex: null }} onChange={(d) => setFiles(d.files)} onFileReject={onFileReject} />
+                                    <BasicInfoSection defaults={{ name: product.name, slug: product.slug, description: product.description ?? undefined, sku: product.sku ?? undefined, barcode: product.barcode ?? undefined }} />
+                                    <PriceStockSection defaults={{ price: product.price, stock: product.stock }} />
+                                    <CategoriesSection storeId={storeId || undefined} value={{ categories: categories }} onChange={({ categories }) => handleAddCategory(categories)} />
                                 </AccordionContent>
                             </AccordionItem>
+
                             <AccordionItem value="item-2">
-                                <AccordionTriggerWithValidation keys={["stock", "description"]}>
+                                <AccordionTriggerWithValidation keys={["is-active", "is-featured", "is-published"]}>
                                     <span className="flex items-center gap-2">
-                                        <Package className="size-4" />
-                                        Informacion adicional
+                                        <Settings className="size-4" />
+                                        Configuracion
                                     </span>
                                 </AccordionTriggerWithValidation>
                                 <AccordionContent className="space-y-4">
-                                    <InputField 
-                                        name="stock" 
-                                        label={t("stock")} 
-                                        type="number" 
-                                        defaultValue={String(product.stock)} 
-                                    />
-                                    <InputField 
-                                        name="description" 
-                                        label={t("description")} 
-                                        type="text" 
-                                        defaultValue={product.description || ""} 
-                                    />
-                                    <div className="space-y-4">
-                                        <div className="flex items-center justify-between">
-                                            <div className="space-y-0.5">
-                                                <Label htmlFor="is-active">Producto activo</Label>
-                                                <p className="text-sm text-muted-foreground">
-                                                    El producto estará disponible para la venta
-                                                </p>
-                                            </div>
-                                            <Switch
-                                                id="is-active"
-                                                checked={isActive}
-                                                onCheckedChange={setIsActive}
-                                            />
-                                        </div>
-                                        <div className="flex items-center justify-between">
-                                            <div className="space-y-0.5">
-                                                <Label htmlFor="is-featured">Producto destacado</Label>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Aparecerá en la sección de productos destacados
-                                                </p>
-                                            </div>
-                                            <Switch
-                                                id="is-featured"
-                                                checked={isFeatured}
-                                                onCheckedChange={setIsFeatured}
-                                            />
-                                        </div>
-                                        <div className="flex items-center justify-between">
-                                            <div className="space-y-0.5">
-                                                <Label htmlFor="is-published">Producto publicado</Label>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Será visible en la tienda pública
-                                                </p>
-                                            </div>
-                                            <Switch
-                                                id="is-published"
-                                                checked={isPublished}
-                                                onCheckedChange={setIsPublished}
-                                            />
-                                        </div>
-                                    </div>
+                                    <SettingsSection value={{ isActive, isFeatured, isPublished }} onChange={(v) => { setIsActive(v.isActive); setIsFeatured(v.isFeatured); setIsPublished(v.isPublished) }} />
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>

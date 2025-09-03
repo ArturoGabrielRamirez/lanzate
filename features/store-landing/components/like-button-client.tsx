@@ -9,6 +9,7 @@ import { useOptimistic, useState, useTransition } from "react"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 type User = {
     id: number
@@ -137,12 +138,32 @@ function LikeButtonUser({
     }
 
     return (
-        <div className="flex items-center gap-2 relative">
-            <Button
+        <div className="flex items-center gap-2 relative group">
+            <IconButton
+                icon={()=><Flame className={cn(
+                    "transition-colors",
+                    optimisticLike && "fill-red-500 text-red-500"
+                )}/>}
+                active={optimisticLike}
+                size="sm"
+                onClick={handleToggleLike}
+                className={cn(
+                    "transition-colors border-none",
+                    optimisticLike && " text-red-600 stroke-red-600",
+                    isPending && "!animate-pulse"
+                )}
+                animate={isPending}
+                color={optimisticLike ? [255, 0, 0] : [0, 0, 0]}
+                transition={{
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 10
+                }}
+            />
+            {/* <Button
                 variant="outline"
                 size="icon"
                 onClick={handleToggleLike}
-                /* disabled={isPending} */
                 className={cn(
                     "transition-colors border-none",
                     optimisticLike && "bg-red-50 border-red-200 text-red-600 hover:bg-red-100",
@@ -153,13 +174,13 @@ function LikeButtonUser({
                     "transition-colors",
                     optimisticLike && "fill-red-500 text-red-500"
                 )} />
-            </Button>
+            </Button> */}
             
             {optimisticCount > 0 && (
                 <Badge 
                     variant="secondary" 
                     className={cn(
-                        "text-xs transition-colors absolute -bottom-1 -right-1 rounded-full size-4",
+                        "text-xs transition-colors absolute -bottom-1 -right-1 rounded-full size-4 opacity-0 group-hover:opacity-100",
                         isPending && "animate-pulse"
                     )}
                 >

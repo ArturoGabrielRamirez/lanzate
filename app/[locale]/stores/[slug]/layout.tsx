@@ -1,4 +1,4 @@
-import { TabTriggerLink, TabsClientContainer, StoreHeader, StoreHeaderSkeleton } from "@/features/stores/components"
+import { TabTriggerLink, TabsClientContainer, StoreHeaderServer, StoreHeaderSkeleton } from "@/features/stores/components"
 import { TabsList } from "@/components/ui/tabs"
 import { StoreDetailsLayoutProps } from "@/features/stores/types"
 import { Box, Building2, ChartLine, Clock, Paintbrush, ShoppingCart, UsersRound } from "lucide-react"
@@ -16,7 +16,7 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
     return (
         <div className="flex flex-col p-2 md:p-4 grow pt-13 md:pt-24 relative pb-24 container mx-auto z-10 xl:px-0">
             <Suspense fallback={<StoreHeaderSkeleton />}>
-                <StoreHeader slug={slug} />
+                <StoreHeaderServer slug={slug} />
             </Suspense>
             <section className="flex py-0 md:pt-4 grow">
                 <TabsClientContainer>

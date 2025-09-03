@@ -4,8 +4,9 @@ import { getDashboardStores } from "../actions/getDashboardStores"
 import { StoreCard } from "@/features/stores/components"
 import Link from "next/link"
 import { ArrowRight, Store } from "lucide-react"
-import { CreateStoreButton } from "@/features/stores/components"
+/* import { CreateStoreButton } from "@/features/stores/components" */
 import * as motion from "motion/react-client"
+import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new"
 
 const StoreList = async () => {
 
@@ -43,7 +44,8 @@ const StoreList = async () => {
                 </div>
                 <section >
                     <div className="sm:hidden mb-3">
-                        <CreateStoreButton userId={user.id} />
+                        {/* <CreateStoreButton userId={user.id} /> */}
+                        <CreateStoreButtonNew userId={user.id} />
                     </div>
                     <div className="md:grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4 flex overflow-x-auto md:overflow-x-visible">
 
@@ -58,7 +60,8 @@ const StoreList = async () => {
                                 <p className="text-center text-sm text-muted-foreground">
                                     No stores found
                                 </p>
-                                <CreateStoreButton userId={user.id} />
+                                {/* <CreateStoreButton userId={user.id} /> */}
+                                <CreateStoreButtonNew userId={user.id} />
                             </div>
                         )}
                     </div>

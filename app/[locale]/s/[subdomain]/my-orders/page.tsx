@@ -1,10 +1,11 @@
 import { Title } from "@/features/layout/components"
+import PageContainer from "@/features/layout/components/page-container"
 import { MyOrdersContainer, OrdersSkeleton } from "@/features/store-orders/components"
 import { Suspense } from "react"
 
 async function MyOrdersPage() {
     return (
-        <section className="p-4 grow flex flex-col pb-8">
+        <PageContainer>
             <Title
                 title="My orders"
                 breadcrumbs={[
@@ -19,7 +20,7 @@ async function MyOrdersPage() {
                     <MyOrdersContainer />
                 </Suspense>
             </div>
-        </section>
+        </PageContainer>
     )
 }
 

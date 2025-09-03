@@ -14,7 +14,7 @@ const sizes = {
   default: 'size-8 [&_svg]:size-5',
   sm: 'size-6 [&_svg]:size-4',
   md: 'size-10 [&_svg]:size-6',
-  lg: 'size-12 [&_svg]:size-7',
+  lg: 'size-14 [&_svg]:size-9',
 };
 
 type IconButtonProps = Omit<HTMLMotionProps<'button'>, 'color'> & {
@@ -25,6 +25,7 @@ type IconButtonProps = Omit<HTMLMotionProps<'button'>, 'color'> & {
   size?: keyof typeof sizes;
   color?: [number, number, number];
   transition?: Transition;
+  iconClassName?: string;
 };
 
 function IconButton({
@@ -35,6 +36,7 @@ function IconButton({
   size = 'default',
   color = [80, 40, 0],
   transition = { type: 'spring', stiffness: 300, damping: 15 },
+  iconClassName,
   ...props
 }: IconButtonProps) {
   return (
@@ -55,7 +57,7 @@ function IconButton({
       >
         <Icon
           className={
-            cn(active ? 'fill-[var(--primary)]' : 'fill-transparent', "size-24")
+            cn(active ? '' : 'fill-transparent', "size-24", iconClassName)
           }
         />
       </motion.div>
@@ -63,14 +65,14 @@ function IconButton({
       <AnimatePresence mode="wait">
         {active && (
           <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[var(--primary)] fill-[var(--primary)]"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[var(--primary)] "
             aria-hidden="true"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}
             transition={transition}
           >
-            <Icon className='size-24'/>
+            <Icon className={cn('size-24', iconClassName)}/>
           </motion.div>
         )}
       </AnimatePresence>

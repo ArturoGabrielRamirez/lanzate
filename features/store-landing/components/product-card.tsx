@@ -5,13 +5,14 @@ import ListCard from "./list-card"
 
 type Props = {
     product: Product
+    href: string
 }
 
-function ProductCard({ product }: Props) {
+function ProductCard({ product, href }: Props) {
     return (
         <ProductCardContainer
-            listCard={<ListCard product={product} />}
-            gridCard={<GridCard product={product} />}
+            listCard={<ListCard product={product} href={href} />}
+            gridCard={<GridCard product={product} href={href} />}
         />
     )
 }
