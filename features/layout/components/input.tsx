@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
 import { Textarea } from '@/components/ui/textarea'
+import { KeyboardEvent } from 'react'
 
 type InputFieldProps = {
   name: string
@@ -15,7 +16,7 @@ type InputFieldProps = {
   value?: string
   className?: string
   containerClassName?: string
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onKeyDown?: (e: (React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) | KeyboardEvent<HTMLInputElement>) => void
   startContent?: React.ReactNode
   endContent?: React.ReactNode
   placeholder?: string,

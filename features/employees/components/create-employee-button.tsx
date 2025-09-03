@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { Plus, Search, Check, UserCheck, Loader, FileText } from "lucide-react"
-import { useState } from "react"
+import { KeyboardEvent, useState } from "react"
 import { toast } from "sonner"
 import { getEmployeesByFilter } from "../actions/getEmployeesByFilter"
 import { createEmployee } from "../actions/createEmployee"
@@ -134,7 +134,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
         setSelectedContract(contract)
     }
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (e.key === 'Enter') {
             handleSearch()
         }
