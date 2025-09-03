@@ -9,7 +9,7 @@ export type ButtonWithPopupPropsType<P extends FieldValues> = {
     title: string
     description: string
     //action: (payload: any) => Promise<ResponseType<T>>
-    action: (payload: P) => Promise<ResponseType<P>>
+    action: (payload?: P ) => Promise<ResponseType<P>> | Promise<{ error: boolean; message: string; payload: null; }>
     disabled?: boolean
     messages: {
         success: string
