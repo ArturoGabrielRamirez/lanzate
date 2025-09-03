@@ -83,8 +83,8 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
                     stock: vStock,
                     variant_id: v.id,
                     variant_label: label,
-                    variants: p.variants,
-                    price: v.price || p.price
+                /*     variants: p.variants,
+                    price: v.price || p.price */
                 })
             }
         }
