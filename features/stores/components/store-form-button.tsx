@@ -115,7 +115,7 @@ function StoreFormButton({
             text={buttonText}
             title={t("title")}
             disabled={mode === 'create' ? !canCreate : false}
-            schema={schema}
+            schema={schema as never}
             description={t("description")}
             action={handleSubmit}
             messages={messages}
