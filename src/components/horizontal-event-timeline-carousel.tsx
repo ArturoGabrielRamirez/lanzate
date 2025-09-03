@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence, PanInfo } from "framer-motion";
+import { motion, AnimatePresence, PanInfo, Variants } from "framer-motion";
 import {
   ChevronDown,
   ChevronLeft,
@@ -16,18 +16,26 @@ const height = "30rem";
 
 type Props = {
   events: {
-    title: string
-    description: string
-    date: string
-  }[]
-}
+    title: string;
+    description: string;
+    date: string;
+    year: number;
+    periodType: "Q" | "H";
+    periodNumber: number;
+    isChecked: boolean;
+    events: {
+      title: string;
+      isChecked: boolean;
+    }[];
+  }[];
+};
 
 export default function HorizontalEventTimelineCarousel({ events }: Props) {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [expandedHeight, setExpandedHeight] = useState<number>(100);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null); // Ref for the header content
+  const headerRef = useRef<HTMLDivElement>(null);
 
   // Calculate expanded height based on total height minus header height
   useEffect(() => {
@@ -47,7 +55,7 @@ export default function HorizontalEventTimelineCarousel({ events }: Props) {
     }
   };
 
-  const formatPeriod = (item: (typeof events)[0]) => {
+  const formatPeriod = (item: Props['events'][0]) => {
     if (item.periodType === "Q") {
       return `Q${item.periodNumber} ${item.year}`;
     } else if (item.periodType === "H") {
@@ -72,7 +80,7 @@ export default function HorizontalEventTimelineCarousel({ events }: Props) {
   };
 
   const handleDragEnd = (
-    event: MouseEvent | TouchEvent | PointerEvent,
+    _event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
     index: number
   ) => {
@@ -84,19 +92,19 @@ export default function HorizontalEventTimelineCarousel({ events }: Props) {
     }
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     active: {
       x: 0,
       scale: 1,
       opacity: 1,
       zIndex: 10,
-      transition: { duration: 0.3, ease: "easeInOut" },
+      transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
     },
     inactive: {
       scale: 0.9,
       opacity: 0.7,
       zIndex: 0,
-      transition: { duration: 0.3, ease: "easeInOut" },
+      transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
     },
   };
 
@@ -177,12 +185,12 @@ export default function HorizontalEventTimelineCarousel({ events }: Props) {
                 <motion.div
                   layout
                   className="w-full"
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
                 >
                   <Card className="overflow-hidden border-primary/10 shadow-lg hover:shadow-xl transition-shadow duration-300">
                     <CardContent className="p-0">
                       <div
-                        ref={index === 0 ? headerRef : null} // Measure first card's header
+                        ref={index === 0 ? headerRef : null}
                         className={`p-6 flex flex-col items-center text-center ${
                           index === currentIndex
                             ? "cursor-pointer"
@@ -232,7 +240,7 @@ export default function HorizontalEventTimelineCarousel({ events }: Props) {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: expandedHeight, opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
                             className="overflow-y-auto"
                           >
                             <div className="px-6 pb-6 pt-2 border-t border-border/50">
