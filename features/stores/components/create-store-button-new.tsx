@@ -233,14 +233,14 @@ const ShippingFormPanel = () => {
                 )}
             </div>
             <p className="text-sm font-medium mb-2">Metodos de envio</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 text-center justify-center mb-8">
-                <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow", offersDelivery ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleOffersDelivery}>
+            <div className="grid grid-cols-2 items-center gap-6 text-center justify-center mb-8">
+                <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow h-full", offersDelivery ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleOffersDelivery}>
                     <h3 className="text-lg font-medium text-primary flex justify-center">
                         <Truck className="size-9" />
                     </h3>
                     <p className="text-sm text-muted-foreground text-balance">This store offers delivery as well as pickup.</p>
                 </div>
-                <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow", !offersDelivery ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleNotOffersDelivery}>
+                <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow h-full", !offersDelivery ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleNotOffersDelivery}>
                     <h3 className="text-lg font-medium text-primary flex justify-center">
                         <Store className="size-9" />
                     </h3>
@@ -581,7 +581,7 @@ const SettingsFormPanel = () => {
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 text-center justify-center mb-8">
+            <div className="grid grid-cols-2 items-center gap-6 text-center justify-center mb-8">
                 <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow", isOpen24Hours ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleIsOpen24Hours}>
                     <h3 className="text-lg font-medium text-primary flex justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" className="size-9">
@@ -727,7 +727,7 @@ const AddressFormPanel = () => {
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 text-center justify-center mb-8">
+            <div className="grid grid-cols-2 items-center gap-6 text-center justify-center mb-8">
                 <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow", !isPhysicalStore ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleOnlineStore}>
                     <h3 className="text-lg font-medium text-primary flex justify-center">
                         <Globe className="size-8" />
@@ -890,7 +890,7 @@ const BasicInfoFormPanel = () => {
             <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-10 mb-8">
                 <div className="space-y-2">
                     <FileUpload value={logo} onValueChange={handleFileSelect}>
-                        <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative", isUploading && "animate-pulse")}>
+                        <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[150px] mx-auto", isUploading && "animate-pulse")}>
                             {logo.length > 0 ? (
                                 <FileUploadItem value={logo[0]} className="absolute p-0 w-full h-full border-none">
                                     <FileUploadItemPreview className="w-full h-full rounded-full" />
