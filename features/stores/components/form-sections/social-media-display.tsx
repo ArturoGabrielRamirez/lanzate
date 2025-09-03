@@ -65,7 +65,7 @@ const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
 
     return (
         <Card className="group/social-media-display">
-            <Form submitButton={false} contentButton={false} resolver={yupResolver(editSocialMediaSchema)}>
+            <Form submitButton={false} contentButton={false} resolver={yupResolver(editSocialMediaSchema as never)}>
                 <CardHeader>
                     <CardTitle>
                         <span className="flex items-center gap-2 text-lg md:text-xl">

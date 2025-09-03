@@ -14,7 +14,7 @@ const LoginForm = () => {
         <>
             <h2 className='text-2xl font-bold text-center'>{t("login")}</h2>
             <Form
-                resolver={yupResolver(loginUserSchema)}
+                resolver={yupResolver(loginUserSchema as never)}
                 formAction={handleLogIn}
                 contentButton={t("login")}
                 successRedirect="/dashboard"

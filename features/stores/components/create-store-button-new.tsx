@@ -1312,7 +1312,7 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
                 <Form<CreateStoreFormValues>
                     contentButton="Create Store"
                     submitButton={false}
-                    resolver={yupResolver(createStoreSchema)}
+                    resolver={yupResolver(createStoreSchema as never)}
                     formAction={handleCreateStore}
                 >
                     <CreateStoreForm step={step} />

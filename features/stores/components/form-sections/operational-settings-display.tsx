@@ -102,7 +102,7 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
 
     return (
         <Card className="group/operational-settings-display">
-            <Form submitButton={false} contentButton={false} resolver={yupResolver(editOperationalSettingsSchema)}>
+            <Form submitButton={false} contentButton={false} resolver={yupResolver(editOperationalSettingsSchema as never)}>
                 <CardHeader>
                     <CardTitle>
                         <span className="flex items-center gap-2">
