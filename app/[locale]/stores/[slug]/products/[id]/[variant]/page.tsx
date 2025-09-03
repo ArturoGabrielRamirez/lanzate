@@ -2,7 +2,7 @@ import { getProductDetails } from "@/features/stores/actions/getProductDetails"
 import { Card, CardContent } from "@/components/ui/card"
 import { VariantDetailForm } from "@/features/products/components/variant-detail-display"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getTranslations } from "next-intl/server"
+/* import { getTranslations } from "next-intl/server" */
 
 type Props = { params: Promise<{ slug: string; id: string; variant: string }> }
 
