@@ -24,7 +24,7 @@ type BasicInfoFormValues = {
     barcode: string
 }
 
-const BasicInfoDisplay = ({ product, slug, userId }: BasicInfoDisplayProps) => {
+const BasicInfoDisplay = ({ product }: BasicInfoDisplayProps) => {
     const [isEditing, setIsEditing] = useState(false)
 
     const handleOpenEdit = () => {
@@ -75,7 +75,7 @@ const BasicInfoDisplay = ({ product, slug, userId }: BasicInfoDisplayProps) => {
             <Form
                 submitButton={false}
                 contentButton={false}
-                resolver={yupResolver(editProductSchema)}
+                resolver={yupResolver(editProductSchema as never)}
                 onSuccess={handleCloseEdit}
             >
                 <CardHeader>
@@ -102,7 +102,7 @@ const BasicInfoDisplay = ({ product, slug, userId }: BasicInfoDisplayProps) => {
                         <div className="space-y-1">
                             <label className="text-sm font-medium">Nombre</label>
                             {isEditing ? (
-                                <InputField name="name" type="text" />
+                                <InputField name="name" type="text" label="Nombre" />
                             ) : (
                                 <p className="text-sm text-muted-foreground">{product.name}</p>
                             )}
@@ -110,7 +110,7 @@ const BasicInfoDisplay = ({ product, slug, userId }: BasicInfoDisplayProps) => {
                         <div className="space-y-1">
                             <label className="text-sm font-medium">SKU</label>
                             {isEditing ? (
-                                <InputField name="sku" type="text" />
+                                <InputField name="sku" type="text" label="SKU" />
                             ) : (
                                 <p className="text-sm text-muted-foreground">{product.sku}</p>
                             )}
@@ -118,7 +118,7 @@ const BasicInfoDisplay = ({ product, slug, userId }: BasicInfoDisplayProps) => {
                         <div className="space-y-1">
                             <label className="text-sm font-medium">Código de barras</label>
                             {isEditing ? (
-                                <InputField name="barcode" type="text" />
+                                <InputField name="barcode" type="text" label="Código de barras" />
                             ) : (
                                 <p className="text-sm text-muted-foreground">{product.barcode || "No especificado"}</p>
                             )}
@@ -126,7 +126,7 @@ const BasicInfoDisplay = ({ product, slug, userId }: BasicInfoDisplayProps) => {
                         <div className="space-y-1 md:col-span-2">
                             <label className="text-sm font-medium">Descripción</label>
                             {isEditing ? (
-                                <InputField name="description" type="textarea" />
+                                <InputField name="description" type="textarea" label="Descripción" />
                             ) : (
                                 <p className="text-sm text-muted-foreground">{product.description || "No hay descripción"}</p>
                             )}
