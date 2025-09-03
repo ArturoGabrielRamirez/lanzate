@@ -89,7 +89,7 @@ const VariantsDisplay = ({ product, slug, userId }: VariantsDisplayProps) => {
                             <div className="grid gap-2 sm:grid-cols-2">
                                 {product.variants.map((variant) => {
                                     const total = (variant.stocks ?? []).reduce((s: number, x: { quantity: number }) => s + (x.quantity ?? 0), 0)
-                                    const label = [variant.size_or_measure, variant.color?.name].filter(Boolean).join(" · ") || `Variante ${variant.id}`
+                                    const label = [variant.size, variant.color?.name].filter(Boolean).join(" · ") || `Variante ${variant.id}`
                                     
                                     return (
                                         <div key={variant.id} className="rounded-md border p-3 flex items-center gap-3">
