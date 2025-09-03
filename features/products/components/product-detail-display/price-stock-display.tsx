@@ -71,7 +71,7 @@ const PriceStockDisplay = ({ product, slug, userId }: PriceStockDisplayProps) =>
             <Form
                 submitButton={false}
                 contentButton={false}
-                resolver={yupResolver(editProductSchema)}
+                resolver={yupResolver(editProductSchema as never)}
                 onSuccess={handleCloseEdit}
             >
                 <CardHeader>
@@ -98,7 +98,7 @@ const PriceStockDisplay = ({ product, slug, userId }: PriceStockDisplayProps) =>
                         <div className="space-y-1">
                             <label className="text-sm font-medium">Precio</label>
                             {isEditing ? (
-                                <InputField name="price" type="number" step="0.01" />
+                                <InputField name="price" type="number" label="Precio" />
                             ) : (
                                 <p className="text-sm text-muted-foreground">${product.price}</p>
                             )}
@@ -106,7 +106,7 @@ const PriceStockDisplay = ({ product, slug, userId }: PriceStockDisplayProps) =>
                         <div className="space-y-1">
                             <label className="text-sm font-medium">Stock total</label>
                             {isEditing ? (
-                                <InputField name="stock" type="number" />
+                                <InputField name="stock" type="number" label="Stock total" />
                             ) : (
                                 <div className="flex items-center gap-2">
                                     <Package className="size-4 text-muted-foreground" />
