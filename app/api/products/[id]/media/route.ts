@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/utils/prisma"
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(
+  req: NextRequest, 
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const productId = parseInt(params.id)
+    const resolvedParams = await params;
+    const productId = parseInt(resolvedParams.id)
     if (Number.isNaN(productId)) return NextResponse.json({ error: "Invalid product id" }, { status: 400 })
 
     const body = await req.json()
