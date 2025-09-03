@@ -65,20 +65,20 @@ function ButtonWithPopup<P extends FieldValues>({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
-    <Form
-                    resolver={yupResolverFlexible(schema)}
-                    formAction={action}
-                    contentButton={contentButton || text}
-                    successMessage={messages.success}
-                    loadingMessage={messages.loading}
-                    onSuccess={handleSuccess}
-                    disabled={formDisabled}
-                >
-                    {children}
-                </Form>
-            </DialogContent>
-        </Dialog>
-    )
+        <Form<P>
+          resolver={yupResolverFlexible<P>(schema as never)}
+          formAction={action as (formData: P) => Promise<{ error: boolean; message: string; payload: unknown }>}
+          contentButton={contentButton || text}
+          successMessage={messages.success}
+          loadingMessage={messages.loading}
+          onSuccess={handleSuccess}
+          disabled={formDisabled}
+        >
+          {children}
+        </Form>
+      </DialogContent>
+    </Dialog>
+  )
 
 }
 

@@ -38,10 +38,11 @@ export default function Form<T extends FieldValues>({
         if (!formAction) return
 
         return new Promise(async (resolve, reject) => {
-            toast.promise(formAction(data), {
+            const promise = formAction(data) as Promise<ResponseType<unknown>>
+            toast.promise(promise, {
                 loading: loadingMessage,
-                success: (data: ResponseType<T>) => {
-                    if (data && data.error) throw new Error(data.message)
+                success: (resp: ResponseType<unknown>) => {
+                    if (resp && resp.error) throw new Error(resp.message)
                     if (successRedirect) router.push(successRedirect)
                     if (onSuccess && typeof onSuccess === 'function') onSuccess()
                     return successMessage
