@@ -20,8 +20,6 @@ export async function updateStoreContact(storeId: number, data: EditContactData)
                 id: storeId
             },
             data: {
-                phone: data.contact_phone,
-                email: data.contact_email,
                 branches: {
                     update: {
                         where: {
