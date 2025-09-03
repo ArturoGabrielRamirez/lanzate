@@ -29,10 +29,10 @@ export function useRealtimeChat({ roomName, username }: UseRealtimeChatProps) {
     const newChannel = supabase.channel(roomName)
 
     newChannel
-      .on('broadcast', { event: EVENT_MESSAGE_TYPE }, (payload) => {
-        setMessages((current) => [...current, payload.payload as ChatMessage])
+      .on('broadcast', { event: EVENT_MESSAGE_TYPE }, (payload: { payload: ChatMessage }) => {
+        setMessages((current) => [...current, payload.payload])
       })
-      .subscribe(async (status) => {
+      .subscribe(async (status: 'SUBSCRIBED' | 'SUBSCRIBED' | 'UNSUBSCRIBED' | 'ERROR') => {
         if (status === 'SUBSCRIBED') {
           setIsConnected(true)
         }
