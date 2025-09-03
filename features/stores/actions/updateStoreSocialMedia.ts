@@ -20,9 +20,6 @@ export async function updateStoreSocialMedia(storeId: number, data: EditSocialMe
                 id: storeId
             },
             data: {
-                facebook_url: data.facebook_url || null,
-                instagram_url: data.instagram_url || null,
-                x_url: data.x_url || null,
                 branches: {
                     update: {
                         where: {
