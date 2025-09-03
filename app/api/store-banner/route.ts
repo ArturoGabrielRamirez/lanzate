@@ -6,7 +6,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 
 export async function POST(request: NextRequest) {
   try {
-    const { user } = await getCurrentUser()
+    const { payload: user } = await getCurrentUser()
     if (!user) return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
 
     const dbUser = await prisma.user.findUnique({ where: { email: user.email }, select: { id: true } })
