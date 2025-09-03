@@ -25,16 +25,11 @@ export default function Form<T extends FieldValues>({
 }: FormPropsType<T>) {
   const config: UseFormProps<T> = { mode: "onChange" }
 
-    const config: UseFormProps<T> = { mode: 'onChange' }
-
     if (resolver) config.resolver = resolver as Resolver<T, unknown, T>
 
     const router = useRouter()
     const methods = useForm<T>(config)
 
-
-  const router = useRouter()
-  const methods = useForm<T>(config)
   const { handleSubmit } = methods
 
 
