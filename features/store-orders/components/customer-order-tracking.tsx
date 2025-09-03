@@ -27,7 +27,7 @@ function CustomerOrderTracking({ order }: Props) {
                     schema: 'public',
                     table: "orders"
                 },
-                (payload) => {
+                (payload: { new: Order | null }) => {
                     if (payload.new && payload.new.id === order.id) {
                         setCurrentOrder(prevOrder => ({
                             ...prevOrder,
@@ -43,7 +43,7 @@ function CustomerOrderTracking({ order }: Props) {
                     schema: 'public',
                     table: "order_tracking"
                 },
-                (payload) => {
+                (payload: { new: OrderTracking | null }) => {
 
                     if (payload.new && payload.new.order_id === order.id) {
                         setCurrentOrder(prevOrder => ({
@@ -53,7 +53,7 @@ function CustomerOrderTracking({ order }: Props) {
                     }
                 }
             )
-            .subscribe((status) => {
+            .subscribe((status: { new: OrderTracking | null }) => {
                 console.log("📡 Subscription status:", status)
             })
 
