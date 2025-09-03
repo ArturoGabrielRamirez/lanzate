@@ -65,7 +65,7 @@ const ContactDisplay = ({ store }: ContactDisplayProps) => {
 
     return (
         <Card className="group/contact-display">
-            <Form submitButton={false} contentButton={false} resolver={yupResolver(editContactSchema)}>
+            <Form submitButton={false} contentButton={false} resolver={yupResolver(editContactSchema as never)}>
                 <CardHeader>
                     <CardTitle>
                         <span className="flex items-center gap-2 text-lg md:text-xl">
