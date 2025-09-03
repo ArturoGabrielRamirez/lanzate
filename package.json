@@ -1,6 +1,6 @@
 {
   "name": "lanzate",
-  "version": "0.43.0",
+  "version": "0.44.0",
   "private": true,
   "scripts": {
     "dev": "NODE_NO_WARNINGS=1 next dev --turbopack",
