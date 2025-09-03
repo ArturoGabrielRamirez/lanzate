@@ -89,7 +89,7 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantB
             <Form
                 submitButton={false}
                 contentButton={false}
-                resolver={yupResolver(editVariantSchema)}
+                resolver={yupResolver(editVariantSchema as never)}
                 onSuccess={handleCloseEdit}
                 formAction={async (data: any) => {
                     try {
