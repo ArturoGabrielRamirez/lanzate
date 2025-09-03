@@ -24,6 +24,7 @@ import { TimePicker } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import { processOpeningHours, processShippingMethods, processPaymentMethods } from "../utils/store-form-helpers"
 import { useRouter } from "next/navigation"
+import Stepper, { Step } from "@/components/Stepper"
 
 type CreateStoreFormStepsNavigatorProps = {
     canGoToNextStep: boolean;
@@ -65,6 +66,12 @@ type ShippingMethodFormPanelProps = {
     index: number
     onCancel: (index: number) => void
     onSave: (index: number, method: ShippingMethod) => void
+}
+
+type StepIndicatorProps = {
+    step: number
+    currentStep: number
+    onStepClick: (step: number) => void
 }
 
 const createStoreSchema = yup.object().shape({
@@ -496,7 +503,6 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
 const SettingsFormPanel = () => {
 
     const { setValue, getValues, formState: { errors } } = useFormContext()
-    console.log("🚀 ~ SettingsFormPanel ~ errors:", errors)
     const [attentionDates, setAttentionDates] = useState<AttentionDateType[]>(() => {
         const existing = getValues("settings.attention_dates") as { days: string[], startTime: string, endTime: string }[] | undefined
         if (!existing || existing.length === 0) return []
@@ -735,45 +741,38 @@ const AddressFormPanel = () => {
                     <p className="text-sm text-muted-foreground text-balance">This is a physical store.</p>
                 </div>
             </div>
-            <AnimatePresence>
-                {isPhysicalStore && (
-                    <motion.div
-                        initial={{ opacity: 0, x: 100 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -100, position: "absolute" }}
-                        className="space-y-4"
-                    >
-                        <InputField
-                            name="address_info.address"
-                            label="Address"
-                            placeholder="Ej: 123 Main St"
-                            startContent={<MapPin />}
-                            isRequired
-                        />
-                        <InputField
-                            name="address_info.city"
-                            label="City"
-                            placeholder="Ej: New York"
-                            startContent={<MapPin />}
-                            isRequired
-                        />
-                        <InputField
-                            name="address_info.province"
-                            label="Province"
-                            placeholder="Ej: New York"
-                            startContent={<MapPin />}
-                            isRequired
-                        />
-                        <InputField
-                            name="address_info.country"
-                            label="Country"
-                            placeholder="Ej: United States"
-                            startContent={<MapPin />}
-                            isRequired
-                        />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {isPhysicalStore && (
+                <div className="space-y-4">
+                    <InputField
+                        name="address_info.address"
+                        label="Address"
+                        placeholder="Ej: 123 Main St"
+                        startContent={<MapPin />}
+                        isRequired
+                    />
+                    <InputField
+                        name="address_info.city"
+                        label="City"
+                        placeholder="Ej: New York"
+                        startContent={<MapPin />}
+                        isRequired
+                    />
+                    <InputField
+                        name="address_info.province"
+                        label="Province"
+                        placeholder="Ej: New York"
+                        startContent={<MapPin />}
+                        isRequired
+                    />
+                    <InputField
+                        name="address_info.country"
+                        label="Country"
+                        placeholder="Ej: United States"
+                        startContent={<MapPin />}
+                        isRequired
+                    />
+                </div>
+            )}
         </>
     )
 }
@@ -1160,6 +1159,38 @@ const CreateStoreForm = ({ step }: { step: number }) => {
     )
 }
 
+const StepIndicator = ({ step, currentStep, onStepClick }: StepIndicatorProps) => {
+    const icons = {
+        1: StoreIcon,
+        2: MapPin,
+        3: Contact2,
+        4: Clock,
+        5: Truck,
+        6: Check,
+    }
+    if (step === currentStep) {
+        const Icon = icons[step as keyof typeof icons]
+        return (
+            <div className="bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center cursor-pointer" onClick={() => onStepClick(step)}>
+                <IconButton
+                    icon={Icon}
+                    active={step === currentStep}
+                    onClick={() => onStepClick(step)}
+                    className={cn(
+                        step === currentStep ? "text-primary" : "text-muted-foreground",
+                    )}
+                />
+            </div>
+        )
+    }
+
+    return (
+        <div className="bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary" onClick={() => onStepClick(step)}>
+            {step}
+        </div>
+    )
+}
+
 const SuccessPanel = () => {
     return (
         <div className="flex flex-col items-center gap-4 py-8 text-center">
@@ -1172,7 +1203,7 @@ const SuccessPanel = () => {
 
 const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
 
-    const [step, { goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, setStep }] = useStep(6)
+    const [step, { /* goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, */ setStep }] = useStep(6)
     const [createdSlug, setCreatedSlug] = useState<string | null>(null)
     const router = useRouter()
 
@@ -1186,69 +1217,6 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
     }, [step, createdSlug, router])
 
     const handleCreateStore = async (data: CreateStoreFormValues) => {
-
-        /* 
-        
-        {
-    "basic_info": {
-        "name": "test",
-        "subdomain": "test",
-        "description": "test",
-        "logo": "https://ugsxvnqkbxihxjxchckw.supabase.co/storage/v1/object/public/store-logos/2-store-logo-1756838158118.jpeg"
-    },
-    "contact_info": {
-        "contact_phone": "5555555",
-        "contact_email": "horacio.estevez@gmail.com",
-        "facebook_url": "",
-        "instagram_url": "",
-        "x_url": ""
-    },
-    "address_info": {
-        "is_physical_store": true,
-        "address": "Las Palmas 735",
-        "city": "Atlantida, Santa Clara del Mar",
-        "province": "Buenos Aires",
-        "country": "Argentina"
-    },
-    "settings": {
-        "is_open_24_hours": false,
-        "attention_dates": [
-            {
-                "days": [
-                    "lunes",
-                    "martes",
-                    "miercoles",
-                    "jueves",
-                    "viernes"
-                ],
-                "startTime": "10:00",
-                "endTime": "18:00"
-            }
-        ]
-    },
-    "payment_info": {
-        "payment_methods": [
-            "Efectivo",
-            "Mercado Pago",
-            "Transferencia"
-        ]
-    },
-    "shipping_info": {
-        "offers_delivery": true,
-        "methods": [
-            {
-                "providers": [
-                    "Delivery propio"
-                ],
-                "minPurchase": "",
-                "freeShippingMin": "",
-                "estimatedTime": "00:30"
-            }
-        ]
-    }
-}
-        */
-
         const processedData = {
             ...data,
             processedOpeningHours: processOpeningHours(data.settings?.attention_dates as { days?: string[]; startTime?: string; endTime?: string }[] | undefined),
@@ -1294,6 +1262,8 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
         6: "Success",
     }
 
+
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -1315,19 +1285,40 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
                     resolver={yupResolver(createStoreSchema as never)}
                     formAction={handleCreateStore}
                 >
-                    <CreateStoreForm step={step} />
-                    <DialogFooter>
-                        {step !== 6 && (
-                            <CreateStoreFormStepsNavigator
-                                canGoToNextStep={canGoToNextStep}
-                                canGoToPrevStep={canGoToPrevStep}
-                                goToNextStep={goToNextStep}
-                                goToPrevStep={goToPrevStep}
-                                setStep={setStep}
-                                step={step}
-                            />
-                        )}
-                    </DialogFooter>
+                    <Stepper
+                        initialStep={1}
+                        className="p-0"
+                        contentClassName="!p-0"
+                        stepContainerClassName="!p-0"
+                        stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"
+                        footerClassName="!p-0"
+                        onStepChange={setStep}
+                        renderStepIndicator={(props) => {
+                            return (
+                                <StepIndicator
+                                    step={props.step}
+                                    currentStep={props.currentStep}
+                                    onStepClick={props.onStepClick}
+                                />
+                            )
+                        }}
+                    >
+                        <Step className="!p-0 !pt-10 !pb-2">
+                            <BasicInfoFormPanel />
+                        </Step>
+                        <Step className="!p-0 !pt-10 !pb-2">
+                            <AddressFormPanel />
+                        </Step>
+                        <Step className="!p-0 !pt-10 !pb-2">
+                            <ContactFormPanel />
+                        </Step>
+                        <Step className="!p-0 !pt-10 !pb-2">
+                            <SettingsFormPanel />
+                        </Step>
+                        <Step className="!p-0 !pt-10 !pb-2">
+                            <ShippingFormPanel />
+                        </Step>
+                    </Stepper>
                 </Form>
             </DialogContent>
         </Dialog>
