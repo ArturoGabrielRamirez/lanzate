@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, DialogDescription, DialogFooter } from "@/components/ui/dialog"
+import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, DialogDescription } from "@/components/ui/dialog"
 import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/components/ui/file-upload"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useCamera } from "@/features/auth/hooks/use-camera"
@@ -10,10 +10,10 @@ import { useStep } from "@/hooks/use-step"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { ArrowLeft, ArrowRight, Calendar, Camera, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Loader2, Mail, MapPin, Phone, Plus, Settings, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
+import { Calendar, Camera, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Mail, MapPin, Phone, Plus, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useFormContext } from "react-hook-form"
 import * as yup from "yup"
 import CameraComponent from "@/features/auth/components/avatar/camera-component"
@@ -25,19 +25,6 @@ import dayjs, { Dayjs } from "dayjs";
 import { processOpeningHours, processShippingMethods, processPaymentMethods } from "../utils/store-form-helpers"
 import { useRouter } from "next/navigation"
 import Stepper, { Step } from "@/components/Stepper"
-
-type CreateStoreFormStepsNavigatorProps = {
-    canGoToNextStep: boolean;
-    canGoToPrevStep: boolean;
-    goToNextStep: () => void;
-    goToPrevStep: () => void;
-    step: number;
-    setStep: (step: number) => void;
-};
-
-type FormPaneProps = {
-    children: React.ReactNode;
-}
 
 type AttentionDateType = {
     date: string
@@ -72,6 +59,12 @@ type StepIndicatorProps = {
     step: number
     currentStep: number
     onStepClick: (step: number) => void
+    disabled: boolean
+}
+
+type CreateStoreFormProps = {
+    setStep: (step: number) => void
+    step: number
 }
 
 const createStoreSchema = yup.object().shape({
@@ -502,7 +495,7 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
 
 const SettingsFormPanel = () => {
 
-    const { setValue, getValues, formState: { errors } } = useFormContext()
+    const { setValue, getValues } = useFormContext()
     const [attentionDates, setAttentionDates] = useState<AttentionDateType[]>(() => {
         const existing = getValues("settings.attention_dates") as { days: string[], startTime: string, endTime: string }[] | undefined
         if (!existing || existing.length === 0) return []
@@ -983,183 +976,72 @@ const BasicInfoFormPanel = () => {
     )
 }
 
-const FormPane = ({ children }: FormPaneProps) => {
-    return (
-        <motion.div
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100, position: "absolute" }}
-            className="top-0 left-0 w-full"
-        >
-            {children}
-        </motion.div>
-    )
-}
+const CreateStoreForm = ({ setStep, step }: CreateStoreFormProps) => {
 
-const CreateStoreFormStepsNavigator = ({
-    canGoToNextStep, canGoToPrevStep, goToNextStep, goToPrevStep, step, setStep
-}: CreateStoreFormStepsNavigatorProps) => {
+    const { trigger, watch } = useFormContext()
+    const [isValid, setIsValid] = useState(false)
 
-    const { formState: { errors, isValid, isSubmitting } } = useFormContext()
+    const errorKeys = useMemo(() => ({
+        1: ["basic_info"],
+        2: ["address_info"],
+        3: ["contact_info"],
+        4: ["settings"],
+        5: ["shipping_info", "payment_info"],
+    }), [])
 
-    const handleStep = (e: React.MouseEvent<HTMLButtonElement>) => {
-        const step = e.currentTarget.dataset.step
-        if (!step) return
-        setStep(Number(step))
-    }
+    const formData = watch(errorKeys[step as keyof typeof errorKeys])
+
+    useEffect(() => {
+        trigger(errorKeys[step as keyof typeof errorKeys])
+            .then((isValid) => {
+                setIsValid(isValid)
+            })
+    }, [trigger, errorKeys, step, JSON.stringify(formData)])
 
 
     return (
-        <div className="flex justify-between w-full">
-            <div className="flex items-center gap-2">
-
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <IconButton
-                            type="button"
-                            icon={ArrowLeft}
-                            onClick={goToPrevStep}
-                            disabled={!canGoToPrevStep}
-                            className={cn(canGoToPrevStep ? "" : "cursor-not-allowed opacity-50")}
-                        />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        Previous step
-                    </TooltipContent>
-                </Tooltip>
-            </div>
-            <div className="flex items-center gap-4 justify-center flex-1">
-                <IconButton
-                    type="button"
-                    icon={Store}
-                    onClick={handleStep}
-                    data-step={1}
-                    active={step === 1}
-                    className={cn(
-                        step === 1 ? "text-primary" : "text-muted-foreground",
-                        errors.basic_info ? "text-destructive" : ""
-                    )}
-                />
-                <IconButton
-                    type="button"
-                    icon={MapPin}
-                    onClick={handleStep}
-                    data-step={2}
-                    active={step === 2}
-                    className={cn(
-                        step === 2 ? "text-primary" : "text-muted-foreground",
-                        errors.address_info ? "text-destructive" : ""
-                    )}
-                />
-                <IconButton
-                    type="button"
-                    icon={Contact2}
-                    onClick={handleStep}
-                    data-step={3}
-                    active={step === 3}
-                    className={cn(
-                        step === 3 ? "text-primary" : "text-muted-foreground",
-                        errors.contact_info ? "text-destructive" : ""
-                    )}
-                />
-                <IconButton
-                    type="button"
-                    icon={Clock}
-                    onClick={handleStep}
-                    data-step={4}
-                    active={step === 4}
-                    className={cn(
-                        step === 4 ? "text-primary" : "text-muted-foreground",
-                        errors.settings ? "text-destructive" : ""
-                    )}
-                />
-                <IconButton
-                    type="button"
-                    icon={Settings}
-                    onClick={handleStep}
-                    data-step={5}
-                    active={step === 5}
-                    className={cn(
-                        step === 5 ? "text-primary" : "text-muted-foreground",
-                        errors.shipping_info || errors.payment_info ? "text-destructive" : ""
-                    )}
-                />
-                {isValid && (
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <IconButton
-                                type="submit"
-                                icon={isSubmitting ? Loader2 : Check}
-                                iconClassName={isSubmitting ? "animate-spin" : undefined}
-                                disabled={isSubmitting}
-                                className={cn(isSubmitting ? "cursor-not-allowed opacity-50" : "")}
-                            />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            {isSubmitting ? "Submitting..." : "Create store"}
-                        </TooltipContent>
-                    </Tooltip>
-                )}
-            </div>
-            <Tooltip>
-                <TooltipTrigger asChild>
-                    <IconButton
-                        type="button"
-                        icon={ArrowRight}
-                        onClick={() => { if (step < 5) { goToNextStep() } }}
-                        disabled={!(canGoToNextStep && step < 5)}
-                        className={cn("ml-auto", canGoToNextStep && step < 5 ? "" : "cursor-not-allowed opacity-50")}
+        <Stepper
+            initialStep={1}
+            className="p-0"
+            contentClassName="!p-0"
+            stepContainerClassName="!p-0"
+            stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"
+            footerClassName="!p-0"
+            onStepChange={setStep}
+            renderStepIndicator={(props) => {
+                return (
+                    <StepIndicator
+                        step={props.step}
+                        currentStep={props.currentStep}
+                        onStepClick={props.onStepClick}
+                        disabled={!isValid}
                     />
-                </TooltipTrigger>
-                <TooltipContent>
-                    Next step
-                </TooltipContent>
-            </Tooltip>
-        </div>
+                )
+            }}
+            nextButtonProps={{
+                disabled: !isValid,
+            }}
+        >
+            <Step className="!p-0 !pt-10 !pb-2">
+                <BasicInfoFormPanel />
+            </Step>
+            <Step className="!p-0 !pt-10 !pb-2">
+                <AddressFormPanel />
+            </Step>
+            <Step className="!p-0 !pt-10 !pb-2">
+                <ContactFormPanel />
+            </Step>
+            <Step className="!p-0 !pt-10 !pb-2">
+                <SettingsFormPanel />
+            </Step>
+            <Step className="!p-0 !pt-10 !pb-2">
+                <ShippingFormPanel />
+            </Step>
+        </Stepper>
     )
 }
 
-const CreateStoreForm = ({ step }: { step: number }) => {
-
-    return (
-        <fieldset className="relative overflow-hidden py-4">
-            <AnimatePresence>
-                {step === 1 && (
-                    <FormPane key="step-1">
-                        <BasicInfoFormPanel />
-                    </FormPane>
-                )}
-                {step === 2 && (
-                    <FormPane key="step-2">
-                        <AddressFormPanel />
-                    </FormPane>
-                )}
-                {step === 3 && (
-                    <FormPane key="step-3">
-                        <ContactFormPanel />
-                    </FormPane>
-                )}
-                {step === 4 && (
-                    <FormPane key="step-4">
-                        <SettingsFormPanel />
-                    </FormPane>
-                )}
-                {step === 5 && (
-                    <FormPane key="step-5">
-                        <ShippingFormPanel />
-                    </FormPane>
-                )}
-                {step === 6 && (
-                    <FormPane key="step-6">
-                        <SuccessPanel />
-                    </FormPane>
-                )}
-            </AnimatePresence>
-        </fieldset>
-    )
-}
-
-const StepIndicator = ({ step, currentStep, onStepClick }: StepIndicatorProps) => {
+const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicatorProps) => {
 
     const { formState: { errors } } = useFormContext<CreateStoreFormValues>()
 
@@ -1193,12 +1075,15 @@ const StepIndicator = ({ step, currentStep, onStepClick }: StepIndicatorProps) =
                     active={step === currentStep}
                     onClick={() => onStepClick(step)}
                     iconClassName={cn(
-                        errors[formKeys[step as keyof typeof formKeys][0] as keyof CreateStoreFormValues] ? "text-destructive-foreground" : ""
+                        errors[formKeys[step as keyof typeof formKeys][0] as keyof CreateStoreFormValues] ? "text-destructive-foreground" : "",
+                        disabled ? "opacity-50" : ""
                     )}
                     className={cn(
                         step === currentStep ? "text-primary" : "text-muted-foreground",
-                        errors[formKeys[step as keyof typeof formKeys][0] as keyof CreateStoreFormValues] ? "text-destructive-foreground bg-destructive" : ""
+                        errors[formKeys[step as keyof typeof formKeys][0] as keyof CreateStoreFormValues] ? "text-destructive-foreground bg-destructive" : "",
+                        disabled ? "opacity-50" : ""
                     )}
+                    disabled={disabled}
                 />
             </div>
         )
@@ -1206,15 +1091,19 @@ const StepIndicator = ({ step, currentStep, onStepClick }: StepIndicatorProps) =
 
     return (
         <div
-            className={cn("bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary", errors[formKeys[step as keyof typeof formKeys][0] as keyof CreateStoreFormValues] ? "text-destructive-foreground bg-destructive/30" : "")}
-            onClick={() => onStepClick(step)}
+            className={cn("bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary", errors[formKeys[step as keyof typeof formKeys][0] as keyof CreateStoreFormValues] ? "text-destructive-foreground bg-destructive/30" : "", disabled ? "opacity-50" : "")}
+            onClick={() => {
+                if (!disabled) {
+                    onStepClick(step)
+                }
+            }}
         >
             {step}
         </div>
     )
 }
 
-const SuccessPanel = () => {
+/* const SuccessPanel = () => {
     return (
         <div className="flex flex-col items-center gap-4 py-8 text-center">
             <Check className="size-10 text-green-600" />
@@ -1222,7 +1111,7 @@ const SuccessPanel = () => {
             <p className="text-sm text-muted-foreground">Serás redirigido a la administración de tu tienda en unos segundos…</p>
         </div>
     )
-}
+} */
 
 const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
 
@@ -1285,8 +1174,6 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
         6: "Success",
     }
 
-
-
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -1308,40 +1195,7 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
                     resolver={yupResolver(createStoreSchema as never)}
                     formAction={handleCreateStore}
                 >
-                    <Stepper
-                        initialStep={1}
-                        className="p-0"
-                        contentClassName="!p-0"
-                        stepContainerClassName="!p-0"
-                        stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"
-                        footerClassName="!p-0"
-                        onStepChange={setStep}
-                        renderStepIndicator={(props) => {
-                            return (
-                                <StepIndicator
-                                    step={props.step}
-                                    currentStep={props.currentStep}
-                                    onStepClick={props.onStepClick}
-                                />
-                            )
-                        }}
-                    >
-                        <Step className="!p-0 !pt-10 !pb-2">
-                            <BasicInfoFormPanel />
-                        </Step>
-                        <Step className="!p-0 !pt-10 !pb-2">
-                            <AddressFormPanel />
-                        </Step>
-                        <Step className="!p-0 !pt-10 !pb-2">
-                            <ContactFormPanel />
-                        </Step>
-                        <Step className="!p-0 !pt-10 !pb-2">
-                            <SettingsFormPanel />
-                        </Step>
-                        <Step className="!p-0 !pt-10 !pb-2">
-                            <ShippingFormPanel />
-                        </Step>
-                    </Stepper>
+                    <CreateStoreForm setStep={setStep} step={step} />
                 </Form>
             </DialogContent>
         </Dialog>

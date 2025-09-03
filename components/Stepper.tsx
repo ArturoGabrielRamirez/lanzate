@@ -5,6 +5,7 @@ import './Stepper.css';
 import { cn } from '@/lib/utils';
 import { IconButton } from '@/src/components/ui/shadcn-io/icon-button';
 import { ArrowRight, Check } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
 interface StepperProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -74,11 +75,13 @@ export default function Stepper({
       setDirection(1);
       updateStep(currentStep + 1);
     }
+    nextButtonProps.onClick?.({} as React.MouseEvent<HTMLButtonElement>)
   };
 
   const handleComplete = () => {
     setDirection(1);
     updateStep(totalSteps + 1);
+    nextButtonProps.onClick?.({} as React.MouseEvent<HTMLButtonElement>)
   };
 
   return (
@@ -137,16 +140,20 @@ export default function Stepper({
                   {backButtonText}
                 </button>
               )}
-              {/* <button onClick={isLastStep ? handleComplete : handleNext} className="next-button" {...nextButtonProps}>
-                {isLastStep ? 'Complete' : nextButtonText}
-              </button> */}
-              <IconButton
-                icon={isLastStep ? Check : ArrowRight}
-                active={isLastStep}
-                onClick={isLastStep ? handleComplete : handleNext}
-                className={cn(isLastStep ? "text-primary" : "text-muted-foreground")}
-                /* {...nextButtonProps} */
-              />
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <IconButton
+                    icon={isLastStep ? Check : ArrowRight}
+                    active={isLastStep}
+                    onClick={isLastStep ? handleComplete : handleNext}
+                    className={cn(isLastStep ? "text-primary" : "text-muted-foreground")}
+                    disabled={nextButtonProps.disabled}
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  {nextButtonProps.disabled ? "You must fill all required fields" : isLastStep ? 'Complete' : nextButtonText}
+                </TooltipContent>
+              </Tooltip>
             </div>
           </div>
         )}
