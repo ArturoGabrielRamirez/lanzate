@@ -20,7 +20,7 @@ const employeeBaseSchema = {
 
 export const contractCreateSchema = yup.object({
     title: yup.string().required('Title is required'),
-    comments: yup.string().max(500, 'Comments must be less than 500 characters long'),
+    comments: yup.string().max(500, 'Comments must be less than 500 characters long').optional(),
 })
 
 export const employeeUpdateSchema = yup.object({

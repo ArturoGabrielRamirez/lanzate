@@ -1,4 +1,5 @@
 import * as yup from "yup"
+import { PaymentMethod } from "@prisma/client"
 
 export const editOperationalSettingsSchema = yup.object({
     offers_delivery: yup.boolean().required(),
@@ -32,22 +33,56 @@ export const editOperationalSettingsSchema = yup.object({
 export type EditOperationalSettingsData = yup.InferType<typeof editOperationalSettingsSchema>
 
 export const operationalSettingsSchema = yup.object({
-    offers_delivery: yup.boolean().required(),
-    delivery_price: yup.number().when('offers_delivery', {
-        is: true,
-        then: (schema) => schema.min(0, 'Delivery price must be 0 or greater').required('Delivery price is required when delivery is enabled'),
-        otherwise: (schema) => schema.notRequired()
+  offers_delivery: yup.boolean().required(),
+
+  delivery_price: yup
+    .string()
+    .when("offers_delivery", {
+      is: true,
+      then: (schema) =>
+        schema
+          .required("Delivery price is required")
+          .test("is-number", "Must be a number", (value) => !isNaN(Number(value)))
+          .test("min", "Min 0", (value) => Number(value) >= 0),
+      otherwise: (schema) => schema.notRequired(),
     }),
-    free_delivery_minimum: yup.number().when('offers_delivery', {
-        is: true,
-        then: (schema) => schema.min(0, 'Free delivery minimum must be 0 or greater').nullable(),
-        otherwise: (schema) => schema.notRequired()
+
+  free_delivery_minimum: yup.string().when("offers_delivery", {
+  is: true,
+  then: (schema) =>
+    schema
+      .test("is-number", "Must be a number", (value) => !value || !isNaN(Number(value)))
+      .test("min", "Min 0", (value) => !value || Number(value) >= 0),
+  otherwise: (schema) => schema.notRequired(),
+}),
+
+  delivery_radius_km: yup
+    .string()
+    .when("offers_delivery", {
+      is: true,
+      then: (schema) =>
+        schema
+          .required("Delivery radius is required")
+          .test("is-number", "Must be a number", (value) => !isNaN(Number(value)))
+          .test("min", "Min 1", (value) => Number(value) >= 1)
+          .test("max", "Max 100", (value) => Number(value) <= 100),
+      otherwise: (schema) => schema.notRequired(),
     }),
-    delivery_radius_km: yup.number().when('offers_delivery', {
-        is: true,
-        then: (schema) => schema.min(1, 'Delivery radius must be at least 1 km').max(100, 'Delivery radius cannot exceed 100 km').required('Delivery radius is required when delivery is enabled'),
-        otherwise: (schema) => schema.notRequired()
-    }),
-    minimum_order_amount: yup.number().min(0, 'Minimum order amount must be 0 or greater'),
-    payment_methods: yup.array().of(yup.string()).min(1, 'At least one payment method must be selected').required()
-}) 
+
+  minimum_order_amount: yup
+    .string()
+    .required()
+    .test("is-number", "Must be a number", (value) => !isNaN(Number(value)))
+    .test("min", "Min 0", (value) => Number(value) >= 0),
+
+  payment_methods: yup
+    .array()
+    .of(
+      yup
+        .mixed<PaymentMethod>()
+        .oneOf(Object.values(PaymentMethod))
+        .required()
+    )
+    .min(1, "Select at least one")
+    .required(),
+})

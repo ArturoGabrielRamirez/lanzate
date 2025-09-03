@@ -1,4 +1,3 @@
-// app/api/avatars/route.ts
 import { /* NextRequest, */ NextResponse } from 'next/server'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { prisma } from '@/utils/prisma'
@@ -45,37 +44,37 @@ export async function GET(/* request: NextRequest */) {
         switch (identity.provider) {
           case 'google':
             avatarUrl = identity.identity_data?.avatar_url ||
-                        identity.identity_data?.picture ||
-                        identity.identity_data?.image_url
+              identity.identity_data?.picture ||
+              identity.identity_data?.image_url
             label = 'Google'
             icon = '🟦'
             break
           case 'facebook':
             avatarUrl = identity.identity_data?.avatar_url ||
-                        identity.identity_data?.picture?.data?.url
+              identity.identity_data?.picture?.data?.url
             label = 'Facebook'
             icon = '📘'
             break
-   /*        case 'github':
-            avatarUrl = identity.identity_data?.avatar_url
-            label = 'GitHub'
-            icon = '🐙'
-            break
-          case 'discord':
-            if (identity.identity_data?.id && identity.identity_data?.avatar) {
-              avatarUrl = `https://cdn.discordapp.com/avatars/${identity.identity_data.id}/${identity.identity_data.avatar}.png`
-            } else {
-              avatarUrl = identity.identity_data?.avatar_url
-            }
-            label = 'Discord'
-            icon = '🎮'
-            break
-          case 'twitter':
-            avatarUrl = identity.identity_data?.avatar_url ||
-                        identity.identity_data?.profile_image_url
-            label = 'Twitter'
-            icon = '🐦'
-            break */
+          /*        case 'github':
+                   avatarUrl = identity.identity_data?.avatar_url
+                   label = 'GitHub'
+                   icon = '🐙'
+                   break
+                 case 'discord':
+                   if (identity.identity_data?.id && identity.identity_data?.avatar) {
+                     avatarUrl = `https://cdn.discordapp.com/avatars/${identity.identity_data.id}/${identity.identity_data.avatar}.png`
+                   } else {
+                     avatarUrl = identity.identity_data?.avatar_url
+                   }
+                   label = 'Discord'
+                   icon = '🎮'
+                   break
+                 case 'twitter':
+                   avatarUrl = identity.identity_data?.avatar_url ||
+                               identity.identity_data?.profile_image_url
+                   label = 'Twitter'
+                   icon = '🐦'
+                   break */
         }
 
         if (avatarUrl?.startsWith('http')) {
@@ -92,49 +91,49 @@ export async function GET(/* request: NextRequest */) {
 
     // --- 2. DiceBear ---
     const diceBearStyles = [
-  { style: 'adventurer', label: 'Aventurero', icon: '⚔️' },
-  { style: 'adventurer-neutral', label: 'Aventurero Neutral', icon: '🛡️' },
-  { style: 'avataaars', label: 'Avataaars', icon: '👤' },
-  { style: 'avataaars-neutral', label: 'Avataaars Neutral', icon: '🧍‍♂️' },
-  { style: 'big-ears', label: 'Orejas Grandes', icon: '👂' },
-  { style: 'big-ears-neutral', label: 'Orejas Grandes Neutro', icon: '👂' },
-  { style: 'big-smile', label: 'Gran Sonrisa', icon: '😁' },
-  { style: 'bottts', label: 'Robot', icon: '🤖' },
-  { style: 'bottts-neutral', label: 'Robot Neutro', icon: '🤖' },
-  { style: 'croodles', label: 'Croodles', icon: '🎨' },
-  { style: 'croodles-neutral', label: 'Croodles Neutro', icon: '🎨' },
-  { style: 'dylan', label: 'Dylan', icon: '👨‍🎨' },
-  { style: 'fun-emoji', label: 'Emoji Divertido', icon: '😄' },
-  { style: 'glass', label: 'Vidrio', icon: '🥽' },
-  { style: 'icons', label: 'Iconos', icon: '🔰' },
-  { style: 'identicon', label: 'Identicon', icon: '🔷' },
-  { style: 'initials', label: 'Iniciales', icon: '🔤' },
-  { style: 'lorelei', label: 'Lorelei', icon: '🧝‍♀️' },
-  { style: 'lorelei-neutral', label: 'Lorelei Neutro', icon: '🧝‍♀️' },
-  { style: 'micah', label: 'Micah', icon: '🧑' },
-  { style: 'miniavs', label: 'Mini Avatar', icon: '🎭' },
-  { style: 'notionists', label: 'Notionists', icon: '🧠' },
-  { style: 'notionists-neutral', label: 'Notionists Neutro', icon: '🧠' },
-  { style: 'open-peeps', label: 'Open Peeps', icon: '🖊️' },
-  { style: 'personas', label: 'Personas', icon: '👨' },
-  { style: 'pixel-art', label: 'Pixel Art', icon: '🎮' },
-  { style: 'pixel-art-neutral', label: 'Pixel Art Neutro', icon: '🟦' },
-  { style: 'rings', label: 'Anillos', icon: '💍' },
-  { style: 'shapes', label: 'Formas', icon: '🔵' },
-  { style: 'thumbs', label: 'Pulgar', icon: '👍' }
-];
+      { style: 'adventurer', label: 'Aventurero', icon: '⚔️' },
+      { style: 'adventurer-neutral', label: 'Aventurero Neutral', icon: '🛡️' },
+      { style: 'avataaars', label: 'Avataaars', icon: '👤' },
+      { style: 'avataaars-neutral', label: 'Avataaars Neutral', icon: '🧍‍♂️' },
+      { style: 'big-ears', label: 'Orejas Grandes', icon: '👂' },
+      { style: 'big-ears-neutral', label: 'Orejas Grandes Neutro', icon: '👂' },
+      { style: 'big-smile', label: 'Gran Sonrisa', icon: '😁' },
+      { style: 'bottts', label: 'Robot', icon: '🤖' },
+      { style: 'bottts-neutral', label: 'Robot Neutro', icon: '🤖' },
+      { style: 'croodles', label: 'Croodles', icon: '🎨' },
+      { style: 'croodles-neutral', label: 'Croodles Neutro', icon: '🎨' },
+      { style: 'dylan', label: 'Dylan', icon: '👨‍🎨' },
+      { style: 'fun-emoji', label: 'Emoji Divertido', icon: '😄' },
+      { style: 'glass', label: 'Vidrio', icon: '🥽' },
+      { style: 'icons', label: 'Iconos', icon: '🔰' },
+      { style: 'identicon', label: 'Identicon', icon: '🔷' },
+      { style: 'initials', label: 'Iniciales', icon: '🔤' },
+      { style: 'lorelei', label: 'Lorelei', icon: '🧝‍♀️' },
+      { style: 'lorelei-neutral', label: 'Lorelei Neutro', icon: '🧝‍♀️' },
+      { style: 'micah', label: 'Micah', icon: '🧑' },
+      { style: 'miniavs', label: 'Mini Avatar', icon: '🎭' },
+      { style: 'notionists', label: 'Notionists', icon: '🧠' },
+      { style: 'notionists-neutral', label: 'Notionists Neutro', icon: '🧠' },
+      { style: 'open-peeps', label: 'Open Peeps', icon: '🖊️' },
+      { style: 'personas', label: 'Personas', icon: '👨' },
+      { style: 'pixel-art', label: 'Pixel Art', icon: '🎮' },
+      { style: 'pixel-art-neutral', label: 'Pixel Art Neutro', icon: '🟦' },
+      { style: 'rings', label: 'Anillos', icon: '💍' },
+      { style: 'shapes', label: 'Formas', icon: '🔵' },
+      { style: 'thumbs', label: 'Pulgar', icon: '👍' }
+    ];
 
-for (const { style, label, icon } of diceBearStyles) {
-  const diceBearUrl = `https://api.dicebear.com/9.x/${style}/svg?seed=${encodeURIComponent(dbUser.email)}&backgroundColor=transparent`;
-  options.push({
-    id: `dicebear-${style}`,
-    url: diceBearUrl,
-    provider: 'DiceBear',
-    label: `${label} Generado`,
-    icon,
-    isExternal: false
-  });
-}
+    for (const { style, label, icon } of diceBearStyles) {
+      const diceBearUrl = `https://api.dicebear.com/9.x/${style}/svg?seed=${encodeURIComponent(dbUser.email)}&backgroundColor=transparent`;
+      options.push({
+        id: `dicebear-${style}`,
+        url: diceBearUrl,
+        provider: 'DiceBear',
+        label: `${label} Generado`,
+        icon,
+        isExternal: false
+      });
+    }
 
 
     // --- 3. Storage personalizado ---

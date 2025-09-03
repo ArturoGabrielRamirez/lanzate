@@ -20,7 +20,7 @@ export async function insertUser(
         let finalSupabaseUserId = supabaseUserId;
 
         if (!finalSupabaseUserId) {
-            const { user } = await getCurrentUser();
+            const { payload: user} = await getCurrentUser();
             finalSupabaseUserId = user?.id;
         }
 

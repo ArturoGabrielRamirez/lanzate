@@ -143,9 +143,11 @@ function StoreHeader({ slug }: StoreHeaderProps) {
                     <CardContent className="flex items-center gap-4 w-full z-10">
                         <div className="relative">
                             <img
+
                                 src={store.logo || `https://api.dicebear.com/9.x/initials/svg?seed=${store.name}`}
                                 alt="Store logo"
                                 className="size-24 rounded-full object-cover"
+
                             />
                             <StoreLogoEditor
                                 currentLogo={store.logo}

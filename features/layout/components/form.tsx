@@ -1,16 +1,11 @@
-'use client'
+"use client"
 
-import { FormProvider, Resolver, useForm, UseFormProps, type SubmitHandler } from 'react-hook-form'
-import { FieldValues } from 'react-hook-form'
+import { FormProvider, useForm, UseFormProps, type SubmitHandler, FieldValues, Resolver } from "react-hook-form"
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-
 import { LoadingSubmitButtonContext } from '@/features/layout/components'
-
 import { FormPropsType, ResponseType } from '@/features/layout/types'
-
 import { cn } from '@/lib/utils'
-
 
 export default function Form<T extends FieldValues>({
     children,
@@ -26,7 +21,9 @@ export default function Form<T extends FieldValues>({
     onError,
     disabled = false,
     submitButton = true
+
 }: FormPropsType<T>) {
+  const config: UseFormProps<T> = { mode: "onChange" }
 
     const config: UseFormProps<T> = { mode: 'onChange' }
 
@@ -35,7 +32,11 @@ export default function Form<T extends FieldValues>({
     const router = useRouter()
     const methods = useForm<T>(config)
 
-    const { handleSubmit } = methods
+
+  const router = useRouter()
+  const methods = useForm<T>(config)
+  const { handleSubmit } = methods
+
 
     const onSubmit: SubmitHandler<T> = async (data) => {
 
@@ -77,3 +78,4 @@ export default function Form<T extends FieldValues>({
         </FormProvider>
     )
 }
+

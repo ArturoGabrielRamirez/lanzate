@@ -20,9 +20,12 @@ type InputFieldProps = {
   endContent?: React.ReactNode
   placeholder?: string,
   disabled?: boolean
+
   isTextArea?: boolean
   isRequired?: boolean
   inputMode?: "search" | "text" | "numeric" | "none" | "tel" | "url" | "email" | "decimal" | undefined
+  maxLength?: number
+
 }
 
 const InputField = ({
@@ -42,6 +45,7 @@ const InputField = ({
   isTextArea = false,
   isRequired = false,
   inputMode = "text",
+  maxLength    
 }: InputFieldProps) => {
   const {
     register,
@@ -109,8 +113,10 @@ const InputField = ({
           endContent={endContent}
           {...inputControls}
           disabled={disabled}
+          maxLength={maxLength}
         />
       )}
+
       {error && <p className="text-sm text-red-500">{error}</p>}
     </div>
   )

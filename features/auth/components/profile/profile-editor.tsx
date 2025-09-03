@@ -157,7 +157,7 @@ export function ProfileEditor({
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button variant="ghost" size="sm" className="bg-gradient-to-b from-primary/95 to-chart-5/65 text-white hover:from-primary/100 hover:to-chart-5/90">
           <Edit className="h-4 w-4" />
           Editar perfil
         </Button>

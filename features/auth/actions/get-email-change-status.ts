@@ -2,16 +2,39 @@
 
 import { createServerSideClient } from "@/utils/supabase/server";
 import { prisma } from "@/utils/prisma";
-import { getLocalUser } from "./index";
+import { actionWrapper } from "@/utils/lib";
 
 export async function getEmailChangeStatus() {
-    const { localUser, error: localUserError } = await getLocalUser();
+    return actionWrapper(async () => {
+        // ✅ OBTENER DATOS DIRECTAMENTE, SIN DEPENDENCIAS CIRCULARES
+        const supabase = await createServerSideClient();
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
 
-    if (localUserError || !localUser) {
-        return { error: localUserError || "Usuario no encontrado" };
-    }
+        if (userError || !user) {
+            return {
+                error: true,
+                message: "Usuario no autenticado",
+                payload: null
+            };
+        }
 
-    try {
+        const localUser = await prisma.user.findFirst({
+            where: { 
+                OR: [
+                    { supabase_user_id: user.id },
+                    { email: user.email! }
+                ]
+            }
+        });
+
+        if (!localUser) {
+            return {
+                error: true,
+                message: "Usuario no encontrado en la base de datos local",
+                payload: null
+            };
+        }
+
         const changeRequest = await prisma.email_change_requests.findFirst({
             where: {
                 user_id: localUser.id,
@@ -25,20 +48,23 @@ export async function getEmailChangeStatus() {
             }
         });
 
-        const supabase = await createServerSideClient();
-
         const {
             data: { user: freshUser },
             error: refreshError } = await supabase.auth.getUser();
 
         if (refreshError || !freshUser) {
-            return { error: "Error al obtener estado del usuario" };
+            return {
+                error: true,
+                message: "Error al obtener estado del usuario",
+                payload: null
+            };
         }
 
         if (!changeRequest) {
             return {
-                success: true,
-                data: {
+                error: false,
+                message: "Estado de cambio de email obtenido",
+                payload: {
                     currentEmail: freshUser.email,
                     newEmail: null,
                     emailConfirmed: freshUser.email_confirmed_at !== null,
@@ -49,6 +75,7 @@ export async function getEmailChangeStatus() {
                 }
             };
         }
+
         const supabaseCompleted = !freshUser.new_email;
 
         if (supabaseCompleted && !changeRequest.completed) {
@@ -71,8 +98,9 @@ export async function getEmailChangeStatus() {
             });
 
             return {
-                success: true,
-                data: {
+                error: false,
+                message: "Estado de cambio de email obtenido",
+                payload: {
                     currentEmail: freshUser.email,
                     newEmail: null,
                     emailConfirmed: true,
@@ -85,8 +113,9 @@ export async function getEmailChangeStatus() {
         }
 
         return {
-            success: true,
-            data: {
+            error: false,
+            message: "Estado de cambio de email obtenido",
+            payload: {
                 currentEmail: changeRequest.old_email,
                 newEmail: changeRequest.new_email,
                 emailConfirmed: freshUser.email_confirmed_at !== null,
@@ -100,8 +129,5 @@ export async function getEmailChangeStatus() {
                 newEmailConfirmedAt: changeRequest.new_email_confirmed_at
             }
         };
-    } catch (error) {
-        console.error('Error getting email change status:', error);
-        return { error: "Error interno del servidor" };
-    }
+    });
 }

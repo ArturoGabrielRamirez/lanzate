@@ -1,4 +1,3 @@
-// app/api/user/avatar/options/route.ts
 import { /* NextRequest, */ NextResponse } from 'next/server'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { prisma } from '@/utils/prisma'
@@ -11,10 +10,6 @@ export async function GET(/* request: NextRequest */) {
     if (userError || !user) {
       return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
     }
-
-    console.log('🔵 Usuario autenticado:', user.id)
-    console.log('🔵 User metadata:', user.user_metadata)
-    console.log('🔵 Identities:', user.identities)
 
     // Obtener usuario de la base de datos
     const dbUser = await prisma.user.findFirst({
@@ -31,7 +26,6 @@ export async function GET(/* request: NextRequest */) {
     // 1. Avatar desde user_metadata (Google, etc.)
     const googleAvatar = user.user_metadata?.avatar_url || user.user_metadata?.picture
     if (googleAvatar) {
-      console.log('✅ Avatar de Google encontrado:', googleAvatar)
       options.push({
         id: 'google-original',
         url: googleAvatar,
@@ -44,10 +38,7 @@ export async function GET(/* request: NextRequest */) {
 
     // 2. Avatares de identities OAuth
     if (user.identities && user.identities.length > 0) {
-      console.log('🔵 Procesando identities:', user.identities.length)
-      
       for (const identity of user.identities) {
-        console.log(`🔵 Identity ${identity.provider}:`, identity.identity_data)
         
         let avatarUrl = null
         let label = ''
@@ -64,7 +55,7 @@ export async function GET(/* request: NextRequest */) {
             label = 'Avatar de Facebook'
             icon = '📘'
             break
-          case 'github':
+        /*   case 'github':
             avatarUrl = identity.identity_data?.avatar_url
             label = 'Avatar de GitHub'
             icon = '🐙'
@@ -78,11 +69,10 @@ export async function GET(/* request: NextRequest */) {
             avatarUrl = identity.identity_data?.avatar_url
             label = 'Avatar de Twitter'
             icon = '🐦'
-            break
+            break */
         }
 
         if (avatarUrl) {
-          console.log(`✅ Avatar de ${identity.provider} encontrado:`, avatarUrl)
           options.push({
             id: identity.provider,
             url: avatarUrl,
@@ -152,8 +142,6 @@ for (const { style, label, icon } of diceBearStyles) {
         })
 
       if (!listError && files && files.length > 0) {
-        console.log(`📁 Encontrados ${files.length} archivos en storage`)
-        
         for (const file of files) {
           const { data: publicUrlData } = supabase.storage
             .from('user-uploads')
@@ -173,10 +161,10 @@ for (const { style, label, icon } of diceBearStyles) {
           }
         }
       } else if (listError) {
-        console.log('❌ Error listando archivos de storage:', listError)
+        console.error('❌ Error listando archivos de storage:', listError)
       }
     } catch (storageError) {
-      console.log('❌ Error accediendo a storage:', storageError)
+      console.error('❌ Error accediendo a storage:', storageError)
     }
 
     // 5. Marcar cuál está actualmente en uso
@@ -184,8 +172,6 @@ for (const { style, label, icon } of diceBearStyles) {
       ...option,
       isCurrentlyUsed: dbUser.avatar === option.url
     }))
-
-    console.log(`✅ Total de opciones generadas: ${optionsWithStatus.length}`)
 
     return NextResponse.json({ 
       options: optionsWithStatus,

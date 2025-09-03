@@ -1,5 +1,7 @@
 "use client"
 
+//puede borrarse
+
 import { updateOperationalSettingsAction } from "../actions/updateOperationalSettings"
 import { PaymentMethod, Store, StoreOperationalSettings } from "@prisma/client"
 import { useState } from "react"
@@ -26,10 +28,12 @@ type OperationalSettingsFormPayload = {
     payment_methods: PaymentMethod[]
 }
 
+
 function EditOperationalSettingsButton({ storeId, store, onSuccess }: EditOperationalSettingsButtonProps) {
     const operationalSettings = store.operational_settings
     const { getValues, formState: { isValid } } = useFormContext()
     const [isLoading, setIsLoading] = useState(false)
+
 
     const handleSubmit = async () => {
         const values = getValues() as OperationalSettingsFormPayload
@@ -52,6 +56,7 @@ function EditOperationalSettingsButton({ storeId, store, onSuccess }: EditOperat
             toast.dismiss()
             toast.success("Operational settings updated successfully!")
             if (onSuccess) onSuccess()
+
         } catch (error) {
             console.error(error)
             toast.dismiss()
@@ -62,12 +67,14 @@ function EditOperationalSettingsButton({ storeId, store, onSuccess }: EditOperat
     }
 
     return (
+
         <IconButton
             icon={isLoading ? Loader2 : CheckIcon}
             onClick={handleSubmit}
             disabled={isLoading || !isValid}
             className={cn(isLoading && "animate-spin", !isValid && "opacity-50 cursor-not-allowed")}
         />
+
     )
 }
 
