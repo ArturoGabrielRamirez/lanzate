@@ -1160,6 +1160,9 @@ const CreateStoreForm = ({ step }: { step: number }) => {
 }
 
 const StepIndicator = ({ step, currentStep, onStepClick }: StepIndicatorProps) => {
+
+    const { formState: { errors } } = useFormContext<CreateStoreFormValues>()
+
     const icons = {
         1: StoreIcon,
         2: MapPin,
@@ -1168,16 +1171,33 @@ const StepIndicator = ({ step, currentStep, onStepClick }: StepIndicatorProps) =
         5: Truck,
         6: Check,
     }
+
+    const formKeys = {
+        1: ["basic_info"],
+        2: ["address_info"],
+        3: ["contact_info"],
+        4: ["settings"],
+        5: ["shipping_info", "payment_info"],
+    }
+
+
     if (step === currentStep) {
         const Icon = icons[step as keyof typeof icons]
         return (
-            <div className="bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center cursor-pointer" onClick={() => onStepClick(step)}>
+            <div
+                className="bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center cursor-pointer"
+                onClick={() => onStepClick(step)}
+            >
                 <IconButton
                     icon={Icon}
                     active={step === currentStep}
                     onClick={() => onStepClick(step)}
+                    iconClassName={cn(
+                        errors[formKeys[step as keyof typeof formKeys][0] as keyof CreateStoreFormValues] ? "text-destructive-foreground" : ""
+                    )}
                     className={cn(
                         step === currentStep ? "text-primary" : "text-muted-foreground",
+                        errors[formKeys[step as keyof typeof formKeys][0] as keyof CreateStoreFormValues] ? "text-destructive-foreground bg-destructive" : ""
                     )}
                 />
             </div>
@@ -1185,7 +1205,10 @@ const StepIndicator = ({ step, currentStep, onStepClick }: StepIndicatorProps) =
     }
 
     return (
-        <div className="bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary" onClick={() => onStepClick(step)}>
+        <div
+            className={cn("bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary", errors[formKeys[step as keyof typeof formKeys][0] as keyof CreateStoreFormValues] ? "text-destructive-foreground bg-destructive/30" : "")}
+            onClick={() => onStepClick(step)}
+        >
             {step}
         </div>
     )
