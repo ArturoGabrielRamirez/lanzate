@@ -83,7 +83,7 @@ const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
 
     return (
         <Card className="group/address-display">
-            <Form submitButton={false} contentButton={false} resolver={yupResolver(editAddressSchema)}>
+            <Form submitButton={false} contentButton={false} resolver={yupResolver(editAddressSchema as never)}>
                 <CardHeader>
                     <CardTitle>
                         <span className="flex items-center gap-2 text-lg md:text-xl">
