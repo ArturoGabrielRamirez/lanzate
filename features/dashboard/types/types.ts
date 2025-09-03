@@ -1,14 +1,6 @@
-export type DashboardStore = {
-    id: number
-    name: string
-    description: string | null
-    logo: string | null
-    slogan: string | null
-    slug: string
-    subdomain: string
-    created_at: Date
-    updated_at: Date
-    user_id: number
+import { Store } from "@prisma/client"
+
+export type DashboardStore = Store & {
     _count: {
         products: number
     }
