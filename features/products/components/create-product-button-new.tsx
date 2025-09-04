@@ -6,8 +6,16 @@ import Stepper, { Step } from "@/components/Stepper"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useCallback, useContext, useEffect, useMemo, useState, createContext } from "react"
-import { Form } from "@/features/layout/components"
-import { Check, Loader, Box, Image as ImageIcon, Plus } from "lucide-react"
+import { useFormContext } from "react-hook-form"
+import { Form, InputField } from "@/features/layout/components"
+import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash } from "lucide-react"
+import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/components/ui/file-upload"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { Progress } from "@/components/ui/progress"
+import { useCamera } from "@/features/auth/hooks/use-camera"
+import CameraComponent from "@/features/auth/components/avatar/camera-component"
+import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 
 type CreateProductFormValues = {
@@ -53,14 +61,240 @@ function CreateProductProvider({ children }: { children: React.ReactNode }) {
 const emptySchema = yup.object({})
 type EmptyFormType = yup.InferType<typeof emptySchema>
 
+// Step 1 schema: mimic store basic form (name + slug labeled as URL)
+const basicInfoSchema = yup.object({
+    basic_info: yup.object({
+        name: yup.string().required("Name is required"),
+        slug: yup.string().required("Slug is required"),
+        image: yup
+            .mixed()
+            .test("image-type", "Unsupported file type. Use JPG, PNG, GIF or WebP", (value) => {
+                if (value instanceof File) {
+                    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"]
+                    return allowed.includes(value.type)
+                }
+                return true
+            })
+            .test("image-size", "File too large (max 5MB)", (value) => {
+                if (value instanceof File) {
+                    return value.size <= 5 * 1024 * 1024
+                }
+                return true
+            }).nullable().optional(),
+    })
+})
+type BasicInfoFormType = yup.InferType<typeof basicInfoSchema>
+
 function BasicInfoFormPanel() {
-    const { setStepValid } = useCreateProductContext()
-    // react-hook-form validity is managed by <Form> via resolver; we mark step as valid from inside the form content
-    useEffect(() => { setStepValid(1, true) }, [setStepValid])
+    const { setStepValid, setValues: setCtxValues, values } = useCreateProductContext()
+    const { watch, setValue, formState: { isValid } } = useFormContext<BasicInfoFormType>()
+
+    function slugify(input: string): string {
+        return (input || "")
+            .toString()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')
+            .replace(/-{2,}/g, '-')
+            .slice(0, 63)
+    }
+
+    const nameValue = watch('basic_info.name') as string | undefined
+    const imageValue = watch('basic_info.image') as unknown
+    const [isSlugTouched, setIsSlugTouched] = useState(false)
+    const [image, setImage] = useState<File[]>([])
+    const [imageUrl, setImageUrl] = useState<string | null>(null)
+    const [isUploading, setIsUploading] = useState(false)
+    const [uploadProgress, setUploadProgress] = useState(0)
+
+    useEffect(() => { setStepValid(1, isValid) }, [isValid, setStepValid])
+
+    // Persist step values into wizard context
+    useEffect(() => {
+        const sub = watch((v) => setCtxValues({ basic_info: (v as BasicInfoFormType).basic_info }))
+        return () => sub.unsubscribe()
+    }, [watch, setCtxValues])
+
+    // Seed from context if present
+    useEffect(() => {
+        if (values.basic_info) setValue('basic_info', values.basic_info as never, { shouldValidate: true })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    // Hydrate image controls from form
+    useEffect(() => {
+        if (imageValue instanceof File) {
+            setImage([imageValue])
+            setImageUrl(null)
+        } else if (typeof imageValue === 'string' && imageValue.length > 0) {
+            setImage([])
+            setImageUrl(imageValue)
+        } else {
+            setImage([])
+            setImageUrl(null)
+        }
+    }, [imageValue])
+
+    // Auto-generate slug from name until user edits slug directly
+    useEffect(() => {
+        if (!isSlugTouched) {
+            const next = slugify(nameValue || '')
+            setValue('basic_info.slug', next, { shouldValidate: true, shouldDirty: true })
+        }
+    }, [nameValue, isSlugTouched, setValue])
+
+    const handleUpload = async (_file: File) => {
+        try {
+            toast.loading('Subiendo imagen...')
+            setIsUploading(true)
+            setUploadProgress(0)
+            void _file
+
+            // const formData = new FormData()
+            // formData.append('file', file)
+            // formData.append('type', 'product-image')
+
+            await new Promise((resolve) => setTimeout(resolve, 600))
+            setUploadProgress(50)
+
+            // TODO: Implementar upload real
+            // const response = await fetch('/api/product-images', { method: 'POST', body: formData })
+            // if (!response.ok) throw new Error('Error uploading file')
+            // const data = await response.json()
+            // setValue("basic_info.image", data.url)
+
+            toast.dismiss()
+            toast.success('Imagen subida (simulada)')
+            setUploadProgress(100)
+        } catch (error) {
+            toast.dismiss()
+            toast.error(error instanceof Error ? error.message : 'Error al subir el archivo')
+        } finally {
+            setIsUploading(false)
+            setUploadProgress(0)
+        }
+    }
+
+    const camera = useCamera({
+        uploadPath: 'product-images',
+        onSuccess: (url) => {
+            setValue("basic_info.image", url)
+            setImage([])
+        },
+        onError: (error) => {
+            console.error('Camera upload error:', error)
+            toast.error('Error al subir la foto')
+        },
+        quality: 0.9
+    })
+
+    const handleCamera = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        e.stopPropagation()
+        camera.openCamera();
+    }
+
+    const handleFileSelect = (files: File[]) => {
+        if (files.length === 0) return
+        const file = files[files.length - 1]
+        setImage([file])
+        setValue("basic_info.image", file)
+        handleUpload(file)
+    }
+
+    const handleDeleteImage = () => {
+        setImage([])
+        setImageUrl(null)
+        setValue("basic_info.image", "")
+    }
+
     return (
-        <div className="min-h-40 flex items-center justify-center text-muted-foreground border rounded-md p-8 border-dashed">
-            <p>Step 1 vacío (Información básica)</p>
-        </div>
+        <>
+            <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-10 mb-8">
+                <div className="space-y-2">
+                    <FileUpload value={image} onValueChange={handleFileSelect}>
+                        <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[150px] mx-auto w-full", isUploading && "animate-pulse") }>
+                            {image.length > 0 ? (
+                                <FileUploadItem value={image[0]} className="absolute p-0 w-full h-full border-none">
+                                    <FileUploadItemPreview className="w-full h-full rounded-full" />
+                                </FileUploadItem>
+                            ) : imageUrl ? (
+                                <img src={imageUrl} alt="Image" className="w-full h-full rounded-full object-cover absolute" />
+                            ) : (
+                                <div className="group-hover/dropzone:hidden flex flex-col items-center gap-1 text-center">
+                                    <ImageIcon className="text-muted-foreground" />
+                                    <p className="text-sm text-muted-foreground">Arrastra la imagen del producto aqui</p>
+                                </div>
+                            )}
+                            <div className="hidden group-hover/dropzone:flex flex-col items-center gap-1 text-center absolute p-0 w-full h-full bg-background/50 justify-center backdrop-blur-xs rounded-full">
+                                <div className="flex gap-2">
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <IconButton icon={Upload} />
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            Click para explorar archivos
+                                        </TooltipContent>
+                                    </Tooltip>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <IconButton icon={Camera} onClick={handleCamera} />
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            Click para tomar foto
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </div>
+                            </div>
+                        </FileUploadDropzone>
+                    </FileUpload>
+                    {isUploading && <Progress value={uploadProgress} />}
+                    {(image.length > 0 || imageUrl) && (
+                        <div className="text-sm text-muted-foreground flex items-center gap-2 justify-center">
+                            <p className="truncate">{image.length > 0 ? image[0].name : 'Imagen cargada'}</p>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <IconButton icon={Trash} onClick={handleDeleteImage} />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    Delete image
+                                </TooltipContent>
+                            </Tooltip>
+                        </div>
+                    )}
+                </div>
+                <CameraComponent
+                    {...camera.cameraProps}
+                    title="Tomar foto del producto"
+                />
+                <div className="space-y-4">
+                    <InputField
+                        name="basic_info.name"
+                        label="Name"
+                        placeholder="Ej: My Product"
+                        startContent={<Box />}
+                        isRequired
+                    />
+                    <InputField
+                        name="basic_info.slug"
+                        label="URL"
+                        placeholder="ej: my-product"
+                        type="url"
+                        inputMode="url"
+                        startContent={<Globe />}
+                        onChange={(e) => {
+                            setIsSlugTouched(true)
+                            const sanitized = slugify(e.target.value)
+                            setValue('basic_info.slug', sanitized, { shouldValidate: true, shouldDirty: true })
+                        }}
+                        endContent={(<span>/product</span>)}
+                        isRequired
+                    />
+                </div>
+            </div>
+        </>
     )
 }
 
@@ -116,7 +350,7 @@ function CreateProductForm({ step, setStep, onSubmitAll }: CreateProductFormProp
             nextButtonProps={{ disabled: !isValid }}
         >
             <Step className="!p-0 !pt-10 !pb-2">
-                <Form<EmptyFormType> contentButton="" submitButton={false} resolver={yupResolver(emptySchema as never)}>
+                <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchema as never)}>
                     <BasicInfoFormPanel />
                 </Form>
             </Step>
@@ -236,11 +470,11 @@ function CreateProductButtonNew() {
         <CreateProductProvider>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button>
-                        <Plus />
-                        <span>Create Product</span>
-                    </Button>
-                </DialogTrigger>
+                <Button>
+                    <Plus />
+                    <span>Create Product</span>
+                </Button>
+            </DialogTrigger>
                 <DialogContent className="max-h-[80vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle>Create Product - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
@@ -250,7 +484,7 @@ function CreateProductButtonNew() {
                     </DialogDescription>
                     <CreateProductForm step={step} setStep={setStep} onSubmitAll={handleCreateProduct} />
                 </DialogContent>
-            </Dialog>
+        </Dialog>
         </CreateProductProvider>
     )
 }
