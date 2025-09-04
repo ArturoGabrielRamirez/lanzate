@@ -1107,7 +1107,7 @@ const BasicInfoFormPanel = () => {
             <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-10 mb-8">
                 <div className="space-y-2">
                     <FileUpload value={logo} onValueChange={handleFileSelect}>
-                        <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[150px] mx-auto", isUploading && "animate-pulse")}>
+                        <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[150px] mx-auto w-full", isUploading && "animate-pulse")}>
                             {logo.length > 0 ? (
                                 <FileUploadItem value={logo[0]} className="absolute p-0 w-full h-full border-none">
                                     <FileUploadItemPreview className="w-full h-full rounded-full" />
