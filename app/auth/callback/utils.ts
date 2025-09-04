@@ -5,6 +5,21 @@ import { insertUser } from '@/features/auth/data/insertUser'
 import { SupabaseClient, User } from '@supabase/supabase-js'
 import { PrismaClient } from '@prisma/client'
 
+function generateUsernameFromEmail(email: string | null | undefined): string | null {
+  if (!email) return null
+  const local = email.split('@')[0] || ''
+  const base = local
+    .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '')
+    .slice(0, 24)
+  const fallback = `user_${Math.random().toString(36).slice(2, 8)}`
+  return base.length > 0 ? base : fallback
+}
+
 export function detectOAuthCancellation(error: string | null, errorDescription: string | null): boolean {
   if (!error) return false
 
@@ -212,12 +227,13 @@ export async function handleUserCreationOrUpdate(user: User, prisma: PrismaClien
     }
 
     const provider = user?.app_metadata?.provider || 'oauth'
+    const username = user?.user_metadata?.username ?? generateUsernameFromEmail(user?.email)
     const insertResult = await insertUser(
       user?.email ?? "",
       provider,
       user?.id ?? "",
       user?.user_metadata?.avatar_url ?? null,
-      user?.user_metadata?.username ?? null,
+      username,
       user?.user_metadata?.name ?? null,
       user?.user_metadata?.lastname ?? null,
       user?.user_metadata?.phone ?? null
