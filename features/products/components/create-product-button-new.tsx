@@ -8,7 +8,7 @@ import * as yup from "yup"
 import { useCallback, useContext, useEffect, useMemo, useState, createContext } from "react"
 import { useFormContext } from "react-hook-form"
 import { Form, InputField } from "@/features/layout/components"
-import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash, Tag, Barcode } from "lucide-react"
+import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash, Tag, Barcode, DollarSign, Package } from "lucide-react"
 import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/components/ui/file-upload"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
@@ -18,10 +18,14 @@ import CameraComponent from "@/features/auth/components/avatar/camera-component"
 import { toast } from "sonner"
 import { generate } from "random-words"
 import { cn } from "@/lib/utils"
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
 
 type CreateProductFormValues = {
     basic_info?: Record<string, unknown>
     media?: Record<string, unknown>
+    pricing?: { price?: number; stock?: number }
+    settings?: { is_active?: boolean; is_featured?: boolean; is_published?: boolean }
 }
 
 type CreateProductContextType = {
@@ -58,11 +62,7 @@ function CreateProductProvider({ children }: { children: React.ReactNode }) {
     )
 }
 
-// Empty per-step schemas (steps vacíos, siempre válidos)
-const emptySchema = yup.object({})
-type EmptyFormType = yup.InferType<typeof emptySchema>
 
-// Step 1 schema: mimic store basic form (name + slug labeled as URL)
 const basicInfoSchema = yup.object({
     basic_info: yup.object({
         name: yup.string().required("Name is required"),
@@ -88,6 +88,24 @@ const basicInfoSchema = yup.object({
     })
 })
 type BasicInfoFormType = yup.InferType<typeof basicInfoSchema>
+
+// Step 2 schema: price and stock
+const pricingSchema = yup.object({
+    pricing: yup.object({
+        price: yup
+            .number()
+            .typeError("Price must be a number")
+            .min(0, "Price must be greater or equal to 0")
+            .required("Price is required"),
+        stock: yup
+            .number()
+            .typeError("Stock must be a number")
+            .integer("Stock must be an integer")
+            .min(0, "Stock must be greater or equal to 0")
+            .required("Stock is required"),
+    })
+})
+type PricingFormType = yup.InferType<typeof pricingSchema>
 
 function BasicInfoFormPanel() {
     const { setStepValid, setValues: setCtxValues, values } = useCreateProductContext()
@@ -335,12 +353,75 @@ function BasicInfoFormPanel() {
 }
 
 function MediaFormPanel() {
-    const { setStepValid } = useCreateProductContext()
-    useEffect(() => { setStepValid(2, true) }, [setStepValid])
+    const { setStepValid, setValues: setCtxValues, values } = useCreateProductContext()
+    const { formState: { isValid }, watch, setValue } = useFormContext<PricingFormType>()
+    const [isActive, setIsActive] = useState<boolean>(() => (values.settings?.is_active ?? true))
+    const [isFeatured, setIsFeatured] = useState<boolean>(() => (values.settings?.is_featured ?? false))
+    const [isPublished, setIsPublished] = useState<boolean>(() => (values.settings?.is_published ?? true))
+
+    useEffect(() => { setStepValid(2, isValid) }, [isValid, setStepValid])
+
+    useEffect(() => {
+        const sub = watch((v) => setCtxValues({ pricing: (v as PricingFormType).pricing }))
+        return () => sub.unsubscribe()
+    }, [watch, setCtxValues])
+
+    useEffect(() => {
+        if (values.pricing) setValue('pricing', values.pricing as never, { shouldValidate: true })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    // Persist settings (switches) into wizard context
+    useEffect(() => {
+        setCtxValues({ settings: { is_active: isActive, is_featured: isFeatured, is_published: isPublished } })
+    }, [isActive, isFeatured, isPublished, setCtxValues])
+
     return (
-        <div className="min-h-40 flex items-center justify-center text-muted-foreground border rounded-md p-8 border-dashed">
-            <p>Step 2 vacío (Medios/Imágenes)</p>
-        </div>
+        <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <InputField
+                    name="pricing.price"
+                    label="Precio"
+                    placeholder="Ej: 1999"
+                    type="number"
+                    inputMode="numeric"
+                    startContent={<DollarSign />}
+                    isRequired
+                />
+                <InputField
+                    name="pricing.stock"
+                    label="Stock"
+                    placeholder="Ej: 10"
+                    type="number"
+                    inputMode="numeric"
+                    startContent={<Package />}
+                    isRequired
+                />
+            </div>
+            <div className="mt-6 space-y-4">
+                <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                        <Label htmlFor="is-active">Producto activo</Label>
+                        <p className="text-sm text-muted-foreground">Hazlo disponible para la venta</p>
+                    </div>
+                    <Switch id="is-active" checked={isActive} onCheckedChange={setIsActive} />
+                </div>
+                <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                        <Label htmlFor="is-featured">Producto destacado</Label>
+                        <p className="text-sm text-muted-foreground">Resáltalo en secciones especiales</p>
+                    </div>
+                    <Switch id="is-featured" checked={isFeatured} onCheckedChange={setIsFeatured} />
+                </div>
+                <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                        <Label htmlFor="is-published">Producto publicado</Label>
+                        <p className="text-sm text-muted-foreground">Visible en tu tienda pública</p>
+                    </div>
+                    <Switch id="is-published" checked={isPublished} onCheckedChange={setIsPublished} />
+                </div>
+            </div>
+        </>
     )
 }
 
@@ -391,7 +472,7 @@ function CreateProductForm({ step, setStep, onSubmitAll }: CreateProductFormProp
                 </Form>
             </Step>
             <Step className="!p-0 !pt-10 !pb-2">
-                <Form<EmptyFormType> contentButton="" submitButton={false} resolver={yupResolver(emptySchema as never)}>
+                <Form<PricingFormType> contentButton="" submitButton={false} resolver={yupResolver(pricingSchema as never)}>
                     <MediaFormPanel />
                 </Form>
             </Step>
@@ -472,15 +553,15 @@ function CreateProductButtonNew() {
     const [open, setOpen] = useState(false)
 
     const descriptions = {
-        1: "Agrega datos básicos; podrás editarlos luego.",
-        2: "Sube imágenes o medios del producto.",
+        1: "Ponle nombre, crea su URL única y completa los datos clave.",
+        2: "Define precio y stock para empezar a vender al instante.",
         3: "Creando tu producto…",
-        4: "Listo!",
+        4: "¡Listo!",
     } as const
 
     const titleSlugs = {
         1: "Basic",
-        2: "Media",
+        2: "Pricing",
         3: "Success",
     } as const
 
@@ -506,11 +587,11 @@ function CreateProductButtonNew() {
         <CreateProductProvider>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button>
-                        <Plus />
-                        <span>Create Product</span>
-                    </Button>
-                </DialogTrigger>
+                <Button>
+                    <Plus />
+                    <span>Create Product</span>
+                </Button>
+            </DialogTrigger>
                 <DialogContent className="max-h-[80vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle>Create Product - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
@@ -520,7 +601,7 @@ function CreateProductButtonNew() {
                     </DialogDescription>
                     <CreateProductForm step={step} setStep={setStep} onSubmitAll={handleCreateProduct} />
                 </DialogContent>
-            </Dialog>
+        </Dialog>
         </CreateProductProvider>
     )
 }
