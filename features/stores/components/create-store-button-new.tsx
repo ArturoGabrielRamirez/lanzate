@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, DialogDescription, DialogFooter } from "@/components/ui/dialog"
+import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, DialogDescription } from "@/components/ui/dialog"
 import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/components/ui/file-upload"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useCamera } from "@/features/auth/hooks/use-camera"
@@ -10,10 +10,10 @@ import { useStep } from "@/hooks/use-step"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { ArrowLeft, ArrowRight, Calendar, Camera, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Loader2, Mail, MapPin, Phone, Plus, Settings, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
+import { Calendar, Camera, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Loader, Mail, MapPin, Phone, Plus, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
-import { useEffect, useState } from "react"
+import { useEffect, useState, createContext, useContext, useCallback, useRef } from "react"
 import { useFormContext } from "react-hook-form"
 import * as yup from "yup"
 import CameraComponent from "@/features/auth/components/avatar/camera-component"
@@ -24,19 +24,7 @@ import { TimePicker } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import { processOpeningHours, processShippingMethods, processPaymentMethods } from "../utils/store-form-helpers"
 import { useRouter } from "next/navigation"
-
-type CreateStoreFormStepsNavigatorProps = {
-    canGoToNextStep: boolean;
-    canGoToPrevStep: boolean;
-    goToNextStep: () => void;
-    goToPrevStep: () => void;
-    step: number;
-    setStep: (step: number) => void;
-};
-
-type FormPaneProps = {
-    children: React.ReactNode;
-}
+import Stepper, { Step } from "@/components/Stepper"
 
 type AttentionDateType = {
     date: string
@@ -67,8 +55,55 @@ type ShippingMethodFormPanelProps = {
     onSave: (index: number, method: ShippingMethod) => void
 }
 
-const createStoreSchema = yup.object().shape({
-    basic_info: yup.object().shape({
+type StepIndicatorProps = {
+    step: number
+    currentStep: number
+    onStepClick: (step: number) => void
+    disabled: boolean
+}
+
+type CreateStoreFormProps = {
+    setStep: (step: number) => void
+    step: number
+}
+
+export type CreateStoreFormValues = {
+    basic_info: {
+        name: string
+        description?: string
+        subdomain: string
+        logo?: File | string | null
+    }
+    address_info: {
+        is_physical_store: boolean
+        address?: string
+        city?: string
+        province?: string
+        country?: string
+    }
+    contact_info: {
+        contact_phone: string
+        contact_email: string
+        facebook_url?: string
+        instagram_url?: string
+        x_url?: string
+    }
+    settings: {
+        is_open_24_hours: boolean
+        attention_dates?: { days?: string[]; startTime?: string; endTime?: string }[]
+    }
+    shipping_info: {
+        offers_delivery: boolean
+        methods?: { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice: string }[]
+    }
+    payment_info: {
+        payment_methods: string[]
+    }
+}
+
+// Per-step schemas
+const basicInfoSchema = yup.object({
+    basic_info: yup.object({
         name: yup.string().required("Name is required"),
         description: yup.string().max(255, "Description must be less than 255 characters long"),
         subdomain: yup.string().required("Subdomain is required"),
@@ -87,8 +122,11 @@ const createStoreSchema = yup.object().shape({
                 }
                 return true
             }).nullable().optional(),
-    }),
-    address_info: yup.object().shape({
+    })
+})
+
+const addressInfoSchema = yup.object({
+    address_info: yup.object({
         is_physical_store: yup.boolean().default(false),
         address: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
             isPhysicalStore ? schema.required("Address is required when store is physical") : schema.max(255, "Address must be less than 255 characters long")
@@ -102,23 +140,42 @@ const createStoreSchema = yup.object().shape({
         country: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
             isPhysicalStore ? schema.required("Country is required when store is physical") : schema.max(100, "Country must be less than 100 characters long")
         ),
-    }),
-    contact_info: yup.object().shape({
+    })
+})
+
+const contactInfoSchema = yup.object({
+    contact_info: yup.object({
         contact_phone: yup.string().max(20, "Phone must be less than 20 characters long").required("Phone is required"),
         contact_email: yup.string().email("Must be a valid email").max(255, "Email must be less than 255 characters long").required("Email is required"),
         facebook_url: yup.string().url("Must be a valid URL").max(255, "Facebook URL must be less than 255 characters long"),
         instagram_url: yup.string().url("Must be a valid URL").max(255, "Instagram URL must be less than 255 characters long"),
         x_url: yup.string().url("Must be a valid URL").max(255, "X URL must be less than 255 characters long"),
-    }),
-    settings: yup.object().shape({
+    })
+})
+
+const settingsSchema = yup.object({
+    settings: yup.object({
         is_open_24_hours: yup.boolean().default(true),
-        attention_dates: yup.array().of(yup.object({
-            days: yup.array().of(yup.string()),
-            startTime: yup.string(),
-            endTime: yup.string(),
-        }))
-    }),
-    shipping_info: yup.object().shape({
+        attention_dates: yup
+            .array()
+            .of(
+                yup.object({
+                    days: yup.array().of(yup.string()),
+                    startTime: yup.string(),
+                    endTime: yup.string(),
+                })
+            )
+            .default([])
+            .test("must-have-at-least-one-when-scheduled", "Debe configurar al menos un día de atención", function (value) {
+                const isOpen = this.parent?.is_open_24_hours
+                if (isOpen) return true
+                return Array.isArray(value) && value.length > 0
+            })
+    })
+})
+
+const shippingPaymentSchema = yup.object({
+    shipping_info: yup.object({
         offers_delivery: yup.boolean().default(false),
         methods: yup.array().of(yup.object({
             providers: yup.array().of(yup.string()).min(1, "Seleccione al menos un proveedor"),
@@ -128,31 +185,114 @@ const createStoreSchema = yup.object().shape({
             deliveryPrice: yup.string().matches(/^\d*$/, "Debe ser un número").required("Precio del delivery es requerido"),
         })).when("offers_delivery", (offers, schema) => offers ? schema.min(1, "Agregue al menos un modo de envío") : schema.notRequired())
     }),
-    payment_info: yup.object().shape({
+    payment_info: yup.object({
         payment_methods: yup.array().of(yup.string()).min(1, "Seleccione al menos un método de pago").required(),
-    }),
+    })
 })
 
-export type CreateStoreFormValues = yup.InferType<typeof createStoreSchema>;
+type BasicInfoFormType = yup.InferType<typeof basicInfoSchema>
+type AddressInfoFormType = yup.InferType<typeof addressInfoSchema>
+type ContactInfoFormType = yup.InferType<typeof contactInfoSchema>
+type SettingsFormType = yup.InferType<typeof settingsSchema>
+type ShippingPaymentFormType = yup.InferType<typeof shippingPaymentSchema>
+
+// Provider/Context (inline in this file)
+type CreateStoreContextType = {
+    values: Partial<CreateStoreFormValues>
+    setValues: (partial: Partial<CreateStoreFormValues>) => void
+    isStepValid: Record<number, boolean>
+    setStepValid: (step: number, valid: boolean) => void
+}
+
+const CreateStoreContext = createContext<CreateStoreContextType | null>(null)
+
+function useCreateStoreContext() {
+    const ctx = useContext(CreateStoreContext)
+    if (!ctx) throw new Error("CreateStoreContext not found")
+    return ctx
+}
+
+function CreateStoreProvider({ children }: { children: React.ReactNode }) {
+    const [values, setValuesState] = useState<Partial<CreateStoreFormValues>>({})
+    const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
+
+    const setValues = useCallback((partial: Partial<CreateStoreFormValues>) => {
+        setValuesState(prev => ({ ...prev, ...partial }))
+    }, [])
+
+    const setStepValid = useCallback((step: number, valid: boolean) => {
+        setIsStepValid(prev => ({ ...prev, [step]: valid }))
+    }, [])
+
+    return (
+        <CreateStoreContext.Provider value={{ values, setValues, isStepValid, setStepValid }}>
+            {children}
+        </CreateStoreContext.Provider>
+    )
+}
 
 const ShippingFormPanel = () => {
 
-    const { setValue, getValues, formState: { errors } } = useFormContext<CreateStoreFormValues>()
+    const { setValue, getValues, formState: { errors, isValid }, watch } = useFormContext<CreateStoreFormValues>()
+    const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const setValueAny = setValue as unknown as (name: string, value: unknown, options?: { shouldValidate?: boolean; shouldDirty?: boolean }) => void
     const [offersDelivery, setOffersDelivery] = useState(false)
     const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([])
     const [isAddingMethod, setIsAddingMethod] = useState(false)
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
-    const [paymentMethods, setPaymentMethods] = useState<string[]>([])
+    // derive payment methods directly from form state to persist across steps
+    const paymentMethods = (watch("payment_info.payment_methods") as string[] | undefined) || []
 
+    const seededRef = useRef(false)
     useEffect(() => {
+        if (seededRef.current) return
+        seededRef.current = true
+        if (values.shipping_info) {
+            const s = values.shipping_info
+            const safe = {
+                offers_delivery: !!s.offers_delivery,
+                methods: Array.isArray(s.methods)
+                    ? (s.methods.filter(Boolean).map((m) => ({
+                        providers: m?.providers || [],
+                        minPurchase: m?.minPurchase,
+                        freeShippingMin: m?.freeShippingMin,
+                        estimatedTime: m?.estimatedTime,
+                        deliveryPrice: m?.deliveryPrice ?? "",
+                    })) as NonNullable<CreateStoreFormValues["shipping_info"]["methods"]>)
+                    : []
+            }
+            setValue("shipping_info", safe, { shouldValidate: true })
+        }
+        if (values.payment_info) {
+            const p = values.payment_info
+            const safe = {
+                payment_methods: Array.isArray(p.payment_methods) ? (p.payment_methods.filter(Boolean) as string[]) : []
+            }
+            setValue("payment_info", safe, { shouldValidate: true })
+        }
         const offers = getValues("shipping_info.offers_delivery") || false
         setOffersDelivery(!!offers)
         const existingMethods = getValues("shipping_info.methods") || []
         setShippingMethods(existingMethods as ShippingMethod[])
+        // ensure form is hydrated with persisted payment methods
         const existingPayments = getValues("payment_info.payment_methods") || []
-        setPaymentMethods(existingPayments as string[])
-    }, [getValues])
+        if (Array.isArray(existingPayments)) {
+            setValueAny("payment_info.payment_methods", existingPayments, { shouldValidate: true })
+        }
+    }, [getValues, setValue, values.shipping_info, values.payment_info])
+
+    useEffect(() => {
+        const sub = watch((v) => {
+            const vv = v as Partial<CreateStoreFormValues>
+            setCtxValues({
+                shipping_info: vv.shipping_info as CreateStoreFormValues["shipping_info"],
+                payment_info: vv.payment_info as CreateStoreFormValues["payment_info"],
+            })
+        })
+        return () => sub.unsubscribe()
+    }, [watch, setCtxValues])
+
+    useEffect(() => { setStepValid(5, isValid) }, [isValid, setStepValid])
 
     const handleOffersDelivery = () => {
         setOffersDelivery(true)
@@ -207,7 +347,6 @@ const ShippingFormPanel = () => {
     }
 
     const handlePaymentTagsChange = (tags: string[]) => {
-        setPaymentMethods(tags)
         setValueAny("payment_info.payment_methods", tags, { shouldValidate: true, shouldDirty: true })
     }
 
@@ -220,20 +359,21 @@ const ShippingFormPanel = () => {
                     onChange={handlePaymentTagsChange}
                     title="Metodos de pago"
                     emptyMessage="No hay metodos de pago seleccionados"
+                    key={paymentMethods.join('|')}
                 />
                 {errors.payment_info?.payment_methods?.message && (
                     <p className="text-sm text-red-500">{errors.payment_info.payment_methods.message as string}</p>
                 )}
             </div>
             <p className="text-sm font-medium mb-2">Metodos de envio</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 text-center justify-center mb-8">
-                <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow", offersDelivery ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleOffersDelivery}>
+            <div className="grid grid-cols-2 items-center gap-6 text-center justify-center mb-8">
+                <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow h-full", offersDelivery ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleOffersDelivery}>
                     <h3 className="text-lg font-medium text-primary flex justify-center">
                         <Truck className="size-9" />
                     </h3>
                     <p className="text-sm text-muted-foreground text-balance">This store offers delivery as well as pickup.</p>
                 </div>
-                <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow", !offersDelivery ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleNotOffersDelivery}>
+                <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow h-full", !offersDelivery ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleNotOffersDelivery}>
                     <h3 className="text-lg font-medium text-primary flex justify-center">
                         <Store className="size-9" />
                     </h3>
@@ -495,8 +635,8 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
 
 const SettingsFormPanel = () => {
 
-    const { setValue, getValues, formState: { errors } } = useFormContext()
-    console.log("🚀 ~ SettingsFormPanel ~ errors:", errors)
+    const { setValue, getValues, formState: { isValid, errors }, watch, trigger } = useFormContext()
+    const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const [attentionDates, setAttentionDates] = useState<AttentionDateType[]>(() => {
         const existing = getValues("settings.attention_dates") as { days: string[], startTime: string, endTime: string }[] | undefined
         if (!existing || existing.length === 0) return []
@@ -511,16 +651,36 @@ const SettingsFormPanel = () => {
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
     const [isOpen24Hours, setIsOpen24Hours] = useState(() => !!(getValues("settings.is_open_24_hours") ?? true))
 
+    const seededRefSettings = useRef(false)
+    useEffect(() => {
+        if (seededRefSettings.current) return
+        seededRefSettings.current = true
+        if (values.settings) setValue("settings", values.settings, { shouldValidate: true })
+    }, [values.settings, setValue])
 
+    useEffect(() => {
+        const sub = watch((v) => setCtxValues({ settings: (v as CreateStoreFormValues).settings }))
+        return () => sub.unsubscribe()
+    }, [watch, setCtxValues])
+
+    useEffect(() => { setStepValid(4, isValid) }, [isValid, setStepValid])
     const handleIsOpen24Hours = () => {
         setIsOpen24Hours(true)
-        setValue("settings.is_open_24_hours", true)
-        setValue("settings.attention_dates", [])
+        setValue("settings.is_open_24_hours", true, { shouldValidate: true, shouldDirty: true })
+        setValue("settings.attention_dates", [], { shouldValidate: true, shouldDirty: true })
+        trigger("settings")
     }
 
     const handleIsNotOpen24Hours = () => {
         setIsOpen24Hours(false)
-        setValue("settings.is_open_24_hours", false)
+        setValue("settings.is_open_24_hours", false, { shouldValidate: true, shouldDirty: true })
+        // force validation when switching to scheduled mode
+        setValue("settings.attention_dates", attentionDates.map(d => ({
+            days: d.days,
+            startTime: dayjs(d.startTime).format("HH:mm"),
+            endTime: dayjs(d.endTime).format("HH:mm"),
+        })), { shouldValidate: true, shouldDirty: true })
+        trigger("settings")
     }
 
     const handleAddDate = () => {
@@ -546,8 +706,9 @@ const SettingsFormPanel = () => {
             days: d.days,
             startTime: dayjs(d.startTime).format("HH:mm"),
             endTime: dayjs(d.endTime).format("HH:mm"),
-        })))
+        })), { shouldValidate: true, shouldDirty: true })
         setEditingIndex(null)
+        trigger("settings")
     }
 
     const handleSaveDate = (index: number, startTime: dayjs.Dayjs, endTime: dayjs.Dayjs, days: string[]) => {
@@ -557,9 +718,10 @@ const SettingsFormPanel = () => {
             days: d.days,
             startTime: dayjs(d.startTime).format("HH:mm"),
             endTime: dayjs(d.endTime).format("HH:mm"),
-        })))
+        })), { shouldValidate: true, shouldDirty: true })
         setIsAddingDate(false)
         setEditingIndex(null)
+        trigger("settings")
     }
 
     const handleDeleteDate = (index: number) => {
@@ -569,13 +731,14 @@ const SettingsFormPanel = () => {
             days: d.days,
             startTime: dayjs(d.startTime).format("HH:mm"),
             endTime: dayjs(d.endTime).format("HH:mm"),
-        })))
+        })), { shouldValidate: true, shouldDirty: true })
         if (editingIndex !== null && index === editingIndex) setEditingIndex(null)
+        trigger("settings")
     }
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 text-center justify-center mb-8">
+            <div className="grid grid-cols-2 items-center gap-6 text-center justify-center mb-8">
                 <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow", isOpen24Hours ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleIsOpen24Hours}>
                     <h3 className="text-lg font-medium text-primary flex justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" className="size-9">
@@ -603,6 +766,9 @@ const SettingsFormPanel = () => {
                             <div className="text-sm text-muted-foreground border border-muted-foreground/50 p-6 rounded-md text-center border-dashed">
                                 <p>No hay dias de atencion configurados</p>
                             </div>
+                        )}
+                        {errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>) && (
+                            <p className="text-sm text-red-500">{(errors.settings as Record<string, { message?: string }>)["attention_dates"]?.message || ""}</p>
                         )}
                         {isAddingDate && editingIndex !== null && attentionDates[editingIndex] && (
                             <AttentionDateFormPanel
@@ -651,6 +817,19 @@ const SettingsFormPanel = () => {
 }
 
 const ContactFormPanel = () => {
+    const { formState: { isValid }, watch, setValue } = useFormContext()
+    const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
+    const seededRefContact = useRef(false)
+    useEffect(() => {
+        if (seededRefContact.current) return
+        seededRefContact.current = true
+        if (values.contact_info) setValue("contact_info", values.contact_info, { shouldValidate: true })
+    }, [values.contact_info, setValue])
+    useEffect(() => {
+        const sub = watch((v) => setCtxValues({ contact_info: (v as CreateStoreFormValues).contact_info }))
+        return () => sub.unsubscribe()
+    }, [watch, setCtxValues])
+    useEffect(() => { setStepValid(3, isValid) }, [isValid, setStepValid])
     return (
         <>
             <div className="space-y-8">
@@ -706,22 +885,49 @@ const ContactFormPanel = () => {
 
 const AddressFormPanel = () => {
 
-    const { setValue, getValues } = useFormContext()
+    const { setValue, getValues, formState: { isValid }, watch, trigger } = useFormContext()
+    const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const [isPhysicalStore, setIsPhysicalStore] = useState(getValues("address_info.is_physical_store") || false)
+
+    // keep local UI state in sync with form value (rehydration or external updates)
+    const isPhysicalStoreValue = watch("address_info.is_physical_store") as boolean | undefined
+    useEffect(() => {
+        setIsPhysicalStore(!!isPhysicalStoreValue)
+    }, [isPhysicalStoreValue])
+
+    const seededRefAddress = useRef(false)
+    useEffect(() => {
+        if (seededRefAddress.current) return
+        seededRefAddress.current = true
+        if (values.address_info) setValue("address_info", values.address_info, { shouldValidate: true })
+    }, [values.address_info, setValue])
+
+    useEffect(() => {
+        const sub = watch((v) => setCtxValues({ address_info: (v as CreateStoreFormValues).address_info }))
+        return () => sub.unsubscribe()
+    }, [watch, setCtxValues])
+
+    useEffect(() => { setStepValid(2, isValid) }, [isValid, setStepValid])
 
     const handlePhysicalStore = () => {
         setIsPhysicalStore(true)
-        setValue("address_info.is_physical_store", true)
+        setValue("address_info.is_physical_store", true, { shouldValidate: true, shouldDirty: true })
+        trigger("address_info")
     }
 
     const handleOnlineStore = () => {
         setIsPhysicalStore(false)
-        setValue("address_info.is_physical_store", false)
+        setValue("address_info.is_physical_store", false, { shouldValidate: true, shouldDirty: true })
+        setValue("address_info.address", "", { shouldValidate: true, shouldDirty: true })
+        setValue("address_info.city", "", { shouldValidate: true, shouldDirty: true })
+        setValue("address_info.province", "", { shouldValidate: true, shouldDirty: true })
+        setValue("address_info.country", "", { shouldValidate: true, shouldDirty: true })
+        trigger("address_info")
     }
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 text-center justify-center mb-8">
+            <div className="grid grid-cols-2 items-center gap-6 text-center justify-center mb-8">
                 <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow", !isPhysicalStore ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleOnlineStore}>
                     <h3 className="text-lg font-medium text-primary flex justify-center">
                         <Globe className="size-8" />
@@ -735,52 +941,46 @@ const AddressFormPanel = () => {
                     <p className="text-sm text-muted-foreground text-balance">This is a physical store.</p>
                 </div>
             </div>
-            <AnimatePresence>
-                {isPhysicalStore && (
-                    <motion.div
-                        initial={{ opacity: 0, x: 100 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -100, position: "absolute" }}
-                        className="space-y-4"
-                    >
-                        <InputField
-                            name="address_info.address"
-                            label="Address"
-                            placeholder="Ej: 123 Main St"
-                            startContent={<MapPin />}
-                            isRequired
-                        />
-                        <InputField
-                            name="address_info.city"
-                            label="City"
-                            placeholder="Ej: New York"
-                            startContent={<MapPin />}
-                            isRequired
-                        />
-                        <InputField
-                            name="address_info.province"
-                            label="Province"
-                            placeholder="Ej: New York"
-                            startContent={<MapPin />}
-                            isRequired
-                        />
-                        <InputField
-                            name="address_info.country"
-                            label="Country"
-                            placeholder="Ej: United States"
-                            startContent={<MapPin />}
-                            isRequired
-                        />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {isPhysicalStore && (
+                <div className="space-y-4">
+                    <InputField
+                        name="address_info.address"
+                        label="Address"
+                        placeholder="Ej: 123 Main St"
+                        startContent={<MapPin />}
+                        isRequired
+                    />
+                    <InputField
+                        name="address_info.city"
+                        label="City"
+                        placeholder="Ej: New York"
+                        startContent={<MapPin />}
+                        isRequired
+                    />
+                    <InputField
+                        name="address_info.province"
+                        label="Province"
+                        placeholder="Ej: New York"
+                        startContent={<MapPin />}
+                        isRequired
+                    />
+                    <InputField
+                        name="address_info.country"
+                        label="Country"
+                        placeholder="Ej: United States"
+                        startContent={<MapPin />}
+                        isRequired
+                    />
+                </div>
+            )}
         </>
     )
 }
 
 const BasicInfoFormPanel = () => {
 
-    const { setValue, watch } = useFormContext()
+    const { setValue, watch, formState: { isValid } } = useFormContext()
+    const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const [logo, setLogo] = useState<File[]>([])
     const [logoUrl, setLogoUrl] = useState<string | null>(null)
     const [isUploading, setIsUploading] = useState(false)
@@ -801,6 +1001,22 @@ const BasicInfoFormPanel = () => {
 
     const nameValue = watch('basic_info.name') as string | undefined
     const logoValue = watch('basic_info.logo') as unknown
+
+    const seededRefBasic = useRef(false)
+    useEffect(() => {
+        if (seededRefBasic.current) return
+        seededRefBasic.current = true
+        if (values.basic_info) setValue('basic_info', values.basic_info as never, { shouldValidate: true })
+    }, [values.basic_info, setValue])
+
+    useEffect(() => {
+        const sub = watch((v) => setCtxValues({ basic_info: (v as CreateStoreFormValues).basic_info }))
+        return () => sub.unsubscribe()
+    }, [watch, setCtxValues])
+
+    useEffect(() => {
+        setStepValid(1, isValid)
+    }, [isValid, setStepValid])
 
     useEffect(() => {
         if (!isSubdomainTouched) {
@@ -891,7 +1107,7 @@ const BasicInfoFormPanel = () => {
             <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-10 mb-8">
                 <div className="space-y-2">
                     <FileUpload value={logo} onValueChange={handleFileSelect}>
-                        <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative", isUploading && "animate-pulse")}>
+                        <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[150px] mx-auto w-full", isUploading && "animate-pulse")}>
                             {logo.length > 0 ? (
                                 <FileUploadItem value={logo[0]} className="absolute p-0 w-full h-full border-none">
                                     <FileUploadItemPreview className="w-full h-full rounded-full" />
@@ -984,200 +1200,163 @@ const BasicInfoFormPanel = () => {
     )
 }
 
-const FormPane = ({ children }: FormPaneProps) => {
+const CreateStoreForm = ({ setStep, step, onSubmitAll }: CreateStoreFormProps & { onSubmitAll: (data: CreateStoreFormValues) => Promise<{ error: boolean; message: string; payload?: unknown } | undefined> }) => {
+
+    const { isStepValid, values } = useCreateStoreContext()
+    const isValid = !!isStepValid[step]
+
+    const allowedMaxStep = (() => {
+        let max = 1
+        for (let s = 1; s <= 5; s++) {
+            if (isStepValid[s]) max = s + 1; else break
+        }
+        return Math.min(max, 5)
+    })()
+
     return (
-        <motion.div
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100, position: "absolute" }}
-            className="top-0 left-0 w-full"
+        <Stepper
+            initialStep={1}
+            className="p-0"
+            contentClassName="!p-0"
+            stepContainerClassName="!p-0"
+            stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"
+            footerClassName="!p-0"
+            onStepChange={setStep}
+            onFinalStepCompleted={async () => {
+                await onSubmitAll(values as CreateStoreFormValues)
+            }}
+            renderStepIndicator={(props) => {
+                return (
+                    <StepIndicator
+                        step={props.step}
+                        currentStep={props.currentStep}
+                        onStepClick={props.onStepClick}
+                        disabled={props.step > allowedMaxStep}
+                    />
+                )
+            }}
+            nextButtonProps={{
+                disabled: !isValid,
+            }}
         >
-            {children}
-        </motion.div>
+            <Step className="!p-0 !pt-10 !pb-2">
+                <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchema as never)}>
+                    <BasicInfoFormPanel />
+                </Form>
+            </Step>
+            <Step className="!p-0 !pt-10 !pb-2">
+                <Form<AddressInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(addressInfoSchema as never)}>
+                    <AddressFormPanel />
+                </Form>
+            </Step>
+            <Step className="!p-0 !pt-10 !pb-2">
+                <Form<ContactInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(contactInfoSchema as never)}>
+                    <ContactFormPanel />
+                </Form>
+            </Step>
+            <Step className="!p-0 !pt-10 !pb-2">
+                <Form<SettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(settingsSchema as never)}>
+                    <SettingsFormPanel />
+                </Form>
+            </Step>
+            <Step className="!p-0 !pt-10 !pb-2">
+                <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
+                    <ShippingFormPanel />
+                </Form>
+            </Step>
+            {step === 6 && (
+                <Step className="!p-0 !pt-10 !pb-2">
+                    <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
+                        <Loader className="size-12 animate-spin text-primary" />
+                        <p className="text-sm text-muted-foreground">{"Creando tu tienda..."}</p>
+                    </div>
+                </Step>
+            )}
+            {step === 7 && (
+                <Step className="!p-0 !pt-10 !pb-2">
+                    <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
+                        <Check className="size-12 text-green-600" />
+                        <p className="text-sm text-muted-foreground">{"Tienda creada con éxito"}</p>
+                    </div>
+                </Step>
+            )}
+        </Stepper>
     )
 }
 
-const CreateStoreFormStepsNavigator = ({
-    canGoToNextStep, canGoToPrevStep, goToNextStep, goToPrevStep, step, setStep
-}: CreateStoreFormStepsNavigatorProps) => {
+const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicatorProps) => {
 
-    const { formState: { errors, isValid, isSubmitting } } = useFormContext()
+    const { isStepValid } = useCreateStoreContext()
 
-    const handleStep = (e: React.MouseEvent<HTMLButtonElement>) => {
-        const step = e.currentTarget.dataset.step
-        if (!step) return
-        setStep(Number(step))
+    const icons = {
+        1: StoreIcon,
+        2: MapPin,
+        3: Contact2,
+        4: Clock,
+        5: Truck,
+        6: Check,
     }
 
+    const isComplete = !!isStepValid[step]
+    const isInvalid = step <= 5 && !isComplete
 
-    return (
-        <div className="flex justify-between w-full">
-            <div className="flex items-center gap-2">
-
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <IconButton
-                            type="button"
-                            icon={ArrowLeft}
-                            onClick={goToPrevStep}
-                            disabled={!canGoToPrevStep}
-                            className={cn(canGoToPrevStep ? "" : "cursor-not-allowed opacity-50")}
-                        />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        Previous step
-                    </TooltipContent>
-                </Tooltip>
+    if (step === currentStep) {
+        const Icon = icons[step as keyof typeof icons]
+        return (
+            <div
+                className={cn(
+                    "aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center cursor-pointer",
+                    isInvalid ? "bg-destructive/20" : "bg-muted"
+                )}
+                onClick={() => !disabled && onStepClick(step)}
+            >
+                <IconButton
+                    icon={Icon}
+                    active={step === currentStep}
+                    onClick={() => !disabled && onStepClick(step)}
+                    iconClassName={cn(
+                        disabled ? "opacity-50" : ""
+                    )}
+                    className={cn(
+                        step === currentStep ? "text-primary" : "text-muted-foreground",
+                        disabled ? "opacity-50" : ""
+                    )}
+                    disabled={disabled}
+                />
             </div>
-            <div className="flex items-center gap-4 justify-center flex-1">
-                <IconButton
-                    type="button"
-                    icon={Store}
-                    onClick={handleStep}
-                    data-step={1}
-                    active={step === 1}
-                    className={cn(
-                        step === 1 ? "text-primary" : "text-muted-foreground",
-                        errors.basic_info ? "text-destructive" : ""
-                    )}
-                />
-                <IconButton
-                    type="button"
-                    icon={MapPin}
-                    onClick={handleStep}
-                    data-step={2}
-                    active={step === 2}
-                    className={cn(
-                        step === 2 ? "text-primary" : "text-muted-foreground",
-                        errors.address_info ? "text-destructive" : ""
-                    )}
-                />
-                <IconButton
-                    type="button"
-                    icon={Contact2}
-                    onClick={handleStep}
-                    data-step={3}
-                    active={step === 3}
-                    className={cn(
-                        step === 3 ? "text-primary" : "text-muted-foreground",
-                        errors.contact_info ? "text-destructive" : ""
-                    )}
-                />
-                <IconButton
-                    type="button"
-                    icon={Clock}
-                    onClick={handleStep}
-                    data-step={4}
-                    active={step === 4}
-                    className={cn(
-                        step === 4 ? "text-primary" : "text-muted-foreground",
-                        errors.settings ? "text-destructive" : ""
-                    )}
-                />
-                <IconButton
-                    type="button"
-                    icon={Settings}
-                    onClick={handleStep}
-                    data-step={5}
-                    active={step === 5}
-                    className={cn(
-                        step === 5 ? "text-primary" : "text-muted-foreground",
-                        errors.shipping_info || errors.payment_info ? "text-destructive" : ""
-                    )}
-                />
-                {isValid && (
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <IconButton
-                                type="submit"
-                                icon={isSubmitting ? Loader2 : Check}
-                                iconClassName={isSubmitting ? "animate-spin" : undefined}
-                                disabled={isSubmitting}
-                                className={cn(isSubmitting ? "cursor-not-allowed opacity-50" : "")}
-                            />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            {isSubmitting ? "Submitting..." : "Create store"}
-                        </TooltipContent>
-                    </Tooltip>
-                )}
-            </div>
-            <Tooltip>
-                <TooltipTrigger asChild>
-                    <IconButton
-                        type="button"
-                        icon={ArrowRight}
-                        onClick={() => { if (step < 5) { goToNextStep() } }}
-                        disabled={!(canGoToNextStep && step < 5)}
-                        className={cn("ml-auto", canGoToNextStep && step < 5 ? "" : "cursor-not-allowed opacity-50")}
-                    />
-                </TooltipTrigger>
-                <TooltipContent>
-                    Next step
-                </TooltipContent>
-            </Tooltip>
-        </div>
-    )
-}
-
-const CreateStoreForm = ({ step }: { step: number }) => {
+        )
+    }
 
     return (
-        <fieldset className="relative overflow-hidden py-4">
-            <AnimatePresence>
-                {step === 1 && (
-                    <FormPane key="step-1">
-                        <BasicInfoFormPanel />
-                    </FormPane>
-                )}
-                {step === 2 && (
-                    <FormPane key="step-2">
-                        <AddressFormPanel />
-                    </FormPane>
-                )}
-                {step === 3 && (
-                    <FormPane key="step-3">
-                        <ContactFormPanel />
-                    </FormPane>
-                )}
-                {step === 4 && (
-                    <FormPane key="step-4">
-                        <SettingsFormPanel />
-                    </FormPane>
-                )}
-                {step === 5 && (
-                    <FormPane key="step-5">
-                        <ShippingFormPanel />
-                    </FormPane>
-                )}
-                {step === 6 && (
-                    <FormPane key="step-6">
-                        <SuccessPanel />
-                    </FormPane>
-                )}
-            </AnimatePresence>
-        </fieldset>
-    )
-}
-
-const SuccessPanel = () => {
-    return (
-        <div className="flex flex-col items-center gap-4 py-8 text-center">
-            <Check className="size-10 text-green-600" />
-            <h3 className="text-lg font-semibold">Tienda creada con éxito</h3>
-            <p className="text-sm text-muted-foreground">Serás redirigido a la administración de tu tienda en unos segundos…</p>
+        <div
+            className={cn(
+                "aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary",
+                isInvalid ? "bg-destructive/20" : "bg-muted",
+                disabled ? "opacity-50 pointer-events-none" : ""
+            )}
+            onClick={() => {
+                if (!disabled) {
+                    onStepClick(step)
+                }
+            }}
+        >
+            {isComplete ? (
+                <Check className="size-4" />
+            ) : (
+                step
+            )}
         </div>
     )
 }
 
 const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
 
-    const [step, { goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, setStep }] = useStep(6)
+    const [step, { /* goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, */ setStep }] = useStep(7)
     const [createdSlug, setCreatedSlug] = useState<string | null>(null)
     const router = useRouter()
 
     useEffect(() => {
-        if (step === 6 && createdSlug) {
+        if (step === 7 && createdSlug) {
             const t = setTimeout(() => {
                 router.push(`/stores/${createdSlug}/account`)
             }, 1500)
@@ -1186,88 +1365,28 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
     }, [step, createdSlug, router])
 
     const handleCreateStore = async (data: CreateStoreFormValues) => {
-
-        /* 
-        
-        {
-    "basic_info": {
-        "name": "test",
-        "subdomain": "test",
-        "description": "test",
-        "logo": "https://ugsxvnqkbxihxjxchckw.supabase.co/storage/v1/object/public/store-logos/2-store-logo-1756838158118.jpeg"
-    },
-    "contact_info": {
-        "contact_phone": "5555555",
-        "contact_email": "horacio.estevez@gmail.com",
-        "facebook_url": "",
-        "instagram_url": "",
-        "x_url": ""
-    },
-    "address_info": {
-        "is_physical_store": true,
-        "address": "Las Palmas 735",
-        "city": "Atlantida, Santa Clara del Mar",
-        "province": "Buenos Aires",
-        "country": "Argentina"
-    },
-    "settings": {
-        "is_open_24_hours": false,
-        "attention_dates": [
-            {
-                "days": [
-                    "lunes",
-                    "martes",
-                    "miercoles",
-                    "jueves",
-                    "viernes"
-                ],
-                "startTime": "10:00",
-                "endTime": "18:00"
-            }
-        ]
-    },
-    "payment_info": {
-        "payment_methods": [
-            "Efectivo",
-            "Mercado Pago",
-            "Transferencia"
-        ]
-    },
-    "shipping_info": {
-        "offers_delivery": true,
-        "methods": [
-            {
-                "providers": [
-                    "Delivery propio"
-                ],
-                "minPurchase": "",
-                "freeShippingMin": "",
-                "estimatedTime": "00:30"
-            }
-        ]
-    }
-}
-        */
-
+        const isPhysical = !!data.address_info?.is_physical_store
         const processedData = {
             ...data,
+            // If online store, clear address fields to avoid backend validations
+            address_info: isPhysical ? data.address_info : { is_physical_store: false },
             processedOpeningHours: processOpeningHours(data.settings?.attention_dates as { days?: string[]; startTime?: string; endTime?: string }[] | undefined),
             processedShippingMethods: processShippingMethods(data.shipping_info?.methods as { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice?: string }[] | undefined),
             processedPaymentMethods: processPaymentMethods(data.payment_info?.payment_methods as string[] | undefined),
         }
 
+        setStep(6)
         const { error, message, payload } = await createStore(processedData, userId)
         if (error) {
-            return {
-                error: true,
-                message: message,
-                payload: null
-            }
+            toast.error(message)
+            // return the form to the last step for correction
+            setStep(5)
+            return { error: true, message, payload: null }
         }
 
         // On success: move to success step and redirect shortly
-        setCreatedSlug(payload.slug)
-        setStep(6)
+        setCreatedSlug(payload?.slug || null)
+        setStep(7)
 
         return {
             error: false,
@@ -1282,7 +1401,8 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
         3: "Add your contact information and social media links so customers can contact you.",
         4: "Choose attention dates and hours so customers know when you are open.",
         5: "Choose your shipping methods and add your payment methods so customers can buy your products.",
-        6: "All set! Redirecting…",
+        6: "Creating your store…",
+        7: "All set! Redirecting…",
     }
 
     const titleSlugs = {
@@ -1295,42 +1415,25 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
     }
 
     return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <Button>
-                    <Plus />
-                    <span>Create Store</span>
-                </Button>
-            </DialogTrigger>
-            <DialogContent className="max-h-[80vh] overflow-y-auto">
-                <DialogHeader>
-                    <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
-                </DialogHeader>
-                <DialogDescription asChild>
-                    <p>{descriptions[step as keyof typeof descriptions]}</p>
-                </DialogDescription>
-                <Form<CreateStoreFormValues>
-                    contentButton="Create Store"
-                    submitButton={false}
-                    resolver={yupResolver(createStoreSchema as never)}
-                    formAction={handleCreateStore}
-                >
-                    <CreateStoreForm step={step} />
-                    <DialogFooter>
-                        {step !== 6 && (
-                            <CreateStoreFormStepsNavigator
-                                canGoToNextStep={canGoToNextStep}
-                                canGoToPrevStep={canGoToPrevStep}
-                                goToNextStep={goToNextStep}
-                                goToPrevStep={goToPrevStep}
-                                setStep={setStep}
-                                step={step}
-                            />
-                        )}
-                    </DialogFooter>
-                </Form>
-            </DialogContent>
-        </Dialog>
+        <CreateStoreProvider>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button>
+                        <Plus />
+                        <span>Create Store</span>
+                    </Button>
+                </DialogTrigger>
+                <DialogContent className="max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
+                    </DialogHeader>
+                    <DialogDescription asChild>
+                        <p>{descriptions[step as keyof typeof descriptions]}</p>
+                    </DialogDescription>
+                    <CreateStoreForm setStep={setStep} step={step} onSubmitAll={handleCreateStore} />
+                </DialogContent>
+            </Dialog>
+        </CreateStoreProvider>
     )
 }
 
