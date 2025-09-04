@@ -1,7 +1,11 @@
-import React, { useState, Children, useRef, useLayoutEffect, HTMLAttributes, ReactNode, JSX } from 'react';
+import React, { useState, Children, useRef, useLayoutEffect, HTMLAttributes, ReactNode } from 'react';
 import { motion, AnimatePresence, Variants } from 'motion/react';
 
 import './Stepper.css';
+import { cn } from '@/lib/utils';
+import { IconButton } from '@/src/components/ui/shadcn-io/icon-button';
+import { ArrowRight, Check } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
 interface StepperProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -29,8 +33,8 @@ interface RenderStepIndicatorProps {
 export default function Stepper({
   children,
   initialStep = 1,
-  onStepChange = () => {},
-  onFinalStepCompleted = () => {},
+  onStepChange = () => { },
+  onFinalStepCompleted = () => { },
   stepCircleContainerClassName = '',
   stepContainerClassName = '',
   contentClassName = '',
@@ -71,11 +75,13 @@ export default function Stepper({
       setDirection(1);
       updateStep(currentStep + 1);
     }
+    nextButtonProps.onClick?.({} as React.MouseEvent<HTMLButtonElement>)
   };
 
   const handleComplete = () => {
     setDirection(1);
     updateStep(totalSteps + 1);
+    nextButtonProps.onClick?.({} as React.MouseEvent<HTMLButtonElement>)
   };
 
   return (
@@ -134,9 +140,20 @@ export default function Stepper({
                   {backButtonText}
                 </button>
               )}
-              <button onClick={isLastStep ? handleComplete : handleNext} className="next-button" {...nextButtonProps}>
-                {isLastStep ? 'Complete' : nextButtonText}
-              </button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <IconButton
+                    icon={isLastStep ? Check : ArrowRight}
+                    active={isLastStep}
+                    onClick={isLastStep ? handleComplete : handleNext}
+                    className={cn(isLastStep ? "text-primary" : "text-muted-foreground")}
+                    disabled={nextButtonProps.disabled}
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  {nextButtonProps.disabled ? "You must fill all required fields" : isLastStep ? 'Complete' : nextButtonText}
+                </TooltipContent>
+              </Tooltip>
             </div>
           </div>
         )}
@@ -184,10 +201,20 @@ function SlideTransition({ children, direction, onHeightReady }: SlideTransition
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
-    if (containerRef.current) {
-      onHeightReady(containerRef.current.offsetHeight);
-    }
-  }, [children, onHeightReady]);
+    const element = containerRef.current;
+    if (!element) return;
+
+    const resizeObserver = new ResizeObserver(() => {
+      onHeightReady(element.offsetHeight);
+    });
+
+    resizeObserver.observe(element);
+
+    // Medición inicial
+    onHeightReady(element.offsetHeight);
+
+    return () => resizeObserver.disconnect();
+  }, [onHeightReady]);
 
   return (
     <motion.div
@@ -222,10 +249,11 @@ const stepVariants: Variants = {
 
 interface StepProps {
   children: ReactNode;
+  className?: string;
 }
 
-export function Step({ children }: StepProps): JSX.Element {
-  return <div className="step-default">{children}</div>;
+export function Step({ children, className }: StepProps) {
+  return <div className={cn("step-default", className)}>{children}</div>;
 }
 
 interface StepIndicatorProps {
@@ -249,8 +277,8 @@ function StepIndicator({ step, currentStep, onClickStep, disableStepIndicators }
       <motion.div
         variants={{
           inactive: { scale: 1, backgroundColor: '#222', color: '#a3a3a3' },
-          active: { scale: 1, backgroundColor: '#5227FF', color: '#5227FF' },
-          complete: { scale: 1, backgroundColor: '#5227FF', color: '#3b82f6' }
+          active: { scale: 1, backgroundColor: 'var(--primary)', color: 'var(--primary)' },
+          complete: { scale: 1, backgroundColor: 'var(--color-green-500)', color: 'var(--color-green-500)' }
         }}
         transition={{ duration: 0.3 }}
         className="step-indicator-inner"
@@ -274,7 +302,7 @@ interface StepConnectorProps {
 function StepConnector({ isComplete }: StepConnectorProps) {
   const lineVariants: Variants = {
     incomplete: { width: 0, backgroundColor: 'transparent' },
-    complete: { width: '100%', backgroundColor: '#5227FF' }
+    complete: { width: '100%', backgroundColor: 'var(--color-green-500)' }
   };
 
   return (
@@ -290,7 +318,13 @@ function StepConnector({ isComplete }: StepConnectorProps) {
   );
 }
 
-function CheckIcon(props: React.SVGProps<SVGSVGElement>) {
+
+interface CheckIconProps extends React.SVGProps<SVGSVGElement> {
+  className?: string;
+}
+
+function CheckIcon(props: CheckIconProps) {
+
   return (
     <svg {...props} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
       <motion.path
