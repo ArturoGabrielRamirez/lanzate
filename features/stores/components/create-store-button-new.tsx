@@ -359,6 +359,7 @@ const ShippingFormPanel = () => {
                     onChange={handlePaymentTagsChange}
                     title="Metodos de pago"
                     emptyMessage="No hay metodos de pago seleccionados"
+                    key={paymentMethods.join('|')}
                 />
                 {errors.payment_info?.payment_methods?.message && (
                     <p className="text-sm text-red-500">{errors.payment_info.payment_methods.message as string}</p>
@@ -887,6 +888,12 @@ const AddressFormPanel = () => {
     const { setValue, getValues, formState: { isValid }, watch, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const [isPhysicalStore, setIsPhysicalStore] = useState(getValues("address_info.is_physical_store") || false)
+
+    // keep local UI state in sync with form value (rehydration or external updates)
+    const isPhysicalStoreValue = watch("address_info.is_physical_store") as boolean | undefined
+    useEffect(() => {
+        setIsPhysicalStore(!!isPhysicalStoreValue)
+    }, [isPhysicalStoreValue])
 
     const seededRefAddress = useRef(false)
     useEffect(() => {
