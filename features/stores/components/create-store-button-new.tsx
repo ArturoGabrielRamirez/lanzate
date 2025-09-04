@@ -1286,6 +1286,8 @@ const CreateStoreForm = ({ setStep, step, onSubmitAll }: CreateStoreFormProps & 
 
 const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicatorProps) => {
 
+    const { isStepValid } = useCreateStoreContext()
+
     const icons = {
         1: StoreIcon,
         2: MapPin,
@@ -1295,11 +1297,17 @@ const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicat
         6: Check,
     }
 
+    const isComplete = !!isStepValid[step]
+    const isInvalid = step <= 5 && !isComplete
+
     if (step === currentStep) {
         const Icon = icons[step as keyof typeof icons]
         return (
             <div
-                className="bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center cursor-pointer"
+                className={cn(
+                    "aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center cursor-pointer",
+                    isInvalid ? "bg-destructive/20" : "bg-muted"
+                )}
                 onClick={() => !disabled && onStepClick(step)}
             >
                 <IconButton
@@ -1321,14 +1329,22 @@ const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicat
 
     return (
         <div
-            className={cn("bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary", disabled ? "opacity-50 pointer-events-none" : "")}
+            className={cn(
+                "aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary",
+                isInvalid ? "bg-destructive/20" : "bg-muted",
+                disabled ? "opacity-50 pointer-events-none" : ""
+            )}
             onClick={() => {
                 if (!disabled) {
                     onStepClick(step)
                 }
             }}
         >
-            {step}
+            {isComplete ? (
+                <Check className="size-4" />
+            ) : (
+                step
+            )}
         </div>
     )
 }
