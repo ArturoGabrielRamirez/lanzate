@@ -8,7 +8,7 @@ import * as yup from "yup"
 import { useCallback, useContext, useEffect, useMemo, useState, createContext } from "react"
 import { useFormContext } from "react-hook-form"
 import { Form, InputField } from "@/features/layout/components"
-import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash } from "lucide-react"
+import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash, Tag, Barcode } from "lucide-react"
 import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/components/ui/file-upload"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
@@ -66,6 +66,9 @@ const basicInfoSchema = yup.object({
     basic_info: yup.object({
         name: yup.string().required("Name is required"),
         slug: yup.string().required("Slug is required"),
+        sku: yup.string().optional(),
+        barcode: yup.string().optional(),
+        description: yup.string().max(255, "Description must be less than 255 characters long").optional(),
         image: yup
             .mixed()
             .test("image-type", "Unsupported file type. Use JPG, PNG, GIF or WebP", (value) => {
@@ -215,7 +218,7 @@ function BasicInfoFormPanel() {
             <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-10 mb-8">
                 <div className="space-y-2">
                     <FileUpload value={image} onValueChange={handleFileSelect}>
-                        <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[150px] mx-auto w-full", isUploading && "animate-pulse") }>
+                        <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[150px] mx-auto w-full", isUploading && "animate-pulse")}>
                             {image.length > 0 ? (
                                 <FileUploadItem value={image[0]} className="absolute p-0 w-full h-full border-none">
                                     <FileUploadItemPreview className="w-full h-full rounded-full" />
@@ -294,6 +297,26 @@ function BasicInfoFormPanel() {
                     />
                 </div>
             </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <InputField
+                    name="basic_info.sku"
+                    label="SKU"
+                    placeholder="Ej: SKU-123"
+                    startContent={<Tag />}
+                />
+                <InputField
+                    name="basic_info.barcode"
+                    label="Código de barras"
+                    placeholder="Ej: 1234567890123"
+                    startContent={<Barcode />}
+                />
+            </div>
+            <InputField
+                name="basic_info.description"
+                label="Description"
+                placeholder="Ej: Breve descripción del producto"
+                isTextArea
+            />
         </>
     )
 }
@@ -470,11 +493,11 @@ function CreateProductButtonNew() {
         <CreateProductProvider>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                <Button>
-                    <Plus />
-                    <span>Create Product</span>
-                </Button>
-            </DialogTrigger>
+                    <Button>
+                        <Plus />
+                        <span>Create Product</span>
+                    </Button>
+                </DialogTrigger>
                 <DialogContent className="max-h-[80vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle>Create Product - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
@@ -484,7 +507,7 @@ function CreateProductButtonNew() {
                     </DialogDescription>
                     <CreateProductForm step={step} setStep={setStep} onSubmitAll={handleCreateProduct} />
                 </DialogContent>
-        </Dialog>
+            </Dialog>
         </CreateProductProvider>
     )
 }
