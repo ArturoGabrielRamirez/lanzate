@@ -13,7 +13,8 @@ export async function selectProductAmount(subdomain: string) {
             where: {
                 store: {
                     subdomain: subdomain
-                }
+                },
+                is_deleted: false
             }
         });
 

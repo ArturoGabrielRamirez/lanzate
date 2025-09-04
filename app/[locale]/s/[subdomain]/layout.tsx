@@ -1,10 +1,12 @@
 import { Toaster } from "@/components/ui/sonner";
 import CartProvider from "@/features/cart/components/cart-provider";
 import { Header } from "@/features/store-landing/components"
+import Footer from "@/features/store-landing/components/footer";
 import MainContainer from "@/features/store-landing/components/main-container";
 import StoreProvider from "@/features/store-landing/components/store-provider";
 import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
 import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 
 type LayoutProps = {
     children: React.ReactNode;
@@ -41,7 +43,7 @@ export default async function Layout({ children, params }: LayoutProps) {
             <StoreProvider>
                 <div
                     style={{
-                        "--background": storeData.customization?.background_color,
+                        /* "--background": storeData.customization?.background_color,
                         "--foreground": storeData.customization?.background_foreground_color,
                         "--header": storeData.customization?.header_color,
                         "--header-foreground": storeData.customization?.header_foreground_color,
@@ -67,18 +69,26 @@ export default async function Layout({ children, params }: LayoutProps) {
                         "--show-searchbar-filter": storeData.customization?.show_searchbar_filter ? "block" : "none",
                         "--primary": storeData.customization?.primary_color,
                         "--accent": storeData.customization?.accent_color,
-                        "--secondary": storeData.customization?.secondary_color,
+                        "--secondary": storeData.customization?.secondary_color, */
                     } as React.CSSProperties}
                     className="contents"
                 >
-                    <Header
+                    <Suspense>
+                        <Header
+                            logo={storeData.logo}
+                            title={storeData.name}
+                            socialMedia={storeData.operational_settings}
+                            showSocialLinks={storeData.customization?.show_social_links ?? true}
+                        />
+                    </Suspense>
+                    <MainContainer>
+                        {children}
+                    </MainContainer>
+                    <Footer
                         title={storeData.name}
                         socialMedia={storeData.operational_settings}
                         showSocialLinks={storeData.customization?.show_social_links ?? true}
                     />
-                    <MainContainer>
-                        {children}
-                    </MainContainer>
                     <Toaster />
                 </div>
             </StoreProvider>

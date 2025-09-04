@@ -1,6 +1,9 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { Camera } from "lucide-react";
+import CameraComponent from "@/features/auth/components/avatar/camera-component";
+import { useCamera } from "@/features/auth/hooks/use-camera";
 import { Slot } from "@radix-ui/react-slot";
 import {
   FileArchiveIcon,
@@ -16,6 +19,7 @@ import * as React from "react";
 const ROOT_NAME = "FileUpload";
 const DROPZONE_NAME = "FileUploadDropzone";
 const TRIGGER_NAME = "FileUploadTrigger";
+const CAMERA_TRIGGER_NAME = "FileUploadCameraTrigger";
 const LIST_NAME = "FileUploadList";
 const ITEM_NAME = "FileUploadItem";
 const ITEM_PREVIEW_NAME = "FileUploadItemPreview";
@@ -869,6 +873,65 @@ function FileUploadTrigger(props: FileUploadTriggerProps) {
   );
 }
 
+interface FileUploadCameraTriggerProps
+  extends React.ComponentPropsWithoutRef<"button"> {
+  asChild?: boolean;
+  uploadPath?: string;
+  label?: string;
+}
+
+function FileUploadCameraTrigger(props: FileUploadCameraTriggerProps) {
+  const { asChild, uploadPath = "uploads", label = "Tomar foto", ...rest } = props;
+  const context = useFileUploadContext(CAMERA_TRIGGER_NAME);
+
+  const camera = useCamera({
+    uploadPath,
+    onSuccess: undefined,
+    onError: undefined,
+  });
+
+  // Cuando se captura la foto, agregar el archivo al store y disparar upload si corresponde
+  const handleCapture = React.useCallback((file: File) => {
+    const inputElement = context.inputRef.current;
+    if (!inputElement) return;
+
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    inputElement.files = dataTransfer.files;
+    inputElement.dispatchEvent(new Event("change", { bubbles: true }));
+  }, [context.inputRef]);
+
+  const TriggerPrimitive = asChild ? Slot : "button";
+
+  return (
+    <>
+      <TriggerPrimitive
+        type="button"
+        aria-controls={context.inputId}
+        data-disabled={context.disabled ? "" : undefined}
+        data-slot="file-upload-trigger"
+        data-camera-trigger
+        {...rest}
+        disabled={context.disabled}
+        onClick={() => camera.openCamera()}
+      >
+        {props.children ?? (
+          <span className="inline-flex items-center gap-2">
+            <Camera className="h-4 w-4" /> {label}
+          </span>
+        )}
+      </TriggerPrimitive>
+
+      {/* Modal de cámara reutilizado */}
+      <CameraComponent
+        {...camera.cameraProps}
+        onCapture={handleCapture}
+        title={label}
+      />
+    </>
+  );
+}
+
 interface FileUploadListProps extends React.ComponentPropsWithoutRef<"div"> {
   orientation?: "horizontal" | "vertical";
   asChild?: boolean;
@@ -1409,6 +1472,7 @@ export {
   FileUploadRoot as FileUpload,
   FileUploadDropzone,
   FileUploadTrigger,
+  FileUploadCameraTrigger,
   FileUploadList,
   FileUploadItem,
   FileUploadItemPreview,
@@ -1420,6 +1484,7 @@ export {
   FileUploadRoot as Root,
   FileUploadDropzone as Dropzone,
   FileUploadTrigger as Trigger,
+  FileUploadCameraTrigger as CameraTrigger,
   FileUploadList as List,
   FileUploadItem as Item,
   FileUploadItemPreview as ItemPreview,

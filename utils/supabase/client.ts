@@ -1,22 +1,22 @@
 import { createBrowserClient } from '@supabase/ssr';
 
-/* function getCookieDomain() {
-  if (typeof window === 'undefined') return 'localhost';
-
-  const hostname = window.location.hostname;
-  const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app';
-
-  return hostname.includes('localhost') ? 'lanzate.app' : `.${rootDomain}`;
-} */
+// Cache del cliente para evitar recreaciones innecesarias
+let supabaseClient: ReturnType<typeof createBrowserClient> | null = null;
 
 export function createClient() {
-  return createBrowserClient(
+  // Reutilizar cliente existente si está disponible
+  if (supabaseClient) {
+    return supabaseClient;
+  }
+
+  supabaseClient = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         getAll() {
           if (typeof document === 'undefined') return [];
+          
           return document.cookie
             .split(';')
             .map(cookie => cookie.trim())
@@ -31,45 +31,56 @@ export function createClient() {
         },
         setAll(cookiesToSet) {
           if (typeof document === 'undefined') return;
+          
           cookiesToSet.forEach(({ name, value, options }) => {
+            // Configuración optimizada de cookies
             const cookieOptions = {
               ...options,
-              //domain: getCookieDomain(),
               domain: '.lanzate.app',
               path: '/',
-              secure: !window.location.hostname.includes('localhost') && !window.location.hostname.includes('lanzate.app'),
-              sameSite: 'lax'
+              secure: !window.location.hostname.includes('localhost'),
+              sameSite: 'lax' as const
             };
 
             let cookieString = `${name}=${value}`;
-
-            if (cookieOptions.domain) {
-              //cookieString += `; Domain=${cookieOptions.domain}`;
-              //cookieString += `; Domain=localhost.com`;
-              cookieString += `; Domain=.lanzate.app`;
+            
+            if (cookieOptions.domain && !window.location.hostname.includes('localhost')) {
+              cookieString += `; Domain=${cookieOptions.domain}`;
             }
-
+            
             if (cookieOptions.path) {
               cookieString += `; Path=${cookieOptions.path}`;
             }
-
+            
             if (cookieOptions.secure) {
               cookieString += `; Secure`;
             }
-
+            
             if (cookieOptions.sameSite) {
-              //cookieString += `; SameSite=${cookieOptions.sameSite}`;
-              cookieString += `; SameSite=Lax`;
+              cookieString += `; SameSite=${cookieOptions.sameSite}`;
             }
-
-            if (cookieOptions.maxAge) {
-              cookieString += `; Max-Age=${cookieOptions.maxAge}`;
+            
+            if (options?.maxAge) {
+              cookieString += `; Max-Age=${options.maxAge}`;
             }
 
             document.cookie = cookieString;
           });
         },
       },
+      auth: {
+        // Configuraciones para mejorar rendimiento
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
     }
   );
+
+  return supabaseClient;
+}
+
+// Función para limpiar el cliente (útil en desarrollo)
+export function resetClient() {
+  supabaseClient = null;
 }

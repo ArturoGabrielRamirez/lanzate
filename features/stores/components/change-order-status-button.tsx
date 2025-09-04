@@ -16,12 +16,12 @@ import { useTranslations } from "next-intl"
 type Props = {
     order: Order
     slug: string
-    userId: number
+    userId?: number
     onComplete?: () => void
 }
 
-function ChangeOrderStatusButton({ order, slug, userId, onComplete }: Props) {
-    
+function ChangeOrderStatusButton({ order, slug, onComplete }: Props) {
+
     const [selectedStatus, setSelectedStatus] = useState<OrderStatus>(order.status)
     const [confirmPayment, setConfirmPayment] = useState(false)
     const [confirmStockRestore, setConfirmStockRestore] = useState(false)
@@ -59,7 +59,7 @@ function ChangeOrderStatusButton({ order, slug, userId, onComplete }: Props) {
             confirmStockRestore: showStockRestoreConfirmation ? confirmStockRestore : false
         }
 
-        return changeOrderStatus(order.id, data, slug, userId)
+        return changeOrderStatus(order.id, data, slug)
     }
 
     const getStatusChangeDescription = () => {
@@ -93,7 +93,7 @@ function ChangeOrderStatusButton({ order, slug, userId, onComplete }: Props) {
             formDisabled={!isFormValid()}
         >
             <div className="space-y-4">
-                
+
                 {/* Current Status */}
                 <div className="p-3 bg-gray-50 border border-gray-200 rounded-md">
                     <h4 className="font-medium text-sm mb-2">{t("current-order-status")}</h4>
@@ -154,13 +154,13 @@ function ChangeOrderStatusButton({ order, slug, userId, onComplete }: Props) {
                                 {t("payment-explanation", { status: selectedStatus })}
                             </p>
                             <div className="flex items-center space-x-2">
-                                <Checkbox 
-                                    id="confirm_payment" 
-                                    checked={confirmPayment} 
+                                <Checkbox
+                                    id="confirm_payment"
+                                    checked={confirmPayment}
                                     onCheckedChange={(checked) => setConfirmPayment(checked === true)}
                                 />
-                                <Label 
-                                    htmlFor="confirm_payment" 
+                                <Label
+                                    htmlFor="confirm_payment"
                                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                 >
                                     {t("confirm-payment")}
@@ -187,13 +187,13 @@ function ChangeOrderStatusButton({ order, slug, userId, onComplete }: Props) {
                                 </ul>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <Checkbox 
-                                    id="confirm_stock_restore" 
-                                    checked={confirmStockRestore} 
+                                <Checkbox
+                                    id="confirm_stock_restore"
+                                    checked={confirmStockRestore}
                                     onCheckedChange={(checked) => setConfirmStockRestore(checked === true)}
                                 />
-                                <Label 
-                                    htmlFor="confirm_stock_restore" 
+                                <Label
+                                    htmlFor="confirm_stock_restore"
                                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                 >
                                     {t("understand-consequences")}

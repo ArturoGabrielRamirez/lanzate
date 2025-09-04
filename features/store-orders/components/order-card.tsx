@@ -1,5 +1,5 @@
 import { Order, OrderItem, Product, Store, Branch } from "@prisma/client"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar, MapPin, Store as StoreIcon, Eye } from "lucide-react"
@@ -54,10 +54,15 @@ function OrderCard({ order }: Props) {
         <Card className="w-full">
             <CardHeader>
                 <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">Order #{order.id}</CardTitle>
-                    <Badge className={getStatusColor(order.status)}>
-                        {order.status}
-                    </Badge>
+                    <CardTitle className="text-xl">Order #{order.id}</CardTitle>
+                    <div>
+                        <p className="font-bold text-lg">
+                            ${order.total_price.toFixed(2)}
+                        </p>
+                        <Badge className={getStatusColor(order.status)}>
+                            {order.status}
+                        </Badge>
+                    </div>
                 </div>
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-1">
@@ -69,40 +74,20 @@ function OrderCard({ order }: Props) {
                         {order.store.name}
                     </div>
                     <div className="flex items-center gap-1">
+
                         <MapPin className="w-4 h-4" />
                         {order.branch.name}
                     </div>
                 </div>
             </CardHeader>
-            <CardContent>
-                <div className="space-y-3">
-                    {order.items.map((item) => (
-                        <OrderItemComponent key={item.id} item={item} />
-                    ))}
-                </div>
-                <div className="mt-4 pt-4 border-t border-muted">
-                    <div className="flex justify-between items-center">
-                        <span className="font-medium">Total:</span>
-                        <span className="font-bold text-lg">
-                            ${order.total_price.toFixed(2)}
-                        </span>
-                    </div>
-                    <div className="flex justify-between items-center text-sm text-muted-foreground">
-                        <span>Items: {order.total_quantity}</span>
-                        <span>
-                            {order.is_paid ? 'Paid' : 'Pending Payment'}
-                        </span>
-                    </div>
-                    <div className="mt-4 flex justify-end">
-                        <Button asChild variant="outline" size="sm">
-                            <Link href={`/my-orders/${order.id}`}>
-                                <Eye className="w-4 h-4 mr-2" />
-                                View Details
-                            </Link>
-                        </Button>
-                    </div>
-                </div>
-            </CardContent>
+            <CardFooter className="flex justify-end">
+                <Button asChild variant="outline" size="sm">
+                    <Link href={`/my-orders/${order.id}`}>
+                        <Eye className="w-4 h-4 mr-2" />
+                        View Details
+                    </Link>
+                </Button>
+            </CardFooter>
         </Card>
     )
 }

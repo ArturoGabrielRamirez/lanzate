@@ -16,7 +16,7 @@ export default async function UpdatePasswordPage() {
     const t = await getTranslations("auth");
 
     return (
-        <div className='flex flex-col p-4 grow'>
+        <div className='flex flex-col p-4 grow z-10'>
             <Title title={t("reset-password.title")} />
             <section className='flex flex-col items-center justify-center w-full grow'>
                 <UpdatePasswordForm />

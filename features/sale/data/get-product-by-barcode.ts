@@ -13,7 +13,8 @@ export async function getProductByBarcode(barcode: string, storeId: number) {
                 barcode: barcode,
                 store_id: storeId,
                 is_active: true,
-                is_published: true
+                is_published: true,
+                is_deleted: false
             },
             include: {
                 categories: true,

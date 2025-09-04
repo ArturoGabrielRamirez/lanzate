@@ -90,7 +90,7 @@ const OrderActionButtons = ({ order }: Props) => {
                             variant="outline"
                         >
                             <Clock className="w-4 h-4 mr-2" />
-                            {isPending ? "Updating..." : "Lista para Buscar"}
+                            {isPending ? "Updating..." : "Lista para retirar"}
                         </Button>
                     )}
                     {currentTrackingStatus === "WAITING_FOR_PICKUP" && (

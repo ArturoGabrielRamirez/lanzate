@@ -1,4 +1,4 @@
-import AccountPageClient from "@/features/account/components/account-page-client";
+import { AccountPageClient } from "@/features/account/components";
 import { getUserInfo } from "@/features/layout/actions/getUserInfo";
 import { getTranslations } from "next-intl/server";
 

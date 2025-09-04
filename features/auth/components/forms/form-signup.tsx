@@ -37,7 +37,7 @@ const SignupForm = () => {
         <>
             <h2 className='text-2xl font-bold'>{t("signup")}</h2>
             <Form<SignupFormData>
-                resolver={yupResolver(signUpSchema)}
+                resolver={yupResolver(signUpSchema as never)}
                 formAction={(data) => {
                     submittedEmailRef.current = data.email;
                     return handleSignup(data);

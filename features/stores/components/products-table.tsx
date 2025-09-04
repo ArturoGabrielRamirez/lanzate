@@ -7,9 +7,10 @@ import { DataTable } from "@/features/layout/components/data-table"
 import { ArrowUpDown, Crown, MoreHorizontal } from "lucide-react"
 import { Eye } from "lucide-react"
 import { Product, Category, Branch, ProductStock } from "@prisma/client"
-import { RowModel, ColumnDef } from "@tanstack/react-table"
-import { CreateProductButton, DeleteProductButton, EditProductButton, ExportProductsButton, DistributeStockButton } from "@/features/products/components"
-import { UpdatePricesButton } from "./update-prices-button"
+import { useMemo } from "react"
+import { ColumnDef } from "@tanstack/react-table"
+import { DeleteProductButton, EditProductButton, DistributeStockButton } from "@/features/products/components"
+import DeleteVariantButton from "@/features/products/components/delete-variant-button"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
@@ -41,14 +42,56 @@ type Props = {
     })[]
 }
 
-function ProductsTable({ data, userId, slug, storeId, employeePermissions, branches }: Props) {
+function ProductsTable({ data, userId, slug, employeePermissions, branches }: Props) {
 
     const t = useTranslations("store.products-table")
 
     // Check if user can create products
-    const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
+    //const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
 
-    const columns: ColumnDef<Product & { categories: Category[] }>[] = [
+    type VariantRow = (Product & { categories: Category[] }) & { variant_id?: number; variant_label?: string }
+
+    const rows: VariantRow[] = useMemo(() => {
+        const list = data as unknown as (Product & {
+            categories: Category[];
+            variants?: {
+                id: number;
+                name: string | null;
+                size: string | null;
+                measure: string | null;
+                color_id: number | null;
+                color?: { name: string } | null;
+                stocks?: { quantity: number }[]
+            }[]
+        })[]
+
+        const flattened: VariantRow[] = []
+
+        for (const p of list) {
+            const variants = p.variants ?? []
+            if (variants.length === 0) {
+                flattened.push({ ...p, variant_id: undefined, variant_label: undefined })
+                continue
+            }
+
+            for (const v of variants) {
+                const vStock = (v.stocks ?? []).reduce((sum, s) => sum + (s.quantity ?? 0), 0)
+                const variantAttributes = [v.size, v.measure, v.color?.name].filter(Boolean).join(" · ")
+                const label = v.name || (variantAttributes || "Variante")
+                flattened.push({
+                    ...p,
+                    stock: vStock,
+                    variant_id: v.id,
+                    variant_label: label,
+                /*     variants: p.variants,
+                    price: v.price || p.price */
+                })
+            }
+        }
+        return flattened
+    }, [data])
+
+    const columns: ColumnDef<VariantRow>[] = [
         {
             id: "select",
             header: ({ table }) => (
@@ -70,10 +113,6 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
             ),
         },
         {
-            header: t("headers.id"),
-            accessorKey: "id",
-        },
-        {
             accessorKey: "name",
             header: ({ column }) => {
                 return (
@@ -89,6 +128,21 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
                     </div>
                 )
             },
+            cell: ({ row }) => {
+                const r = row.original
+                if (r.variant_id) {
+                    return (
+                        <Link href={`/stores/${slug}/products/${r.id}/${r.variant_id}`} className="hover:underline">
+                            {r.variant_label || r.name}
+                        </Link>
+                    )
+                }
+                return (
+                    <Link href={`/stores/${slug}/products/${r.id}`} className="hover:underline">
+                        {r.name}
+                    </Link>
+                )
+            }
         },
         {
             accessorKey: "price",
@@ -107,7 +161,10 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
                 )
             },
             cell: ({ row }) => {
-                const price = row.original.price
+                const variant = row.original as unknown as { variant_id?: number; price: number } & { variants?: { id: number; price: number | null }[] }
+                const price = variant.variant_id
+                    ? variant.variants?.find(v => v.id === variant.variant_id)?.price ?? variant.price
+                    : variant.price
                 return <span>{Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(price)}</span>
             }
         },
@@ -238,8 +295,15 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
                             <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">{t("dropdown.actions")}</DropdownMenuLabel>
                             <DropdownMenuItem asChild>
                                 <Button variant="ghost" className="w-full justify-start cursor-pointer hover:!bg-primary" asChild>
-                                    <Link href={`/stores/${slug}/products/${row.original.id}`} >
+                                    <Link href={`/stores/${slug}/products/${row.original.id}${row.original.variant_id ? `/${row.original.variant_id}` : ""}`} >
                                         <Eye className="w-4 h-4" />{t("dropdown.view-details")}
+                                    </Link>
+                                </Button>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Button variant="ghost" className="w-full justify-start cursor-pointer hover:!bg-primary" asChild>
+                                    <Link href={`/stores/${slug}/products/${row.original.id}`}>
+                                        <Eye className="w-4 h-4" />Ver producto / View product
                                     </Link>
                                 </Button>
                             </DropdownMenuItem>
@@ -247,12 +311,22 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
                                 <>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem asChild>
-                                        <DistributeStockButton
-                                            productId={row.original.id}
-                                            productName={row.original.name}
-                                            availableStock={row.original.stock}
-                                            branches={branches}
-                                        />
+                                        {(() => {
+                                            const currentVariantStocks = row.original.variant_id
+                                                ? (row.original as any).variants?.find((v: any) => v.id === row.original.variant_id)?.stocks as
+                                                    | { branch_id: number; quantity: number }[]
+                                                    | undefined
+                                                : undefined
+                                            return (
+                                                <DistributeStockButton
+                                                    productId={row.original.id}
+                                                    productName={row.original.name}
+                                                    availableStock={row.original.stock}
+                                                    branches={branches}
+                                                    variantStocks={currentVariantStocks}
+                                                />
+                                            )
+                                        })()}
                                     </DropdownMenuItem>
                                 </>
                             )}
@@ -266,6 +340,15 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
                                             userId={userId}
                                         />
                                     </DropdownMenuItem>
+                                    {row.original.variant_id && (
+                                        <DropdownMenuItem asChild>
+                                            <DeleteVariantButton
+                                                variantId={row.original.variant_id}
+                                                slug={slug}
+                                                productId={row.original.id}
+                                            />
+                                        </DropdownMenuItem>
+                                    )}
                                     <DropdownMenuItem asChild>
                                         <DeleteProductButton
                                             productId={row.original.id}
@@ -285,24 +368,8 @@ function ProductsTable({ data, userId, slug, storeId, employeePermissions, branc
     return (
         <DataTable
             columns={columns}
-            data={data}
+            data={rows}
             filterKey="name"
-            topActions={
-                (filteredSelectedRowModel: RowModel<Product & { categories: Category[] }>) => {
-                    return (
-                        <div className="flex items-center gap-2">
-                            <UpdatePricesButton
-                                selectedRows={filteredSelectedRowModel}
-                                storeId={storeId}
-                            />
-                            <ExportProductsButton data={data} />
-                            {canCreateProducts && (
-                                <CreateProductButton storeId={storeId} userId={userId} />
-                            )}
-                        </div>
-                    )
-                }
-            }
         />
     )
 }

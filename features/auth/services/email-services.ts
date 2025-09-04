@@ -22,7 +22,7 @@ export class EmailService {
 
   static async resendConfirmation(params: ResendEmailParams): Promise<ResendEmailResponse> {
     try {
-      const supabase = createServerSideClient();
+      const supabase = await createServerSideClient(); // ✅ Agregado await
       const baseUrl = await this.getBaseUrl();
 
       switch (params.type) {
@@ -110,7 +110,7 @@ export class EmailService {
     baseUrl: string, 
     step?: 'old_email' | 'new_email'
   ): Promise<ResendEmailResponse> {
-    const { user, error: userError } = await getCurrentUser();
+    const { payload: user, error: userError } = await getCurrentUser();
     if (userError || !user) {
       const authError = new Error('Usuario no autenticado');
       (authError as any).status = 401;

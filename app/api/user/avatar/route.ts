@@ -4,17 +4,17 @@ import { getCurrentUser } from '@/features/auth/actions'
 
 export async function PATCH(request: NextRequest) {
   try {
-    const { user } = await getCurrentUser()
+    const { payload: user, error: userError} = await getCurrentUser()
 
-    if (!user) {
-      return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
+    if (userError || !user) {
+      return NextResponse.json({ error: userError || 'No autenticado' }, { status: 401 })
     }
 
     const body = await request.json()
     const { avatarUrl } = body
 
     if (!avatarUrl) {
-      return NextResponse.json({ error: 'URL del avatar requerida' }, { status: 400 })
+      return NextResponse.json({ error: 'URL del avatar requerido' }, { status: 400 })
     }
 
     try {
@@ -46,10 +46,10 @@ export async function PATCH(request: NextRequest) {
 
 export async function DELETE(/* request: NextRequest */) {
   try {
-    const { user } = await getCurrentUser()
+    const { payload: user, error: userError } = await getCurrentUser()
 
-    if (!user) {
-      return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
+    if (userError || !user) {
+      return NextResponse.json({ error: userError || 'No autenticado' }, { status: 401 })
     }
 
     await prisma.user.update({

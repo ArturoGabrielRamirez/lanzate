@@ -26,8 +26,8 @@ async function StoreCard({ store }: StoreCardProps) {
                         <Calendar className="size-4" />
                         {store.created_at.toLocaleDateString()}
                     </p>
-                    <p className="text-sm text-muted-foreground">
-                        0 {t("products")}
+                    <p className="text-md">
+                        {store._count?.products || 0} {t("products")}
                     </p>
                 </CardFooter>
             </Card>

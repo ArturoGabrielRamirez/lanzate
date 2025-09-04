@@ -38,7 +38,7 @@ export function PaymentInformation({ paymentMethod, onChange, allowedPaymentMeth
         { value: "PAYPAL" as PaymentMethod, label: t("method-selector.paypal"), icon: CreditCard },
         { value: "CRYPTO" as PaymentMethod, label: t("method-selector.crypto"), icon: CreditCard },
     ].filter(method => allowedPaymentMethods.includes(method.value))
-
+    
     return (
         <div className="flex flex-col gap-6">
             {/* Payment Method Selection */}

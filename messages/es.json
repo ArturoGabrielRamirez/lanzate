@@ -174,6 +174,13 @@
     },
     "dashboard": {
         "title": "¡Bienvenido!",
+        "stats": {
+            "title": "Tus Estadísticas",
+            "total-revenue": "Ingresos Totales",
+            "orders": "Pedidos",
+            "products": "Productos",
+            "active-stores": "Tiendas Activas"
+        },
         "your-stores": {
             "title": "Tus tiendas ({count})",
             "see-all": "ver todas",
@@ -308,6 +315,23 @@
             "title": "Tu tienda",
             "see-all": "Ver todo",
             "new-store": "Nueva tienda"
+        },
+        "help": {
+            "title": "¿Necesitas ayuda?",
+            "contact-us": "Contáctanos",
+            "description": "Nuestros expertos están aquí para ayudarte.",
+            "send-message": "Enviar mensaje",
+            "dialog": {
+                "title": "Contáctanos",
+                "description": "Envíanos un mensaje y te responderemos lo antes posible.",
+                "email": "Email",
+                "message": "Mensaje",
+                "messages": {
+                    "success": "Mensaje enviado",
+                    "error": "Error al enviar mensaje",
+                    "loading": "Enviando mensaje..."
+                }
+            }
         }
     },
     "error": {
@@ -520,6 +544,19 @@
             "name": "Nombre",
             "description-field": "Descripción",
             "subdomain": "Subdominio",
+            "contact-section": "Información de Contacto",
+            "contact-phone": "Teléfono",
+            "contact-whatsapp": "WhatsApp",
+            "social-media-section": "Redes Sociales",
+            "facebook-url": "URL de Facebook",
+            "instagram-url": "URL de Instagram",
+            "x-url": "URL de X (Twitter)",
+            "address-section": "Dirección de la Tienda",
+            "is-physical-store": "Esta es una tienda física",
+            "address": "Dirección",
+            "city": "Ciudad",
+            "province": "Provincia/Estado",
+            "country": "País",
             "messages": {
                 "name-required": "El nombre es requerido",
                 "user-id-required": "ID de usuario es requerido",
@@ -574,11 +611,34 @@
             "subdomain": "Subdominio",
             "contact-section": "Información de Contacto",
             "contact-phone": "Teléfono",
+            "contact-phone-placeholder": "Ingresá el número de teléfono",
+            "contact-email-placeholder": "Ingresá la dirección de email",
+            "edit-contact": "Editar Contacto",
+            "edit-contact-title": "Editar Información de Contacto",
+            "edit-contact-description": "Actualizá la información de contacto de tu tienda",
+            "contact-updated-success": "Información de contacto actualizada exitosamente",
+            "contact-updated-error": "Error al actualizar información de contacto",
+            "contact-updating": "Actualizando información de contacto...",
             "contact-whatsapp": "WhatsApp",
             "social-media-section": "Redes Sociales",
             "facebook-url": "URL de Facebook",
             "instagram-url": "URL de Instagram",
             "x-url": "URL de X (Twitter)",
+            "edit-social-media": "Editar Redes Sociales",
+            "edit-social-media-title": "Editar Enlaces de Redes Sociales",
+            "edit-social-media-description": "Actualizá los enlaces de redes sociales de tu tienda",
+            "social-media-updated-success": "Enlaces de redes sociales actualizados exitosamente",
+            "social-media-updated-error": "Error al actualizar enlaces de redes sociales",
+            "social-media-updating": "Actualizando enlaces de redes sociales...",
+            "facebook-url-placeholder": "Ingresá la URL de Facebook",
+            "instagram-url-placeholder": "Ingresá la URL de Instagram",
+            "x-url-placeholder": "Ingresá la URL de X (Twitter)",
+            "address-section": "Dirección de la Tienda",
+            "is-physical-store": "Esta es una tienda física",
+            "address": "Dirección",
+            "city": "Ciudad",
+            "province": "Provincia/Estado",
+            "country": "País",
             "messages": {
                 "name-required": "El nombre es requerido",
                 "user-id-required": "ID de usuario es requerido",
@@ -1075,6 +1135,16 @@
         "products": {
             "product-details": "Detalles del producto ",
             "no-categories": "No hay categorías"
+        },
+        "delete-variant": {
+            "button": "Eliminar variante",
+            "title": "Eliminar variante",
+            "description": "¿Estás seguro de que quieres eliminar esta variante? Esta acción no se puede deshacer.",
+            "messages": {
+                "success": "Variante eliminada exitosamente",
+                "error": "Error al eliminar la variante",
+                "loading": "Eliminando variante..."
+            }
         }
     },
     "sale": {
@@ -1269,9 +1339,12 @@
             "method-selector": {
                 "label": "Seleccionar Método de Pago",
                 "placeholder": "Elegí un método de pago",
+                "cash": "Efectivo",
                 "credit-debit-card": "Tarjeta de Crédito/Débito",
                 "bank-transfer": "Transferencia Bancaria",
-                "mercado-pago": "Mercado Pago"
+                "mercado-pago": "Mercado Pago",
+                "paypal": "Paypal",
+                "crypto": "Crypto"
             },
             "card-info": {
                 "label": "Información de la Tarjeta",

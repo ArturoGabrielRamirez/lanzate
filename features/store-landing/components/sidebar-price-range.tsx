@@ -38,9 +38,9 @@ function SidebarPriceRange() {
 
     return (
         <div className="flex gap-2">
-            <Input placeholder="Min $" onChange={handleMinChange} />
+            <Input placeholder="Min $" onChange={handleMinChange} className="rounded-none" />
             -
-            <Input placeholder="Max $" onChange={handleMaxChange} />
+            <Input placeholder="Max $" onChange={handleMaxChange} className="rounded-none" />
             <Button variant="outline" onClick={handleSearch}>
                 <Search />
             </Button>

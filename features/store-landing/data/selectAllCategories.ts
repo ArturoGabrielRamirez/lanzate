@@ -5,7 +5,7 @@ import { actionWrapper/* , formatErrorResponse */ } from "@/utils/lib";
 import { Category } from "../types";
 import { prisma } from "@/utils/prisma"
 
-export async function selectAllCategories(): Promise<{
+export async function selectAllCategories(storeId?: number): Promise<{
   message: string;
   payload: Category[];
   error: boolean;
@@ -13,7 +13,11 @@ export async function selectAllCategories(): Promise<{
   return actionWrapper(async () => {
     /* const prisma = new PrismaClient(); */
 
-    const categoriesRaw = await prisma.category.findMany();
+    const categoriesRaw = await prisma.category.findMany({
+      where: {
+        store_id: storeId
+      }
+    });
 
     const categories: Category[] = categoriesRaw.map((cat) => ({
       ...cat,

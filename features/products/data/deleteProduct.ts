@@ -7,26 +7,40 @@ import { prisma } from "@/utils/prisma"
 
 export async function deleteProduct(productId: number) {
     return actionWrapper(async () => {
-        /* const prisma = new PrismaClient() */
+        const result = await prisma.$transaction(async (tx) => {
+            const product = await tx.product.findUnique({
+                where: { id: productId },
+                include: {
+                    variants: {
+                        select: { id: true }
+                    },
+                }
+            })
 
-        const product = await prisma.product.findUnique({
-            where: { id: productId }
-        })
+            if (!product) throw new Error("Product not found")
 
-        if (!product) throw new Error("Product not found")
+            const variantIds = product.variants.map(v => v.id)
 
-        await prisma.product.delete({
-            where: {
-                id: productId
-            },
-            include: {
-                stock_entries: true,
+            if (variantIds.length > 0) {
+                // Soft delete variants by setting is_deleted to true
+                await tx.productVariant.updateMany({ 
+                    where: { id: { in: variantIds } },
+                    data: { is_deleted: true }
+                })
             }
+
+            // Soft delete product by setting is_deleted to true
+            await tx.product.update({ 
+                where: { id: productId },
+                data: { is_deleted: true }
+            })
+
+            return product
         })
 
         return {
-            message: "Product deleted successfully from db",
-            payload: product,
+            message: "Product soft deleted successfully from db",
+            payload: result,
             error: false
         }
     })

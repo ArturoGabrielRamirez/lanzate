@@ -17,7 +17,6 @@ export function useEmailChange(currentEmail: string) {
         processCompleted: false
     });
 
-    // Función para limpiar el estado
     const resetState = () => {
         setHasPendingChange(false);
         setNewEmail('');
@@ -29,13 +28,12 @@ export function useEmailChange(currentEmail: string) {
         });
     };
 
-    // Verificar estado inicial y cambios
     const checkPendingChange = async () => {
-        if (isLoading) return; // Prevenir llamadas múltiples
-        
+        if (isLoading) return;
+
         setIsLoading(true);
         try {
-            const result = await getEmailChangeStatus();
+            const { payload: result } = await getEmailChangeStatus();
 
             if (result.success && result.data?.hasEmailChange) {
                 const pendingData: PendingChangeData = {
@@ -95,17 +93,27 @@ export function useEmailChange(currentEmail: string) {
         }
 
         setIsLoading(true);
-        try {
-            const result = await handleEditEmail(formData.email);
 
+        try {
+            const result = await handleEditEmail(formData.email, formData.currentPassword) as { error: boolean | string, message?: string, data?: any };
+
+            console.log('🔍 Result from handleEditEmail:', result); // Para debug
+
+            // Manejo consistente de errores
             if (result.error) {
+                // Resetear estado en caso de error para evitar que se "atasque"
+                resetState();
+
                 return {
                     error: true,
-                    message: result.error,
+                    message: typeof result.error === 'string'
+                        ? result.error
+                        : result.message || "Ocurrió un error",
                     payload: null
                 };
             }
 
+            // Si llegamos aquí, fue exitoso
             const newPendingData: PendingChangeData = {
                 oldEmailConfirmed: false,
                 newEmailConfirmed: false,
@@ -120,11 +128,16 @@ export function useEmailChange(currentEmail: string) {
 
             return {
                 error: false,
-                message: "Proceso iniciado. Revisa ambos emails para confirmar.",
-                payload: result.data || null
+                message: result.message || "Proceso iniciado. Revisa ambos emails para confirmar.",
+                payload: result.data || formData
             };
+
         } catch (error) {
             console.error('❌ Error in changeEmailAction:', error);
+
+            // Resetear estado en caso de excepción
+            resetState();
+
             return {
                 error: true,
                 message: "Error inesperado al cambiar el email",
@@ -138,7 +151,7 @@ export function useEmailChange(currentEmail: string) {
     const handleMonitorComplete = () => {
         setShowMonitor(false);
         resetState();
-    
+
         setTimeout(() => {
             window.location.reload();
         }, 20000);

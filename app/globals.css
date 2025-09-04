@@ -352,8 +352,34 @@ body {
   }
 }
 
-[data-name="nextstep-wrapper"], [data-name="nextstep-site"] {
+[data-name="nextstep-wrapper"],
+[data-name="nextstep-site"] {
   /* min-height: 100vh; */
   /* display: flex !important;
   flex-direction: column; */
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.ant-picker-separator,
+.ant-picker-suffix {
+  color: var(--muted-foreground) !important;
+}
+
+.ant-picker-input>input::placeholder,
+.ant-picker-input>input {
+  color: var(--muted-foreground) !important;
+  opacity: 0.8 !important;
 }

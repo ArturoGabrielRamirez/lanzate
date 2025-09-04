@@ -15,10 +15,10 @@ function SidebarOrderBySelect() {
 
     return (
         <Select defaultValue={sort || "price-asc"} onValueChange={handleChange}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full max-w-52 rounded-none" size="sm">
                 <SelectValue placeholder={t("select-a-product")} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="rounded-none">
                 <SelectItem value="name-asc">{t("name-ascending")}</SelectItem>
                 <SelectItem value="name-desc">{t("name-descending")}</SelectItem>
                 <SelectItem value="price-asc">{t("price-ascending")}</SelectItem>

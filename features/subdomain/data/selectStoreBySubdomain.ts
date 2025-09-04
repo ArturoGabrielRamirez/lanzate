@@ -22,6 +22,9 @@ export async function selectStoreBySubdomain(subdomain: string): Promise<SelectS
             include: {
                 branches: true,
                 products: {
+                    where: {
+                        is_deleted: false
+                    },
                     include: {
                         categories: true,
                         stock_entries: true

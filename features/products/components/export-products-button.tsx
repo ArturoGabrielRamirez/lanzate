@@ -5,12 +5,15 @@ import { Download } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Product, Category } from "@prisma/client"
 import * as XLSX from "xlsx-js-style"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 type Props = {
     data: (Product & { categories: Category[] })[]
+    onlyIcon?: boolean
 }
 
-function ExportProductsButton({ data }: Props) {
+function ExportProductsButton({ data, onlyIcon }: Props) {
     const t = useTranslations("store.products-table")
 
     const handleExport = () => {
@@ -186,6 +189,19 @@ function ExportProductsButton({ data }: Props) {
         link.click()
         document.body.removeChild(link)
         window.URL.revokeObjectURL(url)
+    }
+
+    if (onlyIcon) {
+        return (
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <IconButton icon={() => <Download className="w-4 h-4" />} size="md" onClick={handleExport} />
+                </TooltipTrigger>
+                <TooltipContent>
+                    {t("export.button")}
+                </TooltipContent>
+            </Tooltip>
+        )
     }
 
     return (

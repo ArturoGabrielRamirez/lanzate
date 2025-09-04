@@ -1,65 +1,92 @@
 "use server";
-
 import { createServerSideClient } from "@/utils/supabase/server";
 import { getCurrentUser } from "./index";
 import { prisma } from "@/utils/prisma";
 import { getLocalUser } from "./index";
 import { extractSubdomainFromHost } from "../utils";
 import { headers } from "next/headers";
+import { actionWrapper } from "@/utils/lib";
 
-export async function handleEditEmail(email: string) {
-    const { user, error: userError } = await getCurrentUser();
-    const { localUser, error: localUserError } = await getLocalUser();
-    
-    if (userError || !user) {
-        return { error: userError || "User not found" };
-    }
-
-    if (localUserError || !localUser) {
-
-        return { error: localUserError 
-            || "Usuario no encontrado en la base de datos local" };
-            
-    }
-
-    if (email === user.email) {
-        return {
-            error: "El nuevo email debe ser diferente al actual"
-        };
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        return {
-            error: "El formato del email no es válido"
-        };
-    }
-
-    const emailInUse = await prisma.user.findFirst({
-        where: {
-            email: email,
-            id: {
-                not: localUser.id
-            }
+export async function handleEditEmail(email: string, password: string) {
+    return actionWrapper(async () => {
+        const { payload: user, error: userError, message: userMessage } = await getCurrentUser();
+        const { payload: localUser, error: localUserError, message: localUserMessage } = await getLocalUser();
+        
+        if (userError || !user) {
+            return { 
+                error: true, 
+                message: userMessage || "Usuario no encontrado", 
+                payload: null 
+            };
         }
-    });
-
-    if (emailInUse) {
-        return {
-            error: "Este email ya está en uso por otro usuario"
-        };
-    }
-
-    try {
+        
+        if (localUserError || !localUser) {
+            return { 
+                error: true, 
+                message: localUserMessage || "Usuario no encontrado en la base de datos local", 
+                payload: null 
+            };
+        }
+        
+        if (email === user.email) {
+            return {
+                error: true,
+                message: "El nuevo email debe ser diferente al actual",
+                payload: null
+            };
+        }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return {
+                error: true,
+                message: "El formato del email no es válido",
+                payload: null
+            };
+        }
+        
+        // Verificar la contraseña usando Supabase
+        const supabase = await createServerSideClient();
+        const { error: passwordError } = await supabase.auth.signInWithPassword({
+            email: user.email!,
+            password: password
+        });
+        
+        if (passwordError) {
+            return {
+                error: true,
+                message: "La contraseña es incorrecta",
+                payload: null
+            };
+        }
+        
+        // Verificar si el email ya está en uso
+        const emailInUse = await prisma.user.findFirst({
+            where: {
+                email: email,
+                id: {
+                    not: localUser.id
+                }
+            }
+        });
+        
+        if (emailInUse) {
+            return {
+                error: true,
+                message: "Este email ya está en uso por otro usuario",
+                payload: null
+            };
+        }
+        
         const headersList = await headers();
         const host = headersList.get('host') || '';
         const subdomain = extractSubdomainFromHost(host);
-        const supabase = await createServerSideClient();
         const baseUrl = `${subdomain ? `https://${subdomain}.lanzate.app` : `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`}`;
-
+        
         const expiresAt = new Date();
         expiresAt.setHours(expiresAt.getHours() + 24);
-
+        
+        // Cancelar requests anteriores
         await prisma.email_change_requests.updateMany({
             where: {
                 user_id: localUser.id,
@@ -73,7 +100,7 @@ export async function handleEditEmail(email: string) {
                 completed_at: new Date()
             }
         });
-
+        
         const changeRequest = await prisma.email_change_requests.create({
             data: {
                 user_id: localUser.id,
@@ -83,23 +110,27 @@ export async function handleEditEmail(email: string) {
                 updated_at: new Date()
             }
         });
-
+        
         const redirectTo = `${baseUrl}/account?emailCompleted=true`;
-
         const { data, error } = await supabase.auth.updateUser(
             { email: email },
             {
                 emailRedirectTo: redirectTo
             }
         );
-
+        
         if (error) {
             await prisma.email_change_requests.delete({
                 where: { id: changeRequest.id }
             });
-            return { error: error.message };
+            return { 
+                error: true, 
+                message: error.message, 
+                payload: null 
+            };
         }
-
+        
+        // Log de la acción (opcional, no bloquea en caso de error)
         try {
             await prisma.actionLog.create({
                 data: {
@@ -113,18 +144,17 @@ export async function handleEditEmail(email: string) {
             });
         } catch (logError) {
             console.warn('⚠️ Failed to create action log:', logError);
+            // No retornamos error aquí porque el log no es crítico
         }
-
+        
         return {
-            success: true,
-            data,
+            error: false,
             message: "Proceso de cambio iniciado. Confirma desde ambos emails.",
-            new_email: email,
-            request_id: changeRequest.id
+            payload: {
+                data,
+                new_email: email,
+                request_id: changeRequest.id
+            }
         };
-
-    } catch (error) {
-        console.error('Error in handleEditEmail:', error);
-        return { error: "Error interno del servidor" };
-    }
+    });
 }

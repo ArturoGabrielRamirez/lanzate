@@ -5,10 +5,11 @@ import { Store, ShoppingCart, Settings, Share2, ChevronLeft, ChevronRight } from
 import { AnimatePresence, motion } from "motion/react"
 import DashboardStepCard from "./dashboard-step-card"
 import ShareStoreLink from "./share-store-link"
-import { CreateStoreButton } from "@/features/stores/components"
+/* import { CreateStoreButton } from "@/features/stores/components" */
 import { CreateProductForStoreButton, ConfigureStoreOperationsButton } from "@/features/dashboard/components"
 import { DashboardStoreStats } from "../types/types"
 import { useTranslations } from "next-intl"
+import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new"
 
 type StepStatus = 'disabled' | 'active' | 'complete'
 
@@ -22,7 +23,7 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
     const [currentStepIndex, setCurrentStepIndex] = useState(0)
     const [containerHeight, setContainerHeight] = useState<number>(400)
     const cardRef = useRef<HTMLDivElement>(null)
-    
+
     const hasStores = dashboardData.storeCount > 0
     const hasProducts = dashboardData.productCount > 0
     const hasOperationalSettings = dashboardData.operationalSettingsCount > 0
@@ -42,10 +43,13 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             icon: Store,
             status: step1Status,
             footer: !hasStores ? (
-                <CreateStoreButton userId={userId} />
+                <>
+                    {/* <CreateStoreButton userId={userId} /> */}
+                    <CreateStoreButtonNew userId={userId} />
+                </>
             ) : (
                 <p className="text-sm text-muted-foreground">
-                    {t("step-1.stores-created", { 
+                    {t("step-1.stores-created", {
                         count: dashboardData.storeCount,
                         plural: dashboardData.storeCount > 1 ? t("step-1.stores") : t("step-1.store")
                     })}
@@ -60,8 +64,8 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             icon: ShoppingCart,
             status: step2Status,
             footer: hasStores && !hasProducts ? (
-                <CreateProductForStoreButton 
-                    userId={userId} 
+                <CreateProductForStoreButton
+                    userId={userId}
                     stores={dashboardData.stores}
                 />
             ) : undefined,
@@ -74,7 +78,7 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
                     )}
                     {hasProducts && (
                         <div className="mt-2 text-xs text-green-600 bg-green-50 p-2 rounded">
-                            {t("step-2.products-created", { 
+                            {t("step-2.products-created", {
                                 count: dashboardData.productCount,
                                 plural: dashboardData.productCount > 1 ? t("step-2.products") : t("step-2.product")
                             })}
@@ -90,8 +94,8 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             icon: Settings,
             status: step3Status,
             footer: hasProducts && !hasOperationalSettings ? (
-                <ConfigureStoreOperationsButton 
-                    userId={userId} 
+                <ConfigureStoreOperationsButton
+                    userId={userId}
                     stores={dashboardData.stores}
                 />
             ) : undefined,
@@ -104,7 +108,7 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
                     )}
                     {hasOperationalSettings && (
                         <div className="mt-2 text-xs text-green-600 bg-green-50 p-2 rounded">
-                            {t("step-3.operations-configured", { 
+                            {t("step-3.operations-configured", {
                                 count: dashboardData.operationalSettingsCount,
                                 plural: dashboardData.operationalSettingsCount > 1 ? t("step-3.stores") : t("step-3.store")
                             })}
@@ -167,7 +171,7 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             >
                 <ChevronLeft className="w-5 h-5 text-gray-600" />
             </button>
-            
+
             <button
                 onClick={goToNextStep}
                 className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white shadow-lg border opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-gray-50 cursor-pointer"
@@ -191,7 +195,7 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
             </div> */}
 
             {/* Stacked Cards Container */}
-            <motion.div 
+            <motion.div
                 className="relative w-full overflow-hidden"
                 animate={{ height: containerHeight }}
                 transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
@@ -203,7 +207,7 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
                         initial={{ opacity: 0, x: 300, rotateY: 45 }}
                         animate={{ opacity: 1, x: 0, rotateY: 0 }}
                         exit={{ opacity: 0, x: -300, rotateY: -45 }}
-                        transition={{ 
+                        transition={{
                             duration: 0.4,
                             ease: [0.4, 0, 0.2, 1]
                         }}

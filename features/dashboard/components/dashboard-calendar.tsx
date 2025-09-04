@@ -16,7 +16,7 @@ export default function DashboardCalendar() {
         setIsClient(true)
     }, [])
 
-    if (isMobile) return null
+    if (isMobile || !isClient) return null
 
     return (
         <div className="area-[calendar] hidden md:block group" suppressHydrationWarning>

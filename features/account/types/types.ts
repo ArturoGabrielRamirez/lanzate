@@ -1,4 +1,3 @@
-
 export interface Account {
     id: number
     created_at: string | Date
@@ -100,6 +99,7 @@ export interface AccountPageClientProps {
         "description.currently-not-available": string
         "description.username": string
         "description.phone": string
+        [key: string]: string
     }
 }
 
@@ -139,18 +139,17 @@ export interface UserDeletionRequest {
 export interface UserDeletionStatus {
     isDeletionRequested: boolean;
     deletionRequestedAt: Date | null;
-    deletionScheduledAt: Date | null;  
-    displayScheduledAt: Date | null;  
+    deletionScheduledAt: Date | null;
+    displayScheduledAt: Date | null;
     deletionReason: string | null;
     canCancel: boolean;
     daysRemaining: number;
     minutesRemaining: number;
-    timeRemaining: number | null;
-    
+
     canDeleteUntil?: Date | null;
     canCancelUntil?: Date | null;
     isWithinActionWindow?: boolean;
-    
+
     isAnonymized?: boolean;
     anonymizedAt?: Date | null;
     legalRetentionUntil?: Date | null;
@@ -158,12 +157,12 @@ export interface UserDeletionStatus {
     processingMethod?: string;
     cronFrequency?: string;
     testingMode?: boolean;
-    
+
     calculationInfo?: {
         requestedAt?: Date | null;
         scheduledAt?: Date | null;
         displayScheduledAt?: Date | null;
-        currentTime: string; 
+        currentTime: string;
         roundedActionLimit: string | null;
         withinWindow: boolean;
     };
@@ -200,4 +199,50 @@ export interface DeletionActionResponse {
 export interface DangerZoneProps {
     userId: number;
     onStatusChange?: () => void;
+}
+
+export interface AccountDeletedParams {
+    onStatusChange?: () => void;
+    setDeletionStatus: React.Dispatch<React.SetStateAction<UserDeletionStatus>>;
+}
+
+export interface DangerZoneTabProps {
+    userId: number
+    onStatusChange: () => void
+    preload?: boolean
+}
+
+export interface DeleteRequestParams {
+    reason: string;
+    password: string;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    setShowDeleteDialog: React.Dispatch<React.SetStateAction<boolean>>;
+    setReason: React.Dispatch<React.SetStateAction<string>>;
+    setPassword: React.Dispatch<React.SetStateAction<string>>;
+    setDeletionStatus: React.Dispatch<React.SetStateAction<UserDeletionStatus>>;
+    onStatusChange?: () => void;
+}
+
+export interface CancelDeletionParams {
+    setShowCancelDialog: React.Dispatch<React.SetStateAction<boolean>>;
+    setCancelReason: React.Dispatch<React.SetStateAction<string>>;
+    setDeletionStatus: React.Dispatch<React.SetStateAction<UserDeletionStatus>>;
+    onStatusChange?: () => void;
+    cancelReason: string;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface TimeLeft {
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+}
+
+export interface CountdownDisplayProps {
+    timeLeft: TimeLeft;
+    scheduledDate: Date;
+    title?: string;
+    variant?: 'main' | 'action';
+    urgencyTextColor?: string;
 }

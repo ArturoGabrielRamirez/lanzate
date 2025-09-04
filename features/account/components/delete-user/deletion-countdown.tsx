@@ -1,18 +1,20 @@
+"use client"
+
 import { useEffect } from "react";
-import { getUrgencyLevel, getUrgencyColors } from "../../utils/utils";
 import { useAccountDeletion } from "../../hooks/use-account-deletion";
 import { AccountDeletedAlert, ActionNearExpirationAlert, ExplanationAlert, NearExpirationAlert } from "./account-delete-alert";
-import { ActionCountdownDisplay, MainCountdownDisplay } from "./main-countdown-display";
+import { MainCountdownDisplay } from "./main-countdown-display";
 import { useCountdown } from "../../hooks/use-countdown";
-
+import DeletionHelpers from "../../utils/deletion-helpers";
+import { Clock } from "lucide-react";
 
 export default function DeletionCountdown({
     displayScheduledDate,
     canCancelUntil,
+    isWithinActionWindow,
     onAccountDeleted
 }: {
     displayScheduledDate: Date;
-    timeRemaining: number | null;
     canCancelUntil?: Date | null;
     isWithinActionWindow?: boolean;
     onAccountDeleted?: () => void;
@@ -46,31 +48,67 @@ export default function DeletionCountdown({
         return <AccountDeletedAlert />;
     }
 
-    const actionUrgency = actionTimeLeft ? getUrgencyLevel(actionTimeLeft.totalMinutes) : 'expired';
-    const actionColors = getUrgencyColors(actionUrgency);
+    const actionUrgency = actionTimeLeft 
+        ? DeletionHelpers.getUrgencyLevelFromMinutes(actionTimeLeft.totalMinutes)
+        : 'critical';
+
+    const deletionUrgency = DeletionHelpers.getUrgencyLevel(timeLeft.days || 0);
+
+    const getUrgencyTextColor = (urgency: string) => {
+        switch (urgency) {
+            case 'critical': return 'text-red-400';
+            case 'high': return 'text-red-400';
+            case 'medium': return 'text-orange-400';
+            case 'low': return 'text-yellow-400';
+            default: return 'text-red-400';
+        }
+    };
+
+    const getUrgencyBorderColor = (urgency: string) => {
+        switch (urgency) {
+            case 'critical': return 'border-red-500/30';
+            case 'high': return 'border-red-500/30';
+            case 'medium': return 'border-orange-500/30';
+            case 'low': return 'border-yellow-500/30';
+            default: return 'border-red-500/30';
+        }
+    };
+
+    const deletionTextColor = getUrgencyTextColor(deletionUrgency);
+    const deletionBorderColor = getUrgencyBorderColor(deletionUrgency);
+    const actionTextColor = getUrgencyTextColor(actionUrgency);
+    const actionBorderColor = getUrgencyBorderColor(actionUrgency);
 
     return (
-        <div className="bg-gray-800 border border-red-500/30 rounded-lg p-6 mb-6 space-y-6">
-            {canCancelUntil && (
-                <>
-                    <ActionCountdownDisplay
-                        actionTimeLeft={actionTimeLeft}
-                        canCancelUntil={canCancelUntil}
-                        urgencyColors={actionColors}
-                    />
-                    {isActionNearExpiration && actionTimeLeft && (
-                        <ActionNearExpirationAlert totalMinutes={actionTimeLeft.totalMinutes} />
-                    )}
-                </>
+        <div className={`bg-gray-800 border rounded-lg p-4 mb-4 space-y-4 ${deletionBorderColor}`}>
+            {isNearExpiration && <NearExpirationAlert />}
+            {isActionNearExpiration && actionTimeLeft && (
+                <ActionNearExpirationAlert totalMinutes={actionTimeLeft.totalMinutes} />
             )}
 
             <MainCountdownDisplay
                 timeLeft={timeLeft}
                 scheduledDate={displayScheduledDate}
+                urgencyTextColor={deletionTextColor}
             />
 
-            {isNearExpiration && <NearExpirationAlert />}
-
+            {actionTimeLeft && isWithinActionWindow && (
+                <div className={`p-3 rounded border bg-gray-900/50 ${actionBorderColor}`}>
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <Clock className={`h-4 w-4 ${actionTextColor}`} />
+                            <span className={`text-sm font-medium ${actionTextColor}`}>
+                                Ventana: {Math.floor(actionTimeLeft.totalMinutes / 60)}h {actionTimeLeft.totalMinutes % 60}m
+                            </span>
+                        </div>
+                        <span className="text-xs text-gray-400">
+                            {actionUrgency === 'critical' ? 'Crítico' :
+                             actionUrgency === 'high' ? 'Urgente' :
+                             actionUrgency === 'medium' ? 'Activa' : 'Normal'}
+                        </span>
+                    </div>
+                </div>
+            )}
             <ExplanationAlert />
         </div>
     );

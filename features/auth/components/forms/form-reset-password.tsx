@@ -30,7 +30,7 @@ const ResetPassword = () => {
 
   return (
     <Form<SignupFormData>
-      resolver={yupResolver(emailSchema)}
+      resolver={yupResolver(emailSchema as never)}
       formAction={(data) => {
         submittedEmailRef.current = data.email;
         return handleResetPassword(data.email);

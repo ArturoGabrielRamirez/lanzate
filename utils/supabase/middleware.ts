@@ -1,7 +1,7 @@
 // middleware.ts - VERSIÓN SIMPLIFICADA
-import { createServerClient} from '@supabase/ssr'
+import { createServerClient } from '@supabase/ssr'
 import createIntlMiddleware from 'next-intl/middleware'
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { extractSubdomain } from '@/features/subdomain/middleware/middleware'
 import { validateSubdomain } from '@/features/subdomain/actions/validateSubdomain'
 import { routing } from '@/i18n/routing'
@@ -51,8 +51,10 @@ export async function updateSession(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   let response: NextResponse
+
   if (shouldApplyI18n(pathname)) {
     const intlResponse = intlMiddleware(request)
+
     if (intlResponse?.status >= 300 && intlResponse?.status < 400) {
       if (subdomain) {
         const location = intlResponse.headers.get('location')
@@ -82,8 +84,7 @@ export async function updateSession(request: NextRequest) {
             request.cookies.set(name, value)
           })
 
-          response = NextResponse.next({ request })
-
+          //response = NextResponse.next({ request })
           cookiesToSet.forEach(({ name, value, options }) => {
             response.cookies.set(name, value, { ...options, ...cookieConfig })
           })
@@ -125,12 +126,14 @@ export async function updateSession(request: NextRequest) {
       '/checkout': `/${currentLocale}/s/${subdomain}/checkout`,
       '/my-orders': `/${currentLocale}/s/${subdomain}/my-orders`,
       '/account': `/${currentLocale}/s/${subdomain}/account`,
+      '/products': `/${currentLocale}/s/${subdomain}/products`,
     }
-    
+
     if (subdomainRoutes[pathWithoutLocale as keyof typeof subdomainRoutes]) {
       const url = new URL(subdomainRoutes[pathWithoutLocale as keyof typeof subdomainRoutes], request.url)
       url.search = request.nextUrl.search
-      return NextResponse.rewrite(url)
+      //return NextResponse.rewrite(url)
+      return NextResponse.rewrite(url, response)
     }
 
     // Handle dynamic routes
@@ -139,26 +142,35 @@ export async function updateSession(request: NextRequest) {
       if (orderId && !isNaN(Number(orderId))) {
         const url = new URL(`/${currentLocale}/s/${subdomain}/my-orders/${orderId}`, request.url)
         url.search = request.nextUrl.search
-        return NextResponse.rewrite(url)
+        return NextResponse.rewrite(url, response)
       }
     }
 
     if (pathWithoutLocale.startsWith('/item/')) {
       const itemPath = pathWithoutLocale.split('/item/')[1]
       const url = new URL(`/${currentLocale}/s/${subdomain}/item/${itemPath}`, request.url)
-      return NextResponse.rewrite(url)
+      return NextResponse.rewrite(url, response)
     }
 
     return response
   }
 
+  const publicRoutes = [
+    '/',
+    '/login',
+    '/signup',
+    '/reset-password',
+    '/privacy-policy',
+    '/terms-and-conditions',
+    '/cookies',
+  ]
   // Redirecciones de autenticación simples
-  if (!user && (pathWithoutLocale === '/account' || pathWithoutLocale.includes('/dashboard'))) {
+  if (!user && !publicRoutes.includes(pathWithoutLocale)) {
     const url = new URL(`/${currentLocale}/login`, `https://${rootDomain}`)
     return NextResponse.redirect(url)
   }
 
-  if (user && (pathWithoutLocale.includes('/login') || pathWithoutLocale.includes('/signup'))) {
+  if (user && publicRoutes.includes(pathWithoutLocale)) {
     const url = new URL(`/${currentLocale}/dashboard`, `https://${rootDomain}`)
     return NextResponse.redirect(url)
   }

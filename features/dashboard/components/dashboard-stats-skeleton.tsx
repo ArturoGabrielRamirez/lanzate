@@ -2,11 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ChartNoAxesCombined, Store, Package, ShoppingCart, DollarSign } from "lucide-react"
 import * as motion from "motion/react-client"
+import { useTranslations } from "next-intl"
 
 function DashboardStatCardSkeleton({ index, stat }: { index: number, stat: { title: string, icon: React.ComponentType<{ className?: string }> } }) {
     const baseDelay = index * 0.1
-
-
 
     return (
         <motion.div
@@ -33,22 +32,23 @@ function DashboardStatCardSkeleton({ index, stat }: { index: number, stat: { tit
 }
 
 function DashboardStatsSkeleton() {
+    const t = useTranslations("dashboard.stats")
 
     const statsData = [
         {
-            title: "Total Revenue",
+            title: t("total-revenue"),
             icon: DollarSign
         },
         {
-            title: "Orders",
+            title: t("orders"),
             icon: ShoppingCart
         },
         {
-            title: "Products",
+            title: t("products"),
             icon: Package
         },
         {
-            title: "Active Stores",
+            title: t("active-stores"),
             icon: Store
         }
     ]
@@ -58,13 +58,10 @@ function DashboardStatsSkeleton() {
             <div className="flex items-center justify-between mb-2 md:mb-4">
                 <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2 text-primary/50 group-hover/stats:text-primary transition-all">
                     <ChartNoAxesCombined className="size-4 xl:size-5" />
-                    Your stats
+                    {t("title")}
                 </h2>
             </div>
-            <motion.div
-                className="grid-cols-2 gap-4 lg:grid lg:gap-6"
-            >
-
+            <motion.div className="grid-cols-2 gap-4 lg:grid lg:gap-6">
                 {statsData.map((stat, index) => (
                     <DashboardStatCardSkeleton key={index} index={index} stat={stat} />
                 ))}

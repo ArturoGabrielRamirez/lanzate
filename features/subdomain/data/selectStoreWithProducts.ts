@@ -15,7 +15,14 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
             ? category.split(',').map(id => id.trim())
             : undefined;
 
-        const orderBy: { name?: 'asc' | 'desc', price?: 'asc' | 'desc', created_at?: 'asc' | 'desc' } = {}
+        const orderBy: {
+            name?: 'asc' | 'desc',
+            price?: 'asc' | 'desc',
+            created_at?: 'asc' | 'desc',
+            is_featured?: 'asc' | 'desc'
+        } = {
+            is_featured: 'desc'
+        }
 
         if (sort?.includes('name')) {
             orderBy.name = sort.includes('-desc') ? 'desc' : 'asc'
@@ -45,66 +52,76 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
             },
             include: {
                 products: {
-                    where: categoryIds
-                        ? {
-                            categories: {
-                                some: {
-                                    id: {
-                                        in: categoryIds.map(Number)
-                                    }
-                                }
-                            },
-                            OR: [
-                                {
-                                    name: {
-                                        search: search
+                    where: {
+                        is_deleted: false,
+                        ...(categoryIds
+                            ? {
+                                categories: {
+                                    some: {
+                                        id: {
+                                            in: categoryIds.map(id => parseInt(id))
+                                        }
                                     }
                                 },
-                                {
-                                    name: {
-                                        contains: search,
-                                        mode: "insensitive"
-                                    }
-                                },
-                                {
-                                    description: {
-                                        search: search
-                                    }
-                                },
-                                {
-                                    description: {
-                                        contains: search, mode: "insensitive"
-                                    }
-                                },
-                            ],
-                            price: priceRange
+                                OR: [
+                                    {
+                                        name: {
+                                            search: search
+                                        }
+                                    },
+                                    {
+                                        name: {
+                                            contains: search,
+                                            mode: "insensitive"
+                                        }
+                                    },
+                                    {
+                                        description: {
+                                            search: search
+                                        }
+                                    },
+                                    {
+                                        description: {
+                                            contains: search, mode: "insensitive"
+                                        }
+                                    },
+                                ],
+                                price: priceRange
+                            }
+                            : {
+                                OR: [
+                                    {
+                                        name: {
+                                            search: search
+                                        }
+                                    },
+                                    {
+                                        name: {
+                                            contains: search,
+                                            mode: "insensitive"
+                                        }
+                                    },
+                                    {
+                                        description: {
+                                            search: search
+                                        }
+                                    },
+                                    {
+                                        description: {
+                                            contains: search, mode: "insensitive"
+                                        }
+                                    },
+                                ],
+                                price: priceRange
+                            })
+                    },
+                    include: {
+                        variants: {
+                            where: {
+                                is_deleted: false
+                            }
                         }
-                        : {
-                            OR: [
-                                {
-                                    name: {
-                                        search: search
-                                    }
-                                },
-                                {
-                                    name: {
-                                        contains: search,
-                                        mode: "insensitive"
-                                    }
-                                },
-                                {
-                                    description: {
-                                        search: search
-                                    }
-                                },
-                                {
-                                    description: {
-                                        contains: search, mode: "insensitive"
-                                    }
-                                },
-                            ],
-                            price: priceRange
-                        },
+                    },
                     orderBy: orderBy,
                     take: limit,
                     skip: limit * (page - 1)
@@ -113,8 +130,6 @@ export async function selectStoreWithProducts(subdomain: string, category: strin
                 operational_settings: true
             },
         })
-
-        console.log("🚀 ~ result:", result)
 
         return {
             message: "Store with products fetched successfully from db",

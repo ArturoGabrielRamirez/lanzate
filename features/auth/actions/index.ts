@@ -6,7 +6,6 @@ export { handleSignup } from "./handle-sign-up";
 export { handleSignOut } from "./handle-sign-out";
 export { getEmailChangeStatus } from "./get-email-change-status";
 export { getCurrentUser } from "./get-current-user";
-export { getLocalUser } from "./get-locale-user";
+export { getLocalUser } from "./get-local-user";
 export { handleEditEmail } from "./handle-edit-email";
 export { handleEditPassword } from "./handle-edit-password";
-/* export { resendEmailConfirmation } from "./resend-email-confirmation"; */

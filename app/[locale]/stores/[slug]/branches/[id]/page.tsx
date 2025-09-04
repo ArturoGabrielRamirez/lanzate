@@ -27,7 +27,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
         return console.log(error)
     }
 
-    const formatDate = (dateString: string) => {
+    const formatDate = (dateString: string | Date) => {
         return new Date(dateString).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
@@ -158,7 +158,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                                             <div>
                                                 <p className="text-sm font-medium">{t("order")}#{order.id}</p>
                                                 <p className="text-xs text-muted-foreground">
-                                                    {formatDate(order.created_at.toISOString())}
+                                                    {formatDate(order.created_at)}
                                                 </p>
                                             </div>
                                             <div className="text-right">

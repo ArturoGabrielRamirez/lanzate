@@ -39,6 +39,8 @@ export interface EmailChangeStatus {
   expiresAt?: Date;
   oldEmailConfirmedAt?: Date | null;
   newEmailConfirmedAt?: Date | null;
+ /*  nextEmailConfirmedAt?: Date | null;
+  nextStepEmail?: { email: string; type: 'old_email' | 'new_email' } | null; */
 }
 
 export interface EmailChangeStatusResponse extends EmailChangeStatus { }
@@ -118,13 +120,13 @@ export interface EmailStepProgressProps {
 }
 
 export interface ChangePasswordButtonProps {
-  buttonText: string;
+  buttonText: string | React.ReactNode;
   title: string;
   className?: string;
 }
 
 export interface ChangeEmailButtonProps {
-  buttonText: string;
+  buttonText: string | React.ReactNode;
   title: string;
   className?: string;
   currentEmail: string;

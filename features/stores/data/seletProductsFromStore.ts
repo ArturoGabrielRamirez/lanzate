@@ -17,7 +17,8 @@ export async function selectProductsFromStore(slug: string) {
 
         const products = await prisma.product.findMany({
             where: {
-                store_id: store.id
+                store_id: store.id,
+                is_deleted: false
             }
         })
 

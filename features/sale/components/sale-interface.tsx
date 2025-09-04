@@ -261,7 +261,7 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
   } */
 
   return (
-    <div className="grid grid-cols-1 lg:grid-areas-[search_barcode_cart,results_results_cart,buttons_buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_1fr_350px] xl:grid-cols-[1fr_1fr_450px] grid-rows-[min-content_1fr_min-content]">
+    <div className="grid grid-cols-1 lg:grid-areas-[search_barcode_cart,results_results_cart,buttons_buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_1fr_350px] xl:grid-cols-[1fr_1fr_450px] grid-rows-[min-content_min-content_1fr_auto] lg:grid-rows-[min-content_1fr_auto]">
 
       <div className='grid grid-cols-[1fr_auto] gap-4 lg:col-span-2 lg:grid-cols-2'>
         <SearchSection

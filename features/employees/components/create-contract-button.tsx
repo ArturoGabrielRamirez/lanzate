@@ -16,6 +16,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { contractCreateSchema } from "@/features/employees/schemas/employee-schema"
+import { yupResolverFlexible } from "../types/yup-resolver-flexible"
 type CreateContractButtonProps = {
     storeId: number
     userId: number
@@ -171,7 +172,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                     loadingMessage="Creando contrato..."
                     onSuccess={handleSuccess}
                     disabled={false}
-                    resolver={yupResolver(contractCreateSchema)}
+                    resolver={yupResolverFlexible(contractCreateSchema)}
                 >
                     <Accordion type="single" collapsible defaultValue="item-1">
                         <AccordionItem value="item-1">

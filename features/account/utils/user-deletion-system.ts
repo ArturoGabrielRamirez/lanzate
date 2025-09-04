@@ -1,9 +1,9 @@
 import { prisma } from '@/utils/prisma';
 import { CryptoUtils } from './crypto-utils';
-/* import { createServerSideClient } from '@/utils/supabase/server'; */
+import DeletionHelpers from './deletion-helpers';
 
 export class UserDeletionSystem {
-  // ✅ CONFIGURACIÓN ADAPTADA PARA SUPABASE CRON
+  // CONFIGURACIÓN ADAPTADA PARA SUPABASE CRON
   private static readonly CONFIG = {
     // Para testing con cron cada minuto
     GRACE_PERIOD_MINUTES: 2,
@@ -19,12 +19,8 @@ export class UserDeletionSystem {
     IS_TESTING_MODE: true,
   };
 
-  // ================================
-  // 🎯 MÉTODOS PRINCIPALES - YA NO NECESITAN PROCESAMIENTO DIRECTO
-  // ================================
-
   /**
-   * 📊 OBTENER ESTADO - Sin cambios, sigue funcionando igual
+   * OBTENER ESTADO - Corregido para usar displayScheduledAt calculado
    */
   static async getDeletionStatus(userId: number) {
     const user = await prisma.user.findUnique({
@@ -45,46 +41,75 @@ export class UserDeletionSystem {
         isDeletionRequested: false,
         deletionRequestedAt: null,
         deletionScheduledAt: null,
+        displayScheduledAt: null,
         deletionReason: null,
         canCancel: false,
         daysRemaining: 0,
         minutesRemaining: 0,
         timeRemaining: null,
+        canDeleteUntil: null,
+        canCancelUntil: null,
+        isWithinActionWindow: false,
         isAnonymized: user?.is_anonymized || false,
         legalStatus: user?.is_anonymized ? 'legally_processed' : 'active',
-        processingMethod: 'supabase_pg_cron', // 🆕
+        processingMethod: 'supabase_pg_cron',
         testingMode: this.CONFIG.IS_TESTING_MODE,
       };
     }
 
     const now = new Date();
     const scheduledAt = user.deletion_scheduled_at!;
+    
+    // Usar DeletionHelpers para calcular la fecha de display redondeada
+    const displayScheduledAt = DeletionHelpers.getDisplayScheduledDate(scheduledAt);
+    const daysRemaining = DeletionHelpers.getDaysRemaining(scheduledAt);
+    
+    // Calcular minutos usando la fecha original (no redondeada) para precisión
     const timeDifference = scheduledAt.getTime() - now.getTime();
-    const daysRemaining = Math.max(0, Math.ceil(timeDifference / (1000 * 60 * 60 * 24)));
     const minutesRemaining = Math.max(0, Math.ceil(timeDifference / (1000 * 60)));
+    
     const canCancel = timeDifference > 0 && !user.is_deletion_cancelled && !user.is_anonymized;
+
+    // Calcular ventana de acción (últimas horas antes del cron)
+    const actionWindowMinutes = this.CONFIG.IS_TESTING_MODE ? 1 : 60; // 1 min en testing, 1h en prod
+    const actionWindowStart = new Date(scheduledAt.getTime() - (actionWindowMinutes * 60 * 1000));
+    const isWithinActionWindow = now >= actionWindowStart && now < scheduledAt;
+    
+    const canCancelUntil = canCancel ? scheduledAt : null;
 
     return {
       isDeletionRequested: true,
       deletionRequestedAt: user.deletion_requested_at,
       deletionScheduledAt: user.deletion_scheduled_at,
+      displayScheduledAt, // Fecha redondeada para mostrar al usuario
       deletionReason: user.deletion_reason,
       canCancel,
       daysRemaining,
       minutesRemaining,
-      timeRemaining: Math.max(0, timeDifference),
+      timeRemaining: null, // Eliminado - que el frontend calcule desde displayScheduledAt
+      canDeleteUntil: scheduledAt,
+      canCancelUntil,
+      isWithinActionWindow,
       isAnonymized: user.is_anonymized || false,
       anonymizedAt: user.anonymized_at,
       legalRetentionUntil: user.account_locked_until,
       legalStatus: user.is_anonymized ? 'legally_processed' : 'pending_deletion',
-      processingMethod: 'supabase_pg_cron', // 🆕
-      cronFrequency: this.CONFIG.IS_TESTING_MODE ? 'every_minute' : 'daily_3am', // 🆕
+      processingMethod: 'supabase_pg_cron',
+      cronFrequency: this.CONFIG.IS_TESTING_MODE ? 'every_minute' : 'daily_3am',
       testingMode: this.CONFIG.IS_TESTING_MODE,
+      calculationInfo: {
+        requestedAt: user.deletion_requested_at,
+        scheduledAt: user.deletion_scheduled_at,
+        displayScheduledAt,
+        currentTime: now.toISOString(),
+        roundedActionLimit: displayScheduledAt?.toISOString() || null,
+        withinWindow: isWithinActionWindow,
+      },
     };
   }
 
   /**
-   * ✅ SOLICITAR ELIMINACIÓN - Actualizado para pg_cron
+   * SOLICITAR ELIMINACIÓN - Actualizado para usar DeletionHelpers
    */
   static async requestDeletion(params: {
     userId: number;
@@ -100,7 +125,7 @@ export class UserDeletionSystem {
     if (this.CONFIG.IS_TESTING_MODE) {
       // En testing: 2 minutos
       deletionScheduledAt.setMinutes(deletionScheduledAt.getMinutes() + this.CONFIG.GRACE_PERIOD_MINUTES);
-      console.log(`🧪 TESTING: Eliminación programada para ${deletionScheduledAt.toLocaleString()}`);
+      console.log(`Testing: Eliminación programada para ${deletionScheduledAt.toLocaleString()}`);
     } else {
       // En producción: 30 días
       deletionScheduledAt.setDate(deletionScheduledAt.getDate() + this.CONFIG.GRACE_PERIOD_DAYS);
@@ -137,8 +162,9 @@ export class UserDeletionSystem {
           user_agent: userAgent,
           additional_data: JSON.stringify({
             scheduled_for: deletionScheduledAt.toISOString(),
-            processing_method: 'supabase_pg_cron', // 🆕
-            cron_frequency: this.CONFIG.IS_TESTING_MODE ? 'every_minute' : 'daily_3am', // 🆕
+            display_scheduled_for: DeletionHelpers.getDisplayScheduledDate(deletionScheduledAt)?.toISOString(),
+            processing_method: 'supabase_pg_cron',
+            cron_frequency: this.CONFIG.IS_TESTING_MODE ? 'every_minute' : 'daily_3am',
             grace_period_days: this.CONFIG.GRACE_PERIOD_DAYS,
             grace_period_minutes: this.CONFIG.GRACE_PERIOD_MINUTES,
             testing_mode: this.CONFIG.IS_TESTING_MODE,
@@ -150,18 +176,19 @@ export class UserDeletionSystem {
       return {
         deletionRequestedAt,
         deletionScheduledAt,
-        processingMethod: 'supabase_pg_cron', // 🆕
-        cronFrequency: this.CONFIG.IS_TESTING_MODE ? 'every_minute' : 'daily_3am', // 🆕
+        displayScheduledAt: DeletionHelpers.getDisplayScheduledDate(deletionScheduledAt),
+        processingMethod: 'supabase_pg_cron',
+        cronFrequency: this.CONFIG.IS_TESTING_MODE ? 'every_minute' : 'daily_3am',
         gracePeriodDays: this.CONFIG.GRACE_PERIOD_DAYS,
         gracePeriodMinutes: this.CONFIG.GRACE_PERIOD_MINUTES,
         testingMode: this.CONFIG.IS_TESTING_MODE,
-        automaticProcessing: true, // 🆕 Se procesa automáticamente
+        automaticProcessing: true,
       };
     });
   }
 
   /**
-   * ✅ CANCELAR ELIMINACIÓN - Sin cambios
+   * CANCELAR ELIMINACIÓN - Sin cambios
    */
   static async cancelDeletion(params: {
     userId: number;
@@ -206,17 +233,13 @@ export class UserDeletionSystem {
       return {
         cancelledAt,
         processingMethod: 'supabase_pg_cron',
-        automaticProcessing: false, // Ya no se procesará automáticamente
+        automaticProcessing: false,
       };
     });
   }
 
-  // ================================
-  // 🔧 MÉTODOS DE MONITOREO Y ESTADÍSTICAS
-  // ================================
-
   /**
-   * 📊 ESTADÍSTICAS DEL SISTEMA - Actualizado
+   * ESTADÍSTICAS DEL SISTEMA - Actualizado
    */
   static async getDeletionStats() {
     const [pendingDeletions, anonymizedAccounts, expiredRetention] = await Promise.all([
@@ -241,7 +264,6 @@ export class UserDeletionSystem {
       anonymizedAccounts,
       expiredLegalRetention: expiredRetention,
 
-      // 🆕 Información del sistema actualizado
       systemInfo: {
         processingMethod: 'supabase_pg_cron',
         cronFrequency: this.CONFIG.IS_TESTING_MODE ? 'every_minute' : 'daily_3am',
@@ -249,17 +271,17 @@ export class UserDeletionSystem {
         manualInterventionRequired: false,
       },
 
-      gracePeriodDays: this.GRACE_PERIOD_DAYS,
-      gracePeriodMinutes: this.GRACE_PERIOD_MINUTES,
-      legalRetentionYears: this.LEGAL_RETENTION_YEARS,
-      legalRetentionMinutes: this.LEGAL_RETENTION_MINUTES,
+      gracePeriodDays: this.CONFIG.GRACE_PERIOD_DAYS,
+      gracePeriodMinutes: this.CONFIG.GRACE_PERIOD_MINUTES,
+      legalRetentionYears: this.CONFIG.RETENTION.LEGAL_RETENTION_YEARS,
+      legalRetentionMinutes: this.CONFIG.RETENTION.LEGAL_RETENTION_MINUTES,
       testingMode: this.CONFIG.IS_TESTING_MODE,
       lastChecked: new Date().toISOString(),
     };
   }
 
   /**
-   * 🔍 ESTADO DEL SISTEMA - Nuevo método para monitoreo
+   * ESTADO DEL SISTEMA - Nuevo método para monitoreo
    */
   static async getSystemStatus() {
     const stats = await this.getDeletionStats();
@@ -268,7 +290,6 @@ export class UserDeletionSystem {
       ...stats,
       systemHealthy: stats.pendingDeletions < 100 && stats.expiredLegalRetention === 0,
 
-      // 🆕 Estado específico de pg_cron
       cronSystemStatus: {
         enabled: true,
         method: 'supabase_pg_cron',
@@ -285,7 +306,7 @@ export class UserDeletionSystem {
   }
 
   /**
-   * ✅ VALIDACIÓN DE NUEVA CUENTA - Sin cambios
+   * VALIDACIÓN DE NUEVA CUENTA - Sin cambios
    */
   static async validateNewUserCreation(email: string) {
     const emailHash = CryptoUtils.hashEmail(email);
@@ -318,17 +339,13 @@ export class UserDeletionSystem {
       previouslyAnonymized: !!anonymizedUser,
       anonymizedAt: anonymizedUser?.anonymized_at,
       legalRetentionUntil: anonymizedUser?.account_locked_until,
-      processingMethod: 'supabase_pg_cron', // 🆕
+      processingMethod: 'supabase_pg_cron',
       testingMode: this.CONFIG.IS_TESTING_MODE,
     };
   }
 
-  // ================================
-  // 🧪 MÉTODOS PARA TESTING Y DEBUG
-  // ================================
-
   /**
-   * 🧪 FORZAR CHEQUEO MANUAL (solo para testing/debug)
+   * FORZAR CHEQUEO MANUAL (solo para testing/debug)
    */
   static async manualHealthCheck() {
     const stats = await this.getDeletionStats();
@@ -347,10 +364,7 @@ export class UserDeletionSystem {
     };
   }
 
-  // ================================
-  // 🎯 GETTERS PÚBLICOS - Mantenidos por compatibilidad
-  // ================================
-
+  // GETTERS PÚBLICOS - Mantenidos por compatibilidad
   static get GRACE_PERIOD_DAYS() {
     return this.CONFIG.IS_TESTING_MODE ? 0 : 30;
   }

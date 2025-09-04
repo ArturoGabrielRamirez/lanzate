@@ -30,6 +30,7 @@ import { useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -100,9 +101,13 @@ export function DataTable<TData, TValue>({
                 <div className="flex items-center gap-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline" size="lg">
+                            <IconButton
+                                icon={Filter}
+                                size="md"
+                            />
+                            {/* <Button variant="outline" size="lg">
                                 <Filter />
-                            </Button>
+                            </Button> */}
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             {table

@@ -1,11 +1,14 @@
 "use server"
 
-import { actionWrapper, formatErrorResponse } from "@/utils/lib"
+import { actionWrapper } from "@/utils/lib"
 import { selectStoreHeaderBySlug } from "../data/selectStoreHeaderBySlug"
 
 type StoreHeader = {
+    id: number
     name: string
     description: string | null
+    logo: string | null
+    banner: string | null
     balance: {
         current_balance: number
     } | null
