@@ -1,4 +1,4 @@
-import React, { useState, Children, useRef, useLayoutEffect, HTMLAttributes, ReactNode, JSX } from 'react';
+import React, { useState, Children, useRef, useLayoutEffect, HTMLAttributes, ReactNode } from 'react';
 import { motion, AnimatePresence, Variants } from 'motion/react';
 
 import './Stepper.css';
@@ -320,7 +320,7 @@ function StepConnector({ isComplete }: StepConnectorProps) {
 
 
 interface CheckIconProps extends React.SVGProps<SVGSVGElement> { }
-  
+
 function CheckIcon(props: CheckIconProps) {
 
   return (
