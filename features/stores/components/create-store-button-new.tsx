@@ -10,7 +10,7 @@ import { useStep } from "@/hooks/use-step"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Calendar, Camera, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Mail, MapPin, Phone, Plus, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
+import { Calendar, Camera, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Loader, Mail, MapPin, Phone, Plus, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
 import { useEffect, useState, createContext, useContext, useCallback, useRef } from "react"
@@ -1254,6 +1254,22 @@ const CreateStoreForm = ({ setStep, step, onSubmitAll }: CreateStoreFormProps & 
                     <ShippingFormPanel />
                 </Form>
             </Step>
+            {step === 6 && (
+                <Step className="!p-0 !pt-10 !pb-2">
+                    <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
+                        <Loader className="size-12 animate-spin text-primary" />
+                        <p className="text-sm text-muted-foreground">{"Creando tu tienda..."}</p>
+                    </div>
+                </Step>
+            )}
+            {step === 7 && (
+                <Step className="!p-0 !pt-10 !pb-2">
+                    <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
+                        <Check className="size-12 text-green-600" />
+                        <p className="text-sm text-muted-foreground">{"Tienda creada con éxito"}</p>
+                    </div>
+                </Step>
+            )}
         </Stepper>
     )
 }
@@ -1340,18 +1356,16 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
             processedPaymentMethods: processPaymentMethods(data.payment_info?.payment_methods as string[] | undefined),
         }
 
+        setStep(6)
         const { error, message, payload } = await createStore(processedData, userId)
         if (error) {
-            return {
-                error: true,
-                message: message,
-                payload: null
-            }
+            toast.error(message)
+            setStep(5)
         }
 
         // On success: move to success step and redirect shortly
         setCreatedSlug(payload.slug)
-        setStep(6)
+        setStep(7)
 
         return {
             error: false,
@@ -1366,7 +1380,8 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
         3: "Add your contact information and social media links so customers can contact you.",
         4: "Choose attention dates and hours so customers know when you are open.",
         5: "Choose your shipping methods and add your payment methods so customers can buy your products.",
-        6: "All set! Redirecting…",
+        6: "Creating your store…",
+        7: "All set! Redirecting…",
     }
 
     const titleSlugs = {
