@@ -13,7 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { Calendar, Camera, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Mail, MapPin, Phone, Plus, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState, createContext, useContext, useCallback, useRef } from "react"
 import { useFormContext } from "react-hook-form"
 import * as yup from "yup"
 import CameraComponent from "@/features/auth/components/avatar/camera-component"
@@ -67,8 +67,43 @@ type CreateStoreFormProps = {
     step: number
 }
 
-const createStoreSchema = yup.object().shape({
-    basic_info: yup.object().shape({
+export type CreateStoreFormValues = {
+    basic_info: {
+        name: string
+        description?: string
+        subdomain: string
+        logo?: File | string | null
+    }
+    address_info: {
+        is_physical_store: boolean
+        address?: string
+        city?: string
+        province?: string
+        country?: string
+    }
+    contact_info: {
+        contact_phone: string
+        contact_email: string
+        facebook_url?: string
+        instagram_url?: string
+        x_url?: string
+    }
+    settings: {
+        is_open_24_hours: boolean
+        attention_dates?: { days?: string[]; startTime?: string; endTime?: string }[]
+    }
+    shipping_info: {
+        offers_delivery: boolean
+        methods?: { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice: string }[]
+    }
+    payment_info: {
+        payment_methods: string[]
+    }
+}
+
+// Per-step schemas
+const basicInfoSchema = yup.object({
+    basic_info: yup.object({
         name: yup.string().required("Name is required"),
         description: yup.string().max(255, "Description must be less than 255 characters long"),
         subdomain: yup.string().required("Subdomain is required"),
@@ -87,8 +122,11 @@ const createStoreSchema = yup.object().shape({
                 }
                 return true
             }).nullable().optional(),
-    }),
-    address_info: yup.object().shape({
+    })
+})
+
+const addressInfoSchema = yup.object({
+    address_info: yup.object({
         is_physical_store: yup.boolean().default(false),
         address: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
             isPhysicalStore ? schema.required("Address is required when store is physical") : schema.max(255, "Address must be less than 255 characters long")
@@ -102,23 +140,42 @@ const createStoreSchema = yup.object().shape({
         country: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
             isPhysicalStore ? schema.required("Country is required when store is physical") : schema.max(100, "Country must be less than 100 characters long")
         ),
-    }),
-    contact_info: yup.object().shape({
+    })
+})
+
+const contactInfoSchema = yup.object({
+    contact_info: yup.object({
         contact_phone: yup.string().max(20, "Phone must be less than 20 characters long").required("Phone is required"),
         contact_email: yup.string().email("Must be a valid email").max(255, "Email must be less than 255 characters long").required("Email is required"),
         facebook_url: yup.string().url("Must be a valid URL").max(255, "Facebook URL must be less than 255 characters long"),
         instagram_url: yup.string().url("Must be a valid URL").max(255, "Instagram URL must be less than 255 characters long"),
         x_url: yup.string().url("Must be a valid URL").max(255, "X URL must be less than 255 characters long"),
-    }),
-    settings: yup.object().shape({
+    })
+})
+
+const settingsSchema = yup.object({
+    settings: yup.object({
         is_open_24_hours: yup.boolean().default(true),
-        attention_dates: yup.array().of(yup.object({
-            days: yup.array().of(yup.string()),
-            startTime: yup.string(),
-            endTime: yup.string(),
-        }))
-    }),
-    shipping_info: yup.object().shape({
+        attention_dates: yup
+            .array()
+            .of(
+                yup.object({
+                    days: yup.array().of(yup.string()),
+                    startTime: yup.string(),
+                    endTime: yup.string(),
+                })
+            )
+            .default([])
+            .test("must-have-at-least-one-when-scheduled", "Debe configurar al menos un día de atención", function (value) {
+                const isOpen = this.parent?.is_open_24_hours
+                if (isOpen) return true
+                return Array.isArray(value) && value.length > 0
+            })
+    })
+})
+
+const shippingPaymentSchema = yup.object({
+    shipping_info: yup.object({
         offers_delivery: yup.boolean().default(false),
         methods: yup.array().of(yup.object({
             providers: yup.array().of(yup.string()).min(1, "Seleccione al menos un proveedor"),
@@ -128,16 +185,56 @@ const createStoreSchema = yup.object().shape({
             deliveryPrice: yup.string().matches(/^\d*$/, "Debe ser un número").required("Precio del delivery es requerido"),
         })).when("offers_delivery", (offers, schema) => offers ? schema.min(1, "Agregue al menos un modo de envío") : schema.notRequired())
     }),
-    payment_info: yup.object().shape({
+    payment_info: yup.object({
         payment_methods: yup.array().of(yup.string()).min(1, "Seleccione al menos un método de pago").required(),
-    }),
+    })
 })
 
-export type CreateStoreFormValues = yup.InferType<typeof createStoreSchema>;
+type BasicInfoFormType = yup.InferType<typeof basicInfoSchema>
+type AddressInfoFormType = yup.InferType<typeof addressInfoSchema>
+type ContactInfoFormType = yup.InferType<typeof contactInfoSchema>
+type SettingsFormType = yup.InferType<typeof settingsSchema>
+type ShippingPaymentFormType = yup.InferType<typeof shippingPaymentSchema>
+
+// Provider/Context (inline in this file)
+type CreateStoreContextType = {
+    values: Partial<CreateStoreFormValues>
+    setValues: (partial: Partial<CreateStoreFormValues>) => void
+    isStepValid: Record<number, boolean>
+    setStepValid: (step: number, valid: boolean) => void
+}
+
+const CreateStoreContext = createContext<CreateStoreContextType | null>(null)
+
+function useCreateStoreContext() {
+    const ctx = useContext(CreateStoreContext)
+    if (!ctx) throw new Error("CreateStoreContext not found")
+    return ctx
+}
+
+function CreateStoreProvider({ children }: { children: React.ReactNode }) {
+    const [values, setValuesState] = useState<Partial<CreateStoreFormValues>>({})
+    const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
+
+    const setValues = useCallback((partial: Partial<CreateStoreFormValues>) => {
+        setValuesState(prev => ({ ...prev, ...partial }))
+    }, [])
+
+    const setStepValid = useCallback((step: number, valid: boolean) => {
+        setIsStepValid(prev => ({ ...prev, [step]: valid }))
+    }, [])
+
+    return (
+        <CreateStoreContext.Provider value={{ values, setValues, isStepValid, setStepValid }}>
+            {children}
+        </CreateStoreContext.Provider>
+    )
+}
 
 const ShippingFormPanel = () => {
 
-    const { setValue, getValues, formState: { errors } } = useFormContext<CreateStoreFormValues>()
+    const { setValue, getValues, formState: { errors, isValid }, watch } = useFormContext<CreateStoreFormValues>()
+    const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const setValueAny = setValue as unknown as (name: string, value: unknown, options?: { shouldValidate?: boolean; shouldDirty?: boolean }) => void
     const [offersDelivery, setOffersDelivery] = useState(false)
     const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([])
@@ -145,14 +242,53 @@ const ShippingFormPanel = () => {
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
     const [paymentMethods, setPaymentMethods] = useState<string[]>([])
 
+    const seededRef = useRef(false)
     useEffect(() => {
+        if (seededRef.current) return
+        seededRef.current = true
+        if (values.shipping_info) {
+            const s = values.shipping_info
+            const safe = {
+                offers_delivery: !!s.offers_delivery,
+                methods: Array.isArray(s.methods)
+                    ? (s.methods.filter(Boolean).map((m) => ({
+                        providers: m?.providers || [],
+                        minPurchase: m?.minPurchase,
+                        freeShippingMin: m?.freeShippingMin,
+                        estimatedTime: m?.estimatedTime,
+                        deliveryPrice: m?.deliveryPrice ?? "",
+                    })) as NonNullable<CreateStoreFormValues["shipping_info"]["methods"]>)
+                    : []
+            }
+            setValue("shipping_info", safe, { shouldValidate: true })
+        }
+        if (values.payment_info) {
+            const p = values.payment_info
+            const safe = {
+                payment_methods: Array.isArray(p.payment_methods) ? (p.payment_methods.filter(Boolean) as string[]) : []
+            }
+            setValue("payment_info", safe, { shouldValidate: true })
+        }
         const offers = getValues("shipping_info.offers_delivery") || false
         setOffersDelivery(!!offers)
         const existingMethods = getValues("shipping_info.methods") || []
         setShippingMethods(existingMethods as ShippingMethod[])
         const existingPayments = getValues("payment_info.payment_methods") || []
         setPaymentMethods(existingPayments as string[])
-    }, [getValues])
+    }, [getValues, setValue, values.shipping_info, values.payment_info])
+
+    useEffect(() => {
+        const sub = watch((v) => {
+            const vv = v as Partial<CreateStoreFormValues>
+            setCtxValues({
+                shipping_info: vv.shipping_info as CreateStoreFormValues["shipping_info"],
+                payment_info: vv.payment_info as CreateStoreFormValues["payment_info"],
+            })
+        })
+        return () => sub.unsubscribe()
+    }, [watch, setCtxValues])
+
+    useEffect(() => { setStepValid(5, isValid) }, [isValid, setStepValid])
 
     const handleOffersDelivery = () => {
         setOffersDelivery(true)
@@ -495,7 +631,8 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
 
 const SettingsFormPanel = () => {
 
-    const { setValue, getValues } = useFormContext()
+    const { setValue, getValues, formState: { isValid, errors }, watch, trigger } = useFormContext()
+    const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const [attentionDates, setAttentionDates] = useState<AttentionDateType[]>(() => {
         const existing = getValues("settings.attention_dates") as { days: string[], startTime: string, endTime: string }[] | undefined
         if (!existing || existing.length === 0) return []
@@ -510,16 +647,36 @@ const SettingsFormPanel = () => {
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
     const [isOpen24Hours, setIsOpen24Hours] = useState(() => !!(getValues("settings.is_open_24_hours") ?? true))
 
+    const seededRefSettings = useRef(false)
+    useEffect(() => {
+        if (seededRefSettings.current) return
+        seededRefSettings.current = true
+        if (values.settings) setValue("settings", values.settings, { shouldValidate: true })
+    }, [values.settings, setValue])
 
+    useEffect(() => {
+        const sub = watch((v) => setCtxValues({ settings: (v as CreateStoreFormValues).settings }))
+        return () => sub.unsubscribe()
+    }, [watch, setCtxValues])
+
+    useEffect(() => { setStepValid(4, isValid) }, [isValid, setStepValid])
     const handleIsOpen24Hours = () => {
         setIsOpen24Hours(true)
-        setValue("settings.is_open_24_hours", true)
-        setValue("settings.attention_dates", [])
+        setValue("settings.is_open_24_hours", true, { shouldValidate: true, shouldDirty: true })
+        setValue("settings.attention_dates", [], { shouldValidate: true, shouldDirty: true })
+        trigger("settings")
     }
 
     const handleIsNotOpen24Hours = () => {
         setIsOpen24Hours(false)
-        setValue("settings.is_open_24_hours", false)
+        setValue("settings.is_open_24_hours", false, { shouldValidate: true, shouldDirty: true })
+        // force validation when switching to scheduled mode
+        setValue("settings.attention_dates", attentionDates.map(d => ({
+            days: d.days,
+            startTime: dayjs(d.startTime).format("HH:mm"),
+            endTime: dayjs(d.endTime).format("HH:mm"),
+        })), { shouldValidate: true, shouldDirty: true })
+        trigger("settings")
     }
 
     const handleAddDate = () => {
@@ -545,8 +702,9 @@ const SettingsFormPanel = () => {
             days: d.days,
             startTime: dayjs(d.startTime).format("HH:mm"),
             endTime: dayjs(d.endTime).format("HH:mm"),
-        })))
+        })), { shouldValidate: true, shouldDirty: true })
         setEditingIndex(null)
+        trigger("settings")
     }
 
     const handleSaveDate = (index: number, startTime: dayjs.Dayjs, endTime: dayjs.Dayjs, days: string[]) => {
@@ -556,9 +714,10 @@ const SettingsFormPanel = () => {
             days: d.days,
             startTime: dayjs(d.startTime).format("HH:mm"),
             endTime: dayjs(d.endTime).format("HH:mm"),
-        })))
+        })), { shouldValidate: true, shouldDirty: true })
         setIsAddingDate(false)
         setEditingIndex(null)
+        trigger("settings")
     }
 
     const handleDeleteDate = (index: number) => {
@@ -568,8 +727,9 @@ const SettingsFormPanel = () => {
             days: d.days,
             startTime: dayjs(d.startTime).format("HH:mm"),
             endTime: dayjs(d.endTime).format("HH:mm"),
-        })))
+        })), { shouldValidate: true, shouldDirty: true })
         if (editingIndex !== null && index === editingIndex) setEditingIndex(null)
+        trigger("settings")
     }
 
     return (
@@ -602,6 +762,9 @@ const SettingsFormPanel = () => {
                             <div className="text-sm text-muted-foreground border border-muted-foreground/50 p-6 rounded-md text-center border-dashed">
                                 <p>No hay dias de atencion configurados</p>
                             </div>
+                        )}
+                        {errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>) && (
+                            <p className="text-sm text-red-500">{(errors.settings as Record<string, { message?: string }>)["attention_dates"]?.message || ""}</p>
                         )}
                         {isAddingDate && editingIndex !== null && attentionDates[editingIndex] && (
                             <AttentionDateFormPanel
@@ -650,6 +813,19 @@ const SettingsFormPanel = () => {
 }
 
 const ContactFormPanel = () => {
+    const { formState: { isValid }, watch, setValue } = useFormContext()
+    const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
+    const seededRefContact = useRef(false)
+    useEffect(() => {
+        if (seededRefContact.current) return
+        seededRefContact.current = true
+        if (values.contact_info) setValue("contact_info", values.contact_info, { shouldValidate: true })
+    }, [values.contact_info, setValue])
+    useEffect(() => {
+        const sub = watch((v) => setCtxValues({ contact_info: (v as CreateStoreFormValues).contact_info }))
+        return () => sub.unsubscribe()
+    }, [watch, setCtxValues])
+    useEffect(() => { setStepValid(3, isValid) }, [isValid, setStepValid])
     return (
         <>
             <div className="space-y-8">
@@ -705,17 +881,38 @@ const ContactFormPanel = () => {
 
 const AddressFormPanel = () => {
 
-    const { setValue, getValues } = useFormContext()
+    const { setValue, getValues, formState: { isValid }, watch, trigger } = useFormContext()
+    const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const [isPhysicalStore, setIsPhysicalStore] = useState(getValues("address_info.is_physical_store") || false)
+
+    const seededRefAddress = useRef(false)
+    useEffect(() => {
+        if (seededRefAddress.current) return
+        seededRefAddress.current = true
+        if (values.address_info) setValue("address_info", values.address_info, { shouldValidate: true })
+    }, [values.address_info, setValue])
+
+    useEffect(() => {
+        const sub = watch((v) => setCtxValues({ address_info: (v as CreateStoreFormValues).address_info }))
+        return () => sub.unsubscribe()
+    }, [watch, setCtxValues])
+
+    useEffect(() => { setStepValid(2, isValid) }, [isValid, setStepValid])
 
     const handlePhysicalStore = () => {
         setIsPhysicalStore(true)
-        setValue("address_info.is_physical_store", true)
+        setValue("address_info.is_physical_store", true, { shouldValidate: true, shouldDirty: true })
+        trigger("address_info")
     }
 
     const handleOnlineStore = () => {
         setIsPhysicalStore(false)
-        setValue("address_info.is_physical_store", false)
+        setValue("address_info.is_physical_store", false, { shouldValidate: true, shouldDirty: true })
+        setValue("address_info.address", "", { shouldValidate: true, shouldDirty: true })
+        setValue("address_info.city", "", { shouldValidate: true, shouldDirty: true })
+        setValue("address_info.province", "", { shouldValidate: true, shouldDirty: true })
+        setValue("address_info.country", "", { shouldValidate: true, shouldDirty: true })
+        trigger("address_info")
     }
 
     return (
@@ -772,7 +969,8 @@ const AddressFormPanel = () => {
 
 const BasicInfoFormPanel = () => {
 
-    const { setValue, watch } = useFormContext()
+    const { setValue, watch, formState: { isValid } } = useFormContext()
+    const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const [logo, setLogo] = useState<File[]>([])
     const [logoUrl, setLogoUrl] = useState<string | null>(null)
     const [isUploading, setIsUploading] = useState(false)
@@ -793,6 +991,22 @@ const BasicInfoFormPanel = () => {
 
     const nameValue = watch('basic_info.name') as string | undefined
     const logoValue = watch('basic_info.logo') as unknown
+
+    const seededRefBasic = useRef(false)
+    useEffect(() => {
+        if (seededRefBasic.current) return
+        seededRefBasic.current = true
+        if (values.basic_info) setValue('basic_info', values.basic_info as never, { shouldValidate: true })
+    }, [values.basic_info, setValue])
+
+    useEffect(() => {
+        const sub = watch((v) => setCtxValues({ basic_info: (v as CreateStoreFormValues).basic_info }))
+        return () => sub.unsubscribe()
+    }, [watch, setCtxValues])
+
+    useEffect(() => {
+        setStepValid(1, isValid)
+    }, [isValid, setStepValid])
 
     useEffect(() => {
         if (!isSubdomainTouched) {
@@ -976,28 +1190,18 @@ const BasicInfoFormPanel = () => {
     )
 }
 
-const CreateStoreForm = ({ setStep, step }: CreateStoreFormProps) => {
+const CreateStoreForm = ({ setStep, step, onSubmitAll }: CreateStoreFormProps & { onSubmitAll: (data: CreateStoreFormValues) => Promise<{ error: boolean; message: string; payload?: unknown } | undefined> }) => {
 
-    const { trigger, watch } = useFormContext()
-    const [isValid, setIsValid] = useState(false)
+    const { isStepValid, values } = useCreateStoreContext()
+    const isValid = !!isStepValid[step]
 
-    const errorKeys = useMemo(() => ({
-        1: ["basic_info"],
-        2: ["address_info"],
-        3: ["contact_info"],
-        4: ["settings"],
-        5: ["shipping_info", "payment_info"],
-    }), [])
-
-    const formData = watch(errorKeys[step as keyof typeof errorKeys])
-
-    useEffect(() => {
-        trigger(errorKeys[step as keyof typeof errorKeys])
-            .then((isValid) => {
-                setIsValid(isValid)
-            })
-    }, [trigger, errorKeys, step, JSON.stringify(formData)])
-
+    const allowedMaxStep = (() => {
+        let max = 1
+        for (let s = 1; s <= 5; s++) {
+            if (isStepValid[s]) max = s + 1; else break
+        }
+        return Math.min(max, 5)
+    })()
 
     return (
         <Stepper
@@ -1008,13 +1212,16 @@ const CreateStoreForm = ({ setStep, step }: CreateStoreFormProps) => {
             stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"
             footerClassName="!p-0"
             onStepChange={setStep}
+            onFinalStepCompleted={async () => {
+                await onSubmitAll(values as CreateStoreFormValues)
+            }}
             renderStepIndicator={(props) => {
                 return (
                     <StepIndicator
                         step={props.step}
                         currentStep={props.currentStep}
                         onStepClick={props.onStepClick}
-                        disabled={!isValid}
+                        disabled={props.step > allowedMaxStep}
                     />
                 )
             }}
@@ -1023,27 +1230,35 @@ const CreateStoreForm = ({ setStep, step }: CreateStoreFormProps) => {
             }}
         >
             <Step className="!p-0 !pt-10 !pb-2">
-                <BasicInfoFormPanel />
+                <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchema as never)}>
+                    <BasicInfoFormPanel />
+                </Form>
             </Step>
             <Step className="!p-0 !pt-10 !pb-2">
-                <AddressFormPanel />
+                <Form<AddressInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(addressInfoSchema as never)}>
+                    <AddressFormPanel />
+                </Form>
             </Step>
             <Step className="!p-0 !pt-10 !pb-2">
-                <ContactFormPanel />
+                <Form<ContactInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(contactInfoSchema as never)}>
+                    <ContactFormPanel />
+                </Form>
             </Step>
             <Step className="!p-0 !pt-10 !pb-2">
-                <SettingsFormPanel />
+                <Form<SettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(settingsSchema as never)}>
+                    <SettingsFormPanel />
+                </Form>
             </Step>
             <Step className="!p-0 !pt-10 !pb-2">
-                <ShippingFormPanel />
+                <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
+                    <ShippingFormPanel />
+                </Form>
             </Step>
         </Stepper>
     )
 }
 
 const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicatorProps) => {
-
-    const { formState: { errors } } = useFormContext<CreateStoreFormValues>()
 
     const icons = {
         1: StoreIcon,
@@ -1054,33 +1269,22 @@ const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicat
         6: Check,
     }
 
-    const formKeys = {
-        1: ["basic_info"],
-        2: ["address_info"],
-        3: ["contact_info"],
-        4: ["settings"],
-        5: ["shipping_info", "payment_info"],
-    }
-
-
     if (step === currentStep) {
         const Icon = icons[step as keyof typeof icons]
         return (
             <div
                 className="bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center cursor-pointer"
-                onClick={() => onStepClick(step)}
+                onClick={() => !disabled && onStepClick(step)}
             >
                 <IconButton
                     icon={Icon}
                     active={step === currentStep}
-                    onClick={() => onStepClick(step)}
+                    onClick={() => !disabled && onStepClick(step)}
                     iconClassName={cn(
-                        errors[formKeys[step as keyof typeof formKeys][0] as keyof CreateStoreFormValues] ? "text-destructive-foreground" : "",
                         disabled ? "opacity-50" : ""
                     )}
                     className={cn(
                         step === currentStep ? "text-primary" : "text-muted-foreground",
-                        errors[formKeys[step as keyof typeof formKeys][0] as keyof CreateStoreFormValues] ? "text-destructive-foreground bg-destructive" : "",
                         disabled ? "opacity-50" : ""
                     )}
                     disabled={disabled}
@@ -1091,7 +1295,7 @@ const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicat
 
     return (
         <div
-            className={cn("bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary", errors[formKeys[step as keyof typeof formKeys][0] as keyof CreateStoreFormValues] ? "text-destructive-foreground bg-destructive/30" : "", disabled ? "opacity-50" : "")}
+            className={cn("bg-muted aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary", disabled ? "opacity-50 pointer-events-none" : "")}
             onClick={() => {
                 if (!disabled) {
                     onStepClick(step)
@@ -1175,30 +1379,25 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
     }
 
     return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <Button>
-                    <Plus />
-                    <span>Create Store</span>
-                </Button>
-            </DialogTrigger>
-            <DialogContent className="max-h-[80vh] overflow-y-auto">
-                <DialogHeader>
-                    <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
-                </DialogHeader>
-                <DialogDescription asChild>
-                    <p>{descriptions[step as keyof typeof descriptions]}</p>
-                </DialogDescription>
-                <Form<CreateStoreFormValues>
-                    contentButton="Create Store"
-                    submitButton={false}
-                    resolver={yupResolver(createStoreSchema as never)}
-                    formAction={handleCreateStore}
-                >
-                    <CreateStoreForm setStep={setStep} step={step} />
-                </Form>
-            </DialogContent>
-        </Dialog>
+        <CreateStoreProvider>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button>
+                        <Plus />
+                        <span>Create Store</span>
+                    </Button>
+                </DialogTrigger>
+                <DialogContent className="max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
+                    </DialogHeader>
+                    <DialogDescription asChild>
+                        <p>{descriptions[step as keyof typeof descriptions]}</p>
+                    </DialogDescription>
+                    <CreateStoreForm setStep={setStep} step={step} onSubmitAll={handleCreateStore} />
+                </DialogContent>
+            </Dialog>
+        </CreateStoreProvider>
     )
 }
 
