@@ -1,4 +1,4 @@
-import React, { useState, Children, useRef, useLayoutEffect, HTMLAttributes, ReactNode } from 'react';
+import React, { useState, Children, useRef, useLayoutEffect, HTMLAttributes, ReactNode, JSX } from 'react';
 import { motion, AnimatePresence, Variants } from 'motion/react';
 
 import './Stepper.css';
@@ -318,9 +318,11 @@ function StepConnector({ isComplete }: StepConnectorProps) {
   );
 }
 
-interface CheckIconProps extends React.SVGProps<SVGSVGElement> { }
 
+interface CheckIconProps extends React.SVGProps<SVGSVGElement> { }
+  
 function CheckIcon(props: CheckIconProps) {
+
   return (
     <svg {...props} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
       <motion.path
