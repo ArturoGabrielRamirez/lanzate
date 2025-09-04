@@ -16,6 +16,7 @@ import { Progress } from "@/components/ui/progress"
 import { useCamera } from "@/features/auth/hooks/use-camera"
 import CameraComponent from "@/features/auth/components/avatar/camera-component"
 import { toast } from "sonner"
+import { generate } from "random-words"
 import { cn } from "@/lib/utils"
 
 type CreateProductFormValues = {
@@ -124,6 +125,17 @@ function BasicInfoFormPanel() {
     useEffect(() => {
         if (values.basic_info) setValue('basic_info', values.basic_info as never, { shouldValidate: true })
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    // Generate default slug on first mount if empty
+    useEffect(() => {
+        const current = (watch('basic_info.slug') as string | undefined) || ""
+        if (!current || current.length === 0) {
+            const rw = (generate({ exactly: 2, join: '-' }) as unknown as string) || ""
+            const defaultSlug = slugify(rw)
+            console.log("🚀 ~ BasicInfoFormPanel ~ current:", defaultSlug)
+            if (defaultSlug) setValue('basic_info.slug', defaultSlug, { shouldValidate: true })
+        }
     }, [])
 
     // Hydrate image controls from form
