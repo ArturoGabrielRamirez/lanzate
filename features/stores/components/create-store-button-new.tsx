@@ -240,7 +240,8 @@ const ShippingFormPanel = () => {
     const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([])
     const [isAddingMethod, setIsAddingMethod] = useState(false)
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
-    const [paymentMethods, setPaymentMethods] = useState<string[]>([])
+    // derive payment methods directly from form state to persist across steps
+    const paymentMethods = (watch("payment_info.payment_methods") as string[] | undefined) || []
 
     const seededRef = useRef(false)
     useEffect(() => {
@@ -273,8 +274,11 @@ const ShippingFormPanel = () => {
         setOffersDelivery(!!offers)
         const existingMethods = getValues("shipping_info.methods") || []
         setShippingMethods(existingMethods as ShippingMethod[])
+        // ensure form is hydrated with persisted payment methods
         const existingPayments = getValues("payment_info.payment_methods") || []
-        setPaymentMethods(existingPayments as string[])
+        if (Array.isArray(existingPayments)) {
+            setValueAny("payment_info.payment_methods", existingPayments, { shouldValidate: true })
+        }
     }, [getValues, setValue, values.shipping_info, values.payment_info])
 
     useEffect(() => {
@@ -343,7 +347,6 @@ const ShippingFormPanel = () => {
     }
 
     const handlePaymentTagsChange = (tags: string[]) => {
-        setPaymentMethods(tags)
         setValueAny("payment_info.payment_methods", tags, { shouldValidate: true, shouldDirty: true })
     }
 
@@ -1323,24 +1326,14 @@ const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicat
     )
 }
 
-/* const SuccessPanel = () => {
-    return (
-        <div className="flex flex-col items-center gap-4 py-8 text-center">
-            <Check className="size-10 text-green-600" />
-            <h3 className="text-lg font-semibold">Tienda creada con éxito</h3>
-            <p className="text-sm text-muted-foreground">Serás redirigido a la administración de tu tienda en unos segundos…</p>
-        </div>
-    )
-} */
-
 const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
 
-    const [step, { /* goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, */ setStep }] = useStep(6)
+    const [step, { /* goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, */ setStep }] = useStep(7)
     const [createdSlug, setCreatedSlug] = useState<string | null>(null)
     const router = useRouter()
 
     useEffect(() => {
-        if (step === 6 && createdSlug) {
+        if (step === 7 && createdSlug) {
             const t = setTimeout(() => {
                 router.push(`/stores/${createdSlug}/account`)
             }, 1500)
@@ -1349,8 +1342,11 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
     }, [step, createdSlug, router])
 
     const handleCreateStore = async (data: CreateStoreFormValues) => {
+        const isPhysical = !!data.address_info?.is_physical_store
         const processedData = {
             ...data,
+            // If online store, clear address fields to avoid backend validations
+            address_info: isPhysical ? data.address_info : { is_physical_store: false },
             processedOpeningHours: processOpeningHours(data.settings?.attention_dates as { days?: string[]; startTime?: string; endTime?: string }[] | undefined),
             processedShippingMethods: processShippingMethods(data.shipping_info?.methods as { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice?: string }[] | undefined),
             processedPaymentMethods: processPaymentMethods(data.payment_info?.payment_methods as string[] | undefined),
@@ -1360,11 +1356,13 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
         const { error, message, payload } = await createStore(processedData, userId)
         if (error) {
             toast.error(message)
+            // return the form to the last step for correction
             setStep(5)
+            return { error: true, message, payload: null }
         }
 
         // On success: move to success step and redirect shortly
-        setCreatedSlug(payload.slug)
+        setCreatedSlug(payload?.slug || null)
         setStep(7)
 
         return {
