@@ -91,7 +91,7 @@ type BasicInfoFormType = yup.InferType<typeof basicInfoSchema>
 
 function BasicInfoFormPanel() {
     const { setStepValid, setValues: setCtxValues, values } = useCreateProductContext()
-    const { watch, setValue, formState: { isValid } } = useFormContext<BasicInfoFormType>()
+    const { watch, setValue, getValues, formState: { isValid } } = useFormContext<BasicInfoFormType>()
 
     function slugify(input: string): string {
         return (input || "")
@@ -129,14 +129,13 @@ function BasicInfoFormPanel() {
 
     // Generate default slug on first mount if empty
     useEffect(() => {
-        const current = (watch('basic_info.slug') as string | undefined) || ""
+        const current = (getValues('basic_info.slug') as string | undefined) || ""
         if (!current || current.length === 0) {
             const rw = (generate({ exactly: 2, join: '-' }) as unknown as string) || ""
             const defaultSlug = slugify(rw)
-            console.log("🚀 ~ BasicInfoFormPanel ~ current:", defaultSlug)
             if (defaultSlug) setValue('basic_info.slug', defaultSlug, { shouldValidate: true })
         }
-    }, [])
+    }, [getValues, setValue])
 
     // Hydrate image controls from form
     useEffect(() => {
@@ -154,11 +153,13 @@ function BasicInfoFormPanel() {
 
     // Auto-generate slug from name until user edits slug directly
     useEffect(() => {
-        if (!isSlugTouched) {
-            const next = slugify(nameValue || '')
-            setValue('basic_info.slug', next, { shouldValidate: true, shouldDirty: true })
-        }
-    }, [nameValue, isSlugTouched, setValue])
+        if (isSlugTouched) return
+        const currentSlug = (getValues('basic_info.slug') as string | undefined) || ""
+        if (!nameValue || nameValue.trim().length === 0) return
+        if (currentSlug && currentSlug.trim().length > 0) return
+        const next = slugify(nameValue)
+        setValue('basic_info.slug', next, { shouldValidate: true, shouldDirty: true })
+    }, [nameValue, isSlugTouched, getValues, setValue])
 
     const handleUpload = async (_file: File) => {
         try {
