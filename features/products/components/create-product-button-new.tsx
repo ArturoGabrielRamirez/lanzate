@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import CategoryTagsSelect from "@/features/store-landing/components/category-tags-select"
+import { getCategories } from "@/features/store-landing/actions/getCategories"
 
 type MediaItem = { file?: File; url?: string }
 type MediaState = { items: MediaItem[]; primaryIndex: number | null }
@@ -36,6 +37,8 @@ type CreateProductFormValues = {
 type CreateProductContextType = {
     values: Partial<CreateProductFormValues>
     setValues: (partial: Partial<CreateProductFormValues>) => void
+    availableCategories: { id: string; label: string }[]
+    setAvailableCategories: (opts: { id: string; label: string }[]) => void
     isStepValid: Record<number, boolean>
     setStepValid: (step: number, valid: boolean) => void
 }
@@ -48,9 +51,10 @@ function useCreateProductContext() {
     return ctx
 }
 
-function CreateProductProvider({ children }: { children: React.ReactNode }) {
+function CreateProductProvider({ children, storeId }: { children: React.ReactNode; storeId: number }) {
     const [values, setValuesState] = useState<Partial<CreateProductFormValues>>({})
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
+    const [availableCategories, setAvailableCategoriesState] = useState<{ id: string; label: string }[]>([])
 
     const setValues = useCallback((partial: Partial<CreateProductFormValues>) => {
         setValuesState(prev => {
@@ -92,12 +96,38 @@ function CreateProductProvider({ children }: { children: React.ReactNode }) {
         })
     }, [])
 
+    const setAvailableCategories = useCallback((opts: { id: string; label: string }[]) => {
+        setAvailableCategoriesState(opts)
+    }, [])
+
+    useEffect(() => {
+        let mounted = true
+        const refresh = async () => {
+            if (!storeId) return
+            try {
+                const { payload, error } = await getCategories(storeId)
+                if (error || !mounted) return
+                const options = (payload || []).map((c: { id: number; name: string }) => ({ id: String(c.id), label: c.name }))
+                setAvailableCategoriesState(prev => {
+                    const sameLength = prev.length === options.length
+                    const same = sameLength && prev.every((p, i) => p.id === options[i]?.id && p.label === options[i]?.label)
+                    return same ? prev : options
+                })
+            } catch {
+                // silent refresh
+            }
+        }
+        // Always refresh in background; keeps previous options as initial cache
+        refresh()
+        return () => { mounted = false }
+    }, [storeId])
+
     const setStepValid = useCallback((step: number, valid: boolean) => {
         setIsStepValid(prev => ({ ...prev, [step]: valid }))
     }, [])
 
     return (
-        <CreateProductContext.Provider value={{ values, setValues, isStepValid, setStepValid }}>
+        <CreateProductContext.Provider value={{ values, setValues, availableCategories, setAvailableCategories, isStepValid, setStepValid }}>
             {children}
         </CreateProductContext.Provider>
     )
@@ -153,7 +183,7 @@ const emptySchema = yup.object({})
 type EmptyFormType = yup.InferType<typeof emptySchema>
 
 function BasicInfoFormPanel({ storeId }: { storeId: number }) {
-    const { setStepValid, setValues: setCtxValues, values } = useCreateProductContext()
+    const { setStepValid, setValues: setCtxValues, values, setAvailableCategories, availableCategories } = useCreateProductContext()
     const { watch, setValue, getValues, trigger, formState: { isValid } } = useFormContext<BasicInfoFormType>()
 
     function slugify(input: string): string {
@@ -407,6 +437,8 @@ function BasicInfoFormPanel({ storeId }: { storeId: number }) {
             <div className="mt-2">
                 <CategoryTagsSelect
                     storeId={storeId}
+                    options={availableCategories}
+                    onOptionsChange={setAvailableCategories}
                     defaultValue={(values.categories as { label: string; value: string }[] | undefined) || []}
                     onChange={(vals) => setCtxValues({ categories: vals })}
                 />
@@ -791,7 +823,7 @@ function CreateProductButtonNew({ storeId }: { storeId: number }) {
     }, [step, setStep])
 
     return (
-        <CreateProductProvider>
+        <CreateProductProvider storeId={storeId}>
             <Dialog open={open} onOpenChange={setOpen} >
                 <DialogTrigger asChild>
                     <Button>

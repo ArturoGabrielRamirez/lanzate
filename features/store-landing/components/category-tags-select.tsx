@@ -13,21 +13,33 @@ import * as motion from "motion/react-client"
 
 type Option = { id: string; label: string }
 
-type CategoryTagsSelectProps = {
+export type CategoryTagsSelectProps = {
     storeId: number
     onChange?: (value: { label: string, value: string }[]) => void
     defaultValue?: { label: string, value: string }[]
     withLabel?: boolean
     className?: string
+    options?: Option[]
+    onOptionsChange?: (options: Option[]) => void
 }
 
-function CategoryTagsSelect({ storeId, withLabel = true, onChange, defaultValue, className }: CategoryTagsSelectProps) {
+export default function CategoryTagsSelect({ storeId, withLabel = true, onChange, defaultValue, className, options, onOptionsChange }: CategoryTagsSelectProps) {
 
-    const [tags, setTags] = useState<Option[]>([])
+    const [tags, setTags] = useState<Option[]>(() => options || [])
     const [selected, setSelected] = useState<string[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [newTag, setNewTag] = useState<string>("")
     const lastEmittedKeyRef = useRef<string>("")
+
+    // Seed from provided options immediately and keep in sync
+    useEffect(() => {
+        if (!options) return
+        setTags(prev => {
+            const sameLength = prev.length === options.length
+            const same = sameLength && prev.every((p, i) => p.id === options[i]?.id && p.label === options[i]?.label)
+            return same ? prev : options
+        })
+    }, [options])
 
     useEffect(() => {
         let mounted = true
@@ -39,6 +51,7 @@ function CategoryTagsSelect({ storeId, withLabel = true, onChange, defaultValue,
                 if (!mounted) return
                 const options: Option[] = (payload || []).map((c: { id: number; name: string }) => ({ id: String(c.id), label: c.name }))
                 setTags(options)
+                if (onOptionsChange) onOptionsChange(options)
             } finally {
                 setIsLoading(false)
             }
@@ -154,7 +167,5 @@ function CategoryTagsSelect({ storeId, withLabel = true, onChange, defaultValue,
         </div>
     )
 }
-
-export default CategoryTagsSelect
 
 
