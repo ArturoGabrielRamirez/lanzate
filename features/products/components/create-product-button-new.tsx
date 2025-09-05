@@ -8,8 +8,8 @@ import * as yup from "yup"
 import { useCallback, useContext, useEffect, useMemo, useState, createContext } from "react"
 import { useFormContext } from "react-hook-form"
 import { Form, InputField } from "@/features/layout/components"
-import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash, Tag, Barcode, DollarSign, Package, Settings } from "lucide-react"
-import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/components/ui/file-upload"
+import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash, Tag, Barcode, DollarSign, Package, Settings, X } from "lucide-react"
+import { FileUpload, FileUploadCameraTrigger, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/components/ui/file-upload"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Progress } from "@/components/ui/progress"
@@ -21,6 +21,9 @@ import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import CategoryTagsSelect from "@/features/store-landing/components/category-tags-select"
+
+type MediaItem = { file?: File; url?: string }
+type MediaState = { items: MediaItem[]; primaryIndex: number | null }
 
 type CreateProductFormValues = {
     basic_info?: Record<string, unknown>
@@ -60,8 +63,27 @@ function CreateProductProvider({ children }: { children: React.ReactNode }) {
                 const sameIds = sameLength && a.every((x, i) => x.value === b[i]?.value)
                 if (!sameLength || !sameIds) next.categories = b
             }
+            // Compare media state (items length, urls, primaryIndex)
+            const prevMedia = prev.media as unknown as MediaState | undefined
+            const newMedia = partial.media as unknown as MediaState | undefined
+            if (newMedia) {
+                let mediaChanged = false
+                if (!prevMedia) mediaChanged = true
+                else {
+                    mediaChanged = prevMedia.primaryIndex !== newMedia.primaryIndex ||
+                        (prevMedia.items?.length || 0) !== (newMedia.items?.length || 0) ||
+                        (prevMedia.items || []).some((it, idx) => {
+                            const other = newMedia.items[idx]
+                            const a = it?.url || (it?.file as unknown as File | undefined)?.name
+                            const b = other?.url || (other?.file as unknown as File | undefined)?.name
+                            return a !== b
+                        })
+                }
+                if (mediaChanged) next.media = partial.media
+            }
             for (const key of Object.keys(partial) as (keyof CreateProductFormValues)[]) {
                 if (key === 'categories') continue
+                if (key === 'media') continue
                 if (partial[key] !== prev[key]) (next as Record<keyof CreateProductFormValues, unknown>)[key] = partial[key] as unknown
             }
             // If nothing changed, return prev
@@ -125,6 +147,10 @@ const pricingSchema = yup.object({
     })
 })
 type PricingFormType = yup.InferType<typeof pricingSchema>
+
+// Empty schema to provide RHF context on panels without fields
+const emptySchema = yup.object({})
+type EmptyFormType = yup.InferType<typeof emptySchema>
 
 function BasicInfoFormPanel({ storeId }: { storeId: number }) {
     const { setStepValid, setValues: setCtxValues, values } = useCreateProductContext()
@@ -198,6 +224,19 @@ function BasicInfoFormPanel({ storeId }: { storeId: number }) {
             setImage([])
             setImageUrl(null)
         }
+        // Keep media panel in sync: if basic_info.image changes, reflect as primary if different
+        const currentMedia = (values.media as unknown as MediaState | undefined)
+        const maybeItem: MediaItem | null = imageValue instanceof File ? { file: imageValue } : (typeof imageValue === 'string' && imageValue.length > 0 ? { url: imageValue } : null)
+        if (!maybeItem) return
+        const items = currentMedia?.items || []
+        const existsIndex = items.findIndex(it => (it.url && it.url === maybeItem.url) || ((it.file as File | undefined)?.name && (it.file as File | undefined)?.name === (maybeItem.file as File | undefined)?.name))
+        if (existsIndex >= 0) {
+            if (currentMedia?.primaryIndex !== existsIndex) setCtxValues({ media: { items, primaryIndex: existsIndex } as unknown as Record<string, unknown> })
+        } else {
+            const nextItems = [maybeItem, ...items]
+            setCtxValues({ media: { items: nextItems, primaryIndex: 0 } as unknown as Record<string, unknown> })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [imageValue])
 
     // Auto-generate slug from name until user edits slug directly
@@ -470,6 +509,121 @@ function MediaFormPanel() {
     )
 }
 
+// Step 3 – Media (empty panel for now)
+function MediaUploadPanel() {
+    const { setStepValid, values, setValues: setCtxValues } = useCreateProductContext()
+    const { setValue } = useFormContext()
+    const [media, setMedia] = useState<MediaState>({ items: [], primaryIndex: null })
+
+    useEffect(() => { setStepValid(3, true) }, [setStepValid])
+
+    // Seed from provider: if there is an image in basic_info, use it as initial and primary
+    useEffect(() => {
+        const initial: MediaItem[] = []
+        const logo = (values.basic_info?.image as unknown) as string | File | undefined
+        if (logo instanceof File) initial.push({ file: logo })
+        else if (typeof logo === 'string' && logo.length > 0) initial.push({ url: logo })
+
+        const providerMedia = (values.media as unknown as MediaState | undefined)
+        if (providerMedia && Array.isArray(providerMedia.items) && providerMedia.items.length > 0) {
+            setMedia(providerMedia)
+            return
+        }
+
+        if (initial.length > 0) {
+            setMedia({ items: initial, primaryIndex: 0 })
+            setCtxValues({ media: { items: initial, primaryIndex: 0 } as unknown as Record<string, unknown> })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const handleFilesAdded = (newFiles: File[]) => {
+        setMedia(prev => {
+            // De-duplicate by file name
+            const existingNames = new Set(prev.items.map(it => (it.file as File | undefined)?.name || it.url))
+            const additions = newFiles.filter(f => !existingNames.has(f.name)).map(f => ({ file: f }))
+            const items = [...prev.items, ...additions]
+            const nextPrimary = prev.items.length === 0 ? 0 : (prev.primaryIndex ?? 0)
+            const next: MediaState = { items, primaryIndex: nextPrimary }
+            setCtxValues({ media: next as unknown as Record<string, unknown> })
+            return next
+        })
+    }
+
+    const handleDeleteAt = (index: number) => {
+        setMedia(prev => {
+            const items = prev.items.filter((_, i) => i !== index)
+            let primaryIndex = prev.primaryIndex
+            if (primaryIndex !== null) {
+                if (index === primaryIndex) primaryIndex = items.length > 0 ? 0 : null
+                else if (index < primaryIndex) primaryIndex = primaryIndex - 1
+            }
+            const next: MediaState = { items, primaryIndex }
+            setCtxValues({ media: next as unknown as Record<string, unknown> })
+            return next
+        })
+        // Reflect deletion on basic_info.image if primary removed
+        const current = (values.media as unknown as MediaState | undefined)
+        if (!current) return
+        const wasPrimary = current.primaryIndex === index
+        if (wasPrimary) {
+            const newPrimary = current.items.filter((_, i) => i !== index)[0]
+            const nextLogo = newPrimary?.url || (newPrimary?.file as File | undefined) || ""
+            setValue("basic_info.image" as never, nextLogo as never, { shouldValidate: true })
+        }
+    }
+
+    const handleMakePrimary = (index: number) => {
+        setMedia(prev => {
+            const next: MediaState = { ...prev, primaryIndex: index }
+            setCtxValues({ media: next as unknown as Record<string, unknown> })
+            return next
+        })
+    }
+
+    return (
+        <>
+            <FileUpload value={media.items.map(i => i.file).filter(Boolean) as File[]} onValueChange={handleFilesAdded}>
+                <FileUploadDropzone>
+                    <FileUploadTrigger asChild>
+                        <Button variant="outline" size="sm" className="mt-2 w-fit">
+                            Explorar archivos
+                        </Button>
+                    </FileUploadTrigger>
+                    <FileUploadCameraTrigger />
+                </FileUploadDropzone>
+
+                <div className="mt-4 grid grid-cols-1 gap-3">
+                    <FileUploadList className="w-full">
+                        {media.items.map((item, index) => (
+                            <FileUploadItem key={index} value={(item.file as File) || new File([new Blob()], (item.url || `media-${index}`).toString())}>
+                                <div className="flex w-full items-center justify-between gap-3">
+                                    <div className="flex items-center gap-3">
+                                        <FileUploadItemPreview />
+                                        <FileUploadItemMetadata />
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        {media.primaryIndex === index ? (
+                                            <span className="text-xs text-primary">Primaria</span>
+                                        ) : (
+                                            <Button variant="outline" size="sm" onClick={() => handleMakePrimary(index)}>Hacer primaria</Button>
+                                        )}
+                                        <FileUploadItemDelete asChild>
+                                            <Button variant="ghost" size="icon" className="size-7" onClick={() => handleDeleteAt(index)}>
+                                                <X />
+                                            </Button>
+                                        </FileUploadItemDelete>
+                                    </div>
+                                </div>
+                            </FileUploadItem>
+                        ))}
+                    </FileUploadList>
+                </div>
+            </FileUpload>
+        </>
+    )
+}
+
 type CreateProductFormProps = {
     step: number
     setStep: (s: number) => void
@@ -484,10 +638,10 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
 
     const allowedMaxStep = useMemo(() => {
         let max = 1
-        for (let s = 1; s <= 2; s++) {
+        for (let s = 1; s <= 3; s++) {
             if (isStepValid[s]) max = s + 1; else break
         }
-        return Math.min(max, 2)
+        return Math.min(max, 3)
     }, [isStepValid])
 
     return (
@@ -522,7 +676,12 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
                     <MediaFormPanel />
                 </Form>
             </Step>
-            {step === 3 && (
+            <Step className="!p-0 !pt-10 !pb-2">
+                <Form<EmptyFormType> contentButton="" submitButton={false} resolver={yupResolver(emptySchema as never)}>
+                    <MediaUploadPanel />
+                </Form>
+            </Step>
+            {step === 4 && (
                 <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
                         <Loader className="size-12 animate-spin text-primary" />
@@ -530,7 +689,7 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
                     </div>
                 </Step>
             )}
-            {step === 4 && (
+            {step === 5 && (
                 <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
                         <Check className="size-12 text-green-600" />
@@ -555,11 +714,11 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
     const icons = {
         1: Box,
         2: Settings,
-        3: Check,
+        3: ImageIcon,
     } as const
 
     const isComplete = !!isStepValid[step]
-    const isInvalid = step <= 2 && !isComplete
+    const isInvalid = step <= 3 && !isComplete
 
     if (step === currentStep) {
         const Icon = icons[step as keyof typeof icons]
@@ -601,14 +760,16 @@ function CreateProductButtonNew({ storeId }: { storeId: number }) {
     const descriptions = {
         1: "Ponle nombre, crea su URL única y completa los datos clave.",
         2: "Define precio y stock para empezar a vender al instante.",
-        3: "Creando tu producto…",
-        4: "¡Listo!",
+        3: "Agrega imágenes y videos que destaquen tu producto.",
+        4: "Creando tu producto…",
+        5: "¡Listo!",
     } as const
 
     const titleSlugs = {
         1: "Basic",
         2: "Pricing",
-        3: "Success",
+        3: "Media",
+        4: "Success",
     } as const
 
     const handleCreateProduct = useCallback(async () => {
@@ -631,14 +792,14 @@ function CreateProductButtonNew({ storeId }: { storeId: number }) {
 
     return (
         <CreateProductProvider>
-            <Dialog open={open} onOpenChange={setOpen}>
+            <Dialog open={open} onOpenChange={setOpen} >
                 <DialogTrigger asChild>
-                <Button>
-                    <Plus />
-                    <span>Create Product</span>
-                </Button>
-            </DialogTrigger>
-                <DialogContent className="max-h-[80vh] overflow-y-auto">
+                    <Button>
+                        <Plus />
+                        <span>Create Product</span>
+                    </Button>
+                </DialogTrigger>
+                <DialogContent className="max-h-[80vh] overflow-y-auto" isScroll>
                     <DialogHeader>
                         <DialogTitle>Create Product - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
                     </DialogHeader>
@@ -647,7 +808,7 @@ function CreateProductButtonNew({ storeId }: { storeId: number }) {
                     </DialogDescription>
                     <CreateProductForm step={step} setStep={setStep} onSubmitAll={handleCreateProduct} storeId={storeId} />
                 </DialogContent>
-        </Dialog>
+            </Dialog>
         </CreateProductProvider>
     )
 }

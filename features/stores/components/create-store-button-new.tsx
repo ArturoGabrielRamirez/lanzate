@@ -1423,7 +1423,7 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
                         <span>Create Store</span>
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="max-h-[80vh] overflow-y-auto">
+                <DialogContent className="max-h-[80vh] overflow-y-auto" isScroll>
                     <DialogHeader>
                         <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
                     </DialogHeader>
