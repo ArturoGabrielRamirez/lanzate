@@ -127,7 +127,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId, cla
         <div className="flex flex-col gap-1 w-full">
             {withLabel && <Label htmlFor="category">{t("category")}</Label>}
             <MultipleSelector
-            delay={100}
+                delay={100}
                 className={cn(className)}
                 defaultOptions={formatedCategories}
                 value={defaultSelectedCategories}

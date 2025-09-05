@@ -57,7 +57,7 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
                         <CreateProductButton storeId={store.id} userId={user.id} onlyIcon />
                     )}
                     {canCreateProducts && (
-                        <CreateProductButtonNew />
+                        <CreateProductButtonNew storeId={store.id}/>
                     )}
                 </CardAction>
             </CardHeader>

@@ -20,12 +20,14 @@ import { generate } from "random-words"
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
+import CategoryTagsSelect from "@/features/store-landing/components/category-tags-select"
 
 type CreateProductFormValues = {
     basic_info?: Record<string, unknown>
     media?: Record<string, unknown>
     pricing?: { price?: number; stock?: number }
     settings?: { is_active?: boolean; is_featured?: boolean; is_published?: boolean }
+    categories?: { label: string; value: string }[]
 }
 
 type CreateProductContextType = {
@@ -48,7 +50,14 @@ function CreateProductProvider({ children }: { children: React.ReactNode }) {
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
 
     const setValues = useCallback((partial: Partial<CreateProductFormValues>) => {
-        setValuesState(prev => ({ ...prev, ...partial }))
+        setValuesState(prev => {
+            let changed = false
+            for (const key of Object.keys(partial) as (keyof CreateProductFormValues)[]) {
+                if (partial[key] !== prev[key]) { changed = true; break }
+            }
+            if (!changed) return prev
+            return { ...prev, ...partial }
+        })
     }, [])
 
     const setStepValid = useCallback((step: number, valid: boolean) => {
@@ -109,7 +118,7 @@ type PricingFormType = yup.InferType<typeof pricingSchema>
 
 function BasicInfoFormPanel() {
     const { setStepValid, setValues: setCtxValues, values } = useCreateProductContext()
-    const { watch, setValue, getValues, formState: { isValid } } = useFormContext<BasicInfoFormType>()
+    const { watch, setValue, getValues, trigger, formState: { isValid } } = useFormContext<BasicInfoFormType>()
 
     function slugify(input: string): string {
         return (input || "")
@@ -141,7 +150,11 @@ function BasicInfoFormPanel() {
 
     // Seed from context if present
     useEffect(() => {
-        if (values.basic_info) setValue('basic_info', values.basic_info as never, { shouldValidate: true })
+        if (values.basic_info) {
+            setValue('basic_info', values.basic_info as never, { shouldValidate: true })
+            // ensure validation state reflects seeded values when reopening dialog
+            trigger('basic_info')
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -352,7 +365,7 @@ function BasicInfoFormPanel() {
     )
 }
 
-function MediaFormPanel() {
+function MediaFormPanel({ storeId }: { storeId: number }) {
     const { setStepValid, setValues: setCtxValues, values } = useCreateProductContext()
     const { formState: { isValid }, watch, setValue } = useFormContext<PricingFormType>()
     const [isActive, setIsActive] = useState<boolean>(() => (values.settings?.is_active ?? true))
@@ -373,11 +386,20 @@ function MediaFormPanel() {
 
     // Persist settings (switches) into wizard context
     useEffect(() => {
-        setCtxValues({ settings: { is_active: isActive, is_featured: isFeatured, is_published: isPublished } })
-    }, [isActive, isFeatured, isPublished, setCtxValues])
+        const next = { is_active: isActive, is_featured: isFeatured, is_published: isPublished }
+        const prev = values.settings || {}
+        if (
+            prev.is_active === next.is_active &&
+            prev.is_featured === next.is_featured &&
+            prev.is_published === next.is_published
+        ) return
+        setCtxValues({ settings: next })
+    }, [isActive, isFeatured, isPublished, values.settings, setCtxValues])
 
     return (
         <>
+            {/* Categorías */}
+            <CategoryTagsSelect storeId={storeId} /* onChange={(vals) => setCtxValues({ categories: vals })} */ />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <InputField
                     name="pricing.price"
@@ -429,9 +451,10 @@ type CreateProductFormProps = {
     step: number
     setStep: (s: number) => void
     onSubmitAll: (data: CreateProductFormValues) => Promise<{ error: boolean; message: string; payload?: unknown } | undefined>
+    storeId: number
 }
 
-function CreateProductForm({ step, setStep, onSubmitAll }: CreateProductFormProps) {
+function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProductFormProps) {
     const { isStepValid, values } = useCreateProductContext()
 
     const isValid = !!isStepValid[step]
@@ -473,7 +496,7 @@ function CreateProductForm({ step, setStep, onSubmitAll }: CreateProductFormProp
             </Step>
             <Step className="!p-0 !pt-10 !pb-2">
                 <Form<PricingFormType> contentButton="" submitButton={false} resolver={yupResolver(pricingSchema as never)}>
-                    <MediaFormPanel />
+                    <MediaFormPanel storeId={storeId} />
                 </Form>
             </Step>
             {step === 3 && (
@@ -548,7 +571,7 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
     )
 }
 
-function CreateProductButtonNew() {
+function CreateProductButtonNew({ storeId }: { storeId: number }) {
     const [step, { setStep }] = useStepShim(4)
     const [open, setOpen] = useState(false)
 
@@ -599,7 +622,7 @@ function CreateProductButtonNew() {
                     <DialogDescription asChild>
                         <p>{descriptions[step as keyof typeof descriptions]}</p>
                     </DialogDescription>
-                    <CreateProductForm step={step} setStep={setStep} onSubmitAll={handleCreateProduct} />
+                    <CreateProductForm step={step} setStep={setStep} onSubmitAll={handleCreateProduct} storeId={storeId} />
                 </DialogContent>
         </Dialog>
         </CreateProductProvider>
