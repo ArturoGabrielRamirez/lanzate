@@ -51,12 +51,22 @@ function CreateProductProvider({ children }: { children: React.ReactNode }) {
 
     const setValues = useCallback((partial: Partial<CreateProductFormValues>) => {
         setValuesState(prev => {
-            let changed = false
-            for (const key of Object.keys(partial) as (keyof CreateProductFormValues)[]) {
-                if (partial[key] !== prev[key]) { changed = true; break }
+            // Shallow compare arrays of categories by id to avoid churn
+            const next: Partial<CreateProductFormValues> = { ...prev }
+            if (partial.categories) {
+                const a = prev.categories || []
+                const b = partial.categories || []
+                const sameLength = a.length === b.length
+                const sameIds = sameLength && a.every((x, i) => x.value === b[i]?.value)
+                if (!sameLength || !sameIds) next.categories = b
             }
-            if (!changed) return prev
-            return { ...prev, ...partial }
+            for (const key of Object.keys(partial) as (keyof CreateProductFormValues)[]) {
+                if (key === 'categories') continue
+                if (partial[key] !== prev[key]) (next as Record<keyof CreateProductFormValues, unknown>)[key] = partial[key] as unknown
+            }
+            // If nothing changed, return prev
+            const changed = (Object.keys(next) as (keyof CreateProductFormValues)[]).some(k => next[k] !== (prev as Partial<CreateProductFormValues>)[k])
+            return changed ? next : prev
         })
     }, [])
 
@@ -133,6 +143,7 @@ function BasicInfoFormPanel({ storeId }: { storeId: number }) {
     }
 
     const nameValue = watch('basic_info.name') as string | undefined
+    const slugValue = watch('basic_info.slug') as string | undefined
     const imageValue = watch('basic_info.image') as unknown
     const [isSlugTouched, setIsSlugTouched] = useState(false)
     const [image, setImage] = useState<File[]>([])
@@ -141,6 +152,13 @@ function BasicInfoFormPanel({ storeId }: { storeId: number }) {
     const [uploadProgress, setUploadProgress] = useState(0)
 
     useEffect(() => { setStepValid(1, isValid) }, [isValid, setStepValid])
+
+    // Fallback: ensure step validity when both required fields are non-empty
+    useEffect(() => {
+        if ((nameValue || "").trim().length > 0 && (slugValue || "").trim().length > 0) {
+            setStepValid(1, true)
+        }
+    }, [nameValue, slugValue, setStepValid])
 
     // Persist step values into wizard context
     useEffect(() => {
@@ -348,7 +366,11 @@ function BasicInfoFormPanel({ storeId }: { storeId: number }) {
                 isTextArea
             />
             <div className="mt-2">
-                <CategoryTagsSelect storeId={storeId} /* onChange={(vals) => setCtxValues({ categories: vals })} */ />
+                <CategoryTagsSelect
+                    storeId={storeId}
+                    defaultValue={(values.categories as { label: string; value: string }[] | undefined) || []}
+                    onChange={(vals) => setCtxValues({ categories: vals })}
+                />
             </div>
         </>
     )

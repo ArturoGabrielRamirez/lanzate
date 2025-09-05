@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { Label } from "@/components/ui/label"
-    import { CheckIcon, PlusIcon } from "lucide-react"
+import { CheckIcon, PlusIcon, Tag as TagIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { getCategories } from "../actions/getCategories"
 import { createCategoryDynamic } from "@/features/categories/actions/createCategoryDynamic"
@@ -27,6 +27,7 @@ function CategoryTagsSelect({ storeId, withLabel = true, onChange, defaultValue,
     const [selected, setSelected] = useState<string[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [newTag, setNewTag] = useState<string>("")
+    const lastEmittedKeyRef = useRef<string>("")
 
     useEffect(() => {
         let mounted = true
@@ -36,7 +37,7 @@ function CategoryTagsSelect({ storeId, withLabel = true, onChange, defaultValue,
                 const { payload, error } = await getCategories(storeId)
                 if (error) return
                 if (!mounted) return
-                const options: Option[] = (payload || []).map((c: { id: number; name: string }) => ({ id: String(c.name.toLowerCase()), label: c.name }))
+                const options: Option[] = (payload || []).map((c: { id: number; name: string }) => ({ id: String(c.id), label: c.name }))
                 setTags(options)
             } finally {
                 setIsLoading(false)
@@ -51,17 +52,23 @@ function CategoryTagsSelect({ storeId, withLabel = true, onChange, defaultValue,
     useEffect(() => {
         if (!defaultValue || defaultValue.length === 0) return
         const ids = defaultValue.map((d) => d.value)
-        setSelected(ids)
+        setSelected((prev) => {
+            if (prev.length === ids.length && prev.every((v, i) => v === ids[i])) return prev
+            return ids
+        })
     }, [defaultValue])
 
     useEffect(() => {
         if (!onChange) return
+        const key = selected.join('|')
+        if (lastEmittedKeyRef.current === key) return
+        lastEmittedKeyRef.current = key
         const output = selected.map((id) => ({
             value: id,
             label: tags.find((t) => t.id === id)?.label || id
         }))
         onChange(output)
-    }, [selected, tags, onChange])
+    }, [selected, onChange, tags])
 
     const handleRemove = (value: string) => {
         if (!selected.includes(value)) return
@@ -111,6 +118,12 @@ function CategoryTagsSelect({ storeId, withLabel = true, onChange, defaultValue,
                             </motion.div>
                         ))}
                     </AnimatePresence>
+                    {selected.length === 0 && (
+                        <span className="flex items-center gap-2 px-2 py-px text-muted-foreground">
+                            <TagIcon size={14} />
+                            Selecciona una categoría…
+                        </span>
+                    )}
                 </TagsTrigger>
                 <TagsContent>
                     <TagsInput onValueChange={setNewTag} placeholder={placeholder} />
