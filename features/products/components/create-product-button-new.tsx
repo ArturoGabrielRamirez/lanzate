@@ -8,7 +8,7 @@ import * as yup from "yup"
 import { useCallback, useContext, useEffect, useMemo, useState, createContext } from "react"
 import { useFormContext } from "react-hook-form"
 import { Form, InputField } from "@/features/layout/components"
-import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash, Tag, Barcode, DollarSign, Package } from "lucide-react"
+import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash, Tag, Barcode, DollarSign, Package, Settings } from "lucide-react"
 import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/components/ui/file-upload"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
@@ -116,7 +116,7 @@ const pricingSchema = yup.object({
 })
 type PricingFormType = yup.InferType<typeof pricingSchema>
 
-function BasicInfoFormPanel() {
+function BasicInfoFormPanel({ storeId }: { storeId: number }) {
     const { setStepValid, setValues: setCtxValues, values } = useCreateProductContext()
     const { watch, setValue, getValues, trigger, formState: { isValid } } = useFormContext<BasicInfoFormType>()
 
@@ -341,31 +341,20 @@ function BasicInfoFormPanel() {
                     />
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <InputField
-                    name="basic_info.sku"
-                    label="SKU"
-                    placeholder="Ej: SKU-123"
-                    startContent={<Tag />}
-                />
-                <InputField
-                    name="basic_info.barcode"
-                    label="Código de barras"
-                    placeholder="Ej: 1234567890123"
-                    startContent={<Barcode />}
-                />
-            </div>
             <InputField
                 name="basic_info.description"
                 label="Description"
                 placeholder="Ej: Breve descripción del producto"
                 isTextArea
             />
+            <div className="mt-2">
+                <CategoryTagsSelect storeId={storeId} /* onChange={(vals) => setCtxValues({ categories: vals })} */ />
+            </div>
         </>
     )
 }
 
-function MediaFormPanel({ storeId }: { storeId: number }) {
+function MediaFormPanel() {
     const { setStepValid, setValues: setCtxValues, values } = useCreateProductContext()
     const { formState: { isValid }, watch, setValue } = useFormContext<PricingFormType>()
     const [isActive, setIsActive] = useState<boolean>(() => (values.settings?.is_active ?? true))
@@ -398,8 +387,6 @@ function MediaFormPanel({ storeId }: { storeId: number }) {
 
     return (
         <>
-            {/* Categorías */}
-            <CategoryTagsSelect storeId={storeId} /* onChange={(vals) => setCtxValues({ categories: vals })} */ />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <InputField
                     name="pricing.price"
@@ -418,6 +405,20 @@ function MediaFormPanel({ storeId }: { storeId: number }) {
                     inputMode="numeric"
                     startContent={<Package />}
                     isRequired
+                />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <InputField
+                    name="basic_info.sku"
+                    label="SKU"
+                    placeholder="Ej: SKU-123"
+                    startContent={<Tag />}
+                />
+                <InputField
+                    name="basic_info.barcode"
+                    label="Código de barras"
+                    placeholder="Ej: 1234567890123"
+                    startContent={<Barcode />}
                 />
             </div>
             <div className="mt-6 space-y-4">
@@ -491,12 +492,12 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
         >
             <Step className="!p-0 !pt-10 !pb-2">
                 <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchema as never)}>
-                    <BasicInfoFormPanel />
+                    <BasicInfoFormPanel storeId={storeId} />
                 </Form>
             </Step>
             <Step className="!p-0 !pt-10 !pb-2">
                 <Form<PricingFormType> contentButton="" submitButton={false} resolver={yupResolver(pricingSchema as never)}>
-                    <MediaFormPanel storeId={storeId} />
+                    <MediaFormPanel />
                 </Form>
             </Step>
             {step === 3 && (
@@ -531,7 +532,7 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
 
     const icons = {
         1: Box,
-        2: ImageIcon,
+        2: Settings,
         3: Check,
     } as const
 
