@@ -8,7 +8,8 @@ import * as yup from "yup"
 import { useCallback, useContext, useEffect, useMemo, useState, createContext } from "react"
 import { useFormContext } from "react-hook-form"
 import { Form, InputField } from "@/features/layout/components"
-import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash, Tag, Barcode, DollarSign, Package, Settings, X } from "lucide-react"
+import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash, Tag, Barcode, DollarSign, Package, Settings, X, Ruler, Shirt, Palette, Sparkles } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 import { FileUpload, FileUploadCameraTrigger, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/components/ui/file-upload"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
@@ -688,11 +689,26 @@ function ExtraFormPanel() {
                 onChange={setSelected}
             />
             {groups.length > 0 && (
-                <Accordion type="multiple" className="mt-4 rounded-md border">
+                <Accordion type="single" collapsible>
                     {groups.map(g => (
                         <AccordionItem key={g.key} value={g.key}>
-                            <AccordionTrigger className="px-4">{g.title}</AccordionTrigger>
-                            <AccordionContent className="px-4">
+                            <AccordionTrigger>
+                                <div className="flex w-full items-center gap-2">
+                                    {(() => {
+                                        const icons: Record<string, LucideIcon> = {
+                                            dimensiones: Ruler,
+                                            talles: Shirt,
+                                            superficie: Palette,
+                                            sensorial: Sparkles,
+                                        }
+                                        const Icon = icons[g.key] ?? Tag
+                                        return <Icon className="size-4 text-muted-foreground" />
+                                    })()}
+                                    <span>{g.title}</span>
+                                    <span className="ml-auto text-muted-foreground">({g.tags.length})</span>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
                                 <div className="flex flex-wrap items-center gap-2">
                                     {g.tags.map(tag => (
                                         <span key={tag} className="bg-muted text-foreground/80 rounded px-2 py-1 text-xs">
