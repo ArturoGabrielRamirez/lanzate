@@ -683,7 +683,7 @@ function ExtraFormPanel() {
         <div className="text-sm text-muted-foreground">
             <AnimatedTags
                 title="Atributos"
-                emptyMessage="No hay atributos seleccionados aún. Hace click en alguno para agregarlo."
+                emptyMessage="Hace click en algun atributo para agregarselo al producto."
                 initialTags={["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia", "Talle", "Tamaño", "Color", "Material", "Sabor", "Fragancia"]}
                 selectedTags={selected}
                 onChange={setSelected}
