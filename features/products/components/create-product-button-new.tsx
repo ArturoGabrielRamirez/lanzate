@@ -22,6 +22,8 @@ import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import CategoryTagsSelect from "@/features/store-landing/components/category-tags-select"
 import { getCategories } from "@/features/store-landing/actions/getCategories"
+import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 type MediaItem = { file?: File; url?: string }
 type MediaState = { items: MediaItem[]; primaryIndex: number | null }
@@ -656,6 +658,57 @@ function MediaUploadPanel() {
     )
 }
 
+// Step 4 – Extra (empty panel, marks as valid)
+function ExtraFormPanel() {
+    const { setStepValid } = useCreateProductContext()
+    const [selected, setSelected] = useState<string[]>([])
+    useEffect(() => { setStepValid(4, true) }, [setStepValid])
+    const groups = useMemo(() => {
+        const definitions = {
+            dimensiones: { title: "Dimensiones", tags: ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"] },
+            talles: { title: "Talles y tamaños", tags: ["Talle", "Tamaño"] },
+            superficie: { title: "Superficie", tags: ["Color", "Material"] },
+            sensorial: { title: "Aromas y sabores", tags: ["Sabor", "Fragancia"] },
+        } as const
+        return (Object.entries(definitions)
+            .map(([key, def]) => {
+                const groupTags = def.tags.filter(t => selected.includes(t))
+                if (groupTags.length === 0) return null
+                return { key, title: def.title, tags: groupTags }
+            })
+            .filter(Boolean) as { key: string; title: string; tags: string[] }[])
+    }, [selected])
+    return (
+        <div className="text-sm text-muted-foreground">
+            <AnimatedTags
+                title="Atributos"
+                emptyMessage="No hay atributos seleccionados aún. Hace click en alguno para agregarlo."
+                initialTags={["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia", "Talle", "Tamaño", "Color", "Material", "Sabor", "Fragancia"]}
+                selectedTags={selected}
+                onChange={setSelected}
+            />
+            {groups.length > 0 && (
+                <Accordion type="multiple" className="mt-4 rounded-md border">
+                    {groups.map(g => (
+                        <AccordionItem key={g.key} value={g.key}>
+                            <AccordionTrigger className="px-4">{g.title}</AccordionTrigger>
+                            <AccordionContent className="px-4">
+                                <div className="flex flex-wrap items-center gap-2">
+                                    {g.tags.map(tag => (
+                                        <span key={tag} className="bg-muted text-foreground/80 rounded px-2 py-1 text-xs">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    ))}
+                </Accordion>
+            )}
+        </div>
+    )
+}
+
 type CreateProductFormProps = {
     step: number
     setStep: (s: number) => void
@@ -670,10 +723,10 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
 
     const allowedMaxStep = useMemo(() => {
         let max = 1
-        for (let s = 1; s <= 3; s++) {
+        for (let s = 1; s <= 4; s++) {
             if (isStepValid[s]) max = s + 1; else break
         }
-        return Math.min(max, 3)
+        return Math.min(max, 4)
     }, [isStepValid])
 
     return (
@@ -713,7 +766,12 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
                     <MediaUploadPanel />
                 </Form>
             </Step>
-            {step === 4 && (
+            <Step className="!p-0 !pt-10 !pb-2">
+                <Form<EmptyFormType> contentButton="" submitButton={false} resolver={yupResolver(emptySchema as never)}>
+                    <ExtraFormPanel />
+                </Form>
+            </Step>
+            {step === 5 && (
                 <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
                         <Loader className="size-12 animate-spin text-primary" />
@@ -721,7 +779,7 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
                     </div>
                 </Step>
             )}
-            {step === 5 && (
+            {step === 6 && (
                 <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
                         <Check className="size-12 text-green-600" />
@@ -747,10 +805,11 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
         1: Box,
         2: Settings,
         3: ImageIcon,
+        4: Tag,
     } as const
 
     const isComplete = !!isStepValid[step]
-    const isInvalid = step <= 3 && !isComplete
+    const isInvalid = step <= 4 && !isComplete
 
     if (step === currentStep) {
         const Icon = icons[step as keyof typeof icons]
@@ -786,34 +845,36 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
 }
 
 function CreateProductButtonNew({ storeId }: { storeId: number }) {
-    const [step, { setStep }] = useStepShim(4)
+    const [step, { setStep }] = useStepShim(6)
     const [open, setOpen] = useState(false)
 
     const descriptions = {
         1: "Ponle nombre, crea su URL única y completa los datos clave.",
         2: "Define precio y stock para empezar a vender al instante.",
         3: "Agrega imágenes y videos que destaquen tu producto.",
-        4: "Creando tu producto…",
-        5: "¡Listo!",
+        4: "Paso extra (vacío)",
+        5: "Creando tu producto…",
+        6: "¡Listo!",
     } as const
 
     const titleSlugs = {
         1: "Basic",
         2: "Pricing",
         3: "Media",
-        4: "Success",
+        4: "Extra",
+        5: "Success",
     } as const
 
     const handleCreateProduct = useCallback(async () => {
-        setStep(3)
+        setStep(5)
         // Esqueleto: no llamamos al backend aún; mantenemos el flujo y éxito
         await new Promise((r) => setTimeout(r, 800))
-        setStep(4)
+        setStep(6)
         return { error: false, message: "ok" }
     }, [setStep])
 
     useEffect(() => {
-        if (step === 4) {
+        if (step === 6) {
             const t = setTimeout(() => {
                 setOpen(false)
                 setStep(1)

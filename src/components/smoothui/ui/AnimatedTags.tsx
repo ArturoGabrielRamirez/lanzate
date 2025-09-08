@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { CircleX, Plus } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
+import { cn } from "@/lib/utils"
 
 export interface AnimatedTagsProps {
   initialTags?: string[]
@@ -48,7 +49,7 @@ export default function AnimatedTags({
       <div className="flex flex-col items-start justify-center gap-1">
         <p className="text-sm font-medium">{title}</p>
         <AnimatePresence>
-          <div className="bg-background flex min-h-10 w-full flex-wrap items-center gap-1 rounded-md border p-2">
+          <div className={cn("bg-background flex min-h-10 w-full flex-wrap items-center gap-1 rounded-md border p-2", selectedTag.length === 0 && "border-dashed text-center")}>
             {selectedTag?.map((tag) => (
               <motion.div
                 key={tag}
