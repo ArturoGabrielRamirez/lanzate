@@ -28,6 +28,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tags, TagsContent, TagsEmpty, TagsGroup, TagsInput, TagsItem, TagsList, TagsTrigger, TagsValue } from "@/src/components/ui/shadcn-io/tags"
 import { get as rhfGet } from "react-hook-form"
+import InputColor from "@/components/color-input"
+
 
 type MediaItem = { file?: File; url?: string }
 type MediaState = { items: MediaItem[]; primaryIndex: number | null }
@@ -671,6 +673,7 @@ function ExtraFormPanel() {
     const { setStepValid } = useCreateProductContext()
     const { watch, getValues, setValue, setError, clearErrors } = useFormContext()
     const [selected, setSelected] = useState<string[]>([])
+
     useEffect(() => { setStepValid(4, true) }, [setStepValid])
 
     // Units for dimensions
@@ -947,10 +950,35 @@ function ExtraFormPanel() {
         )
     }
 
+    function ColorField() {
+        const name = `extra.surface.color`
+        const current = watch(name) as string | undefined
+        const { formState: { errors } } = useFormContext()
+        const error = rhfGet(errors, name) as { message?: string } | undefined
+        const value = (typeof current === 'string' && current.length > 0) ? current : "#000000"
+        return (
+            <InputColor
+                value={value}
+                onChange={(hex) => {
+                    setValue(name as never, hex as never, { shouldDirty: true, shouldValidate: true })
+                }}
+                onBlur={() => {
+                    const v = (getValues(name as never) as string | undefined) || ""
+                    const valid = /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/.test(v)
+                    if (!valid) setError(name as never, { type: 'required', message: 'Selecciona un color válido' })
+                    else clearErrors(name as never)
+                }}
+                label="Color"
+                error={error?.message}
+            />
+        )
+    }
+
     // Dynamic validity across groups (dimensions + sizes)
     const dimensionTagsSelectedRef = useMemo(() => selected.filter(t => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(t)), [selected])
     const sizeTagsSelectedRef = useMemo(() => selected.filter(t => ["Talle", "Tamaño"].includes(t)), [selected])
     const hasExpirationSelected = useMemo(() => selected.includes("Fecha de vencimiento"), [selected])
+    const hasColorSelected = useMemo(() => selected.includes("Color"), [selected])
 
     // Seed/clear dimension errors only when selection changes
     useEffect(() => {
@@ -971,8 +999,14 @@ function ExtraFormPanel() {
             const hasVal = expVal !== undefined && expVal !== null && String(expVal).trim().length > 0
             if (!hasVal) setError(expPath as never, { type: 'required', message: 'Selecciona la fecha' }); else clearErrors(expPath as never)
         }
+        if (hasColorSelected) {
+            const colorPath = `extra.surface.color`
+            const colorVal = (getValues(colorPath as never) as string | undefined) || ""
+            const isValid = /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/.test(colorVal)
+            if (!isValid) setError(colorPath as never, { type: 'required', message: 'Selecciona un color válido' }); else clearErrors(colorPath as never)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(dimensionTagsSelectedRef), hasExpirationSelected])
+    }, [JSON.stringify(dimensionTagsSelectedRef), hasExpirationSelected, hasColorSelected])
 
     // One watcher to compute step validity without mutating errors (prevents loops)
     useEffect(() => {
@@ -997,7 +1031,12 @@ function ExtraFormPanel() {
                 const arr = (getValues(`extra.sizes.${key}` as never) as string[] | undefined) || []
                 return Array.isArray(arr) && arr.length > 0
             })
-            setStepValid(4, dimsOk && expOk && sizesOk)
+            // color
+            const colorOk = hasColorSelected ? (() => {
+                const v = (getValues(`extra.surface.color` as never) as string | undefined) || ""
+                return /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/.test(v)
+            })() : true
+            setStepValid(4, dimsOk && expOk && sizesOk && colorOk)
         }
         computeValid()
         const sub = watch((_v, info) => {
@@ -1006,7 +1045,7 @@ function ExtraFormPanel() {
         })
         return () => sub.unsubscribe()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(dimensionTagsSelectedRef), JSON.stringify(sizeTagsSelectedRef), hasExpirationSelected])
+    }, [JSON.stringify(dimensionTagsSelectedRef), JSON.stringify(sizeTagsSelectedRef), hasExpirationSelected, hasColorSelected])
 
     const groups = useMemo(() => {
         const definitions = {
@@ -1101,7 +1140,7 @@ function ExtraFormPanel() {
                                         ))}
                                     </div>
                                 ) : (
-                                    <div className={cn("gap-3", g.tags.length > 1 ? "grid grid-cols-1 md:grid-cols-2" : "grid grid-cols-1") }>
+                                    <div className={cn("gap-3", g.tags.length > 1 ? "grid grid-cols-1 md:grid-cols-2" : "grid grid-cols-1")}>
                                         {g.tags.map(tag => (
                                             tag === 'Sabor' ? (
                                                 <FreeTags
@@ -1135,11 +1174,9 @@ function ExtraFormPanel() {
                                                         { id: 'Cedro', label: 'Cedro' },
                                                     ]}
                                                 />
-                                            ) : (
-                                                <span key={tag} className="bg-muted text-foreground/80 rounded px-2 py-1 text-xs">
-                                                    {tag}
-                                                </span>
-                                            )
+                                            ) : tag === 'Color' ? (
+                                                <ColorField key={tag} />
+                                            ) : null
                                         ))}
                                     </div>
                                 )}
