@@ -873,6 +873,80 @@ function ExtraFormPanel() {
         )
     }
 
+    function FreeTags({ name, label, preset }: { name: string; label: string; preset: { id: string; label: string }[] }) {
+        const [options, setOptions] = useState(preset)
+        const [selected, setSelected] = useState<string[]>(() => (getValues(name as never) as string[] | undefined) || [])
+        const [input, setInput] = useState("")
+
+        const applySelection = (next: string[]) => {
+            setSelected(next)
+            setValue(name as never, next as never, { shouldDirty: true, shouldValidate: false })
+        }
+
+        const handleRemove = (id: string) => {
+            const next = selected.filter(v => v !== id)
+            applySelection(next)
+        }
+
+        const handleSelect = (id: string) => {
+            const next = selected.includes(id) ? selected.filter(v => v !== id) : [...selected, id]
+            applySelection(next)
+        }
+
+        const handleCreate = () => {
+            const label = (input || "").trim()
+            if (!label) return
+            const id = label
+            if (!options.some(o => o.id === id)) setOptions(prev => [...prev, { id, label }])
+            if (!selected.includes(id)) applySelection([...selected, id])
+            setInput("")
+        }
+
+        const placeholder = "Escribe para agregar…"
+
+        return (
+            <div className="flex flex-col gap-1 w-full">
+                <Label>{label}</Label>
+                <Tags>
+                    <TagsTrigger className="!bg-transparent">
+                        {selected.map((id) => (
+                            <TagsValue key={id} onRemove={() => handleRemove(id)}>
+                                {options.find(o => o.id === id)?.label || id}
+                            </TagsValue>
+                        ))}
+                        {selected.length === 0 && (
+                            <span className="flex items-center gap-2 px-2 py-px text-muted-foreground">
+                                <Tag size={14} />
+                                Selecciona opciones…
+                            </span>
+                        )}
+                    </TagsTrigger>
+                    <TagsContent>
+                        <TagsInput onValueChange={setInput} placeholder={placeholder} />
+                        <TagsList>
+                            <TagsEmpty>
+                                <button className="mx-auto flex cursor-pointer items-center gap-2" onClick={handleCreate} type="button">
+                                    <PlusIcon className="text-muted-foreground" size={14} />
+                                    Crear: {input}
+                                </button>
+                            </TagsEmpty>
+                            <TagsGroup>
+                                {options.map((opt) => (
+                                    <TagsItem key={opt.id} onSelect={() => handleSelect(opt.id)} value={opt.id}>
+                                        {opt.label}
+                                        {selected.includes(opt.id) && (
+                                            <CheckIcon className="text-muted-foreground" size={14} />
+                                        )}
+                                    </TagsItem>
+                                ))}
+                            </TagsGroup>
+                        </TagsList>
+                    </TagsContent>
+                </Tags>
+            </div>
+        )
+    }
+
     // Dynamic validity across groups (dimensions + sizes)
     const dimensionTagsSelectedRef = useMemo(() => selected.filter(t => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(t)), [selected])
     const sizeTagsSelectedRef = useMemo(() => selected.filter(t => ["Talle", "Tamaño"].includes(t)), [selected])
@@ -1027,11 +1101,45 @@ function ExtraFormPanel() {
                                         ))}
                                     </div>
                                 ) : (
-                                    <div className="flex flex-wrap items-center gap-2">
+                                    <div className={cn("gap-3", g.tags.length > 1 ? "grid grid-cols-1 md:grid-cols-2" : "grid grid-cols-1") }>
                                         {g.tags.map(tag => (
-                                            <span key={tag} className="bg-muted text-foreground/80 rounded px-2 py-1 text-xs">
-                                                {tag}
-                                            </span>
+                                            tag === 'Sabor' ? (
+                                                <FreeTags
+                                                    key={tag}
+                                                    name={`extra.sensorial.flavors`}
+                                                    label={tag}
+                                                    preset={[
+                                                        { id: 'Vainilla', label: 'Vainilla' },
+                                                        { id: 'Chocolate', label: 'Chocolate' },
+                                                        { id: 'Frutilla', label: 'Frutilla' },
+                                                        { id: 'Limón', label: 'Limón' },
+                                                        { id: 'Caramelo', label: 'Caramelo' },
+                                                        { id: 'Menta', label: 'Menta' },
+                                                        { id: 'Café', label: 'Café' },
+                                                        { id: 'Nuez', label: 'Nuez' },
+                                                    ]}
+                                                />
+                                            ) : tag === 'Fragancia' ? (
+                                                <FreeTags
+                                                    key={tag}
+                                                    name={`extra.sensorial.fragrances`}
+                                                    label={tag}
+                                                    preset={[
+                                                        { id: 'Lavanda', label: 'Lavanda' },
+                                                        { id: 'Cítrico', label: 'Cítrico' },
+                                                        { id: 'Vainilla', label: 'Vainilla' },
+                                                        { id: 'Sándalo', label: 'Sándalo' },
+                                                        { id: 'Rosa', label: 'Rosa' },
+                                                        { id: 'Jazmín', label: 'Jazmín' },
+                                                        { id: 'Menta', label: 'Menta' },
+                                                        { id: 'Cedro', label: 'Cedro' },
+                                                    ]}
+                                                />
+                                            ) : (
+                                                <span key={tag} className="bg-muted text-foreground/80 rounded px-2 py-1 text-xs">
+                                                    {tag}
+                                                </span>
+                                            )
                                         ))}
                                     </div>
                                 )}
