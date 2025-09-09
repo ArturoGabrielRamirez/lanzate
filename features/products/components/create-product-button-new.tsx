@@ -776,6 +776,24 @@ function ExtraFormPanel() {
         )
     }
 
+    function ExpirationDateFieldRow() {
+        const baseName = `extra.expiration`
+        const valueName = `${baseName}.date`
+        return (
+            <div className="flex items-end">
+                <div className="flex-1">
+                    <InputField
+                        name={valueName}
+                        label={"Fecha de vencimiento"}
+                        placeholder={"Ej: 2026-12-31"}
+                        type="date"
+                        inputMode="none"
+                    />
+                </div>
+            </div>
+        )
+    }
+
     function SizesTags({ name, label, preset }: { name: string; label: string; preset: { id: string; label: string }[] }) {
         const [options, setOptions] = useState(preset)
         const [selected, setSelected] = useState<string[]>(() => (getValues(name as never) as string[] | undefined) || [])
@@ -858,6 +876,7 @@ function ExtraFormPanel() {
     // Dynamic validity across groups (dimensions + sizes)
     const dimensionTagsSelectedRef = useMemo(() => selected.filter(t => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(t)), [selected])
     const sizeTagsSelectedRef = useMemo(() => selected.filter(t => ["Talle", "Tamaño"].includes(t)), [selected])
+    const hasExpirationSelected = useMemo(() => selected.includes("Fecha de vencimiento"), [selected])
 
     // Seed/clear dimension errors only when selection changes
     useEffect(() => {
@@ -872,8 +891,14 @@ function ExtraFormPanel() {
             if (!hasVal) setError(valuePath as never, { type: 'required', message: 'Campo requerido' }); else clearErrors(valuePath as never)
             if (!hasUnit) setError(unitPath as never, { type: 'required', message: 'Selecciona una unidad' }); else clearErrors(unitPath as never)
         })
+        if (hasExpirationSelected) {
+            const expPath = `extra.expiration.date`
+            const expVal = getValues(expPath as never) as unknown
+            const hasVal = expVal !== undefined && expVal !== null && String(expVal).trim().length > 0
+            if (!hasVal) setError(expPath as never, { type: 'required', message: 'Selecciona la fecha' }); else clearErrors(expPath as never)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(dimensionTagsSelectedRef)])
+    }, [JSON.stringify(dimensionTagsSelectedRef), hasExpirationSelected])
 
     // One watcher to compute step validity without mutating errors (prevents loops)
     useEffect(() => {
@@ -887,13 +912,18 @@ function ExtraFormPanel() {
                 const hu = typeof u === 'string' && u.length > 0
                 return hv && hu
             })
+            // expiration
+            const expOk = hasExpirationSelected ? (() => {
+                const v = getValues(`extra.expiration.date` as never) as unknown
+                return v !== undefined && v !== null && String(v).trim().length > 0
+            })() : true
             // sizes
             const sizesOk = sizeTagsSelectedRef.every(tag => {
                 const key = tag === 'Talle' ? 'talle' : 'tamano'
                 const arr = (getValues(`extra.sizes.${key}` as never) as string[] | undefined) || []
                 return Array.isArray(arr) && arr.length > 0
             })
-            setStepValid(4, dimsOk && sizesOk)
+            setStepValid(4, dimsOk && expOk && sizesOk)
         }
         computeValid()
         const sub = watch((_v, info) => {
@@ -902,11 +932,12 @@ function ExtraFormPanel() {
         })
         return () => sub.unsubscribe()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(dimensionTagsSelectedRef), JSON.stringify(sizeTagsSelectedRef)])
+    }, [JSON.stringify(dimensionTagsSelectedRef), JSON.stringify(sizeTagsSelectedRef), hasExpirationSelected])
 
     const groups = useMemo(() => {
         const definitions = {
-            dimensiones: { title: "Dimensiones", tags: ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"] },
+            contenido: { title: "Contenido y vencimiento", tags: ["Peso", "Fecha de vencimiento"] },
+            dimensiones: { title: "Dimensiones", tags: ["Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"] },
             talles: { title: "Talles y tamaños", tags: ["Talle", "Tamaño"] },
             superficie: { title: "Superficie", tags: ["Color", "Material"] },
             sensorial: { title: "Aromas y sabores", tags: ["Sabor", "Fragancia"] },
@@ -924,13 +955,15 @@ function ExtraFormPanel() {
             <AnimatedTags
                 title="Atributos"
                 emptyMessage="Hace click en algun atributo para agregarselo al producto."
-                initialTags={["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia", "Talle", "Tamaño", "Color", "Material", "Sabor", "Fragancia"]}
+                initialTags={["Peso", "Fecha de vencimiento", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia", "Talle", "Tamaño", "Color", "Material", "Sabor", "Fragancia"]}
                 selectedTags={selected}
                 onChange={(vals) => {
                     setSelected(vals)
                     // Keep a mirror for persisting if needed later
                     setValue('extra_meta.selectedDimensionTags' as never, vals.filter(v => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(v)) as never)
                 }}
+                hasTooltip
+                tooltipMessage="Click para agregar o quitar"
             />
             {groups.length > 0 && (
                 <Accordion type="single" collapsible>
@@ -957,6 +990,16 @@ function ExtraFormPanel() {
                                     <div className={cn("gap-3", g.tags.length > 1 ? "grid grid-cols-1 md:grid-cols-2" : "grid grid-cols-1")}>
                                         {g.tags.map(tag => (
                                             <DimensionFieldRow key={tag} tag={tag} />
+                                        ))}
+                                    </div>
+                                ) : g.key === 'contenido' ? (
+                                    <div className={cn("gap-3", g.tags.length > 1 ? "grid grid-cols-1 md:grid-cols-2" : "grid grid-cols-1")}>
+                                        {g.tags.map(tag => (
+                                            tag === 'Peso' ? (
+                                                <DimensionFieldRow key={tag} tag={tag} />
+                                            ) : (
+                                                <ExpirationDateFieldRow key={tag} />
+                                            )
                                         ))}
                                     </div>
                                 ) : g.key === 'talles' ? (

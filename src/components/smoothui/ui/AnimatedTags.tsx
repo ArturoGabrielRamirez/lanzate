@@ -4,6 +4,7 @@ import { useState } from "react"
 import { CircleX, Plus } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { cn } from "@/lib/utils"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 export interface AnimatedTagsProps {
   initialTags?: string[]
@@ -12,6 +13,8 @@ export interface AnimatedTagsProps {
   className?: string
   title?: string
   emptyMessage?: string
+  hasTooltip?: boolean
+  tooltipMessage?: string
 }
 
 export default function AnimatedTags({
@@ -20,7 +23,9 @@ export default function AnimatedTags({
   onChange,
   className = "",
   title = "Dias de atencion",
-  emptyMessage = "No hay dias de atencion seleccionados"
+  emptyMessage = "No hay dias de atencion seleccionados",
+  hasTooltip = false,
+  tooltipMessage = "Haz click para agregar o quitar"
 }: AnimatedTagsProps) {
   const [internalSelected, setInternalSelected] = useState<string[]>([])
   /* const [internalTags, setInternalTags] = useState<string[]>(initialTags) */
@@ -51,26 +56,53 @@ export default function AnimatedTags({
         <AnimatePresence>
           <div className={cn("bg-background flex min-h-10 w-full flex-wrap items-center gap-1 rounded-md border p-2", selectedTag.length === 0 && "border-dashed text-center")}>
             {selectedTag?.map((tag) => (
-              <motion.div
-                key={tag}
-                layout
-                className="group bg-primary text-primary-foreground group-hover:bg-primary group-hover:text-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border px-2 py-1"
-                onClick={() => handleDeleteTag(tag)}
-                initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
-                animate={{
-                  y: 0,
-                  opacity: 1,
-                  filter: "blur(0px)",
-                }}
-                exit={{ y: 20, opacity: 0, filter: "blur(4px)" }}
-                transition={{ duration: 0.3, bounce: 0, type: "spring" }}
-              >
-                {tag}{" "}
-                <CircleX
-                  size={16}
-                  className="flex items-center justify-center rounded-full transition-all duration-300 ease-in-out"
-                />
-              </motion.div>
+              hasTooltip ? (
+                <Tooltip key={tag}>
+                  <TooltipTrigger asChild>
+                    <motion.div
+                      layout
+                      className="group bg-primary text-primary-foreground group-hover:bg-primary group-hover:text-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border px-2 py-1"
+                      onClick={() => handleDeleteTag(tag)}
+                      initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
+                      animate={{
+                        y: 0,
+                        opacity: 1,
+                        filter: "blur(0px)",
+                      }}
+                      exit={{ y: 20, opacity: 0, filter: "blur(4px)" }}
+                      transition={{ duration: 0.3, bounce: 0, type: "spring" }}
+                    >
+                      {tag}{" "}
+                      <CircleX
+                        size={16}
+                        className="flex items-center justify-center rounded-full transition-all duration-300 ease-in-out"
+                      />
+                    </motion.div>
+                  </TooltipTrigger>
+                  <TooltipContent>{tooltipMessage}</TooltipContent>
+                </Tooltip>
+              ) : (
+                <motion.div
+                  key={tag}
+                  layout
+                  className="group bg-primary text-primary-foreground group-hover:bg-primary group-hover:text-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border px-2 py-1"
+                  onClick={() => handleDeleteTag(tag)}
+                  initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
+                  animate={{
+                    y: 0,
+                    opacity: 1,
+                    filter: "blur(0px)",
+                  }}
+                  exit={{ y: 20, opacity: 0, filter: "blur(4px)" }}
+                  transition={{ duration: 0.3, bounce: 0, type: "spring" }}
+                >
+                  {tag}{" "}
+                  <CircleX
+                    size={16}
+                    className="flex items-center justify-center rounded-full transition-all duration-300 ease-in-out"
+                  />
+                </motion.div>
+              )
             ))}
             {selectedTag.length === 0 && (
               <p className="text-sm text-muted-foreground">{emptyMessage}</p>
@@ -81,26 +113,53 @@ export default function AnimatedTags({
       <AnimatePresence>
         <div className="flex flex-wrap items-center gap-1">
           {tags.map((tag, index) => (
-            <motion.div
-              layout
-              key={index}
-              className="group bg-background text-primary-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border px-2 py-1 text-sm"
-              onClick={() => handleTagClick(tag)}
-              initial={{ y: -20, opacity: 0, filter: "blur(4px)" }}
-              animate={{
-                y: 0,
-                opacity: 1,
-                filter: "blur(0px)",
-              }}
-              exit={{ y: -20, opacity: 0, filter: "blur(4px)" }}
-              transition={{ duration: 0.3, bounce: 0, type: "spring" }}
-            >
-              {tag}{" "}
-              <Plus
-                size={16}
-                className="hover:bg-primary group-hover:text-foreground flex items-center justify-center rounded-full transition-all duration-300 ease-in-out"
-              />
-            </motion.div>
+            hasTooltip ? (
+              <Tooltip key={index}>
+                <TooltipTrigger asChild>
+                  <motion.div
+                    layout
+                    className="group bg-background text-primary-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border px-2 py-1 text-sm"
+                    onClick={() => handleTagClick(tag)}
+                    initial={{ y: -20, opacity: 0, filter: "blur(4px)" }}
+                    animate={{
+                      y: 0,
+                      opacity: 1,
+                      filter: "blur(0px)",
+                    }}
+                    exit={{ y: -20, opacity: 0, filter: "blur(4px)" }}
+                    transition={{ duration: 0.3, bounce: 0, type: "spring" }}
+                  >
+                    {tag}{" "}
+                    <Plus
+                      size={16}
+                      className="hover:bg-primary group-hover:text-foreground flex items-center justify-center rounded-full transition-all duration-300 ease-in-out"
+                    />
+                  </motion.div>
+                </TooltipTrigger>
+                <TooltipContent>{tooltipMessage}</TooltipContent>
+              </Tooltip>
+            ) : (
+              <motion.div
+                layout
+                key={index}
+                className="group bg-background text-primary-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border px-2 py-1 text-sm"
+                onClick={() => handleTagClick(tag)}
+                initial={{ y: -20, opacity: 0, filter: "blur(4px)" }}
+                animate={{
+                  y: 0,
+                  opacity: 1,
+                  filter: "blur(0px)",
+                }}
+                exit={{ y: -20, opacity: 0, filter: "blur(4px)" }}
+                transition={{ duration: 0.3, bounce: 0, type: "spring" }}
+              >
+                {tag}{" "}
+                <Plus
+                  size={16}
+                  className="hover:bg-primary group-hover:text-foreground flex items-center justify-center rounded-full transition-all duration-300 ease-in-out"
+                />
+              </motion.div>
+            )
           ))}
         </div>
       </AnimatePresence>
