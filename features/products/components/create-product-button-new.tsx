@@ -8,7 +8,7 @@ import * as yup from "yup"
 import { useCallback, useContext, useEffect, useMemo, useState, createContext } from "react"
 import { useFormContext } from "react-hook-form"
 import { Form, InputField } from "@/features/layout/components"
-import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash, Tag, Barcode, DollarSign, Package, Settings, X, Ruler, Shirt, Palette, Sparkles } from "lucide-react"
+import { Check, Loader, Box, Image as ImageIcon, Plus, Globe, Upload, Camera, Trash, Tag, Barcode, DollarSign, Package, Settings, X, Ruler, Shirt, Palette, Sparkles, PlusIcon, CheckIcon } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { FileUpload, FileUploadCameraTrigger, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/components/ui/file-upload"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
@@ -26,6 +26,8 @@ import { getCategories } from "@/features/store-landing/actions/getCategories"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Tags, TagsContent, TagsEmpty, TagsGroup, TagsInput, TagsItem, TagsList, TagsTrigger, TagsValue } from "@/src/components/ui/shadcn-io/tags"
+import { get as rhfGet } from "react-hook-form"
 
 type MediaItem = { file?: File; url?: string }
 type MediaState = { items: MediaItem[]; primaryIndex: number | null }
@@ -774,43 +776,133 @@ function ExtraFormPanel() {
         )
     }
 
-    // Dynamic validity for dimensions
-    const dimensionTagsSelectedRef = useMemo(() => selected.filter(t => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(t)), [selected])
-    useEffect(() => {
-        if (dimensionTagsSelectedRef.length === 0) { setStepValid(4, true); return }
-        const keys = dimensionTagsSelectedRef.map(t => tagToKey[t])
-        const compute = () => {
-            let ok = true
-            keys.forEach(k => {
-                const valuePath = `extra.dimensions.${k}.value`
-                const unitPath = `extra.dimensions.${k}.unit`
-                const val = getValues(valuePath as never) as unknown
-                const unit = getValues(unitPath as never) as unknown
-                const hasVal = val !== undefined && val !== null && String(val).trim().length > 0
-                const hasUnit = typeof unit === 'string' && unit.length > 0
-                if (!hasVal) {
-                    ok = false
-                    setError(valuePath as never, { type: 'required', message: 'Campo requerido' })
-                } else {
-                    clearErrors(valuePath as never)
-                }
-                if (!hasUnit) {
-                    ok = false
-                    setError(unitPath as never, { type: 'required', message: 'Selecciona una unidad' })
-                } else {
-                    clearErrors(unitPath as never)
-                }
-            })
-            return ok
+    function SizesTags({ name, label, preset }: { name: string; label: string; preset: { id: string; label: string }[] }) {
+        const [options, setOptions] = useState(preset)
+        const [selected, setSelected] = useState<string[]>(() => (getValues(name as never) as string[] | undefined) || [])
+        const [input, setInput] = useState("")
+        const { formState: { errors } } = useFormContext()
+        const error = rhfGet(errors, name) as { message?: string } | undefined
+
+        const applySelection = (next: string[]) => {
+            setSelected(next)
+            setValue(name as never, next as never, { shouldDirty: true, shouldValidate: true })
+            if (next.length === 0) setError(name as never, { type: 'required', message: 'Selecciona al menos una opción' })
+            else clearErrors(name as never)
         }
-        setStepValid(4, compute())
+
+        const handleRemove = (id: string) => {
+            const next = selected.filter(v => v !== id)
+            applySelection(next)
+        }
+
+        const handleSelect = (id: string) => {
+            const next = selected.includes(id) ? selected.filter(v => v !== id) : [...selected, id]
+            applySelection(next)
+        }
+
+        const handleCreate = () => {
+            const label = (input || "").trim()
+            if (!label) return
+            const id = label
+            if (!options.some(o => o.id === id)) setOptions(prev => [...prev, { id, label }])
+            if (!selected.includes(id)) applySelection([...selected, id])
+            setInput("")
+        }
+
+        const placeholder = "Escribe para agregar…"
+
+        return (
+            <div className="flex flex-col gap-1 w-full">
+                <Label>{label}</Label>
+                <Tags>
+                    <TagsTrigger className="!bg-transparent">
+                        {selected.map((id) => (
+                            <TagsValue key={id} onRemove={() => handleRemove(id)}>
+                                {options.find(o => o.id === id)?.label || id}
+                            </TagsValue>
+                        ))}
+                        {selected.length === 0 && (
+                            <span className="flex items-center gap-2 px-2 py-px text-muted-foreground">
+                                <Tag size={14} />
+                                Selecciona opciones…
+                            </span>
+                        )}
+                    </TagsTrigger>
+                    <TagsContent>
+                        <TagsInput onValueChange={setInput} placeholder={placeholder} />
+                        <TagsList>
+                            <TagsEmpty>
+                                <button className="mx-auto flex cursor-pointer items-center gap-2" onClick={handleCreate} type="button">
+                                    <PlusIcon className="text-muted-foreground" size={14} />
+                                    Crear: {input}
+                                </button>
+                            </TagsEmpty>
+                            <TagsGroup>
+                                {options.map((opt) => (
+                                    <TagsItem key={opt.id} onSelect={() => handleSelect(opt.id)} value={opt.id}>
+                                        {opt.label}
+                                        {selected.includes(opt.id) && (
+                                            <CheckIcon className="text-muted-foreground" size={14} />
+                                        )}
+                                    </TagsItem>
+                                ))}
+                            </TagsGroup>
+                        </TagsList>
+                    </TagsContent>
+                </Tags>
+                {error?.message && <p className="text-xs text-red-500">{error.message}</p>}
+            </div>
+        )
+    }
+
+    // Dynamic validity across groups (dimensions + sizes)
+    const dimensionTagsSelectedRef = useMemo(() => selected.filter(t => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(t)), [selected])
+    const sizeTagsSelectedRef = useMemo(() => selected.filter(t => ["Talle", "Tamaño"].includes(t)), [selected])
+
+    // Seed/clear dimension errors only when selection changes
+    useEffect(() => {
+        const dimKeys = dimensionTagsSelectedRef.map(t => tagToKey[t])
+        dimKeys.forEach(k => {
+            const valuePath = `extra.dimensions.${k}.value`
+            const unitPath = `extra.dimensions.${k}.unit`
+            const val = getValues(valuePath as never) as unknown
+            const unit = getValues(unitPath as never) as unknown
+            const hasVal = val !== undefined && val !== null && String(val).trim().length > 0
+            const hasUnit = typeof unit === 'string' && unit.length > 0
+            if (!hasVal) setError(valuePath as never, { type: 'required', message: 'Campo requerido' }); else clearErrors(valuePath as never)
+            if (!hasUnit) setError(unitPath as never, { type: 'required', message: 'Selecciona una unidad' }); else clearErrors(unitPath as never)
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(dimensionTagsSelectedRef)])
+
+    // One watcher to compute step validity without mutating errors (prevents loops)
+    useEffect(() => {
+        const computeValid = () => {
+            // dimensions
+            const dimKeys = dimensionTagsSelectedRef.map(t => tagToKey[t])
+            const dimsOk = dimKeys.every(k => {
+                const v = getValues(`extra.dimensions.${k}.value` as never) as unknown
+                const u = getValues(`extra.dimensions.${k}.unit` as never) as unknown
+                const hv = v !== undefined && v !== null && String(v).trim().length > 0
+                const hu = typeof u === 'string' && u.length > 0
+                return hv && hu
+            })
+            // sizes
+            const sizesOk = sizeTagsSelectedRef.every(tag => {
+                const key = tag === 'Talle' ? 'talle' : 'tamano'
+                const arr = (getValues(`extra.sizes.${key}` as never) as string[] | undefined) || []
+                return Array.isArray(arr) && arr.length > 0
+            })
+            setStepValid(4, dimsOk && sizesOk)
+        }
+        computeValid()
         const sub = watch((_v, info) => {
             if (!info?.name) return
-            if (info.name.startsWith('extra.dimensions.')) setStepValid(4, compute())
+            if (info.name.startsWith('extra.')) computeValid()
         })
         return () => sub.unsubscribe()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(dimensionTagsSelectedRef)])
+    }, [JSON.stringify(dimensionTagsSelectedRef), JSON.stringify(sizeTagsSelectedRef)])
 
     const groups = useMemo(() => {
         const definitions = {
@@ -865,6 +957,30 @@ function ExtraFormPanel() {
                                     <div className={cn("gap-3", g.tags.length > 1 ? "grid grid-cols-1 md:grid-cols-2" : "grid grid-cols-1")}>
                                         {g.tags.map(tag => (
                                             <DimensionFieldRow key={tag} tag={tag} />
+                                        ))}
+                                    </div>
+                                ) : g.key === 'talles' ? (
+                                    <div className={cn("gap-3", g.tags.length > 1 ? "grid grid-cols-1 md:grid-cols-2" : "grid grid-cols-1")}>
+                                        {g.tags.map(tag => (
+                                            <SizesTags
+                                                key={tag}
+                                                name={`extra.sizes.${tag === 'Talle' ? 'talle' : 'tamano'}`}
+                                                label={tag}
+                                                preset={tag === 'Talle'
+                                                    ? [
+                                                        { id: 'XS', label: 'XS' },
+                                                        { id: 'S', label: 'S' },
+                                                        { id: 'M', label: 'M' },
+                                                        { id: 'L', label: 'L' },
+                                                        { id: 'XL', label: 'XL' },
+                                                        { id: 'XXL', label: 'XXL' },
+                                                    ]
+                                                    : [
+                                                        { id: 'Pequeño', label: 'Pequeño' },
+                                                        { id: 'Mediano', label: 'Mediano' },
+                                                        { id: 'Grande', label: 'Grande' },
+                                                    ]}
+                                            />
                                         ))}
                                     </div>
                                 ) : (
