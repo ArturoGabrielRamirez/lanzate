@@ -88,7 +88,7 @@ const InputField = ({
   }
 
   return (
-    <div className={cn("flex flex-col gap-1", containerClassName)}>
+    <div className={cn("flex flex-col gap-1 relative mb-4", containerClassName)}>
       <Label htmlFor={name}>{label}{isRequired && <span className="text-red-500">*</span>}</Label>
       {isTextArea ? (
         <Textarea
@@ -118,7 +118,7 @@ const InputField = ({
         />
       )}
 
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {error && <p className="text-sm text-red-500 absolute -bottom-6">{error}</p>}
     </div>
   )
 }

@@ -25,6 +25,7 @@ import CategoryTagsSelect from "@/features/store-landing/components/category-tag
 import { getCategories } from "@/features/store-landing/actions/getCategories"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 type MediaItem = { file?: File; url?: string }
 type MediaState = { items: MediaItem[]; primaryIndex: number | null }
@@ -35,6 +36,8 @@ type CreateProductFormValues = {
     pricing?: { price?: number; stock?: number }
     settings?: { is_active?: boolean; is_featured?: boolean; is_published?: boolean }
     categories?: { label: string; value: string }[]
+    extra?: { dimensions?: Record<string, { value?: number | string; unit?: string }> }
+    extra_meta?: { selectedDimensionTags?: string[] }
 }
 
 type CreateProductContextType = {
@@ -483,39 +486,41 @@ function MediaFormPanel() {
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <InputField
-                    name="pricing.price"
-                    label="Precio"
-                    placeholder="Ej: 1999"
-                    type="number"
-                    inputMode="numeric"
-                    startContent={<DollarSign />}
-                    isRequired
-                />
-                <InputField
-                    name="pricing.stock"
-                    label="Stock"
-                    placeholder="Ej: 10"
-                    type="number"
-                    inputMode="numeric"
-                    startContent={<Package />}
-                    isRequired
-                />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <InputField
-                    name="basic_info.sku"
-                    label="SKU"
-                    placeholder="Ej: SKU-123"
-                    startContent={<Tag />}
-                />
-                <InputField
-                    name="basic_info.barcode"
-                    label="Código de barras"
-                    placeholder="Ej: 1234567890123"
-                    startContent={<Barcode />}
-                />
+            <div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <InputField
+                        name="pricing.price"
+                        label="Precio"
+                        placeholder="Ej: 1999"
+                        type="number"
+                        inputMode="numeric"
+                        startContent={<DollarSign />}
+                        isRequired
+                    />
+                    <InputField
+                        name="pricing.stock"
+                        label="Stock"
+                        placeholder="Ej: 10"
+                        type="number"
+                        inputMode="numeric"
+                        startContent={<Package />}
+                        isRequired
+                    />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <InputField
+                        name="basic_info.sku"
+                        label="SKU"
+                        placeholder="Ej: SKU-123"
+                        startContent={<Tag />}
+                    />
+                    <InputField
+                        name="basic_info.barcode"
+                        label="Código de barras"
+                        placeholder="Ej: 1234567890123"
+                        startContent={<Barcode />}
+                    />
+                </div>
             </div>
             <div className="mt-6 space-y-4">
                 <div className="flex items-center justify-between">
@@ -662,8 +667,151 @@ function MediaUploadPanel() {
 // Step 4 – Extra (empty panel, marks as valid)
 function ExtraFormPanel() {
     const { setStepValid } = useCreateProductContext()
+    const { watch, getValues, setValue, setError, clearErrors } = useFormContext()
     const [selected, setSelected] = useState<string[]>([])
     useEffect(() => { setStepValid(4, true) }, [setStepValid])
+
+    // Units for dimensions
+    const unitOptionsByKey: Record<string, { label: string; value: string }[]> = {
+        peso: [
+            { label: "mg", value: "mg" },
+            { label: "g", value: "g" },
+            { label: "kg", value: "kg" },
+            { label: "ml", value: "ml" },
+            { label: "lt", value: "lt" },
+            { label: "oz", value: "oz" },
+            { label: "lb", value: "lb" },
+
+        ],
+        alto: [
+            { label: "mm", value: "mm" },
+            { label: "cm", value: "cm" },
+            { label: "m", value: "m" },
+            { label: "in", value: "in" },
+            { label: "ft", value: "ft" },
+        ],
+        ancho: [
+            { label: "mm", value: "mm" },
+            { label: "cm", value: "cm" },
+            { label: "m", value: "m" },
+            { label: "in", value: "in" },
+            { label: "ft", value: "ft" },
+        ],
+        largo: [
+            { label: "mm", value: "mm" },
+            { label: "cm", value: "cm" },
+            { label: "m", value: "m" },
+            { label: "in", value: "in" },
+            { label: "ft", value: "ft" },
+        ],
+        profundidad: [
+            { label: "mm", value: "mm" },
+            { label: "cm", value: "cm" },
+            { label: "m", value: "m" },
+            { label: "in", value: "in" },
+            { label: "ft", value: "ft" },
+        ],
+        circumferencia: [
+            { label: "mm", value: "mm" },
+            { label: "cm", value: "cm" },
+            { label: "m", value: "m" },
+            { label: "in", value: "in" },
+            { label: "ft", value: "ft" },
+        ],
+    }
+
+    const tagToKey: Record<string, string> = {
+        Peso: "peso",
+        Alto: "alto",
+        Ancho: "ancho",
+        Largo: "largo",
+        Profundidad: "profundidad",
+        Circumferencia: "circumferencia",
+    }
+
+    function UnitSelect({ name, options, placeholder = "Unidad", className }: { name: string; options: { label: string; value: string }[]; placeholder?: string; className?: string }) {
+        const current = watch(name) as string | undefined
+        return (
+            <Select value={current} onValueChange={(val) => setValue(name as never, val as never, { shouldDirty: true, shouldValidate: true })}>
+                <SelectTrigger className={cn("", className)}>
+                    <SelectValue placeholder={placeholder} />
+                </SelectTrigger>
+                <SelectContent>
+                    {options.map(opt => (
+                        <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
+        )
+    }
+
+    function DimensionFieldRow({ tag }: { tag: string }) {
+        const key = tagToKey[tag]
+        const baseName = `extra.dimensions.${key}`
+        const unitName = `${baseName}.unit`
+        const valueName = `${baseName}.value`
+        const unitVal = watch(unitName) as string | undefined
+        useEffect(() => {
+            if (!unitVal) {
+                const first = unitOptionsByKey[key]?.[0]?.value
+                if (first) setValue(unitName as never, first as never, { shouldDirty: true })
+            }
+        }, [unitVal, key, unitName])
+        return (
+            <div className="flex items-end">
+                <div className="flex-1">
+                    <InputField
+                        name={valueName}
+                        label={tag}
+                        placeholder={`Ej: valor de ${tag.toLowerCase()}`}
+                        type="number"
+                        inputMode="numeric"
+                        className="!rounded-r-none"
+                    />
+                </div>
+                <UnitSelect name={unitName} options={unitOptionsByKey[key] || []} className="!rounded-l-none !border-l-0 !h-[40px] mb-4" />
+            </div>
+        )
+    }
+
+    // Dynamic validity for dimensions
+    const dimensionTagsSelectedRef = useMemo(() => selected.filter(t => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(t)), [selected])
+    useEffect(() => {
+        if (dimensionTagsSelectedRef.length === 0) { setStepValid(4, true); return }
+        const keys = dimensionTagsSelectedRef.map(t => tagToKey[t])
+        const compute = () => {
+            let ok = true
+            keys.forEach(k => {
+                const valuePath = `extra.dimensions.${k}.value`
+                const unitPath = `extra.dimensions.${k}.unit`
+                const val = getValues(valuePath as never) as unknown
+                const unit = getValues(unitPath as never) as unknown
+                const hasVal = val !== undefined && val !== null && String(val).trim().length > 0
+                const hasUnit = typeof unit === 'string' && unit.length > 0
+                if (!hasVal) {
+                    ok = false
+                    setError(valuePath as never, { type: 'required', message: 'Campo requerido' })
+                } else {
+                    clearErrors(valuePath as never)
+                }
+                if (!hasUnit) {
+                    ok = false
+                    setError(unitPath as never, { type: 'required', message: 'Selecciona una unidad' })
+                } else {
+                    clearErrors(unitPath as never)
+                }
+            })
+            return ok
+        }
+        setStepValid(4, compute())
+        const sub = watch((_v, info) => {
+            if (!info?.name) return
+            if (info.name.startsWith('extra.dimensions.')) setStepValid(4, compute())
+        })
+        return () => sub.unsubscribe()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(dimensionTagsSelectedRef)])
+
     const groups = useMemo(() => {
         const definitions = {
             dimensiones: { title: "Dimensiones", tags: ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"] },
@@ -686,7 +834,11 @@ function ExtraFormPanel() {
                 emptyMessage="Hace click en algun atributo para agregarselo al producto."
                 initialTags={["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia", "Talle", "Tamaño", "Color", "Material", "Sabor", "Fragancia"]}
                 selectedTags={selected}
-                onChange={setSelected}
+                onChange={(vals) => {
+                    setSelected(vals)
+                    // Keep a mirror for persisting if needed later
+                    setValue('extra_meta.selectedDimensionTags' as never, vals.filter(v => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(v)) as never)
+                }}
             />
             {groups.length > 0 && (
                 <Accordion type="single" collapsible>
@@ -709,13 +861,21 @@ function ExtraFormPanel() {
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent>
-                                <div className="flex flex-wrap items-center gap-2">
-                                    {g.tags.map(tag => (
-                                        <span key={tag} className="bg-muted text-foreground/80 rounded px-2 py-1 text-xs">
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
+                                {g.key === 'dimensiones' ? (
+                                    <div className={cn("gap-3", g.tags.length > 1 ? "grid grid-cols-1 md:grid-cols-2" : "grid grid-cols-1")}>
+                                        {g.tags.map(tag => (
+                                            <DimensionFieldRow key={tag} tag={tag} />
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        {g.tags.map(tag => (
+                                            <span key={tag} className="bg-muted text-foreground/80 rounded px-2 py-1 text-xs">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
                             </AccordionContent>
                         </AccordionItem>
                     ))}
