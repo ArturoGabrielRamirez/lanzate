@@ -913,7 +913,11 @@ function FileUploadCameraTrigger(props: FileUploadCameraTriggerProps) {
         data-camera-trigger
         {...rest}
         disabled={context.disabled}
-        onClick={() => camera.openCamera()}
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          camera.openCamera()
+        }}
       >
         {props.children ?? (
           <span className="inline-flex items-center gap-2">

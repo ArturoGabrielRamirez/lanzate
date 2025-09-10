@@ -209,6 +209,7 @@ const extraSchema = yup.object({
                         .optional(),
                 })
             ).default([]).optional(),
+            materials: yup.array(yup.mixed()).default([]).optional(),
         }).optional(),
         // keep space for other groups; not strictly validated here
     }).optional(),
@@ -226,6 +227,17 @@ const extraSchema = yup.object({
     if (!requiresColor) return true
     const colors = shape?.extra?.surface?.colors
     return Array.isArray(colors) && colors.length > 0
+}).test('require-materials-when-selected', 'Agrega al menos un material', function (obj) {
+    type ExtraSchemaShape2 = {
+        extra?: { surface?: { colors?: { value: string; name?: string }[]; materials?: unknown[] } }
+        extra_meta?: { selectedSurfaceTags?: string[] }
+    }
+    const shape2 = (obj as unknown) as ExtraSchemaShape2
+    const selectedSurfaceTags2 = shape2?.extra_meta?.selectedSurfaceTags
+    const requiresMaterials = Array.isArray(selectedSurfaceTags2) && selectedSurfaceTags2.includes('Material')
+    if (!requiresMaterials) return true
+    const materials = shape2?.extra?.surface?.materials
+    return Array.isArray(materials) && materials.length > 0
 })
 type ExtraFormType = yup.InferType<typeof extraSchema>
 
@@ -1074,6 +1086,110 @@ function ExtraFormPanel() {
         )
     }
 
+    function MaterialsField() {
+        const baseName = `extra.surface.materials`
+        type MaterialItem = { file?: File; url?: string }
+        const arr = (watch(baseName) as MaterialItem[] | undefined) || []
+        const [editing, setEditing] = useState(false)
+
+        // const handleAddFiles = (files: File[]) => {
+        //     if (!files || files.length === 0) return
+        //     const additions: MaterialItem[] = files.map(f => ({ file: f }))
+        //     const next = [...arr, ...additions]
+        //     setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: false })
+        // }
+        const handleDeleteAt = (index: number) => {
+            const next = arr.filter((_v, i) => i !== index)
+            setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
+        }
+
+        const handleCamera = (e: React.MouseEvent<HTMLButtonElement>) => {
+            e.preventDefault()
+            e.stopPropagation()
+        }
+        const handleFilesSelected = (files: File[]) => {
+            if (!files || files.length === 0) return
+            const file = files[files.length - 1]
+            const next = [...arr, { file }]
+            setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
+            setEditing(false)
+        }
+
+        return (
+            <div className="flex flex-col gap-3">
+                {arr.length === 0 && !editing && (
+                    <>
+                        <div className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
+                            No hay materiales agregados
+                        </div>
+                        <Button variant="outline" size="sm" onClick={() => setEditing(true)} className="w-fit">
+                            <Plus className="mr-1 size-4" /> Agregar material
+                        </Button>
+                    </>
+                )}
+                <div className="flex flex-wrap items-center gap-4">
+                    {arr.map((item, index) => (
+                        <div key={index} className="relative">
+                            {item.file ? (
+                                <img
+                                    alt={`material-${index}`}
+                                    src={URL.createObjectURL(item.file)}
+                                    className="size-16 rounded-full object-cover border"
+                                />
+                            ) : item.url ? (
+                                <img alt={`material-${index}`} src={item.url} className="size-16 rounded-full object-cover border" />
+                            ) : (
+                                <div className="size-16 rounded-full border bg-muted" />
+                            )}
+                            <button
+                                type="button"
+                                className="-right-1 -top-1 absolute grid place-items-center rounded-full border bg-background/90 p-1"
+                                onClick={() => handleDeleteAt(index)}
+                            >
+                                <X className="size-3" />
+                            </button>
+                        </div>
+                    ))}
+                    {editing && (
+                        <FileUpload value={[]} onValueChange={handleFilesSelected}>
+                            <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[100px] mx-auto size-28")}> 
+                                <div className="group-hover/dropzone:hidden flex flex-col items-center gap-1 text-center">
+                                    <ImageIcon className="text-muted-foreground" />
+                                    <p className="text-sm text-muted-foreground">Arrastra la imagen del material aqui</p>
+                                </div>
+                                <div className="hidden group-hover/dropzone:flex flex-col items-center gap-1 text-center absolute p-0 w-full h-full bg-background/50 justify-center backdrop-blur-xs rounded-full">
+                                    <div className="flex gap-2">
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <IconButton icon={Upload} />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                Click para explorar archivos
+                                            </TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <IconButton icon={Camera} onClick={handleCamera} />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                Click para tomar foto
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </div>
+                                </div>
+                            </FileUploadDropzone>
+                        </FileUpload>
+                    )}
+                </div>
+                {arr.length > 0 && !editing && (
+                    <Button variant="outline" size="sm" onClick={() => setEditing(true)} className="w-fit">
+                        <Plus className="mr-1 size-4" /> Agregar material
+                    </Button>
+                )}
+            </div>
+        )
+    }
+
     // Dynamic validity across groups (dimensions + sizes)
     const dimensionTagsSelectedRef = useMemo(() => selected.filter(t => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(t)), [selected])
     const sizeTagsSelectedRef = useMemo(() => selected.filter(t => ["Talle", "Tamaño"].includes(t)), [selected])
@@ -1252,8 +1368,12 @@ function ExtraFormPanel() {
                                         ))}
                                     </div>
                                 ) : (
-                                    <div className={cn("gap-3", g.tags.length > 1 ? "grid grid-cols-1 md:grid-cols-2" : "grid grid-cols-1")}>
-                                        {g.tags.map(tag => (
+                                    <div className="flex flex-col gap-6">
+                                        {/* Colores y Material siempre apilados */}
+                                        {g.tags.includes('Color') && <ColorsField />}
+                                        {g.tags.includes('Material') && <MaterialsField />}
+                                        {/* Otros tags de superficie (si se agregan en el futuro) */}
+                                        {g.tags.filter(t => !['Color', 'Material'].includes(t)).map(tag => (
                                             tag === 'Sabor' ? (
                                                 <FreeTags
                                                     key={tag}
@@ -1286,8 +1406,6 @@ function ExtraFormPanel() {
                                                         { id: 'Cedro', label: 'Cedro' },
                                                     ]}
                                                 />
-                                            ) : tag === 'Color' ? (
-                                                <ColorsField key={tag} />
                                             ) : null
                                         ))}
                                     </div>
