@@ -1438,6 +1438,16 @@ function ExtraFormPanel() {
                     setValue('extra_meta.selectedSizeTags' as never, sizes as never, { shouldDirty: true })
                     setValue('extra_meta.selectedSensorialTags' as never, sens as never, { shouldDirty: true })
                     setValue('extra_meta.selectedTags' as never, vals as never, { shouldDirty: true })
+                    // Sync immediately into provider context so VariantsTable sees latest values
+                    setCtxValues({
+                        extra_meta: {
+                            selectedDimensionTags: dim,
+                            selectedSurfaceTags: surf,
+                            selectedSizeTags: sizes,
+                            selectedSensorialTags: sens,
+                            selectedTags: vals,
+                        } as never,
+                    })
                 }}
                 hasTooltip
                 tooltipMessage="Click para agregar o quitar"
@@ -1585,71 +1595,71 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
 
     return (
         <>
-        <Stepper
-            initialStep={1}
-            className="p-0"
-            contentClassName="!p-0"
-            stepContainerClassName="!p-0"
-            stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"
-            footerClassName="!p-0"
-            onStepChange={setStep}
-            onFinalStepCompleted={async () => {
-                console.log('CreateProduct payload', values)
-                // Siempre mandamos a loader (6) y luego éxito (7)
-                setStep(6)
-                await onSubmitAll(values as CreateProductFormValues)
-                setTimeout(() => setStep(7), 800)
-            }}
-            renderStepIndicator={(props) => (
-                <StepIndicator
-                    step={props.step}
-                    currentStep={props.currentStep}
-                    onStepClick={props.onStepClick}
-                    disabled={props.step > allowedMaxStep}
-                />
-            )}
-            nextButtonProps={{ disabled: !isValid }}
-        >
-            <Step className="!p-0 !pt-10 !pb-2">
-                <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchema as never)}>
-                    <BasicInfoFormPanel storeId={storeId} />
-                </Form>
-            </Step>
-            <Step className="!p-0 !pt-10 !pb-2">
-                <Form<PricingFormType> contentButton="" submitButton={false} resolver={yupResolver(pricingSchema as never)}>
-                    <MediaFormPanel />
-                </Form>
-            </Step>
-            <Step className="!p-0 !pt-10 !pb-2">
-                <Form<EmptyFormType> contentButton="" submitButton={false} resolver={yupResolver(emptySchema as never)}>
-                    <MediaUploadPanel />
-                </Form>
-            </Step>
-            <Step className="!p-0 !pt-10 !pb-2">
-                <Form<ExtraFormType> contentButton="" submitButton={false} resolver={yupResolver(extraSchema as never)}>
-                    <ExtraFormPanel />
-                </Form>
-            </Step>
-            {hasVariants && (
+            <Stepper
+                initialStep={1}
+                className="p-0"
+                contentClassName="!p-0"
+                stepContainerClassName="!p-0"
+                stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"
+                footerClassName="!p-0"
+                onStepChange={setStep}
+                onFinalStepCompleted={async () => {
+                    console.log('CreateProduct payload', values)
+                    // Siempre mandamos a loader (6) y luego éxito (7)
+                    setStep(6)
+                    await onSubmitAll(values as CreateProductFormValues)
+                    setTimeout(() => setStep(7), 800)
+                }}
+                renderStepIndicator={(props) => (
+                    <StepIndicator
+                        step={props.step}
+                        currentStep={props.currentStep}
+                        onStepClick={props.onStepClick}
+                        disabled={props.step > allowedMaxStep}
+                    />
+                )}
+                nextButtonProps={{ disabled: !isValid }}
+            >
                 <Step className="!p-0 !pt-10 !pb-2">
-                    <Form<EmptyFormType> contentButton="" submitButton={false} resolver={yupResolver(emptySchema as never)}>
-                        <VariantsTable />
+                    <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchema as never)}>
+                        <BasicInfoFormPanel storeId={storeId} />
                     </Form>
                 </Step>
+                <Step className="!p-0 !pt-10 !pb-2">
+                    <Form<PricingFormType> contentButton="" submitButton={false} resolver={yupResolver(pricingSchema as never)}>
+                        <MediaFormPanel />
+                    </Form>
+                </Step>
+                <Step className="!p-0 !pt-10 !pb-2">
+                    <Form<EmptyFormType> contentButton="" submitButton={false} resolver={yupResolver(emptySchema as never)}>
+                        <MediaUploadPanel />
+                    </Form>
+                </Step>
+                <Step className="!p-0 !pt-10 !pb-2">
+                    <Form<ExtraFormType> contentButton="" submitButton={false} resolver={yupResolver(extraSchema as never)}>
+                        <ExtraFormPanel />
+                    </Form>
+                </Step>
+                {hasVariants && (
+                    <Step className="!p-0 !pt-10 !pb-2">
+                        <Form<EmptyFormType> contentButton="" submitButton={false} resolver={yupResolver(emptySchema as never)}>
+                            <VariantsTable />
+                        </Form>
+                    </Step>
+                )}
+            </Stepper>
+            {step === 6 && (
+                <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
+                    <Loader className="size-12 animate-spin text-primary" />
+                    <p className="text-sm text-muted-foreground">Creando tu producto...</p>
+                </div>
             )}
-        </Stepper>
-        {step === 6 && (
-            <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
-                <Loader className="size-12 animate-spin text-primary" />
-                <p className="text-sm text-muted-foreground">Creando tu producto...</p>
-            </div>
-        )}
-        {step === 7 && (
-            <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
-                <Check className="size-12 text-green-600" />
-                <p className="text-sm text-muted-foreground">Producto creado con éxito</p>
-            </div>
-        )}
+            {step === 7 && (
+                <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
+                    <Check className="size-12 text-green-600" />
+                    <p className="text-sm text-muted-foreground">Producto creado con éxito</p>
+                </div>
+            )}
         </>
     )
 }
