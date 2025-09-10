@@ -1091,6 +1091,7 @@ function ExtraFormPanel() {
         type MaterialItem = { file?: File; url?: string }
         const arr = (watch(baseName) as MaterialItem[] | undefined) || []
         const [editing, setEditing] = useState(false)
+        const materialsError = rhfGet(errors, baseName) as { message?: string } | undefined
 
         // const handleAddFiles = (files: File[]) => {
         //     if (!files || files.length === 0) return
@@ -1185,6 +1186,9 @@ function ExtraFormPanel() {
                     <Button variant="outline" size="sm" onClick={() => setEditing(true)} className="w-fit">
                         <Plus className="mr-1 size-4" /> Agregar material
                     </Button>
+                )}
+                {materialsError?.message && (
+                    <p className="text-xs text-red-500">{materialsError.message}</p>
                 )}
             </div>
         )
@@ -1449,6 +1453,8 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
             footerClassName="!p-0"
             onStepChange={setStep}
             onFinalStepCompleted={async () => {
+                // eslint-disable-next-line no-console
+                console.log('CreateProduct payload', values)
                 await onSubmitAll(values as CreateProductFormValues)
             }}
             renderStepIndicator={(props) => (
@@ -1531,7 +1537,11 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
                 )}
                 onClick={() => !disabled && onStepClick(step)}
             >
-                <Icon className={cn("size-4", disabled ? "opacity-50" : "")} />
+                {Icon ? (
+                    <Icon className={cn("size-4", disabled ? "opacity-50" : "")} />
+                ) : (
+                    step
+                )}
             </div>
         )
     }
