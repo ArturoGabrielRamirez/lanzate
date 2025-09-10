@@ -25,6 +25,7 @@ import CategoryTagsSelect from "@/features/store-landing/components/category-tag
 import { getCategories } from "@/features/store-landing/actions/getCategories"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableCaption } from "@/components/ui/table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tags, TagsContent, TagsEmpty, TagsGroup, TagsInput, TagsItem, TagsList, TagsTrigger, TagsValue } from "@/src/components/ui/shadcn-io/tags"
 import { get as rhfGet } from "react-hook-form"
@@ -252,6 +253,10 @@ type FreeTagsProps = {
     name: string
     label: string
     preset: { id: string; label: string }[]
+}
+
+type VariantRow = {
+    attributes: Record<string, string>
 }
 
 type StepIndicatorProps = {
@@ -1244,10 +1249,12 @@ function ExtraFormPanel() {
     useEffect(() => {
         const dim = ((providerValues?.extra_meta as unknown as { selectedDimensionTags?: string[] })?.selectedDimensionTags) || (getValues('extra_meta.selectedDimensionTags' as never) as string[] | undefined) || []
         const surf = ((providerValues?.extra_meta as unknown as { selectedSurfaceTags?: string[] })?.selectedSurfaceTags) || (getValues('extra_meta.selectedSurfaceTags' as never) as string[] | undefined) || []
-        const combined = Array.from(new Set([...(dim || []), ...(surf || [])]))
+        const sizes = ((providerValues?.extra_meta as unknown as { selectedSizeTags?: string[] })?.selectedSizeTags) || (getValues('extra_meta.selectedSizeTags' as never) as string[] | undefined) || []
+        const sens = ((providerValues?.extra_meta as unknown as { selectedSensorialTags?: string[] })?.selectedSensorialTags) || (getValues('extra_meta.selectedSensorialTags' as never) as string[] | undefined) || []
+        const combined = Array.from(new Set([...(dim || []), ...(surf || []), ...(sizes || []), ...(sens || [])]))
         if (providerValues?.extra) setValue('extra' as never, providerValues.extra as never, { shouldValidate: false })
         if (providerValues?.extra_meta) setValue('extra_meta' as never, providerValues.extra_meta as never, { shouldValidate: false })
-        if (combined.length > 0) setSelected(combined)
+        setSelected(combined)
         trigger('extra')
         trigger('extra_meta')
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1554,10 +1561,11 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
     const isValid = !!isStepValid[step]
 
     const hasVariants = useMemo(() => {
-        const meta = (values.extra_meta as unknown as { selectedTags?: string[]; selectedDimensionTags?: string[]; selectedSurfaceTags?: string[]; selectedSizeTags?: string[]; selectedSensorialTags?: string[] }) || {}
-        if (Array.isArray(meta.selectedTags) && meta.selectedTags.length > 0) return true
-        const any = [meta.selectedDimensionTags, meta.selectedSurfaceTags, meta.selectedSizeTags, meta.selectedSensorialTags].some(arr => Array.isArray(arr) && arr.length > 0)
-        return any
+        const meta = (values.extra_meta as unknown as { selectedSurfaceTags?: string[]; selectedSizeTags?: string[]; selectedSensorialTags?: string[] }) || {}
+        const surface = Array.isArray(meta.selectedSurfaceTags) && meta.selectedSurfaceTags.some(t => ["Color", "Material"].includes(t))
+        const sizes = Array.isArray(meta.selectedSizeTags) && meta.selectedSizeTags.some(t => ["Talle", "Tamaño"].includes(t))
+        const sensorial = Array.isArray(meta.selectedSensorialTags) && meta.selectedSensorialTags.some(t => ["Sabor", "Fragancia"].includes(t))
+        return surface || sizes || sensorial
     }, [values.extra_meta])
 
     const allowedMaxStep = useMemo(() => {
@@ -1619,11 +1627,9 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
             </Step>
             {hasVariants && (
                 <Step className="!p-0 !pt-10 !pb-2">
-                    <div className="flex flex-col gap-2">
-                        <h3 className="text-base font-medium">Variantes</h3>
-                        <p className="text-sm text-muted-foreground">Aquí vas a ver la combinatoria de todos los atributos seleccionados.</p>
-                        {/* Contenido a implementar por ti */}
-                    </div>
+                    <Form<EmptyFormType> contentButton="" submitButton={false} resolver={yupResolver(emptySchema as never)}>
+                        <VariantsTable />
+                    </Form>
                 </Step>
             )}
         </Stepper>
@@ -1765,3 +1771,95 @@ function useStepShim(max: number): [number, { setStep: (s: number) => void }] {
 }
 
 export default CreateProductButtonNew
+
+function VariantsTable() {
+    const { values } = useCreateProductContext()
+    const { watch } = useFormContext()
+
+    const productName = (values.basic_info as { name?: string } | undefined)?.name || (watch('basic_info.name') as string | undefined) || ""
+
+    const sizes = (watch('extra.sizes.talle') as string[] | undefined) || []
+    const tamanos = (watch('extra.sizes.tamano') as string[] | undefined) || []
+    const colorObjs = (watch('extra.surface.colors') as { value: string; name?: string }[] | undefined) || []
+    const colors = colorObjs.map(c => c.name || c.value)
+    const flavors = (watch('extra.sensorial.flavors') as string[] | undefined) || []
+    const fragrances = (watch('extra.sensorial.fragrances') as string[] | undefined) || []
+
+    const dimensionsSelected = ((values.extra_meta as unknown as { selectedDimensionTags?: string[] })?.selectedDimensionTags) || []
+
+    const dimensionValues: Record<string, string[]> = {}
+    for (const tag of dimensionsSelected) {
+        const key = tagToKey[tag]
+        const v = watch(`extra.dimensions.${key}.value`) as string | number | undefined
+        const u = watch(`extra.dimensions.${key}.unit`) as string | undefined
+        if (v !== undefined && v !== null && String(v).length > 0 && u) {
+            dimensionValues[tag] = [String(v) + ' ' + u]
+        }
+    }
+
+    const axes: { key: string; label: string; values: string[] }[] = []
+    if (sizes.length > 0) axes.push({ key: 'Talle', label: 'Talle', values: sizes })
+    if (tamanos.length > 0) axes.push({ key: 'Tamaño', label: 'Tamaño', values: tamanos })
+    if (colors.length > 0) axes.push({ key: 'Color', label: 'Color', values: colors })
+    if (flavors.length > 0) axes.push({ key: 'Sabor', label: 'Sabor', values: flavors })
+    if (fragrances.length > 0) axes.push({ key: 'Fragancia', label: 'Fragancia', values: fragrances })
+    for (const [label, vals] of Object.entries(dimensionValues)) {
+        if (vals.length > 0) axes.push({ key: label, label, values: vals })
+    }
+
+    function cartesian<T>(arrays: T[][]): T[][] {
+        if (arrays.length === 0) return []
+        return arrays.reduce<T[][]>((acc, curr) => {
+            if (acc.length === 0) return curr.map(v => [v])
+            const next: T[][] = []
+            for (const a of acc) for (const c of curr) next.push([...a, c])
+            return next
+        }, [])
+    }
+
+    const combinations = useMemo(() => {
+        const valueArrays = axes.map(a => a.values)
+        const product = cartesian(valueArrays)
+        return product.map(arr => {
+            const attrs: Record<string, string> = {}
+            arr.forEach((v, i) => { attrs[axes[i].label] = String(v) })
+            return { attributes: attrs } as VariantRow
+        })
+    }, [axes])
+
+    if (axes.length === 0) {
+        return (
+            <div className="flex flex-col gap-2">
+                <h3 className="text-base font-medium">Variantes</h3>
+                <p className="text-sm text-muted-foreground">Agrega atributos como Talle y Color para ver las combinaciones.</p>
+            </div>
+        )
+    }
+
+    const headers = ['Nombre', ...axes.map(a => a.label)]
+
+    return (
+        <div className="flex flex-col gap-2">
+            <h3 className="text-base font-medium">Variantes</h3>
+            <p className="text-sm text-muted-foreground">Combinatoria de los atributos seleccionados.</p>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        {headers.map(h => <TableHead key={h}>{h}</TableHead>)}
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {combinations.map((row, idx) => (
+                        <TableRow key={idx}>
+                            <TableCell>{productName || 'Producto'}</TableCell>
+                            {axes.map(a => (
+                                <TableCell key={a.label}>{row.attributes[a.label]}</TableCell>
+                            ))}
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+            <TableCaption>{combinations.length} variantes generadas</TableCaption>
+        </div>
+    )
+}
