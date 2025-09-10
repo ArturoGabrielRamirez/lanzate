@@ -1556,7 +1556,7 @@ function ExtraFormPanel() {
 }
 
 function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProductFormProps) {
-    const { isStepValid, values } = useCreateProductContext()
+    const { isStepValid, values, setStepValid } = useCreateProductContext()
 
     const isValid = !!isStepValid[step]
 
@@ -1568,13 +1568,18 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
         return surface || sizes || sensorial
     }, [values.extra_meta])
 
+    useEffect(() => {
+        // Step 5 no tiene campos requeridos: se marca válido si existe
+        setStepValid(5, !!hasVariants)
+    }, [hasVariants, setStepValid])
+
     const allowedMaxStep = useMemo(() => {
         let max = 1
         for (let s = 1; s <= 4; s++) {
             if (isStepValid[s]) max = s + 1; else break
         }
         // Permitir navegar al step 5 solo si existe Variantes
-        if (hasVariants && max === 5) return 5
+        if (hasVariants && isStepValid[5]) return 5
         return Math.min(max, 4)
     }, [isStepValid, hasVariants])
 
