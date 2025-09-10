@@ -1424,8 +1424,13 @@ function ExtraFormPanel() {
                     // Persist selection immediately so it persists across reopens
                     const dim = vals.filter(v => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(v))
                     const surf = vals.filter(v => ["Color", "Material"].includes(v))
+                    const sizes = vals.filter(v => ["Talle", "Tamaño"].includes(v))
+                    const sens = vals.filter(v => ["Sabor", "Fragancia"].includes(v))
                     setValue('extra_meta.selectedDimensionTags' as never, dim as never, { shouldDirty: true })
                     setValue('extra_meta.selectedSurfaceTags' as never, surf as never, { shouldDirty: true })
+                    setValue('extra_meta.selectedSizeTags' as never, sizes as never, { shouldDirty: true })
+                    setValue('extra_meta.selectedSensorialTags' as never, sens as never, { shouldDirty: true })
+                    setValue('extra_meta.selectedTags' as never, vals as never, { shouldDirty: true })
                 }}
                 hasTooltip
                 tooltipMessage="Click para agregar o quitar"
@@ -1548,15 +1553,25 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
 
     const isValid = !!isStepValid[step]
 
+    const hasVariants = useMemo(() => {
+        const meta = (values.extra_meta as unknown as { selectedTags?: string[]; selectedDimensionTags?: string[]; selectedSurfaceTags?: string[]; selectedSizeTags?: string[]; selectedSensorialTags?: string[] }) || {}
+        if (Array.isArray(meta.selectedTags) && meta.selectedTags.length > 0) return true
+        const any = [meta.selectedDimensionTags, meta.selectedSurfaceTags, meta.selectedSizeTags, meta.selectedSensorialTags].some(arr => Array.isArray(arr) && arr.length > 0)
+        return any
+    }, [values.extra_meta])
+
     const allowedMaxStep = useMemo(() => {
         let max = 1
         for (let s = 1; s <= 4; s++) {
             if (isStepValid[s]) max = s + 1; else break
         }
+        // Permitir navegar al step 5 solo si existe Variantes
+        if (hasVariants && max === 5) return 5
         return Math.min(max, 4)
-    }, [isStepValid])
+    }, [isStepValid, hasVariants])
 
     return (
+        <>
         <Stepper
             initialStep={1}
             className="p-0"
@@ -1567,7 +1582,10 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
             onStepChange={setStep}
             onFinalStepCompleted={async () => {
                 console.log('CreateProduct payload', values)
+                // Siempre mandamos a loader (6) y luego éxito (7)
+                setStep(6)
                 await onSubmitAll(values as CreateProductFormValues)
+                setTimeout(() => setStep(7), 800)
             }}
             renderStepIndicator={(props) => (
                 <StepIndicator
@@ -1599,23 +1617,29 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
                     <ExtraFormPanel />
                 </Form>
             </Step>
-            {step === 5 && (
+            {hasVariants && (
                 <Step className="!p-0 !pt-10 !pb-2">
-                    <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
-                        <Loader className="size-12 animate-spin text-primary" />
-                        <p className="text-sm text-muted-foreground">Creando tu producto...</p>
-                    </div>
-                </Step>
-            )}
-            {step === 6 && (
-                <Step className="!p-0 !pt-10 !pb-2">
-                    <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
-                        <Check className="size-12 text-green-600" />
-                        <p className="text-sm text-muted-foreground">Producto creado con éxito</p>
+                    <div className="flex flex-col gap-2">
+                        <h3 className="text-base font-medium">Variantes</h3>
+                        <p className="text-sm text-muted-foreground">Aquí vas a ver la combinatoria de todos los atributos seleccionados.</p>
+                        {/* Contenido a implementar por ti */}
                     </div>
                 </Step>
             )}
         </Stepper>
+        {step === 6 && (
+            <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
+                <Loader className="size-12 animate-spin text-primary" />
+                <p className="text-sm text-muted-foreground">Creando tu producto...</p>
+            </div>
+        )}
+        {step === 7 && (
+            <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
+                <Check className="size-12 text-green-600" />
+                <p className="text-sm text-muted-foreground">Producto creado con éxito</p>
+            </div>
+        )}
+        </>
     )
 }
 
@@ -1670,16 +1694,17 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
 }
 
 function CreateProductButtonNew({ storeId }: { storeId: number }) {
-    const [step, { setStep }] = useStepShim(6)
+    const [step, { setStep }] = useStepShim(7)
     const [open, setOpen] = useState(false)
 
     const descriptions: Record<number, string> = {
         1: "Ponle nombre, crea su URL única y completa los datos clave.",
         2: "Define precio y stock para empezar a vender al instante.",
         3: "Agrega imágenes y videos que destaquen tu producto.",
-        4: "Paso extra (vacío)",
-        5: "Creando tu producto…",
-        6: "¡Listo!",
+        4: "Configura atributos y extras del producto.",
+        5: "Variantes: combinatoria de atributos seleccionados.",
+        6: "Creando tu producto…",
+        7: "¡Listo!",
     }
 
     const titleSlugs: Record<number, string> = {
@@ -1687,16 +1712,15 @@ function CreateProductButtonNew({ storeId }: { storeId: number }) {
         2: "Pricing",
         3: "Media",
         4: "Extra",
-        5: "Success",
+        5: "Variantes",
+        6: "Creando",
+        7: "Success",
     }
 
     const handleCreateProduct = useCallback(async () => {
-        setStep(5)
-        // Esqueleto: no llamamos al backend aún; mantenemos el flujo y éxito
-        await new Promise((r) => setTimeout(r, 800))
-        setStep(6)
+        // El flujo de loader/éxito ahora se maneja en CreateProductForm
         return { error: false, message: "ok" }
-    }, [setStep])
+    }, [])
 
     useEffect(() => {
         if (step === 6) {
