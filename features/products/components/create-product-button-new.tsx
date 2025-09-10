@@ -20,7 +20,6 @@ import { toast } from "sonner"
 import { generate } from "random-words"
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import CategoryTagsSelect from "@/features/store-landing/components/category-tags-select"
 import { getCategories } from "@/features/store-landing/actions/getCategories"
@@ -992,76 +991,85 @@ function ExtraFormPanel() {
         const baseName = `extra.surface.colors`
         const arr = (watch(baseName) as { value: string; name?: string }[] | undefined) || []
         const colorsError = rhfGet(errors, baseName) as { message?: string } | undefined
-        const addColor = () => {
-            const next = [...arr, { value: '#000000', name: '' }]
+        const [editing, setEditing] = useState<{ value: string; name: string } | null>(null)
+
+        const startAdd = () => setEditing({ value: '#000000', name: '' })
+        const cancelAdd = () => setEditing(null)
+        const confirmAdd = () => {
+            if (!editing) return
+            const valid = hexColorRegex.test(editing.value) && editing.name.length <= 64
+            if (!valid) {
+                if (!hexColorRegex.test(editing.value)) setError(baseName as never, { type: 'required', message: 'Color inválido' })
+                else setError(baseName as never, { type: 'max', message: 'Máximo 64 caracteres' })
+                return
+            }
+            const next = [...arr, { value: editing.value, name: editing.name }]
             setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
+            clearErrors(baseName as never)
+            setEditing(null)
         }
         const removeColor = (index: number) => {
             const next = arr.filter((_v, i) => i !== index)
             setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
         }
+
         return (
             <div className="flex flex-col gap-3">
-                {arr.length === 0 ? (
-                    <>
-                        <div className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
-                            No hay colores agregados
-                        </div>
-                        <Button variant="outline" size="sm" onClick={addColor} className="w-fit">
-                            <Plus className="mr-1 size-4" /> Agregar color
-                        </Button>
-                        {colorsError?.message && <p className="text-xs text-red-500">{colorsError.message}</p>}
-                    </>
-                ) : (
-                    <>
-                        <div className="flex flex-col gap-4">
-                            {arr.map((item, index) => {
-                                const colorName = `${baseName}.${index}.value`
-                                const labelName = `${baseName}.${index}.name`
-                                const colorErr = rhfGet(errors, colorName) as { message?: string } | undefined
-                                const nameErr = rhfGet(errors, labelName) as { message?: string } | undefined
-                                const value = (watch(colorName) as string | undefined) || item.value || '#000000'
-                                const nameVal = (watch(labelName) as string | undefined) || item.name || ''
-                                return (
-                                    <div key={index} className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] items-start gap-3">
-                                        <InputColor
-                                            value={value}
-                                            onChange={(hex) => setValue(colorName as never, hex as never, { shouldDirty: true, shouldValidate: true })}
-                                            onBlur={() => {
-                                                const v = (getValues(colorName as never) as string | undefined) || ''
-                                                const isValid = hexColorRegex.test(v)
-                                                if (!isValid) setError(colorName as never, { type: 'required', message: 'Color inválido' })
-                                                else clearErrors(colorName as never)
-                                            }}
-                                            label={`Color ${index + 1}`}
-                                            error={colorErr?.message}
-                                        />
-                                        <div className="flex flex-col">
-                                            <Label>Nombre</Label>
-                                            <Input
-                                                value={nameVal}
-                                                placeholder="Ej: Azul acero"
-                                                onChange={(e) => setValue(labelName as never, e.target.value as never, { shouldDirty: true, shouldValidate: true })}
-                                                className="h-12"
-                                            />
-                                            {nameErr?.message && <p className="text-xs text-red-500 mt-1">{nameErr.message}</p>}
-                                        </div>
-                                        <div className="pt-6">
-                                            <Button variant="ghost" size="icon" className="size-9" onClick={() => removeColor(index)}>
-                                                <Trash />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div>
-                            <Button variant="outline" size="sm" onClick={addColor} className="w-fit">
-                                <Plus className="mr-1 size-4" /> Agregar color
-                            </Button>
-                        </div>
-                    </>
+                {arr.length === 0 && !editing && (
+                    <div className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
+                        No hay colores agregados
+                    </div>
                 )}
+
+                {arr.length > 0 && !editing && (
+                    <div className="flex flex-wrap gap-4">
+                        {arr.map((c, i) => (
+                            <div key={`${c.value}-${i}`} className="flex flex-col items-center gap-1">
+                                <div
+                                    className="size-10 rounded-full border"
+                                    style={{ backgroundColor: c.value }}
+                                />
+                                <div className="flex items-center gap-1">
+                                    <span className="text-xs text-foreground/80">{c.name || c.value}</span>
+                                    <Button variant="ghost" size="icon" className="size-6" onClick={() => removeColor(i)}>
+                                        <Trash className="size-3" />
+                                    </Button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {editing && (
+                    <div className="flex flex-col gap-3">
+                        <InputColor
+                            value={editing.value}
+                            onChange={(hex) => setEditing(prev => prev ? { ...prev, value: hex } : prev)}
+                            onBlur={() => void 0}
+                            label={`Nuevo color`}
+                            error={undefined}
+                            nameValue={editing.name}
+                            onNameChange={(val) => setEditing(prev => prev ? { ...prev, name: val } : prev)}
+                            onNameBlur={() => void 0}
+                            nameLabel="Nombre"
+                            namePlaceholder="Ej: Azul acero"
+                        />
+                        <div className="flex gap-2">
+                            <Button size="sm" onClick={confirmAdd}>
+                                <Check className="mr-1 size-4" /> Confirmar
+                            </Button>
+                            <Button size="sm" variant="ghost" onClick={cancelAdd}>Cancelar</Button>
+                        </div>
+                    </div>
+                )}
+
+                {!editing && (
+                    <Button variant="outline" size="sm" onClick={startAdd} className="w-fit">
+                        <Plus className="mr-1 size-4" /> Agregar color
+                    </Button>
+                )}
+
+                {colorsError?.message && <p className="text-xs text-red-500">{colorsError.message}</p>}
             </div>
         )
     }

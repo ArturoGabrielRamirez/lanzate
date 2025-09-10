@@ -189,6 +189,13 @@ interface ColorPickerProps {
     error?: string;
     className?: string;
     alpha?: boolean;
+    // Optional name field support
+    nameValue?: string;
+    onNameChange?: (value: string) => void;
+    onNameBlur?: () => void;
+    nameLabel?: string;
+    namePlaceholder?: string;
+    nameError?: string;
 }
 
 interface ColorValues {
@@ -208,6 +215,12 @@ export default function InputColor({
     error,
     className = "mt-6",
     alpha = false,
+    nameValue,
+    onNameChange,
+    onNameBlur,
+    nameLabel = "Nombre",
+    namePlaceholder = "Ej: Azul acero",
+    nameError,
 }: ColorPickerProps) {
     const [colorFormat, setColorFormat] = useState(alpha ? "HEXA" : "HEX");
     const [colorValues, setColorValues] = useState<ColorValues>(() => {
@@ -450,10 +463,15 @@ export default function InputColor({
         return colorValues.hex;
     };
 
+    const showName = typeof onNameChange === 'function' || typeof nameValue === 'string'
+
     return (
         <div className={cn(className)}>
-            <Label className="mb-3">{label}</Label>
-            <div className="flex items-center gap-4">
+            {!showName && (
+                <Label className="mb-3">{label}</Label>
+            )}
+            <div className={cn(showName ? "grid grid-cols-1 md:grid-cols-2 gap-4" : "flex items-center gap-4")}>
+                <div>
                 <Popover onOpenChange={handlePopoverChange}>
                     <PopoverTrigger asChild>
                         <Button
@@ -671,6 +689,20 @@ export default function InputColor({
                             <Loader2 className="text-muted-foreground h-5 w-5 animate-spin" />
                         </span>
                     )}
+                </div>
+                {showName && (
+                    <div className="flex flex-col">
+                        <Label className="mb-3">{nameLabel}</Label>
+                        <Input
+                            className="h-12"
+                            placeholder={namePlaceholder}
+                            value={nameValue || ''}
+                            onChange={(e) => onNameChange && onNameChange(e.target.value)}
+                            onBlur={onNameBlur}
+                        />
+                        {nameError && <p className="text-destructive mt-1.5 text-sm">{nameError}</p>}
+                    </div>
+                )}
                 </div>
             </div>
             {error && <p className="text-destructive mt-1.5 text-sm">{error}</p>}
