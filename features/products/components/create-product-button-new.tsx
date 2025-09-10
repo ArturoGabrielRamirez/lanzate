@@ -30,8 +30,179 @@ import { Tags, TagsContent, TagsEmpty, TagsGroup, TagsInput, TagsItem, TagsList,
 import { get as rhfGet } from "react-hook-form"
 import InputColor from "@/components/color-input"
 
+const CreateProductContext = createContext<CreateProductContextType | null>(null)
+const hexColorRegex = /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/
+
+const basicInfoSchema = yup.object({
+    basic_info: yup.object({
+        name: yup.string().required("Name is required"),
+        slug: yup.string().required("Slug is required"),
+        sku: yup.string().optional(),
+        barcode: yup.string().optional(),
+        description: yup.string().max(255, "Description must be less than 255 characters long").optional(),
+        image: yup
+            .mixed()
+            .test("image-type", "Unsupported file type. Use JPG, PNG, GIF or WebP", (value) => {
+                if (value instanceof File) {
+                    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"]
+                    return allowed.includes(value.type)
+                }
+                return true
+            })
+            .test("image-size", "File too large (max 5MB)", (value) => {
+                if (value instanceof File) {
+                    return value.size <= 5 * 1024 * 1024
+                }
+                return true
+            }).nullable().optional(),
+    })
+})
+
+const pricingSchema = yup.object({
+    pricing: yup.object({
+        price: yup
+            .number()
+            .typeError("Price must be a number")
+            .min(0, "Price must be greater or equal to 0")
+            .required("Price is required"),
+        stock: yup
+            .number()
+            .typeError("Stock must be a number")
+            .integer("Stock must be an integer")
+            .min(0, "Stock must be greater or equal to 0")
+            .required("Stock is required"),
+    })
+})
+
+const emptySchema = yup.object({})
+
+const extraSchema = yup.object({
+    extra: yup.object({
+        dimensions: yup.object({
+            peso: yup.object({ value: yup.string().optional(), unit: yup.string().optional() }).optional(),
+            alto: yup.object({ value: yup.string().optional(), unit: yup.string().optional() }).optional(),
+            ancho: yup.object({ value: yup.string().optional(), unit: yup.string().optional() }).optional(),
+            largo: yup.object({ value: yup.string().optional(), unit: yup.string().optional() }).optional(),
+            profundidad: yup.object({ value: yup.string().optional(), unit: yup.string().optional() }).optional(),
+            circumferencia: yup.object({ value: yup.string().optional(), unit: yup.string().optional() }).optional(),
+        }).optional(),
+        expiration: yup.object({
+            date: yup.string().optional(),
+        }).optional(),
+        sizes: yup.object({
+            talle: yup.array(yup.string()).optional(),
+            tamano: yup.array(yup.string()).optional(),
+        }).optional(),
+        sensorial: yup.object({
+            flavors: yup.array(yup.string()).optional(),
+            fragrances: yup.array(yup.string()).optional(),
+        }).optional(),
+        surface: yup.object({
+            colors: yup.array(
+                yup.object({
+                    value: yup
+                        .string()
+                        .required("Color requerido")
+                        .matches(hexColorRegex, "Color inválido"),
+                    name: yup
+                        .string()
+                        .max(64, "Máximo 64 caracteres")
+                        .optional(),
+                })
+            ).default([]).optional(),
+            materials: yup.array(yup.mixed()).default([]).optional(),
+        }).optional(),
+        // keep space for other groups; not strictly validated here
+    }).optional(),
+    extra_meta: yup.object({
+        selectedDimensionTags: yup.array(yup.string()).default([]).optional(),
+        selectedSurfaceTags: yup.array(yup.string()).default([]).optional(),
+        selectedSizeTags: yup.array(yup.string()).default([]).optional(),
+        selectedSensorialTags: yup.array(yup.string()).default([]).optional(),
+    }).optional(),
+}).test('require-colors-when-selected', 'Agrega al menos un color', function (obj) {
+    type ExtraSchemaShape = {
+        extra?: { surface?: { colors?: { value: string; name?: string }[] } }
+        extra_meta?: { selectedSurfaceTags?: string[] }
+    }
+    const shape = (obj as unknown) as ExtraSchemaShape
+    const selectedSurfaceTags = shape?.extra_meta?.selectedSurfaceTags
+    const requiresColor = Array.isArray(selectedSurfaceTags) && selectedSurfaceTags.includes('Color')
+    if (!requiresColor) return true
+    const colors = shape?.extra?.surface?.colors
+    return Array.isArray(colors) && colors.length > 0
+}).test('require-materials-when-selected', 'Agrega al menos un material', function (obj) {
+    type ExtraSchemaShape2 = {
+        extra?: { surface?: { colors?: { value: string; name?: string }[]; materials?: unknown[] } }
+        extra_meta?: { selectedSurfaceTags?: string[] }
+    }
+    const shape2 = (obj as unknown) as ExtraSchemaShape2
+    const selectedSurfaceTags2 = shape2?.extra_meta?.selectedSurfaceTags
+    const requiresMaterials = Array.isArray(selectedSurfaceTags2) && selectedSurfaceTags2.includes('Material')
+    if (!requiresMaterials) return true
+    const materials = shape2?.extra?.surface?.materials
+    return Array.isArray(materials) && materials.length > 0
+})
+
+type ExtraFormType = yup.InferType<typeof extraSchema>
+type EmptyFormType = yup.InferType<typeof emptySchema>
+type PricingFormType = yup.InferType<typeof pricingSchema>
+type BasicInfoFormType = yup.InferType<typeof basicInfoSchema>
+
+const unitSizeOptions = [
+    { label: "mm", value: "mm" },
+    { label: "cm", value: "cm" },
+    { label: "m", value: "m" },
+    { label: "in", value: "in" },
+    { label: "ft", value: "ft" },
+]
+
+const unitWeightOptions = [
+    { label: "mg", value: "mg" },
+    { label: "g", value: "g" },
+    { label: "kg", value: "kg" },
+    { label: "oz", value: "oz" },
+    { label: "lb", value: "lb" },
+]
+
+const unitVolumeOptions = [
+    { label: "ml", value: "ml" },
+    { label: "lt", value: "lt" },
+]
+
+const unitOptionsByKey: Record<string, { label: string; value: string }[]> = {
+    peso: [
+        ...unitWeightOptions,
+        ...unitVolumeOptions,
+    ],
+    alto: [
+        ...unitSizeOptions,
+    ],
+    ancho: [
+        ...unitSizeOptions,
+    ],
+    largo: [
+        ...unitSizeOptions,
+    ],
+    profundidad: [
+        ...unitSizeOptions,
+    ],
+    circumferencia: [
+        ...unitSizeOptions,
+    ],
+}
+
+const tagToKey: Record<string, string> = {
+    Peso: "peso",
+    Alto: "alto",
+    Ancho: "ancho",
+    Largo: "largo",
+    Profundidad: "profundidad",
+    Circumferencia: "circumferencia",
+}
 
 type MediaItem = { file?: File; url?: string }
+
 type MediaState = { items: MediaItem[]; primaryIndex: number | null }
 
 type CreateProductFormValues = {
@@ -53,7 +224,42 @@ type CreateProductContextType = {
     setStepValid: (step: number, valid: boolean) => void
 }
 
-const CreateProductContext = createContext<CreateProductContextType | null>(null)
+type CreateProductFormProps = {
+    step: number
+    setStep: (s: number) => void
+    onSubmitAll: (data: CreateProductFormValues) => Promise<{ error: boolean; message: string; payload?: unknown } | undefined>
+    storeId: number
+}
+
+type UnitSelectProps = {
+    name: string
+    options: { label: string; value: string }[]
+    placeholder?: string
+    className?: string
+}
+
+type DimensionFieldRowProps = {
+    tag: string
+}
+
+type SizesTagsProps = {
+    name: string
+    label: string
+    preset: { id: string; label: string }[]
+}
+
+type FreeTagsProps = {
+    name: string
+    label: string
+    preset: { id: string; label: string }[]
+}
+
+type StepIndicatorProps = {
+    step: number
+    currentStep: number
+    onStepClick: (s: number) => void
+    disabled: boolean
+}
 
 function useCreateProductContext() {
     const ctx = useContext(CreateProductContext)
@@ -143,103 +349,414 @@ function CreateProductProvider({ children, storeId }: { children: React.ReactNod
     )
 }
 
+function UnitSelect({ name, options, placeholder = "Unidad", className }: UnitSelectProps) {
+    const { watch, setValue } = useFormContext()
+    const current = watch(name) as string | undefined
+    return (
+        <Select value={current} onValueChange={(val) => setValue(name as never, val as never, { shouldDirty: true, shouldValidate: true })}>
+            <SelectTrigger className={cn("", className)}>
+                <SelectValue placeholder={placeholder} />
+            </SelectTrigger>
+            <SelectContent>
+                {options.map(opt => (
+                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                ))}
+            </SelectContent>
+        </Select>
+    )
+}
 
-const basicInfoSchema = yup.object({
-    basic_info: yup.object({
-        name: yup.string().required("Name is required"),
-        slug: yup.string().required("Slug is required"),
-        sku: yup.string().optional(),
-        barcode: yup.string().optional(),
-        description: yup.string().max(255, "Description must be less than 255 characters long").optional(),
-        image: yup
-            .mixed()
-            .test("image-type", "Unsupported file type. Use JPG, PNG, GIF or WebP", (value) => {
-                if (value instanceof File) {
-                    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"]
-                    return allowed.includes(value.type)
-                }
-                return true
-            })
-            .test("image-size", "File too large (max 5MB)", (value) => {
-                if (value instanceof File) {
-                    return value.size <= 5 * 1024 * 1024
-                }
-                return true
-            }).nullable().optional(),
-    })
-})
-type BasicInfoFormType = yup.InferType<typeof basicInfoSchema>
+function DimensionFieldRow({ tag }: DimensionFieldRowProps) {
+    const { watch, setValue } = useFormContext()
+    const key = tagToKey[tag]
+    const baseName = `extra.dimensions.${key}`
+    const unitName = `${baseName}.unit`
+    const valueName = `${baseName}.value`
+    const unitVal = watch(unitName) as string | undefined
+    useEffect(() => {
+        if (!unitVal) {
+            const first = unitOptionsByKey[key]?.[0]?.value
+            if (first) setValue(unitName as never, first as never, { shouldDirty: true })
+        }
+    }, [unitVal, key, unitName, setValue])
+    return (
+        <div className="flex items-end">
+            <div className="flex-1">
+                <InputField
+                    name={valueName}
+                    label={tag}
+                    placeholder={`Ej: valor de ${tag.toLowerCase()}`}
+                    type="number"
+                    inputMode="numeric"
+                    className="!rounded-r-none"
+                    onChange={(e) => {
+                        setValue(valueName as never, e.target.value as never, { shouldDirty: true, shouldValidate: true })
+                    }}
+                />
+            </div>
+            <UnitSelect name={unitName} options={unitOptionsByKey[key] || []} className="!rounded-l-none !border-l-0 !h-[40px] mb-4" />
+        </div>
+    )
+}
 
-// Step 2 schema: price and stock
-const pricingSchema = yup.object({
-    pricing: yup.object({
-        price: yup
-            .number()
-            .typeError("Price must be a number")
-            .min(0, "Price must be greater or equal to 0")
-            .required("Price is required"),
-        stock: yup
-            .number()
-            .typeError("Stock must be a number")
-            .integer("Stock must be an integer")
-            .min(0, "Stock must be greater or equal to 0")
-            .required("Stock is required"),
-    })
-})
-type PricingFormType = yup.InferType<typeof pricingSchema>
+function ExpirationDateFieldRow() {
+    const baseName = `extra.expiration`
+    const valueName = `${baseName}.date`
+    return (
+        <div className="flex items-end">
+            <div className="flex-1">
+                <InputField
+                    name={valueName}
+                    label={"Fecha de vencimiento"}
+                    placeholder={"Ej: 2026-12-31"}
+                    type="date"
+                    inputMode="none"
+                />
+            </div>
+        </div>
+    )
+}
 
-// Empty schema to provide RHF context on panels without fields
-const emptySchema = yup.object({})
-type EmptyFormType = yup.InferType<typeof emptySchema>
+function SizesTags({ name, label, preset }: SizesTagsProps) {
+    const { getValues, setValue, setError, clearErrors, formState: { errors } } = useFormContext()
+    const [options, setOptions] = useState(preset)
+    const [selected, setSelected] = useState<string[]>(() => (getValues(name as never) as string[] | undefined) || [])
+    const [input, setInput] = useState("")
+    const error = rhfGet(errors, name) as { message?: string } | undefined
 
-// Step 4 schema: extra (colors under surface)
-const hexColorRegex = /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/
-const extraSchema = yup.object({
-    extra: yup.object({
-        surface: yup.object({
-            colors: yup.array(
-                yup.object({
-                    value: yup
-                        .string()
-                        .required("Color requerido")
-                        .matches(hexColorRegex, "Color inválido"),
-                    name: yup
-                        .string()
-                        .max(64, "Máximo 64 caracteres")
-                        .optional(),
-                })
-            ).default([]).optional(),
-            materials: yup.array(yup.mixed()).default([]).optional(),
-        }).optional(),
-        // keep space for other groups; not strictly validated here
-    }).optional(),
-    extra_meta: yup.object({
-        selectedSurfaceTags: yup.array(yup.string()).default([]).optional(),
-    }).optional(),
-}).test('require-colors-when-selected', 'Agrega al menos un color', function (obj) {
-    type ExtraSchemaShape = {
-        extra?: { surface?: { colors?: { value: string; name?: string }[] } }
-        extra_meta?: { selectedSurfaceTags?: string[] }
+    const applySelection = (next: string[]) => {
+        setSelected(next)
+        setValue(name as never, next as never, { shouldDirty: true, shouldValidate: true })
+        if (next.length === 0) setError(name as never, { type: 'required', message: 'Selecciona al menos una opción' })
+        else clearErrors(name as never)
     }
-    const shape = (obj as unknown) as ExtraSchemaShape
-    const selectedSurfaceTags = shape?.extra_meta?.selectedSurfaceTags
-    const requiresColor = Array.isArray(selectedSurfaceTags) && selectedSurfaceTags.includes('Color')
-    if (!requiresColor) return true
-    const colors = shape?.extra?.surface?.colors
-    return Array.isArray(colors) && colors.length > 0
-}).test('require-materials-when-selected', 'Agrega al menos un material', function (obj) {
-    type ExtraSchemaShape2 = {
-        extra?: { surface?: { colors?: { value: string; name?: string }[]; materials?: unknown[] } }
-        extra_meta?: { selectedSurfaceTags?: string[] }
+
+    const handleRemove = (id: string) => {
+        const next = selected.filter(v => v !== id)
+        applySelection(next)
     }
-    const shape2 = (obj as unknown) as ExtraSchemaShape2
-    const selectedSurfaceTags2 = shape2?.extra_meta?.selectedSurfaceTags
-    const requiresMaterials = Array.isArray(selectedSurfaceTags2) && selectedSurfaceTags2.includes('Material')
-    if (!requiresMaterials) return true
-    const materials = shape2?.extra?.surface?.materials
-    return Array.isArray(materials) && materials.length > 0
-})
-type ExtraFormType = yup.InferType<typeof extraSchema>
+
+    const handleSelect = (id: string) => {
+        const next = selected.includes(id) ? selected.filter(v => v !== id) : [...selected, id]
+        applySelection(next)
+    }
+
+    const handleCreate = () => {
+        const labelValue = (input || "").trim()
+        if (!labelValue) return
+        const id = labelValue
+        if (!options.some(o => o.id === id)) setOptions(prev => [...prev, { id, label: labelValue }])
+        if (!selected.includes(id)) applySelection([...selected, id])
+        setInput("")
+    }
+
+    const placeholder = "Escribe para agregar…"
+
+    return (
+        <div className="flex flex-col gap-1 w-full">
+            <Label>{label}</Label>
+            <Tags>
+                <TagsTrigger className="!bg-transparent">
+                    {selected.map((id) => (
+                        <TagsValue key={id} onRemove={() => handleRemove(id)}>
+                            {options.find(o => o.id === id)?.label || id}
+                        </TagsValue>
+                    ))}
+                    {selected.length === 0 && (
+                        <span className="flex items-center gap-2 px-2 py-px text-muted-foreground">
+                            <Tag size={14} />
+                            Selecciona opciones…
+                        </span>
+                    )}
+                </TagsTrigger>
+                <TagsContent>
+                    <TagsInput onValueChange={setInput} placeholder={placeholder} />
+                    <TagsList>
+                        <TagsEmpty>
+                            <button className="mx-auto flex cursor-pointer items-center gap-2" onClick={handleCreate} type="button">
+                                <PlusIcon className="text-muted-foreground" size={14} />
+                                Crear: {input}
+                            </button>
+                        </TagsEmpty>
+                        <TagsGroup>
+                            {options.map((opt) => (
+                                <TagsItem key={opt.id} onSelect={() => handleSelect(opt.id)} value={opt.id}>
+                                    {opt.label}
+                                    {selected.includes(opt.id) && (
+                                        <CheckIcon className="text-muted-foreground" size={14} />
+                                    )}
+                                </TagsItem>
+                            ))}
+                        </TagsGroup>
+                    </TagsList>
+                </TagsContent>
+            </Tags>
+            {error?.message && <p className="text-xs text-red-500">{error.message}</p>}
+        </div>
+    )
+}
+
+function FreeTags({ name, label, preset }: FreeTagsProps) {
+    const { getValues, setValue } = useFormContext()
+    const [options, setOptions] = useState(preset)
+    const [selected, setSelected] = useState<string[]>(() => (getValues(name as never) as string[] | undefined) || [])
+    const [input, setInput] = useState("")
+
+    const applySelection = (next: string[]) => {
+        setSelected(next)
+        setValue(name as never, next as never, { shouldDirty: true, shouldValidate: false })
+    }
+
+    const handleRemove = (id: string) => {
+        const next = selected.filter(v => v !== id)
+        applySelection(next)
+    }
+
+    const handleSelect = (id: string) => {
+        const next = selected.includes(id) ? selected.filter(v => v !== id) : [...selected, id]
+        applySelection(next)
+    }
+
+    const handleCreate = () => {
+        const labelValue = (input || "").trim()
+        if (!labelValue) return
+        const id = labelValue
+        if (!options.some(o => o.id === id)) setOptions(prev => [...prev, { id, label: labelValue }])
+        if (!selected.includes(id)) applySelection([...selected, id])
+        setInput("")
+    }
+
+    const placeholder = "Escribe para agregar…"
+
+    return (
+        <div className="flex flex-col gap-1 w-full">
+            <Label>{label}</Label>
+            <Tags>
+                <TagsTrigger className="!bg-transparent">
+                    {selected.map((id) => (
+                        <TagsValue key={id} onRemove={() => handleRemove(id)}>
+                            {options.find(o => o.id === id)?.label || id}
+                        </TagsValue>
+                    ))}
+                    {selected.length === 0 && (
+                        <span className="flex items-center gap-2 px-2 py-px text-muted-foreground">
+                            <Tag size={14} />
+                            Selecciona opciones…
+                        </span>
+                    )}
+                </TagsTrigger>
+                <TagsContent>
+                    <TagsInput onValueChange={setInput} placeholder={placeholder} />
+                    <TagsList>
+                        <TagsEmpty>
+                            <button className="mx-auto flex cursor-pointer items-center gap-2" onClick={handleCreate} type="button">
+                                <PlusIcon className="text-muted-foreground" size={14} />
+                                Crear: {input}
+                            </button>
+                        </TagsEmpty>
+                        <TagsGroup>
+                            {options.map((opt) => (
+                                <TagsItem key={opt.id} onSelect={() => handleSelect(opt.id)} value={opt.id}>
+                                    {opt.label}
+                                    {selected.includes(opt.id) && (
+                                        <CheckIcon className="text-muted-foreground" size={14} />
+                                    )}
+                                </TagsItem>
+                            ))}
+                        </TagsGroup>
+                    </TagsList>
+                </TagsContent>
+            </Tags>
+        </div>
+    )
+}
+
+function ColorsField() {
+    const { watch, setValue, setError, clearErrors, formState: { errors } } = useFormContext()
+    const baseName = `extra.surface.colors`
+    const arr = (watch(baseName) as { value: string; name?: string }[] | undefined) || []
+    const colorsError = rhfGet(errors, baseName) as { message?: string } | undefined
+    const [editing, setEditing] = useState<{ value: string; name: string } | null>(null)
+
+    const startAdd = () => setEditing({ value: '#000000', name: '' })
+    const cancelAdd = () => setEditing(null)
+    const confirmAdd = () => {
+        if (!editing) return
+        const valid = hexColorRegex.test(editing.value) && editing.name.length <= 64
+        if (!valid) {
+            if (!hexColorRegex.test(editing.value)) setError(baseName as never, { type: 'required', message: 'Color inválido' })
+            else setError(baseName as never, { type: 'max', message: 'Máximo 64 caracteres' })
+            return
+        }
+        const next = [...arr, { value: editing.value, name: editing.name }]
+        setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
+        clearErrors(baseName as never)
+        setEditing(null)
+    }
+    const removeColor = (index: number) => {
+        const next = arr.filter((_v, i) => i !== index)
+        setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
+    }
+
+    return (
+        <div className="flex flex-col gap-3">
+            {arr.length === 0 && !editing && (
+                <div className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
+                    No hay colores agregados
+                </div>
+            )}
+
+            {arr.length > 0 && !editing && (
+                <div className="flex flex-wrap gap-4">
+                    {arr.map((c, i) => (
+                        <div key={`${c.value}-${i}`} className="flex flex-col items-center gap-1">
+                            <div
+                                className="size-10 rounded-full border"
+                                style={{ backgroundColor: c.value }}
+                            />
+                            <div className="flex items-center gap-1">
+                                <span className="text-xs text-foreground/80">{c.name || c.value}</span>
+                                <Button variant="ghost" size="icon" className="size-6" onClick={() => removeColor(i)}>
+                                    <Trash className="size-3" />
+                                </Button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {editing && (
+                <div className="flex flex-col gap-3">
+                    <InputColor
+                        value={editing.value}
+                        onChange={(hex) => setEditing(prev => prev ? { ...prev, value: hex } : prev)}
+                        onBlur={() => void 0}
+                        label={`Nuevo color`}
+                        error={undefined}
+                        nameValue={editing.name}
+                        onNameChange={(val) => setEditing(prev => prev ? { ...prev, name: val } : prev)}
+                        onNameBlur={() => void 0}
+                        nameLabel="Nombre"
+                        namePlaceholder="Ej: Azul acero"
+                    />
+                    <div className="flex gap-2">
+                        <Button size="sm" onClick={confirmAdd}>
+                            <Check className="mr-1 size-4" /> Confirmar
+                        </Button>
+                        <Button size="sm" variant="ghost" onClick={cancelAdd}>Cancelar</Button>
+                    </div>
+                </div>
+            )}
+
+            {!editing && (
+                <Button variant="outline" size="sm" onClick={startAdd} className="w-fit">
+                    <Plus className="mr-1 size-4" /> Agregar color
+                </Button>
+            )}
+
+            {colorsError?.message && <p className="text-xs text-red-500">{colorsError.message}</p>}
+        </div>
+    )
+}
+
+function MaterialsField() {
+    const { watch, setValue } = useFormContext()
+    const baseName = `extra.surface.materials`
+    type MaterialItem = { file?: File; url?: string }
+    const arr = (watch(baseName) as MaterialItem[] | undefined) || []
+    const [editing, setEditing] = useState(false)
+
+    const handleDeleteAt = (index: number) => {
+        const next = arr.filter((_v, i) => i !== index)
+        setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
+    }
+
+    const handleCamera = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        e.stopPropagation()
+    }
+    const handleFilesSelected = (files: File[]) => {
+        if (!files || files.length === 0) return
+        const file = files[files.length - 1]
+        const next = [...arr, { file }]
+        setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
+        setEditing(false)
+    }
+
+    return (
+        <div className="flex flex-col gap-3">
+            {arr.length === 0 && !editing && (
+                <>
+                    <div className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
+                        No hay materiales agregados
+                    </div>
+                    <Button variant="outline" size="sm" onClick={() => setEditing(true)} className="w-fit">
+                        <Plus className="mr-1 size-4" /> Agregar material
+                    </Button>
+                </>
+            )}
+            <div className="flex flex-wrap items-center gap-4">
+                {arr.map((item, index) => (
+                    <div key={index} className="relative">
+                        {item.file ? (
+                            <img
+                                alt={`material-${index}`}
+                                src={URL.createObjectURL(item.file)}
+                                className="size-16 rounded-full object-cover border"
+                            />
+                        ) : item.url ? (
+                            <img alt={`material-${index}`} src={item.url} className="size-16 rounded-full object-cover border" />
+                        ) : (
+                            <div className="size-16 rounded-full border bg-muted" />
+                        )}
+                        <button
+                            type="button"
+                            className="-right-1 -top-1 absolute grid place-items-center rounded-full border bg-background/90 p-1"
+                            onClick={() => handleDeleteAt(index)}
+                        >
+                            <X className="size-3" />
+                        </button>
+                    </div>
+                ))}
+                {editing && (
+                    <FileUpload value={[]} onValueChange={handleFilesSelected}>
+                        <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[100px] mx-auto size-28")}>
+                            <div className="group-hover/dropzone:hidden flex flex-col items-center gap-1 text-center">
+                                <ImageIcon className="text-muted-foreground" />
+                                <p className="text-sm text-muted-foreground">Arrastra la imagen del material aqui</p>
+                            </div>
+                            <div className="hidden group-hover/dropzone:flex flex-col items-center gap-1 text-center absolute p-0 w-full h-full bg-background/50 justify-center backdrop-blur-xs rounded-full">
+                                <div className="flex gap-2">
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <IconButton icon={Upload} />
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            Click para explorar archivos
+                                        </TooltipContent>
+                                    </Tooltip>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <IconButton icon={Camera} onClick={handleCamera} />
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            Click para tomar foto
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </div>
+                            </div>
+                        </FileUploadDropzone>
+                    </FileUpload>
+                )}
+            </div>
+            {arr.length > 0 && !editing && (
+                <Button variant="outline" size="sm" onClick={() => setEditing(true)} className="w-fit">
+                    <Plus className="mr-1 size-4" /> Agregar material
+                </Button>
+            )}
+        </div>
+    )
+}
 
 function BasicInfoFormPanel({ storeId }: { storeId: number }) {
     const { setStepValid, setValues: setCtxValues, values, setAvailableCategories, availableCategories } = useCreateProductContext()
@@ -602,7 +1119,6 @@ function MediaFormPanel() {
     )
 }
 
-// Step 3 – Media (empty panel for now)
 function MediaUploadPanel() {
     const { setStepValid, values, setValues: setCtxValues } = useCreateProductContext()
     const { setValue } = useFormContext()
@@ -717,482 +1233,56 @@ function MediaUploadPanel() {
     )
 }
 
-// Step 4 – Extra (empty panel, marks as valid)
 function ExtraFormPanel() {
-    const { setStepValid } = useCreateProductContext()
-    const { watch, getValues, setValue, setError, clearErrors, formState: { errors } } = useFormContext()
+    const { setStepValid, setValues: setCtxValues, values: providerValues } = useCreateProductContext()
+    const { watch, getValues, setValue, setError, clearErrors, trigger } = useFormContext()
     const [selected, setSelected] = useState<string[]>([])
 
     useEffect(() => { setStepValid(4, true) }, [setStepValid])
 
-    // Units for dimensions
-    const unitOptionsByKey: Record<string, { label: string; value: string }[]> = {
-        peso: [
-            { label: "mg", value: "mg" },
-            { label: "g", value: "g" },
-            { label: "kg", value: "kg" },
-            { label: "ml", value: "ml" },
-            { label: "lt", value: "lt" },
-            { label: "oz", value: "oz" },
-            { label: "lb", value: "lb" },
+    // Seed from provider OR existing form values when opening
+    useEffect(() => {
+        const dim = ((providerValues?.extra_meta as unknown as { selectedDimensionTags?: string[] })?.selectedDimensionTags) || (getValues('extra_meta.selectedDimensionTags' as never) as string[] | undefined) || []
+        const surf = ((providerValues?.extra_meta as unknown as { selectedSurfaceTags?: string[] })?.selectedSurfaceTags) || (getValues('extra_meta.selectedSurfaceTags' as never) as string[] | undefined) || []
+        const combined = Array.from(new Set([...(dim || []), ...(surf || [])]))
+        if (providerValues?.extra) setValue('extra' as never, providerValues.extra as never, { shouldValidate: false })
+        if (providerValues?.extra_meta) setValue('extra_meta' as never, providerValues.extra_meta as never, { shouldValidate: false })
+        if (combined.length > 0) setSelected(combined)
+        trigger('extra')
+        trigger('extra_meta')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
-        ],
-        alto: [
-            { label: "mm", value: "mm" },
-            { label: "cm", value: "cm" },
-            { label: "m", value: "m" },
-            { label: "in", value: "in" },
-            { label: "ft", value: "ft" },
-        ],
-        ancho: [
-            { label: "mm", value: "mm" },
-            { label: "cm", value: "cm" },
-            { label: "m", value: "m" },
-            { label: "in", value: "in" },
-            { label: "ft", value: "ft" },
-        ],
-        largo: [
-            { label: "mm", value: "mm" },
-            { label: "cm", value: "cm" },
-            { label: "m", value: "m" },
-            { label: "in", value: "in" },
-            { label: "ft", value: "ft" },
-        ],
-        profundidad: [
-            { label: "mm", value: "mm" },
-            { label: "cm", value: "cm" },
-            { label: "m", value: "m" },
-            { label: "in", value: "in" },
-            { label: "ft", value: "ft" },
-        ],
-        circumferencia: [
-            { label: "mm", value: "mm" },
-            { label: "cm", value: "cm" },
-            { label: "m", value: "m" },
-            { label: "in", value: "in" },
-            { label: "ft", value: "ft" },
-        ],
-    }
-
-    const tagToKey: Record<string, string> = {
-        Peso: "peso",
-        Alto: "alto",
-        Ancho: "ancho",
-        Largo: "largo",
-        Profundidad: "profundidad",
-        Circumferencia: "circumferencia",
-    }
-
-    function UnitSelect({ name, options, placeholder = "Unidad", className }: { name: string; options: { label: string; value: string }[]; placeholder?: string; className?: string }) {
-        const current = watch(name) as string | undefined
-        return (
-            <Select value={current} onValueChange={(val) => setValue(name as never, val as never, { shouldDirty: true, shouldValidate: true })}>
-                <SelectTrigger className={cn("", className)}>
-                    <SelectValue placeholder={placeholder} />
-                </SelectTrigger>
-                <SelectContent>
-                    {options.map(opt => (
-                        <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
-        )
-    }
-
-    function DimensionFieldRow({ tag }: { tag: string }) {
-        const key = tagToKey[tag]
-        const baseName = `extra.dimensions.${key}`
-        const unitName = `${baseName}.unit`
-        const valueName = `${baseName}.value`
-        const unitVal = watch(unitName) as string | undefined
-        useEffect(() => {
-            if (!unitVal) {
-                const first = unitOptionsByKey[key]?.[0]?.value
-                if (first) setValue(unitName as never, first as never, { shouldDirty: true })
+    // Persist Extra and meta into provider on any change
+    useEffect(() => {
+        let last = ''
+        const sub = watch((v) => {
+            const val = v as unknown as { extra?: unknown; extra_meta?: unknown }
+            const snapshot = JSON.stringify({ extra: val.extra || {}, extra_meta: val.extra_meta || {} })
+            if (snapshot !== last) {
+                last = snapshot
+                setCtxValues({ extra: val.extra as never, extra_meta: val.extra_meta as never })
             }
-        }, [unitVal, key, unitName])
-        return (
-            <div className="flex items-end">
-                <div className="flex-1">
-                    <InputField
-                        name={valueName}
-                        label={tag}
-                        placeholder={`Ej: valor de ${tag.toLowerCase()}`}
-                        type="number"
-                        inputMode="numeric"
-                        className="!rounded-r-none"
-                    />
-                </div>
-                <UnitSelect name={unitName} options={unitOptionsByKey[key] || []} className="!rounded-l-none !border-l-0 !h-[40px] mb-4" />
-            </div>
-        )
-    }
+        })
+        return () => sub.unsubscribe()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [watch])
 
-    function ExpirationDateFieldRow() {
-        const baseName = `extra.expiration`
-        const valueName = `${baseName}.date`
-        return (
-            <div className="flex items-end">
-                <div className="flex-1">
-                    <InputField
-                        name={valueName}
-                        label={"Fecha de vencimiento"}
-                        placeholder={"Ej: 2026-12-31"}
-                        type="date"
-                        inputMode="none"
-                    />
-                </div>
-            </div>
-        )
-    }
+    // use hoisted unitOptionsByKey and tagToKey
 
-    function SizesTags({ name, label, preset }: { name: string; label: string; preset: { id: string; label: string }[] }) {
-        const [options, setOptions] = useState(preset)
-        const [selected, setSelected] = useState<string[]>(() => (getValues(name as never) as string[] | undefined) || [])
-        const [input, setInput] = useState("")
-        const { formState: { errors } } = useFormContext()
-        const error = rhfGet(errors, name) as { message?: string } | undefined
 
-        const applySelection = (next: string[]) => {
-            setSelected(next)
-            setValue(name as never, next as never, { shouldDirty: true, shouldValidate: true })
-            if (next.length === 0) setError(name as never, { type: 'required', message: 'Selecciona al menos una opción' })
-            else clearErrors(name as never)
-        }
 
-        const handleRemove = (id: string) => {
-            const next = selected.filter(v => v !== id)
-            applySelection(next)
-        }
 
-        const handleSelect = (id: string) => {
-            const next = selected.includes(id) ? selected.filter(v => v !== id) : [...selected, id]
-            applySelection(next)
-        }
 
-        const handleCreate = () => {
-            const label = (input || "").trim()
-            if (!label) return
-            const id = label
-            if (!options.some(o => o.id === id)) setOptions(prev => [...prev, { id, label }])
-            if (!selected.includes(id)) applySelection([...selected, id])
-            setInput("")
-        }
 
-        const placeholder = "Escribe para agregar…"
 
-        return (
-            <div className="flex flex-col gap-1 w-full">
-                <Label>{label}</Label>
-                <Tags>
-                    <TagsTrigger className="!bg-transparent">
-                        {selected.map((id) => (
-                            <TagsValue key={id} onRemove={() => handleRemove(id)}>
-                                {options.find(o => o.id === id)?.label || id}
-                            </TagsValue>
-                        ))}
-                        {selected.length === 0 && (
-                            <span className="flex items-center gap-2 px-2 py-px text-muted-foreground">
-                                <Tag size={14} />
-                                Selecciona opciones…
-                            </span>
-                        )}
-                    </TagsTrigger>
-                    <TagsContent>
-                        <TagsInput onValueChange={setInput} placeholder={placeholder} />
-                        <TagsList>
-                            <TagsEmpty>
-                                <button className="mx-auto flex cursor-pointer items-center gap-2" onClick={handleCreate} type="button">
-                                    <PlusIcon className="text-muted-foreground" size={14} />
-                                    Crear: {input}
-                                </button>
-                            </TagsEmpty>
-                            <TagsGroup>
-                                {options.map((opt) => (
-                                    <TagsItem key={opt.id} onSelect={() => handleSelect(opt.id)} value={opt.id}>
-                                        {opt.label}
-                                        {selected.includes(opt.id) && (
-                                            <CheckIcon className="text-muted-foreground" size={14} />
-                                        )}
-                                    </TagsItem>
-                                ))}
-                            </TagsGroup>
-                        </TagsList>
-                    </TagsContent>
-                </Tags>
-                {error?.message && <p className="text-xs text-red-500">{error.message}</p>}
-            </div>
-        )
-    }
 
-    function FreeTags({ name, label, preset }: { name: string; label: string; preset: { id: string; label: string }[] }) {
-        const [options, setOptions] = useState(preset)
-        const [selected, setSelected] = useState<string[]>(() => (getValues(name as never) as string[] | undefined) || [])
-        const [input, setInput] = useState("")
 
-        const applySelection = (next: string[]) => {
-            setSelected(next)
-            setValue(name as never, next as never, { shouldDirty: true, shouldValidate: false })
-        }
 
-        const handleRemove = (id: string) => {
-            const next = selected.filter(v => v !== id)
-            applySelection(next)
-        }
 
-        const handleSelect = (id: string) => {
-            const next = selected.includes(id) ? selected.filter(v => v !== id) : [...selected, id]
-            applySelection(next)
-        }
 
-        const handleCreate = () => {
-            const label = (input || "").trim()
-            if (!label) return
-            const id = label
-            if (!options.some(o => o.id === id)) setOptions(prev => [...prev, { id, label }])
-            if (!selected.includes(id)) applySelection([...selected, id])
-            setInput("")
-        }
 
-        const placeholder = "Escribe para agregar…"
 
-        return (
-            <div className="flex flex-col gap-1 w-full">
-                <Label>{label}</Label>
-                <Tags>
-                    <TagsTrigger className="!bg-transparent">
-                        {selected.map((id) => (
-                            <TagsValue key={id} onRemove={() => handleRemove(id)}>
-                                {options.find(o => o.id === id)?.label || id}
-                            </TagsValue>
-                        ))}
-                        {selected.length === 0 && (
-                            <span className="flex items-center gap-2 px-2 py-px text-muted-foreground">
-                                <Tag size={14} />
-                                Selecciona opciones…
-                            </span>
-                        )}
-                    </TagsTrigger>
-                    <TagsContent>
-                        <TagsInput onValueChange={setInput} placeholder={placeholder} />
-                        <TagsList>
-                            <TagsEmpty>
-                                <button className="mx-auto flex cursor-pointer items-center gap-2" onClick={handleCreate} type="button">
-                                    <PlusIcon className="text-muted-foreground" size={14} />
-                                    Crear: {input}
-                                </button>
-                            </TagsEmpty>
-                            <TagsGroup>
-                                {options.map((opt) => (
-                                    <TagsItem key={opt.id} onSelect={() => handleSelect(opt.id)} value={opt.id}>
-                                        {opt.label}
-                                        {selected.includes(opt.id) && (
-                                            <CheckIcon className="text-muted-foreground" size={14} />
-                                        )}
-                                    </TagsItem>
-                                ))}
-                            </TagsGroup>
-                        </TagsList>
-                    </TagsContent>
-                </Tags>
-            </div>
-        )
-    }
-
-    function ColorsField() {
-        const baseName = `extra.surface.colors`
-        const arr = (watch(baseName) as { value: string; name?: string }[] | undefined) || []
-        const colorsError = rhfGet(errors, baseName) as { message?: string } | undefined
-        const [editing, setEditing] = useState<{ value: string; name: string } | null>(null)
-
-        const startAdd = () => setEditing({ value: '#000000', name: '' })
-        const cancelAdd = () => setEditing(null)
-        const confirmAdd = () => {
-            if (!editing) return
-            const valid = hexColorRegex.test(editing.value) && editing.name.length <= 64
-            if (!valid) {
-                if (!hexColorRegex.test(editing.value)) setError(baseName as never, { type: 'required', message: 'Color inválido' })
-                else setError(baseName as never, { type: 'max', message: 'Máximo 64 caracteres' })
-                return
-            }
-            const next = [...arr, { value: editing.value, name: editing.name }]
-            setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
-            clearErrors(baseName as never)
-            setEditing(null)
-        }
-        const removeColor = (index: number) => {
-            const next = arr.filter((_v, i) => i !== index)
-            setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
-        }
-
-        return (
-            <div className="flex flex-col gap-3">
-                {arr.length === 0 && !editing && (
-                    <div className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
-                        No hay colores agregados
-                    </div>
-                )}
-
-                {arr.length > 0 && !editing && (
-                    <div className="flex flex-wrap gap-4">
-                        {arr.map((c, i) => (
-                            <div key={`${c.value}-${i}`} className="flex flex-col items-center gap-1">
-                                <div
-                                    className="size-10 rounded-full border"
-                                    style={{ backgroundColor: c.value }}
-                                />
-                                <div className="flex items-center gap-1">
-                                    <span className="text-xs text-foreground/80">{c.name || c.value}</span>
-                                    <Button variant="ghost" size="icon" className="size-6" onClick={() => removeColor(i)}>
-                                        <Trash className="size-3" />
-                                    </Button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-
-                {editing && (
-                    <div className="flex flex-col gap-3">
-                        <InputColor
-                            value={editing.value}
-                            onChange={(hex) => setEditing(prev => prev ? { ...prev, value: hex } : prev)}
-                            onBlur={() => void 0}
-                            label={`Nuevo color`}
-                            error={undefined}
-                            nameValue={editing.name}
-                            onNameChange={(val) => setEditing(prev => prev ? { ...prev, name: val } : prev)}
-                            onNameBlur={() => void 0}
-                            nameLabel="Nombre"
-                            namePlaceholder="Ej: Azul acero"
-                        />
-                        <div className="flex gap-2">
-                            <Button size="sm" onClick={confirmAdd}>
-                                <Check className="mr-1 size-4" /> Confirmar
-                            </Button>
-                            <Button size="sm" variant="ghost" onClick={cancelAdd}>Cancelar</Button>
-                        </div>
-                    </div>
-                )}
-
-                {!editing && (
-                    <Button variant="outline" size="sm" onClick={startAdd} className="w-fit">
-                        <Plus className="mr-1 size-4" /> Agregar color
-                    </Button>
-                )}
-
-                {colorsError?.message && <p className="text-xs text-red-500">{colorsError.message}</p>}
-            </div>
-        )
-    }
-
-    function MaterialsField() {
-        const baseName = `extra.surface.materials`
-        type MaterialItem = { file?: File; url?: string }
-        const arr = (watch(baseName) as MaterialItem[] | undefined) || []
-        const [editing, setEditing] = useState(false)
-        const materialsError = rhfGet(errors, baseName) as { message?: string } | undefined
-
-        // const handleAddFiles = (files: File[]) => {
-        //     if (!files || files.length === 0) return
-        //     const additions: MaterialItem[] = files.map(f => ({ file: f }))
-        //     const next = [...arr, ...additions]
-        //     setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: false })
-        // }
-        const handleDeleteAt = (index: number) => {
-            const next = arr.filter((_v, i) => i !== index)
-            setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
-        }
-
-        const handleCamera = (e: React.MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault()
-            e.stopPropagation()
-        }
-        const handleFilesSelected = (files: File[]) => {
-            if (!files || files.length === 0) return
-            const file = files[files.length - 1]
-            const next = [...arr, { file }]
-            setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
-            setEditing(false)
-        }
-
-        return (
-            <div className="flex flex-col gap-3">
-                {arr.length === 0 && !editing && (
-                    <>
-                        <div className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
-                            No hay materiales agregados
-                        </div>
-                        <Button variant="outline" size="sm" onClick={() => setEditing(true)} className="w-fit">
-                            <Plus className="mr-1 size-4" /> Agregar material
-                        </Button>
-                    </>
-                )}
-                <div className="flex flex-wrap items-center gap-4">
-                    {arr.map((item, index) => (
-                        <div key={index} className="relative">
-                            {item.file ? (
-                                <img
-                                    alt={`material-${index}`}
-                                    src={URL.createObjectURL(item.file)}
-                                    className="size-16 rounded-full object-cover border"
-                                />
-                            ) : item.url ? (
-                                <img alt={`material-${index}`} src={item.url} className="size-16 rounded-full object-cover border" />
-                            ) : (
-                                <div className="size-16 rounded-full border bg-muted" />
-                            )}
-                            <button
-                                type="button"
-                                className="-right-1 -top-1 absolute grid place-items-center rounded-full border bg-background/90 p-1"
-                                onClick={() => handleDeleteAt(index)}
-                            >
-                                <X className="size-3" />
-                            </button>
-                        </div>
-                    ))}
-                    {editing && (
-                        <FileUpload value={[]} onValueChange={handleFilesSelected}>
-                            <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[100px] mx-auto size-28")}> 
-                                <div className="group-hover/dropzone:hidden flex flex-col items-center gap-1 text-center">
-                                    <ImageIcon className="text-muted-foreground" />
-                                    <p className="text-sm text-muted-foreground">Arrastra la imagen del material aqui</p>
-                                </div>
-                                <div className="hidden group-hover/dropzone:flex flex-col items-center gap-1 text-center absolute p-0 w-full h-full bg-background/50 justify-center backdrop-blur-xs rounded-full">
-                                    <div className="flex gap-2">
-                                        <Tooltip>
-                                            <TooltipTrigger asChild>
-                                                <IconButton icon={Upload} />
-                                            </TooltipTrigger>
-                                            <TooltipContent>
-                                                Click para explorar archivos
-                                            </TooltipContent>
-                                        </Tooltip>
-                                        <Tooltip>
-                                            <TooltipTrigger asChild>
-                                                <IconButton icon={Camera} onClick={handleCamera} />
-                                            </TooltipTrigger>
-                                            <TooltipContent>
-                                                Click para tomar foto
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    </div>
-                                </div>
-                            </FileUploadDropzone>
-                        </FileUpload>
-                    )}
-                </div>
-                {arr.length > 0 && !editing && (
-                    <Button variant="outline" size="sm" onClick={() => setEditing(true)} className="w-fit">
-                        <Plus className="mr-1 size-4" /> Agregar material
-                    </Button>
-                )}
-                {materialsError?.message && (
-                    <p className="text-xs text-red-500">{materialsError.message}</p>
-                )}
-            </div>
-        )
-    }
 
     // Dynamic validity across groups (dimensions + sizes)
     const dimensionTagsSelectedRef = useMemo(() => selected.filter(t => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(t)), [selected])
@@ -1303,9 +1393,11 @@ function ExtraFormPanel() {
                 selectedTags={selected}
                 onChange={(vals) => {
                     setSelected(vals)
-                    // Keep a mirror for persisting if needed later
-                    setValue('extra_meta.selectedDimensionTags' as never, vals.filter(v => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(v)) as never)
-                    setValue('extra_meta.selectedSurfaceTags' as never, vals.filter(v => ["Color", "Material"].includes(v)) as never)
+                    // Persist selection immediately so it persists across reopens
+                    const dim = vals.filter(v => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(v))
+                    const surf = vals.filter(v => ["Color", "Material"].includes(v))
+                    setValue('extra_meta.selectedDimensionTags' as never, dim as never, { shouldDirty: true })
+                    setValue('extra_meta.selectedSurfaceTags' as never, surf as never, { shouldDirty: true })
                 }}
                 hasTooltip
                 tooltipMessage="Click para agregar o quitar"
@@ -1423,13 +1515,6 @@ function ExtraFormPanel() {
     )
 }
 
-type CreateProductFormProps = {
-    step: number
-    setStep: (s: number) => void
-    onSubmitAll: (data: CreateProductFormValues) => Promise<{ error: boolean; message: string; payload?: unknown } | undefined>
-    storeId: number
-}
-
 function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProductFormProps) {
     const { isStepValid, values } = useCreateProductContext()
 
@@ -1453,7 +1538,6 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
             footerClassName="!p-0"
             onStepChange={setStep}
             onFinalStepCompleted={async () => {
-                // eslint-disable-next-line no-console
                 console.log('CreateProduct payload', values)
                 await onSubmitAll(values as CreateProductFormValues)
             }}
@@ -1505,13 +1589,6 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
             )}
         </Stepper>
     )
-}
-
-type StepIndicatorProps = {
-    step: number
-    currentStep: number
-    onStepClick: (s: number) => void
-    disabled: boolean
 }
 
 function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicatorProps) {
@@ -1568,22 +1645,22 @@ function CreateProductButtonNew({ storeId }: { storeId: number }) {
     const [step, { setStep }] = useStepShim(6)
     const [open, setOpen] = useState(false)
 
-    const descriptions = {
+    const descriptions: Record<number, string> = {
         1: "Ponle nombre, crea su URL única y completa los datos clave.",
         2: "Define precio y stock para empezar a vender al instante.",
         3: "Agrega imágenes y videos que destaquen tu producto.",
         4: "Paso extra (vacío)",
         5: "Creando tu producto…",
         6: "¡Listo!",
-    } as const
+    }
 
-    const titleSlugs = {
+    const titleSlugs: Record<number, string> = {
         1: "Basic",
         2: "Pricing",
         3: "Media",
         4: "Extra",
         5: "Success",
-    } as const
+    }
 
     const handleCreateProduct = useCallback(async () => {
         setStep(5)
@@ -1614,10 +1691,10 @@ function CreateProductButtonNew({ storeId }: { storeId: number }) {
                 </DialogTrigger>
                 <DialogContent className="max-h-[80vh] overflow-y-auto" isScroll>
                     <DialogHeader>
-                        <DialogTitle>Create Product - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
+                        <DialogTitle>Create Product - {titleSlugs[step]}</DialogTitle>
                     </DialogHeader>
                     <DialogDescription asChild>
-                        <p>{descriptions[step as keyof typeof descriptions]}</p>
+                        <p>{descriptions[step]}</p>
                     </DialogDescription>
                     <CreateProductForm step={step} setStep={setStep} onSubmitAll={handleCreateProduct} storeId={storeId} />
                 </DialogContent>
@@ -1626,7 +1703,6 @@ function CreateProductButtonNew({ storeId }: { storeId: number }) {
     )
 }
 
-// Small shim to reuse the same signature as useStep from hooks, without importing if not needed here
 function useStepShim(max: number): [number, { setStep: (s: number) => void }] {
     const [current, setCurrent] = useState(1)
     const setStep = useCallback((s: number) => {
