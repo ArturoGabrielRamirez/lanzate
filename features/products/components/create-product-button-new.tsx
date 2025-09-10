@@ -1391,6 +1391,34 @@ function ExtraFormPanel() {
                 emptyMessage="Hace click en algun atributo para agregarselo al producto."
                 initialTags={["Peso", "Fecha de vencimiento", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia", "Talle", "Tamaño", "Color", "Material", "Sabor", "Fragancia"]}
                 selectedTags={selected}
+                getSelectedTagClass={(tag) => {
+                    const contenido = ["Peso", "Fecha de vencimiento"]
+                    const dimensiones = ["Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"]
+                    const talles = ["Talle", "Tamaño"]
+                    const superficie = ["Color", "Material"]
+                    const sensorial = ["Sabor", "Fragancia"]
+
+                    if (contenido.includes(tag)) return "bg-rose-100 text-rose-800 border-rose-200"
+                    if (dimensiones.includes(tag)) return "bg-sky-100 text-sky-800 border-sky-200"
+                    if (talles.includes(tag)) return "bg-emerald-100 text-emerald-800 border-emerald-200"
+                    if (superficie.includes(tag)) return "bg-amber-100 text-amber-900 border-amber-200"
+                    if (sensorial.includes(tag)) return "bg-fuchsia-100 text-fuchsia-800 border-fuchsia-200"
+                    return "bg-primary text-primary-foreground"
+                }}
+                getAvailableTagClass={(tag) => {
+                    const contenido = ["Peso", "Fecha de vencimiento"]
+                    const dimensiones = ["Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"]
+                    const talles = ["Talle", "Tamaño"]
+                    const superficie = ["Color", "Material"]
+                    const sensorial = ["Sabor", "Fragancia"]
+
+                    if (contenido.includes(tag)) return "bg-rose-50 text-rose-700 border-rose-200"
+                    if (dimensiones.includes(tag)) return "bg-sky-50 text-sky-700 border-sky-200"
+                    if (talles.includes(tag)) return "bg-emerald-50 text-emerald-700 border-emerald-200"
+                    if (superficie.includes(tag)) return "bg-amber-50 text-amber-800 border-amber-200"
+                    if (sensorial.includes(tag)) return "bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200"
+                    return "bg-background text-primary-foreground"
+                }}
                 onChange={(vals) => {
                     setSelected(vals)
                     // Persist selection immediately so it persists across reopens
