@@ -457,7 +457,7 @@ export default function InputColor({
                 <Popover onOpenChange={handlePopoverChange}>
                     <PopoverTrigger asChild>
                         <Button
-                            className="border-border h-12 w-12 border shadow-none relative overflow-hidden"
+                            className="border-border h-12 w-12 border shadow-none relative overflow-hidden rounded-full"
                             size={"icon"}
                             style={{ backgroundColor: hexInputValue }}
                         >

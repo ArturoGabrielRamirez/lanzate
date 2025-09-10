@@ -20,6 +20,7 @@ import { toast } from "sonner"
 import { generate } from "random-words"
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import CategoryTagsSelect from "@/features/store-landing/components/category-tags-select"
 import { getCategories } from "@/features/store-landing/actions/getCategories"
@@ -191,6 +192,43 @@ type PricingFormType = yup.InferType<typeof pricingSchema>
 // Empty schema to provide RHF context on panels without fields
 const emptySchema = yup.object({})
 type EmptyFormType = yup.InferType<typeof emptySchema>
+
+// Step 4 schema: extra (colors under surface)
+const hexColorRegex = /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/
+const extraSchema = yup.object({
+    extra: yup.object({
+        surface: yup.object({
+            colors: yup.array(
+                yup.object({
+                    value: yup
+                        .string()
+                        .required("Color requerido")
+                        .matches(hexColorRegex, "Color inválido"),
+                    name: yup
+                        .string()
+                        .max(64, "Máximo 64 caracteres")
+                        .optional(),
+                })
+            ).default([]).optional(),
+        }).optional(),
+        // keep space for other groups; not strictly validated here
+    }).optional(),
+    extra_meta: yup.object({
+        selectedSurfaceTags: yup.array(yup.string()).default([]).optional(),
+    }).optional(),
+}).test('require-colors-when-selected', 'Agrega al menos un color', function (obj) {
+    type ExtraSchemaShape = {
+        extra?: { surface?: { colors?: { value: string; name?: string }[] } }
+        extra_meta?: { selectedSurfaceTags?: string[] }
+    }
+    const shape = (obj as unknown) as ExtraSchemaShape
+    const selectedSurfaceTags = shape?.extra_meta?.selectedSurfaceTags
+    const requiresColor = Array.isArray(selectedSurfaceTags) && selectedSurfaceTags.includes('Color')
+    if (!requiresColor) return true
+    const colors = shape?.extra?.surface?.colors
+    return Array.isArray(colors) && colors.length > 0
+})
+type ExtraFormType = yup.InferType<typeof extraSchema>
 
 function BasicInfoFormPanel({ storeId }: { storeId: number }) {
     const { setStepValid, setValues: setCtxValues, values, setAvailableCategories, availableCategories } = useCreateProductContext()
@@ -671,7 +709,7 @@ function MediaUploadPanel() {
 // Step 4 – Extra (empty panel, marks as valid)
 function ExtraFormPanel() {
     const { setStepValid } = useCreateProductContext()
-    const { watch, getValues, setValue, setError, clearErrors } = useFormContext()
+    const { watch, getValues, setValue, setError, clearErrors, formState: { errors } } = useFormContext()
     const [selected, setSelected] = useState<string[]>([])
 
     useEffect(() => { setStepValid(4, true) }, [setStepValid])
@@ -950,27 +988,81 @@ function ExtraFormPanel() {
         )
     }
 
-    function ColorField() {
-        const name = `extra.surface.color`
-        const current = watch(name) as string | undefined
-        const { formState: { errors } } = useFormContext()
-        const error = rhfGet(errors, name) as { message?: string } | undefined
-        const value = (typeof current === 'string' && current.length > 0) ? current : "#000000"
+    function ColorsField() {
+        const baseName = `extra.surface.colors`
+        const arr = (watch(baseName) as { value: string; name?: string }[] | undefined) || []
+        const colorsError = rhfGet(errors, baseName) as { message?: string } | undefined
+        const addColor = () => {
+            const next = [...arr, { value: '#000000', name: '' }]
+            setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
+        }
+        const removeColor = (index: number) => {
+            const next = arr.filter((_v, i) => i !== index)
+            setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
+        }
         return (
-            <InputColor
-                value={value}
-                onChange={(hex) => {
-                    setValue(name as never, hex as never, { shouldDirty: true, shouldValidate: true })
-                }}
-                onBlur={() => {
-                    const v = (getValues(name as never) as string | undefined) || ""
-                    const valid = /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/.test(v)
-                    if (!valid) setError(name as never, { type: 'required', message: 'Selecciona un color válido' })
-                    else clearErrors(name as never)
-                }}
-                label="Color"
-                error={error?.message}
-            />
+            <div className="flex flex-col gap-3">
+                {arr.length === 0 ? (
+                    <>
+                        <div className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
+                            No hay colores agregados
+                        </div>
+                        <Button variant="outline" size="sm" onClick={addColor} className="w-fit">
+                            <Plus className="mr-1 size-4" /> Agregar color
+                        </Button>
+                        {colorsError?.message && <p className="text-xs text-red-500">{colorsError.message}</p>}
+                    </>
+                ) : (
+                    <>
+                        <div className="flex flex-col gap-4">
+                            {arr.map((item, index) => {
+                                const colorName = `${baseName}.${index}.value`
+                                const labelName = `${baseName}.${index}.name`
+                                const colorErr = rhfGet(errors, colorName) as { message?: string } | undefined
+                                const nameErr = rhfGet(errors, labelName) as { message?: string } | undefined
+                                const value = (watch(colorName) as string | undefined) || item.value || '#000000'
+                                const nameVal = (watch(labelName) as string | undefined) || item.name || ''
+                                return (
+                                    <div key={index} className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] items-start gap-3">
+                                        <InputColor
+                                            value={value}
+                                            onChange={(hex) => setValue(colorName as never, hex as never, { shouldDirty: true, shouldValidate: true })}
+                                            onBlur={() => {
+                                                const v = (getValues(colorName as never) as string | undefined) || ''
+                                                const isValid = hexColorRegex.test(v)
+                                                if (!isValid) setError(colorName as never, { type: 'required', message: 'Color inválido' })
+                                                else clearErrors(colorName as never)
+                                            }}
+                                            label={`Color ${index + 1}`}
+                                            error={colorErr?.message}
+                                        />
+                                        <div className="flex flex-col">
+                                            <Label>Nombre</Label>
+                                            <Input
+                                                value={nameVal}
+                                                placeholder="Ej: Azul acero"
+                                                onChange={(e) => setValue(labelName as never, e.target.value as never, { shouldDirty: true, shouldValidate: true })}
+                                                className="h-12"
+                                            />
+                                            {nameErr?.message && <p className="text-xs text-red-500 mt-1">{nameErr.message}</p>}
+                                        </div>
+                                        <div className="pt-6">
+                                            <Button variant="ghost" size="icon" className="size-9" onClick={() => removeColor(index)}>
+                                                <Trash />
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <div>
+                            <Button variant="outline" size="sm" onClick={addColor} className="w-fit">
+                                <Plus className="mr-1 size-4" /> Agregar color
+                            </Button>
+                        </div>
+                    </>
+                )}
+            </div>
         )
     }
 
@@ -1000,10 +1092,19 @@ function ExtraFormPanel() {
             if (!hasVal) setError(expPath as never, { type: 'required', message: 'Selecciona la fecha' }); else clearErrors(expPath as never)
         }
         if (hasColorSelected) {
-            const colorPath = `extra.surface.color`
-            const colorVal = (getValues(colorPath as never) as string | undefined) || ""
-            const isValid = /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/.test(colorVal)
-            if (!isValid) setError(colorPath as never, { type: 'required', message: 'Selecciona un color válido' }); else clearErrors(colorPath as never)
+            const base = `extra.surface.colors`
+            const arr = (getValues(base as never) as { value: string; name?: string }[] | undefined) || []
+            if (!Array.isArray(arr) || arr.length === 0) {
+                setError(base as never, { type: 'required', message: 'Agrega al menos un color' })
+            } else {
+                clearErrors(base as never)
+                arr.forEach((_item, index) => {
+                    const colorName = `${base}.${index}.value`
+                    const v = (getValues(colorName as never) as string | undefined) || ''
+                    const isValid = hexColorRegex.test(v)
+                    if (!isValid) setError(colorName as never, { type: 'required', message: 'Color inválido' }); else clearErrors(colorName as never)
+                })
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(dimensionTagsSelectedRef), hasExpirationSelected, hasColorSelected])
@@ -1031,10 +1132,12 @@ function ExtraFormPanel() {
                 const arr = (getValues(`extra.sizes.${key}` as never) as string[] | undefined) || []
                 return Array.isArray(arr) && arr.length > 0
             })
-            // color
+            // colors
             const colorOk = hasColorSelected ? (() => {
-                const v = (getValues(`extra.surface.color` as never) as string | undefined) || ""
-                return /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/.test(v)
+                const base = `extra.surface.colors`
+                const arr = (getValues(base as never) as { value: string; name?: string }[] | undefined) || []
+                if (!Array.isArray(arr) || arr.length === 0) return false
+                return arr.every(it => typeof it?.value === 'string' && hexColorRegex.test(it.value))
             })() : true
             setStepValid(4, dimsOk && expOk && sizesOk && colorOk)
         }
@@ -1074,6 +1177,7 @@ function ExtraFormPanel() {
                     setSelected(vals)
                     // Keep a mirror for persisting if needed later
                     setValue('extra_meta.selectedDimensionTags' as never, vals.filter(v => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(v)) as never)
+                    setValue('extra_meta.selectedSurfaceTags' as never, vals.filter(v => ["Color", "Material"].includes(v)) as never)
                 }}
                 hasTooltip
                 tooltipMessage="Click para agregar o quitar"
@@ -1175,7 +1279,7 @@ function ExtraFormPanel() {
                                                     ]}
                                                 />
                                             ) : tag === 'Color' ? (
-                                                <ColorField key={tag} />
+                                                <ColorsField key={tag} />
                                             ) : null
                                         ))}
                                     </div>
@@ -1247,7 +1351,7 @@ function CreateProductForm({ step, setStep, onSubmitAll, storeId }: CreateProduc
                 </Form>
             </Step>
             <Step className="!p-0 !pt-10 !pb-2">
-                <Form<EmptyFormType> contentButton="" submitButton={false} resolver={yupResolver(emptySchema as never)}>
+                <Form<ExtraFormType> contentButton="" submitButton={false} resolver={yupResolver(extraSchema as never)}>
                     <ExtraFormPanel />
                 </Form>
             </Step>
