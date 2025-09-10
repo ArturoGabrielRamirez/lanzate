@@ -1774,38 +1774,41 @@ export default CreateProductButtonNew
 
 function VariantsTable() {
     const { values } = useCreateProductContext()
-    const { watch } = useFormContext()
 
-    const productName = (values.basic_info as { name?: string } | undefined)?.name || (watch('basic_info.name') as string | undefined) || ""
+    const productName = (values.basic_info as { name?: string } | undefined)?.name || ""
 
-    const sizes = (watch('extra.sizes.talle') as string[] | undefined) || []
-    const tamanos = (watch('extra.sizes.tamano') as string[] | undefined) || []
-    const colorObjs = (watch('extra.surface.colors') as { value: string; name?: string }[] | undefined) || []
-    const colors = colorObjs.map(c => c.name || c.value)
-    const flavors = (watch('extra.sensorial.flavors') as string[] | undefined) || []
-    const fragrances = (watch('extra.sensorial.fragrances') as string[] | undefined) || []
+    const extra = (values.extra as unknown as {
+        sizes?: { talle?: string[]; tamano?: string[] }
+        surface?: { colors?: { value: string; name?: string }[] }
+        sensorial?: { flavors?: string[]; fragrances?: string[] }
+        dimensions?: Record<string, { value?: string | number; unit?: string }>
+    }) || {}
 
-    const dimensionsSelected = ((values.extra_meta as unknown as { selectedDimensionTags?: string[] })?.selectedDimensionTags) || []
+    const meta = (values.extra_meta as unknown as { selectedDimensionTags?: string[] }) || {}
 
-    const dimensionValues: Record<string, string[]> = {}
-    for (const tag of dimensionsSelected) {
-        const key = tagToKey[tag]
-        const v = watch(`extra.dimensions.${key}.value`) as string | number | undefined
-        const u = watch(`extra.dimensions.${key}.unit`) as string | undefined
-        if (v !== undefined && v !== null && String(v).length > 0 && u) {
-            dimensionValues[tag] = [String(v) + ' ' + u]
+    const axes = useMemo(() => {
+        const axesLocal: { key: string; label: string; values: string[] }[] = []
+        const sizes = (extra.sizes?.talle || []) as string[]
+        const tamanos = (extra.sizes?.tamano || []) as string[]
+        const colors = ((extra.surface?.colors || []) as { value: string; name?: string }[]).map(c => c.name || c.value)
+        const flavors = (extra.sensorial?.flavors || []) as string[]
+        const fragrances = (extra.sensorial?.fragrances || []) as string[]
+        if (sizes.length > 0) axesLocal.push({ key: 'Talle', label: 'Talle', values: sizes })
+        if (tamanos.length > 0) axesLocal.push({ key: 'Tamaño', label: 'Tamaño', values: tamanos })
+        if (colors.length > 0) axesLocal.push({ key: 'Color', label: 'Color', values: colors })
+        if (flavors.length > 0) axesLocal.push({ key: 'Sabor', label: 'Sabor', values: flavors })
+        if (fragrances.length > 0) axesLocal.push({ key: 'Fragancia', label: 'Fragancia', values: fragrances })
+        // Opcional: incluir dimensiones con valor fijo
+        const dimSelected = meta.selectedDimensionTags || []
+        for (const tag of dimSelected) {
+            const key = tagToKey[tag]
+            const item = extra.dimensions?.[key]
+            if (item && item.value !== undefined && item.unit) {
+                axesLocal.push({ key: tag, label: tag, values: [String(item.value) + ' ' + item.unit] })
+            }
         }
-    }
-
-    const axes: { key: string; label: string; values: string[] }[] = []
-    if (sizes.length > 0) axes.push({ key: 'Talle', label: 'Talle', values: sizes })
-    if (tamanos.length > 0) axes.push({ key: 'Tamaño', label: 'Tamaño', values: tamanos })
-    if (colors.length > 0) axes.push({ key: 'Color', label: 'Color', values: colors })
-    if (flavors.length > 0) axes.push({ key: 'Sabor', label: 'Sabor', values: flavors })
-    if (fragrances.length > 0) axes.push({ key: 'Fragancia', label: 'Fragancia', values: fragrances })
-    for (const [label, vals] of Object.entries(dimensionValues)) {
-        if (vals.length > 0) axes.push({ key: label, label, values: vals })
-    }
+        return axesLocal
+    }, [extra, meta])
 
     function cartesian<T>(arrays: T[][]): T[][] {
         if (arrays.length === 0) return []
