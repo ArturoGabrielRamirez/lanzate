@@ -372,18 +372,23 @@ function UnitSelect({ name, options, placeholder = "Unidad", className }: UnitSe
 }
 
 function DimensionFieldRow({ tag }: DimensionFieldRowProps) {
-    const { watch, setValue } = useFormContext()
+    const { getValues, setValue } = useFormContext()
+    const { setValues: setCtxValues } = useCreateProductContext()
     const key = tagToKey[tag]
     const baseName = `extra.dimensions.${key}`
     const unitName = `${baseName}.unit`
     const valueName = `${baseName}.value`
-    const unitVal = watch(unitName) as string | undefined
     useEffect(() => {
-        if (!unitVal) {
+        const current = (getValues(unitName as never) as string | undefined) || ""
+        if (!current) {
             const first = unitOptionsByKey[key]?.[0]?.value
             if (first) setValue(unitName as never, first as never, { shouldDirty: true })
         }
-    }, [unitVal, key, unitName, setValue])
+        // seed provider with current extra snapshot once
+        const snapshot = getValues('extra' as never) as unknown
+        setCtxValues({ extra: snapshot as never })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     return (
         <div className="flex items-end">
             <div className="flex-1">
@@ -396,6 +401,8 @@ function DimensionFieldRow({ tag }: DimensionFieldRowProps) {
                     className="!rounded-r-none"
                     onChange={(e) => {
                         setValue(valueName as never, e.target.value as never, { shouldDirty: true, shouldValidate: true })
+                        const snapshot = getValues('extra' as never) as unknown
+                        setCtxValues({ extra: snapshot as never })
                     }}
                 />
             </div>
