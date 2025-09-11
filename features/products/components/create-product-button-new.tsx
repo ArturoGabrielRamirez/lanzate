@@ -17,7 +17,6 @@ import { Progress } from "@/components/ui/progress"
 import { useCamera } from "@/features/auth/hooks/use-camera"
 import CameraComponent from "@/features/auth/components/avatar/camera-component"
 import { toast } from "sonner"
-import { generate } from "random-words"
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
@@ -25,7 +24,7 @@ import CategoryTagsSelect from "@/features/store-landing/components/category-tag
 import { getCategories } from "@/features/store-landing/actions/getCategories"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableCaption } from "@/components/ui/table"
+// Table removed for Variants view
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tags, TagsContent, TagsEmpty, TagsGroup, TagsInput, TagsItem, TagsList, TagsTrigger, TagsValue } from "@/src/components/ui/shadcn-io/tags"
 import { get as rhfGet } from "react-hook-form"
@@ -213,7 +212,9 @@ type CreateProductFormValues = {
     settings?: { is_active?: boolean; is_featured?: boolean; is_published?: boolean }
     categories?: { label: string; value: string }[]
     extra?: { dimensions?: Record<string, { value?: number | string; unit?: string }> }
-    extra_meta?: { selectedDimensionTags?: string[] }
+    extra_meta?: { selectedDimensionTags?: string[]; selectedSurfaceTags?: string[]; selectedSizeTags?: string[]; selectedSensorialTags?: string[]; selectedTags?: string[] }
+    variants?: { id: string; name: string; attributes: Record<string, string> }[]
+    variants_removed?: string[]
 }
 
 type CreateProductContextType = {
@@ -223,6 +224,7 @@ type CreateProductContextType = {
     setAvailableCategories: (opts: { id: string; label: string }[]) => void
     isStepValid: Record<number, boolean>
     setStepValid: (step: number, valid: boolean) => void
+    removeVariant: (id: string) => void
 }
 
 type CreateProductFormProps = {
@@ -255,9 +257,7 @@ type FreeTagsProps = {
     preset: { id: string; label: string }[]
 }
 
-type VariantRow = {
-    attributes: Record<string, string>
-}
+// no-op placeholder removed (was used by old table)
 
 type StepIndicatorProps = {
     step: number
@@ -276,6 +276,14 @@ function CreateProductProvider({ children, storeId }: { children: React.ReactNod
     const [values, setValuesState] = useState<Partial<CreateProductFormValues>>({})
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
     const [availableCategories, setAvailableCategoriesState] = useState<{ id: string; label: string }[]>([])
+
+    const removeVariant = useCallback((id: string) => {
+        setValuesState(prev => {
+            const removed = [ ...(prev.variants_removed || []), id ]
+            const next: Partial<CreateProductFormValues> = { ...prev, variants_removed: removed }
+            return next
+        })
+    }, [])
 
     const setValues = useCallback((partial: Partial<CreateProductFormValues>) => {
         setValuesState(prev => {
@@ -347,8 +355,79 @@ function CreateProductProvider({ children, storeId }: { children: React.ReactNod
         setIsStepValid(prev => ({ ...prev, [step]: valid }))
     }, [])
 
+    // ----- Variant generation in provider -----
+    const computeAxesFromValues = useCallback((v: Partial<CreateProductFormValues>) => {
+        const extra = (v.extra as unknown as {
+            sizes?: { talle?: string[]; tamano?: string[] }
+            surface?: { colors?: { value: string; name?: string }[] }
+            sensorial?: { flavors?: string[]; fragrances?: string[] }
+            dimensions?: Record<string, { value?: string | number; unit?: string }>
+        }) || {}
+        const meta = (v.extra_meta as unknown as { selectedDimensionTags?: string[] }) || {}
+
+        const axes: { key: string; label: string; values: string[] }[] = []
+        const sizes = (extra.sizes?.talle || []) as string[]
+        const tamanos = (extra.sizes?.tamano || []) as string[]
+        const colors = ((extra.surface?.colors || []) as { value: string; name?: string }[]).map(c => c.name || c.value)
+        const flavors = (extra.sensorial?.flavors || []) as string[]
+        const fragrances = (extra.sensorial?.fragrances || []) as string[]
+        if (sizes.length > 0) axes.push({ key: 'Talle', label: 'Talle', values: sizes })
+        if (tamanos.length > 0) axes.push({ key: 'Tamaño', label: 'Tamaño', values: tamanos })
+        if (colors.length > 0) axes.push({ key: 'Color', label: 'Color', values: colors })
+        if (flavors.length > 0) axes.push({ key: 'Sabor', label: 'Sabor', values: flavors })
+        if (fragrances.length > 0) axes.push({ key: 'Fragancia', label: 'Fragancia', values: fragrances })
+
+        const dimSelected = meta.selectedDimensionTags || []
+        for (const tag of dimSelected) {
+            const key = tagToKey[tag]
+            const item = extra.dimensions?.[key]
+            if (item && item.value !== undefined && item.unit) {
+                axes.push({ key: tag, label: tag, values: [String(item.value) + ' ' + item.unit] })
+            }
+        }
+        return axes
+    }, [])
+
+    function cartesian<T>(arrays: T[][]): T[][] {
+        if (arrays.length === 0) return []
+        return arrays.reduce<T[][]>((acc, curr) => {
+            if (acc.length === 0) return curr.map(v => [v])
+            const next: T[][] = []
+            for (const a of acc) for (const c of curr) next.push([...a, c])
+            return next
+        }, [])
+    }
+
+    const makeVariantId = (attrs: Record<string, string>) => {
+        const parts = Object.keys(attrs).sort().map(k => `${k}=${attrs[k]}`)
+        return parts.join('|')
+    }
+
+    useEffect(() => {
+        const axes = computeAxesFromValues(values)
+        if (axes.length === 0) {
+            if ((values.variants || []).length > 0) setValuesState(prev => ({ ...prev, variants: [] }))
+            return
+        }
+        const arrays = axes.map(a => a.values)
+        const product = cartesian(arrays)
+        const baseName = (values.basic_info as { name?: string } | undefined)?.name || ''
+        const computed = product.map(arr => {
+            const attrs: Record<string, string> = {}
+            arr.forEach((v, i) => { attrs[axes[i].label] = String(v) })
+            const id = makeVariantId(attrs)
+            return { id, name: baseName, attributes: attrs }
+        })
+        const removed = new Set(values.variants_removed || [])
+        const filtered = computed.filter(v => !removed.has(v.id))
+        const prevStr = JSON.stringify(values.variants || [])
+        const nextStr = JSON.stringify(filtered)
+        if (prevStr !== nextStr) setValuesState(prev => ({ ...prev, variants: filtered }))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [values.extra, values.extra_meta, values.basic_info, values.variants_removed])
+
     return (
-        <CreateProductContext.Provider value={{ values, setValues, availableCategories, setAvailableCategories, isStepValid, setStepValid }}>
+        <CreateProductContext.Provider value={{ values, setValues, availableCategories, setAvailableCategories, isStepValid, setStepValid, removeVariant }}>
             {children}
         </CreateProductContext.Provider>
     )
@@ -827,15 +906,12 @@ function BasicInfoFormPanel({ storeId }: { storeId: number }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    // Generate default slug on first mount if empty
+    // Keep slug synced from name until user edits slug directly
     useEffect(() => {
-        const current = (getValues('basic_info.slug') as string | undefined) || ""
-        if (!current || current.length === 0) {
-            const rw = (generate({ exactly: 2, join: '-' }) as unknown as string) || ""
-            const defaultSlug = slugify(rw)
-            if (defaultSlug) setValue('basic_info.slug', defaultSlug, { shouldValidate: true })
-        }
-    }, [getValues, setValue])
+        if (isSlugTouched) return
+        const next = slugify(nameValue || '')
+        setValue('basic_info.slug', next, { shouldValidate: true, shouldDirty: true })
+    }, [nameValue, isSlugTouched, setValue])
 
     // Hydrate image controls from form
     useEffect(() => {
@@ -864,15 +940,12 @@ function BasicInfoFormPanel({ storeId }: { storeId: number }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [imageValue])
 
-    // Auto-generate slug from name until user edits slug directly
+    // If user clears the slug manually, resume auto-sync
     useEffect(() => {
-        if (isSlugTouched) return
-        const currentSlug = (getValues('basic_info.slug') as string | undefined) || ""
-        if (!nameValue || nameValue.trim().length === 0) return
-        if (currentSlug && currentSlug.trim().length > 0) return
-        const next = slugify(nameValue)
-        setValue('basic_info.slug', next, { shouldValidate: true, shouldDirty: true })
-    }, [nameValue, isSlugTouched, getValues, setValue])
+        const currentSlug = (getValues('basic_info.slug') as string | undefined) || ''
+        if (currentSlug.length === 0) setIsSlugTouched(false)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [getValues])
 
     const handleUpload = async (_file: File) => {
         try {
@@ -1291,20 +1364,6 @@ function ExtraFormPanel() {
 
     // use hoisted unitOptionsByKey and tagToKey
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // Dynamic validity across groups (dimensions + sizes)
     const dimensionTagsSelectedRef = useMemo(() => selected.filter(t => ["Peso", "Alto", "Ancho", "Largo", "Profundidad", "Circumferencia"].includes(t)), [selected])
     const sizeTagsSelectedRef = useMemo(() => selected.filter(t => ["Talle", "Tamaño"].includes(t)), [selected])
@@ -1405,6 +1464,7 @@ function ExtraFormPanel() {
             })
             .filter(Boolean) as { key: string; title: string; tags: string[] }[])
     }, [selected])
+    
     return (
         <div className="text-sm text-muted-foreground">
             <AnimatedTags
@@ -1802,64 +1862,12 @@ function useStepShim(max: number): [number, { setStep: (s: number) => void }] {
 export default CreateProductButtonNew
 
 function VariantsTable() {
-    const { values } = useCreateProductContext()
+    const { values, removeVariant } = useCreateProductContext()
 
     const productName = (values.basic_info as { name?: string } | undefined)?.name || ""
+    const variants = values.variants || []
 
-    const extra = (values.extra as unknown as {
-        sizes?: { talle?: string[]; tamano?: string[] }
-        surface?: { colors?: { value: string; name?: string }[] }
-        sensorial?: { flavors?: string[]; fragrances?: string[] }
-        dimensions?: Record<string, { value?: string | number; unit?: string }>
-    }) || {}
-
-    const meta = (values.extra_meta as unknown as { selectedDimensionTags?: string[] }) || {}
-
-    const axes = useMemo(() => {
-        const axesLocal: { key: string; label: string; values: string[] }[] = []
-        const sizes = (extra.sizes?.talle || []) as string[]
-        const tamanos = (extra.sizes?.tamano || []) as string[]
-        const colors = ((extra.surface?.colors || []) as { value: string; name?: string }[]).map(c => c.name || c.value)
-        const flavors = (extra.sensorial?.flavors || []) as string[]
-        const fragrances = (extra.sensorial?.fragrances || []) as string[]
-        if (sizes.length > 0) axesLocal.push({ key: 'Talle', label: 'Talle', values: sizes })
-        if (tamanos.length > 0) axesLocal.push({ key: 'Tamaño', label: 'Tamaño', values: tamanos })
-        if (colors.length > 0) axesLocal.push({ key: 'Color', label: 'Color', values: colors })
-        if (flavors.length > 0) axesLocal.push({ key: 'Sabor', label: 'Sabor', values: flavors })
-        if (fragrances.length > 0) axesLocal.push({ key: 'Fragancia', label: 'Fragancia', values: fragrances })
-        // Opcional: incluir dimensiones con valor fijo
-        const dimSelected = meta.selectedDimensionTags || []
-        for (const tag of dimSelected) {
-            const key = tagToKey[tag]
-            const item = extra.dimensions?.[key]
-            if (item && item.value !== undefined && item.unit) {
-                axesLocal.push({ key: tag, label: tag, values: [String(item.value) + ' ' + item.unit] })
-            }
-        }
-        return axesLocal
-    }, [extra, meta])
-
-    function cartesian<T>(arrays: T[][]): T[][] {
-        if (arrays.length === 0) return []
-        return arrays.reduce<T[][]>((acc, curr) => {
-            if (acc.length === 0) return curr.map(v => [v])
-            const next: T[][] = []
-            for (const a of acc) for (const c of curr) next.push([...a, c])
-            return next
-        }, [])
-    }
-
-    const combinations = useMemo(() => {
-        const valueArrays = axes.map(a => a.values)
-        const product = cartesian(valueArrays)
-        return product.map(arr => {
-            const attrs: Record<string, string> = {}
-            arr.forEach((v, i) => { attrs[axes[i].label] = String(v) })
-            return { attributes: attrs } as VariantRow
-        })
-    }, [axes])
-
-    if (axes.length === 0) {
+    if (variants.length === 0) {
         return (
             <div className="flex flex-col gap-2">
                 <h3 className="text-base font-medium">Variantes</h3>
@@ -1868,30 +1876,30 @@ function VariantsTable() {
         )
     }
 
-    const headers = ['Nombre', ...axes.map(a => a.label)]
-
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
             <h3 className="text-base font-medium">Variantes</h3>
             <p className="text-sm text-muted-foreground">Combinatoria de los atributos seleccionados.</p>
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        {headers.map(h => <TableHead key={h}>{h}</TableHead>)}
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {combinations.map((row, idx) => (
-                        <TableRow key={idx}>
-                            <TableCell>{productName || 'Producto'}</TableCell>
-                            {axes.map(a => (
-                                <TableCell key={a.label}>{row.attributes[a.label]}</TableCell>
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            <TableCaption>{combinations.length} variantes generadas</TableCaption>
+            <div className="flex flex-col gap-2">
+                {variants.map((row) => (
+                    <article key={row.id} className="rounded-md border p-3 flex items-center gap-4">
+                        <div className="flex-1">
+                            <div className="font-medium">{productName || 'Producto'}</div>
+                            <div className="text-sm text-muted-foreground flex flex-wrap gap-2">
+                                {Object.entries(row.attributes).map(([label, val]) => (
+                                    <span key={label} className="inline-flex items-center gap-1">
+                                        <span className="text-foreground/70">{label}:</span> <span>{val}</span>
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                        <Button size="icon" variant="ghost" className="shrink-0" onClick={() => removeVariant(row.id)}>
+                            <Trash className="size-4" />
+                        </Button>
+                    </article>
+                ))}
+            </div>
+            <div className="text-xs text-muted-foreground">{variants.length} variantes generadas</div>
         </div>
     )
 }
