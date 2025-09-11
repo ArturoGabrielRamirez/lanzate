@@ -326,6 +326,7 @@ model Color {
   id         Int              @id @default(autoincrement())
   store_id   Int?
   name       String
+  hex        String?          @unique
   rgba       Json?
   created_at DateTime         @default(now())
   updated_at DateTime         @updatedAt
@@ -340,6 +341,11 @@ model ProductVariant {
   product_id         Int
   sku                String?               @unique
   color_id           Int?
+  sizes_id           Int?
+  dimensions_id      Int?
+  material_id        Int?
+  flavor_id          Int?
+  fragrance_id       Int?
   price              Float?
   is_active          Boolean               @default(true)
   is_featured        Boolean               @default(false)
@@ -371,7 +377,7 @@ model ProductVariant {
   is_digital         Boolean               @default(false)
   is_visible         Boolean               @default(true)
   low_stock_alert    Int?
-  material           String?
+  material           String? // deprecated: use material_id
   max_per_order      Int?
   min_wholesale_qty  Int?
   name               String?
@@ -381,7 +387,7 @@ model ProductVariant {
   shipping_height    Float?
   shipping_weight    Float?
   shipping_width     Float?
-  size               String?
+  size               String? // deprecated: use talle_id / tamano_id
   measure            String?
   style              String?
   weight             Float?
@@ -393,12 +399,71 @@ model ProductVariant {
   media              ProductMedia[]        @relation("VariantMedia")
   stocks             ProductVariantStock[]
   color              Color?                @relation(fields: [color_id], references: [id])
+  sizes              Sizes?                @relation(fields: [sizes_id], references: [id])
+  dimensions         Dimensions?           @relation(fields: [dimensions_id], references: [id])
+  material_ref       Material?             @relation(fields: [material_id], references: [id])
+  flavor             Flavor?               @relation(fields: [flavor_id], references: [id])
+  fragrance          Fragrance?            @relation(fields: [fragrance_id], references: [id])
   primary_media      ProductMedia?         @relation("VariantPrimaryMedia", fields: [primary_media_id], references: [id])
   product            Product               @relation(fields: [product_id], references: [id], onDelete: Cascade)
 
-  @@unique([product_id, size, color_id])
+  @@unique([product_id, color_id, sizes_id, dimensions_id, material_id, flavor_id, fragrance_id])
   @@index([product_id])
   @@map("product_variants")
+}
+
+// User-defined attribute options (scoped to store) to keep custom values reusable
+model Sizes {
+  id         Int              @id @default(autoincrement())
+  label      String           @unique
+  created_at DateTime         @default(now())
+  updated_at DateTime         @updatedAt
+  variants   ProductVariant[]
+
+  @@map("sizes")
+}
+
+model Dimensions {
+  id         Int              @id @default(autoincrement())
+  label      String           @unique
+  value      Float?
+  unit       String?
+  created_at DateTime         @default(now())
+  updated_at DateTime         @updatedAt
+  variants   ProductVariant[]
+
+  @@map("dimensions")
+}
+
+model Material {
+  id         Int              @id @default(autoincrement())
+  label      String           @unique
+  image_url  String?
+  created_at DateTime         @default(now())
+  updated_at DateTime         @updatedAt
+  variants   ProductVariant[]
+
+  @@map("materials")
+}
+
+model Flavor {
+  id         Int              @id @default(autoincrement())
+  label      String           @unique
+  created_at DateTime         @default(now())
+  updated_at DateTime         @updatedAt
+  variants   ProductVariant[]
+
+  @@map("flavors")
+}
+
+model Fragrance {
+  id         Int              @id @default(autoincrement())
+  label      String           @unique
+  created_at DateTime         @default(now())
+  updated_at DateTime         @updatedAt
+  variants   ProductVariant[]
+
+  @@map("fragrances")
 }
 
 model ProductVariantStock {

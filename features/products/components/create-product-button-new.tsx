@@ -27,6 +27,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 // Table removed for Variants view
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tags, TagsContent, TagsEmpty, TagsGroup, TagsInput, TagsItem, TagsList, TagsTrigger, TagsValue } from "@/src/components/ui/shadcn-io/tags"
+import { createSizesDynamic } from "@/features/products/actions/createSizesDynamic"
+import { createFlavorDynamic } from "@/features/products/actions/createFlavorDynamic"
+import { createFragranceDynamic } from "@/features/products/actions/createFragranceDynamic"
 import { get as rhfGet } from "react-hook-form"
 import InputColor from "@/components/color-input"
 
@@ -532,13 +535,17 @@ function SizesTags({ name, label, preset }: SizesTagsProps) {
         applySelection(next)
     }
 
-    const handleCreate = () => {
+    const handleCreate = async () => {
         const labelValue = (input || "").trim()
         if (!labelValue) return
-        const id = labelValue
-        if (!options.some(o => o.id === id)) setOptions(prev => [...prev, { id, label: labelValue }])
-        if (!selected.includes(id)) applySelection([...selected, id])
-        setInput("")
+        try {
+            const res = await createSizesDynamic(labelValue)
+            const id = String(res?.payload?.id || labelValue)
+            if (!options.some(o => o.id === id)) setOptions(prev => [...prev, { id, label: labelValue }])
+            if (!selected.includes(id)) applySelection([...selected, id])
+        } finally {
+            setInput("")
+        }
     }
 
     const placeholder = "Escribe para agregar…"
@@ -608,13 +615,18 @@ function FreeTags({ name, label, preset }: FreeTagsProps) {
         applySelection(next)
     }
 
-    const handleCreate = () => {
+    const handleCreate = async () => {
         const labelValue = (input || "").trim()
         if (!labelValue) return
-        const id = labelValue
-        if (!options.some(o => o.id === id)) setOptions(prev => [...prev, { id, label: labelValue }])
-        if (!selected.includes(id)) applySelection([...selected, id])
-        setInput("")
+        try {
+            const isFlavor = name.includes('flavors')
+            const res = isFlavor ? await createFlavorDynamic(labelValue) : await createFragranceDynamic(labelValue)
+            const id = String(res?.payload?.id || labelValue)
+            if (!options.some(o => o.id === id)) setOptions(prev => [...prev, { id, label: labelValue }])
+            if (!selected.includes(id)) applySelection([...selected, id])
+        } finally {
+            setInput("")
+        }
     }
 
     const placeholder = "Escribe para agregar…"
