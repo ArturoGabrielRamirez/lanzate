@@ -590,9 +590,9 @@ function ColorsField() {
     const colorsError = rhfGet(errors, baseName) as { message?: string } | undefined
     const [editing, setEditing] = useState<{ value: string; name: string } | null>(null)
 
-    const startAdd = () => setEditing({ value: '#000000', name: '' })
-    const cancelAdd = () => setEditing(null)
-    const confirmAdd = () => {
+    const handleStartAddColor = () => setEditing({ value: '#000000', name: '' })
+    const handleCancelAddColor = () => setEditing(null)
+    const handleConfirmAddColor = () => {
         if (!editing) return
         const valid = hexColorRegex.test(editing.value) && editing.name.length <= 64
         if (!valid) {
@@ -605,10 +605,15 @@ function ColorsField() {
         clearErrors(baseName as never)
         setEditing(null)
     }
-    const removeColor = (index: number) => {
+    const handleRemoveColor = (index: number) => {
         const next = arr.filter((_v, i) => i !== index)
         setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
     }
+
+    const handleColorHexChange = (hex: string) => setEditing(prev => prev ? { ...prev, value: hex } : prev)
+    const handleColorBlur = () => void 0
+    const handleColorNameChange = (val: string) => setEditing(prev => prev ? { ...prev, name: val } : prev)
+    const handleColorNameBlur = () => void 0
 
     return (
         <div className="flex flex-col gap-3">
@@ -628,7 +633,7 @@ function ColorsField() {
                             />
                             <div className="flex items-center gap-1">
                                 <span className="text-xs text-foreground/80">{c.name || c.value}</span>
-                                <Button variant="ghost" size="icon" className="size-6" onClick={() => removeColor(i)}>
+                                <Button variant="ghost" size="icon" className="size-6" onClick={() => handleRemoveColor(i)}>
                                     <Trash className="size-3" />
                                 </Button>
                             </div>
@@ -641,27 +646,27 @@ function ColorsField() {
                 <div className="flex flex-col gap-3">
                     <InputColor
                         value={editing.value}
-                        onChange={(hex) => setEditing(prev => prev ? { ...prev, value: hex } : prev)}
-                        onBlur={() => void 0}
+                        onChange={handleColorHexChange}
+                        onBlur={handleColorBlur}
                         label={`Nuevo color`}
                         error={undefined}
                         nameValue={editing.name}
-                        onNameChange={(val) => setEditing(prev => prev ? { ...prev, name: val } : prev)}
-                        onNameBlur={() => void 0}
+                        onNameChange={handleColorNameChange}
+                        onNameBlur={handleColorNameBlur}
                         nameLabel="Nombre"
                         namePlaceholder="Ej: Azul acero"
                     />
                     <div className="flex gap-2">
-                        <Button size="sm" onClick={confirmAdd}>
+                        <Button size="sm" onClick={handleConfirmAddColor}>
                             <Check className="mr-1 size-4" /> Confirmar
                         </Button>
-                        <Button size="sm" variant="ghost" onClick={cancelAdd}>Cancelar</Button>
+                        <Button size="sm" variant="ghost" onClick={handleCancelAddColor}>Cancelar</Button>
                     </div>
                 </div>
             )}
 
             {!editing && (
-                <Button variant="outline" size="sm" onClick={startAdd} className="w-fit">
+                <Button variant="outline" size="sm" onClick={handleStartAddColor} className="w-fit">
                     <Plus className="mr-1 size-4" /> Agregar color
                 </Button>
             )}
@@ -678,7 +683,9 @@ function MaterialsField() {
     const arr = (watch(baseName) as MaterialItem[] | undefined) || []
     const [editing, setEditing] = useState(false)
 
-    const handleDeleteAt = (index: number) => {
+    const handleStartEditingMaterials = () => setEditing(true)
+
+    const handleDeleteAtIndex = (index: number) => () => {
         const next = arr.filter((_v, i) => i !== index)
         setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
     }
@@ -702,7 +709,7 @@ function MaterialsField() {
                     <div className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
                         No hay materiales agregados
                     </div>
-                    <Button variant="outline" size="sm" onClick={() => setEditing(true)} className="w-fit">
+                    <Button variant="outline" size="sm" onClick={handleStartEditingMaterials} className="w-fit">
                         <Plus className="mr-1 size-4" /> Agregar material
                     </Button>
                 </>
@@ -724,7 +731,7 @@ function MaterialsField() {
                         <button
                             type="button"
                             className="-right-1 -top-1 absolute grid place-items-center rounded-full border bg-background/90 p-1"
-                            onClick={() => handleDeleteAt(index)}
+                            onClick={handleDeleteAtIndex(index)}
                         >
                             <X className="size-3" />
                         </button>
@@ -762,7 +769,7 @@ function MaterialsField() {
                 )}
             </div>
             {arr.length > 0 && !editing && (
-                <Button variant="outline" size="sm" onClick={() => setEditing(true)} className="w-fit">
+                <Button variant="outline" size="sm" onClick={handleStartEditingMaterials} className="w-fit">
                     <Plus className="mr-1 size-4" /> Agregar material
                 </Button>
             )}
