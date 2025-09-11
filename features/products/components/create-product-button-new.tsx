@@ -27,9 +27,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 // Table removed for Variants view
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tags, TagsContent, TagsEmpty, TagsGroup, TagsInput, TagsItem, TagsList, TagsTrigger, TagsValue } from "@/src/components/ui/shadcn-io/tags"
-import { createSizesDynamic } from "@/features/products/actions/createSizesDynamic"
-import { createFlavorDynamic } from "@/features/products/actions/createFlavorDynamic"
-import { createFragranceDynamic } from "@/features/products/actions/createFragranceDynamic"
 import { createColorDynamic } from "@/features/products/actions/createColorDynamic"
 import { createMaterialDynamic } from "@/features/products/actions/createMaterialDynamic"
 import { createDimensionsDynamic } from "@/features/products/actions/createDimensionsDynamic"
@@ -39,6 +36,9 @@ import { getFlavors } from "@/features/products/data/getFlavors"
 import { getFragrances } from "@/features/products/data/getFragrances"
 import { get as rhfGet } from "react-hook-form"
 import InputColor from "@/components/color-input"
+import { createSizesDynamic } from "../actions/createSizesDynamic"
+import { createFlavorDynamic } from "../actions/createFlavorDynamic"
+import { createFragranceDynamic } from "../actions/createFragranceDynamic"
 
 const CreateProductContext = createContext<CreateProductContextType | null>(null)
 const hexColorRegex = /^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/
