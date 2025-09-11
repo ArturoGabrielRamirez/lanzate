@@ -30,6 +30,10 @@ import { Tags, TagsContent, TagsEmpty, TagsGroup, TagsInput, TagsItem, TagsList,
 import { createSizesDynamic } from "@/features/products/actions/createSizesDynamic"
 import { createFlavorDynamic } from "@/features/products/actions/createFlavorDynamic"
 import { createFragranceDynamic } from "@/features/products/actions/createFragranceDynamic"
+import { createColorDynamic } from "@/features/products/actions/createColorDynamic"
+import { createMaterialDynamic } from "@/features/products/actions/createMaterialDynamic"
+import { createDimensionsDynamic } from "@/features/products/actions/createDimensionsDynamic"
+import { getColors } from "@/features/products/data/getColors"
 import { getSizes } from "@/features/products/data/getSizes"
 import { getFlavors } from "@/features/products/data/getFlavors"
 import { getFragrances } from "@/features/products/data/getFragrances"
@@ -463,6 +467,12 @@ function DimensionFieldRow({ tag }: DimensionFieldRowProps) {
     const baseName = `extra.dimensions.${key}`
     const unitName = `${baseName}.unit`
     const valueName = `${baseName}.value`
+    const handlePersistDimension = async () => {
+        const valStr = (getValues(valueName as never) as string | undefined) || ""
+        const unit = (getValues(unitName as never) as string | undefined) || undefined
+        const valNum = valStr ? Number(valStr) : undefined
+        try { await createDimensionsDynamic(tag, valNum, unit) } catch { /* no-op */ }
+    }
     useEffect(() => {
         const current = (getValues(unitName as never) as string | undefined) || ""
         if (!current) {
@@ -488,6 +498,7 @@ function DimensionFieldRow({ tag }: DimensionFieldRowProps) {
                         setValue(valueName as never, e.target.value as never, { shouldDirty: true, shouldValidate: true })
                         const snapshot = getValues('extra' as never) as unknown
                         setCtxValues({ extra: snapshot as never })
+                        void handlePersistDimension()
                     }}
                 />
             </div>
@@ -716,10 +727,11 @@ function ColorsField() {
     const arr = (watch(baseName) as { value: string; name?: string }[] | undefined) || []
     const colorsError = rhfGet(errors, baseName) as { message?: string } | undefined
     const [editing, setEditing] = useState<{ value: string; name: string } | null>(null)
+    const [dbColors, setDbColors] = useState<{ id: number; name: string; hex: string | null }[]>([])
 
     const handleStartAddColor = () => setEditing({ value: '#000000', name: '' })
     const handleCancelAddColor = () => setEditing(null)
-    const handleConfirmAddColor = () => {
+    const handleConfirmAddColor = async () => {
         if (!editing) return
         const valid = hexColorRegex.test(editing.value) && editing.name.length <= 64
         if (!valid) {
@@ -730,6 +742,7 @@ function ColorsField() {
         const next = [...arr, { value: editing.value, name: editing.name }]
         setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
         clearErrors(baseName as never)
+        try { await createColorDynamic({ name: editing.name || undefined, hex: editing.value }) } catch { /* no-op */ }
         setEditing(null)
     }
     const handleRemoveColor = (index: number) => {
@@ -741,6 +754,25 @@ function ColorsField() {
     const handleColorBlur = () => void 0
     const handleColorNameChange = (val: string) => setEditing(prev => prev ? { ...prev, name: val } : prev)
     const handleColorNameBlur = () => void 0
+
+    useEffect(() => {
+        let mounted = true
+        const load = async () => {
+            const { payload } = await getColors()
+            if (!mounted || !Array.isArray(payload)) return
+            setDbColors(payload as { id: number; name: string; hex: string | null }[])
+        }
+        load()
+        return () => { mounted = false }
+    }, [])
+
+    const handlePickDbColor = (hex?: string | null, name?: string | null) => () => {
+        if (!editing) return
+        const safeHex = (hex || '').trim()
+        if (safeHex && hexColorRegex.test(safeHex)) {
+            setEditing({ value: safeHex, name: name || '' })
+        }
+    }
 
     return (
         <div className="flex flex-col gap-3">
@@ -789,6 +821,21 @@ function ColorsField() {
                         </Button>
                         <Button size="sm" variant="ghost" onClick={handleCancelAddColor}>Cancelar</Button>
                     </div>
+                    {dbColors.length > 0 && (
+                        <div className="mt-2">
+                            <p className="text-xs text-muted-foreground mb-2">Colores guardados</p>
+                            <div className="flex flex-wrap gap-3">
+                                {dbColors.map((c) => (
+                                    <button key={c.id} type="button" onClick={handlePickDbColor(c.hex, c.name)} className="group flex items-center gap-2">
+                                        <span className="size-7 rounded-full border" style={{ backgroundColor: c.hex || '#ccc' }} />
+                                        <span className="text-xs text-foreground/80 group-hover:underline">
+                                            {c.name}{c.hex ? ` (${c.hex})` : ''}
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
 
@@ -809,8 +856,11 @@ function MaterialsField() {
     type MaterialItem = { file?: File; url?: string }
     const arr = (watch(baseName) as MaterialItem[] | undefined) || []
     const [editing, setEditing] = useState(false)
+    const [materialLabel, setMaterialLabel] = useState("")
+    const [pendingFile, setPendingFile] = useState<File | null>(null)
+    const [isSaving, setIsSaving] = useState(false)
 
-    const handleStartEditingMaterials = () => setEditing(true)
+    const handleStartEditingMaterials = () => { setEditing(true); setMaterialLabel(""); setPendingFile(null) }
 
     const handleDeleteAtIndex = (index: number) => () => {
         const next = arr.filter((_v, i) => i !== index)
@@ -824,10 +874,36 @@ function MaterialsField() {
     const handleFilesSelected = (files: File[]) => {
         if (!files || files.length === 0) return
         const file = files[files.length - 1]
-        const next = [...arr, { file }]
-        setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
-        setEditing(false)
+        setPendingFile(file)
     }
+
+    async function uploadMaterialFile(file: File): Promise<string> {
+        const form = new FormData()
+        form.append('file', file)
+        form.append('type', 'material')
+        const res = await fetch('/api/upload', { method: 'POST', body: form })
+        if (!res.ok) throw new Error('Upload failed')
+        const json = await res.json()
+        return json.url as string
+    }
+
+    const handleConfirmAddMaterial = async () => {
+        if (!pendingFile) return
+        setIsSaving(true)
+        try {
+            const url = await uploadMaterialFile(pendingFile)
+            const next = [...arr, { url }]
+            setValue(baseName as never, next as never, { shouldDirty: true, shouldValidate: true })
+            try { if (materialLabel) await createMaterialDynamic({ label: materialLabel, image_url: url }) } catch { /* no-op */ }
+            setEditing(false)
+            setMaterialLabel("")
+            setPendingFile(null)
+        } finally {
+            setIsSaving(false)
+        }
+    }
+
+    const handleCancelAddMaterial = () => { setEditing(false); setMaterialLabel(""); setPendingFile(null) }
 
     return (
         <div className="flex flex-col gap-3">
@@ -865,6 +941,7 @@ function MaterialsField() {
                     </div>
                 ))}
                 {editing && (
+                    <div className="flex flex-col gap-2">
                     <FileUpload value={[]} onValueChange={handleFilesSelected}>
                         <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[100px] mx-auto size-28")}>
                             <div className="group-hover/dropzone:hidden flex flex-col items-center gap-1 text-center">
@@ -893,6 +970,21 @@ function MaterialsField() {
                             </div>
                         </FileUploadDropzone>
                     </FileUpload>
+                    {pendingFile && (
+                        <div className="flex items-center gap-2">
+                            <input
+                                className="h-9 w-60 rounded-md border bg-background px-3 text-sm"
+                                placeholder="Nombre del material"
+                                value={materialLabel}
+                                onChange={(e) => setMaterialLabel(e.target.value)}
+                            />
+                            <Button size="sm" onClick={handleConfirmAddMaterial} disabled={isSaving}>
+                                <Check className="mr-1 size-4" /> {isSaving ? 'Guardando…' : 'Confirmar'}
+                            </Button>
+                            <Button size="sm" variant="ghost" onClick={handleCancelAddMaterial} disabled={isSaving}>Cancelar</Button>
+                        </div>
+                    )}
+                    </div>
                 )}
             </div>
             {arr.length > 0 && !editing && (
