@@ -30,6 +30,9 @@ import { Tags, TagsContent, TagsEmpty, TagsGroup, TagsInput, TagsItem, TagsList,
 import { createSizesDynamic } from "@/features/products/actions/createSizesDynamic"
 import { createFlavorDynamic } from "@/features/products/actions/createFlavorDynamic"
 import { createFragranceDynamic } from "@/features/products/actions/createFragranceDynamic"
+import { getSizes } from "@/features/products/data/getSizes"
+import { getFlavors } from "@/features/products/data/getFlavors"
+import { getFragrances } from "@/features/products/data/getFragrances"
 import { get as rhfGet } from "react-hook-form"
 import InputColor from "@/components/color-input"
 
@@ -548,6 +551,22 @@ function SizesTags({ name, label, preset }: SizesTagsProps) {
         }
     }
 
+    useEffect(() => {
+        let mounted = true
+        const load = async () => {
+            const { payload } = await getSizes()
+            if (!mounted || !Array.isArray(payload)) return
+            const dbOptions = (payload || []).map((r: { id: number; label: string }) => ({ id: String(r.id), label: r.label }))
+            setOptions(prev => {
+                const combined = [...prev]
+                dbOptions.forEach(opt => { if (!combined.some(o => o.id === opt.id)) combined.push(opt) })
+                return combined
+            })
+        }
+        load()
+        return () => { mounted = false }
+    }, [])
+
     const placeholder = "Escribe para agregar…"
 
     return (
@@ -628,6 +647,23 @@ function FreeTags({ name, label, preset }: FreeTagsProps) {
             setInput("")
         }
     }
+
+    useEffect(() => {
+        let mounted = true
+        const load = async () => {
+            const isFlavor = name.includes('flavors')
+            const { payload } = isFlavor ? await getFlavors() : await getFragrances()
+            if (!mounted || !Array.isArray(payload)) return
+            const dbOptions = (payload || []).map((r: { id: number; label: string }) => ({ id: String(r.id), label: r.label }))
+            setOptions(prev => {
+                const combined = [...prev]
+                dbOptions.forEach(opt => { if (!combined.some(o => o.id === opt.id)) combined.push(opt) })
+                return combined
+            })
+        }
+        load()
+        return () => { mounted = false }
+    }, [name])
 
     const placeholder = "Escribe para agregar…"
 
