@@ -16,7 +16,7 @@
   "dependencies": {
     "@bprogress/next": "^3.2.12",
     "@formkit/auto-animate": "^0.8.2",
-    "@hookform/resolvers": "^5.1.1",
+    "@hookform/resolvers": "^5.2.2",
     "@lordicon/react": "^1.11.0",
     "@prisma/client": "^6.11.1",
     "@prisma/extension-accelerate": "^2.0.1",
@@ -67,7 +67,7 @@
     "react-colorful": "^5.6.1",
     "react-day-picker": "^9.8.0",
     "react-dom": "^19.0.0",
-    "react-hook-form": "^7.60.0",
+    "react-hook-form": "^7.62.0",
     "react-qr-barcode-scanner": "^2.1.8",
     "react-select": "^5.10.1",
     "react-use": "^17.6.0",
@@ -80,7 +80,8 @@
     "use-query-params": "^2.2.1",
     "vaul": "^1.1.2",
     "xlsx-js-style": "^1.2.0",
-    "yup": "^1.6.1"
+    "yup": "^1.6.1",
+    "zod": "^4.1.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

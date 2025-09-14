@@ -31,6 +31,7 @@ import { createColorDynamic } from "@/features/products/actions/createColorDynam
 import { createMaterialDynamic } from "@/features/products/actions/createMaterialDynamic"
 import { createDimensionsDynamic } from "@/features/products/actions/createDimensionsDynamic"
 import { getColors } from "@/features/products/data/getColors"
+import { createProductWithVariants } from "@/features/products/actions/createProductWithVariants"
 import { getSizes } from "@/features/products/data/getSizes"
 import { getFlavors } from "@/features/products/data/getFlavors"
 import { getFragrances } from "@/features/products/data/getFragrances"
@@ -289,7 +290,7 @@ function CreateProductProvider({ children, storeId }: { children: React.ReactNod
 
     const removeVariant = useCallback((id: string) => {
         setValuesState(prev => {
-            const removed = [ ...(prev.variants_removed || []), id ]
+            const removed = [...(prev.variants_removed || []), id]
             const next: Partial<CreateProductFormValues> = { ...prev, variants_removed: removed }
             return next
         })
@@ -942,48 +943,48 @@ function MaterialsField() {
                 ))}
                 {editing && (
                     <div className="flex flex-col gap-2">
-                    <FileUpload value={[]} onValueChange={handleFilesSelected}>
-                        <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[100px] mx-auto size-28")}>
-                            <div className="group-hover/dropzone:hidden flex flex-col items-center gap-1 text-center">
-                                <ImageIcon className="text-muted-foreground" />
-                                <p className="text-sm text-muted-foreground">Arrastra la imagen del material aqui</p>
-                            </div>
-                            <div className="hidden group-hover/dropzone:flex flex-col items-center gap-1 text-center absolute p-0 w-full h-full bg-background/50 justify-center backdrop-blur-xs rounded-full">
-                                <div className="flex gap-2">
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <IconButton icon={Upload} />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            Click para explorar archivos
-                                        </TooltipContent>
-                                    </Tooltip>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <IconButton icon={Camera} onClick={handleCamera} />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            Click para tomar foto
-                                        </TooltipContent>
-                                    </Tooltip>
+                        <FileUpload value={[]} onValueChange={handleFilesSelected}>
+                            <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[100px] mx-auto size-28")}>
+                                <div className="group-hover/dropzone:hidden flex flex-col items-center gap-1 text-center">
+                                    <ImageIcon className="text-muted-foreground" />
+                                    <p className="text-sm text-muted-foreground">Arrastra la imagen del material aqui</p>
                                 </div>
+                                <div className="hidden group-hover/dropzone:flex flex-col items-center gap-1 text-center absolute p-0 w-full h-full bg-background/50 justify-center backdrop-blur-xs rounded-full">
+                                    <div className="flex gap-2">
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <IconButton icon={Upload} />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                Click para explorar archivos
+                                            </TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <IconButton icon={Camera} onClick={handleCamera} />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                Click para tomar foto
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </div>
+                                </div>
+                            </FileUploadDropzone>
+                        </FileUpload>
+                        {pendingFile && (
+                            <div className="flex items-center gap-2">
+                                <input
+                                    className="h-9 w-60 rounded-md border bg-background px-3 text-sm"
+                                    placeholder="Nombre del material"
+                                    value={materialLabel}
+                                    onChange={(e) => setMaterialLabel(e.target.value)}
+                                />
+                                <Button size="sm" onClick={handleConfirmAddMaterial} disabled={isSaving}>
+                                    <Check className="mr-1 size-4" /> {isSaving ? 'Guardando…' : 'Confirmar'}
+                                </Button>
+                                <Button size="sm" variant="ghost" onClick={handleCancelAddMaterial} disabled={isSaving}>Cancelar</Button>
                             </div>
-                        </FileUploadDropzone>
-                    </FileUpload>
-                    {pendingFile && (
-                        <div className="flex items-center gap-2">
-                            <input
-                                className="h-9 w-60 rounded-md border bg-background px-3 text-sm"
-                                placeholder="Nombre del material"
-                                value={materialLabel}
-                                onChange={(e) => setMaterialLabel(e.target.value)}
-                            />
-                            <Button size="sm" onClick={handleConfirmAddMaterial} disabled={isSaving}>
-                                <Check className="mr-1 size-4" /> {isSaving ? 'Guardando…' : 'Confirmar'}
-                            </Button>
-                            <Button size="sm" variant="ghost" onClick={handleCancelAddMaterial} disabled={isSaving}>Cancelar</Button>
-                        </div>
-                    )}
+                        )}
                     </div>
                 )}
             </div>
@@ -1604,7 +1605,7 @@ function ExtraFormPanel() {
             })
             .filter(Boolean) as { key: string; title: string; tags: string[] }[])
     }, [selected])
-    
+
     return (
         <div className="text-sm text-muted-foreground">
             <AnimatedTags
@@ -1928,7 +1929,7 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
     )
 }
 
-function CreateProductButtonNew({ storeId }: { storeId: number }) {
+function CreateProductButtonNew({ storeId, userId }: { storeId: number; userId: number }) {
     const [step, { setStep }] = useStepShim(7)
     const [open, setOpen] = useState(false)
 
@@ -1952,10 +1953,18 @@ function CreateProductButtonNew({ storeId }: { storeId: number }) {
         7: "Success",
     }
 
-    const handleCreateProduct = useCallback(async () => {
-        // El flujo de loader/éxito ahora se maneja en CreateProductForm
-        return { error: false, message: "ok" }
-    }, [])
+    const handleCreateProduct = useCallback(async (values: CreateProductFormValues) => {
+        toast.loading("Creando producto...")
+        const { error, message, payload } = await createProductWithVariants({ storeId, userId, form: values })
+        if (error) {
+            toast.dismiss()
+            toast.error(message)
+            return { error: true, message, payload: null }
+        }
+        toast.dismiss()
+        toast.success(message)
+        return { error: false, message, payload }
+    }, [storeId, userId])
 
     useEffect(() => {
         if (step === 6) {

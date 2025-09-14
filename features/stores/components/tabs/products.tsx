@@ -9,6 +9,7 @@ import { Box } from "lucide-react"
 import { CreateProductButton } from "@/features/products/components"
 import { ExportProductsButton } from "@/features/products/components"
 import CreateProductButtonNew from "@/features/products/components/create-product-button-new"
+import CreateProductNew from "@/features/products/components/create-product-new"
 
 async function ProductsTab({ slug, userId }: ProductsTabProps) {
 
@@ -57,8 +58,9 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
                         <CreateProductButton storeId={store.id} userId={user.id} onlyIcon />
                     )}
                     {canCreateProducts && (
-                        <CreateProductButtonNew storeId={store.id}/>
+                        <CreateProductButtonNew storeId={store.id} userId={user.id}/>
                     )}
+                    <CreateProductNew />
                 </CardAction>
             </CardHeader>
             <CardContent className="grow flex flex-col">
