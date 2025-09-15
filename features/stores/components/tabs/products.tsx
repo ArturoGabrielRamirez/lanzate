@@ -60,7 +60,7 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
                     {canCreateProducts && (
                         <CreateProductButtonNew storeId={store.id} userId={user.id}/>
                     )}
-                    <CreateProductNew />
+                    <CreateProductNew storeId={store.id} userId={user.id}/>
                 </CardAction>
             </CardHeader>
             <CardContent className="grow flex flex-col">
