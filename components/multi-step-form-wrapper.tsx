@@ -143,7 +143,6 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 
   React.useEffect(() => {
     if (!autoSave || !persistKey) return
-
     const handler = setTimeout(() => {
       try {
         localStorage.setItem(persistKey, JSON.stringify(formData))

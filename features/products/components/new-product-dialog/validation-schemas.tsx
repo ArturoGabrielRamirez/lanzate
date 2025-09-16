@@ -35,6 +35,11 @@ export const attributesSchema = z.object({
     depth_unit: z.string().optional().nullable(),
     circumference: z.string().optional().nullable(),
     circumference_unit: z.string().optional().nullable(),
+    sizes: z.array(z.string()).optional().nullable(),
+    flavors: z.array(z.string()).optional().nullable(),
+    fragrances: z.array(z.string()).optional().nullable(),
+    colors: z.array(z.string()).optional().nullable(),
+    material: z.array(z.string()).optional().nullable(),
 })
 
 export const formSchema = z.object({
@@ -161,6 +166,24 @@ export const formSchema = z.object({
                 code: "custom",
                 message: "Circumference must be a positive number greater than zero",
                 path: ["circumference"],
+            })
+        }
+    }
+
+    if (ref.selected_attributes?.includes("Talle")) {
+        if (!ref.sizes) {
+            return ctx.addIssue({
+                code: "custom",
+                message: "Sizes is required",
+                path: ["sizes"],
+            })
+        }
+
+        if (!ref.sizes.length) {
+            ctx.addIssue({
+                code: "custom",
+                message: "Sizes is required",
+                path: ["sizes"],
             })
         }
     }

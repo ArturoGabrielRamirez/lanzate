@@ -16,6 +16,7 @@ import TalleSelector from "./talle-selector"
 function AttributesStep({ storeId }: { storeId: number }) {
 
     const { form } = useMultiStepForm<FormValues>()
+    console.log("🚀 ~ AttributesStep ~ form:", form.formState.errors)
     const [selected, setSelected] = useState<string[]>([])
     const [accordions, setAccordions] = useState({
         content: false,
@@ -95,7 +96,9 @@ function AttributesStep({ storeId }: { storeId: number }) {
                 <Accordion type="single" collapsible>
                     {accordions.content && (
                         <AccordionItem value="content">
-                            <AccordionTrigger>
+                            <AccordionTrigger className={cn(
+                                (form.formState.errors.weight || form.formState.errors.expiration_date) && "text-red-500"
+                            )}>
                                 <span>Contenido y vencimiento</span>
                             </AccordionTrigger>
                             <AccordionContent>
@@ -217,7 +220,9 @@ function AttributesStep({ storeId }: { storeId: number }) {
                     )}
                     {accordions.dimensions && (
                         <AccordionItem value="dimensions">
-                            <AccordionTrigger>
+                            <AccordionTrigger className={cn(
+                                (form.formState.errors.height || form.formState.errors.width || form.formState.errors.depth || form.formState.errors.circumference) && "text-red-500"
+                            )}>
                                 <span>Dimensiones</span>
                             </AccordionTrigger>
                             <AccordionContent>
@@ -496,7 +501,9 @@ function AttributesStep({ storeId }: { storeId: number }) {
                     )}
                     {accordions.sizes && (
                         <AccordionItem value="sizes">
-                            <AccordionTrigger>
+                            <AccordionTrigger className={cn(
+                                (form.formState.errors.sizes) && "text-red-500"
+                            )}>
                                 <span>Talles y tamaños</span>
                             </AccordionTrigger>
                             <AccordionContent>
@@ -506,7 +513,9 @@ function AttributesStep({ storeId }: { storeId: number }) {
                     )}
                     {accordions.surface && (
                         <AccordionItem value="surface">
-                            <AccordionTrigger>
+                            <AccordionTrigger className={cn(
+                                (form.formState.errors.colors || form.formState.errors.material) && "text-red-500"
+                            )}>
                                 <span>Superficie</span>
                             </AccordionTrigger>
                             <AccordionContent>
@@ -518,7 +527,9 @@ function AttributesStep({ storeId }: { storeId: number }) {
                     )}
                     {accordions.sensorial && (
                         <AccordionItem value="sensorial">
-                            <AccordionTrigger>
+                            <AccordionTrigger className={cn(
+                                (form.formState.errors.flavors || form.formState.errors.fragrances) && "text-red-500"
+                            )}>
                                 <span>Aromas y sabores</span>
                             </AccordionTrigger>
                             <AccordionContent>
