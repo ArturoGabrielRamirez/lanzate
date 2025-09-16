@@ -14,10 +14,12 @@ interface UserProfileParams {
 
 // --- Generar Metadatos ---
 export async function generateMetadata(
-  // Usa el tipo UserProfileParams para 'params'
-  { params }: { params: UserProfileParams }
+  // En Next.js 15, params es una promesa
+  { params }: { params: Promise<UserProfileParams> }
 ): Promise<Metadata> {
-  const user = await getUserPublicProfile(params.username);
+  // Await params para obtener los valores
+  const resolvedParams = await params;
+  const user = await getUserPublicProfile(resolvedParams.username);
 
   if (!user) {
     return { title: 'Usuario no encontrado' };
@@ -41,10 +43,12 @@ export async function generateMetadata(
 
 // --- Componente Principal de la Página ---
 export default async function PublicProfilePage(
-  // Usa el tipo UserProfileParams para 'params'
-  { params }: { params: UserProfileParams }
+  // En Next.js 15, params es una promesa
+  { params }: { params: Promise<UserProfileParams> }
 ) {
-  const response = await getUserPublicProfile(params.username);
+  // Await params para obtener los valores
+  const resolvedParams = await params;
+  const response = await getUserPublicProfile(resolvedParams.username);
 
   if (!response) {
     notFound();
