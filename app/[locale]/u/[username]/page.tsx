@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata/* , ResolvingMetadata  */} from 'next'
 
 // tus imports
 import { PublicProfileClient } from '@/features/profile/components/public-profile-client'
@@ -14,7 +14,7 @@ type PageProps = {
 
 export async function generateMetadata(
   { params }: PageProps,
-  _: ResolvingMetadata
+ /*  _: ResolvingMetadata */
 ): Promise<Metadata> {
   const user = await getUserPublicProfile(params.username)
 
