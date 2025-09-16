@@ -11,9 +11,9 @@ datasource db {
 }
 
 model User {
-  id                        Int       @id @default(autoincrement())
-  email                     String    @unique
-  
+  id    Int    @id @default(autoincrement())
+  email String @unique
+
   avatar                    String?
   banner                    String?
   created_at                DateTime  @default(now())
@@ -67,8 +67,9 @@ model User {
   Store                     Store[]
   deletion_logs             UserDeletionLog[]
   user_reminders            UserReminder[]
-  user_follows              UserFollow[] @relation("UserFollower")
-  user_follows_following    UserFollow[] @relation("UserFollowing")
+  user_follows              UserFollow[]            @relation("UserFollower")
+  user_follows_following    UserFollow[]            @relation("UserFollowing")
+
   @@map("users")
 }
 
@@ -145,6 +146,11 @@ model Store {
   store_reminders      StoreReminder[]
   user                 User                      @relation(fields: [user_id], references: [id])
   transactions         Transaction[]
+  sizes                Sizes[]
+  dimensions           Dimensions[]
+  materials            Material[]
+  flavors              Flavor[]
+  fragrances           Fragrance[]
 
   @@map("stores")
 }
@@ -419,6 +425,8 @@ model Sizes {
   created_at DateTime         @default(now())
   updated_at DateTime         @updatedAt
   variants   ProductVariant[]
+  store_id   Int
+  store      Store            @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
   @@map("sizes")
 }
@@ -431,6 +439,8 @@ model Dimensions {
   created_at DateTime         @default(now())
   updated_at DateTime         @updatedAt
   variants   ProductVariant[]
+  store_id   Int
+  store      Store            @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
   @@map("dimensions")
 }
@@ -442,6 +452,8 @@ model Material {
   created_at DateTime         @default(now())
   updated_at DateTime         @updatedAt
   variants   ProductVariant[]
+  store_id   Int
+  store      Store            @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
   @@map("materials")
 }
@@ -452,6 +464,8 @@ model Flavor {
   created_at DateTime         @default(now())
   updated_at DateTime         @updatedAt
   variants   ProductVariant[]
+  store_id   Int
+  store      Store            @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
   @@map("flavors")
 }
@@ -462,6 +476,8 @@ model Fragrance {
   created_at DateTime         @default(now())
   updated_at DateTime         @updatedAt
   variants   ProductVariant[]
+  store_id   Int
+  store      Store            @relation(fields: [store_id], references: [id], onDelete: Cascade)
 
   @@map("fragrances")
 }

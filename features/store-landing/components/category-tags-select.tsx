@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { Label } from "@/components/ui/label"
-import { CheckIcon, PlusIcon, Tag as TagIcon } from "lucide-react"
+import { CheckIcon, PlusIcon, Tag as TagIcon, Info } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { getCategories } from "../actions/getCategories"
 import { createCategoryDynamic } from "@/features/categories/actions/createCategoryDynamic"
@@ -10,6 +10,8 @@ import { toast } from "sonner"
 import { Tags, TagsTrigger, TagsValue, TagsContent, TagsInput, TagsList, TagsEmpty, TagsGroup, TagsItem } from "@/src/components/ui/shadcn-io/tags"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { FormMessage } from "@/components/ui/form"
 
 type Option = { id: string; label: string }
 
@@ -113,7 +115,21 @@ export default function CategoryTagsSelect({ storeId, withLabel = true, onChange
 
     return (
         <div className={cn("flex flex-col gap-1 w-full", className)}>
-            {withLabel && <Label htmlFor="category-tags">Categorías</Label>}
+            {withLabel && (
+                <Label htmlFor="category-tags" className="text-muted-foreground/50">
+                    Categorías
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Info className="size-4 cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent className="space-y-1">
+                            <p>Las categorías del producto. Se pueden crear nuevas categorías.</p>
+                            <p>Ej: Bebida, Gaseosa, Energética</p>
+                            <FormMessage className="text-foreground text-xs" />
+                        </TooltipContent>
+                    </Tooltip>
+                </Label>
+            )}
             <Tags className="">
                 <TagsTrigger className="!bg-transparent">
                     <AnimatePresence>
