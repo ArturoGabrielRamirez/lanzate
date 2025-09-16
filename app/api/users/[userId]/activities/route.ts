@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 import { getCurrentUser } from '@/features/auth/actions'
 
 const prisma = new PrismaClient()
@@ -80,7 +80,7 @@ export async function GET(
     }
 
     // Construir filtros de consulta
-    const whereClause: any = {
+    const whereClause: Prisma.SocialActivityWhereInput = {
       user_id: userId
     }
 
