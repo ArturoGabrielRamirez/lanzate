@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import TalleSelector from "./talle-selector"
 import DimensionSelector from "./dimension-selector"
+import FlavorSelector from "./flavor-selector"
+import FraganceSelector from "./fragance-selector"
 
 function AttributesStep({ storeId }: { storeId: number }) {
 
@@ -612,8 +614,79 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                 <span>Aromas y sabores</span>
                             </AccordionTrigger>
                             <AccordionContent>
-                                <div>
-                                    <h3>Aromas y sabores</h3>
+                                <div className={cn(
+                                    "grid grid-cols-1 md:grid-cols-2 gap-4",
+                                )}>
+                                    <AnimatePresence>
+                                        {selected.includes("Fragancia") && (
+                                            <motion.div
+                                                initial={{ opacity: 0, x: 50 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                exit={{ opacity: 0, y: 50, position: 'absolute' }}
+                                                key="fragrances"
+                                                className="flex items-end w-full"
+                                            >
+                                                <FormField
+                                                    control={form.control}
+                                                    name="fragrances"
+                                                    render={({ field }) => (
+                                                        <FormItem className="w-full">
+                                                            <FormLabel className="text-muted-foreground/50">
+                                                                Fragancias <span className="text-red-500">*</span>
+                                                                <Tooltip>
+                                                                    <TooltipTrigger asChild>
+                                                                        <Info className="size-4 cursor-pointer" />
+                                                                    </TooltipTrigger>
+                                                                    <TooltipContent>
+                                                                        <p>Las fragancias del producto</p>
+                                                                        <p>Ej: Lavanda, Cítrico, Vainilla, Sándalo, Rosa, Jazmín, Menta, Cedro</p>
+                                                                        <FormMessage className="text-foreground text-xs" />
+                                                                    </TooltipContent>
+                                                                </Tooltip>
+                                                            </FormLabel>
+                                                            <FormControl>
+                                                                <FraganceSelector storeId={storeId} />
+                                                            </FormControl>
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </motion.div>
+                                        )}
+                                        {selected.includes("Sabor") && (
+                                            <motion.div
+                                                initial={{ opacity: 0, x: 50 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                exit={{ opacity: 0, y: 50, position: 'absolute' }}
+                                                key="flavors"
+                                                className="flex items-end w-full"
+                                            >
+                                                <FormField
+                                                    control={form.control}
+                                                    name="flavors"
+                                                    render={({ field }) => (
+                                                        <FormItem className="w-full">
+                                                            <FormLabel className="text-muted-foreground/50">
+                                                                Sabores <span className="text-red-500">*</span>
+                                                                <Tooltip>
+                                                                    <TooltipTrigger asChild>
+                                                                        <Info className="size-4 cursor-pointer" />
+                                                                    </TooltipTrigger>
+                                                                    <TooltipContent>
+                                                                        <p>Los sabores del producto</p>
+                                                                        <p>Ej: Chocolate, Vainilla, Limón, Manzana, Light</p>
+                                                                        <FormMessage className="text-foreground text-xs" />
+                                                                    </TooltipContent>
+                                                                </Tooltip>
+                                                            </FormLabel>
+                                                            <FormControl>
+                                                                <FlavorSelector storeId={storeId} />
+                                                            </FormControl>
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
                                 </div>
                             </AccordionContent>
                         </AccordionItem>

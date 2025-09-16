@@ -3,9 +3,9 @@
 import { prisma } from "@/utils/prisma"
 import { actionWrapper } from "@/utils/lib"
 
-export async function getFragrances() {
+export async function getFragrances({ store_id }: { store_id: number }) {
   return actionWrapper(async () => {
-    const rows = await prisma.fragrance.findMany({ orderBy: { label: 'asc' } })
+    const rows = await prisma.fragrance.findMany({ where: { store_id }, orderBy: { label: 'asc' } })
     return { payload: rows, error: false, message: 'ok' }
   })
 }
