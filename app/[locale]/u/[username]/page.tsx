@@ -1,31 +1,26 @@
-// Importa los tipos necesarios de Next.js
-import type { Metadata } from 'next';
-// Importa PageProps y Params desde los tipos correctos de Next.js
-// En versiones más recientes de Next.js, a menudo se usa el tipo genérico `PropsWithChildren`
-// o simplemente se definen las props directamente si no se necesita `PageProps` explícitamente.
-// Sin embargo, para resolver este error específico de `PageProps`, vamos a asegurarnos de que las `params` se definan correctamente.
 import { notFound } from 'next/navigation';
-import { getUserPublicProfile } from '@/features/profile/actions';
-import { PublicProfileClient } from '@/features/profile/components/public-profile-client';
+import { Metadata } from 'next'; // Asegúrate de que Metadata esté correctamente importado
 
-// Define los tipos para los parámetros de tu ruta dinámica
+import { PublicProfileClient } from '@/features/profile/components/public-profile-client';
+import { getUserPublicProfile } from '@/features/profile/actions'; // Asumiendo que esta acción devuelve el perfil del usuario o null
+
+// Definimos explícitamente el tipo para los parámetros dinámicos de la ruta.
+// Esto es una buena práctica para tener mayor claridad y seguridad de tipos.
 interface UserProfileParams {
   locale: string;
   username: string;
 }
 
-// Define las props para tu página, asegurándote de que `params` tenga el tipo correcto
-interface PublicProfilePageProps {
-  params: UserProfileParams;
-}
-
-// --- Función generateMetadata ---
+// --- Metadatos ---
+// La función generateMetadata recibe las props de la página, incluyendo `params`.
 export async function generateMetadata(
-  { params }: PublicProfilePageProps // Usa el tipo definido para las props de la página
+  { params }: { params: UserProfileParams } // Aquí usamos nuestro tipo de parámetros definido
 ): Promise<Metadata> {
   const user = await getUserPublicProfile(params.username);
 
   if (!user) {
+    // Si el usuario no existe, devolvemos metadatos genéricos.
+    // En un escenario real, podrías querer devolver algo que indique que la página no se encontró.
     return { title: 'Usuario no encontrado' };
   }
 
@@ -45,18 +40,22 @@ export async function generateMetadata(
   };
 }
 
-// --- Componente de Página Principal ---
+// --- Componente de la Página ---
+// El componente de la página también recibe las props, incluyendo `params`.
 export default async function PublicProfilePage(
-  { params }: PublicProfilePageProps // Usa el tipo definido para las props de la página
+  { params }: { params: UserProfileParams } // Aquí también usamos nuestro tipo de parámetros definido
 ) {
   const response = await getUserPublicProfile(params.username);
 
   if (!response) {
+    // Si getUserPublicProfile devuelve null o undefined, llamamos a notFound()
+    // para mostrar la página 404 de Next.js.
     notFound();
   }
 
   return (
     <div className="min-h-screen">
+      {/* Pasamos el payload del usuario al componente cliente */}
       <PublicProfileClient user={response.payload} />
     </div>
   );
