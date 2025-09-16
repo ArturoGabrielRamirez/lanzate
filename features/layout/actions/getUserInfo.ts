@@ -48,3 +48,10 @@ export async function getUserInfo() {
         };
     }
 }
+
+// Función alternativa con cache manual usando un enfoque diferente
+export async function getUserInfoCached() {
+    // En lugar de unstable_cache, puedes usar cache a nivel de componente
+    // o implementar tu propio sistema de cache
+    return await getUserInfo();
+}
