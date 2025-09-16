@@ -1,24 +1,27 @@
-// app/[locale]/u/[username]/page.tsx
+// Importaciones necesarias
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 
+// Asumiendo que estas acciones y componentes están definidos correctamente
 import { PublicProfileClient } from '@/features/profile/components/public-profile-client';
 import { getUserPublicProfile } from '@/features/profile/actions';
 
-// Importa PageProps y Params para una correcta tipificación en Next.js 13+ (App Router)
-/* import { PageProps } from 'next/dist/build/types';  */// O desde 'next' si está disponible en tu versión
-
-// Define un tipo específico para los parámetros de tu ruta
+// Definición del tipo para los parámetros de la ruta
+// Es un objeto simple, no una promesa
 interface UserProfileParams {
   locale: string;
   username: string;
 }
 
-// Asegúrate de que PageProps extienda o use tu UserProfileParams
-// En el App Router, los params se pasan directamente.
-// La tipificación correcta para la metadata y la página es:
+// Definición de las props para la página, incluyendo los parámetros
+interface PublicProfilePageProps {
+  params: UserProfileParams;
+}
+
+// Función para generar metadatos
+// Recibe las props con los parámetros de la ruta
 export async function generateMetadata(
-  { params }: { params: UserProfileParams } // Usa tu tipo específico aquí
+  { params }: PublicProfilePageProps // Usamos el tipo definido
 ): Promise<Metadata> {
   const user = await getUserPublicProfile(params.username);
 
@@ -42,8 +45,10 @@ export async function generateMetadata(
   };
 }
 
+// Componente principal de la página de perfil público
+// Recibe las props con los parámetros de la ruta
 export default async function PublicProfilePage(
-  { params }: { params: UserProfileParams } // Usa tu tipo específico aquí
+  { params }: PublicProfilePageProps // Usamos el tipo definido
 ) {
   const response = await getUserPublicProfile(params.username);
 
