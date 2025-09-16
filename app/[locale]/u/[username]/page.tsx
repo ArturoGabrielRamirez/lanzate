@@ -4,9 +4,9 @@ import { Metadata } from 'next'
 import { PublicProfileClient } from '@/features/profile/components/public-profile-client'
 import { getUserPublicProfile } from '@/features/profile/actions'
 
-
 interface Props {
   params: {
+    locale: string
     username: string
   }
 }
