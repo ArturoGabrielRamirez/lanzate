@@ -19,7 +19,6 @@ const TalleSelector = ({ storeId }: { storeId: number }) => {
     const [optimisticSelectedTalles, setOptimisticSelectedTalles] = useOptimistic<string[]>(selectedTalles)
     const [isPending, startTransition] = useTransition()
 
-
     useEffect(() => {
         let mounted = true
         const load = async () => {

@@ -36,6 +36,7 @@ export const attributesSchema = z.object({
     circumference: z.string().optional().nullable(),
     circumference_unit: z.string().optional().nullable(),
     sizes: z.array(z.string()).optional().nullable(),
+    dimensions: z.array(z.string()).optional().nullable(),
     flavors: z.array(z.string()).optional().nullable(),
     fragrances: z.array(z.string()).optional().nullable(),
     colors: z.array(z.string()).optional().nullable(),
@@ -184,6 +185,24 @@ export const formSchema = z.object({
                 code: "custom",
                 message: "Sizes is required",
                 path: ["sizes"],
+            })
+        }
+    }
+
+    if (ref.selected_attributes?.includes("Tamaño")) {
+        if (!ref.dimensions) {
+            return ctx.addIssue({
+                code: "custom",
+                message: "Dimensions is required",
+                path: ["dimensions"],
+            })
+        }
+
+        if (!ref.dimensions.length) {
+            ctx.addIssue({
+                code: "custom",
+                message: "Dimensions is required",
+                path: ["dimensions"],
             })
         }
     }

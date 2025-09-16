@@ -12,6 +12,7 @@ import { AnimatePresence } from "motion/react"
 import { Input } from "@/components/ui/input"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import TalleSelector from "./talle-selector"
+import DimensionSelector from "./dimension-selector"
 
 function AttributesStep({ storeId }: { storeId: number }) {
 
@@ -77,6 +78,11 @@ function AttributesStep({ storeId }: { storeId: number }) {
             sensorial: vals.includes("Sabor") || vals.includes("Fragancia"),
         })
         form.setValue('selected_attributes', vals)
+        if (!vals.includes("Talle")) form.setValue('sizes', [])
+        if (!vals.includes("Color")) form.setValue('colors', [])
+        if (!vals.includes("Material")) form.setValue('material', [])
+        if (!vals.includes("Sabor")) form.setValue('flavors', [])
+        if (!vals.includes("Fragancia")) form.setValue('fragrances', [])
     }
 
     return (
@@ -502,12 +508,85 @@ function AttributesStep({ storeId }: { storeId: number }) {
                     {accordions.sizes && (
                         <AccordionItem value="sizes">
                             <AccordionTrigger className={cn(
-                                (form.formState.errors.sizes) && "text-red-500"
+                                (form.formState.errors.sizes || form.formState.errors.dimensions) && "text-red-500"
                             )}>
                                 <span>Talles y tamaños</span>
                             </AccordionTrigger>
                             <AccordionContent>
-                                <TalleSelector storeId={storeId} />
+                                <div className={cn(
+                                    "grid grid-cols-1 md:grid-cols-2 gap-4",
+                                )}>
+                                    <AnimatePresence>
+                                        {selected.includes("Talle") && (
+                                            <motion.div
+                                                initial={{ opacity: 0, x: 50 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                exit={{ opacity: 0, y: 50, position: 'absolute' }}
+                                                key="height"
+                                                className="flex items-end w-full"
+                                            >
+                                                <FormField
+                                                    control={form.control}
+                                                    name="sizes"
+                                                    render={({ field }) => (
+                                                        <FormItem className="w-full">
+                                                            <FormLabel className="text-muted-foreground/50">
+                                                                Talles <span className="text-red-500">*</span>
+                                                                <Tooltip>
+                                                                    <TooltipTrigger asChild>
+                                                                        <Info className="size-4 cursor-pointer" />
+                                                                    </TooltipTrigger>
+                                                                    <TooltipContent>
+                                                                        <p>Los talles del producto</p>
+                                                                        <p>Ej: XS, S, M, L, XL</p>
+                                                                        <FormMessage className="text-foreground text-xs" />
+                                                                    </TooltipContent>
+                                                                </Tooltip>
+                                                            </FormLabel>
+                                                            <FormControl>
+                                                                <TalleSelector storeId={storeId} />
+                                                            </FormControl>
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </motion.div>
+                                        )}
+                                        {selected.includes("Tamaño") && (
+                                            <motion.div
+                                                initial={{ opacity: 0, x: 50 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                exit={{ opacity: 0, y: 50, position: 'absolute' }}
+                                                key="height"
+                                                className="flex items-end w-full"
+                                            >
+                                                <FormField
+                                                    control={form.control}
+                                                    name="dimensions"
+                                                    render={({ field }) => (
+                                                        <FormItem className="w-full">
+                                                            <FormLabel className="text-muted-foreground/50">
+                                                                Tamaños <span className="text-red-500">*</span>
+                                                                <Tooltip>
+                                                                    <TooltipTrigger asChild>
+                                                                        <Info className="size-4 cursor-pointer" />
+                                                                    </TooltipTrigger>
+                                                                    <TooltipContent>
+                                                                        <p>Los tamaños del producto</p>
+                                                                        <p>Ej: 1L, 2L, pequeño, mediano, grande</p>
+                                                                        <FormMessage className="text-foreground text-xs" />
+                                                                    </TooltipContent>
+                                                                </Tooltip>
+                                                            </FormLabel>
+                                                            <FormControl>
+                                                                <DimensionSelector storeId={storeId} />
+                                                            </FormControl>
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
                             </AccordionContent>
                         </AccordionItem>
                     )}

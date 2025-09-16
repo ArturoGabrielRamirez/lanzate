@@ -38,6 +38,7 @@ function MultiStepForm({ storeId }: { storeId: number }) {
         circumference: '',
         circumference_unit: 'cm',
         sizes: [],
+        dimensions: [],
         flavors: [],
         fragrances: [],
         colors: [],
