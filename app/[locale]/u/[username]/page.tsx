@@ -4,17 +4,13 @@ import { Metadata } from 'next'
 import { PublicProfileClient } from '@/features/profile/components/public-profile-client'
 import { getUserPublicProfile } from '@/features/profile/actions'
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { locale: string; username: string }
-}): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: { params: { locale: string; username: string } }
+): Promise<Metadata> {
   const user = await getUserPublicProfile(params.username)
 
   if (!user) {
-    return {
-      title: 'Usuario no encontrado',
-    }
+    return { title: 'Usuario no encontrado' }
   }
 
   const displayName =
@@ -33,11 +29,9 @@ export async function generateMetadata({
   }
 }
 
-export default async function PublicProfilePage({
-  params,
-}: {
-  params: { locale: string; username: string }
-}) {
+export default async function PublicProfilePage(
+  { params }: { params: { locale: string; username: string } }
+) {
   const response = await getUserPublicProfile(params.username)
 
   if (!response) {
