@@ -1,27 +1,27 @@
-// Importaciones necesarias
+// Importa los tipos necesarios de Next.js
+import type { Metadata } from 'next';
+// Importa PageProps y Params desde los tipos correctos de Next.js
+// En versiones más recientes de Next.js, a menudo se usa el tipo genérico `PropsWithChildren`
+// o simplemente se definen las props directamente si no se necesita `PageProps` explícitamente.
+// Sin embargo, para resolver este error específico de `PageProps`, vamos a asegurarnos de que las `params` se definan correctamente.
 import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
-
-// Asumiendo que estas acciones y componentes están definidos correctamente
-import { PublicProfileClient } from '@/features/profile/components/public-profile-client';
 import { getUserPublicProfile } from '@/features/profile/actions';
+import { PublicProfileClient } from '@/features/profile/components/public-profile-client';
 
-// Definición del tipo para los parámetros de la ruta
-// Es un objeto simple, no una promesa
+// Define los tipos para los parámetros de tu ruta dinámica
 interface UserProfileParams {
   locale: string;
   username: string;
 }
 
-// Definición de las props para la página, incluyendo los parámetros
+// Define las props para tu página, asegurándote de que `params` tenga el tipo correcto
 interface PublicProfilePageProps {
   params: UserProfileParams;
 }
 
-// Función para generar metadatos
-// Recibe las props con los parámetros de la ruta
+// --- Función generateMetadata ---
 export async function generateMetadata(
-  { params }: PublicProfilePageProps // Usamos el tipo definido
+  { params }: PublicProfilePageProps // Usa el tipo definido para las props de la página
 ): Promise<Metadata> {
   const user = await getUserPublicProfile(params.username);
 
@@ -45,10 +45,9 @@ export async function generateMetadata(
   };
 }
 
-// Componente principal de la página de perfil público
-// Recibe las props con los parámetros de la ruta
+// --- Componente de Página Principal ---
 export default async function PublicProfilePage(
-  { params }: PublicProfilePageProps // Usamos el tipo definido
+  { params }: PublicProfilePageProps // Usa el tipo definido para las props de la página
 ) {
   const response = await getUserPublicProfile(params.username);
 
