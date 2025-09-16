@@ -6,10 +6,13 @@ const prisma = new PrismaClient()
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
-    const userId = parseInt(params.userId)
+    // Await params para obtener los valores en Next.js 15
+    const { userId: userIdString } = await params;
+    const userId = parseInt(userIdString)
+    
     const { searchParams } = new URL(request.url)
     
     const limit = parseInt(searchParams.get('limit') || '20')
