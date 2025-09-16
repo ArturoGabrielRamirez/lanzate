@@ -19,7 +19,7 @@ import FraganceSelector from "./fragance-selector"
 function AttributesStep({ storeId }: { storeId: number }) {
 
     const { form } = useMultiStepForm<FormValues>()
-    console.log("🚀 ~ AttributesStep ~ form:", form.formState.errors)
+
     const [selected, setSelected] = useState<string[]>([])
     const [accordions, setAccordions] = useState({
         content: false,

@@ -58,6 +58,7 @@ function MultiStepForm({ storeId }: { storeId: number }) {
             schema={formSchema}
             initialData={initialValues}
             allowStepReset
+            allowSkipSteps
             autoSave
             persistKey="create-product-new"
         >

@@ -26,6 +26,7 @@ interface MultiStepFormContextType<T extends FormData = FormData> {
   form: UseFormReturn<T>
   getProgressPercentage: () => number
   stepErrors: Record<number, string>
+  setStepErrors: (errors: Record<number, string>) => void
 }
 
 const MultiStepFormContext = createContext<MultiStepFormContextType<any> | undefined>(undefined)
@@ -351,38 +352,43 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 
   const renderStepIndicators = (): React.ReactNode => (
     <div className="flex justify-center items-center mb-6">
-      {steps.map((_, index) => (
-        <React.Fragment key={index}>
-          {index > 0 && (
+      {steps.map((_, index) => {
+        console.log("🚀 ~ renderStepIndicators ~ stepErrors[index]:", stepErrors[index], index)
+        return (
+          <React.Fragment key={index}>
+            {index > 0 && (
+              <div
+                className={cn(
+                  "h-[2px] w-8 mx-1 transition-colors",
+                  index <= currentStep ? "bg-primary" : "bg-gray-300 dark:bg-gray-700"
+                )}
+              />
+            )}
             <div
               className={cn(
-                "h-[2px] w-8 mx-1 transition-colors",
-                index <= currentStep ? "bg-primary" : "bg-gray-300 dark:bg-gray-700"
+                "flex items-center justify-center transition-all",
+                allowSkipSteps && "cursor-pointer hover:scale-110",
               )}
-            />
-          )}
-          <div
-            className={cn(
-              "flex items-center justify-center transition-all",
-              allowSkipSteps && "cursor-pointer hover:scale-110"
-            )}
-            onClick={() => allowSkipSteps && goToStep(index)}
-            role={allowSkipSteps ? "button" : undefined}
-            tabIndex={allowSkipSteps ? 0 : undefined}
-            aria-label={allowSkipSteps ? `Go to step ${index + 1}` : undefined}
-          >
-            {index < currentStep ? (
-              <CheckCircle2 size={24} className="text-primary fill-primary/10" />
-            ) : index === currentStep ? (
-              <div className="rounded-full border-2 border-primary p-1 w-6 h-6 flex items-center justify-center">
-                <span className="text-xs font-medium">{index + 1}</span>
-              </div>
-            ) : (
-              <Circle size={24} className="text-gray-300 dark:text-gray-700" />
-            )}
-          </div>
-        </React.Fragment>
-      ))}
+              onClick={() => allowSkipSteps && goToStep(index)}
+              role={allowSkipSteps ? "button" : undefined}
+              tabIndex={allowSkipSteps ? 0 : undefined}
+              aria-label={allowSkipSteps ? `Go to step ${index + 1}` : undefined}
+            >
+              {index < currentStep ? (
+                <CheckCircle2 size={24} className={cn("text-primary fill-primary/10", stepErrors[index] && "text-red-500")} />
+              ) : index === currentStep ? (
+                <div className={cn("rounded-full border-2 border-primary p-1 w-6 h-6 flex items-center justify-center",
+                  stepErrors[index] && "border-red-500"
+                )}>
+                  <span className={cn("text-xs font-medium", stepErrors[index] && "text-red-500")}>{index + 1}</span>
+                </div>
+              ) : (
+                <Circle size={24} className="text-gray-300 dark:text-gray-700" />
+              )}
+            </div>
+          </React.Fragment>
+        )
+      })}
     </div>
   )
 
@@ -402,6 +408,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
     form,
     getProgressPercentage,
     stepErrors,
+    setStepErrors,
   }), [
     currentStep,
     steps.length,
@@ -419,6 +426,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
     form,
     getProgressPercentage,
     stepErrors,
+    setStepErrors,
   ])
 
   return (
