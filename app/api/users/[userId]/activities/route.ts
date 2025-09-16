@@ -6,10 +6,13 @@ const prisma = new PrismaClient()
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
-    const userId = parseInt(params.userId)
+    // Await params para obtener los valores en Next.js 15
+    const { userId: userIdString } = await params;
+    const userId = parseInt(userIdString)
+    
     const { searchParams } = new URL(request.url)
     
     const limit = parseInt(searchParams.get('limit') || '20')
@@ -17,38 +20,38 @@ export async function GET(
     const includePrivate = searchParams.get('includePrivate') === 'true'
 
     if (includePrivate) {
-  const currentUserResponse = await getCurrentUser()
-  
-  if (!currentUserResponse?.payload) {
-    return NextResponse.json(
-      { error: 'No autorizado para ver actividades privadas' },
-      { status: 401 }
-    )
-  }
+      const currentUserResponse = await getCurrentUser()
+      
+      if (!currentUserResponse?.payload) {
+        return NextResponse.json(
+          { error: 'No autorizado para ver actividades privadas' },
+          { status: 401 }
+        )
+      }
 
-  // Verificar si es el mismo usuario
-  const currentUser = currentUserResponse.payload
-  let currentUserId: number | null = null
-  
-  if (typeof currentUser.id === 'string') {
-    // Si getCurrentUser devuelve UUID, buscar el usuario
-    const dbUser = await prisma.user.findUnique({
-      where: { supabase_user_id: currentUser.id },
-      select: { id: true }
-    })
-    currentUserId = dbUser?.id || null
-  } else {
-    // Si getCurrentUser devuelve ID numérico
-    currentUserId = currentUser.id
-  }
-  
-  if (currentUserId !== userId) {
-    return NextResponse.json(
-      { error: 'No tienes permisos para ver actividades privadas' },
-      { status: 403 }
-    )
-  }
-}
+      // Verificar si es el mismo usuario
+      const currentUser = currentUserResponse.payload
+      let currentUserId: number | null = null
+      
+      if (typeof currentUser.id === 'string') {
+        // Si getCurrentUser devuelve UUID, buscar el usuario
+        const dbUser = await prisma.user.findUnique({
+          where: { supabase_user_id: currentUser.id },
+          select: { id: true }
+        })
+        currentUserId = dbUser?.id || null
+      } else {
+        // Si getCurrentUser devuelve ID numérico
+        currentUserId = currentUser.id
+      }
+      
+      if (currentUserId !== userId) {
+        return NextResponse.json(
+          { error: 'No tienes permisos para ver actividades privadas' },
+          { status: 403 }
+        )
+      }
+    }
 
     // Validar que el userId sea válido
     if (isNaN(userId)) {
