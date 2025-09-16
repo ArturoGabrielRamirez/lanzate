@@ -2,8 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Camera } from "lucide-react";
-import CameraComponent from "@/features/auth/components/avatar/camera-component";
-import { useCamera } from "@/features/auth/hooks/use-camera";
+import { MediaSelector } from "@/features/shared/components/media-selector";
 import { Slot } from "@radix-ui/react-slot";
 import {
   FileArchiveIcon,
@@ -873,6 +872,7 @@ function FileUploadTrigger(props: FileUploadTriggerProps) {
   );
 }
 
+// CORREGIDO: FileUploadCameraTrigger usando MediaSelector
 interface FileUploadCameraTriggerProps
   extends React.ComponentPropsWithoutRef<"button"> {
   asChild?: boolean;
@@ -881,54 +881,62 @@ interface FileUploadCameraTriggerProps
 }
 
 function FileUploadCameraTrigger(props: FileUploadCameraTriggerProps) {
-  const { asChild, uploadPath = "uploads", label = "Tomar foto", ...rest } = props;
+  const { asChild, label = "Tomar foto", ...rest } = props;
   const context = useFileUploadContext(CAMERA_TRIGGER_NAME);
 
-  const camera = useCamera({
-    uploadPath,
-    onSuccess: undefined,
-    onError: undefined,
-  });
+  // REEMPLAZADO: useCamera por MediaSelector
+  const handleMediaUpdate = React.useCallback((url: string | null) => {
+    if (url) {
+      // Convertir URL a File y agregar al FileUpload
+      fetch(url)
+        .then(res => res.blob())
+        .then(blob => {
+          const file = new File([blob], `capture-${Date.now()}.jpg`, { 
+            type: 'image/jpeg' 
+          });
+          
+          const inputElement = context.inputRef.current;
+          if (!inputElement) return;
 
-  // Cuando se captura la foto, agregar el archivo al store y disparar upload si corresponde
-  const handleCapture = React.useCallback((file: File) => {
-    const inputElement = context.inputRef.current;
-    if (!inputElement) return;
-
-    const dataTransfer = new DataTransfer();
-    dataTransfer.items.add(file);
-    inputElement.files = dataTransfer.files;
-    inputElement.dispatchEvent(new Event("change", { bubbles: true }));
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(file);
+          inputElement.files = dataTransfer.files;
+          inputElement.dispatchEvent(new Event("change", { bubbles: true }));
+        })
+        .catch(error => {
+          console.error('Error converting media URL to file:', error);
+        });
+    }
   }, [context.inputRef]);
 
   const TriggerPrimitive = asChild ? Slot : "button";
 
   return (
-    <>
-      <TriggerPrimitive
-        type="button"
-        aria-controls={context.inputId}
-        data-disabled={context.disabled ? "" : undefined}
-        data-slot="file-upload-trigger"
-        data-camera-trigger
-        {...rest}
-        disabled={context.disabled}
-        onClick={() => camera.openCamera()}
-      >
-        {props.children ?? (
-          <span className="inline-flex items-center gap-2">
-            <Camera className="h-4 w-4" /> {label}
-          </span>
-        )}
-      </TriggerPrimitive>
-
-      {/* Modal de cámara reutilizado */}
-      <CameraComponent
-        {...camera.cameraProps}
-        onCapture={handleCapture}
-        title={label}
-      />
-    </>
+    <MediaSelector
+      type="avatar"
+      currentUrl={null}
+      onUpdate={handleMediaUpdate}
+      triggerButton={
+        <TriggerPrimitive
+          type="button"
+          aria-controls={context.inputId}
+          data-disabled={context.disabled ? "" : undefined}
+          data-slot="file-upload-trigger"
+          data-camera-trigger
+          {...rest}
+          disabled={context.disabled}
+        >
+          {props.children ?? (
+            <span className="inline-flex items-center gap-2">
+              <Camera className="h-4 w-4" /> {label}
+            </span>
+          )}
+        </TriggerPrimitive>
+      }
+      title={label}
+      description="Captura una imagen o selecciona una opción"
+      loadApiAvatars={true}
+    />
   );
 }
 
@@ -1245,6 +1253,7 @@ function FileUploadItemMetadata(props: FileUploadItemMetadataProps) {
     </ItemMetadataPrimitive>
   );
 }
+
 interface FileUploadItemProgressProps
   extends React.ComponentPropsWithoutRef<"div"> {
   variant?: "linear" | "circular" | "fill";
