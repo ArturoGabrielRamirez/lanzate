@@ -14,7 +14,7 @@ type PageProps = {
 
 export async function generateMetadata(
   { params }: PageProps,
-  _parent: ResolvingMetadata
+  _: ResolvingMetadata
 ): Promise<Metadata> {
   const user = await getUserPublicProfile(params.username)
 
