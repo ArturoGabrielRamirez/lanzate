@@ -1,19 +1,23 @@
 import { notFound } from 'next/navigation'
-import { Metadata } from 'next'
+import { Metadata, ResolvingMetadata } from 'next'
 
+// tus imports
 import { PublicProfileClient } from '@/features/profile/components/public-profile-client'
 import { getUserPublicProfile } from '@/features/profile/actions'
 
-interface Props {
+type PageProps = {
   params: {
     locale: string
     username: string
   }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: PageProps,
+  _parent: ResolvingMetadata
+): Promise<Metadata> {
   const user = await getUserPublicProfile(params.username)
-  
+
   if (!user) {
     return {
       title: 'Usuario no encontrado',
@@ -35,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function PublicProfilePage({ params }: Props) {
+export default async function PublicProfilePage({ params }: PageProps) {
   const response = await getUserPublicProfile(params.username)
 
   if (!response) {
