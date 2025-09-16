@@ -1,21 +1,14 @@
 import { notFound } from 'next/navigation'
-import { Metadata/* , ResolvingMetadata  */} from 'next'
+import { Metadata } from 'next'
 
-// tus imports
 import { PublicProfileClient } from '@/features/profile/components/public-profile-client'
 import { getUserPublicProfile } from '@/features/profile/actions'
 
-type PageProps = {
-  params: {
-    locale: string
-    username: string
-  }
-}
-
-export async function generateMetadata(
-  { params }: PageProps,
- /*  _: ResolvingMetadata */
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: string; username: string }
+}): Promise<Metadata> {
   const user = await getUserPublicProfile(params.username)
 
   if (!user) {
@@ -24,9 +17,10 @@ export async function generateMetadata(
     }
   }
 
-  const displayName = user.payload.first_name && user.payload.last_name
-    ? `${user.payload.first_name} ${user.payload.last_name}`
-    : user.payload.username
+  const displayName =
+    user.payload.first_name && user.payload.last_name
+      ? `${user.payload.first_name} ${user.payload.last_name}`
+      : user.payload.username
 
   return {
     title: `${displayName} (@${user.payload.username})`,
@@ -39,7 +33,11 @@ export async function generateMetadata(
   }
 }
 
-export default async function PublicProfilePage({ params }: PageProps) {
+export default async function PublicProfilePage({
+  params,
+}: {
+  params: { locale: string; username: string }
+}) {
   const response = await getUserPublicProfile(params.username)
 
   if (!response) {
