@@ -4,8 +4,14 @@ import { Metadata } from 'next'
 import { PublicProfileClient } from '@/features/profile/components/public-profile-client'
 import { getUserPublicProfile } from '@/features/profile/actions'
 
+// Definimos una interfaz explícita para los parámetros de la página
+interface PageParams {
+  locale: string;
+  username: string;
+}
+
 export async function generateMetadata(
-  { params }: { params: { locale: string; username: string } }
+  { params }: { params: PageParams } // Usamos la interfaz PageParams aquí
 ): Promise<Metadata> {
   const user = await getUserPublicProfile(params.username)
 
@@ -30,7 +36,7 @@ export async function generateMetadata(
 }
 
 export default async function PublicProfilePage(
-  { params }: { params: { locale: string; username: string } }
+  { params }: { params: PageParams } // Usamos la interfaz PageParams aquí también
 ) {
   const response = await getUserPublicProfile(params.username)
 
