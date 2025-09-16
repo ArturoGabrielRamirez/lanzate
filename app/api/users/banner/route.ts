@@ -2,7 +2,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/features/auth/actions'
 import { prisma } from '@/utils/prisma'
-import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function PUT(request: NextRequest) {
   try {

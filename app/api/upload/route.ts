@@ -8,20 +8,20 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
 
 // Función auxiliar para obtener userId
-async function getUserId(currentUserResponse: any): Promise<{ id: number; username: string }> {
+async function getUserId(currentUserResponse: { payload: { id: string } }): Promise<{ id: number; username: string }> {
   if (typeof currentUserResponse.payload.id === 'string') {
     const user = await prisma.user.findUnique({
       where: { supabase_user_id: currentUserResponse.payload.id },
       select: { id: true, username: true }
     })
-    
+
     if (!user) {
       throw new Error("Usuario no encontrado")
     }
-    
+
     return user
   }
-  
+
   const user = await prisma.user.findUnique({
     where: { id: currentUserResponse.payload.id },
     select: { id: true, username: true }
@@ -37,9 +37,9 @@ async function getUserId(currentUserResponse: any): Promise<{ id: number; userna
 export async function POST(request: NextRequest) {
   try {
     console.log('API Upload llamada')
-    
+
     const currentUserResponse = await getCurrentUser()
-    
+
     if (!currentUserResponse || currentUserResponse.error) {
       console.log('Error de autenticación:', currentUserResponse?.error)
       return NextResponse.json(
@@ -50,12 +50,12 @@ export async function POST(request: NextRequest) {
 
     const contentType = request.headers.get('content-type')
     console.log('Content-Type:', contentType)
-    
+
     // MANEJO DE PRESETS (JSON)
     if (contentType?.includes('application/json')) {
       console.log('Procesando preset...')
       const { type, presetUrl } = await request.json()
-      
+
       if (!presetUrl || !type) {
         return NextResponse.json(
           { error: "URL de preset y tipo son requeridos" },
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
       console.log('Usuario para preset:', user.username)
 
       const updateData = type === 'banner' ? { banner: presetUrl } : { avatar: presetUrl }
-      
+
       const updatedUser = await prisma.user.update({
         where: { id: user.id },
         data: {
@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
 
     const user = await getUserId(currentUserResponse)
     console.log('Usuario para upload:', user.username)
-    
+
     const supabase = await createServerSideClient()
 
     // Generar nombre único
@@ -170,7 +170,7 @@ export async function POST(request: NextRequest) {
     if (error) {
       console.error('Error Supabase Storage:', error)
       return NextResponse.json(
-        { 
+        {
           error: `Error subiendo archivo: ${error.message}`,
           details: error
         },
@@ -204,7 +204,7 @@ export async function POST(request: NextRequest) {
       })
 
       const currentUrl = type === 'avatar' ? currentUser?.avatar : currentUser?.banner
-      
+
       if (currentUrl && currentUrl.includes('user-uploads')) {
         const oldFilePath = currentUrl.split('/user-uploads/').pop()
         if (oldFilePath) {
@@ -218,7 +218,7 @@ export async function POST(request: NextRequest) {
 
     // Actualizar base de datos
     const updateData = type === 'banner' ? { banner: publicUrl } : { avatar: publicUrl }
-    
+
     const updatedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
@@ -247,7 +247,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error crítico en API:', error)
     return NextResponse.json(
-      { 
+      {
         error: "Error interno del servidor",
         details: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined
       },
@@ -260,9 +260,9 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     console.log('API Delete llamada')
-    
+
     const currentUserResponse = await getCurrentUser()
-    
+
     if (!currentUserResponse || currentUserResponse.error) {
       return NextResponse.json(
         { error: "Debes iniciar sesión para eliminar archivos" },
@@ -305,7 +305,7 @@ export async function DELETE(request: NextRequest) {
 
     // Remover de la base de datos
     const updateData = type === 'banner' ? { banner: null } : { avatar: null }
-    
+
     const updatedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
@@ -331,7 +331,7 @@ export async function DELETE(request: NextRequest) {
   } catch (error) {
     console.error('Error en eliminación:', error)
     return NextResponse.json(
-      { 
+      {
         error: "Error interno del servidor",
         details: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined
       },
