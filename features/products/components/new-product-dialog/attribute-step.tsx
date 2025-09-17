@@ -29,8 +29,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
     const [selectedColors, setSelectedColors] = useState<{ value: string; name: string }[]>([])
     const [selectNewColor, setSelectNewColor] = useState<boolean>(false)
     const [isDeletingPending, startDeletingTransition] = useTransition()
-    const [realSelectedColors, setRealSelectedColors] = useState<string[]>([])
-    console.log("🚀 ~ AttributesStep ~ realSelectedColors:", realSelectedColors)
+    const [realSelectedColors, setRealSelectedColors] = useState<{ value: string; name: string }[]>([])
 
     const [accordions, setAccordions] = useState({
         content: false,
@@ -140,13 +139,18 @@ function AttributesStep({ storeId }: { storeId: number }) {
         setSelectNewColor(false)
     }
 
-    const toggleSelectColor = (color: string) => {
+    const toggleSelectColor = (color: string, name: string) => {
 
-        if (realSelectedColors.includes(color)) {
-            setRealSelectedColors(realSelectedColors.filter((c) => c !== color))
+        let newColors = [...realSelectedColors] as { value: string; name: string }[]
+
+        if (realSelectedColors.some((c) => c.value === color)) {
+            newColors = newColors.filter((c) => c.value !== color)
         } else {
-            setRealSelectedColors([...realSelectedColors, color])
+            newColors = [...newColors, { value: color, name }]
         }
+
+        setRealSelectedColors(newColors)
+        form.setValue('colors', newColors)
 
     }
 
@@ -706,9 +710,9 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                                     <div
                                                                                         className="aspect-square rounded-sm size-16"
                                                                                         style={{ backgroundColor: color.value }}
-                                                                                        onClick={() => toggleSelectColor(color.value)}
+                                                                                        onClick={() => toggleSelectColor(color.value, color.name)}
                                                                                     />
-                                                                                    <div className="absolute w-full h-full bg-background/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out" onClick={() => toggleSelectColor(color.value)}>
+                                                                                    <div className="absolute w-full h-full bg-background/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out" onClick={() => toggleSelectColor(color.value, color.name)}>
                                                                                         <Tooltip>
                                                                                             <TooltipTrigger asChild>
                                                                                                 <IconButton
@@ -726,7 +730,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                                             <TooltipTrigger asChild>
                                                                                                 <IconButton
                                                                                                     icon={Check}
-                                                                                                    onClick={() => toggleSelectColor(color.value)}
+                                                                                                    onClick={() => toggleSelectColor(color.value, color.name)}
                                                                                                 />
                                                                                             </TooltipTrigger>
                                                                                             <TooltipContent>
@@ -737,7 +741,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                                 </div>
                                                                                 <p className="flex items-center gap-2">
                                                                                     {color.name}
-                                                                                    {realSelectedColors.includes(color.value) && <Check className="size-4 text-green-500" />}
+                                                                                    {realSelectedColors.some((c) => c.value === color.value) && <Check className="size-4 text-green-500" />}
                                                                                 </p>
                                                                             </div>
                                                                         </motion.div>
