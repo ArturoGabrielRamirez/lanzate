@@ -62,21 +62,6 @@ const MaterialsSelector = ({ storeId }: Props) => {
 
     }, [])
 
-    /* useEffect(() => {
-        const localData = localStorage.getItem("create-product-new")
-        if (localData) {
-            const data = JSON.parse(localData)
-            setMaterials(prev => {
-                return prev.map(material => {
-                    if (data.materials.some((m: { name: string }) => m.name === material.label)) {
-                        return { ...material, selected: true }
-                    }
-                    return material
-                })
-            })
-        }
-    }, [materials]) */
-
     const handleAddNewMaterial = () => {
         setSelectNewMaterial(true)
     }
