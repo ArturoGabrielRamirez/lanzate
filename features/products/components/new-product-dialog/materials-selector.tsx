@@ -23,8 +23,10 @@ type Props = {
 const MaterialsSelector = ({ storeId }: Props) => {
 
     const { form } = useMultiStepForm<FormValues>()
+    console.log("🚀 ~ MaterialsSelector ~ form:", form.formState.errors)
 
     const [materials, setMaterials] = useState<(Material & { selected: boolean })[]>([])
+    console.log("🚀 ~ MaterialsSelector ~ materials:", materials)
     const [selectNewMaterial, setSelectNewMaterial] = useState<boolean>(false)
     const [file, setFile] = useState<File | null>(null)
     const [materialLabel, setMaterialLabel] = useState<string>("")
@@ -51,8 +53,10 @@ const MaterialsSelector = ({ storeId }: Props) => {
                         return material
                     })
                     setMaterials(newPayload)
+                    form.setValue('materials', newPayload.filter((material: Material & { selected: boolean }) => material.selected).map((material: Material & { selected: boolean }) => ({ value: new File([], material.label), name: material.label })))
                 } else {
                     setMaterials(payload)
+                    form.setValue('materials', [])
                 }
 
             })

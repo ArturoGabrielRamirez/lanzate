@@ -353,7 +353,6 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
   const renderStepIndicators = (): React.ReactNode => (
     <div className="flex justify-center items-center mb-6">
       {steps.map((_, index) => {
-        console.log("🚀 ~ renderStepIndicators ~ stepErrors[index]:", stepErrors[index], index)
         return (
           <React.Fragment key={index}>
             {index > 0 && (

@@ -31,6 +31,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
     const [selectNewColor, setSelectNewColor] = useState<boolean>(false)
     const [isDeletingPending, startDeletingTransition] = useTransition()
     const [realSelectedColors, setRealSelectedColors] = useState<{ value: string; name: string }[]>([])
+    const [isGettingColors, startGettingColorsTransition] = useTransition()
 
     const [accordions, setAccordions] = useState({
         content: false,
@@ -90,11 +91,13 @@ function AttributesStep({ storeId }: { storeId: number }) {
 
     useEffect(() => {
         const load = async () => {
-            const { payload, error } = await getColors({ storeId })
+            startGettingColorsTransition(async () => {
+                const { payload, error } = await getColors({ storeId })
 
-            if (error) return
+                if (error) return
 
-            setSelectedColors(payload.map((color: { hex: string, name: string }) => ({ value: color.hex, name: color.name })))
+                setSelectedColors(payload.map((color: { hex: string, name: string }) => ({ value: color.hex, name: color.name })))
+            })
         }
         load()
     }, [])
@@ -708,6 +711,17 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                         <FormControl>
                                                             <div className="flex flex-wrap gap-4 items-baseline">
                                                                 <AnimatePresence>
+                                                                    {isGettingColors && (
+                                                                        <motion.div
+                                                                            initial={{ opacity: 0, x: 50 }}
+                                                                            animate={{ opacity: 1, x: 0 }}
+                                                                            exit={{ opacity: 0, y: 50 }}
+                                                                            key="loading-colors"
+                                                                            className="flex flex-wrap gap-4 items-baseline"
+                                                                        >
+                                                                            <Loader2 className="size-4 animate-spin" />
+                                                                        </motion.div>
+                                                                    )}
                                                                     {selectedColors.map((color, index) => (
                                                                         <motion.div
                                                                             initial={{ opacity: 0, x: 50 }}
