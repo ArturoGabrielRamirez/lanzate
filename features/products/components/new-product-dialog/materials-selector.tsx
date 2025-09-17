@@ -5,16 +5,17 @@ import { getMaterials } from "../../actions/getMaterials"
 import { Material } from "@prisma/client"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Check, Info, Plus, X } from "lucide-react"
+import { Check, Loader, Plus, X } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { FileUpload, FileUploadDropzone } from "@/components/ui/file-upload"
+import { FileUpload } from "@/components/ui/file-upload"
 import FileUploadDropzoneWrapper from "./file-upload-dropzone-wrapper"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
-import { FormField, FormInfoLabel, FormLabel } from "@/components/ui/form"
+import { FormField, FormInfoLabel } from "@/components/ui/form"
 import { toast } from "sonner"
 import { createMaterialAction } from "../../actions/createMaterialAction"
 import { createMaterialDynamic } from "../../actions/createMaterialDynamic"
+import MaterialPreview from "./material-preview"
 
 type Props = {
     storeId: number
@@ -22,28 +23,59 @@ type Props = {
 const MaterialsSelector = ({ storeId }: Props) => {
 
     const { form } = useMultiStepForm<FormValues>()
-    console.log("🚀 ~ MaterialsSelector ~ form:", form.formState.errors)
-    console.log("🚀 ~ MaterialsSelector ~ form:", form.getValues("materials"))
 
-    const [materials, setMaterials] = useState<Material[]>([])
+    const [materials, setMaterials] = useState<(Material & { selected: boolean })[]>([])
     const [selectNewMaterial, setSelectNewMaterial] = useState<boolean>(false)
-    const [isPending, startTransition] = useTransition()
     const [file, setFile] = useState<File | null>(null)
     const [materialLabel, setMaterialLabel] = useState<string>("")
     const [materialPublicUrl, setMaterialPublicUrl] = useState<string | null>(null)
+    const [isPending, startTransition] = useTransition()
+    const [isGettingMaterials, startGettingMaterialsTransition] = useTransition()
 
     useEffect(() => {
 
         const load = async () => {
+            startGettingMaterialsTransition(async () => {
 
-            const { payload, error } = await getMaterials({ store_id: storeId })
-            if (error) return
-            setMaterials(payload)
+                const localData = localStorage.getItem("create-product-new")
+                const { payload, error } = await getMaterials({ store_id: storeId })
+
+                if (error) return
+
+                if (localData) {
+                    const data = JSON.parse(localData)
+                    const newPayload = payload.map((material: Material & { selected: boolean }) => {
+                        if (data.materials.some((m: { name: string }) => m.name === material.label)) {
+                            return { ...material, selected: true }
+                        }
+                        return material
+                    })
+                    setMaterials(newPayload)
+                } else {
+                    setMaterials(payload)
+                }
+
+            })
         }
 
         load()
 
     }, [])
+
+    /* useEffect(() => {
+        const localData = localStorage.getItem("create-product-new")
+        if (localData) {
+            const data = JSON.parse(localData)
+            setMaterials(prev => {
+                return prev.map(material => {
+                    if (data.materials.some((m: { name: string }) => m.name === material.label)) {
+                        return { ...material, selected: true }
+                    }
+                    return material
+                })
+            })
+        }
+    }, [materials]) */
 
     const handleAddNewMaterial = () => {
         setSelectNewMaterial(true)
@@ -118,15 +150,14 @@ const MaterialsSelector = ({ storeId }: Props) => {
         <div>
             <div className="flex flex-wrap items-center gap-4">
                 {materials.map((material) => (
-                    <div key={material.id} className="flex gap-2 flex-col">
-                        {material.image_url ? (
-                            <img src={material.image_url} alt={material.label} className="size-16 object-cover rounded-md" />
-                        ) : (
-                            <div className="size-16 rounded-full border bg-muted" />
-                        )}
-                        {material.label}
-                    </div>
+                    <MaterialPreview key={material.id} material={material} />
                 ))}
+                {isGettingMaterials && (
+                    <div className="flex items-center gap-2">
+                        <Loader className="size-4 animate-spin" />
+                        <p>Cargando materiales...</p>
+                    </div>
+                )}
                 <Popover open={selectNewMaterial} onOpenChange={setSelectNewMaterial}>
                     <Tooltip>
                         <TooltipTrigger asChild>

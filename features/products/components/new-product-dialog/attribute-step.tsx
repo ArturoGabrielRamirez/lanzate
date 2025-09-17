@@ -78,6 +78,13 @@ function AttributesStep({ storeId }: { storeId: number }) {
                 surface: data.selected_attributes.includes("Color") || data.selected_attributes.includes("Material"),
                 sensorial: data.selected_attributes.includes("Sabor") || data.selected_attributes.includes("Fragancia"),
             })
+            const localColors = data.colors
+            localColors.forEach((color: { value: string, name: string }) => {
+                setRealSelectedColors(prev => {
+                    if (prev.some((c) => c.value === color.value)) return prev
+                    return [...prev, color]
+                })
+            })
         }
     }, [])
 
@@ -88,7 +95,6 @@ function AttributesStep({ storeId }: { storeId: number }) {
             if (error) return
 
             setSelectedColors(payload.map((color: { hex: string, name: string }) => ({ value: color.hex, name: color.name })))
-
         }
         load()
     }, [])
