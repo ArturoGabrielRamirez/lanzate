@@ -15,6 +15,8 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip"
+import { Info } from "lucide-react"
 
 const Form = FormProvider
 
@@ -104,6 +106,32 @@ function FormLabel({
   )
 }
 
+function FormInfoLabel({
+  className,
+  tooltipContent = "",
+  isRequired = true,
+  ...props
+}: React.ComponentProps<typeof LabelPrimitive.Root> & {
+  tooltipContent?: string
+  isRequired?: boolean
+}) {
+
+  return (
+    <FormLabel className={cn("text-muted-foreground/50", className)}>
+      {props.children} {isRequired && <span className="text-red-500">*</span>}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Info className="size-4 cursor-pointer" />
+        </TooltipTrigger>
+        <TooltipContent>
+          {tooltipContent || props.children}
+          <FormMessage className="text-foreground text-xs" />
+        </TooltipContent>
+      </Tooltip>
+    </FormLabel>
+  )
+}
+
 function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
 
@@ -164,4 +192,5 @@ export {
   FormDescription,
   FormMessage,
   FormField,
+  FormInfoLabel,
 }

@@ -40,7 +40,7 @@ export const attributesSchema = z.object({
     flavors: z.array(z.string()).optional().nullable(),
     fragrances: z.array(z.string()).optional().nullable(),
     colors: z.array(z.object({ value: z.string(), name: z.string().optional() })).optional().nullable(),
-    materials: z.array(z.object({ value: z.string(), name: z.string().optional() })).optional().nullable(),
+    materials: z.array(z.object({ value: z.file(), name: z.string().min(1, { message: "Name is required" }) })).optional().nullable(),
 })
 
 export const formSchema = z.object({
@@ -203,6 +203,78 @@ export const formSchema = z.object({
                 code: "custom",
                 message: "Dimensions is required",
                 path: ["dimensions"],
+            })
+        }
+    }
+
+    if (ref.selected_attributes?.includes("Sabor")) {
+        if (!ref.flavors) {
+            return ctx.addIssue({
+                code: "custom",
+                message: "Flavors is required",
+                path: ["flavors"],
+            })
+        }
+
+        if (!ref.flavors.length) {
+            ctx.addIssue({
+                code: "custom",
+                message: "Flavors is required",
+                path: ["flavors"],
+            })
+        }
+    }
+
+    if (ref.selected_attributes?.includes("Fragancia")) {
+        if (!ref.fragrances) {
+            return ctx.addIssue({
+                code: "custom",
+                message: "Fragrances is required",
+                path: ["fragrances"],
+            })
+        }
+
+        if (!ref.fragrances.length) {
+            ctx.addIssue({
+                code: "custom",
+                message: "Fragrances is required",
+                path: ["fragrances"],
+            })
+        }
+    }
+
+    if (ref.selected_attributes?.includes("Color")) {
+        if (!ref.colors) {
+            return ctx.addIssue({
+                code: "custom",
+                message: "Colors is required",
+                path: ["colors"],
+            })
+        }
+
+        if (!ref.colors.length) {
+            ctx.addIssue({
+                code: "custom",
+                message: "Colors is required",
+                path: ["colors"],
+            })
+        }
+    }
+
+    if (ref.selected_attributes?.includes("Material")) {
+        if (!ref.materials) {
+            return ctx.addIssue({
+                code: "custom",
+                message: "Materials is required",
+                path: ["materials"],
+            })
+        }
+
+        if (!ref.materials.length) {
+            ctx.addIssue({
+                code: "custom",
+                message: "Materials is required",
+                path: ["materials"],
             })
         }
     }
