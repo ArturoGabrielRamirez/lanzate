@@ -23,6 +23,7 @@ export interface UserType {
     id: number
     email: string
     avatar: string | null
+    banner: string | null
     created_at: string | Date
     first_name: string | null
     last_name: string | null

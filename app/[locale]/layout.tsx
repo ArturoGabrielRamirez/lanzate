@@ -8,11 +8,13 @@ import { NextIntlClientProvider } from 'next-intl';
 import { GlobalEmailConfirmationDetector } from "@/features/auth/components/index";
 import { BProgressProvider } from "@/src/components/bprogress-provider";
 import LayoutBackgroundEffects from "@/features/layout/components/layout-background-effects";
+
+import { getUserInfo } from "@/features/layout/actions";
 import "../globals.css";
 import FloatingDockContainer from "@/features/header/components/foating-dock-container";
 import { ChatProvider } from "@/features/layout/components/chat-provider";
 import ChatDoc from "@/features/layout/components/chat-doc";
-
+import { UserProvider } from "@/features/profile/context/user-constext";
 
 export const metadata: Metadata = {
   title: {
@@ -27,9 +29,11 @@ export const metadata: Metadata = {
   ],
 };
 
-
 export default async function RootLayout({ children, params }: LayoutProps) {
   const { locale } = await params;
+  
+  // Obtener información inicial del usuario en el servidor
+  const { payload: initialUser } = await getUserInfo();
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -44,30 +48,32 @@ export default async function RootLayout({ children, params }: LayoutProps) {
             <NextIntlClientProvider locale={locale}>
               <BProgressProvider options={{ showSpinner: true }} startOnLoad spinnerPosition="bottom-right" shallowRouting={false}>
                 <ChatProvider>
-                  <SubdomainProvider
-                    adminLayout={(
-                      <>
-                        <Header />
-                        <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
+                  <UserProvider initialUser={initialUser}>
+                    <SubdomainProvider
+                      adminLayout={(
+                        <>
+                          <Header />
+                          <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
+                            {children}
+                          </main>
+                          <FloatingDockContainer />
+                          <Footer />
+                          <ChatDoc />
+                          <Toaster position="top-center" richColors />
+                          <LayoutBackgroundEffects />
+                          <GlobalEmailConfirmationDetector />
+                        </>
+                      )}
+                      userLayout={(
+                        <>
                           {children}
-                        </main>
-                        <FloatingDockContainer />
-                        <Footer />
-                        <ChatDoc />
-                        <Toaster position="top-center" richColors />
-                        <LayoutBackgroundEffects />
-                        <GlobalEmailConfirmationDetector />
-                      </>
-                    )}
-                    userLayout={(
-                      <>
-                        {children}
-                        <ChatDoc />
-                        <GlobalEmailConfirmationDetector />
-                        <Toaster position="top-center" />
-                      </>
-                    )}
-                  />
+                          <ChatDoc />
+                          <GlobalEmailConfirmationDetector />
+                          <Toaster position="top-center" />
+                        </>
+                      )}
+                    />
+                  </UserProvider>
                 </ChatProvider>
               </BProgressProvider>
             </NextIntlClientProvider>

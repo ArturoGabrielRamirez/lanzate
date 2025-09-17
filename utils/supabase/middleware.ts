@@ -44,6 +44,11 @@ function createCookieConfig() {
   }
 }
 
+// Función para verificar si es una ruta de perfil público
+function isPublicProfileRoute(pathWithoutLocale: string): boolean {
+  return pathWithoutLocale.match(/^\/u\/[a-zA-Z0-9_-]+$/) !== null
+}
+
 export async function updateSession(request: NextRequest) {
   const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'
   const subdomain = extractSubdomain(request)
@@ -152,6 +157,11 @@ export async function updateSession(request: NextRequest) {
       return NextResponse.rewrite(url, response)
     }
 
+    // Permitir rutas de perfil público en subdominios también
+    if (isPublicProfileRoute(pathWithoutLocale)) {
+      return response
+    }
+
     return response
   }
 
@@ -164,8 +174,12 @@ export async function updateSession(request: NextRequest) {
     '/terms-and-conditions',
     '/cookies',
   ]
+
+  // Verificar si es una ruta de perfil público (no requiere autenticación)
+  const isPublicProfile = isPublicProfileRoute(pathWithoutLocale)
+
   // Redirecciones de autenticación simples
-  if (!user && !publicRoutes.includes(pathWithoutLocale)) {
+  if (!user && !publicRoutes.includes(pathWithoutLocale) && !isPublicProfile) {
     const url = new URL(`/${currentLocale}/login`, `https://${rootDomain}`)
     return NextResponse.redirect(url)
   }
@@ -177,7 +191,6 @@ export async function updateSession(request: NextRequest) {
 
   return response
 }
-
 /* export const config = {
   matcher: [
     '/((?!api|_next/static|_next/image|favicon.ico).*)',

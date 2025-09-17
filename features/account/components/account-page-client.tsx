@@ -1,6 +1,7 @@
+// features/account/components/account-page-client.tsx
 'use client'
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { User, AlertTriangle, Settings } from "lucide-react"
 import { Title } from "@/features/layout/components"
 import { EmailStatusBanner } from "@/features/auth/components/index"
@@ -8,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import PageContainer from "@/features/layout/components/page-container"
 import { LoadingSkeleton } from "./loading-skeleton"
 import { DeletionRequestedView } from "./deletion-requested-view"
-import AccountHeader from "./account-header"
+import AccountBannerHeader from "./account-banner-header" // Cambiado aquí
 import AccountDetailsTab from "./account-details-tab"
 import DangerZoneTab from "./danger-zone-tab"
 import { AccountPageClientProps } from "../types"
@@ -20,6 +21,21 @@ export default function AccountPageClient({ user: initialUser, translations: t }
     const { deletionStatus, isDeletionLoading, fetchDeletionStatus, hasInitialized } = useDeletionStatus()
     const [activeTab, setActiveTab] = useState("account")
     const [dangerZoneLoaded, setDangerZoneLoaded] = useState(false)
+
+    // Handler para actualizar el banner (opcional)
+    const handleBannerUpdate = useCallback(async (url: string | null) => {
+        // Aquí podrías implementar la lógica para guardar el banner
+        // Similar a como manejas el avatar
+        console.log('Banner actualizado:', url)
+        
+        // Ejemplo de implementación:
+        // try {
+        //   await updateUserBanner(user.id, url)
+        //   // Actualizar estado si es necesario
+        // } catch (error) {
+        //   console.error('Error updating banner:', error)
+        // }
+    }, [])
 
     const loadDangerZone = () => {
         if (!dangerZoneLoaded && activeTab === "danger-zone") {
@@ -49,9 +65,7 @@ export default function AccountPageClient({ user: initialUser, translations: t }
 
     return (
         <PageContainer>
-
             <div className="flex-shrink-0 mb-2 md:mb-4">
-
                 <Title
                     title={(
                         <div className="flex items-center gap-2">
@@ -69,19 +83,23 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                 />
                 <EmailStatusBanner />
 
-                <AccountHeader
+                {/* Reemplazado AccountHeader con AccountBannerHeader */}
+                <AccountBannerHeader
                     user={user}
                     translations={t}
                     onAvatarUpdate={handleAvatarUpdate}
                     onProfileUpdate={handleProfileUpdate}
+                    onBannerUpdate={handleBannerUpdate} // Nueva prop para banner
                 />
             </div>
 
-            <div className="flex-1  overflow-hidden">
+            <div className="flex-1 overflow-hidden">
                 <Tabs
-                   value={activeTab}
+                    value={activeTab}
                     onValueChange={setActiveTab}
-                  defaultValue="account" className="h-full grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4">
+                    defaultValue="account" 
+                    className="h-full grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4"
+                >
                     <TabsList className="w-full h-fit items-start flex-shrink-0">
                         <div className="flex md:block w-full">
                             <TabsTrigger value="account" className="w-full h-fit cursor-pointer py-3">
@@ -122,7 +140,6 @@ export default function AccountPageClient({ user: initialUser, translations: t }
                     </TabsContent>
                 </Tabs>
             </div>
-
         </PageContainer>
     )
 }
