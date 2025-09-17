@@ -444,7 +444,7 @@ export async function DELETE(request: NextRequest) {
       )
     }
 
-    const { type, mediaId, productId, storeId } = await request.json()
+    const { type, mediaId,/*  productId, storeId  */} = await request.json()
 
     const user = await getUserId(currentUserResponse)
     const supabase = await createServerSideClient()
