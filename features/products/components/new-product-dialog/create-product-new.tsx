@@ -15,7 +15,7 @@ export default function CreateProductNew({ storeId }: { storeId: number }) {
                     <span>Create Product</span>
                 </Button>
             </DialogTrigger>
-            <DialogContent isScroll>
+            <DialogContent isScroll className="max-h-[80vh] overflow-y-auto">
                 <DialogTitle>Create Product</DialogTitle>
                 <DialogDescription>Create a new product</DialogDescription>
                 <MultiStepForm storeId={storeId} />

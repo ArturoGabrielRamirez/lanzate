@@ -42,7 +42,7 @@ function MultiStepForm({ storeId }: { storeId: number }) {
         flavors: [],
         fragrances: [],
         colors: [],
-        material: [],
+        materials: [],
     };
 
     const handleComplete = (data: FormValues) => {

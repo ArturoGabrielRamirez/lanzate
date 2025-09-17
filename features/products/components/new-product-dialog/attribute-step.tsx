@@ -3,7 +3,7 @@ import { FormValues } from "./validation-schemas"
 import { useState, useEffect, useTransition } from "react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
-import { Calendar, Check, Info, Loader2, Plus, RotateCw, Trash, Weight } from "lucide-react"
+import { Calendar, Check, Info, Loader2, Plus, RotateCw, Trash, Weight, X } from "lucide-react"
 import * as motion from "motion/react-client"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
@@ -20,6 +20,7 @@ import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { getColors } from "../../data/getColors"
 import { deleteColor } from "../../actions/deleteColor"
 import { toast } from "sonner"
+import MaterialsSelector from "./materials-selector"
 
 function AttributesStep({ storeId }: { storeId: number }) {
 
@@ -111,6 +112,10 @@ function AttributesStep({ storeId }: { storeId: number }) {
 
     const handleAddColor = () => {
         setSelectNewColor(true)
+    }
+
+    const handleCancelAddColor = () => {
+        setSelectNewColor(false)
     }
 
     const handleDeleteColor = async (value: string) => {
@@ -662,11 +667,11 @@ function AttributesStep({ storeId }: { storeId: number }) {
                     {accordions.surface && (
                         <AccordionItem value="surface">
                             <AccordionTrigger className={cn(
-                                (form.formState.errors.colors || form.formState.errors.material) && "text-red-500"
+                                (form.formState.errors.colors || form.formState.errors.materials) && "text-red-500"
                             )}>
                                 <span>Superficie</span>
                             </AccordionTrigger>
-                            <AccordionContent>
+                            <AccordionContent className="space-y-4">
                                 <AnimatePresence>
                                     {selected.includes("Color") && (
                                         <motion.div
@@ -764,8 +769,8 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                 <Tooltip>
                                                                     <TooltipTrigger asChild>
                                                                         <IconButton
-                                                                            icon={Plus}
-                                                                            onClick={handleAddColor}
+                                                                            icon={selectNewColor ? X : Plus}
+                                                                            onClick={selectNewColor ? handleCancelAddColor : handleAddColor}
                                                                         />
                                                                     </TooltipTrigger>
                                                                     <TooltipContent>
@@ -773,6 +778,42 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                     </TooltipContent>
                                                                 </Tooltip>
                                                             </div>
+                                                        </FormControl>
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </motion.div>
+                                    )}
+
+                                    {selected.includes("Material") && (
+                                        <motion.div
+                                            initial={{ opacity: 0, x: 50 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            exit={{ opacity: 0, y: 50, position: 'absolute' }}
+                                            key="materials"
+                                            className="flex items-end w-full"
+                                        >
+
+                                            <FormField
+                                                control={form.control}
+                                                name="materials"
+                                                render={({ field }) => (
+                                                    <FormItem className="w-full">
+                                                        <FormLabel className="text-muted-foreground/50">
+                                                            Materiales <span className="text-red-500">*</span>
+                                                            <Tooltip>
+                                                                <TooltipTrigger asChild>
+                                                                    <Info className="size-4 cursor-pointer" />
+                                                                </TooltipTrigger>
+                                                                <TooltipContent>
+                                                                    <p>Los materiales del producto</p>
+                                                                    <p>Ej: Madera, Metal, Plástico, Cuero, Tela</p>
+                                                                    <FormMessage className="text-foreground text-xs" />
+                                                                </TooltipContent>
+                                                            </Tooltip>
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <MaterialsSelector storeId={storeId} />
                                                         </FormControl>
                                                     </FormItem>
                                                 )}

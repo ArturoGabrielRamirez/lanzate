@@ -1,11 +1,12 @@
 import { useMultiStepForm } from "@/components/multi-step-form-wrapper"
 import { FormValues } from "./validation-schemas"
-import { FileUploadClear, FileUploadDropzone, useFileUpload } from "@/components/ui/file-upload"
+import { FileUploadClear, FileUploadDropzone, FileUploadItem, FileUploadItemPreview, useFileUpload } from "@/components/ui/file-upload"
 import { useCamera } from "@/features/auth/hooks/use-camera"
 import { toast } from "sonner"
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Camera, Trash, Upload } from "lucide-react"
+import CameraComponent from "@/features/auth/components/avatar/camera-component"
 
 function FileUploadDropzoneWrapper() {
     const { form } = useMultiStepForm<FormValues>()
@@ -37,8 +38,15 @@ function FileUploadDropzoneWrapper() {
         form.setValue('images', [])
     }
 
+    const handleCloseCamera = () => {
+        camera.closeCamera();
+    }
+
     return (
-        <FileUploadDropzone className="rounded-full aspect-square w-full">
+        <FileUploadDropzone className="rounded-full aspect-square w-full relative overflow-hidden">
+            {Array.from(files.entries()).length > 0 && (
+                <img src={URL.createObjectURL(files.entries().next().value[0])} alt="Image" className="w-full h-full object-cover absolute" />
+            )}
             {Array.from(files.entries()).length === 0 && (
                 <>
                     <Tooltip>
@@ -71,6 +79,12 @@ function FileUploadDropzoneWrapper() {
                     </TooltipContent>
                 </Tooltip>
             )}
+            <CameraComponent
+                title="Tomar foto"
+                onCapture={() => { }}
+                onClose={handleCloseCamera}
+                isOpen={camera.isOpen}
+            />
         </FileUploadDropzone>
     )
 }
