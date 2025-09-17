@@ -1,9 +1,9 @@
 import { useMultiStepForm } from "@/components/multi-step-form-wrapper"
 import { FormValues } from "./validation-schemas"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useTransition } from "react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
-import { Calendar, Info, RotateCw, Weight } from "lucide-react"
+import { Calendar, Check, Info, Loader2, Plus, RotateCw, Trash, Weight } from "lucide-react"
 import * as motion from "motion/react-client"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
@@ -15,12 +15,23 @@ import TalleSelector from "./talle-selector"
 import DimensionSelector from "./dimension-selector"
 import FlavorSelector from "./flavor-selector"
 import FraganceSelector from "./fragance-selector"
+import ColorSelector from "./color-selector"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { getColors } from "../../data/getColors"
+import { deleteColor } from "../../actions/deleteColor"
+import { toast } from "sonner"
 
 function AttributesStep({ storeId }: { storeId: number }) {
 
     const { form } = useMultiStepForm<FormValues>()
 
     const [selected, setSelected] = useState<string[]>([])
+    const [selectedColors, setSelectedColors] = useState<{ value: string; name: string }[]>([])
+    const [selectNewColor, setSelectNewColor] = useState<boolean>(false)
+    const [isDeletingPending, startDeletingTransition] = useTransition()
+    const [realSelectedColors, setRealSelectedColors] = useState<string[]>([])
+    console.log("🚀 ~ AttributesStep ~ realSelectedColors:", realSelectedColors)
+
     const [accordions, setAccordions] = useState({
         content: false,
         dimensions: false,
@@ -70,6 +81,18 @@ function AttributesStep({ storeId }: { storeId: number }) {
         }
     }, [])
 
+    useEffect(() => {
+        const load = async () => {
+            const { payload, error } = await getColors({ storeId })
+
+            if (error) return
+
+            setSelectedColors(payload.map((color: { hex: string, name: string }) => ({ value: color.hex, name: color.name })))
+
+        }
+        load()
+    }, [])
+
     const handleAttributeChange = (vals: string[]) => {
         setSelected(vals)
         setAccordions({
@@ -85,6 +108,46 @@ function AttributesStep({ storeId }: { storeId: number }) {
         if (!vals.includes("Material")) form.setValue('material', [])
         if (!vals.includes("Sabor")) form.setValue('flavors', [])
         if (!vals.includes("Fragancia")) form.setValue('fragrances', [])
+    }
+
+    const handleAddColor = () => {
+        setSelectNewColor(true)
+    }
+
+    const handleDeleteColor = async (value: string) => {
+        startDeletingTransition(async () => {
+            toast.loading("Eliminando color...")
+
+            try {
+                const { error, message } = await deleteColor(value, storeId)
+
+                if (error) throw new Error(message)
+
+                toast.dismiss()
+                toast.success("Color eliminado correctamente")
+                setSelectedColors(selectedColors.filter((color) => color.value !== value))
+
+            } catch (error) {
+                toast.dismiss()
+                toast.error("Error al eliminar el color")
+            }
+        })
+
+    }
+
+    const handleCreatedColor = (color: string, name: string) => {
+        setSelectedColors([...selectedColors, { value: color, name }])
+        setSelectNewColor(false)
+    }
+
+    const toggleSelectColor = (color: string) => {
+
+        if (realSelectedColors.includes(color)) {
+            setRealSelectedColors(realSelectedColors.filter((c) => c !== color))
+        } else {
+            setRealSelectedColors([...realSelectedColors, color])
+        }
+
     }
 
     return (
@@ -600,9 +663,119 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                 <span>Superficie</span>
                             </AccordionTrigger>
                             <AccordionContent>
-                                <div>
-                                    <h3>Superficie</h3>
-                                </div>
+                                <AnimatePresence>
+                                    {selected.includes("Color") && (
+                                        <motion.div
+                                            initial={{ opacity: 0, x: 50 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            exit={{ opacity: 0, y: 50, position: 'absolute' }}
+                                            key="colors"
+                                            className="flex items-end w-full"
+                                        >
+                                            <FormField
+                                                control={form.control}
+                                                name="colors"
+                                                render={({ field }) => (
+                                                    <FormItem className="w-full">
+                                                        <FormLabel className="text-muted-foreground/50">
+                                                            Colores <span className="text-red-500">*</span>
+                                                            <Tooltip>
+                                                                <TooltipTrigger asChild>
+                                                                    <Info className="size-4 cursor-pointer" />
+                                                                </TooltipTrigger>
+                                                                <TooltipContent>
+                                                                    <p>Los colores del producto</p>
+                                                                    <p>Ej: Rojo, Azul, Verde, Amarillo, Morado, Naranja</p>
+                                                                    <FormMessage className="text-foreground text-xs" />
+                                                                </TooltipContent>
+                                                            </Tooltip>
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <div className="flex flex-wrap gap-4 items-baseline">
+                                                                <AnimatePresence>
+                                                                    {selectedColors.map((color, index) => (
+                                                                        <motion.div
+                                                                            initial={{ opacity: 0, x: 50 }}
+                                                                            animate={{ opacity: 1, x: 0 }}
+                                                                            exit={{ opacity: 0, y: 50 }}
+                                                                            key={`${color.value}-${index}`}
+                                                                            className="flex flex-wrap gap-4 items-baseline"
+                                                                        >
+                                                                            <div className="group flex flex-col gap-2">
+                                                                                <div className="relative flex items-center justify-center">
+                                                                                    <div
+                                                                                        className="aspect-square rounded-sm size-16"
+                                                                                        style={{ backgroundColor: color.value }}
+                                                                                        onClick={() => toggleSelectColor(color.value)}
+                                                                                    />
+                                                                                    <div className="absolute w-full h-full bg-background/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out" onClick={() => toggleSelectColor(color.value)}>
+                                                                                        <Tooltip>
+                                                                                            <TooltipTrigger asChild>
+                                                                                                <IconButton
+                                                                                                    icon={isDeletingPending ? Loader2 : Trash}
+                                                                                                    onClick={() => handleDeleteColor(color.value)}
+                                                                                                    disabled={isDeletingPending}
+                                                                                                    className={cn(isDeletingPending && "animate-spin")}
+                                                                                                />
+                                                                                            </TooltipTrigger>
+                                                                                            <TooltipContent>
+                                                                                                <p>{isDeletingPending ? "Eliminando color..." : "Eliminar color"}</p>
+                                                                                            </TooltipContent>
+                                                                                        </Tooltip>
+                                                                                        <Tooltip>
+                                                                                            <TooltipTrigger asChild>
+                                                                                                <IconButton
+                                                                                                    icon={Check}
+                                                                                                    onClick={() => toggleSelectColor(color.value)}
+                                                                                                />
+                                                                                            </TooltipTrigger>
+                                                                                            <TooltipContent>
+                                                                                                <p>Seleccionar color</p>
+                                                                                            </TooltipContent>
+                                                                                        </Tooltip>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <p className="flex items-center gap-2">
+                                                                                    {color.name}
+                                                                                    {realSelectedColors.includes(color.value) && <Check className="size-4 text-green-500" />}
+                                                                                </p>
+                                                                            </div>
+                                                                        </motion.div>
+                                                                    ))}
+                                                                    {selectNewColor && (
+                                                                        <motion.div
+                                                                            initial={{ opacity: 0, x: 50 }}
+                                                                            animate={{ opacity: 1, x: 0 }}
+                                                                            exit={{ opacity: 0, y: 50 }}
+                                                                            key="new-color"
+                                                                            className="flex flex-wrap gap-4 items-baseline"
+                                                                        >
+                                                                            <ColorSelector
+                                                                                storeId={storeId}
+                                                                                onCreated={handleCreatedColor}
+                                                                            />
+                                                                        </motion.div>
+                                                                    )}
+                                                                </AnimatePresence>
+                                                                <Tooltip>
+                                                                    <TooltipTrigger asChild>
+                                                                        <IconButton
+                                                                            icon={Plus}
+                                                                            onClick={handleAddColor}
+                                                                        />
+                                                                    </TooltipTrigger>
+                                                                    <TooltipContent>
+                                                                        <p>Agregar color</p>
+                                                                    </TooltipContent>
+                                                                </Tooltip>
+                                                            </div>
+                                                        </FormControl>
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </AccordionContent>
                         </AccordionItem>
                     )}

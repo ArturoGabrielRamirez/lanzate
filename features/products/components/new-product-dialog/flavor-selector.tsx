@@ -13,7 +13,7 @@ const FlavorSelector = ({ storeId }: { storeId: number }) => {
     const { form } = useMultiStepForm<FormValues>()
 
     const [flavorInput, setFlavorInput] = useState<string>("")
-    const [initialFlavors, setInitialFlavors] = useState<string[]>(["Vainilla", "Chocolate", "Frutilla", "Limón", "Caramelo", "Menta", "Café", "Nuez"])
+    const [initialFlavors, setInitialFlavors] = useState<string[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [selectedFlavors, setSelectedFlavors] = useState<string[]>([])
     const [optimisticSelectedFlavors, setOptimisticSelectedFlavors] = useOptimistic<string[]>(selectedFlavors)

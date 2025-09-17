@@ -13,7 +13,7 @@ const DimensionSelector = ({ storeId }: { storeId: number }) => {
     const { form } = useMultiStepForm<FormValues>()
 
     const [dimensionInput, setDimensionInput] = useState<string>("")
-    const [initialDimensions, setInitialDimensions] = useState<string[]>(["1L", "2L", "pequeño", "mediano", "grande"])
+    const [initialDimensions, setInitialDimensions] = useState<string[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [selectedDimensions, setSelectedDimensions] = useState<string[]>([])
     const [optimisticSelectedDimensions, setOptimisticSelectedDimensions] = useOptimistic<string[]>(selectedDimensions)

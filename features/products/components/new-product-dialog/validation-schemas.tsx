@@ -39,7 +39,7 @@ export const attributesSchema = z.object({
     dimensions: z.array(z.string()).optional().nullable(),
     flavors: z.array(z.string()).optional().nullable(),
     fragrances: z.array(z.string()).optional().nullable(),
-    colors: z.array(z.string()).optional().nullable(),
+    colors: z.array(z.object({ value: z.string(), name: z.string().optional() })).optional().nullable(),
     material: z.array(z.string()).optional().nullable(),
 })
 

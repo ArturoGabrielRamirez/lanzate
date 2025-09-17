@@ -13,11 +13,10 @@ const FraganceSelector = ({ storeId }: { storeId: number }) => {
     const { form } = useMultiStepForm<FormValues>()
 
     const [fraganceInput, setFraganceInput] = useState<string>("")
-    const [initialFragances, setInitialFragances] = useState<string[]>(["Lavanda", "Cítrico", "Vainilla", "Sándalo", "Rosa", "Jazmín", "Menta", "Cedro"])
+    const [initialFragances, setInitialFragances] = useState<string[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [selectedFragances, setSelectedFragances] = useState<string[]>([])
     const [optimisticSelectedFragances, setOptimisticSelectedFragances] = useOptimistic<string[]>(selectedFragances)
-    console.log("🚀 ~ FraganceSelector ~ optimisticSelectedFragances:", optimisticSelectedFragances)
     const [isPending, startTransition] = useTransition()
 
     useEffect(() => {

@@ -13,7 +13,7 @@ const TalleSelector = ({ storeId }: { storeId: number }) => {
     const { form } = useMultiStepForm<FormValues>()
 
     const [talleInput, setTalleInput] = useState<string>("")
-    const [initialTalles, setInitialTalles] = useState<string[]>(["XS", "S", "M", "L", "XL"])
+    const [initialTalles, setInitialTalles] = useState<string[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [selectedTalles, setSelectedTalles] = useState<string[]>([])
     const [optimisticSelectedTalles, setOptimisticSelectedTalles] = useOptimistic<string[]>(selectedTalles)
