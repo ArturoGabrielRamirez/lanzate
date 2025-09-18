@@ -1,20 +1,42 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Material } from "@prisma/client"
-import { Check, Trash, X } from "lucide-react"
+import { Check, Loader2, Trash, X } from "lucide-react"
+import { useTransition } from "react"
+import { deleteMaterialAction } from "../../actions/deleteMaterialAction"
+import { toast } from "sonner"
+import { cn } from "@/lib/utils"
 
 type Props = {
     material: Material & { selected: boolean }
+    onDelete?: (material: Material) => void
+    onToggleSelected?: (material: Material) => void
 }
 
-const MaterialPreview = ({ material }: Props) => {
+const MaterialPreview = ({ material, onDelete, onToggleSelected }: Props) => {
+
+    const [isDeletePending, startDeleteTransition] = useTransition()
+
 
     const handleToggleSelected = () => {
-
+        if (onToggleSelected && typeof onToggleSelected === "function") onToggleSelected(material)
     }
 
     const handleDeleteMaterial = () => {
-
+        if (isDeletePending) return
+        startDeleteTransition(async () => {
+            toast.loading("Deleting material...")
+            try {
+                const { error, message } = await deleteMaterialAction(material.label, material.store_id)
+                if (error) throw new Error(message)
+                toast.dismiss()
+                toast.success("Material deleted successfully")
+                if (onDelete && typeof onDelete === "function") onDelete(material)
+            } catch (error) {
+                toast.dismiss()
+                toast.error(error instanceof Error ? error.message : "Failed to delete material")
+            }
+        })
     }
 
     return (
@@ -34,8 +56,10 @@ const MaterialPreview = ({ material }: Props) => {
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <IconButton
-                                icon={Trash}
-                                onClick={handleToggleSelected}
+                                icon={isDeletePending ? Loader2 : Trash}
+                                onClick={handleDeleteMaterial}
+                                disabled={isDeletePending}
+                                className={cn(isDeletePending && "animate-spin")}
                             />
                         </TooltipTrigger>
                         <TooltipContent>

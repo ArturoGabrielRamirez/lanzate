@@ -23,10 +23,8 @@ type Props = {
 const MaterialsSelector = ({ storeId }: Props) => {
 
     const { form } = useMultiStepForm<FormValues>()
-    console.log("🚀 ~ MaterialsSelector ~ form:", form.formState.errors)
 
     const [materials, setMaterials] = useState<(Material & { selected: boolean })[]>([])
-    console.log("🚀 ~ MaterialsSelector ~ materials:", materials)
     const [selectNewMaterial, setSelectNewMaterial] = useState<boolean>(false)
     const [file, setFile] = useState<File | null>(null)
     const [materialLabel, setMaterialLabel] = useState<string>("")
@@ -111,6 +109,7 @@ const MaterialsSelector = ({ storeId }: Props) => {
                     image_url: materialPublicUrl,
                     store_id: storeId
                 })
+                console.log("🚀 ~ handleConfirmAddMaterial ~ payload:", payload)
 
                 if (error) throw new Error(message)
 
@@ -135,11 +134,27 @@ const MaterialsSelector = ({ storeId }: Props) => {
         form.setValue(`materials.${materials.length}.name`, e.target.value)
     }
 
+    const handleDeleteMaterial = (material: Material) => {
+        setMaterials(materials.filter((m) => m.label !== material.label))
+    }
+
+    const handleToggleSelected = (material: Material) => {
+
+        const next = materials.map((m) => m.label === material.label ? { ...m, selected: !m.selected } : m)
+        setMaterials(next)
+        form.setValue('materials', next.filter((m) => m.selected).map((m) => ({ value: new File([], m.image_url || ""), name: m.label })))
+    }
+
     return (
         <div>
             <div className="flex flex-wrap items-center gap-4">
                 {materials.map((material) => (
-                    <MaterialPreview key={material.id} material={material} />
+                    <MaterialPreview
+                        key={material.id}
+                        material={material}
+                        onDelete={handleDeleteMaterial}
+                        onToggleSelected={handleToggleSelected}
+                    />
                 ))}
                 {isGettingMaterials && (
                     <div className="flex items-center gap-2">

@@ -13,24 +13,15 @@ export async function insertMaterial(payload: { label: string; image_url?: strin
 
   if (existing) throw new Error("Material already exists")
 
-  const created = await prisma.store.update({
-    where: {
-      id: payload.store_id
-    },
+  const created = await prisma.material.create({
     data: {
-      materials: {
-        create: {
-          label: payload.label,
-          image_url: payload.image_url
-        }
-      }
-    },
-    include: {
-      materials: true
+      label: payload.label,
+      image_url: payload.image_url,
+      store_id: payload.store_id
     }
   })
 
-  return { payload: created.materials, error: false, message: "ok" }
+  return { payload: created, error: false, message: "ok" }
 
 }
 
