@@ -3,7 +3,7 @@ import { FormValues } from "./validation-schemas"
 import { useState, useEffect, useTransition } from "react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
-import { Calendar, Check, Info, Loader2, Plus, RotateCw, Trash, Weight, X } from "lucide-react"
+import { Box, Calendar, Check, Info, Loader2, Palette, Plus, RotateCw, Ruler, Scale, Shirt, Trash, Weight, X } from "lucide-react"
 import * as motion from "motion/react-client"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
@@ -188,7 +188,10 @@ function AttributesStep({ storeId }: { storeId: number }) {
                             <AccordionTrigger className={cn(
                                 (form.formState.errors.weight || form.formState.errors.expiration_date) && "text-red-500"
                             )}>
-                                <span>Contenido y vencimiento</span>
+                                <div className="flex items-center gap-2">
+                                    <Box />
+                                    <span>Contenido y vencimiento</span>
+                                </div>
                             </AccordionTrigger>
                             <AccordionContent>
                                 <div className={cn(
@@ -312,7 +315,10 @@ function AttributesStep({ storeId }: { storeId: number }) {
                             <AccordionTrigger className={cn(
                                 (form.formState.errors.height || form.formState.errors.width || form.formState.errors.depth || form.formState.errors.circumference) && "text-red-500"
                             )}>
-                                <span>Dimensiones</span>
+                                <div className="flex items-center gap-2">
+                                    <Ruler />
+                                    <span>Dimensiones</span>
+                                </div>
                             </AccordionTrigger>
                             <AccordionContent>
                                 <div className={cn(
@@ -593,7 +599,10 @@ function AttributesStep({ storeId }: { storeId: number }) {
                             <AccordionTrigger className={cn(
                                 (form.formState.errors.sizes || form.formState.errors.dimensions) && "text-red-500"
                             )}>
-                                <span>Talles y tamaños</span>
+                                <div className="flex items-center gap-2">
+                                    <Scale />
+                                    <span>Talles y tamaños</span>
+                                </div>
                             </AccordionTrigger>
                             <AccordionContent>
                                 <div className={cn(
@@ -678,7 +687,10 @@ function AttributesStep({ storeId }: { storeId: number }) {
                             <AccordionTrigger className={cn(
                                 (form.formState.errors.colors || form.formState.errors.materials) && "text-red-500"
                             )}>
-                                <span>Superficie</span>
+                                <div className="flex items-center gap-2">
+                                    <Palette />
+                                    <span>Superficie</span>
+                                </div>
                             </AccordionTrigger>
                             <AccordionContent className="space-y-4">
                                 <AnimatePresence>
@@ -854,7 +866,10 @@ function AttributesStep({ storeId }: { storeId: number }) {
                             <AccordionTrigger className={cn(
                                 (form.formState.errors.flavors || form.formState.errors.fragrances) && "text-red-500"
                             )}>
-                                <span>Aromas y sabores</span>
+                                <div className="flex items-center gap-2">
+                                    <Box />
+                                    <span>Aromas y sabores</span>
+                                </div>
                             </AccordionTrigger>
                             <AccordionContent>
                                 <div className={cn(

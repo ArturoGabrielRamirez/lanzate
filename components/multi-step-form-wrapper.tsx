@@ -74,6 +74,7 @@ export interface MultiStepFormWrapperProps<T extends FormData = FormData> {
   autoSaveDelay?: number
   transitionDuration?: number
   animateStepChange?: boolean
+  showNavigation?: boolean
 }
 
 export function Step<T extends FormData = FormData>({ children }: StepProps<T>): React.ReactNode {
@@ -102,6 +103,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
   autoSaveDelay = 1000,
   transitionDuration = 300,
   animateStepChange = true,
+  showNavigation = true,
 }: MultiStepFormWrapperProps<T>): React.ReactNode {
 
   const steps = React.Children.toArray(children).filter(
@@ -475,7 +477,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
           </div>
         )}
 
-        {navigationPosition === 'top' && renderNavigation()}
+        {(navigationPosition === 'top' && showNavigation) && renderNavigation()}
 
         <div
           className={cn(
@@ -489,7 +491,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
           {CurrentStepComponent}
         </div>
 
-        {navigationPosition === 'bottom' && renderNavigation()}
+        {(navigationPosition === 'bottom' && showNavigation) && renderNavigation()}
       </MultiStepFormContext.Provider>
     </div>
   )
