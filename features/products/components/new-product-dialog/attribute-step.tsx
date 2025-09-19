@@ -737,6 +737,11 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                                         style={{ backgroundColor: color.value }}
                                                                                         onClick={() => toggleSelectColor(color.value, color.name)}
                                                                                     />
+                                                                                    {realSelectedColors.some((c) => c.value === color.value) && (
+                                                                                        <div className="absolute top-0 right-0 grid place-items-center w-full h-full bg-background/90 ">
+                                                                                            <Check className="size-6 text-green-500" />
+                                                                                        </div>
+                                                                                    )}
                                                                                     <div className="absolute w-full h-full bg-background/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out" onClick={() => toggleSelectColor(color.value, color.name)}>
                                                                                         <Tooltip>
                                                                                             <TooltipTrigger asChild>

@@ -429,7 +429,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
   ])
 
   return (
-    <div className={cn("max-w-2xl mx-auto", className)}>
+    <div className={cn("max-w-2xl mx-auto flex flex-col", className)}>
       <MultiStepFormContext.Provider value={contextValue}>
         {showStepIndicator && renderStepIndicators()}
 
@@ -479,7 +479,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 
         <div
           className={cn(
-            "mt-4 mb-4",
+            "mt-4 mb-4 grow",
             animateStepChange && "transition-all duration-300 ease-in-out"
           )}
           style={{
