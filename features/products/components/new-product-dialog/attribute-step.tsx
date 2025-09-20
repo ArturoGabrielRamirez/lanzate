@@ -3,7 +3,7 @@ import { FormValues } from "./validation-schemas"
 import { useState, useEffect, useTransition } from "react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
-import { Box, Calendar, Check, Info, Loader2, Palette, Plus, RotateCw, Ruler, Scale, Shirt, Sparkle, Sparkles, Trash, Weight, X } from "lucide-react"
+import { Box, Calendar, Check, Info, Loader2, Palette, Plus, RotateCw, Ruler, Scale, Sparkles, Trash, Weight, X } from "lucide-react"
 import * as motion from "motion/react-client"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
@@ -27,10 +27,10 @@ function AttributesStep({ storeId }: { storeId: number }) {
     const { form } = useMultiStepForm<FormValues>()
 
     const [selected, setSelected] = useState<string[]>([])
-    const [selectedColors, setSelectedColors] = useState<{ value: string; name: string }[]>([])
+    const [selectedColors, setSelectedColors] = useState<{ value: string; name: string; id: number }[]>([])
     const [selectNewColor, setSelectNewColor] = useState<boolean>(false)
     const [isDeletingPending, startDeletingTransition] = useTransition()
-    const [realSelectedColors, setRealSelectedColors] = useState<{ value: string; name: string }[]>([])
+    const [realSelectedColors, setRealSelectedColors] = useState<{ value: string; name: string; id: number }[]>([])
     const [isGettingColors, startGettingColorsTransition] = useTransition()
 
     const [accordions, setAccordions] = useState({
@@ -80,10 +80,10 @@ function AttributesStep({ storeId }: { storeId: number }) {
                 sensorial: data.selected_attributes.includes("Sabor") || data.selected_attributes.includes("Fragancia"),
             })
             const localColors = data.colors
-            localColors.forEach((color: { value: string, name: string }) => {
+            localColors.forEach((color: { value: string, name: string, id: number }) => {
                 setRealSelectedColors(prev => {
                     if (prev.some((c) => c.value === color.value)) return prev
-                    return [...prev, color]
+                    return [...prev, { value: color.value, name: color.name, id: color.id }]
                 })
             })
         }
@@ -96,7 +96,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
 
                 if (error) return
 
-                setSelectedColors(payload.map((color: { hex: string, name: string }) => ({ value: color.hex, name: color.name })))
+                setSelectedColors(payload.map((color: { hex: string, name: string, id: number }) => ({ value: color.hex, name: color.name, id: color.id })))
             })
         }
         load()
@@ -114,7 +114,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
         form.setValue('selected_attributes', vals)
         if (!vals.includes("Talle")) form.setValue('sizes', [])
         if (!vals.includes("Color")) form.setValue('colors', [])
-        if (!vals.includes("Material")) form.setValue('material', [])
+        if (!vals.includes("Material")) form.setValue('materials', [])
         if (!vals.includes("Sabor")) form.setValue('flavors', [])
         if (!vals.includes("Fragancia")) form.setValue('fragrances', [])
     }
@@ -149,18 +149,18 @@ function AttributesStep({ storeId }: { storeId: number }) {
     }
 
     const handleCreatedColor = (color: string, name: string) => {
-        setSelectedColors([...selectedColors, { value: color, name }])
+        setSelectedColors([...selectedColors, { value: color, name, id: -1 }])
         setSelectNewColor(false)
     }
 
-    const toggleSelectColor = (color: string, name: string) => {
+    const toggleSelectColor = (color: string, name: string, id: number) => {
 
-        let newColors = [...realSelectedColors] as { value: string; name: string }[]
+        let newColors = [...realSelectedColors] as { value: string; name: string; id: number }[]
 
         if (realSelectedColors.some((c) => c.value === color)) {
             newColors = newColors.filter((c) => c.value !== color)
         } else {
-            newColors = [...newColors, { value: color, name }]
+            newColors = [...newColors, { value: color, name, id }]
         }
 
         setRealSelectedColors(newColors)
@@ -229,6 +229,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                 <Input
                                                                     type="number"
                                                                     {...field}
+                                                                    value={field.value || ''}
                                                                     placeholder="Ej: 1000"
                                                                     inputMode="numeric"
                                                                     startContent={<Weight />}
@@ -245,7 +246,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                         return (
                                                             <FormItem>
                                                                 <FormControl>
-                                                                    <Select value={field.value} onValueChange={field.onChange}>
+                                                                    <Select value={field.value || 'kg'} onValueChange={field.onChange}>
                                                                         <SelectTrigger className="rounded-l-none !h-[40px]">
                                                                             <SelectValue placeholder="KG" />
                                                                         </SelectTrigger>
@@ -295,6 +296,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                 <Input
                                                                     type="date"
                                                                     {...field}
+                                                                    value={field.value || ''}
                                                                     placeholder="Enter your expiration date"
                                                                     startContent={<Calendar />}
                                                                     className="w-full"
@@ -355,6 +357,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                 <Input
                                                                     type="number"
                                                                     {...field}
+                                                                    value={field.value || ''}
                                                                     placeholder="Ej. 2Mts"
                                                                     inputMode="numeric"
                                                                     className="rounded-r-none h-10"
@@ -374,7 +377,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                     render={({ field }) => (
                                                         <FormItem>
                                                             <FormControl>
-                                                                <Select value={field.value} onValueChange={field.onChange}>
+                                                                <Select value={field.value || 'cm'} onValueChange={field.onChange}>
                                                                     <SelectTrigger className="rounded-l-none !h-[40px]">
                                                                         <SelectValue placeholder="CM" />
                                                                     </SelectTrigger>
@@ -422,6 +425,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                 <Input
                                                                     type="number"
                                                                     {...field}
+                                                                    value={field.value || ''}
                                                                     placeholder="Ej. 2Mts"
                                                                     inputMode="numeric"
                                                                     className="rounded-r-none h-10"
@@ -441,7 +445,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                     render={({ field }) => (
                                                         <FormItem>
                                                             <FormControl>
-                                                                <Select value={field.value} onValueChange={field.onChange}>
+                                                                <Select value={field.value || 'cm'} onValueChange={field.onChange}>
                                                                     <SelectTrigger className="rounded-l-none !h-[40px]">
                                                                         <SelectValue placeholder="CM" />
                                                                     </SelectTrigger>
@@ -489,6 +493,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                 <Input
                                                                     type="number"
                                                                     {...field}
+                                                                    value={field.value || ''}
                                                                     placeholder="Ej. 2Mts"
                                                                     inputMode="numeric"
                                                                     className="rounded-r-none h-10"
@@ -508,7 +513,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                     render={({ field }) => (
                                                         <FormItem>
                                                             <FormControl>
-                                                                <Select value={field.value} onValueChange={field.onChange}>
+                                                                <Select value={field.value || 'cm'} onValueChange={field.onChange}>
                                                                     <SelectTrigger className="rounded-l-none !h-[40px]">
                                                                         <SelectValue placeholder="CM" />
                                                                     </SelectTrigger>
@@ -556,6 +561,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                 <Input
                                                                     type="number"
                                                                     {...field}
+                                                                    value={field.value || ''}
                                                                     placeholder="Ej. 2Mts"
                                                                     inputMode="numeric"
                                                                     className="rounded-r-none h-10"
@@ -571,7 +577,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                     render={({ field }) => (
                                                         <FormItem>
                                                             <FormControl>
-                                                                <Select value={field.value} onValueChange={field.onChange}>
+                                                                <Select value={field.value || 'cm'} onValueChange={field.onChange}>
                                                                     <SelectTrigger className="rounded-l-none !h-[40px]">
                                                                         <SelectValue placeholder="CM" />
                                                                     </SelectTrigger>
@@ -620,7 +626,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                 <FormField
                                                     control={form.control}
                                                     name="sizes"
-                                                    render={({ field }) => (
+                                                    render={() => (
                                                         <FormItem className="w-full">
                                                             <FormLabel className="text-muted-foreground/50">
                                                                 Talles <span className="text-red-500">*</span>
@@ -654,7 +660,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                 <FormField
                                                     control={form.control}
                                                     name="dimensions"
-                                                    render={({ field }) => (
+                                                    render={() => (
                                                         <FormItem className="w-full">
                                                             <FormLabel className="text-muted-foreground/50">
                                                                 Tamaños <span className="text-red-500">*</span>
@@ -705,7 +711,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                             <FormField
                                                 control={form.control}
                                                 name="colors"
-                                                render={({ field }) => (
+                                                render={() => (
                                                     <FormItem className="w-full">
                                                         <FormLabel className="text-muted-foreground/50">
                                                             Colores <span className="text-red-500">*</span>
@@ -747,14 +753,14 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                                     <div
                                                                                         className="aspect-square rounded-sm size-16"
                                                                                         style={{ backgroundColor: color.value }}
-                                                                                        onClick={() => toggleSelectColor(color.value, color.name)}
+                                                                                        onClick={() => toggleSelectColor(color.value, color.name, color.id)}
                                                                                     />
                                                                                     {realSelectedColors.some((c) => c.value === color.value) && (
                                                                                         <div className="absolute top-0 right-0 grid place-items-center w-full h-full bg-background/90 ">
                                                                                             <Check className="size-6 text-green-500" />
                                                                                         </div>
                                                                                     )}
-                                                                                    <div className="absolute w-full h-full bg-background/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out" onClick={() => toggleSelectColor(color.value, color.name)}>
+                                                                                    <div className="absolute w-full h-full bg-background/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out" onClick={() => toggleSelectColor(color.value, color.name, color.id)}>
                                                                                         <Tooltip>
                                                                                             <TooltipTrigger asChild>
                                                                                                 <IconButton
@@ -772,7 +778,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                                                             <TooltipTrigger asChild>
                                                                                                 <IconButton
                                                                                                     icon={Check}
-                                                                                                    onClick={() => toggleSelectColor(color.value, color.name)}
+                                                                                                    onClick={() => toggleSelectColor(color.value, color.name, color.id)}
                                                                                                 />
                                                                                             </TooltipTrigger>
                                                                                             <TooltipContent>
@@ -834,7 +840,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                             <FormField
                                                 control={form.control}
                                                 name="materials"
-                                                render={({ field }) => (
+                                                render={() => (
                                                     <FormItem className="w-full">
                                                         <FormLabel className="text-muted-foreground/50">
                                                             Materiales <span className="text-red-500">*</span>
@@ -887,7 +893,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                 <FormField
                                                     control={form.control}
                                                     name="fragrances"
-                                                    render={({ field }) => (
+                                                    render={() => (
                                                         <FormItem className="w-full">
                                                             <FormLabel className="text-muted-foreground/50">
                                                                 Fragancias <span className="text-red-500">*</span>
@@ -921,7 +927,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                 <FormField
                                                     control={form.control}
                                                     name="flavors"
-                                                    render={({ field }) => (
+                                                    render={() => (
                                                         <FormItem className="w-full">
                                                             <FormLabel className="text-muted-foreground/50">
                                                                 Sabores <span className="text-red-500">*</span>
