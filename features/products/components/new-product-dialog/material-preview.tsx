@@ -1,7 +1,7 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Material } from "@prisma/client"
-import { Check, Loader2, Trash, X } from "lucide-react"
+import { Check, Loader2, Trash } from "lucide-react"
 import { useTransition } from "react"
 import { deleteMaterialAction } from "../../actions/deleteMaterialAction"
 import { toast } from "sonner"
@@ -9,8 +9,8 @@ import { cn } from "@/lib/utils"
 
 type Props = {
     material: Material & { selected: boolean }
-    onDelete?: (material: Material) => void
-    onToggleSelected?: (material: Material) => void
+    onDelete?: (material: (Material & { selected: boolean })) => void
+    onToggleSelected?: (material: (Material & { selected: boolean })) => void
 }
 
 const MaterialPreview = ({ material, onDelete, onToggleSelected }: Props) => {
@@ -27,7 +27,7 @@ const MaterialPreview = ({ material, onDelete, onToggleSelected }: Props) => {
         startDeleteTransition(async () => {
             toast.loading("Deleting material...")
             try {
-                const { error, message } = await deleteMaterialAction(material.label, material.store_id)
+                const { error, message } = await deleteMaterialAction(material.id, material.store_id)
                 if (error) throw new Error(message)
                 toast.dismiss()
                 toast.success("Material deleted successfully")

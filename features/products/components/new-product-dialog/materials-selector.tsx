@@ -2,7 +2,6 @@ import { useMultiStepForm } from "@/components/multi-step-form-wrapper"
 import { FormValues } from "./validation-schemas"
 import { useEffect, useState, useTransition } from "react"
 import { getMaterials } from "../../actions/getMaterials"
-import { Material } from "@prisma/client"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Check, Loader, Plus, X } from "lucide-react"
@@ -16,6 +15,7 @@ import { toast } from "sonner"
 import { createMaterialAction } from "../../actions/createMaterialAction"
 import { createMaterialDynamic } from "../../actions/createMaterialDynamic"
 import MaterialPreview from "./material-preview"
+import { Material } from "@prisma/client"
 
 type Props = {
     storeId: number
@@ -45,13 +45,13 @@ const MaterialsSelector = ({ storeId }: Props) => {
                 if (localData) {
                     const data = JSON.parse(localData)
                     const newPayload = payload.map((material: Material & { selected: boolean }) => {
-                        if (data.materials.some((m: { name: string }) => m.name === material.label)) {
+                        if (data.materials.some((m: { name: string, id: number }) => m.name === material.label && m.id === material.id)) {
                             return { ...material, selected: true }
                         }
                         return material
                     })
                     setMaterials(newPayload)
-                    form.setValue('materials', newPayload.filter((material: Material & { selected: boolean }) => material.selected).map((material: Material & { selected: boolean }) => ({ value: new File([], material.label), name: material.label })))
+                    form.setValue('materials', newPayload.filter((material: Material & { selected: boolean }) => material.selected).map((material: Material & { selected: boolean }) => ({ value: new File([], material.label), name: material.label, id: material.id })))
                 } else {
                     setMaterials(payload)
                     form.setValue('materials', [])
@@ -134,15 +134,15 @@ const MaterialsSelector = ({ storeId }: Props) => {
         form.setValue(`materials.${materials.length}.name`, e.target.value)
     }
 
-    const handleDeleteMaterial = (material: Material) => {
-        setMaterials(materials.filter((m) => m.label !== material.label))
+    const handleDeleteMaterial = (material: Material & { selected: boolean }) => {
+        setMaterials(materials.filter((m) => m.id !== material.id))
     }
 
-    const handleToggleSelected = (material: Material) => {
+    const handleToggleSelected = (material: Material & { selected: boolean }) => {
 
-        const next = materials.map((m) => m.label === material.label ? { ...m, selected: !m.selected } : m)
+        const next = materials.map((m) => m.id === material.id ? { ...m, selected: !m.selected } : m)
         setMaterials(next)
-        form.setValue('materials', next.filter((m) => m.selected).map((m) => ({ value: new File([], m.image_url || ""), name: m.label })))
+        form.setValue('materials', next.filter((m) => m.selected).map((m) => ({ value: new File([], m.image_url || ""), name: m.label || "", id: m.id })))
     }
 
     return (
@@ -181,12 +181,12 @@ const MaterialsSelector = ({ storeId }: Props) => {
                             <FormField
                                 control={form.control}
                                 name={`materials.${materials.length}.name`}
-                                render={({ field }) => (
+                                render={() => (
                                     <>
                                         <FormField
                                             control={form.control}
                                             name={`materials.${materials.length}.value`}
-                                            render={({ field }) => (
+                                            render={() => (
                                                 <>
                                                     <FormInfoLabel>
                                                         Imagen

@@ -2,11 +2,11 @@
 
 import { prisma } from "@/utils/prisma"
 
-export async function deleteMaterial(materialLabel: string, storeId: number) {
+export async function deleteMaterial(materialId: number, storeId: number) {
 
     const material = await prisma.material.findUnique({
         where: {
-            label: materialLabel,
+            id: materialId,
             store_id: storeId
         }
     })
@@ -15,7 +15,7 @@ export async function deleteMaterial(materialLabel: string, storeId: number) {
 
     const deletedMaterial = await prisma.material.delete({
         where: {
-            label: materialLabel,
+            id: materialId,
             store_id: storeId
         }
     })
