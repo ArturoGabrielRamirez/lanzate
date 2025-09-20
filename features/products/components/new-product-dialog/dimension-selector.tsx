@@ -8,15 +8,20 @@ import { FormValues } from "./validation-schemas"
 import { getDimensions } from "../../data/getDimensions"
 import { createDimensionsDynamic } from "../../actions/createDimensionsDynamic"
 
+type DimensionOption = {
+    id: number
+    label: string
+}
+
 const DimensionSelector = ({ storeId }: { storeId: number }) => {
 
     const { form } = useMultiStepForm<FormValues>()
 
     const [dimensionInput, setDimensionInput] = useState<string>("")
-    const [initialDimensions, setInitialDimensions] = useState<string[]>([])
+    const [initialDimensions, setInitialDimensions] = useState<DimensionOption[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [selectedDimensions, setSelectedDimensions] = useState<string[]>([])
-    const [optimisticSelectedDimensions, setOptimisticSelectedDimensions] = useOptimistic<string[]>(selectedDimensions)
+    const [selectedDimensions, setSelectedDimensions] = useState<DimensionOption[]>([])
+    const [optimisticSelectedDimensions, setOptimisticSelectedDimensions] = useOptimistic<DimensionOption[]>(selectedDimensions)
     const [isPending, startTransition] = useTransition()
 
     useEffect(() => {
@@ -32,7 +37,7 @@ const DimensionSelector = ({ storeId }: { storeId: number }) => {
             if (error) return
             setIsLoading(false)
             if (!mounted) return
-            setInitialDimensions([...initialDimensions, ...payload.map((dimension: { label: string }) => dimension.label)])
+            setInitialDimensions(payload)
         }
         load()
         return () => {
@@ -40,27 +45,26 @@ const DimensionSelector = ({ storeId }: { storeId: number }) => {
         }
     }, [])
 
-    const handleSelectDimension = (dimension: string) => {
-        const next = selectedDimensions.includes(dimension) ? selectedDimensions.filter(v => v !== dimension) : [...selectedDimensions, dimension]
-        console.log("🚀 ~ handleSelectDimension ~ next:", next)
+    const handleSelectDimension = (dimension: DimensionOption) => {
+        const next = selectedDimensions.some(v => v.id === dimension.id) ? selectedDimensions.filter(v => v.id !== dimension.id) : [...selectedDimensions, dimension]
         setSelectedDimensions(prev => prev.includes(dimension) ? prev.filter(v => v !== dimension) : [...prev, dimension])
         form.setValue('dimensions', next, { shouldDirty: true })
     }
 
     const handleAddDimension = () => {
         startTransition(async () => {
-            setOptimisticSelectedDimensions([...optimisticSelectedDimensions, dimensionInput])
+            setOptimisticSelectedDimensions([...optimisticSelectedDimensions, { id: -1, label: dimensionInput } as DimensionOption])
             try {
                 toast.loading("Agregando dimensión...")
 
-                const { error, message } = await createDimensionsDynamic(dimensionInput, storeId)
+                const { error, message, payload } = await createDimensionsDynamic(dimensionInput, storeId)
 
                 if (error) throw new Error(message)
 
                 toast.dismiss()
                 toast.success("Talle agregado correctamente")
-                setSelectedDimensions([...selectedDimensions, dimensionInput])
-                setInitialDimensions([...initialDimensions, dimensionInput])
+                setSelectedDimensions([...selectedDimensions, { id: payload.id, label: payload.label }])
+                setInitialDimensions([...initialDimensions, { id: payload.id, label: payload.label }])
                 setDimensionInput("")
             } catch (error) {
                 toast.error("Error al agregar la dimensión")
@@ -72,17 +76,17 @@ const DimensionSelector = ({ storeId }: { storeId: number }) => {
         setDimensionInput(dimension)
     }
 
-    const handleRemoveDimension = (dimension: string) => {
+    const handleRemoveDimension = (dimension: DimensionOption) => {
         setSelectedDimensions(prev => prev.filter(v => v !== dimension))
-        form.setValue('dimensions', selectedDimensions.filter(v => v !== dimension), { shouldDirty: true })
+        form.setValue('dimensions', selectedDimensions.filter(v => v.id !== dimension.id), { shouldDirty: true })
     }
 
     return (
         <Tags>
             <TagsTrigger>
                 {optimisticSelectedDimensions.map((dimension) => (
-                    <TagsValue key={dimension} onRemove={() => handleRemoveDimension(dimension)}>
-                        {dimension}
+                    <TagsValue key={dimension.id} onRemove={() => handleRemoveDimension(dimension)}>
+                        {dimension.label}
                     </TagsValue>
                 ))}
                 {optimisticSelectedDimensions.length === 0 && (
@@ -110,9 +114,9 @@ const DimensionSelector = ({ storeId }: { storeId: number }) => {
                             </TagsItem>
                         )}
                         {initialDimensions.map((dimension) => (
-                            <TagsItem key={dimension} onSelect={() => handleSelectDimension(dimension)}>
-                                {dimension}
-                                {selectedDimensions.includes(dimension) && (
+                            <TagsItem key={dimension.id} onSelect={() => handleSelectDimension(dimension)}>
+                                {dimension.label}
+                                {selectedDimensions.some(selected => selected.id === dimension.id) && (
                                     <CheckIcon className="text-muted-foreground" />
                                 )}
                             </TagsItem>

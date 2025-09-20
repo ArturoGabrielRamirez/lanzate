@@ -13,24 +13,18 @@ export async function insertDimensions(payload: { label: string; value?: number;
 
   if (existing) throw new Error("Dimension already exists")
 
-  const created = await prisma.store.update({
-    where: {
-      id: payload.store_id
-    },
+  const created = await prisma.dimensions.create({
     data: {
-      dimensions: {
-        create: {
-          label: payload.label,
-          value: payload.value,
-          unit: payload.unit
-        }
-      }
+      label: payload.label,
+      store_id: payload.store_id
     },
-    include: {
-      dimensions: true
+    select: {
+      id: true,
+      label: true
     }
   })
-  return { payload: created.dimensions, error: false, message: "ok" }
+
+  return { payload: created, error: false, message: "ok" }
 }
 
 
