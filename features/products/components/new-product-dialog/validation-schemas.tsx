@@ -1,5 +1,7 @@
 import { z } from "zod"
 
+export const emptySchema = z.object({})
+
 export const basicInfoSchema = z.object({
     name: z.string().min(1, { message: "Name is required" }),
     url: z.string().regex(/^[a-zA-Z0-9-_.]+$/, { message: "URL must contain only letters and numbers" }),
@@ -49,7 +51,6 @@ export const formSchema = z.object({
     ...mediaSchema.shape,
     ...attributesSchema.shape,
 }).superRefine((ref, ctx) => {
-
 
     if (ref.selected_attributes?.includes("Peso")) {
         if (!ref.weight) {
@@ -261,6 +262,7 @@ export const formSchema = z.object({
         }
     }
 
+    
     if (ref.selected_attributes?.includes("Material")) {
         if (!ref.materials) {
             return ctx.addIssue({

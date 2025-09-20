@@ -3,7 +3,7 @@ import { FormValues } from "./validation-schemas"
 import { useState, useEffect, useTransition } from "react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
-import { Box, Calendar, Check, Info, Loader2, Palette, Plus, RotateCw, Ruler, Scale, Shirt, Trash, Weight, X } from "lucide-react"
+import { Box, Calendar, Check, Info, Loader2, Palette, Plus, RotateCw, Ruler, Scale, Shirt, Sparkle, Sparkles, Trash, Weight, X } from "lucide-react"
 import * as motion from "motion/react-client"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
@@ -614,7 +614,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                 initial={{ opacity: 0, x: 50 }}
                                                 animate={{ opacity: 1, x: 0 }}
                                                 exit={{ opacity: 0, y: 50, position: 'absolute' }}
-                                                key="height"
+                                                key="sizes"
                                                 className="flex items-end w-full"
                                             >
                                                 <FormField
@@ -648,7 +648,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                                 initial={{ opacity: 0, x: 50 }}
                                                 animate={{ opacity: 1, x: 0 }}
                                                 exit={{ opacity: 0, y: 50, position: 'absolute' }}
-                                                key="height"
+                                                key="dimensions"
                                                 className="flex items-end w-full"
                                             >
                                                 <FormField
@@ -867,7 +867,7 @@ function AttributesStep({ storeId }: { storeId: number }) {
                                 (form.formState.errors.flavors || form.formState.errors.fragrances) && "text-red-500"
                             )}>
                                 <div className="flex items-center gap-2">
-                                    <Box />
+                                    <Sparkles />
                                     <span>Aromas y sabores</span>
                                 </div>
                             </AccordionTrigger>
