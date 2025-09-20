@@ -8,15 +8,20 @@ import { getSizes } from "../../data/getSizes"
 import { useMultiStepForm } from "@/components/multi-step-form-wrapper"
 import { FormValues } from "./validation-schemas"
 
+type SizeOption = {
+    id: number
+    label: string
+}
+
 const TalleSelector = ({ storeId }: { storeId: number }) => {
 
     const { form } = useMultiStepForm<FormValues>()
 
     const [talleInput, setTalleInput] = useState<string>("")
-    const [initialTalles, setInitialTalles] = useState<string[]>([])
+    const [initialTalles, setInitialTalles] = useState<SizeOption[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [selectedTalles, setSelectedTalles] = useState<string[]>([])
-    const [optimisticSelectedTalles, setOptimisticSelectedTalles] = useOptimistic<string[]>(selectedTalles)
+    const [selectedTalles, setSelectedTalles] = useState<SizeOption[]>([])
+    const [optimisticSelectedTalles, setOptimisticSelectedTalles] = useOptimistic<SizeOption[]>(selectedTalles)
     const [isPending, startTransition] = useTransition()
 
     useEffect(() => {
@@ -26,13 +31,17 @@ const TalleSelector = ({ storeId }: { storeId: number }) => {
             const localData = localStorage.getItem("create-product-new")
             if (localData) {
                 const data = JSON.parse(localData)
-                setSelectedTalles(data.sizes)
+                if (data.sizes && Array.isArray(data.sizes)) {
+                    setSelectedTalles(data.sizes)
+                }
             }
             const { payload, error } = await getSizes({ store_id: storeId })
+            console.log("🚀 ~ load ~ payload:", payload)
+            
             if (error) return
             setIsLoading(false)
             if (!mounted) return
-            setInitialTalles([...initialTalles, ...payload.map((talle: { label: string }) => talle.label)])
+            setInitialTalles(payload)
         }
         load()
         return () => {
@@ -40,26 +49,43 @@ const TalleSelector = ({ storeId }: { storeId: number }) => {
         }
     }, [])
 
-    const handleSelectTalle = (talle: string) => {
-        const next = selectedTalles.includes(talle) ? selectedTalles.filter(v => v !== talle) : [...selectedTalles, talle]
-        setSelectedTalles(prev => prev.includes(talle) ? prev.filter(v => v !== talle) : [...prev, talle])
+    const handleSelectTalle = (talle: SizeOption) => {
+        const isSelected = selectedTalles.some(selected => selected.id === talle.id)
+        const next = isSelected 
+            ? selectedTalles.filter(selected => selected.id !== talle.id)
+            : [...selectedTalles, talle]
+        
+        setSelectedTalles(next)
         form.setValue('sizes', next, { shouldDirty: true })
     }
 
     const handleAddTalle = () => {
         startTransition(async () => {
-            setOptimisticSelectedTalles([...optimisticSelectedTalles, talleInput])
+            // Crear un talle temporal para el estado optimista
+            const tempTalle: SizeOption = {
+                id: -1, // ID temporal
+                label: talleInput
+            }
+            setOptimisticSelectedTalles([...optimisticSelectedTalles, tempTalle])
+            
             try {
                 toast.loading("Agregando talle...")
 
-                const { error, message } = await createSizesDynamic(talleInput, storeId)
+                const { error, message, payload } = await createSizesDynamic(talleInput, storeId)
 
                 if (error) throw new Error(message)
 
                 toast.dismiss()
                 toast.success("Talle agregado correctamente")
-                setSelectedTalles([...selectedTalles, talleInput])
-                setInitialTalles([...initialTalles, talleInput])
+                
+                // Usar el talle real devuelto por la API
+                const newTalle: SizeOption = {
+                    id: payload.id,
+                    label: payload.label
+                }
+                
+                setSelectedTalles([...selectedTalles, newTalle])
+                setInitialTalles([...initialTalles, newTalle])
                 setTalleInput("")
             } catch (error) {
                 toast.error("Error al agregar el talle")
@@ -71,17 +97,18 @@ const TalleSelector = ({ storeId }: { storeId: number }) => {
         setTalleInput(talle)
     }
 
-    const handleRemoveTalle = (talle: string) => {
-        setSelectedTalles(prev => prev.filter(v => v !== talle))
-        form.setValue('sizes', selectedTalles.filter(v => v !== talle), { shouldDirty: true })
+    const handleRemoveTalle = (talle: SizeOption) => {
+        const next = selectedTalles.filter(selected => selected.id !== talle.id)
+        setSelectedTalles(next)
+        form.setValue('sizes', next, { shouldDirty: true })
     }
 
     return (
         <Tags>
             <TagsTrigger>
                 {optimisticSelectedTalles.map((talle) => (
-                    <TagsValue key={talle} onRemove={() => handleRemoveTalle(talle)}>
-                        {talle}
+                    <TagsValue key={talle.id} onRemove={() => handleRemoveTalle(talle)}>
+                        {talle.label}
                     </TagsValue>
                 ))}
                 {optimisticSelectedTalles.length === 0 && (
@@ -109,9 +136,9 @@ const TalleSelector = ({ storeId }: { storeId: number }) => {
                             </TagsItem>
                         )}
                         {initialTalles.map((talle) => (
-                            <TagsItem key={talle} onSelect={() => handleSelectTalle(talle)}>
-                                {talle}
-                                {selectedTalles.includes(talle) && (
+                            <TagsItem key={talle.id} onSelect={() => handleSelectTalle(talle)}>
+                                {talle.label}
+                                {selectedTalles.some(selected => selected.id === talle.id) && (
                                     <CheckIcon className="text-muted-foreground" />
                                 )}
                             </TagsItem>

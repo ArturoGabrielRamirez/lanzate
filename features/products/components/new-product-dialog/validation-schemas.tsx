@@ -37,7 +37,7 @@ export const attributesSchema = z.object({
     depth_unit: z.string().optional().nullable(),
     circumference: z.string().optional().nullable(),
     circumference_unit: z.string().optional().nullable(),
-    sizes: z.array(z.string()).optional().nullable(),
+    sizes: z.array(z.object({ id: z.number(), label: z.string() })).optional().nullable(),
     dimensions: z.array(z.string()).optional().nullable(),
     flavors: z.array(z.string()).optional().nullable(),
     fragrances: z.array(z.string()).optional().nullable(),

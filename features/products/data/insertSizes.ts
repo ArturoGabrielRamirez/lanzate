@@ -13,23 +13,16 @@ export async function insertSizes(payload: { label: string, store_id: number }) 
 
   if (existing) throw new Error("Size already exists")
 
-  const created = await prisma.store.update({
-    where: {
-      id: payload.store_id
-    },
+  const created = await prisma.sizes.create({
     data: {
-      sizes: {
-        create: {
-          label: payload.label
-        }
-      }
+      label: payload.label,
+      store_id: payload.store_id
     },
-    include: {
-      sizes: true
+    select: {
+      id: true,
+      label: true
     }
   })
 
-  return { payload: created.sizes, error: false, message: "Size created successfully" }
+  return { payload: created, error: false, message: "Size created successfully" }
 }
-
-

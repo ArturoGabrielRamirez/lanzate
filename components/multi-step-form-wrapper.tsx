@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { useForm, UseFormReturn, DefaultValues } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import { DevTool } from "@hookform/devtools"
 
 type FormData = Record<string, unknown>
 
@@ -493,6 +494,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 
         {(navigationPosition === 'bottom' && showNavigation) && renderNavigation()}
       </MultiStepFormContext.Provider>
+      <DevTool control={form.control} />
     </div>
   )
 }

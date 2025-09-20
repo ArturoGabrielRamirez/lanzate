@@ -85,6 +85,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@hookform/devtools": "^4.4.0",
     "@tailwindcss/postcss": "^4",
     "@types/color": "^4.2.0",
     "@types/node": "^20",
