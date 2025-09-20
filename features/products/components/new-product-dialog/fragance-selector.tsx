@@ -13,10 +13,10 @@ const FraganceSelector = ({ storeId }: { storeId: number }) => {
     const { form } = useMultiStepForm<FormValues>()
 
     const [fraganceInput, setFraganceInput] = useState<string>("")
-    const [initialFragances, setInitialFragances] = useState<string[]>([])
+    const [initialFragances, setInitialFragances] = useState<{ id: number; label: string }[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [selectedFragances, setSelectedFragances] = useState<string[]>([])
-    const [optimisticSelectedFragances, setOptimisticSelectedFragances] = useOptimistic<string[]>(selectedFragances)
+    const [selectedFragances, setSelectedFragances] = useState<{ id: number; label: string }[]>([])
+    const [optimisticSelectedFragances, setOptimisticSelectedFragances] = useOptimistic<{ id: number; label: string }[]>(selectedFragances)
     const [isPending, startTransition] = useTransition()
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const FraganceSelector = ({ storeId }: { storeId: number }) => {
             if (error) return
             setIsLoading(false)
             if (!mounted) return
-            setInitialFragances([...initialFragances, ...payload?.map((fragance: { label: string }) => fragance.label)])
+            setInitialFragances([...initialFragances, ...payload])
         }
         load()
         return () => {
@@ -40,15 +40,15 @@ const FraganceSelector = ({ storeId }: { storeId: number }) => {
         }
     }, [])
 
-    const handleSelectFragance = (fragance: string) => {
-        const next = selectedFragances.includes(fragance) ? selectedFragances.filter(v => v !== fragance) : [...selectedFragances, fragance]
-        setSelectedFragances(prev => prev.includes(fragance) ? prev.filter(v => v !== fragance) : [...prev, fragance])
+    const handleSelectFragance = (fragance: { id: number; label: string }) => {
+        const next = selectedFragances.some(v => v.id === fragance.id) ? selectedFragances.filter(v => v.id !== fragance.id) : [...selectedFragances, fragance]
+        setSelectedFragances(prev => prev.some(v => v.id === fragance.id) ? prev.filter(v => v.id !== fragance.id) : [...prev, fragance])
         form.setValue('fragrances', next, { shouldDirty: true })
     }
 
     const handleAddFragance = () => {
         startTransition(async () => {
-            setOptimisticSelectedFragances([...optimisticSelectedFragances, fraganceInput])
+            setOptimisticSelectedFragances([...optimisticSelectedFragances, { id: -1, label: fraganceInput }])
             try {
                 toast.loading("Agregando fragancia...")
 
@@ -58,10 +58,11 @@ const FraganceSelector = ({ storeId }: { storeId: number }) => {
 
                 toast.dismiss()
                 toast.success("Fragancia agregada correctamente")
-                setSelectedFragances([...selectedFragances, fraganceInput])
-                setInitialFragances([...initialFragances, fraganceInput])
+                setSelectedFragances([...selectedFragances, { id: -1, label: fraganceInput }])
+                setInitialFragances([...initialFragances, { id: -1, label: fraganceInput }])
                 setFraganceInput("")
             } catch (error) {
+                console.log(error)
                 toast.error("Error al agregar la fragancia")
             }
         })
@@ -71,17 +72,17 @@ const FraganceSelector = ({ storeId }: { storeId: number }) => {
         setFraganceInput(fragance)
     }
 
-    const handleRemoveFragance = (fragance: string) => {
-        setSelectedFragances(prev => prev.filter(v => v !== fragance))
-        form.setValue('fragrances', selectedFragances.filter(v => v !== fragance), { shouldDirty: true })
+    const handleRemoveFragance = (fragance: { id: number; label: string }) => {
+        setSelectedFragances(prev => prev.filter(v => v.id !== fragance.id))
+        form.setValue('fragrances', selectedFragances.filter(v => v.id !== fragance.id), { shouldDirty: true })
     }
 
     return (
         <Tags>
             <TagsTrigger>
                 {optimisticSelectedFragances.map((fragance) => (
-                    <TagsValue key={fragance} onRemove={() => handleRemoveFragance(fragance)}>
-                        {fragance}
+                    <TagsValue key={fragance.id} onRemove={() => handleRemoveFragance(fragance)}>
+                        {fragance.label}
                     </TagsValue>
                 ))}
                 {optimisticSelectedFragances.length === 0 && (
@@ -109,9 +110,9 @@ const FraganceSelector = ({ storeId }: { storeId: number }) => {
                             </TagsItem>
                         )}
                         {initialFragances.map((fragance) => (
-                            <TagsItem key={fragance} onSelect={() => handleSelectFragance(fragance)}>
-                                {fragance}
-                                {selectedFragances.includes(fragance) && (
+                            <TagsItem key={fragance.id} onSelect={() => handleSelectFragance(fragance)}>
+                                {fragance.label}
+                                {selectedFragances.some(v => v.id === fragance.id) && (
                                     <CheckIcon className="text-muted-foreground" />
                                 )}
                             </TagsItem>

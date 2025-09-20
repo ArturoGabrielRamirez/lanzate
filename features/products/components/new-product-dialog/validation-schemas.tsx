@@ -39,8 +39,8 @@ export const attributesSchema = z.object({
     circumference_unit: z.string().optional().nullable(),
     sizes: z.array(z.object({ id: z.number(), label: z.string() })).optional().nullable(),
     dimensions: z.array(z.object({ id: z.number(), label: z.string() })).optional().nullable(),
-    flavors: z.array(z.string()).optional().nullable(),
-    fragrances: z.array(z.string()).optional().nullable(),
+    flavors: z.array(z.object({ id: z.number(), label: z.string() })).optional().nullable(),
+    fragrances: z.array(z.object({ id: z.number(), label: z.string() })).optional().nullable(),
     colors: z.array(z.object({ value: z.string(), name: z.string().optional() })).optional().nullable(),
     materials: z.array(z.object({ value: z.file(), name: z.string().min(1, { message: "Name is required" }) })).optional().nullable(),
 })
