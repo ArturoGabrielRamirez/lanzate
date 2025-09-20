@@ -13,10 +13,10 @@ const FlavorSelector = ({ storeId }: { storeId: number }) => {
     const { form } = useMultiStepForm<FormValues>()
 
     const [flavorInput, setFlavorInput] = useState<string>("")
-    const [initialFlavors, setInitialFlavors] = useState<string[]>([])
+    const [initialFlavors, setInitialFlavors] = useState<{ id: number; label: string }[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [selectedFlavors, setSelectedFlavors] = useState<string[]>([])
-    const [optimisticSelectedFlavors, setOptimisticSelectedFlavors] = useOptimistic<string[]>(selectedFlavors)
+    const [selectedFlavors, setSelectedFlavors] = useState<{ id: number; label: string }[]>([])
+    const [optimisticSelectedFlavors, setOptimisticSelectedFlavors] = useOptimistic<{ id: number; label: string }[]>(selectedFlavors)
     const [isPending, startTransition] = useTransition()
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const FlavorSelector = ({ storeId }: { storeId: number }) => {
             if (error) return
             setIsLoading(false)
             if (!mounted) return
-            setInitialFlavors([...initialFlavors, ...payload.map((flavor: { label: string }) => flavor.label)])
+            setInitialFlavors([...initialFlavors, ...payload])
         }
         load()
         return () => {
@@ -40,28 +40,29 @@ const FlavorSelector = ({ storeId }: { storeId: number }) => {
         }
     }, [])
 
-    const handleSelectFlavor = (flavor: string) => {
-        const next = selectedFlavors.includes(flavor) ? selectedFlavors.filter(v => v !== flavor) : [...selectedFlavors, flavor]
-        setSelectedFlavors(prev => prev.includes(flavor) ? prev.filter(v => v !== flavor) : [...prev, flavor])
+    const handleSelectFlavor = (flavor: { id: number; label: string }) => {
+        const next = selectedFlavors.some(v => v.id === flavor.id) ? selectedFlavors.filter(v => v.id !== flavor.id) : [...selectedFlavors, flavor]
+        setSelectedFlavors(prev => prev.some(v => v.id === flavor.id) ? prev.filter(v => v.id !== flavor.id) : [...prev, flavor])
         form.setValue('flavors', next, { shouldDirty: true })
     }
 
     const handleAddFlavor = () => {
         startTransition(async () => {
-            setOptimisticSelectedFlavors([...optimisticSelectedFlavors, flavorInput])
+            setOptimisticSelectedFlavors([...optimisticSelectedFlavors, { id: -1, label: flavorInput }])
             try {
                 toast.loading("Agregando sabor...")
 
-                const { error, message } = await createFlavorDynamic(flavorInput, storeId)
+                const { error, message, payload } = await createFlavorDynamic(flavorInput, storeId)
 
                 if (error) throw new Error(message)
 
                 toast.dismiss()
                 toast.success("Sabor agregado correctamente")
-                setSelectedFlavors([...selectedFlavors, flavorInput])
-                setInitialFlavors([...initialFlavors, flavorInput])
+                setSelectedFlavors([...selectedFlavors, { id: payload.id, label: payload.label }])
+                setInitialFlavors([...initialFlavors, { id: payload.id, label: payload.label }])
                 setFlavorInput("")
             } catch (error) {
+                console.log(error)
                 toast.error("Error al agregar el sabor")
             }
         })
@@ -71,17 +72,17 @@ const FlavorSelector = ({ storeId }: { storeId: number }) => {
         setFlavorInput(flavor)
     }
 
-    const handleRemoveFlavor = (flavor: string) => {
-        setSelectedFlavors(prev => prev.filter(v => v !== flavor))
-        form.setValue('flavors', selectedFlavors.filter(v => v !== flavor), { shouldDirty: true })
+    const handleRemoveFlavor = (flavor: { id: number; label: string }) => {
+        setSelectedFlavors(prev => prev.filter(v => v.id !== flavor.id))
+        form.setValue('flavors', selectedFlavors.filter(v => v.id !== flavor.id), { shouldDirty: true })
     }
 
     return (
         <Tags>
             <TagsTrigger>
                 {optimisticSelectedFlavors.map((flavor) => (
-                    <TagsValue key={flavor} onRemove={() => handleRemoveFlavor(flavor)}>
-                        {flavor}
+                    <TagsValue key={flavor.id} onRemove={() => handleRemoveFlavor(flavor)}>
+                        {flavor.label}
                     </TagsValue>
                 ))}
                 {optimisticSelectedFlavors.length === 0 && (
@@ -109,9 +110,9 @@ const FlavorSelector = ({ storeId }: { storeId: number }) => {
                             </TagsItem>
                         )}
                         {initialFlavors.map((flavor) => (
-                            <TagsItem key={flavor} onSelect={() => handleSelectFlavor(flavor)}>
-                                {flavor}
-                                {selectedFlavors.includes(flavor) && (
+                            <TagsItem key={flavor.id} onSelect={() => handleSelectFlavor(flavor)}>
+                                {flavor.label}
+                                {selectedFlavors.some(v => v.id === flavor.id) && (
                                     <CheckIcon className="text-muted-foreground" />
                                 )}
                             </TagsItem>

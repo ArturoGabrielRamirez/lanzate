@@ -13,23 +13,18 @@ export async function insertFragrance(payload: { label: string, store_id: number
 
   if (existing) throw new Error("Fragrance already exists")
 
-  const created = await prisma.store.update({
-    where: {
-      id: payload.store_id
-    },
+  const created = await prisma.fragrance.create({
     data: {
-      fragrances: {
-        create: {
-          label: payload.label
-        }
-      }
+      label: payload.label,
+      store_id: payload.store_id
     },
-    include: {
-      fragrances: true
+    select: {
+      id: true,
+      label: true
     }
   })
 
-  return { payload: created.fragrances, error: false, message: "Fragrance created successfully" }
+  return { payload: created, error: false, message: "Fragrance created successfully" }
 }
 
 

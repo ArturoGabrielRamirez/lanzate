@@ -52,14 +52,14 @@ const FraganceSelector = ({ storeId }: { storeId: number }) => {
             try {
                 toast.loading("Agregando fragancia...")
 
-                const { error, message } = await createFragranceDynamic(fraganceInput, storeId)
+                const { error, message, payload } = await createFragranceDynamic(fraganceInput, storeId)
 
                 if (error) throw new Error(message)
 
                 toast.dismiss()
                 toast.success("Fragancia agregada correctamente")
-                setSelectedFragances([...selectedFragances, { id: -1, label: fraganceInput }])
-                setInitialFragances([...initialFragances, { id: -1, label: fraganceInput }])
+                setSelectedFragances([...selectedFragances, { id: payload.id, label: payload.label }])
+                setInitialFragances([...initialFragances, { id: payload.id, label: payload.label }])
                 setFraganceInput("")
             } catch (error) {
                 console.log(error)
