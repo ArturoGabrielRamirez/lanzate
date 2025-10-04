@@ -1,14 +1,8 @@
 import { defineRouting } from 'next-intl/routing';
-import { createNavigation } from 'next-intl/navigation';
 
 export const routing = defineRouting({
-    // A list of all locales that are supported
-    locales: ['es', 'en'/* , 'pt' */],
-
-    // Used when no locale matches
-    defaultLocale: 'es'
-
-    // The locale to redirect to when the requested locale could not be found
+    locales: ['es', 'en'],
+    defaultLocale: 'es',
 });
 
 export type Locale = (typeof routing.locales)[number];

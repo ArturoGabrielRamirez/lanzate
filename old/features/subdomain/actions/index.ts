@@ -1,0 +1,1 @@
+export { getStoreBySubdomain } from "./getStoreBySubdomain"

@@ -1,0 +1,28 @@
+"use server"
+
+import { getUserById } from "@/features/layout/data/getUserById"
+import { getStoresFromUser } from "../data/getStoresFromUser"
+
+export async function canCreateStore(userId: number) {
+    try {
+        const { payload: user, error: userError } = await getUserById(userId)
+
+        if (userError || !user) {
+            return false
+        }
+
+        const { payload: stores, error: storesError } = await getStoresFromUser(userId)
+
+        if (storesError) {
+            return false
+        }
+
+        if (stores.length >= 2 && user.Account[0].type === "FREE") {
+            return false
+        }
+
+        return true
+    } catch (error) {
+        return false
+    }
+}

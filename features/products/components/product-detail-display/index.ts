@@ -1,8 +1,0 @@
-export { default as BasicInfoDisplay } from "./basic-info-display"
-export { default as MediaDisplay } from "./media-display"
-export { default as PriceStockDisplay } from "./price-stock-display"
-export { default as CategoriesDisplay } from "./categories-display"
-export { default as VariantsDisplay } from "./variants-display"
-export { default as SettingsDisplay } from "./settings-display"
-export { default as DimensionsDisplay } from "./dimensions-display"
-export { default as ProductDetailForm } from "./product-detail-form"

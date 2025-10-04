@@ -1,1 +1,0 @@
-export { getStoreBySubdomain } from "./getStoreBySubdomain"

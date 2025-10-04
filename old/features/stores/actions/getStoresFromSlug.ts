@@ -1,0 +1,41 @@
+"use server"
+
+import { formatErrorResponse } from "@/utils/lib"
+import { selectStoreBySlug } from "../data/selectStoreBySlug"
+import { Branch, Store, Product, Category, StoreBalance, StoreOperationalSettings, ProductStock } from "@prisma/client"
+
+type GetStoresFromSlugReturn = {
+    message: string
+    payload: Store & {
+        branches: (Branch & { stock: ProductStock[] })[],
+        products: (Product & { categories: Category[] })[],
+        balance: StoreBalance,
+        operational_settings: StoreOperationalSettings | null
+    } | null
+    error: boolean
+}
+
+export async function getStoresFromSlug(slug: string): Promise<GetStoresFromSlugReturn> {
+
+    try {
+        const { payload: store, error, message } = await selectStoreBySlug(slug)
+
+        if (error) throw new Error(message)
+
+        if (!store)
+            throw new Error("Store not found")
+
+        return {
+            message: "Store fetched successfully from db",
+            payload: store as Store & {
+                branches: (Branch & { stock: ProductStock[] })[],
+                products: (Product & { categories: Category[] })[],
+                balance: StoreBalance,
+                operational_settings: StoreOperationalSettings | null
+            },
+            error: false
+        }
+    } catch (error) {
+        return formatErrorResponse("Error fetching store from db", error, null)
+    }
+}

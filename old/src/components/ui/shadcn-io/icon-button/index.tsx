@@ -1,0 +1,122 @@
+'use client';
+
+import * as React from 'react';
+import {
+  motion,
+  AnimatePresence,
+  type HTMLMotionProps,
+  type Transition,
+} from 'motion/react';
+
+import { cn } from '@/lib/utils';
+
+const sizes = {
+  default: 'size-8 [&_svg]:size-5',
+  sm: 'size-6 [&_svg]:size-4',
+  md: 'size-10 [&_svg]:size-6',
+  lg: 'size-14 [&_svg]:size-9',
+};
+
+type IconButtonProps = Omit<HTMLMotionProps<'button'>, 'color'> & {
+  icon: React.ComponentType<{ className?: string }>;
+  active?: boolean;
+  className?: string;
+  animate?: boolean;
+  size?: keyof typeof sizes;
+  color?: [number, number, number];
+  transition?: Transition;
+  iconClassName?: string;
+};
+
+function IconButton({
+  icon: Icon,
+  className,
+  active = false,
+  animate = true,
+  size = 'default',
+  color = [80, 40, 0],
+  transition = { type: 'spring', stiffness: 300, damping: 15 },
+  iconClassName,
+  ...props
+}: IconButtonProps) {
+  return (
+    <motion.button
+      data-slot="icon-button"
+      className={cn(
+        `group/icon-button cursor-pointer relative inline-flex size-10 shrink-0 rounded-full hover:bg-[var(--primary)]/10 active:bg-[var(--primary)]/20 text-[var(--primary)]`,
+        sizes[size],
+        className,
+      )}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      {...props}
+    >
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover/icon-button:stroke-[var(--primary)]"
+        aria-hidden="true"
+      >
+        <Icon
+          className={
+            cn(active ? '' : 'fill-transparent', "size-24", iconClassName)
+          }
+        />
+      </motion.div>
+
+      <AnimatePresence mode="wait">
+        {active && (
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[var(--primary)] "
+            aria-hidden="true"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={transition}
+          >
+            <Icon className={cn('size-24', iconClassName)}/>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {animate && active && (
+          <>
+            <motion.div
+              className="absolute inset-0 z-10 rounded-full "
+              style={{
+                background: `radial-gradient(circle, rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.4) 0%, rgba(${color[0]}, ${color[1]}, ${color[2]}, 0) 70%)`,
+              }}
+              initial={{ scale: 1.2, opacity: 0 }}
+              animate={{ scale: [1.2, 1.8, 1.2], opacity: [0, 0.3, 0] }}
+              transition={{ duration: 1.2, ease: 'easeInOut' }}
+            />
+            <motion.div
+              className="absolute inset-0 z-10 rounded-full"
+              style={{
+                boxShadow: `0 0 10px 2px rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6)`,
+              }}
+              initial={{ scale: 1, opacity: 0 }}
+              animate={{ scale: [1, 1.5], opacity: [0.8, 0] }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+            />
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 rounded-full bg-[var(--icon-button-color)]"
+                initial={{ x: '50%', y: '50%', scale: 0, opacity: 0 }}
+                animate={{
+                  x: `calc(50% + ${Math.cos((i * Math.PI) / 3) * 30}px)`,
+                  y: `calc(50% + ${Math.sin((i * Math.PI) / 3) * 30}px)`,
+                  scale: [0, 1, 0],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{ duration: 0.8, delay: i * 0.05, ease: 'easeOut' }}
+              />
+            ))}
+          </>
+        )}
+      </AnimatePresence>
+    </motion.button>
+  );
+}
+
+export { IconButton, sizes, type IconButtonProps };

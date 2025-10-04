@@ -1,0 +1,51 @@
+import { toast } from "sonner"
+import { finalizeOrderAction } from "../actions/finalizeOrderAction"
+import { Order, OrderTracking } from "@prisma/client"
+import { useTransition } from "react"
+import { Button } from "@/components/ui/button"
+import { CheckCircle, Loader2 } from "lucide-react"
+
+type Props = {
+    order: Order & { tracking: OrderTracking | null }
+}
+
+const FinalizeOrderButton = ({ order }: Props) => {
+
+    const [isFinalizing, startFinalizeTransition] = useTransition()
+
+    const handleFinalize = () => {
+
+        const isPickup = order.shipping_method === "DELIVERY"
+
+        if (isFinalizing) return
+
+        toast.loading("Finalizing order...")
+
+        startFinalizeTransition(async () => {
+            try {
+                const { error, message } = await finalizeOrderAction({
+                    orderId: order.id.toString(),
+                    shippingMethod: order.shipping_method
+                })
+
+                if (error) {
+                    throw new Error(message)
+                }
+                toast.dismiss()
+                toast.success(`Order successfully finalized! The order has been marked as ${isPickup ? "picked up" : "delivered"}.`)
+            } catch (error) {
+                console.error("Error finalizing order:", error)
+                toast.dismiss()
+                toast.error("Failed to finalize order")
+            }
+        })
+    }
+
+    return (
+        <Button onClick={handleFinalize} disabled={isFinalizing}>
+            {isFinalizing ? <Loader2 className="size-4 animate-spin" /> : <CheckCircle className="size-4" />}
+            {isFinalizing ? "Finalizing..." : "Finalize Order"}
+        </Button>
+    )
+}
+export default FinalizeOrderButton
