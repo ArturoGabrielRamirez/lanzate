@@ -1,6 +1,18 @@
-import { ROOT_DOMAIN } from "@/features/global/constants";
+import { APP_CONFIG } from "@/features/global/constants";
 import { NextRequest } from "next/server";
 
+/**
+ * Extracts subdomain from the request hostname
+ * 
+ * Handles multiple scenarios:
+ * - Localhost development (subdomain.localhost)
+ * - Vercel preview deployments (subdomain---project.vercel.app)
+ * - Production domains (subdomain.domain.com)
+ * - Development/staging environments
+ * 
+ * @param request - Next.js request object
+ * @returns The extracted subdomain or null if no subdomain found
+ */
 export function extractSubdomain(request: NextRequest): string | null {
     const host = request.headers.get('host') || '';
     const hostname = host.split(':')[0]; // Remove port if present
@@ -41,14 +53,16 @@ export function extractSubdomain(request: NextRequest): string | null {
         return null;
     }
 
+    const rootDomainWithoutPort = APP_CONFIG.ROOT_DOMAIN.split(':')[0];
+
     // If hostname matches root domain exactly, no subdomain
-    if (hostname === ROOT_DOMAIN.split(':')[0] || hostname === `www.${ROOT_DOMAIN.split(':')[0]}`) {
+    if (hostname === rootDomainWithoutPort || hostname === `www.${rootDomainWithoutPort}`) {
         return null;
     }
 
     // For production or when hostname ends with root domain
-    if (hostname.endsWith(`.${ROOT_DOMAIN.split(':')[0]}`)) {
-        const subdomain = hostname.replace(`.${ROOT_DOMAIN.split(':')[0]}`, '');
+    if (hostname.endsWith(`.${rootDomainWithoutPort}`)) {
+        const subdomain = hostname.replace(`.${rootDomainWithoutPort}`, '');
         return subdomain !== 'www' ? subdomain : null;
     }
 

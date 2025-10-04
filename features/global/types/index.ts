@@ -1,3 +1,1 @@
-export interface Action {
-    (): Promise<any>
-}
+export * from './server-response.types';

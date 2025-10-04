@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import { APP_CONFIG } from '@/features/global/constants';
 
 export function createServerSideClient() {
     const cookieStore = cookies();
@@ -15,14 +16,11 @@ export function createServerSideClient() {
                 setAll(cookiesToSet) {
                     try {
                         cookiesToSet.forEach(async ({ name, value, options }) => {
-                            const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost';
                             const cookieOptions = {
                                 ...options,
-                                //domain: rootDomain.includes('localhost') ? 'localhost' : `.${rootDomain}`,
-                                //domain: 'localhost.com',
-                                domain: 'lanzate.app',
+                                domain: APP_CONFIG.COOKIE_DOMAIN,
                                 path: '/',
-                                secure: !rootDomain.includes('localhost'),
+                                secure: APP_CONFIG.IS_PRODUCTION,
                                 sameSite: 'lax' as const,
                             };
 
@@ -30,13 +28,11 @@ export function createServerSideClient() {
                         });
                     } catch (error) {
                         // En algunos contextos del servidor no se pueden establecer cookies
-                        console.log("🚀 ~ setAll ~ error:", error)
+                        console.error("Error setting cookies:", error);
                     }
                 },
-            }/* ,
-      auth: {
-        flowType: "pkce"
-      } */
+            }
         }
     );
 }
+

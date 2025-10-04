@@ -8,9 +8,11 @@ import createIntlMiddleware from 'next-intl/middleware'
 
 const intlMiddleware = createIntlMiddleware(routing)
 
+import { APP_CONFIG } from "@/features/global/constants";
+
 export async function updateSession(request: NextRequest) {
-    const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'
-    const subdomain = extractSubdomain(request)
+    const rootDomain = APP_CONFIG.ROOT_DOMAIN;
+    const subdomain = extractSubdomain(request);
 
     const { pathname } = request.nextUrl
 

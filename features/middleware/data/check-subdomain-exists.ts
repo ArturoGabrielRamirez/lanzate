@@ -1,11 +1,21 @@
-"use server"
+"use server";
 
 import { formatServerResponse } from "@/features/global/utils";
-import { createServerSideClient } from "@/features/supabase/utils";
+import { ServerResponse } from "@/features/global/types";
+import { createServerSideClient } from "@/lib/supabase";
+import { sanitizeSubdomain } from "@/features/middleware/schemas";
 
-export async function checkSubdomainExists(subdomain: string): Promise<any> {
+/**
+ * Checks if a subdomain exists in the database
+ * 
+ * @param subdomain - The subdomain to check
+ * @returns Server response with boolean indicating if subdomain exists
+ */
+export async function checkSubdomainExists(
+    subdomain: string
+): Promise<ServerResponse<boolean>> {
     try {
-        const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
+        const sanitizedSubdomain = sanitizeSubdomain(subdomain);
 
         const { data, error } = await createServerSideClient()
             .from('stores')
@@ -18,7 +28,7 @@ export async function checkSubdomainExists(subdomain: string): Promise<any> {
         return {
             message: exists ? "Subdomain exists" : "Subdomain does not exist",
             payload: exists,
-            error: false
+            hasError: false
         };
 
     } catch (error) {

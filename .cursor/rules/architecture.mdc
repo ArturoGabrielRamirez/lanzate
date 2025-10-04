@@ -28,6 +28,7 @@ import { pieceName } from '@/features/feature-name/piece-name';
 
 ### Feature Directory Structure
 
+- Everything must be inside the feature folder, no global files outside the feature folder.
   • `components/` → UI components of the feature
   • `actions/` → functions of action / server logic. They would be like "controllers" in MVC. They are the functions that are responsible for the "backend" logic of the feature as database operations, validations, etc.
   • `data/` → database access / queries logic. They would be like "models" in MVC. They are the functions that are responsible for database queries in general, but without validations or business logic.
