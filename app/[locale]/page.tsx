@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 function HomePage() {
     return (
         <div className="min-h-screen">
-            <HeroSection />
+            {/* <HeroSection />
             <HowItWorksSection />
             <div id="integrations" className="py-20 px-4 bg-muted/30">
                 <div className="max-w-7xl mx-auto text-center">
@@ -25,7 +25,24 @@ function HomePage() {
                 </div>
             </div>
             <FAQSection />
-            <Footer />
+            <Footer /> */}
+
+            {/* Simulated content sections for testing header scroll behavior */}
+            <div id="inicio" className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 flex items-center justify-center">
+                <h1 className="text-6xl font-bold">Hero Section</h1>
+            </div>
+            <div id="how-it-works" className="min-h-screen bg-muted/30 flex items-center justify-center">
+                <h2 className="text-5xl font-bold">How It Works</h2>
+            </div>
+            <div id="integrations" className="min-h-screen bg-background flex items-center justify-center">
+                <h2 className="text-5xl font-bold">Integraciones</h2>
+            </div>
+            <div id="pricing" className="min-h-screen bg-muted/30 flex items-center justify-center">
+                <h2 className="text-5xl font-bold">Pricing / FAQ</h2>
+            </div>
+            <div id="contact" className="min-h-[50vh] bg-background flex items-center justify-center">
+                <h2 className="text-5xl font-bold">Contact / Footer</h2>
+            </div>
         </div>
     );
 }

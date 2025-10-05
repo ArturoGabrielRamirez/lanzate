@@ -14,6 +14,7 @@ export interface HeaderNavProps {
 export interface HeaderNavLinkProps {
   label: string;
   href: string;
+  isActive?: boolean;
 }
 
 export interface MobileHeaderProps {

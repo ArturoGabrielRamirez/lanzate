@@ -16,7 +16,7 @@ export const HeaderActions = () => {
         opacity: 0,
         x: 20,
         duration: 0.5,
-        delay: 0.5,
+        delay: 0.8, // Delay increased to wait for header and nav animations
         ease: 'power3.out',
       });
     }, actionsRef);

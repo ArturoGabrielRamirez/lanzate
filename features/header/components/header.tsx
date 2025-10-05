@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { HeaderProps } from '../types';
 import { NAV_LINKS } from '../constants';
@@ -12,7 +12,10 @@ import { MobileHeader } from './mobile-header';
 export const Header = ({ className }: HeaderProps) => {
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
+  // Initial entrance animation
   useEffect(() => {
     if (!headerRef.current || !logoRef.current) return;
 
@@ -34,10 +37,65 @@ export const Header = ({ className }: HeaderProps) => {
     return () => ctx.revert();
   }, []);
 
+  // Scroll behavior
+  useEffect(() => {
+    if (!headerRef.current) return;
+
+    const handleScroll = () => {
+      if (isAnimating) return;
+
+      const currentScrollY = window.scrollY;
+      
+      // Only trigger after scrolling past 100px
+      if (currentScrollY < 100) { 
+        if (headerRef.current) {
+          gsap.to(headerRef.current, {
+            y: 0,
+            duration: 0.3,
+            ease: 'power2.out',
+          });
+        }
+        setLastScrollY(currentScrollY);
+        return;
+      }
+
+      const scrollDifference = currentScrollY - lastScrollY;
+
+      // Scrolling down
+      if (scrollDifference > 5 && currentScrollY > lastScrollY) {
+        setIsAnimating(true);
+        gsap.to(headerRef.current, {
+          y: -100,
+          duration: 0.3,
+          ease: 'power2.out',
+          onComplete: () => setIsAnimating(false),
+        });
+      }
+      // Scrolling up
+      else if (scrollDifference < -5 && currentScrollY < lastScrollY) {
+        setIsAnimating(true);
+        gsap.to(headerRef.current, {
+          y: 0,
+          duration: 0.3,
+          ease: 'power2.out',
+          onComplete: () => setIsAnimating(false),
+        });
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY, isAnimating]);
+
   return (
     <header
       ref={headerRef}
-      className={`sticky top-0 z-30 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${className || ''
+      className={`fixed top-0 z-30 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${className || ''
         }`}
     >
       <div className="container mx-auto px-4">
