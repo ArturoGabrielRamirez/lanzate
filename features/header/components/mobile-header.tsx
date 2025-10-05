@@ -20,7 +20,7 @@ export const MobileHeader = ({ links }: MobileHeaderProps) => {
     <>
       <button
         onClick={handleToggleDrawer}
-        className="md:hidden p-2 rounded-md hover:bg-accent transition-colors"
+        className="md:hidden p-2 rounded-md hover:bg-accent transition-colors cursor-pointer"
         aria-label="Abrir menú"
       >
         <Menu className="w-6 h-6" />
