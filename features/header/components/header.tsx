@@ -14,6 +14,7 @@ export const Header = ({ className }: HeaderProps) => {
   const logoRef = useRef<HTMLDivElement>(null);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 
   // Initial entrance animation
   useEffect(() => {
@@ -37,6 +38,36 @@ export const Header = ({ className }: HeaderProps) => {
     return () => ctx.revert();
   }, []);
 
+  // Mouse hover detection at top of screen
+  useEffect(() => {
+    if (!headerRef.current) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const headerHeight = 80; // Max header height (md:h-20)
+      const triggerZone = 100; // Pixels from top to trigger
+
+      // If mouse is in the trigger zone and header is hidden
+      if (e.clientY <= triggerZone && !isHeaderVisible && window.scrollY > 100) {
+        setIsHeaderVisible(true);
+        if (!isAnimating) {
+          setIsAnimating(true);
+          gsap.to(headerRef.current, {
+            y: 0,
+            duration: 0.3,
+            ease: 'power2.out',
+            onComplete: () => setIsAnimating(false),
+          });
+        }
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [isHeaderVisible, isAnimating]);
+
   // Scroll behavior
   useEffect(() => {
     if (!headerRef.current) return;
@@ -47,7 +78,7 @@ export const Header = ({ className }: HeaderProps) => {
       const currentScrollY = window.scrollY;
       
       // Only trigger after scrolling past 100px
-      if (currentScrollY < 100) { 
+      if (currentScrollY < 100) {
         if (headerRef.current) {
           gsap.to(headerRef.current, {
             y: 0,
@@ -55,6 +86,7 @@ export const Header = ({ className }: HeaderProps) => {
             ease: 'power2.out',
           });
         }
+        setIsHeaderVisible(true);
         setLastScrollY(currentScrollY);
         return;
       }
@@ -64,6 +96,7 @@ export const Header = ({ className }: HeaderProps) => {
       // Scrolling down
       if (scrollDifference > 5 && currentScrollY > lastScrollY) {
         setIsAnimating(true);
+        setIsHeaderVisible(false);
         gsap.to(headerRef.current, {
           y: -100,
           duration: 0.3,
@@ -74,6 +107,7 @@ export const Header = ({ className }: HeaderProps) => {
       // Scrolling up
       else if (scrollDifference < -5 && currentScrollY < lastScrollY) {
         setIsAnimating(true);
+        setIsHeaderVisible(true);
         gsap.to(headerRef.current, {
           y: 0,
           duration: 0.3,
