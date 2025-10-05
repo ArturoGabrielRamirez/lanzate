@@ -59,6 +59,7 @@ export const HeroSection = () => {
 
     return (
         <section
+            id="inicio"
             ref={heroRef}
             className="relative min-h-[90vh] flex items-center justify-center px-4 py-20 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5"
         >

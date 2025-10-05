@@ -1,6 +1,5 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,7 +13,25 @@ import { X } from 'lucide-react';
 import { MobileDrawerProps } from '../types';
 
 export const MobileDrawer = ({ isOpen, onClose, links }: MobileDrawerProps) => {
-  const pathname = usePathname();
+  const handleLinkClick = (href: string) => {
+    onClose(false);
+    
+    const targetId = href.split('#')[1];
+    const element = document.getElementById(targetId);
+    
+    if (element) {
+      setTimeout(() => {
+        const headerOffset = 56;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }, 300);
+    }
+  };
 
   return (
     <Drawer direction="right" open={isOpen} onOpenChange={onClose}>
@@ -33,34 +50,21 @@ export const MobileDrawer = ({ isOpen, onClose, links }: MobileDrawerProps) => {
 
         {/* Navigation Links */}
         <nav className="flex flex-col p-4 gap-2 flex-1 overflow-y-auto">
-          {links.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => onClose(false)}
-                className={`px-4 py-3 rounded-md text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'bg-primary text-primary-foreground'
-                    : 'hover:bg-accent hover:text-accent-foreground'
-                }`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+          {links.map((link) => (
+            <button
+              key={link.href}
+              onClick={() => handleLinkClick(link.href)}
+              className="px-4 py-3 rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground text-left"
+            >
+              {link.label}
+            </button>
+          ))}
         </nav>
 
         {/* Actions */}
-        <div className="p-4 border-t border-border space-y-3 mt-auto">
-          <Button variant="ghost" className="w-full" asChild>
-            <Link href="/saber-mas" onClick={() => onClose(false)}>
-              Saber más
-            </Link>
-          </Button>
+        <div className="p-4 border-t border-border mt-auto">
           <Button className="w-full" asChild>
-            <Link href="/acceder" onClick={() => onClose(false)}>
+            <Link href="/login" onClick={() => onClose(false)}>
               Acceder
             </Link>
           </Button>

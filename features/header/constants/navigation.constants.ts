@@ -1,8 +1,8 @@
 import { NavLink } from '../types';
 
 export const NAV_LINKS: NavLink[] = [
-  { label: 'Inicio', href: '/' },
-  { label: 'Características', href: '/caracteristicas' },
-  { label: 'Precios', href: '/precios' },
-  { label: 'Contacto', href: '/contacto' },
+  { label: 'Cómo Funciona', href: '/#how-it-works' },
+  { label: 'Integraciones', href: '/#integrations' },
+  { label: 'Precios', href: '/#pricing' },
+  { label: 'Contacto', href: '/#contact' },
 ];

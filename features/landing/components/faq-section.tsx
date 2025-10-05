@@ -2,18 +2,23 @@
 
 import { useRef, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+    type CarouselApi,
+} from "@/components/ui/carousel";
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import Autoplay from "embla-carousel-autoplay";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,10 +30,8 @@ interface FAQ {
 export const FAQSection = () => {
     const t = useTranslations();
     const sectionRef = useRef<HTMLElement>(null);
-    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-        Autoplay({ delay: 8000, stopOnInteraction: true }),
-    ]);
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [api, setApi] = useState<CarouselApi>();
+    const [current, setCurrent] = useState(0);
 
     // Define FAQs (you can add these to your translations later)
     const faqGroups: FAQ[][] = [
@@ -76,23 +79,15 @@ export const FAQSection = () => {
         ],
     ];
 
-    const handlePrev = () => emblaApi?.scrollPrev();
-    const handleNext = () => emblaApi?.scrollNext();
-
     useEffect(() => {
-        if (!emblaApi) return;
+        if (!api) return;
 
-        const onSelect = () => {
-            setSelectedIndex(emblaApi.selectedScrollSnap());
-        };
+        setCurrent(api.selectedScrollSnap());
 
-        emblaApi.on("select", onSelect);
-        onSelect();
-
-        return () => {
-            emblaApi.off("select", onSelect);
-        };
-    }, [emblaApi]);
+        api.on("select", () => {
+            setCurrent(api.selectedScrollSnap());
+        });
+    }, [api]);
 
     useEffect(() => {
         if (!sectionRef.current) return;
@@ -113,7 +108,7 @@ export const FAQSection = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className="py-20 px-4 bg-background">
+        <section id="pricing" ref={sectionRef} className="py-20 px-4 bg-background">
             <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-16 space-y-4">
                     <h2 className="faq-title text-4xl md:text-5xl font-bold">
@@ -124,74 +119,68 @@ export const FAQSection = () => {
                     </p>
                 </div>
 
-                <div className="relative">
-                    <div ref={emblaRef} className="overflow-hidden">
-                        <div className="flex">
+                <div className="relative px-12">
+                    <Carousel
+                        setApi={setApi}
+                        opts={{
+                            loop: true,
+                        }}
+                        plugins={[
+                            Autoplay({
+                                delay: 8000,
+                                stopOnInteraction: true,
+                            }),
+                        ]}
+                        className="w-full"
+                    >
+                        <CarouselContent>
                             {faqGroups.map((group, groupIndex) => (
-                                <div
-                                    key={groupIndex}
-                                    className="flex-[0_0_100%] min-w-0 px-4"
-                                >
-                                    <Accordion
-                                        type="single"
-                                        collapsible
-                                        className="w-full space-y-4"
-                                    >
-                                        {group.map((faq, index) => (
-                                            <AccordionItem
-                                                key={index}
-                                                value={`item-${groupIndex}-${index}`}
-                                                className="border border-border rounded-lg px-6 bg-card"
-                                            >
-                                                <AccordionTrigger className="text-left hover:no-underline py-6">
-                                                    <span className="text-lg font-semibold">
-                                                        {faq.question}
-                                                    </span>
-                                                </AccordionTrigger>
-                                                <AccordionContent className="text-muted-foreground pb-6">
-                                                    {faq.answer}
-                                                </AccordionContent>
-                                            </AccordionItem>
-                                        ))}
-                                    </Accordion>
-                                </div>
+                                <CarouselItem key={groupIndex}>
+                                    <div className="p-4">
+                                        <Accordion
+                                            type="single"
+                                            collapsible
+                                            className="w-full space-y-4"
+                                        >
+                                            {group.map((faq, index) => (
+                                                <AccordionItem
+                                                    key={index}
+                                                    value={`item-${groupIndex}-${index}`}
+                                                    className="border border-border rounded-lg px-6 bg-card"
+                                                >
+                                                    <AccordionTrigger className="text-left hover:no-underline py-6">
+                                                        <span className="text-lg font-semibold">
+                                                            {faq.question}
+                                                        </span>
+                                                    </AccordionTrigger>
+                                                    <AccordionContent className="text-muted-foreground pb-6">
+                                                        {faq.answer}
+                                                    </AccordionContent>
+                                                </AccordionItem>
+                                            ))}
+                                        </Accordion>
+                                    </div>
+                                </CarouselItem>
                             ))}
-                        </div>
-                    </div>
+                        </CarouselContent>
+                        <CarouselPrevious className="rounded-full" />
+                        <CarouselNext className="rounded-full" />
+                    </Carousel>
 
-                    {/* Navigation */}
-                    <div className="flex justify-center items-center gap-4 mt-8">
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={handlePrev}
-                            className="rounded-full"
-                        >
-                            <ChevronLeft className="w-5 h-5" />
-                        </Button>
-
-                        <div className="flex gap-2">
-                            {faqGroups.map((_, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => emblaApi?.scrollTo(index)}
-                                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                                        index === selectedIndex
-                                            ? "bg-primary w-8"
-                                            : "bg-muted-foreground/30"
-                                    }`}
-                                />
-                            ))}
-                        </div>
-
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={handleNext}
-                            className="rounded-full"
-                        >
-                            <ChevronRight className="w-5 h-5" />
-                        </Button>
+                    {/* Dots indicator */}
+                    <div className="flex justify-center gap-2 mt-8">
+                        {faqGroups.map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => api?.scrollTo(index)}
+                                className={`h-2 rounded-full transition-all duration-300 ${
+                                    index === current
+                                        ? "bg-primary w-8"
+                                        : "bg-muted-foreground/30 w-2"
+                                }`}
+                                aria-label={`Go to FAQ group ${index + 1}`}
+                            />
+                        ))}
                     </div>
                 </div>
             </div>
