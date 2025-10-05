@@ -15,10 +15,10 @@ export const Header = ({ className }: HeaderProps) => {
   const NAV_LINKS = getNavLinks(t);
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
+  const mouseYRef = useRef<number>(0);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [mouseY, setMouseY] = useState(0);
 
   // Initial entrance animation
   useEffect(() => {
@@ -45,7 +45,7 @@ export const Header = ({ className }: HeaderProps) => {
   // Mouse position tracking
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMouseY(e.clientY);
+      mouseYRef.current = e.clientY;
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
@@ -59,35 +59,44 @@ export const Header = ({ className }: HeaderProps) => {
   useEffect(() => {
     if (!headerRef.current) return;
 
-    const triggerZone = 100; // Pixels from top to trigger
+    const checkMousePosition = () => {
+      const triggerZone = 100;
+      const currentMouseY = mouseYRef.current;
 
-    // If mouse is in the trigger zone and header is hidden
-    if (mouseY <= triggerZone && !isHeaderVisible && window.scrollY > 100) {
-      setIsHeaderVisible(true);
-      if (!isAnimating) {
-        setIsAnimating(true);
-        gsap.to(headerRef.current, {
-          y: 0,
-          duration: 0.3,
-          ease: 'power2.out',
-          onComplete: () => setIsAnimating(false),
-        });
+      // If mouse is in the trigger zone and header is hidden
+      if (currentMouseY <= triggerZone && !isHeaderVisible && window.scrollY > 100) {
+        setIsHeaderVisible(true);
+        if (!isAnimating && headerRef.current) {
+          setIsAnimating(true);
+          gsap.to(headerRef.current, {
+            y: 0,
+            duration: 0.3,
+            ease: 'power2.out',
+            onComplete: () => setIsAnimating(false),
+          });
+        }
       }
-    }
-    // If mouse leaves the trigger zone and header is visible and we're scrolled down
-    else if (mouseY > triggerZone && isHeaderVisible && window.scrollY > 100) {
-      setIsHeaderVisible(false);
-      if (!isAnimating) {
-        setIsAnimating(true);
-        gsap.to(headerRef.current, {
-          y: -100,
-          duration: 0.3,
-          ease: 'power2.out',
-          onComplete: () => setIsAnimating(false),
-        });
+      // If mouse leaves the trigger zone and header is visible and we're scrolled down
+      else if (currentMouseY > triggerZone && isHeaderVisible && window.scrollY > 100) {
+        setIsHeaderVisible(false);
+        if (!isAnimating && headerRef.current) {
+          setIsAnimating(true);
+          gsap.to(headerRef.current, {
+            y: -100,
+            duration: 0.3,
+            ease: 'power2.out',
+            onComplete: () => setIsAnimating(false),
+          });
+        }
       }
-    }
-  }, [mouseY, isHeaderVisible, isAnimating]);
+    };
+
+    const intervalId = setInterval(checkMousePosition, 100);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [isHeaderVisible, isAnimating]);
 
   // Scroll behavior
   useEffect(() => {
@@ -118,7 +127,7 @@ export const Header = ({ className }: HeaderProps) => {
       // Scrolling down - but don't hide if mouse is in trigger zone
       if (scrollDifference > 5 && currentScrollY > lastScrollY) {
         // Don't hide header if mouse is in the trigger zone
-        if (mouseY <= triggerZone) {
+        if (mouseYRef.current <= triggerZone) {
           setLastScrollY(currentScrollY);
           return;
         }
@@ -152,7 +161,7 @@ export const Header = ({ className }: HeaderProps) => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [lastScrollY, isAnimating, mouseY]);
+  }, [lastScrollY, isAnimating]);
 
   return (
     <header
