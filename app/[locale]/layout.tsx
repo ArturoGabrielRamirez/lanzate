@@ -33,15 +33,15 @@ async function LocaleLayout({ children, params }: LocaleLayoutProps) {
                 >
                     <NuqsAdapter>
                         <NextIntlClientProvider locale={locale}>
-                            <BProgressProvider
+                            {/* <BProgressProvider
                                 startOnLoad
                                 spinnerPosition="bottom-right"
                                 shallowRouting={false}
                                 options={{ showSpinner: true }}
-                            >
+                            > */}
                                 <Header />
                                 {children}
-                            </BProgressProvider>
+                            {/* </BProgressProvider> */}
                         </NextIntlClientProvider>
                     </NuqsAdapter>
                 </NextThemeProvider>

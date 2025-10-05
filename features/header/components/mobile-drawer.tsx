@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,8 +13,10 @@ import {
 import { X } from 'lucide-react';
 import { MobileDrawerProps } from '../types';
 import { ThemeToggle } from './theme-toggle';
+import { LanguageSwitch } from './language-switch';
 
 export const MobileDrawer = ({ isOpen, onClose, links }: MobileDrawerProps) => {
+  const t = useTranslations();
   const handleLinkClick = (href: string) => {
     onClose(false);
     
@@ -38,11 +41,11 @@ export const MobileDrawer = ({ isOpen, onClose, links }: MobileDrawerProps) => {
     <Drawer open={isOpen} onOpenChange={onClose}>
       <DrawerContent className="md:hidden">
         <DrawerHeader className="flex items-center justify-between border-b border-border">
-          <DrawerTitle>Menú</DrawerTitle>
+          <DrawerTitle>{t('header.mobile.menu')}</DrawerTitle>
           <DrawerClose asChild>
             <button
               className="p-2 rounded-md hover:bg-accent transition-colors"
-              aria-label="Cerrar menú"
+              aria-label={t('header.mobile.closeMenu')}
             >
               <X className="w-5 h-5" />
             </button>
@@ -63,13 +66,19 @@ export const MobileDrawer = ({ isOpen, onClose, links }: MobileDrawerProps) => {
         </nav>
 
         {/* Actions */}
-        <div className="p-4 border-t border-border flex gap-3">
-          <ThemeToggle />
-          <Button className="flex-1" asChild>
-            <Link href="/login" onClick={() => onClose(false)}>
-              Acceder
-            </Link>
-          </Button>
+        <div className="p-4 border-t border-border space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium">{t('header.mobile.language')}</span>
+            <LanguageSwitch />
+          </div>
+          <div className="flex gap-3 items-center">
+            <ThemeToggle />
+            <Button className="flex-1" asChild>
+              <Link href="/login" onClick={() => onClose(false)}>
+                {t('header.actions.login')}
+              </Link>
+            </Button>
+          </div>
         </div>
       </DrawerContent>
     </Drawer>

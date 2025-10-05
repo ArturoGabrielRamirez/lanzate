@@ -1,1 +1,1 @@
-export { NAV_LINKS } from './navigation.constants';
+export { getNavLinks } from './navigation.constants';

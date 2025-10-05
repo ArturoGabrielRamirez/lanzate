@@ -1,15 +1,18 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { gsap } from 'gsap';
 import { HeaderProps } from '../types';
-import { NAV_LINKS } from '../constants';
+import { getNavLinks } from '../constants';
 import { HeaderLogo } from './header-logo';
 import { HeaderNav } from './header-nav';
 import { HeaderActions } from './header-actions';
 import { MobileHeader } from './mobile-header';
 
 export const Header = ({ className }: HeaderProps) => {
+  const t = useTranslations();
+  const NAV_LINKS = getNavLinks(t);
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const [lastScrollY, setLastScrollY] = useState(0);
