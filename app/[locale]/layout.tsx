@@ -1,5 +1,6 @@
 import { NextThemeProvider } from '@/features/global/components';
 import { LocaleLayoutProps } from '@/features/global/types';
+import { Header } from '@/features/header/components';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { NextIntlClientProvider } from 'next-intl';
 import { BProgressProvider } from '@/components/bprogress-provider';
@@ -38,6 +39,7 @@ async function LocaleLayout({ children, params }: LocaleLayoutProps) {
                                 shallowRouting={false}
                                 options={{ showSpinner: true }}
                             >
+                                <Header />
                                 {children}
                             </BProgressProvider>
                         </NextIntlClientProvider>
