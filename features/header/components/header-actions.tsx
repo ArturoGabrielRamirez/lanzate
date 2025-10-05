@@ -26,7 +26,7 @@ export const HeaderActions = () => {
 
   return (
     <div ref={actionsRef} className="hidden md:flex items-center gap-3">
-      <Button asChild>
+      <Button asChild size="lg">
         <Link href="/login">Acceder</Link>
       </Button>
     </div>
