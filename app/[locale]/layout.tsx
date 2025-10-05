@@ -1,6 +1,7 @@
 import { NextThemeProvider } from '@/features/global/components';
 import { LocaleLayoutProps } from '@/features/global/types';
 import { Header } from '@/features/header/components';
+import { Footer } from '@/features/footer/components';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { NextIntlClientProvider } from 'next-intl';
 import { BProgressProvider } from '@/components/bprogress-provider';
@@ -34,7 +35,10 @@ async function LocaleLayout({ children, params }: LocaleLayoutProps) {
                     <NuqsAdapter>
                         <NextIntlClientProvider locale={locale}>
                             <Header />
-                            {children}
+                            <main className="min-h-screen">
+                                {children}
+                            </main>
+                            <Footer />
                         </NextIntlClientProvider>
                     </NuqsAdapter>
                 </NextThemeProvider>

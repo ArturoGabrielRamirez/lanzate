@@ -28,5 +28,28 @@
       "imagePlaceholderTitle": "Welcome Image",
       "imagePlaceholderDescription": "An attractive image representing your brand and welcoming users will go here"
     }
+  },
+  "footer": {
+    "description": "The all-in-one platform to manage your online business. Simple, powerful, and easy to use.",
+    "product": {
+      "title": "Product",
+      "howItWorks": "How It Works",
+      "integrations": "Integrations",
+      "pricing": "Pricing"
+    },
+    "company": {
+      "title": "Company",
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "support": {
+      "title": "Support",
+      "help": "Help",
+      "docs": "Documentation",
+      "status": "Status"
+    },
+    "rights": "All rights reserved."
   }
 }

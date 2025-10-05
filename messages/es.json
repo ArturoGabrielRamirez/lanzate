@@ -28,5 +28,28 @@
       "imagePlaceholderTitle": "Imagen de Bienvenida",
       "imagePlaceholderDescription": "Aquí irá una imagen atractiva que represente tu marca y dé la bienvenida a los usuarios"
     }
+  },
+  "footer": {
+    "description": "La plataforma todo-en-uno para gestionar tu negocio online. Simple, potente y fácil de usar.",
+    "product": {
+      "title": "Producto",
+      "howItWorks": "Cómo Funciona",
+      "integrations": "Integraciones",
+      "pricing": "Precios"
+    },
+    "company": {
+      "title": "Empresa",
+      "about": "Acerca de",
+      "contact": "Contacto",
+      "privacy": "Privacidad",
+      "terms": "Términos"
+    },
+    "support": {
+      "title": "Soporte",
+      "help": "Ayuda",
+      "docs": "Documentación",
+      "status": "Estado"
+    },
+    "rights": "Todos los derechos reservados."
   }
 }
