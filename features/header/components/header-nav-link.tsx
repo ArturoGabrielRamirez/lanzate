@@ -1,11 +1,8 @@
 'use client';
 
-import { useRouter } from '@bprogress/next';
 import { HeaderNavLinkProps } from '../types';
 
 export const HeaderNavLink = ({ label, href, isActive = false }: HeaderNavLinkProps) => {
-
-  const router = useRouter();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -22,8 +19,6 @@ export const HeaderNavLink = ({ label, href, isActive = false }: HeaderNavLinkPr
         behavior: 'smooth'
       });
     }
-
-    router.push(href);
   };
 
   return (
