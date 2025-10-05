@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { gsap } from 'gsap';
 import { HeaderNavProps } from '../types';
 import { HeaderNavLink } from './header-nav-link';
@@ -8,6 +9,11 @@ import { HeaderNavLink } from './header-nav-link';
 export const HeaderNav = ({ links }: HeaderNavProps) => {
   const navRef = useRef<HTMLElement>(null);
   const [activeSection, setActiveSection] = useState<string>('');
+  const pathname = usePathname();
+  const [hasAnimatedIn, setHasAnimatedIn] = useState(false);
+
+  // Check if we're on the landing page
+  const isLandingPage = pathname === '/' || pathname === '/es' || pathname === '/en';
 
   // Initial animation
   useEffect(() => {
@@ -15,8 +21,8 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
 
     const ctx = gsap.context(() => {
       const navItems = navRef.current?.querySelectorAll('.nav-link-item');
-
-      if (navItems && navItems.length > 0) {
+      
+      if (navItems && navItems.length > 0 && isLandingPage && !hasAnimatedIn) {
         gsap.from(navItems, {
           opacity: 0,
           y: -20,
@@ -24,18 +30,49 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
           stagger: 0.1,
           delay: 0.7,
           ease: 'power3.out',
+          onComplete: () => setHasAnimatedIn(true),
         });
       }
     }, navRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isLandingPage, hasAnimatedIn]);
 
-  // Intersection Observer to detect active section
+  // Animate links based on route
   useEffect(() => {
+    if (!navRef.current) return;
+
+    const navItems = navRef.current.querySelectorAll('.nav-link-item');
+    if (!navItems || navItems.length === 0) return;
+
+    if (isLandingPage) {
+      // Animate in when returning to landing
+      gsap.to(navItems, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'power3.out',
+      });
+    } else {
+      // Animate out when leaving landing
+      gsap.to(navItems, {
+        opacity: 0,
+        y: -20,
+        duration: 0.3,
+        stagger: 0.05,
+        ease: 'power2.in',
+      });
+    }
+  }, [isLandingPage]);
+
+  // Intersection Observer to detect active section (only on landing page)
+  useEffect(() => {
+    if (!isLandingPage) return;
+
     const observerOptions = {
       root: null,
-      rootMargin: '-20% 0px -60% 0px', // Trigger when section is in the middle of viewport
+      rootMargin: '-20% 0px -60% 0px',
       threshold: 0,
     };
 
@@ -61,7 +98,7 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
     return () => {
       observer.disconnect();
     };
-  }, [links]);
+  }, [links, isLandingPage]);
 
   return (
     <nav ref={navRef} className="hidden md:flex items-center gap-1">
