@@ -14,5 +14,19 @@
       "language": "Language",
       "closeMenu": "Close menu"
     }
+  },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Enter your credentials to access your account",
+      "emailPlaceholder": "Email address",
+      "passwordPlaceholder": "Password",
+      "submitButton": "Sign In",
+      "orContinueWith": "Or continue with",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up",
+      "imagePlaceholderTitle": "Welcome Image",
+      "imagePlaceholderDescription": "An attractive image representing your brand and welcoming users will go here"
+    }
   }
 }

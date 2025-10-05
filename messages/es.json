@@ -14,5 +14,19 @@
       "language": "Idioma",
       "closeMenu": "Cerrar menú"
     }
+  },
+  "auth": {
+    "login": {
+      "title": "Iniciar Sesión",
+      "subtitle": "Ingresa tus credenciales para acceder a tu cuenta",
+      "emailPlaceholder": "Correo electrónico",
+      "passwordPlaceholder": "Contraseña",
+      "submitButton": "Iniciar Sesión",
+      "orContinueWith": "O continuar con",
+      "noAccount": "¿No tienes una cuenta?",
+      "signUp": "Regístrate",
+      "imagePlaceholderTitle": "Imagen de Bienvenida",
+      "imagePlaceholderDescription": "Aquí irá una imagen atractiva que represente tu marca y dé la bienvenida a los usuarios"
+    }
   }
 }
