@@ -1,6 +1,6 @@
 function HomePage() {
     return (
-        <div>
+        <div className="typography">
             <h1>Home Page</h1>
         </div>
     );
