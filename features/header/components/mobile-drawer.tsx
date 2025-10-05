@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/drawer';
 import { X } from 'lucide-react';
 import { MobileDrawerProps } from '../types';
+import { ThemeToggle } from './theme-toggle';
 
 export const MobileDrawer = ({ isOpen, onClose, links }: MobileDrawerProps) => {
   const handleLinkClick = (href: string) => {
@@ -34,7 +35,7 @@ export const MobileDrawer = ({ isOpen, onClose, links }: MobileDrawerProps) => {
   };
 
   return (
-    <Drawer direction="right" open={isOpen} onOpenChange={onClose}>
+    <Drawer open={isOpen} onOpenChange={onClose}>
       <DrawerContent className="md:hidden">
         <DrawerHeader className="flex items-center justify-between border-b border-border">
           <DrawerTitle>Menú</DrawerTitle>
@@ -49,7 +50,7 @@ export const MobileDrawer = ({ isOpen, onClose, links }: MobileDrawerProps) => {
         </DrawerHeader>
 
         {/* Navigation Links */}
-        <nav className="flex flex-col p-4 gap-2 flex-1 overflow-y-auto">
+        <nav className="flex flex-col p-4 gap-2">
           {links.map((link) => (
             <button
               key={link.href}
@@ -62,8 +63,9 @@ export const MobileDrawer = ({ isOpen, onClose, links }: MobileDrawerProps) => {
         </nav>
 
         {/* Actions */}
-        <div className="p-4 border-t border-border mt-auto">
-          <Button className="w-full" asChild>
+        <div className="p-4 border-t border-border flex gap-3">
+          <ThemeToggle />
+          <Button className="flex-1" asChild>
             <Link href="/login" onClick={() => onClose(false)}>
               Acceder
             </Link>

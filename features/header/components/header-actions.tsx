@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from './theme-toggle';
 
 export const HeaderActions = () => {
   const actionsRef = useRef<HTMLDivElement>(null);
@@ -26,6 +27,7 @@ export const HeaderActions = () => {
 
   return (
     <div ref={actionsRef} className="hidden md:flex items-center gap-3">
+      <ThemeToggle />
       <Button asChild size="lg">
         <Link href="/login">Acceder</Link>
       </Button>
