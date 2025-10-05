@@ -15,7 +15,7 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
 
     const ctx = gsap.context(() => {
       const navItems = navRef.current?.querySelectorAll('.nav-link-item');
-      
+
       if (navItems && navItems.length > 0) {
         gsap.from(navItems, {
           opacity: 0,
@@ -68,7 +68,7 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
       {links.map((link) => {
         const sectionId = link.href.split('#')[1];
         const isActive = activeSection === sectionId;
-        
+
         return (
           <div key={link.href} className="nav-link-item">
             <HeaderNavLink

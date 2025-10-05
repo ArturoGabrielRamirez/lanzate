@@ -43,7 +43,6 @@ export const Header = ({ className }: HeaderProps) => {
     if (!headerRef.current) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      const headerHeight = 80; // Max header height (md:h-20)
       const triggerZone = 100; // Pixels from top to trigger
 
       // If mouse is in the trigger zone and header is hidden
@@ -53,6 +52,19 @@ export const Header = ({ className }: HeaderProps) => {
           setIsAnimating(true);
           gsap.to(headerRef.current, {
             y: 0,
+            duration: 0.3,
+            ease: 'power2.out',
+            onComplete: () => setIsAnimating(false),
+          });
+        }
+      }
+      // If mouse leaves the trigger zone and header is visible and we're scrolled down
+      else if (e.clientY > triggerZone && isHeaderVisible && window.scrollY > 100) {
+        setIsHeaderVisible(false);
+        if (!isAnimating) {
+          setIsAnimating(true);
+          gsap.to(headerRef.current, {
+            y: -100,
             duration: 0.3,
             ease: 'power2.out',
             onComplete: () => setIsAnimating(false),
