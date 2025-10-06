@@ -3,5 +3,17 @@ alwaysApply: true
 ---
 
 
-- Use bun as the package manager for any command that needs to be run in the command line/terminal.
+- Use bun as the package manager for any command that needs to be run in the command line/terminal as : 
+
+```bash
+bun <command>
+```
+
+or 
+
+```bash
+bun x <command>
+```
+
+
 - Use GSAP for animations.

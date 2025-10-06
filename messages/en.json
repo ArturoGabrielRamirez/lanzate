@@ -27,6 +27,7 @@
       "passwordTooltip": "Must contain at least 8 characters",
       "forgotPassword": "Forgot your password?",
       "submitButton": "Sign In",
+      "submitting": "Signing in...",
       "orContinueWith": "Or continue with",
       "noAccount": "Don't have an account?",
       "signUp": "Sign up",

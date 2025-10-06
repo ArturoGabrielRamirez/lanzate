@@ -37,6 +37,8 @@ export const LoginForm = () => {
 
   // Handle form submission
   const handleSubmit = async (data: any) => {
+    // Simulate a 1 second delay
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log('Login data:', data);
     // TODO: Implement login logic
   };
@@ -55,6 +57,7 @@ export const LoginForm = () => {
           fields={formFields}
           onSubmit={handleSubmit}
           submitText={t('submitButton')}
+          submitLoadingText={t('submitting')}
           validationSchema={validationSchema}
         />
 

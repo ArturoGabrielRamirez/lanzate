@@ -3,8 +3,8 @@
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { Button } from '@/components/ui/button';
 import { FormInput } from './form-input';
+import { FormButton } from './form-button';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 
@@ -24,6 +24,8 @@ interface DynamicFormProps {
   fields: FormField[];
   onSubmit: (data: any) => void | Promise<void>;
   submitText: string;
+  submitLoadingText?: string;
+  submitLeftIcon?: React.ReactNode;
   validationSchema?: Yup.ObjectSchema<any>;
   defaultValues?: Record<string, any>;
 }
@@ -32,12 +34,15 @@ export const DynamicForm = ({
   fields,
   onSubmit,
   submitText,
+  submitLoadingText,
+  submitLeftIcon,
   validationSchema,
   defaultValues = {},
 }: DynamicFormProps) => {
   const [showPassword, setShowPassword] = useState<Record<string, boolean>>({});
 
   const methods = useForm({
+    mode: 'onChange', // Validate on each change for real-time button state
     resolver: validationSchema ? yupResolver(validationSchema) : undefined,
     defaultValues,
   });
@@ -45,7 +50,7 @@ export const DynamicForm = ({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = methods;
 
   const togglePasswordVisibility = (fieldName: string) => {
@@ -95,9 +100,13 @@ export const DynamicForm = ({
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {fields.map(renderField)}
         
-        <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
-          {isSubmitting ? 'Cargando...' : submitText}
-        </Button>
+        <FormButton 
+          className="w-full"
+          leftIcon={submitLeftIcon}
+          loadingText={submitLoadingText}
+        >
+          {submitText}
+        </FormButton>
       </form>
     </FormProvider>
   );

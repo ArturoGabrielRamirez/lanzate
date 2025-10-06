@@ -27,6 +27,7 @@
       "passwordTooltip": "Debe contener al menos 8 caracteres",
       "forgotPassword": "¿Olvidaste tu contraseña?",
       "submitButton": "Iniciar Sesión",
+      "submitting": "Iniciando sesión...",
       "orContinueWith": "O continuar con",
       "noAccount": "¿No tienes una cuenta?",
       "signUp": "Regístrate",
