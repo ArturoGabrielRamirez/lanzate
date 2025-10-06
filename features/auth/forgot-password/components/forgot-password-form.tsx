@@ -1,11 +1,11 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { DynamicForm, FormField } from '@/features/global/components/form';
-import { getForgotValidationSchema } from '../schemas';
+import { DynamicForm, FormField } from '@/features/global/components';
+import { getForgotValidationSchema } from '@/features/auth/forgot-password/schemas';
 import { Mail } from 'lucide-react';
-import { AuthProviders } from '@/features/auth/shared/components/auth-providers';
-import { resetPasswordAction } from '../actions/reset-password.action';
+import { AuthProviders } from '@/features/auth/shared/components';
+import { resetPasswordAction } from '@/features/auth/forgot-password/actions/reset-password.action';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 

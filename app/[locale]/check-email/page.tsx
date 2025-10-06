@@ -1,6 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import { CheckEmailActions } from '@/features/auth/check-email/components/check-email-actions';
-import { CheckEmailVisual } from '@/features/auth/check-email/components/check-email-visual';
+import { CheckEmailActions, CheckEmailVisual } from '@/features/auth/check-email/components';
 
 type CheckEmailPageProps = {
   searchParams: Promise<{ email?: string; type?: string }>

@@ -1,7 +1,7 @@
 'use server';
 
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { resetPasswordRequestData } from '../data/reset-password.data';
+import { resetPasswordRequestData } from '@/features/auth/forgot-password/data/reset-password.data';
 import type { ServerResponse } from '@/features/global/types';
 import { headers } from 'next/headers';
 import { extractSubdomainFromHost } from '../utils/extract-subdomain-from-host';

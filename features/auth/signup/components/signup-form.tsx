@@ -1,11 +1,11 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { DynamicForm, FormField } from '@/features/global/components/form';
-import { getSignupValidationSchema } from '../schemas';
+import { DynamicForm, FormField } from '@/features/global/components';
+import { getSignupValidationSchema } from '@/features/auth/signup/schemas';
 import Link from 'next/link';
 import { Mail, Lock } from 'lucide-react';
-import { AuthProviders } from '@/features/auth/shared/components/auth-providers';
+import { AuthProviders } from '@/features/auth/shared/components';
 
 export const SignupForm = () => {
   const t = useTranslations('auth.signup');

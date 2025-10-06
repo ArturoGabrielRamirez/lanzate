@@ -1,7 +1,7 @@
 'use server';
 
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { signInWithPasswordData } from '../data/sign-in.data';
+import { signInWithPasswordData } from '@/features/auth/login/data/sign-in.data';
 import type { ServerResponse } from '@/features/global/types';
 import { revalidatePath } from 'next/cache';
 

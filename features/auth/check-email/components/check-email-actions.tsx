@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 import { resetPasswordAction } from '@/features/auth/forgot-password/actions/reset-password.action';
-import { AsyncButton } from '@/features/global/components/async-button';
+import { AsyncButton } from '@/features/global/components';
 
 interface CheckEmailActionsProps {
   email?: string;

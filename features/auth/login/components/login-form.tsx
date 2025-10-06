@@ -2,11 +2,11 @@
 
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
-import { DynamicForm, FormField } from '@/features/global/components/form';
-import { getLoginValidationSchema } from '../schemas';
+import { DynamicForm, FormField } from '@/features/global/components';
+import { getLoginValidationSchema } from '@/features/auth/login/schemas';
 import Link from 'next/link';
 import { Mail, Lock } from 'lucide-react';
-import { AuthProviders } from '@/features/auth/shared/components/auth-providers';
+import { AuthProviders } from '@/features/auth/shared/components';
 import { signInAction } from '@/features/auth/login/actions/sign-in.action';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
