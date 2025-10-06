@@ -3,11 +3,11 @@ import { LocaleLayoutProps } from '@/features/global/types';
 import { Header } from '@/features/header/components';
 import { Footer } from '@/features/footer/components';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { getCurrentUserAction } from '@/features/global/actions';
 import { NextIntlClientProvider } from 'next-intl';
 import type { Metadata } from 'next';
-import '../globals.css';
 import { Toaster } from 'sonner';
-import { getCurrentUserAction } from '@/features/global/actions';
+import '../globals.css';
 
 export const metadata: Metadata = {
     title: {

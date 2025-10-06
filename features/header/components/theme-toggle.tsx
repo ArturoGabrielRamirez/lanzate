@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,11 @@ import { gsap } from 'gsap';
 export const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
   const iconRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, [])
 
   const handleToggleClick = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
@@ -27,6 +32,8 @@ export const ThemeToggle = () => {
       });
     }
   };
+
+  if (!isMounted) return null;
 
   return (
     <Button
