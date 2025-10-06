@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import { CheckEmailActions } from '@/features/auth/check-email/components/check-email-actions';
 
 type CheckEmailPageProps = {
   searchParams: Promise<{ email?: string; type?: string }>
@@ -13,19 +14,25 @@ export default async function CheckEmailPage({ searchParams }: CheckEmailPagePro
   return (
     <div className="w-full pt-20 md:pt-24 pb-4">
       <div className="container mx-auto px-4">
-        <div className="max-w-2xl">
-          <div className="typography">
-            <h2>{t('title')}</h2>
-            <p className="muted">
-              {type === 'recovery' ? t('subtitleRecovery') : t('subtitleGeneric')}
-            </p>
-            {email ? (
-              <p>
-                {t('sentTo')} <strong>{email}</strong>
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
+          <div className="flex flex-col gap-8">
+            <div className="typography">
+              <h2>{t('title')}</h2>
+              <p className="muted">
+                {type === 'recovery' ? t('subtitleRecovery') : t('subtitleGeneric')}
               </p>
-            ) : null}
-            <p className="small text-muted-foreground">{t('tipSpam')}</p>
+              {email ? (
+                <p>
+                  {t('sentTo')} <strong>{email}</strong>
+                </p>
+              ) : null}
+              <p className="small text-muted-foreground">{t('tipSpam')}</p>
+            </div>
+
+            <CheckEmailActions email={email} type={type} />
           </div>
+
+          <div className="hidden lg:block" />
         </div>
       </div>
     </div>

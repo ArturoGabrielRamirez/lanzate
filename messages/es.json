@@ -21,7 +21,11 @@
       "subtitleGeneric": "Te enviamos un enlace para continuar con el proceso.",
       "subtitleRecovery": "Te enviamos un enlace para restablecer tu contraseña.",
       "sentTo": "Enviado a",
-      "tipSpam": "Si no lo ves, revisa tu carpeta de spam o correo no deseado."
+      "tipSpam": "Si no lo ves, revisa tu carpeta de spam o correo no deseado.",
+      "resendButton": "Reenviar enlace",
+      "resendSuccess": "Enlace reenviado correctamente",
+      "resendError": "No se pudo reenviar el correo",
+      "backToLogin": "Volver al inicio de sesión"
     },
     "login": {
       "title": "Iniciar Sesión",
