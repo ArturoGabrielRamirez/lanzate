@@ -72,6 +72,7 @@ export function AsyncButton({
       variant={variant}
       size={iconOnly ? 'icon' : size}
       disabled={isDisabled}
+      aria-busy={isLoading}
       className={cn(className)}
       {...props}
     >

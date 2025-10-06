@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { CheckEmailActions } from '@/features/auth/check-email/components/check-email-actions';
+import { CheckEmailVisual } from '@/features/auth/check-email/components/check-email-visual';
 
 type CheckEmailPageProps = {
   searchParams: Promise<{ email?: string; type?: string }>
@@ -32,7 +33,9 @@ export default async function CheckEmailPage({ searchParams }: CheckEmailPagePro
             <CheckEmailActions email={email} type={type} />
           </div>
 
-          <div className="hidden lg:block" />
+          <div className="hidden lg:flex items-center justify-center min-h-[400px]">
+            <CheckEmailVisual />
+          </div>
         </div>
       </div>
     </div>
