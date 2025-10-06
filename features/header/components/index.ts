@@ -1,9 +1,12 @@
 export { Header } from './header';
 export { HeaderLogo } from './header-logo';
 export { HeaderNav } from './header-nav';
+export { HeaderNavAuth } from './header-nav-auth';
+export { HeaderNavGuest } from './header-nav-guest';
 export { HeaderActions } from './header-actions';
 export { MobileHeader } from './mobile-header';
 export { MobileDrawer } from './mobile-drawer';
 export { ThemeToggle } from './theme-toggle';
 export { LanguageSwitch } from './language-switch';
 export { UserMenu } from './user-menu';
+export { NavLinkWithUnderline } from './nav-link-with-underline';
