@@ -47,3 +47,29 @@ export interface MobileDrawerProps {
   links: NavLink[];
   user?: HeaderCurrentUser | null;
 }
+
+export interface HeaderActionsProps {
+  user?: HeaderCurrentUser | null;
+}
+
+export interface UserAvatarProps {
+  user: HeaderCurrentUser;
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+}
+
+export interface UserMenuProps {
+  user: HeaderCurrentUser;
+}
+
+export interface NavLinkWithUnderlineProps {
+  href: string;
+  label: string;
+  icon?: ReactNode;
+  isActive?: boolean;
+  prefetch?: boolean;
+}
+
+export interface SettingsToolbarProps {
+  className?: string;
+}

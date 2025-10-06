@@ -4,15 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
-
-interface AsyncButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  onClickAsync: () => Promise<unknown>;
-  leftIcon?: React.ReactNode;
-  iconOnly?: boolean;
-  loadingText?: string;
-  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
-  size?: 'default' | 'sm' | 'lg' | 'icon';
-}
+import type { AsyncButtonProps } from '../types';
 
 export function AsyncButton({
   onClickAsync,

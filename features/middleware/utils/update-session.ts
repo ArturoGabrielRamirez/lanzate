@@ -4,11 +4,11 @@ import { createServerClient } from "@supabase/ssr";
 import { User } from "@supabase/supabase-js";
 import { routing } from "@/i18n/routing";
 import { validateSubdomain } from "@/features/middleware/actions";
-import createIntlMiddleware from 'next-intl/middleware'
-
-const intlMiddleware = createIntlMiddleware(routing)
-
+import createIntlMiddleware from 'next-intl/middleware';
+import { logger } from "@/features/global/utils";
 import { APP_CONFIG } from "@/features/global/constants";
+
+const intlMiddleware = createIntlMiddleware(routing);
 
 export async function updateSession(request: NextRequest) {
     const rootDomain = APP_CONFIG.ROOT_DOMAIN;
@@ -64,7 +64,7 @@ export async function updateSession(request: NextRequest) {
         const { data } = await supabase.auth.getUser()
         user = data.user
     } catch (error) {
-        console.error('Error getting user:', error)
+        logger.error('Middleware: Failed to get user from Supabase', error)
     }
 
     const { locale, pathWithoutLocale } = extractLocaleFromPath(pathname)
@@ -83,7 +83,7 @@ export async function updateSession(request: NextRequest) {
                 return NextResponse.redirect(url)
             }
         } catch (error) {
-            console.error('Error validating subdomain:', error)
+            logger.error(`Middleware: Failed to validate subdomain "${subdomain}"`, error)
         }
 
         const subdomainRoutes = {

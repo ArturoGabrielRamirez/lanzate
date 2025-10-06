@@ -6,11 +6,7 @@ import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 import { resetPasswordAction } from '@/features/auth/forgot-password/actions';
 import { AsyncButton } from '@/features/global/components';
-
-interface CheckEmailActionsProps {
-  email?: string;
-  type?: string;
-}
+import type { CheckEmailActionsProps } from '../types';
 
 export const CheckEmailActions = ({ email, type }: CheckEmailActionsProps) => {
   const t = useTranslations('auth.checkEmail');

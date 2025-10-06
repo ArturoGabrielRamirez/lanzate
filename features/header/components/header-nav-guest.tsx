@@ -16,7 +16,7 @@ import { GoogleAuthButton } from '@/features/auth/shared/components/google-auth-
 import { googleSignInAction } from '@/features/auth/login/actions';
 import { useSmoothScroll } from '@/features/global/hooks/use-smooth-scroll';
 import { HEADER_CONSTANTS } from '../constants/header.constants';
-import { Home, PlayCircle, HelpCircle, Info, Phone, LogIn, UserPlus, KeyRound } from 'lucide-react';
+import { getIconForHref } from '../utils';
 
 export const HeaderNavGuest = memo(({ menuItems }: Pick<HeaderNavProps, 'menuItems'>) => {
   const t = useTranslations();
@@ -27,19 +27,6 @@ export const HeaderNavGuest = memo(({ menuItems }: Pick<HeaderNavProps, 'menuIte
     if (res.hasError || !res.payload?.url) return;
     window.location.href = res.payload.url;
   }, []);
-
-  const getIconForHref = (href?: string) => {
-    if (!href) return null;
-    if (href === '/' || href.startsWith('/#inicio')) return <Home className="mr-2 h-4 w-4" aria-hidden />;
-    if (href.includes('how-it-works')) return <PlayCircle className="mr-2 h-4 w-4" aria-hidden />;
-    if (href.includes('pricing') || href.includes('faq')) return <HelpCircle className="mr-2 h-4 w-4" aria-hidden />;
-    if (href === '/login') return <LogIn className="mr-2 h-4 w-4" aria-hidden />;
-    if (href === '/signup') return <UserPlus className="mr-2 h-4 w-4" aria-hidden />;
-    if (href === '/forgot-password') return <KeyRound className="mr-2 h-4 w-4" aria-hidden />;
-    if (href === '/about') return <Info className="mr-2 h-4 w-4" aria-hidden />;
-    if (href === '/contact') return <Phone className="mr-2 h-4 w-4" aria-hidden />;
-    return null;
-  };
 
   return (
     <nav className="hidden md:flex items-center">

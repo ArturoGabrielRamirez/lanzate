@@ -3,10 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { googleSignInAction } from '@/features/auth/login/actions';
 import { useRouter } from 'next/navigation';
-
-interface AuthProvidersProps {
-  label: string;
-}
+import type { AuthProvidersProps } from '../types';
 
 export const AuthProviders = ({ label }: AuthProvidersProps) => {
   const router = useRouter();

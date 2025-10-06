@@ -7,4 +7,9 @@ export type {
   HeaderNavProps,
   MobileHeaderProps,
   MobileDrawerProps,
+  HeaderActionsProps,
+  UserAvatarProps,
+  UserMenuProps,
+  NavLinkWithUnderlineProps,
+  SettingsToolbarProps,
 } from './header.types';

@@ -9,11 +9,7 @@ import { SettingsToolbar } from './settings-toolbar';
 import { useGsapFadeIn } from '@/features/global/hooks';
 import { UserMenu } from './user-menu';
 import { isAuthenticated } from '@/features/global/utils';
-import type { HeaderCurrentUser } from '../types';
-
-interface HeaderActionsProps {
-  user?: HeaderCurrentUser | null;
-}
+import type { HeaderActionsProps } from '../types';
 
 export const HeaderActions = ({ user }: HeaderActionsProps) => {
   const t = useTranslations();

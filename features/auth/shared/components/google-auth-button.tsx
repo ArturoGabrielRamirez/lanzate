@@ -1,12 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-
-interface GoogleAuthButtonProps {
-  label: string;
-  onClick: () => void | Promise<void>;
-  className?: string;
-}
+import type { GoogleAuthButtonProps } from '../types';
 
 export const GoogleAuthButton = ({ label, onClick, className }: GoogleAuthButtonProps) => {
   return (

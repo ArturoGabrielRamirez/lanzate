@@ -5,15 +5,7 @@ import { useFormContext } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
-
-interface FormButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children?: React.ReactNode;
-  leftIcon?: React.ReactNode;
-  iconOnly?: boolean;
-  loadingText?: string;
-  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
-  size?: 'default' | 'sm' | 'lg' | 'icon';
-}
+import type { FormButtonProps } from '../../types';
 
 export const FormButton = forwardRef<HTMLButtonElement, FormButtonProps>(
   (

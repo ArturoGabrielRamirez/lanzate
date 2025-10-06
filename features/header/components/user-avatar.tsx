@@ -1,13 +1,7 @@
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import type { HeaderCurrentUser } from '../types';
-
-interface UserAvatarProps {
-  user: HeaderCurrentUser;
-  size?: 'sm' | 'md' | 'lg';
-  className?: string;
-}
+import type { UserAvatarProps } from '../types';
 
 const sizeToClass: Record<NonNullable<UserAvatarProps['size']>, string> = {
   sm: 'h-8 w-8',

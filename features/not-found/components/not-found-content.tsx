@@ -4,13 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Empty, EmptyIcon, EmptyTitle, EmptyDescription, EmptyActions } from '@/components/ui/empty';
 import { FileQuestion, Home, ArrowLeft } from 'lucide-react';
-
-interface NotFoundContentProps {
-  title: string;
-  description: string;
-  goHome: string;
-  goBack: string;
-}
+import type { NotFoundContentProps } from '../types';
 
 export const NotFoundContent = ({ title, description, goHome, goBack }: NotFoundContentProps) => {
   return (

@@ -1,14 +1,18 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { DynamicForm, FormField } from '@/features/global/components';
 import { getSignupValidationSchema } from '@/features/auth/signup/schemas';
+import { signUpAction } from '@/features/auth/signup/actions';
 import Link from 'next/link';
 import { Mail, Lock } from 'lucide-react';
 import { AuthProviders } from '@/features/auth/shared/components';
+import { toast } from 'sonner';
 
 export const SignupForm = () => {
   const t = useTranslations('auth.signup');
+  const router = useRouter();
 
   // Validation schema
   const validationSchema = getSignupValidationSchema((key) => t(key));
@@ -46,10 +50,14 @@ export const SignupForm = () => {
 
   // Handle form submission
   const handleSubmit = async (data: any) => {
-    // Simulate a 1 second delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log('Signup data:', data);
-    // TODO: Implement signup logic
+    const res = await signUpAction({ email: data.email, password: data.password });
+    if (res.hasError) {
+      toast.error(t('toastError'));
+      return;
+    }
+    toast.success(t('toastSuccess'));
+    const url = `/check-email?email=${encodeURIComponent(data.email)}&type=signup`;
+    router.push(url);
   };
 
   return (

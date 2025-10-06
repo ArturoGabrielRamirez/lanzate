@@ -2,10 +2,7 @@
 
 import { LanguageSwitch } from './language-switch';
 import { ThemeToggle } from './theme-toggle';
-
-interface SettingsToolbarProps {
-  className?: string;
-}
+import type { SettingsToolbarProps } from '../types';
 
 export const SettingsToolbar = ({ className }: SettingsToolbarProps) => {
   return (

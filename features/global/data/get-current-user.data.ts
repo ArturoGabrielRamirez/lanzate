@@ -1,10 +1,8 @@
 'use server';
 
 import { createServerSideClient } from '@/lib/supabase/server';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
-
-const prisma = new PrismaClient();
 
 export interface CurrentUserInfo {
   id: number;

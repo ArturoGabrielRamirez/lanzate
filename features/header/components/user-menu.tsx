@@ -15,11 +15,7 @@ import { logoutAction } from '@/features/auth/shared/actions/logout.action';
 import { getUserDisplayName } from '@/features/global/utils';
 import { UserAvatar } from './user-avatar';
 import { toast } from 'sonner';
-import type { HeaderCurrentUser } from '../types';
-
-interface UserMenuProps {
-  user: HeaderCurrentUser;
-}
+import type { UserMenuProps } from '../types';
 
 export const UserMenu = ({ user }: UserMenuProps) => {
   const t = useTranslations('header.userMenu');

@@ -8,16 +8,7 @@ import { InputGroup, InputGroupText } from '@/components/ui/input-group';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  error?: string;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
-  isRequired?: boolean;
-  tooltip?: string;
-  fieldName?: string; // For detecting errors via useFormContext
-}
+import type { FormInputProps } from '../../types';
 
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
   ({ label, error, leftIcon, rightIcon, isRequired, tooltip, fieldName, className, ...props }, ref) => {

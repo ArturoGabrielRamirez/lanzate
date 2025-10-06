@@ -7,28 +7,7 @@ import { FormInput } from './form-input';
 import { FormButton } from './form-button';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
-
-export interface FormField {
-  name: string;
-  label?: string;
-  type?: string;
-  placeholder?: string;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
-  validation?: Yup.AnySchema;
-  required?: boolean;
-  tooltip?: string;
-}
-
-interface DynamicFormProps {
-  fields: FormField[];
-  onSubmit: (data: any) => void | Promise<void>;
-  submitText: string;
-  submitLoadingText?: string;
-  submitLeftIcon?: React.ReactNode;
-  validationSchema?: Yup.ObjectSchema<any>;
-  defaultValues?: Record<string, any>;
-}
+import type { DynamicFormProps } from '../../types';
 
 export const DynamicForm = ({
   fields,

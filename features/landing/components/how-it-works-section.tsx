@@ -14,14 +14,9 @@ import {
     type CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import type { Feature } from '../types';
 
 gsap.registerPlugin(ScrollTrigger);
-
-interface Feature {
-    icon: React.ReactNode;
-    title: string;
-    description: string;
-}
 
 export const HowItWorksSection = () => {
     const t = useTranslations("home");

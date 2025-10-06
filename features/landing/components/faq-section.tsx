@@ -19,13 +19,9 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import Autoplay from "embla-carousel-autoplay";
+import type { FAQ } from '../types';
 
 gsap.registerPlugin(ScrollTrigger);
-
-interface FAQ {
-    question: string;
-    answer: string;
-}
 
 export const FAQSection = () => {
     const t = useTranslations();

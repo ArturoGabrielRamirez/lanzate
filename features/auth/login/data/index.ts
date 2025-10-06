@@ -1,2 +1,2 @@
-export { signInWithPasswordData, type SignInParams } from './sign-in.data';
+export { signInWithPasswordData } from './sign-in.data';
 
