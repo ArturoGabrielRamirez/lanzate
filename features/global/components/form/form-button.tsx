@@ -41,7 +41,7 @@ export const FormButton = forwardRef<HTMLButtonElement, FormButtonProps>(
 
     const isSubmitting = formContext?.formState?.isSubmitting ?? false;
     const isValid = formContext?.formState?.isValid ?? true;
-    const hasErrors = formContext?.formState?.errors && Object.keys(formContext.formState.errors).length > 0;
+    const hasErrors = !!(formContext?.formState?.errors && Object.keys(formContext.formState.errors).length > 0);
 
     // Button should be disabled if:
     // 1. Explicitly disabled prop
@@ -89,7 +89,7 @@ export const FormButton = forwardRef<HTMLButtonElement, FormButtonProps>(
         type="submit"
         variant={variant}
         size={iconOnly ? 'icon' : size}
-        disabled={isDisabled}
+        disabled={isDisabled ?? false}
         className={cn(className)}
         {...props}
       >
