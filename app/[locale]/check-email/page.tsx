@@ -12,7 +12,7 @@ export default async function CheckEmailPage({ searchParams }: CheckEmailPagePro
   const type = params.type || 'signup';
 
   return (
-    <div className="w-full pt-20 md:pt-24 pb-4">
+    <div className="w-full pt-20 md:pt-24 pb-4 flex items-center justify-center min-h-dvh">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           <div className="flex flex-col gap-8">

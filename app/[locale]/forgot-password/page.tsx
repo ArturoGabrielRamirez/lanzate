@@ -11,7 +11,7 @@ export default async function ForgotPasswordPage() {
   const t = await getTranslations('auth.forgot');
 
   return (
-    <div className="w-full pt-20 md:pt-24 pb-4">
+    <div className="w-full pt-20 md:pt-24 pb-4 flex items-center justify-center min-h-dvh">
       <div className="container mx-auto px-4">
         {/* Content Grid */}
         <div className="grid lg:grid-cols-2 gap-8 items-center">

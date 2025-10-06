@@ -26,7 +26,7 @@ export const CheckEmailActions = ({ email, type }: CheckEmailActionsProps) => {
   };
 
   return (
-    <div className="not-typography space-y-3">
+    <div className="not-typography space-y-3 grid grid-cols-2 gap-3">
       <AsyncButton className="w-full" size="lg" onClickAsync={handleResend} disabled={!email} loadingText={t('resendLoading')}>
         {t('resendButton')}
       </AsyncButton>
