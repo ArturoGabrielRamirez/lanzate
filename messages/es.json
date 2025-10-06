@@ -10,18 +10,33 @@
       "contact": "Contacto",
       "sections": {
         "hero": "Inicio",
+        "heroDesc": "Descubre todo lo que Lanzate puede hacer por tu negocio",
         "howItWorks": "Cómo funciona",
-        "faq": "Preguntas frecuentes"
+        "howItWorksDesc": "Aprende cómo gestionar tu tienda en simples pasos",
+        "faq": "Preguntas frecuentes",
+        "faqDesc": "Respuestas a las dudas más comunes"
       },
       "auth": {
         "login": "Iniciar sesión",
+        "loginDesc": "Accede a tu cuenta existente",
         "signup": "Registrarse",
+        "signupDesc": "Crea tu cuenta gratis en minutos",
         "forgotPassword": "Olvidé mi contraseña",
-        "googleAuth": "Acceder con Google"
+        "forgotPasswordDesc": "Recupera el acceso a tu cuenta",
+        "googleAuth": "Acceder con Google",
+        "googleAuthDesc": "Acceso rápido y seguro"
       },
       "info": {
         "about": "Acerca de",
-        "contact": "Contacto"
+        "aboutDesc": "Conoce nuestra historia y misión",
+        "contact": "Contacto",
+        "contactDesc": "Ponte en contacto con nosotros"
+      },
+      "user": {
+        "dashboard": "Dashboard",
+        "dashboardDesc": "Panel de control principal",
+        "account": "Mi cuenta",
+        "accountDesc": "Gestiona tu perfil y configuración"
       }
     },
     "actions": {

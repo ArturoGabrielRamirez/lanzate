@@ -1,11 +1,9 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
 import { Link } from '@/i18n/navigation';
 import { gsap } from 'gsap';
 import { HeaderNavProps } from '../types';
-import { isAuthRoute } from '@/features/global/utils';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -20,18 +18,8 @@ import { useRouter } from 'next/navigation';
 
 export const HeaderNav = ({ menuItems }: HeaderNavProps) => {
   const navRef = useRef<HTMLElement>(null);
-  const pathname = usePathname();
   const [hasAnimatedIn, setHasAnimatedIn] = useState(false);
   const router = useRouter();
-
-  // Check if we're on an auth route (links should be hidden)
-  const isAuth = isAuthRoute(pathname);
-
-  // Check if we're on the landing page (links should be visible)
-  const isLandingPage = pathname === '/' || pathname === '/es' || pathname === '/en';
-
-  // Links should be visible if: not an auth route AND on landing page
-  const shouldShowLinks = !isAuth && isLandingPage;
 
   // Initial animation on first load
   useEffect(() => {
@@ -40,7 +28,7 @@ export const HeaderNav = ({ menuItems }: HeaderNavProps) => {
     const ctx = gsap.context(() => {
       const navWrapper = navRef.current;
 
-      if (navWrapper && shouldShowLinks) {
+      if (navWrapper) {
         gsap.from(navWrapper, {
           opacity: 0,
           y: -20,
@@ -49,37 +37,11 @@ export const HeaderNav = ({ menuItems }: HeaderNavProps) => {
           ease: 'power3.out',
           onComplete: () => setHasAnimatedIn(true),
         });
-      } else if (!shouldShowLinks) {
-        setHasAnimatedIn(true);
       }
     }, navRef);
 
     return () => ctx.revert();
   }, []); // Only run once on mount
-
-  // Animate links based on route changes (after initial animation)
-  useEffect(() => {
-    if (!navRef.current || !hasAnimatedIn) return;
-
-    const navWrapper = navRef.current;
-    if (!navWrapper) return;
-
-    if (shouldShowLinks) {
-      gsap.to(navWrapper, {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        ease: 'power3.out',
-      });
-    } else {
-      gsap.to(navWrapper, {
-        opacity: 0,
-        y: -20,
-        duration: 0.3,
-        ease: 'power2.in',
-      });
-    }
-  }, [shouldShowLinks, hasAnimatedIn]);
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.includes('#')) {

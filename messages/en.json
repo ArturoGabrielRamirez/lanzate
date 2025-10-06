@@ -10,18 +10,33 @@
       "contact": "Contact",
       "sections": {
         "hero": "Home",
+        "heroDesc": "Discover everything Lanzate can do for your business",
         "howItWorks": "How it works",
-        "faq": "FAQ"
+        "howItWorksDesc": "Learn how to manage your store in simple steps",
+        "faq": "FAQ",
+        "faqDesc": "Answers to the most common questions"
       },
       "auth": {
         "login": "Sign in",
+        "loginDesc": "Access your existing account",
         "signup": "Sign up",
+        "signupDesc": "Create your free account in minutes",
         "forgotPassword": "Forgot password",
-        "googleAuth": "Sign in with Google"
+        "forgotPasswordDesc": "Recover access to your account",
+        "googleAuth": "Sign in with Google",
+        "googleAuthDesc": "Fast and secure access"
       },
       "info": {
         "about": "About",
-        "contact": "Contact"
+        "aboutDesc": "Learn our story and mission",
+        "contact": "Contact",
+        "contactDesc": "Get in touch with us"
+      },
+      "user": {
+        "dashboard": "Dashboard",
+        "dashboardDesc": "Main control panel",
+        "account": "My account",
+        "accountDesc": "Manage your profile and settings"
       }
     },
     "actions": {
