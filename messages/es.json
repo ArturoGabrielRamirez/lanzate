@@ -138,5 +138,10 @@
     "description": "Lo sentimos, la página que buscas no existe o ha sido movida. Verifica la URL o vuelve al inicio.",
     "goHome": "Ir al inicio",
     "goBack": "Volver atrás"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "Aún no hay contenido configurado para tu panel. Pronto verás información y accesos rápidos aquí.",
+    "goHome": "Ir al inicio"
   }
 }

@@ -138,5 +138,10 @@
     "description": "Sorry, the page you're looking for doesn't exist or has been moved. Check the URL or return to the homepage.",
     "goHome": "Go to Home",
     "goBack": "Go Back"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "There is no content configured for your dashboard yet. You will soon see information and quick actions here.",
+    "goHome": "Go to Home"
   }
 }
