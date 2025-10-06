@@ -1,2 +1,2 @@
-export { getCurrentUserData } from './get-current-user.data';
+export { getCurrentUserData, type CurrentUserInfo } from './get-current-user.data';
 

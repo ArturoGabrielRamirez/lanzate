@@ -13,7 +13,7 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 import { GoogleAuthButton } from '@/features/auth/shared/components/google-auth-button';
-import { googleSignInAction } from '@/features/auth/login/actions/google-sign-in.action';
+import { googleSignInAction } from '@/features/auth/login/actions';
 import { useSmoothScroll } from '@/features/global/hooks/use-smooth-scroll';
 import { HEADER_CONSTANTS } from '../constants/header.constants';
 import { Home, PlayCircle, HelpCircle, Info, Phone, LogIn, UserPlus, KeyRound } from 'lucide-react';

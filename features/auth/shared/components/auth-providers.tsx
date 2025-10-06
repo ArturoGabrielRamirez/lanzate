@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { googleSignInAction } from '@/features/auth/login/actions/google-sign-in.action';
+import { googleSignInAction } from '@/features/auth/login/actions';
 import { useRouter } from 'next/navigation';
 
 interface AuthProvidersProps {

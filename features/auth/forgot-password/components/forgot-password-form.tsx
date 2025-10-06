@@ -5,7 +5,7 @@ import { DynamicForm, FormField } from '@/features/global/components';
 import { getForgotValidationSchema } from '@/features/auth/forgot-password/schemas';
 import { Mail } from 'lucide-react';
 import { AuthProviders } from '@/features/auth/shared/components';
-import { resetPasswordAction } from '@/features/auth/forgot-password/actions/reset-password.action';
+import { resetPasswordAction } from '@/features/auth/forgot-password/actions';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 

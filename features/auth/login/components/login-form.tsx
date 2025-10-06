@@ -7,7 +7,7 @@ import { getLoginValidationSchema } from '@/features/auth/login/schemas';
 import Link from 'next/link';
 import { Mail, Lock } from 'lucide-react';
 import { AuthProviders } from '@/features/auth/shared/components';
-import { signInAction } from '@/features/auth/login/actions/sign-in.action';
+import { signInAction } from '@/features/auth/login/actions';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 

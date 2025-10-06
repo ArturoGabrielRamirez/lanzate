@@ -3,7 +3,7 @@
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { APP_CONFIG } from '@/features/global/constants';
 import { headers } from 'next/headers';
-import { extractSubdomainFromHost } from '@/features/auth/forgot-password/utils/extract-subdomain-from-host';
+import { extractSubdomainFromHost } from '@/features/auth/forgot-password/utils';
 import { createServerSideClient } from '@/lib/supabase/server';
 
 export const googleSignInAction = async () => {

@@ -7,7 +7,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import type { Metadata } from 'next';
 import '../globals.css';
 import { Toaster } from 'sonner';
-import { getCurrentUserAction } from '@/features/global/actions/get-current-user.action';
+import { getCurrentUserAction } from '@/features/global/actions';
 
 export const metadata: Metadata = {
     title: {
