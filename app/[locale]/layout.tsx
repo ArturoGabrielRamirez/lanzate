@@ -39,7 +39,8 @@ async function LocaleLayout({ children, params }: LocaleLayoutProps) {
                     <main>
                         {children}
                     </main>
-                    <Footer />
+                    {/* Hide footer when user is authenticated */}
+                    {!user && <Footer />}
                     <Toaster richColors position="top-right" />
                 </NextIntlClientProvider>
             </NuqsAdapter>
