@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,13 +14,17 @@ import {
   DrawerFooter,
   DrawerOverlay,
 } from '@/components/ui/drawer';
-import { X } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { X, User as UserIcon, LogOut } from 'lucide-react';
 import { MobileDrawerProps } from '../types';
 import { ThemeToggle } from './theme-toggle';
 import { LanguageSwitch } from './language-switch';
+import { logoutAction } from '@/features/auth/shared/actions/logout.action';
+import { toast } from 'sonner';
 
-export const MobileDrawer = ({ isOpen, onClose, links }: MobileDrawerProps) => {
+export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps) => {
   const t = useTranslations();
+  const router = useRouter();
   const [activeSection, setActiveSection] = useState<string>('');
 
   // Intersection Observer to detect active section
@@ -122,12 +127,66 @@ export const MobileDrawer = ({ isOpen, onClose, links }: MobileDrawerProps) => {
             <ThemeToggle />
           </div>
 
-          {/* Login Button */}
-          <Button className="w-full" size="lg" asChild>
-            <Link href="/login" onClick={() => onClose(false)}>
-              {t('header.actions.login')}
-            </Link>
-          </Button>
+          {user ? (
+            <>
+              {/* User Info */}
+              <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
+                <Avatar className="h-10 w-10 border-2 border-primary">
+                  <AvatarImage src={user.user_metadata?.avatar_url} alt={user.email || 'User'} />
+                  <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                    {(user.user_metadata?.full_name || user.email || '').charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col flex-1 min-w-0">
+                  <p className="text-sm font-medium truncate">
+                    {user.user_metadata?.full_name || t('header.userMenu.account')}
+                  </p>
+                  <p className="text-xs text-muted-foreground truncate">
+                    {user.email}
+                  </p>
+                </div>
+              </div>
+
+              {/* User Actions */}
+              <div className="grid grid-cols-2 gap-2">
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => {
+                    onClose(false);
+                    router.push('/account');
+                  }}
+                >
+                  <UserIcon className="mr-2 h-4 w-4" />
+                  {t('header.userMenu.myAccount')}
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full text-destructive hover:text-destructive"
+                  onClick={async () => {
+                    const res = await logoutAction();
+                    if (res.hasError) {
+                      toast.error(t('header.userMenu.logoutError'));
+                      return;
+                    }
+                    toast.success(t('header.userMenu.logoutSuccess'));
+                    onClose(false);
+                    router.push('/');
+                    router.refresh();
+                  }}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  {t('header.userMenu.logout')}
+                </Button>
+              </div>
+            </>
+          ) : (
+            <Button className="w-full" size="lg" asChild>
+              <Link href="/login" onClick={() => onClose(false)}>
+                {t('header.actions.login')}
+              </Link>
+            </Button>
+          )}
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

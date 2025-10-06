@@ -13,6 +13,13 @@
       "menu": "Menú",
       "language": "Idioma",
       "closeMenu": "Cerrar menú"
+    },
+    "userMenu": {
+      "account": "Mi Cuenta",
+      "myAccount": "Mi Cuenta",
+      "logout": "Cerrar Sesión",
+      "logoutSuccess": "Sesión cerrada exitosamente",
+      "logoutError": "Error al cerrar sesión"
     }
   },
   "auth": {
@@ -142,6 +149,11 @@
   "dashboard": {
     "title": "Dashboard",
     "description": "Aún no hay contenido configurado para tu panel. Pronto verás información y accesos rápidos aquí.",
+    "goHome": "Ir al inicio"
+  },
+  "account": {
+    "title": "Mi Cuenta",
+    "description": "Esta sección está en construcción. Pronto podrás ver y editar tu información personal aquí.",
     "goHome": "Ir al inicio"
   }
 }

@@ -13,6 +13,13 @@
       "menu": "Menu",
       "language": "Language",
       "closeMenu": "Close menu"
+    },
+    "userMenu": {
+      "account": "My Account",
+      "myAccount": "My Account",
+      "logout": "Logout",
+      "logoutSuccess": "Logged out successfully",
+      "logoutError": "Failed to logout"
     }
   },
   "auth": {
@@ -142,6 +149,11 @@
   "dashboard": {
     "title": "Dashboard",
     "description": "There is no content configured for your dashboard yet. You will soon see information and quick actions here.",
+    "goHome": "Go to Home"
+  },
+  "account": {
+    "title": "My Account",
+    "description": "This section is under construction. Soon you'll be able to view and edit your personal information here.",
     "goHome": "Go to Home"
   }
 }

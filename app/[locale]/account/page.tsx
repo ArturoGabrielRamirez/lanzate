@@ -1,0 +1,31 @@
+import { getTranslations } from 'next-intl/server';
+import { Empty, EmptyIcon, EmptyTitle, EmptyDescription, EmptyActions } from '@/components/ui/empty';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { UserCircle } from 'lucide-react';
+
+export default async function AccountPage() {
+  const t = await getTranslations('account');
+
+  return (
+    <div className="w-full pt-20 md:pt-24 pb-4 px-4">
+      <div className="max-w-5xl mx-auto">
+        <Empty>
+          <EmptyIcon>
+            <UserCircle className="h-10 w-10 text-muted-foreground" />
+          </EmptyIcon>
+          <EmptyTitle>{t('title')}</EmptyTitle>
+          <EmptyDescription>
+            {t('description')}
+          </EmptyDescription>
+          <EmptyActions>
+            <Button asChild>
+              <Link href="/">{t('goHome')}</Link>
+            </Button>
+          </EmptyActions>
+        </Empty>
+      </div>
+    </div>
+  );
+}
+

@@ -10,7 +10,7 @@ import { HeaderNav } from './header-nav';
 import { HeaderActions } from './header-actions';
 import { MobileHeader } from './mobile-header';
 
-export const Header = ({ className }: HeaderProps) => {
+export const Header = ({ className, user }: HeaderProps) => {
   const t = useTranslations();
   const NAV_LINKS = getNavLinks(t);
   const headerRef = useRef<HTMLElement>(null);
@@ -180,10 +180,10 @@ export const Header = ({ className }: HeaderProps) => {
           <HeaderNav links={NAV_LINKS} />
 
           {/* Desktop Actions */}
-          <HeaderActions />
+          <HeaderActions user={user} />
 
           {/* Mobile Menu Button */}
-          <MobileHeader links={NAV_LINKS} />
+          <MobileHeader links={NAV_LINKS} user={user} />
         </div>
       </div>
     </header>

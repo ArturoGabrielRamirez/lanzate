@@ -7,8 +7,14 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from './theme-toggle';
 import { LanguageSwitch } from './language-switch';
+import { UserMenu } from './user-menu';
+import { User } from '@supabase/supabase-js';
 
-export const HeaderActions = () => {
+interface HeaderActionsProps {
+  user?: User | null;
+}
+
+export const HeaderActions = ({ user }: HeaderActionsProps) => {
   const t = useTranslations();
   const actionsRef = useRef<HTMLDivElement>(null);
 
@@ -32,9 +38,13 @@ export const HeaderActions = () => {
     <div ref={actionsRef} className="hidden md:flex items-center gap-3">
       <LanguageSwitch />
       <ThemeToggle />
-      <Button asChild size="lg">
-        <Link href="/login">{t('header.actions.login')}</Link>
-      </Button>
+      {user ? (
+        <UserMenu user={user} />
+      ) : (
+        <Button asChild size="lg">
+          <Link href="/login">{t('header.actions.login')}</Link>
+        </Button>
+      )}
     </div>
   );
 };

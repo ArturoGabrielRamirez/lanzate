@@ -5,7 +5,7 @@ import { Menu } from 'lucide-react';
 import { MobileHeaderProps } from '../types';
 import { MobileDrawer } from './mobile-drawer';
 
-export const MobileHeader = ({ links }: MobileHeaderProps) => {
+export const MobileHeader = ({ links, user }: MobileHeaderProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleToggleDrawer = () => {
@@ -30,6 +30,7 @@ export const MobileHeader = ({ links }: MobileHeaderProps) => {
         isOpen={isDrawerOpen}
         onClose={handleDrawerChange}
         links={links}
+        user={user}
       />
     </>
   );

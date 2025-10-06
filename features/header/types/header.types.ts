@@ -1,3 +1,5 @@
+import { User } from '@supabase/supabase-js';
+
 export interface NavLink {
   label: string;
   href: string;
@@ -5,6 +7,7 @@ export interface NavLink {
 
 export interface HeaderProps {
   className?: string;
+  user?: User | null;
 }
 
 export interface HeaderNavProps {
@@ -19,10 +22,12 @@ export interface HeaderNavLinkProps {
 
 export interface MobileHeaderProps {
   links: NavLink[];
+  user?: User | null;
 }
 
 export interface MobileDrawerProps {
   isOpen: boolean;
   onClose: (open: boolean) => void;
   links: NavLink[];
+  user?: User | null;
 }
