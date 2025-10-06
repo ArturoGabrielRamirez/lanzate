@@ -6,6 +6,7 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { NextIntlClientProvider } from 'next-intl';
 import type { Metadata } from 'next';
 import '../globals.css';
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
     title: {
@@ -37,6 +38,7 @@ async function LocaleLayout({ children, params }: LocaleLayoutProps) {
                         {children}
                     </main>
                     <Footer />
+                    <Toaster richColors position="top-right" />
                 </NextIntlClientProvider>
             </NuqsAdapter>
         </NextThemeProvider>

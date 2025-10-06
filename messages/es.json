@@ -31,6 +31,8 @@
       "orContinueWith": "O continuar con",
       "noAccount": "¿No tienes una cuenta?",
       "signUp": "Regístrate",
+      "toastSuccess": "Inicio de sesión exitoso",
+      "toastError": "Credenciales inválidas",
       "imagePlaceholderTitle": "Imagen de Bienvenida",
       "imagePlaceholderDescription": "Aquí irá una imagen atractiva que represente tu marca y dé la bienvenida a los usuarios",
       "validation": {
@@ -83,6 +85,7 @@
       "emailLabel": "Correo Electrónico",
       "emailPlaceholder": "tu@email.com",
       "emailTooltip": "Te enviaremos un enlace de recuperación a este correo",
+      "orContinueWith": "O continuar con",
       "submitButton": "Enviar enlace",
       "submitting": "Enviando...",
       "imagePlaceholderTitle": "Recupera el acceso",

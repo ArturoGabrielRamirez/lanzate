@@ -7,9 +7,13 @@ import { getLoginValidationSchema } from '../schemas';
 import Link from 'next/link';
 import { Mail, Lock } from 'lucide-react';
 import { AuthProviders } from '@/features/auth/shared/components/auth-providers';
+import { signInAction } from '@/features/auth/login/actions/sign-in.action';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export const LoginForm = () => {
   const t = useTranslations('auth.login');
+  const router = useRouter();
 
   // Validation schema
   const validationSchema = getLoginValidationSchema((key) => t(key));
@@ -38,10 +42,13 @@ export const LoginForm = () => {
 
   // Handle form submission
   const handleSubmit = async (data: any) => {
-    // Simulate a 1 second delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log('Login data:', data);
-    // TODO: Implement login logic
+    const res = await signInAction({ email: data.email, password: data.password });
+    if (res.hasError) {
+      toast.error(t('toastError'));
+      return;
+    }
+    toast.success(t('toastSuccess'));
+    router.push('/dashboard');
   };
 
   return (
