@@ -19,14 +19,25 @@
     "login": {
       "title": "Sign In",
       "subtitle": "Enter your credentials to access your account",
-      "emailPlaceholder": "Email address",
-      "passwordPlaceholder": "Password",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "you@email.com",
+      "emailTooltip": "Enter the email address you registered with",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "passwordTooltip": "Must contain at least 8 characters",
+      "forgotPassword": "Forgot your password?",
       "submitButton": "Sign In",
       "orContinueWith": "Or continue with",
       "noAccount": "Don't have an account?",
       "signUp": "Sign up",
       "imagePlaceholderTitle": "Welcome Image",
-      "imagePlaceholderDescription": "An attractive image representing your brand and welcoming users will go here"
+      "imagePlaceholderDescription": "An attractive image representing your brand and welcoming users will go here",
+      "validation": {
+        "emailRequired": "Email address is required",
+        "emailInvalid": "Invalid email address",
+        "passwordRequired": "Password is required",
+        "passwordMin": "Password must be at least 8 characters"
+      }
     }
   },
   "footer": {
