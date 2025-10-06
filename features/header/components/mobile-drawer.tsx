@@ -68,16 +68,6 @@ export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps
           {isAuthenticated(user)
             ? getAuthNavLinks(t).map((link) => {
                 const active = isActiveRoute(pathname, link.href);
-                const icon =
-                  link.href === '/dashboard' ? (
-                    <LayoutDashboard className="mr-2 h-4 w-4" aria-hidden />
-                  ) : link.href === '/new-sale' ? (
-                    <PlusCircle className="mr-2 h-4 w-4" aria-hidden />
-                  ) : link.href === '/stores' ? (
-                    <Store className="mr-2 h-4 w-4" aria-hidden />
-                  ) : (
-                    <UserIconLine className="mr-2 h-4 w-4" aria-hidden />
-                  );
                 return (
                   <Link
                     key={link.href}
@@ -88,7 +78,7 @@ export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps
                         : 'hover:bg-accent hover:text-accent-foreground'
                     }`}
                   >
-                    {icon}
+                    {link.icon}
                     {link.label}
                   </Link>
                 );

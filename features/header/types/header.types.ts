@@ -1,8 +1,10 @@
 import { User } from '@supabase/supabase-js';
+import type { ReactNode } from 'react';
 
 export interface NavLink {
   label: string;
   href: string;
+  icon?: ReactNode;
 }
 
 export interface NavSubItem {
