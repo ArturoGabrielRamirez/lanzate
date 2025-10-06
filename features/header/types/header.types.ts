@@ -25,7 +25,6 @@ export interface HeaderProps {
 export interface HeaderNavProps {
   menuItems: NavMenuItem[];
   user?: User | null;
-  locale?: string;
 }
 
 export interface MobileHeaderProps {

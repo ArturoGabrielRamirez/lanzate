@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -14,7 +14,7 @@ import { LanguageSwitch } from './language-switch';
 import { logoutAction } from '@/features/auth/shared/actions/logout.action';
 import { getUserInitials, getUserDisplayName, isAuthenticated } from '@/features/global/utils';
 import { toast } from 'sonner';
-import { useSmoothScroll } from '@/features/global/hooks';
+import { useIntersectionObserver, useSmoothScroll } from '@/features/global/hooks';
 import { HEADER_CONSTANTS } from '../constants/header.constants';
 import { extractAnchorId } from '../utils/scroll.utils';
 
@@ -24,36 +24,14 @@ export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps
   const [activeSection, setActiveSection] = useState<string>('');
 
   // Intersection Observer to detect active section
+  const observedIds = useMemo(
+    () => links.map((l) => extractAnchorId(l.href)).filter(Boolean) as string[],
+    [links]
+  );
+  const activeId = useIntersectionObserver(observedIds);
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '-20% 0px -60% 0px',
-      threshold: 0,
-    };
-
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    // Observe all sections
-    links.forEach((link) => {
-      const sectionId = link.href.split('#')[1];
-      const element = document.getElementById(sectionId);
-      if (element) {
-        observer.observe(element);
-      }
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [links]);
+    setActiveSection(activeId);
+  }, [activeId]);
 
   const { scrollToAnchor } = useSmoothScroll(HEADER_CONSTANTS.HEADER_OFFSET_MOBILE);
   const handleLinkClick = useCallback((href: string) => {

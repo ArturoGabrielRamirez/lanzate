@@ -1,11 +1,16 @@
 import { NavLink } from '../types';
 
 export const isActiveRoute = (pathname: string, href: string): boolean => {
-  if (href === '/') return pathname === '/';
-  // Ensure exact segment match to avoid '/account' matching '/account-settings'
-  const normalize = (s: string) => s.replace(/\/+$/, '');
-  const path = normalize(pathname);
+  // Remove locale prefix like /es or /en
+  const stripLocale = (s: string) => s.replace(/^\/(es|en)(?=\/|$)/, '');
+  const normalize = (s: string) => s.replace(/\/+$/, '') || '/';
+
+  const path = normalize(stripLocale(pathname));
   const target = normalize(href);
+
+  if (target === '/') return path === '/';
+
+  // Ensure exact segment match to avoid '/account' matching '/account-settings'
   return path === target || path.startsWith(`${target}/`);
 };
 

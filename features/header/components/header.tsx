@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { gsap } from 'gsap';
+import { useGsapFadeIn } from '@/features/global/hooks';
 import { HeaderProps } from '../types';
 import { getNavLinks, getNavMenuItemsGuest } from '../constants';
 import { HeaderLogo } from './header-logo';
@@ -19,26 +20,8 @@ export const Header = ({ className, user }: HeaderProps) => {
   const logoRef = useRef<HTMLDivElement>(null);
 
   // Initial entrance animation
-  useEffect(() => {
-    if (!headerRef.current || !logoRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-      tl.from(headerRef.current, {
-        y: -100,
-        opacity: 0,
-        duration: 0.6,
-      })
-      .from(logoRef.current, {
-        opacity: 0,
-        x: -20,
-        duration: 0.5,
-      }, '-=0.3');
-    }, headerRef);
-
-    return () => ctx.revert();
-  }, []);
+  useGsapFadeIn(headerRef, { y: -100, opacity: 0, duration: 0.6 });
+  useGsapFadeIn(logoRef, { x: -20, opacity: 0, delay: 0.3 });
 
   // Visibility logic moved to hook if needed in future iterations
 
@@ -56,7 +39,7 @@ export const Header = ({ className, user }: HeaderProps) => {
           </div>
 
           {/* Desktop Navigation */}
-          <HeaderNav menuItems={NAV_MENU_ITEMS} user={user} locale={locale} />
+          <HeaderNav menuItems={NAV_MENU_ITEMS} user={user} />
 
           {/* Desktop Actions */}
           <HeaderActions user={user} />
