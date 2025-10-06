@@ -15,13 +15,13 @@ export const LoginImagePlaceholder = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center space-y-4 p-8">
+      <div className="relative z-10 text-center space-y-4 p-8 typography">
         <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-muted/50">
           <ImageIcon className="w-12 h-12 text-muted-foreground" />
         </div>
         <div className="space-y-2">
-          <h3 className="text-xl font-semibold">{t('imagePlaceholderTitle')}</h3>
-          <p className="text-sm text-muted-foreground max-w-sm mx-auto">
+          <h3 className="not-typography">{t('imagePlaceholderTitle')}</h3>
+          <p className="small max-w-sm mx-auto">
             {t('imagePlaceholderDescription')}
           </p>
         </div>

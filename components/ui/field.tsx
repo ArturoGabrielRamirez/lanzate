@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const fieldVariants = cva(
-  "block space-y-2",
+  "block space-y-2.5",
   {
     variants: {
       variant: {
@@ -37,7 +37,7 @@ const FieldLabel = React.forwardRef<
   <label
     ref={ref}
     className={cn(
-      "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+      "text-[13px] font-medium leading-none text-muted-foreground transition-colors peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
       className
     )}
     {...props}

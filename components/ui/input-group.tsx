@@ -9,7 +9,7 @@ const InputGroup = React.forwardRef<
     ref={ref}
     className={cn(
       "flex w-full items-center rounded-md border border-input bg-background",
-      "focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2",
+      "focus-within:outline-none focus-within:ring-2 focus-within:ring-ring",
       "has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50",
       className
     )}

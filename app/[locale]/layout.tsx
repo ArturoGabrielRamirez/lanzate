@@ -33,7 +33,7 @@ async function LocaleLayout({ children, params }: LocaleLayoutProps) {
             <NuqsAdapter>
                 <NextIntlClientProvider locale={locale}>
                     <Header />
-                    <main className="min-h-screen">
+                    <main>
                         {children}
                     </main>
                     <Footer />

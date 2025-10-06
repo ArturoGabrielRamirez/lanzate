@@ -41,8 +41,8 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 
       return (
         <FieldLabel className={cn(
-          'flex items-center gap-2',
-          isFieldInvalid && 'text-destructive'
+          'flex items-center gap-2 group-hover:text-foreground group-focus-within:text-foreground',
+          isFieldInvalid && 'text-destructive group-hover:text-destructive group-focus-within:text-destructive'
         )}>
           <span>
             {label}
@@ -68,7 +68,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 
     if (leftIcon || rightIcon) {
       return (
-        <Field>
+        <Field className="group">
           {renderLabel()}
           <InputGroup className={cn(isFieldInvalid && 'border-destructive')}>
             {leftIcon && <InputGroupText>{leftIcon}</InputGroupText>}
@@ -88,7 +88,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     }
 
     return (
-      <Field>
+      <Field className="group">
         {renderLabel()}
         <Input
           ref={ref}

@@ -44,15 +44,9 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="w-full max-w-md space-y-8">
-      {/* Header */}
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">{t('title')}</h1>
-        <p className="text-muted-foreground">{t('subtitle')}</p>
-      </div>
-
+    <div className="w-full space-y-6 typography">
       {/* Form */}
-      <div className="space-y-4">
+      <div className="not-typography space-y-4">
         <DynamicForm
           fields={formFields}
           onSubmit={handleSubmit}
@@ -65,7 +59,7 @@ export const LoginForm = () => {
         <div className="flex justify-end">
           <Link
             href="/forgot-password"
-            className="text-sm text-primary hover:underline"
+            className="small text-primary hover:underline"
           >
             {t('forgotPassword')}
           </Link>
@@ -76,8 +70,8 @@ export const LoginForm = () => {
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
+          <div className="relative flex justify-center">
+            <span className="small bg-background px-2 text-muted-foreground uppercase">
               {t('orContinueWith')}
             </span>
           </div>
@@ -116,7 +110,7 @@ export const LoginForm = () => {
       </div>
 
       {/* Sign Up Link */}
-      <div className="text-center text-sm">
+      <div className="text-center small">
         <span className="text-muted-foreground">{t('noAccount')} </span>
         <Link href="/signup" className="text-primary hover:underline font-medium">
           {t('signUp')}
