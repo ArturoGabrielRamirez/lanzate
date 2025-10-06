@@ -36,7 +36,9 @@
         "dashboard": "Dashboard",
         "dashboardDesc": "Panel de control principal",
         "account": "Mi cuenta",
-        "accountDesc": "Gestiona tu perfil y configuración"
+        "accountDesc": "Gestiona tu perfil y configuración",
+        "newSale": "Nueva venta",
+        "stores": "Tiendas"
       }
     },
     "actions": {

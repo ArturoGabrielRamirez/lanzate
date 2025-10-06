@@ -2,8 +2,11 @@
 
 import { useRef, useEffect, useState } from 'react';
 import { Link } from '@/i18n/navigation';
+import { usePathname } from 'next/navigation';
 import { gsap } from 'gsap';
 import { HeaderNavProps } from '../types';
+import { isAuthenticated } from '@/features/global/utils';
+import { useTranslations } from 'next-intl';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -16,10 +19,13 @@ import { googleSignInAction } from '@/features/auth/login/actions/google-sign-in
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 
-export const HeaderNav = ({ menuItems }: HeaderNavProps) => {
+export const HeaderNav = ({ menuItems, user }: HeaderNavProps) => {
   const navRef = useRef<HTMLElement>(null);
   const [hasAnimatedIn, setHasAnimatedIn] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  const t = useTranslations();
+  const isUserAuthenticated = isAuthenticated(user);
 
   // Initial animation on first load
   useEffect(() => {
@@ -68,6 +74,40 @@ export const HeaderNav = ({ menuItems }: HeaderNavProps) => {
     router.push(res.payload.url);
   };
 
+  // If user is authenticated, show simple nav links
+  if (isUserAuthenticated) {
+    const navLinks = [
+      { label: t('header.nav.user.dashboard'), href: '/dashboard' },
+      { label: t('header.nav.user.newSale'), href: '/new-sale' },
+      { label: t('header.nav.user.stores'), href: '/stores' },
+      { label: t('header.nav.user.account'), href: '/account' },
+    ];
+
+    return (
+      <nav ref={navRef} className="hidden md:flex items-center gap-1">
+        {navLinks.map((link) => {
+          const isActive = pathname.includes(link.href);
+
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`relative px-3 py-2 text-sm font-medium transition-colors group ${isActive ? 'text-primary' : 'text-foreground hover:text-primary'
+                }`}
+            >
+              {link.label}
+              <span
+                className={`absolute bottom-0 left-0 right-0 h-0.5 bg-primary transition-transform ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  }`}
+              />
+            </Link>
+          );
+        })}
+      </nav>
+    );
+  }
+
+  // If user is not authenticated, show navigation menu with dropdowns
   return (
     <nav ref={navRef} className="hidden md:flex items-center">
       <NavigationMenu>

@@ -36,7 +36,9 @@
         "dashboard": "Dashboard",
         "dashboardDesc": "Main control panel",
         "account": "My account",
-        "accountDesc": "Manage your profile and settings"
+        "accountDesc": "Manage your profile and settings",
+        "newSale": "New sale",
+        "stores": "Stores"
       }
     },
     "actions": {

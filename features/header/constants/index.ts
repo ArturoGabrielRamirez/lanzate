@@ -1,1 +1,1 @@
-export { getNavLinks, getNavMenuItemsAuth, getNavMenuItemsGuest } from './navigation.constants';
+export { getNavLinks, getNavMenuItemsGuest } from './navigation.constants';

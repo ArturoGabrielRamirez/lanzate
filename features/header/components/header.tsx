@@ -4,8 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { gsap } from 'gsap';
 import { HeaderProps } from '../types';
-import { getNavLinks, getNavMenuItemsAuth, getNavMenuItemsGuest } from '../constants';
-import { isAuthenticated } from '@/features/global/utils';
+import { getNavLinks, getNavMenuItemsGuest } from '../constants';
 import { HeaderLogo } from './header-logo';
 import { HeaderNav } from './header-nav';
 import { HeaderActions } from './header-actions';
@@ -15,9 +14,7 @@ export const Header = ({ className, user }: HeaderProps) => {
   const t = useTranslations();
   const locale = useLocale();
   const NAV_LINKS = getNavLinks(t);
-  const NAV_MENU_ITEMS = isAuthenticated(user) 
-    ? getNavMenuItemsAuth(t, locale)
-    : getNavMenuItemsGuest(t, locale);
+  const NAV_MENU_ITEMS = getNavMenuItemsGuest(t, locale);
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const mouseYRef = useRef<number>(0);
@@ -182,7 +179,7 @@ export const Header = ({ className, user }: HeaderProps) => {
           </div>
 
           {/* Desktop Navigation */}
-          <HeaderNav menuItems={NAV_MENU_ITEMS} />
+          <HeaderNav menuItems={NAV_MENU_ITEMS} user={user} locale={locale} />
 
           {/* Desktop Actions */}
           <HeaderActions user={user} />
