@@ -76,6 +76,21 @@
         "confirmPasswordRequired": "You must confirm your password",
         "passwordMatch": "Passwords do not match"
       }
+    },
+    "forgot": {
+      "title": "Recover password",
+      "subtitle": "Enter your email address and we'll send you a recovery link",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "you@email.com",
+      "emailTooltip": "We'll send a password reset link to this email",
+      "submitButton": "Send link",
+      "submitting": "Sending...",
+      "imagePlaceholderTitle": "Regain access",
+      "imagePlaceholderDescription": "Don't worry, we'll help you securely reset your password.",
+      "validation": {
+        "emailRequired": "Email address is required",
+        "emailInvalid": "Invalid email address"
+      }
     }
   },
   "footer": {

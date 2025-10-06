@@ -125,7 +125,7 @@ export async function updateSession(request: NextRequest) {
         '/',
         '/login',
         '/signup',
-        '/reset-password',
+        '/forgot-password',
         '/privacy-policy',
         '/terms-and-conditions',
         '/cookies',

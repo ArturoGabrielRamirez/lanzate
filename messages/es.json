@@ -76,6 +76,21 @@
         "confirmPasswordRequired": "Debes confirmar tu contraseña",
         "passwordMatch": "Las contraseñas no coinciden"
       }
+    },
+    "forgot": {
+      "title": "Recuperar contraseña",
+      "subtitle": "Ingresa tu correo electrónico para enviarte un enlace de recuperación",
+      "emailLabel": "Correo Electrónico",
+      "emailPlaceholder": "tu@email.com",
+      "emailTooltip": "Te enviaremos un enlace de recuperación a este correo",
+      "submitButton": "Enviar enlace",
+      "submitting": "Enviando...",
+      "imagePlaceholderTitle": "Recupera el acceso",
+      "imagePlaceholderDescription": "No te preocupes, te ayudaremos a restablecer tu contraseña de forma segura.",
+      "validation": {
+        "emailRequired": "El correo electrónico es obligatorio",
+        "emailInvalid": "Correo electrónico inválido"
+      }
     }
   },
   "footer": {
