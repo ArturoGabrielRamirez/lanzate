@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { gsap } from 'gsap';
 import { HeaderNavProps } from '../types';
 import { HeaderNavLink } from './header-nav-link';
+import { isAuthRoute } from '@/features/global/utils';
 
 export const HeaderNav = ({ links }: HeaderNavProps) => {
   const navRef = useRef<HTMLElement>(null);
@@ -12,8 +13,14 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
   const pathname = usePathname();
   const [hasAnimatedIn, setHasAnimatedIn] = useState(false);
 
-  // Check if we're on the landing page
+  // Check if we're on an auth route (links should be hidden)
+  const isAuth = isAuthRoute(pathname);
+  
+  // Check if we're on the landing page (links should be visible)
   const isLandingPage = pathname === '/' || pathname === '/es' || pathname === '/en';
+  
+  // Links should be visible if: not an auth route AND on landing page
+  const shouldShowLinks = !isAuth && isLandingPage;
 
   // Initial animation on first load
   useEffect(() => {
@@ -22,7 +29,7 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
     const ctx = gsap.context(() => {
       const navItems = navRef.current?.querySelectorAll('.nav-link-item');
       
-      if (navItems && navItems.length > 0 && isLandingPage) {
+      if (navItems && navItems.length > 0 && shouldShowLinks) {
         gsap.from(navItems, {
           opacity: 0,
           y: -20,
@@ -32,8 +39,8 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
           ease: 'power3.out',
           onComplete: () => setHasAnimatedIn(true),
         });
-      } else if (!isLandingPage) {
-        // If starting on a non-landing page, mark as animated and keep hidden
+      } else if (!shouldShowLinks) {
+        // If starting on a page where links should be hidden, mark as animated and keep hidden
         setHasAnimatedIn(true);
       }
     }, navRef);
@@ -48,8 +55,8 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
     const navItems = navRef.current.querySelectorAll('.nav-link-item');
     if (!navItems || navItems.length === 0) return;
 
-    if (isLandingPage) {
-      // Animate in when returning to landing
+    if (shouldShowLinks) {
+      // Animate in when links should be visible
       gsap.to(navItems, {
         opacity: 1,
         y: 0,
@@ -58,7 +65,7 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
         ease: 'power3.out',
       });
     } else {
-      // Animate out when leaving landing
+      // Animate out when links should be hidden
       gsap.to(navItems, {
         opacity: 0,
         y: -20,
@@ -67,11 +74,11 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
         ease: 'power2.in',
       });
     }
-  }, [isLandingPage, hasAnimatedIn]);
+  }, [shouldShowLinks, hasAnimatedIn]);
 
-  // Intersection Observer to detect active section (only on landing page)
+  // Intersection Observer to detect active section (only when links are visible)
   useEffect(() => {
-    if (!isLandingPage) return;
+    if (!shouldShowLinks) return;
 
     const observerOptions = {
       root: null,
@@ -101,7 +108,7 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
     return () => {
       observer.disconnect();
     };
-  }, [links, isLandingPage]);
+  }, [links, shouldShowLinks]);
 
   return (
     <nav ref={navRef} className="hidden md:flex items-center gap-1">

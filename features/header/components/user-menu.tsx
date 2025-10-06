@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { LogOut, User } from 'lucide-react';
+import { LogOut, User as UserIcon } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,16 +13,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { logoutAction } from '@/features/auth/shared/actions/logout.action';
+import { getUserInitials, getUserDisplayName } from '@/features/global/utils';
 import { toast } from 'sonner';
+import { User } from '@supabase/supabase-js';
 
 interface UserMenuProps {
-  user: {
-    email?: string | null;
-    user_metadata?: {
-      avatar_url?: string;
-      full_name?: string;
-    };
-  };
+  user: User;
 }
 
 export const UserMenu = ({ user }: UserMenuProps) => {
@@ -40,11 +36,6 @@ export const UserMenu = ({ user }: UserMenuProps) => {
     router.refresh();
   };
 
-  const getInitials = () => {
-    const name = user.user_metadata?.full_name || user.email || '';
-    return name.charAt(0).toUpperCase();
-  };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -52,7 +43,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
           <Avatar className="h-9 w-9 border-2 border-primary cursor-pointer">
             <AvatarImage src={user.user_metadata?.avatar_url} alt={user.email || 'User'} />
             <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-              {getInitials()}
+              {getUserInitials(user)}
             </AvatarFallback>
           </Avatar>
         </button>
@@ -61,7 +52,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {user.user_metadata?.full_name || t('account')}
+              {getUserDisplayName(user) || t('account')}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
               {user.email}
@@ -73,7 +64,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
           onClick={() => router.push('/account')}
           className="cursor-pointer"
         >
-          <User className="mr-2 h-4 w-4" />
+          <UserIcon className="mr-2 h-4 w-4" />
           <span>{t('myAccount')}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />

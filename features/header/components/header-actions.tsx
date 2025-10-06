@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { ThemeToggle } from './theme-toggle';
 import { LanguageSwitch } from './language-switch';
 import { UserMenu } from './user-menu';
+import { isAuthenticated } from '@/features/global/utils';
 import { User } from '@supabase/supabase-js';
 
 interface HeaderActionsProps {
@@ -38,7 +39,7 @@ export const HeaderActions = ({ user }: HeaderActionsProps) => {
     <div ref={actionsRef} className="hidden md:flex items-center gap-3">
       <LanguageSwitch />
       <ThemeToggle />
-      {user ? (
+      {isAuthenticated(user) ? (
         <UserMenu user={user} />
       ) : (
         <Button asChild size="lg">

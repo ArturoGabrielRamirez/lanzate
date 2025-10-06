@@ -20,6 +20,7 @@ import { MobileDrawerProps } from '../types';
 import { ThemeToggle } from './theme-toggle';
 import { LanguageSwitch } from './language-switch';
 import { logoutAction } from '@/features/auth/shared/actions/logout.action';
+import { getUserInitials, getUserDisplayName, isAuthenticated } from '@/features/global/utils';
 import { toast } from 'sonner';
 
 export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps) => {
@@ -127,19 +128,19 @@ export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps
             <ThemeToggle />
           </div>
 
-          {user ? (
+          {isAuthenticated(user) ? (
             <>
               {/* User Info */}
               <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
                 <Avatar className="h-10 w-10 border-2 border-primary">
                   <AvatarImage src={user.user_metadata?.avatar_url} alt={user.email || 'User'} />
                   <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                    {(user.user_metadata?.full_name || user.email || '').charAt(0).toUpperCase()}
+                    {getUserInitials(user)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">
-                    {user.user_metadata?.full_name || t('header.userMenu.account')}
+                    {getUserDisplayName(user) || t('header.userMenu.account')}
                   </p>
                   <p className="text-xs text-muted-foreground truncate">
                     {user.email}
