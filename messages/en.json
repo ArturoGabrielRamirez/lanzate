@@ -39,6 +39,43 @@
         "passwordRequired": "Password is required",
         "passwordMin": "Password must be at least 8 characters"
       }
+    },
+    "signup": {
+      "title": "Create Account",
+      "subtitle": "Fill out the form to create your account",
+      "nameLabel": "Full Name",
+      "namePlaceholder": "John Doe",
+      "nameTooltip": "Enter your full name as it appears on your ID",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "you@email.com",
+      "emailTooltip": "We'll use this email to communicate with you",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "passwordTooltip": "Must have at least 8 characters, one uppercase, one lowercase, and one number",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "••••••••",
+      "confirmPasswordTooltip": "Re-enter your password to confirm",
+      "submitButton": "Create Account",
+      "submitting": "Creating account...",
+      "orContinueWith": "Or continue with",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "imagePlaceholderTitle": "Join Us",
+      "imagePlaceholderDescription": "Create your account and start enjoying all the features of our platform",
+      "validation": {
+        "nameRequired": "Name is required",
+        "nameMin": "Name must be at least 2 characters",
+        "nameMax": "Name cannot exceed 50 characters",
+        "emailRequired": "Email address is required",
+        "emailInvalid": "Invalid email address",
+        "passwordRequired": "Password is required",
+        "passwordMin": "Password must be at least 8 characters",
+        "passwordLowercase": "Password must contain at least one lowercase letter",
+        "passwordUppercase": "Password must contain at least one uppercase letter",
+        "passwordNumber": "Password must contain at least one number",
+        "confirmPasswordRequired": "You must confirm your password",
+        "passwordMatch": "Passwords do not match"
+      }
     }
   },
   "footer": {

@@ -39,6 +39,43 @@
         "passwordRequired": "La contraseña es obligatoria",
         "passwordMin": "La contraseña debe tener al menos 8 caracteres"
       }
+    },
+    "signup": {
+      "title": "Crear Cuenta",
+      "subtitle": "Completa el formulario para crear tu cuenta",
+      "nameLabel": "Nombre Completo",
+      "namePlaceholder": "Juan Pérez",
+      "nameTooltip": "Ingresa tu nombre completo como aparece en tu identificación",
+      "emailLabel": "Correo Electrónico",
+      "emailPlaceholder": "tu@email.com",
+      "emailTooltip": "Usaremos este correo para comunicarnos contigo",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "••••••••",
+      "passwordTooltip": "Debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número",
+      "confirmPasswordLabel": "Confirmar Contraseña",
+      "confirmPasswordPlaceholder": "••••••••",
+      "confirmPasswordTooltip": "Vuelve a ingresar tu contraseña para confirmar",
+      "submitButton": "Crear Cuenta",
+      "submitting": "Creando cuenta...",
+      "orContinueWith": "O continuar con",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "signIn": "Inicia sesión",
+      "imagePlaceholderTitle": "Únete a Nosotros",
+      "imagePlaceholderDescription": "Crea tu cuenta y comienza a disfrutar de todas las funcionalidades de nuestra plataforma",
+      "validation": {
+        "nameRequired": "El nombre es obligatorio",
+        "nameMin": "El nombre debe tener al menos 2 caracteres",
+        "nameMax": "El nombre no puede superar los 50 caracteres",
+        "emailRequired": "El correo electrónico es obligatorio",
+        "emailInvalid": "Correo electrónico inválido",
+        "passwordRequired": "La contraseña es obligatoria",
+        "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+        "passwordLowercase": "La contraseña debe contener al menos una letra minúscula",
+        "passwordUppercase": "La contraseña debe contener al menos una letra mayúscula",
+        "passwordNumber": "La contraseña debe contener al menos un número",
+        "confirmPasswordRequired": "Debes confirmar tu contraseña",
+        "passwordMatch": "Las contraseñas no coinciden"
+      }
     }
   },
   "footer": {
