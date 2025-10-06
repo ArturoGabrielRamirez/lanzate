@@ -2,8 +2,8 @@
 
 import { useTranslations } from 'next-intl';
 import { useEffect, useState, useCallback, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerFooter, DrawerOverlay } from '@/components/ui/drawer';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -17,10 +17,13 @@ import { toast } from 'sonner';
 import { useIntersectionObserver, useSmoothScroll } from '@/features/global/hooks';
 import { HEADER_CONSTANTS } from '../constants/header.constants';
 import { extractAnchorId } from '../utils/scroll.utils';
+import { getAuthNavLinks, isActiveRoute } from '../utils';
+import { LayoutDashboard, PlusCircle, Store, User as UserIconLine } from 'lucide-react';
 
 export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps) => {
   const t = useTranslations();
   const router = useRouter();
+  const pathname = usePathname();
   const [activeSection, setActiveSection] = useState<string>('');
 
   // Intersection Observer to detect active section
@@ -62,24 +65,51 @@ export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps
 
         {/* Navigation Links */}
         <nav className="flex flex-col p-4 gap-2 flex-1">
-          {links.map((link) => {
-            const sectionId = link.href.split('#')[1];
-            const isActive = activeSection === sectionId;
-            
-            return (
-              <button
-                key={link.href}
-                onClick={() => handleLinkClick(link.href)}
-                className={`px-4 py-3 rounded-md text-sm font-medium transition-colors text-left cursor-pointer ${
-                  isActive
-                    ? 'bg-primary text-primary-foreground'
-                    : 'hover:bg-accent hover:text-accent-foreground'
-                }`}
-              >
-                {link.label}
-              </button>
-            );
-          })}
+          {isAuthenticated(user)
+            ? getAuthNavLinks(t).map((link) => {
+                const active = isActiveRoute(pathname, link.href);
+                const icon =
+                  link.href === '/dashboard' ? (
+                    <LayoutDashboard className="mr-2 h-4 w-4" aria-hidden />
+                  ) : link.href === '/new-sale' ? (
+                    <PlusCircle className="mr-2 h-4 w-4" aria-hidden />
+                  ) : link.href === '/stores' ? (
+                    <Store className="mr-2 h-4 w-4" aria-hidden />
+                  ) : (
+                    <UserIconLine className="mr-2 h-4 w-4" aria-hidden />
+                  );
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`px-4 py-3 rounded-md text-sm font-medium transition-colors flex items-center ${
+                      active
+                        ? 'bg-primary text-primary-foreground'
+                        : 'hover:bg-accent hover:text-accent-foreground'
+                    }`}
+                  >
+                    {icon}
+                    {link.label}
+                  </Link>
+                );
+              })
+            : links.map((link) => {
+                const sectionId = link.href.split('#')[1];
+                const isActive = activeSection === sectionId;
+                return (
+                  <button
+                    key={link.href}
+                    onClick={() => handleLinkClick(link.href)}
+                    className={`px-4 py-3 rounded-md text-sm font-medium transition-colors text-left cursor-pointer ${
+                      isActive
+                        ? 'bg-primary text-primary-foreground'
+                        : 'hover:bg-accent hover:text-accent-foreground'
+                    }`}
+                  >
+                    {link.label}
+                  </button>
+                );
+              })}
         </nav>
 
         {/* Footer */}
