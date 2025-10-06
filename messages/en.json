@@ -51,5 +51,11 @@
       "status": "Status"
     },
     "rights": "All rights reserved."
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "Sorry, the page you're looking for doesn't exist or has been moved. Check the URL or return to the homepage.",
+    "goHome": "Go to Home",
+    "goBack": "Go Back"
   }
 }

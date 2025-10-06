@@ -4,8 +4,8 @@ import { Header } from '@/features/header/components';
 import { Footer } from '@/features/footer/components';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { NextIntlClientProvider } from 'next-intl';
-import { BProgressProvider } from '@/components/bprogress-provider';
 import type { Metadata } from 'next';
+import '../globals.css';
 
 export const metadata: Metadata = {
     title: {
@@ -24,26 +24,22 @@ async function LocaleLayout({ children, params }: LocaleLayoutProps) {
     const { locale } = await params;
 
     return (
-        <html lang={locale} suppressHydrationWarning>
-            <body>
-                <NextThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    <NuqsAdapter>
-                        <NextIntlClientProvider locale={locale}>
-                            <Header />
-                            <main className="min-h-screen">
-                                {children}
-                            </main>
-                            <Footer />
-                        </NextIntlClientProvider>
-                    </NuqsAdapter>
-                </NextThemeProvider>
-            </body>
-        </html>
+        <NextThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+        >
+            <NuqsAdapter>
+                <NextIntlClientProvider locale={locale}>
+                    <Header />
+                    <main className="min-h-screen">
+                        {children}
+                    </main>
+                    <Footer />
+                </NextIntlClientProvider>
+            </NuqsAdapter>
+        </NextThemeProvider>
     );
 }
 

@@ -51,5 +51,11 @@
       "status": "Estado"
     },
     "rights": "Todos los derechos reservados."
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "Lo sentimos, la página que buscas no existe o ha sido movida. Verifica la URL o vuelve al inicio.",
+    "goHome": "Ir al inicio",
+    "goBack": "Volver atrás"
   }
 }
