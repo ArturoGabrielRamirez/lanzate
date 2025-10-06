@@ -11,9 +11,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { logoutAction } from '@/features/auth/shared/actions/logout.action';
-import { getUserInitials, getUserDisplayName } from '@/features/global/utils';
+import { getUserDisplayName } from '@/features/global/utils';
+import { UserAvatar } from './user-avatar';
 import { toast } from 'sonner';
 import { User } from '@supabase/supabase-js';
 
@@ -40,12 +40,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="relative rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-          <Avatar className="h-9 w-9 border-2 border-primary cursor-pointer">
-            <AvatarImage src={user.user_metadata?.avatar_url} alt={user.email || 'User'} />
-            <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-              {getUserInitials(user)}
-            </AvatarFallback>
-          </Avatar>
+          <UserAvatar user={user} size="md" className="cursor-pointer" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
