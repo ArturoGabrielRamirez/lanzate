@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 import { resetPasswordAction } from '@/features/auth/forgot-password/actions/reset-password.action';
+import { AsyncButton } from '@/features/global/components/async-button';
 
 interface CheckEmailActionsProps {
   email?: string;
@@ -26,9 +27,9 @@ export const CheckEmailActions = ({ email, type }: CheckEmailActionsProps) => {
 
   return (
     <div className="not-typography space-y-3">
-      <Button className="w-full" size="lg" onClick={handleResend} disabled={!email}>
+      <AsyncButton className="w-full" size="lg" onClickAsync={handleResend} disabled={!email} loadingText={t('resendLoading')}>
         {t('resendButton')}
-      </Button>
+      </AsyncButton>
       <Button asChild variant="outline" className="w-full" size="lg">
         <Link href="/login">{t('backToLogin')}</Link>
       </Button>

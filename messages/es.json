@@ -23,6 +23,7 @@
       "sentTo": "Enviado a",
       "tipSpam": "Si no lo ves, revisa tu carpeta de spam o correo no deseado.",
       "resendButton": "Reenviar enlace",
+      "resendLoading": "Reenviando...",
       "resendSuccess": "Enlace reenviado correctamente",
       "resendError": "No se pudo reenviar el correo",
       "backToLogin": "Volver al inicio de sesión"

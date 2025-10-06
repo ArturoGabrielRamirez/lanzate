@@ -23,6 +23,7 @@
       "sentTo": "Sent to",
       "tipSpam": "If you don't see it, please check your spam or junk folder.",
       "resendButton": "Resend link",
+      "resendLoading": "Resending...",
       "resendSuccess": "Link resent successfully",
       "resendError": "Could not resend email",
       "backToLogin": "Back to login"
