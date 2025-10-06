@@ -39,13 +39,13 @@ export const Header = ({ className, user }: HeaderProps) => {
           </div>
 
           {/* Desktop Navigation */}
-          <HeaderNav menuItems={NAV_MENU_ITEMS} user={user} />
+          <HeaderNav menuItems={NAV_MENU_ITEMS} user={user || null} />
 
           {/* Desktop Actions */}
-          <HeaderActions user={user} />
+          <HeaderActions user={user || null} />
 
           {/* Mobile Menu Button */}
-          <MobileHeader links={NAV_LINKS} user={user} />
+          <MobileHeader links={NAV_LINKS} user={user || null} />
         </div>
       </div>
     </header>

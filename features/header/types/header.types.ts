@@ -1,4 +1,3 @@
-import { User } from '@supabase/supabase-js';
 import type { ReactNode } from 'react';
 
 export interface NavLink {
@@ -19,24 +18,32 @@ export interface NavMenuItem {
   items: NavSubItem[];
 }
 
+export interface HeaderCurrentUser {
+  id: number;
+  email: string;
+  fullName: string | null;
+  avatarUrl: string | null;
+  accountType: string | null;
+}
+
 export interface HeaderProps {
   className?: string;
-  user?: User | null;
+  user?: HeaderCurrentUser | null;
 }
 
 export interface HeaderNavProps {
   menuItems: NavMenuItem[];
-  user?: User | null;
+  user?: HeaderCurrentUser | null;
 }
 
 export interface MobileHeaderProps {
   links: NavLink[];
-  user?: User | null;
+  user?: HeaderCurrentUser | null;
 }
 
 export interface MobileDrawerProps {
   isOpen: boolean;
   onClose: (open: boolean) => void;
   links: NavLink[];
-  user?: User | null;
+  user?: HeaderCurrentUser | null;
 }

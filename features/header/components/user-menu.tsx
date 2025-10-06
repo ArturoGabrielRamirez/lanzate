@@ -15,10 +15,10 @@ import { logoutAction } from '@/features/auth/shared/actions/logout.action';
 import { getUserDisplayName } from '@/features/global/utils';
 import { UserAvatar } from './user-avatar';
 import { toast } from 'sonner';
-import { User } from '@supabase/supabase-js';
+import type { HeaderCurrentUser } from '../types';
 
 interface UserMenuProps {
-  user: User;
+  user: HeaderCurrentUser;
 }
 
 export const UserMenu = ({ user }: UserMenuProps) => {
@@ -46,9 +46,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
-              {getUserDisplayName(user) || t('account')}
-            </p>
+            <p className="text-sm font-medium leading-none">{user.fullName || user.email}</p>
             <p className="text-xs leading-none text-muted-foreground">
               {user.email}
             </p>

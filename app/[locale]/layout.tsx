@@ -7,7 +7,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import type { Metadata } from 'next';
 import '../globals.css';
 import { Toaster } from 'sonner';
-import { getCurrentUserData } from '@/features/global/data/get-current-user.data';
+import { getCurrentUserAction } from '@/features/global/actions/get-current-user.action';
 
 export const metadata: Metadata = {
     title: {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 async function LocaleLayout({ children, params }: LocaleLayoutProps) {
     const { locale } = await params;
-    const { user } = await getCurrentUserData();
+    const { payload: user } = await getCurrentUserAction();
 
     return (
         <NextThemeProvider

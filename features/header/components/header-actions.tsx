@@ -9,10 +9,10 @@ import { SettingsToolbar } from './settings-toolbar';
 import { useGsapFadeIn } from '@/features/global/hooks';
 import { UserMenu } from './user-menu';
 import { isAuthenticated } from '@/features/global/utils';
-import { User } from '@supabase/supabase-js';
+import type { HeaderCurrentUser } from '../types';
 
 interface HeaderActionsProps {
-  user?: User | null;
+  user?: HeaderCurrentUser | null;
 }
 
 export const HeaderActions = ({ user }: HeaderActionsProps) => {
@@ -24,7 +24,7 @@ export const HeaderActions = ({ user }: HeaderActionsProps) => {
   return (
     <div ref={actionsRef} className="hidden md:flex items-center gap-3">
       <SettingsToolbar />
-      {isAuthenticated(user) ? (
+      {user ? (
         <UserMenu user={user} />
       ) : (
         <Button asChild size="lg">

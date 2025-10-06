@@ -12,7 +12,7 @@ import { MobileDrawerProps } from '../types';
 import { ThemeToggle } from './theme-toggle';
 import { LanguageSwitch } from './language-switch';
 import { logoutAction } from '@/features/auth/shared/actions/logout.action';
-import { getUserInitials, getUserDisplayName, isAuthenticated } from '@/features/global/utils';
+import { isAuthenticated } from '@/features/global/utils';
 import { UserAvatar } from './user-avatar';
 import { toast } from 'sonner';
 import { useIntersectionObserver, useSmoothScroll } from '@/features/global/hooks';
@@ -66,8 +66,8 @@ export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps
 
         {/* Navigation Links */}
         <nav className="flex flex-col p-4 gap-2 flex-1">
-          {isAuthenticated(user)
-            ? getAuthNavLinks(t).map((link) => {
+          {user
+            ? getAuthNavLinks(t).map((link: { href: string; label: string; icon?: React.ReactNode }) => {
                 const active = isActiveRoute(pathname, link.href);
                 return (
                   <Link
@@ -112,17 +112,15 @@ export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps
             <ThemeToggle />
           </div>
 
-          {isAuthenticated(user) ? (
+          {user ? (
             <>
               {/* User Info */}
               <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
                 <UserAvatar user={user as any} size="lg" />
                 <div className="flex flex-col flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">
-                    {getUserDisplayName(user) || t('header.userMenu.account')}
-                  </p>
+                  <p className="text-sm font-medium truncate">{user?.fullName || user?.email}</p>
                   <p className="text-xs text-muted-foreground truncate">
-                    {user.email}
+                    {user?.email}
                   </p>
                 </div>
               </div>

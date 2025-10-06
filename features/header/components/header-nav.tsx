@@ -4,13 +4,14 @@ import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { HeaderNavProps } from '../types';
 import { isAuthenticated } from '@/features/global/utils';
+import type { HeaderCurrentUser } from '../types';
 import { HeaderNavAuth } from './header-nav-auth';
 import { HeaderNavGuest } from './header-nav-guest';
 
 export const HeaderNav = ({ menuItems, user }: HeaderNavProps) => {
   const navRef = useRef<HTMLElement>(null);
   const [hasAnimatedIn, setHasAnimatedIn] = useState(false);
-  const isUserAuthenticated = isAuthenticated(user);
+  const isUserAuthenticated = Boolean(user);
 
   // Initial animation on first load
   useEffect(() => {
@@ -36,7 +37,7 @@ export const HeaderNav = ({ menuItems, user }: HeaderNavProps) => {
 
   // Auth vs Guest rendering
   return isUserAuthenticated ? (
-    <HeaderNavAuth user={user} />
+    <HeaderNavAuth user={user as HeaderCurrentUser} />
   ) : (
     <HeaderNavGuest menuItems={menuItems} />
   );

@@ -2,6 +2,7 @@ export type {
   NavLink,
   NavSubItem,
   NavMenuItem,
+  HeaderCurrentUser,
   HeaderProps,
   HeaderNavProps,
   MobileHeaderProps,
