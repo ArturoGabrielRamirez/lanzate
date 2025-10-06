@@ -3,7 +3,7 @@
 import { useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { gsap } from 'gsap';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from './theme-toggle';
 import { LanguageSwitch } from './language-switch';

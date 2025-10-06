@@ -1,19 +1,11 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerFooter,
-  DrawerOverlay,
-} from '@/components/ui/drawer';
+import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerFooter, DrawerOverlay } from '@/components/ui/drawer';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { X, User as UserIcon, LogOut } from 'lucide-react';
 import { MobileDrawerProps } from '../types';
@@ -22,6 +14,9 @@ import { LanguageSwitch } from './language-switch';
 import { logoutAction } from '@/features/auth/shared/actions/logout.action';
 import { getUserInitials, getUserDisplayName, isAuthenticated } from '@/features/global/utils';
 import { toast } from 'sonner';
+import { useSmoothScroll } from '@/features/global/hooks';
+import { HEADER_CONSTANTS } from '../constants/header.constants';
+import { extractAnchorId } from '../utils/scroll.utils';
 
 export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps) => {
   const t = useTranslations();
@@ -60,25 +55,15 @@ export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps
     };
   }, [links]);
 
-  const handleLinkClick = (href: string) => {
+  const { scrollToAnchor } = useSmoothScroll(HEADER_CONSTANTS.HEADER_OFFSET_MOBILE);
+  const handleLinkClick = useCallback((href: string) => {
     onClose(false);
-    
-    const targetId = href.split('#')[1];
-    const element = document.getElementById(targetId);
-    
-    if (element) {
-      setTimeout(() => {
-        const headerOffset = 56;
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }, 300);
-    }
-  };
+    const anchorId = extractAnchorId(href);
+    if (!anchorId) return;
+    setTimeout(() => {
+      scrollToAnchor(href);
+    }, HEADER_CONSTANTS.DRAWER_CLOSE_DELAY);
+  }, [onClose, scrollToAnchor]);
 
   return (
     <Drawer open={isOpen} onOpenChange={onClose} setBackgroundColorOnScale>
