@@ -16,6 +16,13 @@
     }
   },
   "auth": {
+    "checkEmail": {
+      "title": "Revisa tu correo",
+      "subtitleGeneric": "Te enviamos un enlace para continuar con el proceso.",
+      "subtitleRecovery": "Te enviamos un enlace para restablecer tu contraseña.",
+      "sentTo": "Enviado a",
+      "tipSpam": "Si no lo ves, revisa tu carpeta de spam o correo no deseado."
+    },
     "login": {
       "title": "Iniciar Sesión",
       "subtitle": "Ingresa tus credenciales para acceder a tu cuenta",
@@ -88,6 +95,8 @@
       "orContinueWith": "O continuar con",
       "submitButton": "Enviar enlace",
       "submitting": "Enviando...",
+      "successSent": "Te enviamos un enlace para restablecer tu contraseña",
+      "errorGeneric": "Ocurrió un error al enviar el correo",
       "imagePlaceholderTitle": "Recupera el acceso",
       "imagePlaceholderDescription": "No te preocupes, te ayudaremos a restablecer tu contraseña de forma segura.",
       "validation": {

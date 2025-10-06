@@ -5,6 +5,9 @@ import { DynamicForm, FormField } from '@/features/global/components/form';
 import { getForgotValidationSchema } from '../schemas';
 import { Mail } from 'lucide-react';
 import { AuthProviders } from '@/features/auth/shared/components/auth-providers';
+import { resetPasswordAction } from '../actions/reset-password.action';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export const ForgotPasswordForm = () => {
   const t = useTranslations('auth.forgot');
@@ -23,9 +26,17 @@ export const ForgotPasswordForm = () => {
     },
   ];
 
+  const router = useRouter();
+
   const onSubmit = async (data: any) => {
-    await new Promise((r) => setTimeout(r, 1000));
-    console.log('Forgot password data:', data);
+    const res = await resetPasswordAction(data.email);
+    if (res.hasError) {
+      toast.error(t('errorGeneric', { default: 'Something went wrong' } as any));
+      return;
+    }
+    toast.success(t('successSent', { default: 'Reset email sent' } as any));
+    const url = `/check-email?email=${encodeURIComponent(data.email)}&type=recovery`;
+    router.push(url);
   };
 
   return (
