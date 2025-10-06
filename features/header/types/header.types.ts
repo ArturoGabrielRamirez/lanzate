@@ -5,19 +5,25 @@ export interface NavLink {
   href: string;
 }
 
+export interface NavSubItem {
+  label: string;
+  href?: string;
+  description?: string;
+  isGoogleAuth?: boolean;
+}
+
+export interface NavMenuItem {
+  label: string;
+  items: NavSubItem[];
+}
+
 export interface HeaderProps {
   className?: string;
   user?: User | null;
 }
 
 export interface HeaderNavProps {
-  links: NavLink[];
-}
-
-export interface HeaderNavLinkProps {
-  label: string;
-  href: string;
-  isActive?: boolean;
+  menuItems: NavMenuItem[];
 }
 
 export interface MobileHeaderProps {

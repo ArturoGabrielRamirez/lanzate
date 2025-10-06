@@ -1,8 +1,9 @@
 export type {
   NavLink,
+  NavSubItem,
+  NavMenuItem,
   HeaderProps,
   HeaderNavProps,
-  HeaderNavLinkProps,
   MobileHeaderProps,
   MobileDrawerProps,
 } from './header.types';

@@ -1,10 +1,28 @@
 {
   "header": {
     "nav": {
+      "home": "Inicio",
+      "access": "Acceder",
+      "moreInfo": "Más info",
       "howItWorks": "Cómo Funciona",
       "integrations": "Integraciones",
       "pricing": "Precios",
-      "contact": "Contacto"
+      "contact": "Contacto",
+      "sections": {
+        "hero": "Inicio",
+        "howItWorks": "Cómo funciona",
+        "faq": "Preguntas frecuentes"
+      },
+      "auth": {
+        "login": "Iniciar sesión",
+        "signup": "Registrarse",
+        "forgotPassword": "Olvidé mi contraseña",
+        "googleAuth": "Acceder con Google"
+      },
+      "info": {
+        "about": "Acerca de",
+        "contact": "Contacto"
+      }
     },
     "actions": {
       "login": "Acceder"

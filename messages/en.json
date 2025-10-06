@@ -1,10 +1,28 @@
 {
   "header": {
     "nav": {
+      "home": "Home",
+      "access": "Access",
+      "moreInfo": "More info",
       "howItWorks": "How It Works",
       "integrations": "Integrations",
       "pricing": "Pricing",
-      "contact": "Contact"
+      "contact": "Contact",
+      "sections": {
+        "hero": "Home",
+        "howItWorks": "How it works",
+        "faq": "FAQ"
+      },
+      "auth": {
+        "login": "Sign in",
+        "signup": "Sign up",
+        "forgotPassword": "Forgot password",
+        "googleAuth": "Sign in with Google"
+      },
+      "info": {
+        "about": "About",
+        "contact": "Contact"
+      }
     },
     "actions": {
       "login": "Sign In"
