@@ -15,14 +15,14 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
   // Check if we're on the landing page
   const isLandingPage = pathname === '/' || pathname === '/es' || pathname === '/en';
 
-  // Initial animation
+  // Initial animation on first load
   useEffect(() => {
-    if (!navRef.current) return;
+    if (!navRef.current || hasAnimatedIn) return;
 
     const ctx = gsap.context(() => {
       const navItems = navRef.current?.querySelectorAll('.nav-link-item');
       
-      if (navItems && navItems.length > 0 && isLandingPage && !hasAnimatedIn) {
+      if (navItems && navItems.length > 0 && isLandingPage) {
         gsap.from(navItems, {
           opacity: 0,
           y: -20,
@@ -32,15 +32,18 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
           ease: 'power3.out',
           onComplete: () => setHasAnimatedIn(true),
         });
+      } else if (!isLandingPage) {
+        // If starting on a non-landing page, mark as animated and keep hidden
+        setHasAnimatedIn(true);
       }
     }, navRef);
 
     return () => ctx.revert();
-  }, [isLandingPage, hasAnimatedIn]);
+  }, []); // Only run once on mount
 
-  // Animate links based on route
+  // Animate links based on route changes (after initial animation)
   useEffect(() => {
-    if (!navRef.current) return;
+    if (!navRef.current || !hasAnimatedIn) return; // Only run after initial animation
 
     const navItems = navRef.current.querySelectorAll('.nav-link-item');
     if (!navItems || navItems.length === 0) return;
@@ -64,7 +67,7 @@ export const HeaderNav = ({ links }: HeaderNavProps) => {
         ease: 'power2.in',
       });
     }
-  }, [isLandingPage]);
+  }, [isLandingPage, hasAnimatedIn]);
 
   // Intersection Observer to detect active section (only on landing page)
   useEffect(() => {
