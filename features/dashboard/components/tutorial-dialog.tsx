@@ -6,6 +6,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -116,24 +117,12 @@ export const TutorialDialog = ({ isOpen, onOpenChange, onComplete }: TutorialDia
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-lg:h-[calc(100vh_-_2rem)] w-[calc(100vw_-_2rem)] max-lg:!max-w-full">
         <DialogHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <DialogTitle>{currentStepData.title}</DialogTitle>
-              <DialogDescription className="mt-2">
-                {currentStepData.description}
-              </DialogDescription>
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onOpenChange(false)}
-              className="h-8 w-8"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
+          <DialogTitle>{currentStepData.title}</DialogTitle>
+          <DialogDescription className="mt-2">
+            {currentStepData.description}
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -141,7 +130,9 @@ export const TutorialDialog = ({ isOpen, onOpenChange, onComplete }: TutorialDia
           <div className="min-h-[200px] flex items-center justify-center">
             {currentStepData.content}
           </div>
+        </div>
 
+        <DialogFooter className='!justify-between w-full flex-row items-end'>
           {/* Stepper */}
           <TutorialStepper
             steps={tutorialSteps}
@@ -150,7 +141,7 @@ export const TutorialDialog = ({ isOpen, onOpenChange, onComplete }: TutorialDia
             onComplete={handleComplete}
             onNext={handleNext}
           />
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

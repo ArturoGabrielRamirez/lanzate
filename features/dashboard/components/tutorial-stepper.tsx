@@ -32,59 +32,60 @@ export const TutorialStepper = ({
   };
 
   return (
-    <div className="space-y-6">
+    <>
+      {/* <div className="space-y-6"> */}
       {/* Progress Bar */}
-      <div className="space-y-2">
+      {/* <div className="space-y-2">
         <div className="flex justify-between text-sm text-muted-foreground">
           <span>{t('stepper.step')} {currentStep + 1} {t('stepper.of')} {steps.length}</span>
           <span>{Math.round(progress)}% {t('stepper.completed')}</span>
         </div>
         <Progress value={progress} className="h-2" />
-      </div>
+      </div> */}
 
       {/* Step Indicators */}
-      <div className="flex justify-center space-x-2">
+      {/* <div className="flex justify-center space-x-2">
         {steps.map((_, index) => (
           <div
             key={index}
-            className={`h-2 w-2 rounded-full transition-colors ${
-              index <= currentStep
+            className={`h-2 w-2 rounded-full transition-colors ${index <= currentStep
                 ? 'bg-primary'
                 : 'bg-muted'
-            }`}
+              }`}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* Navigation Buttons */}
-      <div className="flex justify-between">
-        <Button
-          variant="outline"
-          onClick={handlePrevious}
-          disabled={currentStep === 0}
-          className="flex items-center gap-2"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          {t('stepper.previous')}
-        </Button>
+      {/* <div className="flex justify-between"> */}
+      <Button
+        variant="outline"
+        onClick={handlePrevious}
+        disabled={currentStep === 0}
+        className="flex items-center gap-2"
+      >
+        <ChevronLeft className="h-4 w-4" />
+        {t('stepper.previous')}
+      </Button>
 
-        <Button
-          onClick={handleNext}
-          className="flex items-center gap-2"
-        >
-          {isLastStep ? (
-            <>
-              <Check className="h-4 w-4" />
-              {t('stepper.finish')}
-            </>
-          ) : (
-            <>
-              {t('stepper.next')}
-              <ChevronRight className="h-4 w-4" />
-            </>
-          )}
-        </Button>
-      </div>
-    </div>
+      <Button
+        onClick={handleNext}
+        className="flex items-center gap-2"
+      >
+        {isLastStep ? (
+          <>
+            <Check className="h-4 w-4" />
+            {t('stepper.finish')}
+          </>
+        ) : (
+          <>
+            {t('stepper.next')}
+            <ChevronRight className="h-4 w-4" />
+          </>
+        )}
+      </Button>
+      {/* </div>
+    </div> */}
+    </>
   );
 };
