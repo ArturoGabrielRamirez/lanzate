@@ -3,6 +3,7 @@ import { Empty, EmptyIcon, EmptyTitle, EmptyDescription, EmptyActions } from '@/
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LayoutDashboard } from 'lucide-react';
+import { DashboardTutorial } from '@/features/dashboard';
 
 export default async function DashboardPage() {
   const t = await getTranslations('dashboard');
@@ -10,6 +11,9 @@ export default async function DashboardPage() {
   return (
     <div className="w-full pt-20 md:pt-24 pb-4 px-4">
       <div className="max-w-5xl mx-auto">
+        {/* Tutorial Integration */}
+        <DashboardTutorial />
+        
         <Empty>
           <EmptyIcon>
             <LayoutDashboard className="h-10 w-10 text-muted-foreground" />

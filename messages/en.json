@@ -184,7 +184,34 @@
   "dashboard": {
     "title": "Dashboard",
     "description": "There is no content configured for your dashboard yet. You will soon see information and quick actions here.",
-    "goHome": "Go to Home"
+    "goHome": "Go to Home",
+    "tutorial": {
+      "welcome": "Welcome to Lanzate!",
+      "welcomeDescription": "We'll guide you through the main features of your dashboard.",
+      "welcomeContent": "In the following steps you'll learn to navigate and use all the features of your dashboard.",
+      "overview": "Dashboard Overview",
+      "overviewDescription": "Get to know the main sections of your control panel.",
+      "navigation": "Navigation",
+      "navigationDescription": "Learn how to move through the different sections.",
+      "completion": "Tutorial Completed!",
+      "completionDescription": "You're ready to use all Lanzate features.",
+      "completionContent": "You've completed the tutorial. Now you can explore all your dashboard features!",
+      "widget": {
+        "title": "Getting Started Tutorial",
+        "description": "Complete the tutorial to learn about all features",
+        "progress": "Progress",
+        "continue": "Continue Tutorial",
+        "repeat": "Repeat Tutorial"
+      },
+      "stepper": {
+        "previous": "Previous",
+        "next": "Next",
+        "finish": "Finish Tutorial",
+        "step": "Step",
+        "of": "of",
+        "completed": "completed"
+      }
+    }
   },
   "account": {
     "title": "My Account",

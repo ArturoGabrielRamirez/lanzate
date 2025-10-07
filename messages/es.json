@@ -184,7 +184,34 @@
   "dashboard": {
     "title": "Dashboard",
     "description": "Aún no hay contenido configurado para tu panel. Pronto verás información y accesos rápidos aquí.",
-    "goHome": "Ir al inicio"
+    "goHome": "Ir al inicio",
+    "tutorial": {
+      "welcome": "¡Bienvenido a Lanzate!",
+      "welcomeDescription": "Te guiaremos a través de las funciones principales de tu dashboard.",
+      "welcomeContent": "En los siguientes pasos aprenderás a navegar y usar todas las funciones de tu dashboard.",
+      "overview": "Vista General del Dashboard",
+      "overviewDescription": "Conoce las secciones principales de tu panel de control.",
+      "navigation": "Navegación",
+      "navigationDescription": "Aprende a moverte por las diferentes secciones.",
+      "completion": "¡Tutorial Completado!",
+      "completionDescription": "Ya estás listo para usar todas las funciones de Lanzate.",
+      "completionContent": "Has completado el tutorial. ¡Ahora puedes explorar todas las funciones de tu dashboard!",
+      "widget": {
+        "title": "Tutorial de Inicio",
+        "description": "Completa el tutorial para conocer todas las funciones",
+        "progress": "Progreso",
+        "continue": "Continuar Tutorial",
+        "repeat": "Repetir Tutorial"
+      },
+      "stepper": {
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "finish": "Finalizar Tutorial",
+        "step": "Paso",
+        "of": "de",
+        "completed": "completado"
+      }
+    }
   },
   "account": {
     "title": "Mi Cuenta",
