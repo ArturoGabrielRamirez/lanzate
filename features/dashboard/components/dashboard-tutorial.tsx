@@ -27,13 +27,10 @@ export const DashboardTutorial = () => {
         onComplete={handleTutorialComplete}
       />
 
-      {/* Tutorial Widget - Only show if tutorial is not completed */}
-      {!tutorialState?.isCompleted && (
-        <TutorialWidget
-          onOpenTutorial={openTutorial}
-          className="mb-6"
-        />
-      )}
+      <TutorialWidget
+        onOpenTutorial={openTutorial}
+        className="mb-6"
+      />
     </>
   );
 };
