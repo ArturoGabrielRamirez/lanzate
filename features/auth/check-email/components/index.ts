@@ -1,4 +1,2 @@
-export { CheckEmailActions } from './check-email-actions';
-export { CheckEmailVisual } from './check-email-visual';
-
-
+export * from '@/features/auth/check-email/components/check-email-actions';
+export * from '@/features/auth/check-email/components/check-email-visual';

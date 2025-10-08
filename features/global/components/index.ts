@@ -1,4 +1,4 @@
-export { NextThemeProvider } from './next-theme-provider';
-export { DynamicForm, FormInput, FormButton } from './form';
-export { AsyncButton } from './async-button';
-export type { FormField } from '../types';
+export * from '@/features/global/components/next-theme-provider';
+export * from '@/features/global/components/form';
+export * from '@/features/global/components/async-button';
+export * from '@/features/global/types';

@@ -1,1 +1,1 @@
-export { useTutorial } from './use-tutorial';
+export * from '@/features/dashboard/hooks/use-tutorial';

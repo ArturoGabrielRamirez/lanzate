@@ -14,13 +14,13 @@ const shouldLog = (level: LogLevel): boolean => {
 };
 
 export const logger = {
-  info: (message: string, ...args: any[]) => {
+  info: (message: string, ...args: unknown[]) => {
     if (shouldLog('info')) {
       console.log(`[INFO] ${message}`, ...args);
     }
   },
 
-  warn: (message: string, ...args: any[]) => {
+  warn: (message: string, ...args: unknown[]) => {
     if (shouldLog('warn')) {
       console.warn(`[WARN] ${message}`, ...args);
     }
@@ -29,7 +29,7 @@ export const logger = {
   error: (message: string, error?: unknown) => {
     if (shouldLog('error')) {
       console.error(`[ERROR] ${message}`, error);
-      
+
       // In production, you might want to send errors to a monitoring service
       // Example: Sentry, LogRocket, etc.
       if (process.env.NODE_ENV === 'production') {

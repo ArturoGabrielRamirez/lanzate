@@ -1,2 +1,1 @@
-export { resetPasswordRequestData } from './reset-password.data';
-
+export * from '@/features/auth/forgot-password/data/reset-password.data';

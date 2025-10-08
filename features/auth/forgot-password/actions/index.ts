@@ -1,2 +1,1 @@
-export { resetPasswordAction } from './reset-password.action';
-
+export * from '@/features/auth/forgot-password/actions/reset-password.action';

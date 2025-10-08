@@ -1,13 +1,11 @@
 'use client';
 
-import { TutorialDialog } from './tutorial-dialog';
-import { TutorialWidget } from './tutorial-widget';
-import { useTutorial } from '../hooks';
+import { TutorialDialog, TutorialWidget } from '@/features/dashboard/components';
+import { useTutorial } from '@/features/dashboard/hooks';
 
 export const DashboardTutorial = () => {
   const {
     isDialogOpen,
-    tutorialState,
     isLoading,
     openTutorial,
     closeTutorial,

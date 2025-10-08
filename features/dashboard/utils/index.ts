@@ -1,8 +1,1 @@
-export {
-  getTutorialState,
-  saveTutorialState,
-  markTutorialCompleted,
-  updateTutorialStep,
-  isTutorialCompleted,
-  resetTutorialState,
-} from './tutorial-storage.utils';
+export * from '@/features/dashboard/utils/tutorial-storage.utils';

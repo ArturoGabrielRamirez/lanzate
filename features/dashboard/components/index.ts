@@ -1,4 +1,4 @@
-export { TutorialDialog } from './tutorial-dialog';
-export { TutorialStepper } from './tutorial-stepper';
-export { TutorialWidget } from './tutorial-widget';
-export { DashboardTutorial } from './dashboard-tutorial';
+export * from '@/features/dashboard/components/tutorial-dialog';
+export * from '@/features/dashboard/components/tutorial-stepper';
+export * from '@/features/dashboard/components/tutorial-widget';
+export * from '@/features/dashboard/components/dashboard-tutorial';

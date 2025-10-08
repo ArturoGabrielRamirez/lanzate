@@ -1,1 +1,1 @@
-export * from "./detect-provider"
+export * from "@/features/auth/signup/utils/detect-provider";

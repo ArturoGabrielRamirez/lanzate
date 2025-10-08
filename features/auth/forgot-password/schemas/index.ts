@@ -1,3 +1,3 @@
-export { getForgotValidationSchema } from './forgot.schema';
+export * from '@/features/auth/forgot-password/schemas/forgot.schema';
 
 

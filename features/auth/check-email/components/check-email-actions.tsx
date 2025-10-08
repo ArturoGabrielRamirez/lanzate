@@ -1,14 +1,15 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
+import { toast } from 'sonner';
+
+import { Button } from '@/components/ui/button';
+import type { CheckEmailActionsProps } from '@/features/auth/check-email/types';
 import { resetPasswordAction } from '@/features/auth/forgot-password/actions';
 import { AsyncButton } from '@/features/global/components';
-import type { CheckEmailActionsProps } from '../types';
 
-export const CheckEmailActions = ({ email, type }: CheckEmailActionsProps) => {
+export const CheckEmailActions = ({ email }: CheckEmailActionsProps) => {
   const t = useTranslations('auth.checkEmail');
 
   const handleResend = async () => {

@@ -1,6 +1,1 @@
-export {
-  markTutorialCompletedAction,
-  updateTutorialStepAction,
-  isTutorialCompletedAction,
-  getTutorialStateAction,
-} from './tutorial.actions';
+export * from '@/features/dashboard/actions/tutorial.actions';

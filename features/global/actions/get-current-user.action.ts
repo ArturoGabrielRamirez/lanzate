@@ -1,7 +1,7 @@
 'use server';
 
-import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { getCurrentUserData, type CurrentUserInfo } from '@/features/global/data';
+import { actionWrapper } from '@/features/global/utils';
 
 export const getCurrentUserAction = async () => {
   return actionWrapper<CurrentUserInfo | null>(async () => {

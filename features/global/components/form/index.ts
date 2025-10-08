@@ -1,4 +1,4 @@
-export { DynamicForm } from './dynamic-form';
-export { FormInput } from './form-input';
-export { FormButton } from './form-button';
+export * from '@/features/global/components/form/dynamic-form';
+export * from '@/features/global/components/form/form-input';
+export * from '@/features/global/components/form/form-button';
 

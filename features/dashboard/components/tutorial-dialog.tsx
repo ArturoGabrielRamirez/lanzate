@@ -1,19 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { Store, Settings, Check, Box } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Users, Store, BarChart3, Settings, Check } from 'lucide-react';
-import { TutorialStepper } from './tutorial-stepper';
-import type { TutorialDialogProps, TutorialStep } from '../types';
+import { useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
+import { TutorialStepper } from '@/features/dashboard/components';
+import type { TutorialDialogProps, TutorialStep } from '@/features/dashboard/types';
 
 const getTutorialSteps = (t: (key: string) => string): TutorialStep[] => [
   {
@@ -32,44 +27,36 @@ const getTutorialSteps = (t: (key: string) => string): TutorialStep[] => [
     ),
   },
   {
-    id: 'dashboard-overview',
-    title: t('overview'),
-    description: t('overviewDescription'),
+    id: 'newStore',
+    title: t('newStore'),
+    description: t('newStoreDescription'),
     content: (
-      <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="p-4 border rounded-lg">
-            <BarChart3 className="w-6 h-6 text-primary mb-2" />
-            <h4 className="font-semibold">Analytics</h4>
-            <p className="text-sm text-muted-foreground">Métricas y estadísticas</p>
-          </div>
-          <div className="p-4 border rounded-lg">
-            <Store className="w-6 h-6 text-primary mb-2" />
-            <h4 className="font-semibold">Tiendas</h4>
-            <p className="text-sm text-muted-foreground">Gestiona tus tiendas</p>
+      <div className="space-y-4 flex flex-col items-center justify-center grow">
+        <div className='grid md:grid-cols-[auto_1fr] gap-4'>
+          <Store className='size-24 text-muted-foreground' />
+          <div className='flex flex-col gap-4'>
+            <p className='text-muted-foreground'>Tu tienda es el lugar donde todo comienza. Aquí podrás crear tus productos, gestionar tus ventas y mucho más.</p>
+            <Button>
+              {t('newStoreCTA')}
+            </Button>
           </div>
         </div>
       </div>
     ),
   },
   {
-    id: 'navigation',
-    title: t('navigation'),
-    description: t('navigationDescription'),
+    id: 'newProduct',
+    title: t('newProduct'),
+    description: t('newProductDescription'),
     content: (
-      <div className="space-y-4">
-        <div className="flex items-center space-x-3 p-3 border rounded-lg">
-          <Users className="w-5 h-5 text-primary" />
-          <div>
-            <h4 className="font-semibold">Gestión de Usuarios</h4>
-            <p className="text-sm text-muted-foreground">Administra usuarios y permisos</p>
-          </div>
-        </div>
-        <div className="flex items-center space-x-3 p-3 border rounded-lg">
-          <Settings className="w-5 h-5 text-primary" />
-          <div>
-            <h4 className="font-semibold">Configuración</h4>
-            <p className="text-sm text-muted-foreground">Personaliza tu experiencia</p>
+      <div className="space-y-4 flex flex-col items-center justify-center grow">
+        <div className='grid md:grid-cols-[auto_1fr] gap-4'>
+          <Box className='size-24 text-muted-foreground' />
+          <div className='flex flex-col gap-4'>
+            <p className='text-muted-foreground'>Tu producto es el elemento que vas a vender asi que asegurate de tomarte el tiempo para configurarlo correctamente.</p>
+            <Button size="lg">
+              {t('newProductCTA')}
+            </Button>
           </div>
         </div>
       </div>
@@ -121,7 +108,7 @@ export const TutorialDialog = ({ isOpen, onOpenChange, onComplete }: TutorialDia
       <DialogContent className="max-lg:h-[calc(100vh_-_2rem)] w-[calc(100vw_-_2rem)] max-lg:!max-w-full !grid-rows-[auto_1fr_auto]">
         <DialogHeader>
           <DialogTitle>{currentStepData.title}</DialogTitle>
-          <DialogDescription className="mt-2">
+          <DialogDescription>
             {currentStepData.description}
           </DialogDescription>
         </DialogHeader>
@@ -134,7 +121,7 @@ export const TutorialDialog = ({ isOpen, onOpenChange, onComplete }: TutorialDia
             </div>
             <Progress value={progress} className="h-2" />
           </div>
-          <div className="grow flex flex-col">
+          <div className="grow flex flex-col py-20">
             {currentStepData.content}
           </div>
         </div>

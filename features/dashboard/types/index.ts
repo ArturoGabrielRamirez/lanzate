@@ -1,7 +1,1 @@
-export type {
-  TutorialStep,
-  TutorialState,
-  TutorialDialogProps,
-  TutorialWidgetProps,
-  TutorialStepperProps,
-} from './tutorial.types';
+export type * from '@/features/dashboard/types/tutorial.types';

@@ -1,2 +1,2 @@
-export { getCurrentUserData, type CurrentUserInfo } from './get-current-user.data';
+export * from '@/features/global/data/get-current-user.data';
 

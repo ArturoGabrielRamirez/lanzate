@@ -1,11 +1,13 @@
 'use server';
 
-import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { resetPasswordRequestData } from '@/features/auth/forgot-password/data/reset-password.data';
-import type { ServerResponse } from '@/features/global/types';
 import { headers } from 'next/headers';
-import { extractSubdomainFromHost } from '../utils/extract-subdomain-from-host';
+
+import { resetPasswordRequestData } from '@/features/auth/forgot-password/data';
+import { extractSubdomainFromHost } from '@/features/auth/forgot-password/utils';
 import { APP_CONFIG } from '@/features/global/constants';
+import type { ServerResponse } from '@/features/global/types';
+import { actionWrapper } from '@/features/global/utils/action-wrapper';
+
 
 export const resetPasswordAction = async (email: string): Promise<ServerResponse<null>> => {
   return actionWrapper<null>(async () => {

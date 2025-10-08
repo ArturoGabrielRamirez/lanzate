@@ -1,4 +1,4 @@
-import type { TutorialState } from '../types';
+import type { TutorialState } from '@/features/dashboard/types';
 
 const TUTORIAL_STORAGE_KEY = 'lanzate_tutorial_state';
 
@@ -8,7 +8,7 @@ const TUTORIAL_STORAGE_KEY = 'lanzate_tutorial_state';
  */
 export function getTutorialState(): TutorialState | null {
   if (typeof window === 'undefined') return null;
-  
+
   try {
     const stored = localStorage.getItem(TUTORIAL_STORAGE_KEY);
     return stored ? JSON.parse(stored) : null;
@@ -24,7 +24,7 @@ export function getTutorialState(): TutorialState | null {
  */
 export function saveTutorialState(state: TutorialState): void {
   if (typeof window === 'undefined') return;
-  
+
   try {
     localStorage.setItem(TUTORIAL_STORAGE_KEY, JSON.stringify(state));
   } catch (error) {
@@ -36,14 +36,13 @@ export function saveTutorialState(state: TutorialState): void {
  * Marks the tutorial as completed
  */
 export function markTutorialCompleted(): void {
-  const currentState = getTutorialState();
   const newState: TutorialState = {
     isCompleted: true,
     currentStep: 0,
     completedSteps: [],
     lastCompletedAt: new Date().toISOString(),
   };
-  
+
   saveTutorialState(newState);
 }
 
@@ -59,7 +58,7 @@ export function updateTutorialStep(step: number): void {
     completedSteps: currentState?.completedSteps || [],
     lastCompletedAt: currentState?.lastCompletedAt,
   };
-  
+
   saveTutorialState(newState);
 }
 
@@ -77,7 +76,7 @@ export function isTutorialCompleted(): boolean {
  */
 export function resetTutorialState(): void {
   if (typeof window === 'undefined') return;
-  
+
   try {
     localStorage.removeItem(TUTORIAL_STORAGE_KEY);
   } catch (error) {

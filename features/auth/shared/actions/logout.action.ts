@@ -1,9 +1,10 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
+
+import { ServerResponse } from '@/features/global/types';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { createServerSideClient } from '@/lib/supabase/server';
-import { revalidatePath } from 'next/cache';
-import { ServerResponse } from '@/features/global/types';
 
 export const logoutAction = async (): Promise<ServerResponse<null>> => {
   return actionWrapper(async () => {

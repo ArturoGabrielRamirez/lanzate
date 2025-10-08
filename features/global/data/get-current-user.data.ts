@@ -1,8 +1,8 @@
 'use server';
 
-import { createServerSideClient } from '@/lib/supabase/server';
+import { actionWrapper } from '@/features/global/utils';
 import { prisma } from '@/lib/prisma';
-import { actionWrapper } from '@/features/global/utils/action-wrapper';
+import { createServerSideClient } from '@/lib/supabase/server';
 
 export interface CurrentUserInfo {
   id: number;

@@ -1,10 +1,11 @@
 'use server';
 
-import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { signInWithPasswordData } from '@/features/auth/login/data';
-import type { ServerResponse } from '@/features/global/types';
-import type { SignInActionParams } from '../types';
 import { revalidatePath } from 'next/cache';
+
+import { signInWithPasswordData } from '@/features/auth/login/data';
+import type { SignInActionParams } from '@/features/auth/login/types';
+import type { ServerResponse } from '@/features/global/types';
+import { actionWrapper } from '@/features/global/utils/action-wrapper';
 
 export const signInAction = async ({ email, password }: SignInActionParams): Promise<ServerResponse<{ userId: string }>> => {
   return actionWrapper<{ userId: string }>(async () => {

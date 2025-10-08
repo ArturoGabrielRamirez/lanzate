@@ -2,10 +2,11 @@
 
 import { forwardRef } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import type { FormButtonProps } from '@/features/global/types';
 import { cn } from '@/lib/utils';
-import type { FormButtonProps } from '../../types';
 
 export const FormButton = forwardRef<HTMLButtonElement, FormButtonProps>(
   (

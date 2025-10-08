@@ -1,3 +1,3 @@
-export * from './server-response.types';
-export * from './layout.types';
-export * from './components.types';
+export * from '@/features/global/types/server-response.types';
+export * from '@/features/global/types/layout.types';
+export * from '@/features/global/types/components.types';

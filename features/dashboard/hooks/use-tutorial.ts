@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { getTutorialState, markTutorialCompleted, updateTutorialStep } from '../utils';
-import type { TutorialState } from '../types';
+
+import type { TutorialState } from '@/features/dashboard/types';
+import { getTutorialState, markTutorialCompleted, updateTutorialStep } from '@/features/dashboard/utils';
 
 export const useTutorial = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

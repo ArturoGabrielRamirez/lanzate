@@ -1,2 +1,2 @@
-export { getLoginValidationSchema } from './login.schema';
+export * from '@/features/auth/login/schemas/login.schema';
 

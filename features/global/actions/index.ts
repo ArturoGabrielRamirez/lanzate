@@ -1,2 +1,2 @@
-export { getCurrentUserAction } from './get-current-user.action';
+export * from '@/features/global/actions/get-current-user.action';
 

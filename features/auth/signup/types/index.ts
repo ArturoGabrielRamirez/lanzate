@@ -1,2 +1,2 @@
-export type { SignUpActionParams, SignUpParams , CreateUserParams } from './signup.types';
+export type * from '@/features/auth/signup/types/signup.types';
 

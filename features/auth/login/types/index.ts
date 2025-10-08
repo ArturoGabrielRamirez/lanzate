@@ -1,2 +1,2 @@
-export type { SignInActionParams, SignInParams } from './login.types';
+export type * from '@/features/auth/login/types/login.types';
 

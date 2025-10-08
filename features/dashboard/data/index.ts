@@ -1,1 +1,1 @@
-export { checkTutorialStatusAction } from './tutorial.data';
+export * from '@/features/dashboard/data/tutorial.data';

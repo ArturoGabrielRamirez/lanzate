@@ -6,5 +6,3 @@ export function extractSubdomainFromHost(host: string): string | null {
   const sub = host.replace(`.${root}`, '');
   return sub !== host ? sub : null;
 }
-
-

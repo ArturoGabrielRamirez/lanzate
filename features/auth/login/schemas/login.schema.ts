@@ -10,4 +10,3 @@ export const getLoginValidationSchema = (t: (key: string) => string) => {
       .required(t('validation.passwordRequired')),
   });
 };
-

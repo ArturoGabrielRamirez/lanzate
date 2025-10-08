@@ -1,12 +1,13 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter, CardAction } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Play, CheckCircle, Circle } from 'lucide-react';
-import { useTutorial } from '../hooks';
-import type { TutorialWidgetProps } from '../types';
+import { useTranslations } from 'next-intl';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter, CardAction } from '@/components/ui/card';
+import { useTutorial } from '@/features/dashboard/hooks';
+import type { TutorialWidgetProps } from '@/features/dashboard/types';
 
 const TUTORIAL_STEPS = [
   { id: 'welcome', title: 'Bienvenida' },
@@ -62,7 +63,7 @@ export const TutorialWidget = ({ onOpenTutorial, className }: TutorialWidgetProp
 
         {/* Steps List */}
         <div className="space-y-2">
-          {TUTORIAL_STEPS.map((step, index) => {
+          {TUTORIAL_STEPS.map((step) => {
             const isCompleted = completedSteps.includes(step.id);
             return (
               <div key={step.id} className="flex items-center space-x-3">

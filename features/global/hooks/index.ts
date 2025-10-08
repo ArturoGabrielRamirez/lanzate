@@ -1,5 +1,5 @@
-export { useGsapFadeIn } from './use-gsap-fade-in';
-export { useSmoothScroll } from './use-smooth-scroll';
-export { useIntersectionObserver } from './use-intersection-observer';
-
+export * from '@/features/global/hooks/use-gsap-fade-in';
+export * from '@/features/global/hooks/use-smooth-scroll';
+export * from '@/features/global/hooks/use-intersection-observer';
+export * from '@/features/global/hooks/use-form-stepper';
 

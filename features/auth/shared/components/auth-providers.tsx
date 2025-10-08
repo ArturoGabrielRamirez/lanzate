@@ -1,9 +1,10 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { Button } from '@/components/ui/button';
 import { googleSignInAction } from '@/features/auth/login/actions';
-import { useRouter } from 'next/navigation';
-import type { AuthProvidersProps } from '../types';
+import type { AuthProvidersProps } from '@/features/auth/shared/types';
 
 export const AuthProviders = ({ label }: AuthProvidersProps) => {
   const router = useRouter();

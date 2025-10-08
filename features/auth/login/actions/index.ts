@@ -1,3 +1,3 @@
-export { googleSignInAction } from './google-sign-in.action';
-export { signInAction } from './sign-in.action';
+export * from '@/features/auth/login/actions/google-sign-in.action';
+export * from '@/features/auth/login/actions/sign-in.action';
 

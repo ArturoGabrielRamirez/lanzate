@@ -1,5 +1,5 @@
-import { formatServerResponse } from "@/features/global/utils";
 import { ActionFunction, ServerResponse } from "@/features/global/types";
+import { formatServerResponse } from "@/features/global/utils";
 
 /**
  * Wraps an action function with error handling

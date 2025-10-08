@@ -1,7 +1,7 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { KeyRound } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export const ForgotPasswordImagePlaceholder = () => {
   const t = useTranslations('auth.forgot');

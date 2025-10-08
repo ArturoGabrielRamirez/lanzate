@@ -1,9 +1,10 @@
 'use server';
 
-import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { APP_CONFIG } from '@/features/global/constants';
 import { headers } from 'next/headers';
+
 import { extractSubdomainFromHost } from '@/features/auth/forgot-password/utils';
+import { APP_CONFIG } from '@/features/global/constants';
+import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { createServerSideClient } from '@/lib/supabase/server';
 
 export const googleSignInAction = async () => {

@@ -1,2 +1,2 @@
-export { extractSubdomainFromHost } from './extract-subdomain-from-host';
+export * from '@/features/auth/forgot-password/utils/extract-subdomain-from-host';
 

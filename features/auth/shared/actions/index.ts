@@ -1,2 +1,2 @@
-export { logoutAction } from './logout.action';
+export * from '@/features/auth/shared/actions/logout.action';
 

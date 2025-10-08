@@ -198,7 +198,7 @@ body {
   }
   .typography h2:not(.not-typography h2) {
     scroll-margin: calc(var(--spacing) * 20);
-    border-bottom: 1px solid var(--color-border);
+    /* border-bottom: 1px solid var(--color-border); */
     padding-bottom: calc(var(--spacing) * 2);
     font-size: var(--text-3xl);
     line-height: var(--text-3xl--line-height);

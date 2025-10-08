@@ -1,14 +1,16 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
-import { DynamicForm, FormField } from '@/features/global/components';
-import { getSignupValidationSchema } from '@/features/auth/signup/schemas';
-import { signUpAction } from '@/features/auth/signup/actions';
-import Link from 'next/link';
 import { Mail, Lock } from 'lucide-react';
-import { AuthProviders } from '@/features/auth/shared/components';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
+
+import { AuthProviders } from '@/features/auth/shared/components';
+import { signUpAction } from '@/features/auth/signup/actions';
+import { getSignupValidationSchema } from '@/features/auth/signup/schemas';
+import type { SignUpFormData } from '@/features/auth/signup/types';
+import { DynamicForm, FormField } from '@/features/global/components';
 
 export const SignupForm = () => {
   const t = useTranslations('auth.signup');
@@ -49,7 +51,7 @@ export const SignupForm = () => {
   ];
 
   // Handle form submission
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: SignUpFormData) => {
     const res = await signUpAction({ email: data.email, password: data.password });
     if (res.hasError) {
       toast.error(t('toastError'));

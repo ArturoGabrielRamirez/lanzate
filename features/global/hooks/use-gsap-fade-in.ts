@@ -1,7 +1,7 @@
 'use client';
 
-import { MutableRefObject, useEffect } from 'react';
 import { gsap } from 'gsap';
+import { MutableRefObject, useEffect } from 'react';
 
 interface GsapFadeInOptions {
   delay?: number;

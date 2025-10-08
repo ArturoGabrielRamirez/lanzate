@@ -1,14 +1,15 @@
 'use client';
 
+import { Info } from 'lucide-react';
 import { forwardRef } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import { Field, FieldLabel, FieldMessage } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { InputGroup, InputGroupText } from '@/components/ui/input-group';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Info } from 'lucide-react';
+import type { FormInputProps } from '@/features/global/types';
 import { cn } from '@/lib/utils';
-import type { FormInputProps } from '../../types';
 
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
   ({ label, error, leftIcon, rightIcon, isRequired, tooltip, fieldName, className, ...props }, ref) => {

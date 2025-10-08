@@ -12,7 +12,7 @@ export default async function DashboardPage() {
     <div className="w-full pt-20 md:pt-24 pb-4 px-4">
       <div className="max-w-5xl mx-auto">
 
-        <DashboardTutorial />
+        {/* <DashboardTutorial /> */}
         
         <Empty>
           <EmptyIcon>

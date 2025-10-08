@@ -1,2 +1,2 @@
-export type { AuthProvidersProps, GoogleAuthButtonProps } from './auth-providers.types';
+export type * from '@/features/auth/shared/types/auth-providers.types';
 

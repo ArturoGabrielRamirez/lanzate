@@ -1,13 +1,12 @@
 'use client';
 
-import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import { FormInput } from './form-input';
-import { FormButton } from './form-button';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
-import type { DynamicFormProps } from '../../types';
+import { useForm, FormProvider } from 'react-hook-form';
+
+import { FormInput, FormButton } from '@/features/global/components/form';
+import type { DynamicFormProps, FormField } from '@/features/global/types';
 
 export const DynamicForm = ({
   fields,
@@ -78,8 +77,8 @@ export const DynamicForm = ({
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {fields.map(renderField)}
-        
-        <FormButton 
+
+        <FormButton
           className="w-full"
           leftIcon={submitLeftIcon}
           loadingText={submitLoadingText}

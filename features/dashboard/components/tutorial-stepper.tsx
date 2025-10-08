@@ -1,10 +1,10 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
-import type { TutorialStepperProps } from '../types';
 import { useTranslations } from 'next-intl';
-import { Progress } from '@/components/ui/progress';
+
+import { Button } from '@/components/ui/button';
+import type { TutorialStepperProps } from '@/features/dashboard/types';
 
 export const TutorialStepper = ({
   steps,
@@ -13,9 +13,10 @@ export const TutorialStepper = ({
   onComplete,
   onNext,
 }: TutorialStepperProps) => {
+
   const t = useTranslations('dashboard.tutorial');
   const isLastStep = currentStep === steps.length - 1;
-  const progress = ((currentStep + 1) / steps.length) * 100;
+
   const handleNext = () => {
     if (isLastStep) {
       onComplete();
@@ -32,21 +33,6 @@ export const TutorialStepper = ({
 
   return (
     <>
-      {/* <div className="space-y-6"> */}
-      {/* Progress Bar */}
-      {/* <div className="space-y-2">
-        <div className="flex justify-between text-sm text-muted-foreground">
-          <span>{t('stepper.step')} {currentStep + 1} {t('stepper.of')} {steps.length}</span>
-          <span>{Math.round(progress)}% {t('stepper.completed')}</span>
-        </div>
-        <Progress value={progress} className="h-2" />
-      </div> */}
-
-      {/* Step Indicators */}
-
-
-      {/* Navigation Buttons */}
-      {/* <div className="flex justify-between"> */}
       <Button
         variant="outline"
         onClick={handlePrevious}
@@ -85,8 +71,6 @@ export const TutorialStepper = ({
           </>
         )}
       </Button>
-      {/* </div>
-    </div> */}
     </>
   );
 };

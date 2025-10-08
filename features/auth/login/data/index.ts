@@ -1,2 +1,2 @@
-export { signInWithPasswordData } from './sign-in.data';
+export * from '@/features/auth/login/data/sign-in.data';
 

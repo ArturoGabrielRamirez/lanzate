@@ -1,2 +1,1 @@
-export type { CheckEmailActionsProps } from './check-email.types';
-
+export type * from '@/features/auth/check-email/types/check-email.types';

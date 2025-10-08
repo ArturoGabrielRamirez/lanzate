@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import type { AsyncButtonProps } from '@/features/global/types';
 import { cn } from '@/lib/utils';
-import type { AsyncButtonProps } from '../types';
 
 export function AsyncButton({
   onClickAsync,

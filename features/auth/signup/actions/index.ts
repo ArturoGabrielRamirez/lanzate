@@ -1,2 +1,1 @@
-export { signUpAction } from './sign-up.action';
-
+export * from '@/features/auth/signup/actions/sign-up.action';

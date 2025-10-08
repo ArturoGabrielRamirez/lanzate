@@ -1,9 +1,9 @@
 'use server';
 
-import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { signUpWithPasswordData, createUserData } from '../data';
+import { createUserData, signUpWithPasswordData } from '@/features/auth/signup/data';
+import type { SignUpActionParams } from '@/features/auth/signup/types';
 import type { ServerResponse } from '@/features/global/types';
-import type { SignUpActionParams } from '../types';
+import { actionWrapper } from '@/features/global/utils/action-wrapper';
 
 export const signUpAction = async ({ email, password }: SignUpActionParams): Promise<ServerResponse<{ userId: string }>> => {
   return actionWrapper<{ userId: string }>(async () => {
@@ -19,14 +19,14 @@ export const signUpAction = async ({ email, password }: SignUpActionParams): Pro
     }
 
     // Create user in database
-    const { data: userData, error: userError } = await createUserData({
+    const { error: userError } = await createUserData({
       email,
       supabaseUserId: data.user.id,
       avatar: data.user.user_metadata.avatar,
       firstName: data.user.user_metadata.first_name,
       lastName: data.user.user_metadata.last_name,
       phone: data.user.user_metadata.phone,
-       
+
     });
 
     if (userError) {

@@ -1,7 +1,7 @@
 'use server';
 
+import type { SignInParams } from '@/features/auth/login/types';
 import { createServerSideClient } from '@/lib/supabase/server';
-import type { SignInParams } from '../types';
 
 export async function signInWithPasswordData({ email, password }: SignInParams) {
   const supabase = createServerSideClient();

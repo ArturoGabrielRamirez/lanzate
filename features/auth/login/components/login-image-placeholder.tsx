@@ -1,7 +1,7 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { ImageIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export const LoginImagePlaceholder = () => {
   const t = useTranslations('auth.login');
