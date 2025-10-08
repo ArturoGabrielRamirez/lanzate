@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { Rocket } from 'lucide-react';
+import Link from 'next/link';
 
 export const HeaderLogo = () => {
   return (

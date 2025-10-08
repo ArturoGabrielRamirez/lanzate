@@ -1,15 +1,14 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { gsap } from 'gsap';
-import { Link } from '@/i18n/navigation';
+import { useRef } from 'react';
+
 import { Button } from '@/components/ui/button';
-import { SettingsToolbar } from './settings-toolbar';
 import { useGsapFadeIn } from '@/features/global/hooks';
-import { UserMenu } from './user-menu';
-import { isAuthenticated } from '@/features/global/utils';
-import type { HeaderActionsProps } from '../types';
+import { SettingsToolbar } from '@/features/header/components';
+import { UserMenu } from '@/features/header/components';
+import type { HeaderActionsProps } from '@/features/header/types';
+import { Link } from '@/i18n/navigation';
 
 export const HeaderActions = ({ user }: HeaderActionsProps) => {
   const t = useTranslations();

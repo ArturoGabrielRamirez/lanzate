@@ -1,20 +1,22 @@
 'use client';
 
-import { memo, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { memo, useMemo } from 'react';
+
 import { isAuthenticated } from '@/features/global/utils';
-import { HeaderNavProps } from '../types';
-import { NavLinkWithUnderline } from './nav-link-with-underline';
-import { isActiveRoute, getAuthNavLinks } from '../utils/navigation.utils';
+import { NavLinkWithUnderline } from '@/features/header/components';
+import { HeaderNavProps } from '@/features/header/types';
+import { isActiveRoute, getAuthNavLinks } from '@/features/header/utils';
 
 export const HeaderNavAuth = memo(({ user }: Pick<HeaderNavProps, 'user'>) => {
   const pathname = usePathname();
   const t = useTranslations();
 
+  const navLinks = useMemo(() => getAuthNavLinks(t), [t]);
+
   if (!isAuthenticated(user)) return null;
 
-  const navLinks = useMemo(() => getAuthNavLinks(t), [t]);
 
   return (
     <nav className="hidden md:flex items-center gap-1">

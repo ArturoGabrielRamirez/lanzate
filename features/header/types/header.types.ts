@@ -1,4 +1,7 @@
+import { UserAppMetadata, UserMetadata } from '@supabase/supabase-js';
+
 import type { ReactNode } from 'react';
+
 
 export interface NavLink {
   label: string;
@@ -19,11 +22,15 @@ export interface NavMenuItem {
 }
 
 export interface HeaderCurrentUser {
-  id: number;
+  id: string;
   email: string;
   fullName: string | null;
   avatarUrl: string | null;
   accountType: string | null;
+  app_metadata: UserAppMetadata;
+  user_metadata: UserMetadata;
+  aud: string;
+  created_at: string;
 }
 
 export interface HeaderProps {
