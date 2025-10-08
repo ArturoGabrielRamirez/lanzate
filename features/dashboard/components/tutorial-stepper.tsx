@@ -1,10 +1,10 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
 import type { TutorialStepperProps } from '../types';
 import { useTranslations } from 'next-intl';
+import { Progress } from '@/components/ui/progress';
 
 export const TutorialStepper = ({
   steps,
@@ -14,9 +14,8 @@ export const TutorialStepper = ({
   onNext,
 }: TutorialStepperProps) => {
   const t = useTranslations('dashboard.tutorial');
-  const progress = ((currentStep + 1) / steps.length) * 100;
   const isLastStep = currentStep === steps.length - 1;
-
+  const progress = ((currentStep + 1) / steps.length) * 100;
   const handleNext = () => {
     if (isLastStep) {
       onComplete();
@@ -44,17 +43,7 @@ export const TutorialStepper = ({
       </div> */}
 
       {/* Step Indicators */}
-      {/* <div className="flex justify-center space-x-2">
-        {steps.map((_, index) => (
-          <div
-            key={index}
-            className={`h-2 w-2 rounded-full transition-colors ${index <= currentStep
-                ? 'bg-primary'
-                : 'bg-muted'
-              }`}
-          />
-        ))}
-      </div> */}
+
 
       {/* Navigation Buttons */}
       {/* <div className="flex justify-between"> */}
@@ -67,6 +56,18 @@ export const TutorialStepper = ({
         <ChevronLeft className="h-4 w-4" />
         {t('stepper.previous')}
       </Button>
+
+      <div className="flex justify-center space-x-2">
+        {steps.map((_, index) => (
+          <div
+            key={index}
+            className={`h-2 w-2 rounded-full transition-colors ${index <= currentStep
+              ? 'bg-primary'
+              : 'bg-muted'
+              }`}
+          />
+        ))}
+      </div>
 
       <Button
         onClick={handleNext}

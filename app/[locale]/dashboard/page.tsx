@@ -11,7 +11,7 @@ export default async function DashboardPage() {
   return (
     <div className="w-full pt-20 md:pt-24 pb-4 px-4">
       <div className="max-w-5xl mx-auto">
-        {/* Tutorial Integration */}
+
         <DashboardTutorial />
         
         <Empty>

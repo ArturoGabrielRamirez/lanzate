@@ -8,3 +8,14 @@ export interface SignUpParams {
   password: string;
 }
 
+export interface CreateUserParams {
+  email: string;
+  supabaseUserId?: string;
+  avatar?: string;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  provider?: string;
+}
+

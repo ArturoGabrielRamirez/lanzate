@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createServerSideClient } from '@/lib/supabase/server';
 import { headers } from 'next/headers';
 import { getBaseUrlAndLocale, buildRedirect } from '@/features/global/utils/url';
+import { createUserData } from '@/features/auth/signup/data';
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -29,10 +30,27 @@ export async function GET(request: Request) {
   const supabase = await createServerSideClient();
 
   try {
-    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+    const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
     if (exchangeError) {
       const errorPath = `/login?error=exchange_failed&message=${encodeURIComponent(exchangeError.message)}`;
       return NextResponse.redirect(buildRedirect(baseUrl, locale, errorPath));
+    }
+
+    // Create user in database if they don't exist
+    if (data?.user) {
+      const { data: userData, error: userError } = await createUserData({
+        email: data.user.email || '',
+        supabaseUserId: data.user.id,
+        avatar: data.user.user_metadata?.avatar_url,
+        username: data.user.user_metadata?.preferred_username || data.user.user_metadata?.name,
+        firstName: data.user.user_metadata?.given_name,
+        lastName: data.user.user_metadata?.family_name,
+      });
+
+      if (userError) {
+        console.error('Error creating user in database:', userError);
+        // Continue with login even if user creation fails
+      }
     }
 
     // Signed in, redirect to next or dashboard

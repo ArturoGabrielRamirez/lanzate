@@ -1,2 +1,2 @@
-export type { SignUpActionParams, SignUpParams } from './signup.types';
+export type { SignUpActionParams, SignUpParams , CreateUserParams } from './signup.types';
 

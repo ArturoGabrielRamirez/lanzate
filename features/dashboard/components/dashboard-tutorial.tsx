@@ -20,7 +20,6 @@ export const DashboardTutorial = () => {
 
   return (
     <>
-      {/* Tutorial Dialog */}
       <TutorialDialog
         isOpen={isDialogOpen}
         onOpenChange={closeTutorial}

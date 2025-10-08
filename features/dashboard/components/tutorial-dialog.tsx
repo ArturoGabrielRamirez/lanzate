@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import {
   Dialog,
@@ -10,10 +10,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { X, Play, Users, Store, BarChart3, Settings, Check } from 'lucide-react';
+import { Users, Store, BarChart3, Settings, Check } from 'lucide-react';
 import { TutorialStepper } from './tutorial-stepper';
 import type { TutorialDialogProps, TutorialStep } from '../types';
+import { Progress } from '@/components/ui/progress';
 
 const getTutorialSteps = (t: (key: string) => string): TutorialStep[] => [
   {
@@ -21,9 +21,9 @@ const getTutorialSteps = (t: (key: string) => string): TutorialStep[] => [
     title: t('welcome'),
     description: t('welcomeDescription'),
     content: (
-      <div className="space-y-4 text-center">
+      <div className="space-y-4 text-center flex flex-col items-center justify-center grow">
         <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-          <Play className="w-8 h-8 text-primary" />
+          <Settings className="w-8 h-8 text-primary" />
         </div>
         <p className="text-muted-foreground">
           {t('welcomeContent')}
@@ -97,6 +97,7 @@ export const TutorialDialog = ({ isOpen, onOpenChange, onComplete }: TutorialDia
   const [currentStep, setCurrentStep] = useState(0);
 
   const tutorialSteps = getTutorialSteps(t);
+  const progress = ((currentStep + 1) / tutorialSteps.length) * 100;
 
   const handleNext = () => {
     if (currentStep < tutorialSteps.length - 1) {
@@ -117,7 +118,7 @@ export const TutorialDialog = ({ isOpen, onOpenChange, onComplete }: TutorialDia
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-lg:h-[calc(100vh_-_2rem)] w-[calc(100vw_-_2rem)] max-lg:!max-w-full">
+      <DialogContent className="max-lg:h-[calc(100vh_-_2rem)] w-[calc(100vw_-_2rem)] max-lg:!max-w-full !grid-rows-[auto_1fr_auto]">
         <DialogHeader>
           <DialogTitle>{currentStepData.title}</DialogTitle>
           <DialogDescription className="mt-2">
@@ -125,15 +126,21 @@ export const TutorialDialog = ({ isOpen, onOpenChange, onComplete }: TutorialDia
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6">
-          {/* Step Content */}
-          <div className="min-h-[200px] flex items-center justify-center">
+        <div className='flex flex-col'>
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm text-muted-foreground">
+              <span>{t('stepper.step')} {currentStep + 1} {t('stepper.of')} {tutorialSteps.length}</span>
+              <span>{Math.round(progress)}% {t('stepper.completed')}</span>
+            </div>
+            <Progress value={progress} className="h-2" />
+          </div>
+          <div className="grow flex flex-col">
             {currentStepData.content}
           </div>
         </div>
 
-        <DialogFooter className='!justify-between w-full flex-row items-end'>
-          {/* Stepper */}
+
+        <DialogFooter className='!justify-between w-full flex-row items-center'>
           <TutorialStepper
             steps={tutorialSteps}
             currentStep={currentStep}

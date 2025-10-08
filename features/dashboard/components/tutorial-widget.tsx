@@ -5,21 +5,27 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter, 
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Play, CheckCircle, Circle } from 'lucide-react';
+import { useTutorial } from '../hooks';
 import type { TutorialWidgetProps } from '../types';
 
 const TUTORIAL_STEPS = [
-  { id: 'welcome', title: 'Bienvenida', completed: true },
-  { id: 'dashboard-overview', title: 'Vista General', completed: true },
-  { id: 'navigation', title: 'Navegación', completed: false },
-  { id: 'completion', title: 'Finalización', completed: false },
+  { id: 'welcome', title: 'Bienvenida' },
+  { id: 'dashboard-overview', title: 'Vista General' },
+  { id: 'navigation', title: 'Navegación' },
+  { id: 'completion', title: 'Finalización' },
 ];
 
 export const TutorialWidget = ({ onOpenTutorial, className }: TutorialWidgetProps) => {
   const t = useTranslations('dashboard.tutorial');
+  const { tutorialState, getProgress, getCompletedSteps, isLoading } = useTutorial();
 
-  const completedSteps = TUTORIAL_STEPS.filter(step => step.completed).length;
+  if (isLoading || !tutorialState) {
+    return null;
+  }
+
+  const completedSteps = getCompletedSteps();
   const totalSteps = TUTORIAL_STEPS.length;
-  const progress = (completedSteps / totalSteps) * 100;
+  const progress = getProgress();
 
   return (
     <Card className={className}>
@@ -38,7 +44,7 @@ export const TutorialWidget = ({ onOpenTutorial, className }: TutorialWidgetProp
           </CardAction>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {/* Progress Bar */}
         <div className="space-y-2">
@@ -47,7 +53,7 @@ export const TutorialWidget = ({ onOpenTutorial, className }: TutorialWidgetProp
             <span className="font-medium">{Math.round(progress)}%</span>
           </div>
           <div className="w-full bg-muted rounded-full h-2">
-            <div 
+            <div
               className="bg-primary h-2 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
@@ -56,29 +62,32 @@ export const TutorialWidget = ({ onOpenTutorial, className }: TutorialWidgetProp
 
         {/* Steps List */}
         <div className="space-y-2">
-          {TUTORIAL_STEPS.map((step, index) => (
-            <div key={step.id} className="flex items-center space-x-3">
-              {step.completed ? (
-                <CheckCircle className="w-4 h-4 text-green-600" />
-              ) : (
-                <Circle className="w-4 h-4 text-muted-foreground" />
-              )}
-              <span className={`text-sm ${step.completed ? 'text-green-600' : 'text-muted-foreground'}`}>
-                {step.title}
-              </span>
-            </div>
-          ))}
+          {TUTORIAL_STEPS.map((step, index) => {
+            const isCompleted = completedSteps.includes(step.id);
+            return (
+              <div key={step.id} className="flex items-center space-x-3">
+                {isCompleted ? (
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                ) : (
+                  <Circle className="w-4 h-4 text-muted-foreground" />
+                )}
+                <span className={`text-sm ${isCompleted ? 'text-green-600' : 'text-muted-foreground'}`}>
+                  {step.title}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </CardContent>
 
       <CardFooter>
-        <Button 
+        <Button
           onClick={onOpenTutorial}
           className="w-full"
           variant="outline"
         >
           <Play className="w-4 h-4 mr-2" />
-          {completedSteps === totalSteps ? t('widget.repeat') : t('widget.continue')}
+          {tutorialState.isCompleted ? t('widget.repeat') : t('widget.continue')}
         </Button>
       </CardFooter>
     </Card>

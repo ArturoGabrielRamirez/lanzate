@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { isTutorialCompleted, markTutorialCompleted, updateTutorialStep } from '../utils';
+import { getTutorialState, markTutorialCompleted, updateTutorialStep } from '../utils';
 import type { TutorialState } from '../types';
 
 export const useTutorial = () => {
@@ -13,15 +13,21 @@ export const useTutorial = () => {
   useEffect(() => {
     const checkTutorialStatus = () => {
       try {
-        const isCompleted = isTutorialCompleted();
-        setTutorialState({
-          isCompleted,
-          currentStep: 0,
-          completedSteps: [],
-        });
-        
-        // Show dialog if tutorial is not completed (first time user)
-        if (!isCompleted) {
+        const state = getTutorialState();
+        if (state) {
+          setTutorialState(state);
+          // Show dialog if tutorial is not completed (first time user)
+          if (!state.isCompleted) {
+            setIsDialogOpen(true);
+          }
+        } else {
+          // First time user, initialize state
+          const initialState: TutorialState = {
+            isCompleted: false,
+            currentStep: 0,
+            completedSteps: [],
+          };
+          setTutorialState(initialState);
           setIsDialogOpen(true);
         }
       } catch (error) {
@@ -61,6 +67,20 @@ export const useTutorial = () => {
     setIsDialogOpen(false);
   }, []);
 
+  // Calculate progress based on current step
+  const getProgress = useCallback(() => {
+    if (!tutorialState) return 0;
+    const totalSteps = 4; // welcome, overview, navigation, completion
+    return Math.round((tutorialState.currentStep / (totalSteps - 1)) * 100);
+  }, [tutorialState]);
+
+  // Get completed steps based on current step
+  const getCompletedSteps = useCallback(() => {
+    if (!tutorialState) return [];
+    const stepIds = ['welcome', 'dashboard-overview', 'navigation', 'completion'];
+    return stepIds.slice(0, tutorialState.currentStep + 1);
+  }, [tutorialState]);
+
   return {
     isDialogOpen,
     tutorialState,
@@ -69,5 +89,7 @@ export const useTutorial = () => {
     closeTutorial,
     handleTutorialComplete,
     handleTutorialStepChange,
+    getProgress,
+    getCompletedSteps,
   };
 };

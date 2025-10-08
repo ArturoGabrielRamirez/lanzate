@@ -74,7 +74,7 @@ export async function insertUser(
                 updated_at: new Date(),
                 supabase_user_id: finalSupabaseUserId,
                 phone: phone || null,
-                username: username || "",
+                username: username || email.split('@')[0] || "",
             },
             include: {
                 Account: true
