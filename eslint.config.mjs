@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 
 import { FlatCompat } from "@eslint/eslintrc";
 import pluginImport from "eslint-plugin-import";
+import reactPlugin from "eslint-plugin-react";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,10 +13,22 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...compat.extends(
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:react/recommended",
+  ),
   {
     plugins: {
       import: pluginImport,
+      react: reactPlugin,
+    },
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
     },
     rules: {
       "import/order": [
@@ -62,7 +75,17 @@ const eslintConfig = [
           ],
         },
       ],
-
+      /* "react/function-component-definition": [
+        "error",
+        {
+          namedComponents: ["function-declaration"],
+          unnamedComponents: ["function-declaration"],
+        },
+      ], */
+      "react/react-in-jsx-scope": "off",
+      "react/function-component-definition": [
+        "error"
+      ],
     }
   }
 ];

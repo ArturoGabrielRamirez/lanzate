@@ -5,7 +5,7 @@ import { useRef, useEffect, useState } from 'react';
 
 import { HeaderNavAuth } from '@/features/header/components/header-nav-auth';
 import { HeaderNavGuest } from '@/features/header/components/header-nav-guest';
-import type { HeaderNavProps, HeaderCurrentUser } from '@/features/header/types';
+import type { HeaderNavProps } from '@/features/header/types';
 
 export const HeaderNav = ({ menuItems, user }: HeaderNavProps) => {
   const navRef = useRef<HTMLElement>(null);
@@ -36,7 +36,7 @@ export const HeaderNav = ({ menuItems, user }: HeaderNavProps) => {
 
   // Auth vs Guest rendering
   return isUserAuthenticated ? (
-    <HeaderNavAuth user={user as HeaderCurrentUser} />
+    <HeaderNavAuth user={user} />
   ) : (
     <HeaderNavGuest menuItems={menuItems} />
   );

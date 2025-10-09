@@ -1,5 +1,8 @@
 import { UserAppMetadata, UserMetadata } from '@supabase/supabase-js';
 
+import type { CurrentUserInfo } from '@/features/global/types';
+
+
 import type { ReactNode } from 'react';
 
 
@@ -27,6 +30,7 @@ export interface HeaderCurrentUser {
   fullName: string | null;
   avatarUrl: string | null;
   accountType: string | null;
+  
   app_metadata: UserAppMetadata;
   user_metadata: UserMetadata;
   aud: string;
@@ -35,38 +39,38 @@ export interface HeaderCurrentUser {
 
 export interface HeaderProps {
   className?: string;
-  user?: HeaderCurrentUser | null;
+  user?: CurrentUserInfo | null;
 }
 
 export interface HeaderNavProps {
   menuItems: NavMenuItem[];
-  user?: HeaderCurrentUser | null;
+  user?: CurrentUserInfo | null;
 }
 
 export interface MobileHeaderProps {
   links: NavLink[];
-  user?: HeaderCurrentUser | null;
+  user?: CurrentUserInfo | null;
 }
 
 export interface MobileDrawerProps {
   isOpen: boolean;
   onClose: (open: boolean) => void;
   links: NavLink[];
-  user?: HeaderCurrentUser | null;
+  user?: CurrentUserInfo | null;
 }
 
 export interface HeaderActionsProps {
-  user?: HeaderCurrentUser | null;
+  user?: CurrentUserInfo | null;
 }
 
 export interface UserAvatarProps {
-  user: HeaderCurrentUser;
+  user: CurrentUserInfo;
   size?: 'sm' | 'md' | 'lg';
   className?: string;
 }
 
 export interface UserMenuProps {
-  user: HeaderCurrentUser;
+  user: CurrentUserInfo;
 }
 
 export interface NavLinkWithUnderlineProps {
