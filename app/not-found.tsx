@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+
 import { NotFoundContent } from '@/features/not-found/components';
 
 export default async function NotFound() {

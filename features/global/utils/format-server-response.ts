@@ -8,7 +8,7 @@ import { ServerError } from '@/features/global/types';
  * @returns A ServerError response object
  */
 export function formatServerResponse(
-    message: string, 
+    message: string,
     errorDetails: unknown
 ): ServerError {
     return {
