@@ -1,10 +1,11 @@
 'use client';
 
+import { FileQuestion, Home, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+
 import { Button } from '@/components/ui/button';
 import { Empty, EmptyIcon, EmptyTitle, EmptyDescription, EmptyActions } from '@/components/ui/empty';
-import { FileQuestion, Home, ArrowLeft } from 'lucide-react';
-import type { NotFoundContentProps } from '../types';
+import type { NotFoundContentProps } from '@/features/not-found/types';
 
 export const NotFoundContent = ({ title, description, goHome, goBack }: NotFoundContentProps) => {
   return (

@@ -1,2 +1,2 @@
-export type { NotFoundContentProps } from './not-found.types';
+export type * from '@/features/not-found/types/not-found.types';
 

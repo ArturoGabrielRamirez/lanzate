@@ -1,2 +1,2 @@
-export { NotFoundContent } from './not-found-content';
+export * from '@/features/not-found/components/not-found-content';
 
