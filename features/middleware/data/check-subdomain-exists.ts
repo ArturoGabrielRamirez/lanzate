@@ -1,9 +1,9 @@
 "use server";
 
+import type { ServerResponse } from "@/features/global/types";
 import { formatServerResponse } from "@/features/global/utils";
-import { ServerResponse } from "@/features/global/types";
-import { createServerSideClient } from "@/lib/supabase";
 import { sanitizeSubdomain } from "@/features/middleware/schemas";
+import { createServerSideClient } from "@/lib/supabase";
 
 /**
  * Checks if a subdomain exists in the database

@@ -1,1 +1,1 @@
-export * from './validate-subdomain.action';
+export * from '@/features/middleware/actions/validate-subdomain.action';

@@ -1,5 +1,6 @@
-import { APP_CONFIG } from "@/features/global/constants";
 import { NextRequest } from "next/server";
+
+import { APP_CONFIG } from "@/features/global/constants";
 
 /**
  * Extracts subdomain from the request hostname

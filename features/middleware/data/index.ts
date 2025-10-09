@@ -1,1 +1,1 @@
-export * from './check-subdomain-exists';
+export * from '@/features/middleware/data/check-subdomain-exists';

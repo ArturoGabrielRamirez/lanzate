@@ -1,3 +1,3 @@
-export * from './subdomain.types';
-export * from './middleware.types';
+export * from '@/features/middleware/types/subdomain.types';
+export * from '@/features/middleware/types/middleware.types';
 

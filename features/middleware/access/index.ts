@@ -1,2 +1,2 @@
-export * from './validate-subdomain-access.access';
+export * from '@/features/middleware/access/validate-subdomain-access.access';
 

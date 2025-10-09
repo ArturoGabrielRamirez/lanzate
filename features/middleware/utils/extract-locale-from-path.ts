@@ -1,5 +1,5 @@
-import { routing } from "@/i18n/routing";
-import { LocaleExtractionResult } from "@/features/middleware/types";
+import type { LocaleExtractionResult } from "@/features/middleware/types";
+import { Locale, routing } from "@/i18n/routing";
 
 /**
  * Extracts the locale from a URL pathname
@@ -15,7 +15,7 @@ export function extractLocaleFromPath(pathname: string): LocaleExtractionResult 
     const segments = pathname.split('/').filter(Boolean)
     const firstSegment = segments[0]
 
-    if (routing.locales.includes(firstSegment as any)) {
+    if (routing.locales.includes(firstSegment as Locale)) {
         return {
             locale: firstSegment,
             pathWithoutLocale: '/' + segments.slice(1).join('/')

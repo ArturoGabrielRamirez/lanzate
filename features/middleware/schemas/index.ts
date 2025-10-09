@@ -1,2 +1,2 @@
-export * from './subdomain-validation.schema';
+export * from '@/features/middleware/schemas/subdomain-validation.schema';
 

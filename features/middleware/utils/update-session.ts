@@ -1,12 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
-import { extractSubdomain, shouldApplyI18n, extractLocaleFromPath, createCookieConfig } from "@/features/middleware/utils";
 import { createServerClient } from "@supabase/ssr";
 import { User } from "@supabase/supabase-js";
-import { routing } from "@/i18n/routing";
-import { validateSubdomain } from "@/features/middleware/actions";
+import { NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from 'next-intl/middleware';
-import { logger } from "@/features/global/utils";
+
+
 import { APP_CONFIG } from "@/features/global/constants";
+import { logger } from "@/features/global/utils";
+import { validateSubdomain } from "@/features/middleware/actions";
+import { extractSubdomain, shouldApplyI18n, extractLocaleFromPath, createCookieConfig } from "@/features/middleware/utils";
+import { routing } from "@/i18n/routing";
 
 const intlMiddleware = createIntlMiddleware(routing);
 

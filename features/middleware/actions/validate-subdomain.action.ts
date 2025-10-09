@@ -1,10 +1,10 @@
 "use server";
 
+import type { ServerResponse } from "@/features/global/types";
 import { actionWrapper } from "@/features/global/utils";
-import { ServerResponse } from "@/features/global/types";
-import { checkSubdomainExists } from "@/features/middleware/data";
-import { subdomainSchema } from "@/features/middleware/schemas";
 import { validateSubdomainAccess } from "@/features/middleware/access";
+import { checkSubdomainExists } from "@/features/middleware/data";
+
 
 /**
  * Validates a subdomain by checking its format and existence in the database
@@ -18,7 +18,7 @@ export async function validateSubdomain(
     return await actionWrapper<boolean>(async () => {
         // First validate the subdomain format and access
         const accessValidation = await validateSubdomainAccess(subdomain);
-        
+
         if (!accessValidation.isValid) {
             return {
                 message: accessValidation.error || "Invalid subdomain format",
