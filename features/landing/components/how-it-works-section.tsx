@@ -1,20 +1,14 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import Autoplay from "embla-carousel-autoplay";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Store, Package, TrendingUp } from "lucide-react";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-    type CarouselApi,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import type { Feature } from '../types';
+import { useTranslations } from "next-intl";
+import { useRef, useEffect, useState } from "react";
+
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
+import type { Feature } from '@/features/landing/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -129,11 +123,10 @@ export const HowItWorksSection = () => {
                             <button
                                 key={index}
                                 onClick={() => api?.scrollTo(index)}
-                                className={`h-2 rounded-full transition-all duration-300 ${
-                                    index === current
+                                className={`h-2 rounded-full transition-all duration-300 ${index === current
                                         ? "bg-primary w-8"
                                         : "bg-muted-foreground/30 w-2"
-                                }`}
+                                    }`}
                                 aria-label={`Go to slide ${index + 1}`}
                             />
                         ))}

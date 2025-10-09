@@ -1,8 +1,9 @@
 'use client';
 
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { HEADER_CONSTANTS } from '../constants/header.constants';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
+
+import { HEADER_CONSTANTS } from '@/features/header/constants/header.constants';
 
 export const useHeaderVisibility = (headerRef: MutableRefObject<HTMLElement | null>) => {
   const [isAnimating, setIsAnimating] = useState(false);

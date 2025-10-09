@@ -1,21 +1,14 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { LogOut, User as UserIcon } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { logoutAction } from '@/features/auth/shared/actions/logout.action';
-import { getUserDisplayName } from '@/features/global/utils';
-import { UserAvatar } from './user-avatar';
+import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
-import type { UserMenuProps } from '../types';
+
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { logoutAction } from '@/features/auth/shared/actions/logout.action';
+import { UserAvatar } from '@/features/header/components/user-avatar';
+import type { UserMenuProps } from '@/features/header/types';
 
 export const UserMenu = ({ user }: UserMenuProps) => {
   const t = useTranslations('header.userMenu');

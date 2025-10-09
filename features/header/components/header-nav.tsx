@@ -1,12 +1,11 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
-import { HeaderNavProps } from '../types';
-import { isAuthenticated } from '@/features/global/utils';
-import type { HeaderCurrentUser } from '../types';
-import { HeaderNavAuth } from './header-nav-auth';
-import { HeaderNavGuest } from './header-nav-guest';
+import { useRef, useEffect, useState } from 'react';
+
+import { HeaderNavAuth } from '@/features/header/components/header-nav-auth';
+import { HeaderNavGuest } from '@/features/header/components/header-nav-guest';
+import type { HeaderNavProps, HeaderCurrentUser } from '@/features/header/types';
 
 export const HeaderNav = ({ menuItems, user }: HeaderNavProps) => {
   const navRef = useRef<HTMLElement>(null);
@@ -33,7 +32,7 @@ export const HeaderNav = ({ menuItems, user }: HeaderNavProps) => {
     }, navRef);
 
     return () => ctx.revert();
-  }, []); // Only run once on mount
+  }, [hasAnimatedIn]); // Only run once on mount
 
   // Auth vs Guest rendering
   return isUserAuthenticated ? (

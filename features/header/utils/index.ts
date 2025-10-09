@@ -1,5 +1,3 @@
-export * from './navigation.utils';
-export * from './scroll.utils';
-export * from './icon-mapper.utils';
-
-
+export * from '@/features/header/utils/navigation.utils';
+export * from '@/features/header/utils/scroll.utils';
+export * from '@/features/header/utils/icon-mapper.utils';

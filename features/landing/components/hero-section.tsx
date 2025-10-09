@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { gsap } from "gsap";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useEffect, useRef } from "react";
+
+import { Button } from "@/components/ui/button";
 
 export const HeroSection = () => {
     const t = useTranslations("home");

@@ -1,3 +1,3 @@
-export { useHeaderVisibility } from './use-header-visibility';
+export * from '@/features/header/hooks/use-header-visibility';
 
 

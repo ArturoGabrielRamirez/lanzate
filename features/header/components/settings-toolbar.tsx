@@ -1,8 +1,7 @@
 'use client';
 
-import { LanguageSwitch } from './language-switch';
-import { ThemeToggle } from './theme-toggle';
-import type { SettingsToolbarProps } from '../types';
+import { ThemeToggle, LanguageSwitch } from '@/features/header/components';
+import type { SettingsToolbarProps } from '@/features/header/types';
 
 export const SettingsToolbar = ({ className }: SettingsToolbarProps) => {
   return (

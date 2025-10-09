@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import { Menu } from 'lucide-react';
-import { MobileHeaderProps } from '../types';
-import { MobileDrawer } from './mobile-drawer';
+import { useState } from 'react';
+
+import { MobileDrawer } from '@/features/header/components/mobile-drawer';
+import type { MobileHeaderProps } from '@/features/header/types';
 
 export const MobileHeader = ({ links, user }: MobileHeaderProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState, useTransition } from 'react';
 import { useLocale } from 'next-intl';
-import { useRouter, usePathname } from '@/i18n/navigation';
+import { useEffect, useState, useTransition } from 'react';
+
 import { Switch } from '@/components/ui/switch';
+import { useRouter, usePathname } from '@/i18n/navigation';
 
 export const LanguageSwitch = () => {
   const locale = useLocale();

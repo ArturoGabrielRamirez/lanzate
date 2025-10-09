@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl';
 import { memo, useMemo } from 'react';
 
 import { isAuthenticated } from '@/features/global/utils';
-import { NavLinkWithUnderline } from '@/features/header/components';
-import { HeaderNavProps } from '@/features/header/types';
+import { NavLinkWithUnderline } from '@/features/header/components/nav-link-with-underline';
+import type { HeaderNavProps } from '@/features/header/types';
 import { isActiveRoute, getAuthNavLinks } from '@/features/header/utils';
 
 export const HeaderNavAuth = memo(({ user }: Pick<HeaderNavProps, 'user'>) => {

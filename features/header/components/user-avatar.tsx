@@ -1,7 +1,7 @@
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import type { UserAvatarProps } from '../types';
+import type { UserAvatarProps } from '@/features/header/types';
 
 const sizeToClass: Record<NonNullable<UserAvatarProps['size']>, string> = {
   sm: 'h-8 w-8',

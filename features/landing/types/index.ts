@@ -1,2 +1,2 @@
-export type { FAQ, Feature } from './landing.types';
+export type * from '@/features/landing/types/landing.types';
 

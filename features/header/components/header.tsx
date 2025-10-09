@@ -1,15 +1,15 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { gsap } from 'gsap';
+import { useRef } from 'react';
+
 import { useGsapFadeIn } from '@/features/global/hooks';
-import { HeaderProps } from '../types';
-import { getNavLinks, getNavMenuItemsGuest } from '../constants';
-import { HeaderLogo } from './header-logo';
-import { HeaderNav } from './header-nav';
-import { HeaderActions } from './header-actions';
-import { MobileHeader } from './mobile-header';
+import { HeaderActions } from '@/features/header/components/header-actions';
+import { HeaderLogo } from '@/features/header/components/header-logo';
+import { HeaderNav } from '@/features/header/components/header-nav';
+import { MobileHeader } from '@/features/header/components/mobile-header';
+import { getNavLinks, getNavMenuItemsGuest } from '@/features/header/constants';
+import type { HeaderProps } from '@/features/header/types';
 
 export const Header = ({ className, user }: HeaderProps) => {
   const t = useTranslations();

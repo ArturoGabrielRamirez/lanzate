@@ -5,8 +5,8 @@ import { useRef } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { useGsapFadeIn } from '@/features/global/hooks';
-import { SettingsToolbar } from '@/features/header/components';
-import { UserMenu } from '@/features/header/components';
+import { SettingsToolbar } from '@/features/header/components/settings-toolbar';
+import { UserMenu } from '@/features/header/components/user-menu';
 import type { HeaderActionsProps } from '@/features/header/types';
 import { Link } from '@/i18n/navigation';
 

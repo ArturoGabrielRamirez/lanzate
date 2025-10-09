@@ -1,15 +1,1 @@
-export type {
-  NavLink,
-  NavSubItem,
-  NavMenuItem,
-  HeaderCurrentUser,
-  HeaderProps,
-  HeaderNavProps,
-  MobileHeaderProps,
-  MobileDrawerProps,
-  HeaderActionsProps,
-  UserAvatarProps,
-  UserMenuProps,
-  NavLinkWithUnderlineProps,
-  SettingsToolbarProps,
-} from './header.types';
+export type * from '@/features/header/types/header.types';

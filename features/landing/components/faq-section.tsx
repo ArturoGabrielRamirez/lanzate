@@ -1,30 +1,17 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import Autoplay from "embla-carousel-autoplay";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-    type CarouselApi,
-} from "@/components/ui/carousel";
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion";
-import Autoplay from "embla-carousel-autoplay";
-import type { FAQ } from '../types';
+import { useRef, useEffect, useState } from "react";
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
+import type { FAQ } from '@/features/landing/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const FAQSection = () => {
-    const t = useTranslations();
     const sectionRef = useRef<HTMLElement>(null);
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
@@ -169,11 +156,10 @@ export const FAQSection = () => {
                             <button
                                 key={index}
                                 onClick={() => api?.scrollTo(index)}
-                                className={`h-2 rounded-full transition-all duration-300 ${
-                                    index === current
-                                        ? "bg-primary w-8"
-                                        : "bg-muted-foreground/30 w-2"
-                                }`}
+                                className={`h-2 rounded-full transition-all duration-300 ${index === current
+                                    ? "bg-primary w-8"
+                                    : "bg-muted-foreground/30 w-2"
+                                    }`}
                                 aria-label={`Go to FAQ group ${index + 1}`}
                             />
                         ))}

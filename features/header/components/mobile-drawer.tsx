@@ -1,25 +1,22 @@
 'use client';
 
+import { X, User as UserIcon, LogOut } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState, useCallback, useMemo } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import { Link } from '@/i18n/navigation';
-import { Button } from '@/components/ui/button';
-import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerFooter, DrawerOverlay } from '@/components/ui/drawer';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { X, User as UserIcon, LogOut } from 'lucide-react';
-import { MobileDrawerProps } from '../types';
-import { ThemeToggle } from './theme-toggle';
-import { LanguageSwitch } from './language-switch';
-import { logoutAction } from '@/features/auth/shared/actions/logout.action';
-import { isAuthenticated } from '@/features/global/utils';
-import { UserAvatar } from './user-avatar';
 import { toast } from 'sonner';
+
+import { Button } from '@/components/ui/button';
+import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerFooter } from '@/components/ui/drawer';
+import { logoutAction } from '@/features/auth/shared/actions/logout.action';
 import { useIntersectionObserver, useSmoothScroll } from '@/features/global/hooks';
-import { HEADER_CONSTANTS } from '../constants/header.constants';
-import { extractAnchorId } from '../utils/scroll.utils';
-import { getAuthNavLinks, isActiveRoute } from '../utils';
-import { LayoutDashboard, PlusCircle, Store, User as UserIconLine } from 'lucide-react';
+import { LanguageSwitch } from '@/features/header/components/language-switch';
+import { ThemeToggle } from '@/features/header/components/theme-toggle';
+import { UserAvatar } from '@/features/header/components/user-avatar';
+import { HEADER_CONSTANTS } from '@/features/header/constants';
+import type { MobileDrawerProps } from '@/features/header/types';
+import { extractAnchorId, getAuthNavLinks, isActiveRoute } from '@/features/header/utils';
+import { Link } from '@/i18n/navigation';
 
 export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps) => {
   const t = useTranslations();
@@ -116,7 +113,7 @@ export const MobileDrawer = ({ isOpen, onClose, links, user }: MobileDrawerProps
             <>
               {/* User Info */}
               <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
-                <UserAvatar user={user as any} size="lg" />
+                <UserAvatar user={user} size="lg" />
                 <div className="flex flex-col flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{user?.fullName || user?.email}</p>
                   <p className="text-xs text-muted-foreground truncate">

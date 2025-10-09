@@ -1,5 +1,6 @@
-import { NavLink } from '../types';
 import { LayoutDashboard, PlusCircle, Store, User as UserIcon } from 'lucide-react';
+
+import { NavLink } from '@/features/header/types';
 
 export const isActiveRoute = (pathname: string, href: string): boolean => {
   // Remove locale prefix like /es or /en

@@ -1,25 +1,17 @@
 'use client';
 
 import { memo, useCallback } from 'react';
-import { Link } from '@/i18n/navigation';
-import { useTranslations } from 'next-intl';
-import { HeaderNavProps } from '../types';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from '@/components/ui/navigation-menu';
-import { GoogleAuthButton } from '@/features/auth/shared/components/google-auth-button';
+
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from '@/components/ui/navigation-menu';
 import { googleSignInAction } from '@/features/auth/login/actions';
+import { GoogleAuthButton } from '@/features/auth/shared/components/google-auth-button';
 import { useSmoothScroll } from '@/features/global/hooks/use-smooth-scroll';
-import { HEADER_CONSTANTS } from '../constants/header.constants';
-import { getIconForHref } from '../utils';
+import { HEADER_CONSTANTS } from '@/features/header/constants';
+import type { HeaderNavProps } from '@/features/header/types';
+import { getIconForHref } from '@/features/header/utils';
+import { Link } from '@/i18n/navigation';
 
 export const HeaderNavGuest = memo(({ menuItems }: Pick<HeaderNavProps, 'menuItems'>) => {
-  const t = useTranslations();
   const { scrollToAnchor } = useSmoothScroll(HEADER_CONSTANTS.HEADER_OFFSET_DESKTOP);
 
   const handleGoogleAuthClick = useCallback(async () => {

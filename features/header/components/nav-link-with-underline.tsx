@@ -1,9 +1,9 @@
 'use client';
 
+import type { NavLinkWithUnderlineProps } from '@/features/header/types';
 import { Link } from '@/i18n/navigation';
-import type { NavLinkWithUnderlineProps } from '../types';
 
-export const NavLinkWithUnderline = ({ href, label, icon, isActive = false, prefetch = true }: NavLinkWithUnderlineProps) => {
+export const NavLinkWithUnderline = ({ href, label, isActive = false, prefetch = true }: NavLinkWithUnderlineProps) => {
   return (
     <Link
       href={href}
