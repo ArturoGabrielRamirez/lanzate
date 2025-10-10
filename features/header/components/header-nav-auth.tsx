@@ -2,14 +2,14 @@
 
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { memo, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { isAuthenticated } from '@/features/global/utils';
 import { NavLinkWithUnderline } from '@/features/header/components/nav-link-with-underline';
 import type { HeaderNavProps } from '@/features/header/types';
 import { isActiveRoute, getAuthNavLinks } from '@/features/header/utils';
 
-export const HeaderNavAuth = memo(({ user }: Pick<HeaderNavProps, 'user'>) => {
+function HeaderNavAuth({ user }: Pick<HeaderNavProps, 'user'>) {
   const pathname = usePathname();
   const t = useTranslations();
 
@@ -19,7 +19,7 @@ export const HeaderNavAuth = memo(({ user }: Pick<HeaderNavProps, 'user'>) => {
 
 
   return (
-    <nav className="hidden md:flex items-center gap-1">
+    <>
       {navLinks.map((link) => {
         const isActive = isActiveRoute(pathname, link.href);
         return (
@@ -32,10 +32,8 @@ export const HeaderNavAuth = memo(({ user }: Pick<HeaderNavProps, 'user'>) => {
           />
         );
       })}
-    </nav>
+    </>
   );
-});
+};
 
-HeaderNavAuth.displayName = 'HeaderNavAuth';
-
-
+export { HeaderNavAuth };

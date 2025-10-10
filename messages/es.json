@@ -219,5 +219,17 @@
     "title": "Mi Cuenta",
     "description": "Esta sección está en construcción. Pronto podrás ver y editar tu información personal aquí.",
     "goHome": "Ir al inicio"
+  },
+  "landing": {
+    "hero": {
+      "just_released": "Lanzado recientemente",
+      "title-1": "Tú lo imaginas.",
+      "title-2": "lo hace realidad.",
+      "description": "La plataforma todo-en-uno para gestionar tu negocio online. Simple, potente y fácil de usar.",
+      "CTA-1": "Get Started"
+    }
+  },
+  "brand": {
+    "name": "Lanzate"
   }
 }

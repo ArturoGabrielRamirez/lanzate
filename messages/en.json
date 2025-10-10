@@ -219,5 +219,17 @@
     "title": "My Account",
     "description": "This section is under construction. Soon you'll be able to view and edit your personal information here.",
     "goHome": "Go to Home"
+  },
+  "landing": {
+    "hero": {
+      "just_released": "Just Released",
+      "title-1": "You dream it.",
+      "title-2": "makes it.",
+      "description": "The all-in-one platform to manage your online business. Simple, powerful, and easy to use.",
+      "CTA-1": "Get Started"
+    }
+  },
+  "brand": {
+    "name": "Lanzate"
   }
 }

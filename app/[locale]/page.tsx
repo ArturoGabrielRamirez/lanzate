@@ -1,10 +1,7 @@
-import {
-    HeroSection,
-    HowItWorksSection,
-    FAQSection,
-    Footer,
-} from "@/features/landing/components";
+import { HeroSection } from "@/features/landing/components";
+
 import type { Metadata } from "next";
+
 
 export const metadata: Metadata = {
     title: "Home",
@@ -13,8 +10,9 @@ export const metadata: Metadata = {
 
 function HomePage() {
     return (
-        <div className="min-h-screen">
-            {/* <HeroSection />
+        <>
+            <HeroSection />
+            {/* 
             <HowItWorksSection />
             <div id="integrations" className="py-20 px-4 bg-muted/30">
                 <div className="max-w-7xl mx-auto text-center">
@@ -43,7 +41,7 @@ function HomePage() {
             <div id="contact" className="min-h-[50vh] bg-background flex items-center justify-center">
                 <h2 className="text-5xl font-bold">Contact / Footer</h2>
             </div>
-        </div>
+        </>
     );
 }
 

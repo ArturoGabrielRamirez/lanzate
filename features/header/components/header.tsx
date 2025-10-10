@@ -8,7 +8,7 @@ import { getNavLinks, getNavMenuItemsGuest } from '@/features/header/constants';
 import type { HeaderProps } from '@/features/header/types';
 import { cn } from '@/lib/utils';
 
-export async function Header({ className, user }: HeaderProps) {
+async function Header({ className, user }: HeaderProps) {
 
   const t = await getTranslations();
   const locale = await getLocale();
@@ -18,21 +18,18 @@ export async function Header({ className, user }: HeaderProps) {
   return (
     <header
       className={cn(
-        "fixed top-0 z-30 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+        "absolute top-0 z-30 w-full text-primary-foreground",
         className
       )}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex h-14 md:h-20 items-center justify-between">
-          <HeaderLogo />
-
-          <HeaderNav menuItems={NAV_MENU_ITEMS} user={user || null} />
-
-          <HeaderActions user={user || null} />
-
-          <MobileHeader links={NAV_LINKS} user={user || null} />
-        </div>
+      <div className="container mx-auto px-4 flex h-14 md:h-20 items-center justify-between">
+        <HeaderLogo />
+        <HeaderNav menuItems={NAV_MENU_ITEMS} user={user || null} />
+        <HeaderActions user={user || null} />
+        <MobileHeader links={NAV_LINKS} user={user || null} />
       </div>
     </header>
   );
 };
+
+export { Header };
