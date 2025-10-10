@@ -9,7 +9,7 @@ import { UserMenu } from '@/features/header/components/user-menu';
 import type { HeaderActionsProps } from '@/features/header/types';
 import { Link } from '@/i18n/navigation';
 
-export const HeaderActions = ({ user }: HeaderActionsProps) => {
+function HeaderActions({ user }: HeaderActionsProps) {
   const t = useTranslations();
   const actionsRef = useRef<HTMLDivElement>(null);
 
@@ -19,10 +19,12 @@ export const HeaderActions = ({ user }: HeaderActionsProps) => {
       {user ? (
         <UserMenu user={user} />
       ) : (
-        <Button asChild size="lg">
+        <Button asChild size="lg" className='bg-transparent border border-border dark:!border-primary dark:hover:!bg-primary/20'>
           <Link href="/login">{t('header.actions.login')}</Link>
         </Button>
       )}
     </div>
   );
 };
+
+export { HeaderActions };

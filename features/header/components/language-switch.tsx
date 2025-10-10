@@ -6,7 +6,7 @@ import { useEffect, useState, useTransition } from 'react';
 import { Switch } from '@/components/ui/switch';
 import { useRouter, usePathname } from '@/i18n/navigation';
 
-export const LanguageSwitch = () => {
+function LanguageSwitch() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -28,19 +28,20 @@ export const LanguageSwitch = () => {
 
   return (
     <div className="flex items-center gap-2 cursor-pointer">
-      <p className={`text-xs font-medium transition-colors ${!isChecked ? 'text-primary' : 'text-muted-foreground'}`}>
+      <p className={`text-xs font-medium transition-colors ${!isChecked ? 'text-primary-foreground/50' : 'text-primary-foreground'}`}>
         ES
       </p>
-      <Switch 
-        checked={isChecked} 
-        onCheckedChange={handleChange} 
+      <Switch
+        checked={isChecked}
+        onCheckedChange={handleChange}
         disabled={isPending}
-        className="cursor-pointer"
+        className="cursor-pointer shadow-2xl drop-shadow-2xl"
       />
-      <p className={`text-xs font-medium transition-colors ${isChecked ? 'text-primary' : 'text-muted-foreground'}`}>
+      <p className={`text-xs font-medium transition-colors ${isChecked ? 'text-primary-foreground/50' : 'text-primary-foreground'}`}>
         EN
       </p>
     </div>
   );
 };
 
+export { LanguageSwitch };

@@ -7,7 +7,7 @@ import { useRef, useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 
-export const ThemeToggle = () => {
+function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const iconRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
@@ -39,19 +39,20 @@ export const ThemeToggle = () => {
   return (
     <Button
       variant="ghost"
-      size="icon"
+      size="icon-lg"
       onClick={handleToggleClick}
       aria-label="Toggle theme"
       className="relative"
     >
-      <div ref={iconRef} className="w-5 h-5 flex items-center justify-center">
+      <div ref={iconRef} className="size-6 flex items-center justify-center">
         {theme === 'dark' ? (
-          <Sun className="w-5 h-5" />
+          <Sun className="size-6" />
         ) : (
-          <Moon className="w-5 h-5" />
+          <Moon className="size-6" />
         )}
       </div>
     </Button>
   );
 };
 
+export { ThemeToggle };

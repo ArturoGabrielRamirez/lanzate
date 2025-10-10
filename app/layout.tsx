@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
-import { Geist } from 'next/font/google';
+import { Geist, Quattrocento, Oswald } from 'next/font/google';
 
 import '@/app/globals.css';
+import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
     title: 'Lanzate',
@@ -11,12 +12,25 @@ export const metadata: Metadata = {
 const geist = Geist({
     subsets: ['latin'],
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+    variable: '--font-geist',
+});
+
+const quattrocento = Quattrocento({
+    subsets: ['latin'],
+    weight: ['400', '700'],
+    variable: '--font-quattrocento',
+});
+
+const oswald = Oswald({
+    subsets: ['latin'],
+    weight: ['400', '700'],
+    variable: '--font-oswald',
 });
 
 function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html suppressHydrationWarning>
-            <body className={geist.className}>
+            <body className={cn(geist.variable, quattrocento.variable, oswald.variable, "snap-mandatory")}>
                 {children}
             </body>
         </html>

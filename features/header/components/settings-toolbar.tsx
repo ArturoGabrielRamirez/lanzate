@@ -3,7 +3,7 @@
 import { ThemeToggle, LanguageSwitch } from '@/features/header/components';
 import type { SettingsToolbarProps } from '@/features/header/types';
 
-export const SettingsToolbar = ({ className }: SettingsToolbarProps) => {
+function SettingsToolbar({ className }: SettingsToolbarProps) {
   return (
     <div className={`flex items-center gap-4 ${className || ''}`}>
       <LanguageSwitch />
@@ -12,5 +12,7 @@ export const SettingsToolbar = ({ className }: SettingsToolbarProps) => {
     </div>
   );
 };
+
+export { SettingsToolbar };
 
 
