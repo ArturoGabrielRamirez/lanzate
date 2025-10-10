@@ -5,7 +5,7 @@ import '@/app/globals.css';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-    title: 'Lanzate',
+    title: 'Lanzate | %s',
     description: 'Lanzate',
 };
 
