@@ -74,9 +74,9 @@ function HeroSection() {
                             {tBrand("name")}
                         </span>
                         <span>{" "}</span>
-                        <span >{t("hero.title-2")}</span>
+                        <span>{t("hero.title-2")}</span>
                     </h2>
-                    <p className="text-xl md:text-2xl text-muted dark:text-muted-foreground mb-4 text-center md:text-left font-quattrocento font-light">
+                    <p className="text-xl md:text-2xl text-muted dark:text-muted-foreground mb-4 text-center md:text-left font-quattrocento font-light text-balance">
                         {t("hero.description")}
                     </p>
                     <div className="flex items-center gap-8 font-quattrocento font-thin mb-10 justify-center md:justify-start">
@@ -113,7 +113,7 @@ function HeroSection() {
                             height={500}
                         />
                     </div>
-                    <Marquee className="absolute top-20 -left-60 w-full mask-r-from-60% mask-r-to-90% mask-l-from-60% mask-l-to-90%">
+                    <Marquee className="absolute top-20 -left-60 w-full mask-r-from-60% mask-r-to-90% mask-l-from-60% mask-l-to-90% hidden md:block">
                         <MarqueeFade side="left" />
                         <MarqueeFade side="right" />
                         <MarqueeContent speed={10}>

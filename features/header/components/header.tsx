@@ -16,7 +16,7 @@ function Header({ className }: HeaderProps) {
       <div className="container mx-auto px-4 flex h-14 md:h-20 items-center justify-between">
         <HeaderLogo />
         <HeaderNav />
-        <div className='flex items-center gap-3'>
+        <div className='flex items-center'>
           <HeaderActions />
           <MobileDrawer />
         </div>

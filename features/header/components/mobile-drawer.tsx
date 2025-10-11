@@ -1,11 +1,11 @@
 import { Menu } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-import { DropDrawer, DropDrawerTrigger, DropDrawerContent, DropDrawerItem, DropDrawerGroup, DropDrawerLabel, DropDrawerSub, DropDrawerSubTrigger, DropDrawerSubContent } from "@/components/dropdrawer";
+import { DropDrawer, DropDrawerTrigger, DropDrawerContent, DropDrawerItem, DropDrawerGroup, DropDrawerLabel } from "@/components/dropdrawer";
 import { getCurrentUserAction } from "@/features/global/actions";
 import { IconButton } from "@/features/global/components";
-import { UserAvatar, LogoutLink, SettingsToolbar, HeaderLogo } from "@/features/header/components";
-import { DRAWER_MENU_ITEMS_GUEST, NAV_MENU_ITEMS_AUTH, NAV_MENU_ITEMS_GUEST } from "@/features/header/constants";
+import { UserAvatar, LogoutLink, SettingsToolbar } from "@/features/header/components";
+import { DRAWER_MENU_ITEMS_GUEST, NAV_MENU_ITEMS_AUTH } from "@/features/header/constants";
 import { Link } from "@/i18n/navigation";
 
 
@@ -16,13 +16,13 @@ async function MobileDrawer() {
 
   return (
     <DropDrawer>
-      <DropDrawerTrigger className="rounded-full border-none outline-none" asChild>
+      <DropDrawerTrigger className="rounded-full border-none outline-none ml-4" asChild>
         <div>
-          {currentUser && <UserAvatar user={currentUser} size="md" />}
+          {currentUser && <UserAvatar user={currentUser} size="xl" />}
           {!currentUser && (
             <IconButton
               className="md:hidden"
-              icon={<Menu />}
+              icon={<Menu className="size-7 md:size-8" />}
             />
           )}
         </div>
@@ -32,13 +32,15 @@ async function MobileDrawer() {
           <DropDrawerGroup>
             <DropDrawerLabel>Welcome!</DropDrawerLabel>
             <DropDrawerItem>
-              <UserAvatar user={currentUser} size="md" className="md:hidden"/>
-              <p className="px-2 truncate text-sm text-muted-foreground py-2 md:py-0">{currentUser.email}</p>
+              <div className="mx-auto flex items-center gap-2">
+                <UserAvatar user={currentUser} size="md" className="md:hidden" />
+                <p className="px-2 truncate text-sm text-muted-foreground py-2 md:py-0">{currentUser.email}</p>
+              </div>
             </DropDrawerItem>
           </DropDrawerGroup>
         )}
         {currentUser && (
-          <DropDrawerGroup className="lg:hidden">
+          <DropDrawerGroup>
             <DropDrawerLabel>Menu</DropDrawerLabel>
             {NAV_MENU_ITEMS_AUTH.map((item) => (
               <DropDrawerItem key={item.href} icon={item.icon}>

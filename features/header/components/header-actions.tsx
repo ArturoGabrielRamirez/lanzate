@@ -11,7 +11,7 @@ async function HeaderActions() {
   const { payload: currentUser } = await getCurrentUserAction();
 
   return (
-    <div className="hidden md:flex items-center gap-3">
+    <div className="hidden md:flex items-center md:gap-3">
       <SettingsToolbar />
       {!currentUser && (
         <Button asChild size="lg" className='bg-transparent border border-border dark:!border-primary dark:hover:!bg-primary/20'>

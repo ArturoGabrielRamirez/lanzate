@@ -7,6 +7,7 @@ const sizeToClass: Record<NonNullable<UserAvatarProps['size']>, string> = {
   sm: 'h-8 w-8',
   md: 'h-9 w-9',
   lg: 'h-10 w-10',
+  xl: 'h-11 w-11',
 };
 
 function UserAvatar({ user, size = 'md', className }: UserAvatarProps) {

@@ -57,7 +57,7 @@ export interface MobileDrawerProps {
 
 export interface UserAvatarProps {
   user: CurrentUserInfo;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
 }
 
