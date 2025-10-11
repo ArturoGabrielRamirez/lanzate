@@ -2,20 +2,36 @@
 
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from '@/components/ui/navigation-menu';
 import { googleSignInAction } from '@/features/auth/login/actions';
 import { GoogleAuthButton } from '@/features/auth/shared/components/google-auth-button';
 import { useSmoothScroll } from '@/features/global/hooks/use-smooth-scroll';
 import { HEADER_CONSTANTS, NAV_MENU_ITEMS_GUEST } from '@/features/header/constants';
-import { Link } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
+import { cn } from '@/lib/utils';
+import { useMotionValueEvent, useScroll } from 'motion/react';
 
 function HeaderNavGuest() {
 
   const { scrollToAnchor } = useSmoothScroll(HEADER_CONSTANTS.HEADER_OFFSET_DESKTOP);
   const t = useTranslations();
   const router = useRouter();
+  const pathname = usePathname();
+  const isHome = pathname === '/';
+  const { scrollY } = useScroll()
+
+  const [isFloating, setIsFloating] = useState(false)
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const windowHeight = window.innerHeight
+    if (latest > 100) {
+      setIsFloating(true)
+    } else {
+      setIsFloating(false)
+    }
+  })
 
   const handleGoogleAuthClick = useCallback(async () => {
     const res = await googleSignInAction();
@@ -39,7 +55,7 @@ function HeaderNavGuest() {
       <NavigationMenuList>
         {NAV_MENU_ITEMS_GUEST.map((menuItem) => (
           <NavigationMenuItem key={menuItem.label}>
-            <NavigationMenuTrigger className="bg-transparent">
+            <NavigationMenuTrigger className={cn("bg-transparent", !isHome && "text-foreground", isFloating && "text-white")}>
               {t(menuItem.label)}
             </NavigationMenuTrigger>
             <NavigationMenuContent>
