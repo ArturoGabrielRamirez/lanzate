@@ -4,7 +4,7 @@ import { Rocket } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
-export const Footer = () => {
+function Footer() {
   const t = useTranslations('footer');
   const currentYear = new Date().getFullYear();
 
@@ -143,3 +143,4 @@ export const Footer = () => {
   );
 };
 
+export { Footer };

@@ -11,7 +11,7 @@ import type { FAQ } from '@/features/landing/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export const FAQSection = () => {
+function FAQSection() {
     const sectionRef = useRef<HTMLElement>(null);
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
@@ -169,3 +169,5 @@ export const FAQSection = () => {
         </section>
     );
 };
+
+export { FAQSection };

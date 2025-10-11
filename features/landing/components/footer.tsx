@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 
-export const Footer = () => {
+function Footer() {
     const t = useTranslations("home.footer");
 
     return (
@@ -107,3 +107,5 @@ export const Footer = () => {
         </footer>
     );
 };
+
+export { Footer };

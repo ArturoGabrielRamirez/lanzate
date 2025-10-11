@@ -79,7 +79,7 @@ const getTutorialSteps = (t: (key: string) => string): TutorialStep[] => [
   },
 ];
 
-export const TutorialDialog = ({ isOpen, onOpenChange, onComplete }: TutorialDialogProps) => {
+function TutorialDialog({ isOpen, onOpenChange, onComplete }: TutorialDialogProps) {
   const t = useTranslations('dashboard.tutorial');
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -140,3 +140,5 @@ export const TutorialDialog = ({ isOpen, onOpenChange, onComplete }: TutorialDia
     </Dialog>
   );
 };
+
+export { TutorialDialog };

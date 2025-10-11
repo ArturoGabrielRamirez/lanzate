@@ -7,7 +7,7 @@ import { Spinner } from '@/components/ui/spinner';
 import type { AsyncButtonProps } from '@/features/global/types';
 import { cn } from '@/lib/utils';
 
-export function AsyncButton({
+function AsyncButton({
   onClickAsync,
   children,
   leftIcon,
@@ -74,4 +74,4 @@ export function AsyncButton({
   );
 }
 
-
+export { AsyncButton };

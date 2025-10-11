@@ -3,7 +3,7 @@
 import { TutorialDialog, TutorialWidget } from '@/features/dashboard/components';
 import { useTutorial } from '@/features/dashboard/hooks';
 
-export const DashboardTutorial = () => {
+function DashboardTutorial() {
   const {
     isDialogOpen,
     isLoading,
@@ -31,3 +31,5 @@ export const DashboardTutorial = () => {
     </>
   );
 };
+
+export { DashboardTutorial };

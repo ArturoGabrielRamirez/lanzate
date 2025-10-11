@@ -12,7 +12,7 @@ import type { Feature } from '@/features/landing/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export const HowItWorksSection = () => {
+function HowItWorksSection() {
     const t = useTranslations("home");
     const sectionRef = useRef<HTMLElement>(null);
     const [api, setApi] = useState<CarouselApi>();
@@ -135,4 +135,6 @@ export const HowItWorksSection = () => {
             </div>
         </section>
     );
-};
+    };
+
+export { HowItWorksSection };

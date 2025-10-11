@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Empty, EmptyIcon, EmptyTitle, EmptyDescription, EmptyActions } from '@/components/ui/empty';
 import type { NotFoundContentProps } from '@/features/not-found/types';
 
-export const NotFoundContent = ({ title, description, goHome, goBack }: NotFoundContentProps) => {
+function NotFoundContent({ title, description, goHome, goBack }: NotFoundContentProps) {
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-200px)] px-4">
       <Empty>
@@ -35,3 +35,4 @@ export const NotFoundContent = ({ title, description, goHome, goBack }: NotFound
   );
 };
 
+export { NotFoundContent };

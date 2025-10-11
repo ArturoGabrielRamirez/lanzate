@@ -16,7 +16,7 @@ const TUTORIAL_STEPS = [
   { id: 'completion', title: 'Finalización' },
 ];
 
-export const TutorialWidget = ({ onOpenTutorial, className }: TutorialWidgetProps) => {
+function TutorialWidget({ onOpenTutorial, className }: TutorialWidgetProps) {
   const t = useTranslations('dashboard.tutorial');
   const { tutorialState, getProgress, getCompletedSteps, isLoading } = useTutorial();
 
@@ -94,3 +94,5 @@ export const TutorialWidget = ({ onOpenTutorial, className }: TutorialWidgetProp
     </Card>
   );
 };
+
+export { TutorialWidget };

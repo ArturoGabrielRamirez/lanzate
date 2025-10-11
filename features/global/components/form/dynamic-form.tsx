@@ -8,7 +8,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { FormInput, FormButton } from '@/features/global/components/form';
 import type { DynamicFormProps, FormField } from '@/features/global/types';
 
-export const DynamicForm = ({
+  function DynamicForm({
   fields,
   onSubmit,
   submitText,
@@ -16,7 +16,7 @@ export const DynamicForm = ({
   submitLeftIcon,
   validationSchema,
   defaultValues = {},
-}: DynamicFormProps) => {
+}: DynamicFormProps) {
   const [showPassword, setShowPassword] = useState<Record<string, boolean>>({});
 
   const methods = useForm({
@@ -90,3 +90,4 @@ export const DynamicForm = ({
   );
 };
 
+export { DynamicForm };

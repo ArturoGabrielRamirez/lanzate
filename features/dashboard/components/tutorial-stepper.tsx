@@ -6,13 +6,13 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import type { TutorialStepperProps } from '@/features/dashboard/types';
 
-export const TutorialStepper = ({
+function TutorialStepper({
   steps,
   currentStep,
   onStepChange,
   onComplete,
   onNext,
-}: TutorialStepperProps) => {
+}: TutorialStepperProps) {
 
   const t = useTranslations('dashboard.tutorial');
   const isLastStep = currentStep === steps.length - 1;
@@ -74,3 +74,5 @@ export const TutorialStepper = ({
     </>
   );
 };
+
+export { TutorialStepper };
