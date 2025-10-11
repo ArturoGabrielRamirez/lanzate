@@ -3,7 +3,7 @@ import { Empty, EmptyIcon, EmptyTitle, EmptyDescription, EmptyActions } from '@/
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LayoutDashboard } from 'lucide-react';
-import { DashboardTutorial } from '@/features/dashboard';
+/* import { DashboardTutorial } from '@/features/dashboard'; */
 
 export default async function DashboardPage() {
   const t = await getTranslations('dashboard');

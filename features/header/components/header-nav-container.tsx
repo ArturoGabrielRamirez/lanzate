@@ -1,11 +1,12 @@
 'use client';
 
-import { cn } from "@/lib/utils";
 import { useMotionValueEvent, useScroll } from "motion/react";
-import { useState, type ReactNode } from "react";
-import { HeaderLogo } from "@/features/header/components/header-logo";
 import * as motion from "motion/react-client";
+import { useState, type ReactNode } from "react";
+
+import { HeaderLogo } from "@/features/header/components/header-logo";
 import { SettingsToolbar } from "@/features/header/components/settings-toolbar";
+import { cn } from "@/lib/utils";
 
 function HeaderNavContainer({ children }: { children: ReactNode }) {
     
@@ -13,7 +14,6 @@ function HeaderNavContainer({ children }: { children: ReactNode }) {
     const [shouldBlurBackground, setShouldBlurBackground] = useState(false)
 
     useMotionValueEvent(scrollY, "change", (latest) => {
-        const windowHeight = window.innerHeight
         if (latest > 100) {
             setShouldBlurBackground(true)
         } else {

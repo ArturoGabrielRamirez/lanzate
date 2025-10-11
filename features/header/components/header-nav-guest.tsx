@@ -1,5 +1,6 @@
 'use client';
 
+import { useMotionValueEvent, useScroll } from 'motion/react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
@@ -11,7 +12,6 @@ import { useSmoothScroll } from '@/features/global/hooks/use-smooth-scroll';
 import { HEADER_OFFSET_DESKTOP, NAV_MENU_ITEMS_GUEST } from '@/features/header/constants';
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
-import { useMotionValueEvent, useScroll } from 'motion/react';
 
 function HeaderNavGuest() {
 
@@ -25,7 +25,6 @@ function HeaderNavGuest() {
   const [isFloating, setIsFloating] = useState(false)
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const windowHeight = window.innerHeight
     if (latest > 100) {
       setIsFloating(true)
     } else {
