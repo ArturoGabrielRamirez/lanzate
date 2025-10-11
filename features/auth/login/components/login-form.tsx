@@ -53,8 +53,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="w-full space-y-6 typography">
-      {/* Form */}
+    <div className="w-full space-y-6 lg:max-w-md">
       <div className="not-typography space-y-4">
         <DynamicForm
           fields={formFields}
@@ -64,12 +63,8 @@ export const LoginForm = () => {
           validationSchema={validationSchema}
         />
 
-        {/* Forgot Password Link */}
         <div className="flex justify-end">
-          <Link
-            href="/forgot-password"
-            className="small text-primary hover:underline"
-          >
+          <Link href="/forgot-password" className="small text-primary hover:underline">
             {t('forgotPassword')}
           </Link>
         </div>
@@ -77,7 +72,6 @@ export const LoginForm = () => {
         <AuthProviders label={t('orContinueWith')} />
       </div>
 
-      {/* Sign Up Link */}
       <div className="text-center small">
         <span className="text-muted-foreground">{t('noAccount')} </span>
         <Link href="/signup" className="text-primary hover:underline font-medium">

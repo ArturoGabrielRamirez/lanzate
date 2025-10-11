@@ -8,25 +8,23 @@ export const metadata: Metadata = {
 };
 
 async function SignupPage() {
+  
   const t = await getTranslations('auth.signup');
 
   return (
     <div className="w-full pt-20 md:pt-24 pb-4 flex items-center justify-center min-h-dvh">
       <div className="container mx-auto px-4">
-        {/* Content Grid */}
         <div className="grid lg:grid-cols-2 gap-8 items-center">
-          {/* Left Side - Signup Form */}
           <div className="flex flex-col gap-8">
-            <div className="typography">
+            <div className="typography mb-8 text-center md:text-left">
               <h2 className="border-b-0">{t('title')}</h2>
-              <p className="muted">{t('subtitle')}</p>
+              <p className="muted mt-0">{t('subtitle')}</p>
             </div>
-            <div className="w-full max-w-md">
+            <div className="w-full lg:max-w-md">
               <SignupForm />
             </div>
           </div>
 
-          {/* Right Side - Image Placeholder */}
           <div className="hidden lg:flex items-center justify-center min-h-[600px]">
             <div className="w-full h-[600px]">
               <SignupImagePlaceholder />

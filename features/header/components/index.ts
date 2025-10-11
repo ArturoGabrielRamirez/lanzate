@@ -13,3 +13,4 @@ export * from '@/features/header/components/nav-link-with-underline';
 export * from '@/features/header/components/settings-toolbar';
 export * from '@/features/header/components/logout-link';
 export * from '@/features/header/components/user-avatar';
+export * from '@/features/header/components/header-nav-container';

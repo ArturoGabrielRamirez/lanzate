@@ -133,7 +133,9 @@
         "passwordNumber": "Password must contain at least one number",
         "confirmPasswordRequired": "You must confirm your password",
         "passwordMatch": "Passwords do not match"
-      }
+      },
+      "toastSuccess": "Account created successfully",
+      "toastError": "Error creating account"
     },
     "forgot": {
       "title": "Recover password",

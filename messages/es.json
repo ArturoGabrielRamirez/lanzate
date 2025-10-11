@@ -133,7 +133,9 @@
         "passwordNumber": "La contraseña debe contener al menos un número",
         "confirmPasswordRequired": "Debes confirmar tu contraseña",
         "passwordMatch": "Las contraseñas no coinciden"
-      }
+      },
+      "toastSuccess": "Cuenta creada exitosamente",
+      "toastError": "Error al crear cuenta"
     },
     "forgot": {
       "title": "Recuperar contraseña",

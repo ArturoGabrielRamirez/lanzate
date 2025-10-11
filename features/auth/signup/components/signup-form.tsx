@@ -16,10 +16,8 @@ export const SignupForm = () => {
   const t = useTranslations('auth.signup');
   const router = useRouter();
 
-  // Validation schema
   const validationSchema = getSignupValidationSchema((key) => t(key));
 
-  // Form fields configuration
   const formFields: FormField[] = [
     {
       name: 'email',
@@ -50,10 +48,9 @@ export const SignupForm = () => {
     },
   ];
 
-  // Handle form submission
   const handleSubmit = async (data: SignUpFormData) => {
-    const res = await signUpAction({ email: data.email, password: data.password });
-    if (res.hasError) {
+    const { hasError, message } = await signUpAction({ email: data.email, password: data.password });
+    if (hasError) {
       toast.error(t('toastError'));
       return;
     }

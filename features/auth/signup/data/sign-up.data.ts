@@ -4,7 +4,8 @@ import { createServerSideClient } from '@/lib/supabase/server';
 import type { SignUpParams } from '../types';
 
 export async function signUpWithPasswordData({ email, password }: SignUpParams) {
-  const supabase = createServerSideClient();
+
+  const supabase = await createServerSideClient();
 
   const { data, error } = await supabase.auth.signUp({
     email,

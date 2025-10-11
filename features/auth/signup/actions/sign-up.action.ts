@@ -7,6 +7,7 @@ import { actionWrapper } from '@/features/global/utils/action-wrapper';
 
 export const signUpAction = async ({ email, password }: SignUpActionParams): Promise<ServerResponse<{ userId: string }>> => {
   return actionWrapper<{ userId: string }>(async () => {
+
     const { data, error } = await signUpWithPasswordData({ email, password });
 
     if (error || !data?.user) {
@@ -18,7 +19,6 @@ export const signUpAction = async ({ email, password }: SignUpActionParams): Pro
       } as ServerResponse<{ userId: string }>;
     }
 
-    // Create user in database
     const { error: userError } = await createUserData({
       email,
       supabaseUserId: data.user.id,

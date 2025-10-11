@@ -11,14 +11,12 @@ export const AuthProviders = ({ label }: AuthProvidersProps) => {
 
   const handleGoogle = async () => {
     const res = await googleSignInAction();
-    console.log(res);
     if (res.hasError || !res.payload?.url) return;
     router.push(res.payload.url);
   };
 
   return (
-    <div className="space-y-4">
-      {/* Divider */}
+    <div className="space-y-4 my-12">
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
@@ -30,7 +28,6 @@ export const AuthProviders = ({ label }: AuthProvidersProps) => {
         </div>
       </div>
 
-      {/* Providers */}
       <div className="grid grid-cols-1 gap-4">
         <Button variant="outline" onClick={handleGoogle}>
           <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">

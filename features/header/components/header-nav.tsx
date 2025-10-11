@@ -1,19 +1,20 @@
 import { getCurrentUserAction } from '@/features/global/actions';
 import { HeaderNavAuth } from '@/features/header/components/header-nav-auth';
 import { HeaderNavGuest } from '@/features/header/components/header-nav-guest';
+import { HeaderNavContainer } from '@/features/header/components/header-nav-container';
 
 async function HeaderNav() {
 
   const { payload: currentUser } = await getCurrentUserAction();
 
   return (
-    <nav className="hidden xl:flex items-center fixed left-1/2 -translate-x-1/2 gap-8">
+    <HeaderNavContainer>
       {currentUser ? (
         <HeaderNavAuth />
       ) : (
         <HeaderNavGuest />
       )}
-    </nav>
+    </HeaderNavContainer>
   )
 };
 
