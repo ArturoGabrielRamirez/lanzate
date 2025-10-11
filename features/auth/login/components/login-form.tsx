@@ -12,7 +12,7 @@ import { LoginFormData } from '@/features/auth/login/types';
 import { AuthProviders } from '@/features/auth/shared/components';
 import { DynamicForm, FormField } from '@/features/global/components';
 
-export const LoginForm = () => {
+function LoginForm() {
   const t = useTranslations('auth.login');
   const router = useRouter();
 
@@ -82,3 +82,4 @@ export const LoginForm = () => {
   );
 };
 
+export { LoginForm };

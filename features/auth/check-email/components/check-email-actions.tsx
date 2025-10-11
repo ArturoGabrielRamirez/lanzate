@@ -9,7 +9,7 @@ import type { CheckEmailActionsProps } from '@/features/auth/check-email/types';
 import { resetPasswordAction } from '@/features/auth/forgot-password/actions';
 import { AsyncButton } from '@/features/global/components';
 
-export const CheckEmailActions = ({ email }: CheckEmailActionsProps) => {
+function CheckEmailActions({ email }: CheckEmailActionsProps) {
   const t = useTranslations('auth.checkEmail');
 
   const handleResend = async () => {
@@ -34,4 +34,4 @@ export const CheckEmailActions = ({ email }: CheckEmailActionsProps) => {
   );
 };
 
-
+export { CheckEmailActions };

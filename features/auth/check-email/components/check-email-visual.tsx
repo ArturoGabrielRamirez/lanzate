@@ -1,6 +1,6 @@
 'use client';
 
-export const CheckEmailVisual = () => {
+function CheckEmailVisual() {
   return (
     <div className="relative h-[300px] w-full max-w-md bg-gradient-to-br from-primary/20 via-primary/10 to-background rounded-lg flex items-center justify-center">
       <div className="absolute inset-0 overflow-hidden rounded-lg">
@@ -16,4 +16,4 @@ export const CheckEmailVisual = () => {
   );
 };
 
-
+export { CheckEmailVisual };

@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import type { GoogleAuthButtonProps } from '@/features/auth/shared/types';
 
-export const GoogleAuthButton = ({ label, onClick, className }: GoogleAuthButtonProps) => {
+function GoogleAuthButton({ label, onClick, className }: GoogleAuthButtonProps) {
   return (
     <Button variant="outline" onClick={onClick} className={className}>
       <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
@@ -18,3 +18,4 @@ export const GoogleAuthButton = ({ label, onClick, className }: GoogleAuthButton
 };
 
 
+export { GoogleAuthButton };

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { googleSignInAction } from '@/features/auth/login/actions';
 import type { AuthProvidersProps } from '@/features/auth/shared/types';
 
-export const AuthProviders = ({ label }: AuthProvidersProps) => {
+function AuthProviders({ label }: AuthProvidersProps) {
   const router = useRouter();
 
   const handleGoogle = async () => {
@@ -56,3 +56,4 @@ export const AuthProviders = ({ label }: AuthProvidersProps) => {
 };
 
 
+export { AuthProviders };

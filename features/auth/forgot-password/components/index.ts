@@ -1,4 +1,4 @@
-export { ForgotPasswordForm } from './forgot-password-form';
-export { ForgotPasswordImagePlaceholder } from './forgot-password-image-placeholder';
+export * from '@/features/auth/forgot-password/components/forgot-password-form';
+export * from '@/features/auth/forgot-password/components/forgot-password-image-placeholder';
 
 

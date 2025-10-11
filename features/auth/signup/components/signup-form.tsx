@@ -12,7 +12,7 @@ import { getSignupValidationSchema } from '@/features/auth/signup/schemas';
 import type { SignUpFormData } from '@/features/auth/signup/types';
 import { DynamicForm, FormField } from '@/features/global/components';
 
-export const SignupForm = () => {
+function SignupForm() {
   const t = useTranslations('auth.signup');
   const router = useRouter();
 
@@ -49,7 +49,7 @@ export const SignupForm = () => {
   ];
 
   const handleSubmit = async (data: SignUpFormData) => {
-    const { hasError, message } = await signUpAction({ email: data.email, password: data.password });
+    const { hasError } = await signUpAction({ email: data.email, password: data.password });
     if (hasError) {
       toast.error(t('toastError'));
       return;
@@ -85,3 +85,4 @@ export const SignupForm = () => {
   );
 };
 
+export { SignupForm };

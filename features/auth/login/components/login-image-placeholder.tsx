@@ -3,7 +3,7 @@
 import { ImageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export const LoginImagePlaceholder = () => {
+function LoginImagePlaceholder() {
   const t = useTranslations('auth.login');
 
   return (
@@ -30,3 +30,4 @@ export const LoginImagePlaceholder = () => {
   );
 };
 
+export { LoginImagePlaceholder };

@@ -10,7 +10,7 @@ import { getForgotValidationSchema } from '@/features/auth/forgot-password/schem
 import { AuthProviders } from '@/features/auth/shared/components';
 import { DynamicForm, FormField } from '@/features/global/components';
 
-export const ForgotPasswordForm = () => {
+function ForgotPasswordForm() {
   const t = useTranslations('auth.forgot');
 
   const validationSchema = getForgotValidationSchema((key) => t(key));
@@ -59,3 +59,4 @@ export const ForgotPasswordForm = () => {
 };
 
 
+export { ForgotPasswordForm };

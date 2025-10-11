@@ -3,7 +3,7 @@
 import { KeyRound } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export const ForgotPasswordImagePlaceholder = () => {
+function ForgotPasswordImagePlaceholder() {
   const t = useTranslations('auth.forgot');
 
   return (
@@ -24,3 +24,4 @@ export const ForgotPasswordImagePlaceholder = () => {
 };
 
 
+export { ForgotPasswordImagePlaceholder };
