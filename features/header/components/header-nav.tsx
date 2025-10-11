@@ -2,7 +2,7 @@ import { HeaderNavAuth } from '@/features/header/components/header-nav-auth';
 import { HeaderNavGuest } from '@/features/header/components/header-nav-guest';
 import type { HeaderNavProps } from '@/features/header/types';
 
-function HeaderNav({ menuItems, user }: HeaderNavProps) {
+function HeaderNav({ user }: HeaderNavProps) {
 
   const isUserAuthenticated = Boolean(user);
 
@@ -11,7 +11,7 @@ function HeaderNav({ menuItems, user }: HeaderNavProps) {
       {isUserAuthenticated ? (
         <HeaderNavAuth user={user} />
       ) : (
-        <HeaderNavGuest menuItems={menuItems} />
+        <HeaderNavGuest />
       )}
     </nav>
   )

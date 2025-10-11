@@ -2,10 +2,8 @@ import { HeroSection } from "@/features/landing/components";
 
 import type { Metadata } from "next";
 
-
 export const metadata: Metadata = {
     title: "Home",
-    description: "Gestiona tu negocio online nunca fue tan fácil. Enfocate en crecer mientras te damos el control total.",
 };
 
 function HomePage() {

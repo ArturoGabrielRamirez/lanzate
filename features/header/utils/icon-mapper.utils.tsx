@@ -5,7 +5,7 @@ import type { ReactElement } from 'react';
 /**
  * Icon size configuration for navigation items
  */
-const ICON_SIZE = 'mr-2 h-4 w-4';
+const ICON_SIZE = 'mr-2 size-4 group-hover:text-primary';
 
 /**
  * Maps href patterns to their corresponding icons

@@ -14,7 +14,9 @@
         "howItWorks": "Cómo funciona",
         "howItWorksDesc": "Aprende cómo gestionar tu tienda en simples pasos",
         "faq": "Preguntas frecuentes",
-        "faqDesc": "Respuestas a las dudas más comunes"
+        "faqDesc": "Respuestas a las dudas más comunes",
+        "integrations": "Integraciones",
+        "integrationsDesc": "Integraciones con otras plataformas"
       },
       "auth": {
         "login": "Iniciar sesión",

@@ -14,7 +14,9 @@
         "howItWorks": "How it works",
         "howItWorksDesc": "Learn how to manage your store in simple steps",
         "faq": "FAQ",
-        "faqDesc": "Answers to the most common questions"
+        "faqDesc": "Answers to the most common questions",
+        "integrations": "Integrations",
+        "integrationsDesc": "Integrations with other platforms"
       },
       "auth": {
         "login": "Sign in",

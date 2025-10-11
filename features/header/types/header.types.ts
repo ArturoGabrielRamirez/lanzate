@@ -17,10 +17,12 @@ export interface NavSubItem {
   href?: string;
   description?: string;
   isGoogleAuth?: boolean;
+  icon?: ReactNode;
 }
 
 export interface NavMenuItem {
   label: string;
+  icon?: ReactNode;
   items: NavSubItem[];
 }
 
@@ -30,7 +32,7 @@ export interface HeaderCurrentUser {
   fullName: string | null;
   avatarUrl: string | null;
   accountType: string | null;
-  
+
   app_metadata: UserAppMetadata;
   user_metadata: UserMetadata;
   aud: string;
@@ -43,7 +45,6 @@ export interface HeaderProps {
 }
 
 export interface HeaderNavProps {
-  menuItems: NavMenuItem[];
   user?: CurrentUserInfo | null;
 }
 

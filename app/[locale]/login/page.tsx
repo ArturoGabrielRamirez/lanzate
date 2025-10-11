@@ -1,5 +1,7 @@
-import { LoginForm, LoginImagePlaceholder } from '@/features/auth/login/components';
 import { getTranslations } from 'next-intl/server';
+
+import { LoginForm, LoginImagePlaceholder } from '@/features/auth/login/components';
+
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
