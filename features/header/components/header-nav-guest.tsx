@@ -8,14 +8,14 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { googleSignInAction } from '@/features/auth/login/actions';
 import { GoogleAuthButton } from '@/features/auth/shared/components/google-auth-button';
 import { useSmoothScroll } from '@/features/global/hooks/use-smooth-scroll';
-import { HEADER_CONSTANTS, NAV_MENU_ITEMS_GUEST } from '@/features/header/constants';
+import { HEADER_OFFSET_DESKTOP, NAV_MENU_ITEMS_GUEST } from '@/features/header/constants';
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { useMotionValueEvent, useScroll } from 'motion/react';
 
 function HeaderNavGuest() {
 
-  const { scrollToAnchor } = useSmoothScroll(HEADER_CONSTANTS.HEADER_OFFSET_DESKTOP);
+  const { scrollToAnchor } = useSmoothScroll(HEADER_OFFSET_DESKTOP);
   const t = useTranslations();
   const router = useRouter();
   const pathname = usePathname();

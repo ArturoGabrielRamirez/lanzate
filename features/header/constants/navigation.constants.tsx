@@ -1,6 +1,6 @@
 import { CogIcon, HelpCircleIcon, HomeIcon, InfoIcon, KeyRoundIcon, LayoutDashboard, LogInIcon, PhoneIcon, PlayCircleIcon, PlusCircle, Store, UserIcon, UserPlusIcon } from 'lucide-react';
 
-import { NavLink, NavMenuItem, NavSubItem } from '@/features/header/types';
+import { NavMenuItem, NavSubItem } from '@/features/header/types';
 
 const HOME_ITEM = {
   label: 'header.nav.home',
@@ -101,14 +101,6 @@ const CONTACT_ITEM = {
   icon: <PhoneIcon className='size-6 group-hover:text-inherit' />
 }
 
-
-export const NAV_LINKS_GUEST: NavLink[] = [
-  { label: 'header.nav.howItWorks', href: '/#how-it-works', },
-  { label: 'header.nav.integrations', href: '/#integrations' },
-  { label: 'header.nav.pricing', href: '/#pricing' },
-  { label: 'header.nav.contact', href: '/#contact' },
-  { label: 'header.nav.faq', href: '/#faq' },
-];
 
 export const NAV_MENU_ITEMS_GUEST: NavMenuItem[] = [
   {
