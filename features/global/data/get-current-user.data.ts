@@ -6,7 +6,7 @@ import { createServerSideClient } from '@/lib/supabase/server';
 
 export async function getCurrentUserData() {
 
-  const supabase = createServerSideClient();
+  const supabase = await createServerSideClient();
 
   const { data: { user }, error } = await supabase.auth.getUser();
 
@@ -39,7 +39,7 @@ export async function getCurrentUserData() {
   const payload = {
     id: dbUser.id,
     email: dbUser.email,
-    fullName: [dbUser.first_name, dbUser.last_name].filter(Boolean).join(' ') || null,
+    fullName: [dbUser.first_name, dbUser.last_name].join(' ') || dbUser.email || null,
     avatarUrl: dbUser.avatar ?? null,
     accountType: dbUser.Account?.[0]?.type ?? null,
   };

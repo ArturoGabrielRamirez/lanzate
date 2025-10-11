@@ -1,24 +1,19 @@
-'use client';
-
-import { useTranslations } from 'next-intl';
-import { useRef } from 'react';
+import { getTranslations } from 'next-intl/server';
 
 import { Button } from '@/components/ui/button';
+import { getCurrentUserAction } from '@/features/global/actions';
 import { SettingsToolbar } from '@/features/header/components/settings-toolbar';
-import { UserMenu } from '@/features/header/components/user-menu';
-import type { HeaderActionsProps } from '@/features/header/types';
 import { Link } from '@/i18n/navigation';
 
-function HeaderActions({ user }: HeaderActionsProps) {
-  const t = useTranslations();
-  const actionsRef = useRef<HTMLDivElement>(null);
+async function HeaderActions() {
+
+  const t = await getTranslations();
+  const { payload: currentUser } = await getCurrentUserAction();
 
   return (
-    <div ref={actionsRef} className="hidden md:flex items-center gap-3">
+    <div className="hidden md:flex items-center gap-3">
       <SettingsToolbar />
-      {user ? (
-        <UserMenu user={user} />
-      ) : (
+      {!currentUser && (
         <Button asChild size="lg" className='bg-transparent border border-border dark:!border-primary dark:hover:!bg-primary/20'>
           <Link href="/login">{t('header.actions.login')}</Link>
         </Button>

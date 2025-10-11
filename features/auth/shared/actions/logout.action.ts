@@ -8,7 +8,7 @@ import { createServerSideClient } from '@/lib/supabase/server';
 
 export const logoutAction = async (): Promise<ServerResponse<null>> => {
   return actionWrapper(async () => {
-    const supabase = createServerSideClient();
+    const supabase = await createServerSideClient();
     const { error } = await supabase.auth.signOut();
 
     if (error) {

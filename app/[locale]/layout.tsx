@@ -22,7 +22,7 @@ async function LocaleLayout({ children, params }: LocaleLayoutProps) {
         >
             <NuqsAdapter>
                 <NextIntlClientProvider locale={locale}>
-                    <Header user={user} />
+                    <Header />
                     <main>
                         {children}
                     </main>

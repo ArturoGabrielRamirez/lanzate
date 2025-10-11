@@ -14,7 +14,7 @@ export interface NavLink {
 
 export interface NavSubItem {
   label: string;
-  href?: string;
+  href: string;
   description?: string;
   isGoogleAuth?: boolean;
   icon?: ReactNode;
@@ -23,7 +23,9 @@ export interface NavSubItem {
 export interface NavMenuItem {
   label: string;
   icon?: ReactNode;
-  items: NavSubItem[];
+  items?: NavSubItem[];
+  href?: string;
+  description?: string;
 }
 
 export interface HeaderCurrentUser {
@@ -41,26 +43,15 @@ export interface HeaderCurrentUser {
 
 export interface HeaderProps {
   className?: string;
-  user?: CurrentUserInfo | null;
-}
-
-export interface HeaderNavProps {
-  user?: CurrentUserInfo | null;
 }
 
 export interface MobileHeaderProps {
-  links: NavLink[];
   user?: CurrentUserInfo | null;
 }
 
 export interface MobileDrawerProps {
   isOpen: boolean;
   onClose: (open: boolean) => void;
-  links: NavLink[];
-  user?: CurrentUserInfo | null;
-}
-
-export interface HeaderActionsProps {
   user?: CurrentUserInfo | null;
 }
 

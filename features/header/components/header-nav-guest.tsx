@@ -8,7 +8,7 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { googleSignInAction } from '@/features/auth/login/actions';
 import { GoogleAuthButton } from '@/features/auth/shared/components/google-auth-button';
 import { useSmoothScroll } from '@/features/global/hooks/use-smooth-scroll';
-import { HEADER_CONSTANTS, getNavMenuItemsGuest } from '@/features/header/constants';
+import { HEADER_CONSTANTS, NAV_MENU_ITEMS_GUEST } from '@/features/header/constants';
 import { Link } from '@/i18n/navigation';
 
 function HeaderNavGuest() {
@@ -16,7 +16,6 @@ function HeaderNavGuest() {
   const { scrollToAnchor } = useSmoothScroll(HEADER_CONSTANTS.HEADER_OFFSET_DESKTOP);
   const t = useTranslations();
   const router = useRouter();
-  const NAV_MENU_ITEMS = getNavMenuItemsGuest(t);
 
   const handleGoogleAuthClick = useCallback(async () => {
     const res = await googleSignInAction();
@@ -38,14 +37,15 @@ function HeaderNavGuest() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        {NAV_MENU_ITEMS.map((menuItem) => (
+        {NAV_MENU_ITEMS_GUEST.map((menuItem) => (
           <NavigationMenuItem key={menuItem.label}>
             <NavigationMenuTrigger className="bg-transparent">
-              {menuItem.label}
+              {t(menuItem.label)}
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                {menuItem.items.map((item) => {
+                {menuItem.items && menuItem.items.map((item) => {
+
                   if (item.isGoogleAuth) {
                     return (
                       <li key={item.label} className='row-span-3 col-start-1 row-start-1 flex flex-col gap-2'>
@@ -53,15 +53,15 @@ function HeaderNavGuest() {
                           <div className="group-hover:text-primary">
                             {item.icon}
                           </div>
-                          {item.label}
+                          {t(item.label)}
                         </div>
                         {item.description && (
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            {item.description}
+                            {t(item.description)}
                           </p>
                         )}
                         <GoogleAuthButton
-                          label={item.label}
+                          label={t(item.label)}
                           onClick={handleGoogleAuthClick}
                           className="w-full grow justify-center"
                         />
@@ -82,11 +82,11 @@ function HeaderNavGuest() {
                             <div className="group-hover:text-primary">
                               {item.icon}
                             </div>
-                            {item.label}
+                            {t(item.label)}
                           </div>
                           {item.description && (
                             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              {item.description}
+                              {t(item.description)}
                             </p>
                           )}
                         </Link>

@@ -1,17 +1,17 @@
 'use client';
 
-import { Menu } from 'lucide-react';
+/* import { Menu } from 'lucide-react'; */
 import { useState } from 'react';
 
+/* import { IconButton } from '@/features/global/components'; */
 import { MobileDrawer } from '@/features/header/components/mobile-drawer';
-import type { MobileHeaderProps } from '@/features/header/types';
 
-export const MobileHeader = ({ links, user }: MobileHeaderProps) => {
+function MobileHeader() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const handleToggleDrawer = () => {
+  /* const handleToggleDrawer = () => {
     setIsDrawerOpen(true);
-  };
+  }; */
 
   const handleDrawerChange = (open: boolean) => {
     setIsDrawerOpen(open);
@@ -19,20 +19,19 @@ export const MobileHeader = ({ links, user }: MobileHeaderProps) => {
 
   return (
     <>
-      <button
+      {/* <IconButton
         onClick={handleToggleDrawer}
-        className="md:hidden p-2 rounded-md hover:bg-accent transition-colors cursor-pointer"
+        className="md:hidden"
         aria-label="Abrir menú"
-      >
-        <Menu className="w-6 h-6" />
-      </button>
+        icon={<Menu className="size-6" />}
+      /> */}
 
       <MobileDrawer
         isOpen={isDrawerOpen}
         onClose={handleDrawerChange}
-        links={links}
-        user={user}
       />
     </>
   );
 };
+
+export { MobileHeader };

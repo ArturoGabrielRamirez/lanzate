@@ -5,7 +5,7 @@ import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useRef, useEffect, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
+import { IconButton } from '@/features/global/components';
 
 function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -20,14 +20,12 @@ function ThemeToggle() {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
 
-    // GSAP rotation animation
     if (iconRef.current) {
       gsap.to(iconRef.current, {
         rotation: 360,
         duration: 0.6,
         ease: 'back.inOut(1.5)',
         onComplete: () => {
-          // Reset rotation for next click
           gsap.set(iconRef.current, { rotation: 0 });
         },
       });
@@ -37,21 +35,20 @@ function ThemeToggle() {
   if (!isMounted) return null;
 
   return (
-    <Button
-      variant="ghost"
-      size="icon-lg"
+    <IconButton
       onClick={handleToggleClick}
       aria-label="Toggle theme"
       className="relative"
-    >
-      <div ref={iconRef} className="size-6 flex items-center justify-center">
-        {theme === 'dark' ? (
-          <Sun className="size-6" />
-        ) : (
-          <Moon className="size-6" />
-        )}
-      </div>
-    </Button>
+      icon={(
+        <div ref={iconRef} className="size-6 flex items-center justify-center">
+          {theme === 'dark' ? (
+            <Sun className="size-6" />
+          ) : (
+            <Moon className="size-6" />
+          )}
+        </div>
+      )}
+    />
   );
 };
 

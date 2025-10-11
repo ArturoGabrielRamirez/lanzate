@@ -9,7 +9,7 @@ import { createServerSideClient } from '@/lib/supabase/server';
 
 export const googleSignInAction = async () => {
   return actionWrapper<{ url: string }>(async () => {
-    const supabase = createServerSideClient();
+    const supabase = await createServerSideClient();
     const headersList = await headers();
     const host = headersList.get('host') || '';
     const subdomain = extractSubdomainFromHost(host);

@@ -9,9 +9,9 @@ const sizeToClass: Record<NonNullable<UserAvatarProps['size']>, string> = {
   lg: 'h-10 w-10',
 };
 
-export const UserAvatar = ({ user, size = 'md', className }: UserAvatarProps) => {
+function UserAvatar({ user, size = 'md', className }: UserAvatarProps) {
   return (
-    <Avatar className={`${sizeToClass[size]} border-2 border-primary ${className || ''}`}>
+    <Avatar className={`${sizeToClass[size]} border-2 cursor-pointer border-primary ${className || ''}`}>
       <AvatarImage src={user.avatarUrl || undefined} alt={user.email || 'User'} />
       <AvatarFallback className="bg-primary/10 text-primary font-semibold">
         {(user.fullName || user.email || '').charAt(0).toUpperCase()}
@@ -20,4 +20,4 @@ export const UserAvatar = ({ user, size = 'md', className }: UserAvatarProps) =>
   );
 };
 
-
+export { UserAvatar };

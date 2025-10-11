@@ -11,3 +11,5 @@ export * from '@/features/header/components/language-switch';
 export * from '@/features/header/components/user-menu';
 export * from '@/features/header/components/nav-link-with-underline';
 export * from '@/features/header/components/settings-toolbar';
+export * from '@/features/header/components/logout-link';
+export * from '@/features/header/components/user-avatar';

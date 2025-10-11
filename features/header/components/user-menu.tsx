@@ -9,8 +9,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { logoutAction } from '@/features/auth/shared/actions/logout.action';
 import { UserAvatar } from '@/features/header/components/user-avatar';
 import type { UserMenuProps } from '@/features/header/types';
+import { Link } from '@/i18n/navigation';
 
-export const UserMenu = ({ user }: UserMenuProps) => {
+function UserMenu({ user }: UserMenuProps) {
   const t = useTranslations('header.userMenu');
   const router = useRouter();
 
@@ -27,10 +28,8 @@ export const UserMenu = ({ user }: UserMenuProps) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button className="relative rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-          <UserAvatar user={user} size="md" className="cursor-pointer" />
-        </button>
+      <DropdownMenuTrigger className='rounded-full border-none outline-none'>
+        <UserAvatar user={user} size="md" className="cursor-pointer" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="font-normal">
@@ -42,12 +41,11 @@ export const UserMenu = ({ user }: UserMenuProps) => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={() => router.push('/account')}
-          className="cursor-pointer"
-        >
-          <UserIcon className="mr-2 h-4 w-4" />
-          <span>{t('myAccount')}</span>
+        <DropdownMenuItem className="cursor-pointer" asChild>
+          <Link href="/account">
+            <UserIcon className="mr-2 h-4 w-4" />
+            <span>{t('myAccount')}</span>
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
@@ -62,3 +60,4 @@ export const UserMenu = ({ user }: UserMenuProps) => {
   );
 };
 
+export { UserMenu };

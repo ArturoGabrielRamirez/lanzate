@@ -11,6 +11,7 @@ export const AuthProviders = ({ label }: AuthProvidersProps) => {
 
   const handleGoogle = async () => {
     const res = await googleSignInAction();
+    console.log(res);
     if (res.hasError || !res.payload?.url) return;
     router.push(res.payload.url);
   };

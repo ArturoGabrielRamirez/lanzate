@@ -50,3 +50,6 @@ export interface FormButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
   size?: 'default' | 'sm' | 'lg' | 'icon';
 }
 
+export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  icon: React.ReactNode;
+}
