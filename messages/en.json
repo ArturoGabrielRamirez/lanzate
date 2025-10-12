@@ -1455,8 +1455,11 @@
                 "faq": "FAQ",
                 "faqDesc": "FAQ description",
                 "dashboardDesc": "Dashboard description",
+                "newSale": "New sale",
                 "newSaleDesc": "New sale description",
+                "stores": "Stores",
                 "storesDesc": "Stores description",
+                "account": "Account",
                 "accountDesc": "Account description",
                 "googleAuthDesc": "Google auth description",
                 "aboutDesc": "About description",
@@ -1465,7 +1468,8 @@
                 "signupDesc": "Signup description",
                 "forgotPassword" : "Forgot password",
                 "forgotPasswordDesc": "Forgot password description",
-                "googleAuth": "Google auth"
+                "googleAuth": "Google auth",
+                "dashboard": "Dashboard"
             }
         }
     }

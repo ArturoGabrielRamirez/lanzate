@@ -1,1 +1,6 @@
-export { insertUser } from "./insertUser"
+export * from "@/features/auth/data/insert-user.data"
+export * from "@/features/auth/data/get-current-user.data"
+export * from "@/features/auth/data/get-user-by-supabaseid.data"
+export * from "@/features/auth/data/get-user-by-email.data"
+export * from "@/features/auth/data/update-user-supabaseid-and-email"
+export * from "@/features/auth/data/update-user-email"

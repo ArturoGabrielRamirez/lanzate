@@ -23,15 +23,19 @@ export const formatSuccessResponse = (baseMessage: string, payload?: any) => {
     }
 }
 
-type Action = () => Promise<{
+type Action<T> = () => Promise<{
     error: boolean
     message: string
-    payload: any
+    payload: T
 }>
 
-export const actionWrapper = async (action: Action) => {
+export const actionWrapper = async <T>(action: Action<T>) => {
     try {
-        return await action()
+        return await action() as {
+            error: boolean
+            message: string
+            payload: T
+        }
     } catch (error) {
         return formatErrorResponse("Action Error", error)
     }

@@ -1,11 +1,5 @@
 /* import type { CurrentUserInfo } from '@/features/global/types'; */
-
 import type { ReactNode } from 'react';
-
-
-export interface HeaderProps {
-    className?: string
-}
 
 export interface NavSubItem {
     label: string;
@@ -21,10 +15,6 @@ export interface NavMenuItem {
     items?: NavSubItem[];
     href?: string;
     description?: string;
-}
-
-export interface HeaderProps {
-    className?: string;
 }
 
 export interface UserAvatarProps {

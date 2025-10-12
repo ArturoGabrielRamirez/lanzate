@@ -111,4 +111,4 @@ export interface EmailInfoProps {
     lastResendInfo: LastResendInfo | null;
 }
 
-export * from './types';
+export * from '@/features/auth/types/user.types';

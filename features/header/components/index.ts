@@ -1,6 +1,5 @@
 export * from "@/features/header/components/header"
 export * from "@/features/header/components/notifications-icon"
-export * from "@/features/header/components/account-dropdown"
 export * from "@/features/header/components/theme-toggle"
 export * from "@/features/header/components/mobile-menu"
 export * from "@/features/header/components/language-switch"

@@ -1410,7 +1410,7 @@
             }
         }
     },
-    "feature/header" : {
+    "feature/header": {
         "navigation": {
             "home": "Inicio",
             "about": "Acerca de",
@@ -1433,6 +1433,7 @@
                 "newSaleDesc": "Descripción de la nueva venta",
                 "stores": "Tiendas",
                 "storesDesc": "Descripción de las tiendas",
+                "account": "Cuenta",
                 "accountDesc": "Descripción de la cuenta",
                 "googleAuthDesc": "Descripción de la autenticación con Google",
                 "aboutDesc": "Descripción de la sección de acerca de",
@@ -1441,7 +1442,8 @@
                 "signupDesc": "Descripción de la sección de registrarse",
                 "forgotPassword": "Olvidé mi contraseña",
                 "forgotPasswordDesc": "Descripción de la sección de olvidé mi contraseña",
-                "googleAuth": "Autenticación con Google"
+                "googleAuth": "Autenticación con Google",
+                "dashboard": "Dashboard"
             }
         }
     }

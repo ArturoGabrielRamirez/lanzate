@@ -1,9 +1,8 @@
+import { WithClassName } from "@/features/global/types"
 import { BrandLogo, HeaderNav, HeaderActions, MobileDrawer } from "@/features/header/components"
-import { HeaderProps } from "@/features/header/types"
 import { cn } from "@/lib/utils"
 
-
-async function Header({ className }: HeaderProps) {
+async function Header({ className }: WithClassName) {
 
     return (
         <header className={cn("fixed md:absolute top-0 z-30 w-full text-primary-foreground", className)}>

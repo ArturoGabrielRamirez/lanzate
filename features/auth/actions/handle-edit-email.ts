@@ -1,6 +1,6 @@
 "use server";
 import { createServerSideClient } from "@/utils/supabase/server";
-import { getCurrentUser } from "./index";
+import { getCurrentUserAction } from "./index";
 import { prisma } from "@/utils/prisma";
 import { getLocalUser } from "./index";
 import { extractSubdomainFromHost } from "../utils";
@@ -9,7 +9,7 @@ import { actionWrapper } from "@/utils/lib";
 
 export async function handleEditEmail(email: string, password: string) {
     return actionWrapper(async () => {
-        const { payload: user, error: userError, message: userMessage } = await getCurrentUser();
+        const { payload: user, error: userError, message: userMessage } = await getCurrentUserAction();
         const { payload: localUser, error: localUserError, message: localUserMessage } = await getLocalUser();
         
         if (userError || !user) {
