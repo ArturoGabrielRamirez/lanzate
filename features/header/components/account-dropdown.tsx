@@ -42,4 +42,4 @@ function AccountDropdown({ image }: AccountDropdownProps) {
     )
 }
 
-export default AccountDropdown
+export { AccountDropdown }

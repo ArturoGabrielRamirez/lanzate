@@ -18,4 +18,4 @@ function NavbarLink({ href, children }: Props) {
         <Link href={href} className={cn('p-2 hover:underline hover:!text-primary', isActive && 'text-primary')}>{children}</Link>
     )
 }
-export default NavbarLink
+export { NavbarLink }

@@ -158,4 +158,4 @@ function MobileMenu({ user }: MobileMenuProps) {
     )
 }
 
-export default MobileMenu
+export { MobileMenu }

@@ -1,0 +1,1 @@
+export * from "@/features/global/hooks/use-smooth-scroll"

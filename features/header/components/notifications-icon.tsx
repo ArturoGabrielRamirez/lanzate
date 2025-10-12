@@ -102,4 +102,5 @@ function NotificationsIcon() {
         </DropdownMenu>
     )
 }
-export default NotificationsIcon
+
+export { NotificationsIcon }

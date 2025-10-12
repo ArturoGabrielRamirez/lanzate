@@ -29,4 +29,4 @@ function LanguageSwitch() {
         </div>
     )
 }
-export default LanguageSwitch
+export { LanguageSwitch }

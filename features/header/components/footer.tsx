@@ -18,4 +18,4 @@ function Footer() {
 
     return <FooterSection />
 }
-export default Footer
+export { Footer }

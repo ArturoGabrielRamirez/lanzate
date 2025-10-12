@@ -3,7 +3,7 @@ export { default as SignupForm } from "./forms/form-signup";
 export { default as ResetPassword } from "./forms/form-reset-password";
 export { default as UpdatePasswordForm } from "./forms/update-password-form";
 export { default as ResetPasswordLink } from "./change-visual/reset-password-link";
-export { default as SocialLoginButtons } from "./buttons/social-login-buttons";
+/* export { default as SocialLoginButtons } from "./buttons/social-login-buttons"; */
 export { default as LoginErrorDisplay } from "./change-status/login-error-display";
 export { default as FacebookLogo } from "./social-logo/facebook-logo";
 export { default as GoogleLogo } from "./social-logo/google-logo";
@@ -19,3 +19,4 @@ export { default as EmailChangeForm } from "./forms/email-change-form";
 export { default as EmailChangeDialog } from "./change-visual/email-change-dialog";
 export { default as ProgressButton } from "./buttons/progress-button";
 export { default as EmailStatusAlerts } from "./change-visual/email-status-alerts";
+export * from "@/features/auth/components/buttons/social-login-buttons"

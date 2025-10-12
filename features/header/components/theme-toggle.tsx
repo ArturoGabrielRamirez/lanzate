@@ -16,4 +16,4 @@ function ThemeToggle() {
         />
     )
 }
-export default ThemeToggle
+export { ThemeToggle }

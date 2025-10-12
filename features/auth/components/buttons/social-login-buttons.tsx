@@ -2,9 +2,9 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { handleFacebookLogin, handleGoogleLogIn } from '@/features/auth/actions'
 import { FacebookLogo, GoogleLogo } from '@/features/auth/components'
-import { GoogleLoginButtonProps } from '../../types'
+import { GoogleLoginButtonProps } from '@/features/auth/types'
 
-const SocialLoginButtons = ({ orLoginWith }: GoogleLoginButtonProps) => {
+function SocialLoginButtons({ orLoginWith }: GoogleLoginButtonProps) {
     return (
         <div className="grid w-full place-content-left max-w-xl">
             <Label htmlFor='google' className='justify-center w-full mb-2 text-center'>
@@ -34,4 +34,4 @@ const SocialLoginButtons = ({ orLoginWith }: GoogleLoginButtonProps) => {
     )
 }
 
-export default SocialLoginButtons;
+export { SocialLoginButtons };
