@@ -1,8 +1,5 @@
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode
-}) {
-    return children
+import { ComponentWithChildren } from "@/features/layout/types";
 
+export default function RootLayout({ children }: ComponentWithChildren) {
+    return children
 }
