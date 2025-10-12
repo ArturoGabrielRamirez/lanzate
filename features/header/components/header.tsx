@@ -9,7 +9,7 @@ async function Header({ className }: WithClassName) {
             <div className="container mx-auto px-4 flex h-14 md:h-20 items-center justify-between">
                 <BrandLogo />
                 <HeaderNav />
-                <div className='flex items-center'>
+                <div className='flex items-center flex-row-reverse'>
                     <HeaderActions />
                     <MobileDrawer />
                 </div>

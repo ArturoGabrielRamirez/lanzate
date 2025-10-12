@@ -138,7 +138,10 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
-
+  --font-quattrocento: var(--font-quattrocento);
+  --font-geist: var(--font-geist);
+  --font-oswald: var(--font-oswald);
+  
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

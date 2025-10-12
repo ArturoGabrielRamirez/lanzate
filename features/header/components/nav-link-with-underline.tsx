@@ -11,7 +11,7 @@ function NavLinkWithUnderline({ href, label, icon, isActive = false, prefetch = 
         <Link
             href={href}
             prefetch={prefetch}
-            className={`relative px-3 py-2 text-sm font-medium transition-colors group ${isActive ? 'text-primary' : 'text-foreground hover:text-primary'
+            className={`relative px-3 py-2 text-sm font-medium transition-colors group ${isActive ? 'text-primary' : 'text-foreground hover:text-primary shrink-0'
                 }`}
         >
             <span className="inline-flex items-center gap-2">

@@ -1,9 +1,10 @@
 'use server'
 
-import { actionWrapper } from '@/utils/lib'
-import { createServerSideClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+
+import { actionWrapper } from '@/utils/lib'
+import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function handleSignOut() {
     return actionWrapper(async () => {

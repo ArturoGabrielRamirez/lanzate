@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import { Check } from "lucide-react";
 import Link from "next/link";
-import EyeCatchingButton from "@/features/landing/components/eye-catching-button";
+import { EyeCatchingButton } from "@/features/landing/components";
 
 export const HoverEffect = ({
   items,
