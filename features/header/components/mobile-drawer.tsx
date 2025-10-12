@@ -19,7 +19,7 @@ async function MobileDrawer() {
         <DropDrawer>
             <DropDrawerTrigger className="rounded-full border-none outline-none ml-4" asChild>
                 <div>
-                    {user && <UserAvatar user={user} size="xl" />}
+                    {user && <UserAvatar user={user} size="sm" />}
                     {!user && (
                         <HamburguerIcon />
                     )}

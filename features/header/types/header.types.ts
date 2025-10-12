@@ -1,5 +1,7 @@
-/* import type { CurrentUserInfo } from '@/features/global/types'; */
+import { LocalUserType } from '@/features/auth/types';
+
 import type { ReactNode } from 'react';
+
 
 export interface NavSubItem {
     label: string;
@@ -18,8 +20,7 @@ export interface NavMenuItem {
 }
 
 export interface UserAvatarProps {
-    /* user: CurrentUserInfo; */
-    user: unknown;
+    user: LocalUserType;
     size?: 'sm' | 'md' | 'lg' | 'xl';
     className?: string;
 }
