@@ -9,10 +9,9 @@ import { DRAWER_MENU_ITEMS_GUEST, NAV_MENU_ITEMS_AUTH } from "@/features/header/
 import { getUserInfo } from "@/features/layout/actions";
 import { Link } from "@/i18n/naviation";
 
-
 async function MobileDrawer() {
 
-    const { payload: user } = await getUserInfo()
+    const { payload: user } = await getUserInfo({ withAccount: false })
     const t = await getTranslations();
 
     return (

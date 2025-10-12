@@ -2,13 +2,13 @@
 
 import { prisma } from "@/utils/prisma"
 
-export async function getUserByEmail(email: string) {
+export async function getUserByEmail(email: string, withAccount: boolean = true) {
     const user = await prisma.user.findUnique({
         where: {
             email: email
         },
         include: {
-            Account: true
+            Account: withAccount
         }
     });
 

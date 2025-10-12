@@ -2,7 +2,7 @@
 
 import { prisma } from "@/utils/prisma";
 
-export async function updateUserSupabaseIdAndEmail(userId: number, supabaseId: string, email: string) {
+export async function updateUserSupabaseIdAndEmail(userId: number, supabaseId: string, email: string, withAccount: boolean = true) {
 
     const user = await prisma.user.update({
         where: { id: userId },
@@ -12,7 +12,7 @@ export async function updateUserSupabaseIdAndEmail(userId: number, supabaseId: s
             updated_at: new Date()
         },
         include: {
-            Account: true
+            Account: withAccount
         }
     })
 

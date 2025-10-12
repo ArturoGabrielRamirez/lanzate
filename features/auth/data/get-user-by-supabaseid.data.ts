@@ -2,13 +2,13 @@
 
 import { prisma } from "@/utils/prisma"
 
-export async function getUserBySupabaseId(supabaseId: string) {
+export async function getUserBySupabaseId(supabaseId: string,withAccount: boolean = true) {
     const localUser = await prisma.user.findUnique({
         where: {
             supabase_user_id: supabaseId
         },
         include: {
-            Account: true
+            Account: withAccount
         }
     });
 
