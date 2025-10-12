@@ -1409,5 +1409,40 @@
                 "4": "producto"
             }
         }
+    },
+    "feature/header" : {
+        "navigation": {
+            "home": "Inicio",
+            "about": "Acerca de",
+            "contact": "Contacto",
+            "login": "Iniciar sesión",
+            "signup": "Registrarse",
+            "access": "Acceso",
+            "moreInfo": "Más información",
+            "sections": {
+                "hero": "Hero",
+                "heroDesc": "Descripción del hero",
+                "howItWorks": "Cómo funciona",
+                "integrations": "Integraciones",
+                "faq": "FAQ",
+                "faqDesc": "Descripción de la FAQ",
+                "howItWorksDesc": "Descripción de cómo funciona",
+                "integrationsDesc": "Descripción de las integraciones",
+                "dashboardDesc": "Descripción del dashboard",
+                "newSale": "Nueva venta",
+                "newSaleDesc": "Descripción de la nueva venta",
+                "stores": "Tiendas",
+                "storesDesc": "Descripción de las tiendas",
+                "accountDesc": "Descripción de la cuenta",
+                "googleAuthDesc": "Descripción de la autenticación con Google",
+                "aboutDesc": "Descripción de la sección de acerca de",
+                "contactDesc": "Descripción de la sección de contacto",
+                "loginDesc": "Descripción de la sección de inicio de sesión",
+                "signupDesc": "Descripción de la sección de registrarse",
+                "forgotPassword": "Olvidé mi contraseña",
+                "forgotPasswordDesc": "Descripción de la sección de olvidé mi contraseña",
+                "googleAuth": "Autenticación con Google"
+            }
+        }
     }
 }

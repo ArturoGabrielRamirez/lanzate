@@ -3,113 +3,113 @@ import { CogIcon, HelpCircleIcon, HomeIcon, InfoIcon, KeyRoundIcon, LayoutDashbo
 import { NavMenuItem, NavSubItem } from '@/features/header/types';
 
 const HOME_ITEM = {
-    label: 'header.nav.home',
+    label: 'feature/header.navigation.home',
     href: '/',
-    description: 'header.nav.sections.heroDesc',
+    description: 'feature/header.navigation.sections.heroDesc',
     icon: <HomeIcon className='size-6 group-hover:text-inherit' />
 }
 
 const HOW_IT_WORKS_ITEM = {
-    label: 'header.nav.howItWorks',
-    description: 'header.nav.sections.howItWorksDesc',
+    label: 'feature/header.navigation.sections.howItWorks',
+    description: 'feature/header.navigation.sections.howItWorksDesc',
     href: '/#how-it-works',
     icon: <PlayCircleIcon className='size-6 group-hover:text-inherit' />
 }
 
 const INTEGRATIONS_ITEM = {
-    label: 'header.nav.integrations',
-    description: 'header.nav.sections.integrationsDesc',
+    label: 'feature/header.navigation.sections.integrations',
+    description: 'feature/header.navigation.sections.integrationsDesc',
     href: '/#integrations',
     icon: <CogIcon className='size-6 group-hover:text-inherit' />
 }
 
 const FAQ_ITEM = {
-    label: 'header.nav.sections.faq',
-    description: 'header.nav.sections.faqDesc',
+    label: 'feature/header.navigation.sections.faq',
+    description: 'feature/header.navigation.sections.faqDesc',
     href: '/#pricing',
     icon: <HelpCircleIcon className='size-6 group-hover:text-inherit' />
 }
 
 const LOGIN_ITEM = {
-    label: 'header.nav.auth.login',
+    label: 'feature/header.navigation.login',
     href: '/login',
-    description: 'header.nav.auth.loginDesc',
+    description: 'feature/header.navigation.sections.loginDesc',
     icon: <LogInIcon className='size-6 group-hover:text-inherit' />
 }
 
 const SIGNUP_ITEM = {
-    label: 'header.nav.auth.signup',
+    label: 'feature/header.navigation.signup',
     href: '/signup',
-    description: 'header.nav.auth.signupDesc',
+    description: 'feature/header.navigation.sections.signupDesc',
     icon: <UserPlusIcon className='size-6 group-hover:text-inherit' />
 }
 
 const FORGOT_PASSWORD_ITEM = {
-    label: 'header.nav.auth.forgotPassword',
+    label: 'feature/header.navigation.sections.forgotPassword',
     href: '/forgot-password',
-    description: 'header.nav.auth.forgotPasswordDesc',
+    description: 'feature/header.navigation.sections.forgotPasswordDesc',
     icon: <KeyRoundIcon className='size-6 group-hover:text-inherit' />
 }
 
 const DASHBOARD_ITEM = {
-    label: 'header.nav.user.dashboard',
+    label: 'feature/header.navigation.sections.dashboard',
     href: '/dashboard',
-    description: 'header.nav.user.dashboardDesc',
+    description: 'feature/header.navigation.sections.dashboardDesc',
     icon: <LayoutDashboard className='size-6 group-hover:text-inherit' />
 }
 
 const NEW_SALE_ITEM = {
-    label: 'header.nav.user.newSale',
+    label: 'feature/header.navigation.sections.newSale',
     href: '/new-sale',
-    description: 'header.nav.user.newSaleDesc',
+    description: 'feature/header.navigation.sections.newSaleDesc',
     icon: <PlusCircle className='size-6 group-hover:text-inherit' />
 }
 
 
 const STORES_ITEM = {
-    label: 'header.nav.user.stores',
+    label: 'feature/header.navigation.sections.stores',
     href: '/stores',
-    description: 'header.nav.user.storesDesc',
+    description: 'feature/header.navigation.sections.storesDesc',
     icon: <Store className='size-6 group-hover:text-inherit' />
 }
 
 const ACCOUNT_ITEM = {
-    label: 'header.nav.user.account',
+    label: 'feature/header.navigation.sections.account',
     href: '/account',
-    description: 'header.nav.user.accountDesc',
+    description: 'feature/header.navigation.sections.accountDesc',
     icon: <UserIcon className='size-6 group-hover:text-inherit' />
 }
 
 const GOOGLE_AUTH_ITEM = {
-    label: 'header.nav.auth.googleAuth',
+    label: 'feature/header.navigation.sections.googleAuth',
     href: '/auth/google',
-    description: 'header.nav.auth.googleAuthDesc',
+    description: 'feature/header.navigation.sections.googleAuthDesc',
     icon: <KeyRoundIcon className='size-6 group-hover:text-inherit' />
 }
 
 const ABOUT_ITEM = {
-    label: 'header.nav.info.about',
+    label: 'feature/header.navigation.about',
     href: '/about',
-    description: 'header.nav.info.aboutDesc',
+    description: 'feature/header.navigation.sections.aboutDesc',
     icon: <InfoIcon className='size-6 group-hover:text-inherit' />
 }
 
 const CONTACT_ITEM = {
-    label: 'header.nav.info.contact',
+    label: 'feature/header.navigation.contact',
     href: '/contact',
-    description: 'header.nav.info.contactDesc',
+    description: 'feature/header.navigation.sections.contactDesc',
     icon: <PhoneIcon className='size-6 group-hover:text-inherit' />
 }
 
 
 export const NAV_MENU_ITEMS_GUEST: NavMenuItem[] = [
     {
-        label: 'header.nav.home',
+        label: 'feature/header.navigation.home',
         items: [
             {
-                label: 'header.nav.sections.hero',
+                label: 'feature/header.navigation.sections.hero',
                 href: `/`,
-                description: 'header.nav.sections.heroDesc',
+                description: 'feature/header.navigation.sections.heroDesc',
                 icon: <HomeIcon className='size-6 text-inherit' />
             },
             HOW_IT_WORKS_ITEM,
@@ -118,7 +118,7 @@ export const NAV_MENU_ITEMS_GUEST: NavMenuItem[] = [
         ],
     },
     {
-        label: 'header.nav.access',
+        label: 'feature/header.navigation.access',
         items: [
             LOGIN_ITEM,
             SIGNUP_ITEM,
@@ -127,7 +127,7 @@ export const NAV_MENU_ITEMS_GUEST: NavMenuItem[] = [
         ],
     },
     {
-        label: 'header.nav.moreInfo',
+        label: 'feature/header.navigation.moreInfo',
         items: [
             ABOUT_ITEM,
             CONTACT_ITEM,

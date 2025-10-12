@@ -72,7 +72,7 @@ function IconButton({
             exit={{ opacity: 0, scale: 0 }}
             transition={transition}
           >
-            <Icon className={cn('size-24', iconClassName)}/>
+            <Icon className={cn('size-24', iconClassName)} />
           </motion.div>
         )}
       </AnimatePresence>

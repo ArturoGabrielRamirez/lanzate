@@ -1,6 +1,5 @@
-'use client';
-
-import { ThemeToggle, LanguageSwitch } from '@/features/header/components';
+import { LanguageSwitch } from '@/features/header/components/language-switch';
+import { ThemeToggle } from '@/features/header/components/theme-toggle';
 import type { SettingsToolbarProps } from '@/features/header/types';
 import { cn } from '@/lib/utils';
 

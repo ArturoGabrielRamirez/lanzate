@@ -1435,5 +1435,38 @@
                 "4": "item"
             }
         }
+    },
+    "feature/header": {
+        "navigation": {
+            "home": "Home",
+            "about": "About",
+            "contact": "Contact",
+            "login": "Login",
+            "signup": "Signup",
+            "access": "Access",
+            "moreInfo": "More Info",
+            "sections": {
+                "hero": "Hero",
+                "heroDesc": "Hero description",
+                "howItWorks": "How it works",
+                "howItWorksDesc": "How it works description",
+                "integrations": "Integrations",
+                "integrationsDesc": "Integrations description",
+                "faq": "FAQ",
+                "faqDesc": "FAQ description",
+                "dashboardDesc": "Dashboard description",
+                "newSaleDesc": "New sale description",
+                "storesDesc": "Stores description",
+                "accountDesc": "Account description",
+                "googleAuthDesc": "Google auth description",
+                "aboutDesc": "About description",
+                "contactDesc": "Contact description",
+                "loginDesc": "Login description",
+                "signupDesc": "Signup description",
+                "forgotPassword" : "Forgot password",
+                "forgotPasswordDesc": "Forgot password description",
+                "googleAuth": "Google auth"
+            }
+        }
     }
 }
