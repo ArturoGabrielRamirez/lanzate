@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+
 import { CheckEmailActions, CheckEmailVisual } from '@/features/auth/check-email/components';
 
 type CheckEmailPageProps = {
