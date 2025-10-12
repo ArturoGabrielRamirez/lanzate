@@ -4,7 +4,7 @@ import { getLocalUser } from "@/features/auth/actions";
 import { LocalUserType } from "@/features/auth/types";
 import { actionWrapper } from "@/features/global/utils";
 
-export async function getUserInfo({ withAccount = true }: { withAccount?: boolean }) {
+export async function getUserInfo(withAccount: boolean = true) {
 
     return actionWrapper<LocalUserType>(async () => {
 

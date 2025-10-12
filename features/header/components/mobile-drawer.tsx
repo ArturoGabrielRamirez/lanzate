@@ -11,7 +11,7 @@ import { Link } from "@/i18n/naviation";
 
 async function MobileDrawer() {
 
-    const { payload: user } = await getUserInfo({ withAccount: false })
+    const { payload: user } = await getUserInfo(false)
     const t = await getTranslations();
 
     return (
