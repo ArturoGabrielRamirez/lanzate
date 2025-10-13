@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { IconButton } from './ui/shadcn-io/icon-button'
+
+import { IconButton } from '@/src/components/ui/shadcn-io/icon-button'
 
 const links = [
     {
@@ -20,7 +21,7 @@ const links = [
     },
 ]
 
-export default function FooterSection() {
+function FooterSection() {
     return (
         <footer className="pt-16 pb-24 md:py-16 mx-auto container z-10 relative">
             <div className="mx-auto max-w-5xl">
@@ -109,3 +110,5 @@ export default function FooterSection() {
         </footer>
     )
 }
+
+export { FooterSection }

@@ -3,8 +3,9 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 import { Toaster } from "@/components/ui/sonner"
 import { GlobalEmailConfirmationDetector } from '@/features/auth/components';
-import { Header, Footer } from "@/features/header/components";
-import FloatingDockContainer from "@/features/header/components/foating-dock-container";
+import { FloatingDockContainer } from '@/features/floating-dock/components';
+import { Footer } from "@/features/footer/components";
+import { Header } from "@/features/header/components";
 import { NextThemeProvider, SubdomainProvider } from "@/features/layout/components";
 import ChatDoc from "@/features/layout/components/chat-doc";
 import { ChatProvider } from "@/features/layout/components/chat-provider";
@@ -34,7 +35,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                     <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
                       {children}
                     </main>
-                    {/* <FloatingDockContainer /> */}
+                    <FloatingDockContainer />
                     <Footer />
                     <ChatDoc />
                     <Toaster position="top-center" richColors />

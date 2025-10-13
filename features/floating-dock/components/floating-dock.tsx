@@ -1,35 +1,20 @@
 "use client"
-import { Button } from "@/components/ui/button"
+
+import { Calendar, Home, Store, User } from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useLocale } from "next-intl"
+
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { ArrowLeft, Calendar, Home, Store, User } from "lucide-react"
-import { useLocale } from "next-intl"
-import Link from "next/link"
-import { useRouter, usePathname } from "next/navigation"
 
-type Props = {
-    children?: React.ReactNode
-    showBackButton?: boolean
-}
+function FloatingDock() {
 
-const FloatingDock = ({ showBackButton = false }: Props) => {
-
-    const router = useRouter()
     const pathname = usePathname()
     const locale = useLocale()
 
-    const handleBack = () => {
-        router.back()
-    }
-
     return (
         <div className="fixed w-full bottom-0 px-8 z-50 flex justify-center items-center bg-background/85 backdrop-blur-[4px] rounded-lg py-4 shadow-2xl shadow-black drop-shadow-2xl md:hidden">
-            {showBackButton && (
-                <Button variant="ghost" size="icon" className="" onClick={handleBack}>
-                    <ArrowLeft className="size-6 stroke-2" />
-                </Button>
-            )}
-            {showBackButton && <div className="grow w-px h-10 bg-primary mx-4" />}
             <div className="flex items-center gap-4 relative z-10">
 
                 <Link href="/dashboard">
@@ -78,4 +63,5 @@ const FloatingDock = ({ showBackButton = false }: Props) => {
         </div>
     )
 }
-export default FloatingDock
+
+export { FloatingDock }

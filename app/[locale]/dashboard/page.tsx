@@ -34,7 +34,6 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
     //const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams)
     const { type, page } = await loadFeedParams(searchParams)
 
-
     const { payload: user, hasError, message } = await getUserInfo()
 
     if (hasError || !user) {
@@ -45,65 +44,48 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
 
     return (
         <PageContainer>
-            <NextStepProvider>
-                <NextStepContainer>
-                    <div className="grid grid-cols-1 grid-areas-[search-bar,actions,feed] md:grid-areas-[search-bar_stores,feed_stores,feed_actions,feed_calendar] gap-2 md:grid-cols-[2fr_1fr] md:grid-rows-[min-content_auto_min-content_1fr] lg:grid-areas-[stats_search-bar_stores,stats_feed_stores,stats_feed_actions,setup_feed_calendar,help_feed_calendar,empty_feed_calendar,empty_feed_calendar] lg:grid-rows-[min-content_min-content_min-content_min-content_min-content_1fr] lg:grid-cols-[1fr_2fr_1fr] md:gap-4 lg:gap-6 xl:gap-8">
+            <div>
 
-                        {/* Quick Stats */}
-                        <Suspense fallback={<DashboardStatsSkeleton />}>
-                            <DashboardStats userId={user.id} />
-                        </Suspense>
-
-                        {/* Help Card */}
-                        <HelpCard />
-
-                        {/* Account Setup */}
-                        <Suspense fallback={<AccountSetupSkeleton />}>
-                            <AccountSetup />
-                        </Suspense>
-
-                        {/* Search Bar */}
-                        <div className="flex gap-2 area-[search-bar] flex-col group/search-bar">
-                            <div className="md:flex gap-2 mb-2 md:mb-4 hidden text-primary/50 group-hover/search-bar:text-primary transition-all justify-between items-end">
-                                <div className="flex items-center gap-2">
-                                    <Rss className="size-4 xl:size-5" />
-                                    <h2 className="text-lg lg:text-2xl font-bold leading-6 ">
-                                        Your feed
-                                    </h2>
-                                </div>
-                                <FeedFilters />
-                            </div>
-                            <Suspense>
-                                <GlobalSearch userId={user.id} />
-                            </Suspense>
+            </div>
+            {/* <div className="grid grid-cols-1 grid-areas-[search-bar,actions,feed] md:grid-areas-[search-bar_stores,feed_stores,feed_actions,feed_calendar] gap-2 md:grid-cols-[2fr_1fr] md:grid-rows-[min-content_auto_min-content_1fr] lg:grid-areas-[stats_search-bar_stores,stats_feed_stores,stats_feed_actions,setup_feed_calendar,help_feed_calendar,empty_feed_calendar,empty_feed_calendar] lg:grid-rows-[min-content_min-content_min-content_min-content_min-content_1fr] lg:grid-cols-[1fr_2fr_1fr] md:gap-4 lg:gap-6 xl:gap-8">
+                <Suspense fallback={<DashboardStatsSkeleton />}>
+                    <DashboardStats userId={user.id} />
+                </Suspense>
+                <HelpCard />
+                <Suspense fallback={<AccountSetupSkeleton />}>
+                    <AccountSetup />
+                </Suspense>
+                <div className="flex gap-2 area-[search-bar] flex-col group/search-bar">
+                    <div className="md:flex gap-2 mb-2 md:mb-4 hidden text-primary/50 group-hover/search-bar:text-primary transition-all justify-between items-end">
+                        <div className="flex items-center gap-2">
+                            <Rss className="size-4 xl:size-5" />
+                            <h2 className="text-lg lg:text-2xl font-bold leading-6 ">
+                                Your feed
+                            </h2>
                         </div>
-
-                        {/* Activity Feed */}
-                        <div className="area-[feed] group/search-bar" id="step1">
-                            <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
-                                <ActivityFeed userId={user.id} type={type} page={page || 1} />
-                            </Suspense>
-                        </div>
-
-                        {/* Quick Actions */}
-                        <Suspense fallback={<QuickActionsSkeleton />}>
-                            <QuickActions userId={user.id} />
-                        </Suspense>
-
-                        {/* Store Management Section */}
-                        <StoreListContainer>
-                            <Suspense fallback={<StoreListSkeleton />}>
-                                <StoreList />
-                            </Suspense>
-                        </StoreListContainer>
-
-                        {/* Calendar */}
-                        <Suspense fallback={<div className="area-[calendar] hidden md:block group" />}>
-                            <DashboardCalendar />
-                        </Suspense>
+                        <FeedFilters />
                     </div>
-                </NextStepContainer>
-            </NextStepProvider>
+                    <Suspense>
+                        <GlobalSearch userId={user.id} />
+                    </Suspense>
+                </div>
+                <div className="area-[feed] group/search-bar" id="step1">
+                    <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
+                        <ActivityFeed userId={user.id} type={type} page={page || 1} />
+                    </Suspense>
+                </div>
+                <Suspense fallback={<QuickActionsSkeleton />}>
+                    <QuickActions userId={user.id} />
+                </Suspense>
+                <StoreListContainer>
+                    <Suspense fallback={<StoreListSkeleton />}>
+                        <StoreList />
+                    </Suspense>
+                </StoreListContainer>
+                <Suspense fallback={<div className="area-[calendar] hidden md:block group" />}>
+                    <DashboardCalendar />
+                </Suspense>
+            </div> */}
         </PageContainer>
     )
 }
