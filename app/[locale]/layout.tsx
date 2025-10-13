@@ -2,7 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 import { Toaster } from "@/components/ui/sonner"
-import { GlobalEmailConfirmationDetector } from "@/features/auth/components/index";
+import { GlobalEmailConfirmationDetector } from '@/features/auth/components';
 import { Header, Footer } from "@/features/header/components";
 import FloatingDockContainer from "@/features/header/components/foating-dock-container";
 import { NextThemeProvider, SubdomainProvider } from "@/features/layout/components";
@@ -34,7 +34,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                     <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
                       {children}
                     </main>
-                    <FloatingDockContainer />
+                    {/* <FloatingDockContainer /> */}
                     <Footer />
                     <ChatDoc />
                     <Toaster position="top-center" richColors />

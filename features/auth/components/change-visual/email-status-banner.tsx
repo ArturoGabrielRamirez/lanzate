@@ -1,14 +1,15 @@
 'use client'
 
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
 import { CheckCircle, Clock, Mail, RefreshCw } from 'lucide-react';
-import { useConfirmationEmailChangeStatus } from '../../hooks/use-confirmation-email-change-status';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-export default function EmailStatusBanner() {
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { useConfirmationEmailChangeStatus } from '@/features/auth/hooks/use-confirmation-email-change-status';
+
+function EmailStatusBanner() {
     const { status } = useConfirmationEmailChangeStatus();
     const [isResending, setIsResending] = useState(false);
     const t = useTranslations("Auth");
@@ -161,3 +162,5 @@ export default function EmailStatusBanner() {
         </Alert>
     );
 }
+
+export { EmailStatusBanner };

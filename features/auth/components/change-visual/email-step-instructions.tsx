@@ -1,7 +1,8 @@
 'use client'
-import { EmailStepInstructionsProps } from "../../types";
 
-export default function EmailStepInstructions({ stepStatus, initialOldEmail, newEmail }: EmailStepInstructionsProps 
+import { EmailStepInstructionsProps } from "@/features/auth/types";
+
+function EmailStepInstructions({ stepStatus, initialOldEmail, newEmail }: EmailStepInstructionsProps
 ) {
     return (
         <div className="space-y-3">
@@ -31,3 +32,5 @@ export default function EmailStepInstructions({ stepStatus, initialOldEmail, new
         </div>
     );
 }
+
+export { EmailStepInstructions };

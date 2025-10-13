@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { ProgressButtonProps } from "../../types";
+import { ProgressButtonProps } from "@/features/auth/types";
 
-export default function ProgressButton({
+function ProgressButton({
     hasPendingChange,
     isProcessCompleted,
     progressText,
@@ -20,3 +20,5 @@ export default function ProgressButton({
         </Button>
     );
 }
+
+export { ProgressButton };

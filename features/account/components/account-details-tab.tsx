@@ -1,23 +1,14 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import {
-    User,
-    Mail,
-    Phone,
-    Calendar,
-    Shield,
-    Key,
-    Smartphone,
-    Monitor,
-    Edit,
-} from "lucide-react"
-import { ChangeEmailButton, ChangePasswordButton } from "@/features/auth/components"
+import { User,Mail,Phone,Calendar,Shield,Key,Smartphone,Monitor,Edit } from "lucide-react"
 import { useState, useEffect } from "react"
-import { maskEmail } from "../utils/utils"
+
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { maskEmail } from "@/features/account/utils/utils"
+import { ChangeEmailButton, ChangePasswordButton } from "@/features/auth/components"
 
 // Skeleton inline para evitar dependencias externas
 /* function Skeleton({ className }: { className?: string }) {

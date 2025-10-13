@@ -1,13 +1,12 @@
 'use client'
 
-import { useResendCooldown } from "../../hooks/use-resend-cooldown";
-import { useEmailChangeStatus } from "../../hooks/use-email-change-status";
-import { EmailChangeMonitorProps } from "../../types";
-import { EmailChangeActions, EmailStepInstructions, EmailStepProgress } from "../index";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-/* import { Mail } from "lucide-react"; */
+import { EmailChangeActions, EmailStepInstructions, EmailStepProgress } from "@/features/auth/components";
+import { useEmailChangeStatus } from "@/features/auth/hooks/use-email-change-status";
+import { useResendCooldown } from "@/features/auth/hooks/use-resend-cooldown";
+import { EmailChangeMonitorProps } from "@/features/auth/types";
 
-export default function EmailChangeMonitor({
+function EmailChangeMonitor({
     onComplete,
     initialOldEmail,
     newEmail
@@ -88,3 +87,5 @@ export default function EmailChangeMonitor({
         </Card>
     );
 }
+
+export { EmailChangeMonitor };

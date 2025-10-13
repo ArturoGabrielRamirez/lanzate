@@ -1,40 +1,41 @@
-import { LoginForm, ResetPasswordLink } from '@/features/auth/components'
-import { getTranslations } from 'next-intl/server'
-import { LoginErrorDisplay, SocialLoginButtons } from '@/features/auth/components'
 import { Metadata } from 'next'
+import Image from 'next/image'
+import { getTranslations } from 'next-intl/server'
+
+import loginImage from '@/features/auth/assets/Tablet login-pana.svg'
+import { LoginForm, ResetPasswordLink, LoginErrorDisplay, SocialLoginButtons } from '@/features/auth/components'
+import { LoginPageProps } from '@/features/auth/types'
 
 export const metadata: Metadata = {
     title: "Login",
     description: "Login to your account",
 }
 
-type LoginPageProps = {
-    searchParams: Promise<{
-        error?: string
-        message?: string
-        subdomain?: string
-        next?: string
-    }>
-}
-
 export default async function LoginPage({ searchParams }: LoginPageProps) {
+
     const t = await getTranslations("auth")
     const params = await searchParams
 
     return (
-        <section className="flex flex-col p-4 grow pt-17 relative z-10">
-            <div className='flex flex-col justify-center items-center w-full max-w-xl md:max-w-full lg:max-w-4xl gap-4 mx-auto md:flex-row grow'>
+        <section className="min-h-dvh relative pt-17 flex">
+            <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:items-end md:pb-12 lg:pb-20">
                 <div className='w-full flex flex-col gap-8'>
                     <LoginErrorDisplay
                         error={params.error}
                         message={params.message}
                     />
-
                     <LoginForm />
                     <ResetPasswordLink />
+                    <SocialLoginButtons orLoginWith={t("description.or-login-with")} />
                 </div>
-                <div className='w-full h-1 md:w-1 md:h-100 bg-primary/50'></div>
-                <SocialLoginButtons orLoginWith={t("description.or-login-with")} />
+                <div className="relative aspect-square w-full flex items-end max-w-xl justify-self-end">
+                    <Image
+                        src={loginImage}
+                        alt="Hero Image"
+                        width={5}
+                        className="w-full antialiased object-bottom"
+                    />
+                </div>
             </div>
         </section>
     )

@@ -2,11 +2,13 @@
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useTranslations } from 'next-intl'
-import { Form, InputField } from '@/features/layout/components'
+
 import { handleLogIn } from '@/features/auth/actions'
 import { loginUserSchema } from '@/features/auth/schemas'
+import { InputField } from '@/features/layout/components'
+import { Form } from '@/features/layout/components'
 
-const LoginForm = () => {
+function LoginForm() {
 
     const t = useTranslations("auth");
 
@@ -29,4 +31,4 @@ const LoginForm = () => {
     )
 }
 
-export default LoginForm;
+export { LoginForm };

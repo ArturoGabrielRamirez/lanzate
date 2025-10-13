@@ -1,16 +1,18 @@
 'use client'
-import { useTranslations } from 'next-intl';
-import { handleEditPassword } from "../../actions";
-import { ChangePasswordButtonProps } from '../../types';
-import { ButtonWithPopup, InputField } from "@/features/layout/components";
-import { SetupPasswordPrompt } from '../change-visual/setup-password-prompt';
-import usePasswordGuard from '../../hooks/use-password-guard';
+
 import { Lock } from "lucide-react";
-import { passwordSchema } from '../../schemas/password-schema';
+import { useTranslations } from 'next-intl';
+
 import { Skeleton } from '@/components/ui/skeleton';
+import { handleEditPassword } from "@/features/auth/actions";
+import { SetupPasswordPrompt } from "@/features/auth/components/change-visual/setup-password-prompt";
+import usePasswordGuard from "@/features/auth/hooks/use-password-guard";
+import { passwordSchema } from "@/features/auth/schemas/password-schema";
+import { ChangePasswordButtonProps } from "@/features/auth/types";
+import { ButtonWithPopup, InputField } from "@/features/layout/components";
 
 
-export default function ChangePasswordButton({
+function ChangePasswordButton({
   buttonText,
   title,
   /*  className  */
@@ -103,3 +105,5 @@ export default function ChangePasswordButton({
     </div>
   )
 }
+
+export { ChangePasswordButton };

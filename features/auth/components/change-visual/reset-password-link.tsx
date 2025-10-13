@@ -1,7 +1,7 @@
-import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
-const ResetPasswordLink = () => {
+function ResetPasswordLink() {
 
     const t = useTranslations("auth.reset-password.description");
 
@@ -21,4 +21,4 @@ const ResetPasswordLink = () => {
     );
 }
 
-export default ResetPasswordLink;
+export { ResetPasswordLink };

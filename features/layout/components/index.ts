@@ -1,3 +1,5 @@
+export * from "@/features/layout/components/form";
+
 import LoadingSubmitButtonContext from "./loading-submit-button-context";
 import LoadingSubmitButton from "./loading-submit-button";
 import SubdomainProvider from "./subdomain-provider";
@@ -7,12 +9,10 @@ import TextareaField from "./textarea-field";
 import InputField from "./input";
 import CheckboxField from "./checkbox-field";
 import Title from "./title";
-import Form from "./form";
 
 export {
     ButtonWithPopup,
     CheckboxField,
-    Form,
     InputField,
     LoadingSubmitButton,
     LoadingSubmitButtonContext,
@@ -21,3 +21,4 @@ export {
     Title,
     SubdomainProvider
 }
+
