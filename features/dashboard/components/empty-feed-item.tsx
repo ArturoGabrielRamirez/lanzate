@@ -9,7 +9,7 @@ async function EmptyFeedItem() {
     const { payload: user } = await getUserInfo()
 
     return (
-        <Card className="bg-card rounded-lg border p-6">
+        <Card className="bg-card rounded-lg border p-6 grow h-full">
             <CardHeader className="p-0 pb-4">
                 <CardTitle>
                     <h2 className="text-2xl font-bold">Actividad Reciente</h2>

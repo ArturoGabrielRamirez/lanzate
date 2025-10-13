@@ -44,9 +44,9 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
 
     return (
         <PageContainer>
-            <div>
-
-            </div>
+            <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
+                <ActivityFeed userId={user.id} type={type} page={page || 1} />
+            </Suspense>
             {/* <div className="grid grid-cols-1 grid-areas-[search-bar,actions,feed] md:grid-areas-[search-bar_stores,feed_stores,feed_actions,feed_calendar] gap-2 md:grid-cols-[2fr_1fr] md:grid-rows-[min-content_auto_min-content_1fr] lg:grid-areas-[stats_search-bar_stores,stats_feed_stores,stats_feed_actions,setup_feed_calendar,help_feed_calendar,empty_feed_calendar,empty_feed_calendar] lg:grid-rows-[min-content_min-content_min-content_min-content_min-content_1fr] lg:grid-cols-[1fr_2fr_1fr] md:gap-4 lg:gap-6 xl:gap-8">
                 <Suspense fallback={<DashboardStatsSkeleton />}>
                     <DashboardStats userId={user.id} />
@@ -69,11 +69,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
                         <GlobalSearch userId={user.id} />
                     </Suspense>
                 </div>
-                <div className="area-[feed] group/search-bar" id="step1">
-                    <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
-                        <ActivityFeed userId={user.id} type={type} page={page || 1} />
-                    </Suspense>
-                </div>
+                
                 <Suspense fallback={<QuickActionsSkeleton />}>
                     <QuickActions userId={user.id} />
                 </Suspense>
