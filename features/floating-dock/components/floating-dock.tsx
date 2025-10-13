@@ -4,6 +4,7 @@ import { Camera, Home, Search, Store, X } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
 import { useState } from "react"
+import { useMedia } from "react-use"
 
 import { Input } from "@/features/shadcn/components/input"
 import { Link, usePathname } from "@/i18n/naviation"
@@ -15,6 +16,7 @@ function FloatingDock() {
 
     const pathname = usePathname()
     const [showSearch, setShowSearch] = useState(false)
+    const showDock = useMedia("(max-width: 1180px)")
 
     const handleSearchClick = () => {
         setShowSearch(true)
@@ -25,8 +27,8 @@ function FloatingDock() {
     }
 
     return (
-        <footer className="fixed bottom-0 w-full p-2 z-50 xl:hidden container left-1/2 -translate-x-1/2">
-            <motion.div className={cn("bg-primary/25 dark:bg-background/70 backdrop-blur-[4px] rounded-full py-2 px-2 flex items-center gap-2 border-t dark:border-t-foreground/20 border-b dark:border-b-background/90 border-b-primary/40 border-t-white/70 justify-between overflow-hidden transition-[padding,border] mx-auto", showSearch && "px-2 !border-primary/80 border-3 gap-1")} animate={{ paddingInline: showSearch ? "8px" : "12px ", width: showSearch ? "100%" : "fit-content" }}>
+        <motion.footer className="fixed bottom-0 w-full p-2 z-50 xl:hidden container left-1/2 -translate-x-1/2">
+            <motion.div className={cn("bg-primary/25 dark:bg-background/70 backdrop-blur-[4px] rounded-full py-2 px-2 flex items-center gap-2 border-t dark:border-t-foreground/20 border-b dark:border-b-background/90 border-b-primary/40 border-t-white/70 justify-between overflow-hidden transition-[padding,border] mx-auto", showSearch && "px-2 !border-primary/80 border-3 gap-1")} animate={{ paddingInline: showSearch ? "8px" : "12px ", width: showSearch ? "100%" : "fit-content", y: showDock ? 0 : 100 }}>
                 <AnimatePresence mode="popLayout">
                     {showSearch && (
                         <motion.div key="close-search" exit={{ opacity: 0, y: 40, transition: { delay: 0.1 } }} initial={{ opacity: 0, y: 40, rotate: 360 }} animate={{ opacity: 1, y: 0, rotate: 0, transition: { delay: 0, duration: 0.5 } }} className="flex items-center">
@@ -107,7 +109,7 @@ function FloatingDock() {
                     />
                 </motion.div>
             </motion.div>
-        </footer>
+        </motion.footer>
     )
 }
 
