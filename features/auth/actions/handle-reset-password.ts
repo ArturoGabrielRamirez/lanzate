@@ -1,12 +1,13 @@
 'use server'
 
-import { actionWrapper } from '@/utils/lib'
-import { ResponseType } from '@/features/layout/types'
-import { createServerSideClient } from '@/utils/supabase/server'
 import { headers } from 'next/headers'
-import { extractSubdomainFromHost } from '../utils'
 
-export async function handleResetPassword(payload: any): Promise<ResponseType<any>> {
+import { ChangeEmailFormData } from '@/features/auth/types'
+import { extractSubdomainFromHost } from '@/features/auth/utils'
+import { actionWrapper } from '@/utils/lib'
+import { createServerSideClient } from '@/utils/supabase/server'
+
+export async function handleResetPassword(payload: ChangeEmailFormData) {
     return actionWrapper(async () => {
 
         const supabase = createServerSideClient()
@@ -18,7 +19,7 @@ export async function handleResetPassword(payload: any): Promise<ResponseType<an
             `https://${subdomain}.lanzate.app` :
             `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`}`;
 
-        const { error } = await supabase.auth.resetPasswordForEmail(payload, {
+        const { error } = await supabase.auth.resetPasswordForEmail(payload.email, {
             redirectTo: `${baseUrl}/update-password`,
         })
 

@@ -54,3 +54,4 @@ export interface EmailInfoProps {
 export * from '@/features/auth/types/user.types';
 export * from '@/features/auth/types/login.types';
 export * from '@/features/auth/types/signup.types';
+export * from '@/features/auth/types/change-email.types';

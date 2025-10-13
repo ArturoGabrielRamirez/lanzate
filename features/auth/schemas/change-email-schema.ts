@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const emailSchema = Yup.object().shape({
+export const changeEmailSchema = Yup.object().shape({
     currentPassword: Yup.string()
         .required("La contraseña actual es requerida para cambiar el email"),
     email: Yup.string()

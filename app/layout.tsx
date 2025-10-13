@@ -40,7 +40,7 @@ const oswald = Oswald({
 export default function RootLayout({ children }: WithChildren) {
     return (
         <html suppressHydrationWarning>
-            <body className={cn("min-h-dvh flex flex-col overflow-x-hidden relative", geist.variable, quattrocento.variable, oswald.variable)}>
+            <body className={cn("min-h-dvh flex flex-col overflow-x-hidden relative bg-gradient-to-br from-background to-primary/20", geist.variable, quattrocento.variable, oswald.variable)}>
                 {children}
             </body>
         </html>

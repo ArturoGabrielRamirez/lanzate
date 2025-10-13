@@ -5,7 +5,7 @@ import { SetupPasswordPrompt } from '@/features/auth/components/change-visual/se
 import { EmailChangeDialog, EmailChangeForm, ProgressButton } from '@/features/auth/components/index';
 import { useEmailChange } from '@/features/auth/hooks/use-email-change';
 import usePasswordGuard from '@/features/auth/hooks/use-password-guard';
-import { emailSchema } from '@/features/auth/schemas/change-email-schema';
+import { changeEmailSchema } from '@/features/auth/schemas/change-email-schema';
 import { ChangeEmailButtonProps } from '@/features/auth/types';
 import { ButtonWithPopup } from "@/features/layout/components";
 
@@ -65,7 +65,7 @@ function ChangeEmailButton({
                     title={title}
                     description="Por seguridad, confirma tu contraseña actual. Te enviaremos emails de verificación a ambas direcciones."
                     action={changeEmailAction}
-                    schema={emailSchema}
+                    schema={changeEmailSchema}
                     messages={{
                         success: "Emails de verificación enviados",
                         error: "Error al cambiar el email",

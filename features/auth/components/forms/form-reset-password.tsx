@@ -1,18 +1,19 @@
 'use client'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useTranslations } from 'next-intl'
+import { MailIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useRef } from 'react'
-import { Form, InputField } from '@/features/layout/components'
+
 import { handleResetPassword } from '@/features/auth/actions'
-import { emailSchema } from '@/features/auth/schemas'
+import { changeEmailSchema } from '@/features/auth/schemas'
+import { ChangeEmailFormData } from '@/features/auth/types'
+import { Form } from '@/features/layout/components'
+import { InputField } from '@/features/layout/components/input-field'
 
-interface SignupFormData {
-  email: string;
-}
 
-const ResetPassword = () => {
+function ResetPassword() {
   const t = useTranslations("auth");
   const router = useRouter();
   const submittedEmailRef = useRef<string>('');
@@ -28,22 +29,27 @@ const ResetPassword = () => {
     }
   };
 
+  const handleSubmit = (data: ChangeEmailFormData) => {
+    submittedEmailRef.current = data.email;
+    return handleResetPassword(data);
+  };
+
   return (
-    <Form<SignupFormData>
-      resolver={yupResolver(emailSchema as never)}
-      formAction={(data) => {
-        submittedEmailRef.current = data.email;
-        return handleResetPassword(data.email);
-      }}
-      contentButton={t("buttons.send-reset-link")}
-      successMessage={t("toast-message.success-reset-password")}
-      loadingMessage={t("toast-message.reset-password")}
-      onSuccess={handleSuccess}
-      className="flex flex-col p-8 gap-4 sm:gap-6 w-full max-w-xl"
-    >
-      <InputField name="email" label={t("email")} type="email" />
-    </Form>
+    <>
+      <h2 className='text-2xl font-bold text-center'>{t("reset-password.title")}</h2>
+      <Form
+        resolver={yupResolver(changeEmailSchema as never)}
+        formAction={handleSubmit}
+        contentButton={t("buttons.send-reset-link")}
+        successMessage={t("toast-message.success-reset-password")}
+        loadingMessage={t("toast-message.reset-password")}
+        onSuccess={handleSuccess}
+        className="flex flex-col gap-3 sm:row-start-2 sm:col-start-1 sm:min-w-full sm:justify-center"
+      >
+        <InputField name="email" label={t("email")} placeholder={t("email-placeholder")} startIcon={<MailIcon />} tooltip="Enter the email address associated with your account." type="email" description="Please enter the email address associated with your account. We will send a reset link to your email."/>
+      </Form>
+    </>
   )
 }
 
-export default ResetPassword
+export { ResetPassword }
