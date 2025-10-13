@@ -27,8 +27,8 @@ function FloatingDock() {
     }
 
     return (
-        <motion.footer className="fixed bottom-0 w-full p-2 z-50 xl:hidden container left-1/2 -translate-x-1/2">
-            <motion.div className={cn("bg-primary/25 dark:bg-background/70 backdrop-blur-[4px] rounded-full py-2 px-2 flex items-center gap-2 border-t dark:border-t-foreground/20 border-b dark:border-b-background/90 border-b-primary/40 border-t-white/70 justify-between overflow-hidden transition-[padding,border] mx-auto", showSearch && "px-2 !border-primary/80 border-3 gap-1")} animate={{ paddingInline: showSearch ? "8px" : "12px ", width: showSearch ? "100%" : "fit-content", y: showDock ? 0 : 100 }}>
+        <motion.footer className="fixed bottom-0 w-full p-2 pb-4 z-50 xl:hidden container left-1/2 -translate-x-1/2">
+            <motion.div className={cn("bg-primary/25 dark:bg-background/70 backdrop-blur-[4px] rounded-full py-1 px-2 flex items-center gap-2 border-t dark:border-t-foreground/20 border-b dark:border-b-background/90 border-b-primary/40 border-t-white/70 justify-between overflow-hidden transition-[padding,border,gap] mx-auto shadow-2xl drop-shadow-2xl", showSearch && "px-2 py-2 !border-primary/80 border-3 gap-1")} animate={{ paddingInline: showSearch ? "8px" : "12px ", width: showSearch ? "100%" : "fit-content", y: showDock ? 0 : 100 }}>
                 <AnimatePresence mode="popLayout">
                     {showSearch && (
                         <motion.div key="close-search" exit={{ opacity: 0, y: 40, transition: { delay: 0.1 } }} initial={{ opacity: 0, y: 40, rotate: 360 }} animate={{ opacity: 1, y: 0, rotate: 0, transition: { delay: 0, duration: 0.5 } }} className="flex items-center">

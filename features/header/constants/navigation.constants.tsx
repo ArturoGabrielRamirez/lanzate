@@ -60,7 +60,7 @@ const DASHBOARD_ITEM = {
 
 const NEW_SALE_ITEM = {
     label: 'feature/header.navigation.sections.newSale',
-    href: '/new-sale',
+    href: '/sale',
     description: 'feature/header.navigation.sections.newSaleDesc',
     icon: <PlusCircle className='size-6 group-hover:text-inherit' />
 }
