@@ -4,8 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { LockIcon, MailIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-import { handleLogIn } from '@/features/auth/actions'
-import { logUserSchema } from '@/features/auth/schemas'
+import { handleLogInAction } from '@/features/auth/actions'
+import { loginFormSchema } from '@/features/auth/schemas'
 import { Form } from '@/features/layout/components'
 import { InputField } from '@/features/layout/components/input-field'
 
@@ -17,8 +17,8 @@ function LoginForm() {
         <>
             <h2 className='text-2xl font-bold text-center'>{t("login")}</h2>
             <Form
-                resolver={yupResolver(logUserSchema as never)}
-                formAction={handleLogIn}
+                resolver={yupResolver(loginFormSchema as never)}
+                formAction={handleLogInAction}
                 contentButton={t("login")}
                 successRedirect="/dashboard"
                 successMessage={t("toast-message.success-logged-in")}

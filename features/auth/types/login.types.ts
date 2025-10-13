@@ -1,3 +1,7 @@
+import { InferType } from "yup"
+
+import { loginFormSchema } from "@/features/auth/schemas"
+
 export interface LoginPageProps {
     searchParams: Promise<{
         error?: string
@@ -6,3 +10,5 @@ export interface LoginPageProps {
         next?: string
     }>
 }
+
+export type LoginFormPayload = InferType<typeof loginFormSchema>

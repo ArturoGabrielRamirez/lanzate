@@ -1,67 +1,7 @@
 import type { ResendEmailParams } from '@/features/auth/types';
 import { VALID_STEPS, VALID_TYPES } from '../actions/resend/constants';
-import { EmailChangeStatus } from './types';
 
-export type {
-  EmailResendType,
-  EmailConfirmationType,
-  EmailResendTarget,
-  ResendEmailParams,
-  ResendEmailResponse,
-  SmartResendResponse
-} from './types';
-
-export type {
-  EmailChangeStatus,
-  EmailChangeStatusResponse,
-  EmailChangeMonitorStatus
-} from './types';
-
-export type {
-  CheckEmailProps,
-  CheckEmailPageProps,
-  EmailChangeMonitorProps,
-  EmailChangeDialogProps,
-  EmailChangeActionsProps,
-  EmailChangeFormProps,
-  EmailConfirmationDetectorProps,
-  EmailStatusAlertsProps,
-  EmailStepInstructionsProps,
-  EmailStepProgressProps,
-  ChangePasswordButtonProps,
-  ChangeEmailButtonProps,
-  GoogleLoginButtonProps,
-  ProgressButtonProps
-} from './types';
-
-export type {
-  StepStatus,
-  ResendCooldownState,
-  PendingChangeData
-} from './types';
-
-export type {
-  ApiResponse,
-  ApiErrorResponse,
-  ApiSuccessResponse,
-  HandleLoginAction,
-  UpdateData
-} from './types';
-
-export type {
-  EmailConfig,
-  EmailServiceError,
-  EmailResendLog,
-  EmailValidation,
-  ResendValidation
-} from './types';
-
-export type {
-  FacebookLogoProps,
-  GoogleLogoProps,
-  LoginErrorDisplayProps
-} from './types';
-
+export * from "@/features/auth/types/types";
 
 
 
@@ -113,3 +53,4 @@ export interface EmailInfoProps {
 
 export * from '@/features/auth/types/user.types';
 export * from '@/features/auth/types/login.types';
+export * from '@/features/auth/types/signup.types';

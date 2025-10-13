@@ -13,7 +13,6 @@ function ResetPasswordLink() {
             <Link href="/reset-password" className="text-sm text-blue-500 hover:underline">
                 {t("reset-password")}
             </Link>
-
         </div>
     );
 }

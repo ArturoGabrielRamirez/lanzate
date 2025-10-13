@@ -1,6 +1,6 @@
 export * from "@/features/auth/actions/handle-facebook-login";
 export * from "@/features/auth/actions/handle-google-logIn";
-export * from "@/features/auth/actions/handle-log-in";
+export * from "@/features/auth/actions/handle-log-in.action";
 export * from "@/features/auth/actions/handle-reset-password";
 export * from "@/features/auth/actions/handle-sign-up";
 export * from "@/features/auth/actions/handle-sign-out";

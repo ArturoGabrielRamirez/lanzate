@@ -1,12 +1,12 @@
 'use server'
 
 import { getLocalUser } from '@/features/auth/actions';
-import { HandleLoginAction } from '@/features/auth/types'
+import { LoginFormPayload } from '@/features/auth/types';
 import { actionWrapper } from '@/features/global/utils';
 import { insertLogEntry } from '@/features/layout/data'
 import { createServerSideClient } from '@/utils/supabase/server'
 
-export async function handleLogIn(formData: HandleLoginAction) {
+export async function handleLogInAction(formData: LoginFormPayload) {
   return actionWrapper(async () => {
 
     const supabase = createServerSideClient()

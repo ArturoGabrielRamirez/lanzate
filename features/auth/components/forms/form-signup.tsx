@@ -8,6 +8,7 @@ import { useRef } from 'react'
 
 import { handleSignup } from '@/features/auth/actions'
 import { signUpSchema } from '@/features/auth/schemas'
+import { SignupFormPayload } from '@/features/auth/types'
 import { Form } from '@/features/layout/components'
 import { InputField } from '@/features/layout/components/input-field'
 
@@ -19,7 +20,6 @@ function SignupForm() {
 
     const handleSuccess = () => {
         const email = submittedEmailRef.current;
-
         if (email) {
             const url = `/check-email?email=${encodeURIComponent(email)}&type=signup`;
             router.push(url);
@@ -28,15 +28,17 @@ function SignupForm() {
         }
     };
 
+    const handleSubmit = (data: SignupFormPayload) => {
+        submittedEmailRef.current = data.email;
+        return handleSignup(data);
+    }
+
     return (
         <>
             <h2 className='text-2xl font-bold'>{t("signup")}</h2>
             <Form
                 resolver={yupResolver(signUpSchema as never)}
-                formAction={(data) => {
-                    submittedEmailRef.current = data.email;
-                    return handleSignup(data);
-                }}
+                formAction={handleSubmit}
                 contentButton={<span>{t("signup")}</span>}
                 successMessage={t("toast-message.success-registered")}
                 loadingMessage={t("toast-message.signing-up")}

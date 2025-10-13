@@ -59,22 +59,22 @@ export class UserDeletionSystem {
 
     const now = new Date();
     const scheduledAt = user.deletion_scheduled_at!;
-    
+
     // Usar DeletionHelpers para calcular la fecha de display redondeada
     const displayScheduledAt = DeletionHelpers.getDisplayScheduledDate(scheduledAt);
     const daysRemaining = DeletionHelpers.getDaysRemaining(scheduledAt);
-    
+
     // Calcular minutos usando la fecha original (no redondeada) para precisión
     const timeDifference = scheduledAt.getTime() - now.getTime();
     const minutesRemaining = Math.max(0, Math.ceil(timeDifference / (1000 * 60)));
-    
+
     const canCancel = timeDifference > 0 && !user.is_deletion_cancelled && !user.is_anonymized;
 
     // Calcular ventana de acción (últimas horas antes del cron)
     const actionWindowMinutes = this.CONFIG.IS_TESTING_MODE ? 1 : 60; // 1 min en testing, 1h en prod
     const actionWindowStart = new Date(scheduledAt.getTime() - (actionWindowMinutes * 60 * 1000));
     const isWithinActionWindow = now >= actionWindowStart && now < scheduledAt;
-    
+
     const canCancelUntil = canCancel ? scheduledAt : null;
 
     return {

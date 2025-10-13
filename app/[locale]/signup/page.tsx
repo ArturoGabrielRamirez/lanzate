@@ -20,7 +20,7 @@ export default async function SignupPage() {
             <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:pb-12 lg:pb-20">
                 <div className='w-full flex flex-col gap-8 lg:max-w-md md:justify-self-end'>
                     <SignupForm />
-                    <SocialLoginButtons orLoginWith={t("description.or-login-with")} />
+                    <SocialLoginButtons />
                     <div className='w-full'>
                         <div className="flex gap-2 items-center justify-center w-full">
                             <h3 className="text-sm text-gray-600 dark:text-gray-400">

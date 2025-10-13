@@ -26,7 +26,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                         message={params.message}
                     />
                     <LoginForm />
-                    <SocialLoginButtons orLoginWith={t("description.or-login-with")} />
+                    <SocialLoginButtons />
                     <div className='w-full'>
                         <ResetPasswordLink />
                         <div className="flex gap-2 items-center justify-center w-full">
