@@ -1,8 +1,15 @@
 import { ShoppingBasket } from "lucide-react"
-import { Title } from "@/features/layout/components"
-import { StoreSelectorContainer, StoreSelectorSkeleton } from "@/features/sale/components"
+import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
+
+import { Title } from "@/features/layout/components"
+import { StoreSelectorContainer, StoreSelectorSkeleton } from "@/features/sale/components"
+
+export const metadata: Metadata = {
+    title: "New sale",
+    description: "New sale"
+}
 
 async function SalePage() {
     const t = await getTranslations("sale")

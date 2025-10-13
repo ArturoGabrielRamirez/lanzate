@@ -12,7 +12,7 @@ function FloatingDock() {
 
     return (
         <footer /* className="fixed bottom-0 px-8 z-50 flex justify-center items-center bg-background/85 backdrop-blur-[4px] rounded-lg py-4 shadow-2xl shadow-black drop-shadow-2xl md:hidden" */ className="fixed bottom-0 w-full p-2 z-50 xl:hidden container left-1/2 -translate-x-1/2">
-            <div className="bg-primary/15 dark:bg-background/70 backdrop-blur-[4px] rounded-full py-2 px-2 flex items-center gap-3 justify-center border-t dark:border-t-foreground/20 border-b dark:border-b-background/90 border-b-primary/30 border-t-white/70">
+            <div className="bg-primary/25 dark:bg-background/70 backdrop-blur-[4px] rounded-full py-2 px-2 flex items-center gap-3 justify-center border-t dark:border-t-foreground/20 border-b dark:border-b-background/90 border-b-primary/40 border-t-white/70">
                 <Link href="/dashboard" className="flex items-center">
                     <IconButton
                         size="lg"
@@ -29,7 +29,7 @@ function FloatingDock() {
                         active={pathname.includes(`/stores`)}
                     />
                 </Link>
-                <Link href="/sale" className={cn("rounded-full bg-card/20 aspect-square size-12 flex items-center justify-center dark:border-foreground/40 border-white/40 border", pathname.includes(`/sale`) && "bg-blue-90/20 animate-pulse border-primary")}>
+                <Link href="/sale" className={cn("rounded-full bg-card/20 aspect-square size-12 flex items-center justify-center dark:border-foreground/40 border-white/40 border", pathname.includes(`/sale`) && "bg-blue-90/20 animate-pulse border-primary dark:border-primary")}>
                     <IconButton
                         size="md"
                         icon={() => (
