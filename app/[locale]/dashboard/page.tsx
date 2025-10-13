@@ -1,25 +1,33 @@
-import { Suspense } from "react"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { Rss } from "lucide-react"
-import ActivityFeed from "@/features/dashboard/components/activity-feed"
-import ActivityFeedSkeleton from "@/features/dashboard/components/activity-feed-skeleton"
-import DashboardStats from "@/features/dashboard/components/dashboard-stats"
-import DashboardStatsSkeleton from "@/features/dashboard/components/dashboard-stats-skeleton"
-import GlobalSearch from "@/features/dashboard/components/global-search"
-import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
-import StoreListContainer from "@/features/dashboard/components/store-list-container"
-import StoreList from "@/features/dashboard/components/store-list"
-import StoreListSkeleton from "@/features/dashboard/components/store-list-skeleton"
-import QuickActions from "@/features/dashboard/components/quick-actions"
-import QuickActionsSkeleton from "@/features/dashboard/components/quick-actions-skeleton"
+import { Metadata } from "next"
 import { NextStepProvider } from "nextstepjs"
-import NextStepContainer from "@/features/layout/components/next-step-container"
-import FeedFilters from "@/features/dashboard/components/feed-filters"
-import { loadFeedParams } from "@/features/dashboard/utils/load-feed-params"
-import HelpCard from "@/features/dashboard/components/help-card"
+import { Suspense } from "react"
+
 import AccountSetup from "@/features/dashboard/components/account-setup"
 import AccountSetupSkeleton from "@/features/dashboard/components/account-setup-skeleton"
-import PageContainer from "@/features/layout/components/page-container"
+import ActivityFeed from "@/features/dashboard/components/activity-feed"
+import ActivityFeedSkeleton from "@/features/dashboard/components/activity-feed-skeleton"
+import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
+import DashboardStats from "@/features/dashboard/components/dashboard-stats"
+import DashboardStatsSkeleton from "@/features/dashboard/components/dashboard-stats-skeleton"
+import FeedFilters from "@/features/dashboard/components/feed-filters"
+import GlobalSearch from "@/features/dashboard/components/global-search"
+import HelpCard from "@/features/dashboard/components/help-card"
+import QuickActions from "@/features/dashboard/components/quick-actions"
+import QuickActionsSkeleton from "@/features/dashboard/components/quick-actions-skeleton"
+import StoreList from "@/features/dashboard/components/store-list"
+import StoreListContainer from "@/features/dashboard/components/store-list-container"
+import StoreListSkeleton from "@/features/dashboard/components/store-list-skeleton"
+import { loadFeedParams } from "@/features/dashboard/utils/load-feed-params"
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { PageContainer } from "@/features/layout/components"
+import NextStepContainer from "@/features/layout/components/next-step-container"
+
+export const metadata: Metadata = {
+    title: "Dashboard",
+    description: "Dashboard",
+}
+
 
 export default async function Dashboard({ searchParams }: { searchParams: Promise<{ type: string }> }) {
 
@@ -27,10 +35,11 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
     const { type, page } = await loadFeedParams(searchParams)
 
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError, message } = await getUserInfo()
 
-    if (userError || !user) {
-        return console.error(userMessage)
+    if (hasError || !user) {
+        console.error(message)
+        return <div>Error: {message}</div>
     }
 
 

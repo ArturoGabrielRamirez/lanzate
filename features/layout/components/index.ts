@@ -23,3 +23,4 @@ export {
 }
 
 export * from "@/features/layout/components/input-field";
+export * from "@/features/layout/components/page-container";
