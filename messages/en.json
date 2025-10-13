@@ -18,6 +18,7 @@
         "login": "Log In",
         "signup": "Sign Up",
         "email": "Email",
+        "email-placeholder": "email@example.com",
         "password": "Password",
         "buttons": {
             "login": "Log In",
@@ -47,7 +48,7 @@
             "title": "Reset Password",
             "description": {
                 "forgot-password": "Forgot password?",
-                "reset-password": "Reset your password clicking here",
+                "reset-password": "Reset your password",
                 "password-updated": "Password updated! You can now log in."
             }
         },

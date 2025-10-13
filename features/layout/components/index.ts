@@ -22,3 +22,4 @@ export {
     SubdomainProvider
 }
 
+export * from "@/features/layout/components/input-field";

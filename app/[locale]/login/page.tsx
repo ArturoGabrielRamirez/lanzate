@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server'
 import loginImage from '@/features/auth/assets/Tablet login-pana.svg'
 import { LoginForm, ResetPasswordLink, LoginErrorDisplay, SocialLoginButtons } from '@/features/auth/components'
 import { LoginPageProps } from '@/features/auth/types'
+import { Link } from '@/i18n/naviation'
 
 export const metadata: Metadata = {
     title: "Login",
@@ -18,17 +19,27 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 
     return (
         <section className="min-h-dvh relative pt-17 flex">
-            <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:items-end md:pb-12 lg:pb-20">
-                <div className='w-full flex flex-col gap-8'>
+            <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:pb-12 lg:pb-20">
+                <div className='w-full flex flex-col gap-8 lg:max-w-md md:justify-self-end'>
                     <LoginErrorDisplay
                         error={params.error}
                         message={params.message}
                     />
                     <LoginForm />
-                    <ResetPasswordLink />
                     <SocialLoginButtons orLoginWith={t("description.or-login-with")} />
+                    <div className='w-full'>
+                        <ResetPasswordLink />
+                        <div className="flex gap-2 items-center justify-center w-full">
+                            <h3 className="text-sm text-gray-600 dark:text-gray-400">
+                                No tienes una cuenta?{" "}
+                            </h3>
+                            <Link href="/signup" className="text-sm text-blue-500 hover:underline">
+                                {t("signup")}
+                            </Link>
+                        </div>
+                    </div>
                 </div>
-                <div className="relative aspect-square w-full flex items-end max-w-xl justify-self-end">
+                <div className="relative aspect-square w-full hidden md:flex items-end max-w-xl justify-self-start">
                     <Image
                         src={loginImage}
                         alt="Hero Image"
