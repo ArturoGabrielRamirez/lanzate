@@ -1,5 +1,5 @@
 import { Title } from "@/features/layout/components"
-import PageContainer from "@/features/layout/components/page-container"
+import { PageContainer } from "@/features/layout/components/page-container"
 import { StoresContainer, StoresSkeleton } from "@/features/stores/components"
 import { Store } from "lucide-react"
 import { getTranslations } from "next-intl/server"

@@ -1,5 +1,7 @@
-import type { NextConfig } from "next";
 import createNextIntlPlugin from 'next-intl/plugin';
+
+import type { NextConfig } from "next";
+
 const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin')
 
 
@@ -10,6 +12,9 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: '3mb',
     },
+  },
+  devIndicators : {
+    position : "top-right"
   },
   images: {
     remotePatterns: [
