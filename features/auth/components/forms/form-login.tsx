@@ -5,7 +5,7 @@ import { LockIcon, MailIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import { handleLogIn } from '@/features/auth/actions'
-import { loginUserSchema } from '@/features/auth/schemas'
+import { logUserSchema } from '@/features/auth/schemas'
 import { Form } from '@/features/layout/components'
 import { InputField } from '@/features/layout/components/input-field'
 
@@ -17,7 +17,7 @@ function LoginForm() {
         <>
             <h2 className='text-2xl font-bold text-center'>{t("login")}</h2>
             <Form
-                resolver={yupResolver(loginUserSchema as never)}
+                resolver={yupResolver(logUserSchema as never)}
                 formAction={handleLogIn}
                 contentButton={t("login")}
                 successRedirect="/dashboard"

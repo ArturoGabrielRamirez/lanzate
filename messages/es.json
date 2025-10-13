@@ -20,6 +20,8 @@
         "email": "Correo electrónico",
         "email-placeholder": "mi.correo@ejemplo.com",
         "password": "Contraseña",
+        "username": "Nombre de usuario",
+        "confirm-password": "Confirmar contraseña",
         "buttons": {
             "login": "Iniciar sesión",
             "sign-up": "Registrarse",

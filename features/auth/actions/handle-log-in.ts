@@ -1,10 +1,10 @@
 'use server'
 
-import { actionWrapper } from '@/utils/lib'
-import { createServerSideClient } from '@/utils/supabase/server'
-import { HandleLoginAction } from '../types'
+import { getLocalUser } from '@/features/auth/actions';
+import { HandleLoginAction } from '@/features/auth/types'
+import { actionWrapper } from '@/features/global/utils';
 import { insertLogEntry } from '@/features/layout/data'
-import { getLocalUser } from '../actions';
+import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function handleLogIn(formData: HandleLoginAction) {
   return actionWrapper(async () => {
@@ -16,23 +16,15 @@ export async function handleLogIn(formData: HandleLoginAction) {
       password: formData.password
     })
 
-    if (signInError || !authUser) {
-      return {
-        error: true,
-        message: 'Invalid credentials',
-        payload: null
-      }
-    }
+    if (signInError) throw new Error(signInError.message)
 
-    const { payload: localUser, error: localUserError } = await getLocalUser()
+    if (!authUser) throw new Error('User not found')
 
-    if (localUserError || !localUser) {
-      return {
-        error: true,
-        message: "There was an error after logging in",
-        payload: null
-      }
-    }
+    const { payload: localUser, hasError: localUserError, message: localUserMessage } = await getLocalUser({ withAccount: false })
+
+    if (localUserError) throw new Error(localUserMessage)
+
+    if (!localUser) throw new Error('User not found')
 
     insertLogEntry({
       action: "LOGIN",
@@ -44,7 +36,7 @@ export async function handleLogIn(formData: HandleLoginAction) {
     })
 
     return {
-      error: false,
+      hasError: false,
       message: "Logged in successfully",
       payload: localUser
     }

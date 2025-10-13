@@ -1,6 +1,7 @@
 "use client"
 
-import { EyeIcon, InfoIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, InfoIcon } from "lucide-react";
+import { useState } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
@@ -32,6 +33,11 @@ function InputField({
 }) {
 
     const { control } = useFormContext();
+    const [showPassword, setShowPassword] = useState(false);
+    
+    const handleTogglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    }
 
     return (
         <Controller
@@ -56,7 +62,7 @@ function InputField({
                             aria-invalid={fieldState.invalid}
                             autoComplete="off"
                             id={field.name}
-                            type={type}
+                            type={showPassword ? "text" : type}
                             className=""
                         />
                         {endText && (
@@ -75,8 +81,9 @@ function InputField({
                                     variant="ghost"
                                     aria-label="Toggle password visibility"
                                     size="icon-xs"
+                                    onClick={handleTogglePasswordVisibility}
                                 >
-                                    <EyeIcon />
+                                    {!showPassword ? <EyeIcon /> : <EyeOffIcon />}
                                 </InputGroupButton>
                             </InputGroupAddon>
                         )}

@@ -1,5 +1,5 @@
 export type ResponseType<T> = {
-    error: boolean
+    error?: boolean
     message: string
     payload: T
 }

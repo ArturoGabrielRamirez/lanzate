@@ -20,6 +20,8 @@
         "email": "Email",
         "email-placeholder": "email@example.com",
         "password": "Password",
+        "username": "Username",
+        "confirm-password": "Confirm Password",
         "buttons": {
             "login": "Log In",
             "sign-up": "Sign Up",

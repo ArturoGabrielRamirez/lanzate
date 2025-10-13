@@ -1,23 +1,18 @@
 'use client'
 
-import { useRef } from 'react'
-import { useTranslations } from 'next-intl'
-import { useRouter } from 'next/navigation'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { LockIcon, MailIcon, UserIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import { useRef } from 'react'
+
 import { handleSignup } from '@/features/auth/actions'
 import { signUpSchema } from '@/features/auth/schemas'
-import { Form, InputField } from '@/features/layout/components'
+import { Form } from '@/features/layout/components'
+import { InputField } from '@/features/layout/components/input-field'
 
-interface SignupFormData {
-    email: string;
-    password: string;
-    username: string;
-    name?: string | undefined;
-    lastname?: string | undefined;
-    phone?: string | undefined;
-}
 
-const SignupForm = () => {
+function SignupForm() {
     const t = useTranslations("auth");
     const router = useRouter();
     const submittedEmailRef = useRef<string>('');
@@ -36,7 +31,7 @@ const SignupForm = () => {
     return (
         <>
             <h2 className='text-2xl font-bold'>{t("signup")}</h2>
-            <Form<SignupFormData>
+            <Form
                 resolver={yupResolver(signUpSchema as never)}
                 formAction={(data) => {
                     submittedEmailRef.current = data.email;
@@ -48,15 +43,13 @@ const SignupForm = () => {
                 onSuccess={handleSuccess}
                 className="flex flex-col gap-4 w-full max-w-xl"
             >
-                <InputField name="email" label={t("email")} type="email" />
-                <InputField name="password" label={t("password")} type="password" />
-                <InputField name="username" label={t("username")} />
-                <InputField name="name" label={t("name")} />
-                <InputField name="lastname" label={t("lastname")} />
-                <InputField name="phone" label={t("phone")} />
+                <InputField name="email" label={t("email")} placeholder={t("email-placeholder")} startIcon={<MailIcon />} tooltip="Enter the email address associated with your account." />
+                <InputField name="username" label={t("username")} placeholder={t("username")} startIcon={<UserIcon />} tooltip="Enter the username associated with your account." />
+                <InputField name="password" label={t("password")} placeholder={t("password")} startIcon={<LockIcon />} tooltip="Enter the password associated with your account." type="password" />
+                <InputField name="confirm-password" label={t("confirm-password")} placeholder={t("confirm-password")} startIcon={<LockIcon />} tooltip="Enter the password associated with your account." type="password" />
             </Form>
         </>
     )
 }
 
-export default SignupForm;
+export { SignupForm };
