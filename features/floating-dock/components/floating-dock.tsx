@@ -5,6 +5,7 @@ import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
 import { useState } from "react"
 
+import { Input } from "@/features/shadcn/components/input"
 import { Link, usePathname } from "@/i18n/naviation"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
@@ -25,7 +26,7 @@ function FloatingDock() {
 
     return (
         <footer className="fixed bottom-0 w-full p-2 z-50 xl:hidden container left-1/2 -translate-x-1/2">
-            <motion.div className={cn("bg-primary/25 dark:bg-background/70 backdrop-blur-[4px] rounded-full py-2 px-12 flex items-center gap-3 border-t dark:border-t-foreground/20 border-b dark:border-b-background/90 border-b-primary/40 border-t-white/70 justify-between overflow-hidden transition-[padding]", showSearch && "px-2")} animate={{ paddingInline: showSearch ? "8px" : "48px " }}>
+            <motion.div className={cn("bg-primary/25 dark:bg-background/70 backdrop-blur-[4px] rounded-full py-2 px-12 flex items-center gap-3 border-t dark:border-t-foreground/20 border-b dark:border-b-background/90 border-b-primary/40 border-t-white/70 justify-between overflow-hidden transition-[padding,border]", showSearch && "px-2 !border-primary/80 border-3")} animate={{ paddingInline: showSearch ? "8px" : "48px " }}>
                 <AnimatePresence mode="popLayout">
                     {showSearch && (
                         <motion.div key="close-search" exit={{ opacity: 0, y: 40, transition: { delay: 0.1 } }} initial={{ opacity: 0, y: 40, rotate: 360 }} animate={{ opacity: 1, y: 0, rotate: 0, transition: { delay: 0, duration: 0.5 } }} className="flex items-center">
@@ -37,6 +38,11 @@ function FloatingDock() {
                                 onClick={handleSearchClose}
                                 key="close-search"
                             />
+                        </motion.div>
+                    )}
+                    {showSearch && (
+                        <motion.div key="input" exit={{ width: "0%", opacity: 0 }} initial={{ width: "0%", opacity: 0 }} animate={{ width: "100%", opacity: 1 }}>
+                            <Input autoFocus className="!bg-transparent !border-none !ring-0 !outline-none h-10 md:h-12"/>
                         </motion.div>
                     )}
                     {!showSearch && (
