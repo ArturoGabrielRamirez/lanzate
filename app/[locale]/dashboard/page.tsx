@@ -3,15 +3,16 @@ import { Metadata } from "next"
 import { NextStepProvider } from "nextstepjs"
 import { Suspense } from "react"
 
+import { GlobalSearch } from "@/features/dashboard/components"
+import { DashboardError } from "@/features/dashboard/components"
 import AccountSetup from "@/features/dashboard/components/account-setup"
 import AccountSetupSkeleton from "@/features/dashboard/components/account-setup-skeleton"
-import ActivityFeed from "@/features/dashboard/components/activity-feed"
 import ActivityFeedSkeleton from "@/features/dashboard/components/activity-feed-skeleton"
+import ActivityFeed from "@/features/dashboard/components/activity-items/activity-feed"
 import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
 import DashboardStats from "@/features/dashboard/components/dashboard-stats"
 import DashboardStatsSkeleton from "@/features/dashboard/components/dashboard-stats-skeleton"
 import FeedFilters from "@/features/dashboard/components/feed-filters"
-import GlobalSearch from "@/features/dashboard/components/global-search"
 import HelpCard from "@/features/dashboard/components/help-card"
 import QuickActions from "@/features/dashboard/components/quick-actions"
 import QuickActionsSkeleton from "@/features/dashboard/components/quick-actions-skeleton"
@@ -22,6 +23,7 @@ import { loadFeedParams } from "@/features/dashboard/utils/load-feed-params"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { PageContainer } from "@/features/layout/components"
 import NextStepContainer from "@/features/layout/components/next-step-container"
+import { redirect } from "@/i18n/naviation"
 
 export const metadata: Metadata = {
     title: "Dashboard",
@@ -36,14 +38,21 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
 
     const { payload: user, hasError, message } = await getUserInfo()
 
-    if (hasError || !user) {
-        console.error(message)
-        return <div>Error: {message}</div>
-    }
+    if (!user) return redirect({ href: "/login", locale: "es" })
 
+    if (hasError) {
+        return (
+            <PageContainer>
+                <DashboardError message={message} />
+            </PageContainer>
+        )
+    }
 
     return (
         <PageContainer>
+            <Suspense>
+                <GlobalSearch userId={user.id} />
+            </Suspense>
             <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
                 <ActivityFeed userId={user.id} type={type} page={page || 1} />
             </Suspense>
@@ -65,9 +74,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
                         </div>
                         <FeedFilters />
                     </div>
-                    <Suspense>
-                        <GlobalSearch userId={user.id} />
-                    </Suspense>
+                    
                 </div>
                 
                 <Suspense fallback={<QuickActionsSkeleton />}>

@@ -1,7 +1,6 @@
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { getUserStoreActivities } from "../actions/getUserStoreActivities"
-import NewActivityFeed from "./new-activity-feed"
-import EmptyFeedItem from "./empty-feed-item"
+import { getUserStoreActivities } from "@/features/dashboard/actions/getUserStoreActivities"
+import { EmptyFeedItem, NewActivityFeed } from "@/features/dashboard/components"
 
 type Props = {
     userId: number

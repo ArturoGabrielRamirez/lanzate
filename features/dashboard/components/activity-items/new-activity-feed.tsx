@@ -1,20 +1,19 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import * as motion from "motion/react-client"
-import FeedItem from "./activity-items/feed-item"
 import { Contract, ContractAssignment, Order, OrderTracking, Product, SocialActivity, Store, User } from "@prisma/client"
-import EmptyFeedItem from "./empty-feed-item"
-import InfiniteScroll from "./infinite-scroll"
-import { getUserStoreActivities } from "../actions/getUserStoreActivities"
-/* import { createClient } from "@/utils/supabase/client" */
+import * as motion from "motion/react-client"
+import { useEffect, useState } from "react"
+
+import { getUserStoreActivities } from "@/features/dashboard/actions/getUserStoreActivities"
+import { FeedItem } from "@/features/dashboard/components/activity-items"
+import { EmptyFeedItem } from "@/features/dashboard/components/activity-items"
+import InfiniteScroll from "@/features/dashboard/components/infinite-scroll"
 
 type Props = {
     initialActivities: (SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } })[]
     userId: number
     type: string
 }
-
 
 function NewActivityFeed({ initialActivities, userId, type }: Props) {
 
@@ -106,7 +105,6 @@ function NewActivityFeed({ initialActivities, userId, type }: Props) {
             transition={{ duration: 0.3 }}
         >
             {activities.map((item, index) => {
-
                 return <FeedItem item={item} key={index} />
             })}
 
@@ -119,4 +117,4 @@ function NewActivityFeed({ initialActivities, userId, type }: Props) {
     )
 }
 
-export default NewActivityFeed
+export { NewActivityFeed }

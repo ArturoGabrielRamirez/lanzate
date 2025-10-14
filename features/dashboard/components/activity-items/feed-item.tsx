@@ -1,23 +1,26 @@
 "use client"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+
 import { Contract, ContractAssignment, Order, OrderTracking, Product, SocialActivity, Store, User } from "@prisma/client"
-import { extractLink, formatActivityDate, getUserInitials } from "./shared-utils"
 import { FileCheck, Flame, MapPin, MessageCircle, ShoppingBag, Truck } from "lucide-react"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import Link from "next/link"
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { CancelOrderButton } from "@/features/stores/components"
-import ConfirmOrderButtonIcon from "@/features/orders/components/confirm-order-button-icon"
-import { cn } from "@/lib/utils"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 /* import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { useState } from "react" */
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { extractLink, formatActivityDate, getUserInitials } from "@/features/dashboard/components/activity-items/shared-utils"
+import ConfirmOrderButtonIcon from "@/features/orders/components/confirm-order-button-icon"
 import OpenChatButton from "@/features/orders/components/open-chat-button"
+import { CancelOrderButton } from "@/features/stores/components"
+import { cn } from "@/lib/utils"
 
 type Props = {
     item: SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } }
 }
-const FeedItem = ({ item }: Props) => {
+
+function FeedItem({ item }: Props) {
 
     /* const [open, setOpen] = useState(false)
 
@@ -30,7 +33,7 @@ const FeedItem = ({ item }: Props) => {
 
             <Card
                 className="h-full group not-dark:bg-gradient-to-br not-dark:to-background not-dark:from-transparent not-dark:to-120% border-white/5 backdrop-blur-sm hover:!shadow-2xl dark:via-background hover:border-white/40 relative dark:hover:to-primary/20 dark:bg-card group"
-                // onClick={handleOpen}
+            // onClick={handleOpen}
             >
                 <CardHeader className="flex gap-2">
                     <Avatar className="h-10 w-10">
@@ -160,4 +163,5 @@ const FeedItem = ({ item }: Props) => {
         </>
     )
 }
-export default FeedItem
+
+export { FeedItem }

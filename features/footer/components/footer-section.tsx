@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 
 import { IconButton } from '@/src/components/ui/shadcn-io/icon-button'

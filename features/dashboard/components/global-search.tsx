@@ -1,12 +1,15 @@
 'use client'
 
-import { useState, useEffect, useRef } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { Search, ExternalLink, Loader } from "lucide-react"
-import Link from "next/link"
 import { motion, AnimatePresence } from "motion/react"
-import { searchGlobalAction } from "../actions/search-global-action"
+import Link from "next/link"
+import { useState, useEffect, useRef } from "react"
+
+import { Button } from "@/components/ui/button"
+/* import { Input } from "@/components/ui/input" */
+import { searchGlobalAction } from "@/features/dashboard/actions/search-global-action"
+import { Field } from "@/features/shadcn/components/field"
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/features/shadcn/components/input-group"
 import { useDebounce } from "@/hooks/use-debounce"
 import { cn } from "@/lib/utils"
 
@@ -23,7 +26,7 @@ type GlobalSearchProps = {
     userId: number
 }
 
-export default function GlobalSearch({ userId }: GlobalSearchProps) {
+function GlobalSearch({ userId }: GlobalSearchProps) {
     const [query, setQuery] = useState('')
     const [results, setResults] = useState<SearchResult[]>([])
     const [isLoading, setIsLoading] = useState(false)
@@ -84,16 +87,24 @@ export default function GlobalSearch({ userId }: GlobalSearchProps) {
                 <div className="fixed inset-0 z-40 bg-background/50 backdrop-blur-xs" onClick={() => setShowResults(false)}></div>
             )}
             <div className="flex gap-2 relative z-50">
-                <Input
-                    placeholder="Search products, orders, customers..."
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onFocus={handleInputFocus}
-                    className={cn("flex-1 p-1 h-8 md:h-9", isLoading && "animate-pulse")}
-                />
-                <Button variant="outline" disabled={isLoading} className={cn("size-8 md:size-9", isLoading && "animate-pulse")}>
-                    {isLoading ? <Loader className="size-4 animate-spin" /> : <Search className="size-4" />}
-                </Button>
+                <Field>
+                    <InputGroup className="rounded-full">
+                        <InputGroupAddon>
+                            <Search className="size-4" />
+                        </InputGroupAddon>
+                        <InputGroupInput
+                            placeholder="Products, orders, customers..."
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            onFocus={handleInputFocus}
+                        />
+                        {isLoading && (
+                            <InputGroupAddon align="inline-end">
+                                <Loader className="size-4 animate-spin" />
+                            </InputGroupAddon>
+                        )}
+                    </InputGroup>
+                </Field>
             </div>
 
             <AnimatePresence>
@@ -169,4 +180,6 @@ export default function GlobalSearch({ userId }: GlobalSearchProps) {
             </AnimatePresence>
         </div>
     )
-} 
+}
+
+export { GlobalSearch }
