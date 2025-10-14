@@ -3,7 +3,7 @@ import { Metadata } from "next"
 import { NextStepProvider } from "nextstepjs"
 import { Suspense } from "react"
 
-import { GlobalSearch } from "@/features/dashboard/components"
+import { GlobalSearch, WelcomeWidget } from "@/features/dashboard/components"
 import { DashboardError } from "@/features/dashboard/components"
 import AccountSetup from "@/features/dashboard/components/account-setup"
 import AccountSetupSkeleton from "@/features/dashboard/components/account-setup-skeleton"
@@ -49,7 +49,8 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
     }
 
     return (
-        <PageContainer>
+        <PageContainer className="gap-4 flex flex-col">
+            <WelcomeWidget user={user}/>
             <Suspense>
                 <GlobalSearch userId={user.id} />
             </Suspense>

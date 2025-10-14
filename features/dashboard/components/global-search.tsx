@@ -5,13 +5,10 @@ import { motion, AnimatePresence } from "motion/react"
 import Link from "next/link"
 import { useState, useEffect, useRef } from "react"
 
-import { Button } from "@/components/ui/button"
-/* import { Input } from "@/components/ui/input" */
 import { searchGlobalAction } from "@/features/dashboard/actions/search-global-action"
 import { Field } from "@/features/shadcn/components/field"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/features/shadcn/components/input-group"
 import { useDebounce } from "@/hooks/use-debounce"
-import { cn } from "@/lib/utils"
 
 type SearchResult = {
     id: string | number
@@ -88,7 +85,7 @@ function GlobalSearch({ userId }: GlobalSearchProps) {
             )}
             <div className="flex gap-2 relative z-50">
                 <Field>
-                    <InputGroup className="rounded-full">
+                    <InputGroup className="rounded-full bg-background border-border shadow-xs">
                         <InputGroupAddon>
                             <Search className="size-4" />
                         </InputGroupAddon>
