@@ -1,10 +1,9 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-
 import { NavLinkWithUnderline } from '@/features/header/components/nav-link-with-underline';
 import { NAV_MENU_ITEMS_AUTH } from '@/features/header/constants';
 import { isActiveRoute } from '@/features/header/utils';
+import { usePathname } from '@/i18n/naviation';
 
 function HeaderNavAuth() {
 

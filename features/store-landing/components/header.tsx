@@ -1,10 +1,10 @@
-import Link from "next/link"
 import { Rocket, Facebook, Instagram } from "lucide-react"
-import CartIcon from "@/features/cart/components/cart-icon"
+import Link from "next/link"
 import { getTranslations } from "next-intl/server"
-import LandingAccountDropdown from "@/features/header/components/landing-account-dropdown"
+
+import CartIcon from "@/features/cart/components/cart-icon"
+import { LandingAccountDropdown } from "@/features/header/components"
 import { getUserInfo } from "@/features/layout/actions"
-import Image from "next/image"
 
 type Props = {
     title?: string
