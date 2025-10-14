@@ -1,4 +1,5 @@
-import { HeaderLoginLink, SettingsToolbar } from '@/features/header/components';
+import { HeaderLoginLink } from '@/features/header/components/header-login-link';
+import { SettingsToolbar } from '@/features/header/components/settings-toolbar';
 import { getUserInfo } from '@/features/layout/actions';
 
 async function HeaderActions() {

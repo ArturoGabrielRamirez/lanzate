@@ -1446,6 +1446,7 @@
             "contact": "Contact",
             "login": "Login",
             "signup": "Signup",
+            "signout": "Signout",
             "access": "Access",
             "moreInfo": "More Info",
             "sections": {

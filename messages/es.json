@@ -1420,6 +1420,7 @@
             "contact": "Contacto",
             "login": "Iniciar sesión",
             "signup": "Registrarse",
+            "signout": "Cerrar sesión",
             "access": "Acceso",
             "moreInfo": "Más información",
             "sections": {
