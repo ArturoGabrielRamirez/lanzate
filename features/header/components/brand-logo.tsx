@@ -3,6 +3,7 @@
 import Link from 'next/link';
 
 import { BrandLogoProps } from '@/features/header/types';
+import { isActiveRoute } from '@/features/header/utils';
 import { usePathname } from '@/i18n/naviation';
 import { cn } from '@/lib/utils';
 
@@ -10,7 +11,7 @@ function BrandLogo({ hasText = true }: BrandLogoProps) {
 
     const pathname = usePathname()
 
-    const isHome = pathname === '/'
+    const isHome = isActiveRoute(pathname, '/')
 
     return (
         <Link href="/" className={cn("flex items-center gap-2 group", !isHome && "text-primary")}>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 
 import { Switch } from "@/components/ui/switch"
+import { isActiveRoute } from '@/features/header/utils';
 import { usePathname } from "@/i18n/naviation"
 import { cn } from "@/lib/utils"
 import { useChangeLocale, useCurrentLocale } from "@/locales/client"
@@ -12,7 +13,7 @@ function LanguageSwitch() {
     const changeLocale = useChangeLocale()
     const currentLocale = useCurrentLocale()
     const pathname = usePathname()
-    const isHome = pathname === "/"
+    const isHome = isActiveRoute(pathname, "/")
 
     const [isChecked, setIsChecked] = useState(currentLocale !== "es")
 

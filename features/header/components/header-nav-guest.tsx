@@ -9,6 +9,7 @@ import { useCallback, useState } from 'react';
 /* import { GoogleAuthButton } from '@/features/auth/shared/components/google-auth-button'; */
 import { useSmoothScroll } from '@/features/global/hooks/use-smooth-scroll';
 import { HEADER_OFFSET_DESKTOP, NAV_MENU_ITEMS_GUEST } from '@/features/header/constants';
+import { isActiveRoute } from '@/features/header/utils';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from '@/features/shadcn/components';
 import { Link, usePathname } from '@/i18n/naviation';
 import { cn } from '@/lib/utils';
@@ -19,7 +20,7 @@ function HeaderNavGuest() {
     const t = useTranslations();
     const router = useRouter();
     const pathname = usePathname();
-    const isHome = pathname === '/';
+    const isHome = isActiveRoute(pathname, '/');
     const { scrollY } = useScroll()
 
     const [isFloating, setIsFloating] = useState(false)
