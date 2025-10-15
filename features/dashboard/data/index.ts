@@ -1,0 +1,1 @@
+export * from "@/features/global-search/data/search-global.data"

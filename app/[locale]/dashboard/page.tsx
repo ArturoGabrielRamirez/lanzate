@@ -3,7 +3,8 @@ import { Metadata } from "next"
 import { NextStepProvider } from "nextstepjs"
 import { Suspense } from "react"
 
-import { GlobalSearch, WelcomeWidget } from "@/features/dashboard/components"
+import { WelcomeWidget } from "@/features/dashboard/components"
+import { StoreListContainer } from "@/features/dashboard/components"
 import { DashboardError } from "@/features/dashboard/components"
 import AccountSetup from "@/features/dashboard/components/account-setup"
 import AccountSetupSkeleton from "@/features/dashboard/components/account-setup-skeleton"
@@ -17,9 +18,9 @@ import HelpCard from "@/features/dashboard/components/help-card"
 import QuickActions from "@/features/dashboard/components/quick-actions"
 import QuickActionsSkeleton from "@/features/dashboard/components/quick-actions-skeleton"
 import StoreList from "@/features/dashboard/components/store-list"
-import StoreListContainer from "@/features/dashboard/components/store-list-container"
 import StoreListSkeleton from "@/features/dashboard/components/store-list-skeleton"
 import { loadFeedParams } from "@/features/dashboard/utils/load-feed-params"
+import { GlobalSearch } from "@/features/global-search/components"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { PageContainer } from "@/features/layout/components"
 import NextStepContainer from "@/features/layout/components/next-step-container"
@@ -50,9 +51,12 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
 
     return (
         <PageContainer className="gap-4 flex flex-col">
-            <WelcomeWidget user={user}/>
+            <WelcomeWidget user={user} />
             <Suspense>
                 <GlobalSearch userId={user.id} />
+            </Suspense>
+            <Suspense fallback={<StoreListSkeleton />}>
+                <StoreList />
             </Suspense>
             <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
                 <ActivityFeed userId={user.id} type={type} page={page || 1} />
@@ -81,11 +85,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
                 <Suspense fallback={<QuickActionsSkeleton />}>
                     <QuickActions userId={user.id} />
                 </Suspense>
-                <StoreListContainer>
-                    <Suspense fallback={<StoreListSkeleton />}>
-                        <StoreList />
-                    </Suspense>
-                </StoreListContainer>
+                
                 <Suspense fallback={<div className="area-[calendar] hidden md:block group" />}>
                     <DashboardCalendar />
                 </Suspense>

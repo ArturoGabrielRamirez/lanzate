@@ -12,5 +12,5 @@ export { default as QuickActionsSkeleton } from './quick-actions-skeleton'
 export { default as QuickActionsClient } from './quick-actions-client'
 
 export * from "@/features/dashboard/components/activity-items"
-export * from "@/features/dashboard/components/global-search"
 export * from "@/features/dashboard/components/welcome-widget"
+export * from "@/features/dashboard/components/store-list-container"

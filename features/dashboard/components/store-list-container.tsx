@@ -6,7 +6,7 @@ type Props = {
     children: React.ReactNode
 }
 
-const StoreListContainer = ({ children }: Props) => {
+function StoreListContainer({ children }: R) {
 
     const isMd = useMedia("(min-width: 768px)")
 
@@ -14,4 +14,6 @@ const StoreListContainer = ({ children }: Props) => {
 
     return children
 }
-export default StoreListContainer
+
+
+export { StoreListContainer }

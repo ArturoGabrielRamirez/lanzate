@@ -1,0 +1,1 @@
+export * from "@/features/global-search/actions/search-global.action"

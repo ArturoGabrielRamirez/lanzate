@@ -4,28 +4,18 @@ import { Search, ExternalLink, Loader } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
 import Link from "next/link"
 import { useState, useEffect, useRef } from "react"
+import { toast } from "sonner"
 
-import { searchGlobalAction } from "@/features/dashboard/actions/search-global-action"
+import { searchGlobalAction } from "@/features/global-search/actions"
+import { GlobalSearchProps, SearchResultType } from "@/features/global-search/types"
 import { Field } from "@/features/shadcn/components/field"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/features/shadcn/components/input-group"
 import { useDebounce } from "@/hooks/use-debounce"
 
-type SearchResult = {
-    id: string | number
-    type: 'product' | 'order' | 'customer'
-    title: string
-    subtitle: string
-    href: string | null
-    icon: string
-}
-
-type GlobalSearchProps = {
-    userId: number
-}
 
 function GlobalSearch({ userId }: GlobalSearchProps) {
     const [query, setQuery] = useState('')
-    const [results, setResults] = useState<SearchResult[]>([])
+    const [results, setResults] = useState<SearchResultType[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [showResults, setShowResults] = useState(false)
     const debouncedQuery = useDebounce(query, 300)
@@ -40,27 +30,22 @@ function GlobalSearch({ userId }: GlobalSearchProps) {
             }
 
             setIsLoading(true)
-            try {
-                const result = await searchGlobalAction(debouncedQuery, userId)
-                if (result.error) {
-                    console.error('Search error:', result.message)
-                    setResults([])
-                } else {
-                    setResults(result.payload || [])
-                    setShowResults(true)
-                }
-            } catch (error) {
-                console.error('Search error:', error)
-                setResults([])
-            } finally {
+            const { hasError, payload, message } = await searchGlobalAction(debouncedQuery, userId)
+
+            if (hasError) {
+                toast.error(message)
                 setIsLoading(false)
+                return setResults([])
             }
+
+            setResults(payload || [])
+            setShowResults(true)
+            setIsLoading(false)
         }
 
         performSearch()
     }, [debouncedQuery, userId])
 
-    // Close results when clicking outside
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
