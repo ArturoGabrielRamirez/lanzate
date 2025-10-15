@@ -1,29 +1,31 @@
-import { getUserInfo } from "@/features/layout/actions"
-import { getTranslations } from "next-intl/server"
-import { getDashboardStores } from "../actions/getDashboardStores"
-import { StoreCard } from "@/features/stores/components"
-import Link from "next/link"
 import { ArrowRight, Store } from "lucide-react"
-/* import { CreateStoreButton } from "@/features/stores/components" */
 import * as motion from "motion/react-client"
-import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new"
+import Link from "next/link"
+import { getTranslations } from "next-intl/server"
 
-const StoreList = async () => {
+import { getDashboardStoresAction } from "@/features/dashboard/actions"
+import { StoreListError } from "@/features/dashboard/components"
+import { getUserInfo } from "@/features/layout/actions"
+import { StoreCard } from "@/features/stores/components"
+import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new"
+import { redirect } from "@/i18n/naviation"
+
+async function StoreList() {
 
     const t = await getTranslations("dashboard")
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError } = await getUserInfo()
 
-    if (userError || !user) {
-        console.error(userMessage)
-        return null
+    if (!user) return redirect({ href: "/login", locale: "es" })
+
+    if (userError) {
+        return <StoreListError />
     }
 
-    const { payload: dashboardData, error: dashboardError } = await getDashboardStores(user.id, 2)
+    const { payload: dashboardData, error: dashboardError } = await getDashboardStoresAction(user.id, 2)
 
     if (dashboardError || !dashboardData) {
-        console.error("Error loading dashboard data")
-        return null
+        return <StoreListError />
     }
 
     return (
@@ -60,7 +62,6 @@ const StoreList = async () => {
                                 <p className="text-center text-sm text-muted-foreground">
                                     No stores found
                                 </p>
-                                {/* <CreateStoreButton userId={user.id} /> */}
                                 <CreateStoreButtonNew userId={user.id} />
                             </div>
                         )}
@@ -71,4 +72,4 @@ const StoreList = async () => {
     )
 }
 
-export default StoreList
+export { StoreList }

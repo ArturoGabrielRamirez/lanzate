@@ -1,5 +1,5 @@
 // Actions
-export { getDashboardStores } from './actions/getDashboardStores'
+export { getDashboardStores } from './actions/get-dashboard-stores.action'
 export { updateStoreOperationalSettingsAction } from './actions/updateStoreOperationalSettingsAction'
 
 // Data
