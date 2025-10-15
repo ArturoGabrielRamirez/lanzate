@@ -1,5 +1,5 @@
 "use client"
-import { Boxes, Calendar, EllipsisVertical, Loader2, StoreIcon, Trash2 } from "lucide-react"
+import { Boxes, Calendar, EllipsisVertical, Loader2, ShoppingCart, StoreIcon, Trash2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
@@ -77,8 +77,13 @@ function StoreCard({ store, userId }: StoreCardProps) {
                                     </Link>
                                 </DropDrawerItem>
                                 <DropDrawerItem icon={<Boxes className="size-6" />}>
-                                    <Link href={`/stores/${store.slug}/account`}>
-                                        View products
+                                    <Link href={`/stores/${store.slug}/products`}>
+                                        Products
+                                    </Link>
+                                </DropDrawerItem>
+                                <DropDrawerItem icon={<ShoppingCart className="size-6" />}>
+                                    <Link href={`/stores/${store.slug}/orders`}>
+                                        Orders
                                     </Link>
                                 </DropDrawerItem>
                             </DropDrawerGroup>
