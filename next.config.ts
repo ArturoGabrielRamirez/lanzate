@@ -7,19 +7,21 @@ const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin')
 
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ["lanzate.app","lodemauri.lanzate.app","www.lanzate.app"],
+  allowedDevOrigins: ["lanzate.app", "lodemauri.lanzate.app", "www.lanzate.app"],
   experimental: {
     serverActions: {
       bodySizeLimit: '3mb',
     },
   },
-  devIndicators : {
-    position : "top-right"
+  devIndicators: {
+    position: "top-right"
   },
   images: {
     remotePatterns: [
       {
-        hostname: "api.dicebear.com"
+        protocol: "https",
+        hostname: "api.dicebear.com",
+        pathname: "/**",
       },
       {
         hostname: "ugsxvnqkbxihxjxchckw.supabase.co"

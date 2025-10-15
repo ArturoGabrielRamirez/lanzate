@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server"
 
 import { getDashboardStoresAction } from "@/features/dashboard/actions"
 import { StoreListError } from "@/features/dashboard/components"
-import { StoreList } from "@/features/dashboard/components/store-list/store-list"
+import { StoreList } from "@/features/dashboard/components"
 import { getUserInfo } from "@/features/layout/actions"
 import { redirect } from "@/i18n/naviation"
 
@@ -19,7 +19,7 @@ async function StoreListContainer() {
         return <StoreListError />
     }
 
-    const { payload: dashboardData, error: dashboardError } = await getDashboardStoresAction(user.id, 2)
+    const { payload: dashboardData, hasError: dashboardError } = await getDashboardStoresAction(user.id, 2)
 
     if (dashboardError || !dashboardData) {
         return <StoreListError />

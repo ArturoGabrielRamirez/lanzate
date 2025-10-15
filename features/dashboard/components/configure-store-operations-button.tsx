@@ -1,17 +1,18 @@
 "use client"
 
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
-import { operationalSettingsSchema } from "../schemas/operational-settings-schema"
-import { updateStoreOperationalSettingsAction } from "../actions/updateStoreOperationalSettingsAction"
-import { formatErrorResponse } from "@/utils/lib"
+import { PaymentMethod } from "@prisma/client"
 import { Settings, Clock, CreditCard, Truck } from "lucide-react"
 import { useState } from "react"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { DashboardStore } from "../types/types"
-import { PaymentMethod, StoreOperationalSettingsForm } from "../types/operational-settings"
+import { updateStoreOperationalSettingsAction } from "@/features/dashboard/actions/updateStoreOperationalSettingsAction"
+import { operationalSettingsSchema } from "@/features/dashboard/schemas/operational-settings-schema"
+import { DashboardStore, StoreOperationalSettingsForm } from "@/features/dashboard/types"
+import { ButtonWithPopup, InputField } from "@/features/layout/components"
+import { formatErrorResponse } from "@/utils/lib"
 
 type ConfigureStoreOperationsButtonProps = {
     userId: number

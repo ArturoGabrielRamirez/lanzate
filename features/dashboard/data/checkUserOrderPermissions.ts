@@ -1,15 +1,9 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
-type CheckUserOrderPermissionsReturn = {
-    message: string
-    payload: boolean
-    error: boolean
-}
-
-export async function checkUserOrderPermissions(userId: number): Promise<CheckUserOrderPermissionsReturn> {
+export async function checkUserOrderPermissions(userId: number) {
     return actionWrapper(async () => {
         // Check if user is admin of any store or has can_create_orders permission
         const storesWithPermissions = await prisma.store.findMany({

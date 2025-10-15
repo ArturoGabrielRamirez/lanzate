@@ -1,7 +1,7 @@
 "use client"
 
+import { DashboardStore } from "@/features/dashboard/types"
 import UnifiedCreateProductButton from "@/features/products/components/unified-create-product-button"
-import { DashboardStore } from "../types/types"
 
 type CreateProductForStoreButtonProps = {
     userId: number

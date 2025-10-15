@@ -1,1 +1,1 @@
-export * from "@/features/dashboard/types/store-list.types"
+export * from "@/features/dashboard/types/types"

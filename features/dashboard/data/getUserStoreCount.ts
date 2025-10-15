@@ -3,13 +3,7 @@
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 
-type GetUserStoreCountReturn = {
-    message: string
-    payload: number
-    error: boolean
-}
-
-export async function getUserStoreCount(userId: number): Promise<GetUserStoreCountReturn> {
+export async function getUserStoreCount(userId: number) {
     return actionWrapper(async () => {
 
         const storeCount = await prisma.store.count({

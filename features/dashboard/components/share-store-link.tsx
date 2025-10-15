@@ -1,14 +1,15 @@
 "use client"
 
+import { Copy, ExternalLink } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
+import { toast } from "sonner"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Copy, ExternalLink } from "lucide-react"
-import { toast } from "sonner"
-import { DashboardStore } from "../types/types"
-import { useTranslations } from "next-intl"
+import { DashboardStore } from "@/features/dashboard/types"
 
 type ShareStoreLinkProps = {
     stores: DashboardStore[]

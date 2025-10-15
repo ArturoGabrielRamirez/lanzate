@@ -1,8 +1,19 @@
 "use server"
 
-import { selectDashboardStores } from "@/features/dashboard/data/selectDashboardStores"
-import { GetDashboardStoresReturn } from "@/features/dashboard/types/types"
+import { selectDashboardStoresData } from "@/features/dashboard/data"
+import { actionWrapper } from "@/features/global/utils"
 
-export async function getDashboardStoresAction(userId: number, limit?: number): Promise<GetDashboardStoresReturn> {
-    return await selectDashboardStores(userId, limit)
+export async function getDashboardStoresAction(userId: number, limit?: number) {
+    return await actionWrapper(async () => {
+
+        const { error, payload, message } = await selectDashboardStoresData(userId, limit)
+
+        if (error) throw new Error(message)
+
+        return {
+            message: message,
+            payload: payload,
+            hasError: false
+        }
+    })
 } 

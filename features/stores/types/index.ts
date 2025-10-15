@@ -4,7 +4,6 @@ import { Props as TabPageProps } from "./tab-page-type";
 import { Props as CreateStoreButtonProps } from "./create-store-button-type";
 import { Props as DeleteStoreButtonProps } from "./delete-store-button-type";
 import { Props as EditStoreButtonProps } from "./edit-store-button-type";
-import { Props as StoreCardProps } from "./store-card-type";
 import { Props as TabTriggerLinkProps } from "./tab-trigger-link-type";
 import { Props as TabClientContainerProps } from "./tab-client-container-type";
 import { Props as AccountTabProps } from "./account-tab-type";
@@ -23,7 +22,6 @@ export type {
     CreateStoreButtonProps,
     DeleteStoreButtonProps,
     EditStoreButtonProps,
-    StoreCardProps,
     TabTriggerLinkProps,
     TabClientContainerProps,
     AccountTabProps,
@@ -37,3 +35,5 @@ export type {
     ChangeOrderStatusData,
     SettingsTabProps
 }
+
+export * from "@/features/stores/types/types"

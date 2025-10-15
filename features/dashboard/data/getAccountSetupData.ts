@@ -2,22 +2,8 @@
 
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
-import { Store } from "@prisma/client"
 
-export type AccountSetupData = {
-	storeCount: number
-	productCount: number
-	hasOperationalSettings: boolean
-	stores: Store[]
-}
-
-export type GetAccountSetupDataReturn = {
-	message: string
-	payload: AccountSetupData
-	error: boolean
-}
-
-export async function getAccountSetupData(userId: number): Promise<GetAccountSetupDataReturn> {
+export async function getAccountSetupData(userId: number) {
 	return actionWrapper(async () => {
 		const stores = await prisma.store.findMany({
 			where: {

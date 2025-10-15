@@ -1,14 +1,15 @@
 "use client"
 
-import { useState, useRef, useEffect, useCallback } from "react"
 import { Store, ShoppingCart, Settings, Share2, ChevronLeft, ChevronRight } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
-import DashboardStepCard from "./dashboard-step-card"
-import ShareStoreLink from "./share-store-link"
-/* import { CreateStoreButton } from "@/features/stores/components" */
-import { CreateProductForStoreButton, ConfigureStoreOperationsButton } from "@/features/dashboard/components"
-import { DashboardStoreStats } from "../types/types"
 import { useTranslations } from "next-intl"
+import { useState, useRef, useEffect, useCallback } from "react"
+
+import { CreateProductForStoreButton, ConfigureStoreOperationsButton } from "@/features/dashboard/components"
+import DashboardStepCard from "@/features/dashboard/components/dashboard-step-card"
+import ShareStoreLink from "@/features/dashboard/components/share-store-link"
+/* import { CreateStoreButton } from "@/features/stores/components" */
+import { DashboardStoreStats } from "@/features/dashboard/types"
 import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new"
 
 type StepStatus = 'disabled' | 'active' | 'complete'
