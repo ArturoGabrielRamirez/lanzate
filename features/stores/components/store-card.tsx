@@ -99,7 +99,7 @@ function StoreCard({ store, userId }: StoreCardProps) {
                     <Calendar className="size-4" />
                     {store.created_at.toLocaleDateString()}
                 </p>
-                <p className="text-md">
+                <p className="text-md text-muted-foreground">
                     {store._count?.products || 0} {t("products")}
                 </p>
             </CardFooter>
