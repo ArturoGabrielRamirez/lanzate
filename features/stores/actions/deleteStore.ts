@@ -27,12 +27,13 @@
 ---
 
 */
-
-import { actionWrapper } from "@/utils/lib"
-import { deleteStore as deleteStoreFromDb } from "../data/deleteStore"
 import { revalidatePath } from "next/cache"
+
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
-import { canDeleteStore } from "../access/canDeleteStore"
+import { canDeleteStore } from "@/features/stores/access/canDeleteStore"
+import { deleteStore as deleteStoreFromDb } from "@/features/stores/data/deleteStore"
+import { actionWrapper } from "@/utils/lib"
+
 export async function deleteStore(storeId: number, userId: number) {
     return actionWrapper(async () => {
 
@@ -52,6 +53,7 @@ export async function deleteStore(storeId: number, userId: number) {
         if (error) throw new Error(message)
 
         revalidatePath("/stores")
+        revalidatePath(`/dashboard`)
 
         // Create action log
         const { error: logError } = await insertLogEntry({
