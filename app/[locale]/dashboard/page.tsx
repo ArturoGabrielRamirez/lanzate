@@ -1,28 +1,28 @@
-import { Rss } from "lucide-react"
+/* import { Rss } from "lucide-react" */
 import { Metadata } from "next"
-import { NextStepProvider } from "nextstepjs"
+/* import { NextStepProvider } from "nextstepjs" */
 import { Suspense } from "react"
 
 import { WelcomeWidget } from "@/features/dashboard/components"
 import { DashboardError } from "@/features/dashboard/components"
-import AccountSetup from "@/features/dashboard/components/account-setup"
-import AccountSetupSkeleton from "@/features/dashboard/components/account-setup-skeleton"
+/* import AccountSetup from "@/features/dashboard/components/account-setup"
+import AccountSetupSkeleton from "@/features/dashboard/components/account-setup-skeleton" */
 import ActivityFeedSkeleton from "@/features/dashboard/components/activity-feed-skeleton"
 import ActivityFeed from "@/features/dashboard/components/activity-items/activity-feed"
-import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
+/* import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
 import DashboardStats from "@/features/dashboard/components/dashboard-stats"
 import DashboardStatsSkeleton from "@/features/dashboard/components/dashboard-stats-skeleton"
 import FeedFilters from "@/features/dashboard/components/feed-filters"
 import HelpCard from "@/features/dashboard/components/help-card"
 import QuickActions from "@/features/dashboard/components/quick-actions"
-import QuickActionsSkeleton from "@/features/dashboard/components/quick-actions-skeleton"
-import { StoreList } from "@/features/dashboard/components/store-list"
+import QuickActionsSkeleton from "@/features/dashboard/components/quick-actions-skeleton" */
+import { StoreListContainer } from "@/features/dashboard/components/store-list"
 import { StoreListSkeleton } from "@/features/dashboard/components/store-list"
 import { loadFeedParams } from "@/features/dashboard/utils/load-feed-params"
 import { GlobalSearch } from "@/features/global-search/components"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { PageContainer } from "@/features/layout/components"
-import NextStepContainer from "@/features/layout/components/next-step-container"
+/* import NextStepContainer from "@/features/layout/components/next-step-container" */
 import { redirect } from "@/i18n/naviation"
 
 export const metadata: Metadata = {
@@ -55,7 +55,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
                 <GlobalSearch userId={user.id} />
             </Suspense>
             <Suspense fallback={<StoreListSkeleton />}>
-                <StoreList />
+                <StoreListContainer />
             </Suspense>
             <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
                 <ActivityFeed userId={user.id} type={type} page={page || 1} />

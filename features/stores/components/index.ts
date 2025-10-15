@@ -6,7 +6,6 @@ import { DeliverySwitch } from "./delivery-switch";
 import { PaymentMethodsSwitches } from "./payment-methods-switches";
 import ProductCard from "./product-card";
 import ProductDetail from "./product-detail";
-import StoreCard from "./store-card";
 import StoreHeader from "./store-header";
 import StoreHeaderServer from "./store-header-server";
 import StoreHeaderSkeleton from "./store-header-skeleton";
@@ -40,7 +39,6 @@ export {
     PaymentMethodsSwitches,
     ProductCard,
     ProductDetail,
-    StoreCard,
     StoreHeader,
     StoreHeaderServer,
     StoreHeaderSkeleton,
@@ -65,3 +63,5 @@ export {
     HistoryTable,
     StoreInformationForm
 }
+
+export * from "@/features/stores/components/store-card"
