@@ -1,12 +1,12 @@
 "use client"
-import { Calendar, EllipsisVertical, StoreIcon } from "lucide-react"
+import { Calendar, EllipsisVertical, StoreIcon, Trash2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { DropDrawer, DropDrawerContent, DropDrawerTrigger } from "@/features/shadcn/components/components/ui/dropdrawer"
+import { DropDrawer, DropDrawerContent, DropDrawerFooter, DropDrawerGroup, DropDrawerItem, DropDrawerTrigger } from "@/features/shadcn/components/components/ui/dropdrawer"
 import { StoreCardProps } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
@@ -18,7 +18,7 @@ function StoreCard({ store }: StoreCardProps) {
         <Card className="transition-all gap-2 md:gap-3 lg:gap-4 shrink-0 group h-full group relative">
             <CardHeader className="gap-0 items-center">
                 <CardTitle className="flex items-start md:items-center gap-2 truncate">
-                    <Avatar className="aspect-square size-8 lg:size-10 shrink-0">
+                    <Avatar className="aspect-square size-8 lg:size-10 shrink-0 border-2 border-primary">
                         <AvatarImage src={store.logo || ""} alt={store.name} asChild className="aspect-square">
                             <Image src={store.logo || ""} alt={store.name} width={32} height={32} unoptimized className="aspect-square" />
                         </AvatarImage>
@@ -46,7 +46,21 @@ function StoreCard({ store }: StoreCardProps) {
                             />
                         </DropDrawerTrigger>
                         <DropDrawerContent>
-
+                            <DropDrawerGroup>
+                                <DropDrawerItem icon={<StoreIcon className="size-4" />}>
+                                    <Link href={`/stores/${store.slug}/account`}>
+                                        Manage store
+                                    </Link>
+                                </DropDrawerItem>
+                                <DropDrawerItem icon={<StoreIcon className="size-4" />}>
+                                    <Link href={`/stores/${store.slug}/account`}>
+                                        View products
+                                    </Link>
+                                </DropDrawerItem>
+                            </DropDrawerGroup>
+                            <DropDrawerItem icon={<Trash2 className="size-4 text-destructive" />} className="text-destructive">
+                                Delete Store
+                            </DropDrawerItem>
                         </DropDrawerContent>
                     </DropDrawer>
                 </CardAction>
