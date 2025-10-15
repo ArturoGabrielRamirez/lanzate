@@ -1,5 +1,7 @@
 import { formatSuccessResponse } from "@/features/global/utils"
-import { SearchResultType } from "@/features/global-search/types"
+import { SEARCH_CONFIG } from "@/features/global-search/constants"
+import { SearchResult } from "@/features/global-search/types"
+import { formatSearchTerm, createProductSearchResult, createOrderSearchResult, createCustomerSearchResult } from "@/features/global-search/utils"
 import { prisma } from "@/utils/prisma"
 import { createServerSideClient } from "@/utils/supabase/server"
 
@@ -11,7 +13,7 @@ async function searchGlobalData(query: string, userId: number) {
 
     const supabase = createServerSideClient()
 
-    const searchTerm = `%${query.toLowerCase()}%`
+    const searchTerm = formatSearchTerm(query)
 
     const stores = await prisma.store.findMany({
         where: {
@@ -27,7 +29,7 @@ async function searchGlobalData(query: string, userId: number) {
 
     const storeIds = stores.map(store => store.id)
 
-    const results: SearchResultType[] = []
+    const results: SearchResult[] = []
 
     const products = await prisma.product.findMany({
         where: {
@@ -55,20 +57,12 @@ async function searchGlobalData(query: string, userId: number) {
                 }
             },
         },
-        take: 5
+        take: SEARCH_CONFIG.MAX_RESULTS_PER_TYPE.PRODUCTS
     })
 
     if (products) {
         products.forEach(product => {
-            const store = product.store
-            results.push({
-                id: product.id,
-                type: 'product',
-                title: product.name,
-                subtitle: `SKU: ${product.sku} - $${product.price}`,
-                href: `/stores/${store?.slug}/products/${product.id}`,
-                icon: '📦'
-            })
+            results.push(createProductSearchResult(product))
         })
     }
 
@@ -98,21 +92,15 @@ async function searchGlobalData(query: string, userId: number) {
                 }
             },
         },
-        take: 5
+        take: SEARCH_CONFIG.MAX_RESULTS_PER_TYPE.ORDERS
     })
-
 
     if (orders) {
         orders.forEach(order => {
-            const store = order.store
-            results.push({
-                id: order.id,
-                type: 'order',
-                title: `Order #${order.id}`,
-                subtitle: `${order.customer_name || order.customer_email} - $${order.total_price} (${order.status})`,
-                href: `/stores/${store?.slug}/orders/${order.id}`,
-                icon: '🛒'
-            })
+            results.push(createOrderSearchResult({
+                ...order,
+                customer_email: order.customer_email || ''
+            }))
         })
     }
 
@@ -127,7 +115,7 @@ async function searchGlobalData(query: string, userId: number) {
         .in('store_id', storeIds)
         .not('customer_name', 'is', null)
         .or(`customer_name.ilike.${searchTerm},customer_email.ilike.${searchTerm}`)
-        .limit(3)
+        .limit(SEARCH_CONFIG.MAX_RESULTS_PER_TYPE.CUSTOMERS)
 
     if (customersError) throw new Error("Error fetching customers")
 
@@ -144,18 +132,11 @@ async function searchGlobalData(query: string, userId: number) {
         }, [])
 
         uniqueCustomers.forEach(customer => {
-            results.push({
-                id: customer.customer_email || customer.customer_name,
-                type: 'customer',
-                title: customer.customer_name || 'Unknown Customer',
-                subtitle: customer.customer_email || 'No email',
-                href: null,
-                icon: '👤'
-            })
+            results.push(createCustomerSearchResult(customer))
         })
     }
 
-    return formatSuccessResponse("Search completed", results.slice(0, 10))
+    return formatSuccessResponse("Search completed", results.slice(0, SEARCH_CONFIG.MAX_TOTAL_RESULTS))
 }
 
 export { searchGlobalData }

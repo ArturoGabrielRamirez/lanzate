@@ -3,65 +3,25 @@
 import { Search, ExternalLink, Loader } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
 import Link from "next/link"
-import { useState, useEffect, useRef } from "react"
-import { toast } from "sonner"
 
-import { searchGlobalAction } from "@/features/global-search/actions"
-import { GlobalSearchProps, SearchResultType } from "@/features/global-search/types"
+import { SEARCH_CONFIG, SEARCH_MESSAGES } from "@/features/global-search/constants"
+import { useGlobalSearch } from "@/features/global-search/hooks"
+import { GlobalSearchProps } from "@/features/global-search/types"
 import { Field } from "@/features/shadcn/components/field"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/features/shadcn/components/input-group"
-import { useDebounce } from "@/hooks/use-debounce"
 
 
 function GlobalSearch({ userId }: GlobalSearchProps) {
-    const [query, setQuery] = useState('')
-    const [results, setResults] = useState<SearchResultType[]>([])
-    const [isLoading, setIsLoading] = useState(false)
-    const [showResults, setShowResults] = useState(false)
-    const debouncedQuery = useDebounce(query, 300)
-    const searchRef = useRef<HTMLDivElement>(null)
-
-    useEffect(() => {
-        async function performSearch() {
-            if (!debouncedQuery.trim()) {
-                setResults([])
-                setShowResults(false)
-                return
-            }
-
-            setIsLoading(true)
-            const { hasError, payload, message } = await searchGlobalAction(debouncedQuery, userId)
-
-            if (hasError) {
-                toast.error(message)
-                setIsLoading(false)
-                return setResults([])
-            }
-
-            setResults(payload || [])
-            setShowResults(true)
-            setIsLoading(false)
-        }
-
-        performSearch()
-    }, [debouncedQuery, userId])
-
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-                setShowResults(false)
-            }
-        }
-
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [])
-
-    const handleInputFocus = () => {
-        if (results.length > 0) {
-            setShowResults(true)
-        }
-    }
+    const {
+        query,
+        setQuery,
+        results,
+        isLoading,
+        showResults,
+        setShowResults,
+        searchRef,
+        handleInputFocus,
+    } = useGlobalSearch(userId)
 
     return (
         <div ref={searchRef} className="relative w-full">
@@ -75,7 +35,7 @@ function GlobalSearch({ userId }: GlobalSearchProps) {
                             <Search className="size-4" />
                         </InputGroupAddon>
                         <InputGroupInput
-                            placeholder="Products, orders, customers..."
+                            placeholder={SEARCH_CONFIG.SEARCH_PLACEHOLDER}
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             onFocus={handleInputFocus}
@@ -101,13 +61,13 @@ function GlobalSearch({ userId }: GlobalSearchProps) {
                         {isLoading && (
                             <div className="p-4 text-center text-muted-foreground">
                                 <Search className="size-4 animate-spin mx-auto mb-2" />
-                                Searching...
+                                {SEARCH_MESSAGES.SEARCHING}
                             </div>
                         )}
 
                         {!isLoading && results.length === 0 && query.trim() && (
                             <div className="p-4 text-center text-muted-foreground">
-                                No results found for &ldquo;{query}&rdquo;
+                                {SEARCH_MESSAGES.NO_RESULTS} &ldquo;{query}&rdquo;
                             </div>
                         )}
 
@@ -154,7 +114,7 @@ function GlobalSearch({ userId }: GlobalSearchProps) {
 
                         {!isLoading && results.length > 0 && (
                             <div className="p-2 text-xs text-center text-muted-foreground border-t border-gray-100 dark:border-gray-700">
-                                Showing {results.length} result{results.length !== 1 ? 's' : ''}
+                                {SEARCH_MESSAGES.SHOWING_RESULTS} {results.length} {results.length !== 1 ? SEARCH_MESSAGES.RESULTS : SEARCH_MESSAGES.RESULT}
                             </div>
                         )}
                     </motion.div>
