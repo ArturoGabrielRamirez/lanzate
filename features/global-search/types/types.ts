@@ -58,3 +58,36 @@ export interface GlobalSearchResultsProps {
     query: string
     onResultClick: () => void
 }
+
+// Data Types
+export interface ProductSearchData {
+    id: number
+    name: string
+    sku: string
+    price: number
+    store_id: number
+    store: {
+        slug: string
+    }
+}
+
+export interface OrderSearchData {
+    id: number
+    customer_name: string | null
+    customer_email: string | null
+    total_price: number
+    status: string
+    store_id: number
+    store: {
+        slug: string
+    }
+}
+
+export interface CustomerSearchData {
+    customer_name: string | null
+    customer_email: string
+    store_id: number
+    stores: {
+        slug: string
+    }
+}
