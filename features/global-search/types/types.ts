@@ -43,3 +43,18 @@ export interface UseGlobalSearchReturn {
     searchRef: React.RefObject<HTMLDivElement | null>
     handleInputFocus: () => void
 }
+
+// Component Props Types
+export interface GlobalSearchInputProps {
+    query: string
+    setQuery: (query: string) => void
+    isLoading: boolean
+    onFocus: () => void
+}
+
+export interface GlobalSearchResultsProps {
+    results: SearchResult[]
+    isLoading: boolean
+    query: string
+    onResultClick: () => void
+}

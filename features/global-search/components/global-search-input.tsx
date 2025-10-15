@@ -3,15 +3,9 @@
 import { Search, Loader } from "lucide-react"
 
 import { SEARCH_CONFIG } from "@/features/global-search/constants"
+import { GlobalSearchInputProps } from "@/features/global-search/types"
 import { Field } from "@/features/shadcn/components/field"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/features/shadcn/components/input-group"
-
-interface GlobalSearchInputProps {
-    query: string
-    setQuery: (query: string) => void
-    isLoading: boolean
-    onFocus: () => void
-}
 
 function GlobalSearchInput({ query, setQuery, isLoading, onFocus }: GlobalSearchInputProps) {
     return (
