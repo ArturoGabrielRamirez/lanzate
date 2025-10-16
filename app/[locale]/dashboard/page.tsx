@@ -3,6 +3,7 @@ import { Metadata } from "next"
 /* import { NextStepProvider } from "nextstepjs" */
 import { Suspense } from "react"
 
+import { WelcomeTutorial } from "@/features/dashboard/components"
 import { WelcomeWidget } from "@/features/dashboard/components"
 import { DashboardError } from "@/features/dashboard/components"
 /* import AccountSetup from "@/features/dashboard/components/account-setup"
@@ -51,6 +52,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
     return (
         <PageContainer className="gap-4 flex flex-col">
             <WelcomeWidget user={user} />
+            <WelcomeTutorial />
             <Suspense>
                 <GlobalSearch userId={user.id} />
             </Suspense>

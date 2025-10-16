@@ -12,12 +12,12 @@ function StoreList({ stores, userId }: StoreListProps) {
                 </motion.div>
             ))}
             {stores.length === 0 && (
-                <motion.div className="relative group shrink-0 grow" whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+                <motion.div className="relative group shrink-0 grow">
                     <NewStoreCard userId={userId} variant="empty" />
                 </motion.div>
             )}
             {stores.length > 0 && (
-                <motion.div className="relative group shrink-0 grow" whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+                <motion.div className="relative group shrink-0 grow">
                     <NewStoreCard userId={userId} variant="add-more" />
                 </motion.div>
             )}

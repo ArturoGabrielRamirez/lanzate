@@ -14,3 +14,4 @@ export { default as QuickActionsClient } from './quick-actions-client'
 export * from "@/features/dashboard/components/activity-items"
 export * from "@/features/dashboard/components/welcome-widget"
 export * from "@/features/dashboard/components/store-list"
+export * from "@/features/dashboard/components/welcome-tutorial"

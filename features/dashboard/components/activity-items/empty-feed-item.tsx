@@ -12,8 +12,8 @@ async function EmptyFeedItem() {
     const { payload: user } = await getUserInfo()
 
     return (
-        <Card className="grow h-full">
-            <CardContent className="p-0 grow flex items-center">
+        <Card className="grow h-full border-dashed bg-card/50 group">
+            <CardContent className="p-0 grow flex items-center opacity-50 group-hover:opacity-100 transition-all">
                 <Empty>
                     <EmptyHeader>
                         <EmptyMedia variant="icon">
