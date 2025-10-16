@@ -5,7 +5,7 @@ import { StoreCard, NewStoreCard } from "@/features/stores/components"
 
 function StoreList({ stores, userId }: StoreListProps) {
     return (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-3">
             {stores.map((store) => (
                 <motion.div className="relative group shrink-0 grow" key={store.id} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
                     <StoreCard store={store} userId={userId} />

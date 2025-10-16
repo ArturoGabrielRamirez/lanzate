@@ -36,4 +36,4 @@ function StoreHeaderSkeleton() {
     )
 }
 
-export default StoreHeaderSkeleton 
+export { StoreHeaderSkeleton }

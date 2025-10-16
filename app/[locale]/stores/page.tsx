@@ -3,9 +3,9 @@ import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
 
+import { StoreListContainer, StoreListSkeleton } from "@/features/dashboard/components"
 import { Title } from "@/features/layout/components"
 import { PageContainer } from "@/features/layout/components/page-container"
-import { StoresContainer, StoresSkeleton } from "@/features/stores/components"
 
 export const metadata: Metadata = {
     title: "Stores",
@@ -27,8 +27,8 @@ async function StoresPage() {
                 }
             ]} showDate />
 
-            <Suspense fallback={<StoresSkeleton />}>
-                <StoresContainer />
+            <Suspense fallback={<StoreListSkeleton />}>
+                <StoreListContainer />
             </Suspense>
         </PageContainer>
     )

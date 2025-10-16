@@ -32,10 +32,7 @@ async function StoreListContainer() {
                     <Store className="size-4 xl:size-5" />
                     {t("your-stores.title", { count: dashboardData.storeCount })}
                 </h2>
-                <Link
-                    href="/stores"
-                    className="flex items-center gap-1 text-sm text-inherit hover:text-primary transition-colors"
-                >
+                <Link href="/stores" className="flex items-center gap-1 text-sm text-inherit hover:text-primary transition-colors">
                     {t("your-stores.see-all")}
                     <ArrowRight className="size-4" />
                 </Link>

@@ -1,8 +1,8 @@
 "use client"
 
-import { Tabs } from "@/components/ui/tabs"
 import { usePathname } from "next/navigation"
 
+import { Tabs } from "@/components/ui/tabs"
 import { TabClientContainerProps } from "@/features/stores/types"
 
 function TabsClientContainer({ children }: TabClientContainerProps) {
@@ -16,4 +16,5 @@ function TabsClientContainer({ children }: TabClientContainerProps) {
         </Tabs>
     )
 }
-export default TabsClientContainer
+
+export { TabsClientContainer }

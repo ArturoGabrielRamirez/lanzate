@@ -7,8 +7,9 @@ import { useState } from "react"
 import { toast } from "sonner"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { DropDrawer, DropDrawerContent, DropDrawerGroup, DropDrawerItem, DropDrawerTrigger } from "@/features/shadcn/components/components/ui/dropdrawer"
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty"
 import { deleteStoreAction } from "@/features/stores/actions"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
@@ -54,9 +55,9 @@ function StoreCard({ store, userId }: StoreCardProps) {
 
     return (
         <Card className="transition-all gap-2 md:gap-3 lg:gap-4 group h-full group relative">
-            <CardHeader className="gap-0 items-center">
+            <CardHeader className="gap-0 items-center hidden md:grid">
                 <CardTitle className="flex items-start md:items-center gap-2 truncate">
-                    <Avatar className="aspect-square size-8 lg:size-10 shrink-0 border-2 border-primary">
+                    <Avatar className="aspect-square size-8 lg:size-10 shrink-0 border-2 border-primary hidden md:block">
                         <AvatarImage src={store?.logo || ""} alt={store?.name || ""} asChild className="aspect-square">
                             <Image src={store?.logo || ""} alt={store?.name || ""} width={32} height={32} unoptimized className="aspect-square" />
                         </AvatarImage>
@@ -108,7 +109,29 @@ function StoreCard({ store, userId }: StoreCardProps) {
                     </DropDrawer>
                 </CardAction>
             </CardHeader>
-            <CardFooter className="justify-between items-center flex-wrap">
+            <CardContent className="grow">
+                <Empty className="md:hidden">
+                    <EmptyHeader>
+                        <EmptyMedia variant="icon">
+                            <Avatar className="aspect-square size-8 lg:size-10 shrink-0 border-2 border-primary hidden md:block">
+                                <AvatarImage src={store?.logo || ""} alt={store?.name || ""} asChild className="aspect-square">
+                                    <Image src={store?.logo || ""} alt={store?.name || ""} width={32} height={32} unoptimized className="aspect-square" />
+                                </AvatarImage>
+                                <AvatarFallback>
+                                    <StoreIcon className="size-4 md:size-5 lg:size-6 text-primary/50 group-hover:text-primary transition-all" />
+                                </AvatarFallback>
+                            </Avatar>
+                        </EmptyMedia>
+                        <EmptyTitle>
+                            {store?.name || ""}
+                        </EmptyTitle>
+                        <EmptyDescription>
+                            {store?.description || t("no-description")}
+                        </EmptyDescription>
+                    </EmptyHeader>
+                </Empty>
+            </CardContent>
+            <CardFooter className="justify-center md:justify-between items-center flex-wrap">
                 <p className="text-sm text-muted-foreground items-center gap-2 hidden md:flex">
                     <Calendar className="size-4" />
                     {store?.created_at.toLocaleDateString() || ""}
@@ -119,6 +142,38 @@ function StoreCard({ store, userId }: StoreCardProps) {
                     </p>
                 </div>
             </CardFooter>
+            <CardAction className="shrink-0 absolute top-0 right-0 md:hidden">
+                <DropDrawer>
+                    <DropDrawerTrigger asChild>
+                        <IconButton
+                            className="shrink-0"
+                            icon={EllipsisVertical}
+                        />
+                    </DropDrawerTrigger>
+                    <DropDrawerContent>
+                        <DropDrawerGroup>
+                            <DropDrawerItem icon={<StoreIcon className="size-6 lg:size-4" />}>
+                                <Link href={`/stores/${store?.slug || ""}/account`}>
+                                    Manage store
+                                </Link>
+                            </DropDrawerItem>
+                            <DropDrawerItem icon={<Boxes className="size-6 lg:size-4" />}>
+                                <Link href={`/stores/${store?.slug || ""}/products`}>
+                                    Products
+                                </Link>
+                            </DropDrawerItem>
+                            <DropDrawerItem icon={<ShoppingCart className="size-6 lg:size-4" />}>
+                                <Link href={`/stores/${store?.slug || ""}/orders`}>
+                                    Orders
+                                </Link>
+                            </DropDrawerItem>
+                        </DropDrawerGroup>
+                        <DropDrawerItem icon={isDeleting ? <Loader2 className="size-6 lg:size-4 text-destructive animate-spin" /> : <Trash2 className="size-6 lg:size-4 text-destructive" />} className="text-destructive" onClick={handleDeleteStore} disabled={isDeleting}>
+                            {isDeleting ? "Deleting..." : "Delete Store"}
+                        </DropDrawerItem>
+                    </DropDrawerContent>
+                </DropDrawer>
+            </CardAction>
         </Card>
     )
 }

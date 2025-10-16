@@ -52,7 +52,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
     return (
         <PageContainer className="gap-4 flex flex-col">
             <WelcomeWidget user={user} />
-            <WelcomeTutorial />
+            {/* <WelcomeTutorial /> */}
             <Suspense>
                 <GlobalSearch userId={user.id} />
             </Suspense>
