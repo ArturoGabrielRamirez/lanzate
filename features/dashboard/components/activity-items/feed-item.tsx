@@ -13,7 +13,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { extractLink, formatActivityDate, getUserInitials } from "@/features/dashboard/components/activity-items/shared-utils"
 import ConfirmOrderButtonIcon from "@/features/orders/components/confirm-order-button-icon"
 import OpenChatButton from "@/features/orders/components/open-chat-button"
-import { CancelOrderButton } from "@/features/stores/components"
+/* import { CancelOrderButton } from "@/features/stores/components" */
 import { cn } from "@/lib/utils"
 
 type Props = {
@@ -148,9 +148,9 @@ function FeedItem({ item }: Props) {
                     {item.activity_type === "ORDER_CREATED" && item.order.status === "PROCESSING" && (
                         <ConfirmOrderButtonIcon orderId={item.order?.id || 0} />
                     )}
-                    {item.activity_type === "ORDER_CREATED" && (
+                    {/* {item.activity_type === "ORDER_CREATED" && (
                         <CancelOrderButton order={item.order} slug={item.store.slug} size="sm" onlyIcon className="" />
-                    )}
+                    )} */}
                     {item.activity_type === "ORDER_CREATED" && <OpenChatButton roomId={String(item.order.id)} onlyIcon username="Store" messageType="STORE_TO_CUSTOMER" />}
                 </CardFooter>
             </Card>

@@ -81,4 +81,4 @@ async function StoreHeaderServer({ slug }: StoreHeaderServerProps) {
     )
 }
 
-export default StoreHeaderServer
+export { StoreHeaderServer }

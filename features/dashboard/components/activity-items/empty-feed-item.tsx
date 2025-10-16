@@ -1,7 +1,7 @@
 import { MessageCircleDashed } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { getUserInfo } from "@/features/layout/actions";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty";
 import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new";
@@ -12,12 +12,7 @@ async function EmptyFeedItem() {
     const { payload: user } = await getUserInfo()
 
     return (
-        <Card className="bg-card rounded-lg border p-6 grow h-full">
-            <CardHeader className="p-0 pb-4">
-                <CardTitle>
-                    <h2 className="text-2xl font-bold text-center">Actividad Reciente</h2>
-                </CardTitle>
-            </CardHeader>
+        <Card className="grow h-full">
             <CardContent className="p-0 grow flex items-center">
                 <Empty>
                     <EmptyHeader>

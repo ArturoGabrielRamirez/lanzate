@@ -5,3 +5,7 @@ export type StoreCardProps = {
     store?: DashboardStore
     isEmpty?: boolean
 }
+
+export type NewStoreCardProps = {
+    variant?: "empty" | "add-more"
+}
