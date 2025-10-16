@@ -57,19 +57,21 @@ function WelcomeTutorial() {
                 </DialogHeader>
 
                 <div className="text-center md:text-left">
-                    <Image src={images[currentStep - 1]} alt="Welcome Image" width={500} height={500} className="mb-8" />
-                    <p className="text-3xl font-bold mb-4">
+                    <div className="relative w-full aspect-video my-8">
+                        <Image src={images[currentStep - 1]} alt="Welcome Image" fill objectFit="cover" />
+                    </div>
+                    <p className="text-3xl font-bold mb-6">
                         {texts[currentStep - 1].title}
                     </p>
-                    <p className="text-lg mb-2">
+                    <p className="text-lg mb-2 text-balance text-muted-foreground">
                         {texts[currentStep - 1].descriptions[0]}
                     </p>
-                    <p className="text-lg">
+                    <p className="text-lg text-balance text-muted-foreground">
                         {texts[currentStep - 1].descriptions[1]}
                     </p>
                 </div>
 
-                <DialogFooter>
+                <DialogFooter className="!flex-col justify-end md:!flex-row">
                     {currentStep > 1 && (
                         <Button onClick={goToPrevStep} variant="secondary">
                             Previous
