@@ -71,23 +71,23 @@ function StoreCard({ store, userId }: StoreCardProps) {
                         </DropDrawerTrigger>
                         <DropDrawerContent>
                             <DropDrawerGroup>
-                                <DropDrawerItem icon={<StoreIcon className="size-6" />}>
+                                <DropDrawerItem icon={<StoreIcon className="size-6 lg:size-4" />}>
                                     <Link href={`/stores/${store.slug}/account`}>
                                         Manage store
                                     </Link>
                                 </DropDrawerItem>
-                                <DropDrawerItem icon={<Boxes className="size-6" />}>
+                                <DropDrawerItem icon={<Boxes className="size-6 lg:size-4" />}>
                                     <Link href={`/stores/${store.slug}/products`}>
                                         Products
                                     </Link>
                                 </DropDrawerItem>
-                                <DropDrawerItem icon={<ShoppingCart className="size-6" />}>
+                                <DropDrawerItem icon={<ShoppingCart className="size-6 lg:size-4" />}>
                                     <Link href={`/stores/${store.slug}/orders`}>
                                         Orders
                                     </Link>
                                 </DropDrawerItem>
                             </DropDrawerGroup>
-                            <DropDrawerItem icon={isDeleting ? <Loader2 className="size-6 text-destructive animate-spin" /> : <Trash2 className="size-6 text-destructive" />} className="text-destructive" onClick={handleDeleteStore} disabled={isDeleting}>
+                            <DropDrawerItem icon={isDeleting ? <Loader2 className="size-6 lg:size-4 text-destructive animate-spin" /> : <Trash2 className="size-6 lg:size-4 text-destructive" />} className="text-destructive" onClick={handleDeleteStore} disabled={isDeleting}>
                                 {isDeleting ? "Deleting..." : "Delete Store"}
                             </DropDrawerItem>
                         </DropDrawerContent>
