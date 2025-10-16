@@ -1,14 +1,16 @@
-import { Box, Building2, ChartLine, Clock, Paintbrush, ShoppingCart, UsersRound } from "lucide-react"
-import { Store } from "lucide-react"
-import { BookOpenText } from "lucide-react"
+/* import { Box, Building2, ChartLine, Clock, Paintbrush, ShoppingCart, UsersRound } from "lucide-react" */
+/* import { Store } from "lucide-react" */
+/* import { BookOpenText } from "lucide-react" */
 import { getTranslations } from "next-intl/server"
-import { Suspense } from "react"
 
-import { TabsList } from "@/components/ui/tabs"
-import { TabTriggerLink, TabsClientContainer } from "@/features/stores/components"
-import { StoreHeaderSkeleton } from "@/features/stores/components"
-import { StoreHeaderServer } from "@/features/stores/components/store-header-server"
+/* import { TabsList } from "@/components/ui/tabs" */
+/* import { TabTriggerLink, TabsClientContainer } from "@/features/stores/components" */
+/* import { StoreHeaderServer } from "@/features/stores/components/store-header-server" */
+import { getUserInfo } from "@/features/layout/actions"
+import { PageContainer } from "@/features/layout/components"
+import { getStoreBasicsBySlugAction } from "@/features/stores/actions"
 import { StoreDetailsLayoutProps } from "@/features/stores/types"
+import { redirect } from "@/i18n/naviation"
 
 
 async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps) {
@@ -17,13 +19,29 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
 
     const t = await getTranslations("store.layout")
 
+    const { payload: user, hasError: userError } = await getUserInfo()
+
+    if (!user) return redirect({ href: "/login", locale: "es" })
+
+    if (userError) {
+        //return <DashboardError message={userMessage} />
+        return null
+    }
+
+    const { payload: store, hasError: storeError } = await getStoreBasicsBySlugAction(slug)
+
+    if (storeError) {
+        return null
+    }
+
+    if (!store) {
+        return redirect({ href: "/stores", locale: "es" })
+    }
+
     return (
-        <div className="flex flex-col p-2 md:p-4 grow pt-20 md:pt-24 relative pb-24 container mx-auto z-10 xl:px-0">
-            <Suspense fallback={<StoreHeaderSkeleton />}>
-                <StoreHeaderServer slug={slug} />
-            </Suspense>
-            <section className="flex py-0 md:pt-4 grow">
-                {/* <TabsClientContainer>
+        <PageContainer>
+            {children}
+            {/* <TabsClientContainer>
                     <TabsList className="items-start w-full h-full max-md:bg-transparent p-0">
                         <div className="bottom-0 z-10 flex w-full overflow-x-auto md:block md:relative bg-accent md:h-full rounded-xl">
                             <TabTriggerLink value="overview" text={t("overview")} slug={slug} icon={<BookOpenText className="size-6 lg:size-4" />} />
@@ -39,8 +57,7 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                     </TabsList>
                     {children}
                 </TabsClientContainer> */}
-            </section>
-        </div>
+        </PageContainer>
     )
 }
 export default StoreDetailsLayout

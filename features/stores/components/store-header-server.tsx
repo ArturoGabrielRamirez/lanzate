@@ -1,23 +1,28 @@
-import { Store } from "lucide-react"
-
-import { Card, CardContent } from "@/components/ui/card"
-import { Title } from "@/features/layout/components"
-import { getStoreHeaderBySlug } from "@/features/stores/actions/getStoreHeaderBySlug"
-import StoreBannerEditorWrapper from "@/features/stores/components/store-banner-editor-wrapper"
-import StoreLogoEditorWrapper from "@/features/stores/components/store-logo-editor-wrapper"
+import { getStoreBasicsBySlugAction } from "@/features/stores/actions"
+import { StoreCardLogo } from "@/features/stores/components"
 
 type StoreHeaderServerProps = {
     slug: string
 }
 
 async function StoreHeaderServer({ slug }: StoreHeaderServerProps) {
-    const { payload: store, error, message } = await getStoreHeaderBySlug(slug)
 
-    if (error || !store) {
-        return <div>Error loading store header: {message}</div>
+    const { payload: store, hasError, message } = await getStoreBasicsBySlugAction(slug)
+
+    if (hasError || !store) {
+        return <div>Error loading store header: {message || "Unknown error"}</div>
     }
 
     return (
+        <header className="flex gap-4">
+            <StoreCardLogo logo={store.logo || ""} name={store.name || ""} className="block size-12 lg:size-14" />
+            <h2 className="text-xl font-bold truncate">
+                {store.name}
+            </h2>
+        </header>
+    )
+
+    /* return (
         <>
             <Title
                 title={(
@@ -79,7 +84,7 @@ async function StoreHeaderServer({ slug }: StoreHeaderServerProps) {
                 </Card>
             </section>
         </>
-    )
+    ) */
 }
 
 export { StoreHeaderServer }
