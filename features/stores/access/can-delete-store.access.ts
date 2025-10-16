@@ -1,9 +1,9 @@
 "use server"
 
 import { getUserById } from "@/features/layout/data/getUserById"
-import { selectStoreById } from "../data/selectStoreById"
+import { selectStoreById } from "@/features/stores/data/selectStoreById"
 
-export async function canDeleteStore(storeId: number, userId: number) {
+export async function canDeleteStoreAccess(storeId: number, userId: number) {
     try {
         const { payload: user, error: userError } = await getUserById(userId)
 

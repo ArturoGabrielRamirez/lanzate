@@ -1,0 +1,1 @@
+export * from "@/features/stores/data/delete-store.data"

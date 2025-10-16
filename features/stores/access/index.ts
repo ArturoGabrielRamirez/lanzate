@@ -1,0 +1,1 @@
+export * from "@/features/stores/access/can-delete-store.access"

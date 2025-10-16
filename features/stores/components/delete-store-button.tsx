@@ -1,11 +1,13 @@
 "use client"
-import { ButtonWithPopup } from "@/features/layout/components"
-import { deleteStore } from "../actions/deleteStore"
-import { formatErrorResponse } from "@/utils/lib"
-import { redirect } from "next/navigation"
+
 import { Trash2 } from "lucide-react"
-import { DeleteStoreButtonProps } from "@/features/stores/types"
+import { redirect } from "next/navigation"
 import { useTranslations } from "next-intl"
+
+import { ButtonWithPopup } from "@/features/layout/components"
+import { deleteStoreAction } from "@/features/stores/actions"
+import { DeleteStoreButtonProps } from "@/features/stores/types"
+import { formatErrorResponse } from "@/utils/lib"
 
 function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
 
@@ -13,14 +15,14 @@ function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
 
     const handleDeleteStore = async () => {
         try {
-            const { error, message, payload } = await deleteStore(storeId,userId)
+            const { hasError, message } = await deleteStoreAction(storeId, userId)
 
-            if (error) throw new Error(message)
+            if (hasError) throw new Error(message)
 
             return {
                 error: false,
                 message: t("messages.success"),
-                payload: payload
+                payload: null
             }
 
         } catch (error) {

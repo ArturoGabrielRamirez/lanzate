@@ -9,7 +9,7 @@ import { toast } from "sonner"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { DropDrawer, DropDrawerContent, DropDrawerGroup, DropDrawerItem, DropDrawerTrigger } from "@/features/shadcn/components/components/ui/dropdrawer"
-import { deleteStore } from "@/features/stores/actions/deleteStore"
+import { deleteStoreAction } from "@/features/stores/actions"
 import { StoreCardProps } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
@@ -22,17 +22,15 @@ function StoreCard({ store, userId }: StoreCardProps) {
         try {
             setIsDeleting(true)
             toast.loading("Deleting store...")
-            const { error, message } = await deleteStore(store.id, userId)
+            const { hasError, message } = await deleteStoreAction(store.id, userId)
 
-            if (error) throw new Error(message)
+            if (hasError) throw new Error(message)
 
             toast.dismiss()
             toast.success("Store deleted successfully")
 
-
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
-            toast.error(errorMessage)
+            toast.error(error instanceof Error ? error.message : "An unknown error occurred")
         } finally {
             setIsDeleting(false)
         }
@@ -63,7 +61,7 @@ function StoreCard({ store, userId }: StoreCardProps) {
                 </CardTitle>
                 <CardAction className="shrink-0">
                     <DropDrawer>
-                        <DropDrawerTrigger>
+                        <DropDrawerTrigger asChild>
                             <IconButton
                                 className="shrink-0"
                                 icon={EllipsisVertical}
