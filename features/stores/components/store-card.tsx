@@ -1,5 +1,5 @@
 "use client"
-import { Boxes, Calendar, EllipsisVertical, Loader2, ShoppingCart, StoreIcon, Trash2 } from "lucide-react"
+import { Boxes, Calendar, EllipsisVertical, Loader2, Plus, ShoppingCart, StoreIcon, Trash2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
@@ -13,7 +13,7 @@ import { deleteStoreAction } from "@/features/stores/actions"
 import { StoreCardProps } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-function StoreCard({ store, userId }: StoreCardProps) {
+function StoreCard({ store, userId, isEmpty = false }: StoreCardProps) {
 
     const t = useTranslations("store.store-card")
     const [isDeleting, setIsDeleting] = useState(false)
@@ -22,6 +22,9 @@ function StoreCard({ store, userId }: StoreCardProps) {
         try {
             setIsDeleting(true)
             toast.loading("Deleting store...")
+
+            if (!store || !store.id) throw new Error("Store not found")
+
             const { hasError, message } = await deleteStoreAction(store.id, userId)
 
             if (hasError) throw new Error(message)
@@ -37,24 +40,29 @@ function StoreCard({ store, userId }: StoreCardProps) {
     }
 
     return (
-        <Card className="transition-all gap-2 md:gap-3 lg:gap-4 shrink-0 group h-full group relative">
+        <Card className="transition-all gap-2 md:gap-3 lg:gap-4 group h-full group relative">
             <CardHeader className="gap-0 items-center">
                 <CardTitle className="flex items-start md:items-center gap-2 truncate">
                     <Avatar className="aspect-square size-8 lg:size-10 shrink-0 border-2 border-primary">
-                        <AvatarImage src={store.logo || ""} alt={store.name} asChild className="aspect-square">
-                            <Image src={store.logo || ""} alt={store.name} width={32} height={32} unoptimized className="aspect-square" />
+                        <AvatarImage src={isEmpty ? "" : store?.logo || ""} alt={isEmpty ? "" : store?.name || ""} asChild className="aspect-square">
+                            <Image src={isEmpty ? "" : store?.logo || ""} alt={isEmpty ? "" : store?.name || ""} width={32} height={32} unoptimized className="aspect-square" />
                         </AvatarImage>
                         <AvatarFallback>
-                            <StoreIcon className="size-4 md:size-5 lg:size-6 text-primary/50 group-hover:text-primary transition-all" />
+                            {isEmpty ? <Plus className="size-4 md:size-5 lg:size-6 text-primary/50 group-hover:text-primary transition-all" /> : <StoreIcon className="size-4 md:size-5 lg:size-6 text-primary/50 group-hover:text-primary transition-all" />}
                         </AvatarFallback>
                     </Avatar>
                     <div className="flex flex-col truncate">
-                        <Link href={`/stores/${store.slug}/account`} className="cursor-pointer hover:text-primary transition-colors leading-0 truncate">
-                            <h2 className="text-lg md:text-xl lg:text-2xl font-bold shrink-0 leading-6 truncate">{store.name}</h2>
-                        </Link>
+                        {!isEmpty && (
+                            <Link href={`/stores/${isEmpty ? "" : store?.slug || ""}/account`} className="cursor-pointer hover:text-primary transition-colors leading-0 truncate">
+                                <h2 className="text-lg md:text-xl lg:text-2xl font-bold shrink-0 leading-6 truncate">{isEmpty ? "" : store?.name || ""}</h2>
+                            </Link>
+                        )}
+                        {isEmpty && (
+                            <h2 className="text-lg md:text-xl lg:text-2xl font-bold shrink-0 leading-6 truncate">New Store</h2>
+                        )}
                         <CardDescription className="truncate">
                             <p className="text-sm text-muted-foreground truncate">
-                                {store.description || t("no-description")}
+                                {isEmpty ? "Create your first store" : store?.description || t("no-description")}
                             </p>
                         </CardDescription>
                     </div>
@@ -68,38 +76,58 @@ function StoreCard({ store, userId }: StoreCardProps) {
                             />
                         </DropDrawerTrigger>
                         <DropDrawerContent>
-                            <DropDrawerGroup>
-                                <DropDrawerItem icon={<StoreIcon className="size-6 lg:size-4" />}>
-                                    <Link href={`/stores/${store.slug}/account`}>
-                                        Manage store
+                            {!isEmpty && (
+                                <>
+                                    <DropDrawerGroup>
+                                        <DropDrawerItem icon={<StoreIcon className="size-6 lg:size-4" />}>
+                                            <Link href={`/stores/${isEmpty ? "" : store?.slug || ""}/account`}>
+                                                Manage store
+                                            </Link>
+                                        </DropDrawerItem>
+                                        <DropDrawerItem icon={<Boxes className="size-6 lg:size-4" />}>
+                                            <Link href={`/stores/${isEmpty ? "" : store?.slug || ""}/products`}>
+                                                Products
+                                            </Link>
+                                        </DropDrawerItem>
+                                        <DropDrawerItem icon={<ShoppingCart className="size-6 lg:size-4" />}>
+                                            <Link href={`/stores/${isEmpty ? "" : store?.slug || ""}/orders`}>
+                                                Orders
+                                            </Link>
+                                        </DropDrawerItem>
+                                    </DropDrawerGroup>
+                                    <DropDrawerItem icon={isDeleting ? <Loader2 className="size-6 lg:size-4 text-destructive animate-spin" /> : <Trash2 className="size-6 lg:size-4 text-destructive" />} className="text-destructive" onClick={handleDeleteStore} disabled={isDeleting}>
+                                        {isDeleting ? "Deleting..." : "Delete Store"}
+                                    </DropDrawerItem>
+                                </>
+                            )}
+                            {isEmpty && (
+                                <DropDrawerItem icon={<Plus className="size-6 lg:size-4" />}>
+                                    <Link href="/stores/create">
+                                        Create Store
                                     </Link>
                                 </DropDrawerItem>
-                                <DropDrawerItem icon={<Boxes className="size-6 lg:size-4" />}>
-                                    <Link href={`/stores/${store.slug}/products`}>
-                                        Products
-                                    </Link>
-                                </DropDrawerItem>
-                                <DropDrawerItem icon={<ShoppingCart className="size-6 lg:size-4" />}>
-                                    <Link href={`/stores/${store.slug}/orders`}>
-                                        Orders
-                                    </Link>
-                                </DropDrawerItem>
-                            </DropDrawerGroup>
-                            <DropDrawerItem icon={isDeleting ? <Loader2 className="size-6 lg:size-4 text-destructive animate-spin" /> : <Trash2 className="size-6 lg:size-4 text-destructive" />} className="text-destructive" onClick={handleDeleteStore} disabled={isDeleting}>
-                                {isDeleting ? "Deleting..." : "Delete Store"}
-                            </DropDrawerItem>
+                            )}
                         </DropDrawerContent>
                     </DropDrawer>
                 </CardAction>
             </CardHeader>
-            <CardFooter className="justify-between items-center gap-2">
-                <p className="text-sm text-muted-foreground items-center gap-2 hidden md:flex">
-                    <Calendar className="size-4" />
-                    {store.created_at.toLocaleDateString()}
-                </p>
-                <p className="text-md text-muted-foreground">
-                    {store._count?.products || 0} {t("products")}
-                </p>
+            <CardFooter className="justify-between items-center flex-wrap">
+                {!isEmpty && (
+                    <p className="text-sm text-muted-foreground items-center gap-2 hidden md:flex">
+                        <Calendar className="size-4" />
+                        {store?.created_at.toLocaleDateString() || ""}
+                    </p>
+                )}
+                <div>
+                    <p className="text-md text-muted-foreground">
+                        {isEmpty ? "Click here to start." : `${store?._count?.products || 0} ${t("products")}`}
+                    </p>
+                    {isEmpty && (
+                        <p className="text-sm text-muted-foreground">
+                            Be the first to claim your custom domain!
+                        </p>
+                    )}
+                </div>
             </CardFooter>
         </Card>
     )
