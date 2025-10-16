@@ -19,6 +19,7 @@ function InputField({
     description,
     type = "text",
     tooltip,
+    isRequired = false,
 }: {
     name: string,
     label: string,
@@ -30,6 +31,7 @@ function InputField({
     description?: string | React.ReactNode,
     type?: string,
     tooltip?: string | React.ReactNode
+    isRequired?: boolean
 }) {
 
     const { control } = useFormContext();
@@ -45,7 +47,7 @@ function InputField({
             control={control}
             render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>{label}{isRequired && <span className="text-red-500">*</span>}</FieldLabel>
                     <InputGroup>
                         {startIcon && (
                             <InputGroupAddon>

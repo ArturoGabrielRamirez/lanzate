@@ -1,60 +1,102 @@
-'use client'
+"use client"
 
-import { useFormContext } from 'react-hook-form'
-import { cn } from '@/lib/utils'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
+import { InfoIcon } from "lucide-react";
+import { useFormContext, Controller } from "react-hook-form";
 
-type TextareaFieldProps = {
-  name: string
-  label: string
-  defaultValue?: string
-  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
-  value?: string
-  className?: string
-  containerClassName?: string
-  placeholder?: string
-  rows?: number
-}
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/features/shadcn/components/field";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupTextarea } from "@/features/shadcn/components/input-group";
 
-const TextareaField = ({
+function TextareaField({
   name,
   label,
-  defaultValue,
-  onChange,
-  value,
-  className,
-  containerClassName,
   placeholder,
-  rows = 4
-}: TextareaFieldProps) => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext()
+  startIcon,
+  startText,
+  endIcon,
+  endText,
+  description,
+  tooltip,
+  isRequired = false,
+}: {
+  name: string,
+  label: string,
+  placeholder: string,
+  startIcon?: React.ReactNode,
+  startText?: string,
+  endIcon?: React.ReactNode,
+  endText?: string,
+  description?: string | React.ReactNode,
+  tooltip?: string | React.ReactNode
+  isRequired?: boolean
+}) {
 
-  const error = errors[name]?.message as string | undefined
-
-  const controlls: Record<string, any> = {}
-
-  if (value) controlls.value = value
-  if (onChange) controlls.onChange = onChange
+  const { control } = useFormContext();
 
   return (
-    <div className={cn("flex flex-col gap-1", containerClassName)}>
-      <Label htmlFor={name}>{label}</Label>
-      <Textarea
-        id={name}
-        rows={rows}
-        placeholder={placeholder}
-        {...register(name)}
-        defaultValue={defaultValue}
-        className={className}
-        {...controlls}
-      />
-      {error && <p className="text-sm text-red-500">{error}</p>}
-    </div>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState }) => (
+        <Field data-invalid={fieldState.invalid}>
+          <FieldLabel htmlFor={field.name}>{label}{isRequired && <span className="text-red-500">*</span>}</FieldLabel>
+          <InputGroup>
+            {startIcon && (
+              <InputGroupAddon>
+                {startIcon}
+              </InputGroupAddon>
+            )}
+            {startText && (
+              <InputGroupText>
+                {startText}
+              </InputGroupText>
+            )}
+            <InputGroupTextarea
+              placeholder={placeholder} {...field}
+              aria-invalid={fieldState.invalid}
+              autoComplete="off"
+              id={field.name}
+              className=""
+            />
+            {endText && (
+              <InputGroupText>
+                {endText}
+              </InputGroupText>
+            )}
+            {endIcon && (
+              <InputGroupAddon align="inline-end">
+                {endIcon}
+              </InputGroupAddon>
+            )}
+            {tooltip && (
+              <InputGroupAddon align="inline-end">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <InputGroupButton
+                      variant="ghost"
+                      aria-label="Info"
+                      size="icon-xs"
+                    >
+                      <InfoIcon />
+                    </InputGroupButton>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{tooltip}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </InputGroupAddon>
+            )}
+          </InputGroup>
+          {description && (
+            <FieldDescription>
+              {description}
+            </FieldDescription>
+          )}
+          {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+        </Field>
+      )}
+    />
   )
 }
 
-export default TextareaField 
+export { TextareaField };
