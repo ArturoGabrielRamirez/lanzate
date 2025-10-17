@@ -1,3 +1,5 @@
+"use client"
+
 import { Loader } from "lucide-react"
 import { motion, useInView } from "motion/react"
 import { useEffect, useRef } from "react"

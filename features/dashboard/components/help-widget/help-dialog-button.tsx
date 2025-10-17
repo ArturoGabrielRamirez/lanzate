@@ -8,7 +8,6 @@ function HelpDialogButton() {
     const t = useTranslations("dashboard.help")
 
     const handleContactUs = async () => {
-        console.log("Contact us")
         return {
             error: true,
             message: "Contact us",

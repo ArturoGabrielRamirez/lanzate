@@ -3,10 +3,10 @@
 import * as motion from "motion/react-client"
 import { useEffect, useState } from "react"
 
-import { getUserStoreActivities } from "@/features/dashboard/actions/get-user-store-activities.action"
+import { getUserStoreActivitiesAction } from "@/features/dashboard/actions"
 import { FeedItem } from "@/features/dashboard/components/activity-items"
 import { EmptyFeedItem } from "@/features/dashboard/components/activity-items"
-import InfiniteScroll from "@/features/dashboard/components/infinite-scroll"
+import { InfiniteScroll } from "@/features/dashboard/components/activity-items"
 import { NewActivityFeedProps } from "@/features/dashboard/types"
 
 function NewActivityFeed({ initialActivities, userId, type }: NewActivityFeedProps) {
@@ -16,7 +16,6 @@ function NewActivityFeed({ initialActivities, userId, type }: NewActivityFeedPro
     const [currentPage, setCurrentPage] = useState(1)
 
     const [activities, setActivities] = useState(initialActivities)
-
 
 
     /* const handleActivity = async (payload: RealtimePostgresChangesPayload<SocialActivityRecord>) => {
@@ -66,9 +65,9 @@ function NewActivityFeed({ initialActivities, userId, type }: NewActivityFeedPro
 
     const handleGetMoreActivities = async () => {
         setIsLoading(true)
-        const { payload: newActivities, error } = await getUserStoreActivities(userId, type, currentPage)
+        const { payload: newActivities, hasError } = await getUserStoreActivitiesAction(userId, type, currentPage)
 
-        if (error || !newActivities) {
+        if (hasError || !newActivities) {
             setHasMore(false)
             setIsLoading(false)
             return

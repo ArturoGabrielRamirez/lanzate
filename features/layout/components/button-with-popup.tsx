@@ -82,4 +82,4 @@ function ButtonWithPopup<P extends FieldValues>({
 
 }
 
-export default ButtonWithPopup
+export { ButtonWithPopup }

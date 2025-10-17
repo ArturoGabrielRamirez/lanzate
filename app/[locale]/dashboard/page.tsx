@@ -6,14 +6,11 @@ import { Suspense } from "react"
 import { WelcomeTutorial } from "@/features/dashboard/components"
 import { WelcomeWidget } from "@/features/dashboard/components"
 import { DashboardError } from "@/features/dashboard/components"
-/* import AccountSetup from "@/features/dashboard/components/account-setup"
-import AccountSetupSkeleton from "@/features/dashboard/components/account-setup-skeleton" */
 import { ActivityFeed, ActivityFeedSkeleton } from "@/features/dashboard/components"
-/* import DashboardCalendar from "@/features/dashboard/components/dashboard-calendar"
-import DashboardStats from "@/features/dashboard/components/dashboard-stats"
+import { HelpCard } from "@/features/dashboard/components"
+/* 
 import DashboardStatsSkeleton from "@/features/dashboard/components/dashboard-stats-skeleton"
 import FeedFilters from "@/features/dashboard/components/feed-filters"
-import HelpCard from "@/features/dashboard/components/help-card"
 import QuickActions from "@/features/dashboard/components/quick-actions"
 import QuickActionsSkeleton from "@/features/dashboard/components/quick-actions-skeleton" */
 import { StoreListContainer } from "@/features/dashboard/components/store-list"
@@ -61,11 +58,11 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
             <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
                 <ActivityFeed userId={user.id} type={type} page={page || 1} />
             </Suspense>
+            <HelpCard />
             {/* <div className="grid grid-cols-1 grid-areas-[search-bar,actions,feed] md:grid-areas-[search-bar_stores,feed_stores,feed_actions,feed_calendar] gap-2 md:grid-cols-[2fr_1fr] md:grid-rows-[min-content_auto_min-content_1fr] lg:grid-areas-[stats_search-bar_stores,stats_feed_stores,stats_feed_actions,setup_feed_calendar,help_feed_calendar,empty_feed_calendar,empty_feed_calendar] lg:grid-rows-[min-content_min-content_min-content_min-content_min-content_1fr] lg:grid-cols-[1fr_2fr_1fr] md:gap-4 lg:gap-6 xl:gap-8">
                 <Suspense fallback={<DashboardStatsSkeleton />}>
                     <DashboardStats userId={user.id} />
                 </Suspense>
-                <HelpCard />
                 <Suspense fallback={<AccountSetupSkeleton />}>
                     <AccountSetup />
                 </Suspense>
