@@ -14,3 +14,7 @@ export type NewStoreCardProps = {
 }
 
 export type BasicInfoFormType = yup.InferType<typeof basicInfoSchema>
+
+export interface StoreHeaderServerProps {
+    slug: string
+}

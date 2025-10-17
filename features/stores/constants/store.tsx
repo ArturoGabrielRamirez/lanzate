@@ -4,7 +4,7 @@ export const STORES_NAVIGATION_LINKS = [
     {
         label: "Cuenta",
         description: "Gestiona la cuenta de tu tienda.",
-        href: "/",
+        href: "/account",
         icon: <Store className="size-[inherit]" />
     },
     {

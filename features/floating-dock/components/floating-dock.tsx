@@ -14,7 +14,7 @@ import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 function FloatingDock() {
 
-    const pathname = usePathname() // "/stores/FXx550w2/account"
+    const pathname = usePathname() 
     const pathnameParts = pathname.split("/") // ["", "stores", "FXx550w2", "account"]
     const slug = pathnameParts[2] // "FXx550w2"
     const [showSearch, setShowSearch] = useState(false)
@@ -115,12 +115,12 @@ function FloatingDock() {
                     )}
                     {!showSearch && isStorePage && (
                         <motion.div key="account" exit={{ opacity: 0, y: 40, transition: { delay: 0.3 } }} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.3 } }} className="flex items-center">
-                            <Link href={`/stores/${slug}/account`} className="flex items-center" key="account">
+                            <Link href={`/stores/${slug}`} className="flex items-center" key="account">
                                 <IconButton
                                     size="lg"
                                     icon={Store}
-                                    className={cn(pathname.includes(`/account`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
-                                    active={pathname.includes(`/account`)}
+                                    className={cn(pathname.includes(`/stores/${slug}`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                                    active={pathname.includes(`/stores/${slug}`)}
                                     key="account"
                                 />
                             </Link>
