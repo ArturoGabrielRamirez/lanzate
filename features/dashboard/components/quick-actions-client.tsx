@@ -1,11 +1,7 @@
 "use client"
 
-/* import CreateStoreButton from "@/features/stores/components/create-store-button" */
+import { QuickActionsClientProps } from "@/features/dashboard/types"
 import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new"
-
-type QuickActionsClientProps = {
-    userId: number
-}
 
 function QuickActionsClient({ userId }: QuickActionsClientProps) {
     return (

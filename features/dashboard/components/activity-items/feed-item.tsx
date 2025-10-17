@@ -1,6 +1,5 @@
 "use client"
 
-import { Contract, ContractAssignment, Order, OrderTracking, Product, SocialActivity, Store, User } from "@prisma/client"
 import { FileCheck, Flame, MapPin, MessageCircle, ShoppingBag, Truck } from "lucide-react"
 import Link from "next/link"
 
@@ -11,16 +10,13 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useState } from "react" */
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { extractLink, formatActivityDate, getUserInitials } from "@/features/dashboard/components/activity-items/shared-utils"
+import { FeedItemProps } from "@/features/dashboard/types"
 import ConfirmOrderButtonIcon from "@/features/orders/components/confirm-order-button-icon"
 import OpenChatButton from "@/features/orders/components/open-chat-button"
 /* import { CancelOrderButton } from "@/features/stores/components" */
 import { cn } from "@/lib/utils"
 
-type Props = {
-    item: SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } }
-}
-
-function FeedItem({ item }: Props) {
+function FeedItem({ item }: FeedItemProps) {
 
     /* const [open, setOpen] = useState(false)
 

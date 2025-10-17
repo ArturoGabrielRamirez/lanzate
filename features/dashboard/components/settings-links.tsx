@@ -1,14 +1,12 @@
 "use client"
-import { Button } from "@/components/ui/button"
-import { Select, SelectItem, SelectValue, SelectTrigger, SelectContent } from "@/components/ui/select"
-import { Store } from "@prisma/client"
 import Link from "next/link"
 import { useState } from "react"
 
-type Props = {
-    stores: Store[]
-}
-const SettingsLinks = ({ stores }: Props) => {
+import { Button } from "@/components/ui/button"
+import { Select, SelectItem, SelectValue, SelectTrigger, SelectContent } from "@/components/ui/select"
+import { SettingsLinksProps } from "@/features/dashboard/types"
+
+const SettingsLinks = ({ stores }: SettingsLinksProps) => {
 
     const [selectedStore, setSelectedStore] = useState<number | null>(null)
 

@@ -1,15 +1,12 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { Check, X } from "lucide-react"
-import { respondToContract } from "@/features/employees/data"
+import { useState } from "react"
 import { toast } from "sonner"
 
-type ContractResponseButtonsProps = {
-    assignmentId: number
-    onResponse?: () => void
-}
+import { Button } from "@/components/ui/button"
+import { ContractResponseButtonsProps } from "@/features/dashboard/types"
+import { respondToContract } from "@/features/employees/data"
 
 function ContractResponseButtons({ assignmentId, onResponse }: ContractResponseButtonsProps) {
     const [isResponding, setIsResponding] = useState(false)

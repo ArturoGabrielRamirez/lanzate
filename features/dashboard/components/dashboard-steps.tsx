@@ -9,15 +9,8 @@ import { CreateProductForStoreButton, ConfigureStoreOperationsButton } from "@/f
 import DashboardStepCard from "@/features/dashboard/components/dashboard-step-card"
 import ShareStoreLink from "@/features/dashboard/components/share-store-link"
 /* import { CreateStoreButton } from "@/features/stores/components" */
-import { DashboardStoreStats } from "@/features/dashboard/types"
+import { StepStatus, DashboardStepsProps, DashboardStoreStats } from "@/features/dashboard/types" // eslint-disable-line @typescript-eslint/no-unused-vars
 import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new"
-
-type StepStatus = 'disabled' | 'active' | 'complete'
-
-type DashboardStepsProps = {
-    userId: number
-    dashboardData: DashboardStoreStats
-}
 
 function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
     const t = useTranslations("dashboard")

@@ -1,12 +1,9 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { Download, Eye } from "lucide-react"
 
-type ContractActionButtonsProps = {
-    fileUrl: string
-    title: string
-}
+import { Button } from "@/components/ui/button"
+import { ContractActionButtonsProps } from "@/features/dashboard/types"
 
 function ContractActionButtons({ fileUrl, title }: ContractActionButtonsProps) {
     const handleView = () => {

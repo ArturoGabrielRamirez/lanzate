@@ -1,12 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowDown, ArrowUp, ChartNoAxesCombined, DollarSign, Package, ShoppingCart, Store } from "lucide-react"
-import { getDashboardStats } from "../actions/getDashboardStats"
 import * as motion from "motion/react-client"
 import { getTranslations } from "next-intl/server"
 
-type Props = {
-    userId: number
-}
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { getDashboardStats } from "@/features/dashboard/actions/getDashboardStats"
+import { DashboardStatsProps, ChangeIndicatorProps } from "@/features/dashboard/types"
 
 function formatCurrency(amount: number) {
     return new Intl.NumberFormat('en-US', {
@@ -26,7 +24,7 @@ function formatNumber(num: number) {
     return num.toString()
 }
 
-function ChangeIndicator({ change }: { change: number }) {
+function ChangeIndicator({ change }: ChangeIndicatorProps) {
     const isPositive = change >= 0
     const Icon = isPositive ? ArrowUp : ArrowDown
     const colorClass = isPositive ? 'text-green-500' : 'text-red-500'
@@ -41,7 +39,7 @@ function ChangeIndicator({ change }: { change: number }) {
     )
 }
 
-async function DashboardStats({ userId }: Props) {
+async function DashboardStats({ userId }: DashboardStatsProps) {
     const t = await getTranslations("dashboard.stats")
     const { payload: stats, error } = await getDashboardStats(userId)
 

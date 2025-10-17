@@ -1,13 +1,11 @@
-import { getUserStoreCount } from "@/features/dashboard/data/getUserStoreCount"
-import { Button } from "@/components/ui/button"
 import { Calendar, Store } from "lucide-react"
-import Link from "next/link"
 import { Zap } from "lucide-react"
-import QuickActionsClient from "@/features/dashboard/components/quick-actions-client"
+import Link from "next/link"
 
-type QuickActionsProps = {
-    userId: number
-}
+import { Button } from "@/components/ui/button"
+import QuickActionsClient from "@/features/dashboard/components/quick-actions-client"
+import { getUserStoreCount } from "@/features/dashboard/data/getUserStoreCount"
+import { QuickActionsProps } from "@/features/dashboard/types"
 
 async function QuickActions({ userId }: QuickActionsProps) {
 

@@ -1,17 +1,14 @@
-import { Card, CardContent } from "@/components/ui/card"
+import { ShoppingCart, Clock, MapPin, Truck } from "lucide-react"
+import * as motion from "motion/react-client"
+import Link from "next/link"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { ShoppingCart, Clock, MapPin, Truck } from "lucide-react"
-import Link from "next/link"
-import { getUserInitials, formatActivityDate, getOrderStatusBadgeVariant } from "./shared-utils"
-import { Store, User, Order, SocialActivity } from "@prisma/client"
-import * as motion from "motion/react-client"
+import { Card, CardContent } from "@/components/ui/card"
+import { formatActivityDate, getOrderStatusBadgeVariant, getUserInitials } from "@/features/dashboard/components/activity-items/shared-utils"
+import { OrderActivityCardProps } from "@/features/dashboard/types"
 
-type Props = {
-    item: SocialActivity & { user: User, store: Store, order: Order }
-}
-
-function OrderActivityCard({ item }: Props) {
+function OrderActivityCard({ item }: OrderActivityCardProps) {
     return (
         <motion.div
             whileHover={{ scale: 1.02 }}

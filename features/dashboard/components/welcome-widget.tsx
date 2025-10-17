@@ -1,6 +1,6 @@
-import { LocalUserType } from "@/features/auth/types"
+import { WelcomeWidgetProps } from "@/features/dashboard/types"
 
-function WelcomeWidget({ user }: { user: LocalUserType }) {
+function WelcomeWidget({ user }: WelcomeWidgetProps) {
     return (
         <header>
             <h2 className="text-2xl font-bold flex items-center gap-2">

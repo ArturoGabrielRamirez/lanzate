@@ -2,10 +2,11 @@ import { MessageCircleDashed } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { FeedErrorProps } from "@/features/dashboard/types";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty";
 import { Link } from "@/i18n/naviation";
 
-async function FeedError({ message }: { message: string }) {
+async function FeedError({ message }: FeedErrorProps) {
 
     return (
         <Card className="bg-card rounded-lg border p-6 grow h-full">

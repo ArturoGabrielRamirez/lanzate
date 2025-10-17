@@ -1,15 +1,12 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MessageCircle, Clock } from "lucide-react"
 import Link from "next/link"
-import { getUserInitials, formatActivityDate } from "./shared-utils"
-import { Store, User, Product, SocialActivity } from "@prisma/client"
 
-type Props = {
-    item: SocialActivity & { user: User, store: Store, product: Product & { store: Store } }
-}
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent } from "@/components/ui/card"
+import { formatActivityDate, getUserInitials } from "@/features/dashboard/components/activity-items/shared-utils"
+import { CommentActivityCardProps } from "@/features/dashboard/types"
 
-function CommentActivityCard({ item }: Props) {
+function CommentActivityCard({ item }: CommentActivityCardProps) {
     return (
         <Card className="p-4 space-y-3 transition-discrete transition-all duration-200 from-transparent to-background/90 bg-radial-[circle_at_center_center] hover:[background-size:200%_100%] [background-size:100%_300%] [background-position:bottom_left] hover:[background-position:top_right] border-white/5">
             <CardContent className="p-0 space-y-3">

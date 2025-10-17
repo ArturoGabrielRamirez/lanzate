@@ -1,15 +1,13 @@
 "use client"
-import { Button } from "@/components/ui/button"
-import { Select, SelectItem, SelectValue, SelectTrigger, SelectContent } from "@/components/ui/select"
-import { Store } from "@prisma/client"
 import { Copy, Loader } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 
-type Props = {
-    stores: Store[]
-}
-const CopyLink = ({ stores }: Props) => {
+import { Button } from "@/components/ui/button"
+import { Select, SelectItem, SelectValue, SelectTrigger, SelectContent } from "@/components/ui/select"
+import { CopyLinkProps } from "@/features/dashboard/types"
+
+const CopyLink = ({ stores }: CopyLinkProps) => {
 
     const [selectedStore, setSelectedStore] = useState<number | null>(null)
     const [isCopying, setIsCopying] = useState(false)

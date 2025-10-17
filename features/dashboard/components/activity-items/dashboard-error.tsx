@@ -2,10 +2,11 @@ import { MessageCircleDashed } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DashboardErrorProps } from "@/features/dashboard/types";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty";
 import { Link } from "@/i18n/naviation";
 
-function DashboardError({ message }: { message: string }) {
+function DashboardError({ message }: DashboardErrorProps) {
     return (
         <Card className="bg-card rounded-lg border p-6 grow h-full">
             <CardHeader className="p-0 pb-4">

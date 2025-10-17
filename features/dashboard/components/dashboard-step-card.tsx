@@ -1,22 +1,10 @@
 "use client"
 
+import { ArrowRight } from "lucide-react"
+
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight, LucideIcon } from "lucide-react"
+import { DashboardStepCardProps } from "@/features/dashboard/types"
 import { cn } from "@/lib/utils"
-import { ReactNode } from "react"
-
-type StepStatus = 'disabled' | 'active' | 'complete'
-
-type DashboardStepCardProps = {
-    stepNumber: number
-    title: string
-    description: string
-    icon: LucideIcon
-    status: StepStatus
-    children?: ReactNode
-    footer?: ReactNode
-    cardClassName?: string
-}
 
 function DashboardStepCard({
     stepNumber,

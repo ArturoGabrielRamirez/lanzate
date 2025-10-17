@@ -2,13 +2,9 @@ import { Loader } from "lucide-react"
 import { motion, useInView } from "motion/react"
 import { useEffect, useRef } from "react"
 
-type Props = {
-    isLoading: boolean
-    hasMore: boolean
-    next: () => void
-}
+import { InfiniteScrollProps } from "@/features/dashboard/types"
 
-const InfiniteScroll = ({ isLoading, hasMore, next }: Props) => {
+const InfiniteScroll = ({ isLoading, hasMore, next }: InfiniteScrollProps) => {
 
     const ref = useRef<HTMLDivElement>(null)
     const isInView = useInView(ref)

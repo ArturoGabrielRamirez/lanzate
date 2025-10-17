@@ -1,17 +1,14 @@
-import { Card, CardContent } from "@/components/ui/card"
+import { FileText, Clock } from "lucide-react"
+import Link from "next/link"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { FileText, Clock } from "lucide-react"
-import { ActivityFeedItem } from "../../types"
-import Link from "next/link"
-import { getUserInitials, formatActivityDate, getStatusBadgeVariant } from "./shared-utils"
-import ContractActionButtons from "../contract-action-buttons"
+import { Card, CardContent } from "@/components/ui/card"
+import { formatActivityDate, getStatusBadgeVariant, getUserInitials } from "@/features/dashboard/components/activity-items/shared-utils"
+import ContractActionButtons from "@/features/dashboard/components/contract-action-buttons"
+import { ContractOwnerActivityCardProps } from "@/features/dashboard/types"
 
-type Props = {
-    item: ActivityFeedItem & { type: 'contract_assignment_as_owner' }
-}
-
-function ContractOwnerActivityCard({ item }: Props) {
+function ContractOwnerActivityCard({ item }: ContractOwnerActivityCardProps) {
     return (
         <Card className="p-4 space-y-3">
             <CardContent className="p-0 space-y-3">

@@ -10,14 +10,9 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { updateStoreOperationalSettingsAction } from "@/features/dashboard/actions/updateStoreOperationalSettingsAction"
 import { operationalSettingsSchema } from "@/features/dashboard/schemas/operational-settings-schema"
-import { DashboardStore, StoreOperationalSettingsForm } from "@/features/dashboard/types"
+import { StoreOperationalSettingsForm, ConfigureStoreOperationsButtonProps } from "@/features/dashboard/types"
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { formatErrorResponse } from "@/utils/lib"
-
-type ConfigureStoreOperationsButtonProps = {
-    userId: number
-    stores: DashboardStore[]
-}
 
 function ConfigureStoreOperationsButton({ stores }: ConfigureStoreOperationsButtonProps) {
     const [selectedStoreId, setSelectedStoreId] = useState<string>("")

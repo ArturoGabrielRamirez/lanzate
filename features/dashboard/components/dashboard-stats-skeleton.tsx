@@ -1,10 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
 import { ChartNoAxesCombined, Store, Package, ShoppingCart, DollarSign } from "lucide-react"
 import * as motion from "motion/react-client"
 import { useTranslations } from "next-intl"
 
-function DashboardStatCardSkeleton({ index, stat }: { index: number, stat: { title: string, icon: React.ComponentType<{ className?: string }> } }) {
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
+import { DashboardStatCardSkeletonProps } from "@/features/dashboard/types"
+
+function DashboardStatCardSkeleton({ index, stat }: DashboardStatCardSkeletonProps) {
     const baseDelay = index * 0.1
 
     return (

@@ -1,14 +1,9 @@
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getUserStoreActivities } from "@/features/dashboard/actions/getUserStoreActivities"
 import { EmptyFeedItem, NewActivityFeed } from "@/features/dashboard/components"
+import { ActivityFeedProps } from "@/features/dashboard/types"
 
-type Props = {
-    userId: number
-    type: string
-    page: number
-}
-
-async function ActivityFeed({ userId, type, page }: Props) {
+async function ActivityFeed({ userId, type, page }: ActivityFeedProps) {
 
     const { payload: activities, error } = await getUserStoreActivities(userId, type, page)
 

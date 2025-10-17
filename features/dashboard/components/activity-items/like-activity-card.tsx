@@ -1,16 +1,13 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Flame, Clock } from "lucide-react"
-import Link from "next/link"
-import { getUserInitials, formatActivityDate } from "./shared-utils"
-import { SocialActivity, Store, User, Product } from "@prisma/client"
 import * as motion from "motion/react-client"
+import Link from "next/link"
 
-type Props = {
-    item: SocialActivity & { user: User, store: Store, product: Product }
-}
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent } from "@/components/ui/card"
+import { formatActivityDate, getUserInitials } from "@/features/dashboard/components/activity-items/shared-utils"
+import { LikeActivityCardProps } from "@/features/dashboard/types"
 
-function LikeActivityCard({ item }: Props) {
+function LikeActivityCard({ item }: LikeActivityCardProps) {
     const displayName = item.user.username || `${item.user.first_name} ${item.user.last_name}`
     const userName = item.user.first_name
     const userLastName = item.user.last_name

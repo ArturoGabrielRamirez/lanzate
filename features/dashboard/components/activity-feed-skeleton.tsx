@@ -1,8 +1,10 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
 import * as motion from "motion/react-client"
 
-function ActivityFeedItemSkeleton({ index }: { index: number }) {
+import { Card, CardContent } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
+import { ActivityFeedItemSkeletonProps } from "@/features/dashboard/types"
+
+function ActivityFeedItemSkeleton({ index }: ActivityFeedItemSkeletonProps) {
     const baseDelay = index * 0.1
     
     // Use index to create deterministic variations
