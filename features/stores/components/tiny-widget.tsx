@@ -12,10 +12,10 @@ function TinyWidget({ title, children, href }: TinyWidgetProps) {
         <Item variant="muted" size="sm" className="gap-8 px-2 lg:px-4 bg-primary/40" asChild>
             <Link href={href} title="Test">
                 <ItemHeader>
-                    <ItemTitle className="text-muted-foreground text-base">{title}</ItemTitle>
+                    <ItemTitle className="text-background dark:text-muted-foreground text-base">{title}</ItemTitle>
                 </ItemHeader>
                 <ItemContent>
-                    <ItemDescription className="flex items-end gap-2 text-foreground font-bold">
+                    <ItemDescription className="flex items-center gap-2">
                         {children}
                     </ItemDescription>
                 </ItemContent>

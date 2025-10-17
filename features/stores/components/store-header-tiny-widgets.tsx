@@ -11,24 +11,24 @@ function StoreHeaderTinyWidgets({ slug }: StoreHeaderTinyWidgetsProps) {
     return (
         <ItemGroup className="grid grid-cols-3 gap-2">
             <TinyWidget title="Productos" href={`/stores/${slug}/products`}>
-                <Box />
-                <span className="flex items-center gap-1">
-                    <span className="text-foreground font-bold">10</span>
-                    <span className="text-muted-foreground">items</span>
+                <Box className="size-8"/>
+                <span className="flex flex-col">
+                    <span className="text-primary font-bold text-xl leading-4">10</span>
+                    <span className="text-muted-foreground text-xs leading-4">items</span>
                 </span>
             </TinyWidget>
             <TinyWidget title="Ordenes" href={`/stores/${slug}/orders`}>
-                <ShoppingCart />
-                <span className="flex items-center gap-1">
-                    <span className="text-foreground font-bold">4</span>
-                    <span className="text-muted-foreground">hoy</span>
+                <ShoppingCart className="size-8"/>
+                <span className="flex flex-col">
+                    <span className="text-primary font-bold text-xl leading-4">4</span>
+                    <span className="text-background/70 dark:text-muted-foreground text-xs leading-4">hoy</span>
                 </span>
             </TinyWidget>
             <TinyWidget title="Alertas" href={`/stores/${slug}/notifications`}>
-                <Rocket />
-                <span className="flex items-center gap-1">
-                    <span className="text-foreground font-bold">2</span>
-                    <span className="text-muted-foreground">nuevos</span>
+                <Rocket className="size-8"/>
+                <span className="flex flex-col">
+                    <span className="text-primary font-bold text-xl leading-4">2</span>
+                    <span className="text-background/70 dark:text-muted-foreground text-xs leading-4">nuevos</span>
                 </span>
             </TinyWidget>
         </ItemGroup>
