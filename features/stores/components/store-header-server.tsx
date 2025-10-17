@@ -19,7 +19,7 @@ async function StoreHeaderServer({ slug }: StoreHeaderServerProps) {
                     {store.name}
                 </h2>
             </div>
-            <StoreHeaderTinyWidgets slug={slug}/>
+            <StoreHeaderTinyWidgets slug={slug} />
         </header>
     )
 }

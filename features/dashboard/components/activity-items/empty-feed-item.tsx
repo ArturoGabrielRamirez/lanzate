@@ -21,8 +21,7 @@ async function EmptyFeedItem() {
                         </EmptyMedia>
                         <EmptyTitle>No activity</EmptyTitle>
                         <EmptyDescription>
-                            <p>Aquí podrás ver toda la actividad reciente de tu tienda, incluyendo likes, comentarios, pedidos y contratos.</p>
-                            <p>Cuando tengas actividad, aparecerá aquí automáticamente.</p>
+                            <p>Aquí podrás ver todos los likes, comentarios y pedidos de tus tiendas.</p>
                         </EmptyDescription>
                     </EmptyHeader>
                     <EmptyContent>
