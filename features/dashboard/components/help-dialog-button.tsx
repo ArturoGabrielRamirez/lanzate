@@ -1,8 +1,10 @@
 'use client'
-import { ButtonWithPopup, InputField, TextareaField } from "@/features/layout/components"
+
 import { useTranslations } from "next-intl"
 
-const HelpDialogButton = () => {
+import { ButtonWithPopup, InputField, TextareaField } from "@/features/layout/components"
+
+function HelpDialogButton() {
     const t = useTranslations("dashboard.help")
 
     const handleContactUs = async () => {
@@ -32,4 +34,5 @@ const HelpDialogButton = () => {
         </ButtonWithPopup>
     )
 }
-export default HelpDialogButton
+
+export { HelpDialogButton }

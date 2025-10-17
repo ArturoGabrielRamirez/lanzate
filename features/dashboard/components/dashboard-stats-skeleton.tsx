@@ -72,4 +72,4 @@ function DashboardStatsSkeleton() {
     )
 }
 
-export default DashboardStatsSkeleton 
+export { DashboardStatsSkeleton, DashboardStatCardSkeleton }

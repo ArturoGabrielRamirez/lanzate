@@ -71,7 +71,7 @@ function DashboardStepCard({
                     </div>
                 </div>
             </CardHeader>
-            
+
             {!isHorizontalLayout && (
                 <CardContent className={cn(
                     isActive && "text-muted-foreground/50",
@@ -105,4 +105,4 @@ function DashboardStepCard({
     )
 }
 
-export default DashboardStepCard 
+export { DashboardStepCard }

@@ -1,17 +1,18 @@
+import { CheckCircle, Circle } from "lucide-react"
+
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { CheckCircle, Circle } from "lucide-react"
-import { getAccountSetupDataAction } from "@/features/dashboard/actions/getAccountSetupDataAction"
+import { getAccountSetupDataAction } from "@/features/dashboard/actions"
 /* import { CreateStoreButton } from "@/features/stores/components" */
+import { SettingsLinks } from "@/features/dashboard/components"
+import { CopyLink } from "@/features/dashboard/components"
 import { getUserInfo } from "@/features/layout/actions"
 import UnifiedCreateProductButton from "@/features/products/components/unified-create-product-button"
 /* import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select" */
-import SettingsLinks from "./settings-links"
-import CopyLink from "./copy-link"
 import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new"
 /* import UnifiedCreateProductButton from "@/features/products/components/unified-create-product-button" */
 
-const AccountSetupCard = async () => {
+async function AccountSetupCard() {
     const { payload: user } = await getUserInfo()
 
     if (!user) return null
@@ -75,10 +76,11 @@ const AccountSetupCard = async () => {
                     <SettingsLinks stores={payload?.stores || []} />
                 )}
                 {settingsDone && (
-                    <CopyLink stores={payload?.stores || []}/>
+                    <CopyLink stores={payload?.stores || []} />
                 )}
             </CardFooter>
         </Card>
     )
 }
-export default AccountSetupCard
+
+export { AccountSetupCard }

@@ -107,4 +107,4 @@ function ShareStoreLink({ stores }: ShareStoreLinkProps) {
     )
 }
 
-export default ShareStoreLink 
+export { ShareStoreLink }

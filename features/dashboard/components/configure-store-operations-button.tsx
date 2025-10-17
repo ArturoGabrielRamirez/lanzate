@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { updateStoreOperationalSettingsAction } from "@/features/dashboard/actions/updateStoreOperationalSettingsAction"
+import { updateStoreOperationalSettingsAction } from "@/features/dashboard/actions/update-store-operational-settings.action"
 import { operationalSettingsSchema } from "@/features/dashboard/schemas/operational-settings-schema"
 import { StoreOperationalSettingsForm, ConfigureStoreOperationsButtonProps } from "@/features/dashboard/types"
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
@@ -286,4 +286,4 @@ function ConfigureStoreOperationsButton({ stores }: ConfigureStoreOperationsButt
     )
 }
 
-export default ConfigureStoreOperationsButton 
+export { ConfigureStoreOperationsButton }

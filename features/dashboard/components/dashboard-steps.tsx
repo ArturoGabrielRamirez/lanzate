@@ -5,11 +5,9 @@ import { AnimatePresence, motion } from "motion/react"
 import { useTranslations } from "next-intl"
 import { useState, useRef, useEffect, useCallback } from "react"
 
-import { CreateProductForStoreButton, ConfigureStoreOperationsButton } from "@/features/dashboard/components"
-import DashboardStepCard from "@/features/dashboard/components/dashboard-step-card"
-import ShareStoreLink from "@/features/dashboard/components/share-store-link"
+import { CreateProductForStoreButton, ConfigureStoreOperationsButton, ShareStoreLink, DashboardStepCard } from "@/features/dashboard/components"
 /* import { CreateStoreButton } from "@/features/stores/components" */
-import { StepStatus, DashboardStepsProps, DashboardStoreStats } from "@/features/dashboard/types" // eslint-disable-line @typescript-eslint/no-unused-vars
+import { StepStatus, DashboardStepsProps } from "@/features/dashboard/types"
 import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new"
 
 function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
@@ -236,4 +234,4 @@ function DashboardSteps({ userId, dashboardData }: DashboardStepsProps) {
     )
 }
 
-export default DashboardSteps 
+export { DashboardSteps }

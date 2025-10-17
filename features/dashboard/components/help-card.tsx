@@ -1,9 +1,10 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import HelpDialogButton from "./help-dialog-button"
 import { Headset, MessageCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-const HelpCard = () => {
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { HelpDialogButton } from "@/features/dashboard/components"
+
+function HelpCard() {
     const t = useTranslations("dashboard.help")
     
     return (
@@ -33,4 +34,5 @@ const HelpCard = () => {
         </div>
     )
 }
-export default HelpCard
+
+export { HelpCard }

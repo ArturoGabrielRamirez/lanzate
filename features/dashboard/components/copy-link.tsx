@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectItem, SelectValue, SelectTrigger, SelectContent } from "@/components/ui/select"
 import { CopyLinkProps } from "@/features/dashboard/types"
 
-const CopyLink = ({ stores }: CopyLinkProps) => {
+function CopyLink({ stores }: CopyLinkProps) {
 
     const [selectedStore, setSelectedStore] = useState<number | null>(null)
     const [isCopying, setIsCopying] = useState(false)
@@ -47,4 +47,5 @@ const CopyLink = ({ stores }: CopyLinkProps) => {
         </div>
     )
 }
-export default CopyLink
+
+export { CopyLink }

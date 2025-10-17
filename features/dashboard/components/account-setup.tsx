@@ -1,7 +1,8 @@
 import { Settings } from "lucide-react"
-import AccountSetupCard from "./account-setup-card"
 
-const AccountSetup = () => {
+import { AccountSetupCard } from "@/features/dashboard/components"
+
+function AccountSetup() {
     return (
         <div className="area-[setup] hidden lg:block group/setup">
             <div className="flex items-center justify-between mb-2 md:mb-4">
@@ -14,4 +15,5 @@ const AccountSetup = () => {
         </div>
     )
 }
-export default AccountSetup
+
+export { AccountSetup }

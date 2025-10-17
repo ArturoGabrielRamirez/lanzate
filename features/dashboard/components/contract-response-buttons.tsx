@@ -54,4 +54,4 @@ function ContractResponseButtons({ assignmentId, onResponse }: ContractResponseB
     )
 }
 
-export default ContractResponseButtons 
+export { ContractResponseButtons }

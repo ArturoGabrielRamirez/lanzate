@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 /* import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { useState } from "react" */
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { extractLink, formatActivityDate, getUserInitials } from "@/features/dashboard/components/activity-items/shared-utils"
+import { extractLink, formatActivityDate, getUserInitials } from "@/features/dashboard/utils/shared-utils"
 import { FeedItemProps } from "@/features/dashboard/types"
 import ConfirmOrderButtonIcon from "@/features/orders/components/confirm-order-button-icon"
 import OpenChatButton from "@/features/orders/components/open-chat-button"

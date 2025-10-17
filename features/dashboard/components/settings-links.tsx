@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectItem, SelectValue, SelectTrigger, SelectContent } from "@/components/ui/select"
 import { SettingsLinksProps } from "@/features/dashboard/types"
 
-const SettingsLinks = ({ stores }: SettingsLinksProps) => {
+function SettingsLinks({ stores }: SettingsLinksProps) {
 
     const [selectedStore, setSelectedStore] = useState<number | null>(null)
 
@@ -38,4 +38,5 @@ const SettingsLinks = ({ stores }: SettingsLinksProps) => {
         </div>
     )
 }
-export default SettingsLinks
+
+export { SettingsLinks }

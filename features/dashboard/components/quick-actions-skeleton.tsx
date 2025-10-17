@@ -1,7 +1,8 @@
-import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
 import { Calendar, Store, Zap } from "lucide-react"
 import * as motion from "motion/react-client"
+
+import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
 
 function QuickActionsSkeleton() {
     return (
@@ -32,4 +33,4 @@ function QuickActionsSkeleton() {
     )
 }
 
-export default QuickActionsSkeleton 
+export { QuickActionsSkeleton }

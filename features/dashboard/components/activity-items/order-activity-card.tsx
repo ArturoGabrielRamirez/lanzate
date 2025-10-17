@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { formatActivityDate, getOrderStatusBadgeVariant, getUserInitials } from "@/features/dashboard/components/activity-items/shared-utils"
+import { formatActivityDate, getOrderStatusBadgeVariant, getUserInitials } from "@/features/dashboard/utils/shared-utils"
 import { OrderActivityCardProps } from "@/features/dashboard/types"
 
 function OrderActivityCard({ item }: OrderActivityCardProps) {
@@ -82,4 +82,4 @@ function OrderActivityCard({ item }: OrderActivityCardProps) {
     )
 }
 
-export default OrderActivityCard 
+export { OrderActivityCard }

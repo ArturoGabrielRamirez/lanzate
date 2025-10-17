@@ -6,7 +6,7 @@ import { ActivityFeedItemSkeletonProps } from "@/features/dashboard/types"
 
 function ActivityFeedItemSkeleton({ index }: ActivityFeedItemSkeletonProps) {
     const baseDelay = index * 0.1
-    
+
     // Use index to create deterministic variations
     const hasSecondaryContent = index % 3 === 0
     const hasActionButtons = index % 5 === 0
@@ -22,7 +22,7 @@ function ActivityFeedItemSkeleton({ index }: ActivityFeedItemSkeletonProps) {
                     <div className="flex items-start space-x-3">
                         {/* Avatar skeleton */}
                         <Skeleton className="size-10 rounded-full shrink-0" />
-                        
+
                         <div className="flex-1 space-y-2">
                             {/* Main content skeleton */}
                             <div className="flex items-center space-x-2">
@@ -36,7 +36,7 @@ function ActivityFeedItemSkeleton({ index }: ActivityFeedItemSkeletonProps) {
                             {hasSecondaryContent && (
                                 <Skeleton className="h-3 w-48" />
                             )}
-                            
+
                             {/* Action buttons skeleton (for contracts) */}
                             {hasActionButtons && (
                                 <div className="flex space-x-2">
@@ -79,4 +79,4 @@ function ActivityFeedSkeleton() {
     )
 }
 
-export default ActivityFeedSkeleton 
+export { ActivityFeedSkeleton, ActivityFeedItemSkeleton }

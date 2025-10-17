@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 
 import { InfiniteScrollProps } from "@/features/dashboard/types"
 
-const InfiniteScroll = ({ isLoading, hasMore, next }: InfiniteScrollProps) => {
+function InfiniteScroll({ isLoading, hasMore, next }: InfiniteScrollProps) {
 
     const ref = useRef<HTMLDivElement>(null)
     const isInView = useInView(ref)
@@ -36,4 +36,5 @@ const InfiniteScroll = ({ isLoading, hasMore, next }: InfiniteScrollProps) => {
         </motion.div>
     )
 }
-export default InfiniteScroll
+
+export { InfiniteScroll }

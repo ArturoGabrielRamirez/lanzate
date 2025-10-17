@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { getUserInitials, formatActivityDate, getStatusBadgeVariant } from "@/features/dashboard/components/activity-items/shared-utils"
+import { getUserInitials, formatActivityDate, getStatusBadgeVariant } from "@/features/dashboard/utils/shared-utils"
 import ContractActionButtons from "@/features/dashboard/components/contract-action-buttons"
 import ContractResponseButtons from "@/features/dashboard/components/contract-response-buttons"
 import { ContractEmployeeActivityCardProps } from "@/features/dashboard/types"
@@ -81,4 +81,4 @@ function ContractEmployeeActivityCard({ item }: ContractEmployeeActivityCardProp
     )
 }
 
-export default ContractEmployeeActivityCard 
+export { ContractEmployeeActivityCard }

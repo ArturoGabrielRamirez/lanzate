@@ -3,7 +3,7 @@
 import * as motion from "motion/react-client"
 import { useEffect, useState } from "react"
 
-import { getUserStoreActivities } from "@/features/dashboard/actions/getUserStoreActivities"
+import { getUserStoreActivities } from "@/features/dashboard/actions/get-user-store-activities.action"
 import { FeedItem } from "@/features/dashboard/components/activity-items"
 import { EmptyFeedItem } from "@/features/dashboard/components/activity-items"
 import InfiniteScroll from "@/features/dashboard/components/infinite-scroll"

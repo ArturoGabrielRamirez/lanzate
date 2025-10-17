@@ -3,7 +3,7 @@ import * as motion from "motion/react-client"
 import { getTranslations } from "next-intl/server"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { getDashboardStats } from "@/features/dashboard/actions/getDashboardStats"
+import { getDashboardStatsAction } from "@/features/dashboard/actions"
 import { DashboardStatsProps, ChangeIndicatorProps } from "@/features/dashboard/types"
 
 function formatCurrency(amount: number) {
@@ -41,9 +41,9 @@ function ChangeIndicator({ change }: ChangeIndicatorProps) {
 
 async function DashboardStats({ userId }: DashboardStatsProps) {
     const t = await getTranslations("dashboard.stats")
-    const { payload: stats, error } = await getDashboardStats(userId)
+    const { payload: stats, hasError } = await getDashboardStatsAction(userId)
 
-    if (error || !stats) {
+    if (hasError || !stats) {
         return (
             <div className="grid-cols-2 xl:grid-cols-4 2xl:grid-cols-2 gap-4 area-[stats] opacity-50 hover:opacity-100 transition-opacity duration-300 hidden lg:grid">
                 <Card className="!p-2 !gap-2">
@@ -126,4 +126,4 @@ async function DashboardStats({ userId }: DashboardStatsProps) {
     )
 }
 
-export default DashboardStats 
+export { DashboardStats, ChangeIndicator }

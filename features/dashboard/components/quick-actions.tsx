@@ -3,13 +3,13 @@ import { Zap } from "lucide-react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
-import QuickActionsClient from "@/features/dashboard/components/quick-actions-client"
-import { getUserStoreCount } from "@/features/dashboard/data/getUserStoreCount"
+import { QuickActionsClient } from "@/features/dashboard/components"
+import { getUserStoreCountData } from "@/features/dashboard/data"
 import { QuickActionsProps } from "@/features/dashboard/types"
 
 async function QuickActions({ userId }: QuickActionsProps) {
 
-    const { payload: storeCount, error: storeCountError, message: storeCountMessage } = await getUserStoreCount(userId)
+    const { payload: storeCount, hasError: storeCountError, message: storeCountMessage } = await getUserStoreCountData(userId)
 
     if (storeCountError || storeCount === undefined) {
         console.error(storeCountMessage)
@@ -49,4 +49,4 @@ async function QuickActions({ userId }: QuickActionsProps) {
     )
 }
 
-export default QuickActions 
+export { QuickActions }

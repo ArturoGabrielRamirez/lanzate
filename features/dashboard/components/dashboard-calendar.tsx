@@ -1,12 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { Calendar } from "@/components/ui/calendar"
-import Link from "next/link"
 import { ArrowRight, CalendarIcon } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 import { useMedia } from "react-use"
 
-export default function DashboardCalendar() {
+import { Calendar } from "@/components/ui/calendar"
+
+function DashboardCalendar() {
 
     const [date, setDate] = useState<Date | undefined>(new Date())
     const [isClient, setIsClient] = useState(false)
@@ -45,3 +46,5 @@ export default function DashboardCalendar() {
         </div>
     )
 }
+
+export { DashboardCalendar }

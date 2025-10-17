@@ -1,5 +1,5 @@
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { getUserStoreActivities } from "@/features/dashboard/actions/getUserStoreActivities"
+import { getUserStoreActivities } from "@/features/dashboard/actions/get-user-store-activities.action"
 import { EmptyFeedItem, NewActivityFeed } from "@/features/dashboard/components"
 import { ActivityFeedProps } from "@/features/dashboard/types"
 
@@ -34,4 +34,4 @@ async function ActivityFeed({ userId, type, page }: ActivityFeedProps) {
     return <NewActivityFeed initialActivities={activities} userId={userId} type={type} />
 }
 
-export default ActivityFeed
+export { ActivityFeed }

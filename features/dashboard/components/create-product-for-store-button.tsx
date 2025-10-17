@@ -7,4 +7,4 @@ function CreateProductForStoreButton(props: CreateProductForStoreButtonProps) {
     return <UnifiedCreateProductButton {...props} />
 }
 
-export default CreateProductForStoreButton 
+export { CreateProductForStoreButton }

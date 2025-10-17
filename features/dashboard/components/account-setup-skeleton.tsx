@@ -1,9 +1,10 @@
 import { Loader, Settings } from "lucide-react"
+
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "@/components/ui/skeleton"
 
-const AccountSetupSkeleton = () => {
+function AccountSetupSkeleton() {
     return (
         <div className="area-[setup] hidden lg:block group/setup">
             <div className="flex items-center justify-between mb-2 md:mb-4">
@@ -47,4 +48,5 @@ const AccountSetupSkeleton = () => {
         </div>
     )
 }
-export default AccountSetupSkeleton
+
+export { AccountSetupSkeleton }

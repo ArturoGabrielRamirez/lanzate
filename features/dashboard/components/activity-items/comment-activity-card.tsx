@@ -3,7 +3,7 @@ import Link from "next/link"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
-import { formatActivityDate, getUserInitials } from "@/features/dashboard/components/activity-items/shared-utils"
+import { formatActivityDate, getUserInitials } from "@/features/dashboard/utils/shared-utils"
 import { CommentActivityCardProps } from "@/features/dashboard/types"
 
 function CommentActivityCard({ item }: CommentActivityCardProps) {
@@ -62,4 +62,4 @@ function CommentActivityCard({ item }: CommentActivityCardProps) {
     )
 }
 
-export default CommentActivityCard 
+export { CommentActivityCard }

@@ -1,10 +1,11 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
-import { cn } from "@/lib/utils"
 import { useQueryState } from "nuqs"
 
-const FeedFilters = () => {
+import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
+
+function FeedFilters() {
 
     const [type, setType] = useQueryState("type", { clearOnDefault: true, shallow: false, defaultValue: "all" })
 
@@ -52,4 +53,5 @@ const FeedFilters = () => {
         </div>
     )
 }
-export default FeedFilters
+
+export { FeedFilters }

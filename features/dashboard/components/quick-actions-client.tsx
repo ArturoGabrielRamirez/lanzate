@@ -12,4 +12,4 @@ function QuickActionsClient({ userId }: QuickActionsClientProps) {
     )
 }
 
-export default QuickActionsClient 
+export { QuickActionsClient }

@@ -39,4 +39,4 @@ function ContractActionButtons({ fileUrl, title }: ContractActionButtonsProps) {
     )
 }
 
-export default ContractActionButtons 
+export { ContractActionButtons }

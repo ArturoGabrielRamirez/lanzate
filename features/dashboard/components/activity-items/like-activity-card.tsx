@@ -4,7 +4,7 @@ import Link from "next/link"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
-import { formatActivityDate, getUserInitials } from "@/features/dashboard/components/activity-items/shared-utils"
+import { formatActivityDate, getUserInitials } from "@/features/dashboard/utils/shared-utils"
 import { LikeActivityCardProps } from "@/features/dashboard/types"
 
 function LikeActivityCard({ item }: LikeActivityCardProps) {
@@ -79,4 +79,4 @@ function LikeActivityCard({ item }: LikeActivityCardProps) {
     )
 }
 
-export default LikeActivityCard
+export { LikeActivityCard }
