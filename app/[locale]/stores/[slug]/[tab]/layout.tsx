@@ -1,8 +1,9 @@
-import { BookOpenText, Building2, UsersRound, Box, Store, ShoppingCart, Settings, ChartLine, Clock, Paintbrush } from "lucide-react"
+import { BookOpenText, Building2, UsersRound, Box, Store, ShoppingCart, Settings, ChartLine, Clock, Paintbrush, ArrowLeft } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { TabsContent } from "@/components/ui/tabs"
+import { PageHeader } from "@/features/layout/components"
 import { TabLayoutProps } from "@/features/stores/types"
 
 async function TabLayout({ children, params }: TabLayoutProps) {
@@ -36,7 +37,12 @@ async function TabLayout({ children, params }: TabLayoutProps) {
         styles: { title: <><Paintbrush className="w-4 h-4" />{t("styles")}</>, hasCard: true },
     }
 
-    return children
+    return (
+        <>
+            <PageHeader title={titles[tab as keyof typeof titles]} />
+            {/* {children} */}
+        </>
+    )
 
     return (
         <TabsContent value={tab} className="flex flex-col">
