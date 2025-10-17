@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import shareStoreImage from "@/features/dashboard/assets/Ecommerce web page-pana.svg"
@@ -13,7 +13,7 @@ import { useStep } from "@/hooks/use-step"
 
 function WelcomeTutorial() {
 
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(false)
     const [currentStep, { goToNextStep, goToPrevStep }] = useStep(4)
 
     const images = [welcomeImage, createStoreImage, createProductImage, shareStoreImage]
@@ -23,6 +23,7 @@ function WelcomeTutorial() {
             descriptions: [
                 "This is a brief tutorial to help you get started with your business.",
                 "Once you have completed the tutorial, you will be able to start using Lanzate.",
+
             ]
         },
         {
@@ -48,6 +49,20 @@ function WelcomeTutorial() {
             ]
         }
     ]
+
+    useEffect(() => {
+        const tutorialFinished = localStorage.getItem("tutorial-finished")
+        if (tutorialFinished) {
+            setOpen(false)
+        } else {
+            setOpen(true)
+        }
+    }, [])
+
+    const handleFinishTutorial = () => {
+        setOpen(false)
+        localStorage.setItem("tutorial-finished", "true")
+    }
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -83,7 +98,7 @@ function WelcomeTutorial() {
                         </Button>
                     )}
                     {currentStep === 4 && (
-                        <Button onClick={() => setOpen(false)}>
+                        <Button onClick={handleFinishTutorial}>
                             Finish Tutorial
                         </Button>
                     )}
