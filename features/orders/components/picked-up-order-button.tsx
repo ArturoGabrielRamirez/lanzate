@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { changeOrderTrackingStatus } from "@/features/orders/actions/changeOrderTrackingStatus"
 import { Order, OrderTrackingStatus, OrderTracking, OrderItem, Product, OrderPayment } from "@prisma/client"
