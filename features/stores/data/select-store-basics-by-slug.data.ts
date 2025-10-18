@@ -11,6 +11,7 @@ export async function selectStoreBasicsBySlug(slug: string) {
         select: {
             id: true,
             logo: true,
+            slug: true,
             subdomain: true,
             name: true,
             _count: {

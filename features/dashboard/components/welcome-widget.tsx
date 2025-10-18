@@ -1,15 +1,12 @@
 import { WelcomeWidgetProps } from "@/features/dashboard/types"
+import { PageHeader } from "@/features/layout/components"
 
 function WelcomeWidget({ user }: WelcomeWidgetProps) {
     return (
-        <header>
-            <h2 className="text-2xl lg:text-4xl font-bold flex items-center gap-2">
-                Hola, {user.first_name}!
-            </h2>
-            <p className="text-base lg:text-lg text-muted-foreground">
-                Welcome back to <span className="text-primary">Lanzate</span>
-            </p>
-        </header>
+        <PageHeader
+            title={`Hola, ${user.first_name}!`}
+            subtitle={<span>Welcome back to <span className="text-primary">Lanzate</span></span>}
+        />
     )
 }
 

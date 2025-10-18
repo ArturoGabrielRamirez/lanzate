@@ -57,6 +57,11 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
             </div>
             <div className="hidden lg:grid lg:grid-cols-[1fr_2fr] lg:gap-8">
                 <div className="flex flex-col gap-8">
+                    <Suspense>
+                        <SectionContainer title="Looking for something?">
+                            <GlobalSearch userId={user.id} />
+                        </SectionContainer>
+                    </Suspense>
                     <Suspense fallback={<StoreListSkeleton />}>
                         <StoreListContainer />
                     </Suspense>
@@ -64,11 +69,6 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
                     <WelcomeTutorial />
                 </div>
                 <div className="flex flex-col gap-4">
-                    <Suspense>
-                        <SectionContainer title="Looking for something?">
-                            <GlobalSearch userId={user.id} />
-                        </SectionContainer>
-                    </Suspense>
                     <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
                         <ActivityFeed userId={user.id} type={type} page={page || 1} />
                     </Suspense>

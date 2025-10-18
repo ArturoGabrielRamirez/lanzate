@@ -1,22 +1,17 @@
-/* import { Box, Building2, ChartLine, Clock, Paintbrush, ShoppingCart, UsersRound } from "lucide-react" */
-/* import { Store } from "lucide-react" */
-/* import { BookOpenText } from "lucide-react" */
 import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
 
-/* import { TabsList } from "@/components/ui/tabs" */
-/* import { TabTriggerLink, TabsClientContainer } from "@/features/stores/components" */
-/* import { StoreHeaderServer } from "@/features/stores/components/store-header-server" */
+import { HelpCard } from "@/features/dashboard/components"
+import { GlobalSearch } from "@/features/global-search/components"
 import { getUserInfo } from "@/features/layout/actions"
-import { PageContainer } from "@/features/layout/components"
-import { getStoreBasicsBySlugAction } from "@/features/stores/actions"
-import { StoreDetailsLayoutProps } from "@/features/stores/types"
-import { Link, redirect } from "@/i18n/naviation"
-import { SectionContainer, StoreBalanceBig, StoreBalanceBigSkeleton, StoreHeaderServer, StoreHeaderSkeleton, StoreHeaderTinyWidgets } from "@/features/stores/components"
+import { PageContainer, PageHeader } from "@/features/layout/components"
 import { OrdersListWidget, OrdersListWidgetSkeleton } from "@/features/orders/components"
 import { Item, ItemContent, ItemGroup, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
+import { getStoreBasicsBySlugAction } from "@/features/stores/actions"
+import { SectionContainer, StoreBalanceBig, StoreBalanceBigSkeleton, StoreHeaderServer, StoreHeaderSkeleton, StoreHeaderTinyWidgets } from "@/features/stores/components"
 import { STORES_NAVIGATION_LINKS } from "@/features/stores/constants"
-import { HelpCard } from "@/features/dashboard/components"
+import { StoreDetailsLayoutProps } from "@/features/stores/types"
+import { Link, redirect } from "@/i18n/naviation"
 
 
 async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps) {
@@ -85,11 +80,14 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                 </div>
                 <div className="hidden lg:grid lg:grid-cols-[1fr_2fr] lg:gap-8">
                     <div className="flex flex-col gap-8">
-                        <SectionContainer title="Tu tienda" moreLink={`/stores/${slug}/account`}>
-                            <Suspense fallback={<StoreHeaderSkeleton />}>
-                                <StoreHeaderServer slug={slug} />
-                            </Suspense>
-                        </SectionContainer>
+                        <Suspense fallback={<StoreHeaderSkeleton />}>
+                            <StoreHeaderServer slug={slug} />
+                        </Suspense>
+                        <Suspense>
+                            <SectionContainer title="Looking for something?">
+                                <GlobalSearch userId={user.id} />
+                            </SectionContainer>
+                        </Suspense>
                         <SectionContainer title="Tu resumen">
                             <StoreHeaderTinyWidgets slug={slug} />
                         </SectionContainer>

@@ -1,11 +1,7 @@
-import Link from "next/link"
 import { Suspense } from "react"
 
-import { HelpCard } from "@/features/dashboard/components"
 import { OrdersListWidget, OrdersListWidgetSkeleton } from "@/features/orders/components"
-import { Item, ItemContent, ItemGroup, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
-import { SectionContainer, StoreBalanceBig, StoreBalanceBigSkeleton, StoreHeaderServer, StoreHeaderSkeleton, StoreHeaderTinyWidgets } from "@/features/stores/components"
-import { STORES_NAVIGATION_LINKS } from "@/features/stores/constants"
+import { SectionContainer, StoreBalanceBig, StoreBalanceBigSkeleton } from "@/features/stores/components"
 
 type StoreDetailsPageProps = {
     params: Promise<{ locale: string, slug: string }>
