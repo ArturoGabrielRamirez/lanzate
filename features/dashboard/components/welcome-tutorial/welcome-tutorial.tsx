@@ -8,13 +8,14 @@ import shareStoreImage from "@/features/dashboard/assets/Ecommerce web page-pana
 import createStoreImage from "@/features/dashboard/assets/fashion shop-pana.svg"
 import createProductImage from "@/features/dashboard/assets/Niche service marketplace-pana.svg"
 import welcomeImage from "@/features/dashboard/assets/we are open-pana.svg"
+import { WelcomeTutorialWidget } from "@/features/dashboard/components/welcome-tutorial"
 import { Button } from "@/features/shadcn/components/button"
 import { useStep } from "@/hooks/use-step"
 
 function WelcomeTutorial() {
 
     const [open, setOpen] = useState(false)
-    const [currentStep, { goToNextStep, goToPrevStep }] = useStep(4)
+    const [currentStep, { goToNextStep, goToPrevStep, setStep }] = useStep(4)
 
     const images = [welcomeImage, createStoreImage, createProductImage, shareStoreImage]
     const texts = [
@@ -64,47 +65,56 @@ function WelcomeTutorial() {
         localStorage.setItem("tutorial-finished", "true")
     }
 
+    const handleRetakeTutorial = () => {
+        localStorage.removeItem("tutorial-finished")
+        setOpen(true)
+        setStep(1)
+    }
+
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="w-full !max-w-full h-full md:!max-w-lg md:h-auto rounded-none md:rounded-lg">
-                <DialogHeader>
-                    <DialogTitle>Welcome to Lanzate!</DialogTitle>
-                </DialogHeader>
+        <>
+            <WelcomeTutorialWidget onRetakeTutorial={handleRetakeTutorial} />
+            <Dialog open={open} onOpenChange={setOpen}>
+                <DialogContent className="w-full !max-w-full h-full md:!max-w-lg md:h-auto rounded-none md:rounded-lg">
+                    <DialogHeader>
+                        <DialogTitle>Welcome to Lanzate!</DialogTitle>
+                    </DialogHeader>
 
-                <div className="text-center md:text-left">
-                    <div className="relative w-full aspect-video my-8">
-                        <Image src={images[currentStep - 1]} alt="Welcome Image" fill objectFit="cover" />
+                    <div className="text-center md:text-left">
+                        <div className="relative w-full aspect-video my-8">
+                            <Image src={images[currentStep - 1]} alt="Welcome Image" fill objectFit="cover" />
+                        </div>
+                        <p className="text-3xl font-bold mb-6">
+                            {texts[currentStep - 1].title}
+                        </p>
+                        <p className="text-lg mb-2 text-balance text-muted-foreground">
+                            {texts[currentStep - 1].descriptions[0]}
+                        </p>
+                        <p className="text-lg text-balance text-muted-foreground">
+                            {texts[currentStep - 1].descriptions[1]}
+                        </p>
                     </div>
-                    <p className="text-3xl font-bold mb-6">
-                        {texts[currentStep - 1].title}
-                    </p>
-                    <p className="text-lg mb-2 text-balance text-muted-foreground">
-                        {texts[currentStep - 1].descriptions[0]}
-                    </p>
-                    <p className="text-lg text-balance text-muted-foreground">
-                        {texts[currentStep - 1].descriptions[1]}
-                    </p>
-                </div>
 
-                <DialogFooter className="!flex-col justify-end md:!flex-row">
-                    {currentStep > 1 && (
-                        <Button onClick={goToPrevStep} variant="secondary">
-                            Previous
-                        </Button>
-                    )}
-                    {currentStep < 4 && (
-                        <Button onClick={goToNextStep}>
-                            Next
-                        </Button>
-                    )}
-                    {currentStep === 4 && (
-                        <Button onClick={handleFinishTutorial}>
-                            Finish Tutorial
-                        </Button>
-                    )}
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+                    <DialogFooter className="!flex-col justify-end md:!flex-row">
+                        {currentStep > 1 && (
+                            <Button onClick={goToPrevStep} variant="secondary">
+                                Previous
+                            </Button>
+                        )}
+                        {currentStep < 4 && (
+                            <Button onClick={goToNextStep}>
+                                Next
+                            </Button>
+                        )}
+                        {currentStep === 4 && (
+                            <Button onClick={handleFinishTutorial}>
+                                Finish Tutorial
+                            </Button>
+                        )}
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        </>
     )
 
 }

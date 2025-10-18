@@ -48,7 +48,7 @@ function NextStepButton({ goToNextStep, className }: { goToNextStep: () => void,
 }
 
 
-function CreateStoreButton() {
+function CreateStoreButton({ userId }: { userId: number }) {
 
     const steps = 4
     const [open, setOpen] = useState(false)

@@ -37,19 +37,38 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
     }
 
     return (
-        <PageContainer className="gap-4 flex flex-col">
+        <PageContainer className="gap-4 flex flex-col lg:gap-8">
             <WelcomeWidget user={user} />
-            <WelcomeTutorial />
-            <Suspense>
-                <GlobalSearch userId={user.id} />
-            </Suspense>
-            <Suspense fallback={<StoreListSkeleton />}>
-                <StoreListContainer />
-            </Suspense>
-            <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
-                <ActivityFeed userId={user.id} type={type} page={page || 1} />
-            </Suspense>
-            <HelpCard />
+            <div className="lg:hidden flex flex-col gap-4">
+                <Suspense>
+                    <GlobalSearch userId={user.id} />
+                </Suspense>
+                <Suspense fallback={<StoreListSkeleton />}>
+                    <StoreListContainer />
+                </Suspense>
+                <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
+                    <ActivityFeed userId={user.id} type={type} page={page || 1} />
+                </Suspense>
+                <HelpCard />
+                <WelcomeTutorial />
+            </div>
+            <div className="hidden lg:grid lg:grid-cols-[1fr_2fr] lg:gap-8">
+                <div className="flex flex-col gap-8">
+                    <Suspense fallback={<StoreListSkeleton />}>
+                        <StoreListContainer />
+                    </Suspense>
+                    <HelpCard />
+                    <WelcomeTutorial />
+                </div>
+                <div className="flex flex-col gap-4">
+                    <Suspense>
+                        <GlobalSearch userId={user.id} />
+                    </Suspense>
+                    <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
+                        <ActivityFeed userId={user.id} type={type} page={page || 1} />
+                    </Suspense>
+                </div>
+            </div>
         </PageContainer>
     )
 }

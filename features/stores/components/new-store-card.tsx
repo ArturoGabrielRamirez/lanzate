@@ -19,9 +19,9 @@ function NewStoreCard({ userId, variant = "empty" }: NewStoreCardProps) {
     const description = isAddMore ? "Take your business to another level!" : "Be the first to claim your custom domain!"
 
     return (
-        <Card className="p-0 border-dashed bg-card/50 hover:bg-card/75 transition-all group">
+        <Card className="p-0 md:p-0 lg:p-0 xl:p-0 border-dashed bg-card/50 hover:bg-card/75 transition-all group">
             <CardContent className="opacity-50 group-hover:opacity-100 transition-all">
-                <Empty>
+                <Empty className="lg:p-3 xl:p-3">
                     <EmptyHeader>
                         <EmptyMedia variant="icon">
                             <Plus className="size-4 md:size-5 lg:size-6" />
