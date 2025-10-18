@@ -12,35 +12,35 @@ async function TabLayout({ children, params }: TabLayoutProps) {
     const t = await getTranslations("store.tabs")
 
     const titles = {
-        overview: <><BookOpenText className="w-4 h-4" />{t("overview")}</>,
-        account: <><Store className="w-4 h-4" />{t("account")}</>,
-        branches: <><Building2 className="w-4 h-4" />{t("branches")}</>,
-        employees: <><UsersRound className="w-4 h-4" />{t("employees")}</>,
-        products: <><Box className="w-4 h-4" />{t("products")}</>,
-        orders: <><ShoppingCart className="w-4 h-4" />{t("orders")}</>,
-        settings: <><Settings className="w-4 h-4" />{t("settings")}</>,
-        analytics: <><ChartLine className="w-4 h-4" />{t("analytics")}</>,
-        history: <><Clock className="w-4 h-4" />{t("history")}</>,
-        styles: <><Paintbrush className="w-4 h-4" />{t("styles")}</>,
+        overview: <><BookOpenText className="size-8" />{t("overview")}</>,
+        account: <><Store className="size-8" />{t("account")}</>,
+        branches: <><Building2 className="size-8" />{t("branches")}</>,
+        employees: <><UsersRound className="size-8" />{t("employees")}</>,
+        products: <><Box className="size-8" />{t("products")}</>,
+        orders: <><ShoppingCart className="size-8" />{t("orders")}</>,
+        settings: <><Settings className="size-8" />{t("settings")}</>,
+        analytics: <><ChartLine className="size-8" />{t("analytics")}</>,
+        history: <><Clock className="size-8" />{t("history")}</>,
+        styles: <><Paintbrush className="size-8" />{t("styles")}</>,
     }
 
     const content = {
-        overview: { title: <><BookOpenText className="w-4 h-4" />{t("overview")}</>, hasCard: true },
-        account: { title: <><Store className="w-4 h-4" />{t("account")}</>, hasCard: false },
-        branches: { title: <><Building2 className="w-4 h-4" />{t("branches")}</>, hasCard: true },
-        employees: { title: <><UsersRound className="w-4 h-4" />{t("employees")}</>, hasCard: true },
-        products: { title: <><Box className="w-4 h-4" />{t("products")}</>, hasCard: false },
-        orders: { title: <><ShoppingCart className="w-4 h-4" />{t("orders")}</>, hasCard: true },
-        settings: { title: <><Settings className="w-4 h-4" />{t("settings")}</>, hasCard: true },
-        analytics: { title: <><ChartLine className="w-4 h-4" />{t("analytics")}</>, hasCard: true },
-        history: { title: <><Clock className="w-4 h-4" />{t("history")}</>, hasCard: true },
-        styles: { title: <><Paintbrush className="w-4 h-4" />{t("styles")}</>, hasCard: true },
+        overview: { title: <><BookOpenText className="size-8" />{t("overview")}</>, hasCard: true },
+        account: { title: <><Store className="size-8" />{t("account")}</>, hasCard: false },
+        branches: { title: <><Building2 className="size-8" />{t("branches")}</>, hasCard: true },
+        employees: { title: <><UsersRound className="size-8" />{t("employees")}</>, hasCard: true },
+        products: { title: <><Box className="size-8" />{t("products")}</>, hasCard: false },
+        orders: { title: <><ShoppingCart className="size-8" />{t("orders")}</>, hasCard: true },
+        settings: { title: <><Settings className="size-8" />{t("settings")}</>, hasCard: true },
+        analytics: { title: <><ChartLine className="size-8" />{t("analytics")}</>, hasCard: true },
+        history: { title: <><Clock className="size-8" />{t("history")}</>, hasCard: true },
+        styles: { title: <><Paintbrush className="size-8" />{t("styles")}</>, hasCard: true },
     }
 
     return (
         <>
             <PageHeader title={titles[tab as keyof typeof titles]} />
-            {/* {children} */}
+            {children}
         </>
     )
 

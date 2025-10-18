@@ -12,7 +12,7 @@ interface StoreCardLogoProps {
 
 function StoreCardLogo({ logo, name, className }: StoreCardLogoProps) {
     return (
-        <Avatar className={cn("aspect-square size-10 lg:size-12 shrink-0 border-2 border-primary hidden md:block", className)}>
+        <Avatar className={cn("aspect-square size-10 lg:size-12 shrink-0 border-2 border-primary", className)}>
             <AvatarImage src={logo} alt={name} asChild className="aspect-square">
                 <Image src={logo} alt={name} width={32} height={32} unoptimized className="aspect-square" />
             </AvatarImage>

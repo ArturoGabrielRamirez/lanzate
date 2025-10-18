@@ -1,10 +1,9 @@
-import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
 
 import { HelpCard } from "@/features/dashboard/components"
 import { GlobalSearch } from "@/features/global-search/components"
 import { getUserInfo } from "@/features/layout/actions"
-import { PageContainer, PageHeader } from "@/features/layout/components"
+import { PageContainer } from "@/features/layout/components"
 import { OrdersListWidget, OrdersListWidgetSkeleton } from "@/features/orders/components"
 import { Item, ItemContent, ItemGroup, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
 import { getStoreBasicsBySlugAction } from "@/features/stores/actions"
@@ -13,19 +12,33 @@ import { STORES_NAVIGATION_LINKS } from "@/features/stores/constants"
 import { StoreDetailsLayoutProps } from "@/features/stores/types"
 import { Link, redirect } from "@/i18n/naviation"
 
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }){
+
+    const { slug } = await params
+
+    const { payload: store, hasError: storeError } = await getStoreBasicsBySlugAction(slug)
+
+    if (storeError || !store) {
+        return {
+            title: "Store not found"
+        }
+    }
+
+    return {
+        title: store.name
+    }
+}
+
 
 async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps) {
 
     const { slug } = await params
-
-    const t = await getTranslations("store.layout")
 
     const { payload: user, hasError: userError } = await getUserInfo()
 
     if (!user) return redirect({ href: "/login", locale: "es" })
 
     if (userError) {
-        //return <DashboardError message={userMessage} />
         return null
     }
 
@@ -43,11 +56,14 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
         <PageContainer className="gap-4 flex flex-col lg:gap-8">
             <div className="grow flex flex-col gap-8">
                 <div className="lg:hidden flex flex-col gap-4">
-                    <SectionContainer title="Tu tienda" moreLink={`/stores/${slug}/account`}>
-                        <Suspense fallback={<StoreHeaderSkeleton />}>
-                            <StoreHeaderServer slug={slug} />
-                        </Suspense>
-                    </SectionContainer>
+                    <Suspense fallback={<StoreHeaderSkeleton />}>
+                        <StoreHeaderServer slug={slug} />
+                    </Suspense>
+                    <Suspense>
+                        <SectionContainer title="Looking for something?">
+                            <GlobalSearch userId={user.id} />
+                        </SectionContainer>
+                    </Suspense>
                     <SectionContainer title="Tu resumen" className="@container">
                         <StoreHeaderTinyWidgets slug={slug} />
                     </SectionContainer>
@@ -96,11 +112,11 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                                 {STORES_NAVIGATION_LINKS.map((link) => (
                                     <Item key={link.href} variant="outline" className="flex-col items-center p-2 @md:p-4 bg-gradient-to-br from-card/50 to-card/10 group/item gap-2 @lg:gap-4" asChild>
                                         <Link href={`/stores/${slug}${link.href}`}>
-                                            <ItemMedia variant="icon" className="mx-auto size-8 bg-transparent border-none text-muted-foreground group-hover/item:text-primary group-hover/item:scale-125 transition-all duration-100">
+                                            <ItemMedia variant="icon" className="mx-auto size-6 bg-transparent border-none text-muted-foreground group-hover/item:text-primary group-hover/item:scale-125 transition-all duration-100">
                                                 {link.icon}
                                             </ItemMedia>
                                             <ItemContent>
-                                                <ItemTitle className="font-medium text-xs md:text-sm lg:text-base text-muted-foreground group-hover/item:text-foreground">{link.label}</ItemTitle>
+                                                <ItemTitle className="font-medium text-xs md:text-sm text-muted-foreground group-hover/item:text-foreground">{link.label}</ItemTitle>
                                             </ItemContent>
                                         </Link>
                                     </Item>

@@ -11,9 +11,10 @@ interface PageHeaderProps {
     title: string | React.ReactNode
     subtitle?: string | React.ReactNode
     breadcrumbs?: { label: string, href: string }[]
+    media?: React.ReactNode | string
 }
 
-function PageHeader({ title, subtitle, breadcrumbs }: PageHeaderProps) {
+function PageHeader({ title, subtitle, breadcrumbs, media }: PageHeaderProps) {
 
     const router = useRouter()
 
@@ -22,15 +23,20 @@ function PageHeader({ title, subtitle, breadcrumbs }: PageHeaderProps) {
     }
 
     return (
-        <header>
-            <h2 className="text-2xl lg:text-4xl font-bold flex items-center gap-2">
-                {title}
-            </h2>
-            {subtitle && (
-                <p className="text-base lg:text-lg text-muted-foreground">
-                    {subtitle}
-                </p>
-            )}
+        <header className="flex flex-col gap-2">
+            <div className="flex items-center gap-4">
+                {media && media}
+                <div className="flex flex-col gap-2">
+                    <h2 className="text-2xl lg:text-4xl font-bold flex items-center gap-2">
+                        {title}
+                    </h2>
+                    {subtitle && (
+                        <p className="text-base lg:text-lg text-muted-foreground">
+                            {subtitle}
+                        </p>
+                    )}
+                </div>
+            </div>
             {breadcrumbs && breadcrumbs?.length > 0 && (
                 <Breadcrumb>
                     <BreadcrumbList>

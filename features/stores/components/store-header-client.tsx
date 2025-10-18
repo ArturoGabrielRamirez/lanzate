@@ -3,6 +3,7 @@
 import { Store } from "@prisma/client"
 
 import { PageHeader } from "@/features/layout/components"
+import { StoreCardLogo } from "@/features/stores/components"
 import { usePathname } from "@/i18n/naviation"
 
 interface StoreHeaderClientProps {
@@ -11,10 +12,9 @@ interface StoreHeaderClientProps {
 
 function StoreHeaderClient({ store }: StoreHeaderClientProps) {
 
-    const pathname = usePathname()// "/stores/lPUEv7i2/account" I only need the last part to dynamically generate the breadcrumbs conditionally. If there's a 
-    const lastPart = pathname.split("/") // ["","stores", "lPUEv7i2", "account"]
-    console.log("🚀 ~ StoreHeaderClient ~ lastPart:", lastPart)
-    const hasLinkAfterSlug = lastPart.length > 3 // true
+    const pathname = usePathname()
+    const lastPart = pathname.split("/")
+    const hasLinkAfterSlug = lastPart.length > 3
 
     const breadcrumbs = [
         { label: store.name, href: `/stores/${store.slug}` },
@@ -28,6 +28,7 @@ function StoreHeaderClient({ store }: StoreHeaderClientProps) {
         <PageHeader
             title={store.name}
             breadcrumbs={breadcrumbs}
+            media={<StoreCardLogo logo={store.logo || ""} name={store.name} />}
         />
     )
 }

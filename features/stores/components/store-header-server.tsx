@@ -1,6 +1,5 @@
-import { PageHeader } from "@/features/layout/components"
 import { getStoreBasicsBySlugAction } from "@/features/stores/actions"
-import { StoreCardLogo, StoreHeaderClient } from "@/features/stores/components"
+import { StoreHeaderClient } from "@/features/stores/components"
 import { StoreHeaderServerProps } from "@/features/stores/types"
 
 
