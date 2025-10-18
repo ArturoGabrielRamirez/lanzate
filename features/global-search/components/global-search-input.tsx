@@ -11,7 +11,7 @@ function GlobalSearchInput({ query, setQuery, isLoading, onFocus }: GlobalSearch
     return (
         <div className="flex gap-2 relative z-50">
             <Field>
-                <InputGroup className="rounded-full bg-background border-border shadow-xs">
+                <InputGroup className="rounded-full bg-background border-border shadow-lg">
                     <InputGroupAddon>
                         <Search className="size-4" />
                     </InputGroupAddon>

@@ -13,21 +13,21 @@ function StoreHeaderTinyWidgets({ slug }: StoreHeaderTinyWidgetsProps) {
             <TinyWidget title="Productos" href={`/stores/${slug}/products`}>
                 <Box className="size-8" />
                 <span className="flex flex-col">
-                    <span className="text-primary font-bold text-xl leading-4">10</span>
-                    <span className="text-muted-foreground text-xs leading-4">items</span>
+                    <span className="font-bold text-xl leading-4">10</span>
+                    <span className="text-background/70 dark:text-muted-foreground text-xs leading-4">items</span>
                 </span>
             </TinyWidget>
             <TinyWidget title="Ordenes" href={`/stores/${slug}/orders`}>
                 <ShoppingCart className="size-8" />
                 <span className="flex flex-col">
-                    <span className="text-primary font-bold text-xl leading-4">4</span>
+                    <span className="font-bold text-xl leading-4">4</span>
                     <span className="text-background/70 dark:text-muted-foreground text-xs leading-4">hoy</span>
                 </span>
             </TinyWidget>
             <TinyWidget title="Alertas" href={`/stores/${slug}/notifications`}>
                 <Rocket className="size-8" />
                 <span className="flex flex-col">
-                    <span className="text-primary font-bold text-xl leading-4">2</span>
+                    <span className="font-bold text-xl leading-4">2</span>
                     <span className="text-background/70 dark:text-muted-foreground text-xs leading-4">nuevos</span>
                 </span>
             </TinyWidget>
