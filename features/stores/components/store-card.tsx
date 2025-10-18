@@ -42,7 +42,7 @@ function StoreCard({ store, userId }: StoreCardProps) {
     }
 
     return (
-        <Card className="transition-all gap-2 md:gap-3 lg:gap-4 group h-full group relative">
+        <Card className="transition-all gap-2 md:gap-3 lg:gap-4 group h-full group relative @container">
             <CardHeader className="gap-0 items-center hidden md:grid">
                 <CardTitle className="flex items-start md:items-center gap-2 truncate">
                     <StoreCardLogo logo={store?.logo || ""} name={store?.name || ""} />
@@ -118,7 +118,7 @@ function StoreCard({ store, userId }: StoreCardProps) {
                 </Empty>
             </CardContent>
             <CardFooter className="justify-center md:justify-between items-center flex-wrap">
-                <p className="text-sm text-muted-foreground items-center gap-2 hidden md:flex">
+                <p className="text-sm text-muted-foreground items-center gap-2 hidden @[230px]:flex">
                     <Calendar className="size-4" />
                     {store?.created_at.toLocaleDateString() || ""}
                 </p>

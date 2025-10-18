@@ -41,7 +41,7 @@ async function StoreDetailsPage({ params }: StoreDetailsPageProps) {
                         {STORES_NAVIGATION_LINKS.map((link) => (
                             <Item key={link.href} variant="outline" className="flex-col items-center p-2 lg:p-4 bg-card/50 group/item" asChild>
                                 <Link href={`/stores/${slug}${link.href}`}>
-                                    <ItemMedia variant="icon" className="mx-auto size-9 bg-transparent border-none text-muted-foreground group-hover/item:text-primary group-hover/item:scale-110 transition-all duration-100">
+                                    <ItemMedia variant="icon" className="mx-auto size-8 bg-transparent border-none text-muted-foreground group-hover/item:text-primary group-hover/item:scale-110 transition-all duration-100">
                                         {link.icon}
                                     </ItemMedia>
                                     <ItemContent>
@@ -66,9 +66,9 @@ async function StoreDetailsPage({ params }: StoreDetailsPageProps) {
                     <SectionContainer title="Tus atajos" className="@container">
                         <ItemGroup className="grid @md:grid-cols-4 grid-cols-3 gap-4">
                             {STORES_NAVIGATION_LINKS.map((link) => (
-                                <Item key={link.href} variant="outline" className="flex-col items-center p-2 @md:p-4 bg-card/50 group/item gap-2 @lg:gap-4" asChild>
+                                <Item key={link.href} variant="outline" className="flex-col items-center p-2 @md:p-4 bg-gradient-to-br from-card/50 to-card/10 group/item gap-2 @lg:gap-4" asChild>
                                     <Link href={`/stores/${slug}${link.href}`}>
-                                        <ItemMedia variant="icon" className="mx-auto size-9 bg-transparent border-none text-muted-foreground group-hover/item:text-primary group-hover/item:scale-110 transition-all duration-100">
+                                        <ItemMedia variant="icon" className="mx-auto size-8 bg-transparent border-none text-muted-foreground group-hover/item:text-primary group-hover/item:scale-125 transition-all duration-100">
                                             {link.icon}
                                         </ItemMedia>
                                         <ItemContent>

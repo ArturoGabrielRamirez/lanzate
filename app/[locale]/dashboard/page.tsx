@@ -12,6 +12,7 @@ import { loadFeedParams } from "@/features/dashboard/utils/load-feed-params"
 import { GlobalSearch } from "@/features/global-search/components"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { PageContainer } from "@/features/layout/components"
+import { SectionContainer } from "@/features/stores/components"
 import { redirect } from "@/i18n/naviation"
 
 export const metadata: Metadata = {
@@ -41,7 +42,9 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
             <WelcomeWidget user={user} />
             <div className="lg:hidden flex flex-col gap-4">
                 <Suspense>
-                    <GlobalSearch userId={user.id} />
+                    <SectionContainer title="Looking for something?">
+                        <GlobalSearch userId={user.id} />
+                    </SectionContainer>
                 </Suspense>
                 <Suspense fallback={<StoreListSkeleton />}>
                     <StoreListContainer />
@@ -62,7 +65,9 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
                 </div>
                 <div className="flex flex-col gap-4">
                     <Suspense>
-                        <GlobalSearch userId={user.id} />
+                        <SectionContainer title="Looking for something?">
+                            <GlobalSearch userId={user.id} />
+                        </SectionContainer>
                     </Suspense>
                     <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
                         <ActivityFeed userId={user.id} type={type} page={page || 1} />

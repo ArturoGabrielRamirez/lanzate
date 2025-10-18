@@ -1,6 +1,7 @@
 import { getUserStoreActivitiesAction } from "@/features/dashboard/actions"
 import { EmptyFeedItem, NewActivityFeed } from "@/features/dashboard/components"
 import { ActivityFeedProps } from "@/features/dashboard/types"
+import { SectionContainer } from "@/features/stores/components"
 
 async function ActivityFeed({ userId, type, page }: ActivityFeedProps) {
 
@@ -11,11 +12,19 @@ async function ActivityFeed({ userId, type, page }: ActivityFeedProps) {
     }
 
     if (activities.length === 0) {
-        return <EmptyFeedItem />
+        return (
+            <SectionContainer title="Tu feed">
+                <EmptyFeedItem />
+            </SectionContainer>
+        )
 
     }
 
-    return <NewActivityFeed initialActivities={activities} userId={userId} type={type} />
+    return (
+        <SectionContainer title="Tu feed">
+            <NewActivityFeed initialActivities={activities} userId={userId} type={type} />
+        </SectionContainer>
+    )
 }
 
 export { ActivityFeed }
