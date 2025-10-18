@@ -9,7 +9,7 @@ interface StoreHeaderTinyWidgetsProps {
 
 function StoreHeaderTinyWidgets({ slug }: StoreHeaderTinyWidgetsProps) {
     return (
-        <ItemGroup className="grid grid-cols-3 gap-2">
+        <ItemGroup className="grid grid-cols-3 lg:grid-cols-1 xl:grid-cols-3 gap-2 md:gap-4">
             <TinyWidget title="Productos" href={`/stores/${slug}/products`}>
                 <Box className="size-8" />
                 <span className="flex flex-col">

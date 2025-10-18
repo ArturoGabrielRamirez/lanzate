@@ -9,7 +9,7 @@ interface TinyWidgetProps {
 
 function TinyWidget({ title, children, href }: TinyWidgetProps) {
     return (
-        <Item variant="muted" size="sm" className="gap-8 px-2 lg:px-4 bg-primary/40" asChild>
+        <Item variant="muted" size="sm" className="gap-2 @xs:gap-8 px-2 lg:px-4 bg-primary/40" asChild>
             <Link href={href} title="Test">
                 <ItemHeader>
                     <ItemTitle className="text-background dark:text-muted-foreground text-base">{title}</ItemTitle>

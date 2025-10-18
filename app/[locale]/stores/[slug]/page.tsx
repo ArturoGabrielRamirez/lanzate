@@ -1,8 +1,9 @@
 import Link from "next/link"
 import { Suspense } from "react"
 
+import { HelpCard } from "@/features/dashboard/components"
 import { OrdersListWidget, OrdersListWidgetSkeleton } from "@/features/orders/components"
-import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
+import { Item, ItemContent, ItemGroup, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
 import { SectionContainer, StoreBalanceBig, StoreBalanceBigSkeleton, StoreHeaderServer, StoreHeaderSkeleton, StoreHeaderTinyWidgets } from "@/features/stores/components"
 import { STORES_NAVIGATION_LINKS } from "@/features/stores/constants"
 
@@ -21,6 +22,9 @@ async function StoreDetailsPage({ params }: StoreDetailsPageProps) {
                     <Suspense fallback={<StoreHeaderSkeleton />}>
                         <StoreHeaderServer slug={slug} />
                     </Suspense>
+                </SectionContainer>
+                <SectionContainer title="Tu resumen" className="@container">
+                    <StoreHeaderTinyWidgets slug={slug} />
                 </SectionContainer>
                 <SectionContainer title="Tu balance">
                     <Suspense fallback={<StoreBalanceBigSkeleton />}>
@@ -42,7 +46,6 @@ async function StoreDetailsPage({ params }: StoreDetailsPageProps) {
                                     </ItemMedia>
                                     <ItemContent>
                                         <ItemTitle className="font-medium text-xs md:text-sm lg:text-base text-muted-foreground group-hover/item:text-foreground">{link.label}</ItemTitle>
-                                        {/* <ItemDescription className="hidden md:block text-xs text-muted-foreground group-hover/item:text-foreground">{link.description}</ItemDescription> */}
                                     </ItemContent>
                                 </Link>
                             </Item>
@@ -76,6 +79,7 @@ async function StoreDetailsPage({ params }: StoreDetailsPageProps) {
                             ))}
                         </ItemGroup>
                     </SectionContainer>
+                    <HelpCard />
                 </div>
                 <div className="flex flex-col gap-8">
                     <SectionContainer title="Tu balance">
