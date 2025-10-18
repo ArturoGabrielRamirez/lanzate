@@ -12,19 +12,19 @@ function HelpCard() {
 
     return (
         <SectionContainer title={t("title")}>
-            <Card className="group/help !gap-2">
+            <Card className="group/help !gap-2 opacity-50 hover:opacity-100 transition-all">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                        <MessageCircle className="size-4 text-muted-foreground/50 group-hover/help:text-primary transition-all" />
+                        <MessageCircle className="size-4 text-muted-foreground" />
                         {t("contact-us")}
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-muted-foreground/50 group-hover/help:text-muted-foreground transition-all">
+                    <p className="text-muted-foreground">
                         {t("description")}
                     </p>
                 </CardContent>
-                <CardFooter className="opacity-50 group-hover/help:opacity-100 transition-all">
+                <CardFooter>
                     <HelpDialogButton />
                 </CardFooter>
             </Card>
