@@ -11,7 +11,7 @@ interface TinyWidgetProps {
 function TinyWidget({ title, children, href }: TinyWidgetProps) {
     return (
         <Item variant="accent" size="sm" className={cn(
-            "gap-2 @xs:gap-8 px-2 lg:px-4 shadow-lg",
+            "gap-2 @xs:gap-8 px-2 lg:px-4 shadow-lg hover:text-primary",
             /* "bg-gradient-to-br from-primary/40 to-primary/60",
             "dark:from-primary/60 dark:to-primary/35 border-2",
             "border-t-[color-mix(in_srgb,var(--primary)_30%,white_45%)] border-l-[color-mix(in_srgb,var(--primary)_30%,white_45%)] border-b-[color-mix(in_srgb,var(--primary)_30%,black_05%)]  border-r-[color-mix(in_srgb,var(--primary)_20%,black_05%)] ",
@@ -22,7 +22,7 @@ function TinyWidget({ title, children, href }: TinyWidgetProps) {
                     <ItemTitle className="text-base">{title}</ItemTitle>
                 </ItemHeader>
                 <ItemContent>
-                    <ItemDescription className="flex items-center gap-2 text-primary-foreground">
+                    <ItemDescription className="flex items-center gap-2 text-inherit">
                         {children}
                     </ItemDescription>
                 </ItemContent>
