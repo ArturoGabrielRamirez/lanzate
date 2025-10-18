@@ -39,7 +39,7 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
     }
 
     return (
-        <PageContainer>
+        <PageContainer className="gap-4 flex flex-col lg:gap-8">
             {children}
             {/* <TabsClientContainer>
                     <TabsList className="items-start w-full h-full max-md:bg-transparent p-0">

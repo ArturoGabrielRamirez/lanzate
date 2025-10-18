@@ -10,6 +10,7 @@ import createProductImage from "@/features/dashboard/assets/Niche service market
 import welcomeImage from "@/features/dashboard/assets/we are open-pana.svg"
 import { WelcomeTutorialWidget } from "@/features/dashboard/components/welcome-tutorial"
 import { Button } from "@/features/shadcn/components/button"
+import { SectionContainer } from "@/features/stores/components"
 import { useStep } from "@/hooks/use-step"
 
 function WelcomeTutorial() {
@@ -72,7 +73,7 @@ function WelcomeTutorial() {
     }
 
     return (
-        <>
+        <SectionContainer title="Feeling lost?">
             <WelcomeTutorialWidget onRetakeTutorial={handleRetakeTutorial} />
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent className="w-full !max-w-full h-full md:!max-w-lg md:h-auto rounded-none md:rounded-lg">
@@ -114,7 +115,7 @@ function WelcomeTutorial() {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
-        </>
+        </SectionContainer>
     )
 
 }

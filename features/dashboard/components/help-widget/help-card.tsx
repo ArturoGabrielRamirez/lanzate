@@ -5,18 +5,13 @@ import { useTranslations } from "next-intl"
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { HelpDialogButton } from "@/features/dashboard/components"
+import { SectionContainer } from "@/features/stores/components"
 
 function HelpCard() {
     const t = useTranslations("dashboard.help")
-    
+
     return (
-        <div className="group/help">
-            <div className="flex items-center justify-between mb-2 md:mb-4">
-                <h2 className="text-lg lg:text-2xl font-bold leading-6 flex items-center gap-2 text-primary/50 group-hover/help:text-primary transition-all">
-                    <Headset className="size-4 xl:size-5" />
-                    {t("title")}
-                </h2>
-            </div>
+        <SectionContainer title={t("title")}>
             <Card className="group/help !gap-2">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
@@ -33,7 +28,7 @@ function HelpCard() {
                     <HelpDialogButton />
                 </CardFooter>
             </Card>
-        </div>
+        </SectionContainer>
     )
 }
 
