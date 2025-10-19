@@ -1,9 +1,10 @@
 'use client'
 
 import { CheckCircle, Clock, ArrowRight } from "lucide-react";
-import { EmailStepProgressProps } from "../../types";
 
-export default function EmailStepProgress({ status, initialOldEmail, newEmail }: EmailStepProgressProps) {
+import { EmailStepProgressProps } from "@/features/auth/types";
+
+function EmailStepProgress({ status, initialOldEmail, newEmail }: EmailStepProgressProps) {
     const getStepStatus = () => {
         if (!status.hasEmailChange) {
             return { step1: 'confirmed', step2: 'confirmed', currentStep: 'completed' };
@@ -82,3 +83,5 @@ export default function EmailStepProgress({ status, initialOldEmail, newEmail }:
         </div>
     );
 }
+
+export { EmailStepProgress };

@@ -1,0 +1,1 @@
+export const HEADER_OFFSET_DESKTOP = 80;

@@ -4,10 +4,10 @@ import { Skeleton } from "@/components/ui/skeleton"
 function StoreHeaderSkeleton() {
     return (
         <>
-            <div className="flex flex-col gap-4 mb-6 pt-2">
+            <div className="flex flex-col gap-4 pt-2">
                 <div className="flex items-center gap-2">
-                    <Skeleton className="w-6 h-6" />
-                    <Skeleton className="w-32 h-6" />
+                    <Skeleton className="w-6 h-8" />
+                    <Skeleton className="w-32 h-8" />
                 </div>
                 <div className="flex items-center gap-2">
                     <Skeleton className="w-16 h-4" />
@@ -15,7 +15,7 @@ function StoreHeaderSkeleton() {
                     <Skeleton className="w-24 h-4" />
                 </div>
             </div>
-            <section className="flex items-center gap-4">
+            {/* <section className="flex items-center gap-4">
                 <Card className="w-full">
                     <CardContent className="flex flex-col justify-between w-full gap-4 md:items-center xs:flex-row">
                         <div className="flex items-center gap-4">
@@ -31,9 +31,9 @@ function StoreHeaderSkeleton() {
                         </div>
                     </CardContent>
                 </Card>
-            </section>
+            </section> */}
         </>
     )
 }
 
-export default StoreHeaderSkeleton 
+export { StoreHeaderSkeleton }

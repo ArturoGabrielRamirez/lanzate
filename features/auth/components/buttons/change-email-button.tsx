@@ -1,15 +1,16 @@
 'use client'
-import { ButtonWithPopup } from "@/features/layout/components";
-import { emailSchema } from '../../schemas/change-email-schema';
-import { ChangeEmailButtonProps } from '../../types';
-import { useEmailChange } from "../../hooks/use-email-change";
-import { EmailChangeDialog, EmailChangeForm, ProgressButton } from "../index";
-import { SetupPasswordPrompt } from "../change-visual/setup-password-prompt";
-import usePasswordGuard from "../../hooks/use-password-guard";
+
 import { Skeleton } from "@/components/ui/skeleton";
+import { SetupPasswordPrompt } from '@/features/auth/components/change-visual/setup-password-prompt';
+import { EmailChangeDialog, EmailChangeForm, ProgressButton } from '@/features/auth/components/index';
+import { useEmailChange } from '@/features/auth/hooks/use-email-change';
+import usePasswordGuard from '@/features/auth/hooks/use-password-guard';
+import { changeEmailSchema } from '@/features/auth/schemas/change-email-schema';
+import { ChangeEmailButtonProps } from '@/features/auth/types';
+import { ButtonWithPopup } from "@/features/layout/components";
 
 
-export default function ChangeEmailButton({
+function ChangeEmailButton({
     buttonText,
     title,
     /* className, */
@@ -64,7 +65,7 @@ export default function ChangeEmailButton({
                     title={title}
                     description="Por seguridad, confirma tu contraseña actual. Te enviaremos emails de verificación a ambas direcciones."
                     action={changeEmailAction}
-                    schema={emailSchema}
+                    schema={changeEmailSchema}
                     messages={{
                         success: "Emails de verificación enviados",
                         error: "Error al cambiar el email",
@@ -101,3 +102,5 @@ export default function ChangeEmailButton({
         </>
     )
 }
+
+export { ChangeEmailButton };

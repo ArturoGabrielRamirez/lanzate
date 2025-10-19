@@ -22,3 +22,5 @@ export type {
     ButtonWithPopupPropsType,
     LayoutProps
 }
+
+export * from "@/features/layout/types/page-container.types"

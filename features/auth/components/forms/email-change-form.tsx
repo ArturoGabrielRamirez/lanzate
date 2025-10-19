@@ -1,8 +1,8 @@
+import { EmailStatusAlerts } from "@/features/auth/components";
+import { EmailChangeFormProps } from "@/features/auth/types";
 import { InputField } from "@/features/layout/components";
-import { EmailStatusAlerts } from "../index";
-import { EmailChangeFormProps } from "../../types";
 
-export default function EmailChangeForm({
+function EmailChangeForm({
     currentEmail,
     hasPendingChange,
     isProcessCompleted
@@ -32,3 +32,5 @@ export default function EmailChangeForm({
         </>
     );
 }
+
+export { EmailChangeForm };

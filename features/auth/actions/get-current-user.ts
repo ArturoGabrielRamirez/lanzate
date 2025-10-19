@@ -1,9 +1,9 @@
 // features/auth/actions/get-current-user.ts
 "use server"
 
-import { createServerSideClient } from "@/utils/supabase/server"
-import { prisma } from "@/utils/prisma"
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
+import { createServerSideClient } from "@/utils/supabase/server"
 
 /**
  * ✅ SINGLE SOURCE OF TRUTH

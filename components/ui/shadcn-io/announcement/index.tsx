@@ -1,18 +1,20 @@
-import type { ComponentProps, HTMLAttributes } from 'react';
+
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+
+import type { ComponentProps, HTMLAttributes } from 'react';
 
 export type AnnouncementProps = ComponentProps<typeof Badge> & {
   themed?: boolean;
 };
 
-export const Announcement = ({
+export function Announcement({
   variant = 'outline',
   themed = false,
   className,
   ...props
-}: AnnouncementProps) => (
-  <Badge
+}: AnnouncementProps) {
+  return <Badge
     className={cn(
       'group max-w-full gap-2 rounded-full bg-background px-3 py-0.5 font-medium shadow-sm transition-all',
       'hover:shadow-md',
@@ -22,15 +24,15 @@ export const Announcement = ({
     variant={variant}
     {...props}
   />
-);
+}
 
 export type AnnouncementTagProps = HTMLAttributes<HTMLDivElement>;
 
-export const AnnouncementTag = ({
+export function AnnouncementTag({
   className,
   ...props
-}: AnnouncementTagProps) => (
-  <div
+}: AnnouncementTagProps) {
+  return <div
     className={cn(
       '-ml-2.5 shrink-0 truncate rounded-full bg-foreground/5 px-2.5 py-1 text-xs',
       'group-[.announcement-themed]:bg-background/60',
@@ -38,16 +40,16 @@ export const AnnouncementTag = ({
     )}
     {...props}
   />
-);
+}
 
 export type AnnouncementTitleProps = HTMLAttributes<HTMLDivElement>;
 
-export const AnnouncementTitle = ({
+export function AnnouncementTitle({
   className,
   ...props
-}: AnnouncementTitleProps) => (
-  <div
+}: AnnouncementTitleProps) {
+  return <div
     className={cn('flex items-center gap-1 truncate py-1', className)}
     {...props}
   />
-);
+}

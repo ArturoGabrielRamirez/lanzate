@@ -1,18 +1,17 @@
 'use client'
 
-import { useState, useEffect } from "react"
 import { User, AlertTriangle, Settings } from "lucide-react"
-import { Title } from "@/features/layout/components"
-import { EmailStatusBanner } from "@/features/auth/components/index"
+import { useState, useEffect } from "react"
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { LoadingSkeleton } from "./loading-skeleton"
-
-import { AccountPageClientProps } from "../types"
-import { AccountBannerHeader, AccountDetailsTab, DangerZoneTab, DeletionRequestedView } from "."
-import useUserData from "../hooks/use-user-data"
-import useDeletionStatus from "../hooks/use-deletion-status"
-import PageContainer from "@/features/layout/components/page-container"
-
+import { AccountBannerHeader, AccountDetailsTab, DangerZoneTab, DeletionRequestedView } from "@/features/account/components"
+import { LoadingSkeleton } from "@/features/account/components/loading-skeleton"
+import useDeletionStatus from "@/features/account/hooks/use-deletion-status"
+import useUserData from "@/features/account/hooks/use-user-data"
+import { AccountPageClientProps } from "@/features/account/types"
+import { EmailStatusBanner } from "@/features/auth/components/index"
+import { PageContainer } from "@/features/layout/components"
+import { Title } from "@/features/layout/components"
 
 
 export function AccountPageClient({ user: initialUser, translations: t }: AccountPageClientProps) {

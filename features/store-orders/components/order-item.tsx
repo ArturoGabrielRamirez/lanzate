@@ -1,5 +1,4 @@
 import { OrderItem, Product } from "@prisma/client"
-import { Card, CardContent } from "@/components/ui/card"
 
 type OrderItemWithProduct = OrderItem & {
     product: Product
@@ -15,8 +14,8 @@ function OrderItemComponent({ item }: Props) {
             <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 bg-muted rounded-md flex items-center justify-center">
                     {item.product.image ? (
-                        <img 
-                            src={item.product.image} 
+                        <img
+                            src={item.product.image}
                             alt={item.product.name}
                             className="w-full h-full object-cover rounded-md"
                         />

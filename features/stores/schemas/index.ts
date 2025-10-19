@@ -1,0 +1,1 @@
+export * from '@/features/stores/schemas/basic-info-schema'

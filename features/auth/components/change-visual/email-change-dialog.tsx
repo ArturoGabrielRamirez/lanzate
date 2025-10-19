@@ -1,9 +1,10 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { EmailChangeMonitor } from "../index";
-import { EmailChangeDialogProps } from "../../types";
 import { Mail } from "lucide-react";
 
-export default function EmailChangeDialog({
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { EmailChangeMonitor } from "@/features/auth/components";
+import { EmailChangeDialogProps } from "@/features/auth/types";
+
+function EmailChangeDialog({
     showMonitor,
     onOpenChange,
     currentEmail,
@@ -26,3 +27,5 @@ export default function EmailChangeDialog({
         </Dialog>
     );
 }
+
+export { EmailChangeDialog };

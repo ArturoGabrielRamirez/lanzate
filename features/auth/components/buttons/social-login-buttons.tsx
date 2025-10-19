@@ -1,14 +1,18 @@
+import { getTranslations } from 'next-intl/server'
+
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { handleFacebookLogin, handleGoogleLogIn } from '@/features/auth/actions'
 import { FacebookLogo, GoogleLogo } from '@/features/auth/components'
-import { GoogleLoginButtonProps } from '../../types'
 
-const SocialLoginButtons = ({ orLoginWith }: GoogleLoginButtonProps) => {
+async function SocialLoginButtons() {
+
+    const t = await getTranslations("auth")
+
     return (
         <div className="grid w-full place-content-left max-w-xl">
             <Label htmlFor='google' className='justify-center w-full mb-2 text-center'>
-                {orLoginWith}
+                {t("description.or-login-with")}
             </Label>
             <div className='flex flex-col gap-2 w-full'>
                 <form action={handleGoogleLogIn}>
@@ -34,4 +38,4 @@ const SocialLoginButtons = ({ orLoginWith }: GoogleLoginButtonProps) => {
     )
 }
 
-export default SocialLoginButtons;
+export { SocialLoginButtons };

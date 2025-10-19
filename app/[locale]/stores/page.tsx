@@ -1,9 +1,16 @@
-import { Title } from "@/features/layout/components"
-import PageContainer from "@/features/layout/components/page-container"
-import { StoresContainer, StoresSkeleton } from "@/features/stores/components"
 import { Store } from "lucide-react"
+import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
+
+import { StoreListContainer, StoreListSkeleton } from "@/features/dashboard/components"
+import { Title } from "@/features/layout/components"
+import { PageContainer } from "@/features/layout/components/page-container"
+
+export const metadata: Metadata = {
+    title: "Stores",
+    description: "Stores"
+}
 
 async function StoresPage() {
     const t = await getTranslations("store")
@@ -20,8 +27,8 @@ async function StoresPage() {
                 }
             ]} showDate />
 
-            <Suspense fallback={<StoresSkeleton />}>
-                <StoresContainer />
+            <Suspense fallback={<StoreListSkeleton />}>
+                <StoreListContainer />
             </Suspense>
         </PageContainer>
     )

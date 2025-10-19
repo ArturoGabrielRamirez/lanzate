@@ -18,7 +18,10 @@
         "login": "Log In",
         "signup": "Sign Up",
         "email": "Email",
+        "email-placeholder": "email@example.com",
         "password": "Password",
+        "username": "Username",
+        "confirm-password": "Confirm Password",
         "buttons": {
             "login": "Log In",
             "sign-up": "Sign Up",
@@ -47,7 +50,7 @@
             "title": "Reset Password",
             "description": {
                 "forgot-password": "Forgot password?",
-                "reset-password": "Reset your password clicking here",
+                "reset-password": "Reset your password",
                 "password-updated": "Password updated! You can now log in."
             }
         },
@@ -397,7 +400,7 @@
             }
         },
         "description": {
-            "slogan": "Manage your business has never been easier. Focus on growth while we give you full control:",
+            "slogan": "Manage your business has never been easier. Focus on growth while we give you full control",
             "slogan-items": {
                 "1": "manage your products",
                 "2": "process sales",
@@ -1433,6 +1436,44 @@
                 "2": "of",
                 "3": "items",
                 "4": "item"
+            }
+        }
+    },
+    "feature/header": {
+        "navigation": {
+            "home": "Home",
+            "about": "About",
+            "contact": "Contact",
+            "login": "Login",
+            "signup": "Signup",
+            "signout": "Signout",
+            "access": "Access",
+            "moreInfo": "More Info",
+            "sections": {
+                "hero": "Hero",
+                "heroDesc": "Hero description",
+                "howItWorks": "How it works",
+                "howItWorksDesc": "How it works description",
+                "integrations": "Integrations",
+                "integrationsDesc": "Integrations description",
+                "faq": "FAQ",
+                "faqDesc": "FAQ description",
+                "dashboardDesc": "Dashboard description",
+                "newSale": "New sale",
+                "newSaleDesc": "New sale description",
+                "stores": "Stores",
+                "storesDesc": "Stores description",
+                "account": "Account",
+                "accountDesc": "Account description",
+                "googleAuthDesc": "Google auth description",
+                "aboutDesc": "About description",
+                "contactDesc": "Contact description",
+                "loginDesc": "Login description",
+                "signupDesc": "Signup description",
+                "forgotPassword" : "Forgot password",
+                "forgotPasswordDesc": "Forgot password description",
+                "googleAuth": "Google auth",
+                "dashboard": "Dashboard"
             }
         }
     }

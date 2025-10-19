@@ -1,6 +1,6 @@
 import type { FacebookLogoProps } from "@/features/auth/types";
 
-const FacebookLogo = (props: FacebookLogoProps) => {
+function FacebookLogo(props: FacebookLogoProps) {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="url(#facebook__a)" height="1em" width="1em" {...props}>
             <defs>
@@ -15,4 +15,4 @@ const FacebookLogo = (props: FacebookLogoProps) => {
     )
 }
 
-export default FacebookLogo;
+export { FacebookLogo };

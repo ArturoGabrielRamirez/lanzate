@@ -1,10 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { AccountDetailsTabProps } from "../types"
-import { BasicInfoCard, SecurityCard, SecuritySkeleton, StatsCard } from "."
 
-export function AccountDetailsTab({ user, translations: t, immediateData }: AccountDetailsTabProps) {
+import { BasicInfoCard, SecurityCard, SecuritySkeleton, StatsCard } from "@/features/account/components"
+import { AccountDetailsTabProps } from "@/features/account/types"
+
+export function AccountDetailsTab({ user, immediateData }: AccountDetailsTabProps) {
     const [securityVisible, setSecurityVisible] = useState(false)
 
     useEffect(() => {

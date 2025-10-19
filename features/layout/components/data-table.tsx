@@ -96,8 +96,8 @@ export function DataTable<TData, TValue>({
     }
 
     return (
-        <>
-            <div className="flex items-center py-4 justify-between gap-2">
+        <div className="flex flex-col grow gap-4">
+            <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -150,7 +150,7 @@ export function DataTable<TData, TValue>({
                 </div>
                 {typeof topActions === "function" ? topActions(table.getFilteredSelectedRowModel()) : topActions}
             </div>
-            <div className="rounded-md border">
+            <div className="rounded-md border bg-card grow">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -216,6 +216,6 @@ export function DataTable<TData, TValue>({
                     <ChevronRight />
                 </Button>
             </div>
-        </>
+        </div>
     )
 }

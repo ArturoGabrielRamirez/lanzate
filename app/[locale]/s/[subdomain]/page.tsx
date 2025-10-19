@@ -1,6 +1,11 @@
+import { ArrowRight, BookA, Candy, Eye, Milk, Utensils } from "lucide-react";
+import Link from "next/link";
+import { SearchParams } from "nuqs";
+import { Suspense } from "react";
+
 /* import { Title } from "@/features/layout/components"; */
 import { Card, CardContent } from "@/components/ui/card";
-import PageContainer from "@/features/layout/components/page-container";
+import { PageContainer } from "@/features/layout/components";
 /* import PaginationNav from "@/features/store-landing/components/pagination-nav";
 import ProductAmountDisplay from "@/features/store-landing/components/product-amount-display"; */
 import ProductCardLoader from "@/features/store-landing/components/product-card-loader";
@@ -12,11 +17,7 @@ import { loadFilterParams } from "@/features/store-landing/utils/load-filter-par
 import StoreBanner from "@/features/store-layout/components/store-banner";
 import TopCategoriesNavbar from "@/features/store-layout/components/top-categories-navbar";
 /* import { getStoreProductAmount } from "@/features/subdomain/actions/getStoreProductAmount"; */
-import { ArrowRight, BookA, Candy, Eye, Milk, Utensils } from "lucide-react";
 /* import Image from "next/image"; */
-import Link from "next/link";
-import { SearchParams } from "nuqs";
-import { Suspense } from "react";
 
 type Props = {
     params: Promise<{ subdomain: string }>

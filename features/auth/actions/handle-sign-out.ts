@@ -1,9 +1,7 @@
 'use server'
 
-import { actionWrapper } from '@/utils/lib'
+import { actionWrapper } from '@/features/global/utils'
 import { createServerSideClient } from '@/utils/supabase/server'
-import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 
 export async function handleSignOut() {
     return actionWrapper(async () => {
@@ -14,12 +12,16 @@ export async function handleSignOut() {
 
         if (user) {
             const { error } = await supabase.auth.signOut()
+            console.log(error)
             if (error) {
                 throw new Error(error.message)
             }
         }
 
-        revalidatePath('/', 'layout')
-        redirect('/login')
+        return {
+            hasError: false,
+            payload: null,
+            message: 'Logged out successfully'
+        }
     })
 }

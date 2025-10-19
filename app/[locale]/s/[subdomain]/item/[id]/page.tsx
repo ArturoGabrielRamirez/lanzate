@@ -1,7 +1,7 @@
 // import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Title } from "@/features/layout/components"
-import PageContainer from "@/features/layout/components/page-container"
+import { PageContainer } from "@/features/layout/components"
 import AddToCartButton from "@/features/store-landing/components/add-to-cart-button"
 // import LikeButton from "@/features/store-landing/components/like-button"
 import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"

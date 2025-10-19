@@ -1,22 +1,23 @@
 "use client"
 
-import { TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
-
-import { TabTriggerLinkProps } from "@/features/stores/types"
 import { usePathname } from "next/navigation"
+
+
+import { TabsTrigger } from "@/components/ui/tabs"
+import { TabTriggerLinkProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
 
 function TabTriggerLink({ value, text, slug, icon }: TabTriggerLinkProps) {
 
     const pathname = usePathname()
-    
+
     // More precise active detection
     // Check if the path ends with the tab value or if it's exactly the tab path
-    const isActive = pathname === `/stores/${slug}/${value}` || 
-                    pathname.startsWith(`/stores/${slug}/${value}/`) ||
-                    (pathname.includes(`/stores/${slug}/${value}`) && 
-                     !pathname.includes(`/stores/${slug}/${value}-`))
+    const isActive = pathname === `/stores/${slug}/${value}` ||
+        pathname.startsWith(`/stores/${slug}/${value}/`) ||
+        (pathname.includes(`/stores/${slug}/${value}`) &&
+            !pathname.includes(`/stores/${slug}/${value}-`))
 
     return (
         <TabsTrigger value={value} className={cn(
@@ -35,4 +36,4 @@ function TabTriggerLink({ value, text, slug, icon }: TabTriggerLinkProps) {
     )
 }
 
-export default TabTriggerLink
+export { TabTriggerLink }

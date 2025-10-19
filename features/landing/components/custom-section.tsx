@@ -1,6 +1,7 @@
 import Link from "next/link"
-import EyeCatchingButton from "./eye-catching-button"
 import { getTranslations } from "next-intl/server"
+
+import { EyeCatchingButton } from "@/features/landing/components"
 
 async function CustomSection() {
 

@@ -1,11 +1,11 @@
-export { handleFacebookLogin } from "./handle-facebook-login";
-export { handleGoogleLogIn } from "./handle-google-logIn";
-export { handleLogIn } from "./handle-log-in";
-export { handleResetPassword } from "./handle-reset-password";
-export { handleSignup } from "./handle-sign-up";
-export { handleSignOut } from "./handle-sign-out";
-export { getEmailChangeStatus } from "./get-email-change-status";
-export { getCurrentUser } from "./get-current-user";
-/* export { getLocalUser } from "./get-local-user"; */
-export { handleEditEmail } from "./handle-edit-email";
-export { handleEditPassword } from "./handle-edit-password";
+export * from "@/features/auth/actions/handle-facebook-login";
+export * from "@/features/auth/actions/handle-google-logIn";
+export * from "@/features/auth/actions/handle-log-in.action";
+export * from "@/features/auth/actions/handle-reset-password";
+export * from "@/features/auth/actions/handle-sign-up";
+export * from "@/features/auth/actions/handle-sign-out";
+export * from "@/features/auth/actions/get-email-change-status";
+export * from "@/features/auth/actions/handle-edit-email";
+export * from "@/features/auth/actions/handle-edit-password";
+export * from "@/features/auth/actions/get-current-user.action";
+export * from "@/features/auth/actions/get-current-user";

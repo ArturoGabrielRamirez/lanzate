@@ -1,6 +1,6 @@
-import { EmailStatusAlertsProps } from "../../types";
+import { EmailStatusAlertsProps } from "@/features/auth/types";
 
-export default function EmailStatusAlerts({
+function EmailStatusAlerts({
     currentEmail,
     hasPendingChange,
     isProcessCompleted
@@ -33,3 +33,5 @@ export default function EmailStatusAlerts({
         </>
     );
 }
+
+export { EmailStatusAlerts };

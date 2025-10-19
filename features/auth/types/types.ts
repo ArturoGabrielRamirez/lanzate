@@ -132,10 +132,6 @@ export interface ChangeEmailButtonProps {
   currentEmail: string;
 }
 
-export interface GoogleLoginButtonProps {
-  orLoginWith: string;
-}
-
 export interface ProgressButtonProps {
   hasPendingChange: boolean;
   isProcessCompleted: boolean;
@@ -175,11 +171,6 @@ export interface ApiErrorResponse extends ApiResponse {
 
 export interface ApiSuccessResponse<T = Record<string, unknown>> extends ApiResponse<T> {
   error: false;
-}
-
-export type HandleLoginAction = {
-  email: string;
-  password: string;
 }
 
 export type UpdateData = {

@@ -1,10 +1,11 @@
 'use server'
 
-import { createServerSideClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
+
 import { extractSubdomainFromHost, buildLoginErrorUrl } from '@/features/auth/utils'
 import { actionWrapper } from '@/utils/lib'
+import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function handleGoogleLogIn() {
     const result = await actionWrapper(async () => {

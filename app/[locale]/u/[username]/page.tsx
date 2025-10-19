@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
-import { PublicProfileClient } from '@/features/profile/components/public-profile-client'
 
-import UserNotFound from '@/features/profile/components/not-found'
 import { getProfileWithFollowStatus } from '@/features/profile/components/get-profile-with-follow';
+import UserNotFound from '@/features/profile/components/not-found'
+import { PublicProfileClient } from '@/features/profile/components/public-profile-client'
 
 export async function generateMetadata(
   { params }: { params: Promise<{ locale: string; username: string }> }
