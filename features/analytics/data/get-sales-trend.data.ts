@@ -1,4 +1,4 @@
-import { createServerSideClient } from "@/utils/supabase/server"
+/* import { createServerSideClient } from "@/utils/supabase/server"
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 
 export async function getSalesTrend(slug: string, period: 'daily' | 'weekly' | 'monthly' = 'daily') {
@@ -109,4 +109,4 @@ export async function getSalesTrend(slug: string, period: 'daily' | 'weekly' | '
 
         return formatSuccessResponse("Sales trend fetched successfully", salesTrend)
     })
-} 
+}  */

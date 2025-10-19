@@ -1,7 +1,7 @@
-'use server'
+/* 'use server'
 
-import { getTopCategories } from "../data/get-top-categories"
+import { getTopCategories } from "@/features/analytics/data/"
 
 export async function getTopCategoriesAction(slug: string) {
     return await getTopCategories(slug)
-} 
+}  */

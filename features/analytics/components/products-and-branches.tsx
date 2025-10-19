@@ -1,10 +1,7 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+/* import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import { ProductsAndBranchesProps } from "@/features/analytics/types"
 
-type ProductsAndBranchesProps = {
-    slug: string
-}
-
-export default function ProductsAndBranches({ slug }: ProductsAndBranchesProps) {
+export function ProductsAndBranches({ slug }: ProductsAndBranchesProps) {
     return (
         <Card>
             <CardHeader>
@@ -12,4 +9,4 @@ export default function ProductsAndBranches({ slug }: ProductsAndBranchesProps) 
             </CardHeader>
         </Card>
     )
-} 
+}  */

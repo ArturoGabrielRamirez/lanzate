@@ -1,4 +1,4 @@
-import { getSalesTrendAction } from "../actions/get-sales-trend-action"
+/* import { getSalesTrendAction } from "../actions/get-sales-trend-action.action"
 import SalesTrendChartClient from "./sales-trend-chart-client"
 
 type SalesTrendServerProps = {
@@ -27,4 +27,4 @@ export default async function SalesTrendServer({ slug }: SalesTrendServerProps) 
     }))
 
     return <SalesTrendChartClient data={chartData} />
-} 
+}  */

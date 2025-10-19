@@ -1,4 +1,4 @@
-import { createServerSideClient } from "@/utils/supabase/server"
+/* import { createServerSideClient } from "@/utils/supabase/server"
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 
 export async function getTopProducts(slug: string) {
@@ -70,4 +70,4 @@ export async function getTopProducts(slug: string) {
 
         return formatSuccessResponse("Top products fetched successfully", topProducts)
     })
-} 
+}  */

@@ -1,7 +1,7 @@
-'use server'
+/* 'use server'
 
-import { getTopProducts } from "../data/get-top-products"
+import { getTopProducts } from "@/features/analytics/data/"
 
 export async function getTopProductsAction(slug: string) {
     return await getTopProducts(slug)
-} 
+}  */
