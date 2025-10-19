@@ -1,22 +1,16 @@
 "use client"
 
 import { CheckIcon, Loader2 } from "lucide-react"
-import { Store, Branch } from "@prisma/client"
-import { updateStoreAddress } from "@/features/stores/actions/updateStoreAddress"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { toast } from "sonner"
+
+import { updateStoreAddressAction } from "@/features/stores/actions/update-store-address.action"
+import { EditAddressButtonProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface EditAddressButtonProps {
-    store: Store & { branches: Branch[] }
-    userId: number
-    className?: string
-    onSuccess?: () => void
-}
-
-const EditAddressButton = ({ store, userId, onSuccess }: EditAddressButtonProps) => {
+function EditAddressButton({ store, userId, onSuccess }: EditAddressButtonProps) {
     const { getValues, formState: { isValid } } = useFormContext()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -33,9 +27,9 @@ const EditAddressButton = ({ store, userId, onSuccess }: EditAddressButtonProps)
         try {
             setIsLoading(true)
             toast.loading("Updating address information...")
-            const { error, message } = await updateStoreAddress(store.slug, payload, userId)
+            const { hasError, message } = await updateStoreAddressAction(store.slug, payload, userId)
 
-            if (error) {
+            if (hasError) {
                 throw new Error(message)
             }
             toast.dismiss()
@@ -61,4 +55,4 @@ const EditAddressButton = ({ store, userId, onSuccess }: EditAddressButtonProps)
     )
 }
 
-export default EditAddressButton
+export { EditAddressButton }

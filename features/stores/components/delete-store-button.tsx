@@ -55,4 +55,4 @@ function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
         />
     )
 }
-export default DeleteStoreButton
+export { DeleteStoreButton }

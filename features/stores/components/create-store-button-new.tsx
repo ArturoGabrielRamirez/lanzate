@@ -1,208 +1,34 @@
 "use client"
-import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
-import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, DialogDescription } from "@/components/ui/dialog"
-import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/components/ui/file-upload"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { useCamera } from "@/features/auth/hooks/use-camera"
-import { Form, InputField } from "@/features/layout/components"
-import { useStep } from "@/hooks/use-step"
-import { cn } from "@/lib/utils"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+
 import { yupResolver } from "@hookform/resolvers/yup"
+import { TimePicker } from "antd";
+import dayjs, { Dayjs } from "dayjs";
 import { Calendar, Camera, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Loader, Mail, MapPin, Phone, Plus, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
+import { useRouter } from "next/navigation"
 import { useEffect, useState, createContext, useContext, useCallback, useRef } from "react"
 import { useFormContext } from "react-hook-form"
-import * as yup from "yup"
-import CameraComponent from "@/features/auth/components/avatar/camera-component"
-import { Progress } from "@/components/ui/progress"
-import { createStore } from "../actions/createStore"
-import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
-import { TimePicker } from "antd";
-import dayjs, { Dayjs } from "dayjs";
-import { processOpeningHours, processShippingMethods, processPaymentMethods } from "../utils/store-form-helpers"
-import { useRouter } from "next/navigation"
+import { toast } from "sonner"
+
 import Stepper, { Step } from "@/components/Stepper"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, DialogDescription } from "@/components/ui/dialog"
+import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/components/ui/file-upload"
+import { Progress } from "@/components/ui/progress"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import CameraComponent from "@/features/auth/components/avatar/camera-component"
+import { useCamera } from "@/features/auth/hooks/use-camera"
+import { Form, InputField } from "@/features/layout/components"
+import { createStoreAction } from "@/features/stores/actions"
+import { basicInfoSchemaNew, addressInfoSchema, contactInfoSchema, settingsSchema, shippingPaymentSchema, BasicInfoFormType, AddressInfoFormType, ContactInfoFormType, SettingsFormType, ShippingPaymentFormType } from "@/features/stores/schemas"
+import { AttentionDateType, ShippingMethod, AttentionDateFormPanelProps, ShippingMethodFormPanelProps, StepIndicatorProps, CreateStoreFormProps, CreateStoreFormValues, CreateStoreContextType } from "@/features/stores/types"
+import { processOpeningHours, processShippingMethods, processPaymentMethods, slugify } from "@/features/stores/utils"
+import { useStep } from "@/hooks/use-step"
+import { cn } from "@/lib/utils"
+import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-type AttentionDateType = {
-    date: string
-    startTime: dayjs.Dayjs
-    endTime: dayjs.Dayjs
-    days: string[]
-}
-
-type ShippingMethod = {
-    providers: string[]
-    minPurchase: string
-    freeShippingMin: string
-    estimatedTime: string
-    deliveryPrice?: string
-}
-
-type AttentionDateFormPanelProps = {
-    date: AttentionDateType
-    onCancel: (index: number) => void
-    onSave: (index: number, startTime: dayjs.Dayjs, endTime: dayjs.Dayjs, days: string[]) => void
-    index: number
-}
-
-type ShippingMethodFormPanelProps = {
-    method: ShippingMethod
-    index: number
-    onCancel: (index: number) => void
-    onSave: (index: number, method: ShippingMethod) => void
-}
-
-type StepIndicatorProps = {
-    step: number
-    currentStep: number
-    onStepClick: (step: number) => void
-    disabled: boolean
-}
-
-type CreateStoreFormProps = {
-    setStep: (step: number) => void
-    step: number
-}
-
-export type CreateStoreFormValues = {
-    basic_info: {
-        name: string
-        description?: string
-        subdomain: string
-        logo?: File | string | null
-    }
-    address_info: {
-        is_physical_store: boolean
-        address?: string
-        city?: string
-        province?: string
-        country?: string
-    }
-    contact_info: {
-        contact_phone: string
-        contact_email: string
-        facebook_url?: string
-        instagram_url?: string
-        x_url?: string
-    }
-    settings: {
-        is_open_24_hours: boolean
-        attention_dates?: { days?: string[]; startTime?: string; endTime?: string }[]
-    }
-    shipping_info: {
-        offers_delivery: boolean
-        methods?: { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice: string }[]
-    }
-    payment_info: {
-        payment_methods: string[]
-    }
-}
-
-// Per-step schemas
-const basicInfoSchema = yup.object({
-    basic_info: yup.object({
-        name: yup.string().required("Name is required"),
-        description: yup.string().max(255, "Description must be less than 255 characters long"),
-        subdomain: yup.string().required("Subdomain is required"),
-        logo: yup
-            .mixed()
-            .test("logo-type", "Unsupported file type. Use JPG, PNG, GIF or WebP", (value) => {
-                if (value instanceof File) {
-                    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"]
-                    return allowed.includes(value.type)
-                }
-                return true
-            })
-            .test("logo-size", "File too large (max 5MB)", (value) => {
-                if (value instanceof File) {
-                    return value.size <= 5 * 1024 * 1024
-                }
-                return true
-            }).nullable().optional(),
-    })
-})
-
-const addressInfoSchema = yup.object({
-    address_info: yup.object({
-        is_physical_store: yup.boolean().default(false),
-        address: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
-            isPhysicalStore ? schema.required("Address is required when store is physical") : schema.max(255, "Address must be less than 255 characters long")
-        ),
-        city: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
-            isPhysicalStore ? schema.required("City is required when store is physical") : schema.max(100, "City must be less than 100 characters long")
-        ),
-        province: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
-            isPhysicalStore ? schema.required("Province is required when store is physical") : schema.max(100, "Province must be less than 100 characters long")
-        ),
-        country: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
-            isPhysicalStore ? schema.required("Country is required when store is physical") : schema.max(100, "Country must be less than 100 characters long")
-        ),
-    })
-})
-
-const contactInfoSchema = yup.object({
-    contact_info: yup.object({
-        contact_phone: yup.string().max(20, "Phone must be less than 20 characters long").required("Phone is required"),
-        contact_email: yup.string().email("Must be a valid email").max(255, "Email must be less than 255 characters long").required("Email is required"),
-        facebook_url: yup.string().url("Must be a valid URL").max(255, "Facebook URL must be less than 255 characters long"),
-        instagram_url: yup.string().url("Must be a valid URL").max(255, "Instagram URL must be less than 255 characters long"),
-        x_url: yup.string().url("Must be a valid URL").max(255, "X URL must be less than 255 characters long"),
-    })
-})
-
-const settingsSchema = yup.object({
-    settings: yup.object({
-        is_open_24_hours: yup.boolean().default(true),
-        attention_dates: yup
-            .array()
-            .of(
-                yup.object({
-                    days: yup.array().of(yup.string()),
-                    startTime: yup.string(),
-                    endTime: yup.string(),
-                })
-            )
-            .default([])
-            .test("must-have-at-least-one-when-scheduled", "Debe configurar al menos un día de atención", function (value) {
-                const isOpen = this.parent?.is_open_24_hours
-                if (isOpen) return true
-                return Array.isArray(value) && value.length > 0
-            })
-    })
-})
-
-const shippingPaymentSchema = yup.object({
-    shipping_info: yup.object({
-        offers_delivery: yup.boolean().default(false),
-        methods: yup.array().of(yup.object({
-            providers: yup.array().of(yup.string()).min(1, "Seleccione al menos un proveedor"),
-            minPurchase: yup.string(),
-            freeShippingMin: yup.string(),
-            estimatedTime: yup.string(),
-            deliveryPrice: yup.string().matches(/^\d*$/, "Debe ser un número").required("Precio del delivery es requerido"),
-        })).when("offers_delivery", (offers, schema) => offers ? schema.min(1, "Agregue al menos un modo de envío") : schema.notRequired())
-    }),
-    payment_info: yup.object({
-        payment_methods: yup.array().of(yup.string()).min(1, "Seleccione al menos un método de pago").required(),
-    })
-})
-
-type BasicInfoFormType = yup.InferType<typeof basicInfoSchema>
-type AddressInfoFormType = yup.InferType<typeof addressInfoSchema>
-type ContactInfoFormType = yup.InferType<typeof contactInfoSchema>
-type SettingsFormType = yup.InferType<typeof settingsSchema>
-type ShippingPaymentFormType = yup.InferType<typeof shippingPaymentSchema>
-
-// Provider/Context (inline in this file)
-type CreateStoreContextType = {
-    values: Partial<CreateStoreFormValues>
-    setValues: (partial: Partial<CreateStoreFormValues>) => void
-    isStepValid: Record<number, boolean>
-    setStepValid: (step: number, valid: boolean) => void
-}
 
 const CreateStoreContext = createContext<CreateStoreContextType | null>(null)
 
@@ -231,7 +57,7 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
     )
 }
 
-const ShippingFormPanel = () => {
+function ShippingFormPanel() {
 
     const { setValue, getValues, formState: { errors, isValid }, watch } = useFormContext<CreateStoreFormValues>()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -447,7 +273,7 @@ const ShippingFormPanel = () => {
     )
 }
 
-const AttentionDateFormPanel = ({ date, onCancel, onSave, index }: AttentionDateFormPanelProps) => {
+function AttentionDateFormPanel({ date, onCancel, onSave, index }: AttentionDateFormPanelProps) {
 
     const initialTags = [
         "lunes",
@@ -517,7 +343,7 @@ const AttentionDateFormPanel = ({ date, onCancel, onSave, index }: AttentionDate
     )
 }
 
-const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMethodFormPanelProps) => {
+function ShippingMethodFormPanel({ method, index, onCancel, onSave }: ShippingMethodFormPanelProps) {
 
     const initialTags = [
         "Delivery propio",
@@ -633,7 +459,7 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
     )
 }
 
-const SettingsFormPanel = () => {
+function SettingsFormPanel() {
 
     const { setValue, getValues, formState: { isValid, errors }, watch, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -816,7 +642,7 @@ const SettingsFormPanel = () => {
     )
 }
 
-const ContactFormPanel = () => {
+function ContactFormPanel() {
     const { formState: { isValid }, watch, setValue } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const seededRefContact = useRef(false)
@@ -883,7 +709,7 @@ const ContactFormPanel = () => {
     )
 }
 
-const AddressFormPanel = () => {
+function AddressFormPanel() {
 
     const { setValue, getValues, formState: { isValid }, watch, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -977,7 +803,7 @@ const AddressFormPanel = () => {
     )
 }
 
-const BasicInfoFormPanel = () => {
+function BasicInfoFormPanel() {
 
     const { setValue, watch, formState: { isValid } } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -987,17 +813,6 @@ const BasicInfoFormPanel = () => {
     const [uploadProgress, setUploadProgress] = useState(0)
     const [isSubdomainTouched, setIsSubdomainTouched] = useState(false)
 
-    function slugify(input: string): string {
-        return (input || "")
-            .toString()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-+|-+$/g, '')
-            .replace(/-{2,}/g, '-')
-            .slice(0, 63)
-    }
 
     const nameValue = watch('basic_info.name') as string | undefined
     const logoValue = watch('basic_info.logo') as unknown
@@ -1200,7 +1015,7 @@ const BasicInfoFormPanel = () => {
     )
 }
 
-const CreateStoreForm = ({ setStep, step, onSubmitAll }: CreateStoreFormProps & { onSubmitAll: (data: CreateStoreFormValues) => Promise<{ error: boolean; message: string; payload?: unknown } | undefined> }) => {
+function CreateStoreForm({ setStep, step, onSubmitAll }: CreateStoreFormProps) {
 
     const { isStepValid, values } = useCreateStoreContext()
     const isValid = !!isStepValid[step]
@@ -1225,7 +1040,7 @@ const CreateStoreForm = ({ setStep, step, onSubmitAll }: CreateStoreFormProps & 
             onFinalStepCompleted={async () => {
                 await onSubmitAll(values as CreateStoreFormValues)
             }}
-            renderStepIndicator={(props) => {
+            renderStepIndicator={(props: { step: number; currentStep: number; onStepClick: (step: number) => void }) => {
                 return (
                     <StepIndicator
                         step={props.step}
@@ -1240,7 +1055,7 @@ const CreateStoreForm = ({ setStep, step, onSubmitAll }: CreateStoreFormProps & 
             }}
         >
             <Step className="!p-0 !pt-10 !pb-2">
-                <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchema as never)}>
+                <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchemaNew as never)}>
                     <BasicInfoFormPanel />
                 </Form>
             </Step>
@@ -1284,7 +1099,7 @@ const CreateStoreForm = ({ setStep, step, onSubmitAll }: CreateStoreFormProps & 
     )
 }
 
-const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicatorProps) => {
+function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicatorProps) {
 
     const { isStepValid } = useCreateStoreContext()
 
@@ -1349,7 +1164,7 @@ const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicat
     )
 }
 
-const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
+function CreateStoreButtonNew({ userId }: { userId: number }) {
 
     const [step, { /* goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, */ setStep }] = useStep(7)
     const [createdSlug, setCreatedSlug] = useState<string | null>(null)
@@ -1376,8 +1191,9 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
         }
 
         setStep(6)
-        const { error, message, payload } = await createStore(processedData, userId)
-        if (error) {
+        const { hasError, message, payload } = await createStoreAction(processedData, userId)
+
+        if (hasError) {
             toast.error(message)
             // return the form to the last step for correction
             setStep(5)
@@ -1437,4 +1253,4 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
     )
 }
 
-export default CreateStoreButtonNew
+export { CreateStoreButtonNew }

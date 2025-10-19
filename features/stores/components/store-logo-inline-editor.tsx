@@ -1,30 +1,17 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { useState, useRef } from 'react'
 import { Smartphone, Upload, Loader2, Check, Camera } from "lucide-react"
-import { useCamera } from '@/features/auth/hooks/use-camera'
-import { Label } from "@/components/ui/label"
-import { cn } from "@/lib/utils"
+import { useState, useRef } from 'react'
 import { toast } from "sonner"
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { useCamera } from '@/features/auth/hooks/use-camera'
+import { StoreLogoOption, StoreLogoInlineEditorProps } from '@/features/stores/types'
+import { cn } from "@/lib/utils"
 
-type StoreLogoOption = {
-  id: string
-  url: string
-  provider: string
-  label: string
-  icon: string
-  isCurrentlyUsed?: boolean
-}
-
-type StoreLogoInlineEditorProps = {
-  currentLogo: string | null
-  storeName: string
-  onLogoUpdate: (newLogoUrl: string | null) => void
-}
-
-export default function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoInlineEditorProps) {
+function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoInlineEditorProps) {
   const [showEditor, setShowEditor] = useState(false)
   const [isLoadingOptions, setIsLoadingOptions] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -277,3 +264,4 @@ export default function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUp
 }
 
 
+export { StoreLogoInlineEditor }

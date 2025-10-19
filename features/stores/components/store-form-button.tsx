@@ -1,62 +1,15 @@
 "use client"
 
-import { ButtonWithPopup } from "@/features/layout/components"
-import { generate } from "random-words"
 import { Plus, Pencil } from "lucide-react"
-import { useState } from "react"
 import { useTranslations } from "next-intl"
+import { generate } from "random-words"
+import { useState } from "react"
+
 import { Accordion } from "@/components/ui/accordion"
+import { ButtonWithPopup } from "@/features/layout/components"
+import { BasicInfoSection, AddressSection, ContactSection, SocialMediaSection, StoreLogoInlineEditor } from "@/features/stores/components"
+import { StoreFormData, StoreFormButtonProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
-import { Store, StoreOperationalSettings, Branch } from "@prisma/client"
-import * as yup from 'yup'
-import { ResponseType } from "@/features/layout/types"
-import { 
-    BasicInfoSection, 
-    AddressSection, 
-    ContactSection, 
-    SocialMediaSection 
-} from "./form-sections"
-import StoreLogoInlineEditor from "./store-logo-inline-editor"
-
-
-type StoreFormData = {
-    name: string
-    description?: string
-    subdomain: string
-    logo?: string
-    contact_phone?: string
-    contact_whatsapp?: string
-    facebook_url?: string
-    instagram_url?: string
-    x_url?: string
-    is_physical_store?: boolean
-    address?: string
-    city?: string
-    province?: string
-    country?: string
-}
-
-type StoreFormButtonProps = {
-    mode: 'create' | 'edit'
-    userId: number
-    schema: yup.ObjectSchema<Record<string, unknown>>
-    action: (payload: StoreFormData) => Promise<ResponseType<unknown>>
-    messages: {
-        success: string
-        error: string
-        loading: string
-    }
-    // Props específicas para crear
-    canCreate?: boolean
-    className?: string
-    // Props específicas para editar
-    slug?: string
-    store?: Store & {
-        operational_settings: StoreOperationalSettings | null
-        branches: Branch[]
-    }
-
-}
 
 function StoreFormButton({
     mode,
@@ -153,4 +106,4 @@ function StoreFormButton({
     )
 }
 
-export default StoreFormButton
+export { StoreFormButton }

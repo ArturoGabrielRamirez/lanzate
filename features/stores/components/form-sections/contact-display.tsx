@@ -1,23 +1,20 @@
 "use client"
 
+import { yupResolver } from "@hookform/resolvers/yup"
 import { Phone, Edit as EditIcon, X } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { Store, Branch } from "@prisma/client"
-import { EditContactButton } from "../section-buttons"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, InputField } from "@/features/layout/components"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { editContactSchema, type EditContactData } from "../../schemas/contact-schema"
 import { useFormContext } from "react-hook-form"
+
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
+import { Form, InputField } from "@/features/layout/components"
+import { EditContactButton } from "@/features/stores/components/section-buttons"
+import { editContactSchema } from "@/features/stores/schemas/contact-schema"
+import { ContactDisplayProps, EditContactData } from "@/features/stores/types"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface ContactDisplayProps {
-    store: Store & { branches: Branch[] }
-}
-
-const ContactDisplay = ({ store }: ContactDisplayProps) => {
+function ContactDisplay({ store }: ContactDisplayProps) {
     const t = useTranslations("store.edit-store")
     const [isEditing, setIsEditing] = useState(false)
     const mainBranch = store.branches?.find((branch) => branch.is_main)
@@ -109,4 +106,4 @@ const ContactDisplay = ({ store }: ContactDisplayProps) => {
     )
 }
 
-export default ContactDisplay
+export { ContactDisplay }

@@ -5,7 +5,7 @@ import { searchOrdersData } from "@/features/global-search/data/search-orders.da
 import { searchProductsData } from "@/features/global-search/data/search-products.data"
 import { SearchResult } from "@/features/global-search/types"
 import { createProductSearchResult, createOrderSearchResult, createCustomerSearchResult } from "@/features/global-search/utils"
-import { getStoresFromUser } from "@/features/stores/actions/getStoresFromUser"
+import { getStoresFromUser } from "@/features/stores/actions/get-stores-from-user.action"
 
 async function searchGlobalData(query: string, userId: number) {
     if (!query.trim()) {

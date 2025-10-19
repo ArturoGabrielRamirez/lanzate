@@ -1,18 +1,14 @@
 "use client"
 
-import { InputField } from "@/features/layout/components"
 import { Phone } from "lucide-react"
 import { useTranslations } from "next-intl"
+
 import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { Store, Branch } from "@prisma/client"
+import { InputField } from "@/features/layout/components"
+import { ContactSectionProps } from "@/features/stores/types"
 
-interface ContactSectionProps {
-    store?: Store & { branches: Branch[] }
-    mode: 'create' | 'edit'
-}
-
-const ContactSection = ({ store, mode }: ContactSectionProps) => {
+function ContactSection({ store, mode }: ContactSectionProps) {
     const t = useTranslations(mode === 'create' ? "store.create-store" : "store.edit-store")
 
     return (
@@ -41,4 +37,4 @@ const ContactSection = ({ store, mode }: ContactSectionProps) => {
     )
 }
 
-export default ContactSection
+export { ContactSection }

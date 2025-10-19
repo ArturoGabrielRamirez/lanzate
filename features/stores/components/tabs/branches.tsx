@@ -1,12 +1,12 @@
-import { getStoresFromSlug } from "../../actions/getStoresFromSlug"
-import { getEmployeePermissions } from "../../actions/getEmployeePermissions"
+import { BranchTable } from "@/features/branches/components/branch-table"
+import { getEmployeePermissionsAction } from "@/features/employees/actions/get-employee-permisions.action"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
 import { BranchesTabProps } from "@/features/stores/types"
-import BranchTable from "../branch-table"
 
 async function BranchesTab({ slug }: BranchesTabProps) {
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.log(userMessage)
@@ -14,11 +14,11 @@ async function BranchesTab({ slug }: BranchesTabProps) {
 
     // Get user info and employee permissions
     const [
-        { payload: store, error: storeError },
-        { payload: employeePermissions, error: permissionsError }
+        { payload: store, hasError: storeError },
+        { payload: employeePermissions, hasError: permissionsError }
     ] = await Promise.all([
-        getStoresFromSlug(slug),
-        getEmployeePermissions(user.id, slug)
+        getStoresFromSlugAction(slug),
+        getEmployeePermissionsAction(user.id, slug)
     ])
 
     if (userError || !user) {
@@ -35,10 +35,10 @@ async function BranchesTab({ slug }: BranchesTabProps) {
 
     return (
         <>
-            <BranchTable 
-                branches={store.branches} 
-                storeId={store.id} 
-                userId={user.id} 
+            <BranchTable
+                branches={store.branches}
+                storeId={store.id}
+                userId={user.id}
                 slug={slug}
                 employeePermissions={employeePermissions}
             />

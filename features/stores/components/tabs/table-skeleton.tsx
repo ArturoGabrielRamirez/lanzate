@@ -1,13 +1,14 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { ChevronLeft, ChevronRight, Filter, Search, ArrowUpDown, MoreHorizontal } from "lucide-react"
+import * as motion from "motion/react-client"
+
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ChevronLeft, ChevronRight, Filter, Search, ArrowUpDown, MoreHorizontal } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
-import * as motion from "motion/react-client"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 function TableSkeleton() {
   return (
@@ -194,4 +195,4 @@ function TableSkeleton() {
   )
 }
 
-export default TableSkeleton
+export { TableSkeleton }

@@ -7,7 +7,7 @@ import { searchOrdersData } from "@/features/global-search/data/search-orders.da
 import { searchProductsData } from "@/features/global-search/data/search-products.data"
 import { SearchResult } from "@/features/global-search/types"
 import { createProductSearchResult, createOrderSearchResult, createCustomerSearchResult } from "@/features/global-search/utils"
-import { getStoresFromUser } from "@/features/stores/actions/getStoresFromUser"
+import { getStoresFromUserAction } from "@/features/stores/actions/get-stores-from-user.action"
 
 export async function searchGlobalAction(query: string, userId: number) {
     return actionWrapper(async () => {
@@ -16,7 +16,7 @@ export async function searchGlobalAction(query: string, userId: number) {
             return formatSuccessResponse("Empty query", [])
         }
 
-        const { payload: stores, error: storesError } = await getStoresFromUser(userId)
+        const { payload: stores, hasError: storesError } = await getStoresFromUserAction(userId)
 
         if (storesError || !stores || stores.length === 0) {
             throw new Error("Empty search. You need to create a store and create a product to search for it.")

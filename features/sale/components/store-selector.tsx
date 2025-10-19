@@ -93,4 +93,4 @@ function StoreSelector({ stores }: StoreSelectorProps) {
     )
 }
 
-export default StoreSelector 
+export { StoreSelector }

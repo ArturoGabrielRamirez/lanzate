@@ -5,7 +5,6 @@ import { actionWrapper } from "@/features/global/utils";
 
 export async function getUserInfo() {
 
-
     return actionWrapper(async () => {
 
         const { payload: localUser, error: errorUser, message: messageUser } = await getCurrentUser();

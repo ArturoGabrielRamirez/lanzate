@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getUserInfo } from "@/features/layout/actions";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty";
-import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new";
+import { CreateStoreButtonNew } from "@/features/stores/components";
 import { Link } from "@/i18n/naviation";
 
 async function EmptyFeedItem() {

@@ -1,28 +1,16 @@
 "use client"
 
+import { Store } from "lucide-react"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
+
 import { Card, CardAction, CardContent } from "@/components/ui/card"
 import { Title } from "@/features/layout/components"
-import { Store } from "lucide-react"
-import StoreLogoEditor from "./store-logo-editor"
-import { useEffect, useState } from "react"
-import { getStoreHeaderBySlug } from "../actions/getStoreHeaderBySlug"
-import { updateStoreLogo } from "../actions/updateStoreLogo"
-import { toast } from "sonner"
-import { StoreBannerEditor } from "./store-banner-editor"
-import { updateStoreBanner } from "../actions/updateStoreBanner"
-
-type StoreHeaderProps = {
-    slug: string
-}
+import { getStoreHeaderBySlugAction, updateStoreBannerAction, updateStoreLogoAction } from "@/features/stores/actions"
+import { StoreBannerEditor, StoreLogoEditor } from "@/features/stores/components"
+import { StoreHeaderProps, StoreHeaderData } from "@/features/stores/types"
 
 function StoreHeader({ slug }: StoreHeaderProps) {
-    type StoreHeaderData = {
-        id: number
-        name: string
-        description: string | null
-        logo: string | null
-        banner: string | null
-    }
     const [store, setStore] = useState<StoreHeaderData | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -30,7 +18,7 @@ function StoreHeader({ slug }: StoreHeaderProps) {
     useEffect(() => {
         const loadStore = async () => {
             try {
-                const { payload, error: hasError, message } = await getStoreHeaderBySlug(slug)
+                const { payload, hasError: hasError, message } = await getStoreHeaderBySlugAction(slug)
                 if (hasError) setError(message)
                 else setStore(payload)
             } catch {
@@ -59,8 +47,8 @@ function StoreHeader({ slug }: StoreHeaderProps) {
                 // Actualizar en la base de datos
                 if (newLogoUrl) {
                     toast.loading('Updating store logo...')
-                    const { error, message } = await updateStoreLogo(store.id, newLogoUrl)
-                    if (error) {
+                    const { hasError, message } = await updateStoreLogoAction(store.id, newLogoUrl)
+                    if (hasError) {
                         toast.dismiss()
                         toast.error(message)
                     } else {
@@ -88,8 +76,8 @@ function StoreHeader({ slug }: StoreHeaderProps) {
                 })
                 if (newBannerUrl) {
                     toast.loading('Updating store banner...')
-                    const { error, message } = await updateStoreBanner(store.id, newBannerUrl)
-                    if (error) {
+                    const { hasError, message } = await updateStoreBannerAction(store.id, newBannerUrl)
+                    if (hasError) {
                         toast.dismiss()
                         toast.error(message)
                     } else {

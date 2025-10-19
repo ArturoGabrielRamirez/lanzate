@@ -1,22 +1,16 @@
 "use client"
 
 import { CheckIcon, Loader2 } from "lucide-react"
-import { Store } from "@prisma/client"
-import { updateStoreBasicInfo } from "@/features/stores/actions/updateStoreBasicInfo"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
-import { useState } from "react"
+
+import { updateStoreBasicInfoAction } from "@/features/stores/actions/update-store-basics.action"
+import { EditBasicInfoButtonProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface EditBasicInfoButtonProps {
-    store: Store
-    userId: number
-    className?: string
-    onSuccess?: () => void
-}
-
-const EditBasicInfoButton = ({ store, userId, onSuccess }: EditBasicInfoButtonProps) => {
+function EditBasicInfoButton({ store, userId, onSuccess }: EditBasicInfoButtonProps) {
     const { getValues, formState: { isValid } } = useFormContext()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -32,9 +26,9 @@ const EditBasicInfoButton = ({ store, userId, onSuccess }: EditBasicInfoButtonPr
         try {
             setIsLoading(true)
             toast.loading("Updating basic information...")
-            const { error, message } = await updateStoreBasicInfo(store.slug, payload, userId)
+            const { hasError, message } = await updateStoreBasicInfoAction(store.slug, payload, userId)
 
-            if (error) {
+            if (hasError) {
                 throw new Error(message)
             }
             toast.dismiss()
@@ -64,4 +58,4 @@ const EditBasicInfoButton = ({ store, userId, onSuccess }: EditBasicInfoButtonPr
     )
 }
 
-export default EditBasicInfoButton
+export { EditBasicInfoButton }

@@ -2,7 +2,7 @@
 
 import { prisma } from "@/utils/prisma"
 
-export async function selectStoreBasicsBySlug(slug: string) {
+export async function selectStoreBasicsBySlugData(slug: string) {
 
     const store = await prisma.store.findUnique({
         where: {

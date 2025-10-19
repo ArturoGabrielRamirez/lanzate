@@ -1,4 +1,4 @@
-import { getLogDetails } from "@/features/stores/actions/getLogDetails"
+import { getLogDetailsAction } from "@/features/stores/actions/get-log-details.action"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { LogDetailPageProps } from "@/features/stores/types"
 import { ArrowLeft, Activity, User, Clock, Tag, Hash, FileText, Info, UserCheck } from "lucide-react"

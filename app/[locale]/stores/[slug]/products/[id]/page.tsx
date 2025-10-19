@@ -1,4 +1,4 @@
-import { getProductDetails } from "@/features/stores/actions/getProductDetails"
+import { getProductDetails } from "@/features/products/actions/getProductDetails"
 
 import { DeleteProductButton } from "@/features/products/components"
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"

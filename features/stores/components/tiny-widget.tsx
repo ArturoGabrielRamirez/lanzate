@@ -1,12 +1,7 @@
 import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from "@/features/shadcn/components/item"
+import { TinyWidgetProps } from "@/features/stores/types"
 import { Link } from "@/i18n/naviation"
 import { cn } from "@/lib/utils"
-
-interface TinyWidgetProps {
-    title: string
-    children: React.ReactNode
-    href: string
-}
 
 function TinyWidget({ title, children, href }: TinyWidgetProps) {
     return (

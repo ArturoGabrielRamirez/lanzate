@@ -2,13 +2,8 @@ import { StoreIcon } from "lucide-react"
 import Image from "next/image"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { StoreCardLogoProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
-
-interface StoreCardLogoProps {
-    logo: string
-    name: string
-    className?: string
-}
 
 function StoreCardLogo({ logo, name, className }: StoreCardLogoProps) {
     return (

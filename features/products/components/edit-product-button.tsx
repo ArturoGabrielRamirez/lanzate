@@ -17,7 +17,7 @@ import MediaSection from "./sections/media-section"
 import PriceStockSection from "./sections/price-stock-section"
 import CategoriesSection from "./sections/categories-section"
 import SettingsSection from "./sections/settings-section"
-import { getProductDetails } from "@/features/stores/actions/getProductDetails"
+import { getProductDetails } from "@/features/products/actions/getProductDetails"
 
 
 type CategoryValue = { value: string; label: string }

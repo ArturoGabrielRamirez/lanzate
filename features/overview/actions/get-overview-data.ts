@@ -1,6 +1,6 @@
 "use server"
 
-import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
+import { getStoresFromSlug } from "@/features/stores/actions/get-stores-from-slug.action"
 import { getSalesOverview } from "../data/get-sales-overview"
 import { getProductStoreCount } from "../data/get-product-store-count"
 import { getSalesByMonth } from "../data/get-sales-by-month"

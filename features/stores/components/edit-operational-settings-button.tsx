@@ -2,31 +2,16 @@
 
 //puede borrarse
 
-import { updateOperationalSettingsAction } from "../actions/updateOperationalSettings"
-import { PaymentMethod, Store, StoreOperationalSettings } from "@prisma/client"
+import { PaymentMethod } from "@prisma/client"
+import { CheckIcon, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { CheckIcon, Loader2 } from "lucide-react"
 import { toast } from "sonner"
+
+import { updateOperationalSettingsAction } from "@/features/stores/actions"
+import { EditOperationalSettingsButtonProps, OperationalSettingsFormPayload } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
-
-type EditOperationalSettingsButtonProps = {
-    storeId: number
-    store: Store & {
-        operational_settings?: StoreOperationalSettings | null
-    }
-    onSuccess?: () => void
-}
-
-type OperationalSettingsFormPayload = {
-    offers_delivery: boolean
-    delivery_price?: string
-    free_delivery_minimum?: string
-    delivery_radius_km?: string
-    minimum_order_amount: string
-    payment_methods: PaymentMethod[]
-}
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 
 function EditOperationalSettingsButton({ storeId, store, onSuccess }: EditOperationalSettingsButtonProps) {
@@ -49,10 +34,12 @@ function EditOperationalSettingsButton({ storeId, store, onSuccess }: EditOperat
 
             setIsLoading(true)
             toast.loading("Updating operational settings...")
-            const { error, message } = await updateOperationalSettingsAction(storeId, data)
-            if (error) {
+            const { hasError, message } = await updateOperationalSettingsAction(storeId, data)
+            
+            if (hasError) {
                 throw new Error(message)
             }
+
             toast.dismiss()
             toast.success("Operational settings updated successfully!")
             if (onSuccess) onSuccess()
@@ -78,4 +65,4 @@ function EditOperationalSettingsButton({ storeId, store, onSuccess }: EditOperat
     )
 }
 
-export default EditOperationalSettingsButton 
+export { EditOperationalSettingsButton }

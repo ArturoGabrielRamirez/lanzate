@@ -5,12 +5,8 @@ import { OrdersListWidget, OrdersListWidgetSkeleton } from "@/features/orders/co
 import { Item, ItemContent, ItemGroup, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
 import { SectionContainer, StoreBalanceBig, StoreBalanceBigSkeleton, StoreHeaderServer, StoreHeaderSkeleton, StoreHeaderTinyWidgets } from "@/features/stores/components"
 import { STORES_NAVIGATION_LINKS } from "@/features/stores/constants"
+import { MobileSidebarProps } from "@/features/stores/types"
 import { Link } from "@/i18n/naviation"
-
-interface MobileSidebarProps {
-    slug: string
-    userId: number
-}
 
 function MobileSidebar({ slug, userId }: MobileSidebarProps) {
     return (

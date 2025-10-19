@@ -1,30 +1,22 @@
 "use client"
 
-import { Store, StoreOperationalSettings, PaymentMethod, Branch, BranchOperationalSettings, BranchShippingMethod } from "@prisma/client"
-import { Truck, CreditCard, Edit as EditIcon, X } from "lucide-react"
-import { EditOperationalSettingsButton } from "../section-buttons"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Form, InputField, CheckboxField } from "@/features/layout/components"
-import { useEffect, useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { PaymentMethodsSwitches } from "../payment-methods-switches"
-import { useFormContext } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { editOperationalSettingsSchema, type EditOperationalSettingsData } from "../../schemas/operational-settings-schema"
+import { PaymentMethod } from "@prisma/client"
+import { Truck, CreditCard, Edit as EditIcon, X } from "lucide-react"
+import { useEffect, useState } from "react"
+import { useFormContext } from "react-hook-form"
+
+import { Badge } from "@/components/ui/badge"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Form, InputField, CheckboxField } from "@/features/layout/components"
+import { EditOperationalSettingsButton } from "@/features/stores/components"
+import { PaymentMethodsSwitches } from "@/features/stores/components/payment-methods-switches"
+import { editOperationalSettingsSchema } from "@/features/stores/schemas/operational-settings-schema"
+import { EditOperationalSettingsData, OperationalSettingsDisplayProps } from "@/features/stores/types"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface OperationalSettingsDisplayProps {
-    store: Store & {
-        operational_settings: StoreOperationalSettings | null
-        branches?: (Branch & {
-            operational_settings: BranchOperationalSettings | null
-            shipping_methods: BranchShippingMethod[]
-        })[]
-    }
-}
-
-const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) => {
+function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) {
     const storeOperationalSettings = store.operational_settings
 
     const mainBranch = store.branches?.find(b => b.is_main)
@@ -68,10 +60,10 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
         const initialValues: EditOperationalSettingsData = {
             offers_delivery: Boolean(effectiveOffersDelivery),
             // The following remain store-level while we migrate UI to per-method settings
-            delivery_price: storeOperationalSettings?.delivery_price?.toString() || "0",
-            free_delivery_minimum: storeOperationalSettings?.free_delivery_minimum?.toString() || "",
-            delivery_radius_km: storeOperationalSettings?.delivery_radius_km?.toString() || "5",
-            minimum_order_amount: branchOperationalSettings?.minimum_order_amount?.toString() || storeOperationalSettings?.minimum_order_amount?.toString() || "0",
+            /*  delivery_price: storeOperationalSettings?.delivery_price?.toString() || "0",
+             free_delivery_minimum: storeOperationalSettings?.free_delivery_minimum?.toString() || "",
+             delivery_radius_km: storeOperationalSettings?.delivery_radius_km?.toString() || "5", */
+            minimum_order_amount: branchOperationalSettings?.minimum_order_amount?.toString() || "0" /* storeOperationalSettings?.minimum_order_amount?.toString() || "0", */
         }
 
         const onClick = () => {
@@ -215,4 +207,4 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
     )
 }
 
-export default OperationalSettingsDisplay
+export { OperationalSettingsDisplay }

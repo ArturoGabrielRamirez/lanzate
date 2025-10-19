@@ -1,5 +1,5 @@
-import { getEmployeePermissions } from "@/features/stores/actions/getEmployeePermissions"
-import { getOrderDetails } from "@/features/stores/actions/getOrderDetails"
+import { getEmployeePermissions } from "@/features/employees/actions/get-employee-permisions.action"
+import { getOrderDetails } from "@/features/orders/actions/get-order-details.action"
 import { formatDate } from "@/lib/utils"
 import { MapPin, Truck } from "lucide-react"
 import OrderTimeline from "./order-timeline"

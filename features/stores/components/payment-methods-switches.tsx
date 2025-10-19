@@ -1,18 +1,15 @@
 "use client"
 
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
+import { PaymentMethod } from "@prisma/client"
+import { useTranslations } from "next-intl"
 import { useState, useEffect } from "react"
 import { useFormContext } from "react-hook-form"
-import { useTranslations } from "next-intl"
-import { PaymentMethod } from "@prisma/client"
 
-type PaymentMethodsSwitchesProps = {
-    defaultMethods?: PaymentMethod[]
-    onPaymentMethodsChange?: (methods: PaymentMethod[]) => void
-}
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
+import { PaymentMethodsSwitchesProps } from "@/features/stores/types"
 
-export function PaymentMethodsSwitches({ defaultMethods = [PaymentMethod.CASH], onPaymentMethodsChange }: PaymentMethodsSwitchesProps) {
+function PaymentMethodsSwitches({ defaultMethods = [PaymentMethod.CASH], onPaymentMethodsChange }: PaymentMethodsSwitchesProps) {
     const [selectedPaymentMethods, setSelectedPaymentMethods] = useState<PaymentMethod[]>(defaultMethods)
     const { setValue } = useFormContext()
     const t = useTranslations("store.edit-operational-settings")
@@ -77,3 +74,5 @@ export function PaymentMethodsSwitches({ defaultMethods = [PaymentMethod.CASH], 
         </div>
     )
 } 
+
+export { PaymentMethodsSwitches }

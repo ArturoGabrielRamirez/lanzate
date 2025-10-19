@@ -3,9 +3,9 @@
 import { usePathname } from "next/navigation"
 
 import { Tabs } from "@/components/ui/tabs"
-import { TabClientContainerProps } from "@/features/stores/types"
+import { TabProps } from "@/features/stores/types"
 
-function TabsClientContainer({ children }: TabClientContainerProps) {
+function TabsClientContainer({ children }: TabProps) {
 
     const pathname = usePathname()
     const tab = pathname.split("/").pop()
