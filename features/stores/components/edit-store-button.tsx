@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl"
 
 import { updateStoreAction } from "@/features/stores/actions/update-store.action"
-import StoreFormButton from "@/features/stores/components/store-form-button"
+import { StoreFormButton } from "@/features/stores/components"
 import { editSchema } from "@/features/stores/schemas/store-schema"
 import { EditStoreButtonProps } from "@/features/stores/types"
 

@@ -4,7 +4,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 
 import { updateStoreLogoAction } from "@/features/stores/actions"
-import { StoreLogoEditor } from "@/features/stores/components/store-logo-editor"
+import { StoreLogoEditor } from "@/features/stores/components"
 
 type StoreLogoEditorWrapperProps = {
     currentLogo: string | null
@@ -47,4 +47,4 @@ function StoreLogoEditorWrapper({ currentLogo, storeName, storeId }: StoreLogoEd
     )
 }
 
-export default StoreLogoEditorWrapper
+export { StoreLogoEditorWrapper }
