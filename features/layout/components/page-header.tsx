@@ -1,11 +1,9 @@
 "use client"
 
-import { ArrowLeft } from "lucide-react"
 import { Fragment } from "react"
 
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/features/shadcn/components/breadcrumb"
-import { Link, useRouter } from "@/i18n/naviation"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/features/shadcn/components/breadcrumb"
+import { Link } from "@/i18n/naviation"
 
 interface PageHeaderProps {
     title: string | React.ReactNode
@@ -15,12 +13,6 @@ interface PageHeaderProps {
 }
 
 function PageHeader({ title, subtitle, breadcrumbs, media }: PageHeaderProps) {
-
-    const router = useRouter()
-
-    const handleGoBack = () => {
-        router.back()
-    }
 
     return (
         <header className="flex flex-col gap-2">
@@ -59,17 +51,6 @@ function PageHeader({ title, subtitle, breadcrumbs, media }: PageHeaderProps) {
                     </BreadcrumbList>
                 </Breadcrumb>
             )}
-        </header>
-    )
-
-    return (
-        <header className="flex items-center gap-2 justify-center relative">
-            <IconButton
-                icon={ArrowLeft}
-                className="absolute left-0"
-                onClick={handleGoBack}
-            />
-            <h2 className="flex items-center gap-2 font-bold text-xl"> {title} </h2>
         </header>
     )
 }

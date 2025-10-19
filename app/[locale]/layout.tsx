@@ -32,7 +32,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
                 adminLayout={(
                   <>
                     <Header />
-                    <main className='flex flex-col overflow-x-hidden overflow-y-hidden grow'>
+                    <main className='flex flex-col grow'>
                       {children}
                     </main>
                     <FloatingDockContainer />
