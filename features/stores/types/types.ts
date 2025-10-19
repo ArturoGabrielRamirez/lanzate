@@ -1,12 +1,12 @@
 import { Order, Store, StoreOperationalSettings, Branch, Product, Category, StoreBalance, ProductStock, PaymentMethod, BranchOperationalSettings, BranchOpeningHour, BranchShippingMethod } from "@prisma/client"
 import { RowModel } from "@tanstack/react-table"
-import dayjs, { Dayjs } from "dayjs"
+import dayjs from "dayjs"
 import { ReactNode } from "react"
 import * as yup from "yup"
 
 import { DashboardStore } from "@/features/dashboard/types"
 import { ResponseType } from "@/features/layout/types"
-import { basicInfoSchema } from "@/features/stores/schemas"
+import { basicInfoSchema, editOperationalSettingsSchema, editSocialMediaSchema, editContactSchema } from "@/features/stores/schemas"
 
 // Store-related types
 export type StoreCardProps = {
@@ -126,11 +126,6 @@ export type ChangeOrderStatusData = {
 }
 
 // Action-related types
-export type ProcessedCreateStoreData = CreateStoreFormValues & {
-    processedOpeningHours: ProcessedOpeningHour[]
-    processedShippingMethods: ProcessedShippingMethod[]
-    processedPaymentMethods: ProcessedPaymentMethod[]
-}
 
 export type StoreHeader = {
     id: number
@@ -592,3 +587,36 @@ export type UpdatePricesButtonProps = {
 }
 
 export type UpdateType = "fijo" | "porcentaje"
+
+// Data layer types
+export type ProcessedCreateStoreData = CreateStoreFormValues & {
+    processedOpeningHours: ProcessedOpeningHour[]
+    processedShippingMethods: ProcessedShippingMethod[]
+    processedPaymentMethods: ProcessedPaymentMethod[]
+}
+
+export type DataType = {
+    contact_phone?: string
+    contact_whatsapp?: string
+    facebook_url?: string
+    instagram_url?: string
+    x_url?: string
+    address?: string
+    city?: string
+    province?: string
+    country?: string
+}
+
+export type UpdateOperationalSettingsPayload = {
+    offers_delivery: boolean
+    delivery_price: number
+    free_delivery_minimum: number | null
+    delivery_radius_km: number
+    payment_methods: PaymentMethod[]
+    minimum_order_amount: number
+}
+
+// Schema type inferences
+export type EditOperationalSettingsData = yup.InferType<typeof editOperationalSettingsSchema>
+export type EditSocialMediaData = yup.InferType<typeof editSocialMediaSchema>
+export type EditContactData = yup.InferType<typeof editContactSchema>

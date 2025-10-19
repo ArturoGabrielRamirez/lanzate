@@ -3,15 +3,8 @@
 import { PaymentMethod, Prisma } from '@prisma/client'
 import randomstring from "randomstring"
 
-import { CreateStoreFormValues } from '@/features/stores/components'
-import type { ProcessedOpeningHour, ProcessedPaymentMethod, ProcessedShippingMethod } from '@/features/stores/utils'
+import { ProcessedCreateStoreData } from '@/features/stores/types'
 import { prisma } from "@/utils/prisma"
-
-type ProcessedCreateStoreData = CreateStoreFormValues & {
-    processedOpeningHours: ProcessedOpeningHour[]
-    processedShippingMethods: ProcessedShippingMethod[]
-    processedPaymentMethods: ProcessedPaymentMethod[]
-}
 
 export async function insertStoreData(payload: ProcessedCreateStoreData, userId: number) {
 

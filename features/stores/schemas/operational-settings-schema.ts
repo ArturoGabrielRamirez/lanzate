@@ -30,7 +30,6 @@ export const editOperationalSettingsSchema = yup.object({
         .matches(/^\d+(?:\.\d+)?$/, "Must be a valid number"),
 })
 
-export type EditOperationalSettingsData = yup.InferType<typeof editOperationalSettingsSchema>
 
 export const operationalSettingsSchema = yup.object({
   offers_delivery: yup.boolean().required(),

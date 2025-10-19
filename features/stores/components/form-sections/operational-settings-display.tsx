@@ -12,8 +12,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Form, InputField, CheckboxField } from "@/features/layout/components"
 import { EditOperationalSettingsButton } from "@/features/stores/components"
 import { PaymentMethodsSwitches } from "@/features/stores/components/payment-methods-switches"
-import { editOperationalSettingsSchema, type EditOperationalSettingsData } from "@/features/stores/schemas/operational-settings-schema"
-import { OperationalSettingsDisplayProps } from "@/features/stores/types"
+import { editOperationalSettingsSchema } from "@/features/stores/schemas/operational-settings-schema"
+import { EditOperationalSettingsData, OperationalSettingsDisplayProps } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) {

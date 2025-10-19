@@ -1,15 +1,5 @@
-import { PaymentMethod } from "@prisma/client"
-
+import { UpdateOperationalSettingsPayload } from '@/features/stores/types'
 import { prisma } from "@/utils/prisma"
-
-type UpdateOperationalSettingsPayload = {
-    offers_delivery: boolean
-    delivery_price: number
-    free_delivery_minimum: number | null
-    delivery_radius_km: number
-    payment_methods: PaymentMethod[]
-    minimum_order_amount: number
-}
 
 export async function updateOperationalSettingsData(storeId: number, payload: UpdateOperationalSettingsPayload) {
     // Check if operational settings exist for this store

@@ -10,8 +10,8 @@ import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/componen
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { Form, InputField } from "@/features/layout/components"
 import { EditSocialMediaButton } from "@/features/stores/components/section-buttons"
-import { editSocialMediaSchema, type EditSocialMediaData } from "@/features/stores/schemas/social-media-schema"
-import { SocialMediaDisplayProps } from "@/features/stores/types"
+import { editSocialMediaSchema } from "@/features/stores/schemas/social-media-schema"
+import { EditSocialMediaData, SocialMediaDisplayProps } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 function SocialMediaDisplay({ store }: SocialMediaDisplayProps) {

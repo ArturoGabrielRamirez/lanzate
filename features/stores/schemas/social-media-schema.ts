@@ -6,4 +6,3 @@ export const editSocialMediaSchema = yup.object({
     x_url: yup.string().url("Invalid X (Twitter) URL format").optional()
 })
 
-export type EditSocialMediaData = yup.InferType<typeof editSocialMediaSchema>

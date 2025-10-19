@@ -1,19 +1,7 @@
 "use server"
 
+import { DataType } from '@/features/stores/types'
 import { prisma } from "@/utils/prisma"
-
-
-type DataType = {
-    contact_phone?: string
-    contact_whatsapp?: string
-    facebook_url?: string
-    instagram_url?: string
-    x_url?: string
-    address?: string
-    city?: string
-    province?: string
-    country?: string
-}
 
 
 export async function updateStoreBySlugData(slug: string, data: DataType) {

@@ -10,8 +10,8 @@ import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/componen
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 import { Form, InputField } from "@/features/layout/components"
 import { EditContactButton } from "@/features/stores/components/section-buttons"
-import { editContactSchema, type EditContactData } from "@/features/stores/schemas/contact-schema"
-import { ContactDisplayProps } from "@/features/stores/types"
+import { editContactSchema } from "@/features/stores/schemas/contact-schema"
+import { ContactDisplayProps, EditContactData } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 function ContactDisplay({ store }: ContactDisplayProps) {

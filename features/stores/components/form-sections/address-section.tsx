@@ -1,6 +1,5 @@
 "use client"
 
-import { Store, Branch } from "@prisma/client"
 import { MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"

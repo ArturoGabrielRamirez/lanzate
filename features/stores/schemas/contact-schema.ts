@@ -5,4 +5,3 @@ export const editContactSchema = yup.object({
     contact_email: yup.string().email("Invalid email format").max(255, "Email must be less than 255 characters long")
 })
 
-export type EditContactData = yup.InferType<typeof editContactSchema>
