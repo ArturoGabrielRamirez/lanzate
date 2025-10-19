@@ -3,15 +3,8 @@
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
+import { UpdateAddressPayload } from "@/features/stores/types"
 import { prisma } from "@/utils/prisma"
-
-type UpdateAddressPayload = {
-    is_physical_store: boolean
-    address?: string
-    city?: string
-    province?: string
-    country?: string
-}
 
 export async function updateStoreAddressAction(slug: string, payload: UpdateAddressPayload, userId: number) {
     return actionWrapper(async () => {

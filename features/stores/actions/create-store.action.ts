@@ -5,16 +5,8 @@ import { revalidatePath } from "next/cache"
 import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { canCreateStore } from "@/features/stores/access"
-import { CreateStoreFormValues } from "@/features/stores/components"
 import { insertStoreData } from "@/features/stores/data"
-import type { ProcessedOpeningHour, ProcessedPaymentMethod, ProcessedShippingMethod } from "@/features/stores/utils/store-form-helpers"
-
-
-type ProcessedCreateStoreData = CreateStoreFormValues & {
-    processedOpeningHours: ProcessedOpeningHour[]
-    processedShippingMethods: ProcessedShippingMethod[]
-    processedPaymentMethods: ProcessedPaymentMethod[]
-}
+import { ProcessedCreateStoreData } from "@/features/stores/types"
 
 export async function createStoreAction(payload: ProcessedCreateStoreData, userId: number) {
     return actionWrapper(async () => {

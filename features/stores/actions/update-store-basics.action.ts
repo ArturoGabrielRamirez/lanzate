@@ -3,13 +3,8 @@
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
+import { UpdateBasicInfoPayload } from "@/features/stores/types"
 import { prisma } from "@/utils/prisma"
-
-type UpdateBasicInfoPayload = {
-    name: string
-    description?: string
-    subdomain: string
-}
 
 export async function updateStoreBasicInfoAction(slug: string, payload: UpdateBasicInfoPayload, userId: number) {
     return actionWrapper(async () => {

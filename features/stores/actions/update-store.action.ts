@@ -6,17 +6,7 @@ import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { canUpdateStore } from "@/features/stores/access"
 import { updateStoreBySlugData } from "@/features/stores/data"
-
-type UpdateStorePayload = {
-    name: string
-    description?: string
-    subdomain: string
-    contact_phone?: string
-    contact_whatsapp?: string
-    facebook_url?: string
-    instagram_url?: string
-    x_url?: string
-}
+import { UpdateStorePayload } from "@/features/stores/types"
 
 export async function updateStoreAction(slug: string, data: UpdateStorePayload, userId: number) {
     return actionWrapper(async () => {
