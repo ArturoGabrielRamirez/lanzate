@@ -8,11 +8,7 @@ import { useState } from "react"
 import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
 import { InputField, CheckboxField } from "@/features/layout/components"
-
-interface AddressSectionProps {
-    store?: Store & { branches: Branch[] }
-    mode: 'create' | 'edit'
-}
+import { AddressSectionProps } from "@/features/stores/types"
 
 function AddressSection({ store, mode }: AddressSectionProps) {
     

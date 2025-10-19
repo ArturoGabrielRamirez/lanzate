@@ -1,7 +1,7 @@
 "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Store, StoreOperationalSettings, PaymentMethod, Branch, BranchOperationalSettings, BranchShippingMethod } from "@prisma/client"
+import { PaymentMethod } from "@prisma/client"
 import { Truck, CreditCard, Edit as EditIcon, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
@@ -13,17 +13,8 @@ import { Form, InputField, CheckboxField } from "@/features/layout/components"
 import { EditOperationalSettingsButton } from "@/features/stores/components"
 import { PaymentMethodsSwitches } from "@/features/stores/components/payment-methods-switches"
 import { editOperationalSettingsSchema, type EditOperationalSettingsData } from "@/features/stores/schemas/operational-settings-schema"
+import { OperationalSettingsDisplayProps } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-
-interface OperationalSettingsDisplayProps {
-    store: Store & {
-        operational_settings: StoreOperationalSettings | null
-        branches?: (Branch & {
-            operational_settings: BranchOperationalSettings | null
-            shipping_methods: BranchShippingMethod[]
-        })[]
-    }
-}
 
 function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) {
     const storeOperationalSettings = store.operational_settings
@@ -69,10 +60,10 @@ function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) 
         const initialValues: EditOperationalSettingsData = {
             offers_delivery: Boolean(effectiveOffersDelivery),
             // The following remain store-level while we migrate UI to per-method settings
-            delivery_price: storeOperationalSettings?.delivery_price?.toString() || "0",
-            free_delivery_minimum: storeOperationalSettings?.free_delivery_minimum?.toString() || "",
-            delivery_radius_km: storeOperationalSettings?.delivery_radius_km?.toString() || "5",
-            minimum_order_amount: branchOperationalSettings?.minimum_order_amount?.toString() || storeOperationalSettings?.minimum_order_amount?.toString() || "0",
+            /*  delivery_price: storeOperationalSettings?.delivery_price?.toString() || "0",
+             free_delivery_minimum: storeOperationalSettings?.free_delivery_minimum?.toString() || "",
+             delivery_radius_km: storeOperationalSettings?.delivery_radius_km?.toString() || "5", */
+            minimum_order_amount: branchOperationalSettings?.minimum_order_amount?.toString() || "0" /* storeOperationalSettings?.minimum_order_amount?.toString() || "0", */
         }
 
         const onClick = () => {

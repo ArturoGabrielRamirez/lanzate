@@ -1,21 +1,12 @@
 "use client"
 
-import { Branch, BranchOperationalSettings, BranchOpeningHour, PaymentMethod } from "@prisma/client"
+import { BranchOpeningHour, PaymentMethod } from "@prisma/client"
 import { Truck } from "lucide-react"
 import Link from "next/link"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-
-type BranchWithSettings = Branch & {
-  operational_settings: BranchOperationalSettings | null
-  opening_hours: BranchOpeningHour[]
-}
-
-type Props = {
-  branches: BranchWithSettings[]
-  slug: string
-}
+import { BranchesOverviewDisplayProps } from "@/features/stores/types"
 
 function getPaymentLabel(method: PaymentMethod): string {
   switch (method) {
@@ -39,7 +30,7 @@ function formatHours(openingHours: BranchOpeningHour[]): string {
     .join(" • ")
 }
 
-function BranchesOverviewDisplay({ branches, slug }: Props) {
+function BranchesOverviewDisplay({ branches, slug }: BranchesOverviewDisplayProps) {
   if (!branches || branches.length === 0) return null
 
   return (

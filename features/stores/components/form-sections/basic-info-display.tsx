@@ -1,7 +1,6 @@
 "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Store } from "@prisma/client"
 import { StoreIcon, EditIcon, X } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
@@ -11,18 +10,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Form, InputField } from "@/features/layout/components"
 import { EditBasicInfoButton } from "@/features/stores/components/section-buttons"
 import { editBasicInfoSchema } from "@/features/stores/schemas/basic-info-schema"
+import { BasicInfoDisplayProps, BasicInfoFormValues } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-
-interface BasicInfoDisplayProps {
-    store: Store
-    userId: number
-}
-
-type BasicInfoFormValues = {
-    name: string
-    description: string
-    subdomain: string
-}
 
 
 function BasicInfoDisplay({ store, userId }: BasicInfoDisplayProps) {
@@ -40,9 +29,9 @@ function BasicInfoDisplay({ store, userId }: BasicInfoDisplayProps) {
         const { reset } = useFormContext<BasicInfoFormValues>()
 
         const initialValues = {
-            name: store.name,
+            /* name: store.name,
             description: store.description || "No description",
-            subdomain: store.subdomain,
+            subdomain: store.subdomain, */
         }
 
         const onClick = () => {

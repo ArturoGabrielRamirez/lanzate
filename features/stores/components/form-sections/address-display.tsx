@@ -1,7 +1,6 @@
 "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Store, Branch } from "@prisma/client"
 import { MapPin, Edit as EditIcon, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
@@ -12,22 +11,11 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Form, InputField, CheckboxField } from "@/features/layout/components"
 import { EditAddressButton } from "@/features/stores/components/section-buttons"
 import { editAddressSchema } from "@/features/stores/schemas/address-schema"
+import { AddressDisplayProps, AddressFormValues } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface AddressDisplayProps {
-    store: Store & { branches: Branch[] }
-    userId: number
-}
-
-type AddressFormValues = {
-    is_physical_store: boolean
-    address?: string
-    city?: string
-    province?: string
-    country?: string
-}
-
 function AddressDisplay({ store, userId }: AddressDisplayProps) {
+    
     const t = useTranslations("store.edit-store")
     const mainBranch = store.branches?.find((branch) => branch.is_main)
     const [isEditing, setIsEditing] = useState(false)
@@ -48,8 +36,8 @@ function AddressDisplay({ store, userId }: AddressDisplayProps) {
     function ToggleEditButton() {
         const { reset } = useFormContext<AddressFormValues>()
 
-        const initialValues: AddressFormValues = {
-            is_physical_store: Boolean(store.is_physical_store),
+        const initialValues = {
+            /* is_physical_store: store.is_physical_store, */
             address: mainBranch?.address || "",
             city: mainBranch?.city || "",
             province: mainBranch?.province || "",
@@ -59,7 +47,7 @@ function AddressDisplay({ store, userId }: AddressDisplayProps) {
         const onClick = () => {
             if (isEditing) {
                 reset(initialValues)
-                setIsPhysicalStore(initialValues.is_physical_store)
+                /* setIsPhysicalStore(initialValues.is_physical_store) */
                 handleCloseEdit()
                 return
             }

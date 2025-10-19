@@ -1,7 +1,6 @@
 "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Store, Branch } from "@prisma/client"
 import { Phone, Edit as EditIcon, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
@@ -12,11 +11,8 @@ import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip
 import { Form, InputField } from "@/features/layout/components"
 import { EditContactButton } from "@/features/stores/components/section-buttons"
 import { editContactSchema, type EditContactData } from "@/features/stores/schemas/contact-schema"
+import { ContactDisplayProps } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-
-interface ContactDisplayProps {
-    store: Store & { branches: Branch[] }
-}
 
 function ContactDisplay({ store }: ContactDisplayProps) {
     const t = useTranslations("store.edit-store")

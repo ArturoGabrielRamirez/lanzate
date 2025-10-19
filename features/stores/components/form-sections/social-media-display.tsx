@@ -1,7 +1,6 @@
 "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Branch, Store, StoreOperationalSettings } from "@prisma/client"
 import { MessageCircle, Edit as EditIcon, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
@@ -12,11 +11,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Form, InputField } from "@/features/layout/components"
 import { EditSocialMediaButton } from "@/features/stores/components/section-buttons"
 import { editSocialMediaSchema, type EditSocialMediaData } from "@/features/stores/schemas/social-media-schema"
+import { SocialMediaDisplayProps } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-
-interface SocialMediaDisplayProps {
-    store: Store & { operational_settings: StoreOperationalSettings | null, branches: Branch[] }
-}
 
 function SocialMediaDisplay({ store }: SocialMediaDisplayProps) {
     const t = useTranslations("store.edit-store")

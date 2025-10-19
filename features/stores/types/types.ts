@@ -1,11 +1,10 @@
-import { Order, Store, StoreOperationalSettings, Branch, Product, Category, StoreBalance, ProductStock, PaymentMethod } from "@prisma/client"
+import { Order, Store, StoreOperationalSettings, Branch, Product, Category, StoreBalance, ProductStock, PaymentMethod, BranchOperationalSettings, BranchOpeningHour, BranchShippingMethod } from "@prisma/client"
 import { ReactNode } from "react"
 import * as yup from "yup"
 
 import { DashboardStore } from "@/features/dashboard/types"
 import { CreateStoreFormValues } from "@/features/stores/components"
 import { basicInfoSchema } from "@/features/stores/schemas"
-import type { ProcessedOpeningHour, ProcessedPaymentMethod, ProcessedShippingMethod } from "@/features/stores/utils/store-form-helpers"
 
 // Store-related types
 export type StoreCardProps = {
@@ -194,4 +193,101 @@ export type UpdateStorePayload = {
     facebook_url?: string
     instagram_url?: string
     x_url?: string
+}
+
+// Store form helper types
+export type ProcessedOpeningHour = {
+    day: number
+    start: string
+    end: string
+}
+
+export type ProcessedShippingMethod = {
+    provider: string
+    min_order_amount: number | null
+    free_shipping_min: number | null
+    eta_minutes: number | null
+    delivery_price: number | null
+    active: boolean
+}
+
+export type ProcessedPaymentMethod = string
+
+// Form sections types
+export interface AddressDisplayProps {
+    store: Store & { 
+        branches: Branch[]
+        is_physical_store: boolean
+    }
+    userId: number
+}
+
+export type AddressFormValues = {
+    is_physical_store: boolean
+    address?: string
+    city?: string
+    province?: string
+    country?: string
+}
+
+export interface AddressSectionProps {
+    store?: Store & { branches: Branch[] }
+    mode: 'create' | 'edit'
+}
+
+export interface BasicInfoDisplayProps {
+    store: Store
+    userId: number
+}
+
+export type BasicInfoFormValues = {
+    name: string
+    description: string
+    subdomain: string
+}
+
+export interface BasicInfoSectionProps {
+    store?: Store
+    subdomain: string
+    onSubdomainChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    mode: 'create' | 'edit'
+    onNameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+export type BranchWithSettings = Branch & {
+    operational_settings: BranchOperationalSettings | null
+    opening_hours: BranchOpeningHour[]
+}
+
+export interface BranchesOverviewDisplayProps {
+    branches: BranchWithSettings[]
+    slug: string
+}
+
+export interface ContactDisplayProps {
+    store: Store & { branches: Branch[] }
+}
+
+export interface ContactSectionProps {
+    store?: Store & { branches: Branch[] }
+    mode: 'create' | 'edit'
+}
+
+export interface OperationalSettingsDisplayProps {
+    store: Store & {
+        operational_settings: StoreOperationalSettings | null
+        branches?: (Branch & {
+            operational_settings: BranchOperationalSettings | null
+            shipping_methods: BranchShippingMethod[]
+        })[]
+    }
+}
+
+export interface SocialMediaDisplayProps {
+    store: Store & { operational_settings: StoreOperationalSettings | null, branches: Branch[] }
+}
+
+export interface SocialMediaSectionProps {
+    store?: Store & { operational_settings: StoreOperationalSettings | null }
+    mode: 'create' | 'edit'
 }
