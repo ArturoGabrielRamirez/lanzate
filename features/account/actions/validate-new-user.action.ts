@@ -1,9 +1,9 @@
 'use server'
 
+import { DELETION_CONFIG } from "@/features/account/config/deletion.config"
+import { findUserByEmail, findAnonymizedUserByEmailHash } from "@/features/account/data/index"
+import { CryptoUtils } from "@/features/account/utils/crypto-utils"
 import { actionWrapper, formatSuccessResponse } from "@/utils/lib"
-import { findUserByEmail, findAnonymizedUserByEmailHash } from "../data"
-import { CryptoUtils } from "../utils/crypto-utils"
-import { DELETION_CONFIG } from "../config/deletion.config"
 
 export async function validateNewUserCreationAction(email: string) {
     return actionWrapper(async () => {

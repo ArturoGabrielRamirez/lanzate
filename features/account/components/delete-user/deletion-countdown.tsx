@@ -1,14 +1,15 @@
 "use client"
 
-import { useEffect } from "react";
-import { useAccountDeletion } from "../../hooks/use-account-deletion";
-import { AccountDeletedAlert, ActionNearExpirationAlert, ExplanationAlert, NearExpirationAlert } from "./account-delete-alert";
-import { MainCountdownDisplay } from "./main-countdown-display";
-import { useCountdown } from "../../hooks/use-countdown";
-import /* DeletionHelpers, */ { getUrgencyLevel, getUrgencyLevelFromMinutes } from "../../utils/deletion-helpers";
-import { Clock } from "lucide-react";
+import { Clock } from "lucide-react"
+import { useEffect } from "react"
 
-export default function DeletionCountdown({
+import { AccountDeletedAlert, ActionNearExpirationAlert, ExplanationAlert, NearExpirationAlert } from "@/features/account/components/delete-user/index"
+import { MainCountdownDisplay } from "@/features/account/components/delete-user/main-countdown-display"
+import { useAccountDeletion } from "@/features/account/hooks/use-account-deletion"
+import { useCountdown } from "@/features/account/hooks/use-countdown"
+import { getUrgencyLevel, getUrgencyLevelFromMinutes } from "@/features/account/utils/deletion-helpers"
+
+export function DeletionCountdown({
     displayScheduledDate,
     canCancelUntil,
     isWithinActionWindow,
@@ -48,7 +49,7 @@ export default function DeletionCountdown({
         return <AccountDeletedAlert />;
     }
 
-    const actionUrgency = actionTimeLeft 
+    const actionUrgency = actionTimeLeft
         ? getUrgencyLevelFromMinutes(actionTimeLeft.totalMinutes)
         : 'critical';
 
@@ -103,8 +104,8 @@ export default function DeletionCountdown({
                         </div>
                         <span className="text-xs text-gray-400">
                             {actionUrgency === 'critical' ? 'Crítico' :
-                             actionUrgency === 'high' ? 'Urgente' :
-                             actionUrgency === 'medium' ? 'Activa' : 'Normal'}
+                                actionUrgency === 'high' ? 'Urgente' :
+                                    actionUrgency === 'medium' ? 'Activa' : 'Normal'}
                         </span>
                     </div>
                 </div>

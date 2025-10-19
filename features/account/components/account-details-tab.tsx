@@ -24,7 +24,6 @@ export function AccountDetailsTab({ user, immediateData }: AccountDetailsTabProp
             ) : (
                 <SecuritySkeleton />
             )}
-
             <StatsCard user={user} immediateData={immediateData} />
         </div>
     )

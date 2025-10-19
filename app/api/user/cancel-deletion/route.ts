@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { cancelDeletionAction } from '@/features/account/actions/cancel-deletion'
+import { cancelDeletionAction } from '@/features/account/actions/cancel-deletion.action'
 
 export async function POST(request: NextRequest) {
   try {

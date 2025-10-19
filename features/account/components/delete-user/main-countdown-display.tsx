@@ -1,8 +1,7 @@
 import { Clock } from "lucide-react";
-import { CountdownDisplayProps } from "../../types";
-import TimeBlock from "./time-block";
 
-
+import { TimeBlock } from "@/features/account/components/delete-user/index";
+import { CountdownDisplayProps, } from "@/features/account/types/index";
 
 export function MainCountdownDisplay({
     timeLeft,

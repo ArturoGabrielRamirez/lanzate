@@ -1,4 +1,4 @@
-'use server'
+/* 'use server'
 
 import { actionWrapper, formatSuccessResponse } from "@/utils/lib"
 import { getStatsFromData } from "../data"
@@ -30,4 +30,4 @@ export async function getDeletionStatsAction() {
       lastChecked: new Date().toISOString(),
     })
   })
-}
+} */

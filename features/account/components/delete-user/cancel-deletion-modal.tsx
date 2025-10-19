@@ -1,10 +1,11 @@
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle, X } from "lucide-react";
+import { CheckCircle, X } from "lucide-react"
 
-export default function CancelDeletionModal({
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+
+export function CancelDeletionModal({
     isOpen,
     onClose,
     onConfirm,

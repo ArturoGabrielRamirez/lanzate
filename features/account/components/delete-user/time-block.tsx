@@ -1,10 +1,10 @@
-export default function TimeBlock({ 
-    value, 
-    label, 
+export function TimeBlock({
+    value,
+    label,
     urgencyTextColor = 'text-red-400',
     isMain = false
-}: { 
-    value: number; 
+}: {
+    value: number;
     label: string;
     urgencyTextColor?: string;
     isMain?: boolean;

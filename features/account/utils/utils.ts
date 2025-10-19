@@ -1,7 +1,7 @@
-import { UserDeletionStatus, DeleteRequestParams, CancelDeletionParams, AccountDeletedParams, UserType } from "../types/types";
-import { notifyError, handleDeletionResponse } from "./notification-service";
-import { SUBTLE_BANNERS } from "./banners-presets";
-import { cancelDeletionAction, getDeletionStatusAction, requestDeletionAction } from "../actions";
+import { cancelDeletionAction, getDeletionStatusAction, requestDeletionAction } from "@/features/account/actions";
+import { UserDeletionStatus, DeleteRequestParams, CancelDeletionParams, AccountDeletedParams, UserType } from "@/features/account/types"
+import { notifyError, handleDeletionResponse } from "@/features/account/utils";
+/* import { SUBTLE_BANNERS } from "./banners-presets"; */
 
 
 export const getBaseUrl = (): string => {

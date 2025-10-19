@@ -1,20 +1,20 @@
 'use client'
 
+import { Camera, RefreshCw, Image as Img, Settings, Calendar, Shield, Link } from "lucide-react"
+import Image from 'next/image';
 import { useState, useCallback, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
+
 import { Button } from "@/components/ui/button"
-import { Camera, RefreshCw, Image, Settings, Calendar, Shield } from "lucide-react"
-import Link from "next/link"
-import { AccountBannerHeaderProps } from "../types"
-import { SUBTLE_BANNERS } from "../utils/banners-presets"
-import { formatJoinDate, getDisplayName } from "../utils/utils"
-import { MediaSelector } from "@/features/shared/components/media-selector/types/index"
+import { Card, CardContent } from "@/components/ui/card"
+import { AccountBannerHeaderProps } from "@/features/account/types"
+import { formatJoinDate, getDisplayName, SUBTLE_BANNERS } from "@/features/account/utils"
 import { ProfileEditor } from "@/features/auth/components/profile/profile-editor"
 import { getDefaultBannerForUser } from "@/features/profile/utils/get-default-banner-for-user"
+import { MediaSelector } from "@/features/shared/components/media-selector/types"
 
 export function AccountBannerHeader({
   user,
-  translations: t,
+  /*   translations: t, */
   onAvatarUpdate,
   onProfileUpdate,
   onBannerUpdate
@@ -30,11 +30,12 @@ export function AccountBannerHeader({
     setCurrentAvatar(user.avatar)
   }, [user.avatar])
 
+
   useEffect(() => {
     if (user.banner !== backgroundBanner && user.banner !== null) {
       setBackgroundBanner(user.banner || getDefaultBannerForUser(user.id))
     }
-  }, [user.banner, user.id])
+  }, [user.banner, user.id, backgroundBanner])
 
   const handleBackgroundUpdate = useCallback((url: string | null) => {
     if (url) {
@@ -87,7 +88,7 @@ export function AccountBannerHeader({
                 variant="ghost"
                 className="h-7 px-2 text-xs opacity-60 hover:opacity-100 transition-opacity hover:bg-background/60"
               >
-                <Image className="w-3 h-3" />
+                <Img className="w-3 h-3" />
               </Button>
             }
             title="Cambiar Fondo"
@@ -99,7 +100,7 @@ export function AccountBannerHeader({
 
           <div className="flex items-center gap-3">
             <div className="relative">
-              <img
+              <Image
                 src={currentAvatar || `https://api.dicebear.com/9.x/initials/svg?seed=${user.email}`}
                 alt="User avatar"
                 className={`size-16 rounded-full object-cover bg-chart-4 ring-2 ring-primary/30 shadow-lg transition-all duration-300 ${isUpdating ? 'opacity-75 scale-95' : 'opacity-100 scale-100'
@@ -107,6 +108,8 @@ export function AccountBannerHeader({
                 onError={(e) => {
                   e.currentTarget.src = `https://api.dicebear.com/9.x/initials/svg?seed=${user.email}`
                 }}
+                width={32}
+                height={32}
               />
 
               {isUpdating && (
@@ -148,9 +151,10 @@ export function AccountBannerHeader({
 
                 <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/20 rounded-full border border-primary/30 backdrop-blur-sm">
                   <Settings className="w-3 h-3 text-primary" />
-                 {/*  <p className="capitalize text-xs font-medium text-primary">
-                    {user.Account[0].type.toLowerCase()} {t.title}
-                  </p> */}
+                  <p className="capitalize text-xs font-medium text-primary">
+                    Cuenta
+                    {/* {user.Account[0].type.toLowerCase()} {t.title} */}
+                  </p>
                 </div>
 
                 <div className="flex items-center gap-1.5 px-2.5 py-1 bg-muted/70 rounded-full border border-muted-foreground/30 backdrop-blur-sm">
@@ -191,13 +195,14 @@ export function AccountBannerHeader({
                 onProfileUpdate={onProfileUpdate}
               />
 
-         {/*      {user.Account[0].type === "FREE" && (
+              {user.Account[0].type === "FREE" && (
                 <Button asChild size="sm" className="bg-gradient-to-r from-primary to-primary/80 text-white hover:from-primary/90 hover:to-primary/70 text-xs h-8 px-4">
                   <Link href="/upgrade">
-                    {t["description.upgrade-plan"]}
+                    Actualizar Plan
+                    {/*      {t["description.upgrade-plan"]} */}
                   </Link>
                 </Button>
-              )} */}
+              )}
             </div>
           </div>
         </CardContent>

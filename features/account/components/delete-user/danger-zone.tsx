@@ -1,18 +1,16 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { UserDeletionStatus } from '../../types/types'
+
+import { CancelDeletionModal, DeletionStatusCard, DeletionCountdown, DeleteConfirmationModal } from '@/features/account/components/delete-user/index'
+import { UserDeletionStatus } from '@/features/account/types/types'
 import {
   createAccountDeletedHandler,
   createCancelDeletionHandler,
   createDeleteRequestHandler,
   fetchDeletionStatus,
   initialDeletionStatus,
-} from '../../utils/utils'
-import DeleteConfirmationModal from './delete-confirmation-modal'
-import DeletionCountdown from './deletion-countdown'
-import DeletionStatusCard from './deletion-status-card'
-import CancelDeletionModal from './cancel-deletion-modal'
+} from '@/features/account/utils/utils'
 
 export default function DangerZone({
   userId,
@@ -110,7 +108,6 @@ export default function DangerZone({
   return (
     <div className="space-y-6">
 
-      {/* 🔥 CORRECCIÓN: Mostrar mensaje de gracia si canCancel es true */}
       {deletionStatus.canCancel && deletionStatus.canCancelUntil && (
         <div className="bg-blue-900/40 border border-blue-600 rounded-lg p-4">
           <p className="text-sm text-blue-300">
@@ -123,7 +120,6 @@ export default function DangerZone({
         </div>
       )}
 
-      {/* 🔥 NUEVO: Mensaje de urgencia solo en la ventana de acción */}
       {deletionStatus.isWithinActionWindow && deletionStatus.canCancel && (
         <div className="bg-red-900/40 border border-red-600 rounded-lg p-4">
           <p className="text-sm text-red-300">

@@ -1,9 +1,10 @@
+/* import { Upload } from "lucide-react"
 import { forwardRef } from 'react'
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Upload } from "lucide-react"
-import { FileUploadSectionProps } from '../types'
+import { FileUploadSectionProps } from '@/features/account/types'
 
 export const FileUploadSection = forwardRef<HTMLInputElement, FileUploadSectionProps>(
     ({ onFileSelect, onButtonClick }, ref) => {
@@ -35,4 +36,4 @@ export const FileUploadSection = forwardRef<HTMLInputElement, FileUploadSectionP
     }
 )
 
-FileUploadSection.displayName = 'FileUploadSection'
+FileUploadSection.displayName = 'FileUploadSection' */

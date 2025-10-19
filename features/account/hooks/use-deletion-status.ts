@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { UserDeletionStatus } from "../types"
+
+import { UserDeletionStatus } from "@/features/account/types"
 
 export default function useDeletionStatus() {
     const [deletionStatus, setDeletionStatus] = useState<UserDeletionStatus>({

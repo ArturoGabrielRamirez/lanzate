@@ -1,5 +1,5 @@
 import { /* NextRequest, */ NextResponse } from 'next/server'
-import { getDeletionStatusAction } from '@/features/account/actions/get-deletion-status'
+import { getDeletionStatusAction } from '@/features/account/actions/get-deletion-status.action'
 
 export async function GET(/* request: NextRequest */) {
   try {

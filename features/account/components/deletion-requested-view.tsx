@@ -1,8 +1,9 @@
-import { Suspense } from "react"
 import { AlertTriangle } from "lucide-react"
+import { Suspense } from "react"
+
+import { DangerDeepZoneSkeleton, DangerZoneTab } from "@/features/account/components"
+import { DeletionRequestedViewProps } from "@/features/account/types"
 import { Title } from "@/features/layout/components"
-import { DeletionRequestedViewProps } from "../types"
-import { DangerDeepZoneSkeleton, DangerZoneTab } from "."
 
 export function DeletionRequestedView({
     user,

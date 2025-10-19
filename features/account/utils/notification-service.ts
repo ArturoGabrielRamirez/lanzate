@@ -1,6 +1,6 @@
-// utils/notification-service.ts
 import { toast } from "sonner";
-import { DeletionActionResponse } from "../types/types";
+
+import { DeletionActionResponse } from "@/features/account/types"
 
 /**
  * Funciones para manejo de notificaciones
@@ -23,7 +23,7 @@ export function notifyInfo(message: string): void {
 export function handleDeletionResponse(response: DeletionActionResponse, type: 'request' | 'cancel'): void {
   if (type === 'request') {
     notifySuccess('Solicitud de eliminación enviada correctamente.');
-    
+
     if (response.deletionInfo?.actionWindowMinutes) {
       notifySuccess(
         `Tienes ${response.deletionInfo.actionWindowMinutes} minutos para cambiar de opinión y cancelar la eliminación.`
@@ -31,7 +31,7 @@ export function handleDeletionResponse(response: DeletionActionResponse, type: '
     }
   } else {
     notifySuccess('Eliminación cancelada correctamente');
-    
+
     if (response.cancellationInfo?.cancelledWithMinutesToSpare) {
       notifySuccess(
         `Cancelación exitosa con ${response.cancellationInfo.cancelledWithMinutesToSpare} minutos de margen.`
@@ -44,9 +44,14 @@ export function handleDeletionResponse(response: DeletionActionResponse, type: '
  * Maneja errores específicos de eliminación con contexto mejorado
  */
 export function handleDeletionError(
-  error: boolean, 
-  status?: number, 
-  data?: any, 
+  error: boolean,
+  status?: number,
+  data?: {
+    existingRequest?: {
+      isWithinActionWindow: boolean;
+      canCancelUntil: string;
+    }; minutesPastDeadline?: number
+  },
   message?: string,
   type: 'request' | 'cancel' = 'request'
 ): void {

@@ -1,18 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
-interface TimeLeft {
-    days: number;
-    hours: number;
-    minutes: number;
-    seconds: number;
-    difference: number;
-}
-
-interface ActionTimeLeft {
-    minutes: number;
-    seconds: number;
-    totalMinutes: number;
-}
+import { ActionTimeLeft, TimeLeft } from "@/features/account/types";
 
 export function useCountdown(targetDate: Date, canCancelUntil?: Date | null) {
     const [timeLeft, setTimeLeft] = useState<TimeLeft>({
@@ -60,7 +48,7 @@ export function useCountdown(targetDate: Date, canCancelUntil?: Date | null) {
 
     const updateCountdowns = useCallback(() => {
         const now = Date.now();
-        
+
         // Evitar actualizaciones muy frecuentes (mínimo 100ms entre updates)
         if (now - lastUpdateRef.current < 100) {
             return;
@@ -85,7 +73,7 @@ export function useCountdown(targetDate: Date, canCancelUntil?: Date | null) {
 
         setActionTimeLeft(prev => {
             if (!newActionTimeLeft) return null;
-            
+
             if (
                 !prev ||
                 prev.minutes !== newActionTimeLeft.minutes ||
@@ -120,7 +108,7 @@ export function useCountdown(targetDate: Date, canCancelUntil?: Date | null) {
 
         const tick = () => {
             const currentSecond = Math.floor(Date.now() / 1000);
-            
+
             // Solo actualizar cuando cambie el segundo
             if (currentSecond !== lastSecond) {
                 lastSecond = currentSecond;
@@ -143,7 +131,7 @@ export function useCountdown(targetDate: Date, canCancelUntil?: Date | null) {
                 clearInterval(intervalRef.current);
             }
         };
-    }, [targetDate, canCancelUntil, updateCountdowns]);
+    }, [targetDate, canCancelUntil, updateCountdowns, timeLeft]);
 
     return {
         timeLeft,
