@@ -4,14 +4,14 @@ import { Title } from "@/features/layout/components"
 import { PageContainer } from "@/features/layout/components"
 import AddToCartButton from "@/features/store-landing/components/add-to-cart-button"
 // import LikeButton from "@/features/store-landing/components/like-button"
-import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"
-import Comments from "@/features/subdomain/components/comments"
+import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
+import Comments from "@/features/products/components/comments"
 import { Category } from "@prisma/client"
-import VariantDetailClient from "@/features/subdomain/components/variant-detail-client"
+import VariantDetailClient from "@/features/products/components/variant-detail-client"
 import type { Product, ProductVariant, Color } from "@prisma/client"
 import { ShoppingBag } from "lucide-react"
 import Link from "next/link"
-import RelatedProducts from "@/features/subdomain/components/related-products"
+import RelatedProducts from "@/features/products/components/related-products"
 
 type Props = {
     params: Promise<{ id: string; subdomain: string; variant?: string }>
@@ -23,7 +23,7 @@ async function ProductDetailsPage({ params, searchParams }: Props) {
     const { id, subdomain } = await params
     await searchParams
 
-    const { payload: product, error, message } = await getProductDetails(id, subdomain)
+    const { payload: product, error, message } = await getProductDetailsAction(id, subdomain)
 
     if (error || !product) {
         return (

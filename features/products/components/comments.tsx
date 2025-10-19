@@ -1,5 +1,5 @@
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getProductComments } from "../data/getProductComments"
+import { getProductCommentsData } from "../data/getProductComments"
 import CommentsClient from "./comments-client"
 
 type Props = {
@@ -10,7 +10,7 @@ async function Comments({ productId }: Props) {
     const { payload: user } = await getUserInfo()
     
     // Get initial comments
-    const { payload: comments, error } = await getProductComments(productId)
+    const { payload: comments, error } = await getProductCommentsData(productId)
     
     const initialComments = error ? [] : comments || []
 

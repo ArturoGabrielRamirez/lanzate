@@ -1,1 +1,1 @@
-export { getStoreBySubdomain } from "./getStoreBySubdomain"
+export * from "@/features/subdomain/actions/validate-subdomain.action"

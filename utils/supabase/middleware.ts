@@ -2,8 +2,8 @@
 import { createServerClient } from '@supabase/ssr'
 import createIntlMiddleware from 'next-intl/middleware'
 import { NextRequest, NextResponse } from 'next/server'
-import { extractSubdomain } from '@/features/subdomain/middleware/middleware'
-import { validateSubdomain } from '@/features/subdomain/actions/validateSubdomain'
+import { extractSubdomain } from '@/features/subdomain/middleware'
+import { validateSubdomainAction } from '@/features/subdomain/actions/validate-subdomain.action'
 import { routing } from '@/i18n/routing'
 import type { User } from '@supabase/supabase-js'
 
@@ -116,7 +116,7 @@ export async function updateSession(request: NextRequest) {
     }
 
     try {
-      const { payload: exists } = await validateSubdomain(subdomain)
+      const { payload: exists } = await validateSubdomainAction(subdomain)
       if (!exists) {
         const url = new URL('/not-found', `https://${rootDomain}`)
         return NextResponse.redirect(url)
