@@ -1,4 +1,3 @@
-// features/shared/hooks/use-media-upload.ts
 'use client'
 
 import { useCallback } from 'react'

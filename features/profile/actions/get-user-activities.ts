@@ -4,16 +4,8 @@ import { Prisma } from '@prisma/client'
 import { getCurrentUser } from '@/features/auth/actions'
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/utils/lib'
 import { prisma } from '@/utils/prisma'
-import { unstable_cache } from 'next/cache'
 import { getCachedActivities } from '../data/get-cached-activities'
-
-type GetUserActivitiesParams = {
-    userId: number
-    limit?: number
-    offset?: number
-    includePrivate?: boolean
-}
-
+import { GetUserActivitiesParams } from '../types'
 
 export async function getUserActivitiesAction({
     userId,

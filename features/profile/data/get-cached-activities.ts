@@ -1,17 +1,9 @@
 'use server'
 
 import { Prisma } from '@prisma/client'
-/* import { getCurrentUser } from '@/features/auth/actions' */
-/* import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/utils/lib' */
 import { prisma } from '@/utils/prisma'
 import { unstable_cache } from 'next/cache'
 
-/* type GetUserActivitiesParams = {
-  userId: number
-  limit?: number
-  offset?: number
-  includePrivate?: boolean
-} */
 
 // ✅ Cache de actividades (revalidar cada 60 segundos)
 export const getCachedActivities = unstable_cache(

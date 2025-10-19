@@ -17,23 +17,13 @@ export interface CurrentUser {
   created_at: Date | string
   profile_is_public?: boolean
 }
-/* 
-export interface UserState {
-  id: number | string
-  username: string
-  supabase_user_id?: string | null
-  email?: string
-  avatar?: string | null
-  first_name?: string | null
-  last_name?: string | null
+export type GetUserActivitiesParams = {
+  userId: number
+  limit?: number
+  offset?: number
+  includePrivate?: boolean
 }
- */
-/* export interface UserStateStrict {
-  id: number
-  username: string
-  supabase_user_id?: string | null
-}
- */
+
 // ===== TIPOS DE PERFIL =====
 
 export interface PublicUserProfile {
@@ -542,20 +532,20 @@ export interface PublicProfileClientProps {
 }
 
 export interface FileValidationOptions {
-    maxSize?: number
-    allowedTypes?: string[]
-    maxWidth?: number
-    maxHeight?: number
-    allowCropping?: boolean
+  maxSize?: number
+  allowedTypes?: string[]
+  maxWidth?: number
+  maxHeight?: number
+  allowCropping?: boolean
 }
 
 export interface ValidationResult {
-    isValid: boolean
-    error?: string
-    needsCropping: boolean
-    shouldOptimize: boolean
-    originalDimensions?: { width: number; height: number }
-    fileSize: number
+  isValid: boolean
+  error?: string
+  needsCropping: boolean
+  shouldOptimize: boolean
+  originalDimensions?: { width: number; height: number }
+  fileSize: number
 }
 
 export interface ProfilePermissions {

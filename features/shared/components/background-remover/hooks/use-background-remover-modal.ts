@@ -1,4 +1,3 @@
-// features/shared/hooks/use-background-remover.ts
 'use client'
 
 import { useState, useCallback } from 'react'

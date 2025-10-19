@@ -5,7 +5,7 @@ import { createStorageService } from '@/features/shared/services/storage'
 
 import { UPLOAD_TYPES } from '@/features/shared/types/types'
 import { ValidationError } from '@/features/shared/utils/validators'
-import { handleUserDelete } from '@/features/shared/actions/handle-user-delet'
+import { handleUserDelete } from '@/features/shared/actions/handle-user-delete'
 
 export async function POST(request: NextRequest) {
     try {
