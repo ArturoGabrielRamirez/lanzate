@@ -23,7 +23,7 @@ import { Form, InputField } from "@/features/layout/components"
 import { createStoreAction } from "@/features/stores/actions"
 import { basicInfoSchemaNew, addressInfoSchema, contactInfoSchema, settingsSchema, shippingPaymentSchema, BasicInfoFormType, AddressInfoFormType, ContactInfoFormType, SettingsFormType, ShippingPaymentFormType } from "@/features/stores/schemas"
 import { AttentionDateType, ShippingMethod, AttentionDateFormPanelProps, ShippingMethodFormPanelProps, StepIndicatorProps, CreateStoreFormProps, CreateStoreFormValues, CreateStoreContextType } from "@/features/stores/types"
-import { processOpeningHours, processShippingMethods, processPaymentMethods } from "@/features/stores/utils"
+import { processOpeningHours, processShippingMethods, processPaymentMethods, slugify } from "@/features/stores/utils"
 import { useStep } from "@/hooks/use-step"
 import { cn } from "@/lib/utils"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
@@ -813,17 +813,6 @@ function BasicInfoFormPanel() {
     const [uploadProgress, setUploadProgress] = useState(0)
     const [isSubdomainTouched, setIsSubdomainTouched] = useState(false)
 
-    function slugify(input: string): string {
-        return (input || "")
-            .toString()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-+|-+$/g, '')
-            .replace(/-{2,}/g, '-')
-            .slice(0, 63)
-    }
 
     const nameValue = watch('basic_info.name') as string | undefined
     const logoValue = watch('basic_info.logo') as unknown

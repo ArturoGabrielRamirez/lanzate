@@ -1,34 +1,13 @@
 "use client"
 
-import { BranchOpeningHour, PaymentMethod } from "@prisma/client"
+import { PaymentMethod } from "@prisma/client"
 import { Truck } from "lucide-react"
 import Link from "next/link"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { BranchesOverviewDisplayProps } from "@/features/stores/types"
-
-function getPaymentLabel(method: PaymentMethod): string {
-  switch (method) {
-    case "CASH": return "Efectivo"
-    case "CREDIT_CARD": return "Crédito"
-    case "DEBIT_CARD": return "Débito"
-    case "TRANSFER": return "Transferencia"
-    case "MERCADO_PAGO": return "Mercado Pago"
-    case "PAYPAL": return "PayPal"
-    case "CRYPTO": return "Crypto"
-    default: return String(method)
-  }
-}
-
-function formatHours(openingHours: BranchOpeningHour[]): string {
-  if (!openingHours || openingHours.length === 0) return "Sin horarios configurados"
-  const dayLabel = (d: number) => ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"][d] || String(d)
-  return openingHours
-    .sort((a, b) => a.day - b.day)
-    .map(h => `${dayLabel(h.day)} ${h.start}-${h.end}`)
-    .join(" • ")
-}
+import { getPaymentLabel, formatHours } from "@/features/stores/utils"
 
 function BranchesOverviewDisplay({ branches, slug }: BranchesOverviewDisplayProps) {
   if (!branches || branches.length === 0) return null
