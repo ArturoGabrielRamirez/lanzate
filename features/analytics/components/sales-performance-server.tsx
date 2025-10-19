@@ -1,4 +1,4 @@
-import { getSalesPerformanceAction } from "../actions/get-sales-performance-action"
+/* import { getSalesPerformanceAction } from "../actions/get-sales-performance-action.action"
 import SalesPerformanceChartClient from "./sales-performance-chart-client"
 
 type SalesPerformanceServerProps = {
@@ -27,4 +27,4 @@ export default async function SalesPerformanceServer({ slug }: SalesPerformanceS
     }))
 
     return <SalesPerformanceChartClient data={chartData} />
-} 
+}  */

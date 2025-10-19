@@ -1,11 +1,7 @@
-import { getSalesByMonthAction } from "../actions/get-sales-by-month-action"
-import SalesByMonthChartClient from "./sales-by-month-chart-client"
+/* import { getSalesByMonthAction } from "@/features/analytics/actions"
+import SalesByMonthChartClient from "@/features/analytics/components"
 
-type SalesByMonthServerProps = {
-    slug: string
-}
-
-export default async function SalesByMonthServer({ slug }: SalesByMonthServerProps) {
+export async function SalesByMonthServer({ slug }: SalesByMonthServerProps) {
     const result = await getSalesByMonthAction(slug)
 
     if (result.error) {
@@ -18,7 +14,7 @@ export default async function SalesByMonthServer({ slug }: SalesByMonthServerPro
 
     const salesByMonth = result.payload
 
-    const chartData = salesByMonth.map((month: any) => ({
+    const chartData = salesByMonth.map((month: { month: string; totalRevenue: number; totalOrders: number; totalQuantity: number; averageOrderValue: number }) => ({
         name: month.month,
         revenue: month.totalRevenue,
         orders: month.totalOrders,
@@ -27,4 +23,4 @@ export default async function SalesByMonthServer({ slug }: SalesByMonthServerPro
     }))
 
     return <SalesByMonthChartClient data={chartData} />
-} 
+}  */

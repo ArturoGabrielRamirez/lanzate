@@ -1,4 +1,4 @@
-import { getTopProductsByBranchAction } from "../actions/get-top-products-by-branch-action"
+/* import { getTopProductsByBranchAction } from "../actions/get-top-products-by-branch-action.action"
 import TopProductsByBranchChartClient from "./top-products-by-branch-chart-client"
 
 type TopProductsByBranchServerProps = {
@@ -54,4 +54,4 @@ export default async function TopProductsByBranchServer({ slug }: TopProductsByB
         }))
 
     return <TopProductsByBranchChartClient data={chartData} pieData={pieData} />
-} 
+}  */

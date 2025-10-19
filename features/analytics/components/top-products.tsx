@@ -1,4 +1,4 @@
-import { Suspense } from "react"
+/* import { Suspense } from "react"
 import TopProductsServer from "./top-products-server"
 import TopCategoriesServer from "./top-categories-server"
 import TopProductsByBranchServer from "./top-products-by-branch-server"
@@ -24,4 +24,4 @@ export default function TopProducts({ slug }: TopProductsProps) {
             </Suspense>
         </div>
     )
-} 
+}  */

@@ -1,4 +1,4 @@
-import { createServerSideClient } from "@/utils/supabase/server"
+/* import { createServerSideClient } from "@/utils/supabase/server"
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 
 export async function getSalesByMonth(slug: string) {
@@ -84,4 +84,4 @@ export async function getSalesByMonth(slug: string) {
 
         return formatSuccessResponse("Sales by month fetched successfully", salesByMonth)
     })
-} 
+}  */

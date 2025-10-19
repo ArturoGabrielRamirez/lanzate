@@ -1,7 +1,7 @@
-'use server'
+/* 'use server'
 
-import { getSalesByMonth } from "../data/get-sales-by-month"
+import { getSalesByMonth } from "@/features/analytics/data/"
 
 export async function getSalesByMonthAction(slug: string) {
     return await getSalesByMonth(slug)
-} 
+}  */

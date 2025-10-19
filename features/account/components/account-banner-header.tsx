@@ -1,6 +1,6 @@
 'use client'
 
-import { Camera, RefreshCw, Image as Img, Settings, Calendar, Shield, Link } from "lucide-react"
+import { Camera, RefreshCw, Image as Img, Settings, Calendar, Shield } from "lucide-react"
 import Image from 'next/image';
 import { useState, useCallback, useEffect } from "react"
 
@@ -195,14 +195,14 @@ export function AccountBannerHeader({
                 onProfileUpdate={onProfileUpdate}
               />
 
-              {user.Account[0].type === "FREE" && (
+           {/*    {user.Account[0].type === "FREE" && (
                 <Button asChild size="sm" className="bg-gradient-to-r from-primary to-primary/80 text-white hover:from-primary/90 hover:to-primary/70 text-xs h-8 px-4">
                   <Link href="/upgrade">
                     Actualizar Plan
-                    {/*      {t["description.upgrade-plan"]} */}
+                         {t["description.upgrade-plan"]}
                   </Link>
                 </Button>
-              )}
+              )} */}
             </div>
           </div>
         </CardContent>

@@ -1,4 +1,4 @@
-import { createServerSideClient } from "@/utils/supabase/server"
+/* import { createServerSideClient } from "@/utils/supabase/server"
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 
 export async function getSalesPerformance(slug: string, timeUnit: 'hourly' | 'daily' | 'monthly' = 'daily') {
@@ -122,4 +122,4 @@ export async function getSalesPerformance(slug: string, timeUnit: 'hourly' | 'da
 
         return formatSuccessResponse("Sales performance fetched successfully", salesPerformance)
     })
-} 
+}  */

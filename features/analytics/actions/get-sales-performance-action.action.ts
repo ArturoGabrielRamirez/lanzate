@@ -1,7 +1,7 @@
-'use server'
+/* 'use server'
 
-import { getSalesPerformance } from "../data/get-sales-performance"
+import { getSalesPerformance } from "@/features/analytics/data/"
 
 export async function getSalesPerformanceAction(slug: string, timeUnit: 'hourly' | 'daily' | 'monthly' = 'daily') {
     return await getSalesPerformance(slug, timeUnit)
-} 
+}  */
