@@ -44,6 +44,7 @@ const eslintConfig = [
           caughtErrors: "none"
         }
       ],
+      "react/prop-types": "off",
       "import/order": [
         "error",
         {

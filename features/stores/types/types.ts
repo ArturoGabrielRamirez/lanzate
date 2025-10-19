@@ -1,6 +1,6 @@
 import { Order, Store, StoreOperationalSettings, Branch, Product, Category, StoreBalance, ProductStock, PaymentMethod, BranchOperationalSettings, BranchOpeningHour, BranchShippingMethod } from "@prisma/client"
 import { RowModel } from "@tanstack/react-table"
-import dayjs from "dayjs"
+import dayjs, { Dayjs } from "dayjs"
 import { ReactNode } from "react"
 import * as yup from "yup"
 
@@ -363,6 +363,7 @@ export type StepIndicatorProps = {
 export type CreateStoreFormProps = {
     setStep: (step: number) => void
     step: number
+    onSubmitAll: (data: CreateStoreFormValues) => Promise<{ error: boolean; message: string; payload?: unknown } | undefined>
 }
 
 export type CreateStoreFormValues = {

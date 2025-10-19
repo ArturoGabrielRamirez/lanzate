@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState, createContext, useContext, useCallback, useRef } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
-import * as yup from "yup"
 
 import Stepper, { Step } from "@/components/Stepper"
 import { Button } from "@/components/ui/button"
@@ -22,189 +21,14 @@ import CameraComponent from "@/features/auth/components/avatar/camera-component"
 import { useCamera } from "@/features/auth/hooks/use-camera"
 import { Form, InputField } from "@/features/layout/components"
 import { createStoreAction } from "@/features/stores/actions"
+import { basicInfoSchemaNew, addressInfoSchema, contactInfoSchema, settingsSchema, shippingPaymentSchema, BasicInfoFormType, AddressInfoFormType, ContactInfoFormType, SettingsFormType, ShippingPaymentFormType } from "@/features/stores/schemas"
+import { AttentionDateType, ShippingMethod, AttentionDateFormPanelProps, ShippingMethodFormPanelProps, StepIndicatorProps, CreateStoreFormProps, CreateStoreFormValues, CreateStoreContextType } from "@/features/stores/types"
 import { processOpeningHours, processShippingMethods, processPaymentMethods } from "@/features/stores/utils"
 import { useStep } from "@/hooks/use-step"
 import { cn } from "@/lib/utils"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-type AttentionDateType = {
-    date: string
-    startTime: dayjs.Dayjs
-    endTime: dayjs.Dayjs
-    days: string[]
-}
-
-type ShippingMethod = {
-    providers: string[]
-    minPurchase: string
-    freeShippingMin: string
-    estimatedTime: string
-    deliveryPrice?: string
-}
-
-type AttentionDateFormPanelProps = {
-    date: AttentionDateType
-    onCancel: (index: number) => void
-    onSave: (index: number, startTime: dayjs.Dayjs, endTime: dayjs.Dayjs, days: string[]) => void
-    index: number
-}
-
-type ShippingMethodFormPanelProps = {
-    method: ShippingMethod
-    index: number
-    onCancel: (index: number) => void
-    onSave: (index: number, method: ShippingMethod) => void
-}
-
-type StepIndicatorProps = {
-    step: number
-    currentStep: number
-    onStepClick: (step: number) => void
-    disabled: boolean
-}
-
-type CreateStoreFormProps = {
-    setStep: (step: number) => void
-    step: number
-}
-
-export type CreateStoreFormValues = {
-    basic_info: {
-        name: string
-        description?: string
-        subdomain: string
-        logo?: File | string | null
-    }
-    address_info: {
-        is_physical_store: boolean
-        address?: string
-        city?: string
-        province?: string
-        country?: string
-    }
-    contact_info: {
-        contact_phone: string
-        contact_email: string
-        facebook_url?: string
-        instagram_url?: string
-        x_url?: string
-    }
-    settings: {
-        is_open_24_hours: boolean
-        attention_dates?: { days?: string[]; startTime?: string; endTime?: string }[]
-    }
-    shipping_info: {
-        offers_delivery: boolean
-        methods?: { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice: string }[]
-    }
-    payment_info: {
-        payment_methods: string[]
-    }
-}
-
-// Per-step schemas
-const basicInfoSchema = yup.object({
-    basic_info: yup.object({
-        name: yup.string().required("Name is required"),
-        description: yup.string().max(255, "Description must be less than 255 characters long"),
-        subdomain: yup.string().required("Subdomain is required"),
-        logo: yup
-            .mixed()
-            .test("logo-type", "Unsupported file type. Use JPG, PNG, GIF or WebP", (value) => {
-                if (value instanceof File) {
-                    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"]
-                    return allowed.includes(value.type)
-                }
-                return true
-            })
-            .test("logo-size", "File too large (max 5MB)", (value) => {
-                if (value instanceof File) {
-                    return value.size <= 5 * 1024 * 1024
-                }
-                return true
-            }).nullable().optional(),
-    })
-})
-
-const addressInfoSchema = yup.object({
-    address_info: yup.object({
-        is_physical_store: yup.boolean().default(false),
-        address: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
-            isPhysicalStore ? schema.required("Address is required when store is physical") : schema.max(255, "Address must be less than 255 characters long")
-        ),
-        city: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
-            isPhysicalStore ? schema.required("City is required when store is physical") : schema.max(100, "City must be less than 100 characters long")
-        ),
-        province: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
-            isPhysicalStore ? schema.required("Province is required when store is physical") : schema.max(100, "Province must be less than 100 characters long")
-        ),
-        country: yup.string().when("is_physical_store", ([isPhysicalStore], schema) =>
-            isPhysicalStore ? schema.required("Country is required when store is physical") : schema.max(100, "Country must be less than 100 characters long")
-        ),
-    })
-})
-
-const contactInfoSchema = yup.object({
-    contact_info: yup.object({
-        contact_phone: yup.string().max(20, "Phone must be less than 20 characters long").required("Phone is required"),
-        contact_email: yup.string().email("Must be a valid email").max(255, "Email must be less than 255 characters long").required("Email is required"),
-        facebook_url: yup.string().url("Must be a valid URL").max(255, "Facebook URL must be less than 255 characters long"),
-        instagram_url: yup.string().url("Must be a valid URL").max(255, "Instagram URL must be less than 255 characters long"),
-        x_url: yup.string().url("Must be a valid URL").max(255, "X URL must be less than 255 characters long"),
-    })
-})
-
-const settingsSchema = yup.object({
-    settings: yup.object({
-        is_open_24_hours: yup.boolean().default(true),
-        attention_dates: yup
-            .array()
-            .of(
-                yup.object({
-                    days: yup.array().of(yup.string()),
-                    startTime: yup.string(),
-                    endTime: yup.string(),
-                })
-            )
-            .default([])
-            .test("must-have-at-least-one-when-scheduled", "Debe configurar al menos un día de atención", function (value) {
-                const isOpen = this.parent?.is_open_24_hours
-                if (isOpen) return true
-                return Array.isArray(value) && value.length > 0
-            })
-    })
-})
-
-const shippingPaymentSchema = yup.object({
-    shipping_info: yup.object({
-        offers_delivery: yup.boolean().default(false),
-        methods: yup.array().of(yup.object({
-            providers: yup.array().of(yup.string()).min(1, "Seleccione al menos un proveedor"),
-            minPurchase: yup.string(),
-            freeShippingMin: yup.string(),
-            estimatedTime: yup.string(),
-            deliveryPrice: yup.string().matches(/^\d*$/, "Debe ser un número").required("Precio del delivery es requerido"),
-        })).when("offers_delivery", (offers, schema) => offers ? schema.min(1, "Agregue al menos un modo de envío") : schema.notRequired())
-    }),
-    payment_info: yup.object({
-        payment_methods: yup.array().of(yup.string()).min(1, "Seleccione al menos un método de pago").required(),
-    })
-})
-
-type BasicInfoFormType = yup.InferType<typeof basicInfoSchema>
-type AddressInfoFormType = yup.InferType<typeof addressInfoSchema>
-type ContactInfoFormType = yup.InferType<typeof contactInfoSchema>
-type SettingsFormType = yup.InferType<typeof settingsSchema>
-type ShippingPaymentFormType = yup.InferType<typeof shippingPaymentSchema>
-
-// Provider/Context (inline in this file)
-type CreateStoreContextType = {
-    values: Partial<CreateStoreFormValues>
-    setValues: (partial: Partial<CreateStoreFormValues>) => void
-    isStepValid: Record<number, boolean>
-    setStepValid: (step: number, valid: boolean) => void
-}
 
 const CreateStoreContext = createContext<CreateStoreContextType | null>(null)
 
@@ -1202,7 +1026,7 @@ function BasicInfoFormPanel() {
     )
 }
 
-function CreateStoreForm({ setStep, step, onSubmitAll }: CreateStoreFormProps & { onSubmitAll: (data: CreateStoreFormValues) => Promise<{ error: boolean; message: string; payload?: unknown } | undefined> }) {
+function CreateStoreForm({ setStep, step, onSubmitAll }: CreateStoreFormProps) {
 
     const { isStepValid, values } = useCreateStoreContext()
     const isValid = !!isStepValid[step]
@@ -1242,7 +1066,7 @@ function CreateStoreForm({ setStep, step, onSubmitAll }: CreateStoreFormProps & 
             }}
         >
             <Step className="!p-0 !pt-10 !pb-2">
-                <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchema as never)}>
+                <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchemaNew as never)}>
                     <BasicInfoFormPanel />
                 </Form>
             </Step>
@@ -1379,7 +1203,7 @@ function CreateStoreButtonNew({ userId }: { userId: number }) {
 
         setStep(6)
         const { hasError, message, payload } = await createStoreAction(processedData, userId)
-        
+
         if (hasError) {
             toast.error(message)
             // return the form to the last step for correction
