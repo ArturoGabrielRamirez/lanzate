@@ -2,10 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/features/auth/actions'
 import { toggleFollowUser } from '@/features/profile/actions/toggle-follow-user-action'
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { userId: string } }
-) {
+export async function POST(request: NextRequest) {
   try {
     const currentUserResponse = await getCurrentUser()
 
@@ -16,7 +13,10 @@ export async function POST(
       )
     }
 
-    const targetUserId = parseInt(params.userId, 10)
+    // ✅ Obtener userId desde la URL
+    const url = new URL(request.url)
+    const userId = url.pathname.split('/').at(-2) // /users/[userId]/follow → penúltimo segmento
+    const targetUserId = parseInt(userId || '', 10)
 
     if (isNaN(targetUserId)) {
       return NextResponse.json(
