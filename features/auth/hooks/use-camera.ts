@@ -9,7 +9,7 @@ interface CapturedFile {
 }
 
 interface UseCameraOptions {
-  uploadPath: 'avatar' | 'banner' | 'product-image' | 'product-video' | 'store-logo' | 'store-banner'
+  uploadPath: 'avatar' | 'banner' | 'product-image' | 'product-video' | 'store-logos' | 'store-banners'
   onSuccess?: (url: string) => void
   onError?: (error: string) => void
   maxWidth?: number
