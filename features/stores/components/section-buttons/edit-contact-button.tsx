@@ -1,13 +1,14 @@
 "use client"
 
-import { CheckIcon, Loader2 } from "lucide-react"
-import { updateStoreContactAction } from "@/features/stores/actions/update-store-contact.action"
 import { Store, Branch } from "@prisma/client"
-import { useFormContext } from "react-hook-form"
+import { CheckIcon, Loader2 } from "lucide-react"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
+
+import { updateStoreContactAction } from "@/features/stores/actions/update-store-contact.action"
 import { cn } from "@/lib/utils"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface EditContactButtonProps {
     store: Store & { branches: Branch[] }
@@ -15,7 +16,7 @@ interface EditContactButtonProps {
     onSuccess?: () => void
 }
 
-const EditContactButton = ({ store, onSuccess }: EditContactButtonProps) => {
+function EditContactButton({ store, onSuccess }: EditContactButtonProps) {
     const { getValues, formState: { isValid } } = useFormContext()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -29,9 +30,9 @@ const EditContactButton = ({ store, onSuccess }: EditContactButtonProps) => {
         try {
             setIsLoading(true)
             toast.loading("Updating contact information...")
-            const { error, message } = await updateStoreContact(store.id, payload)
+            const { hasError, message } = await updateStoreContactAction(store.id, payload)
 
-            if (error) {
+            if (hasError) {
                 throw new Error(message)
             }
             toast.dismiss()
@@ -57,4 +58,4 @@ const EditContactButton = ({ store, onSuccess }: EditContactButtonProps) => {
     )
 }
 
-export default EditContactButton
+export { EditContactButton }
