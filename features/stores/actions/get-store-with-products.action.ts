@@ -1,6 +1,6 @@
 "use server"
 
-import { selectStoreWithProductsData } from "@/features/stores/data/select-store-with-products";
+import { selectStoreWithProductsData } from "@/features/stores/data/select-store-with-products.data";
 import { GetStoreWithProductsReturn } from "@/features/stores/types/types";
 import { formatErrorResponse } from "@/utils/lib";
 
