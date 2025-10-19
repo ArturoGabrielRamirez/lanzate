@@ -1,22 +1,23 @@
-import { OverviewTabProps } from "@/features/overview/types"
-import { getStoresFromSlug } from "@/features/stores/actions/get-stores-from-slug.action"
-import QuickActionsBar from "@/features/overview/components/quick-actions-bar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Store, Sparkles, TrendingUp, Users, Package } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { getUserInfo } from "@/features/layout/actions"
+import QuickActionsBar from "@/features/overview/components/quick-actions-bar"
+import { OverviewTabProps } from "@/features/overview/types"
+import { getStoresFromSlugAction } from "@/features/stores/actions"
 
 async function Overview({ slug }: OverviewTabProps) {
     const t = await getTranslations("overview")
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         console.error(userMessage)
         return null
     }
 
-    const { payload: store, error: storeError } = await getStoresFromSlug(slug)
+    const { payload: store, hasError: storeError } = await getStoresFromSlugAction(slug)
 
     if (storeError || !store) {
         return (
@@ -98,4 +99,4 @@ async function Overview({ slug }: OverviewTabProps) {
     )
 }
 
-export default Overview
+export { Overview }

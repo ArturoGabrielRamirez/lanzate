@@ -1,16 +1,12 @@
-import { Box } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
-import { Card, CardTitle, CardHeader, CardContent, CardAction } from "@/components/ui/card"
-import { ProductsTable } from "@/features/products/components/products-table"
+import { getEmployeePermissionsAction } from "@/features/employees/actions/get-employee-permisions.action"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { CreateProductButton } from "@/features/products/components"
-import { ExportProductsButton } from "@/features/products/components"
-import { getEmployeePermissions } from "@/features/employees/actions/get-employee-permisions.action"
-import { getStoresFromSlug } from "@/features/stores/actions/get-stores-from-slug.action"
+import { ProductsTable } from "@/features/products/components/products-table"
+import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
 import { ProductsTabProps } from "@/features/stores/types"
 
-async function ProductsTab({ slug, userId }: ProductsTabProps) {
+async function ProductsTab({ slug }: ProductsTabProps) {
 
     const t = await getTranslations("store.products-tab")
 
@@ -23,11 +19,11 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
 
     // Get user info and employee permissions
     const [
-        { payload: store, error: storeError },
-        { payload: employeePermissions, error: permissionsError }
+        { payload: store, hasError: storeError },
+        { payload: employeePermissions, hasError: permissionsError }
     ] = await Promise.all([
-        getStoresFromSlug(slug),
-        getEmployeePermissions(user.id, slug)
+        getStoresFromSlugAction(slug),
+        getEmployeePermissionsAction(user.id, slug)
     ])
 
     if (userError || !user) {
@@ -42,8 +38,6 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
         return console.log("Error loading employee permissions")
     }
 
-    const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
-
     return (
         <ProductsTable
             data={store.products}
@@ -53,32 +47,6 @@ async function ProductsTab({ slug, userId }: ProductsTabProps) {
             employeePermissions={employeePermissions}
             branches={store.branches}
         />
-    )
-    return (
-        <Card className="grow !gap-2">
-            {/* <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Box className="w-4 h-4" />
-                    Productos
-                </CardTitle>
-                <CardAction>
-                    <ExportProductsButton data={store.products} onlyIcon />
-                    {canCreateProducts && (
-                        <CreateProductButton storeId={store.id} userId={user.id} onlyIcon />
-                    )}
-                </CardAction>
-            </CardHeader> */}
-            <CardContent className="grow flex flex-col">
-                <ProductsTable
-                    data={store.products}
-                    userId={user.id}
-                    slug={slug}
-                    storeId={store.id}
-                    employeePermissions={employeePermissions}
-                    branches={store.branches}
-                />
-            </CardContent>
-        </Card>
     )
 }
 

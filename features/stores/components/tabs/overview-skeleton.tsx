@@ -1,7 +1,8 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
 import { Store, TrendingUp, Package, Users, Sparkles } from "lucide-react"
 import * as motion from "motion/react-client"
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 
 function OverviewSkeleton() {
     return (
@@ -150,4 +151,4 @@ function OverviewSkeleton() {
     )
 }
 
-export default OverviewSkeleton 
+export { OverviewSkeleton }

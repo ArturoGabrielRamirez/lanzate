@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server"
 
 import { HistoryTable } from "@/features/history/components/history-table"
-import { getStoreLogsAction } from "@/features/stores/actions/get-store-logs.action"
+import { getStoreLogsAction } from "@/features/stores/actions"
 import { HistoryTabProps } from "@/features/stores/types"
 
 async function HistoryTab({ slug }: HistoryTabProps) {
@@ -18,4 +18,4 @@ async function HistoryTab({ slug }: HistoryTabProps) {
     )
 }
 
-export default HistoryTab 
+export { HistoryTab }

@@ -1,7 +1,8 @@
-import { getOrdersFromStore } from "../../../orders/actions/getOrdersFromStore"
-import OrdersTable from "../../../orders/components/orders-table"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
+
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getOrdersFromStore } from "@/features/orders/actions/getOrdersFromStore"
+import OrdersTable from "@/features/orders/components/orders-table"
 
 type Props = {
     slug: string
@@ -10,16 +11,16 @@ type Props = {
 async function OrdersTab({ slug }: Props) {
 
     const t = await getTranslations("store.orders-tab")
-    
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage || t("error-loading-user"))
     }
 
-    const { payload: orders, error, message } = await getOrdersFromStore(slug)
+    const { payload: orders, hasError, message } = await getOrdersFromStore(slug)
 
-    if (error || !orders) {
+    if (hasError || !orders) {
         return console.log(message || t("error-loading-orders"))
     }
 
@@ -29,4 +30,5 @@ async function OrdersTab({ slug }: Props) {
         </>
     )
 }
-export default OrdersTab
+
+export { OrdersTab }

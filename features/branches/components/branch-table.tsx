@@ -212,4 +212,4 @@ function BranchTable({ branches, storeId, userId, slug, employeePermissions }: P
     )
 }
 
-export default BranchTable
+export { BranchTable }

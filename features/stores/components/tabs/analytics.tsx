@@ -6,4 +6,5 @@ function AnalyticsTab({ slug, userId }: OverviewTabProps) {
         <OverviewTab slug={slug} userId={userId} />
     )
 }
-export default AnalyticsTab
+
+export { AnalyticsTab }

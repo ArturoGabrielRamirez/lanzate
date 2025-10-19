@@ -376,4 +376,4 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
     )
 }
 
-export default ProductsTable
+export { ProductsTable }

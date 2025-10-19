@@ -8,4 +8,4 @@ async function StylesTab({ slug }: SettingsTabProps) {
     )
 }
 
-export default StylesTab
+export { StylesTab }
