@@ -1,15 +1,15 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { getStoresFromUser as getStoresFromUserDb } from "@/features/stores/data/get-stores-from-user.data"
+import { getStoresFromUserData } from "@/features/stores/data"
 
-export async function getStoresFromUserAction(userId: number){
+export async function getStoresFromUserAction(userId: number) {
 
     return actionWrapper(async () => {
 
-        const { payload, error, message } = await getStoresFromUserDb(userId)
+        const { payload, hasError, message } = await getStoresFromUserData(userId)
 
-        if (error) throw new Error(message)
+        if (hasError) throw new Error(message)
 
         return {
             message: "Stores fetched successfully",

@@ -4,9 +4,9 @@ import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
-import { canCreateStore } from "@/features/stores/access/can-create-store.access"
-import { CreateStoreFormValues } from "@/features/stores/components/create-store-button-new"
-import { insertStoreData } from "@/features/stores/data/insert-store.data"
+import { canCreateStore } from "@/features/stores/access"
+import { CreateStoreFormValues } from "@/features/stores/components"
+import { insertStoreData } from "@/features/stores/data"
 import type { ProcessedOpeningHour, ProcessedPaymentMethod, ProcessedShippingMethod } from "@/features/stores/utils/store-form-helpers"
 
 

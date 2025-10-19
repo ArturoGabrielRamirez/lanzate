@@ -1,12 +1,12 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { selectStoreBasicsBySlug } from "@/features/stores/data"
+import { selectStoreBasicsBySlugData } from "@/features/stores/data"
 
 export async function getStoreBasicsBySlugAction(slug: string) {
     return actionWrapper(async () => {
 
-        const { payload: store } = await selectStoreBasicsBySlug(slug)
+        const { payload: store } = await selectStoreBasicsBySlugData(slug)
 
         return {
             message: "Store basics fetched successfully from db",

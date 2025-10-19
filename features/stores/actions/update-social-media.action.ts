@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
-import { EditSocialMediaData } from "@/features/stores/schemas/social-media-schema"
+import { EditSocialMediaData } from "@/features/stores/schemas"
 import { prisma } from "@/utils/prisma"
 
 export async function updateStoreSocialMediaAction(storeId: number, data: EditSocialMediaData) {

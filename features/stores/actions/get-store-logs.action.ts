@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { getStoreLogsBySlugData } from "@/features/stores/data/get-store-logs-by-slug.data"
+import { getStoreLogsBySlugData } from "@/features/stores/data"
 
 export async function getStoreLogsAction(slug: string) {
     return actionWrapper(async () => {

@@ -3,7 +3,7 @@
 import { Branch, Store, Product, Category, StoreBalance, StoreOperationalSettings, ProductStock } from "@prisma/client"
 
 import { actionWrapper } from "@/features/global/utils"
-import { selectStoreBySlug } from "@/features/stores/data/select-store-by-slug.data"
+import { selectStoreBySlugData } from "@/features/stores/data"
 
 type GetStoresFromSlugReturn = {
     message: string
@@ -19,9 +19,9 @@ type GetStoresFromSlugReturn = {
 export async function getStoresFromSlugAction(slug: string): Promise<GetStoresFromSlugReturn> {
 
     return actionWrapper(async () => {
-        const { payload: store, error, message } = await selectStoreBySlug(slug)
+        const { payload: store, hasError, message } = await selectStoreBySlugData(slug)
 
-        if (error) throw new Error(message)
+        if (hasError) throw new Error(message)
 
         if (!store)
             throw new Error("Store not found")

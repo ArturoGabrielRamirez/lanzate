@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
-import { canUpdateStore } from "@/features/stores/access/can-update-store.access"
-import { updateStoreBySlugData } from "@/features/stores/data/update-store-by-slug.data"
+import { canUpdateStore } from "@/features/stores/access"
+import { updateStoreBySlugData } from "@/features/stores/data"
 
 type UpdateStorePayload = {
     name: string

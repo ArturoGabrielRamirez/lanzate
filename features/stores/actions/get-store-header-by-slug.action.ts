@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { selectStoreHeaderBySlugData } from "@/features/stores/data/select-store-header-by-slug.data"
+import { selectStoreHeaderBySlugData } from "@/features/stores/data"
 
 type StoreHeader = {
     id: number

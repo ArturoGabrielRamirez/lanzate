@@ -1,7 +1,7 @@
 "use server"
 
 import { getUserById } from "@/features/layout/data/getUserById"
-import { selectStoreByIdData } from "@/features/stores/data/select-store-by-id.data"
+import { selectStoreByIdData } from "@/features/stores/data"
 
 export async function canDeleteStoreAccess(storeId: number, userId: number) {
     try {
@@ -17,7 +17,6 @@ export async function canDeleteStoreAccess(storeId: number, userId: number) {
 
         return true
     } catch (error) {
-        console.error('Error in canDeleteStoreAccess:', error)
         return false
     }
 }

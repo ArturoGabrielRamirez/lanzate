@@ -1,7 +1,7 @@
 "use server"
 
 import { getUserById } from "@/features/layout/data/getUserById"
-import { getStoresFromUser } from "@/features/stores/data/get-stores-from-user.data"
+import { getStoresFromUserData } from "@/features/stores/data"
 
 export async function canCreateStore(userId: number) {
     try {
@@ -11,7 +11,7 @@ export async function canCreateStore(userId: number) {
             return false
         }
 
-        const { payload: stores, error: storesError } = await getStoresFromUser(userId)
+        const { payload: stores, hasError: storesError } = await getStoresFromUserData(userId)
 
         if (storesError) {
             return false
@@ -23,7 +23,6 @@ export async function canCreateStore(userId: number) {
 
         return true
     } catch (error) {
-        console.error("Error in canCreateStore:", error)
         return false
     }
 }

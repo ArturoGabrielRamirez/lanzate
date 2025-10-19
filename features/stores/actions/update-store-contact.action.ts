@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
-import { EditContactData } from "@/features/stores/schemas/contact-schema"
+import { EditContactData } from "@/features/stores/schemas"
 import { prisma } from "@/utils/prisma"
 
 export async function updateStoreContactAction(storeId: number, data: EditContactData) {

@@ -4,7 +4,7 @@ import { PaymentMethod } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
-import { updateOperationalSettingsData } from "@/features/stores/data/update-operational-settings.data"
+import { updateOperationalSettingsData } from "@/features/stores/data"
 
 type UpdateOperationalSettingsActionPayload = {
     offers_delivery: boolean
