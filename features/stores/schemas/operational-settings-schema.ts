@@ -1,5 +1,5 @@
-import * as yup from "yup"
 import { PaymentMethod } from "@prisma/client"
+import * as yup from "yup"
 
 export const editOperationalSettingsSchema = yup.object({
     offers_delivery: yup.boolean().required(),
