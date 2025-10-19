@@ -1,16 +1,16 @@
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getStoresFromUser } from "@/features/stores/actions/get-stores-from-user.action"
-import StoreSelector from "./store-selector"
+import { StoreSelector } from "@/features/sale/components/store-selector"
+import { getStoresFromUserAction } from "@/features/stores/actions"
 
 async function StoreSelectorContainer() {
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         console.error(userMessage)
         return null
     }
 
-    const { payload: stores, error: storesError, message: storesMessage } = await getStoresFromUser(user.id)
+    const { payload: stores, hasError: storesError, message: storesMessage } = await getStoresFromUserAction(user.id)
 
     if (storesError || !stores) {
         console.error(storesMessage)
