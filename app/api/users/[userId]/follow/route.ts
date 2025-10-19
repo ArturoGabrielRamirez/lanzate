@@ -1,9 +1,9 @@
-import { /* NextRequest, */ NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/features/auth/actions'
 import { toggleFollowUser } from '@/features/profile/actions/toggle-follow-user-action'
 
 export async function POST(
-  /*   request: NextRequest, */
+  request: NextRequest,
   { params }: { params: { userId: string } }
 ) {
   try {
@@ -38,15 +38,17 @@ export async function POST(
       message: result.message,
       data: result.payload
     })
-
   } catch (error) {
     console.error('Error en follow endpoint:', error)
     return NextResponse.json(
       {
         error: 'Error interno del servidor',
-        details: process.env.NODE_ENV === 'development'
-          ? (error instanceof Error ? error.message : String(error))
-          : undefined
+        details:
+          process.env.NODE_ENV === 'development'
+            ? error instanceof Error
+              ? error.message
+              : String(error)
+            : undefined
       },
       { status: 500 }
     )
