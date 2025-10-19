@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl'
 import HeaderContainer from "./header-container"
 import NavbarLink from "./navbar-link"
 import { Skeleton } from "@/components/ui/skeleton"
-import { useUserData } from "@/features/profile/context/user-constext"
+import { useUserData } from "@/features/profile/context/user-context"
 
 function Header() {
     const { user, isLoading } = useUserData()

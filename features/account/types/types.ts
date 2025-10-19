@@ -43,9 +43,22 @@ export interface AvatarOption {
     label: string
     icon?: string
     isExternal?: boolean
+    isCurrentlyUsed?: boolean
     fileName?: string
     size?: number
     uploadedAt?: string | Date
+}
+
+export interface BannerOption {
+    id: string
+    url: string
+    provider: string
+    label: string
+    icon: string
+    isCurrentlyUsed?: boolean
+    fileName?: string
+    size?: number
+    uploadedAt?: string
 }
 
 export interface AvatarEditorProps {
@@ -69,20 +82,6 @@ export interface AccountHeaderProps {
     }) => void
 }
 
-export interface AccountDetailsTabProps {
-    user: UserType
-    translations: {
-        "description.account-details": string
-        "description.username": string
-        "description.first-name": string
-        "description.last-name": string
-        "description.email": string
-        "description.password": string
-        "description.change-email": string
-        "description.change-password": string
-        "description.phone": string
-    }
-}
 
 export interface AccountPageClientProps {
     user: UserType
@@ -246,4 +245,50 @@ export interface CountdownDisplayProps {
     title?: string;
     variant?: 'main' | 'action';
     urgencyTextColor?: string;
+}
+
+export interface UseAvatarEditorProps {
+    currentAvatar: string | null
+    userEmail: string
+    onAvatarUpdate: (newAvatarUrl: string | null) => void
+    fileInputRef: React.RefObject<HTMLInputElement | null>
+    onClose: () => void
+}
+
+export interface AccountDetailsTabProps {
+    user: UserType
+    translations: {
+        "description.account-details": string
+        "description.username": string
+        "description.first-name": string
+        "description.last-name": string
+        "description.email": string
+        "description.password": string
+        "description.change-email": string
+        "description.change-password": string
+        "description.phone": string
+        [key: string]: string
+    }
+    immediateData?: {
+        username?: string | null
+        email: string
+        firstName?: string | null
+        lastName?: string | null
+        phone?: string | null
+        avatar?: string | null
+        createdAt: Date | string
+        activeAccounts: number
+        storesCount: number
+        accountType: string
+    }
+}
+
+export interface AccountBannerHeaderProps extends AccountHeaderProps {
+    onBannerUpdate?: (url: string | null) => void
+}
+
+export interface DeletionRequestedViewProps {
+    user: UserType
+    deletionStatus: UserDeletionStatus
+    onStatusChange: () => void
 }

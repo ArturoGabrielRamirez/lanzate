@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Camera } from "lucide-react";
-import { MediaSelector } from "@/features/shared/components/media-selector";
+import { MediaSelector } from "@/features/shared/components/media-selector/types/index";
 import { Slot } from "@radix-ui/react-slot";
 import {
   FileArchiveIcon,

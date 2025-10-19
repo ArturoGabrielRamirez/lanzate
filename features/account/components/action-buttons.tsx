@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Loader2, Check, Upload, X } from "lucide-react"
 import { ActionButtonsProps } from "../types"
 
-export default function ActionButtons({
+export function ActionButtons({
     selectedOption,
     selectedFile,
     currentAvatar,

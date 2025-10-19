@@ -1,4 +1,4 @@
-// src/utils/file-validation.ts
+/* // src/utils/file-validation.ts
 export interface FileValidationOptions {
   maxSize?: number // en bytes - aumentamos el límite
   allowedTypes?: string[]
@@ -190,4 +190,4 @@ export async function compressImage(
     
     img.src = URL.createObjectURL(file)
   })
-}
+} */

@@ -1,9 +1,9 @@
-import { AlertTriangle, ShieldUser, Clock, X } from "lucide-react";
+import { AlertTriangle, ShieldUser, Clock } from "lucide-react";
 import { UserDeletionStatus } from "../../types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import DeletionHelpers from "../../utils/deletion-helpers";
+import/*  DeletionHelpers, */ { getUrgencyLevel, getUrgencyLevelFromMinutes } from "../../utils/deletion-helpers";
 
 export default function DeletionStatusCard({
     status,
@@ -23,7 +23,8 @@ export default function DeletionStatusCard({
     onCancelClick: () => void;
     scheduledDate: Date | null;
 }) {
-    const canActuallyCancelNow = status.isWithinActionWindow && status.canCancel;
+    // 🔥 CORRECCIÓN: Solo verificar canCancel
+    const canActuallyCancelNow = status.canCancel;
 
     const getTimeUntilActionLimit = () => {
         if (!status.canCancelUntil) return null;
@@ -38,8 +39,8 @@ export default function DeletionStatusCard({
 
     const timeUntilLimit = getTimeUntilActionLimit();
 
-    const deletionUrgency = DeletionHelpers.getUrgencyLevel(status.daysRemaining || 0);
-    const actionUrgency = timeUntilLimit ? DeletionHelpers.getUrgencyLevelFromMinutes(timeUntilLimit.totalMinutes) : 'critical';
+    const deletionUrgency = getUrgencyLevel(status.daysRemaining || 0);
+    const actionUrgency = timeUntilLimit ? getUrgencyLevelFromMinutes(timeUntilLimit.totalMinutes) : 'critical';
 
     const getUrgencyColors = (urgency: string) => {
         switch (urgency) {
@@ -107,7 +108,8 @@ export default function DeletionStatusCard({
                     </span>
                 </div>
 
-                {timeUntilLimit && timeUntilLimit.totalMinutes <= 30 && (
+                {/* 🔥 MEJORA: Mostrar tiempo restante solo si hay menos de 60 minutos (o siempre en testing) */}
+                {timeUntilLimit && (timeUntilLimit.totalMinutes <= 60 || status.isWithinActionWindow) && (
                     <div className="flex items-center justify-between text-sm">
                         <span className="text-gray-300">Tiempo restante:</span>
                         <span className={`font-mono font-bold ${actionColors.text}`}>
@@ -133,20 +135,21 @@ export default function DeletionStatusCard({
                 disabled={!canActuallyCancelNow}
                 size="sm"
                 className={`w-full ${canActuallyCancelNow
-                        ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                        : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                    : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                     }`}
             >
                 <ShieldUser className="h-3 w-3 mr-1" />
                 {canActuallyCancelNow ? 'Cancelar eliminación' : 'Período expirado'}
             </Button>
 
-            {timeUntilLimit && timeUntilLimit.totalMinutes <= 10 && canActuallyCancelNow && (
+            {/* 🔥 MEJORA: Mostrar alerta de urgencia solo en la ventana de acción */}
+            {status.isWithinActionWindow && canActuallyCancelNow && (
                 <Alert className={`${actionColors.bg} ${actionColors.border} mt-2`}>
                     <Clock className={`h-3 w-3 ${actionColors.icon}`} />
                     <AlertDescription className="text-gray-300 text-xs">
-                        <span className={`font-medium ${actionColors.text}`}>Últimos minutos:</span>{' '}
-                        {timeUntilLimit.minutes} min para cancelar.
+                        <span className={`font-medium ${actionColors.text}`}>⚠️ Últimos minutos:</span>{' '}
+                        La eliminación es inminente. Actúa ahora si quieres cancelar.
                     </AlertDescription>
                 </Alert>
             )}

@@ -1,9 +1,9 @@
 import { routing } from '@/i18n/routing'
-import { UserDeletionSystem } from '@/features/account/utils/user-deletion-system'
 import { CryptoUtils } from '@/features/account/utils/crypto-utils'
 import { insertUser } from '@/features/auth/data/insertUser'
 import { SupabaseClient, User } from '@supabase/supabase-js'
 import { PrismaClient } from '@prisma/client'
+import { validateNewUserCreationAction } from '@/features/account/actions'
 
 function generateUsernameFromEmail(email: string | null | undefined): string | null {
   if (!email) return null
@@ -204,9 +204,11 @@ export async function handleUserCreationOrUpdate(user: User, prisma: PrismaClien
 
   if (!existingUser && user?.email) {
     try {
-      const validation = await UserDeletionSystem.validateNewUserCreation(user.email)
+      const validation = await validateNewUserCreationAction(user.email)
 
-      if (!validation.canCreate && validation.conflict) {
+      /*  UserDeletionSystem.validateNewUserCreation(user.email) */
+
+      if (!validation.payload.canCreate && validation.payload.conflict) {
         console.error(`❌ Email ${user.email} ya está en uso por cuenta activa`)
         return {
           error: true,

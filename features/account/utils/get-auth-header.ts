@@ -6,7 +6,6 @@ export default async function getAuthHeaders(): Promise<HeadersInit> {
 
     return {
         'Content-Type': 'application/json',
-        // Pasar todas las cookies (incluyendo tokens de sesión)
         'Cookie': cookieStore.toString(),
     };
 };

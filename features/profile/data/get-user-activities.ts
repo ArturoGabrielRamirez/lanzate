@@ -1,12 +1,10 @@
-// features/user-profile/actions/get-user-activities.ts
-'use server'
+/* 'use server'
 
 import { getCurrentUser } from "@/features/auth/actions"
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
-import { getUserActivitiesData } from "../data/get-user-profile"
-
 import { prisma } from "@/utils/prisma"
-import { getCurrentUserId } from "../utils/user-utils"
+
+import { getUserActivitiesData } from "./get-user-activity-data"
 
 export async function getUserActivities(
   userId: number,
@@ -22,10 +20,10 @@ export async function getUserActivities(
     // Verificar que el usuario existe
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { 
-        id: true, 
+      select: {
+        id: true,
         profile_is_public: true,
-        username: true 
+        username: true
       }
     })
 
@@ -36,14 +34,14 @@ export async function getUserActivities(
     // Verificar permisos para actividades privadas
     if (includePrivate) {
       const currentUserResponse = await getCurrentUser()
-      
+
       if (!currentUserResponse?.payload) {
         return formatErrorResponse("No autorizado para ver actividades privadas", null)
       }
 
-      const currentUserId = await getCurrentUserId(currentUserResponse.payload)
-      
-      if (currentUserId !== userId) {
+      const currentUserId = await getCurrentUser()
+
+      if (currentUserId.payload !== userId) {
         return formatErrorResponse("No tienes permisos para ver actividades privadas", null)
       }
     }
@@ -55,9 +53,9 @@ export async function getUserActivities(
 
     // Obtener actividades REALES (sin mock)
     const { activities, totalActivities } = await getUserActivitiesData(
-      userId, 
-      limit, 
-      offset, 
+      userId,
+      limit,
+      offset,
       includePrivate
     )
 
@@ -77,4 +75,4 @@ export async function getUserActivities(
       }
     })
   })
-}
+} */

@@ -1,4 +1,4 @@
-"use server";
+/* "use server";
 import { prisma } from "@/utils/prisma";
 import { getCurrentUser } from "./index";
 import { actionWrapper } from "@/utils/lib";
@@ -76,4 +76,4 @@ export async function getLocalUser() {
       payload: localUser
     };
   });
-}
+} */

@@ -1,4 +1,4 @@
-import { prisma } from "@/utils/prisma"
+/* import { prisma } from "@/utils/prisma"
 
 export async function getUserLikedProductsData(
   userId: number,
@@ -59,3 +59,4 @@ export async function getUserLikedProductsData(
 
   return { likedProducts, totalLiked }
 }
+ */

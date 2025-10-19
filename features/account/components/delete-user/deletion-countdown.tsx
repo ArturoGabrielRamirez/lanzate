@@ -5,7 +5,7 @@ import { useAccountDeletion } from "../../hooks/use-account-deletion";
 import { AccountDeletedAlert, ActionNearExpirationAlert, ExplanationAlert, NearExpirationAlert } from "./account-delete-alert";
 import { MainCountdownDisplay } from "./main-countdown-display";
 import { useCountdown } from "../../hooks/use-countdown";
-import DeletionHelpers from "../../utils/deletion-helpers";
+import /* DeletionHelpers, */ { getUrgencyLevel, getUrgencyLevelFromMinutes } from "../../utils/deletion-helpers";
 import { Clock } from "lucide-react";
 
 export default function DeletionCountdown({
@@ -49,10 +49,10 @@ export default function DeletionCountdown({
     }
 
     const actionUrgency = actionTimeLeft 
-        ? DeletionHelpers.getUrgencyLevelFromMinutes(actionTimeLeft.totalMinutes)
+        ? getUrgencyLevelFromMinutes(actionTimeLeft.totalMinutes)
         : 'critical';
 
-    const deletionUrgency = DeletionHelpers.getUrgencyLevel(timeLeft.days || 0);
+    const deletionUrgency = getUrgencyLevel(timeLeft.days || 0);
 
     const getUrgencyTextColor = (urgency: string) => {
         switch (urgency) {

@@ -4,14 +4,14 @@ import { actionWrapper } from '@/utils/lib'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { HandleLoginAction } from '../types'
 import { insertLogEntry } from '@/features/layout/data'
-import { getLocalUser } from '../actions';
+import { getCurrentUser } from '.'
 
 export async function handleLogIn(formData: HandleLoginAction) {
   return actionWrapper(async () => {
 
     const supabase = createServerSideClient()
 
-    const { error: signInError, data: { user: authUser } } = await supabase.auth.signInWithPassword({
+    const { error: signInError, data: { user: authUser } } = await (await supabase).auth.signInWithPassword({
       email: formData.email,
       password: formData.password
     })
@@ -24,7 +24,7 @@ export async function handleLogIn(formData: HandleLoginAction) {
       }
     }
 
-    const { payload: localUser, error: localUserError } = await getLocalUser()
+    const { payload: localUser, error: localUserError } = await getCurrentUser()
 
     if (localUserError || !localUser) {
       return {

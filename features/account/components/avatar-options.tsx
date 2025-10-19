@@ -4,7 +4,7 @@ import { Loader2, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { AvatarOptionsProps } from "../types"
 
-export default function AvatarOptions({
+export function AvatarOptions({
   isLoading,
   options,
   selectedOption,

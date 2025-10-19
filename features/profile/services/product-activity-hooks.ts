@@ -1,13 +1,13 @@
 // services/product-activity-hooks.ts
-import { prisma } from "@/utils/prisma"
-import { SocialActivityService } from "./social-activity-services"
+/* import { prisma } from "@/utils/prisma"
+import { SocialActivityService } from "./social-activity-services" */
 
 
 /**
  * Hook que se ejecuta cuando un usuario le da like a un producto
  * Debe llamarse desde la acción de like
  */
-export async function onProductLike(userId: number, productId: number) {
+/* export async function onProductLike(userId: number, productId: number) {
   // Obtener información del producto
   const product = await prisma.product.findUnique({
     where: { id: productId },
@@ -31,12 +31,12 @@ export async function onProductLike(userId: number, productId: number) {
     productId,
     storeId: product.store_id
   })
-}
+} */
 
 /**
  * Hook que se ejecuta cuando un usuario quita el like a un producto
  */
-export async function onProductUnlike(userId: number, productId: number) {
+/* export async function onProductUnlike(userId: number, productId: number) {
   // Eliminar la actividad de like
   await prisma.socialActivity.deleteMany({
     where: {
@@ -45,12 +45,12 @@ export async function onProductUnlike(userId: number, productId: number) {
       product_id: productId
     }
   })
-}
+} */
 
 /**
  * Hook para cuando se crea un comentario
  */
-export async function onProductComment(userId: number, productId: number, comment: string) {
+/* export async function onProductComment(userId: number, productId: number, comment: string) {
   const product = await prisma.product.findUnique({
     where: { id: productId },
     select: {
@@ -72,4 +72,4 @@ export async function onProductComment(userId: number, productId: number, commen
     productId,
     storeId: product.store_id
   })
-}
+} */

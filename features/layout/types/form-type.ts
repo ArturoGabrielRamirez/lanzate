@@ -1,7 +1,6 @@
 import { Resolver, FieldValues } from "react-hook-form"
 import { ResponseType } from "./"
 
-// FormProps tipado genéricamente con T
 export type FormPropsType<T extends FieldValues> = {
 
     children: React.ReactNode

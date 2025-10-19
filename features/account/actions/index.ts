@@ -1,3 +1,4 @@
-export { default as requestDeletionAction } from "./request-deletion-action";
-export { default as cancelDeletionAction } from "./cancel-deletion-action";
-export { default as fetchDeletionStatusAction } from "./fetch-deletion-status";
+export * from './cancel-deletion'
+export * from './get-deletion-status'
+export * from './request-deletion'
+export * from './validate-new-user'

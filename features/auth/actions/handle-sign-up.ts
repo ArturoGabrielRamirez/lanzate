@@ -6,7 +6,7 @@ import { insertUser } from '@/features/auth/data'
 import { actionWrapper } from '@/utils/lib'
 import { ResponseType } from '@/features/layout/types'
 import { prisma } from '@/utils/prisma'
-import { UserDeletionSystem } from '@/features/account/utils/user-deletion-system'
+import { validateNewUserCreationAction } from '@/features/account/actions'
 
 export const handleSignup = async (payload: any): Promise<ResponseType<any>> => {
     return actionWrapper(async () => {
@@ -15,12 +15,12 @@ export const handleSignup = async (payload: any): Promise<ResponseType<any>> => 
         const { email, password, name, lastname, phone, username } = payload
 
         try {
-            const validation = await UserDeletionSystem.validateNewUserCreation(email)
+            const validation = await validateNewUserCreationAction(email)
 
-            if (!validation.canCreate && validation.conflict) {
+            if (!validation.payload.canCreate && validation.payload.conflict) {
                 throw new Error('User already exists')
             }
-      
+
         } catch (validationError) {
             console.error('❌ Error en validación:', validationError)
             if (validationError instanceof Error && validationError.message.includes('User already exists')) {

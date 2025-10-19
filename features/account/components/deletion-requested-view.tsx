@@ -1,15 +1,8 @@
 import { Suspense } from "react"
 import { AlertTriangle } from "lucide-react"
 import { Title } from "@/features/layout/components"
-import { UserType, UserDeletionStatus } from "../types"
-import DangerZoneTab from "./danger-zone-tab"
-import DangerDeepZoneSkeleton from "./danger-deep-zone-skeleton"
-
-interface DeletionRequestedViewProps {
-    user: UserType
-    deletionStatus: UserDeletionStatus
-    onStatusChange: () => void
-}
+import { DeletionRequestedViewProps } from "../types"
+import { DangerDeepZoneSkeleton, DangerZoneTab } from "."
 
 export function DeletionRequestedView({
     user,

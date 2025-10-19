@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/features/auth/actions'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { prisma } from '@/utils/prisma'
-import type { SupabaseClient } from '@supabase/supabase-js'
+import { cleanupOldUploads } from '@/features/profile/utils/cleanup-old-uploads'
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,17 +32,17 @@ export async function POST(request: NextRequest) {
     const fileExtension = file.type.split('/')[1] || file.name.split('.').pop() || 'jpg'
     const fileName = `${dbUser.id}-${type}-${Date.now()}.${fileExtension}`
 
-    const supabase = await createServerSideClient()
+    const supabase = createServerSideClient()
 
-    const { error: uploadError } = await supabase.storage
+    const { error: uploadError } = await (await supabase).storage
       .from('store-banners')
       .upload(fileName, buffer, { contentType: file.type, upsert: true })
 
-      if (uploadError) {
+    if (uploadError) {
       return NextResponse.json({ error: 'Error subiendo archivo', details: uploadError.message }, { status: 500 })
     }
 
-    const { data: publicUrlData } = supabase.storage
+    const { data: publicUrlData } = (await supabase).storage
       .from('store-banners')
       .getPublicUrl(fileName)
 
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No se pudo generar URL pública' }, { status: 500 })
     }
 
-    cleanupOldUploads(supabase, dbUser.id.toString(), type).catch(console.error)
+    cleanupOldUploads(await supabase, dbUser.id.toString(), type).catch(console.error)
 
     return NextResponse.json({
       success: true,
@@ -67,23 +67,3 @@ export async function POST(request: NextRequest) {
     )
   }
 }
-
-async function cleanupOldUploads(supabase: SupabaseClient, userId: string, type: string) {
-  try {
-    const { data: files } = await supabase.storage
-      .from('store-banners')
-      .list('', { search: `${userId}-${type}`, sortBy: { column: 'updated_at', order: 'desc' } })
-
-    if (!files) return
-
-    const filesToDelete = files.slice(5)
-    if (filesToDelete.length > 0) {
-      const pathsToDelete = filesToDelete.map((f: { name: string }) => f.name)
-      await supabase.storage.from('store-banners').remove(pathsToDelete)
-    }
-  } catch (err) {
-    console.error('Error limpiando uploads antiguos:', err)
-  }
-}
-
-

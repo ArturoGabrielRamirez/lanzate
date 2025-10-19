@@ -1,10 +1,11 @@
 "use server";
 
-import { getLocalUser } from "../../auth/actions";
+
+import { getCurrentUser } from "@/features/auth/actions";
 import { prisma } from "@/utils/prisma";
 
 export async function getUserInfo() {
-    const { payload: localUser, error: errorUser, message: messageUser } = await getLocalUser();
+    const { payload: localUser, error: errorUser, message: messageUser } = await getCurrentUser();
 
     if (errorUser || !localUser) {
         return {

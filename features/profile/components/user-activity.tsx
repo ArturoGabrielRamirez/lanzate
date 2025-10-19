@@ -1,13 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   Heart,
   MessageCircle,
   ShoppingBag,
   Store,
   Package,
-  Calendar,
   User,
   TrendingUp,
   Award,
@@ -19,50 +18,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { formatDistanceToNow } from 'date-fns'
 import { es } from 'date-fns/locale'
-
-interface UserActivity {
-  id: number
-  activity_type: string
-  title: string
-  description?: string
-  created_at: string
-  entity_type: string
-  entity_id: number
-  is_public: boolean
-  is_featured: boolean
-  metadata?: string
-  // Relaciones opcionales basadas en el activity_type
-  product?: {
-    id: number
-    name: string
-    image?: string
-    slug: string
-  }
-  store?: {
-    id: number
-    name: string
-    logo?: string
-    slug: string
-  }
-  order?: {
-    id: number
-    total_price: number
-    status: string
-  }
-  /*  followedUser?: {
-     id: number;
-     username: string;
-     avatar?: string;
-     first_name: string;
-     last_name: string;
-   }; */
-}
-
-interface UserActivitiesProps {
-  userId: number
-  isOwnProfile?: boolean
-  showPrivateActivities?: boolean
-}
+import { UserActivitiesProps, UserActivity } from '../types'
 
 // Mapeo de iconos y colores para diferentes tipos de actividad
 const getActivityConfig = (activityType: string) => {
@@ -76,7 +32,7 @@ const getActivityConfig = (activityType: string) => {
     USER_REGISTERED: { icon: User, color: 'text-gray-600', bgColor: 'bg-gray-50' },
     ACHIEVEMENT_UNLOCKED: { icon: Award, color: 'text-yellow-600', bgColor: 'bg-yellow-50' },
     MILESTONE_REACHED: { icon: TrendingUp, color: 'text-orange-600', bgColor: 'bg-orange-50' },
-    /*  USER_FOLLOW: { icon: UserPlus, color: 'text-cyan-600', bgColor: 'bg-cyan-50' }, */ // Nuevo
+    USER_FOLLOW: { icon: UserPlus, color: 'text-cyan-600', bgColor: 'bg-cyan-50' },
   }
 
   return configs[activityType] || { icon: Activity, color: 'text-gray-600', bgColor: 'bg-gray-50' }
@@ -93,41 +49,56 @@ const getActivityTitle = (activity: UserActivity) => {
       return `Realizó un pedido${activity.store ? ` en ${activity.store.name}` : ''}`
     case 'ORDER_COMPLETED':
       return `Completó un pedido${activity.store ? ` en ${activity.store.name}` : ''}`
-    case 'PRODUCT_CREATED':
-      return activity.product ? `Creó el producto "${activity.product.name}"` : 'Creó un nuevo producto'
-    case 'STORE_CREATED':
-      return activity.store ? `Creó la tienda "${activity.store.name}"` : 'Creó una nueva tienda'
-    case 'USER_REGISTERED':
-      return 'Se unió a la plataforma'
-    case 'ACHIEVEMENT_UNLOCKED':
-      return activity.title || 'Desbloqueó un logro'
-    case 'MILESTONE_REACHED':
-      return activity.title || 'Alcanzó un hito'
-    /*   case 'USER_FOLLOW':
-      const followedUserName = activity.followedUser?.username || 'un usuario';
-      const followedFullName = activity.followedUser?.first_name && activity.followedUser?.last_name
-        ? `${activity.followedUser.first_name} ${activity.followedUser.last_name}`
-        : followedUserName;
-      return `Comenzó a seguir a ${followedFullName}`; */
+    /*  case 'PRODUCT_CREATED':
+       return activity.product ? `Creó el producto "${activity.product.name}"` : 'Creó un nuevo producto'
+     case 'STORE_CREATED':
+       return activity.store ? `Creó la tienda "${activity.store.name}"` : 'Creó una nueva tienda'
+     case 'USER_REGISTERED':
+       return 'Se unió a la plataforma'
+     case 'ACHIEVEMENT_UNLOCKED':
+       return activity.title || 'Desbloqueó un logro'
+     case 'MILESTONE_REACHED': */
+    /*   return activity.title || 'Alcanzó un hito' */
+    case 'USER_LOGIN' /* 'USER_FOLLOW' */:
+      // Parsear metadata si existe
+      try {
+        const metadata = typeof activity.metadata === 'string'
+          ? JSON.parse(activity.metadata)
+          : activity.metadata
+        const followedUserName = metadata?.followedUser?.displayName || 'un usuario'
+        return `Comenzó a seguir a ${followedUserName}`
+      } catch {
+        return activity.title || 'Comenzó a seguir a un usuario'
+      }
     default:
       return activity.title || 'Realizó una actividad'
   }
 }
 
-export function UserActivities({ userId, isOwnProfile = false, showPrivateActivities = false }: UserActivitiesProps) {
+export function UserActivities({
+  userId,
+  isOwnProfile = false,
+  showPrivateActivities = false
+}: UserActivitiesProps) {
   const [activities, setActivities] = useState<UserActivity[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  // Evitar múltiples fetches con ref
+  const hasFetched = useRef(false)
+
   useEffect(() => {
+    // Evitar doble fetch en desarrollo (React StrictMode)
+    if (hasFetched.current) return
+    hasFetched.current = true
+
     const fetchActivities = async () => {
       try {
         setIsLoading(true)
 
         // Construir query params
         const params = new URLSearchParams({
-          userId: userId.toString(),
-          limit: '20',
+          limit: '5',
           ...(showPrivateActivities && { includePrivate: 'true' })
         })
 
@@ -149,19 +120,25 @@ export function UserActivities({ userId, isOwnProfile = false, showPrivateActivi
     }
 
     fetchActivities()
+
+    // Cleanup para reset en unmount
+    return () => {
+      hasFetched.current = false
+    }
   }, [userId, showPrivateActivities])
 
   if (isLoading) {
     return (
       <div className="space-y-4">
         {[...Array(3)].map((_, i) => (
-          <Card key={i} className="animate-pulse">
+          <Card key={i} className="animate-pulse bg-gray-800/30 border-gray-700/50">
             <CardContent className="p-4">
               <div className="flex gap-3">
-                <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+                <div className="w-10 h-10 bg-gray-700/50 rounded-full flex-shrink-0"></div>
                 <div className="flex-1 space-y-2">
-                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                  <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                  <div className="h-4 bg-gray-700/50 rounded w-3/4"></div>
+                  <div className="h-3 bg-gray-700/50 rounded w-1/2"></div>
+                  <div className="h-2 bg-gray-700/50 rounded w-1/4 mt-2"></div>
                 </div>
               </div>
             </CardContent>
@@ -250,26 +227,12 @@ export function UserActivities({ userId, isOwnProfile = false, showPrivateActivi
                       </div>
                     </div>
 
-                   {/*  {(activity.product?.image || activity.store?.logo || activity.followedUser?.avatar) && ( // Añadir la condición para el avatar del usuario seguido
-  <div className="flex-shrink-0">
-    <Avatar className="w-8 h-8">
-      <AvatarImage
-        src={activity.product?.image || activity.store?.logo || activity.followedUser?.avatar} // Usar el avatar si existe
-        alt=""
-      />
-      <AvatarFallback className="text-xs">
-        {activity.product ? 'P' : activity.store ? 'T' : 'U'}
-      </AvatarFallback>
-    </Avatar>
-  </div>
-)} */}
-
                     {/* Imagen relacionada si existe */}
                     {(activity.product?.image || activity.store?.logo) && (
                       <div className="flex-shrink-0">
                         <Avatar className="w-8 h-8">
                           <AvatarImage
-                            src={activity.product?.image || activity.store?.logo}
+                            src={activity.product?.image || activity.store?.logo || ""}
                             alt=""
                           />
                           <AvatarFallback className="text-xs">
@@ -293,7 +256,7 @@ export function UserActivities({ userId, isOwnProfile = false, showPrivateActivi
             <button
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               onClick={() => {
-                // Aquí puedes implementar paginación o cargar más actividades
+                // TODO: Implementar paginación
                 console.log('Cargar más actividades')
               }}
             >

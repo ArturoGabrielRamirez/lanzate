@@ -9,12 +9,14 @@ interface CapturedFile {
 }
 
 interface UseCameraOptions {
- uploadPath: 'avatar' | 'banner' | (string & {})
+  uploadPath: 'avatar' | 'banner' | 'product-image' | 'product-video' | 'store-logo' | 'store-banner'
   onSuccess?: (url: string) => void
   onError?: (error: string) => void
   maxWidth?: number
   maxHeight?: number
   quality?: number
+  productId?: number  // Opcional: para productos
+  storeId?: number    // Opcional: para tiendas
 }
 
 export function useCamera({
@@ -23,7 +25,9 @@ export function useCamera({
   onError,
   maxWidth = 1920,
   maxHeight = 1080,
-  quality = 0.8
+  quality = 0.8,
+  productId,
+  storeId
 }: UseCameraOptions) {
   const [capturedFile, setCapturedFile] = useState<CapturedFile | null>(null)
   const [isUploading, setIsUploading] = useState(false)
@@ -63,7 +67,7 @@ export function useCamera({
     }
   }, [capturedFile])
 
-  // Subir foto usando la nueva API
+  // Subir foto usando la nueva API modularizada
   const uploadPhoto = useCallback(async () => {
     if (!capturedFile) {
       onError?.('No hay foto para subir')
@@ -72,10 +76,20 @@ export function useCamera({
 
     setIsUploading(true)
     try {
+      // Crear FormData
       const formData = new FormData()
       formData.append('file', capturedFile.file)
       formData.append('type', uploadPath)
 
+      // Agregar IDs opcionales
+      if (productId) {
+        formData.append('productId', productId.toString())
+      }
+      if (storeId) {
+        formData.append('storeId', storeId.toString())
+      }
+
+      // Subir al nuevo endpoint
       const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
@@ -87,7 +101,7 @@ export function useCamera({
       }
 
       const data = await response.json()
-      
+
       if (!data.url) {
         throw new Error('La respuesta no contiene la URL del archivo')
       }
@@ -105,7 +119,7 @@ export function useCamera({
     } finally {
       setIsUploading(false)
     }
-  }, [capturedFile, uploadPath, onSuccess, onError])
+  }, [capturedFile, uploadPath, productId, storeId, onSuccess, onError])
 
   // Props para el componente de cámara
   const cameraProps = {
@@ -122,14 +136,14 @@ export function useCamera({
     capturedFile,
     isUploading,
     isCameraOpen,
-    
+
     // Métodos
     openCamera,
     closeCamera,
     retakePhoto,
     discardPhoto,
     uploadPhoto,
-    
+
     // Props para el componente
     cameraProps
   }

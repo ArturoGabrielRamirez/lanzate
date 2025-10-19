@@ -1,4 +1,4 @@
-'use server'
+/* 'use server'
 
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 import { getUserLikedProductsData } from "../data/get-liked-products"
@@ -65,4 +65,4 @@ export async function getUserLikedProducts(
       }
     })
   })
-}
+} */

@@ -39,8 +39,8 @@ export interface EmailChangeStatus {
   expiresAt?: Date;
   oldEmailConfirmedAt?: Date | null;
   newEmailConfirmedAt?: Date | null;
- /*  nextEmailConfirmedAt?: Date | null;
-  nextStepEmail?: { email: string; type: 'old_email' | 'new_email' } | null; */
+  /*  nextEmailConfirmedAt?: Date | null;
+   nextStepEmail?: { email: string; type: 'old_email' | 'new_email' } | null; */
 }
 
 export interface EmailChangeStatusResponse extends EmailChangeStatus { }
@@ -223,6 +223,23 @@ export interface ResendValidation {
   remainingCooldown: number;
   reason?: string;
 } // chequear que se este usando
+
+export interface CapturedFile {
+  file: File
+  preview: string
+}
+
+export interface UseCameraOptions {
+  uploadPath: 'avatar' | 'banner' | (string & {})
+  onSuccess?: (url: string) => void
+  onError?: (error: string) => void
+  maxWidth?: number
+  maxHeight?: number
+  quality?: number
+  productId?: number
+  storeId?: number
+}
+
 
 export type { FacebookLogoProps } from "./facebook-logo";
 export type { GoogleLogoProps } from "./google-logo";

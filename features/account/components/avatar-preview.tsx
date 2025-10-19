@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { AvatarPreviewProps } from "../types"
 
-export default function AvatarPreview({ previewUrl, getDefaultAvatar }: AvatarPreviewProps) {
+export function AvatarPreview({ previewUrl, getDefaultAvatar }: AvatarPreviewProps) {
   return (
     <div className="flex justify-center">
       <Avatar className="h-32 w-32 border-2 border-primary bg-chart-4">

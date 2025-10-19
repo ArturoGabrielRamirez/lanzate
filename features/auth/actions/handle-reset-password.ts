@@ -18,7 +18,7 @@ export async function handleResetPassword(payload: any): Promise<ResponseType<an
             `https://${subdomain}.lanzate.app` :
             `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`}`;
 
-        const { error } = await supabase.auth.resetPasswordForEmail(payload, {
+        const { error } = await (await supabase).auth.resetPasswordForEmail(payload, {
             redirectTo: `${baseUrl}/update-password`,
         })
 

@@ -6,8 +6,8 @@ import { getTranslations } from 'next-intl/server'
 
 
 export default async function UpdatePasswordPage() {
-    const supabase = await createServerSideClient()
-    const { data: { session } } = await supabase.auth.getSession()
+    const supabase = createServerSideClient()
+    const { data: { session } } = await (await supabase).auth.getSession()
 
     if (!session?.user) {
         redirect('/error')

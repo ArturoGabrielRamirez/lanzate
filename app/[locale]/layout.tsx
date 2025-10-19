@@ -14,7 +14,7 @@ import "../globals.css";
 import FloatingDockContainer from "@/features/header/components/foating-dock-container";
 import { ChatProvider } from "@/features/layout/components/chat-provider";
 import ChatDoc from "@/features/layout/components/chat-doc";
-import { UserProvider } from "@/features/profile/context/user-constext";
+import { UserProvider } from "@/features/profile/context/user-context";
 
 export const metadata: Metadata = {
   title: {

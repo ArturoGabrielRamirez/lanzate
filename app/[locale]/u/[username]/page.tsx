@@ -1,62 +1,59 @@
-// app/[locale]/u/[username]/page.tsx
-import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
+import { Metadata } from 'next'
+import { PublicProfileClient } from '@/features/profile/components/public-profile-client'
 
-import { PublicProfileClient } from '@/features/profile/components/public-profile-client';
-import { getUserPublicProfile } from '@/features/profile/actions';
+import UserNotFound from '@/features/profile/components/not-found'
+import { getProfileWithFollowStatus } from '@/features/profile/components/get-profile-with-follow';
 
-// Importa o define tu tipo de parámetros aquí
-// Si lo definiste en otro archivo, usa: import { UserProfileParams } from '@/types';
-interface UserProfileParams {
-  locale: string;
-  username: string;
-}
-
-// --- Generar Metadatos ---
 export async function generateMetadata(
-  // En Next.js 15, params es una promesa
-  { params }: { params: Promise<UserProfileParams> }
+  { params }: { params: Promise<{ locale: string; username: string }> }
 ): Promise<Metadata> {
-  // Await params para obtener los valores
-  const resolvedParams = await params;
-  const user = await getUserPublicProfile(resolvedParams.username);
+  const resolvedParams = await params
+  const result = await getProfileWithFollowStatus(resolvedParams.username)
 
-  if (!user) {
-    return { title: 'Usuario no encontrado' };
+  if (!result?.payload?.user) {
+    return {
+      title: 'Usuario no encontrado',
+      description: 'El perfil que buscas no existe'
+    }
   }
 
-  const displayName =
-    user.payload.first_name && user.payload.last_name
-      ? `${user.payload.first_name} ${user.payload.last_name}`
-      : user.payload.username;
+  const { user } = result.payload
+  const displayName = user.first_name && user.last_name
+    ? `${user.first_name} ${user.last_name}`
+    : user.username
 
   return {
-    title: `${displayName} (@${user.payload.username})`,
-    description: user.payload.profile_bio || `Perfil de ${displayName}`,
+    title: `${displayName} (@${user.username})`,
+    description: user.profile_bio || `Perfil de ${displayName}`,
     openGraph: {
-      title: `${displayName} (@${user.payload.username})`,
-      description: user.payload.profile_bio || `Perfil de ${displayName}`,
-      images: user.payload.avatar ? [user.payload.avatar] : undefined,
+      title: `${displayName} (@${user.username})`,
+      description: user.profile_bio || `Perfil de ${displayName}`,
+      images: user.avatar ? [user.avatar] : undefined,
     },
-  };
+  }
 }
 
-// --- Componente Principal de la Página ---
 export default async function PublicProfilePage(
-  // En Next.js 15, params es una promesa
-  { params }: { params: Promise<UserProfileParams> }
+  { params }: { params: Promise<{ locale: string; username: string }> }
 ) {
-  // Await params para obtener los valores
-  const resolvedParams = await params;
-  const response = await getUserPublicProfile(resolvedParams.username);
+  const resolvedParams = await params
 
-  if (!response) {
-    notFound();
+  // ✅ SINGLE QUERY: Obtiene user + currentUser + isFollowing
+  const result = await getProfileWithFollowStatus(resolvedParams.username)
+
+  if (!result?.payload?.user) {
+    return <UserNotFound />
   }
+
+  const { user, currentUser, isFollowing } = result.payload
 
   return (
     <div className="min-h-screen">
-      <PublicProfileClient user={response.payload} />
+      <PublicProfileClient
+        user={user}
+        initialCurrentUser={currentUser}
+        initialIsFollowing={isFollowing} // ✅ Estado inicial desde servidor
+      />
     </div>
-  );
+  )
 }
