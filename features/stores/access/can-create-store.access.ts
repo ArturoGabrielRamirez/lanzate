@@ -1,7 +1,7 @@
 "use server"
 
 import { getUserById } from "@/features/layout/data/getUserById"
-import { getStoresFromUser } from "@/features/stores/data/getStoresFromUser"
+import { getStoresFromUser } from "@/features/stores/data/get-stores-from-user.data"
 
 export async function canCreateStore(userId: number) {
     try {

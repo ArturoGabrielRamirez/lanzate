@@ -1,8 +1,8 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils";
+import { selectOrdersFromStore } from "@/features/orders/data/selectOrdersFromStore";
 import { getStoresFromSlugAction } from "@/features/stores/actions";
-import { selectOrdersFromStore } from "@/features/stores/data/selectOrdersFromStore";
 
 export async function getOrdersFromStore(slug: string, limit?: number) {
     return actionWrapper(async () => {

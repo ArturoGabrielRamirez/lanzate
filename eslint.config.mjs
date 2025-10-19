@@ -2,6 +2,8 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 import { FlatCompat } from "@eslint/eslintrc";
+import tseslint from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
 import pluginImport from "eslint-plugin-import";
 import reactPlugin from "eslint-plugin-react";
 
@@ -22,15 +24,20 @@ const eslintConfig = [
     plugins: {
       import: pluginImport,
       react: reactPlugin,
+      "@typescript-eslint": tseslint,
     },
     languageOptions: {
+      parser: tsParser,
       parserOptions: {
         ecmaFeatures: {
           jsx: true,
         },
+        sourceType: "module",
+        project: true,
       },
     },
     rules: {
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
       "import/order": [
         "error",
         {

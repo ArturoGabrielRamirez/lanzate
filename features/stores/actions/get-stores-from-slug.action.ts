@@ -3,7 +3,7 @@
 import { Branch, Store, Product, Category, StoreBalance, StoreOperationalSettings, ProductStock } from "@prisma/client"
 
 import { actionWrapper } from "@/features/global/utils"
-import { selectStoreBySlug } from "@/features/stores/data/selectStoreBySlug"
+import { selectStoreBySlug } from "@/features/stores/data/select-store-by-slug.data"
 
 type GetStoresFromSlugReturn = {
     message: string

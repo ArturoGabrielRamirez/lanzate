@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { selectStoreHeaderBySlug } from "@/features/stores/data/selectStoreHeaderBySlug"
+import { selectStoreHeaderBySlugData } from "@/features/stores/data/select-store-header-by-slug.data"
 
 type StoreHeader = {
     id: number
@@ -22,9 +22,10 @@ type GetStoreHeaderBySlugReturn = {
 
 export async function getStoreHeaderBySlugAction(slug: string): Promise<GetStoreHeaderBySlugReturn> {
     return actionWrapper(async () => {
-        const { payload: store, error, message } = await selectStoreHeaderBySlug(slug)
 
-        if (error) throw new Error(message)
+        const { payload: store, hasError, message } = await selectStoreHeaderBySlugData(slug)
+
+        if (hasError) throw new Error(message)
 
         if (!store) {
             throw new Error("Store not found")

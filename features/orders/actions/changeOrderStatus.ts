@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 
 import { getUserInfo } from "@/features/layout/actions"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
-import { updateOrderStatus } from "@/features/stores/data/updateOrderStatus"
+import { updateOrderStatus } from "@/features/orders/data/updateOrderStatusOld"
 import { actionWrapper } from "@/utils/lib"
 
 type ChangeOrderStatusData = {

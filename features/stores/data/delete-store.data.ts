@@ -25,4 +25,10 @@ export async function deleteStoreData(storeId: number) {
         }
     })
 
+    return {
+        message: "Store deleted successfully",
+        payload: null,
+        hasError: false
+    }
+
 }

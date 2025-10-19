@@ -1,7 +1,7 @@
 "use server"
 
+import { getEmployeePermissionsData } from "@/features/employees/data/get-employee-permissions.data"
 import { actionWrapper } from "@/features/global/utils"
-import { getEmployeePermissions as getEmployeePermissionsData } from "@/features/stores/data/getEmployeePermissions"
 
 export async function getEmployeePermissionsAction(userId: number, slug: string) {
     return actionWrapper(async () => {

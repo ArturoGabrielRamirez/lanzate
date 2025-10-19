@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/utils/lib"
-import { selectOrderById } from "../../stores/data/selectOrderById"
+import { selectOrderById } from "../data/selectOrderById"
 import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
 
 type GetOrderDetailsResponse = {

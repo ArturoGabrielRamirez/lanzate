@@ -1,8 +1,8 @@
 "use server"
 
 /* import { PrismaClient } from '@prisma/client' */
-import { actionWrapper } from "@/utils/lib"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 
 type ChangeOrderStatusData = {
@@ -41,7 +41,7 @@ export async function updateOrderStatus(orderId: number, data: ChangeOrderStatus
             if (!order) throw new Error("Order not found")
 
             const oldStatus = order.status
-            const newStatus = data.newStatus as any // Cast to OrderStatus enum
+            const newStatus = data.newStatus as never // Cast to OrderStatus enum
 
             // Validar que el status ha cambiado
             if (oldStatus === newStatus) {

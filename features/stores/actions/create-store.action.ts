@@ -6,7 +6,7 @@ import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { canCreateStore } from "@/features/stores/access/can-create-store.access"
 import { CreateStoreFormValues } from "@/features/stores/components/create-store-button-new"
-import { insertStore } from "@/features/stores/data/insertStore"
+import { insertStoreData } from "@/features/stores/data/insert-store.data"
 import type { ProcessedOpeningHour, ProcessedPaymentMethod, ProcessedShippingMethod } from "@/features/stores/utils/store-form-helpers"
 
 
@@ -31,10 +31,10 @@ export async function createStoreAction(payload: ProcessedCreateStoreData, userI
         //Create store record
         //Create default branch
         //Create store's initial balance
-        const { payload: newStore, error, message } = await insertStore(payload, userId)
+        const { payload: newStore, hasError, message } = await insertStoreData(payload, userId)
 
         //Throw error if store was not able to be created
-        if (error) throw new Error(message)
+        if (hasError) throw new Error(message)
 
         revalidatePath("/stores")
 

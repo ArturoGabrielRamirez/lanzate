@@ -1,6 +1,6 @@
 "use server"
 
-import { selectProductsFromStore } from "@/features/stores/data/seletProductsFromStore"
+import { selectProductsFromStore } from "@/features/products/data/seletProductsFromStore"
 import { actionWrapper } from "@/utils/lib"
 
 export async function getProductsFromStore(slug: string) {

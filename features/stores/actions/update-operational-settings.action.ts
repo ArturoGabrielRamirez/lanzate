@@ -4,7 +4,7 @@ import { PaymentMethod } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
-import { updateOperationalSettings } from "@/features/stores/data/updateOperationalSettings"
+import { updateOperationalSettingsData } from "@/features/stores/data/update-operational-settings.data"
 
 type UpdateOperationalSettingsActionPayload = {
     offers_delivery: boolean
@@ -17,9 +17,9 @@ type UpdateOperationalSettingsActionPayload = {
 
 export async function updateOperationalSettingsAction(storeId: number, payload: UpdateOperationalSettingsActionPayload) {
     return actionWrapper(async () => {
-        const { error, payload: updatedPayload, message } = await updateOperationalSettings(storeId, payload)
+        const { hasError, payload: updatedPayload, message } = await updateOperationalSettingsData(storeId, payload)
 
-        if (error) throw new Error(message)
+        if (hasError || !updatedPayload) throw new Error(message)
 
         revalidatePath(`/stores/${storeId}/account`)
 

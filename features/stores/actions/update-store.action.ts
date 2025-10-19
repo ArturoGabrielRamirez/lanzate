@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache"
 import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { canUpdateStore } from "@/features/stores/access/can-update-store.access"
-import { updateStoreBySlug } from "@/features/stores/data/updateStoreBySlug"
+import { updateStoreBySlugData } from "@/features/stores/data/update-store-by-slug.data"
 
 type UpdateStorePayload = {
     name: string
@@ -28,9 +28,9 @@ export async function updateStoreAction(slug: string, data: UpdateStorePayload, 
 
         //Check slug/subdomain availability if changed
         //Update store fields
-        const { error, payload, message } = await updateStoreBySlug(slug, data)
+        const { hasError, payload, message } = await updateStoreBySlugData(slug, data)
 
-        if (error) throw new Error(message)
+        if (hasError || !payload) throw new Error(message)
 
         revalidatePath(`/stores/${slug}`)
 

@@ -1,14 +1,14 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { getStoreLogsBySlug } from "@/features/stores/data/getStoreLogsBySlug"
+import { getStoreLogsBySlugData } from "@/features/stores/data/get-store-logs-by-slug.data"
 
 export async function getStoreLogsAction(slug: string) {
     return actionWrapper(async () => {
 
-        const { error, payload, message } = await getStoreLogsBySlug(slug)
+        const { hasError, message, payload } = await getStoreLogsBySlugData(slug)
 
-        if (error) throw new Error(message)
+        if (hasError) throw new Error(message)
 
         return {
             hasError: false,

@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { getStoresFromUser as getStoresFromUserDb } from "@/features/stores/data/getStoresFromUser"
+import { getStoresFromUser as getStoresFromUserDb } from "@/features/stores/data/get-stores-from-user.data"
 
 export async function getStoresFromUserAction(userId: number){
 

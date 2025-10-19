@@ -1,9 +1,9 @@
 "use server"
 
 /* import { PrismaClient } from '@prisma/client' */
-import { actionWrapper } from "@/utils/lib"
-import { selectStoreBySlug } from "./selectStoreBySlug"
 import { prisma } from "@/utils/prisma"
+import { actionWrapper } from "@/utils/lib"
+import { selectStoreBySlug } from "../../stores/data/select-store-by-slug.data"
 
 export async function selectProductsFromStore(slug: string) {
 
