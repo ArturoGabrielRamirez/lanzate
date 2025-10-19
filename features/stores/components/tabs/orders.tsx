@@ -3,12 +3,9 @@ import { getTranslations } from "next-intl/server"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getOrdersFromStore } from "@/features/orders/actions/getOrdersFromStore"
 import OrdersTable from "@/features/orders/components/orders-table"
+import { OrdersTabProps } from "@/features/stores/types"
 
-type Props = {
-    slug: string
-}
-
-async function OrdersTab({ slug }: Props) {
+async function OrdersTab({ slug }: OrdersTabProps) {
 
     const t = await getTranslations("store.orders-tab")
 

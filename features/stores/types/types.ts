@@ -318,3 +318,8 @@ export interface EditSocialMediaButtonProps {
     className?: string
     onSuccess?: () => void
 }
+
+// Tabs types
+export type OrdersTabProps = {
+    slug: string
+}
