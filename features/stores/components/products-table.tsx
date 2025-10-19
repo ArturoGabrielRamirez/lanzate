@@ -1,20 +1,22 @@
 "use client"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { DropdownMenu } from "@/components/ui/dropdown-menu"
-import { DataTable } from "@/features/layout/components/data-table"
-import { ArrowUpDown, Crown, MoreHorizontal } from "lucide-react"
-import { Eye } from "lucide-react"
+
 import { Product, Category, Branch, ProductStock } from "@prisma/client"
-import { useMemo } from "react"
 import { ColumnDef } from "@tanstack/react-table"
-import { DeleteProductButton, EditProductButton, DistributeStockButton } from "@/features/products/components"
-import DeleteVariantButton from "@/features/products/components/delete-variant-button"
+import { Eye } from "lucide-react"
+import { ArrowUpDown, Crown, MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
-import { cn } from "@/lib/utils"
+import { useMemo } from "react"
+
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+import { DropdownMenu } from "@/components/ui/dropdown-menu"
+import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DataTable } from "@/features/layout/components/data-table"
+import { DeleteProductButton, EditProductButton, DistributeStockButton } from "@/features/products/components"
+import DeleteVariantButton from "@/features/products/components/delete-variant-button"
+import { cn } from "@/lib/utils"
 
 type EmployeePermissions = {
     isAdmin: boolean
