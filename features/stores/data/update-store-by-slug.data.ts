@@ -1,10 +1,10 @@
 "use server"
 
-import { DataType } from '@/features/stores/types'
+import { StoreUpdateData } from '@/features/stores/types'
 import { prisma } from "@/utils/prisma"
 
 
-export async function updateStoreBySlugData(slug: string, data: DataType) {
+export async function updateStoreBySlugData(slug: string, data: StoreUpdateData) {
 
     // Separar los campos de operational_settings de los campos del store
     const { contact_phone, contact_whatsapp, facebook_url, instagram_url, x_url, address, city, province, country, ...storeData } = data

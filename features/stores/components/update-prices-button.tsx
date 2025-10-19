@@ -10,14 +10,14 @@ import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { getProductsCountByCategoryAction } from "@/features/products/actions/getProductsCountByCategory"
 import { updateProductsPricesAction } from "@/features/products/actions/updateProductsPrices"
 import { getCategories } from "@/features/store-landing/actions/getCategories"
-import { UpdatePricesButtonProps, UpdateType } from "@/features/stores/types"
+import { UpdatePricesButtonProps, PriceUpdateType } from "@/features/stores/types"
 import { formatErrorResponse } from "@/utils/lib"
 
 function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) {
     const [categories, setCategories] = useState<Category[]>([])
     const [selectedCategory, setSelectedCategory] = useState<string>("")
     const [amount, setAmount] = useState<string>("")
-    const [updateType, setUpdateType] = useState<UpdateType>("fijo")
+    const [updateType, setUpdateType] = useState<PriceUpdateType>("fijo")
     const [productsInCategory, setProductsInCategory] = useState<number>(0)
     const [isLoadingCount, setIsLoadingCount] = useState(false)
     const t = useTranslations("store.update-prices")
@@ -74,7 +74,7 @@ function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) 
             let payload: {
                 storeId: number
                 amount: number
-                updateType: UpdateType
+                updateType: PriceUpdateType
                 productIds?: number[]
                 categoryId?: number
             }
@@ -140,7 +140,7 @@ function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) 
                         </div>
                         <div className="w-full flex flex-col gap-2">
                             <Label htmlFor="update-type">{t("update-type")}</Label>
-                            <Select value={updateType} onValueChange={(value: UpdateType) => setUpdateType(value)}>
+                            <Select value={updateType} onValueChange={(value: PriceUpdateType) => setUpdateType(value)}>
                                 <SelectTrigger className="w-full min-h-10 mb-0">
                                     <SelectValue />
                                 </SelectTrigger>
@@ -200,7 +200,7 @@ function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) 
                                     </div>
                                     <div className="flex flex-col gap-2 w-full">
                                         <Label htmlFor="update-type">{t("update-type")}</Label>
-                                        <Select value={updateType} onValueChange={(value: UpdateType) => setUpdateType(value)}>
+                                        <Select value={updateType} onValueChange={(value: PriceUpdateType) => setUpdateType(value)}>
                                             <SelectTrigger className="w-full mb-0 min-h-10">
                                                 <SelectValue />
                                             </SelectTrigger>

@@ -1,9 +1,9 @@
 import { getStoreBasicsBySlugAction } from "@/features/stores/actions"
 import { StoreHeaderClient } from "@/features/stores/components"
-import { StoreHeaderServerProps } from "@/features/stores/types"
+import { StoreHeaderProps } from "@/features/stores/types"
 
 
-async function StoreHeaderServer({ slug }: StoreHeaderServerProps) {
+async function StoreHeaderServer({ slug }: StoreHeaderProps) {
 
     const { payload: store, hasError, message } = await getStoreBasicsBySlugAction(slug)
 

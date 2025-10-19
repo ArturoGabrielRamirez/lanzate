@@ -6,23 +6,83 @@ import * as yup from "yup"
 
 import { DashboardStore } from "@/features/dashboard/types"
 import { ResponseType } from "@/features/layout/types"
-import { basicInfoSchema, editOperationalSettingsSchema, editSocialMediaSchema, editContactSchema } from "@/features/stores/schemas"
+import { editOperationalSettingsSchema, editSocialMediaSchema, editContactSchema } from "@/features/stores/schemas"
 
-// Store-related types
-export type StoreCardProps = {
+// ============================================================================
+// BASE TYPES AND UTILITIES
+// ============================================================================
+
+/**
+ * Common result type for actions
+ */
+export type ActionResult<T = unknown> = {
+    error: boolean
+    message: string
+    payload?: T
+}
+
+/**
+ * Base tab props that all tabs share
+ */
+export type BaseTabProps = {
+    slug: string
+    userId: number
+}
+
+/**
+ * Generic tab props with additional data
+ */
+export type TabProps<T = Record<string, never>> = BaseTabProps & T
+
+/**
+ * Store with common relations
+ */
+export type StoreWithBranches = Store & { branches: Branch[] }
+export type StoreWithSettings = Store & { operational_settings: StoreOperationalSettings | null }
+export type StoreWithBranchesAndSettings = StoreWithBranches & StoreWithSettings
+
+/**
+ * Base store data for forms
+ */
+export type BaseStoreData = {
+    name: string
+    description?: string
+    subdomain: string
+}
+
+/**
+ * Generic form props
+ */
+export type FormProps<T> = {
+    mode: 'create' | 'edit'
+    data?: T
+    onSubmit: (data: T) => Promise<ActionResult>
+}
+
+/**
+ * Generic action button props
+ */
+export type ActionButtonProps<T> = {
+    data: T
+    onSuccess?: () => void
+    className?: string
+}
+
+// ============================================================================
+// STORE-RELATED TYPES
+// ============================================================================
+
+export type StoreCardComponentProps = {
     userId: number
     store?: DashboardStore
     isEmpty?: boolean
 }
 
 
-export type BasicInfoFormType = yup.InferType<typeof basicInfoSchema>
+// ============================================================================
+// LAYOUT AND NAVIGATION TYPES
+// ============================================================================
 
-export interface StoreHeaderServerProps {
-    slug: string
-}
-
-// Layout and navigation types
 export type StoreDetailsLayoutProps = {
     children: ReactNode
     params: Promise<{ slug: string }>
@@ -37,10 +97,6 @@ export type TabPageProps = {
     params: Promise<{ slug: string, tab: string }>
 }
 
-export type TabClientContainerProps = {
-    children: ReactNode
-}
-
 export type TabTriggerLinkProps = {
     value: string
     text: string
@@ -48,7 +104,10 @@ export type TabTriggerLinkProps = {
     icon?: ReactNode
 }
 
-// Button types
+// ============================================================================
+// BUTTON TYPES
+// ============================================================================
+
 export type CreateStoreButtonProps = {
     userId: number
     canCreate?: boolean
@@ -63,39 +122,24 @@ export type DeleteStoreButtonProps = {
 export type EditStoreButtonProps = {
     userId: number
     slug: string
-    store: Store & {
-        operational_settings: StoreOperationalSettings | null
-        branches: Branch[]
-    }
+    store: StoreWithBranchesAndSettings
 }
 
-// Tab types
-export type AccountTabProps = {
-    slug: string
-    userId: number
-}
+// ============================================================================
+// TAB TYPES (Consolidated using BaseTabProps)
+// ============================================================================
 
-export type BranchesTabProps = {
-    slug: string
-    userId: number
-}
+export type AccountTabProps = BaseTabProps
+export type BranchesTabProps = BaseTabProps
+export type ProductsTabProps = BaseTabProps
+export type HistoryTabProps = BaseTabProps
+export type SettingsTabProps = BaseTabProps
+export type OrdersTabProps = BaseTabProps
 
-export type ProductsTabProps = {
-    slug: string
-    userId: number
-}
+// ============================================================================
+// PAGE TYPES
+// ============================================================================
 
-export type HistoryTabProps = {
-    slug: string
-    userId: number
-}
-
-export type SettingsTabProps = {
-    slug: string
-    userId: number
-}
-
-// Page types
 export type OrderDetailPageProps = {
     params: Promise<{ slug: string, id: string }>
 }
@@ -104,7 +148,10 @@ export type LogDetailPageProps = {
     params: Promise<{ slug: string, id: string }>
 }
 
-// Order status types
+// ============================================================================
+// ORDER STATUS TYPES
+// ============================================================================
+
 export type ChangeOrderStatusButtonProps = {
     order: Order
     slug: string
@@ -125,9 +172,11 @@ export type ChangeOrderStatusData = {
     confirmStockRestore: boolean
 }
 
-// Action-related types
+// ============================================================================
+// ACTION-RELATED TYPES
+// ============================================================================
 
-export type StoreHeader = {
+export type StoreHeaderData = {
     id: number
     name: string
     description: string | null
@@ -138,24 +187,20 @@ export type StoreHeader = {
     } | null
 }
 
-export type GetStoreHeaderBySlugReturn = {
-    message: string
-    payload: StoreHeader | null
-    hasError: boolean
-}
+export type GetStoreHeaderBySlugReturn = ActionResult<StoreHeaderData | null>
 
-export type GetStoresFromSlugReturn = {
-    message: string
-    payload: Store & {
-        branches: (Branch & { stock: ProductStock[] })[],
-        products: (Product & { categories: Category[] })[],
-        balance: StoreBalance | null,
-        operational_settings: StoreOperationalSettings | null
-    } | null
-    hasError: boolean
-}
+export type GetStoresFromSlugReturn = ActionResult<Store & {
+    branches: (Branch & { stock: ProductStock[] })[]
+    products: (Product & { categories: Category[] })[]
+    balance: StoreBalance | null
+    operational_settings: StoreOperationalSettings | null
+} | null>
 
-export type UpdateOperationalSettingsActionPayload = {
+// ============================================================================
+// PAYLOAD TYPES (Consolidated using BaseStoreData)
+// ============================================================================
+
+export type UpdateOperationalSettingsPayload = {
     offers_delivery: boolean
     delivery_price: number
     free_delivery_minimum: number | null
@@ -172,16 +217,9 @@ export type UpdateAddressPayload = {
     country?: string
 }
 
-export type UpdateBasicInfoPayload = {
-    name: string
-    description?: string
-    subdomain: string
-}
+export type UpdateBasicInfoPayload = BaseStoreData
 
-export type UpdateStorePayload = {
-    name: string
-    description?: string
-    subdomain: string
+export type UpdateStorePayload = BaseStoreData & {
     contact_phone?: string
     contact_whatsapp?: string
     facebook_url?: string
@@ -189,7 +227,10 @@ export type UpdateStorePayload = {
     x_url?: string
 }
 
-// Store form helper types
+// ============================================================================
+// STORE FORM HELPER TYPES
+// ============================================================================
+
 export type ProcessedOpeningHour = {
     day: number
     start: string
@@ -207,12 +248,12 @@ export type ProcessedShippingMethod = {
 
 export type ProcessedPaymentMethod = string
 
-// Form sections types
+// ============================================================================
+// FORM SECTIONS TYPES
+// ============================================================================
+
 export interface AddressDisplayProps {
-    store: Store & {
-        branches: Branch[]
-        is_physical_store: boolean
-    }
+    store: StoreWithBranches & { is_physical_store: boolean }
     userId: number
 }
 
@@ -225,7 +266,7 @@ export type AddressFormValues = {
 }
 
 export interface AddressSectionProps {
-    store?: Store & { branches: Branch[] }
+    store?: StoreWithBranches
     mode: 'create' | 'edit'
 }
 
@@ -234,11 +275,7 @@ export interface BasicInfoDisplayProps {
     userId: number
 }
 
-export type BasicInfoFormValues = {
-    name: string
-    description: string
-    subdomain: string
-}
+export type BasicInfoFormValues = BaseStoreData
 
 export interface BasicInfoSectionProps {
     store?: Store
@@ -259,17 +296,16 @@ export interface BranchesOverviewDisplayProps {
 }
 
 export interface ContactDisplayProps {
-    store: Store & { branches: Branch[] }
+    store: StoreWithBranches
 }
 
 export interface ContactSectionProps {
-    store?: Store & { branches: Branch[] }
+    store?: StoreWithBranches
     mode: 'create' | 'edit'
 }
 
 export interface OperationalSettingsDisplayProps {
-    store: Store & {
-        operational_settings: StoreOperationalSettings | null
+    store: StoreWithSettings & {
         branches?: (Branch & {
             operational_settings: BranchOperationalSettings | null
             shipping_methods: BranchShippingMethod[]
@@ -278,17 +314,20 @@ export interface OperationalSettingsDisplayProps {
 }
 
 export interface SocialMediaDisplayProps {
-    store: Store & { operational_settings: StoreOperationalSettings | null, branches: Branch[] }
+    store: StoreWithBranchesAndSettings
 }
 
 export interface SocialMediaSectionProps {
-    store?: Store & { operational_settings: StoreOperationalSettings | null }
+    store?: StoreWithSettings
     mode: 'create' | 'edit'
 }
 
-// Section buttons types
+// ============================================================================
+// SECTION BUTTONS TYPES (Consolidated using ActionButtonProps)
+// ============================================================================
+
 export interface EditAddressButtonProps {
-    store: Store & { branches: Branch[] }
+    store: StoreWithBranches
     userId: number
     className?: string
     onSuccess?: () => void
@@ -302,23 +341,21 @@ export interface EditBasicInfoButtonProps {
 }
 
 export interface EditContactButtonProps {
-    store: Store & { branches: Branch[] }
+    store: StoreWithBranches
     className?: string
     onSuccess?: () => void
 }
 
 export interface EditSocialMediaButtonProps {
-    store: Store & { operational_settings: StoreOperationalSettings | null }
+    store: StoreWithSettings
     className?: string
     onSuccess?: () => void
 }
 
-// Tabs types
-export type OrdersTabProps = {
-    slug: string
-}
+// ============================================================================
+// COMPONENT TYPES
+// ============================================================================
 
-// Components types
 export type AttentionDateType = {
     date: string
     startTime: dayjs.Dayjs
@@ -326,7 +363,7 @@ export type AttentionDateType = {
     days: string[]
 }
 
-export type ShippingMethod = {
+export type CreateStoreShippingMethod = {
     providers: string[]
     minPurchase: string
     freeShippingMin: string
@@ -342,10 +379,10 @@ export type AttentionDateFormPanelProps = {
 }
 
 export type ShippingMethodFormPanelProps = {
-    method: ShippingMethod
+    method: CreateStoreShippingMethod
     index: number
     onCancel: (index: number) => void
-    onSave: (index: number, method: ShippingMethod) => void
+    onSave: (index: number, method: CreateStoreShippingMethod) => void
 }
 
 export type StepIndicatorProps = {
@@ -358,23 +395,14 @@ export type StepIndicatorProps = {
 export type CreateStoreFormProps = {
     setStep: (step: number) => void
     step: number
-    onSubmitAll: (data: CreateStoreFormValues) => Promise<{ error: boolean; message: string; payload?: unknown } | undefined>
+    onSubmitAll: (data: CreateStoreFormValues) => Promise<ActionResult>
 }
 
 export type CreateStoreFormValues = {
-    basic_info: {
-        name: string
-        description?: string
-        subdomain: string
+    basic_info: BaseStoreData & {
         logo?: File | string | null
     }
-    address_info: {
-        is_physical_store: boolean
-        address?: string
-        city?: string
-        province?: string
-        country?: string
-    }
+    address_info: AddressFormValues
     contact_info: {
         contact_phone: string
         contact_email: string
@@ -409,9 +437,7 @@ export type DeliverySwitchProps = {
 
 export type EditOperationalSettingsButtonProps = {
     storeId: number
-    store: Store & {
-        operational_settings?: StoreOperationalSettings | null
-    }
+    store: StoreWithSettings
     onSuccess?: () => void
 }
 
@@ -424,10 +450,7 @@ export type OperationalSettingsFormPayload = {
     payment_methods: PaymentMethod[]
 }
 
-export type EditStorePayload = {
-    name: string
-    description?: string
-    subdomain: string
+export type EditStorePayload = BaseStoreData & {
     contact_phone?: string
     contact_whatsapp?: string
     facebook_url?: string
@@ -440,10 +463,7 @@ export type EditStorePayload = {
     country?: string
 }
 
-export type MobileSidebarProps = {
-    slug: string
-    userId: number
-}
+export type MobileSidebarProps = BaseTabProps
 
 export type NewStoreCardProps = {
     userId: number
@@ -480,10 +500,7 @@ export type StoreCardLogoProps = {
     className?: string
 }
 
-export type StoreFormData = {
-    name: string
-    description?: string
-    subdomain: string
+export type StoreFormData = BaseStoreData & {
     logo?: string
     contact_phone?: string
     contact_whatsapp?: string
@@ -512,10 +529,7 @@ export type StoreFormButtonProps = {
     className?: string
     // Props específicas para editar
     slug?: string
-    store?: Store & {
-        operational_settings: StoreOperationalSettings | null
-        branches: Branch[]
-    }
+    store?: StoreWithBranchesAndSettings
 }
 
 export type StoreHeaderClientProps = {
@@ -526,17 +540,8 @@ export type StoreHeaderProps = {
     slug: string
 }
 
-export type StoreHeaderData = {
-    id: number
-    name: string
-    description: string | null
-    logo: string | null
-    banner: string | null
-}
-
 export type StoreInformationFormProps = {
-    store: Store & {
-        operational_settings: StoreOperationalSettings | null
+    store: StoreWithBranchesAndSettings & {
         branches: (Branch & { operational_settings: BranchOperationalSettings | null, opening_hours: BranchOpeningHour[] })[]
     }
     canManageStore?: boolean
@@ -586,16 +591,19 @@ export type UpdatePricesButtonProps = {
     storeId: number
 }
 
-export type UpdateType = "fijo" | "porcentaje"
+export type PriceUpdateType = "fijo" | "porcentaje"
 
-// Data layer types
+// ============================================================================
+// DATA LAYER TYPES
+// ============================================================================
+
 export type ProcessedCreateStoreData = CreateStoreFormValues & {
     processedOpeningHours: ProcessedOpeningHour[]
     processedShippingMethods: ProcessedShippingMethod[]
     processedPaymentMethods: ProcessedPaymentMethod[]
 }
 
-export type DataType = {
+export type StoreUpdateData = {
     contact_phone?: string
     contact_whatsapp?: string
     facebook_url?: string
@@ -607,16 +615,10 @@ export type DataType = {
     country?: string
 }
 
-export type UpdateOperationalSettingsPayload = {
-    offers_delivery: boolean
-    delivery_price: number
-    free_delivery_minimum: number | null
-    delivery_radius_km: number
-    payment_methods: PaymentMethod[]
-    minimum_order_amount: number
-}
+// ============================================================================
+// SCHEMA TYPE INFERENCES
+// ============================================================================
 
-// Schema type inferences
 export type EditOperationalSettingsData = yup.InferType<typeof editOperationalSettingsSchema>
 export type EditSocialMediaData = yup.InferType<typeof editSocialMediaSchema>
 export type EditContactData = yup.InferType<typeof editContactSchema>

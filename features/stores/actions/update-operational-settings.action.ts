@@ -4,9 +4,9 @@ import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
 import { updateOperationalSettingsData } from "@/features/stores/data"
-import { UpdateOperationalSettingsActionPayload } from "@/features/stores/types"
+import { UpdateOperationalSettingsPayload } from "@/features/stores/types"
 
-export async function updateOperationalSettingsAction(storeId: number, payload: UpdateOperationalSettingsActionPayload) {
+export async function updateOperationalSettingsAction(storeId: number, payload: UpdateOperationalSettingsPayload) {
     return actionWrapper(async () => {
         const { hasError, payload: updatedPayload, message } = await updateOperationalSettingsData(storeId, payload)
 

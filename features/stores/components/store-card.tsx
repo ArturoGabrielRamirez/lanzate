@@ -12,11 +12,11 @@ import { DropDrawer, DropDrawerContent, DropDrawerGroup, DropDrawerItem, DropDra
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty"
 import { deleteStoreAction } from "@/features/stores/actions"
 import { StoreCardLogo } from "@/features/stores/components"
-import { StoreCardProps } from "@/features/stores/types"
+import { StoreCardComponentProps } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 
-function StoreCard({ store, userId }: StoreCardProps) {
+function StoreCard({ store, userId }: StoreCardComponentProps) {
     const t = useTranslations("store.store-card")
     const [isDeleting, setIsDeleting] = useState(false)
 
