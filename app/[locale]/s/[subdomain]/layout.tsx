@@ -4,7 +4,7 @@ import { Header } from "@/features/store-landing/components"
 import Footer from "@/features/store-landing/components/footer";
 import MainContainer from "@/features/store-landing/components/main-container";
 import StoreProvider from "@/features/store-landing/components/store-provider";
-import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
+import { getStoreWithProductsAction } from "@/features/stores/actions/get-store-with-products.action";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -21,7 +21,7 @@ export default async function Layout({ children, params }: LayoutProps) {
 
     const { subdomain } = await params;
 
-    const { payload: storeData, error } = await getStoreWithProducts(
+    const { payload: storeData, error } = await getStoreWithProductsAction(
         subdomain,
         undefined,
         undefined,

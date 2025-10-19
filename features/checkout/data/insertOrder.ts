@@ -3,7 +3,7 @@
 import { CartItemType } from "@/features/cart/types"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
-import { getStoreBySubdomain } from "@/features/subdomain/actions/getStoreBySubdomain"
+import { getStoreBySubdomainAction } from "@/features/stores/actions/get-store-by-subdomain.action"
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 import { OrderStatus, PaymentMethod } from "@prisma/client"
@@ -55,7 +55,7 @@ export async function insertOrder({
 
         if (userError || !user) throw new Error(userMessage)
 
-        const { payload: store, error: storeError, message: storeMessage } = await getStoreBySubdomain(subdomain)
+        const { payload: store, error: storeError, message: storeMessage } = await getStoreBySubdomainAction(subdomain)
 
         if (storeError || !store) throw new Error(storeMessage)
 

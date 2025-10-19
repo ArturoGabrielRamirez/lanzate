@@ -3,11 +3,11 @@ import { Title } from "@/features/layout/components"
 import PageContainer from "@/features/layout/components/page-container"
 import AddToCartButton from "@/features/store-landing/components/add-to-cart-button"
 import LikeButton from "@/features/store-landing/components/like-button"
-import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"
+import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
 import { Category } from "@prisma/client"
 import { Image, Share, ShoppingBag } from "lucide-react"
 import Link from "next/link"
-import VariantDetailClient from "@/features/subdomain/components/variant-detail-client"
+import VariantDetailClient from "@/features/products/components/variant-detail-client"
 import type { Product, ProductVariant, Color } from "@prisma/client"
 
 type Props = {
@@ -17,7 +17,7 @@ type Props = {
 export default async function ProductVariantDetailsPage({ params }: Props) {
     const { id, subdomain, variant } = await params
 
-    const { payload: product, error, message } = await getProductDetails(id, subdomain, variant)
+    const { payload: product, error, message } = await getProductDetailsAction(id, subdomain, variant)
 
     if (error || !product) {
         return (

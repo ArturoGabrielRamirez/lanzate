@@ -1,4 +1,4 @@
-import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
+import { getStoreWithProductsAction } from "@/features/stores/actions/get-store-with-products.action";
 import ProductCard from "./product-card";
 import type { Product, ProductVariant } from "@prisma/client";
 import ProductListContainer from "./product-list-container";
@@ -16,7 +16,7 @@ type Props = {
 
 async function ProductList({ subdomain, category, sort, search, min, max, limit, page }: Props) {
 
-    const { payload: storeData, error } = await getStoreWithProducts(subdomain, category, sort, search, min, max, limit, page);
+    const { payload: storeData, error } = await getStoreWithProductsAction(subdomain, category, sort, search, min, max, limit, page);
 
     if (error || !storeData) {
         return <div>Tienda no encontrada</div>;

@@ -3,7 +3,7 @@ import { Title } from "@/features/layout/components"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { SaleInterface } from "@/features/sale/components"
 import { getTranslations } from "next-intl/server"
-import { getStoreBySubdomain } from "@/features/subdomain/actions/getStoreBySubdomain"
+import { getStoreBySubdomainAction } from "@/features/stores/actions/get-store-by-subdomain.action"
 
 type Props = {
     params: Promise<{ slug: string, branch: string }>
@@ -19,7 +19,7 @@ async function SaleStorePage({ params }: Props) {
         return console.error(userMessage)
     }
 
-    const { payload: store, error: storeError, message: storeMessage } = await getStoreBySubdomain(slug)
+    const { payload: store, error: storeError, message: storeMessage } = await getStoreBySubdomainAction(slug)
 
     if (storeError || !store) {
         return console.error(storeMessage)

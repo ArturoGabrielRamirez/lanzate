@@ -1,6 +1,6 @@
 import ProductListContainer from "@/features/store-landing/components/product-list-container"
 import ProductCard from "@/features/store-landing/components/product-card"
-import { getRelatedProducts } from "@/features/subdomain/actions/getRelatedProducts"
+import { getRelatedProducts } from "@/features/products/actions/getRelatedProducts"
 import type { Product } from "@prisma/client"
 
 type Props = {

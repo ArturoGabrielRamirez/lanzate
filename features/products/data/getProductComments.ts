@@ -4,7 +4,7 @@
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 
-export async function getProductComments(productId: number) {
+export async function getProductCommentsData(productId: number) {
     return actionWrapper(async () => {
 
         /* const prisma = new PrismaClient() */

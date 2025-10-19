@@ -3,9 +3,9 @@
 import { formatErrorResponse } from "@/utils/lib"
 import { selectProductByIdAndSubdomain } from "../data/selectProductByIdAndSubdomain"
 import { selectProductByIdsAndSubdomain } from "../data/selectProductByIdsAndSubdomain"
-import { GetProductDetailsReturn } from "../types/types"
+import { GetProductDetailsReturn } from "@/features/products/type/types"
 
-export async function getProductDetails(productId: string, subdomain: string, variantId?: string): Promise<GetProductDetailsReturn> {
+export async function getProductDetailsAction(productId: string, subdomain: string, variantId?: string): Promise<GetProductDetailsReturn> {
     try {
         const parsedProductId = parseInt(productId)
         const parsedVariantId = variantId ? parseInt(variantId) : undefined

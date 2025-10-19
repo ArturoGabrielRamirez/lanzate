@@ -13,7 +13,6 @@ import { EmailStatusBanner } from "@/features/auth/components/index"
 import { PageContainer } from "@/features/layout/components"
 import { Title } from "@/features/layout/components"
 
-
 export function AccountPageClient({ user: initialUser, translations: t }: AccountPageClientProps) {
     const { user, immediateData, handleAvatarUpdate, handleProfileUpdate } = useUserData(initialUser)
     const { deletionStatus, isDeletionLoading, fetchDeletionStatus, hasInitialized } = useDeletionStatus()
