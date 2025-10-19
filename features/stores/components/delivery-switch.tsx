@@ -6,11 +6,7 @@ import { useFormContext } from "react-hook-form"
 
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-
-type DeliverySwitchProps = {
-    defaultValue?: boolean
-    onDeliveryChange?: (enabled: boolean) => void
-}
+import { DeliverySwitchProps } from "@/features/stores/types"
 
 function DeliverySwitch({ defaultValue = false, onDeliveryChange }: DeliverySwitchProps) {
     const [offersDelivery, setOffersDelivery] = useState(defaultValue)

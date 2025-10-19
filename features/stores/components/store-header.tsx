@@ -8,19 +8,9 @@ import { Card, CardAction, CardContent } from "@/components/ui/card"
 import { Title } from "@/features/layout/components"
 import { getStoreHeaderBySlugAction, updateStoreBannerAction, updateStoreLogoAction } from "@/features/stores/actions"
 import { StoreBannerEditor, StoreLogoEditor } from "@/features/stores/components"
-
-type StoreHeaderProps = {
-    slug: string
-}
+import { StoreHeaderProps, StoreHeaderData } from "@/features/stores/types"
 
 function StoreHeader({ slug }: StoreHeaderProps) {
-    type StoreHeaderData = {
-        id: number
-        name: string
-        description: string | null
-        logo: string | null
-        banner: string | null
-    }
     const [store, setStore] = useState<StoreHeaderData | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)

@@ -1,7 +1,6 @@
 "use client"
 
-import { Category, Product } from "@prisma/client"
-import { RowModel } from "@tanstack/react-table"
+import { Category } from "@prisma/client"
 import { useTranslations } from "next-intl"
 import { useState, useEffect } from "react"
 
@@ -11,14 +10,8 @@ import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { getProductsCountByCategoryAction } from "@/features/products/actions/getProductsCountByCategory"
 import { updateProductsPricesAction } from "@/features/products/actions/updateProductsPrices"
 import { getCategories } from "@/features/store-landing/actions/getCategories"
+import { UpdatePricesButtonProps, UpdateType } from "@/features/stores/types"
 import { formatErrorResponse } from "@/utils/lib"
-
-type UpdatePricesButtonProps = {
-    selectedRows: RowModel<Product & { categories: Category[] }>
-    storeId: number
-}
-
-type UpdateType = "fijo" | "porcentaje"
 
 function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) {
     const [categories, setCategories] = useState<Category[]>([])

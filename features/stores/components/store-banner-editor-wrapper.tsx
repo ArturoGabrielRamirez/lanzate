@@ -6,12 +6,7 @@ import { toast } from "sonner"
 import { CardAction } from "@/components/ui/card"
 import { updateStoreBannerAction } from "@/features/stores/actions"
 import { StoreBannerEditor } from "@/features/stores/components"
-
-type StoreBannerEditorWrapperProps = {
-    currentBanner: string | null
-    storeName: string
-    storeId: number
-}
+import { StoreBannerEditorWrapperProps } from "@/features/stores/types"
 
 function StoreBannerEditorWrapper({ currentBanner, storeName, storeId }: StoreBannerEditorWrapperProps) {
     const [banner, setBanner] = useState<string | null>(currentBanner)

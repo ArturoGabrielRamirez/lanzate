@@ -7,12 +7,7 @@ import { useFormContext } from "react-hook-form"
 
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-
-
-type PaymentMethodsSwitchesProps = {
-    defaultMethods?: PaymentMethod[]
-    onPaymentMethodsChange?: (methods: PaymentMethod[]) => void
-}
+import { PaymentMethodsSwitchesProps } from "@/features/stores/types"
 
 function PaymentMethodsSwitches({ defaultMethods = [PaymentMethod.CASH], onPaymentMethodsChange }: PaymentMethodsSwitchesProps) {
     const [selectedPaymentMethods, setSelectedPaymentMethods] = useState<PaymentMethod[]>(defaultMethods)

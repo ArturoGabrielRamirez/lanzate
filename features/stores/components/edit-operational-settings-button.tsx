@@ -2,32 +2,16 @@
 
 //puede borrarse
 
-import { PaymentMethod, Store, StoreOperationalSettings } from "@prisma/client"
+import { PaymentMethod } from "@prisma/client"
 import { CheckIcon, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
 import { updateOperationalSettingsAction } from "@/features/stores/actions"
+import { EditOperationalSettingsButtonProps, OperationalSettingsFormPayload } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-
-type EditOperationalSettingsButtonProps = {
-    storeId: number
-    store: Store & {
-        operational_settings?: StoreOperationalSettings | null
-    }
-    onSuccess?: () => void
-}
-
-type OperationalSettingsFormPayload = {
-    offers_delivery: boolean
-    delivery_price?: string
-    free_delivery_minimum?: string
-    delivery_radius_km?: string
-    minimum_order_amount: string
-    payment_methods: PaymentMethod[]
-}
 
 
 function EditOperationalSettingsButton({ storeId, store, onSuccess }: EditOperationalSettingsButtonProps) {

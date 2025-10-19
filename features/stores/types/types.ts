@@ -1,9 +1,11 @@
 import { Order, Store, StoreOperationalSettings, Branch, Product, Category, StoreBalance, ProductStock, PaymentMethod, BranchOperationalSettings, BranchOpeningHour, BranchShippingMethod } from "@prisma/client"
+import { RowModel } from "@tanstack/react-table"
+import dayjs from "dayjs"
 import { ReactNode } from "react"
 import * as yup from "yup"
 
 import { DashboardStore } from "@/features/dashboard/types"
-import { CreateStoreFormValues } from "@/features/stores/components"
+import { ResponseType } from "@/features/layout/types"
 import { basicInfoSchema } from "@/features/stores/schemas"
 
 // Store-related types
@@ -13,9 +15,6 @@ export type StoreCardProps = {
     isEmpty?: boolean
 }
 
-export type NewStoreCardProps = {
-    variant?: "empty" | "add-more"
-}
 
 export type BasicInfoFormType = yup.InferType<typeof basicInfoSchema>
 
@@ -64,7 +63,7 @@ export type DeleteStoreButtonProps = {
 export type EditStoreButtonProps = {
     userId: number
     slug: string
-    store: Store & { 
+    store: Store & {
         operational_settings: StoreOperationalSettings | null
         branches: Branch[]
     }
@@ -215,7 +214,7 @@ export type ProcessedPaymentMethod = string
 
 // Form sections types
 export interface AddressDisplayProps {
-    store: Store & { 
+    store: Store & {
         branches: Branch[]
         is_physical_store: boolean
     }
@@ -323,3 +322,272 @@ export interface EditSocialMediaButtonProps {
 export type OrdersTabProps = {
     slug: string
 }
+
+// Components types
+export type AttentionDateType = {
+    date: string
+    startTime: dayjs.Dayjs
+    endTime: dayjs.Dayjs
+    days: string[]
+}
+
+export type ShippingMethod = {
+    providers: string[]
+    minPurchase: string
+    freeShippingMin: string
+    estimatedTime: string
+    deliveryPrice?: string
+}
+
+export type AttentionDateFormPanelProps = {
+    date: AttentionDateType
+    onCancel: (index: number) => void
+    onSave: (index: number, startTime: dayjs.Dayjs, endTime: dayjs.Dayjs, days: string[]) => void
+    index: number
+}
+
+export type ShippingMethodFormPanelProps = {
+    method: ShippingMethod
+    index: number
+    onCancel: (index: number) => void
+    onSave: (index: number, method: ShippingMethod) => void
+}
+
+export type StepIndicatorProps = {
+    step: number
+    currentStep: number
+    onStepClick: (step: number) => void
+    disabled: boolean
+}
+
+export type CreateStoreFormProps = {
+    setStep: (step: number) => void
+    step: number
+}
+
+export type CreateStoreFormValues = {
+    basic_info: {
+        name: string
+        description?: string
+        subdomain: string
+        logo?: File | string | null
+    }
+    address_info: {
+        is_physical_store: boolean
+        address?: string
+        city?: string
+        province?: string
+        country?: string
+    }
+    contact_info: {
+        contact_phone: string
+        contact_email: string
+        facebook_url?: string
+        instagram_url?: string
+        x_url?: string
+    }
+    settings: {
+        is_open_24_hours: boolean
+        attention_dates?: { days?: string[]; startTime?: string; endTime?: string }[]
+    }
+    shipping_info: {
+        offers_delivery: boolean
+        methods?: { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice: string }[]
+    }
+    payment_info: {
+        payment_methods: string[]
+    }
+}
+
+export type CreateStoreContextType = {
+    values: Partial<CreateStoreFormValues>
+    setValues: (partial: Partial<CreateStoreFormValues>) => void
+    isStepValid: Record<number, boolean>
+    setStepValid: (step: number, valid: boolean) => void
+}
+
+export type DeliverySwitchProps = {
+    defaultValue?: boolean
+    onDeliveryChange?: (enabled: boolean) => void
+}
+
+export type EditOperationalSettingsButtonProps = {
+    storeId: number
+    store: Store & {
+        operational_settings?: StoreOperationalSettings | null
+    }
+    onSuccess?: () => void
+}
+
+export type OperationalSettingsFormPayload = {
+    offers_delivery: boolean
+    delivery_price?: string
+    free_delivery_minimum?: string
+    delivery_radius_km?: string
+    minimum_order_amount: string
+    payment_methods: PaymentMethod[]
+}
+
+export type EditStorePayload = {
+    name: string
+    description?: string
+    subdomain: string
+    contact_phone?: string
+    contact_whatsapp?: string
+    facebook_url?: string
+    instagram_url?: string
+    x_url?: string
+    is_physical_store?: boolean
+    address?: string
+    city?: string
+    province?: string
+    country?: string
+}
+
+export type MobileSidebarProps = {
+    slug: string
+    userId: number
+}
+
+export type NewStoreCardProps = {
+    userId: number
+    variant?: "empty" | "add-more"
+}
+
+export type PaymentMethodsSwitchesProps = {
+    defaultMethods?: PaymentMethod[]
+    onPaymentMethodsChange?: (methods: PaymentMethod[]) => void
+}
+
+export type SectionContainerProps = {
+    children: React.ReactNode
+    title: string
+    className?: string
+    moreLink?: string
+}
+
+export type StoreBannerEditorWrapperProps = {
+    currentBanner: string | null
+    storeName: string
+    storeId: number
+}
+
+export type StoreBannerEditorProps = {
+    currentBanner: string | null
+    storeName: string
+    onBannerUpdate: (newBannerUrl: string | null) => void
+}
+
+export type StoreCardLogoProps = {
+    logo: string
+    name: string
+    className?: string
+}
+
+export type StoreFormData = {
+    name: string
+    description?: string
+    subdomain: string
+    logo?: string
+    contact_phone?: string
+    contact_whatsapp?: string
+    facebook_url?: string
+    instagram_url?: string
+    x_url?: string
+    is_physical_store?: boolean
+    address?: string
+    city?: string
+    province?: string
+    country?: string
+}
+
+export type StoreFormButtonProps = {
+    mode: 'create' | 'edit'
+    userId: number
+    schema: yup.ObjectSchema<Record<string, unknown>>
+    action: (payload: StoreFormData) => Promise<ResponseType<unknown>>
+    messages: {
+        success: string
+        error: string
+        loading: string
+    }
+    // Props específicas para crear
+    canCreate?: boolean
+    className?: string
+    // Props específicas para editar
+    slug?: string
+    store?: Store & {
+        operational_settings: StoreOperationalSettings | null
+        branches: Branch[]
+    }
+}
+
+export type StoreHeaderClientProps = {
+    store: Pick<Store, "id" | "name" | "logo" | "subdomain" | "slug"> & { _count: { products: number } }
+}
+
+export type StoreHeaderProps = {
+    slug: string
+}
+
+export type StoreHeaderData = {
+    id: number
+    name: string
+    description: string | null
+    logo: string | null
+    banner: string | null
+}
+
+export type StoreInformationFormProps = {
+    store: Store & {
+        operational_settings: StoreOperationalSettings | null
+        branches: (Branch & { operational_settings: BranchOperationalSettings | null, opening_hours: BranchOpeningHour[] })[]
+    }
+    canManageStore?: boolean
+    children?: React.ReactNode
+    userId: number
+}
+
+export type StoreLogoEditorWrapperProps = {
+    currentLogo: string | null
+    storeName: string
+    storeId: number
+}
+
+export type StoreLogoOption = {
+    id: string
+    url: string
+    provider: string
+    label: string
+    icon: string
+    isCurrentlyUsed?: boolean
+}
+
+export type StoreLogoEditorProps = {
+    currentLogo: string | null
+    storeName: string
+    onLogoUpdate: (newLogoUrl: string | null) => void
+}
+
+export type StoreLogoInlineEditorProps = {
+    currentLogo: string | null
+    storeName: string
+    onLogoUpdate: (newLogoUrl: string | null) => void
+}
+
+export type StoreHeaderTinyWidgetsProps = {
+    slug: string
+}
+
+export type TinyWidgetProps = {
+    title: string
+    children: React.ReactNode
+    href: string
+}
+
+export type UpdatePricesButtonProps = {
+    selectedRows: RowModel<Product & { categories: Category[] }>
+    storeId: number
+}
+
+export type UpdateType = "fijo" | "porcentaje"

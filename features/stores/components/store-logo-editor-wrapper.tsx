@@ -5,12 +5,7 @@ import { toast } from "sonner"
 
 import { updateStoreLogoAction } from "@/features/stores/actions"
 import { StoreLogoEditor } from "@/features/stores/components"
-
-type StoreLogoEditorWrapperProps = {
-    currentLogo: string | null
-    storeName: string
-    storeId: number
-}
+import { StoreLogoEditorWrapperProps } from "@/features/stores/types"
 
 function StoreLogoEditorWrapper({ currentLogo, storeName, storeId }: StoreLogoEditorWrapperProps) {
     const [logo, setLogo] = useState<string | null>(currentLogo)

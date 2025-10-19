@@ -5,23 +5,7 @@ import { useTranslations } from "next-intl"
 import { updateStoreAction } from "@/features/stores/actions"
 import { StoreFormButton } from "@/features/stores/components"
 import { editSchema } from "@/features/stores/schemas"
-import { EditStoreButtonProps } from "@/features/stores/types"
-
-type EditStorePayload = {
-    name: string
-    description?: string
-    subdomain: string
-    contact_phone?: string
-    contact_whatsapp?: string
-    facebook_url?: string
-    instagram_url?: string
-    x_url?: string
-    is_physical_store?: boolean
-    address?: string
-    city?: string
-    province?: string
-    country?: string
-}
+import { EditStoreButtonProps, EditStorePayload } from "@/features/stores/types"
 
 function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
 

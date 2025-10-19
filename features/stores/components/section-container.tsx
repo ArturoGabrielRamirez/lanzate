@@ -1,16 +1,10 @@
 import { ArrowRight } from "lucide-react"
 
+import { SectionContainerProps } from "@/features/stores/types"
 import { Link } from "@/i18n/naviation"
 import { cn } from "@/lib/utils"
 
-type Props = {
-    children: React.ReactNode
-    title: string
-    className?: string
-    moreLink?: string
-}
-
-function SectionContainer({ children, title, className, moreLink }: Props) {
+function SectionContainer({ children, title, className, moreLink }: SectionContainerProps) {
     return (
         <div className={cn(className)}>
             <div className="flex items-center justify-between">

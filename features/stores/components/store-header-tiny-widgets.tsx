@@ -2,10 +2,7 @@ import { Box, Rocket, ShoppingCart } from "lucide-react"
 
 import { ItemGroup } from "@/features/shadcn/components/item"
 import { TinyWidget } from "@/features/stores/components"
-
-interface StoreHeaderTinyWidgetsProps {
-    slug: string
-}
+import { StoreHeaderTinyWidgetsProps } from "@/features/stores/types"
 
 function StoreHeaderTinyWidgets({ slug }: StoreHeaderTinyWidgetsProps) {
     return (

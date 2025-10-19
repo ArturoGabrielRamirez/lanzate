@@ -5,12 +5,8 @@ import { Plus } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Empty, EmptyHeader, EmptyTitle, EmptyMedia, EmptyDescription, EmptyContent } from "@/features/shadcn/components/empty"
 import { CreateStoreButton } from "@/features/stores/components"
+import { NewStoreCardProps } from "@/features/stores/types"
 /* import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new" */
-
-interface NewStoreCardProps {
-    userId: number
-    variant?: "empty" | "add-more"
-}
 
 function NewStoreCard({ userId, variant = "empty" }: NewStoreCardProps) {
 

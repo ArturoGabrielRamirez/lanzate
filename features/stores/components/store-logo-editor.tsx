@@ -10,23 +10,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from "@/components/ui/label"
 import CameraComponent from '@/features/auth/components/avatar/camera-component'
 import { useCamera } from '@/features/auth/hooks/use-camera'
+import { StoreLogoOption, StoreLogoEditorProps } from '@/features/stores/types'
 import { cn } from "@/lib/utils"
-
-
-interface StoreLogoOption {
-  id: string
-  url: string
-  provider: string
-  label: string
-  icon: string
-  isCurrentlyUsed?: boolean
-}
-
-interface StoreLogoEditorProps {
-  currentLogo: string | null
-  storeName: string
-  onLogoUpdate: (newLogoUrl: string | null) => void
-}
 
 function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEditorProps) {
   const [isOpen, setIsOpen] = useState(false)

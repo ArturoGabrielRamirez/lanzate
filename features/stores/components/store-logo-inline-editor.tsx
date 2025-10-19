@@ -8,22 +8,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { useCamera } from '@/features/auth/hooks/use-camera'
+import { StoreLogoOption, StoreLogoInlineEditorProps } from '@/features/stores/types'
 import { cn } from "@/lib/utils"
-
-type StoreLogoOption = {
-  id: string
-  url: string
-  provider: string
-  label: string
-  icon: string
-  isCurrentlyUsed?: boolean
-}
-
-type StoreLogoInlineEditorProps = {
-  currentLogo: string | null
-  storeName: string
-  onLogoUpdate: (newLogoUrl: string | null) => void
-}
 
 function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoInlineEditorProps) {
   const [showEditor, setShowEditor] = useState(false)

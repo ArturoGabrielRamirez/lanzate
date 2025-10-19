@@ -10,13 +10,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { TooltipContent } from '@/components/ui/tooltip'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
 import { useCamera } from '@/features/auth/hooks/use-camera'
+import { StoreBannerEditorProps } from '@/features/stores/types'
 import { IconButton } from '@/src/components/ui/shadcn-io/icon-button'
-
-type StoreBannerEditorProps = {
-    currentBanner: string | null
-    storeName: string
-    onBannerUpdate: (newBannerUrl: string | null) => void
-}
 
 function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: StoreBannerEditorProps) {
     const [isOpen, setIsOpen] = useState(false)

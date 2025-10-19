@@ -1,14 +1,9 @@
 "use client"
 
-import { Store } from "@prisma/client"
-
 import { PageHeader } from "@/features/layout/components"
 import { StoreCardLogo } from "@/features/stores/components"
+import { StoreHeaderClientProps } from "@/features/stores/types"
 import { usePathname } from "@/i18n/naviation"
-
-interface StoreHeaderClientProps {
-    store: Pick<Store, "id" | "name" | "logo" | "subdomain" | "slug"> & { _count: { products: number } }
-}
 
 function StoreHeaderClient({ store }: StoreHeaderClientProps) {
 
