@@ -2,7 +2,7 @@
 
 import { Store, StoreOperationalSettings, Branch, BranchOperationalSettings, BranchOpeningHour } from "@prisma/client"
 
-import { BasicInfoDisplay, AddressDisplay, ContactDisplay, SocialMediaDisplay, BranchesOverviewDisplay } from "@/features/stores/components/form-sections"
+import { BasicInfoDisplay, AddressDisplay, ContactDisplay, SocialMediaDisplay, BranchesOverviewDisplay } from "@/features/stores/components"
 
 interface StoreInformationFormProps {
     store: Store & {

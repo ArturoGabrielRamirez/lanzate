@@ -6,9 +6,7 @@ import { toast } from "sonner"
 
 import { Card, CardAction, CardContent } from "@/components/ui/card"
 import { Title } from "@/features/layout/components"
-import { getStoreHeaderBySlugAction } from "@/features/stores/actions/get-store-header-by-slug.action"
-import { updateStoreBannerAction } from "@/features/stores/actions/update-store-banner.action"
-import { updateStoreLogoAction } from "@/features/stores/actions/update-store-logo.action"
+import { getStoreHeaderBySlugAction, updateStoreBannerAction, updateStoreLogoAction } from "@/features/stores/actions"
 import { StoreBannerEditor, StoreLogoEditor } from "@/features/stores/components"
 
 type StoreHeaderProps = {

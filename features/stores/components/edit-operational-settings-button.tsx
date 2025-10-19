@@ -8,7 +8,7 @@ import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
-import { updateOperationalSettingsAction } from "@/features/stores/actions/update-operational-settings.action"
+import { updateOperationalSettingsAction } from "@/features/stores/actions"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 

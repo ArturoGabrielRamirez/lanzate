@@ -3,8 +3,8 @@
 import { PaymentMethod, Prisma } from '@prisma/client'
 import randomstring from "randomstring"
 
-import { CreateStoreFormValues } from '@/features/stores/components/create-store-button-new'
-import type { ProcessedOpeningHour, ProcessedPaymentMethod, ProcessedShippingMethod } from '@/features/stores/utils/store-form-helpers'
+import { CreateStoreFormValues } from '@/features/stores/components'
+import type { ProcessedOpeningHour, ProcessedPaymentMethod, ProcessedShippingMethod } from '@/features/stores/utils'
 import { prisma } from "@/utils/prisma"
 
 type ProcessedCreateStoreData = CreateStoreFormValues & {

@@ -1,1 +1,1 @@
-export * from "@/features/stores/types/"
+export * from "@/features/stores/types/types"

@@ -4,8 +4,8 @@ import { useState } from "react"
 import { toast } from "sonner"
 
 import { CardAction } from "@/components/ui/card"
-import { updateStoreBannerAction } from "@/features/stores/actions/update-store-banner.action"
-import { StoreBannerEditor } from "@/features/stores/components/store-banner-editor"
+import { updateStoreBannerAction } from "@/features/stores/actions"
+import { StoreBannerEditor } from "@/features/stores/components"
 
 type StoreBannerEditorWrapperProps = {
     currentBanner: string | null

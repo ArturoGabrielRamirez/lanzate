@@ -1,6 +1,6 @@
-import * as yup from "yup"
-import { ReactNode } from "react"
 import { Order, Store, StoreOperationalSettings, Branch } from "@prisma/client"
+import { ReactNode } from "react"
+import * as yup from "yup"
 
 import { DashboardStore } from "@/features/dashboard/types"
 import { basicInfoSchema } from "@/features/stores/schemas"

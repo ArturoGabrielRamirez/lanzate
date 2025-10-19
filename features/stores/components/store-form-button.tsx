@@ -10,8 +10,7 @@ import * as yup from 'yup'
 import { Accordion } from "@/components/ui/accordion"
 import { ButtonWithPopup } from "@/features/layout/components"
 import { ResponseType } from "@/features/layout/types"
-import { BasicInfoSection, AddressSection, ContactSection, SocialMediaSection } from "@/features/stores/components/form-sections"
-import { StoreLogoInlineEditor } from "@/features/stores/components/store-logo-inline-editor"
+import { BasicInfoSection, AddressSection, ContactSection, SocialMediaSection, StoreLogoInlineEditor } from "@/features/stores/components"
 import { cn } from "@/lib/utils"
 
 

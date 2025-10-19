@@ -2,9 +2,9 @@
 
 import { useTranslations } from "next-intl"
 
-import { updateStoreAction } from "@/features/stores/actions/update-store.action"
+import { updateStoreAction } from "@/features/stores/actions"
 import { StoreFormButton } from "@/features/stores/components"
-import { editSchema } from "@/features/stores/schemas/store-schema"
+import { editSchema } from "@/features/stores/schemas"
 import { EditStoreButtonProps } from "@/features/stores/types"
 
 type EditStorePayload = {
