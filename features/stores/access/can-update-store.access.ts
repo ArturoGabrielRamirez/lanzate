@@ -1,7 +1,7 @@
 "use server"
 
 import { getUserById } from "@/features/layout/data/getUserById"
-import { selectStoreBySlug } from "../data/selectStoreBySlug"
+import { selectStoreBySlug } from "@/features/stores/data/selectStoreBySlug"
 
 export async function canUpdateStore(slug: string, userId: number) {
     try {
@@ -17,6 +17,7 @@ export async function canUpdateStore(slug: string, userId: number) {
 
         return true
     } catch (error) {
+        console.error("Error in canUpdateStore:", error)
         return false
     }
 }
