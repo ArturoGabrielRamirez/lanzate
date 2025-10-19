@@ -1,19 +1,20 @@
 "use client"
 
-import { InputField, CheckboxField } from "@/features/layout/components"
+import { Store, Branch } from "@prisma/client"
 import { MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
+
 import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { Store, Branch } from "@prisma/client"
-import { useState } from "react"
+import { InputField, CheckboxField } from "@/features/layout/components"
 
 interface AddressSectionProps {
     store?: Store & { branches: Branch[] }
     mode: 'create' | 'edit'
 }
 
-const AddressSection = ({ store, mode }: AddressSectionProps) => {
+function AddressSection({ store, mode }: AddressSectionProps) {
     
     const t = useTranslations(mode === 'create' ? "store.create-store" : "store.edit-store")
     const [isPhysicalStore, setIsPhysicalStore] = useState(store?.is_physical_store || false)
@@ -69,4 +70,4 @@ const AddressSection = ({ store, mode }: AddressSectionProps) => {
     )
 }
 
-export default AddressSection
+export { AddressSection }

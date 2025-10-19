@@ -1,17 +1,18 @@
 "use client"
 
+import { yupResolver } from "@hookform/resolvers/yup"
+import { Store, Branch } from "@prisma/client"
 import { MapPin, Edit as EditIcon, X } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { Store, Branch } from "@prisma/client"
-import { EditAddressButton } from "../section-buttons"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, InputField, CheckboxField } from "@/features/layout/components"
 import { useEffect, useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { editAddressSchema } from "../../schemas/address-schema"
 import { useFormContext } from "react-hook-form"
+
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Form, InputField, CheckboxField } from "@/features/layout/components"
+import { EditAddressButton } from "@/features/stores/components/section-buttons"
+import { editAddressSchema } from "@/features/stores/schemas/address-schema"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface AddressDisplayProps {
     store: Store & { branches: Branch[] }
@@ -26,7 +27,7 @@ type AddressFormValues = {
     country?: string
 }
 
-const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
+function AddressDisplay({ store, userId }: AddressDisplayProps) {
     const t = useTranslations("store.edit-store")
     const mainBranch = store.branches?.find((branch) => branch.is_main)
     const [isEditing, setIsEditing] = useState(false)
@@ -156,4 +157,4 @@ const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
     )
 }
 
-export default AddressDisplay
+export { AddressDisplay }

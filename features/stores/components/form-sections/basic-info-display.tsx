@@ -1,16 +1,17 @@
 "use client"
 
-import { StoreIcon, EditIcon, X } from "lucide-react"
-import { Store } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, InputField } from "@/features/layout/components"
-import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { EditBasicInfoButton } from "../section-buttons"
-import { editBasicInfoSchema } from "../../schemas/basic-info-schema"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { Store } from "@prisma/client"
+import { StoreIcon, EditIcon, X } from "lucide-react"
+import { useState } from "react"
 import { useFormContext } from "react-hook-form"
+
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Form, InputField } from "@/features/layout/components"
+import { EditBasicInfoButton } from "@/features/stores/components/section-buttons"
+import { editBasicInfoSchema } from "@/features/stores/schemas/basic-info-schema"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface BasicInfoDisplayProps {
     store: Store
@@ -24,7 +25,7 @@ type BasicInfoFormValues = {
 }
 
 
-const BasicInfoDisplay = ({ store, userId }: BasicInfoDisplayProps) => {
+function BasicInfoDisplay({ store, userId }: BasicInfoDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
 
     const handleOpenEdit = () => {
@@ -128,4 +129,4 @@ const BasicInfoDisplay = ({ store, userId }: BasicInfoDisplayProps) => {
     )
 }
 
-export default BasicInfoDisplay
+export { BasicInfoDisplay }

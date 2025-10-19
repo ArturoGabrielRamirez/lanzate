@@ -1,18 +1,19 @@
 "use client"
 
+import { yupResolver } from "@hookform/resolvers/yup"
 import { Store, StoreOperationalSettings, PaymentMethod, Branch, BranchOperationalSettings, BranchShippingMethod } from "@prisma/client"
 import { Truck, CreditCard, Edit as EditIcon, X } from "lucide-react"
-import { EditOperationalSettingsButton } from "../section-buttons"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Form, InputField, CheckboxField } from "@/features/layout/components"
 import { useEffect, useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { PaymentMethodsSwitches } from "../payment-methods-switches"
 import { useFormContext } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { editOperationalSettingsSchema, type EditOperationalSettingsData } from "../../schemas/operational-settings-schema"
+
+import { Badge } from "@/components/ui/badge"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Form, InputField, CheckboxField } from "@/features/layout/components"
+import { PaymentMethodsSwitches } from "@/features/stores/components/payment-methods-switches"
+import { EditOperationalSettingsButton } from "@/features/stores/components/section-buttons"
+import { editOperationalSettingsSchema, type EditOperationalSettingsData } from "@/features/stores/schemas/operational-settings-schema"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface OperationalSettingsDisplayProps {
     store: Store & {
@@ -24,7 +25,7 @@ interface OperationalSettingsDisplayProps {
     }
 }
 
-const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) => {
+function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) {
     const storeOperationalSettings = store.operational_settings
 
     const mainBranch = store.branches?.find(b => b.is_main)
@@ -215,4 +216,4 @@ const OperationalSettingsDisplay = ({ store }: OperationalSettingsDisplayProps) 
     )
 }
 
-export default OperationalSettingsDisplay
+export { OperationalSettingsDisplay }

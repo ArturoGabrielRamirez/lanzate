@@ -1,11 +1,12 @@
 "use client"
 
-import { InputField } from "@/features/layout/components"
+import { Store } from "@prisma/client"
 import { StoreIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
+
 import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { Store } from "@prisma/client"
+import { InputField } from "@/features/layout/components"
 
 interface BasicInfoSectionProps {
     store?: Store
@@ -15,7 +16,7 @@ interface BasicInfoSectionProps {
     onNameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const BasicInfoSection = ({ store, subdomain, onSubdomainChange, mode, onNameChange }: BasicInfoSectionProps) => {
+function BasicInfoSection({ store, subdomain, onSubdomainChange, mode, onNameChange }: BasicInfoSectionProps) {
     const t = useTranslations(mode === 'create' ? "store.create-store" : "store.edit-store")
 
     return (
@@ -57,4 +58,4 @@ const BasicInfoSection = ({ store, subdomain, onSubdomainChange, mode, onNameCha
     )
 }
 
-export default BasicInfoSection
+export { BasicInfoSection }

@@ -1,10 +1,11 @@
 "use client"
 
 import { Branch, BranchOperationalSettings, BranchOpeningHour, PaymentMethod } from "@prisma/client"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Truck } from "lucide-react"
 import Link from "next/link"
+
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 type BranchWithSettings = Branch & {
   operational_settings: BranchOperationalSettings | null
@@ -38,7 +39,7 @@ function formatHours(openingHours: BranchOpeningHour[]): string {
     .join(" • ")
 }
 
-const BranchesOverviewDisplay = ({ branches, slug }: Props) => {
+function BranchesOverviewDisplay({ branches, slug }: Props) {
   if (!branches || branches.length === 0) return null
 
   return (
@@ -81,4 +82,4 @@ const BranchesOverviewDisplay = ({ branches, slug }: Props) => {
   )
 }
 
-export default BranchesOverviewDisplay
+export { BranchesOverviewDisplay }

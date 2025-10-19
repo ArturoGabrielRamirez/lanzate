@@ -1,18 +1,19 @@
 "use client"
 
-import { InputField } from "@/features/layout/components"
+import { Store, StoreOperationalSettings } from "@prisma/client"
 import { MessageCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
+
 import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { Store, StoreOperationalSettings } from "@prisma/client"
+import { InputField } from "@/features/layout/components"
 
 interface SocialMediaSectionProps {
     store?: Store & { operational_settings: StoreOperationalSettings | null }
     mode: 'create' | 'edit'
 }
 
-const SocialMediaSection = ({ store, mode }: SocialMediaSectionProps) => {
+function SocialMediaSection({ mode }: SocialMediaSectionProps) {
     const t = useTranslations(mode === 'create' ? "store.create-store" : "store.edit-store")
 
     return (
@@ -47,4 +48,4 @@ const SocialMediaSection = ({ store, mode }: SocialMediaSectionProps) => {
     )
 }
 
-export default SocialMediaSection
+export { SocialMediaSection }
