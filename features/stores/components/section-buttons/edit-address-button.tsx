@@ -1,21 +1,14 @@
 "use client"
 
-import { Store, Branch } from "@prisma/client"
 import { CheckIcon, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
 import { updateStoreAddressAction } from "@/features/stores/actions/update-store-address.action"
+import { EditAddressButtonProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-
-interface EditAddressButtonProps {
-    store: Store & { branches: Branch[] }
-    userId: number
-    className?: string
-    onSuccess?: () => void
-}
 
 function EditAddressButton({ store, userId, onSuccess }: EditAddressButtonProps) {
     const { getValues, formState: { isValid } } = useFormContext()

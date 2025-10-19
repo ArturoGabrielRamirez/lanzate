@@ -1,21 +1,14 @@
 "use client"
 
-import { Store } from "@prisma/client"
 import { CheckIcon, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
 import { updateStoreBasicInfoAction } from "@/features/stores/actions/update-store-basics.action"
+import { EditBasicInfoButtonProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-
-interface EditBasicInfoButtonProps {
-    store: Store
-    userId: number
-    className?: string
-    onSuccess?: () => void
-}
 
 function EditBasicInfoButton({ store, userId, onSuccess }: EditBasicInfoButtonProps) {
     const { getValues, formState: { isValid } } = useFormContext()

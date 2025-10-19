@@ -1,20 +1,14 @@
 "use client"
 
-import { Store, StoreOperationalSettings } from "@prisma/client"
 import { CheckIcon, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
 import { updateStoreSocialMediaAction } from "@/features/stores/actions"
+import { EditSocialMediaButtonProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-
-interface EditSocialMediaButtonProps {
-    store: Store & { operational_settings: StoreOperationalSettings | null }
-    className?: string
-    onSuccess?: () => void
-}
 
 function EditSocialMediaButton({ store, onSuccess }: EditSocialMediaButtonProps) {
     const { getValues, formState: { isValid } } = useFormContext()

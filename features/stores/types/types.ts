@@ -291,3 +291,30 @@ export interface SocialMediaSectionProps {
     store?: Store & { operational_settings: StoreOperationalSettings | null }
     mode: 'create' | 'edit'
 }
+
+// Section buttons types
+export interface EditAddressButtonProps {
+    store: Store & { branches: Branch[] }
+    userId: number
+    className?: string
+    onSuccess?: () => void
+}
+
+export interface EditBasicInfoButtonProps {
+    store: Store
+    userId: number
+    className?: string
+    onSuccess?: () => void
+}
+
+export interface EditContactButtonProps {
+    store: Store & { branches: Branch[] }
+    className?: string
+    onSuccess?: () => void
+}
+
+export interface EditSocialMediaButtonProps {
+    store: Store & { operational_settings: StoreOperationalSettings | null }
+    className?: string
+    onSuccess?: () => void
+}
