@@ -1,5 +1,6 @@
+import { VALID_STEPS, VALID_TYPES } from '@/features/auth/actions/resend/constants';
 import type { ResendEmailParams } from '@/features/auth/types';
-import { VALID_STEPS, VALID_TYPES } from '../actions/resend/constants';
+import { EmailChangeStatus } from '@/features/auth/types/types';
 
 export * from "@/features/auth/types/types";
 
@@ -47,8 +48,8 @@ export interface EmailConfirmationCardProps {
 }
 
 export interface EmailInfoProps {
-    targetEmail: string;
-    lastResendInfo: LastResendInfo | null;
+  targetEmail: string;
+  lastResendInfo: LastResendInfo | null;
 }
 
 export * from '@/features/auth/types/user.types';

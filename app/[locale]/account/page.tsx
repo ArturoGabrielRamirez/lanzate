@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 
 
 export default async function AccountPage() {
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
     const t = await getTranslations("account");
 
     if (userError || !user) {

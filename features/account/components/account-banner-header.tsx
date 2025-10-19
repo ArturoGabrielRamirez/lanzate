@@ -148,9 +148,9 @@ export function AccountBannerHeader({
 
                 <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/20 rounded-full border border-primary/30 backdrop-blur-sm">
                   <Settings className="w-3 h-3 text-primary" />
-                  <p className="capitalize text-xs font-medium text-primary">
+                 {/*  <p className="capitalize text-xs font-medium text-primary">
                     {user.Account[0].type.toLowerCase()} {t.title}
-                  </p>
+                  </p> */}
                 </div>
 
                 <div className="flex items-center gap-1.5 px-2.5 py-1 bg-muted/70 rounded-full border border-muted-foreground/30 backdrop-blur-sm">
@@ -191,13 +191,13 @@ export function AccountBannerHeader({
                 onProfileUpdate={onProfileUpdate}
               />
 
-              {user.Account[0].type === "FREE" && (
+         {/*      {user.Account[0].type === "FREE" && (
                 <Button asChild size="sm" className="bg-gradient-to-r from-primary to-primary/80 text-white hover:from-primary/90 hover:to-primary/70 text-xs h-8 px-4">
                   <Link href="/upgrade">
                     {t["description.upgrade-plan"]}
                   </Link>
                 </Button>
-              )}
+              )} */}
             </div>
           </div>
         </CardContent>

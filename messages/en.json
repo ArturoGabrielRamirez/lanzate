@@ -14,6 +14,7 @@
             "currently-not-available": "Currently not available"
         }
     },
+    "Auth": {},
     "auth": {
         "login": "Log In",
         "signup": "Sign Up",
@@ -1470,7 +1471,7 @@
                 "contactDesc": "Contact description",
                 "loginDesc": "Login description",
                 "signupDesc": "Signup description",
-                "forgotPassword" : "Forgot password",
+                "forgotPassword": "Forgot password",
                 "forgotPasswordDesc": "Forgot password description",
                 "googleAuth": "Google auth",
                 "dashboard": "Dashboard"
