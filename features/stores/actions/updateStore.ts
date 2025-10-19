@@ -25,7 +25,7 @@
 */
 
 import { actionWrapper } from "@/utils/lib"
-import { canUpdateStore } from "../access/canUpdateStore"
+import { canUpdateStore } from "@/features/stores/access/can-update-store.access"
 import { updateStoreBySlug } from "../data/updateStoreBySlug"
 import { revalidatePath } from "next/cache"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"

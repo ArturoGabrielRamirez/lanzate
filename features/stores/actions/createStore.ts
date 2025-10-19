@@ -31,7 +31,7 @@
 import { revalidatePath } from "next/cache"
 import { insertStore } from "../data/insertStore"
 import { actionWrapper } from "@/utils/lib"
-import { canCreateStore } from "../access/canCreateStore"
+import { canCreateStore } from "@/features/stores/access/can-create-store.access"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { CreateStoreFormValues } from "../components/create-store-button-new"
 import type { ProcessedOpeningHour, ProcessedPaymentMethod, ProcessedShippingMethod } from "../utils/store-form-helpers"

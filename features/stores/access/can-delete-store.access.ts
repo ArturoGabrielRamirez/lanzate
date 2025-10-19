@@ -17,6 +17,7 @@ export async function canDeleteStoreAccess(storeId: number, userId: number) {
 
         return true
     } catch (error) {
+        console.error('Error in canDeleteStoreAccess:', error)
         return false
     }
 }
