@@ -1,22 +1,18 @@
 "use client"
 
-import { ButtonWithPopup } from "@/features/layout/components"
-import { generate } from "random-words"
-import { Plus, Pencil } from "lucide-react"
-import { useState } from "react"
-import { useTranslations } from "next-intl"
-import { Accordion } from "@/components/ui/accordion"
-import { cn } from "@/lib/utils"
 import { Store, StoreOperationalSettings, Branch } from "@prisma/client"
+import { Plus, Pencil } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { generate } from "random-words"
+import { useState } from "react"
 import * as yup from 'yup'
+
+import { Accordion } from "@/components/ui/accordion"
+import { ButtonWithPopup } from "@/features/layout/components"
 import { ResponseType } from "@/features/layout/types"
-import { 
-    BasicInfoSection, 
-    AddressSection, 
-    ContactSection, 
-    SocialMediaSection 
-} from "./form-sections"
-import StoreLogoInlineEditor from "./store-logo-inline-editor"
+import { BasicInfoSection, AddressSection, ContactSection, SocialMediaSection } from "@/features/stores/components/form-sections"
+import { StoreLogoInlineEditor } from "@/features/stores/components/store-logo-inline-editor"
+import { cn } from "@/lib/utils"
 
 
 type StoreFormData = {
@@ -153,4 +149,4 @@ function StoreFormButton({
     )
 }
 
-export default StoreFormButton
+export { StoreFormButton }

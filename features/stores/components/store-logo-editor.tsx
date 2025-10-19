@@ -1,16 +1,17 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
+import { Loader2, Check, Camera, Store, Smartphone, Upload } from "lucide-react"
 import { useState, useRef, useEffect } from 'react'
-import { Camera, Store, Smartphone, Upload } from "lucide-react"
-import { useCamera } from '@/features/auth/hooks/use-camera'
-import CameraComponent from '@/features/auth/components/avatar/camera-component'
+import { toast } from "sonner"
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
-import { Loader2, Check } from "lucide-react"
+import CameraComponent from '@/features/auth/components/avatar/camera-component'
+import { useCamera } from '@/features/auth/hooks/use-camera'
 import { cn } from "@/lib/utils"
-import { toast } from "sonner"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+
 
 interface StoreLogoOption {
   id: string
@@ -27,7 +28,7 @@ interface StoreLogoEditorProps {
   onLogoUpdate: (newLogoUrl: string | null) => void
 }
 
-export default function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEditorProps) {
+function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEditorProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoadingOptions, setIsLoadingOptions] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -441,3 +442,5 @@ export default function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }
     </>
   )
 }
+
+export { StoreLogoEditor }

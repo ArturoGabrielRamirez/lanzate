@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { changeOrderStatus } from "../../orders/actions/changeOrderStatus"
+import { changeOrderStatus } from "../actions/changeOrderStatus"
 import { useTranslations } from "next-intl"
 
 type Props = {

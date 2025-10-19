@@ -1,9 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import StoreLogoEditor from "./store-logo-editor"
-import { updateStoreLogo } from "../actions/update-store-logo.action"
 import { toast } from "sonner"
+
+import { updateStoreLogoAction } from "@/features/stores/actions"
+import { StoreLogoEditor } from "@/features/stores/components/store-logo-editor"
 
 type StoreLogoEditorWrapperProps = {
     currentLogo: string | null
@@ -22,8 +23,8 @@ function StoreLogoEditorWrapper({ currentLogo, storeName, storeId }: StoreLogoEd
             // Update in database
             if (newLogoUrl) {
                 toast.loading('Updating store logo...')
-                const { error, message } = await updateStoreLogo(storeId, newLogoUrl)
-                if (error) {
+                const { hasError, message } = await updateStoreLogoAction(storeId, newLogoUrl)
+                if (hasError) {
                     toast.dismiss()
                     toast.error(message)
                 } else {

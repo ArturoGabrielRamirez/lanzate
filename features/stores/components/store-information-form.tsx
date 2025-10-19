@@ -1,7 +1,8 @@
 "use client"
 
 import { Store, StoreOperationalSettings, Branch, BranchOperationalSettings, BranchOpeningHour } from "@prisma/client"
-import { BasicInfoDisplay, AddressDisplay, ContactDisplay, SocialMediaDisplay, BranchesOverviewDisplay } from "./form-sections"
+
+import { BasicInfoDisplay, AddressDisplay, ContactDisplay, SocialMediaDisplay, BranchesOverviewDisplay } from "@/features/stores/components/form-sections"
 
 interface StoreInformationFormProps {
     store: Store & {
@@ -13,12 +14,7 @@ interface StoreInformationFormProps {
     userId: number
 }
 
-const StoreInformationForm = ({
-    store,
-    canManageStore = false,
-    children,
-    userId
-}: StoreInformationFormProps) => {
+function StoreInformationForm({ store, canManageStore = false, children, userId }: StoreInformationFormProps) {
 
     return (
         <>
@@ -47,4 +43,4 @@ const StoreInformationForm = ({
     )
 }
 
-export default StoreInformationForm
+export { StoreInformationForm }

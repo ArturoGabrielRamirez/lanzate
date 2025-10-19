@@ -3,7 +3,7 @@
 import { ButtonWithPopup } from "@/features/layout/components"
 import { /* Loader2, */ Trash2 } from "lucide-react"
 import { Order } from "@prisma/client"
-import { changeOrderStatus } from "../../orders/actions/changeOrderStatus"
+import { changeOrderStatus } from "../actions/changeOrderStatus"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { ResponseType } from "@/features/layout/types"

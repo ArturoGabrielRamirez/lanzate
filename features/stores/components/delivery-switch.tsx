@@ -1,17 +1,18 @@
 "use client"
 
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
+import { useTranslations } from "next-intl"
 import { useState, useEffect } from "react"
 import { useFormContext } from "react-hook-form"
-import { useTranslations } from "next-intl"
+
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
 
 type DeliverySwitchProps = {
     defaultValue?: boolean
     onDeliveryChange?: (enabled: boolean) => void
 }
 
-export function DeliverySwitch({ defaultValue = false, onDeliveryChange }: DeliverySwitchProps) {
+function DeliverySwitch({ defaultValue = false, onDeliveryChange }: DeliverySwitchProps) {
     const [offersDelivery, setOffersDelivery] = useState(defaultValue)
     const { setValue } = useFormContext()
     const t = useTranslations("store.edit-operational-settings")
@@ -42,4 +43,6 @@ export function DeliverySwitch({ defaultValue = false, onDeliveryChange }: Deliv
             />
         </div>
     )
-} 
+}
+
+export { DeliverySwitch }

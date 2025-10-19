@@ -1,14 +1,15 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { DataTable } from "@/features/layout/components/data-table"
-import { ActionLog, User, Employee } from "@prisma/client"
+import { ActionLog } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { Eye, MoreHorizontal, User as UserIcon, Clock, Activity, Tag } from "lucide-react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
+
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DataTable } from "@/features/layout/components/data-table"
 
 type ActionLogWithRelations = ActionLog & {
     user?: {
@@ -214,4 +215,4 @@ function HistoryTable({ data, slug }: Props) {
     )
 }
 
-export default HistoryTable 
+export { HistoryTable }

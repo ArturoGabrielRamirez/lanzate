@@ -2,14 +2,15 @@
 
 //puede borrarse
 
-import { updateOperationalSettingsAction } from "@/features/stores/actions/update-operational-settings.action"
 import { PaymentMethod, Store, StoreOperationalSettings } from "@prisma/client"
+import { CheckIcon, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { CheckIcon, Loader2 } from "lucide-react"
 import { toast } from "sonner"
+
+import { updateOperationalSettingsAction } from "@/features/stores/actions/update-operational-settings.action"
 import { cn } from "@/lib/utils"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 type EditOperationalSettingsButtonProps = {
     storeId: number
@@ -49,10 +50,12 @@ function EditOperationalSettingsButton({ storeId, store, onSuccess }: EditOperat
 
             setIsLoading(true)
             toast.loading("Updating operational settings...")
-            const { error, message } = await updateOperationalSettingsAction(storeId, data)
-            if (error) {
+            const { hasError, message } = await updateOperationalSettingsAction(storeId, data)
+            
+            if (hasError) {
                 throw new Error(message)
             }
+
             toast.dismiss()
             toast.success("Operational settings updated successfully!")
             if (onSuccess) onSuccess()
@@ -78,4 +81,4 @@ function EditOperationalSettingsButton({ storeId, store, onSuccess }: EditOperat
     )
 }
 
-export default EditOperationalSettingsButton 
+export { EditOperationalSettingsButton }

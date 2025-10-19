@@ -2,7 +2,7 @@ import { getStoresFromSlug } from "../../actions/get-stores-from-slug.action"
 import { getEmployeePermissions } from "../../../employees/actions/get-employee-permisions.action"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { BranchesTabProps } from "@/features/stores/types"
-import BranchTable from "../branch-table"
+import BranchTable from "../../../branches/components/branch-table"
 
 async function BranchesTab({ slug }: BranchesTabProps) {
 

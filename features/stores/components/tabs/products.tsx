@@ -2,12 +2,12 @@ import { Box } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 import { Card, CardTitle, CardHeader, CardContent, CardAction } from "@/components/ui/card"
+import { ProductsTable } from "@/features/products/components/products-table"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { CreateProductButton } from "@/features/products/components"
 import { ExportProductsButton } from "@/features/products/components"
 import { getEmployeePermissions } from "@/features/employees/actions/get-employee-permisions.action"
 import { getStoresFromSlug } from "@/features/stores/actions/get-stores-from-slug.action"
-import ProductsTable from "@/features/stores/components/products-table"
 import { ProductsTabProps } from "@/features/stores/types"
 
 async function ProductsTab({ slug, userId }: ProductsTabProps) {

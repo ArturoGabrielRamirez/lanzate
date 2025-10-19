@@ -1,22 +1,24 @@
 'use client'
 
+import { Camera, Image as ImageIcon, Upload, Loader2 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { toast } from 'sonner'
-import { Camera, Image as ImageIcon, Upload, Loader2 } from 'lucide-react'
-import { useCamera } from '@/features/auth/hooks/use-camera'
 import { TooltipContent } from '@/components/ui/tooltip'
-import { IconButton } from '@/src/components/ui/shadcn-io/icon-button'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import { useCamera } from '@/features/auth/hooks/use-camera'
+import { IconButton } from '@/src/components/ui/shadcn-io/icon-button'
+
 type StoreBannerEditorProps = {
     currentBanner: string | null
     storeName: string
     onBannerUpdate: (newBannerUrl: string | null) => void
 }
 
-export function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: StoreBannerEditorProps) {
+function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: StoreBannerEditorProps) {
     const [isOpen, setIsOpen] = useState(false)
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
     const [previewUrl, setPreviewUrl] = useState<string | null>(null)
@@ -283,4 +285,4 @@ export function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: 
     )
 }
 
-
+export { StoreBannerEditor }

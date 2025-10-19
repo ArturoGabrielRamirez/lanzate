@@ -1,5 +1,5 @@
 import { getOrdersFromStore } from "../../../orders/actions/getOrdersFromStore"
-import OrdersTable from "../orders-table"
+import OrdersTable from "../../../orders/components/orders-table"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
 

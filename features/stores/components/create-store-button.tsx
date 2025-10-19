@@ -48,7 +48,7 @@ function NextStepButton({ goToNextStep, className }: { goToNextStep: () => void,
 }
 
 
-function CreateStoreButton({ userId }: { userId: number }) {
+function CreateStoreButton({ }: { userId: number }) {
 
     const steps = 4
     const [open, setOpen] = useState(false)
@@ -78,7 +78,7 @@ function CreateStoreButton({ userId }: { userId: number }) {
                             )}
                             {currentStep === 2 && (
                                 <div className="space-y-4">
-                                    
+
                                 </div>
                             )}
 

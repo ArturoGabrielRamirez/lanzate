@@ -1,17 +1,17 @@
 "use client"
 
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
-import { Pencil } from "lucide-react"
-import { useState, useEffect } from "react"
-import { useTranslations } from "next-intl"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
+import { Category, Product } from "@prisma/client"
 import { RowModel } from "@tanstack/react-table"
-import { getCategories } from "@/features/store-landing/actions/getCategories"
+import { useTranslations } from "next-intl"
+import { useState, useEffect } from "react"
+
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { getProductsCountByCategoryAction } from "@/features/products/actions/getProductsCountByCategory"
 import { updateProductsPricesAction } from "@/features/products/actions/updateProductsPrices"
+import { getCategories } from "@/features/store-landing/actions/getCategories"
 import { formatErrorResponse } from "@/utils/lib"
-import { Category, Product } from "@prisma/client"
 
 type UpdatePricesButtonProps = {
     selectedRows: RowModel<Product & { categories: Category[] }>
@@ -20,7 +20,7 @@ type UpdatePricesButtonProps = {
 
 type UpdateType = "fijo" | "porcentaje"
 
-export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) {
+function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) {
     const [categories, setCategories] = useState<Category[]>([])
     const [selectedCategory, setSelectedCategory] = useState<string>("")
     const [amount, setAmount] = useState<string>("")
@@ -257,3 +257,5 @@ export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButton
         </ButtonWithPopup>
     )
 } 
+
+export { UpdatePricesButton }

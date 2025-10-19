@@ -1,4 +1,7 @@
 "use client"
+
+import { useTranslations } from "next-intl"
+
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -10,7 +13,6 @@ import { ArrowUpDown, Eye, MapPin, MoreHorizontal, Truck } from "lucide-react"
 import Link from "next/link"
 import CancelOrderButton from "./cancel-order-button"
 import { ExportOrdersButton } from "@/features/orders/components"
-import { useTranslations } from "next-intl"
 
 type Props = {
     data: Order[]

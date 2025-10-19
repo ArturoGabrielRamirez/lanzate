@@ -1,30 +1,32 @@
 "use client"
-import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
-import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, DialogDescription } from "@/components/ui/dialog"
-import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/components/ui/file-upload"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { useCamera } from "@/features/auth/hooks/use-camera"
-import { Form, InputField } from "@/features/layout/components"
-import { useStep } from "@/hooks/use-step"
-import { cn } from "@/lib/utils"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+
 import { yupResolver } from "@hookform/resolvers/yup"
+import { TimePicker } from "antd";
+import dayjs, { Dayjs } from "dayjs";
 import { Calendar, Camera, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Loader, Mail, MapPin, Phone, Plus, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
+import { useRouter } from "next/navigation"
 import { useEffect, useState, createContext, useContext, useCallback, useRef } from "react"
 import { useFormContext } from "react-hook-form"
+import { toast } from "sonner"
 import * as yup from "yup"
-import CameraComponent from "@/features/auth/components/avatar/camera-component"
-import { Progress } from "@/components/ui/progress"
-import { createStore } from "../actions/create-store.action"
-import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
-import { TimePicker } from "antd";
-import dayjs, { Dayjs } from "dayjs";
-import { processOpeningHours, processShippingMethods, processPaymentMethods } from "../utils/store-form-helpers"
-import { useRouter } from "next/navigation"
+
 import Stepper, { Step } from "@/components/Stepper"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, DialogDescription } from "@/components/ui/dialog"
+import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/components/ui/file-upload"
+import { Progress } from "@/components/ui/progress"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import CameraComponent from "@/features/auth/components/avatar/camera-component"
+import { useCamera } from "@/features/auth/hooks/use-camera"
+import { Form, InputField } from "@/features/layout/components"
+import { createStoreAction } from "@/features/stores/actions"
+import { processOpeningHours, processShippingMethods, processPaymentMethods } from "@/features/stores/utils/store-form-helpers"
+import { useStep } from "@/hooks/use-step"
+import { cn } from "@/lib/utils"
+import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 type AttentionDateType = {
     date: string
@@ -231,7 +233,7 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
     )
 }
 
-const ShippingFormPanel = () => {
+function ShippingFormPanel() {
 
     const { setValue, getValues, formState: { errors, isValid }, watch } = useFormContext<CreateStoreFormValues>()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -447,7 +449,7 @@ const ShippingFormPanel = () => {
     )
 }
 
-const AttentionDateFormPanel = ({ date, onCancel, onSave, index }: AttentionDateFormPanelProps) => {
+function AttentionDateFormPanel({ date, onCancel, onSave, index }: AttentionDateFormPanelProps) {
 
     const initialTags = [
         "lunes",
@@ -517,7 +519,7 @@ const AttentionDateFormPanel = ({ date, onCancel, onSave, index }: AttentionDate
     )
 }
 
-const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMethodFormPanelProps) => {
+function ShippingMethodFormPanel({ method, index, onCancel, onSave }: ShippingMethodFormPanelProps) {
 
     const initialTags = [
         "Delivery propio",
@@ -633,7 +635,7 @@ const ShippingMethodFormPanel = ({ method, index, onCancel, onSave }: ShippingMe
     )
 }
 
-const SettingsFormPanel = () => {
+function SettingsFormPanel() {
 
     const { setValue, getValues, formState: { isValid, errors }, watch, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -816,7 +818,7 @@ const SettingsFormPanel = () => {
     )
 }
 
-const ContactFormPanel = () => {
+function ContactFormPanel() {
     const { formState: { isValid }, watch, setValue } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const seededRefContact = useRef(false)
@@ -883,7 +885,7 @@ const ContactFormPanel = () => {
     )
 }
 
-const AddressFormPanel = () => {
+function AddressFormPanel() {
 
     const { setValue, getValues, formState: { isValid }, watch, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -977,7 +979,7 @@ const AddressFormPanel = () => {
     )
 }
 
-const BasicInfoFormPanel = () => {
+function BasicInfoFormPanel() {
 
     const { setValue, watch, formState: { isValid } } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -1200,7 +1202,7 @@ const BasicInfoFormPanel = () => {
     )
 }
 
-const CreateStoreForm = ({ setStep, step, onSubmitAll }: CreateStoreFormProps & { onSubmitAll: (data: CreateStoreFormValues) => Promise<{ error: boolean; message: string; payload?: unknown } | undefined> }) => {
+function CreateStoreForm({ setStep, step, onSubmitAll }: CreateStoreFormProps & { onSubmitAll: (data: CreateStoreFormValues) => Promise<{ error: boolean; message: string; payload?: unknown } | undefined> }) {
 
     const { isStepValid, values } = useCreateStoreContext()
     const isValid = !!isStepValid[step]
@@ -1225,7 +1227,7 @@ const CreateStoreForm = ({ setStep, step, onSubmitAll }: CreateStoreFormProps & 
             onFinalStepCompleted={async () => {
                 await onSubmitAll(values as CreateStoreFormValues)
             }}
-            renderStepIndicator={(props) => {
+            renderStepIndicator={(props: { step: number; currentStep: number; onStepClick: (step: number) => void }) => {
                 return (
                     <StepIndicator
                         step={props.step}
@@ -1284,7 +1286,7 @@ const CreateStoreForm = ({ setStep, step, onSubmitAll }: CreateStoreFormProps & 
     )
 }
 
-const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicatorProps) => {
+function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicatorProps) {
 
     const { isStepValid } = useCreateStoreContext()
 
@@ -1349,7 +1351,7 @@ const StepIndicator = ({ step, currentStep, onStepClick, disabled }: StepIndicat
     )
 }
 
-const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
+function CreateStoreButtonNew({ userId }: { userId: number }) {
 
     const [step, { /* goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, */ setStep }] = useStep(7)
     const [createdSlug, setCreatedSlug] = useState<string | null>(null)
@@ -1376,8 +1378,9 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
         }
 
         setStep(6)
-        const { error, message, payload } = await createStore(processedData, userId)
-        if (error) {
+        const { hasError, message, payload } = await createStoreAction(processedData, userId)
+        
+        if (hasError) {
             toast.error(message)
             // return the form to the last step for correction
             setStep(5)
@@ -1437,4 +1440,4 @@ const CreateStoreButtonNew = ({ userId }: { userId: number }) => {
     )
 }
 
-export default CreateStoreButtonNew
+export { CreateStoreButtonNew }

@@ -1,10 +1,11 @@
 "use client"
 
-import { updateStoreAction } from "@/features/stores/actions/update-store.action"
-import { editSchema } from "../schemas/store-schema"
-import { EditStoreButtonProps } from "@/features/stores/types"
 import { useTranslations } from "next-intl"
-import StoreFormButton from "./store-form-button"
+
+import { updateStoreAction } from "@/features/stores/actions/update-store.action"
+import StoreFormButton from "@/features/stores/components/store-form-button"
+import { editSchema } from "@/features/stores/schemas/store-schema"
+import { EditStoreButtonProps } from "@/features/stores/types"
 
 type EditStorePayload = {
     name: string
@@ -35,11 +36,11 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
             facebook_url: payload.facebook_url || "",
             instagram_url: payload.instagram_url || "",
             x_url: payload.x_url || "",
-            is_physical_store: payload.is_physical_store || false,
-            address: payload.address || "",
+            /* is_physical_store: payload.is_physical_store || false, */
+            /* address: payload.address || "",
             city: payload.city || "",
             province: payload.province || "",
-            country: payload.country || "",
+            country: payload.country || "", */
         }, userId)
     }
 
@@ -61,4 +62,4 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
     )
 }
 
-export default EditStoreButton
+export { EditStoreButton }
