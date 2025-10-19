@@ -1045,7 +1045,7 @@ const BasicInfoFormPanel = () => {
             setUploadProgress(0)
             const formData = new FormData()
             formData.append('file', file)
-            formData.append('type', 'store-logo')
+            formData.append('type', 'store-logos')
 
             await new Promise((resolve) => setTimeout(resolve, 1000))
             setUploadProgress(50)
@@ -1070,7 +1070,7 @@ const BasicInfoFormPanel = () => {
     }
 
     const camera = useCamera({
-        uploadPath: 'store-logo',
+        uploadPath: 'store-logos',
         onSuccess: (url) => {
             setValue("basic_info.logo", url)
             setLogo([])

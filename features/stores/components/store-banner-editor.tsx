@@ -25,7 +25,7 @@ export function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: 
     const [suggestedIds, setSuggestedIds] = useState<number[]>([])
 
     const camera = useCamera({
-        uploadPath: 'store-banner',
+        uploadPath: 'store-banners',
         onSuccess: (url) => {
             onBannerUpdate(url)
             setIsOpen(false)
