@@ -1070,7 +1070,7 @@ const BasicInfoFormPanel = () => {
     }
 
     const camera = useCamera({
-        uploadPath: 'store-logos',
+        uploadPath: 'store-logo',
         onSuccess: (url) => {
             setValue("basic_info.logo", url)
             setLogo([])
