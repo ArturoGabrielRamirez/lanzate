@@ -1,8 +1,9 @@
 "use server"
 
-import { formatErrorResponse } from "@/utils/lib"
-import { selectStoreBySlug } from "../data/selectStoreBySlug"
 import { Branch, Store, Product, Category, StoreBalance, StoreOperationalSettings, ProductStock } from "@prisma/client"
+
+import { actionWrapper } from "@/features/global/utils"
+import { selectStoreBySlug } from "@/features/stores/data/selectStoreBySlug"
 
 type GetStoresFromSlugReturn = {
     message: string
@@ -12,12 +13,12 @@ type GetStoresFromSlugReturn = {
         balance: StoreBalance,
         operational_settings: StoreOperationalSettings | null
     } | null
-    error: boolean
+    hasError: boolean
 }
 
-export async function getStoresFromSlug(slug: string): Promise<GetStoresFromSlugReturn> {
+export async function getStoresFromSlugAction(slug: string): Promise<GetStoresFromSlugReturn> {
 
-    try {
+    return actionWrapper(async () => {
         const { payload: store, error, message } = await selectStoreBySlug(slug)
 
         if (error) throw new Error(message)
@@ -33,9 +34,7 @@ export async function getStoresFromSlug(slug: string): Promise<GetStoresFromSlug
                 balance: StoreBalance,
                 operational_settings: StoreOperationalSettings | null
             },
-            error: false
+            hasError: false
         }
-    } catch (error) {
-        return formatErrorResponse("Error fetching store from db", error, null)
-    }
+    })
 }

@@ -1,6 +1,4 @@
-export { StoreCard } from "./store-card"
-export { NewStoreCard } from "./new-store-card"
-
+export * from '@/features/stores/components/'
 export * from '@/features/stores/components/store-header-server'
 export * from '@/features/stores/components/store-header-skeleton'
 export * from '@/features/stores/components/tab-trigger-link'

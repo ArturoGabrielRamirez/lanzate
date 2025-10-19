@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { getOverviewData } from "../actions/get-overview-data"
-import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
+import { getStoresFromSlug } from "@/features/stores/actions/get-stores-from-slug.action"
 import { OverviewTabProps } from "../types"
 import {
     SalesOverviewWidget,

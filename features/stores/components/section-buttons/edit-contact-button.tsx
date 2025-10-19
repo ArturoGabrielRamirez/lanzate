@@ -1,7 +1,7 @@
 "use client"
 
 import { CheckIcon, Loader2 } from "lucide-react"
-import { updateStoreContact } from "../../actions/updateStoreContact"
+import { updateStoreContactAction } from "@/features/stores/actions/update-store-contact.action"
 import { Store, Branch } from "@prisma/client"
 import { useFormContext } from "react-hook-form"
 import { useState } from "react"

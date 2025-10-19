@@ -5,11 +5,11 @@ import { Title } from "@/features/layout/components"
 import { Store } from "lucide-react"
 import StoreLogoEditor from "./store-logo-editor"
 import { useEffect, useState } from "react"
-import { getStoreHeaderBySlug } from "../actions/getStoreHeaderBySlug"
-import { updateStoreLogo } from "../actions/updateStoreLogo"
+import { getStoreHeaderBySlug } from "../actions/get-store-header-by-slug.action"
+import { updateStoreLogo } from "../actions/update-store-logo.action"
 import { toast } from "sonner"
 import { StoreBannerEditor } from "./store-banner-editor"
-import { updateStoreBanner } from "../actions/updateStoreBanner"
+import { updateStoreBanner } from "../actions/update-store-banner.action"
 
 type StoreHeaderProps = {
     slug: string

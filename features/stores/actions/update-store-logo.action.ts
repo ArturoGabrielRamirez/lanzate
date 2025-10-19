@@ -1,9 +1,9 @@
 "use server"
 
+import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
-import { actionWrapper } from "@/utils/lib"
 
-export async function updateStoreLogo(storeId: number, logoUrl: string) {
+export async function updateStoreLogoAction(storeId: number, logoUrl: string) {
     return actionWrapper(async () => {
         const updatedStore = await prisma.store.update({
             where: { id: storeId },
@@ -11,7 +11,7 @@ export async function updateStoreLogo(storeId: number, logoUrl: string) {
         })
 
         return {
-            error: false,
+            hasError: false,
             message: "Logo actualizado correctamente",
             payload: updatedStore
         }

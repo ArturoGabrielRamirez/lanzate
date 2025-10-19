@@ -1,9 +1,9 @@
 "use server"
 
+import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
-import { actionWrapper } from "@/utils/lib"
 
-export async function updateStoreBanner(storeId: number, bannerUrl: string) {
+export async function updateStoreBannerAction(storeId: number, bannerUrl: string) {
     return actionWrapper(async () => {
         const updatedStore = await prisma.store.update({
             where: { id: storeId },
@@ -11,7 +11,7 @@ export async function updateStoreBanner(storeId: number, bannerUrl: string) {
         })
 
         return {
-            error: false,
+            hasError: false,
             message: "Banner actualizado correctamente",
             payload: updatedStore
         }

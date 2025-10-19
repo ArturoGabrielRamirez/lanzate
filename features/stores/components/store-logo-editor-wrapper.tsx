@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import StoreLogoEditor from "./store-logo-editor"
-import { updateStoreLogo } from "../actions/updateStoreLogo"
+import { updateStoreLogo } from "../actions/update-store-logo.action"
 import { toast } from "sonner"
 
 type StoreLogoEditorWrapperProps = {

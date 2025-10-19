@@ -1,5 +1,5 @@
-import { getStoresFromSlug } from "../../actions/getStoresFromSlug"
-import { getEmployeePermissions } from "../../actions/getEmployeePermissions"
+import { getStoresFromSlug } from "../../actions/get-stores-from-slug.action"
+import { getEmployeePermissions } from "../../../employees/actions/get-employee-permisions.action"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { BranchesTabProps } from "@/features/stores/types"
 import BranchTable from "../branch-table"

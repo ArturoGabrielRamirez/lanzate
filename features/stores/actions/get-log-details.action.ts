@@ -1,9 +1,9 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { getLogDetailsById } from "../data/getLogDetailsById"
+import { actionWrapper } from "@/features/global/utils"
+import { getLogDetailsById } from "@/features/stores/data/getLogDetailsById"
 
-export async function getLogDetails(id: string) {
+export async function getLogDetailsAction(id: string) {
     return actionWrapper(async () => {
 
         const { error, payload, message } = await getLogDetailsById(parseInt(id))
@@ -11,7 +11,7 @@ export async function getLogDetails(id: string) {
         if (error) throw new Error(message)
 
         return {
-            error: false,
+            hasError: false,
             message: "Log details retrieved successfully",
             payload: payload
         }

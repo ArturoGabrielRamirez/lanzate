@@ -1,4 +1,4 @@
-import { getOrdersFromStore } from "../../actions/getOrdersFromStore"
+import { getOrdersFromStore } from "../../../orders/actions/getOrdersFromStore"
 import OrdersTable from "../orders-table"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"

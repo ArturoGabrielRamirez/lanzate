@@ -18,7 +18,7 @@ import { useFormContext } from "react-hook-form"
 import * as yup from "yup"
 import CameraComponent from "@/features/auth/components/avatar/camera-component"
 import { Progress } from "@/components/ui/progress"
-import { createStore } from "../actions/createStore"
+import { createStore } from "../actions/create-store.action"
 import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
 import { TimePicker } from "antd";
 import dayjs, { Dayjs } from "dayjs";

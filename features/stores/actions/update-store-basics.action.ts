@@ -1,8 +1,9 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { prisma } from "@/utils/prisma"
 import { revalidatePath } from "next/cache"
+
+import { actionWrapper } from "@/features/global/utils"
+import { prisma } from "@/utils/prisma"
 
 type UpdateBasicInfoPayload = {
     name: string
@@ -10,7 +11,7 @@ type UpdateBasicInfoPayload = {
     subdomain: string
 }
 
-export async function updateStoreBasicInfo(slug: string, payload: UpdateBasicInfoPayload, userId: number) {
+export async function updateStoreBasicInfoAction(slug: string, payload: UpdateBasicInfoPayload, userId: number) {
     return actionWrapper(async () => {
         // Verificar que la tienda existe y pertenece al usuario
         const existingStore = await prisma.store.findFirst({
@@ -54,7 +55,7 @@ export async function updateStoreBasicInfo(slug: string, payload: UpdateBasicInf
         return {
             message: "Basic information updated successfully",
             payload: updatedStore,
-            error: false
+            hasError: false
         }
     })
 }

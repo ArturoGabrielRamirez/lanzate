@@ -1,4 +1,4 @@
-import { getProductDetails } from "@/features/stores/actions/getProductDetails"
+import { getProductDetails } from "@/features/products/actions/getProductDetails"
 import { Card, CardContent } from "@/components/ui/card"
 import { VariantDetailForm } from "@/features/products/components/variant-detail-display"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"

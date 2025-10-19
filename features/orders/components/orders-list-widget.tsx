@@ -1,5 +1,5 @@
 import { OrdersListEmpty } from "@/features/orders/components"
-import { getOrdersFromStore } from "@/features/stores/actions/getOrdersFromStore"
+import { getOrdersFromStore } from "@/features/orders/actions/getOrdersFromStore"
 
 async function OrdersListWidget({ slug }: { slug: string }) {
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { CheckIcon, Loader2 } from "lucide-react"
-import { updateStoreSocialMedia } from "../../actions/updateStoreSocialMedia"
+import { updateStoreSocialMediaAction } from "@/features/stores/actions/update-store-social-media.action"
 import { Store, StoreOperationalSettings } from "@prisma/client"
 import { useFormContext } from "react-hook-form"
 import { useState } from "react"

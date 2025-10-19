@@ -1,8 +1,9 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { prisma } from "@/utils/prisma"
 import { revalidatePath } from "next/cache"
+
+import { actionWrapper } from "@/features/global/utils"
+import { prisma } from "@/utils/prisma"
 
 type UpdateAddressPayload = {
     is_physical_store: boolean
@@ -12,7 +13,7 @@ type UpdateAddressPayload = {
     country?: string
 }
 
-export async function updateStoreAddress(slug: string, payload: UpdateAddressPayload, userId: number) {
+export async function updateStoreAddressAction(slug: string, payload: UpdateAddressPayload, userId: number) {
     return actionWrapper(async () => {
         // Verificar que la tienda existe y pertenece al usuario
         const existingStore = await prisma.store.findFirst({
@@ -61,7 +62,7 @@ export async function updateStoreAddress(slug: string, payload: UpdateAddressPay
         return {
             message: "Address information updated successfully",
             payload: updatedBranch,
-            error: false
+            hasError: false
         }
     })
 }

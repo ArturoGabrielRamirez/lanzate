@@ -1,7 +1,7 @@
 "use server"
 
 import { formatErrorResponse } from "@/utils/lib"
-import { selectProductById } from "../data/selectProductById"
+import { selectProductById } from "../../stores/data/selectProductById"
 
 export async function getProductDetails(id: string) {
     try {

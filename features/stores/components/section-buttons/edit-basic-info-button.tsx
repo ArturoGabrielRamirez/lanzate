@@ -2,7 +2,7 @@
 
 import { CheckIcon, Loader2 } from "lucide-react"
 import { Store } from "@prisma/client"
-import { updateStoreBasicInfo } from "@/features/stores/actions/updateStoreBasicInfo"
+import { updateStoreBasicInfoAction } from "@/features/stores/actions/update-store-basics.action"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"

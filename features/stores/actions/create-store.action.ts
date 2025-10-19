@@ -1,40 +1,13 @@
 "use server"
 
-/* 
-
-### 2.1 Crear Nueva Tienda
-**Pasos:**
-1. Check user is authenticated
-2. Check user account type allows store creation
-3. Verify slug and subdomain availability
-4. Create store record
-5. Create default branch
-6. Create success notification
-7. Crear registro en action_logs ("create_store")
-
-**Tablas involucradas:**
-- `stores` (CREATE)
-- `branches` (CREATE)
-- `accounts` (READ)
-- `notifications` (CREATE)
-- `action_logs` (CREATE)
-
-**Manejo de errores:**
-- Slug/subdomain duplicado → Error 409
-- Límite de tiendas alcanzado → Error 403
-- Error en branch creation → Rollback store
-
----
-
-*/
-
 import { revalidatePath } from "next/cache"
-import { insertStore } from "../data/insertStore"
-import { actionWrapper } from "@/utils/lib"
-import { canCreateStore } from "@/features/stores/access/can-create-store.access"
+
+import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
-import { CreateStoreFormValues } from "../components/create-store-button-new"
-import type { ProcessedOpeningHour, ProcessedPaymentMethod, ProcessedShippingMethod } from "../utils/store-form-helpers"
+import { canCreateStore } from "@/features/stores/access/can-create-store.access"
+import { CreateStoreFormValues } from "@/features/stores/components/create-store-button-new"
+import { insertStore } from "@/features/stores/data/insertStore"
+import type { ProcessedOpeningHour, ProcessedPaymentMethod, ProcessedShippingMethod } from "@/features/stores/utils/store-form-helpers"
 
 
 type ProcessedCreateStoreData = CreateStoreFormValues & {
@@ -43,7 +16,7 @@ type ProcessedCreateStoreData = CreateStoreFormValues & {
     processedPaymentMethods: ProcessedPaymentMethod[]
 }
 
-export async function createStore(payload: ProcessedCreateStoreData, userId: number) {
+export async function createStoreAction(payload: ProcessedCreateStoreData, userId: number) {
     return actionWrapper(async () => {
 
         //Check user is authenticated
@@ -78,9 +51,9 @@ export async function createStore(payload: ProcessedCreateStoreData, userId: num
         if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
 
         return {
+            hasError: false,
             message: "Store created successfully",
-            payload: newStore,
-            error: false
+            payload: newStore
         }
 
     })

@@ -1,14 +1,15 @@
-import { getStoreLogs } from "../../actions/getStoreLogs"
-import { HistoryTabProps } from "@/features/stores/types"
-import HistoryTable from "../history-table"
 import { getTranslations } from "next-intl/server"
 
-async function HistoryTab({ slug, userId }: HistoryTabProps) {
+import { getStoreLogsAction } from "@/features/stores/actions/get-store-logs.action"
+import HistoryTable from "@/features/stores/components/history-table"
+import { HistoryTabProps } from "@/features/stores/types"
 
-    const { payload: logs, error } = await getStoreLogs(slug)
+async function HistoryTab({ slug }: HistoryTabProps) {
+
+    const { payload: logs, hasError } = await getStoreLogsAction(slug)
     const t = await getTranslations("store.history-tab")
 
-    if (error || !logs) {
+    if (hasError || !logs) {
         return <div>{t("error-loading-logs")}</div>
     }
 

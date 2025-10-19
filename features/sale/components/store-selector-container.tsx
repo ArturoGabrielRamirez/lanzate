@@ -1,5 +1,5 @@
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getStoresFromUser } from "@/features/stores/actions/getStoresFromUser"
+import { getStoresFromUser } from "@/features/stores/actions/get-stores-from-user.action"
 import StoreSelector from "./store-selector"
 
 async function StoreSelectorContainer() {

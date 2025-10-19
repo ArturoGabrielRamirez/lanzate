@@ -1,6 +1,6 @@
 "use client"
 
-import { updateStore } from "../actions/updateStore"
+import { updateStoreAction } from "@/features/stores/actions/update-store.action"
 import { editSchema } from "../schemas/store-schema"
 import { EditStoreButtonProps } from "@/features/stores/types"
 import { useTranslations } from "next-intl"
@@ -27,7 +27,7 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
     const t = useTranslations("store.edit-store")
 
     const handleEditStore = async (payload: EditStorePayload) => {
-        return updateStore(slug, {
+        return updateStoreAction(slug, {
             ...payload,
             subdomain: payload.subdomain,
             contact_phone: payload.contact_phone || "",

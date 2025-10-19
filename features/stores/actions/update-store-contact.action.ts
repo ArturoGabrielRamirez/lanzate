@@ -1,12 +1,13 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
-import { EditContactData } from "../schemas/contact-schema"
 import { revalidatePath } from "next/cache"
 
-export async function updateStoreContact(storeId: number, data: EditContactData) {
-    try {
-        // Update the main branch with contact information
+import { actionWrapper } from "@/features/global/utils"
+import { EditContactData } from "@/features/stores/schemas/contact-schema"
+import { prisma } from "@/utils/prisma"
+
+export async function updateStoreContactAction(storeId: number, data: EditContactData) {
+    return actionWrapper(async () => {
 
         const mainBranch = await prisma.branch.findFirst({
             where: {
@@ -38,15 +39,8 @@ export async function updateStoreContact(storeId: number, data: EditContactData)
 
         return {
             message: "Contact information updated successfully",
-            error: false,
+            hasError: false,
             payload: data
         }
-    } catch (error) {
-        console.error("Error updating store contact:", error)
-        return {
-            message: "Failed to update contact information",
-            error: true,
-            payload: null
-        }
-    }
+    })
 }

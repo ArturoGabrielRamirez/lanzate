@@ -1,13 +1,13 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
-import { EditSocialMediaData } from "../schemas/social-media-schema"
 import { revalidatePath } from "next/cache"
 
-export async function updateStoreSocialMedia(storeId: number, data: EditSocialMediaData) {
-    try {
-        // Update the store's operational settings with social media information
+import { actionWrapper } from "@/features/global/utils"
+import { EditSocialMediaData } from "@/features/stores/schemas/social-media-schema"
+import { prisma } from "@/utils/prisma"
 
+export async function updateStoreSocialMediaAction(storeId: number, data: EditSocialMediaData) {
+    return actionWrapper(async () => {
         const mainBranch = await prisma.branch.findFirst({
             where: {
                 store_id: storeId,
@@ -39,15 +39,8 @@ export async function updateStoreSocialMedia(storeId: number, data: EditSocialMe
 
         return {
             message: "Social media information updated successfully",
-            error: false,
+            hasError: false,
             payload: data
         }
-    } catch (error) {
-        console.error("Error updating store social media:", error)
-        return {
-            message: "Failed to update social media information",
-            error: true,
-            payload: null
-        }
-    }
+    })
 }

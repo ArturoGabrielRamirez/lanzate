@@ -2,7 +2,7 @@
 
 import { CheckIcon, Loader2 } from "lucide-react"
 import { Store, Branch } from "@prisma/client"
-import { updateStoreAddress } from "@/features/stores/actions/updateStoreAddress"
+import { updateStoreAddressAction } from "@/features/stores/actions/update-store-address.action"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"

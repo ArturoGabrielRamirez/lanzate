@@ -1,36 +1,24 @@
 "use server"
 
-/* 
-
-### 2.2 Actualizar Tienda
-**Pasos:**
-1. Check user owns store
-2. Check slug/subdomain availability if changed
-3. Update store fields
-4. Update logo if provided
-5. Log store modification
-6. Crear registro en action_logs ("update_store")
-
-**Tablas involucradas:**
-- `stores` (READ, UPDATE)
-- `users` (READ)
-- `action_logs` (CREATE)
-
-**Manejo de errores:**
-- Usuario no es owner → Error 403
-- Slug duplicado → Error 409
-
----
-
-*/
-
-import { actionWrapper } from "@/utils/lib"
-import { canUpdateStore } from "@/features/stores/access/can-update-store.access"
-import { updateStoreBySlug } from "../data/updateStoreBySlug"
 import { revalidatePath } from "next/cache"
-import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 
-export async function updateStore(slug: string, data: any, userId: number) {
+import { actionWrapper } from "@/features/global/utils"
+import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { canUpdateStore } from "@/features/stores/access/can-update-store.access"
+import { updateStoreBySlug } from "@/features/stores/data/updateStoreBySlug"
+
+type UpdateStorePayload = {
+    name: string
+    description?: string
+    subdomain: string
+    contact_phone?: string
+    contact_whatsapp?: string
+    facebook_url?: string
+    instagram_url?: string
+    x_url?: string
+}
+
+export async function updateStoreAction(slug: string, data: UpdateStorePayload, userId: number) {
     return actionWrapper(async () => {
 
         //Check user owns store
@@ -62,7 +50,7 @@ export async function updateStore(slug: string, data: any, userId: number) {
         return {
             message: "Store updated successfully",
             payload: payload,
-            error: false
+            hasError: false
         }
     })
 }

@@ -1,7 +1,7 @@
 "use server"
 
 import { updateStoreSettings } from "@/features/settings/data/updateStoreSettings"
-import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
+import { getStoresFromSlug } from "@/features/stores/actions/get-stores-from-slug.action"
 import { StoreCustomization } from "@prisma/client"
 import { ResponseType } from "@/features/layout/types"
 import { revalidatePath } from "next/cache"

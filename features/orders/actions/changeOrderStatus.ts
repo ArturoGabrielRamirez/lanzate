@@ -1,10 +1,11 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { updateOrderStatus } from "../data/updateOrderStatus"
 import { revalidatePath } from "next/cache"
-import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+
 import { getUserInfo } from "@/features/layout/actions"
+import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { updateOrderStatus } from "@/features/stores/data/updateOrderStatus"
+import { actionWrapper } from "@/utils/lib"
 
 type ChangeOrderStatusData = {
     newStatus: string
@@ -15,7 +16,7 @@ type ChangeOrderStatusData = {
 export async function changeOrderStatus(orderId: number, data: ChangeOrderStatusData, slug: string) {
     return actionWrapper(async () => {
 
-        const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+        const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
         if (userError || !user) throw new Error(userMessage)
 

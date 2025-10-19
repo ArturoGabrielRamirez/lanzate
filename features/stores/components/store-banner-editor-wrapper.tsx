@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { CardAction } from "@/components/ui/card"
 import { StoreBannerEditor } from "./store-banner-editor"
-import { updateStoreBanner } from "../actions/updateStoreBanner"
+import { updateStoreBanner } from "../actions/update-store-banner.action"
 import { toast } from "sonner"
 
 type StoreBannerEditorWrapperProps = {

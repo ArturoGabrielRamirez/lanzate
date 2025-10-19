@@ -1,7 +1,7 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { selectStoreHeaderBySlug } from "../data/selectStoreHeaderBySlug"
+import { actionWrapper } from "@/features/global/utils"
+import { selectStoreHeaderBySlug } from "@/features/stores/data/selectStoreHeaderBySlug"
 
 type StoreHeader = {
     id: number
@@ -17,10 +17,10 @@ type StoreHeader = {
 type GetStoreHeaderBySlugReturn = {
     message: string
     payload: StoreHeader | null
-    error: boolean
+    hasError: boolean
 }
 
-export async function getStoreHeaderBySlug(slug: string): Promise<GetStoreHeaderBySlugReturn> {
+export async function getStoreHeaderBySlugAction(slug: string): Promise<GetStoreHeaderBySlugReturn> {
     return actionWrapper(async () => {
         const { payload: store, error, message } = await selectStoreHeaderBySlug(slug)
 
@@ -33,7 +33,7 @@ export async function getStoreHeaderBySlug(slug: string): Promise<GetStoreHeader
         return {
             message: "Store header fetched successfully",
             payload: store,
-            error: false
+            hasError: false
         }
     })
 } 

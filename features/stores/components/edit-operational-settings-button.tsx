@@ -2,7 +2,7 @@
 
 //puede borrarse
 
-import { updateOperationalSettingsAction } from "../actions/updateOperationalSettings"
+import { updateOperationalSettingsAction } from "@/features/stores/actions/update-operational-settings.action"
 import { PaymentMethod, Store, StoreOperationalSettings } from "@prisma/client"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"

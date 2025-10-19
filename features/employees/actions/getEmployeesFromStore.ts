@@ -1,7 +1,7 @@
 "use server"
 import { actionWrapper } from "@/utils/lib"
 import { selectEmployeesFromStore } from "../data/selectEmployeesFromStore"
-import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
+import { getStoresFromSlug } from "@/features/stores/actions/get-stores-from-slug.action"
 
 export async function getEmployeesFromStore(slug: string) {
     return actionWrapper(async () => {

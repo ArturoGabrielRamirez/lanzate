@@ -1,6 +1,6 @@
 import { getEmployeesFromStore } from "@/features/employees/actions/getEmployeesFromStore"
-import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
-import { getEmployeePermissions } from "@/features/stores/actions/getEmployeePermissions"
+import { getStoresFromSlug } from "@/features/stores/actions/get-stores-from-slug.action"
+import { getEmployeePermissions } from "@/features/employees/actions/get-employee-permisions.action"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import EmployeesTable from "@/features/employees/components/employees-table"
 import { EmployeesTabProps } from "@/features/employees/types/index"

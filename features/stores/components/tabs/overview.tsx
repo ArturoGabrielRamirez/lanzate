@@ -1,5 +1,5 @@
 import { OverviewTabProps } from "@/features/overview/types"
-import { getStoresFromSlug } from "@/features/stores/actions/getStoresFromSlug"
+import { getStoresFromSlug } from "@/features/stores/actions/get-stores-from-slug.action"
 import QuickActionsBar from "@/features/overview/components/quick-actions-bar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Store, Sparkles, TrendingUp, Users, Package } from "lucide-react"
