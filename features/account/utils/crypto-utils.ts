@@ -22,6 +22,7 @@ export class CryptoUtils {
       const hashToCompare = await pbkdf2Async(password, salt, 10000, 64, 'sha512');
       return timingSafeEqual(Buffer.from(hash, 'hex'), hashToCompare);
     } catch (error) {
+      console.error('Error verifying password:', error);
       return false;
     }
   }
@@ -34,14 +35,14 @@ export class CryptoUtils {
     if (!email || typeof email !== 'string') {
       throw new Error('Email is required and must be a string');
     }
-    
+
     // Normalización consistente
     const normalizedEmail = email.toLowerCase().trim();
-    
+
     if (!normalizedEmail) {
       throw new Error('Email cannot be empty after normalization');
     }
-    
+
     return createHash('sha256').update(normalizedEmail).digest('hex');
   }
 
@@ -53,6 +54,7 @@ export class CryptoUtils {
       const computedHash = this.hashEmail(email);
       return timingSafeEqual(Buffer.from(hash, 'hex'), Buffer.from(computedHash, 'hex'));
     } catch (error) {
+      console.error('Error verifying email hash:', error);
       return false;
     }
   }
@@ -65,7 +67,7 @@ export class CryptoUtils {
     if (!supabaseUserId) {
       throw new Error('Supabase User ID is required');
     }
-    
+
     const ts = timestamp || Date.now();
     // Tomar solo una parte del UUID para el identificador
     const shortId = supabaseUserId.replace(/-/g, '').substring(0, 12);
@@ -79,7 +81,7 @@ export class CryptoUtils {
     if (!supabaseUserId) {
       throw new Error('Supabase User ID is required');
     }
-    
+
     const ts = timestamp || Date.now();
     const shortId = supabaseUserId.replace(/-/g, '').substring(0, 12);
     return `deleted_${shortId}_${ts}@deleted.local`;
@@ -98,10 +100,10 @@ export class CryptoUtils {
    */
   static createPreventionHash(email: string, additionalData?: string): string {
     const normalizedEmail = email.toLowerCase().trim();
-    const dataToHash = additionalData 
-      ? `${normalizedEmail}:${additionalData}` 
+    const dataToHash = additionalData
+      ? `${normalizedEmail}:${additionalData}`
       : normalizedEmail;
-    
+
     return createHash('sha256').update(dataToHash).digest('hex');
   }
 
@@ -112,7 +114,7 @@ export class CryptoUtils {
     if (!email || typeof email !== 'string') {
       return false;
     }
-    
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email.toLowerCase().trim());
   }

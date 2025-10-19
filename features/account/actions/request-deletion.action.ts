@@ -1,31 +1,27 @@
-// features/account/actions/request-deletion.ts
 'use server'
 
 import { headers } from 'next/headers'
+
+import { DELETION_CONFIG, getGracePeriod } from "@/features/account/config/deletion.config"
+import { getCurrentUserForDeletion, verifyUserPassword } from "@/features/account/data/index"
+import { calculateScheduledDeletionDate } from "@/features/account/utils/deletion-calculator"
+import { getDisplayScheduledDate } from "@/features/account/utils/deletion-helpers"
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 import { prisma } from '@/utils/prisma'
-import { getCurrentUserForDeletion, verifyUserPassword } from "../data"
-import { calculateScheduledDeletionDate } from "../utils/deletion-calculator"
-import { getDisplayScheduledDate } from "../utils/deletion-helpers"
-import { DELETION_CONFIG, getGracePeriod } from "../config/deletion.config"
 
 export async function requestDeletionAction(reason: string, password: string) {
     return actionWrapper(async () => {
-        // Obtener headers del request
+
         const headersList = headers()
         const ipAddress = (await headersList).get('x-forwarded-for') ||
-            (await headersList).get('x-real-ip') ||
-            '127.0.0.1'
+            (await headersList).get('x-real-ip') || '127.0.0.1'
         const userAgent = (await headersList).get('user-agent') || 'Unknown'
-
-        // Obtener usuario actual
         const currentUser = await getCurrentUserForDeletion()
 
         if (!currentUser) {
             return formatErrorResponse('Usuario no encontrado', null)
         }
 
-        // Verificar contraseña
         const isPasswordValid = await verifyUserPassword(currentUser.email, password)
 
         if (!isPasswordValid) {
@@ -39,7 +35,6 @@ export async function requestDeletionAction(reason: string, password: string) {
             console.log(`Testing: Eliminación programada para ${deletionScheduledAt.toLocaleString()}`)
         }
 
-        // Transacción para actualizar usuario y crear log
         const result = await prisma.$transaction(async (tx) => {
             const user = await tx.user.findUnique({
                 where: { id: currentUser.id },

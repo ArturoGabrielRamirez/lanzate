@@ -1,5 +1,6 @@
 import { useState } from "react"
-import { UserType } from "../types"
+
+import { UserType } from "@/features/account/types"
 
 export default function useUserData(initialUser: UserType) {
     const [user, setUser] = useState(initialUser)

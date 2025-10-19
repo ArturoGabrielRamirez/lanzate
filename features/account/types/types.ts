@@ -232,11 +232,12 @@ export interface CancelDeletionParams {
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface TimeLeft {
+export interface TimeLeft {
     days: number;
     hours: number;
     minutes: number;
     seconds: number;
+    difference: number;
 }
 
 export interface CountdownDisplayProps {
@@ -291,4 +292,10 @@ export interface DeletionRequestedViewProps {
     user: UserType
     deletionStatus: UserDeletionStatus
     onStatusChange: () => void
+}
+
+export interface ActionTimeLeft {
+    minutes: number;
+    seconds: number;
+    totalMinutes: number;
 }

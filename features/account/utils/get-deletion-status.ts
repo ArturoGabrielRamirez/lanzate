@@ -1,4 +1,4 @@
-'use server'
+/* 'use server'
 
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 import { getCurrentUserForDeletion, getUserForDeletion } from "../data"
@@ -27,4 +27,4 @@ export async function getDeletionStatusAction() {
             testingMode: DELETION_CONFIG.IS_TESTING_MODE
         })
     })
-}
+} */

@@ -1,6 +1,7 @@
+import { getTranslations } from "next-intl/server";
+
 import { AccountPageClient } from "@/features/account/components";
 import { getUserInfo } from "@/features/layout/actions/getUserInfo";
-import { getTranslations } from "next-intl/server";
 
 
 export default async function AccountPage() {

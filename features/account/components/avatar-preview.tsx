@@ -1,5 +1,7 @@
+/* import Image from "next/image"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { AvatarPreviewProps } from "../types"
+import { AvatarPreviewProps } from "@/features/account/types"
 
 export function AvatarPreview({ previewUrl, getDefaultAvatar }: AvatarPreviewProps) {
   return (
@@ -10,7 +12,7 @@ export function AvatarPreview({ previewUrl, getDefaultAvatar }: AvatarPreviewPro
           alt="Preview avatar"
         />
         <AvatarFallback>
-          <img
+          <Image
             src={getDefaultAvatar()}
             alt="Default avatar"
             className="h-full w-full"
@@ -19,4 +21,4 @@ export function AvatarPreview({ previewUrl, getDefaultAvatar }: AvatarPreviewPro
       </Avatar>
     </div>
   )
-}
+} */

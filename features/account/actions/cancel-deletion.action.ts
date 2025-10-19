@@ -1,21 +1,20 @@
 'use server'
 
 import { headers } from 'next/headers'
+
+import { DELETION_CONFIG } from "@/features/account/config/deletion.config"
+import { getCurrentUserForDeletion } from "@/features/account/data/index"
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 import { prisma } from '@/utils/prisma'
-import { getCurrentUserForDeletion } from "../data"
-import { DELETION_CONFIG } from "../config/deletion.config"
 
 export async function cancelDeletionAction(reason: string) {
     return actionWrapper(async () => {
-        // Obtener headers del request
         const headersList = headers()
         const ipAddress = (await headersList).get('x-forwarded-for') ||
             (await headersList).get('x-real-ip') ||
             '127.0.0.1'
         const userAgent = (await headersList).get('user-agent') || 'Unknown'
 
-        // Obtener usuario actual
         const currentUser = await getCurrentUserForDeletion()
 
         if (!currentUser) {

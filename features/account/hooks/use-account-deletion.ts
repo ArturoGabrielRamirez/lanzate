@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+
 import { createClient } from "@/utils/supabase/client";
 
 export function useAccountDeletion(onAccountDeleted?: () => void) {

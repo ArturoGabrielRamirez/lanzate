@@ -1,8 +1,9 @@
 "use client"
 
 import { Suspense, lazy, useEffect } from "react"
-import { DangerZoneSkeleton } from "./danger-zone-skeleton"
-import { DangerZoneTabProps } from "../types"
+
+import { DangerZoneSkeleton } from "@/features/account/components"
+import { DangerZoneTabProps } from "@/features/account/types"
 const DangerZoneOriginal = lazy(() => import("./delete-user/danger-zone"))
 
 export function DangerZoneTab({ userId, onStatusChange, preload }: DangerZoneTabProps) {

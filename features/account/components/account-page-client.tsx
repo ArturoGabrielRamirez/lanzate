@@ -1,7 +1,7 @@
 'use client'
 
 import { User, AlertTriangle, Settings } from "lucide-react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AccountBannerHeader, AccountDetailsTab, DangerZoneTab, DeletionRequestedView } from "@/features/account/components"
@@ -31,17 +31,17 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
    
        }, []) */
 
-    const loadDangerZone = () => {
+    const loadDangerZone = useCallback(() => {
         if (!dangerZoneLoaded && activeTab === "danger-zone") {
             setDangerZoneLoaded(true)
         }
-    }
+    }, [dangerZoneLoaded, activeTab])
 
     useEffect(() => {
         if (activeTab === "danger-zone") {
             loadDangerZone()
         }
-    }, [activeTab, dangerZoneLoaded])
+    }, [activeTab, dangerZoneLoaded, loadDangerZone])
 
     if (isDeletionLoading && deletionStatus.isDeletionRequested && hasInitialized) {
         return <LoadingSkeleton />

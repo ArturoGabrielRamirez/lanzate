@@ -1,14 +1,15 @@
 import { AlertTriangle, ShieldUser, Clock } from "lucide-react";
-import { UserDeletionStatus } from "../../types";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import/*  DeletionHelpers, */ { getUrgencyLevel, getUrgencyLevelFromMinutes } from "../../utils/deletion-helpers";
 
-export default function DeletionStatusCard({
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { UserDeletionStatus } from "@/features/account/types/index";
+import { getUrgencyLevel, getUrgencyLevelFromMinutes } from "@/features/account/utils/deletion-helpers";
+
+export function DeletionStatusCard({
     status,
     onCancelClick,
-    scheduledDate
+   /*  scheduledDate */
 }: {
     status: UserDeletionStatus & {
         canDeleteUntil?: Date | null;
@@ -23,7 +24,7 @@ export default function DeletionStatusCard({
     onCancelClick: () => void;
     scheduledDate: Date | null;
 }) {
-    // 🔥 CORRECCIÓN: Solo verificar canCancel
+
     const canActuallyCancelNow = status.canCancel;
 
     const getTimeUntilActionLimit = () => {
@@ -108,7 +109,6 @@ export default function DeletionStatusCard({
                     </span>
                 </div>
 
-                {/* 🔥 MEJORA: Mostrar tiempo restante solo si hay menos de 60 minutos (o siempre en testing) */}
                 {timeUntilLimit && (timeUntilLimit.totalMinutes <= 60 || status.isWithinActionWindow) && (
                     <div className="flex items-center justify-between text-sm">
                         <span className="text-gray-300">Tiempo restante:</span>
@@ -143,7 +143,6 @@ export default function DeletionStatusCard({
                 {canActuallyCancelNow ? 'Cancelar eliminación' : 'Período expirado'}
             </Button>
 
-            {/* 🔥 MEJORA: Mostrar alerta de urgencia solo en la ventana de acción */}
             {status.isWithinActionWindow && canActuallyCancelNow && (
                 <Alert className={`${actionColors.bg} ${actionColors.border} mt-2`}>
                     <Clock className={`h-3 w-3 ${actionColors.icon}`} />

@@ -1,5 +1,6 @@
-import { DELETION_CONFIG, getGracePeriod } from '../config/deletion.config'
-import /* DeletionHelpers, */ { getDaysRemaining, getDisplayScheduledDate } from './deletion-helpers'
+import { DELETION_CONFIG, getGracePeriod } from '@/features/account/config/deletion.config'
+import { getDaysRemaining, getDisplayScheduledDate } from '@/features/account/utils'
+
 
 export function calculateScheduledDeletionDate(): Date {
     const scheduledAt = new Date()

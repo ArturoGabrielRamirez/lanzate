@@ -1,6 +1,7 @@
+/* import { Loader2, Check, Upload, X } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
-import { Loader2, Check, Upload, X } from "lucide-react"
-import { ActionButtonsProps } from "../types"
+import { ActionButtonsProps } from "@/features/account/types"
 
 export function ActionButtons({
     selectedOption,
@@ -86,3 +87,4 @@ export function ActionButtons({
         </div>
     )
 }
+ */

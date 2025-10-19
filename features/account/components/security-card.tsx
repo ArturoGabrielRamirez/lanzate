@@ -1,10 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Edit, Key, Mail, Monitor, Shield, Smartphone } from "lucide-react"
-import { maskEmail } from "../utils/utils"
-import { ChangeEmailButton, ChangePasswordButton } from "@/features/auth/components"
+
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { UserType } from "../types"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { UserType } from "@/features/account/types"
+import { maskEmail } from "@/features/account/utils"
+import { ChangeEmailButton, ChangePasswordButton } from "@/features/auth/components"
 
 export function SecurityCard({ user }: { user: UserType }) {
     const truncateEmail = (email: string, maxLength: number = 20) => {
