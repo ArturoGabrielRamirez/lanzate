@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/utils/lib"
-import { toggleProductLike } from "../data/toggleProductLike"
+import { toggleProductLike } from "./toggleProductLike"
 import { revalidatePath } from "next/cache"
 
 export async function toggleLike(productId: number, userId: number, pathname: string) {

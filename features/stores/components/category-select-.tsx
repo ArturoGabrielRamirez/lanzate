@@ -1,11 +1,13 @@
 "use client"
-import { useState, useEffect } from "react";
-import { getCategories } from "../actions/getCategories";
-import { Label } from "@/components/ui/label";
+
 import { useTranslations } from "next-intl";
-import MultipleSelector from "@/components/expansion/multiple-selector";
-import { createCategoryDynamic } from "@/features/categories/actions/createCategoryDynamic";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
+
+import MultipleSelector from "@/components/expansion/multiple-selector";
+import { Label } from "@/components/ui/label";
+import { createCategoryDynamic } from "@/features/categories/actions/createCategoryDynamic";
+import { getCategoriesAction } from "@/features/stores/actions/get-categories.action";
 import { cn } from "@/lib/utils";
 
 type CategorySelectProps = {
@@ -35,9 +37,9 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId, cla
     // Fetch categories if not preloaded
     useEffect(() => {
         const fetchCategories = async () => {
-            const { payload, error } = await getCategories(storeId)
-            if (error) return console.log(error)
-            const fetchedCategories = payload.map((cat) => ({ label: cat.name, value: cat.id }))
+            const { payload, hasError, message } = await getCategoriesAction(storeId)
+            if (hasError) return console.log(message)
+            const fetchedCategories = payload?.map((cat) => ({ label: cat.name, value: cat.id })) ?? []
             setCategories(fetchedCategories)
         }
         if (storeId && categories.length === 0) {
@@ -127,7 +129,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId, cla
         <div className="flex flex-col gap-1 w-full">
             {withLabel && <Label htmlFor="category">{t("category")}</Label>}
             <MultipleSelector
-            delay={100}
+                delay={100}
                 className={cn(className)}
                 defaultOptions={formatedCategories}
                 value={defaultSelectedCategories}
@@ -160,4 +162,5 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId, cla
         </div>
     )
 }
-export default CategorySelect
+
+export { CategorySelect }

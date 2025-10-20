@@ -1,7 +1,7 @@
 import { BadgeAlert, Crown, Trophy, Home, Clock } from "lucide-react"
 import Link from "next/link"
 
-const TopCategoriesNavbar = () => {
+function TopCategoriesNavbar() {
     return (
         <div className="bg-primary/50 w-full">
             <div className="container mx-auto flex flex-wrap items-center">
@@ -33,4 +33,5 @@ const TopCategoriesNavbar = () => {
         </div>
     )
 }
-export default TopCategoriesNavbar
+
+export { TopCategoriesNavbar }

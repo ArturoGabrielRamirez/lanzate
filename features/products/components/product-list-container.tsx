@@ -1,6 +1,6 @@
 "use client"
 
-import { useStore } from "./store-provider"
+import { useStore } from "../../layout/components/public-store/store-provider"
 import { cn } from "@/lib/utils"
 
 type Props = {

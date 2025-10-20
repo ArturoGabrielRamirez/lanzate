@@ -1,5 +1,5 @@
-import ProductListContainer from "@/features/store-landing/components/product-list-container"
-import ProductCard from "@/features/store-landing/components/product-card"
+import ProductListContainer from "@/features/products/components/product-list-container"
+import ProductsCard from "@/features/products/components/products-card"
 import { getRelatedProducts } from "@/features/products/actions/getRelatedProducts"
 import type { Product } from "@prisma/client"
 
@@ -22,7 +22,7 @@ export default async function RelatedProducts({ productId }: Props) {
           <h3 className="text-xl font-semibold">Otras variantes</h3>
           <ProductListContainer>
             {sameList.map((p) => (
-              <ProductCard key={`same-${p.id}`} product={p} href={`/item/${p.id}`} />
+              <ProductsCard key={`same-${p.id}`} product={p} href={`/item/${p.id}`} />
             ))}
           </ProductListContainer>
         </div>
@@ -33,7 +33,7 @@ export default async function RelatedProducts({ productId }: Props) {
           <h3 className="text-xl font-semibold">Relacionados</h3>
           <ProductListContainer>
             {catList.map((p) => (
-              <ProductCard key={`cat-${p.id}`} product={p} href={`/item/${p.id}`} />
+              <ProductsCard key={`cat-${p.id}`} product={p} href={`/item/${p.id}`} />
             ))}
           </ProductListContainer>
         </div>

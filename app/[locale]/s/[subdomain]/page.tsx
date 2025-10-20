@@ -8,14 +8,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PageContainer } from "@/features/layout/components";
 /* import PaginationNav from "@/features/store-landing/components/pagination-nav";
 import ProductAmountDisplay from "@/features/store-landing/components/product-amount-display"; */
-import ProductCardLoader from "@/features/store-landing/components/product-card-loader";
-import ProductList from "@/features/store-landing/components/product-list";
+import ProductCardLoader from "@/features/products/components/product-card-loader";
+import ProductList from "@/features/products/components/product-list";
 /* import ProductListDisplay from "@/features/store-landing/components/product-list-display"; */
 /* import SectionContainer from "@/features/store-landing/components/section-container";
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters"; */
-import { loadFilterParams } from "@/features/store-landing/utils/load-filter-params";
-import StoreBanner from "@/features/store-layout/components/store-banner";
-import TopCategoriesNavbar from "@/features/store-layout/components/top-categories-navbar";
+import { loadFilterParams } from "@/features/products/utils/load-filter-params";
+import StoreBanner from "@/features/stores/components/public/store-banner";
+import TopCategoriesNavbar from "@/features/stores/components/public/top-categories-navbar";
 /* import { getStoreProductAmount } from "@/features/subdomain/actions/getStoreProductAmount"; */
 /* import Image from "next/image"; */
 

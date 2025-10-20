@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { toggleLike } from "../actions/toggleLike"
+import { toggleLike } from "../data/toggleLike"
 import { Flame } from "lucide-react"
 import { useOptimistic, useState, useTransition } from "react"
 import { usePathname } from "next/navigation"

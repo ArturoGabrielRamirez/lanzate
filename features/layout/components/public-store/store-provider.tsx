@@ -1,7 +1,8 @@
 "use client"
 
 import { createContext, useContext, useState } from "react"
-import { StoreContextType } from "../types"
+
+import { StoreContextType } from "@/features/stores/types"
 
 const StoreContext = createContext<StoreContextType>({
     displayType: "grid",

@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/utils/lib"
-import { getUserProductLike } from "../data/getUserProductLike"
+import { getUserProductLike } from "./getUserProductLike"
 
 export async function getLikeStatus(userId: number, productId: number) {
     return actionWrapper(async () => {

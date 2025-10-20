@@ -8,7 +8,7 @@ type Props = {
     href: string
 }
 
-function ProductCard({ product, href }: Props) {
+function ProductsCard({ product, href }: Props) {
     return (
         <ProductCardContainer
             listCard={<ListCard product={product} href={href} />}
@@ -17,4 +17,4 @@ function ProductCard({ product, href }: Props) {
     )
 }
 
-export default ProductCard
+export default ProductsCard

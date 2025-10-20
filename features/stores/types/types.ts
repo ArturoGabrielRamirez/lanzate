@@ -632,3 +632,9 @@ export type StoreUpdateData = {
 export type EditOperationalSettingsData = yup.InferType<typeof editOperationalSettingsSchema>
 export type EditSocialMediaData = yup.InferType<typeof editSocialMediaSchema>
 export type EditContactData = yup.InferType<typeof editContactSchema>
+
+
+export type StoreContextType = {
+    displayType: "grid" | "list"
+    setDisplayType: (displayType: "grid" | "list") => void
+}  

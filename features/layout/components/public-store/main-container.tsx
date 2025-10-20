@@ -2,7 +2,7 @@ type Props = {
     children: React.ReactNode
 }
 
-const MainContainer = ({ children }: Props) => {
+function MainContainer({ children }: Props) {
     return (
         <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow bg-background text-foreground @container'>
             {children}
@@ -10,4 +10,4 @@ const MainContainer = ({ children }: Props) => {
     )
 }
 
-export default MainContainer
+export { MainContainer }
