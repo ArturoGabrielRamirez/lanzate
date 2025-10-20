@@ -1,8 +1,8 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { ArrowLeft, ArrowRight } from "lucide-react"
-import { useStepper } from "@/components/expansion/interactive-stepper"
+import { useStepper } from "@/features/shadcn/components/expansion/interactive-stepper"
 import { useTranslations } from "next-intl"
 
 export function StepNavigation() {

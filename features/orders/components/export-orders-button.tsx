@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { Download } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Order } from "@prisma/client"

@@ -1,4 +1,4 @@
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@/features/shadcn/components/ui/sonner";
 import CartProvider from "@/features/cart/components/cart-provider";
 import { Header } from "@/features/store-landing/components"
 import Footer from "@/features/layout/components/public-store/footer";

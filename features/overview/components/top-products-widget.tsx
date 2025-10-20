@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
 import { ArrowRight, Crown } from "lucide-react"
 import { TopProductData } from "../types"
 import { getTranslations } from "next-intl/server"

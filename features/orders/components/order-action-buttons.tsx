@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { Order, OrderTracking, OrderTrackingStatus } from "@prisma/client"
 import { Clock, Package, CheckCircle2, Truck } from "lucide-react"
 import { useTransition } from "react"

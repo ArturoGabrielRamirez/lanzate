@@ -1,6 +1,6 @@
 'use client'
 
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton";
 import { SetupPasswordPrompt } from '@/features/auth/components/change-visual/setup-password-prompt';
 import { EmailChangeDialog, EmailChangeForm, ProgressButton } from '@/features/auth/components/index';
 import { useEmailChange } from '@/features/auth/hooks/use-email-change';

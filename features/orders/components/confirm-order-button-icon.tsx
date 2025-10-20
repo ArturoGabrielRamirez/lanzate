@@ -6,7 +6,7 @@ import { useTransition } from "react"
 import { toast } from "sonner"
 import { confirmOrderAction } from "../actions/confirmOrderAction"
 import { cn } from "@/lib/utils"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 
 type Props = {
     orderId: number

@@ -2,7 +2,7 @@
 
 import { Plus } from "lucide-react"
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { Empty, EmptyHeader, EmptyTitle, EmptyMedia, EmptyDescription, EmptyContent } from "@/features/shadcn/components/empty"
 import { CreateStoreButton } from "@/features/stores/components"
 import { NewStoreCardProps } from "@/features/stores/types"

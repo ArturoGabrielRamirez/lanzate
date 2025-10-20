@@ -1,6 +1,6 @@
 
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/features/shadcn/components/ui/button'
 import Link from 'next/link'
 
 

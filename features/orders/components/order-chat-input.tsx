@@ -1,7 +1,7 @@
 "use client"
 
-import { AutosizeTextarea } from "@/components/expansion/autosize-textarea"
-import { Button } from "@/components/ui/button"
+import { AutosizeTextarea } from "@/features/shadcn/components/expansion/autosize-textarea"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { Paperclip } from "lucide-react"
 import { useState, useTransition } from "react"
 import { usePathname } from "next/navigation"

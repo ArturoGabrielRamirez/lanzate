@@ -2,7 +2,7 @@
 
 import { RefreshCw, Send, CheckCircle } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/features/shadcn/components/ui/button";
 import { EmailChangeActionsProps } from "@/features/auth/types";
 
 function EmailChangeActions({

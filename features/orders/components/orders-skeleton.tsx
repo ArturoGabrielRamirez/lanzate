@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Card, CardContent, CardHeader } from "@/features/shadcn/components/ui/card"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 
 function OrdersSkeleton() {
     return (

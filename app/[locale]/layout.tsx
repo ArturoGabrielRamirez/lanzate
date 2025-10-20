@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/features/shadcn/components/ui/sonner"
 import { GlobalEmailConfirmationDetector } from '@/features/auth/components';
 import { FloatingDockContainer } from '@/features/floating-dock/components';
 import { Footer } from "@/features/footer/components";

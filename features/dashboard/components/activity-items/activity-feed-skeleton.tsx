@@ -1,7 +1,7 @@
 import * as motion from "motion/react-client"
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { ActivityFeedItemSkeletonProps } from "@/features/dashboard/types"
 
 function ActivityFeedItemSkeleton({ index }: ActivityFeedItemSkeletonProps) {

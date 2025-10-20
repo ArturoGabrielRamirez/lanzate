@@ -1,4 +1,4 @@
-import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
 import { InitialPreviewProps } from '../types'
 
 export function InitialPreview({ originalUrl }: InitialPreviewProps) {

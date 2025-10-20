@@ -1,6 +1,6 @@
 "use client"
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { useCart } from "@/features/cart/components/cart-provider"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Product } from "@prisma/client"

@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 
-import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Label } from '@/features/shadcn/components/ui/label'
 import { handleFacebookLogin, handleGoogleLogIn } from '@/features/auth/actions'
 import { FacebookLogo, GoogleLogo } from '@/features/auth/components'
 

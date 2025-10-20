@@ -3,7 +3,7 @@
 import { User, AlertTriangle, Settings } from "lucide-react"
 import { useState, useEffect, useCallback } from "react"
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/features/shadcn/components/ui/tabs"
 import { AccountBannerHeader, AccountDetailsTab, DangerZoneTab, DeletionRequestedView } from "@/features/account/components"
 import { LoadingSkeleton } from "@/features/account/components/loading-skeleton"
 import useDeletionStatus from "@/features/account/hooks/use-deletion-status"

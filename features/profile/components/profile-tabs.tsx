@@ -1,8 +1,8 @@
 'use client'
 
 import { Suspense, lazy } from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Card, CardContent } from '@/components/ui/card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/features/shadcn/components/ui/tabs'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
 import { ProfileTabsProps } from '../types'
 import { TabLoadingState } from './tab-laoding-state'
 

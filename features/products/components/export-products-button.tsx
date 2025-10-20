@@ -1,11 +1,11 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { Download } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Product, Category } from "@prisma/client"
 import * as XLSX from "xlsx-js-style"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 type Props = {

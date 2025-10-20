@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { getEmployeePermissionsAction } from "@/features/employees/actions/get-employee-permisions.action"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"

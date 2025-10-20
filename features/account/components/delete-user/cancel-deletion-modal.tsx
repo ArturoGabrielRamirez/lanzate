@@ -1,9 +1,9 @@
 import { CheckCircle, X } from "lucide-react"
 
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
+import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Textarea } from "@/features/shadcn/components/ui/textarea"
 
 export function CancelDeletionModal({
     isOpen,

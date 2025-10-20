@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
 import { CheckCircle, AlertCircle, AlertTriangle } from "lucide-react"
 import { useTransition } from "react"
 import { confirmOrderAction } from "../actions/confirmOrderAction"

@@ -1,4 +1,4 @@
-import { Card, CardDescription, CardTitle } from "@/components/ui/card"
+import { Card, CardDescription, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Product } from "@prisma/client"
 import Image from "next/image"
 import AddToCartButton from "./add-to-cart-button"

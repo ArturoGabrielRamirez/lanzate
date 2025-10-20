@@ -3,7 +3,7 @@
 import { Lock } from "lucide-react";
 import { useTranslations } from 'next-intl';
 
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from '@/features/shadcn/components/ui/skeleton';
 import { handleEditPassword } from "@/features/auth/actions";
 import { SetupPasswordPrompt } from "@/features/auth/components/change-visual/setup-password-prompt";
 import usePasswordGuard from "@/features/auth/hooks/use-password-guard";

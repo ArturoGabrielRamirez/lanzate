@@ -1,7 +1,7 @@
 import { Store, Sparkles, TrendingUp, Users, Package } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { getUserInfo } from "@/features/layout/actions"
 import QuickActionsBar from "@/features/overview/components/quick-actions-bar"
 import { OverviewTabProps } from "@/features/overview/types"

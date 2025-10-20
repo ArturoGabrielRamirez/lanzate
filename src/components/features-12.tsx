@@ -1,5 +1,5 @@
 'use client'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/features/shadcn/components/ui/accordion'
 import { ChartBarIncreasingIcon, Home, Settings, TabletSmartphone } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'

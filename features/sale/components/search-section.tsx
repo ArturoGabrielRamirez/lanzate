@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
 import { Search, Loader2 } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
+import { Input } from '@/features/shadcn/components/ui/input'
 import { searchProductsByNameAction } from '../actions/search-products-by-name'
 import type { ScannedProduct, ProductSearchByNameResult } from '../types'
 import { useTranslations } from 'next-intl'

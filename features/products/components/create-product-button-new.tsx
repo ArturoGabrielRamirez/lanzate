@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogTrigger } from "@/components/ui/dialog"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Dialog, DialogTrigger } from "@/features/shadcn/components/ui/dialog"
 import { Plus } from "lucide-react"
 
 const CreateProductButtonNew = () => {

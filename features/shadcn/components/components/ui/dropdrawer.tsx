@@ -12,7 +12,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
+} from "@/features/shadcn/components/ui/drawer";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,7 +23,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/features/shadcn/components/ui/dropdown-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
@@ -266,7 +266,7 @@ function DropDrawerContent({
   // Animation transition
   const transition = {
     duration: 0.3,
-    ease: [0.25, 0.1, 0.25, 1.0], // cubic-bezier easing
+    ease: [0.25, 0.1, 0.25, 1.0] as const, // cubic-bezier easing
   };
 
   if (isMobile) {

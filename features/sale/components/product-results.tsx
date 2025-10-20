@@ -1,9 +1,9 @@
 "use client"
 
 import { Search, Loader2, Plus, AlertCircle, Package, X } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/features/shadcn/components/ui/card'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Badge } from '@/features/shadcn/components/ui/badge'
 import type { ScannedProduct, ProductSearchByNameResult, ProductSearchResult } from '../types'
 import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'

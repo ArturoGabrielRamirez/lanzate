@@ -1,6 +1,6 @@
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent } from '@/components/ui/card'
-import { Progress } from '@/components/ui/progress'
+import { Badge } from '@/features/shadcn/components/ui/badge'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
+import { Progress } from '@/features/shadcn/components/ui/progress'
 import { LevelCardProps } from '../types'
 
 export function LevelCard({ level, points, progressData }: LevelCardProps) {

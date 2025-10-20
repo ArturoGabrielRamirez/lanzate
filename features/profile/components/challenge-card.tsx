@@ -1,5 +1,5 @@
-import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
+import { Badge } from '@/features/shadcn/components/ui/badge'
+import { Progress } from '@/features/shadcn/components/ui/progress'
 import { ChallengeCardProps } from '../types'
 
 export function ChallengeCard({ challenge }: ChallengeCardProps) {

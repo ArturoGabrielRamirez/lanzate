@@ -1,6 +1,6 @@
 import { ExternalLink } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
+import { Button } from '@/features/shadcn/components/ui/button'
 import { ProductCardProps } from '../types'
 import { ProductImage } from './product-image'
 import { ProductBadges } from './product-badges'

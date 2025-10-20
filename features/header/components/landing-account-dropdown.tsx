@@ -4,8 +4,8 @@ import { User } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 

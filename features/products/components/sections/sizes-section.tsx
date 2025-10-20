@@ -1,9 +1,9 @@
 "use client"
 
-import MultipleSelector from "@/components/expansion/multiple-selector"
-import type { Option as MultiOption } from "@/components/expansion/multiple-selector"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
+import MultipleSelector from "@/features/shadcn/components/expansion/multiple-selector"
+import type { Option as MultiOption } from "@/features/shadcn/components/expansion/multiple-selector"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Switch } from "@/features/shadcn/components/ui/switch"
 import { useMemo } from "react"
 import { useFormContext } from "react-hook-form"
 import type { SizesSectionData } from "@/features/products/type/create-form-extra"

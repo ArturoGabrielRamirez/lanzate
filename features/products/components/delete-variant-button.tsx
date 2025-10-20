@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { deleteProductVariant } from "@/features/products/actions/deleteProductVariant"
 import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 

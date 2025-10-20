@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ColorPicker, ColorPickerAlpha, ColorPickerEyeDropper, ColorPickerFormat, ColorPickerHue, ColorPickerOutput, ColorPickerSelection } from '@/components/ui/shadcn-io/color-picker'
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { ColorPicker, ColorPickerAlpha, ColorPickerEyeDropper, ColorPickerFormat, ColorPickerHue, ColorPickerOutput, ColorPickerSelection } from '@/features/shadcn/components/shadcn-io/color-picker'
+import { Popover, PopoverContent, PopoverTrigger } from "@/features/shadcn/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { ColorLike } from "color"
 import Color from "color"

@@ -2,10 +2,10 @@ import { ArrowUpRightIcon } from "lucide-react";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
-import { Announcement, AnnouncementTitle, AnnouncementTag } from "@/components/ui/shadcn-io/announcement";
-import { RotatingText } from "@/components/ui/shadcn-io/rotating-text";
 import heroImage from "@/features/landing/assets/Startup life-pana 1.svg";
 import { HeroDescription } from "@/features/landing/components";
+import { Announcement, AnnouncementTitle, AnnouncementTag } from "@/features/shadcn/components/shadcn-io/announcement";
+import { RotatingText } from "@/features/shadcn/components/shadcn-io/rotating-text";
 
 async function HeroSection() {
 

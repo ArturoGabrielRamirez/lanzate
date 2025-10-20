@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { changeOrderTrackingStatus } from "@/features/orders/actions/changeOrderTrackingStatus"
 import { Order, OrderTrackingStatus, OrderTracking, OrderItem, Product, OrderPayment } from "@prisma/client"
 import { CheckCircle, Loader2 } from "lucide-react"

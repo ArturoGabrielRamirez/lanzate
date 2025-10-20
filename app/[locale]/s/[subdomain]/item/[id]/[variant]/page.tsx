@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { Title } from "@/features/layout/components"
 import PageContainer from "@/features/layout/components/page-container"
 import AddToCartButton from "@/features/products/components/add-to-cart-button"

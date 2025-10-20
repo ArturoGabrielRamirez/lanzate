@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select";
 
 function SidebarOrderBySelect() {
 

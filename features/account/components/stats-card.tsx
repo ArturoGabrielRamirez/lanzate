@@ -1,6 +1,6 @@
 import { User } from "lucide-react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
 import { UserType } from "@/features/account/types";
 
 export function StatsCard({ user, immediateData }: { user: UserType; immediateData?: { activeAccounts: number; storesCount: number; accountType: string } }) {

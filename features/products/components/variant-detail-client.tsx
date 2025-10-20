@@ -1,7 +1,7 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import { cn } from "@/lib/utils"
 import { Product, ProductVariant, Color, ProductMedia } from "@prisma/client"
 import { useMemo, useState, useEffect } from "react"

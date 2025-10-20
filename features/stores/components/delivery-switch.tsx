@@ -4,8 +4,8 @@ import { useTranslations } from "next-intl"
 import { useState, useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Switch } from "@/features/shadcn/components/ui/switch"
 import { DeliverySwitchProps } from "@/features/stores/types"
 
 function DeliverySwitch({ defaultValue = false, onDeliveryChange }: DeliverySwitchProps) {

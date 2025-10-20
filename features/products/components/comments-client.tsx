@@ -1,6 +1,6 @@
 "use client"
 
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/features/shadcn/components/ui/textarea"
 import { Form, InputField } from "@/features/layout/components"
 import { addProductComment } from "../actions/addProductComment"
 import { useOptimistic, useState, useTransition } from "react"

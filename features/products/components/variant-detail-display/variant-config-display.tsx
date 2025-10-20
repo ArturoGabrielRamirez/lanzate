@@ -2,14 +2,14 @@
 
 import { Settings2, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { ProductMedia, Product, ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Form } from "@/features/layout/components"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 // removed unused resolver/schema
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
+import { Switch } from "@/features/shadcn/components/ui/switch"
+import { Label } from "@/features/shadcn/components/ui/label"
 import { updateVariantFlags } from "../../actions/updateVariantFlags"
 import { toast } from "sonner"
 

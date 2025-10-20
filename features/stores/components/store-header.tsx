@@ -4,7 +4,7 @@ import { Store } from "lucide-react"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
-import { Card, CardAction, CardContent } from "@/components/ui/card"
+import { Card, CardAction, CardContent } from "@/features/shadcn/components/ui/card"
 import { Title } from "@/features/layout/components"
 import { getStoreHeaderBySlugAction, updateStoreBannerAction, updateStoreLogoAction } from "@/features/stores/actions"
 import { StoreBannerEditor, StoreLogoEditor } from "@/features/stores/components"

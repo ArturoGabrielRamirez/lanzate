@@ -4,9 +4,9 @@ import { Smartphone, Upload, Loader2, Check, Camera } from "lucide-react"
 import { useState, useRef } from 'react'
 import { toast } from "sonner"
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Label } from "@/features/shadcn/components/ui/label"
 import { useCamera } from '@/features/auth/hooks/use-camera'
 import { StoreLogoOption, StoreLogoInlineEditorProps } from '@/features/stores/types'
 import { cn } from "@/lib/utils"

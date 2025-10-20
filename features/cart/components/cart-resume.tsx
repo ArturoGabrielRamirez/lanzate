@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { useCart } from "@/features/cart/components"
 import { useTranslations } from "next-intl"
 import { StoreOperationalSettings } from "@prisma/client"

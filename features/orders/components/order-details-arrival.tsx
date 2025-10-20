@@ -1,7 +1,7 @@
-import { Card, CardTitle, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
+import { Card, CardTitle, CardHeader, CardContent, CardFooter } from "@/features/shadcn/components/ui/card"
 import { MapPin, Timer } from "lucide-react"
 import { Order, OrderTracking, OrderItem, Product, OrderPayment, Store } from "@prisma/client"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }

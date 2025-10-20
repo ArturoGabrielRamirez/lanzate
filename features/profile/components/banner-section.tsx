@@ -1,6 +1,6 @@
 import { Image } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { PRESET_BANNERS } from "../utils/preset-banners"
 import { BannerImage } from "./banner-image-memo"
 import { BannerSectionProps } from "../types"

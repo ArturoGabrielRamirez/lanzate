@@ -2,8 +2,8 @@ import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { cn } from "@/lib/utils"
 import { Clock, CircleCheck, ShoppingBag, MapPin, PartyPopper } from "lucide-react"
 import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }

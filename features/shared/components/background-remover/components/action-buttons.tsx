@@ -1,5 +1,5 @@
 import { Loader2, Sparkles } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/features/shadcn/components/ui/button'
 import { ActionButtonsProps } from '../types'
 
 export function ActionButtons({

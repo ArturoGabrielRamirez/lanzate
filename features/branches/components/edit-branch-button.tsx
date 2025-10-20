@@ -8,9 +8,9 @@ import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { branchUpdateSchema } from "@/features/branches/schemas"
 import { editBranch } from "@/features/branches/actions"
 import { EditBranchButtonProps } from "@/features/branches/types"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Textarea } from "@/features/shadcn/components/ui/textarea"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
 
 function EditBranchButton({ branch, slug, onComplete, userId }: EditBranchButtonProps) {
     

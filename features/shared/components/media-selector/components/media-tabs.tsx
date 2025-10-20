@@ -1,6 +1,6 @@
 'use client'
 
-import { Badge } from '@/components/ui/badge'
+import { Badge } from '@/features/shadcn/components/ui/badge'
 
 interface MediaTabsProps {
   activeTab: 'my-files' | 'gallery'

@@ -1,7 +1,7 @@
 import { MessageCircleDashed } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/features/shadcn/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
 import { FeedErrorProps } from "@/features/dashboard/types";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty";
 import { Link } from "@/i18n/naviation";

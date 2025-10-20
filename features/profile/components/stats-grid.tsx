@@ -1,5 +1,5 @@
 import { Users, Heart, UserCheck, Calendar } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
 import { StatItem } from './stats-item'
 import { StatsGridProps } from '../types'
 

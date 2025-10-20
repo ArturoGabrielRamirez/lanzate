@@ -4,8 +4,8 @@ import { Camera, RefreshCw, Image as Img, Settings, Calendar, Shield } from "luc
 import Image from 'next/image';
 import { useState, useCallback, useEffect } from "react"
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { AccountBannerHeaderProps } from "@/features/account/types"
 import { formatJoinDate, getDisplayName, SUBTLE_BANNERS } from "@/features/account/utils"
 import { ProfileEditor } from "@/features/auth/components/profile/profile-editor"

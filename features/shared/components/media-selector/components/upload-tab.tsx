@@ -1,7 +1,7 @@
 'use client'
 
 import { Upload, Camera } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/features/shadcn/components/ui/button'
 import { UploadTabProps } from '../types'
 
 export function UploadTab({

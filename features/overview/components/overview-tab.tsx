@@ -8,7 +8,7 @@ import {
     SalesByMonthWidget,
     TopProductsWidget,
 } from "./index"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { getTranslations } from "next-intl/server"
 
 async function OverviewTab({ slug }: OverviewTabProps) {

@@ -1,4 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/features/shadcn/components/ui/tabs'
 import { CompareView } from './compare-view'
 import { EditorViewProps } from '../types'
 import { EditView } from '@/features/shared/components/background-remover/components/index'

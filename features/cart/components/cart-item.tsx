@@ -1,7 +1,7 @@
 "use client"
 
 import { useCart } from "@/features/cart/components"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { Trash2 } from "lucide-react"
 import { CartItemType } from "@/features/cart/types"
 import Image from "next/image"

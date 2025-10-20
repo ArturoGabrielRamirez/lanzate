@@ -14,7 +14,7 @@ import {
     getSortedRowModel,
     RowModel
 } from "@tanstack/react-table"
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 import {
     Table,
     TableBody,
@@ -22,13 +22,13 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table"
+} from "@/features/shadcn/components/ui/table"
 import { ChevronRight, Filter, Search } from "lucide-react"
 import { ChevronLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { useState } from "react"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
+import { Input } from "@/features/shadcn/components/ui/input"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 

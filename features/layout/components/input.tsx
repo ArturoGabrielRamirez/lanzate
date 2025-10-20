@@ -1,10 +1,10 @@
 'use client'
 
 import { useFormContext, get } from 'react-hook-form'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Input } from '@/features/shadcn/components/ui/input'
+import { Label } from '@/features/shadcn/components/ui/label'
 import { cn } from '@/lib/utils'
-import { Textarea } from '@/components/ui/textarea'
+import { Textarea } from '@/features/shadcn/components/ui/textarea'
 import { KeyboardEvent } from 'react'
 
 type InputFieldProps = {

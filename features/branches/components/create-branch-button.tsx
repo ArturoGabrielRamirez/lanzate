@@ -9,7 +9,7 @@ import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { CreateBranchButtonProps } from "@/features/branches/types"
 import { branchCreateSchema } from "@/features/branches/schemas"
 import { createBranch } from "@/features/branches/actions"
-import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion"
+import { Accordion, AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
 import AccordionTriggerWithValidation from "./accordion-trigger-with-validation"
 
 function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useOptimistic } from 'react'
 import { toast } from 'sonner'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/features/shadcn/components/ui/dialog'
 import { useMediaUpload } from '@/features/shared/hooks/use-media-upload'
 import { useMediaOptions } from '@/features/shared/components/media-selector/hooks/use-media-options'
 import { removeMedia } from '@/features/shared/components/media-selector/utils/remove-media'

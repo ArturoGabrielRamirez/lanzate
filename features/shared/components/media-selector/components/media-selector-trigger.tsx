@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import Image from "next/image"
 import { MediaSelectorTriggerProps } from "../types"
 import { forwardRef, Ref } from "react"

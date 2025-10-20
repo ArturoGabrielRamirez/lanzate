@@ -1,5 +1,5 @@
-import { Label } from '@/components/ui/label'
-import { Slider } from '@/components/ui/slider'
+import { Label } from '@/features/shadcn/components/ui/label'
+import { Slider } from '@/features/shadcn/components/ui/slider'
 import { CheckerboardBackground } from '@/features/shared/components/background-remover/components/index'
 import { CompareViewProps } from '../types'
 

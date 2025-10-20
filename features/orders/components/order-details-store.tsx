@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/features/shadcn/components/ui/card"
 import OpenChatButton from "@/features/orders/components/open-chat-button"
 import { cn } from "@/lib/utils"
 import { Order, OrderTracking, OrderItem, Product, OrderPayment, Store, Branch } from "@prisma/client"

@@ -1,7 +1,7 @@
 "use client"
 
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Switch } from "@/features/shadcn/components/ui/switch"
 import { useState } from "react"
 import type { SettingsSectionData } from "@/features/products/type/create-form-extra"
 

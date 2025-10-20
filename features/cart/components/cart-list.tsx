@@ -1,7 +1,7 @@
 "use client"
 
 import { useCart, CartItem } from "@/features/cart/components"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { Trash2, ShoppingBag } from "lucide-react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"

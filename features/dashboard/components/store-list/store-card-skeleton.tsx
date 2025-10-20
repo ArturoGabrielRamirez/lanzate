@@ -1,7 +1,7 @@
 import * as motion from "motion/react-client"
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { StoreCardSkeletonProps } from "@/features/dashboard/types"
 
 function StoreCardSkeleton({ index }: StoreCardSkeletonProps) {

@@ -1,5 +1,5 @@
 import { Heart } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
 import { EmptyStateProps } from '../types'
 
 export function EmptyState({

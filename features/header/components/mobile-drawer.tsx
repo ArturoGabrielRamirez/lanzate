@@ -1,17 +1,17 @@
 import { getTranslations } from "next-intl/server";
 
-import { DropDrawer, DropDrawerTrigger, DropDrawerContent, DropDrawerItem, DropDrawerGroup, DropDrawerLabel } from "@/components/dropdrawer";
 import { HamburguerIcon } from "@/features/header/components/hamburguer-icon";
 import { LogoutLink } from "@/features/header/components/logout-link";
 import { SettingsToolbar } from "@/features/header/components/settings-toolbar";
 import { UserAvatar } from "@/features/header/components/user-avatar";
 import { DRAWER_MENU_ITEMS_GUEST, NAV_MENU_ITEMS_AUTH } from "@/features/header/constants";
 import { getUserInfo } from "@/features/layout/actions";
+import { DropDrawer, DropDrawerTrigger, DropDrawerContent, DropDrawerItem, DropDrawerGroup, DropDrawerLabel } from "@/features/shadcn/components/dropdrawer";
 import { Link } from "@/i18n/naviation";
 
 async function MobileDrawer() {
 
-    const { payload: user } = await getUserInfo(false)
+    const { payload: user } = await getUserInfo()
     const t = await getTranslations();
 
     return (

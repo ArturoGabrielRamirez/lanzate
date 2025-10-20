@@ -1,6 +1,6 @@
 import { AlertCircle } from "lucide-react"
 
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
 
 export function ActionNearExpirationAlert({ totalMinutes }: { totalMinutes: number }) {
     return (

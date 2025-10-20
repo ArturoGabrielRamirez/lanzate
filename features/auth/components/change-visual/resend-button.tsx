@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/features/shadcn/components/ui/button";
 
 interface ResendButtonProps {
     isResending: boolean;

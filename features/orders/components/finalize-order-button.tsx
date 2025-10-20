@@ -2,7 +2,7 @@ import { toast } from "sonner"
 import { finalizeOrderAction } from "../actions/finalizeOrderAction"
 import { Order, OrderTracking } from "@prisma/client"
 import { useTransition } from "react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { CheckCircle, Loader2 } from "lucide-react"
 
 type Props = {

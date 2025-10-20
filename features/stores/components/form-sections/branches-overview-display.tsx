@@ -4,8 +4,8 @@ import { PaymentMethod } from "@prisma/client"
 import { Truck } from "lucide-react"
 import Link from "next/link"
 
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { BranchesOverviewDisplayProps } from "@/features/stores/types"
 import { getPaymentLabel, formatHours } from "@/features/stores/utils"
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { Plus, Search, Check, UserCheck, Loader, FileText } from "lucide-react"
 import { KeyboardEvent, useState } from "react"

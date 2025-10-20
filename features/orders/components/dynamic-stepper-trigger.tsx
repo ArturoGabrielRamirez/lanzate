@@ -1,6 +1,6 @@
 "use client"
 
-import { InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperTitle, InteractiveStepperTrigger, useStepper } from "@/components/expansion/interactive-stepper"
+import { InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperTitle, InteractiveStepperTrigger, useStepper } from "@/features/shadcn/components/expansion/interactive-stepper"
 import { cn } from "@/lib/utils"
 import { LucideIcon } from "lucide-react"
 

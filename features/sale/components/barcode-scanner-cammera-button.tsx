@@ -1,7 +1,7 @@
 "use client"
 import { useState } from 'react';
 import { BarcodeScanner } from '@thewirv/react-barcode-scanner';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/features/shadcn/components/ui/button';
 import { Camera, X } from 'lucide-react';
 
 type BarcodeScannerCammeraButtonProps = {

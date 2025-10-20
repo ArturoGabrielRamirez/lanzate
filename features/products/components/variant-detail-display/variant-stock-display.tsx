@@ -2,18 +2,18 @@
 
 import { Package, EditIcon, X, Check, Plus, Trash2, Loader2 } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Form } from "@/features/layout/components"
 import { useEffect, useMemo, useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { useFormContext } from "react-hook-form"
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select"
-import { Button } from "@/components/ui/button"
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/features/shadcn/components/ui/select"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { toast } from "sonner"
 import { getBranchesForVariant } from "../../data/getBranchesForVariant"
 import { updateVariantStocks } from "../../data/updateVariantStocks"
-import { Input } from "@/components/ui/input"
+import { Input } from "@/features/shadcn/components/ui/input"
 
 interface VariantStockDisplayProps {
     variant: ProductVariant & {

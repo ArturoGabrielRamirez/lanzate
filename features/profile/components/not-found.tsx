@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { UserX, Home, Search } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/features/shadcn/components/ui/button'
 
 export default function UserNotFound() {
   return (

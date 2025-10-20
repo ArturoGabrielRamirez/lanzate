@@ -9,7 +9,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
+} from '@/features/shadcn/components/ui/alert-dialog'
 import { ConfirmDialogProps } from '../types'
 
 export function ConfirmDialog({

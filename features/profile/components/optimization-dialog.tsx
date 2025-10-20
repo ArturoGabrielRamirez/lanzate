@@ -1,6 +1,6 @@
 'use client'
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/features/shadcn/components/ui/dialog'
 import { Info } from 'lucide-react'
 import { OptimizationDialogProps } from '../types'
 import { useImageInfo } from '../hooks/use-image-info'

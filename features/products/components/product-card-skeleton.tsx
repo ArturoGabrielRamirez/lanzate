@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { ShoppingCart } from "lucide-react"
 
 function ProductCardSkeleton() {

@@ -1,5 +1,5 @@
 "use client"
-import { InputTags } from "@/components/ui/tag-input"
+import { InputTags } from "@/features/shadcn/components/ui/tag-input"
 import { useState } from "react"
 
 function AddCategoryInput() {

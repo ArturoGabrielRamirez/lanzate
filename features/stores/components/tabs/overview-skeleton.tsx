@@ -1,8 +1,8 @@
 import { Store, TrendingUp, Package, Users, Sparkles } from "lucide-react"
 import * as motion from "motion/react-client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 
 function OverviewSkeleton() {
     return (

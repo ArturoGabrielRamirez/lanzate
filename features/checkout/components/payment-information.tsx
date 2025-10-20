@@ -1,8 +1,8 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
+import { Label } from "@/features/shadcn/components/ui/label"
 import { InputField } from "@/features/layout/components"
 import { CreditCard, Banknote, Smartphone } from "lucide-react"
 import { useFormContext } from "react-hook-form"

@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react'
 import {/*  Upload, */ X, Image as ImageIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/features/shadcn/components/ui/button'
 import { MyFilesTabProps } from '../types'
 
 export function MyFilesTab({
