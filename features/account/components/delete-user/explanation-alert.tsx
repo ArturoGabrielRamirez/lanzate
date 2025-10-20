@@ -1,4 +1,4 @@
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert";
 
 export function ExplanationAlert() {
     return (

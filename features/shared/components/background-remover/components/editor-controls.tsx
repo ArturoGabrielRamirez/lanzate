@@ -1,7 +1,7 @@
 import { ZoomIn, ZoomOut } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
-import { Slider } from '@/components/ui/slider'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Label } from '@/features/shadcn/components/ui/label'
+import { Slider } from '@/features/shadcn/components/ui/slider'
 import { EditorControlsProps } from '../types'
 
 export function EditorControls({

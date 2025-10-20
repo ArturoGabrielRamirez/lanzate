@@ -1,6 +1,6 @@
 import { Lock, UserPlus } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
 import { PrivateProfileViewProps } from '../types'
 
 export function PrivateProfileView({ reason, currentUser, isUserLoading }: PrivateProfileViewProps) {

@@ -1,8 +1,8 @@
 "use client"
 
 import { Trash2, Receipt } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
+import { Button } from '@/features/shadcn/components/ui/button'
 import { useTranslations } from 'next-intl'
 import CalculateChangeButton from './calculate-change-button'
 import FinalizeSaleButton from './finalize-sale-button'

@@ -1,4 +1,4 @@
-import { AccordionTrigger } from "@/components/ui/accordion"
+import { AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { cn } from "@/lib/utils"
 import { useFormContext } from "react-hook-form"
 

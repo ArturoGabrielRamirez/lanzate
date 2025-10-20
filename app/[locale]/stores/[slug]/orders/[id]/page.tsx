@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { OrderDetailPageProps } from "@/features/stores/types/order-detail-page-type"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"

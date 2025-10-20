@@ -1,6 +1,6 @@
 'use client'
-import { Button } from '@/components/ui/button'
-import { Progress } from '@/components/ui/progress'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Progress } from '@/features/shadcn/components/ui/progress'
 import { X, Check, FileImage } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { UploadProgressProps } from '../types'

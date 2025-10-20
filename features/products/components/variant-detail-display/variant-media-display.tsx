@@ -2,12 +2,12 @@
 
 import { ImageIcon, EditIcon, X, Check, Upload, Loader2 } from "lucide-react"
 import { Product, ProductMedia, ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { FileUpload, FileUploadDropzone, FileUploadTrigger } from "@/components/ui/file-upload"
-import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { FileUpload, FileUploadDropzone, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { toast } from "sonner"
 import { updateVariantMedia } from "../../data/updateVariantMedia"
 

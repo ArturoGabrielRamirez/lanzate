@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 import type { ProductColor } from "@/features/products/type/product-color"
 import { useFormContext } from "react-hook-form"
 import type { VariantPreview } from "@/features/products/type/create-form-extra"

@@ -1,6 +1,6 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { MediaSelector } from "@/features/shared/components/media-selector/components/media-selector"
 
 import { Camera } from "lucide-react"

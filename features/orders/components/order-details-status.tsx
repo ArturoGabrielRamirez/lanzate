@@ -1,9 +1,9 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { MapPin, Truck, Store as StoreIcon } from "lucide-react"
 import OrderTimelineIcons from "@/features/orders/components/order-timeline-icons"
 import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
-import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/features/shadcn/components/ui/progress"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 import { useMemo } from "react"
 
 type Props = {

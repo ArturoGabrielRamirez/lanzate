@@ -1,9 +1,9 @@
 "use client"
 
 import { Product, Category, ProductVariant } from "@prisma/client"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 
 interface ProductDetailFormProps {
     product: Product & {

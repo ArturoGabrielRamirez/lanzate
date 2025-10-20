@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import CreateProductButton from "@/features/products/components/create-product-button"
 import { getTranslations } from "next-intl/server"
 

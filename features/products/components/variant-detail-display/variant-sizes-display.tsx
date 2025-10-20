@@ -2,13 +2,13 @@
 
 import { Ruler, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import MultipleSelector from "@/components/expansion/multiple-selector"
-import type { Option as MultiOption } from "@/components/expansion/multiple-selector"
-import { Label } from "@/components/ui/label"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import MultipleSelector from "@/features/shadcn/components/expansion/multiple-selector"
+import type { Option as MultiOption } from "@/features/shadcn/components/expansion/multiple-selector"
+import { Label } from "@/features/shadcn/components/ui/label"
 import { toast } from "sonner"
 import { updateVariantSizes } from "../../data/updateVariantSizes"
 

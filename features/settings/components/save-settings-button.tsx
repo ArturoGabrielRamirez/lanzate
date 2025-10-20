@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { Save } from "lucide-react"
 import { useSettingsForm } from "./settings-form-provider"
 import { useFormContext } from "react-hook-form"

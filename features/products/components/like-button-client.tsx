@@ -1,8 +1,8 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
 import { toggleLike } from "../data/toggleLike"
 import { Flame } from "lucide-react"
 import { useOptimistic, useState, useTransition } from "react"

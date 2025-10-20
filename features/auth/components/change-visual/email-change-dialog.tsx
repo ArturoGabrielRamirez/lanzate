@@ -1,6 +1,6 @@
 import { Mail } from "lucide-react";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog";
 import { EmailChangeMonitor } from "@/features/auth/components";
 import { EmailChangeDialogProps } from "@/features/auth/types";
 

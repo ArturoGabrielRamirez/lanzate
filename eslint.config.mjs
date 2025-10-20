@@ -37,6 +37,9 @@ const eslintConfig = [
       },
     },
     rules: {
+      "no-unknown-property": "off",
+      "@typescript-eslint/no-unknown-property": "off",
+      "react/no-unknown-property": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {

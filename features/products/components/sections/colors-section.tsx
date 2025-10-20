@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { ProductColorRow } from "@/features/products/components/product-color-row"
 import type { ColorsSectionData } from "@/features/products/type/create-form-extra"
 import type { ProductColor } from "@/features/products/type/product-color"

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 
-import { Switch } from "@/components/ui/switch"
+import { Switch } from "@/features/shadcn/components/ui/switch"
 import { isActiveRoute } from '@/features/header/utils';
 import { usePathname } from "@/i18n/naviation"
 import { cn } from "@/lib/utils"

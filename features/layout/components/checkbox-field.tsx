@@ -1,11 +1,11 @@
 "use client"
 
 import { useFormContext } from "react-hook-form"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
+import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+import { Label } from "@/features/shadcn/components/ui/label"
 import { cn } from "@/lib/utils"
 import { useEffect } from "react"
-import { Switch } from "@/components/ui/switch"
+import { Switch } from "@/features/shadcn/components/ui/switch"
 
 interface CheckboxFieldProps {
   name: string

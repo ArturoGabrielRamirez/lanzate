@@ -3,7 +3,7 @@
 import { Headset, MessageCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { HelpDialogButton } from "@/features/dashboard/components"
 import { SectionContainer } from "@/features/stores/components"
 

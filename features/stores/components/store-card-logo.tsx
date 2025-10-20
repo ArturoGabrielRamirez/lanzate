@@ -1,7 +1,7 @@
 import { StoreIcon } from "lucide-react"
 import Image from "next/image"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
 import { StoreCardLogoProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
 

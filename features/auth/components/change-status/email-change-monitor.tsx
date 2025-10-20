@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/features/shadcn/components/ui/card";
 import { EmailChangeActions, EmailStepInstructions, EmailStepProgress } from "@/features/auth/components";
 import { useEmailChangeStatus } from "@/features/auth/hooks/use-email-change-status";
 import { useResendCooldown } from "@/features/auth/hooks/use-resend-cooldown";

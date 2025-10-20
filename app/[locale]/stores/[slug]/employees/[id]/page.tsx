@@ -1,10 +1,10 @@
 import { getEmployeeDetails } from "@/features/employees/actions/getEmployeeDetails"
 import { DeleteEmployeeButton, EditEmployeeButton } from "@/features/employees/components"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { EmployeeDetailPageProps } from "@/features/employees/types"
 import { ArrowLeft, UserCheck, UserX, Calendar, Building, Briefcase, DollarSign, Shield, FileText } from "lucide-react"
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
 

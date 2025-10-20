@@ -1,6 +1,6 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { Order } from "@prisma/client"
 import { Package, User, Store, Globe, MapPin, Truck, CheckCircle, Check, Clock, X, Loader2 } from "lucide-react"

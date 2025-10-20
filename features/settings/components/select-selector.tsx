@@ -1,6 +1,6 @@
 "use client"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import { useFormContext } from "react-hook-form"
 import { useSettingsForm } from "./settings-form-provider"
 import { useState, useEffect } from "react"

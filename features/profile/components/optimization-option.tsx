@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
+import { Badge } from '@/features/shadcn/components/ui/badge'
 import { Check } from 'lucide-react'
 import { OptimizationOptionProps } from '../types'
 

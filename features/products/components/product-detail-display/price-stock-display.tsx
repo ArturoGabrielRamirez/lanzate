@@ -2,11 +2,11 @@
 
 import { DollarSign, Package, EditIcon, X } from "lucide-react"
 import { Product } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Form, InputField } from "@/features/layout/components"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useFormContext } from "react-hook-form"
 import { editProductSchema } from "../../schemas/product-schema"

@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Label } from "@/features/shadcn/components/ui/label"
 import { cn } from "@/lib/utils"
 import { MapPin, Truck } from "lucide-react"
 import { useEffect } from "react"

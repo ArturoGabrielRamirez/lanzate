@@ -5,7 +5,7 @@ import { MediaSelectorContentProps } from '../types'
 import { ConfirmDialog } from './confirm-dialog'
 import { useConfirm } from '../hooks/use-confirm'
 import { UploadProgress } from '../../upload-progress'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/features/shadcn/components/ui/button'
 import { AvatarLayout, BannerLayout } from '@/features/shared/components/media-selector/components/index'
 
 

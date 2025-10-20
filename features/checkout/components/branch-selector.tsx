@@ -1,7 +1,7 @@
 "use client"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
+import { Label } from "@/features/shadcn/components/ui/label"
 import { Branch } from "@prisma/client"
 import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"

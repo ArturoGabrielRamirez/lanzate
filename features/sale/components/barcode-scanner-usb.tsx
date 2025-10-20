@@ -1,13 +1,13 @@
 "use client"
 
 import { useState } from 'react'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
 import { useBarcodeScanner } from '../lib/use-barcode-scanner'
 import type { ScannedData } from '../types'
 import { useTranslations } from 'next-intl'
 import BarcodeScannerCammeraButton from './barcode-scanner-cammera-button'
 import { ScanBarcode } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/features/shadcn/components/ui/button'
 import { cn } from '@/lib/utils'
 
 type BarcodeScannerUSBProps = {

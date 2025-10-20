@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react"
 import { getContracts } from "@/features/employees/data"
 import { Contract } from "@/features/employees/types"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { Eye, Download, Check, Loader } from "lucide-react"
 
 type ContractsSelectorProps = {

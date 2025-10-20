@@ -1,5 +1,5 @@
 import { getProductDetails } from "@/features/products/actions/getProductDetails"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { VariantDetailForm } from "@/features/products/components/variant-detail-display"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 /* import { getTranslations } from "next-intl/server" */

@@ -2,12 +2,12 @@
 
 import { DollarSign, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Form, InputField } from "@/features/layout/components"
-import { Label } from "@/components/ui/label"
+import { Label } from "@/features/shadcn/components/ui/label"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { updateVariantPrice } from "../../data/updateVariantPrice"
 
 interface VariantPriceDisplayProps {

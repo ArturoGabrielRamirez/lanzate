@@ -1,9 +1,9 @@
 import { getLogDetailsAction } from "@/features/stores/actions/get-log-details.action"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { LogDetailPageProps } from "@/features/stores/types"
 import { ArrowLeft, Activity, User, Clock, Tag, Hash, FileText, Info, UserCheck } from "lucide-react"
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
 

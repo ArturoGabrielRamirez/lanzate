@@ -1,6 +1,6 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { Button } from "@/components/ui/button"
-import { Select, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Select, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import * as motion from "motion/react-client"
 
 function StoreSelectorSkeleton() {

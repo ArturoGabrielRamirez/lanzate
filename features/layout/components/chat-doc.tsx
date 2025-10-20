@@ -3,7 +3,7 @@
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
 import { useChat } from "./chat-provider"
-import { RealtimeChat } from "@/components/realtime-chat"
+import { RealtimeChat } from "@/features/shadcn/components/supabase/realtime-chat"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { X, Minimize2, Maximize2, Loader2 } from "lucide-react"
 import { ChatMessage } from "@/hooks/use-realtime-chat"

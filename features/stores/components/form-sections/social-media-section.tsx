@@ -3,7 +3,7 @@
 import { MessageCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
+import { AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
 import { InputField } from "@/features/layout/components"
 import { SocialMediaSectionProps } from "@/features/stores/types"

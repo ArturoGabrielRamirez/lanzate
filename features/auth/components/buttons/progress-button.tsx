@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/features/shadcn/components/ui/button";
 import { ProgressButtonProps } from "@/features/auth/types";
 
 function ProgressButton({

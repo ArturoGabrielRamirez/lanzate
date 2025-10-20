@@ -1,11 +1,11 @@
 import { AlertTriangle, X } from "lucide-react"
 import { useState } from "react"
 
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
+import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Input } from "@/features/shadcn/components/ui/input"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Textarea } from "@/features/shadcn/components/ui/textarea"
 import { validators, DELETION_CONSTANTS } from "@/features/account/utils/utils"
 
 export function DeleteConfirmationModal({

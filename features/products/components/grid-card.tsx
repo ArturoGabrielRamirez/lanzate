@@ -1,5 +1,5 @@
 "use client"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader } from "@/features/shadcn/components/ui/card"
 import { Product } from "@prisma/client"
 import Image from "next/image"
 import AddToCartButton from "./add-to-cart-button"
@@ -9,7 +9,7 @@ import * as motion from "motion/react-client"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Crown, Heart, Share, ShoppingCart } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 
 type Props = {
     product: Product

@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 
 export function LoadingSkeleton() {
     return (

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { CardAction } from "@/components/ui/card"
+import { CardAction } from "@/features/shadcn/components/ui/card"
 import { updateStoreBannerAction } from "@/features/stores/actions"
 import { StoreBannerEditor } from "@/features/stores/components"
 import { StoreBannerEditorWrapperProps } from "@/features/stores/types"

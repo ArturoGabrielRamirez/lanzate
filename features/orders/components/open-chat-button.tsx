@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { useChat } from "@/features/layout/components/chat-provider"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { MessageCircle } from "lucide-react"

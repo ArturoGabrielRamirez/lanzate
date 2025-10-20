@@ -1,5 +1,5 @@
 import { Zap } from 'lucide-react'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/features/shadcn/components/ui/card'
 import { ChallengeCard } from './challenge-card'
 import { ChallengesSectionProps } from '../types'
 

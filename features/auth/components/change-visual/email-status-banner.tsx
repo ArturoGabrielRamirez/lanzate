@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert';
+import { Button } from '@/features/shadcn/components/ui/button';
 import { useConfirmationEmailChangeStatus } from '@/features/auth/hooks/use-confirmation-email-change-status';
 
 function EmailStatusBanner() {

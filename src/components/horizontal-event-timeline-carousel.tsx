@@ -9,8 +9,8 @@ import {
   Calendar,
   CheckCircle,
 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/features/shadcn/components/ui/card";
+import { Badge } from "@/features/shadcn/components/ui/badge";
 
 const height = "30rem";
 

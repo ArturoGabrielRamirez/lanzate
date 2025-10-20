@@ -2,8 +2,8 @@
 
 import React, { useRef, useEffect, useState, useCallback } from 'react'
 import { Camera, X, RotateCcw, Check } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
 
 interface CameraComponentProps {
   isOpen: boolean

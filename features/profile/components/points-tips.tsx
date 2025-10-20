@@ -1,5 +1,5 @@
 import { Trophy } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
 
 export function PointsTips() {
     return (

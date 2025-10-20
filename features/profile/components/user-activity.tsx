@@ -13,9 +13,9 @@ import {
   Activity,
   UserPlus
 } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
+import { Avatar, AvatarImage, AvatarFallback } from '@/features/shadcn/components/ui/avatar'
+import { Badge } from '@/features/shadcn/components/ui/badge'
 import { formatDistanceToNow } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { UserActivitiesProps, UserActivity } from '../types'

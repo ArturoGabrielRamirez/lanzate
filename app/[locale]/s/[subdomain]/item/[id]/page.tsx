@@ -1,5 +1,5 @@
 // import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { Title } from "@/features/layout/components"
 import { PageContainer } from "@/features/layout/components"
 import AddToCartButton from "@/features/products/components/add-to-cart-button"

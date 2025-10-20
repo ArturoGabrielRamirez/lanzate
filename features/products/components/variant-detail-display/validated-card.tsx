@@ -1,6 +1,6 @@
 "use client"
 
-import { Card } from "@/components/ui/card"
+import { Card } from "@/features/shadcn/components/ui/card"
 import { cn } from "@/lib/utils"
 import { useFormContext } from "react-hook-form"
 

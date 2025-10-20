@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { Sparkles } from 'lucide-react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
-import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/features/shadcn/components/ui/dialog'
+import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
 import { ActionButtons, EditorView, InitialPreview, ProcessingView } from '@/features/shared/components/background-remover/components/index'
 import {  useBackgroundRemover, useCanvasEditor } from '@/features/shared/components/background-remover/hooks/index'
 import { BackgroundRemoverProps } from '../types'

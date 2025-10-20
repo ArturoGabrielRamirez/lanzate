@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import { TabsTrigger } from "@/components/ui/tabs"
+import { TabsTrigger } from "@/features/shadcn/components/ui/tabs"
 import { TabTriggerLinkProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
 

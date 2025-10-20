@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { Marquee } from "@/components/magicui/marquee";
+
 import IntegrationsSection from "@/src/components/integrations-3";
 
 function StatsSection() {

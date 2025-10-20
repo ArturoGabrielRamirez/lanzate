@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { ColorPicker, ColorPickerSelection, ColorPickerHue, ColorPickerAlpha, ColorPickerOutput, ColorPickerFormat } from "@/components/ui/shadcn-io/color-picker"
+import { Input } from "@/features/shadcn/components/ui/input"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { ColorPicker, ColorPickerSelection, ColorPickerHue, ColorPickerAlpha, ColorPickerOutput, ColorPickerFormat } from "@/features/shadcn/components/shadcn-io/color-picker"
 import Color, { ColorLike } from "color"
 import { toast } from "sonner"
 import { createStoreColor } from "../data/createStoreColor"

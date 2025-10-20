@@ -1,8 +1,8 @@
 import { AlertTriangle, ShieldUser, Clock } from "lucide-react";
 
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert";
+import { Badge } from "@/features/shadcn/components/ui/badge";
+import { Button } from "@/features/shadcn/components/ui/button";
 import { UserDeletionStatus } from "@/features/account/types/index";
 import { getUrgencyLevel, getUrgencyLevelFromMinutes } from "@/features/account/utils/deletion-helpers";
 

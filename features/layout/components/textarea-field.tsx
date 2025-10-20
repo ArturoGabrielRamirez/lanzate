@@ -3,7 +3,7 @@
 import { InfoIcon } from "lucide-react";
 import { useFormContext, Controller } from "react-hook-form";
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/features/shadcn/components/field";
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupTextarea } from "@/features/shadcn/components/input-group";
 

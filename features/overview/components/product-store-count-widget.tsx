@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Package, Store, Eye, Activity } from "lucide-react"
 import { ProductStoreCountData } from "../types"
 import { getTranslations } from "next-intl/server"

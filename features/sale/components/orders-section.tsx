@@ -1,9 +1,9 @@
 "use client"
 
 import { Clock, Receipt, Calendar } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/features/shadcn/components/ui/card'
+import { Badge } from '@/features/shadcn/components/ui/badge'
+import { Button } from '@/features/shadcn/components/ui/button'
 
 // Tipos temporales para demostración
 type Order = {

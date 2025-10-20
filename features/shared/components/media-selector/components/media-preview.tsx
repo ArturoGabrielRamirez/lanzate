@@ -1,8 +1,8 @@
 'use client'
 
 import { X, Image as ImageIcon } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@/features/shadcn/components/ui/avatar'
+import { Button } from '@/features/shadcn/components/ui/button'
 import { MediaPreviewWithRemoveProps } from '../types'
 
 export function MediaPreview({

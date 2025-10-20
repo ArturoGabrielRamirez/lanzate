@@ -1,12 +1,12 @@
 'use client'
 
 import { useState, useRef, useCallback, useEffect } from 'react'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/features/shadcn/components/ui/dialog'
 import { Check, X, Loader2, ZoomIn, ZoomOut, Minimize2, Maximize2, Lock, Unlock } from 'lucide-react'
 import ReactCrop, { Crop, PixelCrop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
-import { Slider } from '@/components/ui/slider'
+import { Slider } from '@/features/shadcn/components/ui/slider'
 /* import { Label } from '@/components/ui/label' */
 import { ImageCropperProps } from '../types'
 

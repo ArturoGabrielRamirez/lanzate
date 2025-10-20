@@ -1,10 +1,10 @@
 import { Store, Settings, Phone, MessageCircle, Facebook, Instagram, Twitter, DollarSign, Truck } from "lucide-react"
 import * as motion from "motion/react-client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Switch } from "@/components/ui/switch"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
+import { Switch } from "@/features/shadcn/components/ui/switch"
 
 function AccountSkeleton() {
     return (

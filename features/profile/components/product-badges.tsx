@@ -1,5 +1,5 @@
 import { Heart } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
+import { Badge } from '@/features/shadcn/components/ui/badge'
 import { ProductBadgesProps } from '../types'
 
 export function ProductBadges({ isActive }: ProductBadgesProps) {

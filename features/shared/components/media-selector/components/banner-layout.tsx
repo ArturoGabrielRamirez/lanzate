@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import { Upload, Camera, Scissors, Sparkles, AlertCircle } from 'lucide-react'
-import { Card } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Card } from '@/features/shadcn/components/ui/card'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
 import { MediaPreview } from './media-preview'
 import { ToolButton } from './tool-button'
 import { MediaTabs } from './media-tabs'

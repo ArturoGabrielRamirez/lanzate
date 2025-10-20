@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { useFormStatus } from "react-dom"
 import { Loader } from "lucide-react"
 

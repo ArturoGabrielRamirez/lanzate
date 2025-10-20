@@ -3,12 +3,12 @@
 import { FileCheck, Flame, MapPin, MessageCircle, ShoppingBag, Truck } from "lucide-react"
 import Link from "next/link"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 /* import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { useState } from "react" */
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { FeedItemProps } from "@/features/dashboard/types"
 import { extractLink, formatActivityDate, getUserInitials } from "@/features/dashboard/utils/shared-utils"
 import ConfirmOrderButtonIcon from "@/features/orders/components/confirm-order-button-icon"

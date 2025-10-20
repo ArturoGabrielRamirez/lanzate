@@ -1,7 +1,7 @@
 import { MessageCircleDashed } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/features/shadcn/components/ui/button";
+import { Card, CardContent } from "@/features/shadcn/components/ui/card";
 import { getUserInfo } from "@/features/layout/actions";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty";
 import { CreateStoreButtonNew } from "@/features/stores/components";

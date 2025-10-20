@@ -4,7 +4,7 @@ import { ShoppingCart } from "lucide-react"
 import { useCart } from "@/features/cart/components"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { useEffect, useState } from "react"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 import Link from "next/link"
 
 function CartIcon() {

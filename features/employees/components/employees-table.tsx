@@ -9,11 +9,11 @@ import DeleteEmployeeButton from "@/features/employees/components/delete-employe
 import EditEmployeeButton from "@/features/employees/components/edit-employee-button"
 import { EmployeesTableProps } from "@/features/employees/types"
 import { MoreHorizontal, Eye, ArrowUpDown } from "lucide-react"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
+import { Button } from "@/features/shadcn/components/ui/button"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 import { cn } from "@/lib/utils"
 
 export default function EmployeesTable({ data, userId, slug, storeId, employeePermissions }: EmployeesTableProps) {

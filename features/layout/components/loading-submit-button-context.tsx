@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { Loader } from "lucide-react"
 import { useFormContext } from "react-hook-form"
 import { Props } from "../types/loading-submit-button-type"

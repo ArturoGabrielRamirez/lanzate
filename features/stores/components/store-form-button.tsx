@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { generate } from "random-words"
 import { useState } from "react"
 
-import { Accordion } from "@/components/ui/accordion"
+import { Accordion } from "@/features/shadcn/components/ui/accordion"
 import { ButtonWithPopup } from "@/features/layout/components"
 import { BasicInfoSection, AddressSection, ContactSection, SocialMediaSection, StoreLogoInlineEditor } from "@/features/stores/components"
 import { StoreFormData, StoreFormButtonProps } from "@/features/stores/types"

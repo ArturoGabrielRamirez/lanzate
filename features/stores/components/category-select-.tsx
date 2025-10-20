@@ -4,8 +4,8 @@ import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
-import MultipleSelector from "@/components/expansion/multiple-selector";
-import { Label } from "@/components/ui/label";
+import MultipleSelector from "@/features/shadcn/components/expansion/multiple-selector";
+import { Label } from "@/features/shadcn/components/ui/label";
 import { createCategoryDynamic } from "@/features/categories/actions/createCategoryDynamic";
 import { getCategoriesAction } from "@/features/stores/actions/get-categories.action";
 import { cn } from "@/lib/utils";

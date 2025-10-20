@@ -6,9 +6,9 @@ import { useTranslations } from "next-intl"
 import { Package } from "lucide-react"
 
 import { ButtonWithPopup } from "@/features/layout/components"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
+import { Input } from "@/features/shadcn/components/ui/input"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 
 import { distributeProductStock } from "@/features/products/data/distributeProductStock"
 import { Branch, ProductStock } from "@prisma/client"

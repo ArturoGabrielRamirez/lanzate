@@ -1,4 +1,4 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import PageContainer from "@/features/layout/components/page-container"
 import ProductCardLoader from "@/features/products/components/product-card-loader"
 import ProductList from "@/features/products/components/product-list"

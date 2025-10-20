@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation"
 
-import { Tabs } from "@/components/ui/tabs"
+import { Tabs } from "@/features/shadcn/components/ui/tabs"
 import { TabProps } from "@/features/stores/types"
 
 function TabsClientContainer({ children }: TabProps) {
