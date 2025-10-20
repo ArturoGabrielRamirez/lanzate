@@ -12,25 +12,8 @@ import { BarcodeScannerUSB } from '@/features/sale/components/barcode-scanner-us
 import { CartSection } from '@/features/sale/components/cart-section'
 import { ProductResults } from '@/features/sale/components/product-results'
 import { SearchSection } from '@/features/sale/components/search-section'
-import type { SearchSectionRef } from '@/features/sale/components/search-section'
-import type { ScannedProduct, ProductSearchResult, CartItem, ProductSearchByNameResult } from '@/features/sale/types'
+import type { ScannedProduct, ProductSearchResult, CartItem, ProductSearchByNameResult, SaleInterfaceProps, CustomerInfo, SearchSectionRef } from '@/features/sale/types'
 import { actionWrapper } from '@/utils/lib'
-
-type SaleInterfaceProps = {
-  storeName: string
-  storeDescription?: string
-  storeId: number
-  branchId: number
-  subdomain: string
-  processed_by_user_id: number
-  branchName?: string
-}
-
-type CustomerInfo = {
-  name: string
-  phone: string
-  email: string
-}
 
 function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, branchName }: SaleInterfaceProps) {
   /* const [scannedProducts, setScannedProducts] = useState<ScannedProduct[]>([]) */

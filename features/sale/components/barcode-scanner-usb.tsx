@@ -6,15 +6,10 @@ import { useState } from 'react'
 
 import { BarcodeScannerCammeraButton } from '@/features/sale/components/barcode-scanner-cammera-button'
 import { useBarcodeScanner } from '@/features/sale/lib/use-barcode-scanner'
-import type { ScannedData } from '@/features/sale/types'
+import type { ScannedData, BarcodeScannerUSBProps } from '@/features/sale/types'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Card, CardContent } from '@/features/shadcn/components/ui/card'
 import { cn } from '@/lib/utils'
-
-type BarcodeScannerUSBProps = {
-  onProductScanned?: (barcode: string) => void
-  className?: string
-}
 
 function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBProps) {
   const [enabled, setEnabled] = useState(true)

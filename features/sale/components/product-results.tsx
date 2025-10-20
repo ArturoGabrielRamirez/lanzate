@@ -3,18 +3,11 @@
 import { Search, Loader2, Plus, AlertCircle, Package, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-import type { ScannedProduct, ProductSearchByNameResult, ProductSearchResult } from '@/features/sale/types'
+import type { ProductResultsProps } from '@/features/sale/types'
 import { Badge } from '@/features/shadcn/components/ui/badge'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/features/shadcn/components/ui/card'
 import { cn } from '@/lib/utils'
-
-type ProductResultsProps = {
-  searchResults: ProductSearchByNameResult
-  barcodeResult: ProductSearchResult
-  onAddToCart: (product: ScannedProduct) => void
-  onClearResults?: () => void
-}
 
 function ProductResults({ searchResults, barcodeResult, onAddToCart, onClearResults }: ProductResultsProps) {
   const t = useTranslations('sale.product-results')

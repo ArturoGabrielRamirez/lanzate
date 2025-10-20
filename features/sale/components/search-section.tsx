@@ -5,18 +5,8 @@ import { useTranslations } from 'next-intl'
 import { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
 
 import { searchProductsByNameAction } from '@/features/products/actions/search-products-by-name'
-import type { ScannedProduct, ProductSearchByNameResult } from '@/features/sale/types'
+import type { ProductSearchByNameResult, SearchSectionProps, SearchSectionRef } from '@/features/sale/types'
 import { Input } from '@/features/shadcn/components/ui/input'
-
-type SearchSectionProps = {
-  storeId: number
-  onAddToCart: (product: ScannedProduct) => void
-  onSearchResults: (results: ProductSearchByNameResult) => void
-}
-
-export type SearchSectionRef = {
-  clearSearch: () => void
-}
 
 const SearchSection = forwardRef<SearchSectionRef, SearchSectionProps>(({ storeId, onSearchResults }, ref) => {
   const [searchTerm, setSearchTerm] = useState('')

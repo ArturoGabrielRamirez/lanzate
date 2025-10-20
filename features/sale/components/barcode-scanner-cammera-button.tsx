@@ -4,11 +4,8 @@ import { BarcodeScanner } from '@thewirv/react-barcode-scanner';
 import { Camera, X } from 'lucide-react';
 import { useState } from 'react';
 
+import type { BarcodeScannerCammeraButtonProps } from '@/features/sale/types'
 import { Button } from '@/features/shadcn/components/ui/button';
-
-type BarcodeScannerCammeraButtonProps = {
-    onProductScanned?: (barcode: string) => void
-}
 
 function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammeraButtonProps) {
     const [isOpen, setIsOpen] = useState(false);

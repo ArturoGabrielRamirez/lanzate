@@ -3,15 +3,9 @@
 import { ShoppingBasket, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-import type { CartItem } from '@/features/sale/types'
+import type { CartSectionProps } from '@/features/sale/types'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/features/shadcn/components/ui/card'
-
-type CartSectionProps = {
-  cartItems: CartItem[]
-  onUpdateQuantity: (productId: number, newQuantity: number) => void
-  onRemoveItem: (productId: number) => void
-}
 
 function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
   const t = useTranslations('sale.cart')

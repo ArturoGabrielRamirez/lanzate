@@ -1,6 +1,5 @@
 "use client"
 
-import { PaymentMethod } from '@prisma/client'
 import { CreditCard } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
@@ -9,35 +8,9 @@ import * as Yup from 'yup'
 import { ButtonWithPopup } from '@/features/layout/components'
 import InputField from '@/features/layout/components/input'
 import SelectField from '@/features/layout/components/select-field'
+import type { FinalizeSaleButtonProps, FinalizeSaleFormData } from '@/features/sale/types'
 import { Label } from '@/features/shadcn/components/ui/label'
 import { Switch } from '@/features/shadcn/components/ui/switch'
-
-type CustomerInfo = {
-  name: string
-  phone: string
-  email: string
-}
-
-type FinalizeSaleButtonProps = {
-  cartTotal: number
-  cartItemCount: number
-  disabled?: boolean
-  className?: string
-  onConfirm: (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => Promise<{ error: boolean; payload: unknown; message: string }>
-  selectedPaymentMethod: PaymentMethod
-  setSelectedPaymentMethod: (method: PaymentMethod) => void
-  customerInfo: CustomerInfo
-  setCustomerInfo: (info: CustomerInfo) => void
-  branchName?: string
-}
-
-type FinalizeSaleFormData = {
-  paymentMethod: PaymentMethod
-  includeCustomerInfo: boolean
-  name: string
-  phone: string
-  email: string
-}
 
 const finalizeSaleSchema = Yup.object({
   paymentMethod: Yup.string()

@@ -6,16 +6,7 @@ import { useState } from 'react'
 import * as Yup from 'yup'
 
 import { ButtonWithPopup, InputField } from '@/features/layout/components'
-
-type CalculateChangeButtonProps = {
-  cartTotal: number
-  disabled?: boolean
-  className?: string
-}
-
-type ChangeFormData = {
-  paymentAmount: string
-}
+import type { CalculateChangeButtonProps, ChangeFormData } from '@/features/sale/types'
 
 const changeSchema = Yup.object({
   paymentAmount: Yup.string()

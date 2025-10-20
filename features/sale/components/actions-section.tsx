@@ -1,35 +1,13 @@
 "use client"
 
-import { PaymentMethod } from '@prisma/client'
 import { Trash2, Receipt } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import { CalculateChangeButton } from '@/features/sale/components/calculate-change-button'
 import { FinalizeSaleButton } from '@/features/sale/components/finalize-sale-button'
+import type { ActionsSectionProps } from '@/features/sale/types'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Card, CardContent } from '@/features/shadcn/components/ui/card'
-
-type CustomerInfo = {
-  name: string
-  phone: string
-  email: string
-}
-
-type ActionsSectionProps = {
-  cartTotal: number
-  cartItemCount: number
-  onFinalizeSale: (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => Promise<{ error: boolean; payload: unknown; message: string }>
-  onRefund: () => void
-  onClearCart: () => void
-  onCalculateChange: () => void
-  onPrintReceipt: () => void
-  disabled?: boolean
-  selectedPaymentMethod: PaymentMethod
-  setSelectedPaymentMethod: (method: PaymentMethod) => void
-  customerInfo: CustomerInfo
-  setCustomerInfo: (info: CustomerInfo) => void
-  branchName?: string
-}
 
 function ActionsSection({
   cartTotal,
