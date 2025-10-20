@@ -1,15 +1,16 @@
 "use client"
 
+import { PaymentMethod } from '@prisma/client'
 import { CreditCard } from 'lucide-react'
-import { ButtonWithPopup } from '@/features/layout/components'
 import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 import * as Yup from 'yup'
+
+import { ButtonWithPopup } from '@/features/layout/components'
 import InputField from '@/features/layout/components/input'
 import SelectField from '@/features/layout/components/select-field'
-import { Switch } from '@/features/shadcn/components/ui/switch'
 import { Label } from '@/features/shadcn/components/ui/label'
-import { useState } from 'react'
-import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
+import { Switch } from '@/features/shadcn/components/ui/switch'
 
 type CustomerInfo = {
   name: string
@@ -22,7 +23,7 @@ type FinalizeSaleButtonProps = {
   cartItemCount: number
   disabled?: boolean
   className?: string
-  onConfirm: (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => Promise<{ error: boolean; payload: FinalizeSaleFormData; message: string }>
+  onConfirm: (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => Promise<{ error: boolean; payload: unknown; message: string }>
   selectedPaymentMethod: PaymentMethod
   setSelectedPaymentMethod: (method: PaymentMethod) => void
   customerInfo: CustomerInfo
@@ -213,4 +214,4 @@ function FinalizeSaleButton({
   )
 }
 
-export default FinalizeSaleButton 
+export { FinalizeSaleButton }

@@ -1,10 +1,11 @@
 "use client"
 
-import { useState } from 'react'
 import { Calculator } from 'lucide-react'
-import { ButtonWithPopup, InputField } from '@/features/layout/components'
 import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 import * as Yup from 'yup'
+
+import { ButtonWithPopup, InputField } from '@/features/layout/components'
 
 type CalculateChangeButtonProps = {
   cartTotal: number
@@ -148,4 +149,4 @@ function CalculateChangeButton({ cartTotal, disabled = false, className }: Calcu
   )
 }
 
-export default CalculateChangeButton 
+export { CalculateChangeButton }

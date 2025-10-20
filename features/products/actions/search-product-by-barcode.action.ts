@@ -1,9 +1,9 @@
 "use server"
 
+import { getProductByBarcode } from "@/features/products/data/get-product-by-barcode"
 import { actionWrapper } from "@/utils/lib"
-import { getProductByBarcode } from "../data/get-product-by-barcode"
 
-export async function searchProductByBarcode(barcode: string, storeId: number) {
+export async function searchProductByBarcodeAction(barcode: string, storeId: number) {
     return actionWrapper(async () => {
         
         if (!barcode || barcode.trim() === '') {

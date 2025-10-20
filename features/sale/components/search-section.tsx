@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
 import { Search, Loader2 } from 'lucide-react'
-import { Card, CardContent } from '@/features/shadcn/components/ui/card'
-import { Input } from '@/features/shadcn/components/ui/input'
-import { searchProductsByNameAction } from '../actions/search-products-by-name'
-import type { ScannedProduct, ProductSearchByNameResult } from '../types'
 import { useTranslations } from 'next-intl'
+import { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
+
+import { searchProductsByNameAction } from '@/features/products/actions/search-products-by-name'
+import type { ScannedProduct, ProductSearchByNameResult } from '@/features/sale/types'
+import { Input } from '@/features/shadcn/components/ui/input'
 
 type SearchSectionProps = {
   storeId: number
@@ -126,4 +126,6 @@ const SearchSection = forwardRef<SearchSectionRef, SearchSectionProps>(({ storeI
   )
 })
 
-export default SearchSection 
+SearchSection.displayName = 'SearchSection'
+
+export { SearchSection }

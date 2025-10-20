@@ -1,20 +1,20 @@
 "use client"
 
-import { useState, useRef } from 'react'
-import { searchProductByBarcode } from '../actions/search-product-by-barcode'
-import type { ScannedProduct, ProductSearchResult, CartItem, ProductSearchByNameResult } from '../types'
-import type { SearchSectionRef } from './search-section'
-import CartSection from './cart-section'
-import SearchSection from './search-section'
-import ActionsSection from './actions-section'
-import ProductResults from './product-results'
-import BarcodeScannerUSB from './barcode-scanner-usb'
+import { PaymentMethod } from '@prisma/client'
 import { useTranslations } from 'next-intl'
-import { createNewWalkInOrder } from '@/features/checkout/actions/createNewWalkInOrder'
-import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
+import { useState, useRef } from 'react'
+
 import { CartItemType } from '@/features/cart/types'
+import { createNewWalkInOrder } from '@/features/checkout/actions/createNewWalkInOrder'
+import { searchProductByBarcodeAction } from '@/features/products/actions/search-product-by-barcode.action'
+import { ActionsSection } from '@/features/sale/components/actions-section'
+import { BarcodeScannerUSB } from '@/features/sale/components/barcode-scanner-usb'
+import { CartSection } from '@/features/sale/components/cart-section'
+import { ProductResults } from '@/features/sale/components/product-results'
+import { SearchSection } from '@/features/sale/components/search-section'
+import type { SearchSectionRef } from '@/features/sale/components/search-section'
+import type { ScannedProduct, ProductSearchResult, CartItem, ProductSearchByNameResult } from '@/features/sale/types'
 import { actionWrapper } from '@/utils/lib'
-import BarcodeScannerCammeraButton from './barcode-scanner-cammera-button'
 
 type SaleInterfaceProps = {
   storeName: string
@@ -76,7 +76,7 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
     })
 
     try {
-      const { error, payload, message } = await searchProductByBarcode(barcode, storeId)
+      const { error, payload, message } = await searchProductByBarcodeAction(barcode, storeId)
 
       if (error || !payload) {
         setBarcodeResult({
@@ -184,7 +184,7 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
 
   const handleFinalizeSale = async (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => {
     return actionWrapper(async () => {
-      
+
       const { error, message, payload } = await createNewWalkInOrder({
         branch_id: branchId,
         subdomain: subdomain,
@@ -204,7 +204,7 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
           email: formData.customerInfo.email,
         },
       })
-      
+
       if (error) {
         throw new Error(message)
       }
@@ -271,7 +271,7 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
           ref={searchSectionRef}
         />
 
-        
+
 
         <BarcodeScannerUSB onProductScanned={handleProductScanned} />
       </div>

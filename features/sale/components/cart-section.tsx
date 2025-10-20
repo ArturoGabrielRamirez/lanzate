@@ -1,10 +1,11 @@
 "use client"
 
 import { ShoppingBasket, Trash2 } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/features/shadcn/components/ui/card'
-import { Button } from '@/features/shadcn/components/ui/button'
-import type { CartItem } from '../types'
 import { useTranslations } from 'next-intl'
+
+import type { CartItem } from '@/features/sale/types'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/features/shadcn/components/ui/card'
 
 type CartSectionProps = {
   cartItems: CartItem[]
@@ -92,4 +93,4 @@ function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
   )
 }
 
-export default CartSection 
+export { CartSection }

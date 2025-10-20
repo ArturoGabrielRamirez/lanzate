@@ -1,11 +1,12 @@
 "use client"
 
 import { Search, Loader2, Plus, AlertCircle, Package, X } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/features/shadcn/components/ui/card'
-import { Button } from '@/features/shadcn/components/ui/button'
-import { Badge } from '@/features/shadcn/components/ui/badge'
-import type { ScannedProduct, ProductSearchByNameResult, ProductSearchResult } from '../types'
 import { useTranslations } from 'next-intl'
+
+import type { ScannedProduct, ProductSearchByNameResult, ProductSearchResult } from '@/features/sale/types'
+import { Badge } from '@/features/shadcn/components/ui/badge'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/features/shadcn/components/ui/card'
 import { cn } from '@/lib/utils'
 
 type ProductResultsProps = {
@@ -206,4 +207,4 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart, onClearResu
   )
 }
 
-export default ProductResults 
+export { ProductResults }

@@ -1,8 +1,10 @@
 "use client"
-import { useState } from 'react';
+
 import { BarcodeScanner } from '@thewirv/react-barcode-scanner';
-import { Button } from '@/features/shadcn/components/ui/button';
 import { Camera, X } from 'lucide-react';
+import { useState } from 'react';
+
+import { Button } from '@/features/shadcn/components/ui/button';
 
 type BarcodeScannerCammeraButtonProps = {
     onProductScanned?: (barcode: string) => void
@@ -46,7 +48,7 @@ function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammera
                         containerStyle={{ width: '100%', height: '100%', zIndex: 1000, backdropFilter: "blur(10px)" }}
                         videoContainerStyle={{ width: '100%', height: '100%', padding: 0, display: "flex", justifyContent: "center", alignItems: "center" }}
                         constraints={{ aspectRatio: 16 / 9 }}
-                        videoStyle={{ width: "89%", position: "static" , height : "80%", borderRadius : "20px"}}
+                        videoStyle={{ width: "89%", position: "static", height: "80%", borderRadius: "20px" }}
                     />
                 </div>
             )}
@@ -54,4 +56,4 @@ function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammera
     );
 }
 
-export default BarcodeScannerCammeraButton
+export { BarcodeScannerCammeraButton }

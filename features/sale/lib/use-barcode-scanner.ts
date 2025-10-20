@@ -1,8 +1,9 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { getCharByKeyCode } from './keyboard-utils'
-import type { BarcodeScannerConfig, BarcodeScannerHookOptions, BarcodeScannerHookReturn, ScannedData } from '../types'
+
+import { getCharByKeyCode } from '@/features/sale/lib/keyboard-utils'
+import type { BarcodeScannerConfig, BarcodeScannerHookOptions, BarcodeScannerHookReturn, ScannedData } from '@/features/sale/types'
 
 const DEFAULT_CONFIG: BarcodeScannerConfig = {
   intervalBetweenKeyPress: 50, // 50ms between keypresses (scanners are typically ~25ms)
@@ -22,7 +23,7 @@ export function useBarcodeScanner(options: BarcodeScannerHookOptions = {}): Barc
   } = options
 
   const config = { ...DEFAULT_CONFIG, ...userConfig }
-  
+
   const [isScanning, setIsScanning] = useState(false)
   const [lastScanned, setLastScanned] = useState<string | null>(null)
   const [scanHistory, setScanHistory] = useState<string[]>([])
@@ -32,19 +33,18 @@ export function useBarcodeScanner(options: BarcodeScannerHookOptions = {}): Barc
   const keyDownTimeRef = useRef<number | null>(null)
   const inputTextRef = useRef<string>('')
 
-  const log = useCallback((...args: any[]) => {
+  const log = useCallback((...args: unknown[]) => {
     if (config.debug) {
       console.debug('[BarcodeScanner]', ...args)
     }
   }, [config.debug])
 
   const handleKeydown = useCallback((event: KeyboardEvent) => {
-    console.log("🚀 ~ useBarcodeScanner ~ event:", event)
     if (!enabled) return
 
     const currentTime = Date.now()
     const character = getCharByKeyCode(event.keyCode, event.shiftKey)
-    
+
     // Ignore keypresses without character
     if (character === '') return
 
@@ -54,9 +54,9 @@ export function useBarcodeScanner(options: BarcodeScannerHookOptions = {}): Barc
     }
 
     // Ignore if cursor is in input/textarea and ignoreOnInputs is enabled
-    if (config.ignoreOnInputs && 
-        event.target instanceof HTMLElement &&
-        (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA')) {
+    if (config.ignoreOnInputs &&
+      event.target instanceof HTMLElement &&
+      (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA')) {
       return
     }
 
@@ -67,11 +67,11 @@ export function useBarcodeScanner(options: BarcodeScannerHookOptions = {}): Barc
       log('First keypress detected')
     } else {
       const timeDiff = currentTime - keyDownTimeRef.current
-      
+
       if (timeDiff < config.intervalBetweenKeyPress) {
         // Fast keypresses detected - this is likely a barcode scanner
         inputTextRef.current += character
-        
+
         if (isBusyRef.current === null) {
           // First fast keypress - start scanning mode
           setIsScanning(true)
@@ -93,16 +93,16 @@ export function useBarcodeScanner(options: BarcodeScannerHookOptions = {}): Barc
           }
 
           log('Scan completed:', scannedData)
-          
+
           setLastScanned(scannedData)
           setScanHistory(prev => {
             const newHistory = [scannedData, ...prev].slice(0, config.historyLength)
             return newHistory
           })
-          
+
           onScanned?.(scanData)
           onScanEnd?.()
-          
+
           // Reset state
           setIsScanning(false)
           isBusyRef.current = null
@@ -113,7 +113,7 @@ export function useBarcodeScanner(options: BarcodeScannerHookOptions = {}): Barc
         // Slow keypress - reset to single character
         inputTextRef.current = character
       }
-      
+
       keyDownTimeRef.current = currentTime
     }
   }, [enabled, config, onScanned, onScanStart, onScanEnd, log])
@@ -122,9 +122,9 @@ export function useBarcodeScanner(options: BarcodeScannerHookOptions = {}): Barc
     if (!enabled) return
 
     log('Scanner enabled with config:', config)
-    
+
     window.addEventListener('keydown', handleKeydown)
-    
+
     return () => {
       window.removeEventListener('keydown', handleKeydown)
       if (isBusyRef.current) {
