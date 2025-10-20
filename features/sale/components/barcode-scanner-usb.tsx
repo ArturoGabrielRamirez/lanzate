@@ -4,7 +4,7 @@ import { ScanBarcode } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
-import { BarcodeScannerCammeraButton } from '@/features/sale/components/barcode-scanner-cammera-button'
+import { BarcodeScannerCammeraButton } from '@/features/sale/components'
 import { useBarcodeScanner } from '@/features/sale/lib/use-barcode-scanner'
 import type { ScannedData, BarcodeScannerUSBProps } from '@/features/sale/types'
 import { Button } from '@/features/shadcn/components/ui/button'

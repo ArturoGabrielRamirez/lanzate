@@ -3,8 +3,7 @@
 import { Trash2, Receipt } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-import { CalculateChangeButton } from '@/features/sale/components/calculate-change-button'
-import { FinalizeSaleButton } from '@/features/sale/components/finalize-sale-button'
+import { CalculateChangeButton, FinalizeSaleButton } from '@/features/sale/components'
 import type { ActionsSectionProps } from '@/features/sale/types'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Card, CardContent } from '@/features/shadcn/components/ui/card'
