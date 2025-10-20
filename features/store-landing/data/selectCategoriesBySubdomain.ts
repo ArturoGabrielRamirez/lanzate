@@ -1,14 +1,9 @@
 "use server";
 
 import { actionWrapper } from "@/utils/lib";
-import { Category } from "../types";
 import { prisma } from "@/utils/prisma"
 
-export async function selectCategoriesBySubdomain(subdomain: string): Promise<{
-  message: string;
-  payload: Category[];
-  error: boolean;
-}> {
+export async function selectCategoriesBySubdomain(subdomain: string) {
   return actionWrapper(async () => {
     const store = await prisma.store.findUnique({
       where: { subdomain },
@@ -29,7 +24,7 @@ export async function selectCategoriesBySubdomain(subdomain: string): Promise<{
       }
     });
 
-    const categories: Category[] = categoriesRaw.map((cat) => ({
+    const categories = categoriesRaw.map((cat) => ({
       id: cat.id,
       name: cat.name,
       description: cat.description ?? undefined,

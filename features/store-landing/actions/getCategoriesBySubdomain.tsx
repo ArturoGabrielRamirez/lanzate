@@ -2,13 +2,8 @@
 
 import { actionWrapper } from "@/utils/lib";
 import { selectCategoriesBySubdomain } from "../data/selectCategoriesBySubdomain";
-import { Category } from "../types";
 
-export async function getCategoriesBySubdomain(subdomain: string): Promise<{
-  message: string;
-  payload: Category[];
-  error: boolean;
-}> {
+export async function getCategoriesBySubdomain(subdomain: string) {
   return actionWrapper(async () => {
     const { payload: categories, error, message } = await selectCategoriesBySubdomain(subdomain);
     if (error) throw new Error(message);

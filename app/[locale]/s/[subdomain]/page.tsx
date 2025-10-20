@@ -13,7 +13,7 @@ import ProductList from "@/features/store-landing/components/product-list";
 /* import ProductListDisplay from "@/features/store-landing/components/product-list-display"; */
 /* import SectionContainer from "@/features/store-landing/components/section-container";
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters"; */
-import { loadFilterParams } from "@/features/store-landing/utils/load-filter-params";
+import { loadFilterParams } from "@/features/products/utils/load-filter-params";
 import StoreBanner from "@/features/stores/components/public/store-banner";
 import TopCategoriesNavbar from "@/features/stores/components/public/top-categories-navbar";
 /* import { getStoreProductAmount } from "@/features/subdomain/actions/getStoreProductAmount"; */
