@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { getProductsCountByCategoryAction } from "@/features/products/actions/getProductsCountByCategory"
 import { updateProductsPricesAction } from "@/features/products/actions/updateProductsPrices"
-import { getCategories } from "@/features/store-landing/actions/getCategories"
+import { getCategoriesAction } from "@/features/stores/actions/get-categories.action"
 import { UpdatePricesButtonProps, PriceUpdateType } from "@/features/stores/types"
 import { formatErrorResponse } from "@/utils/lib"
 
@@ -26,7 +26,7 @@ function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) 
 
     useEffect(() => {
         const fetchCategories = async () => {
-            const { payload, error } = await getCategories()
+            const { payload, error } = await getCategoriesAction()
             if (!error && payload) {
                 setCategories(payload)
             }

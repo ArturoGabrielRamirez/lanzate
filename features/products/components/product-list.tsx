@@ -1,5 +1,5 @@
 import { getStoreWithProductsAction } from "@/features/stores/actions/get-store-with-products.action";
-import ProductCard from "./product-card";
+import ProductsCard from "./products-card";
 import type { Product, ProductVariant } from "@prisma/client";
 import ProductListContainer from "./product-list-container";
 
@@ -49,7 +49,7 @@ async function ProductList({ subdomain, category, sort, search, min, max, limit,
             {items.length > 0 && (
                 <ProductListContainer>
                     {items.map((product) => (
-                        <ProductCard key={product.id} product={product} href={product.__href} />
+                        <ProductsCard key={product.id} product={product} href={product.__href} />
                     ))}
                 </ProductListContainer>
             )}

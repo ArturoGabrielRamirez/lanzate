@@ -1,6 +1,6 @@
 "use client"
 
-import { useStore } from "./store-provider"
+import { useStore } from "../../layout/components/public-store/store-provider"
 
 type Props = {
     listCard: React.ReactNode

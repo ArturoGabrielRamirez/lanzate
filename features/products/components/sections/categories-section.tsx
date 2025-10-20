@@ -1,8 +1,8 @@
 "use client"
 
-import CategorySelect from "@/features/store-landing/components/category-select-"
+import CategorySelect from "@/features/stores/components/category-select-"
 import { useEffect, useMemo, useState } from "react"
-import { getCategories } from "@/features/store-landing/actions/getCategories"
+import { getCategoriesAction } from "@/features/stores/actions/get-categories.action"
 import type { CategoryValue, CategoriesSectionData } from "@/features/products/type/create-form-extra"
 import { useFormContext } from "react-hook-form"
 
@@ -22,7 +22,7 @@ export function CategoriesSection({ storeId, value, onChange }: Props) {
         let mounted = true
         const load = async () => {
             if (!storeId) return
-            const { payload, error } = await getCategories(storeId)
+            const { payload, error } = await getCategoriesAction(storeId)
             if (error) return
             if (!mounted) return
             setInitialCategories(payload.map((c) => ({ label: c.name, value: c.id })))

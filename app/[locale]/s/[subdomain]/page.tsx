@@ -8,8 +8,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PageContainer } from "@/features/layout/components";
 /* import PaginationNav from "@/features/store-landing/components/pagination-nav";
 import ProductAmountDisplay from "@/features/store-landing/components/product-amount-display"; */
-import ProductCardLoader from "@/features/store-landing/components/product-card-loader";
-import ProductList from "@/features/store-landing/components/product-list";
+import ProductCardLoader from "@/features/products/components/product-card-loader";
+import ProductList from "@/features/products/components/product-list";
 /* import ProductListDisplay from "@/features/store-landing/components/product-list-display"; */
 /* import SectionContainer from "@/features/store-landing/components/section-container";
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters"; */

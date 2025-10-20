@@ -1,7 +1,9 @@
 "use client"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 function SidebarOrderBySelect() {
 

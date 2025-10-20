@@ -1,7 +1,7 @@
 "use client"
 
 import { Grid2X2 } from "lucide-react"
-import { useStore } from "./store-provider"
+import { useStore } from "../../layout/components/public-store/store-provider"
 import { List } from "lucide-react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { useState } from "react"
