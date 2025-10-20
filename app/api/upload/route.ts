@@ -13,10 +13,10 @@ import {
   validatePresetData
 } from '../../../features/shared/utils/validators'
 import { PresetRequest, UPLOAD_TYPES, type FileUploadData } from '../../../features/shared/types/types'
-import { handlePresetUpload } from '@/features/shared/actions/handle-preset-upload'
-import { handleUserUpload } from '@/features/shared/actions/handle-user-upload'
-import { handleProductUpload } from '@/features/shared/actions/handle-product-upload'
-import { handleStoreUpload } from '@/features/shared/actions/handle-store-upload'
+import { handlePresetUploadAction } from '@/features/shared/actions/handle-preset-upload.action'
+import { handleUserUploadAction } from '@/features/shared/actions/handle-user-upload.action'
+import { handleProductUploadAction } from '@/features/shared/actions/handle-product-upload.action'
+import { handleStoreUploadAction } from '@/features/shared/actions/handle-store-upload.action'
 import { getUserId } from '@/features/shared/data/get-user-id'
 
 
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
         validateUploadType(data.type)
         validatePresetType(data.type)
 
-        const result = await handlePresetUpload(
+        const result = await handlePresetUploadAction(
           data as PresetRequest,
           user.id,
           user.username
@@ -99,11 +99,11 @@ export async function POST(request: NextRequest) {
       let actionResult
 
       if (type === UPLOAD_TYPES.AVATAR || type === UPLOAD_TYPES.BANNER) {
-        actionResult = await handleUserUpload(uploadData, user.id, user.username, storage)
+        actionResult = await handleUserUploadAction(uploadData, user.id, user.username, storage)
       } else if (type === UPLOAD_TYPES.PRODUCT_IMAGE || type === UPLOAD_TYPES.PRODUCT_VIDEO) {
-        actionResult = await handleProductUpload(uploadData, user.id, user.username, storage)
+        actionResult = await handleProductUploadAction(uploadData, user.id, user.username, storage)
       } else if (type === UPLOAD_TYPES.STORE_LOGO || type === UPLOAD_TYPES.STORE_BANNER) {
-        actionResult = await handleStoreUpload(uploadData, user.id, user.username, storage)
+        actionResult = await handleStoreUploadAction(uploadData, user.id, user.username, storage)
       } else {
         throw new ValidationError('Tipo de upload no soportado')
       }

@@ -1,10 +1,10 @@
 "use server"
 
-import { PresetRequest, UPLOAD_TYPES, UploadResult } from "@/features/shared/types/types"
-import { actionWrapper, formatSuccessResponse } from "@/utils/lib"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { updateUserAvatar, updateUserBanner } from "@/features/shared/data/index"
+import { PresetRequest, UPLOAD_TYPES, UploadResult } from "@/features/shared/types/types"
 
-export async function handlePresetUpload(
+export async function handlePresetUploadAction(
     data: PresetRequest,
     userId: number,
     username: string

@@ -5,7 +5,7 @@ import { createStorageService } from '@/features/shared/services/storage'
 
 import { UPLOAD_TYPES } from '@/features/shared/types/types'
 import { ValidationError } from '@/features/shared/utils/validators'
-import { handleUserDelete } from '@/features/shared/actions/handle-user-delete'
+import { handleUserDeleteAction } from '@/features/shared/actions/handle-user-delete.action'
 
 export async function POST(request: NextRequest) {
     try {
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
         const storage = createStorageService()
 
         // Ejecutar eliminación
-        const result = await handleUserDelete(
+        const result = await handleUserDeleteAction(
             type,
             user.id,
             user.username,

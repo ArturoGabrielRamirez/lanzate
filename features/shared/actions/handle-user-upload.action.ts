@@ -1,12 +1,12 @@
 "use server"
 
+import { getCurrentUser } from "@/features/shared/data/get-current-user"
+import { updateUserBanner, updateUserAvatar } from "@/features/shared/data/index"
 import { StorageService } from "@/features/shared/services/storage"
 import { FileUploadData, UPLOAD_TYPES, UploadResult } from "@/features/shared/types/types"
 import { actionWrapper, formatSuccessResponse } from "@/utils/lib"
-import { updateUserBanner, updateUserAvatar } from "@/features/shared/data/index"
-import { getCurrentUser } from "../data/get-current-user"
 
-export async function handleUserUpload(
+export async function handleUserUploadAction(
     uploadData: FileUploadData,
     userId: number,
     username: string,

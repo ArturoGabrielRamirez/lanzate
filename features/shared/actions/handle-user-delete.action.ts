@@ -1,23 +1,23 @@
 "use server"
 
+import { getCurrentUser } from "@/features/auth/actions"
+import { updateUserBanner, updateUserAvatar } from "@/features/shared/data/index"
 import { StorageService } from "@/features/shared/services/storage"
 import { UPLOAD_TYPES, DeleteResult } from "@/features/shared/types/types"
 import { actionWrapper, formatSuccessResponse } from "@/utils/lib"
-import { updateUserBanner, updateUserAvatar } from "@/features/shared/data/index"
-import { getCurrentUser } from "../data/get-current-user"
 
-export async function handleUserDelete(
+export async function handleUserDeleteAction(
     type: typeof UPLOAD_TYPES.AVATAR | typeof UPLOAD_TYPES.BANNER,
     userId: number,
     username: string,
     storage: StorageService
 ) {
     return actionWrapper(async () => {
-        const currentUser = await getCurrentUser(userId)
+        const currentUser = await getCurrentUser()
 
         const currentUrl = type === UPLOAD_TYPES.AVATAR
-            ? currentUser?.avatar
-            : currentUser?.banner
+            ? currentUser.payload?.avatar
+            : currentUser.payload?.banner
 
         // Eliminar archivo físico del storage si existe
         if (currentUrl && currentUrl.includes('.supabase.')) {
