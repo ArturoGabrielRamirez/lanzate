@@ -1,14 +1,16 @@
 
 import { ProductMediaResponse, UploadType } from "@/features/shared/types/types"
+import { getMediaType } from "@/features/shared/utils/get-media-type"
 import { prisma } from "@/utils/prisma"
-import { getMediaType } from "../utils/get-media-type"
 
-export async function createProductMedia(
+//TODO: Revisar todo el flujo de la subida 
+export async function createProductMediaData(
     productId: number,
     url: string,
     file: File,
     type: UploadType
 ): Promise<ProductMediaResponse> {
+    
     const mediaType = getMediaType(type, file.type)
 
     if (!mediaType) {

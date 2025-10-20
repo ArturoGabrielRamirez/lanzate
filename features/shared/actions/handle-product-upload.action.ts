@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
-import { updateProductPrimaryImage, createProductMedia, verifyProductOwnership, deleteProductMedia } from "@/features/shared/data/index"
+import { updateProductPrimaryImage, createProductMediaData, verifyProductOwnership, deleteProductMedia } from "@/features/shared/data/index"
 import { StorageService } from "@/features/shared/services/storage"
 import { FileUploadData, UploadResult } from "@/features/shared/types/types"
 
@@ -39,7 +39,7 @@ export async function handleProductUploadAction(
 
         const publicUrl = await storage.uploadFile(file, type, userId)
 
-        const mediaRecord = await createProductMedia(
+        const mediaRecord = await createProductMediaData(
             productId,
             publicUrl,
             file,
