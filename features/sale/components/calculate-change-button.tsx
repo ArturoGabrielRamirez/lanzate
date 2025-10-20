@@ -1,20 +1,12 @@
 "use client"
 
-import { useState } from 'react'
 import { Calculator } from 'lucide-react'
-import { ButtonWithPopup, InputField } from '@/features/layout/components'
 import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 import * as Yup from 'yup'
 
-type CalculateChangeButtonProps = {
-  cartTotal: number
-  disabled?: boolean
-  className?: string
-}
-
-type ChangeFormData = {
-  paymentAmount: string
-}
+import { ButtonWithPopup, InputField } from '@/features/layout/components'
+import type { CalculateChangeButtonProps, ChangeFormData } from '@/features/sale/types'
 
 const changeSchema = Yup.object({
   paymentAmount: Yup.string()
@@ -148,4 +140,4 @@ function CalculateChangeButton({ cartTotal, disabled = false, className }: Calcu
   )
 }
 
-export default CalculateChangeButton 
+export { CalculateChangeButton }

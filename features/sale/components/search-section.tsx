@@ -1,22 +1,12 @@
 "use client"
 
-import { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
 import { Search, Loader2 } from 'lucide-react'
-import { Card, CardContent } from '@/features/shadcn/components/ui/card'
-import { Input } from '@/features/shadcn/components/ui/input'
-import { searchProductsByNameAction } from '../actions/search-products-by-name'
-import type { ScannedProduct, ProductSearchByNameResult } from '../types'
 import { useTranslations } from 'next-intl'
+import { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
 
-type SearchSectionProps = {
-  storeId: number
-  onAddToCart: (product: ScannedProduct) => void
-  onSearchResults: (results: ProductSearchByNameResult) => void
-}
-
-export type SearchSectionRef = {
-  clearSearch: () => void
-}
+import { searchProductsByNameAction } from '@/features/products/actions/search-products-by-name'
+import type { ProductSearchByNameResult, SearchSectionProps, SearchSectionRef } from '@/features/sale/types'
+import { Input } from '@/features/shadcn/components/ui/input'
 
 const SearchSection = forwardRef<SearchSectionRef, SearchSectionProps>(({ storeId, onSearchResults }, ref) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -126,4 +116,6 @@ const SearchSection = forwardRef<SearchSectionRef, SearchSectionProps>(({ storeI
   )
 })
 
-export default SearchSection 
+SearchSection.displayName = 'SearchSection'
+
+export { SearchSection }
