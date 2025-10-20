@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/features/auth/actions'
-import { toggleFollowUser } from '@/features/profile/actions/toggle-follow-user-action'
+import { toggleFollowUserAction } from '@/features/profile/actions/toggle-follow-user.action'
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const result = await toggleFollowUser(targetUserId)
+    const result = await toggleFollowUserAction(targetUserId)
 
     if (result.error) {
       return NextResponse.json(

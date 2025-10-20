@@ -1,6 +1,6 @@
 import { Settings, Lock } from 'lucide-react'
 import { InputField, CheckboxField, ButtonWithPopup } from '@/features/layout/components'
-import { updateProfileSettings } from '../actions/update-profile-settings'
+import { updateProfileSettingsAction } from '../actions/update-profile-settings.action'
 import { profileConfigSchema } from '../schemas/profile-config-schema'
 import { ProfileSettingsFormProps } from '../types'
 
@@ -10,7 +10,7 @@ export function ProfileSettingsForm({ user }: ProfileSettingsFormProps) {
             text={<><Settings className="w-4 h-4 mr-2" />Configurar Perfil</>}
             title="Configuración del Perfil"
             description="Personaliza tu información pública y configuraciones de privacidad"
-            action={updateProfileSettings}
+            action={updateProfileSettingsAction}
             messages={{
                 success: "Perfil actualizado correctamente",
                 loading: "Guardando cambios...",

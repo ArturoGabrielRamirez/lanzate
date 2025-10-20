@@ -1,29 +1,20 @@
 // features/profile/actions/toggle-follow-optimized.ts
 "use server"
 
-import { prisma } from '@/utils/prisma'
-import { getCurrentUser } from '@/features/auth/actions'
-import { actionWrapper } from '@/utils/lib'
 import { revalidateTag } from 'next/cache'
 
-export async function toggleFollowUser(targetUserId: number) {
+import { getCurrentUser } from '@/features/auth/actions'
+import { actionWrapper } from '@/features/global/utils'
+import { prisma } from '@/utils/prisma'
+
+export async function toggleFollowUserAction(targetUserId: number) {
   return actionWrapper(async () => {
     // 1. Validar usuario actual
     const { payload: currentUser, error: authError } = await getCurrentUser()
-    if (authError || !currentUser) {
-      return {
-        error: true,
-        message: 'Tenés que iniciar sesión para seguir usuarios',
-        payload: null
-      }
-    }
+    if (authError || !currentUser) throw new Error('No autenticado')
 
     if (currentUser.id === targetUserId) {
-      return {
-        error: true,
-        message: 'No podés seguirte a vos mismo',
-        payload: null
-      }
+      throw new Error('No podés seguirte a vos mismo')
     }
 
     // 2. ✅ QUERY ÚNICA: Obtiene user + follow status + contadores
@@ -51,19 +42,11 @@ export async function toggleFollowUser(targetUserId: number) {
     })
 
     if (!targetUser) {
-      return {
-        error: true,
-        message: 'Usuario no encontrado',
-        payload: null
-      }
+      throw new Error('Usuario no encontrado')
     }
 
     if (!targetUser.profile_is_public) {
-      return {
-        error: true,
-        message: 'No puedes seguir perfiles privados',
-        payload: null
-      }
+      throw new Error('No puedes seguir perfiles privados')
     }
 
     // 3. ✅ Determinar acción desde JOIN (sin query adicional)
@@ -72,7 +55,7 @@ export async function toggleFollowUser(targetUserId: number) {
 
     let isFollowing = false
     let followersCount = targetUser._count.user_follows_following
-    let followingCount = targetUser._count.user_follows
+    const followingCount = targetUser._count.user_follows
 
     // 4. ✅ Transacción optimizada con menos operaciones
     await prisma.$transaction(async (tx) => {
@@ -148,7 +131,7 @@ export async function toggleFollowUser(targetUserId: number) {
     revalidateTag(`user-activities-${currentUser.id}`)
 
     return {
-      error: false,
+      hasError: false,
       message: isFollowing
         ? `Ahora sigues a @${targetUser.username}`
         : `Dejaste de seguir a @${targetUser.username}`,

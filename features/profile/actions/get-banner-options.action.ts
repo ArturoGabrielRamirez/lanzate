@@ -1,24 +1,24 @@
 'use server'
 
-import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
-import { createServerSideClient } from '@/utils/supabase/server'
-import { getUserBannerData, getStorageBanners } from "../data/get-banner-options"
-import { PRESET_BANNERS } from '@/features/profile/utils/preset-banners'
 import { BannerOption } from '@/features/account/types'
+import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
+import { getUserBannerData, getStorageBanners } from "@/features/profile/data/get-banner-options"
+import { PRESET_BANNERS } from '@/features/profile/utils/preset-banners'
+import { createServerSideClient } from '@/utils/supabase/server'
 
-export async function getBannerOptions() {
+export async function getBannerOptionsAction() {
     return actionWrapper(async () => {
         const supabase = createServerSideClient()
         const { data: { user }, error: userError } = await supabase.auth.getUser()
 
         if (userError || !user) {
-            return formatErrorResponse('No autenticado', null)
+            return formatErrorResponse('No autenticado')
         }
 
         const dbUser = await getUserBannerData(user.id)
 
         if (!dbUser) {
-            return formatErrorResponse('Usuario no encontrado', null)
+            return formatErrorResponse('Usuario no encontrado')
         }
 
         const options: BannerOption[] = []

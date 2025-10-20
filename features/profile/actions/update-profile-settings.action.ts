@@ -1,19 +1,16 @@
 'use server'
 
+import { getCurrentUser } from "@/features/auth/actions"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
+import { UpdateProfileData } from "@/features/profile/types"
 import { prisma } from "@/utils/prisma"
 
-import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
-import { UpdateProfileData } from "../types"
-import { getCurrentUser } from "@/features/auth/actions"
 
-
-export async function updateProfileSettings(data: UpdateProfileData) {
+export async function updateProfileSettingsAction(data: UpdateProfileData) {
   return actionWrapper(async () => {
     const { payload: currentUser, error } = await getCurrentUser()
 
-    if (error || !currentUser) {
-      return formatErrorResponse("Usuario no autenticado", null)
-    }
+    if (error || !currentUser) throw new Error("Usuario no autenticado")
 
     try {
       // Sanitizar y validar datos
@@ -76,8 +73,7 @@ export async function updateProfileSettings(data: UpdateProfileData) {
 
       return formatSuccessResponse("Perfil actualizado correctamente", updatedUser)
     } catch (error) {
-      console.error('Error updating profile:', error)
-      return formatErrorResponse("Error al actualizar el perfil", null)
+      throw new Error("Error al actualizar el perfil")
     }
   })
 }

@@ -1,25 +1,25 @@
 'use server'
 
-import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
-import { createServerSideClient } from '@/utils/supabase/server'
-import { getStorageAvatars } from "../data/get-storage-avatars"
-import { diceBearStyles } from '@/features/profile/utils/preset-avatars'
 import { AvatarOption } from '@/features/account/types'
-import { getUserAvatarData } from "../data/get-user-avatar-data"
+import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
+import { getStorageAvatars } from "@/features/profile/data/get-storage-avatars"
+import { getUserAvatarData } from "@/features/profile/data/get-user-avatar-data"
+import { diceBearStyles } from '@/features/profile/utils/preset-avatars'
+import { createServerSideClient } from '@/utils/supabase/server'
 
-export async function getAvatarOptions() {
+export async function getAvatarOptionsAction() {
     return actionWrapper(async () => {
         const supabase = createServerSideClient()
         const { data: { user }, error: userError } = await supabase.auth.getUser()
 
         if (userError || !user) {
-            return formatErrorResponse('No autenticado', null)
+            return formatErrorResponse('No autenticado')
         }
 
         const dbUser = await getUserAvatarData(user.id)
 
         if (!dbUser) {
-            return formatErrorResponse('Usuario no encontrado', null)
+            return formatErrorResponse('Usuario no encontrado')
         }
 
         const options: AvatarOption[] = []

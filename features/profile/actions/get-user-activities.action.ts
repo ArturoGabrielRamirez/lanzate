@@ -1,11 +1,13 @@
 'use server'
 
 import { Prisma } from '@prisma/client'
+
+
 import { getCurrentUser } from '@/features/auth/actions'
-import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/utils/lib'
+import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
+import { getCachedActivities } from '@/features/profile/data/get-cached-activities'
+import { GetUserActivitiesParams } from '@/features/profile/types'
 import { prisma } from '@/utils/prisma'
-import { getCachedActivities } from '../data/get-cached-activities'
-import { GetUserActivitiesParams } from '../types'
 
 export async function getUserActivitiesAction({
     userId,
@@ -16,7 +18,7 @@ export async function getUserActivitiesAction({
     return actionWrapper(async () => {
         // Validar userId
         if (isNaN(userId) || userId <= 0) {
-            return formatErrorResponse('ID de usuario inválido', null)
+            return formatErrorResponse('ID de usuario inválido')
         }
 
         // ✅ Verificar permisos para actividades privadas
@@ -24,7 +26,7 @@ export async function getUserActivitiesAction({
             const currentUserResponse = await getCurrentUser()
 
             if (!currentUserResponse?.payload || currentUserResponse.payload.id !== userId) {
-                return formatErrorResponse('No autorizado para ver actividades privadas', null)
+                return formatErrorResponse('No autorizado para ver actividades privadas')
             }
         }
 
@@ -39,7 +41,7 @@ export async function getUserActivitiesAction({
         })
 
         if (!user) {
-            return formatErrorResponse('Usuario no encontrado', null)
+            return formatErrorResponse('Usuario no encontrado')
         }
 
         // Verificar si el usuario permite mostrar actividades
@@ -57,7 +59,7 @@ export async function getUserActivitiesAction({
 
         // Verificar privacidad del perfil
         if (!user.profile_is_public && !includePrivate) {
-            return formatErrorResponse('Perfil privado', null)
+            return formatErrorResponse('Perfil privado')
         }
 
         // Construir filtros
