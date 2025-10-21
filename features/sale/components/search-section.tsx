@@ -4,7 +4,7 @@ import { Search, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
 
-import { searchProductsByNameAction } from '@/features/products/actions/search-products-by-name'
+import { searchProductsByNameAction } from '@/features/products/actions/search-products-by-name.action'
 import type { ProductSearchByNameResult, SearchSectionProps, SearchSectionRef } from '@/features/sale/types'
 import { Input } from '@/features/shadcn/components/ui/input'
 
@@ -57,10 +57,10 @@ const SearchSection = forwardRef<SearchSectionRef, SearchSectionProps>(({ storeI
     onSearchResults(loadingResult)
 
     try {
-      const { error, payload, message } = await searchProductsByNameAction(term, storeId)
+      const { hasError, payload, message } = await searchProductsByNameAction(term, storeId)
 
       let result: ProductSearchByNameResult
-      if (error || !payload) {
+      if (hasError || !payload) {
         result = {
           products: [],
           message: message || t('error'),
