@@ -1,8 +1,9 @@
 "use client"
 
+import { useFormContext } from "react-hook-form"
+
 import { Card } from "@/features/shadcn/components/ui/card"
 import { cn } from "@/lib/utils"
-import { useFormContext } from "react-hook-form"
 
 type Props = {
     keys: string[]
@@ -11,10 +12,10 @@ type Props = {
     className?: string
 }
 
-const ValidatedCard = ({ keys = [], completeKeys, children, className }: Props) => {
+function ValidatedCard({ keys = [], completeKeys, children, className }: Props) {
     const { formState: { errors }, watch } = useFormContext()
 
-    const hasErrors = keys.some(key => (errors as any)[key])
+    const hasErrors = keys.some(key => (errors as Record<string, unknown>)[key])
 
     const keysToCheck = completeKeys && completeKeys.length > 0 ? completeKeys : keys
     const values = keysToCheck.map((k) => watch(k))
@@ -43,4 +44,4 @@ const ValidatedCard = ({ keys = [], completeKeys, children, className }: Props) 
     )
 }
 
-export default ValidatedCard
+export { ValidatedCard }

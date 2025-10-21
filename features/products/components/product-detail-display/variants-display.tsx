@@ -1,13 +1,13 @@
 "use client"
 
-import { Boxes, EditIcon, X, Trash2 } from "lucide-react"
 import { Product, ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Boxes, EditIcon, X } from "lucide-react"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+
+import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import DeleteVariantButton from "../delete-variant-button"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface VariantsDisplayProps {
     product: Product & {
@@ -21,7 +21,7 @@ interface VariantsDisplayProps {
     userId: number
 }
 
-const VariantsDisplay = ({ product, slug, userId }: VariantsDisplayProps) => {
+function VariantsDisplay({ product, slug }: VariantsDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
 
     const handleOpenEdit = () => {
@@ -142,4 +142,4 @@ const VariantsDisplay = ({ product, slug, userId }: VariantsDisplayProps) => {
     )
 }
 
-export default VariantsDisplay
+export { VariantsDisplay }

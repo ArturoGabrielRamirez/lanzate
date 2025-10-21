@@ -1,15 +1,18 @@
 "use client"
-import { Card, CardContent, CardFooter, CardHeader } from "@/features/shadcn/components/ui/card"
+
 import { Product } from "@prisma/client"
+import { Crown, Heart, Share, ShoppingCart } from "lucide-react"
+import * as motion from "motion/react-client"
 import Image from "next/image"
-import AddToCartButton from "./add-to-cart-button"
 import Link from "next/link"
 import { useState } from "react"
-import * as motion from "motion/react-client"
+
+
+import { AddToCartButton } from "@/features/products/components/add-to-cart-button"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent, CardFooter, CardHeader } from "@/features/shadcn/components/ui/card"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Crown, Heart, Share, ShoppingCart } from "lucide-react"
-import { Badge } from "@/features/shadcn/components/ui/badge"
 
 type Props = {
     product: Product
@@ -152,4 +155,4 @@ function GridCard({ product, href }: Props) {
     )
 }
 
-export default GridCard 
+export { GridCard } 

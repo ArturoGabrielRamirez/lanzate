@@ -1,8 +1,9 @@
 "use client"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
-import { useQueryState } from "nuqs"
 import { useTranslations } from "next-intl"
+import { useQueryState } from "nuqs"
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 
 function ProductAmountDisplay({ amount }: { amount: number }) {
     const [limit, setLimit] = useQueryState("limit", { shallow: false, clearOnDefault: true })
@@ -33,4 +34,4 @@ function ProductAmountDisplay({ amount }: { amount: number }) {
     )
 }
 
-export default ProductAmountDisplay
+export { ProductAmountDisplay }

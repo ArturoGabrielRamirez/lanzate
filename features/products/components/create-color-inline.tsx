@@ -1,18 +1,19 @@
 "use client"
 
-import { useState } from "react"
-import { Input } from "@/features/shadcn/components/ui/input"
-import { Button } from "@/features/shadcn/components/ui/button"
-import { ColorPicker, ColorPickerSelection, ColorPickerHue, ColorPickerAlpha, ColorPickerOutput, ColorPickerFormat } from "@/features/shadcn/components/shadcn-io/color-picker"
 import Color, { ColorLike } from "color"
+import { useState } from "react"
 import { toast } from "sonner"
-import { createStoreColor } from "../data/create-store-color.data"
+
+import { createStoreColor } from "@/features/products/data/create-store-color.data"
+import { ColorPicker, ColorPickerSelection, ColorPickerHue, ColorPickerAlpha, ColorPickerOutput, ColorPickerFormat } from "@/features/shadcn/components/shadcn-io/color-picker"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Input } from "@/features/shadcn/components/ui/input"
 
 type Props = {
     onCreated?: (color: { id: number; name: string; hex: string }) => void
 }
 
-export default function CreateColorInline({ onCreated }: Props) {
+function CreateColorInline({ onCreated }: Props) {
     const [name, setName] = useState("")
     const [hex, setHex] = useState("#ff0000")
     const [isSaving, setIsSaving] = useState(false)

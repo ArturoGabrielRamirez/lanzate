@@ -1,11 +1,12 @@
 "use client"
 
-import { ImageIcon, EditIcon, X } from "lucide-react"
 import { Product } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { ImageIcon, EditIcon, X } from "lucide-react"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface MediaDisplayProps {
     product: Product & {
@@ -14,7 +15,7 @@ interface MediaDisplayProps {
     }
 }
 
-const MediaDisplay = ({ product }: MediaDisplayProps) => {
+function MediaDisplay({ product }: MediaDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
 
     const handleOpenEdit = () => {
@@ -125,4 +126,4 @@ const MediaDisplay = ({ product }: MediaDisplayProps) => {
     )
 }
 
-export default MediaDisplay
+export { MediaDisplay }

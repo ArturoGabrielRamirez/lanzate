@@ -1,7 +1,8 @@
+import { ShoppingCart } from "lucide-react"
+
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
-import { ShoppingCart } from "lucide-react"
 
 function ProductCardSkeleton() {
     return (
@@ -28,4 +29,4 @@ function ProductCardSkeleton() {
         </Card>
     )
 }
-export default ProductCardSkeleton
+export { ProductCardSkeleton }

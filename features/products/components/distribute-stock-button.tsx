@@ -1,17 +1,16 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useTranslations } from "next-intl"
-
+import { Branch, ProductStock } from "@prisma/client"
 import { Package } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useState, useEffect } from "react"
+
 
 import { ButtonWithPopup } from "@/features/layout/components"
+import { distributeProductStock } from "@/features/products/data/distribute-product-stock.data"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Label } from "@/features/shadcn/components/ui/label"
-import { Badge } from "@/features/shadcn/components/ui/badge"
-
-import { distributeProductStock } from "@/features/products/data/distribute-product-stock.data"
-import { Branch, ProductStock } from "@prisma/client"
 
 type Props = {
     productId: number
@@ -21,7 +20,7 @@ type Props = {
     variantStocks?: { branch_id: number; quantity: number }[]
 }
 
-export default function DistributeStockButton({
+function DistributeStockButton({
     productId,
     productName,
     availableStock,
@@ -166,3 +165,5 @@ export default function DistributeStockButton({
         </ButtonWithPopup>
     )
 }
+
+export { DistributeStockButton }

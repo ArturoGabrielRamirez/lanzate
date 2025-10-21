@@ -1,15 +1,16 @@
 "use client"
 
-import { Box, EditIcon, X } from "lucide-react"
-import { Product } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Form, InputField } from "@/features/layout/components"
-import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { Product } from "@prisma/client"
+import { Box, EditIcon, X } from "lucide-react"
+import { useState } from "react"
 import { useFormContext } from "react-hook-form"
-import { editProductSchema } from "../../schemas/product-schema"
+
+import { Form, InputField } from "@/features/layout/components"
+import { editProductSchema } from "@/features/products/schemas/product-schema"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface BasicInfoDisplayProps {
     product: Product
@@ -24,7 +25,7 @@ type BasicInfoFormValues = {
     barcode: string
 }
 
-const BasicInfoDisplay = ({ product }: BasicInfoDisplayProps) => {
+function BasicInfoDisplay({ product }: BasicInfoDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
 
     const handleOpenEdit = () => {
@@ -138,4 +139,4 @@ const BasicInfoDisplay = ({ product }: BasicInfoDisplayProps) => {
     )
 }
 
-export default BasicInfoDisplay
+export { BasicInfoDisplay }

@@ -1,11 +1,12 @@
 "use client"
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { useCart } from "@/features/cart/components/cart-provider"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Product } from "@prisma/client"
 import { ShoppingCart } from "lucide-react"
 import { useState } from "react"
+
+import { useCart } from "@/features/cart/components/cart-provider"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 type Props = {
     product: Product
@@ -55,4 +56,4 @@ function AddToCartButton({ product, canBeAddedToCart, overrideId, overrideName, 
     )
 }
 
-export default AddToCartButton 
+export { AddToCartButton } 

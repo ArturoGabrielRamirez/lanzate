@@ -1,9 +1,9 @@
-import { Card, CardDescription, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Product } from "@prisma/client"
 import Image from "next/image"
-import AddToCartButton from "./add-to-cart-button"
 import Link from "next/link"
-import LikeButton from "./like-button"
+
+import { AddToCartButton } from "@/features/products/components/add-to-cart-button"
+import { Card, CardDescription, CardTitle } from "@/features/shadcn/components/ui/card"
 
 type Props = {
     product: Product
@@ -52,4 +52,4 @@ function ListCard({ product, href }: Props) {
     )
 }
 
-export default ListCard
+export { ListCard }

@@ -1,23 +1,25 @@
 "use client"
-import { editProductAction } from "../actions/edit-producto.action"
-import { formatErrorResponse } from "@/utils/lib"
+
 import { Pencil, Box, Settings } from "lucide-react"
-import { EditProductButtonProps } from "@/features/products/type"
+import { useTranslations } from "next-intl"
 import { useCallback, useState, useEffect } from "react"
 import { toast } from "sonner"
-import { Button } from "@/features/shadcn/components/ui/button"
-import { useTranslations } from "next-intl"
-import { getStoreIdBySlug } from "@/features/categories/data/getStoreIdBySlug"
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
-import { Form } from "@/features/layout/components"
-import { Accordion, AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
+
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import BasicInfoSection from "./sections/basic-info-section"
-import MediaSection from "./sections/media-section"
-import PriceStockSection from "./sections/price-stock-section"
-import CategoriesSection from "./sections/categories-section"
-import SettingsSection from "./sections/settings-section"
+import { getStoreIdBySlug } from "@/features/categories/data/getStoreIdBySlug"
+import { Form } from "@/features/layout/components"
+import { editProductAction } from "@/features/products/actions/edit-producto.action"
 import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
+import { BasicInfoSection } from "@/features/products/components/sections/basic-info-section"
+import { CategoriesSection } from "@/features/products/components/sections/categories-section"
+import { MediaSection } from "@/features/products/components/sections/media-section"
+import { PriceStockSection } from "@/features/products/components/sections/price-stock-section"
+import { SettingsSection } from "@/features/products/components/sections/settings-section"
+import { EditProductButtonProps } from "@/features/products/type"
+import { Accordion, AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
+import { formatErrorResponse } from "@/utils/lib"
 
 
 type CategoryValue = { value: string; label: string }
@@ -205,4 +207,4 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
     )
 }
 
-export default EditProductButton 
+export { EditProductButton } 

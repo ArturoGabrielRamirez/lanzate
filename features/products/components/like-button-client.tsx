@@ -1,14 +1,15 @@
 "use client"
 
-import { Button } from "@/features/shadcn/components/ui/button"
-import { Badge } from "@/features/shadcn/components/ui/badge"
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
-import { toggleLikeAction } from "../actions/toggle-like.action"
 import { Flame } from "lucide-react"
-import { useOptimistic, useState, useTransition } from "react"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useOptimistic, useState, useTransition } from "react"
+
+import { toggleLikeAction } from "@/features/products/actions/toggle-like.action"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
+import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 type User = {
@@ -120,7 +121,7 @@ function LikeButtonUser({
             
             try {
                 const result = await toggleLikeAction(productId, userId, pathname)
-                if (!result.error && result.payload) {
+                if (!result.hasError && result.payload) {
                     setIsLiked(result.payload.isLiked)
                     setLikesCount(result.payload.count)
                 } else {
@@ -191,4 +192,4 @@ function LikeButtonUser({
     )
 }
 
-export default LikeButtonClient 
+export { LikeButtonClient } 

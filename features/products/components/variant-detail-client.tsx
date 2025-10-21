@@ -1,11 +1,12 @@
 "use client"
 
+import { Product, ProductVariant, Color, ProductMedia } from "@prisma/client"
+import { useQueryState } from "nuqs"
+import { useMemo, useState, useEffect } from "react"
+
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import { cn } from "@/lib/utils"
-import { Product, ProductVariant, Color, ProductMedia } from "@prisma/client"
-import { useMemo, useState, useEffect } from "react"
-import { useQueryState } from "nuqs"
 
 type VariantWithColor = ProductVariant & { color: Color | null; primary_media?: ProductMedia | null; media?: ProductMedia[] }
 
@@ -166,6 +167,6 @@ function VariantDetailClient({ product, initialVariantId }: Props) {
   )
 }
 
-export default VariantDetailClient
+export { VariantDetailClient }
 
 

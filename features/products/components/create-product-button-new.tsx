@@ -1,8 +1,9 @@
-import { Button } from "@/features/shadcn/components/ui/button"
-import { Dialog, DialogTrigger } from "@/features/shadcn/components/ui/dialog"
 import { Plus } from "lucide-react"
 
-const CreateProductButtonNew = () => {
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Dialog, DialogTrigger } from "@/features/shadcn/components/ui/dialog"
+
+function CreateProductButtonNew() {
     return (
         <Dialog>
             <DialogTrigger>
@@ -14,4 +15,4 @@ const CreateProductButtonNew = () => {
         </Dialog>
     )
 }
-export default CreateProductButtonNew
+export { CreateProductButtonNew }

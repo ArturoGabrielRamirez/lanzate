@@ -400,4 +400,4 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
     )
 }
 
-export default UnifiedCreateProductButton 
+export { UnifiedCreateProductButton } 

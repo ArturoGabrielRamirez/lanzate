@@ -1,15 +1,15 @@
 "use client"
 
+import type { VariantPreview } from "@/features/products/type/create-form-extra"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
-import type { VariantPreview } from "@/features/products/type/create-form-extra"
 
 type Props = {
     variant: VariantPreview
     onClose: () => void
 }
 
-export function VariantsEditor({ variant, onClose }: Props) {
+function VariantsEditor({ variant, onClose }: Props) {
     return (
         <div className="h-full w-full p-4 flex flex-col gap-4">
             <div className="flex items-center justify-between">
@@ -30,6 +30,6 @@ export function VariantsEditor({ variant, onClose }: Props) {
     )
 }
 
-export default VariantsEditor
+export { VariantsEditor }
 
 

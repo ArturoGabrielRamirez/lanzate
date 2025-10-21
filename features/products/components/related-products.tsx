@@ -1,15 +1,17 @@
-import ProductListContainer from "@/features/products/components/product-list-container"
-import ProductsCard from "@/features/products/components/products-card"
+
 import { getRelatedProductsAction } from "@/features/products/actions/get-related-products.action"
+import { ProductListContainer } from "@/features/products/components/product-list-container"
+import { ProductsCard } from "@/features/products/components/products-card"
+
 import type { Product } from "@prisma/client"
 
 type Props = {
   productId: number
 }
 
-export default async function RelatedProducts({ productId }: Props) {
+async function RelatedProducts({ productId }: Props) {
   const { payload } = await getRelatedProductsAction(productId)
-  const { sameProductVariants, categoryProducts } = payload
+  const { sameProductVariants = [], categoryProducts = [] } = payload || {}
   const sameList = sameProductVariants as unknown as Product[]
   const catList = categoryProducts as unknown as Product[]
 
@@ -41,5 +43,7 @@ export default async function RelatedProducts({ productId }: Props) {
     </div>
   )
 }
+
+export { RelatedProducts }
 
 

@@ -1,9 +1,10 @@
 "use client"
 
 import { Product, Category, ProductVariant } from "@prisma/client"
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import Link from "next/link"
+
 import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 interface ProductDetailFormProps {
     product: Product & {
@@ -22,7 +23,7 @@ interface ProductDetailFormProps {
     userId: number
 }
 
-const ProductDetailForm = ({ product, slug }: ProductDetailFormProps) => {
+function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
     const currency = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" })
 
     return (
@@ -159,4 +160,4 @@ const ProductDetailForm = ({ product, slug }: ProductDetailFormProps) => {
     )
 }
 
-export default ProductDetailForm
+export { ProductDetailForm }

@@ -1,9 +1,10 @@
 "use client"
 
 import { DollarSign, Package } from "lucide-react"
+
 import { InputField } from "@/features/layout/components"
 
-export function PriceStockSection({ defaults }: { defaults?: { price?: number | string; stock?: number | string } }) {
+function PriceStockSection({ defaults }: { defaults?: { price?: number | string; stock?: number | string } }) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <InputField
@@ -24,6 +25,6 @@ export function PriceStockSection({ defaults }: { defaults?: { price?: number | 
     )
 }
 
-export default PriceStockSection
+export { PriceStockSection }
 
 

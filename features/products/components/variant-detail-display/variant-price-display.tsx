@@ -1,14 +1,15 @@
 "use client"
 
-import { DollarSign, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Form, InputField } from "@/features/layout/components"
-import { Label } from "@/features/shadcn/components/ui/label"
+import { DollarSign, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+
+import { Form, InputField } from "@/features/layout/components"
+import { updateVariantPrice } from "@/features/products/data/update-variant-price.data"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Label } from "@/features/shadcn/components/ui/label"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { updateVariantPrice } from "../../data/update-variant-price.data"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface VariantPriceDisplayProps {
     variant: ProductVariant
@@ -19,7 +20,7 @@ type VariantPriceFormValues = {
     "variant-price"?: string
 }
 
-const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps) => {
+function VariantPriceDisplay({ variant, productPrice }: VariantPriceDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
     const [priceInput, setPriceInput] = useState<string>(
@@ -156,4 +157,4 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
     )
 }
 
-export default VariantPriceDisplay
+export { VariantPriceDisplay }

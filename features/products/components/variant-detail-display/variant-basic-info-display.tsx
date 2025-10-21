@@ -1,19 +1,20 @@
 "use client"
 
-import { Box, EditIcon, X, ArrowLeft, Check } from "lucide-react"
-import { Product, ProductMedia, ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { VariantLinkCard } from "./variant-link-card"
-import { Form, InputField } from "@/features/layout/components"
-import { useState } from "react"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { editVariantSchema } from "../../schemas/product-schema"
-import { updateVariantBasicInfo } from "../../data/update-variant-basic-info.data"
-import { toast } from "sonner"
-import { useFormContext } from "react-hook-form"
-import DeleteVariantButton from "../delete-variant-button"
+import { Product, ProductMedia, ProductVariant } from "@prisma/client"
+import { Box, EditIcon, X, ArrowLeft, Check } from "lucide-react"
 import Link from "next/link"
+import { useState } from "react"
+import { useFormContext } from "react-hook-form"
+import { toast } from "sonner"
+
+import { Form, InputField } from "@/features/layout/components"
+import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
+import { VariantLinkCard } from "@/features/products/components/variant-detail-display/variant-link-card"
+import { updateVariantBasicInfo } from "@/features/products/data/update-variant-basic-info.data"
+import { editVariantSchema } from "@/features/products/schemas/product-schema"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface VariantBasicInfoDisplayProps {
@@ -73,7 +74,7 @@ function ToggleEditButton({ isEditing, onToggle, onCancel, variant }: {
     )
 }
 
-const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantBasicInfoDisplayProps) => {
+function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantBasicInfoDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
 
     const handleOpenEdit = () => {
@@ -91,7 +92,7 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantB
                 contentButton={false}
                 resolver={yupResolver(editVariantSchema as never)}
                 onSuccess={handleCloseEdit}
-                formAction={async (data: any) => {
+                formAction={async (data: { name: string | null; sku: string | null; barcode: string | null; description: string | null }) => {
                     try {
                         const result = await updateVariantBasicInfo(variant.id, {
                             name: data.name || null,
@@ -99,7 +100,7 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantB
                             barcode: data.barcode || null,
                             description: data.description || null
                         })
-                        if (result.error) {
+                        if (result.hasError) {
                             toast.error("Error al actualizar la variante", {
                                 description: result.message
                             })
@@ -209,8 +210,8 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantB
                             <label className="text-sm font-medium">Otras variantes del producto</label>
                             <div className="grid gap-2 sm:grid-cols-2">
                                 {product.variants
-                                    .filter((v: any) => v.id !== variant.id)
-                                    .map((otherVariant: any) => (
+                                    .filter((v: ProductVariant) => v.id !== variant.id)
+                                    .map((otherVariant: ProductVariant) => (
                                         <VariantLinkCard
                                             key={otherVariant.id}
                                             variant={otherVariant}
@@ -242,4 +243,4 @@ const VariantBasicInfoDisplay = ({ variant, slug, productId, product }: VariantB
     )
 }
 
-export default VariantBasicInfoDisplay
+export { VariantBasicInfoDisplay }

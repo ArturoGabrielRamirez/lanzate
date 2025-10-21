@@ -1,27 +1,31 @@
 "use client"
 
+import { Product, ProductVariant } from "@prisma/client"
 import { Palette, EditIcon, X, Check, Loader2 } from "lucide-react"
-import { ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Form } from "@/features/layout/components"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { updateVariantColor } from "../../data/update-variant-color.data"
-import { CreateColorInline } from "../../components/create-color-inline"
 import { toast } from "sonner"
+
+import { Form } from "@/features/layout/components"
+import { CreateColorInline } from "@/features/products/components/create-color-inline"
+import { updateVariantColor } from "@/features/products/data/update-variant-color.data"
+import { ProductColor } from "@/features/products/type/product-color"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface VariantColorDisplayProps {
     variant: ProductVariant & {
         color?: { name: string; hex: string } | null
     }
-    product: any
+    product: Product & {
+        available_colors: ProductColor[]
+    }
 }
 
-const VariantColorDisplay = ({ variant, product }: VariantColorDisplayProps) => {
+function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
-    const [pendingColorId, setPendingColorId] = useState<number | null>(variant.color ? (variant as any).color_id ?? null : null)
+    const [pendingColorId, setPendingColorId] = useState<number | null>(variant.color ? (variant).color_id ?? null : null)
 
     const handleOpenEdit = () => {
         setIsEditing(true)
@@ -52,8 +56,8 @@ const VariantColorDisplay = ({ variant, product }: VariantColorDisplayProps) => 
                                             onClick={async () => {
                                                 try {
                                                     setIsSaving(true)
-                                                    const { error, message } = await updateVariantColor(variant.id, pendingColorId)
-                                                    if (error) {
+                                                    const { hasError, message } = await updateVariantColor(variant.id, pendingColorId)
+                                                    if (hasError) {
                                                         toast.error(message || "Error al actualizar color")
                                                         setIsSaving(false)
                                                         return
@@ -109,7 +113,7 @@ const VariantColorDisplay = ({ variant, product }: VariantColorDisplayProps) => 
                     <div className="space-y-4">
                         {variant.color ? (
                             <div className="flex items-center gap-3">
-                                <div 
+                                <div
                                     className="size-10 rounded-full border"
                                     style={{ backgroundColor: variant.color.hex }}
                                 />
@@ -127,39 +131,37 @@ const VariantColorDisplay = ({ variant, product }: VariantColorDisplayProps) => 
                         {isEditing && (
                             <div className="space-y-3">
                                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                                {product.available_colors?.map((color: any) => {
-                                    const isSelected = (pendingColorId ?? variant.color_id) === color.id
-                                    return (
-                                        <button
-                                            key={color.id}
-                                            type="button"
-                                            className={`p-2 rounded-lg border text-left transition-colors ${
-                                                isSelected ? 'border-primary bg-primary/5' : 'hover:border-primary/50'
+                                    {product.available_colors?.map((color: ProductColor) => {
+                                        const isSelected = (pendingColorId ?? variant.color_id) === Number(color.id)
+                                        return (
+                                            <button
+                                                key={color.id}
+                                                type="button"
+                                                className={`p-2 rounded-lg border text-left transition-colors ${isSelected ? 'border-primary bg-primary/5' : 'hover:border-primary/50'
+                                                    }`}
+                                                onClick={() => setPendingColorId(Number(color.id))}
+                                            >
+                                                <div className="flex items-center gap-2">
+                                                    <div className="size-6 rounded-full border" style={{ backgroundColor: `rgba(${color.rgba[0]}, ${color.rgba[1]}, ${color.rgba[2]}, ${color.rgba[3]})` }} />
+                                                    <span className="text-sm">{color.name}</span>
+                                                </div>
+                                            </button>
+                                        )
+                                    })}
+                                    <button
+                                        type="button"
+                                        className={`p-2 rounded-lg border text-left transition-colors ${pendingColorId === null ? 'border-primary bg-primary/5' : 'hover:border-primary/50'
                                             }`}
-                                            onClick={() => setPendingColorId(color.id)}
-                                        >
-                                            <div className="flex items-center gap-2">
-                                                <div className="size-6 rounded-full border" style={{ backgroundColor: color.hex }} />
-                                                <span className="text-sm">{color.name}</span>
-                                            </div>
-                                        </button>
-                                    )
-                                })}
-                                <button
-                                    type="button"
-                                    className={`p-2 rounded-lg border text-left transition-colors ${
-                                        pendingColorId === null ? 'border-primary bg-primary/5' : 'hover:border-primary/50'
-                                    }`}
-                                    onClick={() => setPendingColorId(null)}
-                                >
-                                    <div className="flex items-center gap-2">
-                                        <div className="size-6 rounded-full border bg-background" />
-                                        <span className="text-sm">Sin color</span>
-                                    </div>
-                                </button>
+                                        onClick={() => setPendingColorId(null)}
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <div className="size-6 rounded-full border bg-background" />
+                                            <span className="text-sm">Sin color</span>
+                                        </div>
+                                    </button>
                                 </div>
                                 <CreateColorInline onCreated={(newColor) => {
-                                    product.available_colors = [...(product.available_colors ?? []), newColor]
+                                    /* product.available_colors = [...(product.available_colors ?? []), newColor] */
                                     setPendingColorId(newColor.id)
                                 }} />
                             </div>
@@ -171,4 +173,4 @@ const VariantColorDisplay = ({ variant, product }: VariantColorDisplayProps) => 
     )
 }
 
-export default VariantColorDisplay
+export { VariantColorDisplay }

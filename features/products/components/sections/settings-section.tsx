@@ -1,16 +1,17 @@
 "use client"
 
+import { useState } from "react"
+
+import type { SettingsSectionData } from "@/features/products/type/create-form-extra"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Switch } from "@/features/shadcn/components/ui/switch"
-import { useState } from "react"
-import type { SettingsSectionData } from "@/features/products/type/create-form-extra"
 
 type Props = {
     value?: SettingsSectionData
     onChange?: (data: SettingsSectionData) => void
 }
 
-export function SettingsSection({ value, onChange }: Props) {
+function SettingsSection({ value, onChange }: Props) {
     const [isActive, setIsActive] = useState<boolean>(value?.isActive ?? true)
     const [isFeatured, setIsFeatured] = useState<boolean>(value?.isFeatured ?? false)
     const [isPublished, setIsPublished] = useState<boolean>(value?.isPublished ?? true)
@@ -42,6 +43,6 @@ export function SettingsSection({ value, onChange }: Props) {
     )
 }
 
-export default SettingsSection
+export { SettingsSection }
 
 

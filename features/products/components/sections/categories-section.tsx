@@ -1,10 +1,11 @@
 "use client"
 
-import CategorySelect from "@/features/stores/components/category-select-"
-import { useEffect, useMemo, useState } from "react"
-import { getCategoriesAction } from "@/features/stores/actions/get-categories.action"
-import type { CategoryValue, CategoriesSectionData } from "@/features/products/type/create-form-extra"
+import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
+
+import type { CategoryValue, CategoriesSectionData } from "@/features/products/type/create-form-extra"
+import { getCategoriesAction } from "@/features/stores/actions/get-categories.action"
+import { CategorySelect } from "@/features/stores/components/category-select-"
 
 type Props = {
     storeId?: number
@@ -12,7 +13,7 @@ type Props = {
     onChange?: (data: CategoriesSectionData) => void
 }
 
-export function CategoriesSection({ storeId, value, onChange }: Props) {
+function CategoriesSection({ storeId, value, onChange }: Props) {
     const { watch, setValue } = useFormContext()
     const categories = (watch('categories') as CategoryValue[] | undefined) ?? (value?.categories ?? [])
     const [initialCategories, setInitialCategories] = useState<{ label: string, value: number }[] | undefined>(undefined)
@@ -22,8 +23,8 @@ export function CategoriesSection({ storeId, value, onChange }: Props) {
         let mounted = true
         const load = async () => {
             if (!storeId) return
-            const { payload, error } = await getCategoriesAction(storeId)
-            if (error) return
+            const { payload, hasError } = await getCategoriesAction(storeId)
+            if (hasError || !payload) return
             if (!mounted) return
             setInitialCategories(payload.map((c) => ({ label: c.name, value: c.id })))
         }
@@ -46,6 +47,6 @@ export function CategoriesSection({ storeId, value, onChange }: Props) {
     )
 }
 
-export default CategoriesSection
+export { CategoriesSection }
 
 

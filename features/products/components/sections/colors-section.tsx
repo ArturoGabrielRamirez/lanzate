@@ -1,12 +1,13 @@
 "use client"
 
-import { Button } from "@/features/shadcn/components/ui/button"
+import { useFormContext } from "react-hook-form"
+
 import { ProductColorRow } from "@/features/products/components/product-color-row"
 import type { ColorsSectionData } from "@/features/products/type/create-form-extra"
 import type { ProductColor } from "@/features/products/type/product-color"
-import { useFormContext } from "react-hook-form"
+import { Button } from "@/features/shadcn/components/ui/button"
 
-export function ColorsSection({ value, onChange }: { value?: ColorsSectionData; onChange?: (data: ColorsSectionData) => void }) {
+function ColorsSection({ value, onChange }: { value?: ColorsSectionData; onChange?: (data: ColorsSectionData) => void }) {
     const { formState: { errors }, setValue, watch } = useFormContext()
     const colors = (watch('colors') as ProductColor[] | undefined) ?? (value?.colors ?? [])
 
@@ -61,6 +62,6 @@ export function ColorsSection({ value, onChange }: { value?: ColorsSectionData; 
     )
 }
 
-export default ColorsSection
+export { ColorsSection }
 
 

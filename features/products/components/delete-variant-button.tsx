@@ -1,13 +1,14 @@
 "use client"
-import { ButtonWithPopup } from "@/features/layout/components"
+
 import { Trash2 } from "lucide-react"
-import { useTranslations } from "next-intl"
-import { deleteProductVariantAction } from "@/features/products/actions/delete-product-variant.action"
-import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { useTranslations } from "next-intl"
+
+import { ButtonWithPopup } from "@/features/layout/components"
+import { deleteProductVariantAction } from "@/features/products/actions/delete-product-variant.action"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { formatErrorResponse } from "@/utils/lib"
 
 type Props = { 
     variantId: number; 
@@ -16,13 +17,13 @@ type Props = {
     onlyIcon?: boolean;
 }
 
-export default function DeleteVariantButton({ variantId, slug, productId, onlyIcon = false }: Props) {
+function DeleteVariantButton({ variantId, slug, productId, onlyIcon = false }: Props) {
     const t = useTranslations("store.delete-variant")
 
     const action = async () => {
         try {
-            const { error, message } = await deleteProductVariantAction(variantId, slug)
-            if (error) throw new Error(message)
+            const { hasError, message } = await deleteProductVariantAction(variantId, slug)
+            if (hasError) throw new Error(message)
             return { error: false, message: t("messages.success"), payload: null }
         } catch (error) {
             return formatErrorResponse(t("messages.error"), error, null)
@@ -54,5 +55,7 @@ export default function DeleteVariantButton({ variantId, slug, productId, onlyIc
         />
     )
 }
+
+export { DeleteVariantButton }
 
 

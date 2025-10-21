@@ -1,17 +1,18 @@
 "use client"
 
-import { Ruler, EditIcon, X } from "lucide-react"
 import { Product } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Ruler, EditIcon, X } from "lucide-react"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface DimensionsDisplayProps {
     product: Product
 }
 
-const DimensionsDisplay = ({ product }: DimensionsDisplayProps) => {
+function DimensionsDisplay({ product }: DimensionsDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
 
     const handleOpenEdit = () => {
@@ -137,4 +138,4 @@ const DimensionsDisplay = ({ product }: DimensionsDisplayProps) => {
     )
 }
 
-export default DimensionsDisplay
+export { DimensionsDisplay }

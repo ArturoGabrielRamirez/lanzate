@@ -1,10 +1,11 @@
 "use client"
 
-import { Button } from "@/features/shadcn/components/ui/button"
+import { Product, Category } from "@prisma/client"
 import { Download } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { Product, Category } from "@prisma/client"
 import * as XLSX from "xlsx-js-style"
+
+import { Button } from "@/features/shadcn/components/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
@@ -212,4 +213,4 @@ function ExportProductsButton({ data, onlyIcon }: Props) {
     )
 }
 
-export default ExportProductsButton 
+export { ExportProductsButton } 

@@ -1,13 +1,14 @@
 "use client"
 
+import { Upload, X } from "lucide-react"
+import { useCallback, useState, useEffect } from "react"
+import { useFormContext } from "react-hook-form"
+
+import type { MediaSectionData } from "@/features/products/type/create-form-extra"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { FileUpload, FileUploadCameraTrigger, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Switch } from "@/features/shadcn/components/ui/switch"
-import { Upload, X } from "lucide-react"
-import { useCallback, useState, useEffect } from "react"
-import { useFormContext } from "react-hook-form"
-import type { MediaSectionData } from "@/features/products/type/create-form-extra"
 
 type Props = {
     value?: MediaSectionData
@@ -15,7 +16,7 @@ type Props = {
     onFileReject?: (file: File, message: string) => void
 }
 
-export function MediaSection({ value, onChange, onFileReject }: Props) {
+function MediaSection({ value, onChange, onFileReject }: Props) {
     const { setValue } = useFormContext()
     const [files, setFiles] = useState<File[]>(value?.files ?? [])
     const [primaryIndex, setPrimaryIndex] = useState<number | null>(value?.primaryIndex ?? null)
@@ -95,6 +96,6 @@ export function MediaSection({ value, onChange, onFileReject }: Props) {
     )
 }
 
-export default MediaSection
+export { MediaSection }
 
 

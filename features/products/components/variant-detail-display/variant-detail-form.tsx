@@ -1,16 +1,17 @@
 "use client"
 
 import { Product, ProductMedia, ProductVariant } from "@prisma/client"
-import { 
-    VariantBasicInfoDisplay, 
-    VariantMediaDisplay, 
-    VariantStockDisplay, 
+
+import {
+    VariantBasicInfoDisplay,
+    VariantMediaDisplay,
+    VariantStockDisplay,
     VariantPriceDisplay,
     VariantDimensionsDisplay,
     VariantSizesDisplay,
     VariantConfigDisplay,
     VariantColorDisplay
-} from "./index"
+} from "@/features/products/components/variant-detail-display/index"
 
 interface VariantDetailFormProps {
     variant: ProductVariant & {
@@ -33,7 +34,7 @@ interface VariantDetailFormProps {
     }
 }
 
-const VariantDetailForm = ({ variant, productPrice, slug, productId, product }: VariantDetailFormProps) => {
+function VariantDetailForm({ variant, productPrice, slug, productId, product }: VariantDetailFormProps) {
     return (
         <div className="space-y-6">
             {/* Primera fila: Información básica y Medios */}
@@ -88,4 +89,4 @@ const VariantDetailForm = ({ variant, productPrice, slug, productId, product }: 
     )
 }
 
-export default VariantDetailForm
+export { VariantDetailForm }

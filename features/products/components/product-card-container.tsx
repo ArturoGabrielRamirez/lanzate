@@ -1,6 +1,6 @@
 "use client"
 
-import { useStore } from "../../layout/components/public-store/store-provider"
+import { useStore } from "@/features/layout/components/public-store/store-provider"
 
 type Props = {
     listCard: React.ReactNode
@@ -17,4 +17,4 @@ function ProductCardContainer({ listCard, gridCard }: Props) {
     return <>{gridCard}</>
 }
 
-export default ProductCardContainer 
+export { ProductCardContainer } 

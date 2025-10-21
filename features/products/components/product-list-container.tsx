@@ -1,6 +1,6 @@
 "use client"
 
-import { useStore } from "../../layout/components/public-store/store-provider"
+import { useStore } from "@/features/layout/components/public-store/store-provider"
 import { cn } from "@/lib/utils"
 
 type Props = {
@@ -24,4 +24,4 @@ function ProductListContainer({ children }: Props) {
         </div>
     )
 }
-export default ProductListContainer
+export { ProductListContainer }

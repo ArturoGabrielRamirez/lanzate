@@ -1,15 +1,16 @@
 "use client"
 
-import { ImageIcon, EditIcon, X, Check, Upload, Loader2 } from "lucide-react"
 import { Product, ProductMedia, ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { ImageIcon, EditIcon, X, Check, Upload, Loader2 } from "lucide-react"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { FileUpload, FileUploadDropzone, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
-import { Button } from "@/features/shadcn/components/ui/button"
 import { toast } from "sonner"
-import { updateVariantMedia } from "../../data/update-variant-media.data"
+
+import { updateVariantMedia } from "@/features/products/data/update-variant-media.data"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { FileUpload, FileUploadDropzone, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 interface VariantMediaDisplayProps {
     variant: ProductVariant & {
@@ -22,7 +23,7 @@ interface VariantMediaDisplayProps {
     }
 }
 
-const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => {
+function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [pendingPrimaryId, setPendingPrimaryId] = useState<number | null>(null)
     const [isSaving, setIsSaving] = useState(false)
@@ -234,4 +235,4 @@ const VariantMediaDisplay = ({ variant, product }: VariantMediaDisplayProps) => 
     )
 }
 
-export default VariantMediaDisplay
+export { VariantMediaDisplay }

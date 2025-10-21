@@ -1,19 +1,20 @@
 "use client"
 
+import { useMemo } from "react"
+import { useFormContext } from "react-hook-form"
+
+import type { SizesSectionData } from "@/features/products/type/create-form-extra"
 import MultipleSelector from "@/features/shadcn/components/expansion/multiple-selector"
 import type { Option as MultiOption } from "@/features/shadcn/components/expansion/multiple-selector"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Switch } from "@/features/shadcn/components/ui/switch"
-import { useMemo } from "react"
-import { useFormContext } from "react-hook-form"
-import type { SizesSectionData } from "@/features/products/type/create-form-extra"
 
 type Props = {
     value?: SizesSectionData
     onChange?: (data: SizesSectionData) => void
 }
 
-export function SizesSection({ value, onChange }: Props) {
+function SizesSection({ value, onChange }: Props) {
     const { watch, setValue } = useFormContext()
     const isUniqueSize = (watch('isUniqueSize') as boolean | undefined) ?? (value?.isUniqueSize ?? false)
     const selectedSizes = (watch('sizes') as MultiOption[] | undefined) ?? (value?.sizes as MultiOption[] ?? [])
@@ -89,6 +90,6 @@ export function SizesSection({ value, onChange }: Props) {
     )
 }
 
-export default SizesSection
+export { SizesSection }
 
 

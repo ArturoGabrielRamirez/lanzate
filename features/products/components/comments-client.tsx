@@ -82,8 +82,8 @@ function CommentsClient({ productId, user, initialComments }: Props) {
                 pathname
             )
 
-            if (!result.error) {
-                setComments(prev => [result.payload, ...prev])
+            if (!result.hasError) {
+                setComments(prev => [result.payload as Comment, ...prev])
                 return result
             } else {
                 // Revert optimistic update on error
@@ -173,4 +173,4 @@ function CommentsClient({ productId, user, initialComments }: Props) {
     )
 }
 
-export default CommentsClient 
+export { CommentsClient } 
