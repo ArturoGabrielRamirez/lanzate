@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
-import { ProfilePermissions, PublicUserProfile } from '../types'
+
+import { ProfilePermissions, PublicUserProfile } from '@/features/profile/types'
 
 export function useProfilePermissions(
     currentUserId: string | number | undefined,

@@ -1,9 +1,9 @@
-import { ProfileAvatar } from "./profile-avatar-memo"
-import { BannerSection } from "./banner-section"
-import { ProfileInfo } from "./profile-info"
-import { ProfileBannerDesktopProps } from "../types"
+import { BannerSection } from '@/features/profile/components/banner-section'
+import { ProfileAvatar } from '@/features/profile/components/profile-avatar-memo'
+import { ProfileInfo } from '@/features/profile/components/profile-info'
+import { ProfileBannerDesktopProps } from '@/features/profile/types'
 
-export default function ProfileBannerDesktop({
+function ProfileBannerDesktop({
   user,
   displayName,
   bannerUrl,
@@ -66,3 +66,5 @@ export default function ProfileBannerDesktop({
     </div>
   )
 }
+
+export { ProfileBannerDesktop }

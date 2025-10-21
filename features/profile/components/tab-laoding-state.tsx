@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/features/shadcn/components/ui/card";
 
-export function TabLoadingState() {
+function TabLoadingState() {
     return (
         <div className="space-y-4">
             {[...Array(3)].map((_, i) => (
@@ -19,3 +19,5 @@ export function TabLoadingState() {
         </div>
     )
 }
+
+export { TabLoadingState }

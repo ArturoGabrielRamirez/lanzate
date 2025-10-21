@@ -1,9 +1,9 @@
-import { ProfileAvatar } from "./profile-avatar-memo"
-import { BannerSection } from "./banner-section"
-import { ProfileInfo } from "./profile-info"
-import { ProfileBannerMobileProps } from "../types"
+import { BannerSection } from '@/features/profile/components/banner-section'
+import { ProfileAvatar } from '@/features/profile/components/profile-avatar-memo'
+import { ProfileInfo } from '@/features/profile/components/profile-info'
+import { ProfileBannerMobileProps } from '@/features/profile/types'
 
-export function ProfileBannerMobile({
+function ProfileBannerMobile({
   user,
   displayName,
   bannerUrl,
@@ -66,3 +66,5 @@ export function ProfileBannerMobile({
     </div>
   )
 }
+
+export { ProfileBannerMobile }

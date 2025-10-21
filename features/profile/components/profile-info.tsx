@@ -1,8 +1,9 @@
 import { Calendar, MapPin } from "lucide-react"
-import { formatDate } from "../utils/format-date"
-import { ProfileInfoProps } from "../types"
 
-export function ProfileInfo({
+import { ProfileInfoProps } from '@/features/profile/types'
+import { formatDate } from '@/features/profile/utils/format-date'
+
+function ProfileInfo({
     displayName,
     username,
     bio,
@@ -74,3 +75,5 @@ export function ProfileInfo({
         </div>
     )
 }
+
+export { ProfileInfo }

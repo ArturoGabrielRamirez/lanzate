@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react"
-import { getDefaultBannerForUser } from "../utils/get-default-banner-for-user"
+
+import { getDefaultBannerForUser } from '@/features/profile/utils/get-default-banner-for-user'
 
 export function useBannerState(userId: string, initialBanner: string | null) {
     const [bannerUrl, setBannerUrl] = useState(() => {

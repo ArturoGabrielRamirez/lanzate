@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef } from 'react'
-import { toggleFollowUser } from '../actions/toggle-follow-user-action'
+
+import { toggleFollowUserAction } from '@/features/profile/actions'
 
 export function useFollowStatus(
     currentUserId: number | undefined,
@@ -21,12 +22,15 @@ export function useFollowStatus(
         setIsLoading(true)
 
         try {
-            const response = await toggleFollowUser(targetUserId)
+            const response = await toggleFollowUserAction(targetUserId)
 
-            if (response && !response.error) {
+            if (!response.payload) throw new Error('No response from toggleFollowUserAction')
+
+            if (response && !response.hasError) {
                 setIsFollowing(response.payload.isFollowing)
                 return response.payload.isFollowing
             }
+
         } catch (error) {
             console.error('Error toggling follow:', error)
         } finally {

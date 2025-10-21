@@ -1,13 +1,14 @@
 "use client"
 
 import { useCallback } from "react"
-import { ProfileBannerProps } from "../types"
-import { useBannerState } from "../hooks/use-banner-state"
-import { useAvatarState } from "../hooks/use-avatar-state"
-import { ProfileBannerMobile } from "./profile-banner-mobile"
-import ProfileBannerDesktop from "./profile-banner-desktop"
 
-export default function ProfileBanner({
+import { ProfileBannerDesktop } from '@/features/profile/components/profile-banner-desktop'
+import { ProfileBannerMobile } from '@/features/profile/components/profile-banner-mobile'
+import { useAvatarState } from '@/features/profile/hooks/use-avatar-state'
+import { useBannerState } from '@/features/profile/hooks/use-banner-state'
+import { ProfileBannerProps } from '@/features/profile/types'
+
+function ProfileBanner({
   user,
   onBannerUpdate,
   onAvatarUpdate,
@@ -57,3 +58,5 @@ export default function ProfileBanner({
     </div>
   )
 }
+
+export { ProfileBanner }

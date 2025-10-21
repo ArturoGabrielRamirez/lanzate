@@ -1,7 +1,7 @@
-import { StatItemProps } from "../types"
+import { StatItemProps } from '@/features/profile/types'
 
 
-export function StatItem({
+function StatItem({
     icon: Icon,
     label,
     value,
@@ -36,3 +36,5 @@ export function StatItem({
         </div>
     )
 }
+
+export { StatItem }

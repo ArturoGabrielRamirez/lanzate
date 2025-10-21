@@ -1,28 +1,18 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import {
-  Heart,
-  MessageCircle,
-  ShoppingBag,
-  Store,
-  Package,
-  User,
-  TrendingUp,
-  Award,
-  Activity,
-  UserPlus
-} from 'lucide-react'
-import { Card, CardContent } from '@/features/shadcn/components/ui/card'
-import { Avatar, AvatarImage, AvatarFallback } from '@/features/shadcn/components/ui/avatar'
-import { Badge } from '@/features/shadcn/components/ui/badge'
 import { formatDistanceToNow } from 'date-fns'
 import { es } from 'date-fns/locale'
-import { UserActivitiesProps, UserActivity } from '../types'
+import { Heart, MessageCircle, ShoppingBag, Store, Package, User, TrendingUp, Award, Activity, UserPlus } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+
+import { UserActivitiesProps, UserActivity } from '@/features/profile/types'
+import { Avatar, AvatarImage, AvatarFallback } from '@/features/shadcn/components/ui/avatar'
+import { Badge } from '@/features/shadcn/components/ui/badge'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
 
 // Mapeo de iconos y colores para diferentes tipos de actividad
 const getActivityConfig = (activityType: string) => {
-  const configs: Record<string, { icon: React.ComponentType<any>, color: string, bgColor: string }> = {
+  const configs: Record<string, { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>, color: string, bgColor: string }> = {
     PRODUCT_LIKE: { icon: Heart, color: 'text-red-600', bgColor: 'bg-red-50' },
     PRODUCT_COMMENT: { icon: MessageCircle, color: 'text-blue-600', bgColor: 'bg-blue-50' },
     ORDER_CREATED: { icon: ShoppingBag, color: 'text-green-600', bgColor: 'bg-green-50' },
@@ -75,7 +65,7 @@ const getActivityTitle = (activity: UserActivity) => {
   }
 }
 
-export function UserActivities({
+function UserActivities({
   userId,
   isOwnProfile = false,
   showPrivateActivities = false
@@ -268,3 +258,5 @@ export function UserActivities({
     </div>
   )
 }
+
+export { UserActivities }

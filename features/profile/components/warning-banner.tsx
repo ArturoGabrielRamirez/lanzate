@@ -1,8 +1,6 @@
-interface WarningBannerProps {
-    isMuchLarger: boolean
-}
+import { WarningBannerProps } from '@/features/profile/types'
 
-export function WarningBanner({ isMuchLarger }: WarningBannerProps) {
+function WarningBanner({ isMuchLarger }: WarningBannerProps) {
     if (!isMuchLarger) return null
 
     return (
@@ -14,3 +12,5 @@ export function WarningBanner({ isMuchLarger }: WarningBannerProps) {
         </div>
     )
 }
+
+export { WarningBanner }

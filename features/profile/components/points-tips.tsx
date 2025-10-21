@@ -1,7 +1,8 @@
 import { Trophy } from 'lucide-react'
+
 import { Card, CardContent } from '@/features/shadcn/components/ui/card'
 
-export function PointsTips() {
+function PointsTips() {
     return (
         <Card className="bg-gray-800/30 border-gray-700/30 backdrop-blur-sm">
             <CardContent className="p-4">
@@ -19,3 +20,5 @@ export function PointsTips() {
         </Card>
     )
 }
+
+export { PointsTips }

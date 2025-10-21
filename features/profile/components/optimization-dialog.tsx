@@ -1,16 +1,18 @@
 'use client'
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/features/shadcn/components/ui/dialog'
 import { Info } from 'lucide-react'
-import { OptimizationDialogProps } from '../types'
-import { useImageInfo } from '../hooks/use-image-info'
-import { getRecommendedSize, analyzeImageSize } from '../utils/image-calculations'
-import { ImagePreview } from './image-preview'
-import { RecommendationBanner } from './recommendation-banner'
-import { OptimizationOptionsList } from './optimization-options-list'
-import { WarningBanner } from './warning-banner'
 
-export function OptimizationDialog({
+import { ImagePreview } from '@/features/profile/components/image-preview'
+import { OptimizationOptionsList } from '@/features/profile/components/optimization-options-list'
+import { RecommendationBanner } from '@/features/profile/components/recommendation-banner'
+import { WarningBanner } from '@/features/profile/components/warning-banner'
+import { useImageInfo } from '@/features/profile/hooks/use-image-info'
+import { OptimizationDialogProps } from '@/features/profile/types'
+import { analyzeImageSize } from '@/features/profile/utils/analyze-image-size'
+import { getRecommendedSize } from '@/features/profile/utils/get-recommended-size'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/features/shadcn/components/ui/dialog'
+
+function OptimizationDialog({
   isOpen,
   onDecision,
   imageFile,
@@ -73,3 +75,5 @@ export function OptimizationDialog({
     </Dialog>
   )
 }
+
+export { OptimizationDialog }

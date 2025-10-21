@@ -1,7 +1,8 @@
 import { Info } from 'lucide-react'
-import { RecommendationBannerProps } from '../types'
 
-export function RecommendationBanner({
+import { RecommendationBannerProps } from '@/features/profile/types'
+
+function RecommendationBanner({
   type,
   recommendedWidth,
   recommendedHeight,
@@ -28,3 +29,5 @@ export function RecommendationBanner({
     </div>
   )
 }
+
+export { RecommendationBanner }

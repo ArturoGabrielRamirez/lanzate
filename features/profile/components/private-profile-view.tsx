@@ -1,9 +1,10 @@
 import { Lock, UserPlus } from 'lucide-react'
+
+import { PrivateProfileViewProps } from '@/features/profile/types'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Card, CardContent } from '@/features/shadcn/components/ui/card'
-import { PrivateProfileViewProps } from '../types'
 
-export function PrivateProfileView({ reason, currentUser, isUserLoading }: PrivateProfileViewProps) {
+function PrivateProfileView({ reason, currentUser, isUserLoading }: PrivateProfileViewProps) {
     return (
         <div className="px-4 md:px-6 pt-4">
             <Card className="bg-gray-800/30 border-gray-700/50 backdrop-blur-sm">
@@ -38,3 +39,5 @@ export function PrivateProfileView({ reason, currentUser, isUserLoading }: Priva
         </div>
     )
 }
+
+export { PrivateProfileView }

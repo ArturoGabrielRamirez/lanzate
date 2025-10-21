@@ -1,9 +1,10 @@
 'use client'
 
 import { createContext, useContext, useState, useCallback, useEffect } from 'react'
+
 import { getUserInfo } from '@/features/layout/actions'
-import { CurrentUser, UserContextType, UserProviderProps } from '../types'
-import { revalidateCache } from '../utils/cache'
+import { CurrentUser, UserContextType, UserProviderProps } from '@/features/profile/types'
+import { revalidateCache } from '@/features/profile/utils/cache'
 
 const UserContext = createContext<UserContextType | null>(null)
 
@@ -18,7 +19,7 @@ export function UserProvider({ children, initialUser }: UserProviderProps) {
       setIsLoading(true)
       setError(null)
 
-      const { payload, error: userError } = await getUserInfo()
+      const { payload, hasError: userError } = await getUserInfo()
 
       if (userError || !payload) {
         const errorMessage = typeof userError === 'string'

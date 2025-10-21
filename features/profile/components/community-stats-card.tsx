@@ -1,14 +1,15 @@
 "use client"
 
 import { memo } from 'react'
-import { CommunityStatsProps } from '../types'
-import { useUserStats } from '../hooks/use-user-stats'
-import { LevelCard } from './level-card'
-import { StatsGrid } from './stats-grid'
-import { ChallengesSection } from './challenges-section'
-import { PointsTips } from './points-tips'
 
-export const CommunityStatsCard = memo(({
+import { ChallengesSection } from '@/features/profile/components/challenges-section'
+import { LevelCard } from '@/features/profile/components/level-card'
+import { PointsTips } from '@/features/profile/components/points-tips'
+import { StatsGrid } from '@/features/profile/components/stats-grid'
+import { useUserStats } from '@/features/profile/hooks/use-user-stats'
+import { CommunityStatsProps } from '@/features/profile/types'
+
+const CommunityStatsCard = memo(({
   followersCount,
   followingCount,
   likesCount,
@@ -50,3 +51,7 @@ export const CommunityStatsCard = memo(({
     </div>
   )
 })
+
+CommunityStatsCard.displayName = 'CommunityStatsCard'
+
+export { CommunityStatsCard }

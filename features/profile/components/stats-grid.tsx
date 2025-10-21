@@ -1,9 +1,10 @@
 import { Users, Heart, UserCheck, Calendar } from 'lucide-react'
-import { Card, CardContent } from '@/features/shadcn/components/ui/card'
-import { StatItem } from './stats-item'
-import { StatsGridProps } from '../types'
 
-export function StatsGrid({
+import { StatItem } from '@/features/profile/components/stats-item'
+import { StatsGridProps } from '@/features/profile/types'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
+
+function StatsGrid({
     followersCount,
     followingCount,
     likesCount,
@@ -51,3 +52,5 @@ export function StatsGrid({
         </Card>
     )
 }
+
+export { StatsGrid }

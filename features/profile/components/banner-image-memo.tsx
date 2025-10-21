@@ -1,7 +1,8 @@
-import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { memo } from "react"
 
-export const BannerImage = memo(({
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
+
+const BannerImage = memo(({
     bannerUrl,
     isLoading,
     onLoad,
@@ -33,3 +34,5 @@ export const BannerImage = memo(({
 })
 
 BannerImage.displayName = 'BannerImage'
+
+export { BannerImage }

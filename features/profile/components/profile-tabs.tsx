@@ -1,10 +1,11 @@
 'use client'
 
 import { Suspense, lazy } from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/features/shadcn/components/ui/tabs'
+
+import { TabLoadingState } from '@/features/profile/components/tab-laoding-state'
+import { ProfileTabsProps } from '@/features/profile/types'
 import { Card, CardContent } from '@/features/shadcn/components/ui/card'
-import { ProfileTabsProps } from '../types'
-import { TabLoadingState } from './tab-laoding-state'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/features/shadcn/components/ui/tabs'
 
 // Lazy load para no cargar todo de golpe
 const UserActivities = lazy(() =>
@@ -15,7 +16,7 @@ const UserLikedProducts = lazy(() =>
 )
 
 
-export function ProfileTabs({ user, isOwnProfile, currentUserId }: ProfileTabsProps) {
+function ProfileTabs({ user, isOwnProfile }: ProfileTabsProps) {
     return (
         <Card className="bg-gray-800/30 border-gray-700/50 backdrop-blur-sm">
             <CardContent className="p-0">
@@ -83,3 +84,5 @@ export function ProfileTabs({ user, isOwnProfile, currentUserId }: ProfileTabsPr
         </Card>
     )
 }
+
+export { ProfileTabs }
