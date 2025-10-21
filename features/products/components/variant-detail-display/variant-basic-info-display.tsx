@@ -211,7 +211,7 @@ function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantB
                             <div className="grid gap-2 sm:grid-cols-2">
                                 {product.variants
                                     .filter((v: ProductVariant) => v.id !== variant.id)
-                                    .map((otherVariant: ProductVariant) => (
+                                    .map((otherVariant) => (
                                         <VariantLinkCard
                                             key={otherVariant.id}
                                             variant={otherVariant}
