@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
-import { calculatePoints, generateChallenges, getProgressToNextLevel, getUserLevel } from '../utils/points-system-utils'
+
+import { calculatePoints, generateChallenges, getProgressToNextLevel, getUserLevel } from '@/features/profile/utils/points-system-utils'
 
 export function useUserStats(
     followersCount: number,

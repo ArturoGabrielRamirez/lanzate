@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { ImageInfo } from '../types'
+
+import { ImageInfo } from '@/features/profile/types'
 
 export function useImageInfo(isOpen: boolean, imageFile: File | null) {
     const [imageInfo, setImageInfo] = useState<ImageInfo | null>(null)

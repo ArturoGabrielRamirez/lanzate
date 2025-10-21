@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { LikedProduct } from '../types'
+
+import { LikedProduct } from '@/features/profile/types'
 
 export function useLikedProducts(userId: number) {
     const [likedProducts, setLikedProducts] = useState<LikedProduct[]>([])
