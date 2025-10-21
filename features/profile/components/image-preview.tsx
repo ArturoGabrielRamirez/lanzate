@@ -1,5 +1,5 @@
 import { ImagePreviewProps } from '@/features/profile/types'
-import { formatFileSize } from '@/features/profile/utils/image-calculations'
+import { formatFileSize } from '@/features/profile/utils/format-file-size'
 
 function ImagePreview({ previewUrl, width, height, size, type }: ImagePreviewProps) {
   return (

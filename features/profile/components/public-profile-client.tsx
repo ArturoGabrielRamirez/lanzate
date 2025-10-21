@@ -12,7 +12,7 @@ import { ProfileTabs } from '@/features/profile/components/profile-tabs'
 import { useFollowStatus } from '@/features/profile/hooks/use-follow-status'
 import { useProfilePermissions } from '@/features/profile/hooks/use-profile-permissions'
 import { PublicProfileClientProps } from '@/features/profile/types'
-import { calculateAccountAge } from '@/features/profile/utils/profile-calculations'
+import { calculateAccountAge } from '@/features/profile/utils/calculate-account-age'
 
 function PublicProfileClient({
   user,

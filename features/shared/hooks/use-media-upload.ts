@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react'
 import { toast } from 'sonner'
-import { AVATAR_OPTIONS, BANNER_OPTIONS } from '@/features/profile/utils/file-validation-client'
+import { AVATAR_OPTIONS, BANNER_OPTIONS } from '@/features/profile/constants'
 import { useFileSelection } from './use-file-selection'
 import { useImageCropper } from './use-image-cropper'
 import { useBackgroundRemoverModal } from '../components/background-remover/hooks/use-background-remover-modal'

@@ -8,7 +8,8 @@ import { RecommendationBanner } from '@/features/profile/components/recommendati
 import { WarningBanner } from '@/features/profile/components/warning-banner'
 import { useImageInfo } from '@/features/profile/hooks/use-image-info'
 import { OptimizationDialogProps } from '@/features/profile/types'
-import { getRecommendedSize, analyzeImageSize } from '@/features/profile/utils/image-calculations'
+import { analyzeImageSize } from '@/features/profile/utils/analyze-image-size'
+import { getRecommendedSize } from '@/features/profile/utils/get-recommended-size'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/features/shadcn/components/ui/dialog'
 
 function OptimizationDialog({

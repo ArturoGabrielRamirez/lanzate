@@ -1,45 +1,5 @@
-
 import { Users, Heart, UserCheck, TrendingUp } from 'lucide-react'
 
-import { CUSTOMER_LEVELS, STORE_LEVELS } from '@/features/profile/constants'
-
-// Cálculo de puntos
-export const calculatePoints = (followersCount: number, likesCount: number, accountAge: number): number => {
-    const followersPoints = followersCount * 5 // 5 puntos por seguidor
-    const likesPoints = likesCount * 2 // 2 puntos por like recibido
-    const loyaltyPoints = Math.min(accountAge, 365) // 1 punto por día hasta un año
-    const bonusPoints = followersCount > 10 ? 50 : 0 // Bonus por alcanzar 10+ seguidores
-
-    return followersPoints + likesPoints + loyaltyPoints + bonusPoints
-}
-
-export const getUserLevel = (points: number, userType: 'customer' | 'store') => {
-    const levels = userType === 'store' ? STORE_LEVELS : CUSTOMER_LEVELS
-    return levels.find(level => points >= level.minPoints && points <= level.maxPoints) || levels[0]
-}
-
-export const getProgressToNextLevel = (points: number, userType: 'customer' | 'store') => {
-    const levels = userType === 'store' ? STORE_LEVELS : CUSTOMER_LEVELS
-    const currentLevel = getUserLevel(points, userType)
-    const nextLevel = levels.find(level => level.level === currentLevel.level + 1)
-
-    if (!nextLevel) {
-        return { progress: 100, pointsNeeded: 0, nextLevelName: 'Nivel máximo' }
-    }
-
-    const pointsInCurrentLevel = points - currentLevel.minPoints
-    const pointsNeededForNextLevel = nextLevel.minPoints - currentLevel.minPoints
-    const progress = Math.min((pointsInCurrentLevel / pointsNeededForNextLevel) * 100, 100)
-    const pointsNeeded = nextLevel.minPoints - points
-
-    return {
-        progress: Math.round(progress),
-        pointsNeeded: Math.max(pointsNeeded, 0),
-        nextLevelName: nextLevel.name
-    }
-}
-
-// Generar retos dinámicos optimizados para el sidebar estrecho
 export const generateChallenges = (followersCount: number, followingCount: number, likesCount: number, isOwnProfile: boolean) => {
     const challenges = []
 
