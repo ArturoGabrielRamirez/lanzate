@@ -1,7 +1,5 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
-
 import { ResponseType } from "@/features/layout/types"
 import { prisma } from "@/utils/prisma"
 
@@ -87,8 +85,6 @@ export async function distributeProductStock(data: DistributeStockData): Promise
                 }
             })
         })
-
-        revalidatePath("/stores/[slug]/products", "page")
 
         return {
             error: false,
