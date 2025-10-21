@@ -1,8 +1,9 @@
 import { Heart } from 'lucide-react'
-import { Badge } from '@/features/shadcn/components/ui/badge'
-import { ProductBadgesProps } from '../types'
 
-export function ProductBadges({ isActive }: ProductBadgesProps) {
+import { ProductBadgesProps } from '@/features/profile/types'
+import { Badge } from '@/features/shadcn/components/ui/badge'
+
+function ProductBadges({ isActive }: ProductBadgesProps) {
     return (
         <>
             <div className="absolute top-2 right-2">
@@ -21,3 +22,5 @@ export function ProductBadges({ isActive }: ProductBadgesProps) {
         </>
     )
 }
+
+export { ProductBadges }

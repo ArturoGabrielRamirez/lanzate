@@ -1,8 +1,9 @@
 import { Crop, Minimize2, Zap, ImageIcon } from 'lucide-react'
-import { OptimizationOption } from './optimization-option'
-import { OptimizationOptionsListProps } from '../types'
 
-export function OptimizationOptionsList({
+import { OptimizationOption } from '@/features/profile/components/optimization-option'
+import { OptimizationOptionsListProps } from '@/features/profile/types'
+
+function OptimizationOptionsList({
     onDecision,
     isMuchLarger,
     isLargeFile
@@ -50,3 +51,5 @@ export function OptimizationOptionsList({
         </div>
     )
 }
+
+export { OptimizationOptionsList }

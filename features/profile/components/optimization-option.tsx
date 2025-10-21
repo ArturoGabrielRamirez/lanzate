@@ -1,10 +1,11 @@
+import { Check } from 'lucide-react'
+
+import { OptimizationOptionProps } from '@/features/profile/types'
+import { Badge } from '@/features/shadcn/components/ui/badge'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Card, CardContent } from '@/features/shadcn/components/ui/card'
-import { Badge } from '@/features/shadcn/components/ui/badge'
-import { Check } from 'lucide-react'
-import { OptimizationOptionProps } from '../types'
 
-export function OptimizationOption({
+function OptimizationOption({
   icon: Icon,
   iconColor,
   title,
@@ -54,3 +55,5 @@ export function OptimizationOption({
     </Card>
   )
 }
+
+export { OptimizationOption }

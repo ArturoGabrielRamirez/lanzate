@@ -1,9 +1,9 @@
+import { LevelCardProps } from '@/features/profile/types'
 import { Badge } from '@/features/shadcn/components/ui/badge'
 import { Card, CardContent } from '@/features/shadcn/components/ui/card'
 import { Progress } from '@/features/shadcn/components/ui/progress'
-import { LevelCardProps } from '../types'
 
-export function LevelCard({ level, points, progressData }: LevelCardProps) {
+function LevelCard({ level, points, progressData }: LevelCardProps) {
     const LevelIcon = level.icon
 
     return (
@@ -38,3 +38,5 @@ export function LevelCard({ level, points, progressData }: LevelCardProps) {
         </Card>
     )
 }
+
+export { LevelCard }

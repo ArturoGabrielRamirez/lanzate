@@ -1,8 +1,9 @@
 import { Heart } from 'lucide-react'
-import { Card, CardContent } from '@/features/shadcn/components/ui/card'
-import { EmptyStateProps } from '../types'
 
-export function EmptyState({
+import { EmptyStateProps } from '@/features/profile/types'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
+
+function EmptyState({
     icon: Icon = Heart,
     title,
     description
@@ -17,3 +18,5 @@ export function EmptyState({
         </Card>
     )
 }
+
+export { EmptyState }

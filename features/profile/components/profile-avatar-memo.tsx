@@ -1,12 +1,13 @@
+import { Camera } from "lucide-react"
+import { memo } from "react"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { MediaSelector } from "@/features/shared/components/media-selector/components/media-selector"
 
-import { Camera } from "lucide-react"
-import { memo } from "react"
 
-export const ProfileAvatar = memo(({
+const ProfileAvatar = memo(({
     avatarUrl,
     displayName,
     isLoading,
@@ -78,3 +79,5 @@ export const ProfileAvatar = memo(({
 })
 
 ProfileAvatar.displayName = 'ProfileAvatar'
+
+export { ProfileAvatar }

@@ -1,4 +1,4 @@
-export default function ProfileNotFound() {
+function ProfileNotFound() {
     return (
         <div className="text-center py-16">
             <h2 className="text-2xl font-bold">Perfil no encontrado</h2>
@@ -6,3 +6,5 @@ export default function ProfileNotFound() {
         </div>
     )
 }
+
+export { ProfileNotFound }

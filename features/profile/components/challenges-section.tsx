@@ -1,9 +1,10 @@
 import { Zap } from 'lucide-react'
-import { Card, CardContent, CardHeader } from '@/features/shadcn/components/ui/card'
-import { ChallengeCard } from './challenge-card'
-import { ChallengesSectionProps } from '../types'
 
-export function ChallengesSection({ challenges }: ChallengesSectionProps) {
+import { ChallengeCard } from '@/features/profile/components/challenge-card'
+import { ChallengesSectionProps } from '@/features/profile/types'
+import { Card, CardContent, CardHeader } from '@/features/shadcn/components/ui/card'
+
+function ChallengesSection({ challenges }: ChallengesSectionProps) {
     if (challenges.length === 0) return null
 
     return (
@@ -22,3 +23,5 @@ export function ChallengesSection({ challenges }: ChallengesSectionProps) {
         </Card>
     )
 }
+
+export { ChallengesSection }

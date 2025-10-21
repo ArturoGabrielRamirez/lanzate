@@ -1,7 +1,8 @@
 import { Package } from 'lucide-react'
-import { ProductImageProps } from '../types'
 
-export function ProductImage({ src, alt }: ProductImageProps) {
+import { ProductImageProps } from '@/features/profile/types'
+
+function ProductImage({ src, alt }: ProductImageProps) {
     return (
         <div className="relative aspect-square mb-3 bg-gray-100 rounded-lg overflow-hidden">
             {src ? (
@@ -18,3 +19,5 @@ export function ProductImage({ src, alt }: ProductImageProps) {
         </div>
     )
 }
+
+export { ProductImage }

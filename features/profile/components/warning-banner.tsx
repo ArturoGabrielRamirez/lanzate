@@ -2,7 +2,7 @@ interface WarningBannerProps {
     isMuchLarger: boolean
 }
 
-export function WarningBanner({ isMuchLarger }: WarningBannerProps) {
+function WarningBanner({ isMuchLarger }: WarningBannerProps) {
     if (!isMuchLarger) return null
 
     return (
@@ -14,3 +14,5 @@ export function WarningBanner({ isMuchLarger }: WarningBannerProps) {
         </div>
     )
 }
+
+export { WarningBanner }

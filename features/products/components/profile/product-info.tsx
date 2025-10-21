@@ -1,8 +1,9 @@
 import { Store } from 'lucide-react'
-import { formatRelativeTime } from '../utils/date-utils'
-import { ProductInfoProps } from '../types'
 
-export function ProductInfo({
+import { ProductInfoProps } from '@/features/profile/types'
+import { formatRelativeTime } from '@/features/profile/utils/date-utils'
+
+function ProductInfo({
     name,
     description,
     price,
@@ -40,3 +41,5 @@ export function ProductInfo({
         </div>
     )
 }
+
+export { ProductInfo }

@@ -1,10 +1,11 @@
 import { Settings, Lock } from 'lucide-react'
-import { InputField, CheckboxField, ButtonWithPopup } from '@/features/layout/components'
-import { updateProfileSettingsAction } from '../actions/update-profile-settings.action'
-import { profileConfigSchema } from '@/features/profile/schemas'
-import { ProfileSettingsFormProps } from '../types'
 
-export function ProfileSettingsForm({ user }: ProfileSettingsFormProps) {
+import { InputField, CheckboxField, ButtonWithPopup } from '@/features/layout/components'
+import { updateProfileSettingsAction } from '@/features/profile/actions/update-profile-settings.action'
+import { profileConfigSchema } from '@/features/profile/schemas'
+import { ProfileSettingsFormProps } from '@/features/profile/types'
+
+function ProfileSettingsForm({ user }: ProfileSettingsFormProps) {
     return (
         <ButtonWithPopup
             text={<><Settings className="w-4 h-4 mr-2" />Configurar Perfil</>}
@@ -90,3 +91,5 @@ export function ProfileSettingsForm({ user }: ProfileSettingsFormProps) {
         </ButtonWithPopup>
     )
 }
+
+export { ProfileSettingsForm }

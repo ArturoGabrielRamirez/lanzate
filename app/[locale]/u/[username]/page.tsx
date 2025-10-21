@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 
-import { getProfileWithFollowStatus } from '@/features/profile/components/get-profile-with-follow';
+import { getProfileWithFollowStatusAction } from '@/features/profile/actions/get-profile-with-follow.action';
 import UserNotFound from '@/features/profile/components/not-found'
 import { PublicProfileClient } from '@/features/profile/components/public-profile-client'
 
@@ -8,7 +8,7 @@ export async function generateMetadata(
   { params }: { params: Promise<{ locale: string; username: string }> }
 ): Promise<Metadata> {
   const resolvedParams = await params
-  const result = await getProfileWithFollowStatus(resolvedParams.username)
+  const result = await getProfileWithFollowStatusAction(resolvedParams.username)
 
   if (!result?.payload?.user) {
     return {
@@ -39,7 +39,7 @@ export default async function PublicProfilePage(
   const resolvedParams = await params
 
   // ✅ SINGLE QUERY: Obtiene user + currentUser + isFollowing
-  const result = await getProfileWithFollowStatus(resolvedParams.username)
+  const result = await getProfileWithFollowStatusAction(resolvedParams.username)
 
   if (!result?.payload?.user) {
     return <UserNotFound />

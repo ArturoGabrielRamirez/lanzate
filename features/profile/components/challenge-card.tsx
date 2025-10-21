@@ -1,8 +1,8 @@
+import { ChallengeCardProps } from '@/features/profile/types'
 import { Badge } from '@/features/shadcn/components/ui/badge'
 import { Progress } from '@/features/shadcn/components/ui/progress'
-import { ChallengeCardProps } from '../types'
 
-export function ChallengeCard({ challenge }: ChallengeCardProps) {
+function ChallengeCard({ challenge }: ChallengeCardProps) {
     const ChallengeIcon = challenge.icon
     const progressPercent = (challenge.progress / challenge.max) * 100
 
@@ -28,3 +28,5 @@ export function ChallengeCard({ challenge }: ChallengeCardProps) {
         </div>
     )
 }
+
+export { ChallengeCard }

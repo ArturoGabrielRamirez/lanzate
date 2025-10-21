@@ -1,8 +1,9 @@
-import Link from 'next/link'
 import { UserX, Home, Search } from 'lucide-react'
+import Link from 'next/link'
+
 import { Button } from '@/features/shadcn/components/ui/button'
 
-export default function UserNotFound() {
+function UserNotFound() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center px-4 py-8">
       <div className="max-w-lg w-full">
@@ -76,3 +77,5 @@ export default function UserNotFound() {
     </div>
   )
 }
+
+export { UserNotFound }

@@ -1,7 +1,7 @@
-import { ImagePreviewProps } from "../types"
-import { formatFileSize } from "../utils/image-calculations"
+import { ImagePreviewProps } from '@/features/profile/types'
+import { formatFileSize } from '@/features/profile/utils/image-calculations'
 
-export function ImagePreview({ previewUrl, width, height, size, type }: ImagePreviewProps) {
+function ImagePreview({ previewUrl, width, height, size, type }: ImagePreviewProps) {
   return (
     <div className="text-center">
       <div className={`relative inline-block rounded-lg overflow-hidden border ${type === 'avatar' ? 'w-24 h-24' : 'w-48 h-24'
@@ -19,3 +19,5 @@ export function ImagePreview({ previewUrl, width, height, size, type }: ImagePre
     </div>
   )
 }
+
+export { ImagePreview }

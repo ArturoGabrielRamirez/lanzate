@@ -1,13 +1,13 @@
 'use client'
 
-import { useLikedProducts } from '../hooks/use-liked-products'
-import { UserLikedProductsProps } from '../types'
-import { ProductSkeletonGrid } from './product-skeleton-grid'
-import { ErrorState } from './error-state'
-import { EmptyState } from './empty-state'
-import { ProductsGrid } from './products-grid'
+import { ProductSkeletonGrid } from '@/features/products/components/profile/product-skeleton-grid'
+import { ProductsGrid } from '@/features/products/components/profile/products-grid'
+import { EmptyState } from '@/features/profile/components/empty-state'
+import { ErrorState } from '@/features/profile/components/error-state'
+import { useLikedProducts } from '@/features/profile/hooks/use-liked-products'
+import { UserLikedProductsProps } from '@/features/profile/types'
 
-export function UserLikedProducts({ userId, isOwnProfile = false }: UserLikedProductsProps) {
+function UserLikedProducts({ userId, isOwnProfile = false }: UserLikedProductsProps) {
   const { likedProducts, isLoading, error } = useLikedProducts(userId)
 
   if (isLoading) {
@@ -32,3 +32,5 @@ export function UserLikedProducts({ userId, isOwnProfile = false }: UserLikedPro
 
   return <ProductsGrid products={likedProducts} />
 }
+
+export { UserLikedProducts }

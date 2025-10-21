@@ -2,33 +2,33 @@
 'use client'
 
 import { useState, useCallback, useMemo } from 'react'
-import ProfileBanner from './profile-banner'
-import { CommunityStatsCard } from './community-stats-card'
-import { ProfileActionButton } from './profile-action-button'
-import { PrivateProfileView } from './private-profile-view'
-import { ProfileTabs } from './profile-tabs'
-import { useFollowStatus } from '../hooks/use-follow-status'
-import { useProfilePermissions } from '../hooks/use-profile-permissions'
-import { calculateAccountAge, getDisplayName } from '../utils/profile-calculations'
-import { PublicProfileClientProps } from '../types'
-import ProfileNotFound from './profile-not-found'
 
-export function PublicProfileClient({
+import { CommunityStatsCard } from '@/features/profile/components/community-stats-card'
+import { PrivateProfileView } from '@/features/profile/components/private-profile-view'
+import { ProfileActionButton } from '@/features/profile/components/profile-action-button'
+import { ProfileBanner } from '@/features/profile/components/profile-banner'
+import { ProfileNotFound } from '@/features/profile/components/profile-not-found'
+import { ProfileTabs } from '@/features/profile/components/profile-tabs'
+import { useFollowStatus } from '@/features/profile/hooks/use-follow-status'
+import { useProfilePermissions } from '@/features/profile/hooks/use-profile-permissions'
+import { PublicProfileClientProps } from '@/features/profile/types'
+import { calculateAccountAge } from '@/features/profile/utils/profile-calculations'
+
+function PublicProfileClient({
   user,
   initialCurrentUser = null,
   initialIsFollowing
 }: PublicProfileClientProps) {
-  if (!user?._count) {
-    return <ProfileNotFound />
-  }
-
-  const currentUser = initialCurrentUser
 
   const permissions = useProfilePermissions(
-    currentUser?.id,
+    initialCurrentUser?.id,
     user,
     false
   )
+
+
+  const currentUser = initialCurrentUser
+
 
   const [followersCount, setFollowersCount] = useState(user._count.user_follows_following)
   const [profileData, setProfileData] = useState({
@@ -43,26 +43,25 @@ export function PublicProfileClient({
     initialIsFollowing
   )
 
-  const displayName = useMemo(
-    () => getDisplayName(user.first_name, user.last_name, user.username),
-    [user.first_name, user.last_name, user.username]
-  )
+
 
   // ✅ FIX: Normalizar created_at antes de pasar a calculateAccountAge
   const accountAge = useMemo(() => {
-    const createdAtString = user.created_at instanceof Date 
+    const createdAtString = user.created_at instanceof Date
       ? user.created_at.toISOString()
       : user.created_at
-    
+
     return calculateAccountAge(createdAtString)
   }, [user.created_at])
+
+
 
   const handleFollowToggle = useCallback(async () => {
     if (permissions.isOwnProfile || !currentUser) return
 
     try {
       const newIsFollowing = await toggleFollow()
-      
+
       if (newIsFollowing !== undefined) {
         setFollowersCount(prev => newIsFollowing ? prev + 1 : Math.max(0, prev - 1))
       }
@@ -78,6 +77,10 @@ export function PublicProfileClient({
   const handleAvatarUpdate = useCallback((url: string | null) => {
     if (url) setProfileData(prev => ({ ...prev, avatar: url }))
   }, [])
+
+  if (!user?._count) {
+    return <ProfileNotFound />
+  }
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -136,3 +139,5 @@ export function PublicProfileClient({
     </div>
   )
 }
+
+export { PublicProfileClient }

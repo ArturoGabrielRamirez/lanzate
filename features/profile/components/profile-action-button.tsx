@@ -1,11 +1,12 @@
 'use client'
 
-import { Button } from '@/features/shadcn/components/ui/button'
-import { UserPlus, UserMinus, Loader2 } from 'lucide-react'
-import { ProfileSettingsForm } from './profile-settings-form'
-import { ProfileActionButtonProps } from '../types'
+import { UserPlus, UserMinus } from 'lucide-react'
 
-export function ProfileActionButton({
+import { ProfileSettingsForm } from '@/features/profile/components/profile-settings-form'
+import { ProfileActionButtonProps } from '@/features/profile/types'
+import { Button } from '@/features/shadcn/components/ui/button'
+
+function ProfileActionButton({
   isUserLoading,
   isOwnProfile,
   showFollowButton,
@@ -72,3 +73,5 @@ export function ProfileActionButton({
 
   return null
 }
+
+export { ProfileActionButton }

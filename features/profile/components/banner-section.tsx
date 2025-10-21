@@ -1,12 +1,13 @@
 import { Image } from "lucide-react"
+
+import { BannerImage } from "@/features/profile/components/banner-image-memo"
+import { BannerSectionProps } from "@/features/profile/types"
+import { PRESET_BANNERS } from "@/features/profile/utils/preset-banners"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
-import { PRESET_BANNERS } from "../utils/preset-banners"
-import { BannerImage } from "./banner-image-memo"
-import { BannerSectionProps } from "../types"
 import { MediaSelector } from "@/features/shared/components/media-selector/components/media-selector"
 
-export function BannerSection({
+function BannerSection({
     bannerUrl,
     isLoading,
     hasError,
@@ -79,3 +80,5 @@ export function BannerSection({
         </div>
     )
 }
+
+export { BannerSection }

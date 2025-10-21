@@ -1,13 +1,14 @@
 import { ExternalLink } from 'lucide-react'
-import { Card, CardContent } from '@/features/shadcn/components/ui/card'
-import { Button } from '@/features/shadcn/components/ui/button'
-import { ProductCardProps } from '../types'
-import { ProductImage } from './product-image'
-import { ProductBadges } from './product-badges'
-import { ProductInfo } from './product-info'
-import { navigateToProduct } from '../utils/product-navigation'
 
-export function ProductCard({ likedProduct }: ProductCardProps) {
+import { ProductBadges } from '@/features/products/components/profile/product-badges'
+import { ProductImage } from '@/features/products/components/profile/product-image'
+import { ProductInfo } from '@/features/products/components/profile/product-info'
+import { ProductCardProps } from '@/features/profile/types'
+import { navigateToProduct } from '@/features/profile/utils/product-navigation'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
+
+function ProductCard({ likedProduct }: ProductCardProps) {
     const { product, created_at } = likedProduct
 
     return (
@@ -42,3 +43,5 @@ export function ProductCard({ likedProduct }: ProductCardProps) {
         </Card>
     )
 }
+
+export { ProductCard }

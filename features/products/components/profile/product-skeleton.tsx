@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/features/shadcn/components/ui/card'
 
-export function ProductSkeleton() {
+function ProductSkeleton() {
     return (
         <Card className="animate-pulse">
             <CardContent className="p-4">
@@ -13,3 +13,5 @@ export function ProductSkeleton() {
         </Card>
     )
 }
+
+export { ProductSkeleton }

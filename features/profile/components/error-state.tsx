@@ -1,8 +1,9 @@
 import { Heart } from 'lucide-react'
-import { Card, CardContent } from '@/features/shadcn/components/ui/card'
-import { ErrorStateProps } from '../types'
 
-export function ErrorState({ message }: ErrorStateProps) {
+import { ErrorStateProps } from '@/features/profile/types'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
+
+function ErrorState({ message }: ErrorStateProps) {
     return (
         <Card>
             <CardContent className="p-8 text-center text-muted-foreground">
@@ -13,3 +14,5 @@ export function ErrorState({ message }: ErrorStateProps) {
         </Card>
     )
 }
+
+export { ErrorState }
