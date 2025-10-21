@@ -554,3 +554,7 @@ export interface ProfilePermissions {
   showFollowButton: boolean
   reason?: string
 }
+
+export interface WarningBannerProps {
+  isMuchLarger: boolean
+}

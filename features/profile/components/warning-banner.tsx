@@ -1,6 +1,4 @@
-interface WarningBannerProps {
-    isMuchLarger: boolean
-}
+import { WarningBannerProps } from '@/features/profile/types'
 
 function WarningBanner({ isMuchLarger }: WarningBannerProps) {
     if (!isMuchLarger) return null
