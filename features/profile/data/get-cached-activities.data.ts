@@ -1,12 +1,13 @@
 'use server'
 
 import { Prisma } from '@prisma/client'
-import { prisma } from '@/utils/prisma'
 import { unstable_cache } from 'next/cache'
+
+import { prisma } from '@/utils/prisma'
 
 
 // ✅ Cache de actividades (revalidar cada 60 segundos)
-export const getCachedActivities = unstable_cache(
+export const getCachedActivitiesData = unstable_cache(
     async (
         whereClause: Prisma.SocialActivityWhereInput,
         limit: number,

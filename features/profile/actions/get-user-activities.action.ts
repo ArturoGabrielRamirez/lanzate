@@ -5,7 +5,7 @@ import { Prisma } from '@prisma/client'
 
 import { getCurrentUser } from '@/features/auth/actions'
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
-import { getCachedActivities } from '@/features/profile/data/get-cached-activities'
+import { getCachedActivitiesData } from '@/features/profile/data'
 import { GetUserActivitiesParams } from '@/features/profile/types'
 import { prisma } from '@/utils/prisma'
 
@@ -73,7 +73,7 @@ export async function getUserActivitiesAction({
 
         // ✅ Usar cache para actividades frecuentes
         const [activities, totalActivities] = await Promise.all([
-            getCachedActivities(whereClause, limit, offset),
+            getCachedActivitiesData(whereClause, limit, offset),
             prisma.socialActivity.count({ where: whereClause })
         ])
 

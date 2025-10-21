@@ -1,14 +1,8 @@
-import { prisma } from "@/utils/prisma"
+'use server'
+
 import { SupabaseClient } from "@supabase/supabase-js"
 
-export async function getUserBannerData(supabaseUserId: string) {
-    return await prisma.user.findFirst({
-        where: { supabase_user_id: supabaseUserId },
-        select: { id: true, email: true, banner: true }
-    })
-}
-
-export async function getStorageBanners(
+export async function getStorageBannersData(
     supabase: SupabaseClient,
     userId: number
 ) {

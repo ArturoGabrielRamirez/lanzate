@@ -1,3 +1,5 @@
+'use server'
+
 import { prisma } from "@/utils/prisma";
 
 export async function getUserAvatarData(supabaseUserId: string) {

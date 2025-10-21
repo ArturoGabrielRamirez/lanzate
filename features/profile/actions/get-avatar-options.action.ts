@@ -2,8 +2,7 @@
 
 import { AvatarOption } from '@/features/account/types'
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
-import { getStorageAvatars } from "@/features/profile/data/get-storage-avatars"
-import { getUserAvatarData } from "@/features/profile/data/get-user-avatar-data"
+import { getUserAvatarData, getStorageAvatarsData } from "@/features/profile/data"
 import { diceBearStyles } from '@/features/profile/utils/preset-avatars'
 import { createServerSideClient } from '@/utils/supabase/server'
 
@@ -71,7 +70,7 @@ export async function getAvatarOptionsAction() {
         }
 
         // --- 2. Avatares personalizados en Storage ---
-        const storageAvatars = await getStorageAvatars(supabase, dbUser.id)
+        const storageAvatars = await getStorageAvatarsData(supabase, dbUser.id)
 
         for (const avatar of storageAvatars) {
             options.push({

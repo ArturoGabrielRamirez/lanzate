@@ -1,6 +1,8 @@
+'use server'
+
 import { SupabaseClient } from "@supabase/supabase-js"
 
-export async function getStorageAvatars(
+export async function getStorageAvatarsData(
     supabase: SupabaseClient,
     userId: number
 ) {

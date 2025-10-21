@@ -2,7 +2,7 @@
 
 import { BannerOption } from '@/features/account/types'
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
-import { getUserBannerData, getStorageBanners } from "@/features/profile/data/get-banner-options"
+import { getStorageBannersData, getUserBannerData } from "@/features/profile/data"
 import { PRESET_BANNERS } from '@/features/profile/utils/preset-banners'
 import { createServerSideClient } from '@/utils/supabase/server'
 
@@ -24,7 +24,7 @@ export async function getBannerOptionsAction() {
         const options: BannerOption[] = []
 
         // --- 1. Banners personalizados subidos por el usuario ---
-        const storageBanners = await getStorageBanners(supabase, dbUser.id)
+        const storageBanners = await getStorageBannersData(supabase, dbUser.id)
 
         for (const banner of storageBanners) {
             options.push({
