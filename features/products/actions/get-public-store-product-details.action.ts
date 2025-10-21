@@ -11,11 +11,11 @@ export async function getPublicStoreProductDetailsAction(productId: string, subd
 
         if (isNaN(parsedProductId)) throw new Error("Invalid product id")
 
-        const { payload: product, error, message } = parsedVariantId
+        const { payload: product, hasError, message } = parsedVariantId
             ? await selectProductByIdsAndSubdomain(parsedProductId, parsedVariantId, subdomain)
             : await selectProductByIdAndSubdomain(parsedProductId, subdomain)
 
-        if (error) throw new Error(message)
+        if (hasError) throw new Error(message)
 
         return {
             payload: product,

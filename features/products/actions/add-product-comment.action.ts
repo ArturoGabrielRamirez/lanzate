@@ -16,9 +16,9 @@ export async function addProductCommentAction(formData: { content: string }, pro
             throw new Error("Comment cannot exceed 500 characters")
         }
 
-        const { payload, error, message } = await insertProductComment(userId, productId, formData.content.trim())
+        const { payload, hasError, message } = await insertProductComment(userId, productId, formData.content.trim())
 
-        if (error || !payload) {
+        if (hasError || !payload) {
             throw new Error(message || "Failed to add comment")
         }
 

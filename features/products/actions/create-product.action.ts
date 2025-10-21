@@ -24,9 +24,9 @@ export async function createProductAction(payload: InsertProductPayload, storeId
     return actionWrapper(async () => {
 
 
-        const { error, message, payload: product } = await insertProduct(payload, storeId, userId)
+        const { hasError, message, payload: product } = await insertProduct(payload, storeId, userId)
 
-        if (error) throw new Error(message)
+        if (hasError) throw new Error(message)
 
         revalidatePath(`/stores/${storeId}`)
         revalidatePath(`/dashboard`)

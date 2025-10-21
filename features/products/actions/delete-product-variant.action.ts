@@ -7,8 +7,8 @@ import { deleteProductVariant as deleteVariantFromDb } from "@/features/products
 
 export async function deleteProductVariantAction(variantId: number, slug: string) {
     return actionWrapper(async () => {
-        const { payload, error, message } = await deleteVariantFromDb(variantId)
-        if (error) throw new Error(message)
+        const { payload, hasError, message } = await deleteVariantFromDb(variantId)
+        if (hasError) throw new Error(message)
         revalidatePath(`/stores/${slug}`)
         return { hasError: false, message: "Variant soft deleted successfully", payload }
     })

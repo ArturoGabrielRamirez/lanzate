@@ -29,8 +29,8 @@ export type CreateUnifiedProductArgs = {
 
 export async function createUnifiedProductAction(args: CreateUnifiedProductArgs) {
     return actionWrapper(async () => {
-        const { payload, error, message } = await insertUnifiedProduct(args)
-        if (error) throw new Error(message)
+        const { payload, hasError, message } = await insertUnifiedProduct(args)
+        if (hasError) throw new Error(message)
 
         revalidatePath("/store/" + args.targetStoreId)
         

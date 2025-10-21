@@ -28,9 +28,9 @@ export async function editProductAction(productId: number, data: UpdateProductPa
         //Check SKU uniqueness if changed
         //Update product fields
         //Update image/video if provided
-        const { error, payload, message } = await updateProductInDb(productId, data)
+        const { hasError, payload, message } = await updateProductInDb(productId, data)
 
-        if (error) throw new Error(message)
+        if (hasError) throw new Error(message)
 
         revalidatePath(`/stores/${slug}`)
 

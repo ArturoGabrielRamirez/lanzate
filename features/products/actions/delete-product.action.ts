@@ -13,8 +13,8 @@ export async function deleteProductAction(productId: number, slug: string, userI
         //Check user owns product or is employee
 
         //Soft delete product from database
-        const { error, message, payload } = await deleteProductFromDb(productId)
-        if (error) throw new Error(message)
+        const { hasError, message, payload } = await deleteProductFromDb(productId)
+        if (hasError) throw new Error(message)
 
         //Revalidate path
         revalidatePath(`/stores/${slug}`)
