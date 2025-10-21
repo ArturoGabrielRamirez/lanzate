@@ -1,7 +1,7 @@
 import { Settings, Lock } from 'lucide-react'
 import { InputField, CheckboxField, ButtonWithPopup } from '@/features/layout/components'
 import { updateProfileSettingsAction } from '../actions/update-profile-settings.action'
-import { profileConfigSchema } from '../schemas/profile-config-schema'
+import { profileConfigSchema } from '@/features/profile/schemas'
 import { ProfileSettingsFormProps } from '../types'
 
 export function ProfileSettingsForm({ user }: ProfileSettingsFormProps) {

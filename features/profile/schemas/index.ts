@@ -1,0 +1,1 @@
+export * from '@/features/profile/schemas/profile-config-schema'
