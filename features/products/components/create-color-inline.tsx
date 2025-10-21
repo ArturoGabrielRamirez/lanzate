@@ -6,7 +6,7 @@ import { Button } from "@/features/shadcn/components/ui/button"
 import { ColorPicker, ColorPickerSelection, ColorPickerHue, ColorPickerAlpha, ColorPickerOutput, ColorPickerFormat } from "@/features/shadcn/components/shadcn-io/color-picker"
 import Color, { ColorLike } from "color"
 import { toast } from "sonner"
-import { createStoreColor } from "../data/createStoreColor"
+import { createStoreColor } from "../data/create-store-color.data"
 
 type Props = {
     onCreated?: (color: { id: number; name: string; hex: string }) => void

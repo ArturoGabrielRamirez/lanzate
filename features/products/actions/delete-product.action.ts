@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
-import { deleteProduct as deleteProductFromDb } from "@/features/products/data/deleteProduct"
+import { deleteProduct as deleteProductFromDb } from "@/features/products/data/delete-product.data"
 
 
 export async function deleteProductAction(productId: number, slug: string, userId: number) {

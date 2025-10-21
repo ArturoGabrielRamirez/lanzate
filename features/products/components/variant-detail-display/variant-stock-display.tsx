@@ -11,7 +11,7 @@ import { useFormContext } from "react-hook-form"
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/features/shadcn/components/ui/select"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { toast } from "sonner"
-import { getBranchesForVariant } from "../../data/getBranchesForVariant"
+import { getBranchesForVariant } from "../../data/get-branches-for-variant.data"
 import { updateVariantStocks } from "../../data/updateVariantStocks"
 import { Input } from "@/features/shadcn/components/ui/input"
 

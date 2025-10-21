@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { getProductsCountByCategory } from "@/features/products/data/getProductsCountByCategory"
+import { getProductsCountByCategory } from "@/features/products/data/get-products-by-category.data"
 
 export async function getProductsCountByCategoryAction(categoryId: number, storeId: number) {
     return actionWrapper(async () => {

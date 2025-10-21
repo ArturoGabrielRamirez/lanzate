@@ -1,5 +1,5 @@
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getProductCommentsData } from "../data/getProductComments"
+import { getProductCommentsData } from "../data/get-product-comments.data"
 import CommentsClient from "./comments-client"
 
 type Props = {

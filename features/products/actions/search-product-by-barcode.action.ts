@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { getProductByBarcode } from "@/features/products/data/get-product-by-barcode"
+import { getProductByBarcode } from "@/features/products/data/get-product-by-barcode.data"
 
 export async function searchProductByBarcodeAction(barcode: string, storeId: number) {
     return actionWrapper(async () => {

@@ -1,8 +1,9 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
+
 import { ResponseType } from "@/features/layout/types"
 import { prisma } from "@/utils/prisma"
-import { revalidatePath } from "next/cache"
 
 type DistributeStockData = {
     productId: number

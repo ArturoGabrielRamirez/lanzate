@@ -1,5 +1,5 @@
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getProductLikeInfo } from "../data/getProductLikeInfo"
+import { getProductLikeInfo } from "../data/get-product-like-info.data"
 import LikeButtonClient from "./like-button-client"
 
 type Props = {

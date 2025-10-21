@@ -10,7 +10,7 @@ import { Input } from "@/features/shadcn/components/ui/input"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 
-import { distributeProductStock } from "@/features/products/data/distributeProductStock"
+import { distributeProductStock } from "@/features/products/data/distribute-product-stock.data"
 import { Branch, ProductStock } from "@prisma/client"
 
 type Props = {
