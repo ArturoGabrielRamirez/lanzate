@@ -1,4 +1,4 @@
-import { PRESET_BANNERS } from "./preset-banners"
+import { PRESET_BANNERS } from '@/features/profile/utils/preset-banners'
 
 export const getDefaultBannerForUser = (() => {
     const cache = new Map<string, string>()

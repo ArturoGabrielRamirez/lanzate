@@ -256,7 +256,7 @@ export interface UserActivity {
   entity_id: number | null
   title: string
   description?: string | null
-  metadata?: string | any | null
+  metadata?: string | null
   is_public: boolean
   is_featured: boolean
   created_at: Date | string
@@ -513,7 +513,7 @@ export interface UserContextType {
   isLoading: boolean
   error: string | null
   refreshUser: () => Promise<void>
-  updateUserField: (field: keyof CurrentUser, value: any) => void
+  updateUserField: (field: keyof CurrentUser, value: string | null) => void
   updateAvatar: (url: string | null) => void
   updateBanner: (url: string | null) => void
   updateProfile: (data: Partial<CurrentUser>) => void

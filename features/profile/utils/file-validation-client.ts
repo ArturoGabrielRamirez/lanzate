@@ -1,6 +1,6 @@
 'use client'
 
-import { FileValidationOptions, ValidationResult } from "../types"
+import { FileValidationOptions, ValidationResult } from '@/features/profile/types'
 
 
 

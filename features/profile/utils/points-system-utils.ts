@@ -1,6 +1,7 @@
 
 import { Users, Heart, UserCheck, TrendingUp } from 'lucide-react'
-import { CUSTOMER_LEVELS, STORE_LEVELS } from './points-system-objects'
+
+import { CUSTOMER_LEVELS, STORE_LEVELS } from '@/features/profile/utils/points-system-objects'
 // Cálculo de puntos
 export const calculatePoints = (followersCount: number, likesCount: number, accountAge: number): number => {
     const followersPoints = followersCount * 5 // 5 puntos por seguidor

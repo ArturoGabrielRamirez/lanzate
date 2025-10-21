@@ -1,5 +1,4 @@
-
-import { /* Users, Heart, UserCheck, */ Trophy, Star, /* TrendingUp, User, Target, */ Zap, Crown, Award, /* Calendar  */ } from 'lucide-react'
+import { Trophy, Star, Zap, Crown, Award } from 'lucide-react'
 
 
 // Sistema de niveles para clientes
