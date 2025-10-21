@@ -2,8 +2,8 @@
 
 import { AvatarOption } from '@/features/account/types'
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
+import { diceBearStyles } from '@/features/profile/constants'
 import { getUserAvatarData, getStorageAvatarsData } from "@/features/profile/data"
-import { diceBearStyles } from '@/features/profile/utils/preset-avatars'
 import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function getAvatarOptionsAction() {

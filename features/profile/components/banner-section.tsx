@@ -1,8 +1,8 @@
 import { Image } from "lucide-react"
 
 import { BannerImage } from "@/features/profile/components/banner-image-memo"
+import { PRESET_BANNERS } from "@/features/profile/constants"
 import { BannerSectionProps } from "@/features/profile/types"
-import { PRESET_BANNERS } from "@/features/profile/utils/preset-banners"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { MediaSelector } from "@/features/shared/components/media-selector/components/media-selector"

@@ -1,38 +1,8 @@
 'use client'
 
+import { DEFAULT_IMAGE_OPTIONS } from '@/features/profile/constants'
 import { FileValidationOptions, ValidationResult } from '@/features/profile/types'
 
-
-
-export const DEFAULT_IMAGE_OPTIONS: FileValidationOptions = {
-  maxSize: 50 * 1024 * 1024, // 50MB
-  allowedTypes: [
-    'image/jpeg',
-    'image/jpg',
-    'image/png',
-    'image/gif',
-    'image/webp',
-    'image/bmp',
-    'image/tiff'
-  ],
-  maxWidth: 4000,
-  maxHeight: 4000,
-  allowCropping: true
-}
-
-export const AVATAR_OPTIONS: FileValidationOptions = {
-  ...DEFAULT_IMAGE_OPTIONS,
-  maxWidth: 2000,
-  maxHeight: 2000,
-  allowCropping: true
-}
-
-export const BANNER_OPTIONS: FileValidationOptions = {
-  ...DEFAULT_IMAGE_OPTIONS,
-  maxWidth: 4000,
-  maxHeight: 2000,
-  allowCropping: true
-}
 
 export class FileValidationError extends Error {
   public readonly canBeCropped: boolean
