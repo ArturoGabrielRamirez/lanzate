@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { searchProductsByName } from "@/features/products/data/search-products-by-name"
+import { searchProductsByName } from "@/features/products/data/search-products-by-name.data"
 
 export async function searchProductsByNameAction(searchTerm: string, storeId: number) {
     return actionWrapper(async () => {

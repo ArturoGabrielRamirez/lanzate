@@ -9,7 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/compo
 import { FileUpload, FileUploadDropzone, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { toast } from "sonner"
-import { updateVariantMedia } from "../../data/updateVariantMedia"
+import { updateVariantMedia } from "../../data/update-variant-media.data"
 
 interface VariantMediaDisplayProps {
     variant: ProductVariant & {

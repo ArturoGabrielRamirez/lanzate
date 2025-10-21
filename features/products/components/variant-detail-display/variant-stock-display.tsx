@@ -12,7 +12,7 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@
 import { Button } from "@/features/shadcn/components/ui/button"
 import { toast } from "sonner"
 import { getBranchesForVariant } from "../../data/get-branches-for-variant.data"
-import { updateVariantStocks } from "../../data/updateVariantStocks"
+import { updateVariantStocks } from "../../data/update-variant-stocks.data"
 import { Input } from "@/features/shadcn/components/ui/input"
 
 interface VariantStockDisplayProps {

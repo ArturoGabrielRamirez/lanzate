@@ -10,7 +10,7 @@ import MultipleSelector from "@/features/shadcn/components/expansion/multiple-se
 import type { Option as MultiOption } from "@/features/shadcn/components/expansion/multiple-selector"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { toast } from "sonner"
-import { updateVariantSizes } from "../../data/updateVariantSizes"
+import { updateVariantSizes } from "../../data/update-variant-sizes.data"
 
 interface VariantSizesDisplayProps {
     variant: ProductVariant

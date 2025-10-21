@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
-import { insertProduct } from "@/features/products/data/insertProduct"
+import { insertProduct } from "@/features/products/data/insert-product.data"
 
 type CategoryValue = { value: string; label: string }
 

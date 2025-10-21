@@ -1,8 +1,8 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { selectProductByIdAndSubdomain } from "@/features/products/data/selectProductByIdAndSubdomain"
-import { selectProductByIdsAndSubdomain } from "@/features/products/data/selectProductByIdsAndSubdomain"
+import { selectProductByIdAndSubdomain } from "@/features/products/data/select-product-by-id-and-subdomain.data"
+import { selectProductByIdsAndSubdomain } from "@/features/products/data/select-product-by-ids-and-subdomain.data"
 
 export async function getPublicStoreProductDetailsAction(productId: string, subdomain: string, variantId?: string) {
     return actionWrapper(async () => {

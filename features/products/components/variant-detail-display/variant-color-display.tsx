@@ -7,7 +7,7 @@ import { Form } from "@/features/layout/components"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { updateVariantColor } from "../../data/updateVariantColor"
+import { updateVariantColor } from "../../data/update-variant-color.data"
 import { CreateColorInline } from "../../components/create-color-inline"
 import { toast } from "sonner"
 

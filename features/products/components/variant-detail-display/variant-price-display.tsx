@@ -8,7 +8,7 @@ import { Label } from "@/features/shadcn/components/ui/label"
 import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { updateVariantPrice } from "../../data/updateVariantPrice"
+import { updateVariantPrice } from "../../data/update-variant-price.data"
 
 interface VariantPriceDisplayProps {
     variant: ProductVariant

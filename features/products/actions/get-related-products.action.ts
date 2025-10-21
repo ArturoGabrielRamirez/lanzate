@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { selectRelatedProducts } from "@/features/products/data/selectRelatedProducts"
+import { selectRelatedProducts } from "@/features/products/data/select-related-products.data"
 
 export async function getRelatedProductsAction(productId: number) {
   return actionWrapper(async () => {

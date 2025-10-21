@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
-import { updateProductsPrices } from "@/features/products/data/updateProductsPrices"
+import { updateProductsPrices } from "@/features/products/data/update-product-prices.data"
 
 type UpdatePricesActionPayload = {
     storeId: number

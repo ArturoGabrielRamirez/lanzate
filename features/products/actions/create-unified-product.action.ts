@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
-import { insertUnifiedProduct } from "@/features/products/data/insertUnifiedProduct"
+import { insertUnifiedProduct } from "@/features/products/data/insert-unified-product.data"
 
 export type CreateUnifiedProductArgs = {
     form: {

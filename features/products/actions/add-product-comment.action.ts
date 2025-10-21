@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
-import { insertProductComment } from "@/features/products/data/insertProductComment"
+import { insertProductComment } from "@/features/products/data/insert-product-comment.data"
 
 export async function addProductCommentAction(formData: { content: string }, productId: number, userId: number, pathname: string) {
     return actionWrapper(async () => {

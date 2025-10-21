@@ -3,7 +3,7 @@
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
-import { toggleLike } from "../data/toggleLike"
+import { toggleLikeAction } from "../actions/toggle-like.action"
 import { Flame } from "lucide-react"
 import { useOptimistic, useState, useTransition } from "react"
 import { usePathname } from "next/navigation"
@@ -119,7 +119,7 @@ function LikeButtonUser({
             addOptimisticCount(newCount)
             
             try {
-                const result = await toggleLike(productId, userId, pathname)
+                const result = await toggleLikeAction(productId, userId, pathname)
                 if (!result.error && result.payload) {
                     setIsLiked(result.payload.isLiked)
                     setLikesCount(result.payload.count)

@@ -10,7 +10,7 @@ import { useState } from "react"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { toast } from "sonner"
-import { updateVariantDimensions } from "../../data/updateVariantDimensions"
+import { updateVariantDimensions } from "../../data/update-variant-dimensions.data"
 
 const lengthUnits = ["MM", "CM", "M", "IN", "FT"] as const
 const weightUnits = ["MG", "G", "KG", "OZ", "LB"] as const
