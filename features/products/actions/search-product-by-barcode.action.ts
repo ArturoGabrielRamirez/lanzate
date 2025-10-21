@@ -1,11 +1,11 @@
 "use server"
 
+import { actionWrapper } from "@/features/global/utils"
 import { getProductByBarcode } from "@/features/products/data/get-product-by-barcode"
-import { actionWrapper } from "@/utils/lib"
 
 export async function searchProductByBarcodeAction(barcode: string, storeId: number) {
     return actionWrapper(async () => {
-        
+
         if (!barcode || barcode.trim() === '') {
             throw new Error("Barcode is required")
         }
@@ -23,7 +23,7 @@ export async function searchProductByBarcodeAction(barcode: string, storeId: num
         return {
             message: message,
             payload: payload,
-            error: false
+            hasError: false
         }
     })
 } 

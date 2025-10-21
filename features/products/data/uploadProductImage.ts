@@ -2,7 +2,7 @@
 
 import { createServerSideClient } from "@/utils/supabase/server"
 
-export async function uploadProductImage(file: File, storeId: number) {
+export async function uploadProductImageAction(file: File, storeId: number) {
   const supabase = createServerSideClient()
 
   const sanitizedName = file.name.replace(/[^a-zA-Z0-9_.-]/g, "_")

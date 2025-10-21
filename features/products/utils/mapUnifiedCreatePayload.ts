@@ -1,4 +1,4 @@
-import type { CreateUnifiedProductArgs } from "@/features/products/actions/createUnifiedProduct"
+import type { CreateUnifiedProductArgs } from "@/features/products/actions/create-unified-product.action"
 import type { ProductColor } from "@/features/products/type/product-color"
 
 type FormValues = {

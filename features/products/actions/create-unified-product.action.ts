@@ -1,8 +1,9 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { insertUnifiedProduct } from "@/features/products/data/insertUnifiedProduct"
 import { revalidatePath } from "next/cache"
+
+import { actionWrapper } from "@/features/global/utils"
+import { insertUnifiedProduct } from "@/features/products/data/insertUnifiedProduct"
 
 export type CreateUnifiedProductArgs = {
     form: {
@@ -26,13 +27,14 @@ export type CreateUnifiedProductArgs = {
     userId: number
 }
 
-export async function createUnifiedProduct(args: CreateUnifiedProductArgs) {
+export async function createUnifiedProductAction(args: CreateUnifiedProductArgs) {
     return actionWrapper(async () => {
         const { payload, error, message } = await insertUnifiedProduct(args)
         if (error) throw new Error(message)
 
         revalidatePath("/store/" + args.targetStoreId)
-        return { error: false, message: "Product created successfully", payload }
+        
+        return { hasError: false, message: "Product created successfully", payload }
     })
 }
 

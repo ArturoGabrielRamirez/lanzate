@@ -1,8 +1,9 @@
 "use server"
 
-import { updateProductsPrices } from "../data/updateProductsPrices"
-import { actionWrapper } from "@/utils/lib"
 import { revalidatePath } from "next/cache"
+
+import { actionWrapper } from "@/features/global/utils"
+import { updateProductsPrices } from "@/features/products/data/updateProductsPrices"
 
 type UpdatePricesActionPayload = {
     storeId: number
@@ -20,7 +21,7 @@ export async function updateProductsPricesAction(payload: UpdatePricesActionPayl
         revalidatePath(`/stores/${payload.storeId}/products`)
         
         return {
-            error: false,
+            hasError: false,
             message: "Precios actualizados correctamente",
             payload: result
         }

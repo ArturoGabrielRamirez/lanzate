@@ -4,7 +4,7 @@ import { Title } from "@/features/layout/components"
 import { PageContainer } from "@/features/layout/components"
 import AddToCartButton from "@/features/products/components/add-to-cart-button"
 // import LikeButton from "@/features/store-landing/components/like-button"
-import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
+import { getPublicStoreProductDetailsAction } from "@/features/products/actions/get-public-store-product-details.action"
 import Comments from "@/features/products/components/comments"
 import { Category } from "@prisma/client"
 import VariantDetailClient from "@/features/products/components/variant-detail-client"
@@ -23,7 +23,7 @@ async function ProductDetailsPage({ params, searchParams }: Props) {
     const { id, subdomain } = await params
     await searchParams
 
-    const { payload: product, error, message } = await getProductDetailsAction(id, subdomain)
+    const { payload: product, error, message } = await getPublicStoreProductDetailsAction(id, subdomain)
 
     if (error || !product) {
         return (

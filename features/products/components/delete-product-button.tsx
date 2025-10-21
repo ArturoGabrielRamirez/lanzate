@@ -1,6 +1,6 @@
 "use client"
 import { ButtonWithPopup } from "@/features/layout/components"
-import { deleteProduct } from "../actions/deleteProduct"
+import { deleteProductAction } from "../actions/delete-product.action"
 import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
 import { Trash2 } from "lucide-react"
@@ -13,7 +13,7 @@ function DeleteProductButton({ productId, slug, onComplete, userId }: DeleteProd
     
     const handleDeleteProduct = async () => {
         try {
-            const { error, message, payload } = await deleteProduct(productId, slug, userId)
+            const { error, message, payload } = await deleteProductAction(productId, slug, userId)
             if (error) throw new Error(message)
             return {
                 error: false,

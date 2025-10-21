@@ -10,7 +10,7 @@ type UpdateVariantFlagsPayload = {
     is_featured: boolean
 }
 
-export async function updateVariantFlags(variantId: number, data: UpdateVariantFlagsPayload) {
+export async function updateVariantFlagsAction(variantId: number, data: UpdateVariantFlagsPayload) {
     return actionWrapper(async () => {
         const updated = await prisma.productVariant.update({
             where: { id: variantId },

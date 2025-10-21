@@ -1,30 +1,24 @@
 "use server"
 
-import { formatErrorResponse } from "@/utils/lib"
-import { selectProductByIdAndSubdomain } from "../data/selectProductByIdAndSubdomain"
-import { selectProductByIdsAndSubdomain } from "../data/selectProductByIdsAndSubdomain"
-import { GetProductDetailsReturn } from "@/features/products/type/types"
+import { actionWrapper } from "@/features/global/utils"
+import { selectProductById } from "@/features/products/data/select-product-by-id.data"
 
-export async function getProductDetailsAction(productId: string, subdomain: string, variantId?: string): Promise<GetProductDetailsReturn> {
-    try {
-        const parsedProductId = parseInt(productId)
-        const parsedVariantId = variantId ? parseInt(variantId) : undefined
+export async function getProductDetailsAction(id: string) {
+    return actionWrapper(async () => {
 
-        if (isNaN(parsedProductId)) throw new Error("Invalid product id")
+        const parsedId = parseInt(id)
 
-        const { payload: product, error, message } = parsedVariantId
-            ? await selectProductByIdsAndSubdomain(parsedProductId, parsedVariantId, subdomain)
-            : await selectProductByIdAndSubdomain(parsedProductId, subdomain)
+        if (isNaN(parsedId)) throw new Error("Invalid product id")
 
-        if (error) throw new Error(message)
+        const { payload: product, hasError, message } = await selectProductById(parsedId)
+
+        if (hasError) throw new Error(message)
 
         return {
             payload: product,
-            error: false,
+            hasError: false,
             message: "Product details fetched successfully"
         }
 
-    } catch (error) {
-        return formatErrorResponse("Error fetching product details", error, null)
-    }
-} 
+    })
+}

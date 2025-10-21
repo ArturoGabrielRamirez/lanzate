@@ -10,7 +10,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/compo
 // removed unused resolver/schema
 import { Switch } from "@/features/shadcn/components/ui/switch"
 import { Label } from "@/features/shadcn/components/ui/label"
-import { updateVariantFlags } from "../../actions/updateVariantFlags"
+import { updateVariantFlagsAction } from "../../data/update-variant-flags.action"
 import { toast } from "sonner"
 
 interface VariantConfigDisplayProps {
@@ -59,7 +59,7 @@ const VariantConfigDisplay = ({ variant }: VariantConfigDisplayProps) => {
                                                 try {
                                                     setIsSaving(true)
                                                     const payload = { is_active: active, is_published: published, is_featured: featured }
-                                                    const { error, message } = await updateVariantFlags(variant.id, payload)
+                                                    const { error, message } = await updateVariantFlagsAction(variant.id, payload)
                                                     if (error) {
                                                         toast.error(message || "Error al guardar configuración")
                                                         setIsSaving(false)

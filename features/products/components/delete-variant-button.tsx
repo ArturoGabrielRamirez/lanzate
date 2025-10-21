@@ -2,7 +2,7 @@
 import { ButtonWithPopup } from "@/features/layout/components"
 import { Trash2 } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { deleteProductVariant } from "@/features/products/actions/deleteProductVariant"
+import { deleteProductVariantAction } from "@/features/products/actions/delete-product-variant.action"
 import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
@@ -21,7 +21,7 @@ export default function DeleteVariantButton({ variantId, slug, productId, onlyIc
 
     const action = async () => {
         try {
-            const { error, message } = await deleteProductVariant(variantId, slug)
+            const { error, message } = await deleteProductVariantAction(variantId, slug)
             if (error) throw new Error(message)
             return { error: false, message: t("messages.success"), payload: null }
         } catch (error) {

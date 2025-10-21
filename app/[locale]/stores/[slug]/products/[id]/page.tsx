@@ -1,4 +1,4 @@
-import { getProductDetails } from "@/features/products/actions/getProductDetails"
+import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
 
 import { DeleteProductButton } from "@/features/products/components"
 import { Card, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
@@ -21,7 +21,7 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
         return console.error(userMessage)
     }
 
-    const { payload: product, error } = await getProductDetails(id)
+    const { payload: product, error } = await getProductDetailsAction(id)
     console.log("🚀 ~ ProductDetailPage ~ product:", product)
 
     if (error || !product) {

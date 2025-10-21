@@ -1,12 +1,12 @@
 "use client"
 
-import { Textarea } from "@/features/shadcn/components/ui/textarea"
-import { Form, InputField } from "@/features/layout/components"
-import { addProductComment } from "../actions/addProductComment"
-import { useOptimistic, useState, useTransition } from "react"
-import { usePathname } from "next/navigation"
 import { User } from "lucide-react"
+import { usePathname } from "next/navigation"
+import { useOptimistic, useState, useTransition } from "react"
 import { toast } from "sonner"
+
+import { Form, InputField } from "@/features/layout/components"
+import { addProductCommentAction } from "@/features/products/actions/add-product-comment.action"
 
 type Comment = {
     id: number
@@ -75,13 +75,13 @@ function CommentsClient({ productId, user, initialComments }: Props) {
         })
 
         try {
-            const result = await addProductComment(
+            const result = await addProductCommentAction(
                 { content: data.content.trim() },
                 productId,
                 user.id,
                 pathname
             )
-            
+
             if (!result.error) {
                 setComments(prev => [result.payload, ...prev])
                 return result
@@ -121,7 +121,7 @@ function CommentsClient({ productId, user, initialComments }: Props) {
     return (
         <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">Comentarios</h3>
-            
+
             {/* Comment Form */}
             {user ? (
                 <Form

@@ -1,5 +1,5 @@
 "use client"
-import { editProduct } from "../actions/editProduct"
+import { editProductAction } from "../actions/edit-producto.action"
 import { formatErrorResponse } from "@/utils/lib"
 import { Pencil, Box, Settings } from "lucide-react"
 import { EditProductButtonProps } from "@/features/products/type"
@@ -17,7 +17,7 @@ import MediaSection from "./sections/media-section"
 import PriceStockSection from "./sections/price-stock-section"
 import CategoriesSection from "./sections/categories-section"
 import SettingsSection from "./sections/settings-section"
-import { getProductDetails } from "@/features/products/actions/getProductDetails"
+import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
 
 
 type CategoryValue = { value: string; label: string }
@@ -80,7 +80,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
     useEffect(() => {
         const load = async () => {
             if (!open) return
-            const { payload } = await getProductDetails(String(product.id))
+            const { payload } = await getProductDetailsAction(String(product.id))
             if (payload) setProductDetails({ media: payload.media as { id: number; url: string }[] | undefined, primary_media: payload.primary_media as { id: number; url: string } | null })
         }
         load()
@@ -110,7 +110,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
         if (!payload.name) return formatErrorResponse(t("validation.name-required"), null, null)
         if (payload.price == null) return formatErrorResponse(t("validation.price-required"), null, null)
         if (payload.stock == null) return formatErrorResponse(t("validation.stock-required"), null, null)
-        return editProduct(product.id, data, slug, userId)
+        return editProductAction(product.id, data, slug, userId)
     }
 
     const handleSuccess = async () => {

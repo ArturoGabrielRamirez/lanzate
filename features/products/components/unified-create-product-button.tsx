@@ -35,7 +35,7 @@ import VariantsEditor from "./sections/variants-editor"
 import type { MediaSectionData, CategoriesSectionData, SizesSectionData, ColorsSectionData, SettingsSectionData, CategoryValue, DimensionsSectionData } from "../type/create-form-extra"
 import type { ProductColor } from "../type/product-color"
 import { mapUnifiedCreatePayload } from "../utils/mapUnifiedCreatePayload"
-import { createUnifiedProduct, type CreateUnifiedProductArgs } from "../actions/createUnifiedProduct"
+import { createUnifiedProductAction, type CreateUnifiedProductArgs } from "../actions/create-unified-product.action"
 
 type CreateProductPayload = {
     name: string
@@ -155,7 +155,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                 props.userId,
             )
 
-            const { error, message, payload: created } = await createUnifiedProduct(args as CreateUnifiedProductArgs)
+            const { error, message, payload: created } = await createUnifiedProductAction(args as CreateUnifiedProductArgs)
             if (error) throw new Error(message)
             return { error: false, message: t("messages.success"), payload: created }
         } catch (error) {

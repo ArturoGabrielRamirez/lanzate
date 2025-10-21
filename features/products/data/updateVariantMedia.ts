@@ -2,7 +2,7 @@
 
 import { prisma } from "@/utils/prisma"
 import { actionWrapper } from "@/utils/lib"
-import { uploadProductImage } from "@/features/products/actions/uploadProductImage"
+import { uploadProductImageAction } from "@/features/products/data/uploadProductImage"
 import { MediaType } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
@@ -28,7 +28,7 @@ export async function updateVariantMedia(variantId: number, data: UpdateVariantM
             }
 
             // Subir imagen a Supabase Storage usando el flujo existente
-            const uploaded = await uploadProductImage(file, variantWithProduct.product.store_id)
+            const uploaded = await uploadProductImageAction(file, variantWithProduct.product.store_id)
 
             // Crear el registro de media en el modelo correcto y asignarlo a la variante
             const createdMedia = await prisma.productMedia.create({

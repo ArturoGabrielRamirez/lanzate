@@ -1,9 +1,9 @@
 "use server"
 
 /* import { PrismaClient } from '@prisma/client' */
-import { createServerSideClient } from "@/utils/supabase/server"
-import { prisma } from "@/utils/prisma"
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
+import { createServerSideClient } from "@/utils/supabase/server"
 
 type CategoryValue = { value: string; label: string }
 

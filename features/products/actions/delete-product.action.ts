@@ -1,12 +1,13 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { deleteProduct as deleteProductFromDb } from "../data/deleteProduct"
 import { revalidatePath } from "next/cache"
+
+import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { deleteProduct as deleteProductFromDb } from "@/features/products/data/deleteProduct"
 
 
-export async function deleteProduct(productId: number, slug: string, userId: number) {
+export async function deleteProductAction(productId: number, slug: string, userId: number) {
     return actionWrapper(async () => {
 
         //Check user owns product or is employee
@@ -31,7 +32,7 @@ export async function deleteProduct(productId: number, slug: string, userId: num
         if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
 
         return {
-            error: false,
+            hasError: false,
             message: "Product soft deleted successfully",
             payload: payload
         }
