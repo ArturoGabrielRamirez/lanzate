@@ -155,8 +155,8 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                 props.userId,
             )
 
-            const { error, message, payload: created } = await createUnifiedProductAction(args as CreateUnifiedProductArgs)
-            if (error) throw new Error(message)
+            const { hasError, message, payload: created } = await createUnifiedProductAction(args as CreateUnifiedProductArgs)
+            if (hasError) throw new Error(message)
             return { error: false, message: t("messages.success"), payload: created }
         } catch (error) {
             return formatErrorResponse(t("messages.error"), error, null)
