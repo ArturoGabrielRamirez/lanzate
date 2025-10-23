@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server"
 
-import { QuickActionsBarProps } from "@/features/overview/types/types"
+import { QuickActionsBarProps } from "@/features/overview/types"
 import CreateProductButton from "@/features/products/components/create-product-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"

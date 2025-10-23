@@ -3,7 +3,7 @@ import { Suspense } from "react"
 
 import { getOverviewData } from "@/features/overview/actions/get-overview-data"
 import { SalesOverviewWidget, ProductStoreCountWidget, SalesByMonthWidget, TopProductsWidget } from "@/features/overview/components"
-import { OverviewTabProps } from "@/features/overview/types/types"
+import { OverviewTabProps } from "@/features/overview/types"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
 

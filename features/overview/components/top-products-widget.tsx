@@ -2,7 +2,7 @@ import { ArrowRight, Crown } from "lucide-react"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 
-import { TopProductsWidgetProps } from "@/features/overview/types/types"
+import { TopProductsWidgetProps } from "@/features/overview/types"
 import { formatCurrency } from "@/features/overview/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
