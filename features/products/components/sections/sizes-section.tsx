@@ -3,7 +3,7 @@
 import { useMemo } from "react"
 import { useFormContext } from "react-hook-form"
 
-import type { SizesSectionData } from "@/features/products/type/create-form-extra"
+import type { SizesSectionData } from "@/features/products/types/create-form-extra"
 import MultipleSelector from "@/features/shadcn/components/expansion/multiple-selector"
 import type { Option as MultiOption } from "@/features/shadcn/components/expansion/multiple-selector"
 import { Label } from "@/features/shadcn/components/ui/label"

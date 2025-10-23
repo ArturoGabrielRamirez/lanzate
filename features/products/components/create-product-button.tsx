@@ -1,7 +1,7 @@
 "use client"
 
 import { UnifiedCreateProductButton } from "@/features/products/components/unified-create-product-button"
-import { CreateProductButtonProps } from "@/features/products/type"
+import { CreateProductButtonProps } from "@/features/products/types"
 
 function CreateProductButton(props: CreateProductButtonProps) {
     return <UnifiedCreateProductButton {...props} />

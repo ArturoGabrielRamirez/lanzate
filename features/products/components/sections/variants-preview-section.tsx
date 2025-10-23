@@ -2,8 +2,8 @@
 
 import { useFormContext } from "react-hook-form"
 
-import type { VariantPreview } from "@/features/products/type/create-form-extra"
-import type { ProductColor } from "@/features/products/type/product-color"
+import type { VariantPreview } from "@/features/products/types/create-form-extra"
+import type { ProductColor } from "@/features/products/types/product-color"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 

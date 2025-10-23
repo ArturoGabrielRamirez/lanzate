@@ -4,7 +4,7 @@ import Color, { ColorLike } from "color"
 import { X } from "lucide-react"
 import { useEffect, useState } from "react"
 
-import { ProductColor } from "@/features/products/type/product-color"
+import { ProductColor } from "@/features/products/types/product-color"
 import { ColorPicker, ColorPickerSelection, ColorPickerHue, ColorPickerAlpha, ColorPickerOutput, ColorPickerFormat, ColorPickerEyeDropper } from "@/features/shadcn/components/shadcn-io/color-picker"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Input } from "@/features/shadcn/components/ui/input"

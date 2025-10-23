@@ -4,7 +4,7 @@ import { Box } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 
-import { ProductCardProps } from "@/features/products/type"
+import { ProductCardProps } from "@/features/products/types"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 function ProductCard({ product, slug }: ProductCardProps) {

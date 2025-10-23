@@ -16,7 +16,7 @@ export type SizesSectionData = {
 }
 
 export type ColorsSectionData = {
-    colors: import("../type/product-color").ProductColor[]
+    colors: import("./product-color").ProductColor[]
 }
 
 export type SettingsSectionData = {
@@ -43,7 +43,7 @@ export type TFunction = (key: string, values?: Record<string, string | number | 
 export type VariantPreview = {
     id: string
     size?: string
-    color?: import("../type/product-color").ProductColor
+    color?: import("./product-color").ProductColor
 }
 
 

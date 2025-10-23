@@ -2,7 +2,7 @@
 
 import { useFormContext } from "react-hook-form"
 
-import type { DimensionsSectionData } from "@/features/products/type/create-form-extra"
+import type { DimensionsSectionData } from "@/features/products/types/create-form-extra"
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"

@@ -4,7 +4,7 @@ import { DeleteProductButton } from "@/features/products/components"
 import { Card, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { ProductDetailForm } from "@/features/products/components/product-detail-display"
 
-import { ProductDetailPageProps } from "@/features/products/type"
+import { ProductDetailPageProps } from "@/features/products/types"
 
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"

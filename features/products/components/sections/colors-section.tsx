@@ -3,8 +3,8 @@
 import { useFormContext } from "react-hook-form"
 
 import { ProductColorRow } from "@/features/products/components/product-color-row"
-import type { ColorsSectionData } from "@/features/products/type/create-form-extra"
-import type { ProductColor } from "@/features/products/type/product-color"
+import type { ColorsSectionData } from "@/features/products/types/create-form-extra"
+import type { ProductColor } from "@/features/products/types/product-color"
 import { Button } from "@/features/shadcn/components/ui/button"
 
 function ColorsSection({ value, onChange }: { value?: ColorsSectionData; onChange?: (data: ColorsSectionData) => void }) {

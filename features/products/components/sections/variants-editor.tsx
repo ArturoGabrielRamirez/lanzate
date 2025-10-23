@@ -1,6 +1,6 @@
 "use client"
 
-import type { VariantPreview } from "@/features/products/type/create-form-extra"
+import type { VariantPreview } from "@/features/products/types/create-form-extra"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 

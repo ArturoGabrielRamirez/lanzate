@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
-import type { CategoryValue, CategoriesSectionData } from "@/features/products/type/create-form-extra"
+import type { CategoryValue, CategoriesSectionData } from "@/features/products/types/create-form-extra"
 import { getCategoriesAction } from "@/features/stores/actions/get-categories.action"
 import { CategorySelect } from "@/features/stores/components/category-select-"
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-import type { SettingsSectionData } from "@/features/products/type/create-form-extra"
+import type { SettingsSectionData } from "@/features/products/types/create-form-extra"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Switch } from "@/features/shadcn/components/ui/switch"
 

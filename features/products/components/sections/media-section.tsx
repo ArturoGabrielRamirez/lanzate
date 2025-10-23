@@ -4,7 +4,7 @@ import { Upload, X } from "lucide-react"
 import { useCallback, useState, useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 
-import type { MediaSectionData } from "@/features/products/type/create-form-extra"
+import type { MediaSectionData } from "@/features/products/types/create-form-extra"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { FileUpload, FileUploadCameraTrigger, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
 import { Label } from "@/features/shadcn/components/ui/label"

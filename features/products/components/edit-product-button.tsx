@@ -15,7 +15,7 @@ import { CategoriesSection } from "@/features/products/components/sections/categ
 import { MediaSection } from "@/features/products/components/sections/media-section"
 import { PriceStockSection } from "@/features/products/components/sections/price-stock-section"
 import { SettingsSection } from "@/features/products/components/sections/settings-section"
-import { EditProductButtonProps } from "@/features/products/type"
+import { EditProductButtonProps } from "@/features/products/types"
 import { Accordion, AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
