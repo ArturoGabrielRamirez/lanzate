@@ -45,3 +45,26 @@ export type QuickAction = {
     icon: string
     variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link"
 } 
+
+// Component prop types
+export type ProductStoreCountWidgetProps = {
+    data: ProductStoreCountData
+}
+
+export type SalesByMonthWidgetProps = {
+    data: SalesByMonthData[]
+}
+
+export type SalesOverviewWidgetProps = {
+    data: SalesOverviewData
+}
+
+export type TopProductsWidgetProps = {
+    data: TopProductData[]
+}
+
+export type QuickActionsBarProps = {
+    slug: string
+    storeId: number
+    userId: number
+}

@@ -1,17 +1,12 @@
 import { getTranslations } from "next-intl/server"
 
+import { QuickActionsBarProps } from "@/features/overview/types"
 import CreateProductButton from "@/features/products/components/create-product-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-type Props = {
-    slug: string
-    storeId: number
-    userId: number
-}
-
-async function QuickActionsBar({ storeId, userId }: Props) {
+async function QuickActionsBar({ storeId, userId }: QuickActionsBarProps) {
 
     const t = await getTranslations("overview.quick-actions")
 

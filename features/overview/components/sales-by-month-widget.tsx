@@ -5,15 +5,11 @@ import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 
-import { SalesByMonthData } from "@/features/overview/types"
+import { SalesByMonthWidgetProps } from "@/features/overview/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/features/shadcn/components/ui/chart"
 
-type Props = {
-    data: SalesByMonthData[]
-}
-
-function SalesByMonthWidget({ data }: Props) {
+function SalesByMonthWidget({ data }: SalesByMonthWidgetProps) {
 
     const t = useTranslations("overview.sales-by-month")
 

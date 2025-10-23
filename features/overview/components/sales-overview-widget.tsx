@@ -1,23 +1,15 @@
 import { DollarSign, ShoppingCart, TrendingUp } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
-import { SalesOverviewData } from "@/features/overview/types"
+import { SalesOverviewWidgetProps } from "@/features/overview/types"
+import { formatCurrency } from "@/features/overview/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-type Props = {
-    data: SalesOverviewData
-}
-
-async function SalesOverviewWidget({ data }: Props) {
+async function SalesOverviewWidget({ data }: SalesOverviewWidgetProps) {
 
     const t = await getTranslations("overview.sales-overview")
 
-    const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('es-AR', {
-            style: 'currency',
-            currency: 'ARS'
-        }).format(amount)
-    }
+    
 
     return (
         <Card className="hover:bg-accent transition-colors duration-200 group">

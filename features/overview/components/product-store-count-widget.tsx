@@ -1,14 +1,10 @@
 import { Package, Store, Eye, Activity } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
-import { ProductStoreCountData } from "@/features/overview/types"
+import { ProductStoreCountWidgetProps } from "@/features/overview/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-type Props = {
-    data: ProductStoreCountData
-}
-
-async function ProductStoreCountWidget({ data }: Props) {
+async function ProductStoreCountWidget({ data }: ProductStoreCountWidgetProps) {
 
     const t = await getTranslations("overview.product-store-count")
 
