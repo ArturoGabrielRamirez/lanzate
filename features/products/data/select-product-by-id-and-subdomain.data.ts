@@ -2,7 +2,7 @@
 
 import { prisma } from "@/utils/prisma"
 
-export async function selectProductByIdAndSubdomain(id: number, subdomain: string) {
+export async function selectProductByIdAndSubdomainData(id: number, subdomain: string) {
     const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
 
     const product = await prisma.product.findFirst({

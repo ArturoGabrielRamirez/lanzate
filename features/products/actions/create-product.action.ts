@@ -4,14 +4,14 @@ import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
-import { insertProduct } from "@/features/products/data/insert-product.data"
+import { insertProductData } from "@/features/products/data/insert-product.data"
 import { InsertProductPayload } from "@/features/products/types"
 
 export async function createProductAction(payload: InsertProductPayload, storeId: number, userId: number) {
     return actionWrapper(async () => {
 
 
-        const { hasError, message, payload: product } = await insertProduct(payload, storeId, userId)
+        const { hasError, message, payload: product } = await insertProductData(payload, storeId, userId)
 
         if (hasError) throw new Error(message)
 

@@ -11,7 +11,7 @@ type UpdateVariantBasicInfoPayload = {
     description: string | null
 }
 
-export async function updateVariantBasicInfo(variantId: number, data: UpdateVariantBasicInfoPayload) {
+export async function updateVariantBasicInfoData(variantId: number, data: UpdateVariantBasicInfoPayload) {
     const variant = await prisma.productVariant.update({
         where: { id: variantId },
         data: {

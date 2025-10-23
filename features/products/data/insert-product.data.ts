@@ -7,7 +7,7 @@ import { CategoryValue, InsertProductPayload } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
 import { createServerSideClient } from "@/utils/supabase/server"
 
-export async function insertProduct(payload: InsertProductPayload, storeId: number, userId: number) {
+export async function insertProductData(payload: InsertProductPayload, storeId: number, userId: number) {
     const supabase = createServerSideClient()
 
     const result = await prisma.$transaction(async (tx) => {

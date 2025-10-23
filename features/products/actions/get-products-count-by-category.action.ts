@@ -1,12 +1,12 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { getProductsCountByCategory } from "@/features/products/data/get-products-by-category.data"
+import { getProductsCountByCategoryData } from "@/features/products/data/get-products-by-category.data"
 
 export async function getProductsCountByCategoryAction(categoryId: number, storeId: number) {
     return actionWrapper(async () => {
 
-        const { payload, error, message } = await getProductsCountByCategory(categoryId, storeId)
+        const { payload, error, message } = await getProductsCountByCategoryData(categoryId, storeId)
 
         if (error) throw new Error(message)
 

@@ -8,7 +8,7 @@ import { createServerSideClient } from "@/utils/supabase/server"
 
 import type { MediaType, LengthUnit, WeightUnit } from "@prisma/client"
 
-export async function insertUnifiedProduct(args: UnifiedArgs) {
+export async function insertUnifiedProductData(args: UnifiedArgs) {
     const supabase = createServerSideClient()
 
     // PREP: Upload media first, outside of the DB transaction to avoid timeouts

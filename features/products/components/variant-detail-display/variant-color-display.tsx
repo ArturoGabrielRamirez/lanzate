@@ -7,7 +7,7 @@ import { toast } from "sonner"
 
 import { Form } from "@/features/layout/components"
 import { CreateColorInline } from "@/features/products/components/create-color-inline"
-import { updateVariantColor } from "@/features/products/data/update-variant-color.data"
+import { updateVariantColorData } from "@/features/products/data/update-variant-color.data"
 import { ProductColor } from "@/features/products/types/product-color"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
@@ -56,7 +56,7 @@ function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
                                             onClick={async () => {
                                                 try {
                                                     setIsSaving(true)
-                                                    const { hasError, message } = await updateVariantColor(variant.id, pendingColorId)
+                                                    const { hasError, message } = await updateVariantColorData(variant.id, pendingColorId)
                                                     if (hasError) {
                                                         toast.error(message || "Error al actualizar color")
                                                         setIsSaving(false)

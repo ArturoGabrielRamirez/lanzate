@@ -5,7 +5,7 @@ import { Scale, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { updateVariantDimensions } from "@/features/products/data/update-variant-dimensions.data"
+import { updateVariantDimensionsData } from "@/features/products/data/update-variant-dimensions.data"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Label } from "@/features/shadcn/components/ui/label"
@@ -58,7 +58,7 @@ function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplay
                         diameter_unit: formData.get('diameterUnit') as string || "CM"
                     }
                     setIsSaving(true)
-                    const response = await updateVariantDimensions(variant.id, data)
+                    const response = await updateVariantDimensionsData(variant.id, data)
                     if (response.hasError) {
                         toast.error(response.message || "Error al actualizar las dimensiones")
                         setIsSaving(false)

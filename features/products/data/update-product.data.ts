@@ -4,7 +4,7 @@ import { CategoryValue, UpdateProductPayload } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
 import { createServerSideClient } from "@/utils/supabase/server"
 
-export async function updateProduct(productId: number, data: UpdateProductPayload) {
+export async function updateProductData(productId: number, data: UpdateProductPayload) {
     const supabase = createServerSideClient()
 
     const updatedProduct = await prisma.product.update({

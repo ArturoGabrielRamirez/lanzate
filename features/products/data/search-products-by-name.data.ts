@@ -2,7 +2,7 @@
 
 import { prisma } from "@/utils/prisma"
 
-export async function searchProductsByName(searchTerm: string, storeId: number) {
+export async function searchProductsByNameData(searchTerm: string, storeId: number) {
     if (!searchTerm || searchTerm.trim() === '') {
         return {
             message: "No hay término de búsqueda",

@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { searchProductsByName } from "@/features/products/data/search-products-by-name.data"
+import { searchProductsByNameData } from "@/features/products/data/search-products-by-name.data"
 
 export async function searchProductsByNameAction(searchTerm: string, storeId: number) {
     return actionWrapper(async () => {
@@ -10,7 +10,7 @@ export async function searchProductsByNameAction(searchTerm: string, storeId: nu
             throw new Error("Store ID is required")
         }
 
-        const { error, payload, message } = await searchProductsByName(searchTerm, storeId)
+        const { error, payload, message } = await searchProductsByNameData(searchTerm, storeId)
 
         if (error) {
             throw new Error(message)

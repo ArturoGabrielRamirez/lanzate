@@ -7,7 +7,7 @@ import { useState, useEffect } from "react"
 
 
 import { ButtonWithPopup } from "@/features/layout/components"
-import { distributeProductStock } from "@/features/products/data/distribute-product-stock.data"
+import { distributeProductStockData } from "@/features/products/data/distribute-product-stock.data"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Label } from "@/features/shadcn/components/ui/label"
@@ -70,7 +70,7 @@ function DistributeStockButton({
                 quantity
             }))
 
-        return await distributeProductStock({
+        return await distributeProductStockData({
             productId,
             distributions: distributionArray
         })

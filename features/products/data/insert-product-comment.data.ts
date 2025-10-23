@@ -2,7 +2,7 @@
 
 import { prisma } from "@/utils/prisma"
 
-export async function insertProductComment(userId: number, productId: number, content: string) {
+export async function insertProductCommentData(userId: number, productId: number, content: string) {
     const comment = await prisma.product_comments.create({
         data: {
             user_id: userId,

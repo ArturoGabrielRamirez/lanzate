@@ -2,7 +2,7 @@
 
 import { prisma } from "@/utils/prisma"
 
-export async function selectRelatedProducts(productId: number) {
+export async function selectRelatedProductsData(productId: number) {
   const product = await prisma.product.findUnique({
     where: { id: productId },
     include: {

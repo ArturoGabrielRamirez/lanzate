@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 
 import { prisma } from "@/utils/prisma"
 
-export async function updateVariantColor(variantId: number, colorId: number | null) {
+export async function updateVariantColorData(variantId: number, colorId: number | null) {
     const updated = await prisma.productVariant.update({
         where: { id: variantId },
         data: { color_id: colorId }

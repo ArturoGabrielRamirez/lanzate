@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
-import { deleteProductVariant as deleteVariantFromDb } from "@/features/products/data/delete-product-variant.data"
+import { deleteProductVariantData as deleteVariantFromDb } from "@/features/products/data/delete-product-variant.data"
 
 export async function deleteProductVariantAction(variantId: number, slug: string) {
     return actionWrapper(async () => {

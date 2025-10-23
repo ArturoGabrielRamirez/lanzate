@@ -5,7 +5,7 @@ import { DollarSign, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
 
 import { Form, InputField } from "@/features/layout/components"
-import { updateVariantPrice } from "@/features/products/data/update-variant-price.data"
+import { updateVariantPriceData } from "@/features/products/data/update-variant-price.data"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
@@ -56,7 +56,7 @@ function VariantPriceDisplay({ variant, productPrice }: VariantPriceDisplayProps
                         setIsSaving(true)
                         const raw = data?.["variant-price"]
                         const price = raw && raw !== "" ? Number(raw) : null
-                        const response = await updateVariantPrice(variant.id, { price })
+                        const response = await updateVariantPriceData(variant.id, { price })
                         setIsSaving(false)
                         return response
                     } catch (error) {

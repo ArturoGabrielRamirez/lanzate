@@ -3,7 +3,7 @@
 import { prisma } from "@/utils/prisma"
 
 
-export async function deleteProduct(productId: number) {
+export async function deleteProductData(productId: number) {
     const result = await prisma.$transaction(async (tx) => {
         const product = await tx.product.findUnique({
             where: { id: productId },

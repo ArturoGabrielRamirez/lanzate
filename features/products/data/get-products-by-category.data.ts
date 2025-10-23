@@ -1,6 +1,6 @@
 import { prisma } from "@/utils/prisma"
 
-export async function getProductsCountByCategory(categoryId: number, storeId: number) {
+export async function getProductsCountByCategoryData(categoryId: number, storeId: number) {
     try {
         const count = await prisma.product.count({
             where: {

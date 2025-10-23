@@ -6,7 +6,7 @@ import { prisma } from "@/utils/prisma"
 
 export type VariantStockUpdate = { branch_id: number; quantity: number }
 
-export async function updateVariantStocks(variantId: number, updates: VariantStockUpdate[]) {
+export async function updateVariantStocksData(variantId: number, updates: VariantStockUpdate[]) {
     // Upsert per-branch stock for the variant
     await prisma.$transaction(async (tx) => {
         for (const { branch_id, quantity } of updates) {

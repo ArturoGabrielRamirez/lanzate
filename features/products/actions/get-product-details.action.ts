@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { selectProductById } from "@/features/products/data/select-product-by-id.data"
+import { selectProductByIdData } from "@/features/products/data/select-product-by-id.data"
 
 export async function getProductDetailsAction(id: string) {
     return actionWrapper(async () => {
@@ -10,7 +10,7 @@ export async function getProductDetailsAction(id: string) {
 
         if (isNaN(parsedId)) throw new Error("Invalid product id")
 
-        const { payload: product, hasError, message } = await selectProductById(parsedId)
+        const { payload: product, hasError, message } = await selectProductByIdData(parsedId)
 
         if (hasError) throw new Error(message)
 

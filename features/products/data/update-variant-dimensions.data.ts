@@ -36,7 +36,7 @@ type UpdateVariantDimensionsPayload = {
     diameter_unit?: string | null
 }
 
-export async function updateVariantDimensions(variantId: number, data: UpdateVariantDimensionsPayload) {
+export async function updateVariantDimensionsData(variantId: number, data: UpdateVariantDimensionsPayload) {
     const variant = await prisma.productVariant.update({
         where: { id: variantId },
         data: {

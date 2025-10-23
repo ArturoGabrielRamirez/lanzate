@@ -11,7 +11,7 @@ type UpdateVariantMediaPayload = {
     files?: File[]
 }
 
-export async function updateVariantMedia(variantId: number, data: UpdateVariantMediaPayload) {
+export async function updateVariantMediaData(variantId: number, data: UpdateVariantMediaPayload) {
     // Si hay archivos nuevos, subirlos primero
     if (data.files && data.files.length > 0) {
         const file = data.files[0] // Solo tomamos el primero ya que las variantes solo tienen una imagen

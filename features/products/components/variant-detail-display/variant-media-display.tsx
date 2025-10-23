@@ -5,7 +5,7 @@ import { ImageIcon, EditIcon, X, Check, Upload, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { updateVariantMedia } from "@/features/products/data/update-variant-media.data"
+import { updateVariantMediaData } from "@/features/products/data/update-variant-media.data"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { FileUpload, FileUploadDropzone, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
@@ -55,7 +55,7 @@ function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
         setIsSaving(true)
         try {
             if (pendingPrimaryId !== null && pendingPrimaryId !== variant.primary_media?.id) {
-                const response = await updateVariantMedia(variant.id, { primary_media_id: pendingPrimaryId })
+                const response = await updateVariantMediaData(variant.id, { primary_media_id: pendingPrimaryId })
                 if (response.error) {
                     toast.error(response.message || "Error al actualizar la imagen")
                     return
@@ -203,7 +203,7 @@ function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
                                 accept="image/jpg, image/png, image/jpeg"
                                 onValueChange={async (files) => {
                                     if (files.length === 0) return
-                                    const response = await updateVariantMedia(variant.id, { files })
+                                    const response = await updateVariantMediaData(variant.id, { files })
                                     if (response.error) {
                                         toast.error(response.message || "Error al subir la imagen")
                                         return

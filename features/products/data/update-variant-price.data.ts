@@ -8,7 +8,7 @@ type UpdateVariantPricePayload = {
     price: number | null
 }
 
-export async function updateVariantPrice(variantId: number, data: UpdateVariantPricePayload) {
+export async function updateVariantPriceData(variantId: number, data: UpdateVariantPricePayload) {
     const variant = await prisma.productVariant.update({
         where: { id: variantId },
         data: {

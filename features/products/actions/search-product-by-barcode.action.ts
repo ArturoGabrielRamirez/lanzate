@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/features/global/utils"
-import { getProductByBarcode } from "@/features/products/data/get-product-by-barcode.data"
+import { getProductByBarcodeData } from "@/features/products/data/get-product-by-barcode.data"
 
 export async function searchProductByBarcodeAction(barcode: string, storeId: number) {
     return actionWrapper(async () => {
@@ -14,7 +14,7 @@ export async function searchProductByBarcodeAction(barcode: string, storeId: num
             throw new Error("Store ID is required")
         }
 
-        const { error, payload, message } = await getProductByBarcode(barcode.trim(), storeId)
+        const { error, payload, message } = await getProductByBarcodeData(barcode.trim(), storeId)
 
         if (error) {
             throw new Error(message)

@@ -3,7 +3,7 @@
 import { VariantBranch } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
 
-export async function getBranchesForVariant(variantId: number) {
+export async function getBranchesForVariantData(variantId: number) {
     const variant = await prisma.productVariant.findUnique({
         where: { id: variantId },
         select: { product: { select: { store_id: true } } }

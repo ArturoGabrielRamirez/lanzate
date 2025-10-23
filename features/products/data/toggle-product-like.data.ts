@@ -2,7 +2,7 @@
 
 import { prisma } from "@/utils/prisma"
 
-export async function toggleProductLike(userId: number, productId: number) {
+export async function toggleProductLikeData(userId: number, productId: number) {
     // Verificar si ya existe el like
     const existingLike = await prisma.$queryRaw`
             SELECT * FROM product_likes 

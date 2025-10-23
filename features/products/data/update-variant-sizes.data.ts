@@ -9,7 +9,7 @@ type UpdateVariantSizesPayload = {
     measure: string | null
 }
 
-export async function updateVariantSizes(variantId: number, data: UpdateVariantSizesPayload) {
+export async function updateVariantSizesData(variantId: number, data: UpdateVariantSizesPayload) {
     const variant = await prisma.productVariant.update({
         where: { id: variantId },
         data: {

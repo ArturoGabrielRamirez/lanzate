@@ -3,12 +3,12 @@
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
-import { updateProductsPrices } from "@/features/products/data/update-product-prices.data"
+import { updateProductsPricesData } from "@/features/products/data/update-product-prices.data"
 import { UpdatePricesActionPayload } from "@/features/products/types"
 
 export async function updateProductsPricesAction(payload: UpdatePricesActionPayload) {
     return actionWrapper(async () => {
-        const result = await updateProductsPrices(payload)
+        const result = await updateProductsPricesData(payload)
         
         // Revalidate the store products page to reflect the changes
         revalidatePath(`/stores/${payload.storeId}/products`)

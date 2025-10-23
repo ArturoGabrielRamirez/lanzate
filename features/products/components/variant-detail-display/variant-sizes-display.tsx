@@ -5,7 +5,7 @@ import { Ruler, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { updateVariantSizes } from "@/features/products/data/update-variant-sizes.data"
+import { updateVariantSizesData } from "@/features/products/data/update-variant-sizes.data"
 import MultipleSelector from "@/features/shadcn/components/expansion/multiple-selector"
 import type { Option as MultiOption } from "@/features/shadcn/components/expansion/multiple-selector"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
@@ -83,7 +83,7 @@ function VariantSizesDisplay({ variant }: VariantSizesDisplayProps) {
                 onSubmit={async (e) => {
                     e.preventDefault()
                     setIsSaving(true)
-                    const response = await updateVariantSizes(variant.id, {
+                    const response = await updateVariantSizesData(variant.id, {
                         size: selectedSize?.value ?? null,
                         measure: selectedMeasure?.value ?? null
                     })

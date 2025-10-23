@@ -11,7 +11,7 @@ import { toast } from "sonner"
 import { Form, InputField } from "@/features/layout/components"
 import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
 import { VariantLinkCard } from "@/features/products/components/variant-detail-display/variant-link-card"
-import { updateVariantBasicInfo } from "@/features/products/data/update-variant-basic-info.data"
+import { updateVariantBasicInfoData } from "@/features/products/data/update-variant-basic-info.data"
 import { editVariantSchema } from "@/features/products/schemas/product-schema"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
@@ -94,7 +94,7 @@ function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantB
                 onSuccess={handleCloseEdit}
                 formAction={async (data: { name: string | null; sku: string | null; barcode: string | null; description: string | null }) => {
                     try {
-                        const result = await updateVariantBasicInfo(variant.id, {
+                        const result = await updateVariantBasicInfoData(variant.id, {
                             name: data.name || null,
                             sku: data.sku || null,
                             barcode: data.barcode || null,

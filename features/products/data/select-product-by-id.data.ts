@@ -4,7 +4,7 @@ import { ProductVariant } from "@prisma/client"
 
 import { prisma } from "@/utils/prisma"
 
-export async function selectProductById(id: number) {
+export async function selectProductByIdData(id: number) {
     const product = await prisma.product.findUnique({
         where: {
             id: id,

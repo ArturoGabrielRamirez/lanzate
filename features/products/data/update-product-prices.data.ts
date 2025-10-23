@@ -1,7 +1,7 @@
 import { UpdatePricesPayload } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
 
-export async function updateProductsPrices(payload: UpdatePricesPayload) {
+export async function updateProductsPricesData(payload: UpdatePricesPayload) {
     try {
         const { storeId, amount, updateType, productIds, categoryId } = payload
 

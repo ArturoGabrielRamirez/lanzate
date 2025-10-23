@@ -2,7 +2,7 @@
 
 import { prisma } from "@/utils/prisma"
 
-export async function getProductByBarcode(barcode: string, storeId: number) {
+export async function getProductByBarcodeData(barcode: string, storeId: number) {
     const product = await prisma.product.findFirst({
         where: {
             barcode: barcode,

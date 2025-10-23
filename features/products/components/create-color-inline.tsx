@@ -4,7 +4,7 @@ import Color, { ColorLike } from "color"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { createStoreColor } from "@/features/products/data/create-store-color.data"
+import { createStoreColorData } from "@/features/products/data/create-store-color.data"
 import { ColorPicker, ColorPickerSelection, ColorPickerHue, ColorPickerAlpha, ColorPickerOutput, ColorPickerFormat } from "@/features/shadcn/components/shadcn-io/color-picker"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Input } from "@/features/shadcn/components/ui/input"
@@ -56,7 +56,7 @@ function CreateColorInline({ onCreated }: Props) {
                     onClick={async () => {
                         try {
                             setIsSaving(true)
-                            const { error, message, payload } = await createStoreColor({ name, hex })
+                            const { error, message, payload } = await createStoreColorData({ name, hex })
                             if (error || !payload) {
                                 toast.error(message || "Error al crear color")
                                 setIsSaving(false)

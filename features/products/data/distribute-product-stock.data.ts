@@ -4,7 +4,7 @@ import { ResponseType } from "@/features/layout/types"
 import { DistributeStockData } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
 
-export async function distributeProductStock(data: DistributeStockData): Promise<ResponseType<null>> {
+export async function distributeProductStockData(data: DistributeStockData): Promise<ResponseType<null>> {
     try {
         const { productId, distributions } = data
 

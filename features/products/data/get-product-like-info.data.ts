@@ -2,7 +2,7 @@
 
 import { prisma } from "@/utils/prisma"
 
-export async function getProductLikeInfo(userId: number | null, productId: number) {
+export async function getProductLikeInfoData(userId: number | null, productId: number) {
     // Obtener el conteo total de likes
     const countResult = await prisma.$queryRaw`
             SELECT COUNT(*) as count FROM product_likes 

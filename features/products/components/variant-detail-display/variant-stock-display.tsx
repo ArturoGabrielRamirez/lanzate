@@ -7,8 +7,8 @@ import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
 import { Form } from "@/features/layout/components"
-import { getBranchesForVariant } from "@/features/products/data/get-branches-for-variant.data"
-import { updateVariantStocks } from "@/features/products/data/update-variant-stocks.data"
+import { getBranchesForVariantData } from "@/features/products/data/get-branches-for-variant.data"
+import { updateVariantStocksData } from "@/features/products/data/update-variant-stocks.data"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Input } from "@/features/shadcn/components/ui/input"
@@ -47,7 +47,7 @@ function VariantStockDisplay({ variant }: VariantStockDisplayProps) {
 
     useEffect(() => {
         const load = async () => {
-            const { payload, hasError, message } = await getBranchesForVariant(variant.id)
+            const { payload, hasError, message } = await getBranchesForVariantData(variant.id)
             if (hasError || !payload) {
                 console.error(message)
                 return
@@ -88,7 +88,7 @@ function VariantStockDisplay({ variant }: VariantStockDisplayProps) {
         }
 
         setIsSaving(true)
-        const { hasError, message } = await updateVariantStocks(variant.id, updates)
+        const { hasError, message } = await updateVariantStocksData(variant.id, updates)
         if (hasError) {
             toast.error(message || "Error al actualizar stock")
             setIsSaving(false)
