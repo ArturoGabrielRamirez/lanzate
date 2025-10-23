@@ -3,7 +3,7 @@
 import { TopProductData } from "@/features/overview/types/types"
 import { prisma } from "@/utils/prisma"
 
-export async function getTopProducts(storeId: number, limit: number = 5) {
+export async function getTopProductsData(storeId: number, limit: number = 5) {
     // Get order items with product info for this store
     const orderItems = await prisma.orderItem.findMany({
         where: {

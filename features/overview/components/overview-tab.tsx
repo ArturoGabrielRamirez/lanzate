@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
 
-import { getOverviewData } from "@/features/overview/actions/get-overview-data"
+import { getOverviewInfoAction } from "@/features/overview/actions/get-overview-info.action"
 import { SalesOverviewWidget, ProductStoreCountWidget, SalesByMonthWidget, TopProductsWidget } from "@/features/overview/components"
 import { OverviewTabProps } from "@/features/overview/types"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
@@ -15,7 +15,7 @@ async function OverviewTab({ slug }: OverviewTabProps) {
         { payload: data, error, message },
         { payload: store, hasError: storeError }
     ] = await Promise.all([
-        getOverviewData(slug),
+        getOverviewInfoAction(slug),
         getStoresFromSlugAction(slug)
     ])
 

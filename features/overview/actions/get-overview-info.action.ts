@@ -1,24 +1,19 @@
 "use server"
 
-import { getStoresFromSlug } from "@/features/stores/actions/get-stores-from-slug.action"
-import { getSalesOverview } from "../data/get-sales-overview"
-import { getProductStoreCount } from "../data/get-product-store-count"
-import { getSalesByMonth } from "../data/get-sales-by-month"
-import { getTopProducts } from "../data/get-top-products"
-import { OverviewData } from "../types/types"
+import { actionWrapper } from "@/features/global/utils"
+import { getProductStoreCountData } from "@/features/overview/data/get-product-store-count.data"
+import { getSalesByMonthData } from "@/features/overview/data/get-sales-by-month.data"
+import { getSalesOverviewData } from "@/features/overview/data/get-sales-overview.data"
+import { getTopProductsData } from "@/features/overview/data/get-top-products.data"
+import { OverviewData } from "@/features/overview/types"
+import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
 
-export async function getOverviewData(slug: string) {
-    try {
+export async function getOverviewInfoAction(slug: string) {
+    return actionWrapper(async () => {
         // Get store first
-        const { payload: store, error: storeError } = await getStoresFromSlug(slug)
-        
-        if (storeError || !store) {
-            return {
-                error: true,
-                message: "Store not found",
-                payload: null
-            }
-        }
+        const { payload: store, hasError: storeError } = await getStoresFromSlugAction(slug)
+
+        if (storeError || !store) throw new Error("Store not found")
 
         // Get all overview data in parallel
         const [
@@ -27,10 +22,10 @@ export async function getOverviewData(slug: string) {
             salesByMonthResult,
             topProductsResult
         ] = await Promise.all([
-            getSalesOverview(store.id),
-            getProductStoreCount(store.id),
-            getSalesByMonth(store.id),
-            getTopProducts(store.id, 5)
+            getSalesOverviewData(store.id),
+            getProductStoreCountData(store.id),
+            getSalesByMonthData(store.id),
+            getTopProductsData(store.id, 5)
         ])
 
         // Check for errors
@@ -55,16 +50,10 @@ export async function getOverviewData(slug: string) {
         }
 
         return {
-            error: false,
+            hasError: false,
             message: "Overview data fetched successfully",
             payload: overviewData
         }
 
-    } catch (error) {
-        return {
-            error: true,
-            message: error instanceof Error ? error.message : "Error fetching overview data",
-            payload: null
-        }
-    }
+    })
 } 

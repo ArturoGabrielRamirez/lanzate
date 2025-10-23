@@ -1,1 +1,1 @@
-export * from "@/features/overview/actions/get-overview-data"
+export * from "@/features/overview/actions/get-overview-info.action"

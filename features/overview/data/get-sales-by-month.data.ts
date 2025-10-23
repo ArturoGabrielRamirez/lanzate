@@ -3,7 +3,7 @@
 import { SalesByMonthData } from "@/features/overview/types/types"
 import { prisma } from "@/utils/prisma"
 
-export async function getSalesByMonth(storeId: number) {
+export async function getSalesByMonthData(storeId: number) {
     // Get orders from the last 6 months
     const sixMonthsAgo = new Date()
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6)

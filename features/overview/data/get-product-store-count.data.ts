@@ -3,7 +3,7 @@
 import { ProductStoreCountData } from "@/features/overview/types/types"
 import { prisma } from "@/utils/prisma"
 
-export async function getProductStoreCount(storeId: number) {
+export async function getProductStoreCountData(storeId: number) {
     // Get store with products and branches
     const store = await prisma.store.findUnique({
         where: {

@@ -3,7 +3,7 @@
 import { SalesOverviewData } from "@/features/overview/types/types"
 import { prisma } from "@/utils/prisma"
 
-export async function getSalesOverview(storeId: number) {
+export async function getSalesOverviewData(storeId: number) {
     // Get all orders for this store
     const orders = await prisma.order.findMany({
         where: {

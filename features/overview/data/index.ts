@@ -1,6 +1,6 @@
-export * from "@/features/overview/data/get-product-store-count"
-export * from "@/features/overview/data/get-sales-by-month"
-export * from "@/features/overview/data/get-sales-overview"
-export * from "@/features/overview/data/get-top-products"
+export * from "@/features/overview/data/get-product-store-count.data"
+export * from "@/features/overview/data/get-sales-by-month.data"
+export * from "@/features/overview/data/get-sales-overview.data"
+export * from "@/features/overview/data/get-top-products.data"
 
 
