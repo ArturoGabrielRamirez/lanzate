@@ -7,22 +7,13 @@ import { toast } from "sonner"
 
 import { Form } from "@/features/layout/components"
 import { updateVariantFlagsData } from "@/features/products/data/update-variant-flags.data"
+import type { VariantConfigDisplayProps } from "@/features/products/types"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Switch } from "@/features/shadcn/components/ui/switch"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface VariantConfigDisplayProps {
-    variant: ProductVariant
-    product: Product & {
-        variants: (ProductVariant & {
-            color?: { name: string } | null
-            stocks?: { quantity: number; branch_id: number }[]
-            primary_media?: ProductMedia | null
-        })[]
-    }
-}
 
 function VariantConfigDisplay({ variant }: VariantConfigDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)

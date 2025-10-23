@@ -362,6 +362,128 @@ export type VariantsDisplayProps = {
     userId: number
 }
 
+// Variant detail components - shared types
+export type ValidatedCardProps = {
+    keys: string[]
+    completeKeys?: string[]
+    children: React.ReactNode
+    className?: string
+}
+
+export type VariantBasicInfoDisplayProps = {
+    variant: ProductVariant & {
+        color?: { name: string } | null
+    }
+    slug: string
+    productId: number
+    product: Product & {
+        variants: (ProductVariant & {
+            color?: { name: string } | null
+            stocks?: { quantity: number }[]
+            primary_media?: any | null
+        })[]
+    }
+}
+
+export type VariantColorDisplayProps = {
+    variant: ProductVariant & {
+        color?: { name: string; hex: string } | null
+    }
+    product: Product & {
+        available_colors: ProductColor[]
+    }
+}
+
+export type VariantConfigDisplayProps = {
+    variant: ProductVariant
+    product: Product & {
+        variants: (ProductVariant & {
+            color?: { name: string } | null
+            stocks?: { quantity: number; branch_id: number }[]
+            primary_media?: any | null
+        })[]
+    }
+}
+
+export type VariantDetailFormProps = {
+    variant: ProductVariant & {
+        color?: { name: string; hex: string } | null
+        stocks?: { quantity: number; branch_id: number }[]
+        primary_media?: any | null
+        media?: any[]
+    }
+    productPrice: number
+    slug: string
+    productId: number
+    product: Product & {
+        media?: any[]
+        primary_media?: any | null
+        variants: (ProductVariant & {
+            color?: { name: string } | null
+            stocks?: { quantity: number; branch_id: number }[]
+            primary_media?: any | null
+        })[]
+    }
+}
+
+export type VariantDimensionsDisplayProps = {
+    variant: ProductVariant
+    product: Product & {
+        heightUnit: string
+        widthUnit: string
+        depthUnit: string
+        diameterUnit: string
+        weightUnit: string
+    }
+}
+
+export type VariantLinkCardProps = {
+    variant: ProductVariant & { stocks: { quantity: number }[]; color: any; primary_media: any }
+    slug: string
+    productId: string | number
+    productPrice?: number
+}
+
+export type VariantMediaDisplayProps = {
+    variant: ProductVariant & {
+        primary_media?: any | null
+        media?: any[]
+    }
+    product: Product & {
+        media?: any[]
+        primary_media?: any | null
+    }
+}
+
+export type VariantPriceDisplayProps = {
+    variant: ProductVariant
+    productPrice: number
+}
+
+export type VariantPriceFormValues = {
+    "variant-price"?: string
+}
+
+export type VariantSizesDisplayProps = {
+    variant: ProductVariant
+    product: Product & {
+        heightUnit: string
+        widthUnit: string
+        depthUnit: string
+        diameterUnit: string
+        weightUnit: string
+    }
+}
+
+export type VariantStockDisplayProps = {
+    variant: ProductVariant & {
+        stocks?: { quantity: number; branch_id: number; branch?: { id: number; name: string } }[]
+    }
+}
+
+export type VariantStockFormValues = {
+    stock: number
+}
 // Profile components
 export type ProductSkeletonGridProps = {
     count?: number

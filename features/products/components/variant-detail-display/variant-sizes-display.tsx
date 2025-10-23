@@ -1,11 +1,11 @@
 "use client"
 
-import { Product, ProductVariant } from "@prisma/client"
 import { Ruler, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 
 import { updateVariantSizesData } from "@/features/products/data/update-variant-sizes.data"
+import type { VariantSizesDisplayProps } from "@/features/products/types"
 import MultipleSelector from "@/features/shadcn/components/expansion/multiple-selector"
 import type { Option as MultiOption } from "@/features/shadcn/components/expansion/multiple-selector"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
@@ -13,16 +13,6 @@ import { Label } from "@/features/shadcn/components/ui/label"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface VariantSizesDisplayProps {
-    variant: ProductVariant
-    product: Product & {
-        heightUnit: string
-        widthUnit: string
-        depthUnit: string
-        diameterUnit: string
-        weightUnit: string
-    }
-}
 
 const sizeOptions: MultiOption[] = [
     { label: "XS", value: "XS", group: "Letras" },

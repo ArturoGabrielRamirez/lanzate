@@ -1,7 +1,7 @@
 "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Product, ProductMedia, ProductVariant } from "@prisma/client"
+import { ProductVariant } from "@prisma/client"
 import { Box, EditIcon, X, ArrowLeft, Check } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
@@ -13,24 +13,11 @@ import { DeleteVariantButton } from "@/features/products/components/delete-varia
 import { VariantLinkCard } from "@/features/products/components/variant-detail-display/variant-link-card"
 import { updateVariantBasicInfoData } from "@/features/products/data/update-variant-basic-info.data"
 import { editVariantSchema } from "@/features/products/schemas/product-schema"
+import type { VariantBasicInfoDisplayProps } from "@/features/products/types"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface VariantBasicInfoDisplayProps {
-    variant: ProductVariant & {
-        color?: { name: string } | null
-    }
-    slug: string
-    productId: number
-    product: Product & {
-        variants: (ProductVariant & {
-            color?: { name: string } | null
-            stocks?: { quantity: number }[]
-            primary_media?: ProductMedia | null
-        })[]
-    }
-}
 
 function ToggleEditButton({ isEditing, onToggle, onCancel, variant }: {
     isEditing: boolean

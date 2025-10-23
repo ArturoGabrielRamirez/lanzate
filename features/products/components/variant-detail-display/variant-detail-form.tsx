@@ -1,38 +1,7 @@
 "use client"
 
-import { Product, ProductMedia, ProductVariant } from "@prisma/client"
-
-import {
-    VariantBasicInfoDisplay,
-    VariantMediaDisplay,
-    VariantStockDisplay,
-    VariantPriceDisplay,
-    VariantDimensionsDisplay,
-    VariantSizesDisplay,
-    VariantConfigDisplay,
-    VariantColorDisplay
-} from "@/features/products/components/variant-detail-display/index"
-
-interface VariantDetailFormProps {
-    variant: ProductVariant & {
-        color?: { name: string; hex: string } | null
-        stocks?: { quantity: number; branch_id: number }[]
-        primary_media?: ProductMedia | null
-        media?: ProductMedia[]
-    }
-    productPrice: number
-    slug: string
-    productId: number
-    product: Product & {
-        media?: ProductMedia[]
-        primary_media?: ProductMedia | null
-        variants: (ProductVariant & {
-            color?: { name: string } | null
-            stocks?: { quantity: number; branch_id: number }[]
-            primary_media?: ProductMedia | null
-        })[]
-    }
-}
+import {VariantBasicInfoDisplay,VariantMediaDisplay,VariantStockDisplay,VariantPriceDisplay,VariantDimensionsDisplay,VariantSizesDisplay,VariantConfigDisplay,VariantColorDisplay} from "@/features/products/components/variant-detail-display/index"   
+ import type { VariantDetailFormProps } from "@/features/products/types"
 
 function VariantDetailForm({ variant, productPrice, slug, productId, product }: VariantDetailFormProps) {
     return (

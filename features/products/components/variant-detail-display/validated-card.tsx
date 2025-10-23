@@ -2,17 +2,11 @@
 
 import { useFormContext } from "react-hook-form"
 
+import type { ValidatedCardProps } from "@/features/products/types"
 import { Card } from "@/features/shadcn/components/ui/card"
 import { cn } from "@/lib/utils"
 
-type Props = {
-    keys: string[]
-    completeKeys?: string[]
-    children: React.ReactNode
-    className?: string
-}
-
-function ValidatedCard({ keys = [], completeKeys, children, className }: Props) {
+function ValidatedCard({ keys = [], completeKeys, children, className }: ValidatedCardProps) {
     const { formState: { errors }, watch } = useFormContext()
 
     const hasErrors = keys.some(key => (errors as Record<string, unknown>)[key])

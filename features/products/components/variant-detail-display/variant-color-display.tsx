@@ -1,6 +1,5 @@
 "use client"
 
-import { Product, ProductVariant } from "@prisma/client"
 import { Palette, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -8,19 +7,12 @@ import { toast } from "sonner"
 import { Form } from "@/features/layout/components"
 import { CreateColorInline } from "@/features/products/components/create-color-inline"
 import { updateVariantColorData } from "@/features/products/data/update-variant-color.data"
-import { ProductColor } from "@/features/products/types/product-color"
+import type { ProductColor, VariantColorDisplayProps } from "@/features/products/types"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface VariantColorDisplayProps {
-    variant: ProductVariant & {
-        color?: { name: string; hex: string } | null
-    }
-    product: Product & {
-        available_colors: ProductColor[]
-    }
-}
+ 
 
 function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)

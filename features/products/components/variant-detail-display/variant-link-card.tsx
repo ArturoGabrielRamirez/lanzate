@@ -1,15 +1,10 @@
 "use client"
 
-import { Color, ProductMedia, ProductVariant, ProductVariantStock } from "@prisma/client"
 import { Boxes } from "lucide-react"
 import Link from "next/link"
 
-interface VariantLinkCardProps {
-    variant: ProductVariant & { stocks: ProductVariantStock[], color: Color, primary_media: ProductMedia }
-    slug: string
-    productId: string | number
-    productPrice?: number
-}
+import type { VariantLinkCardProps } from "@/features/products/types"
+
 
 function VariantLinkCard({ variant, slug, productId, productPrice }: VariantLinkCardProps) {
     const total = (variant.stocks ?? []).reduce((s: number, x: { quantity: number }) => s + (x.quantity ?? 0), 0)

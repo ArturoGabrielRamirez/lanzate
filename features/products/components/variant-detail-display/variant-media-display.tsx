@@ -1,27 +1,17 @@
 "use client"
 
-import { Product, ProductMedia, ProductVariant } from "@prisma/client"
 import { ImageIcon, EditIcon, X, Check, Upload, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 
 import { updateVariantMediaData } from "@/features/products/data/update-variant-media.data"
+import type { VariantMediaDisplayProps } from "@/features/products/types"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { FileUpload, FileUploadDropzone, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface VariantMediaDisplayProps {
-    variant: ProductVariant & {
-        primary_media?: ProductMedia | null
-        media?: ProductMedia[]
-    }
-    product: Product & {
-        media?: ProductMedia[]
-        primary_media?: ProductMedia | null
-    }
-}
 
 function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)

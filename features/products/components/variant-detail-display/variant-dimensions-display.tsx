@@ -1,11 +1,11 @@
 "use client"
 
-import { Product, ProductVariant } from "@prisma/client"
 import { Scale, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 
 import { updateVariantDimensionsData } from "@/features/products/data/update-variant-dimensions.data"
+import type { VariantDimensionsDisplayProps } from "@/features/products/types"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Label } from "@/features/shadcn/components/ui/label"
@@ -16,16 +16,6 @@ import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 const lengthUnits = ["MM", "CM", "M", "IN", "FT"] as const
 const weightUnits = ["MG", "G", "KG", "OZ", "LB"] as const
 
-interface VariantDimensionsDisplayProps {
-    variant: ProductVariant
-    product: Product & {
-        heightUnit: string
-        widthUnit: string
-        depthUnit: string
-        diameterUnit: string
-        weightUnit: string
-    }
-}
 
 function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
