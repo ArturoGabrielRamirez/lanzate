@@ -1,2 +1,5 @@
 export * from "@/features/products/utils/load-filter-params"
 export * from "@/features/products/utils/mapUnifiedCreatePayload"
+export * from "@/features/products/utils/validateWeightUnit"
+export * from "@/features/products/utils/validateLengthUnit"
+export * from "@/features/products/utils/generateSlug"

@@ -3,6 +3,7 @@
 import randomstring from "randomstring"
 
 import { UnifiedArgs } from "@/features/products/types"
+import { generateSlug } from "@/features/products/utils"
 import { prisma } from "@/utils/prisma"
 import { createServerSideClient } from "@/utils/supabase/server"
 
@@ -38,19 +39,17 @@ export async function insertUnifiedProductData(args: UnifiedArgs) {
 
         // 2) Create product
         // Generar un slug base y verificar si existe
-        let slug = (args.form.slug && args.form.slug.length > 0)
+        const baseSlug = (args.form.slug && args.form.slug.length > 0)
             ? args.form.slug
             : args.form.name.toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-') // reemplazar caracteres especiales con guiones
-                .replace(/^-+|-+$/g, '') // remover guiones del inicio y final
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '')
 
         // Verificar si el slug existe y agregar sufijo si es necesario
-        const existingProduct = await tx.product.findUnique({ where: { slug } })
-        if (existingProduct) {
-            slug = `${slug}-${randomstring.generate(6)}`
-        }
+        const existingProduct = await tx.product.findUnique({ where: { slug: baseSlug } })
+        const slug = generateSlug(baseSlug, existingProduct ? baseSlug : null)
 
-        const skuBase = randomstring.generate(8)
+        const skuBase = Math.random().toString(36).slice(2, 10)
 
         // Resolve categories from form or section and filter invalid values
         const categoryIds: number[] = ((args.form.categories && args.form.categories.length > 0)

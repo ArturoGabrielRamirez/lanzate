@@ -4,25 +4,9 @@
 import { revalidatePath } from "next/cache"
 
 import { UpdateVariantDimensionsPayload } from "@/features/products/types"
+import { validateWeightUnit } from "@/features/products/utils"
+import { validateLengthUnit } from "@/features/products/utils"
 import { prisma } from "@/utils/prisma"
-
-import type { WeightUnit, LengthUnit } from "@prisma/client"
-
-const validateWeightUnit = (unit: string | null | undefined): WeightUnit | null => {
-    if (!unit) return null
-    if (["MG", "G", "KG", "OZ", "LB"].includes(unit)) {
-        return unit as WeightUnit
-    }
-    return "KG"
-}
-
-const validateLengthUnit = (unit: string | null | undefined): LengthUnit | null => {
-    if (!unit) return null
-    if (["MM", "CM", "M", "IN", "FT"].includes(unit)) {
-        return unit as LengthUnit
-    }
-    return "CM"
-}
 
  
 
