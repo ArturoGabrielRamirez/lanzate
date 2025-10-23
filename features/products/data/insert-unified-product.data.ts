@@ -2,32 +2,11 @@
 
 import randomstring from "randomstring"
 
+import { UnifiedArgs } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
 import { createServerSideClient } from "@/utils/supabase/server"
 
 import type { MediaType, LengthUnit, WeightUnit } from "@prisma/client"
-
-type UnifiedArgs = {
-    form: {
-        name: string
-        slug?: string
-        description?: string
-        price: number
-        stock: number
-        categories: { label: string; value: string }[]
-        images?: File[]
-        [key: string]: unknown
-    }
-    media?: { files: File[]; primaryIndex: number | null }
-    categories?: { categories: { label: string; value: string }[] }
-    sizes?: { isUniqueSize: boolean; sizes: { label: string; value: string }[]; measures?: { label: string; value: string; group?: string }[] }
-    colors?: { colors: { id: string; name: string; rgba: [number, number, number, number] }[] }
-    dimensions?: { [key: string]: unknown }
-    settings?: { isActive: boolean; isFeatured: boolean; isPublished: boolean }
-    variants?: { id: string; size?: string; measure?: string; color?: { id: string; name: string; rgba: [number, number, number, number] } }[]
-    targetStoreId: number
-    userId: number
-}
 
 export async function insertUnifiedProduct(args: UnifiedArgs) {
     const supabase = createServerSideClient()

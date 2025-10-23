@@ -1,21 +1,8 @@
 "use server"
 
+import { CategoryValue, UpdateProductPayload } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
 import { createServerSideClient } from "@/utils/supabase/server"
-
-type CategoryValue = { value: string; label: string }
-
-type UpdateProductPayload = {
-    name: string
-    price: number
-    stock: number
-    description?: string
-    categories: CategoryValue[]
-    image?: File
-    is_active?: boolean
-    is_featured?: boolean
-    is_published?: boolean
-}
 
 export async function updateProduct(productId: number, data: UpdateProductPayload) {
     const supabase = createServerSideClient()

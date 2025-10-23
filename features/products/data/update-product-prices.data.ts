@@ -1,12 +1,5 @@
+import { UpdatePricesPayload } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
-
-type UpdatePricesPayload = {
-    storeId: number
-    amount: number
-    updateType: "fijo" | "porcentaje"
-    productIds?: number[]
-    categoryId?: number
-}
 
 export async function updateProductsPrices(payload: UpdatePricesPayload) {
     try {

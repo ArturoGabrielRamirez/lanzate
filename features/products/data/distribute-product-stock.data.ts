@@ -1,15 +1,8 @@
 "use server"
 
 import { ResponseType } from "@/features/layout/types"
+import { DistributeStockData } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
-
-type DistributeStockData = {
-    productId: number
-    distributions: {
-        branchId: number
-        quantity: number
-    }[]
-}
 
 export async function distributeProductStock(data: DistributeStockData): Promise<ResponseType<null>> {
     try {

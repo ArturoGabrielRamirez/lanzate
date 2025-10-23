@@ -1,8 +1,7 @@
 "use server"
 
+import { VariantBranch } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
-
-export type VariantBranch = { id: number; name: string }
 
 export async function getBranchesForVariant(variantId: number) {
     const variant = await prisma.productVariant.findUnique({
