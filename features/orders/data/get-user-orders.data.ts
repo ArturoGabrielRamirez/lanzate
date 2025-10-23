@@ -1,50 +1,29 @@
 "use server"
 
+import { formatSuccessResponse } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
-import { Order, OrderItem, Product, Store, Branch } from "@prisma/client"
 
-type OrderWithDetails = Order & {
-    items: (OrderItem & {
-        product: Product
-    })[]
-    store: Store
-    branch: Branch
+
+export async function getUserOrdersData(userId: number) {
+    const orders = await prisma.order.findMany({
+        where: {
+            customer_id: userId
+        },
+        include: {
+            items: {
+                include: {
+                    product: true
+                }
+            },
+            store: true,
+            branch: true
+        },
+        orderBy: {
+            created_at: 'desc'
+        }
+    })
+
+    if (!orders) throw new Error("Orders not found")
+
+    return formatSuccessResponse("Orders fetched successfully", orders)
 }
-
-export async function getUserOrdersData(userId: number): Promise<{
-    payload: OrderWithDetails[] | null
-    error: boolean
-    message: string
-}> {
-    try {
-        const orders = await prisma.order.findMany({
-            where: {
-                customer_id: userId
-            },
-            include: {
-                items: {
-                    include: {
-                        product: true
-                    }
-                },
-                store: true,
-                branch: true
-            },
-            orderBy: {
-                created_at: 'desc'
-            }
-        })
-
-        return {
-            payload: orders,
-            error: false,
-            message: "Orders fetched successfully"
-        }
-    } catch (error) {
-        return {
-            payload: null,
-            error: true,
-            message: error instanceof Error ? error.message : "Failed to fetch orders"
-        }
-    }
-} 

@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 
-import { actionWrapper } from "@/features/global/utils"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { confirmOrderData } from "@/features/orders/data/confirm-order.data"
 
 type ConfirmOrderActionProps = {
@@ -18,10 +18,6 @@ export async function confirmOrderAction({ orderId }: ConfirmOrderActionProps) {
         revalidatePath("/dashboard")
         revalidatePath("/stores")
 
-        return {
-            payload: result.payload,
-            hasError: result.error,
-            message: result.message
-        }
+        return formatSuccessResponse(result.message, result.payload)
     })
 } 

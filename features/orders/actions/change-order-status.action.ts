@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 
-import { actionWrapper } from "@/features/global/utils"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { getUserInfo } from "@/features/layout/actions"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { updateOrderStatusData } from "@/features/orders/data/update-order-status.data"
@@ -42,11 +42,7 @@ export async function changeOrderStatusAction(orderId: number, data: ChangeOrder
 
         if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
 
-        return {
-            payload: updatedOrder,
-            hasError: false,
-            message: "Order status updated successfully"
-        }
+        return formatSuccessResponse(message, updatedOrder)
 
     })
 } 

@@ -1,6 +1,5 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 
 type GetMessagesFromOrderProps = {
@@ -9,49 +8,47 @@ type GetMessagesFromOrderProps = {
 }
 
 export async function getMessagesFromOrderData({ storeSlug, orderId }: GetMessagesFromOrderProps) {
-    return actionWrapper(async () => {
 
-        const order = await prisma.order.findFirst({
-            where: {
-                id: parseInt(orderId),
-                store: {
-                    slug: storeSlug
-                }
-            },
-            select: {
-                id: true
+    const order = await prisma.order.findFirst({
+        where: {
+            id: parseInt(orderId),
+            store: {
+                slug: storeSlug
             }
-        })
-
-        if (!order) {
-            throw new Error("Order not found or doesn't belong to this store")
+        },
+        select: {
+            id: true
         }
-
-        const messages = await prisma.orderMessage.findMany({
-            where: {
-                order_id: parseInt(orderId)
-            },
-            include: {
-                sender: {
-                    select: {
-                        id: true,
-                        first_name: true,
-                        last_name: true,
-                        email: true,
-                        avatar: true,
-                    }
-                }
-            },
-            orderBy: {
-                created_at: "asc"
-            }
-        })
-
-        return {
-            message: "Messages fetched successfully",
-            payload: messages,
-            error: false
-        }
-
     })
-} 
+
+    if (!order) {
+        throw new Error("Order not found or doesn't belong to this store")
+    }
+
+    const messages = await prisma.orderMessage.findMany({
+        where: {
+            order_id: parseInt(orderId)
+        },
+        include: {
+            sender: {
+                select: {
+                    id: true,
+                    first_name: true,
+                    last_name: true,
+                    email: true,
+                    avatar: true,
+                }
+            }
+        },
+        orderBy: {
+            created_at: "asc"
+        }
+    })
+
+    return {
+        message: "Messages fetched successfully",
+        payload: messages,
+        hasError: false
+    }
+
+}

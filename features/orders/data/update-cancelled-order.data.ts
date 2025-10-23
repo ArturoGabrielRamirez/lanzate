@@ -1,18 +1,17 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { prisma } from "@/utils/prisma"
+import { formatSuccessResponse } from "@/features/global/utils"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { prisma } from "@/utils/prisma"
 
 type UpdateCancelledOrderProps = {
     orderId: string
 }
 
 export async function updateCancelledOrderData({ orderId }: UpdateCancelledOrderProps) {
-    return actionWrapper(async () => {
         // Get current user
-        const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+        const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
         if (userError || !user) {
             throw new Error(userMessage || "User not authenticated")
@@ -184,11 +183,8 @@ export async function updateCancelledOrderData({ orderId }: UpdateCancelledOrder
         //     await sendOrderCancelledNotification(updatedOrder)
         // }
 
-        return {
-            message: "Order has been cancelled. Stock restored and payment refunded if applicable.",
-            payload: updatedOrder,
-            error: false
-        }
-
-    })
+        return formatSuccessResponse(
+            "Order has been cancelled. Stock restored and payment refunded if applicable.",
+            updatedOrder
+        )
 } 

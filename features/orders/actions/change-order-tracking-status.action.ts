@@ -3,7 +3,7 @@
 import { OrderTrackingStatus } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
-import { actionWrapper } from "@/features/global/utils"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { changeOrderTrackingStatusData } from "@/features/orders/data/change-order-tracking-status.data"
 
 type ChangeOrderTrackingStatusActionProps = {
@@ -18,19 +18,16 @@ export async function changeOrderTrackingStatusAction({
     newStatus
 }: ChangeOrderTrackingStatusActionProps) {
     return actionWrapper(async () => {
-        const result = await changeOrderTrackingStatusData({
+
+        const { payload: updatedTracking, hasError, message } = await changeOrderTrackingStatusData({
             orderId,
             newStatus
         })
 
-        if (!result.error) {
-            revalidatePath(`/dashboard/orders/${orderId}`)
-        }
+        if (hasError) throw new Error(message)
 
-        return {
-            payload: result.payload,
-            hasError: result.error,
-            message: result.message
-        }
+        revalidatePath(`/dashboard/orders/${orderId}`)
+
+        return formatSuccessResponse(message, updatedTracking)
     })
 }

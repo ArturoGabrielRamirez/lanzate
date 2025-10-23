@@ -1,8 +1,7 @@
 "use server"
 
-/* import { PrismaClient } from '@prisma/client' */
+import { formatSuccessResponse } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
-import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 
 type ChangeOrderStatusData = {
@@ -12,7 +11,6 @@ type ChangeOrderStatusData = {
 }
 
 export async function updateOrderStatusData(orderId: number, data: ChangeOrderStatusData, userId: number) {
-    return actionWrapper(async () => {
 
         /* const client = new PrismaClient() */
 
@@ -194,11 +192,5 @@ export async function updateOrderStatusData(orderId: number, data: ChangeOrderSt
             console.warn("Order status updated but failed to create log entry:", logError)
         }
 
-        return {
-            message: "Order status updated successfully",
-            payload: updatedOrder,
-            error: false
-        }
-
-    })
+        return formatSuccessResponse("Order status updated successfully", updatedOrder)
 } 
