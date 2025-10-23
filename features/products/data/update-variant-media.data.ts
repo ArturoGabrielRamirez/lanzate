@@ -4,12 +4,8 @@ import { MediaType } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 import { uploadProductImageData } from "@/features/products/data/upload-product-image.data"
+import { UpdateVariantMediaPayload } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
-
-type UpdateVariantMediaPayload = {
-    primary_media_id?: number | null
-    files?: File[]
-}
 
 export async function updateVariantMediaData(variantId: number, data: UpdateVariantMediaPayload) {
     // Si hay archivos nuevos, subirlos primero

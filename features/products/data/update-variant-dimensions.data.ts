@@ -3,6 +3,7 @@
 
 import { revalidatePath } from "next/cache"
 
+import { UpdateVariantDimensionsPayload } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
 
 import type { WeightUnit, LengthUnit } from "@prisma/client"
@@ -23,18 +24,7 @@ const validateLengthUnit = (unit: string | null | undefined): LengthUnit | null 
     return "CM"
 }
 
-type UpdateVariantDimensionsPayload = {
-    weight?: number | null
-    weight_unit?: string | null
-    height?: number | null
-    height_unit?: string | null
-    width?: number | null
-    width_unit?: string | null
-    depth?: number | null
-    depth_unit?: string | null
-    diameter?: number | null
-    diameter_unit?: string | null
-}
+ 
 
 export async function updateVariantDimensionsData(variantId: number, data: UpdateVariantDimensionsPayload) {
     const variant = await prisma.productVariant.update({

@@ -2,9 +2,8 @@
 
 import { revalidatePath } from "next/cache"
 
+import { VariantStockUpdate } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
-
-export type VariantStockUpdate = { branch_id: number; quantity: number }
 
 export async function updateVariantStocksData(variantId: number, updates: VariantStockUpdate[]) {
     // Upsert per-branch stock for the variant

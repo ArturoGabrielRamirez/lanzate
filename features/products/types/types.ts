@@ -214,3 +214,46 @@ export type UpdatePricesPayload = {
     productIds?: number[]
     categoryId?: number
 }
+
+// Variant update payloads
+export type UpdateVariantBasicInfoPayload = {
+    name: string | null
+    sku: string | null
+    barcode: string | null
+    description: string | null
+}
+
+export type UpdateVariantDimensionsPayload = {
+    weight?: number | null
+    weight_unit?: string | null
+    height?: number | null
+    height_unit?: string | null
+    width?: number | null
+    width_unit?: string | null
+    depth?: number | null
+    depth_unit?: string | null
+    diameter?: number | null
+    diameter_unit?: string | null
+}
+
+export type UpdateVariantFlagsPayload = {
+    is_active: boolean
+    is_published: boolean
+    is_featured: boolean
+}
+
+export type UpdateVariantMediaPayload = {
+    primary_media_id?: number | null
+    files?: File[]
+}
+
+export type UpdateVariantPricePayload = {
+    price: number | null
+}
+
+export type UpdateVariantSizesPayload = {
+    size: string | null
+    measure: string | null
+}
+
+export type VariantStockUpdate = { branch_id: number; quantity: number }

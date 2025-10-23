@@ -2,12 +2,8 @@
 
 import { revalidatePath } from "next/cache"
 
+import { UpdateVariantSizesPayload } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
-
-type UpdateVariantSizesPayload = {
-    size: string | null
-    measure: string | null
-}
 
 export async function updateVariantSizesData(variantId: number, data: UpdateVariantSizesPayload) {
     const variant = await prisma.productVariant.update({

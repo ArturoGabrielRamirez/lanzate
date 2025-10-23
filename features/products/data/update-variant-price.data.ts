@@ -2,11 +2,8 @@
 
 import { revalidatePath } from "next/cache"
 
+import { UpdateVariantPricePayload } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
-
-type UpdateVariantPricePayload = {
-    price: number | null
-}
 
 export async function updateVariantPriceData(variantId: number, data: UpdateVariantPricePayload) {
     const variant = await prisma.productVariant.update({

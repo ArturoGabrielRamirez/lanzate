@@ -2,13 +2,8 @@
 
 import { revalidatePath } from "next/cache"
 
+import { UpdateVariantFlagsPayload } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
-
-type UpdateVariantFlagsPayload = {
-    is_active: boolean
-    is_published: boolean
-    is_featured: boolean
-}
 
 export async function updateVariantFlagsData(variantId: number, data: UpdateVariantFlagsPayload) {
     const updated = await prisma.productVariant.update({
