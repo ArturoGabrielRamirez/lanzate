@@ -10,4 +10,5 @@ export * from "@/features/products/actions/get-public-store-product-details.acti
 export * from "@/features/products/actions/get-related-products.action"
 export * from "@/features/products/actions/search-product-by-barcode.action"
 export * from "@/features/products/actions/search-products-by-name.action"
+export * from "@/features/products/actions/toggle-like.action"
 export * from "@/features/products/actions/update-products-prices.action"
