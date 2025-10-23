@@ -20,7 +20,7 @@ export async function changeOrderStatusAction(orderId: number, data: ChangeOrder
 
         if (userError || !user) throw new Error(userMessage)
 
-        const { payload: updatedOrder, error, message } = await updateOrderStatusData(orderId, data, user.id)
+        const { payload: updatedOrder, hasError: error, message } = await updateOrderStatusData(orderId, data, user.id)
 
         if (error) throw new Error(message)
 

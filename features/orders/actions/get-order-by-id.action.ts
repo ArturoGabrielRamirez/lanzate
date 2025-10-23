@@ -13,7 +13,7 @@ export async function getOrderByIdAction(orderId: number, userId: number) {
             throw new Error("User ID is required")
         }
 
-        const { payload, error, message } = await getOrderByIdData(orderId, userId)
+        const { payload, hasError: error, message } = await getOrderByIdData(orderId, userId)
 
         if (error) {
             throw new Error(message)

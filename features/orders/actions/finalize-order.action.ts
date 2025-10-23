@@ -20,13 +20,13 @@ export async function finalizeOrderAction({
             shippingMethod
         })
 
-        if (!result.error) {
+        if (!result.hasError) {
             revalidatePath(`/dashboard/orders/${orderId}`)
         }
 
         return {
             payload: result.payload,
-            hasError: result.error,
+            hasError: result.hasError,
             message: result.message
         }
     })

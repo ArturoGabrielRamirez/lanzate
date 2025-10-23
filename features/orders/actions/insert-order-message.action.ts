@@ -3,7 +3,7 @@
 import { MessageType } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
-import { actionWrapper } from "@/features/global/utils"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { insertOrderMessageData } from "@/features/orders/data/insert-order-message.data"
 
 type InsertOrderMessageActionProps = {
@@ -26,7 +26,7 @@ export async function insertOrderMessageAction({
     pathname
 }: InsertOrderMessageActionProps) {
     return actionWrapper(async () => {
-        const { payload: newMessage, error, message: resultMessage } = await insertOrderMessageData({
+        const { payload: newMessage, hasError: hasError, message: resultMessage } = await insertOrderMessageData({
             orderId,
             message,
             messageType,
@@ -35,16 +35,12 @@ export async function insertOrderMessageAction({
             fileSize
         })
 
-        if (error) throw new Error(resultMessage)
+        if (hasError) throw new Error(resultMessage)
 
         // Revalidate the path to refresh the messages
         revalidatePath(pathname)
 
-        return {
-            message: "Message sent successfully",
-            payload: newMessage,
-            hasError: false
-        }
+        return formatSuccessResponse("Message sent successfully", newMessage)
 
     })
 } 

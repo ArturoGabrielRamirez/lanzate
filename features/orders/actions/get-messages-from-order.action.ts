@@ -1,6 +1,6 @@
 "use server"
 
-import { actionWrapper } from "@/features/global/utils"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { getMessagesFromOrderData } from "@/features/orders/data/get-messages-from-order.data"
 
 type GetMessagesFromOrderActionProps = {
@@ -10,16 +10,11 @@ type GetMessagesFromOrderActionProps = {
 
 export async function getMessagesFromOrderAction({ storeSlug, orderId }: GetMessagesFromOrderActionProps) {
     return actionWrapper(async () => {
-        
-        const { payload: messages, error, message } = await getMessagesFromOrderData({ storeSlug, orderId })
+
+        const { payload: messages, hasError: error, message } = await getMessagesFromOrderData({ storeSlug, orderId })
 
         if (error) throw new Error(message)
 
-        return {
-            message: "Messages fetched successfully",
-            payload: messages,
-            hasError: false
-        }
-
+        return formatSuccessResponse("Messages fetched successfully", messages)
     })
 } 

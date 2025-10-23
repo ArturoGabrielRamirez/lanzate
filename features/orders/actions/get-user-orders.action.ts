@@ -1,6 +1,6 @@
 "use server"
 
-import { actionWrapper } from "@/features/global/utils"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { getUserOrdersData } from "@/features/orders/data/get-user-orders.data"
 
 export async function getUserOrdersAction(userId: number) {
@@ -9,16 +9,10 @@ export async function getUserOrdersAction(userId: number) {
             throw new Error("User ID is required")
         }
 
-        const { payload, error, message } = await getUserOrdersData(userId)
+        const { payload, hasError: hasError, message } = await getUserOrdersData(userId)
 
-        if (error) {
-            throw new Error(message)
-        }
+        if (hasError) throw new Error(message)
 
-        return {
-            message: message,
-            payload: payload,
-            hasError: false
-        }
+        return formatSuccessResponse("Orders fetched successfully", payload)
     })
 } 

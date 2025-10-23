@@ -1,6 +1,6 @@
 "use server"
 
-import { actionWrapper } from "@/features/global/utils"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { selectOrderByIdData } from "@/features/orders/data/select-order-by-id.data"
 
 export async function getOrderDetailsAction(id: string) {
@@ -10,15 +10,11 @@ export async function getOrderDetailsAction(id: string) {
 
         if (isNaN(parsedId)) throw new Error("Invalid order id")
 
-        const { payload: order, error, message } = await selectOrderByIdData(parsedId)
+        const { payload: order, hasError: error, message } = await selectOrderByIdData(parsedId)
 
         if (error) throw new Error(message)
 
-        return {
-            payload: order,
-            hasError: false,
-            message: "Order details fetched successfully"
-        }
+        return formatSuccessResponse("Order details fetched successfully", order)
 
     })
 } 
