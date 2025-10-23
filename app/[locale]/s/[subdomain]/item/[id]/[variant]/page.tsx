@@ -3,7 +3,7 @@ import { Title } from "@/features/layout/components"
 import PageContainer from "@/features/layout/components/page-container"
 import AddToCartButton from "@/features/products/components/add-to-cart-button"
 import LikeButton from "@/features/products/components/like-button"
-import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
+import { getPublicStoreProductDetailsAction } from "@/features/products/actions/get-public-store-product-details.action"
 import { Category } from "@prisma/client"
 import { Image, Share, ShoppingBag } from "lucide-react"
 import Link from "next/link"
@@ -17,7 +17,7 @@ type Props = {
 export default async function ProductVariantDetailsPage({ params }: Props) {
     const { id, subdomain, variant } = await params
 
-    const { payload: product, error, message } = await getProductDetailsAction(id, subdomain, variant)
+    const { payload: product, error, message } = await getPublicStoreProductDetailsAction(id, subdomain, variant)
 
     if (error || !product) {
         return (

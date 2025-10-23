@@ -1,16 +1,11 @@
-import { Card, CardDescription, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Product } from "@prisma/client"
 import Image from "next/image"
-import AddToCartButton from "./add-to-cart-button"
 import Link from "next/link"
-import LikeButton from "./like-button"
 
-type Props = {
-    product: Product
-    href: string
-}
+import { AddToCartButton } from "@/features/products/components/add-to-cart-button"
+import type { ListCardProps } from "@/features/products/types"
+import { Card, CardDescription, CardTitle } from "@/features/shadcn/components/ui/card"
 
-function ListCard({ product, href }: Props) {
+function ListCard({ product, href }: ListCardProps) {
     return (
         <Link href={href} className="block w-full">
             <Card className="flex flex-row gap-3 p-3 h-24 hover:shadow-md transition-shadow">
@@ -52,4 +47,4 @@ function ListCard({ product, href }: Props) {
     )
 }
 
-export default ListCard
+export { ListCard }

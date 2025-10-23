@@ -1,21 +1,18 @@
 "use client"
 
 import { Ruler, EditIcon, X, Check, Loader2 } from "lucide-react"
-import { ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { toast } from "sonner"
+
+import { updateVariantSizesData } from "@/features/products/data/update-variant-sizes.data"
+import type { VariantSizesDisplayProps } from "@/features/products/types"
 import MultipleSelector from "@/features/shadcn/components/expansion/multiple-selector"
 import type { Option as MultiOption } from "@/features/shadcn/components/expansion/multiple-selector"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Label } from "@/features/shadcn/components/ui/label"
-import { toast } from "sonner"
-import { updateVariantSizes } from "../../data/updateVariantSizes"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface VariantSizesDisplayProps {
-    variant: ProductVariant
-    product: any
-}
 
 const sizeOptions: MultiOption[] = [
     { label: "XS", value: "XS", group: "Letras" },
@@ -42,7 +39,7 @@ const measureOptions: MultiOption[] = [
     { label: "Grande", value: "large", group: "Genérico" },
 ]
 
-const VariantSizesDisplay = ({ variant, product }: VariantSizesDisplayProps) => {
+function VariantSizesDisplay({ variant }: VariantSizesDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
     const [selectedSize, setSelectedSize] = useState<MultiOption | null>(
@@ -76,11 +73,11 @@ const VariantSizesDisplay = ({ variant, product }: VariantSizesDisplayProps) => 
                 onSubmit={async (e) => {
                     e.preventDefault()
                     setIsSaving(true)
-                    const response = await updateVariantSizes(variant.id, {
-                        size: selectedSize?.value!,
-                        measure: selectedMeasure?.value!
+                    const response = await updateVariantSizesData(variant.id, {
+                        size: selectedSize?.value ?? null,
+                        measure: selectedMeasure?.value ?? null
                     })
-                    if (response.error) {
+                    if (response.hasError) {
                         toast.error(response.message || "Error al actualizar los tamaños")
                         setIsSaving(false)
                         return
@@ -184,4 +181,4 @@ const VariantSizesDisplay = ({ variant, product }: VariantSizesDisplayProps) => 
     )
 }
 
-export default VariantSizesDisplay
+export { VariantSizesDisplay }

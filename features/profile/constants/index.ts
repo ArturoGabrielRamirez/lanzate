@@ -126,36 +126,3 @@ export const PRESET_BANNERS = [
         name: "Lago rodeado de bosque otoñal"
     }
 ];
-
-export const diceBearStyles = [
-    { style: 'adventurer', label: 'Aventurero', icon: '⚔️' },
-    { style: 'adventurer-neutral', label: 'Aventurero Neutral', icon: '🛡️' },
-    { style: 'avataaars', label: 'Avataaars', icon: '👤' },
-    { style: 'avataaars-neutral', label: 'Avataaars Neutral', icon: '🧍‍♂️' },
-    { style: 'big-ears', label: 'Orejas Grandes', icon: '👂' },
-    { style: 'big-ears-neutral', label: 'Orejas Grandes Neutro', icon: '👂' },
-    { style: 'big-smile', label: 'Gran Sonrisa', icon: '😁' },
-    { style: 'bottts', label: 'Robot', icon: '🤖' },
-    { style: 'bottts-neutral', label: 'Robot Neutro', icon: '🤖' },
-    { style: 'croodles', label: 'Croodles', icon: '🎨' },
-    { style: 'croodles-neutral', label: 'Croodles Neutro', icon: '🎨' },
-    { style: 'dylan', label: 'Dylan', icon: '👨‍🎨' },
-    { style: 'fun-emoji', label: 'Emoji Divertido', icon: '😄' },
-    { style: 'glass', label: 'Vidrio', icon: '🥽' },
-    { style: 'icons', label: 'Iconos', icon: '🔰' },
-    { style: 'identicon', label: 'Identicon', icon: '🔷' },
-    { style: 'initials', label: 'Iniciales', icon: '🔤' },
-    { style: 'lorelei', label: 'Lorelei', icon: '🧝‍♀️' },
-    { style: 'lorelei-neutral', label: 'Lorelei Neutro', icon: '🧝‍♀️' },
-    { style: 'micah', label: 'Micah', icon: '🧑' },
-    { style: 'miniavs', label: 'Mini Avatar', icon: '🎭' },
-    { style: 'notionists', label: 'Notionists', icon: '🧠' },
-    { style: 'notionists-neutral', label: 'Notionists Neutro', icon: '🧠' },
-    { style: 'open-peeps', label: 'Open Peeps', icon: '🖊️' },
-    { style: 'personas', label: 'Personas', icon: '👨' },
-    { style: 'pixel-art', label: 'Pixel Art', icon: '🎮' },
-    { style: 'pixel-art-neutral', label: 'Pixel Art Neutro', icon: '🟦' },
-    { style: 'rings', label: 'Anillos', icon: '💍' },
-    { style: 'shapes', label: 'Formas', icon: '🔵' },
-    { style: 'thumbs', label: 'Pulgar', icon: '👍' }
-];

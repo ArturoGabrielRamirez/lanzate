@@ -1,4 +1,4 @@
-import ProductCardSkeleton from "./product-card-skeleton"
+import { ProductCardSkeleton } from "@/features/products/components/product-card-skeleton"
 
 function ProductCardLoader() {
     return (
@@ -13,4 +13,4 @@ function ProductCardLoader() {
         </div>
     )
 }
-export default ProductCardLoader
+export { ProductCardLoader }

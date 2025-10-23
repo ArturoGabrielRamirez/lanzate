@@ -211,7 +211,7 @@
         "create-product": {
             "button": "Crear Producto",
             "title": "Crear nuevo producto",
-            "description": "¡Creá un nuevo producto para comenzar a vender tus productos! Elegí un nombre para tu producto y hacé clic en el botón de abajo, podés continuar agregando más detalles del producto una vez que esté creado.",
+            "description": "Descripción",
             "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
             "drag-drop": "Arrastrá y soltá archivos aquí",
             "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
@@ -219,7 +219,6 @@
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
-            "description": "Descripción",
             "file-rejected": "\"{filename}\" ha sido rechazado",
             "messages": {
                 "success": "¡Producto creado exitosamente!",
@@ -1003,7 +1002,7 @@
         "create-product": {
             "button": "Crear Producto",
             "title": "Crear nuevo producto",
-            "description": "¡Creá un nuevo producto para comenzar a vender tus productos! Elegí un nombre para tu producto y hacé clic en el botón de abajo, podés continuar agregando más detalles del producto una vez que esté creado.",
+            "description": "Descripción",
             "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
             "drag-drop": "Arrastrá y soltá archivos aquí",
             "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
@@ -1011,7 +1010,6 @@
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
-            "description": "Descripción",
             "file-rejected": "\"{filename}\" ha sido rechazado",
             "messages": {
                 "success": "¡Producto creado exitosamente!",
@@ -1022,14 +1020,13 @@
         "edit-product": {
             "button": "Editar Producto",
             "title": "Editar producto",
-            "description": "Editá los detalles de tu producto",
+            "description": "Descripción",
             "drag-drop": "Arrastrá y soltá archivos aquí",
             "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
             "browse-files": "Explorar archivos",
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
-            "description": "Descripción",
             "file-rejected": "\"{filename}\" ha sido rechazado",
             "validation": {
                 "name-required": "El nombre es requerido",

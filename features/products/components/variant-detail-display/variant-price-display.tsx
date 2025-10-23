@@ -1,25 +1,18 @@
 "use client"
 
 import { DollarSign, EditIcon, X, Check, Loader2 } from "lucide-react"
-import { ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Form, InputField } from "@/features/layout/components"
-import { Label } from "@/features/shadcn/components/ui/label"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+
+import { Form, InputField } from "@/features/layout/components"
+import { updateVariantPriceData } from "@/features/products/data/update-variant-price.data"
+import type { VariantPriceDisplayProps, VariantPriceFormValues } from "@/features/products/types"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Label } from "@/features/shadcn/components/ui/label"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { updateVariantPrice } from "../../data/updateVariantPrice"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface VariantPriceDisplayProps {
-    variant: ProductVariant
-    productPrice: number
-}
 
-type VariantPriceFormValues = {
-    "variant-price"?: string
-}
-
-const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps) => {
+function VariantPriceDisplay({ variant, productPrice }: VariantPriceDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
     const [priceInput, setPriceInput] = useState<string>(
@@ -55,7 +48,7 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
                         setIsSaving(true)
                         const raw = data?.["variant-price"]
                         const price = raw && raw !== "" ? Number(raw) : null
-                        const response = await updateVariantPrice(variant.id, { price })
+                        const response = await updateVariantPriceData(variant.id, { price })
                         setIsSaving(false)
                         return response
                     } catch (error) {
@@ -156,4 +149,4 @@ const VariantPriceDisplay = ({ variant, productPrice }: VariantPriceDisplayProps
     )
 }
 
-export default VariantPriceDisplay
+export { VariantPriceDisplay }

@@ -1,22 +1,20 @@
 "use client"
-import { Card, CardContent, CardFooter, CardHeader } from "@/features/shadcn/components/ui/card"
-import { Product } from "@prisma/client"
+
+import { Crown, Heart, Share, ShoppingCart } from "lucide-react"
+import * as motion from "motion/react-client"
 import Image from "next/image"
-import AddToCartButton from "./add-to-cart-button"
 import Link from "next/link"
 import { useState } from "react"
-import * as motion from "motion/react-client"
+
+
+import { AddToCartButton } from "@/features/products/components/add-to-cart-button"
+import type { GridCardProps } from "@/features/products/types"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent, CardFooter, CardHeader } from "@/features/shadcn/components/ui/card"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Crown, Heart, Share, ShoppingCart } from "lucide-react"
-import { Badge } from "@/features/shadcn/components/ui/badge"
 
-type Props = {
-    product: Product
-    href: string
-}
-
-function GridCard({ product, href }: Props) {
+function GridCard({ product, href }: GridCardProps) {
 
     const [isFlipped, setIsFlipped] = useState(false)
 
@@ -152,4 +150,4 @@ function GridCard({ product, href }: Props) {
     )
 }
 
-export default GridCard 
+export { GridCard } 

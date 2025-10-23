@@ -1,13 +1,13 @@
-
-import { cn } from '@/lib/utils'
-import { Button } from '@/features/shadcn/components/ui/button'
 import Link from 'next/link'
+
+import { Button } from '@/features/shadcn/components/ui/button'
+import { cn } from '@/lib/utils'
 
 
 
 export default function IntegrationsSection() {
     return (
-        <div className="dark:bg-black bg-background py-24 md:pt-12 md:py-32 sm:rounded-b-3xl">
+        <div className="py-24 md:pt-12 md:py-32 bg-background">
             <div className="mx-auto max-w-5xl px-6">
                 <div className="grid items-center sm:grid-cols-2">
                     <div className="dark:bg-black/20 relative mx-auto w-fit mask-t-from-80% mask-l-from-80% mask-b-from-80% mask-r-from-80%">
@@ -62,7 +62,7 @@ export default function IntegrationsSection() {
     )
 }
 
-const IntegrationCard = ({ children, className, borderClassName }: { children: React.ReactNode; className?: string; borderClassName?: string }) => {
+function IntegrationCard({ children, className, borderClassName }: { children: React.ReactNode; className?: string; borderClassName?: string }) {
     return (
         <div className={cn('bg-background relative flex size-20 rounded-xl dark:bg-transparent hover:scale-110 transition-all', className)}>
             <div

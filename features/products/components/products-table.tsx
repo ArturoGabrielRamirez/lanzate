@@ -1,6 +1,6 @@
 "use client"
 
-import { Product, Category, Branch, ProductStock } from "@prisma/client"
+import { Product, Category } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { Eye } from "lucide-react"
 import { ArrowUpDown, Crown, MoreHorizontal } from "lucide-react"
@@ -8,52 +8,25 @@ import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { useMemo } from "react"
 
+import { DataTable } from "@/features/layout/components/data-table"
+import { DeleteProductButton, EditProductButton, DistributeStockButton } from "@/features/products/components"
+import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
+import type { ProductsTableProps, ProductsTableVariantRow } from "@/features/products/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
 import { DropdownMenu } from "@/features/shadcn/components/ui/dropdown-menu"
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
-import { DataTable } from "@/features/layout/components/data-table"
-import { DeleteProductButton, EditProductButton, DistributeStockButton } from "@/features/products/components"
-import DeleteVariantButton from "@/features/products/components/delete-variant-button"
 import { cn } from "@/lib/utils"
 
-type EmployeePermissions = {
-    isAdmin: boolean
-    permissions?: {
-        can_create_orders: boolean
-        can_update_orders: boolean
-        can_create_products: boolean
-        can_update_products: boolean
-        can_manage_stock: boolean
-        can_process_refunds: boolean
-        can_view_reports: boolean
-        can_manage_employees: boolean
-        can_manage_store: boolean
-    }
-}
-
-type Props = {
-    data: (Product & { categories: Category[] })[]
-    userId: number
-    slug: string
-    storeId: number
-    employeePermissions: EmployeePermissions
-    branches: (Branch & {
-        stock: ProductStock[]
-    })[]
-}
-
-function ProductsTable({ data, userId, slug, employeePermissions, branches }: Props) {
+function ProductsTable({ data, userId, slug, employeePermissions, branches }: ProductsTableProps) {
 
     const t = useTranslations("store.products-table")
 
     // Check if user can create products
     //const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
 
-    type VariantRow = (Product & { categories: Category[] }) & { variant_id?: number; variant_label?: string }
-
-    const rows: VariantRow[] = useMemo(() => {
+    const rows: ProductsTableVariantRow[] = useMemo(() => {
         const list = data as unknown as (Product & {
             categories: Category[];
             variants?: {
@@ -67,7 +40,7 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
             }[]
         })[]
 
-        const flattened: VariantRow[] = []
+        const flattened: ProductsTableVariantRow[] = []
 
         for (const p of list) {
             const variants = p.variants ?? []
@@ -93,7 +66,7 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
         return flattened
     }, [data])
 
-    const columns: ColumnDef<VariantRow>[] = [
+    const columns: ColumnDef<ProductsTableVariantRow>[] = [
         {
             id: "select",
             header: ({ table }) => (

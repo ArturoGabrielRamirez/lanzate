@@ -1,31 +1,23 @@
 "use client"
 
 import { Package, EditIcon, X, Check, Plus, Trash2, Loader2 } from "lucide-react"
-import { ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Form } from "@/features/layout/components"
 import { useEffect, useMemo, useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { useFormContext } from "react-hook-form"
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/features/shadcn/components/ui/select"
-import { Button } from "@/features/shadcn/components/ui/button"
 import { toast } from "sonner"
-import { getBranchesForVariant } from "../../data/getBranchesForVariant"
-import { updateVariantStocks } from "../../data/updateVariantStocks"
+
+import { Form } from "@/features/layout/components"
+import { getBranchesForVariantData } from "@/features/products/data/get-branches-for-variant.data"
+import { updateVariantStocksData } from "@/features/products/data/update-variant-stocks.data"
+import type { VariantStockDisplayProps, VariantStockFormValues } from "@/features/products/types"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Input } from "@/features/shadcn/components/ui/input"
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/features/shadcn/components/ui/select"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface VariantStockDisplayProps {
-    variant: ProductVariant & {
-        stocks?: { quantity: number; branch_id: number; branch?: { id: number; name: string } }[]
-    }
-}
 
-type VariantStockFormValues = {
-    stock: number
-}
-
-const VariantStockDisplay = ({ variant }: VariantStockDisplayProps) => {
+function VariantStockDisplay({ variant }: VariantStockDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [branches, setBranches] = useState<{ id: number; name: string }[]>([])
     const [rows, setRows] = useState<{ branch_id: number | ""; quantity: number | "" }[]>([])
@@ -46,8 +38,8 @@ const VariantStockDisplay = ({ variant }: VariantStockDisplayProps) => {
 
     useEffect(() => {
         const load = async () => {
-            const { payload, error, message } = await getBranchesForVariant(variant.id)
-            if (error || !payload) {
+            const { payload, hasError, message } = await getBranchesForVariantData(variant.id)
+            if (hasError || !payload) {
                 console.error(message)
                 return
             }
@@ -87,8 +79,8 @@ const VariantStockDisplay = ({ variant }: VariantStockDisplayProps) => {
         }
 
         setIsSaving(true)
-        const { error, message } = await updateVariantStocks(variant.id, updates)
-        if (error) {
+        const { hasError, message } = await updateVariantStocksData(variant.id, updates)
+        if (hasError) {
             toast.error(message || "Error al actualizar stock")
             setIsSaving(false)
             return
@@ -174,7 +166,7 @@ const VariantStockDisplay = ({ variant }: VariantStockDisplayProps) => {
                                 <p className="text-sm text-muted-foreground">{totalStock} unidades</p>
                             </div>
                         </div>
-                        
+
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Stock por sucursal</label>
                             {isEditing ? (
@@ -253,4 +245,4 @@ const VariantStockDisplay = ({ variant }: VariantStockDisplayProps) => {
     )
 }
 
-export default VariantStockDisplay
+export { VariantStockDisplay }

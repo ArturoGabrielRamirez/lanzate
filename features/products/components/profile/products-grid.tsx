@@ -1,5 +1,5 @@
-import { ProductsGridProps } from '../../../profile/types'
-import { ProductCard } from './product-card'
+import { ProductCard } from '@/features/products/components/profile/product-card'
+import { ProductsGridProps } from '@/features/profile/types'
 
 export function ProductsGrid({ products }: ProductsGridProps) {
     return (

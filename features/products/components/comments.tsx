@@ -1,21 +1,18 @@
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getProductCommentsData } from "../data/getProductComments"
-import CommentsClient from "./comments-client"
+import { CommentsClient } from "@/features/products/components/comments-client"
+import { getProductCommentsData } from "@/features/products/data/get-product-comments.data"
+import type { CommentsProps } from "@/features/products/types"
 
-type Props = {
-    productId: number
-}
-
-async function Comments({ productId }: Props) {
+async function Comments({ productId }: CommentsProps) {
     const { payload: user } = await getUserInfo()
-    
+
     // Get initial comments
-    const { payload: comments, error } = await getProductCommentsData(productId)
-    
-    const initialComments = error ? [] : comments || []
+    const { payload: comments, hasError } = await getProductCommentsData(productId)
+
+    const initialComments = hasError ? [] : comments || []
 
     return (
-        <CommentsClient 
+        <CommentsClient
             productId={productId}
             user={user}
             initialComments={initialComments}
@@ -23,4 +20,4 @@ async function Comments({ productId }: Props) {
     )
 }
 
-export default Comments 
+export { Comments } 

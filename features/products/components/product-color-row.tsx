@@ -1,14 +1,16 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
-import { Popover, PopoverContent, PopoverTrigger } from "@/features/shadcn/components/ui/popover"
-import { ColorPicker, ColorPickerSelection, ColorPickerHue, ColorPickerAlpha, ColorPickerOutput, ColorPickerFormat, ColorPickerEyeDropper } from "@/features/shadcn/components/shadcn-io/color-picker"
-import { Label } from "@/features/shadcn/components/ui/label"
-import { Input } from "@/features/shadcn/components/ui/input"
-import { Button } from "@/features/shadcn/components/ui/button"
-import { X } from "lucide-react"
 import Color, { ColorLike } from "color"
-import type { ProductColor } from "../type/product-color"
+import { X } from "lucide-react"
+import { useEffect, useState } from "react"
+
+import type { ProductColor } from "@/features/products/types"
+import { ColorPicker, ColorPickerSelection, ColorPickerHue, ColorPickerAlpha, ColorPickerOutput, ColorPickerFormat, ColorPickerEyeDropper } from "@/features/shadcn/components/shadcn-io/color-picker"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Input } from "@/features/shadcn/components/ui/input"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Popover, PopoverContent, PopoverTrigger } from "@/features/shadcn/components/ui/popover"
+
 
 type ProductColorRowProps = {
     color: ProductColor
@@ -25,7 +27,7 @@ function rgbaToHex(rgba: [number, number, number, number]) {
     return hex
 }
 
-export function ProductColorRow({ color, index, onChange, onDelete, canDelete, error }: ProductColorRowProps) {
+function ProductColorRow({ color, index, onChange, onDelete, canDelete, error }: ProductColorRowProps) {
     const [name, setName] = useState<string>("")
     const [hexColor, setHexColor] = useState<string>(() => rgbaToHex(color.rgba))
     const [selectedColor, setSelectedColor] = useState<string>("#ef4444")
@@ -102,5 +104,7 @@ export function ProductColorRow({ color, index, onChange, onDelete, canDelete, e
         </div>
     )
 }
+
+export { ProductColorRow }
 
 

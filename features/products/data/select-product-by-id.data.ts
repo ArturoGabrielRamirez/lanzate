@@ -1,8 +1,10 @@
 "use server"
 
+import { ProductVariant } from "@prisma/client"
+
 import { prisma } from "@/utils/prisma"
 
-export async function selectProductById(id: number) {
+export async function selectProductByIdData(id: number) {
     const product = await prisma.product.findUnique({
         where: {
             id: id,
@@ -35,11 +37,11 @@ export async function selectProductById(id: number) {
     // derive total stock from variants
     const enriched = product && {
         ...product,
-        stock: (product.variants ?? []).flatMap((v: any) => v.stocks ?? []).reduce((s: number, x: any) => s + (x.quantity ?? 0), 0)
+        stock: (product.variants ?? []).flatMap((v: ProductVariant & { stocks: { quantity: number }[] }) => v.stocks ?? []).reduce((s: number, x: { quantity: number }) => s + (x.quantity ?? 0), 0)
     }
 
     return {
-        payload: enriched as any,
+        payload: enriched,
         hasError: false,
         message: "Product details fetched successfully"
     }

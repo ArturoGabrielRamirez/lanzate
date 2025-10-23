@@ -1,26 +1,23 @@
 "use client"
 
 import { Scale, EditIcon, X, Check, Loader2 } from "lucide-react"
-import { ProductVariant } from "@prisma/client"
+import { useState } from "react"
+import { toast } from "sonner"
+
+import { updateVariantDimensionsData } from "@/features/products/data/update-variant-dimensions.data"
+import type { VariantDimensionsDisplayProps } from "@/features/products/types"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
-import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { toast } from "sonner"
-import { updateVariantDimensions } from "../../data/updateVariantDimensions"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 const lengthUnits = ["MM", "CM", "M", "IN", "FT"] as const
 const weightUnits = ["MG", "G", "KG", "OZ", "LB"] as const
 
-interface VariantDimensionsDisplayProps {
-    variant: ProductVariant
-    product: any
-}
 
-const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplayProps) => {
+function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
 
@@ -51,8 +48,8 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
                         diameter_unit: formData.get('diameterUnit') as string || "CM"
                     }
                     setIsSaving(true)
-                    const response = await updateVariantDimensions(variant.id, data)
-                    if (response.error) {
+                    const response = await updateVariantDimensionsData(variant.id, data)
+                    if (response.hasError) {
                         toast.error(response.message || "Error al actualizar las dimensiones")
                         setIsSaving(false)
                         return
@@ -130,8 +127,8 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
                                     defaultValue={variant.height?.toString() || product.height?.toString()}
                                     disabled={!isEditing}
                                 />
-                                <Select 
-                                    name="heightUnit" 
+                                <Select
+                                    name="heightUnit"
                                     defaultValue={variant.height_unit || product.height_unit || "CM"}
                                     disabled={!isEditing}
                                 >
@@ -158,8 +155,8 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
                                     defaultValue={variant.width?.toString() || product.width?.toString()}
                                     disabled={!isEditing}
                                 />
-                                <Select 
-                                    name="widthUnit" 
+                                <Select
+                                    name="widthUnit"
                                     defaultValue={variant.width_unit || product.width_unit || "CM"}
                                     disabled={!isEditing}
                                 >
@@ -186,8 +183,8 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
                                     defaultValue={variant.depth?.toString() || product.depth?.toString()}
                                     disabled={!isEditing}
                                 />
-                                <Select 
-                                    name="depthUnit" 
+                                <Select
+                                    name="depthUnit"
                                     defaultValue={variant.depth_unit || product.depth_unit || "CM"}
                                     disabled={!isEditing}
                                 >
@@ -214,8 +211,8 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
                                     defaultValue={variant.diameter?.toString() || product.diameter?.toString()}
                                     disabled={!isEditing}
                                 />
-                                <Select 
-                                    name="diameterUnit" 
+                                <Select
+                                    name="diameterUnit"
                                     defaultValue={variant.diameter_unit || product.diameter_unit || "CM"}
                                     disabled={!isEditing}
                                 >
@@ -242,8 +239,8 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
                                     defaultValue={variant.weight?.toString() || product.weight?.toString()}
                                     disabled={!isEditing}
                                 />
-                                <Select 
-                                    name="weightUnit" 
+                                <Select
+                                    name="weightUnit"
                                     defaultValue={variant.weight_unit || product.weight_unit || "KG"}
                                     disabled={!isEditing}
                                 >
@@ -266,4 +263,4 @@ const VariantDimensionsDisplay = ({ variant, product }: VariantDimensionsDisplay
     )
 }
 
-export default VariantDimensionsDisplay
+export { VariantDimensionsDisplay }

@@ -1,14 +1,10 @@
 import { Product } from "@prisma/client"
-import ProductCardContainer from "./product-card-container"
-import GridCard from "./grid-card"
-import ListCard from "./list-card"
 
-type Props = {
-    product: Product
-    href: string
-}
+import { GridCard } from "@/features/products/components/grid-card"
+import { ListCard } from "@/features/products/components/list-card"
+import { ProductCardContainer } from "@/features/products/components/product-card-container"
 
-function ProductsCard({ product, href }: Props) {
+function ProductsCard({ product, href }: { product: Product; href: string }) {
     return (
         <ProductCardContainer
             listCard={<ListCard product={product} href={href} />}
@@ -17,4 +13,4 @@ function ProductsCard({ product, href }: Props) {
     )
 }
 
-export default ProductsCard
+export { ProductsCard }

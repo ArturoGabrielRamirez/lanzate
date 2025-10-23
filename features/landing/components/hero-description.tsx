@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl"
 
-import { Button } from "@/features/shadcn/components/ui/button"
 import { WithClassName } from "@/features/global/types";
-import { EyeCatchingButton } from "@/features/landing/components"
+import { AnimatedShinyButton } from "@/features/shadcn/components/animated-shiny-button";
+import { Button } from "@/features/shadcn/components/ui/button"
 import { cn } from "@/lib/utils";
 
 function HeroDescription({ className }: WithClassName) {
@@ -16,16 +16,19 @@ function HeroDescription({ className }: WithClassName) {
                 {t("description.slogan")}
             </p>
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
-                <Button variant="outline" className="text-xl font-bold">
+                <Button variant="outline" className="text-xl font-bold" size="lg">
                     <Link href="/about">
                         {t('buttons.learn-more')}
                     </Link>
                 </Button>
-                <EyeCatchingButton asChild className="text-xl font-bold">
+                <AnimatedShinyButton asChild>
                     <Link href="/login">
                         {t('buttons.get-started')}
                     </Link>
-                </EyeCatchingButton>
+                </AnimatedShinyButton>
+                {/* <EyeCatchingButton asChild className="text-xl font-bold">
+                    
+                </EyeCatchingButton> */}
             </div>
         </div>
     )

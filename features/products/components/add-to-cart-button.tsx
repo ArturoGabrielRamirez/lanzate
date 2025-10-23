@@ -1,24 +1,14 @@
 "use client"
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { useCart } from "@/features/cart/components/cart-provider"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Product } from "@prisma/client"
 import { ShoppingCart } from "lucide-react"
 import { useState } from "react"
 
-type Props = {
-    product: Product
-    withText?: boolean
-    className?: string
-    canBeAddedToCart: boolean
-    overrideId?: string | number
-    overrideName?: string
-    overridePrice?: number
-    overrideImage?: string
-}
+import { useCart } from "@/features/cart/components/cart-provider"
+import type { AddToCartButtonProps } from "@/features/products/types"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-function AddToCartButton({ product, canBeAddedToCart, overrideId, overrideName, overridePrice, overrideImage }: Props) {
+function AddToCartButton({ product, canBeAddedToCart, overrideId, overrideName, overridePrice, overrideImage }: AddToCartButtonProps) {
     const { addToCart } = useCart()
     const [isAdded, setIsAdded] = useState(false)
 
@@ -55,4 +45,4 @@ function AddToCartButton({ product, canBeAddedToCart, overrideId, overrideName, 
     )
 }
 
-export default AddToCartButton 
+export { AddToCartButton } 

@@ -1,10 +1,11 @@
 "use client"
 
 import { Grid2X2 } from "lucide-react"
-import { useStore } from "../../layout/components/public-store/store-provider"
 import { List } from "lucide-react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { useState } from "react"
+
+import { useStore } from "@/features/layout/components/public-store/store-provider"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 function ProductListDisplay() {
 
@@ -32,4 +33,4 @@ function ProductListDisplay() {
     )
 }
 
-export default ProductListDisplay
+export { ProductListDisplay }

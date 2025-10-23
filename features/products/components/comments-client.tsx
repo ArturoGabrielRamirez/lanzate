@@ -1,43 +1,21 @@
 "use client"
 
-import { Textarea } from "@/features/shadcn/components/ui/textarea"
-import { Form, InputField } from "@/features/layout/components"
-import { addProductComment } from "../actions/addProductComment"
-import { useOptimistic, useState, useTransition } from "react"
-import { usePathname } from "next/navigation"
 import { User } from "lucide-react"
+import { usePathname } from "next/navigation"
+import { useOptimistic, useState, useTransition } from "react"
 import { toast } from "sonner"
 
-type Comment = {
-    id: number
-    content: string
-    created_at: Date
-    users: {
-        id: number
-        first_name?: string | null
-        last_name?: string | null
-        email: string
-    }
-}
+import { Form, InputField } from "@/features/layout/components"
+import { addProductCommentAction } from "@/features/products/actions/add-product-comment.action"
+import type { CommentsClientProps, ProductComment } from "@/features/products/types"
 
-type Props = {
-    productId: number
-    user: {
-        id: number
-        email: string
-        first_name?: string | null
-        last_name?: string | null
-    } | null
-    initialComments: Comment[]
-}
-
-function CommentsClient({ productId, user, initialComments }: Props) {
+function CommentsClient({ productId, user, initialComments }: CommentsClientProps) {
     const [comments, setComments] = useState(initialComments)
     const [isPending, startTransition] = useTransition()
     const [optimisticComments, addOptimisticComment] = useOptimistic(
         comments,
         (currentComments, newComment) => {
-            return [newComment as Comment, ...currentComments]
+            return [newComment as ProductComment, ...currentComments]
         }
     )
     const pathname = usePathname()
@@ -57,7 +35,7 @@ function CommentsClient({ productId, user, initialComments }: Props) {
             return { error: true, message: "Comment cannot exceed 500 characters", payload: null }
         }
 
-        const optimisticComment: Comment = {
+        const optimisticComment: ProductComment = {
             id: Date.now(), // Temporary ID
             content: data.content.trim(),
             created_at: new Date(),
@@ -75,15 +53,15 @@ function CommentsClient({ productId, user, initialComments }: Props) {
         })
 
         try {
-            const result = await addProductComment(
+            const result = await addProductCommentAction(
                 { content: data.content.trim() },
                 productId,
                 user.id,
                 pathname
             )
-            
-            if (!result.error) {
-                setComments(prev => [result.payload, ...prev])
+
+            if (!result.hasError) {
+                setComments(prev => [result.payload as ProductComment, ...prev])
                 return result
             } else {
                 // Revert optimistic update on error
@@ -98,7 +76,7 @@ function CommentsClient({ productId, user, initialComments }: Props) {
         }
     }
 
-    function formatUserName(user: Comment['users']) {
+    function formatUserName(user: ProductComment['users']) {
         if (user.first_name && user.last_name) {
             return `${user.first_name} ${user.last_name}`
         }
@@ -121,7 +99,7 @@ function CommentsClient({ productId, user, initialComments }: Props) {
     return (
         <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">Comentarios</h3>
-            
+
             {/* Comment Form */}
             {user ? (
                 <Form
@@ -173,4 +151,4 @@ function CommentsClient({ productId, user, initialComments }: Props) {
     )
 }
 
-export default CommentsClient 
+export { CommentsClient } 

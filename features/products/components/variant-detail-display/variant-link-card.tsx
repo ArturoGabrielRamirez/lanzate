@@ -3,14 +3,10 @@
 import { Boxes } from "lucide-react"
 import Link from "next/link"
 
-interface VariantLinkCardProps {
-    variant: any
-    slug: string
-    productId: string | number
-    productPrice?: number
-}
+import type { VariantLinkCardProps } from "@/features/products/types"
 
-export const VariantLinkCard = ({ variant, slug, productId, productPrice }: VariantLinkCardProps) => {
+
+function VariantLinkCard({ variant, slug, productId, productPrice }: VariantLinkCardProps) {
     const total = (variant.stocks ?? []).reduce((s: number, x: { quantity: number }) => s + (x.quantity ?? 0), 0)
     const size = variant.size
     const measure = variant.measure
@@ -42,3 +38,5 @@ export const VariantLinkCard = ({ variant, slug, productId, productPrice }: Vari
         </Link>
     )
 }
+
+export { VariantLinkCard }

@@ -1,19 +1,13 @@
 "use client"
 
 import { Box, Barcode, FileText, Link, Tag } from "lucide-react"
-import { InputField } from "@/features/layout/components"
 import { useRef } from "react"
 import { useFormContext } from "react-hook-form"
 
-type Defaults = {
-    name?: string
-    slug?: string
-    description?: string
-    sku?: string
-    barcode?: string
-}
+import { InputField } from "@/features/layout/components"
+import type { BasicInfoSectionProps } from "@/features/products/types"
 
-export function BasicInfoSection({ defaults }: { defaults?: Defaults }) {
+function BasicInfoSection({ defaults }: BasicInfoSectionProps) {
     const { setValue } = useFormContext()
     const slugEditedRef = useRef(false)
 
@@ -92,6 +86,6 @@ export function BasicInfoSection({ defaults }: { defaults?: Defaults }) {
     )
 }
 
-export default BasicInfoSection
+export { BasicInfoSection }
 
 

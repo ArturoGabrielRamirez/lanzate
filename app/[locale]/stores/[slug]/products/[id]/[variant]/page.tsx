@@ -1,4 +1,4 @@
-import { getProductDetails } from "@/features/products/actions/getProductDetails"
+import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { VariantDetailForm } from "@/features/products/components/variant-detail-display"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
@@ -14,7 +14,7 @@ export default async function ProductVariantDetailPage({ params }: Props) {
         return console.error(userMessage)
     }
 
-    const { payload: product, error } = await getProductDetails(id)
+    const { payload: product, error } = await getProductDetailsAction(id)
     if (error || !product) return null
 
     const variantId = Number(variant)
