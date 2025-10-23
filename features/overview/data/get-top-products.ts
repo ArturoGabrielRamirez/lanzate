@@ -1,6 +1,6 @@
 "use server"
 
-import { TopProductData } from "@/features/overview/types"
+import { TopProductData } from "@/features/overview/types/types"
 import { prisma } from "@/utils/prisma"
 
 export async function getTopProducts(storeId: number, limit: number = 5) {

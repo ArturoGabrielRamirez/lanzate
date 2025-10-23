@@ -1,6 +1,6 @@
 "use server"
 
-import { SalesByMonthData } from "@/features/overview/types"
+import { SalesByMonthData } from "@/features/overview/types/types"
 import { prisma } from "@/utils/prisma"
 
 export async function getSalesByMonth(storeId: number) {

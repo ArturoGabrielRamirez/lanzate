@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 
-import { SalesByMonthWidgetProps } from "@/features/overview/types"
+import { SalesByMonthWidgetProps } from "@/features/overview/types/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/features/shadcn/components/ui/chart"
 
@@ -69,4 +69,4 @@ function SalesByMonthWidget({ data }: SalesByMonthWidgetProps) {
     )
 }
 
-export default SalesByMonthWidget 
+export { SalesByMonthWidget }

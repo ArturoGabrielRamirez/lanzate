@@ -1,7 +1,7 @@
 import { DollarSign, ShoppingCart, TrendingUp } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
-import { SalesOverviewWidgetProps } from "@/features/overview/types"
+import { SalesOverviewWidgetProps } from "@/features/overview/types/types"
 import { formatCurrency } from "@/features/overview/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
@@ -61,4 +61,4 @@ async function SalesOverviewWidget({ data }: SalesOverviewWidgetProps) {
     )
 }
 
-export default SalesOverviewWidget 
+export { SalesOverviewWidget }

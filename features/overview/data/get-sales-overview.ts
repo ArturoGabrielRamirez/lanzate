@@ -1,6 +1,6 @@
 "use server"
 
-import { SalesOverviewData } from "@/features/overview/types"
+import { SalesOverviewData } from "@/features/overview/types/types"
 import { prisma } from "@/utils/prisma"
 
 export async function getSalesOverview(storeId: number) {

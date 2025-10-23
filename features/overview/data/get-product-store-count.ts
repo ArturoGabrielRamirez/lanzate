@@ -1,6 +1,6 @@
 "use server"
 
-import { ProductStoreCountData } from "@/features/overview/types"
+import { ProductStoreCountData } from "@/features/overview/types/types"
 import { prisma } from "@/utils/prisma"
 
 export async function getProductStoreCount(storeId: number) {

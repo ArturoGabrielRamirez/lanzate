@@ -1,5 +1,5 @@
 import { OverviewTab } from "@/features/overview/components"
-import { OverviewTabProps } from "@/features/overview/types"
+import { OverviewTabProps } from "@/features/overview/types/types"
 
 function AnalyticsTab({ slug, userId }: OverviewTabProps) {
     return (

@@ -1,7 +1,7 @@
 import { Package, Store, Eye, Activity } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
-import { ProductStoreCountWidgetProps } from "@/features/overview/types"
+import { ProductStoreCountWidgetProps } from "@/features/overview/types/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 async function ProductStoreCountWidget({ data }: ProductStoreCountWidgetProps) {
@@ -61,4 +61,4 @@ async function ProductStoreCountWidget({ data }: ProductStoreCountWidgetProps) {
     )
 }
 
-export default ProductStoreCountWidget 
+export { ProductStoreCountWidget }

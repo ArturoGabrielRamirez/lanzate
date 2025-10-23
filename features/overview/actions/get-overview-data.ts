@@ -5,7 +5,7 @@ import { getSalesOverview } from "../data/get-sales-overview"
 import { getProductStoreCount } from "../data/get-product-store-count"
 import { getSalesByMonth } from "../data/get-sales-by-month"
 import { getTopProducts } from "../data/get-top-products"
-import { OverviewData } from "../types"
+import { OverviewData } from "../types/types"
 
 export async function getOverviewData(slug: string) {
     try {
