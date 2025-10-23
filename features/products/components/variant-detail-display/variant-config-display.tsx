@@ -1,6 +1,5 @@
 "use client"
 
-import { ProductMedia, Product, ProductVariant } from "@prisma/client"
 import { Settings2, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"

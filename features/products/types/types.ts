@@ -1,4 +1,4 @@
-import { Category, Color, Product, ProductVariant, StoreCustomization, Store } from "@prisma/client";
+import { Category, Color, Product, ProductVariant, StoreCustomization, Store, ProductMedia, ProductVariantStock } from "@prisma/client";
 
 // Main product types
 export type GetProductDetailsReturn = {
@@ -142,6 +142,7 @@ export type UpdateProductPayload = {
     is_published?: boolean
 }
 
+// (Consolidated alias) Keep a single canonical name
 export type CreateUnifiedProductArgs = {
     form: {
         name: string
@@ -164,13 +165,7 @@ export type CreateUnifiedProductArgs = {
     userId: number
 }
 
-export type UpdatePricesActionPayload = {
-    storeId: number
-    amount: number
-    updateType: "fijo" | "porcentaje"
-    productIds?: number[]
-    categoryId?: number
-}
+// (Consolidated) Use UpdatePricesPayload
 
 // Data layer types
 export type CreateStoreColorArgs = { name: string; hex: string }
@@ -185,27 +180,7 @@ export type DistributeStockData = {
 
 export type VariantBranch = { id: number; name: string }
 
-export type UnifiedArgs = {
-    form: {
-        name: string
-        slug?: string
-        description?: string
-        price: number
-        stock: number
-        categories: { label: string; value: string }[]
-        images?: File[]
-        [key: string]: unknown
-    }
-    media?: { files: File[]; primaryIndex: number | null }
-    categories?: { categories: { label: string; value: string }[] }
-    sizes?: { isUniqueSize: boolean; sizes: { label: string; value: string }[]; measures?: { label: string; value: string; group?: string }[] }
-    colors?: { colors: { id: string; name: string; rgba: [number, number, number, number] }[] }
-    dimensions?: { [key: string]: unknown }
-    settings?: { isActive: boolean; isFeatured: boolean; isPublished: boolean }
-    variants?: { id: string; size?: string; measure?: string; color?: { id: string; name: string; rgba: [number, number, number, number] } }[]
-    targetStoreId: number
-    userId: number
-}
+export type UnifiedArgs = CreateUnifiedProductArgs
 
 export type UpdatePricesPayload = {
     storeId: number
@@ -296,12 +271,7 @@ export type BasicInfoDisplayProps = {
     userId: number
 }
 
-export type BasicInfoFormValues = {
-    name: string
-    description: string
-    sku: string
-    barcode: string
-}
+export type BasicInfoFormValues = Pick<Product, 'name' | 'description' | 'sku' | 'barcode'>
 
 export type CategoriesDisplayProps = {
     product: Product & { categories: Category[] }
@@ -324,10 +294,7 @@ export type PriceStockDisplayProps = {
     userId: number
 }
 
-export type PriceStockFormValues = {
-    price: number
-    stock: number
-}
+export type PriceStockFormValues = Pick<Product, 'price' | 'stock'>
 
 export type ProductDetailFormProps = {
     product: Product & {
@@ -370,115 +337,58 @@ export type ValidatedCardProps = {
     className?: string
 }
 
-export type VariantBasicInfoDisplayProps = {
-    variant: ProductVariant & {
-        color?: { name: string } | null
-    }
+export type VariantDisplayBaseProps = { variant: ProductVariant }
+
+export type VariantBasicInfoDisplayProps = VariantDisplayBaseProps & {
+    variant: VariantWithColor
     slug: string
     productId: number
-    product: Product & {
-        variants: (ProductVariant & {
-            color?: { name: string } | null
-            stocks?: { quantity: number }[]
-            primary_media?: any | null
-        })[]
-    }
+    product: ProductWithVariants
 }
 
-export type VariantColorDisplayProps = {
-    variant: ProductVariant & {
-        color?: { name: string; hex: string } | null
-    }
-    product: Product & {
-        available_colors: ProductColor[]
-    }
+export type VariantColorDisplayProps = VariantDisplayBaseProps & {
+    variant: VariantWithColor
+    product: ProductCommon
 }
 
-export type VariantConfigDisplayProps = {
-    variant: ProductVariant
-    product: Product & {
-        variants: (ProductVariant & {
-            color?: { name: string } | null
-            stocks?: { quantity: number; branch_id: number }[]
-            primary_media?: any | null
-        })[]
-    }
+export type VariantConfigDisplayProps = VariantDisplayBaseProps & {
+    product: ProductWithVariants
 }
 
 export type VariantDetailFormProps = {
-    variant: ProductVariant & {
-        color?: { name: string; hex: string } | null
-        stocks?: { quantity: number; branch_id: number }[]
-        primary_media?: any | null
-        media?: any[]
-    }
+    variant: VariantFull
     productPrice: number
     slug: string
     productId: number
-    product: Product & {
-        media?: any[]
-        primary_media?: any | null
-        variants: (ProductVariant & {
-            color?: { name: string } | null
-            stocks?: { quantity: number; branch_id: number }[]
-            primary_media?: any | null
-        })[]
-    }
+    product: ProductWithMedia & ProductWithVariants
 }
 
-export type VariantDimensionsDisplayProps = {
-    variant: ProductVariant
-    product: Product & {
-        heightUnit: string
-        widthUnit: string
-        depthUnit: string
-        diameterUnit: string
-        weightUnit: string
-    }
+export type VariantDimensionsDisplayProps = VariantDisplayBaseProps & {
+    product: ProductDimensions
 }
 
 export type VariantLinkCardProps = {
-    variant: ProductVariant & { stocks: { quantity: number }[]; color: any; primary_media: any }
+    variant: VariantWithMedia & { stocks: ProductVariantStock[]; color: Color; primary_media: ProductMedia }
     slug: string
     productId: string | number
     productPrice?: number
 }
 
 export type VariantMediaDisplayProps = {
-    variant: ProductVariant & {
-        primary_media?: any | null
-        media?: any[]
-    }
-    product: Product & {
-        media?: any[]
-        primary_media?: any | null
-    }
+    variant: VariantWithMedia
+    product: ProductWithMedia
 }
 
-export type VariantPriceDisplayProps = {
-    variant: ProductVariant
-    productPrice: number
-}
+export type VariantPriceDisplayProps = VariantDisplayBaseProps & { productPrice: number }
 
 export type VariantPriceFormValues = {
     "variant-price"?: string
 }
 
-export type VariantSizesDisplayProps = {
-    variant: ProductVariant
-    product: Product & {
-        heightUnit: string
-        widthUnit: string
-        depthUnit: string
-        diameterUnit: string
-        weightUnit: string
-    }
-}
+export type VariantSizesDisplayProps = VariantDisplayBaseProps & { product: ProductDimensions }
 
-export type VariantStockDisplayProps = {
-    variant: ProductVariant & {
-        stocks?: { quantity: number; branch_id: number; branch?: { id: number; name: string } }[]
-    }
+export type VariantStockDisplayProps = VariantDisplayBaseProps & {
+    variant: VariantWithStock & { stocks?: (StockInfo & { branch?: { id: number; name: string } })[] }
 }
 
 export type VariantStockFormValues = {
@@ -531,3 +441,73 @@ export type UpdateVariantSizesPayload = {
 }
 
 export type VariantStockUpdate = { branch_id: number; quantity: number }
+
+// =====================
+// Base reusable types
+// =====================
+
+// Utility primitives
+export type LabelValue = { label: string; value: string }
+export type StockInfo = { quantity: number; branch_id: number; branch?: { id: number; name: string } }
+export type ColorRGBA = [number, number, number, number]
+
+// Common Prisma relation shapes
+export type ProductWithMedia = Product & {
+    media?: ProductMedia[]
+    primary_media?: ProductMedia | null
+}
+
+export type VariantWithColor = ProductVariant & {
+    color?: Color & { rgba: ColorRGBA, hex: string } | null
+}
+
+export type VariantWithStock = ProductVariant & {
+    stocks?: StockInfo[]
+}
+
+export type VariantWithMedia = ProductVariant & {
+    primary_media?: ProductMedia | null
+    media?: ProductMedia[]
+}
+
+// Composed relations
+export type VariantFull = VariantWithColor & VariantWithStock & VariantWithMedia
+
+export type ProductWithVariants = Product & {
+    variants: VariantFull[]
+}
+
+export type ProductWithAllRelations = ProductWithMedia & ProductWithVariants & {
+    categories: Category[]
+}
+
+// Consolidated product shape for UI components
+export type ProductCommon = Product & {
+    media?: ProductMedia[]
+    primary_media?: ProductMedia | null
+    variants?: VariantFull[]
+    categories?: Category[]
+    available_colors?: ProductColor[]
+}
+
+// =====================
+// Dimension aliases via Pick<PrismaModel>
+// =====================
+
+export type ProductDimensions = Pick<
+    Product,
+    | 'height' | 'height_unit'
+    | 'width' | 'width_unit'
+    | 'depth' | 'depth_unit'
+    | 'diameter' | 'diameter_unit'
+    | 'weight' | 'weight_unit'
+>
+
+export type VariantDimensions = Pick<
+    ProductVariant,
+    | 'height' | 'height_unit'
+    | 'width' | 'width_unit'
+    | 'depth' | 'depth_unit'
+    | 'diameter' | 'diameter_unit'
+    | 'weight' | 'weight_unit'
+>
