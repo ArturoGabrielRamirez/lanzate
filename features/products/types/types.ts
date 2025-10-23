@@ -215,6 +215,28 @@ export type UpdatePricesPayload = {
     categoryId?: number
 }
 
+// Utils: payload mapping helpers
+export type FormValues = {
+    name: string
+    slug?: string
+    description?: string
+    price: number
+    stock: number
+    categories: { label: string; value: string }[]
+    images?: File[]
+    [key: string]: unknown
+}
+
+export type SectionRefs = {
+    media?: { files: File[]; primaryIndex: number | null }
+    categories?: { categories: { label: string; value: string }[] }
+    sizes?: { isUniqueSize: boolean; sizes: { label: string; value: string }[]; measures?: { label: string; value: string; group?: string }[] }
+    colors?: { colors: ProductColor[] }
+    dimensions?: { [key: string]: unknown }
+    settings?: { isActive: boolean; isFeatured: boolean; isPublished: boolean }
+    variants?: { id: string; sizeOrMeasure?: string; color?: ProductColor }[]
+}
+
 // Variant update payloads
 export type UpdateVariantBasicInfoPayload = {
     name: string | null
