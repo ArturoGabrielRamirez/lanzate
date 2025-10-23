@@ -1,25 +1,14 @@
 "use client"
 
-import { Product } from "@prisma/client"
 import { ShoppingCart } from "lucide-react"
 import { useState } from "react"
 
 import { useCart } from "@/features/cart/components/cart-provider"
+import type { AddToCartButtonProps } from "@/features/products/types"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-type Props = {
-    product: Product
-    withText?: boolean
-    className?: string
-    canBeAddedToCart: boolean
-    overrideId?: string | number
-    overrideName?: string
-    overridePrice?: number
-    overrideImage?: string
-}
-
-function AddToCartButton({ product, canBeAddedToCart, overrideId, overrideName, overridePrice, overrideImage }: Props) {
+function AddToCartButton({ product, canBeAddedToCart, overrideId, overrideName, overridePrice, overrideImage }: AddToCartButtonProps) {
     const { addToCart } = useCart()
     const [isAdded, setIsAdded] = useState(false)
 

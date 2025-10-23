@@ -7,37 +7,15 @@ import { toast } from "sonner"
 
 import { Form, InputField } from "@/features/layout/components"
 import { addProductCommentAction } from "@/features/products/actions/add-product-comment.action"
+import type { CommentsClientProps, ProductComment } from "@/features/products/types"
 
-type Comment = {
-    id: number
-    content: string
-    created_at: Date
-    users: {
-        id: number
-        first_name?: string | null
-        last_name?: string | null
-        email: string
-    }
-}
-
-type Props = {
-    productId: number
-    user: {
-        id: number
-        email: string
-        first_name?: string | null
-        last_name?: string | null
-    } | null
-    initialComments: Comment[]
-}
-
-function CommentsClient({ productId, user, initialComments }: Props) {
+function CommentsClient({ productId, user, initialComments }: CommentsClientProps) {
     const [comments, setComments] = useState(initialComments)
     const [isPending, startTransition] = useTransition()
     const [optimisticComments, addOptimisticComment] = useOptimistic(
         comments,
         (currentComments, newComment) => {
-            return [newComment as Comment, ...currentComments]
+            return [newComment as ProductComment, ...currentComments]
         }
     )
     const pathname = usePathname()
@@ -57,7 +35,7 @@ function CommentsClient({ productId, user, initialComments }: Props) {
             return { error: true, message: "Comment cannot exceed 500 characters", payload: null }
         }
 
-        const optimisticComment: Comment = {
+        const optimisticComment: ProductComment = {
             id: Date.now(), // Temporary ID
             content: data.content.trim(),
             created_at: new Date(),
@@ -83,7 +61,7 @@ function CommentsClient({ productId, user, initialComments }: Props) {
             )
 
             if (!result.hasError) {
-                setComments(prev => [result.payload as Comment, ...prev])
+                setComments(prev => [result.payload as ProductComment, ...prev])
                 return result
             } else {
                 // Revert optimistic update on error
@@ -98,7 +76,7 @@ function CommentsClient({ productId, user, initialComments }: Props) {
         }
     }
 
-    function formatUserName(user: Comment['users']) {
+    function formatUserName(user: ProductComment['users']) {
         if (user.first_name && user.last_name) {
             return `${user.first_name} ${user.last_name}`
         }

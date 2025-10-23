@@ -1,4 +1,4 @@
-import { Category, Color, Product, ProductVariant, StoreCustomization, Store, ProductMedia, ProductVariantStock } from "@prisma/client";
+import { Category, Color, Product, ProductVariant, StoreCustomization, Store, ProductMedia, ProductVariantStock, Branch, ProductStock } from "@prisma/client";
 
 // Main product types
 export type GetProductDetailsReturn = {
@@ -489,6 +489,102 @@ export type ProductCommon = Product & {
     categories?: Category[]
     available_colors?: ProductColor[]
 }
+
+// =====================
+// Top-level components props/types
+// =====================
+
+export type LikeButtonProps = { productId: number }
+
+export type DistributeStockButtonProps = {
+    productId: number
+    productName: string
+    availableStock: number
+    branches: (Branch & { stock: ProductStock[] })[]
+    variantStocks?: { branch_id: number; quantity: number }[]
+}
+
+export type CreateColorInlineProps = {
+    onCreated?: (color: { id: number; name: string; hex: string }) => void
+}
+
+export type EmployeePermissions = {
+    isAdmin: boolean
+    permissions?: {
+        can_create_orders: boolean
+        can_update_orders: boolean
+        can_create_products: boolean
+        can_update_products: boolean
+        can_manage_stock: boolean
+        can_process_refunds: boolean
+        can_view_reports: boolean
+        can_manage_employees: boolean
+        can_manage_store: boolean
+    }
+}
+
+export type ProductsTableProps = {
+    data: (Product & { categories: Category[] })[]
+    userId: number
+    slug: string
+    storeId: number
+    employeePermissions: EmployeePermissions
+    branches: (Branch & { stock: ProductStock[] })[]
+}
+
+export type ProductsTableVariantRow = (Product & { categories: Category[] }) & { variant_id?: number; variant_label?: string }
+
+export type MinimalUser = {
+    id: number
+    email: string
+    first_name?: string | null
+    last_name?: string | null
+}
+
+export type LikeButtonClientProps = {
+    productId: number
+    user: MinimalUser | null
+    initialLiked: boolean
+    initialCount: number
+}
+
+export type DeleteVariantButtonProps = {
+    variantId: number
+    slug: string
+    productId: number
+    onlyIcon?: boolean
+}
+
+export type AddToCartButtonProps = {
+    product: Product
+    withText?: boolean
+    className?: string
+    canBeAddedToCart: boolean
+    overrideId?: string | number
+    overrideName?: string
+    overridePrice?: number
+    overrideImage?: string
+}
+
+export type ProductComment = {
+    id: number
+    content: string
+    created_at: Date
+    users: {
+        id: number
+        first_name?: string | null
+        last_name?: string | null
+        email: string
+    }
+}
+
+export type CommentsClientProps = {
+    productId: number
+    user: MinimalUser | null
+    initialComments: ProductComment[]
+}
+
+export type CommentsProps = { productId: number }
 
 // =====================
 // Dimension aliases via Pick<PrismaModel>

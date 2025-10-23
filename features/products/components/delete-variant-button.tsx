@@ -6,18 +6,12 @@ import { useTranslations } from "next-intl"
 
 import { ButtonWithPopup } from "@/features/layout/components"
 import { deleteProductVariantAction } from "@/features/products/actions/delete-product-variant.action"
+import type { DeleteVariantButtonProps } from "@/features/products/types"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { formatErrorResponse } from "@/utils/lib"
 
-type Props = { 
-    variantId: number; 
-    slug: string; 
-    productId: number;
-    onlyIcon?: boolean;
-}
-
-function DeleteVariantButton({ variantId, slug, productId, onlyIcon = false }: Props) {
+function DeleteVariantButton({ variantId, slug, productId, onlyIcon = false }: DeleteVariantButtonProps) {
     const t = useTranslations("store.delete-variant")
 
     const action = async () => {

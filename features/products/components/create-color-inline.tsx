@@ -5,15 +5,12 @@ import { useState } from "react"
 import { toast } from "sonner"
 
 import { createStoreColorData } from "@/features/products/data/create-store-color.data"
+import type { CreateColorInlineProps } from "@/features/products/types"
 import { ColorPicker, ColorPickerSelection, ColorPickerHue, ColorPickerAlpha, ColorPickerOutput, ColorPickerFormat } from "@/features/shadcn/components/shadcn-io/color-picker"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Input } from "@/features/shadcn/components/ui/input"
 
-type Props = {
-    onCreated?: (color: { id: number; name: string; hex: string }) => void
-}
-
-function CreateColorInline({ onCreated }: Props) {
+function CreateColorInline({ onCreated }: CreateColorInlineProps) {
     const [name, setName] = useState("")
     const [hex, setHex] = useState("#ff0000")
     const [isSaving, setIsSaving] = useState(false)

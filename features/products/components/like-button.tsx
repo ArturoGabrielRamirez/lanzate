@@ -1,12 +1,9 @@
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { LikeButtonClient } from "@/features/products/components/like-button-client"
 import { getProductLikeInfoData } from "@/features/products/data/get-product-like-info.data"
+import type { LikeButtonProps } from "@/features/products/types"
 
-type Props = {
-    productId: number
-}
-
-async function LikeButton({ productId }: Props) {
+async function LikeButton({ productId }: LikeButtonProps) {
 
     const { payload: user } = await getUserInfo()
 
