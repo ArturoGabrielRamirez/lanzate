@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { /* ArrowRight, */ DollarSign, ShoppingCart, TrendingUp } from "lucide-react"
-import { SalesOverviewData } from "../types"
+import { DollarSign, ShoppingCart, TrendingUp } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-/* import Link from "next/link" */
+
+import { SalesOverviewData } from "@/features/overview/types"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 type Props = {
     data: SalesOverviewData

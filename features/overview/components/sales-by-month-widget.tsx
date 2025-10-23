@@ -1,12 +1,13 @@
 "use client"
 
+import { ArrowRight, TrendingUp } from "lucide-react"
+import Link from "next/link"
+import { useTranslations } from "next-intl"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+
+import { SalesByMonthData } from "@/features/overview/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/features/shadcn/components/ui/chart"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-import { ArrowRight, TrendingUp } from "lucide-react"
-import { SalesByMonthData } from "../types"
-import { useTranslations } from "next-intl"
-import Link from "next/link"
 
 type Props = {
     data: SalesByMonthData[]

@@ -1,9 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
 import { ArrowRight, Crown } from "lucide-react"
-import { TopProductData } from "../types"
-import { getTranslations } from "next-intl/server"
 import Link from "next/link"
+import { getTranslations } from "next-intl/server"
+
+import { TopProductData } from "@/features/overview/types"
+import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 type Props = {
     data: TopProductData[]

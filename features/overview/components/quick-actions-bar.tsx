@@ -1,8 +1,9 @@
-import { Button } from "@/features/shadcn/components/ui/button"
-import { Badge } from "@/features/shadcn/components/ui/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import CreateProductButton from "@/features/products/components/create-product-button"
 import { getTranslations } from "next-intl/server"
+
+import CreateProductButton from "@/features/products/components/create-product-button"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 type Props = {
     slug: string
