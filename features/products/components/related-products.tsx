@@ -1,15 +1,14 @@
 
+
 import { getRelatedProductsAction } from "@/features/products/actions/get-related-products.action"
 import { ProductListContainer } from "@/features/products/components/product-list-container"
 import { ProductsCard } from "@/features/products/components/products-card"
+import type { RelatedProductsProps } from "@/features/products/types"
 
 import type { Product } from "@prisma/client"
 
-type Props = {
-  productId: number
-}
 
-async function RelatedProducts({ productId }: Props) {
+async function RelatedProducts({ productId }: RelatedProductsProps) {
   const { payload } = await getRelatedProductsAction(productId)
   const { sameProductVariants = [], categoryProducts = [] } = payload || {}
   const sameList = sameProductVariants as unknown as Product[]

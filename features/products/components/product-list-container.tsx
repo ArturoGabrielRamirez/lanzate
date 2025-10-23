@@ -1,13 +1,10 @@
 "use client"
 
 import { useStore } from "@/features/layout/components/public-store/store-provider"
+import type { ProductListContainerProps } from "@/features/products/types"
 import { cn } from "@/lib/utils"
 
-type Props = {
-    children: React.ReactNode
-}
-
-function ProductListContainer({ children }: Props) {
+function ProductListContainer({ children }: ProductListContainerProps) {
 
     const { displayType } = useStore()
 

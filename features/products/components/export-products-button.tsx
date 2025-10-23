@@ -1,20 +1,16 @@
 "use client"
 
-import { Product, Category } from "@prisma/client"
+import { Category } from "@prisma/client"
 import { Download } from "lucide-react"
 import { useTranslations } from "next-intl"
 import * as XLSX from "xlsx-js-style"
 
+import type { ExportProductsButtonProps } from "@/features/products/types"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-type Props = {
-    data: (Product & { categories: Category[] })[]
-    onlyIcon?: boolean
-}
-
-function ExportProductsButton({ data, onlyIcon }: Props) {
+function ExportProductsButton({ data, onlyIcon }: ExportProductsButtonProps) {
     const t = useTranslations("store.products-table")
 
     const handleExport = () => {

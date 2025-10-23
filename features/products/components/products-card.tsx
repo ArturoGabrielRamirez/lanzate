@@ -4,12 +4,7 @@ import { GridCard } from "@/features/products/components/grid-card"
 import { ListCard } from "@/features/products/components/list-card"
 import { ProductCardContainer } from "@/features/products/components/product-card-container"
 
-type Props = {
-    product: Product
-    href: string
-}
-
-function ProductsCard({ product, href }: Props) {
+function ProductsCard({ product, href }: { product: Product; href: string }) {
     return (
         <ProductCardContainer
             listCard={<ListCard product={product} href={href} />}

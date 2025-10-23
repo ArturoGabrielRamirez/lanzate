@@ -457,9 +457,7 @@ export type ProductWithMedia = Product & {
     primary_media?: ProductMedia | null
 }
 
-export type VariantWithColor = ProductVariant & {
-    color?: Color & { rgba: ColorRGBA, hex: string } | null
-}
+export type VariantWithColor = ProductVariant & { color?: Color | null }
 
 export type VariantWithStock = ProductVariant & {
     stocks?: StockInfo[]
@@ -585,6 +583,30 @@ export type CommentsClientProps = {
 }
 
 export type CommentsProps = { productId: number }
+
+export type ExportProductsButtonProps = {
+    data: (Product & { categories: Category[] })[]
+    onlyIcon?: boolean
+}
+
+export type GridCardProps = {
+    product: Product
+    href: string
+}
+
+export type ListCardProps = {
+    product: Product
+    href: string
+}
+
+export type ProductCardContainerProps = {
+    listCard: React.ReactNode
+    gridCard: React.ReactNode
+}
+
+export type ProductListContainerProps = { children: React.ReactNode }
+
+export type RelatedProductsProps = { productId: number }
 
 // =====================
 // Dimension aliases via Pick<PrismaModel>

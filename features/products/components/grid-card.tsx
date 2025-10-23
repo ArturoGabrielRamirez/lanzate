@@ -1,6 +1,5 @@
 "use client"
 
-import { Product } from "@prisma/client"
 import { Crown, Heart, Share, ShoppingCart } from "lucide-react"
 import * as motion from "motion/react-client"
 import Image from "next/image"
@@ -9,17 +8,13 @@ import { useState } from "react"
 
 
 import { AddToCartButton } from "@/features/products/components/add-to-cart-button"
+import type { GridCardProps } from "@/features/products/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardContent, CardFooter, CardHeader } from "@/features/shadcn/components/ui/card"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-type Props = {
-    product: Product
-    href: string
-}
-
-function GridCard({ product, href }: Props) {
+function GridCard({ product, href }: GridCardProps) {
 
     const [isFlipped, setIsFlipped] = useState(false)
 

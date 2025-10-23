@@ -1,13 +1,9 @@
 "use client"
 
 import { useStore } from "@/features/layout/components/public-store/store-provider"
+import type { ProductCardContainerProps } from "@/features/products/types"
 
-type Props = {
-    listCard: React.ReactNode
-    gridCard: React.ReactNode
-}
-
-function ProductCardContainer({ listCard, gridCard }: Props) {
+function ProductCardContainer({ listCard, gridCard }: ProductCardContainerProps) {
     const { displayType } = useStore()
 
     if (displayType === "list") {
