@@ -1,9 +1,10 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { insertOrderMessageData } from "../data/insert-order-message.data"
-import { revalidatePath } from "next/cache"
 import { MessageType } from "@prisma/client"
+import { revalidatePath } from "next/cache"
+
+import { actionWrapper } from "@/features/global/utils"
+import { insertOrderMessageData } from "@/features/orders/data/insert-order-message.data"
 
 type InsertOrderMessageActionProps = {
     orderId: string
@@ -15,9 +16,9 @@ type InsertOrderMessageActionProps = {
     pathname: string
 }
 
-export async function insertOrderMessageAction({ 
-    orderId, 
-    message, 
+export async function insertOrderMessageAction({
+    orderId,
+    message,
     messageType,
     fileUrl,
     fileName,
@@ -25,9 +26,9 @@ export async function insertOrderMessageAction({
     pathname
 }: InsertOrderMessageActionProps) {
     return actionWrapper(async () => {
-        const { payload: newMessage, error, message: resultMessage } = await insertOrderMessageData({ 
-            orderId, 
-            message, 
+        const { payload: newMessage, error, message: resultMessage } = await insertOrderMessageData({
+            orderId,
+            message,
             messageType,
             fileUrl,
             fileName,
@@ -42,7 +43,7 @@ export async function insertOrderMessageAction({
         return {
             message: "Message sent successfully",
             payload: newMessage,
-            error: false
+            hasError: false
         }
 
     })

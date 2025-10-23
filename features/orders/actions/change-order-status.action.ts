@@ -2,10 +2,10 @@
 
 import { revalidatePath } from "next/cache"
 
+import { actionWrapper } from "@/features/global/utils"
 import { getUserInfo } from "@/features/layout/actions"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { updateOrderStatusData } from "@/features/orders/data/update-order-status.data"
-import { actionWrapper } from "@/utils/lib"
 
 type ChangeOrderStatusData = {
     newStatus: string
@@ -44,7 +44,7 @@ export async function changeOrderStatusAction(orderId: number, data: ChangeOrder
 
         return {
             payload: updatedOrder,
-            error: false,
+            hasError: false,
             message: "Order status updated successfully"
         }
 

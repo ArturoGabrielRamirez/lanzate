@@ -1,18 +1,9 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { selectOrderByIdData } from "../data/select-order-by-id.data"
-import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
+import { actionWrapper } from "@/features/global/utils"
+import { selectOrderByIdData } from "@/features/orders/data/select-order-by-id.data"
 
-type GetOrderDetailsResponse = {
-    payload: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & {
-        store: Store
-    } | null
-    error: boolean
-    message: string
-}
-
-export async function getOrderDetailsAction(id: string): Promise<GetOrderDetailsResponse> {
+export async function getOrderDetailsAction(id: string) {
     return actionWrapper(async () => {
 
         const parsedId = parseInt(id)
@@ -25,7 +16,7 @@ export async function getOrderDetailsAction(id: string): Promise<GetOrderDetails
 
         return {
             payload: order,
-            error: false,
+            hasError: false,
             message: "Order details fetched successfully"
         }
 

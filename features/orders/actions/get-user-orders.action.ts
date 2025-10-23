@@ -1,7 +1,7 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { getUserOrdersData } from "../data/get-user-orders.data"
+import { actionWrapper } from "@/features/global/utils"
+import { getUserOrdersData } from "@/features/orders/data/get-user-orders.data"
 
 export async function getUserOrdersAction(userId: number) {
     return actionWrapper(async () => {
@@ -18,7 +18,7 @@ export async function getUserOrdersAction(userId: number) {
         return {
             message: message,
             payload: payload,
-            error: false
+            hasError: false
         }
     })
 } 

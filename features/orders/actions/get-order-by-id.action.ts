@@ -1,7 +1,7 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { getOrderByIdData } from "../data/get-order-by-id.data"
+import { actionWrapper } from "@/features/global/utils"
+import { getOrderByIdData } from "@/features/orders/data/get-order-by-id.data"
 
 export async function getOrderByIdAction(orderId: number, userId: number) {
     return actionWrapper(async () => {
@@ -22,7 +22,7 @@ export async function getOrderByIdAction(orderId: number, userId: number) {
         return {
             message: message,
             payload: payload,
-            error: false
+            hasError: false
         }
     })
 } 

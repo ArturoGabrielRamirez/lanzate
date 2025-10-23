@@ -1,8 +1,10 @@
 "use server"
 
-import { changeOrderTrackingStatusData } from "../data/change-order-tracking-status.data"
 import { OrderTrackingStatus } from "@prisma/client"
 import { revalidatePath } from "next/cache"
+
+import { actionWrapper } from "@/features/global/utils"
+import { changeOrderTrackingStatusData } from "@/features/orders/data/change-order-tracking-status.data"
 
 type ChangeOrderTrackingStatusActionProps = {
     orderId: number
@@ -11,12 +13,12 @@ type ChangeOrderTrackingStatusActionProps = {
     }
 }
 
-export async function changeOrderTrackingStatusAction({ 
-    orderId, 
-    newStatus 
+export async function changeOrderTrackingStatusAction({
+    orderId,
+    newStatus
 }: ChangeOrderTrackingStatusActionProps) {
-    try {
-        const result = await changeOrderTrackingStatusData({ 
+    return actionWrapper(async () => {
+        const result = await changeOrderTrackingStatusData({
             orderId,
             newStatus
         })
@@ -25,12 +27,10 @@ export async function changeOrderTrackingStatusAction({
             revalidatePath(`/dashboard/orders/${orderId}`)
         }
 
-        return result
-    } catch (error) {
-        console.error("Error changing order tracking status:", error)
         return {
-            error: true,
-            message: "Failed to change order tracking status"
+            payload: result.payload,
+            hasError: result.error,
+            message: result.message
         }
-    }
+    })
 }

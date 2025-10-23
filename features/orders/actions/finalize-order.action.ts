@@ -1,19 +1,21 @@
 "use server"
 
-import { finalizeOrderData } from "../data/finalize-order.data"
 import { revalidatePath } from "next/cache"
+
+import { actionWrapper } from "@/features/global/utils"
+import { finalizeOrderData } from "@/features/orders/data/finalize-order.data"
 
 type FinalizeOrderActionProps = {
     orderId: string
     shippingMethod: "PICKUP" | "DELIVERY"
 }
 
-export async function finalizeOrderAction({ 
-    orderId, 
-    shippingMethod 
+export async function finalizeOrderAction({
+    orderId,
+    shippingMethod
 }: FinalizeOrderActionProps) {
-    try {
-        const result = await finalizeOrderData({ 
+    return actionWrapper(async () => {
+        const result = await finalizeOrderData({
             orderId: parseInt(orderId),
             shippingMethod
         })
@@ -22,12 +24,10 @@ export async function finalizeOrderAction({
             revalidatePath(`/dashboard/orders/${orderId}`)
         }
 
-        return result
-    } catch (error) {
-        console.error("Error finalizing order:", error)
         return {
-            error: true,
-            message: "Failed to finalize order"
+            payload: result.payload,
+            hasError: result.error,
+            message: result.message
         }
-    }
+    })
 } 
