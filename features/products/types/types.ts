@@ -310,6 +310,11 @@ export type VariantsDisplayProps = {
     userId: number
 }
 
+// Profile components
+export type ProductSkeletonGridProps = {
+    count?: number
+}
+
 // Variant update payloads
 export type UpdateVariantBasicInfoPayload = {
     name: string | null
