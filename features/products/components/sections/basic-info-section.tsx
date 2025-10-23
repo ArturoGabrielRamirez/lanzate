@@ -5,16 +5,9 @@ import { useRef } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/layout/components"
+import type { BasicInfoSectionProps } from "@/features/products/types"
 
-type Defaults = {
-    name?: string
-    slug?: string
-    description?: string
-    sku?: string
-    barcode?: string
-}
-
-function BasicInfoSection({ defaults }: { defaults?: Defaults }) {
+function BasicInfoSection({ defaults }: BasicInfoSectionProps) {
     const { setValue } = useFormContext()
     const slugEditedRef = useRef(false)
 

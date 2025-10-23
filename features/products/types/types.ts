@@ -237,6 +237,58 @@ export type SectionRefs = {
     variants?: { id: string; sizeOrMeasure?: string; color?: ProductColor }[]
 }
 
+// Create form Sections - Props
+export type BasicInfoDefaults = {
+    name?: string
+    slug?: string
+    description?: string
+    sku?: string
+    barcode?: string
+}
+
+export type BasicInfoSectionProps = { defaults?: BasicInfoDefaults }
+
+export type CategoriesSectionProps = {
+    storeId?: number
+    value?: CategoriesSectionData
+    onChange?: (data: CategoriesSectionData) => void
+}
+
+export type ColorsSectionProps = {
+    value?: ColorsSectionData
+    onChange?: (data: ColorsSectionData) => void
+}
+
+export type DimensionsSectionProps = { onChange?: (data: DimensionsSectionData) => void }
+
+export type MediaSectionProps = {
+    value?: MediaSectionData
+    onChange?: (data: MediaSectionData) => void
+    onFileReject?: (file: File, message: string) => void
+}
+
+export type PriceStockSectionDefaults = { price?: number | string; stock?: number | string }
+export type PriceStockSectionProps = { defaults?: PriceStockSectionDefaults }
+
+export type SettingsSectionProps = {
+    value?: SettingsSectionData
+    onChange?: (data: SettingsSectionData) => void
+}
+
+export type SizesSectionProps = {
+    value?: SizesSectionData
+    onChange?: (data: SizesSectionData) => void
+}
+
+export type VariantsEditorProps = {
+    variant: VariantPreview
+    onClose: () => void
+}
+
+export type VariantsPreviewSectionProps = {
+    onEditVariant?: (v: VariantPreview) => void
+}
+
 // Component props - product detail display
 export type BasicInfoDisplayProps = {
     product: Product

@@ -4,19 +4,13 @@ import { Upload, X } from "lucide-react"
 import { useCallback, useState, useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 
-import type { MediaSectionData } from "@/features/products/types/create-form-extra"
+import type { MediaSectionProps } from "@/features/products/types"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { FileUpload, FileUploadCameraTrigger, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Switch } from "@/features/shadcn/components/ui/switch"
 
-type Props = {
-    value?: MediaSectionData
-    onChange?: (data: MediaSectionData) => void
-    onFileReject?: (file: File, message: string) => void
-}
-
-function MediaSection({ value, onChange, onFileReject }: Props) {
+function MediaSection({ value, onChange, onFileReject }: MediaSectionProps) {
     const { setValue } = useFormContext()
     const [files, setFiles] = useState<File[]>(value?.files ?? [])
     const [primaryIndex, setPrimaryIndex] = useState<number | null>(value?.primaryIndex ?? null)

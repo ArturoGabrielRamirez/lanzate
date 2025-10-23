@@ -3,17 +3,11 @@
 import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
-import type { CategoryValue, CategoriesSectionData } from "@/features/products/types/create-form-extra"
+import type { CategoryValue, CategoriesSectionProps } from "@/features/products/types"
 import { getCategoriesAction } from "@/features/stores/actions/get-categories.action"
 import { CategorySelect } from "@/features/stores/components/category-select-"
 
-type Props = {
-    storeId?: number
-    value?: CategoriesSectionData
-    onChange?: (data: CategoriesSectionData) => void
-}
-
-function CategoriesSection({ storeId, value, onChange }: Props) {
+function CategoriesSection({ storeId, value, onChange }: CategoriesSectionProps) {
     const { watch, setValue } = useFormContext()
     const categories = (watch('categories') as CategoryValue[] | undefined) ?? (value?.categories ?? [])
     const [initialCategories, setInitialCategories] = useState<{ label: string, value: number }[] | undefined>(undefined)

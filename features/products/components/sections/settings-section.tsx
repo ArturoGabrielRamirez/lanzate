@@ -2,16 +2,11 @@
 
 import { useState } from "react"
 
-import type { SettingsSectionData } from "@/features/products/types/create-form-extra"
+import type { SettingsSectionProps } from "@/features/products/types"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Switch } from "@/features/shadcn/components/ui/switch"
 
-type Props = {
-    value?: SettingsSectionData
-    onChange?: (data: SettingsSectionData) => void
-}
-
-function SettingsSection({ value, onChange }: Props) {
+function SettingsSection({ value, onChange }: SettingsSectionProps) {
     const [isActive, setIsActive] = useState<boolean>(value?.isActive ?? true)
     const [isFeatured, setIsFeatured] = useState<boolean>(value?.isFeatured ?? false)
     const [isPublished, setIsPublished] = useState<boolean>(value?.isPublished ?? true)

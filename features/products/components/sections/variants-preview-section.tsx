@@ -2,8 +2,7 @@
 
 import { useFormContext } from "react-hook-form"
 
-import type { VariantPreview } from "@/features/products/types/create-form-extra"
-import type { ProductColor } from "@/features/products/types/product-color"
+import type { ProductColor, VariantsPreviewSectionProps } from "@/features/products/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 
@@ -13,7 +12,7 @@ type Variant = {
     color?: ProductColor
 }
 
-function VariantsPreviewSection({ onEditVariant }: { onEditVariant?: (v: VariantPreview) => void }) {
+function VariantsPreviewSection({ onEditVariant }: VariantsPreviewSectionProps) {
     const { watch, setValue } = useFormContext()
     const isUniqueSize = (watch('isUniqueSize') as boolean | undefined) ?? false
     const sizes = (watch('sizes') as { label: string; value: string }[] | undefined)?.map(s => s.value) ?? []
