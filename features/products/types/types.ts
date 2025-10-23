@@ -1,5 +1,6 @@
-import { Category, Color, Product, ProductVariant, StoreCustomization } from "@prisma/client";
+import { Category, Color, Product, ProductVariant, StoreCustomization, Store } from "@prisma/client";
 
+// Main product types
 export type GetProductDetailsReturn = {
     message: string;
     payload: (Product & {
@@ -14,3 +15,104 @@ export type GetProductDetailsReturn = {
     }) | null;
     error: boolean;
 };
+
+// Product color type
+export type ProductColor = {
+    id: string
+    name: string
+    rgba: [number, number, number, number]
+}
+
+// Form and section data types
+export type CategoryValue = { value: string; label: string }
+
+export type MediaSectionData = {
+    files: File[]
+    primaryIndex: number | null
+}
+
+export type CategoriesSectionData = {
+    categories: CategoryValue[]
+}
+
+export type SizesSectionData = {
+    isUniqueSize: boolean
+    sizes: { label: string; value: string; group?: string }[]
+    measures?: { label: string; value: string; group?: string }[]
+}
+
+export type ColorsSectionData = {
+    colors: ProductColor[]
+}
+
+export type SettingsSectionData = {
+    isActive: boolean
+    isFeatured: boolean
+    isPublished: boolean
+}
+
+export type DimensionsSectionData = {
+    height?: number
+    heightUnit?: string
+    width?: number
+    widthUnit?: string
+    depth?: number
+    depthUnit?: string
+    diameter?: number
+    diameterUnit?: string
+    weight?: number
+    weightUnit?: string
+}
+
+export type TFunction = (key: string, values?: Record<string, string | number | boolean | Date | undefined>) => string
+
+export type VariantPreview = {
+    id: string
+    size?: string
+    color?: ProductColor
+}
+
+// Component prop types
+export type CreateProductButtonProps = {
+    storeId: number
+    userId: number
+    onlyIcon?: boolean
+}
+
+// Discriminated union types for unified component
+type WithStoreId = {
+    storeId?: number
+    userId: number
+    onlyIcon?: boolean
+}
+
+type WithStoreSelection = {
+    userId: number
+    stores: Store[]
+    onlyIcon?: boolean
+}
+
+export type UnifiedCreateProductButtonProps = WithStoreId | WithStoreSelection
+
+export type DeleteProductButtonProps = {
+    productId: number
+    slug: string
+    onComplete?: () => void
+    userId: number
+}
+
+export type EditProductButtonProps = {
+    product: Product & { categories: Category[] }
+    slug: string
+    onComplete?: () => void
+    userId: number
+}
+
+export type ProductCardProps = {
+    product: Product
+    slug: string
+}
+
+export type ProductDetailPageProps = {
+    params: Promise<{ slug: string, id: string }>
+}
