@@ -3,7 +3,7 @@
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 
-export async function selectOrdersFromStore(storeId: number, limit?: number) {
+export async function selectOrdersFromStoreData(storeId: number, limit?: number) {
     return actionWrapper(async () => {
 
         const orders = await prisma.order.findMany({

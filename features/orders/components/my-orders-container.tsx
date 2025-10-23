@@ -1,5 +1,5 @@
 import { getUserInfo } from "@/features/layout/actions"
-import { getUserOrdersAction } from "../actions/getUserOrdersAction"
+import { getUserOrdersAction } from "../actions/get-user-orders.action"
 import OrderCard from "./order-card"
 import { Package } from "lucide-react"
 import { Order, OrderItem, Product, Store, Branch } from "@prisma/client"

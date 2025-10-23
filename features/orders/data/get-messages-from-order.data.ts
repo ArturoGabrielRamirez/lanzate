@@ -8,7 +8,7 @@ type GetMessagesFromOrderProps = {
     orderId: string
 }
 
-export async function getMessagesFromOrder({ storeSlug, orderId }: GetMessagesFromOrderProps) {
+export async function getMessagesFromOrderData({ storeSlug, orderId }: GetMessagesFromOrderProps) {
     return actionWrapper(async () => {
 
         const order = await prisma.order.findFirst({

@@ -14,7 +14,7 @@ type InsertOrderMessageProps = {
     fileSize?: number
 }
 
-export async function insertOrderMessage({ 
+export async function insertOrderMessageData({ 
     orderId, 
     message, 
     messageType = "STORE_TO_CUSTOMER",

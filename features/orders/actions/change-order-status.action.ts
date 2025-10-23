@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 
 import { getUserInfo } from "@/features/layout/actions"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
-import { updateOrderStatus } from "@/features/orders/data/updateOrderStatusOld"
+import { updateOrderStatusData } from "@/features/orders/data/update-order-status.data"
 import { actionWrapper } from "@/utils/lib"
 
 type ChangeOrderStatusData = {
@@ -13,14 +13,14 @@ type ChangeOrderStatusData = {
     confirmStockRestore: boolean
 }
 
-export async function changeOrderStatus(orderId: number, data: ChangeOrderStatusData, slug: string) {
+export async function changeOrderStatusAction(orderId: number, data: ChangeOrderStatusData, slug: string) {
     return actionWrapper(async () => {
 
         const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
         if (userError || !user) throw new Error(userMessage)
 
-        const { payload: updatedOrder, error, message } = await updateOrderStatus(orderId, data, user.id)
+        const { payload: updatedOrder, error, message } = await updateOrderStatusData(orderId, data, user.id)
 
         if (error) throw new Error(message)
 

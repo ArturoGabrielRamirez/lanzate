@@ -1,6 +1,6 @@
 "use server"
 
-import { finalizeOrderData } from "../data/finalizeOrderData"
+import { finalizeOrderData } from "../data/finalize-order.data"
 import { revalidatePath } from "next/cache"
 
 type FinalizeOrderActionProps = {

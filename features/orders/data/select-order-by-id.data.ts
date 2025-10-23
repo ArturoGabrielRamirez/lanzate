@@ -11,7 +11,7 @@ type SelectOrderByIdResponse = {
     error: boolean
 }
 
-export async function selectOrderById(orderId: number): Promise<SelectOrderByIdResponse> {
+export async function selectOrderByIdData(orderId: number): Promise<SelectOrderByIdResponse> {
     return actionWrapper(async () => {
 
         /* const client = new PrismaClient() */

@@ -9,7 +9,7 @@ type UpdateCancelledOrderProps = {
     orderId: string
 }
 
-export async function updateCancelledOrder({ orderId }: UpdateCancelledOrderProps) {
+export async function updateCancelledOrderData({ orderId }: UpdateCancelledOrderProps) {
     return actionWrapper(async () => {
         // Get current user
         const { payload: user, error: userError, message: userMessage } = await getUserInfo()

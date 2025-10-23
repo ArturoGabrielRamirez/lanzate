@@ -4,9 +4,9 @@ import { Button } from "@/features/shadcn/components/ui/button"
 import { Order, OrderTracking, OrderTrackingStatus } from "@prisma/client"
 import { Clock, Package, CheckCircle2, Truck } from "lucide-react"
 import { useTransition } from "react"
-import { updateOrderTrackingAction } from "../actions/updateOrderTrackingAction"
+import { updateOrderTrackingAction } from "../actions/update-order-tracking.action"
 import { toast } from "sonner"
-import { finalizeOrderAction } from "../actions/finalizeOrderAction"
+import { finalizeOrderAction } from "../actions/finalize-order.action"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null }

@@ -1,19 +1,15 @@
 "use server"
 
 import { actionWrapper } from "@/utils/lib"
-import { getOrderById } from "../data/getOrderById"
+import { getUserOrdersData } from "../data/get-user-orders.data"
 
-export async function getOrderByIdAction(orderId: number, userId: number) {
+export async function getUserOrdersAction(userId: number) {
     return actionWrapper(async () => {
-        if (!orderId) {
-            throw new Error("Order ID is required")
-        }
-
         if (!userId) {
             throw new Error("User ID is required")
         }
 
-        const { payload, error, message } = await getOrderById(orderId, userId)
+        const { payload, error, message } = await getUserOrdersData(userId)
 
         if (error) {
             throw new Error(message)

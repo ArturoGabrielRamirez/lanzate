@@ -11,7 +11,7 @@ type OrderWithDetails = Order & {
     branch: Branch
 }
 
-export async function getOrderById(orderId: number, userId: number): Promise<{
+export async function getOrderByIdData(orderId: number, userId: number): Promise<{
     payload: OrderWithDetails | null
     error: boolean
     message: string

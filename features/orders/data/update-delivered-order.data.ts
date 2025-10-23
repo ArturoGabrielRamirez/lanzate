@@ -5,11 +5,11 @@ import { prisma } from "@/utils/prisma"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 
-type UpdateProcessingOrderProps = {
+type UpdateDeliveredOrderProps = {
     orderId: string
 }
 
-export async function updateProcessingOrder({ orderId }: UpdateProcessingOrderProps) {
+export async function updateDeliveredOrderData({ orderId }: UpdateDeliveredOrderProps) {
     return actionWrapper(async () => {
         // Get current user
         const { payload: user, error: userError, message: userMessage } = await getUserInfo()
@@ -36,7 +36,8 @@ export async function updateProcessingOrder({ orderId }: UpdateProcessingOrderPr
                         }
                     },
                     branch: true,
-                    processed_by: true
+                    processed_by: true,
+                    customer: true
                 }
             })
 
@@ -47,61 +48,24 @@ export async function updateProcessingOrder({ orderId }: UpdateProcessingOrderPr
             const oldStatus = order.status
 
             // Validate status change
-            if (oldStatus === 'PROCESSING') {
-                throw new Error("Order is already in PROCESSING status")
+            if (oldStatus === 'DELIVERED') {
+                throw new Error("Order is already in DELIVERED status")
             }
 
-            // Business rule: Can only process from PENDING
-            if (oldStatus !== 'PENDING') {
-                throw new Error(`Cannot change order status from ${oldStatus} to PROCESSING. Order must be in PENDING status.`)
-            }
+            // Business rule: Can only deliver from READY (pickup) or SHIPPED (delivery)
+            const allowedFromStatuses = order.shipping_method === 'PICKUP' 
+                ? ['READY'] 
+                : ['SHIPPED']
 
-            // Validate stock availability for all items
-            for (const item of order.items) {
-                if (item.product.stock < item.quantity) {
-                    throw new Error(`Insufficient stock for ${item.product.name}. Available: ${item.product.stock}, Required: ${item.quantity}`)
-                }
-            }
-
-            // Reserve stock by reducing it
-            for (const item of order.items) {
-                await tx.product.update({
-                    where: { id: item.product_id },
-                    data: {
-                        stock: {
-                            decrement: item.quantity
-                        }
-                    }
-                })
-
-                // Update branch stock if exists
-                if (order.branch_id) {
-                    await tx.productStock.upsert({
-                        where: {
-                            product_id_branch_id: {
-                                product_id: item.product_id,
-                                branch_id: order.branch_id
-                            }
-                        },
-                        update: {
-                            quantity: {
-                                decrement: item.quantity
-                            }
-                        },
-                        create: {
-                            product_id: item.product_id,
-                            branch_id: order.branch_id,
-                            quantity: Math.max(0, item.product.stock - item.quantity)
-                        }
-                    })
-                }
+            if (!allowedFromStatuses.includes(oldStatus)) {
+                throw new Error(`Cannot change order status from ${oldStatus} to DELIVERED. Order must be in ${allowedFromStatuses.join(' or ')} status.`)
             }
 
             // Update order status
             const finalOrder = await tx.order.update({
                 where: { id: parseInt(orderId) },
                 data: {
-                    status: "PROCESSING",
+                    status: "DELIVERED",
                     updated_at: new Date(),
                     processed_by_user_id: user.id
                 },
@@ -129,15 +93,20 @@ export async function updateProcessingOrder({ orderId }: UpdateProcessingOrderPr
             entity_id: parseInt(orderId),
             user_id: user.id,
             action_initiator: "Order status update",
-            details: `Order status changed to PROCESSING. Stock reserved for all items.`
+            details: `Order status changed to DELIVERED. Order has been ${updatedOrder.shipping_method === 'PICKUP' ? 'picked up' : 'delivered'} to customer.`
         })
 
         if (logError) {
             console.warn("Order status updated but failed to create log entry:", logError)
         }
 
+        // TODO: Send delivery confirmation to customer
+        // if (updatedOrder.customer_email) {
+        //     await sendOrderDeliveredNotification(updatedOrder)
+        // }
+
         return {
-            message: "Order status updated to PROCESSING successfully. Stock has been reserved.",
+            message: `Order has been ${updatedOrder.shipping_method === 'PICKUP' ? 'picked up' : 'delivered'} successfully`,
             payload: updatedOrder,
             error: false
         }

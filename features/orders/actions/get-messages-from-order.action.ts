@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/utils/lib"
-import { getMessagesFromOrder } from "../data/getMessagesFromOrder"
+import { getMessagesFromOrderData } from "../data/get-messages-from-order.data"
 
 type GetMessagesFromOrderActionProps = {
     storeSlug: string
@@ -10,7 +10,7 @@ type GetMessagesFromOrderActionProps = {
 
 export async function getMessagesFromOrderAction({ storeSlug, orderId }: GetMessagesFromOrderActionProps) {
     return actionWrapper(async () => {
-        const { payload: messages, error, message } = await getMessagesFromOrder({ storeSlug, orderId })
+        const { payload: messages, error, message } = await getMessagesFromOrderData({ storeSlug, orderId })
 
         if (error) throw new Error(message)
 

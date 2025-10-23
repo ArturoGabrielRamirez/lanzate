@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper } from "@/utils/lib"
-import { selectOrderById } from "../data/selectOrderById"
+import { selectOrderByIdData } from "../data/select-order-by-id.data"
 import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
 
 type GetOrderDetailsResponse = {
@@ -12,14 +12,14 @@ type GetOrderDetailsResponse = {
     message: string
 }
 
-export async function getOrderDetails(id: string): Promise<GetOrderDetailsResponse> {
+export async function getOrderDetailsAction(id: string): Promise<GetOrderDetailsResponse> {
     return actionWrapper(async () => {
 
         const parsedId = parseInt(id)
 
         if (isNaN(parsedId)) throw new Error("Invalid order id")
 
-        const { payload: order, error, message } = await selectOrderById(parsedId)
+        const { payload: order, error, message } = await selectOrderByIdData(parsedId)
 
         if (error) throw new Error(message)
 

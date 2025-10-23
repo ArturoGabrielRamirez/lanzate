@@ -1,7 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { confirmOrderData } from "../data/confirmOrderData"
+import { confirmOrderData } from "../data/confirm-order.data"
 
 type ConfirmOrderActionProps = {
     orderId: string

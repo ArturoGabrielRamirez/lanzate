@@ -1,5 +1,5 @@
 import { getEmployeePermissions } from "@/features/employees/actions/get-employee-permisions.action"
-import { getOrderDetails } from "@/features/orders/actions/get-order-details.action"
+import { getOrderDetailsAction } from "@/features/orders/actions/get-order-details.action"
 import { formatDate } from "@/lib/utils"
 import { MapPin, Truck } from "lucide-react"
 import OrderTimeline from "./order-timeline"
@@ -17,7 +17,7 @@ const OrderSummaryStepsContainer = async ({ userId, orderId, storeSlug }: Props)
         { payload: order, error: orderError },
         { payload: employeePermissions, error: permissionsError }
     ] = await Promise.all([
-        getOrderDetails(orderId),
+        getOrderDetailsAction(orderId),
         getEmployeePermissions(userId, storeSlug)
     ])
 

@@ -5,7 +5,7 @@ import { Button } from "@/features/shadcn/components/ui/button"
 import { Order } from "@prisma/client"
 import { AlertTriangle, CheckCircle } from "lucide-react"
 import { useTransition } from "react"
-import { confirmOrderAction } from "../actions/confirmOrderAction"
+import { confirmOrderAction } from "../actions/confirm-order.action"
 import { toast } from "sonner"
 
 type EmployeePermissions = {

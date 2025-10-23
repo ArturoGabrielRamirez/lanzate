@@ -1,5 +1,5 @@
 import { toast } from "sonner"
-import { finalizeOrderAction } from "../actions/finalizeOrderAction"
+import { finalizeOrderAction } from "../actions/finalize-order.action"
 import { Order, OrderTracking } from "@prisma/client"
 import { useTransition } from "react"
 import { Button } from "@/features/shadcn/components/ui/button"

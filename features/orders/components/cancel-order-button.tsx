@@ -3,7 +3,7 @@
 import { ButtonWithPopup } from "@/features/layout/components"
 import { /* Loader2, */ Trash2 } from "lucide-react"
 import { Order } from "@prisma/client"
-import { changeOrderStatus } from "../actions/changeOrderStatus"
+import { changeOrderStatusAction } from "../actions/change-order-status.action"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { ResponseType } from "@/features/layout/types"
@@ -28,7 +28,7 @@ function CancelOrderButton({ order, slug, onComplete, className, size = "default
 
     const handleCancelOrder = async (): Promise<ResponseType<unknown>> => {
         try {
-            const { error, message } = await changeOrderStatus(order.id, {
+            const { error, message } = await changeOrderStatusAction(order.id, {
                 newStatus: "CANCELLED",
                 confirmPayment: false,
                 confirmStockRestore: true

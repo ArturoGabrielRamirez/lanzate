@@ -5,11 +5,11 @@ import { prisma } from "@/utils/prisma"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 
-type UpdateDeliveredOrderProps = {
+type UpdateCompletedOrderProps = {
     orderId: string
 }
 
-export async function updateDeliveredOrder({ orderId }: UpdateDeliveredOrderProps) {
+export async function updateCompletedOrderData({ orderId }: UpdateCompletedOrderProps) {
     return actionWrapper(async () => {
         // Get current user
         const { payload: user, error: userError, message: userMessage } = await getUserInfo()
@@ -48,24 +48,25 @@ export async function updateDeliveredOrder({ orderId }: UpdateDeliveredOrderProp
             const oldStatus = order.status
 
             // Validate status change
-            if (oldStatus === 'DELIVERED') {
-                throw new Error("Order is already in DELIVERED status")
+            if (oldStatus === 'COMPLETED') {
+                throw new Error("Order is already in COMPLETED status")
             }
 
-            // Business rule: Can only deliver from READY (pickup) or SHIPPED (delivery)
-            const allowedFromStatuses = order.shipping_method === 'PICKUP' 
-                ? ['READY'] 
-                : ['SHIPPED']
+            // Business rule: Can only complete from DELIVERED
+            if (oldStatus !== 'DELIVERED') {
+                throw new Error(`Cannot change order status from ${oldStatus} to COMPLETED. Order must be in DELIVERED status.`)
+            }
 
-            if (!allowedFromStatuses.includes(oldStatus)) {
-                throw new Error(`Cannot change order status from ${oldStatus} to DELIVERED. Order must be in ${allowedFromStatuses.join(' or ')} status.`)
+            // Validate that order was delivered successfully
+            if (!order.is_paid) {
+                throw new Error("Cannot complete unpaid order")
             }
 
             // Update order status
             const finalOrder = await tx.order.update({
                 where: { id: parseInt(orderId) },
                 data: {
-                    status: "DELIVERED",
+                    status: "COMPLETED",
                     updated_at: new Date(),
                     processed_by_user_id: user.id
                 },
@@ -93,20 +94,25 @@ export async function updateDeliveredOrder({ orderId }: UpdateDeliveredOrderProp
             entity_id: parseInt(orderId),
             user_id: user.id,
             action_initiator: "Order status update",
-            details: `Order status changed to DELIVERED. Order has been ${updatedOrder.shipping_method === 'PICKUP' ? 'picked up' : 'delivered'} to customer.`
+            details: `Order status changed to COMPLETED. Order has been successfully finalized.`
         })
 
         if (logError) {
             console.warn("Order status updated but failed to create log entry:", logError)
         }
 
-        // TODO: Send delivery confirmation to customer
+        // TODO: Send completion notification to customer
         // if (updatedOrder.customer_email) {
-        //     await sendOrderDeliveredNotification(updatedOrder)
+        //     await sendOrderCompletedNotification(updatedOrder)
+        // }
+
+        // TODO: Send satisfaction survey
+        // if (updatedOrder.customer_email) {
+        //     await sendSatisfactionSurvey(updatedOrder)
         // }
 
         return {
-            message: `Order has been ${updatedOrder.shipping_method === 'PICKUP' ? 'picked up' : 'delivered'} successfully`,
+            message: "Order has been completed successfully",
             payload: updatedOrder,
             error: false
         }

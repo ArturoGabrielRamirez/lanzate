@@ -1,5 +1,5 @@
-export { getMessagesFromOrderAction } from "./getMessagesFromOrderAction"
-export { insertOrderMessageAction } from "./insertOrderMessageAction"
+export { getMessagesFromOrderAction } from "./get-messages-from-order.action"
+export { insertOrderMessageAction } from "./insert-order-message.action"
 export { updateOrderStatusAction } from "./updateOrderStatusAction"
 export { updateOrderShippingMethodAction } from "./updateOrderShippingMethodAction"
-export { changeOrderTrackingStatus } from "./changeOrderTrackingStatus" 
+export { changeOrderTrackingStatusAction as changeOrderTrackingStatus } from "./change-order-tracking-status.action" 

@@ -1,5 +1,5 @@
 import { Button } from "@/features/shadcn/components/ui/button"
-import { changeOrderTrackingStatus } from "@/features/orders/actions/changeOrderTrackingStatus"
+import { changeOrderTrackingStatusAction } from "@/features/orders/actions/change-order-tracking-status.action"
 import { Order, OrderTrackingStatus, OrderTracking, OrderItem, Product, OrderPayment } from "@prisma/client"
 import { CheckCircle, Loader2 } from "lucide-react"
 import { useTransition } from "react"
@@ -25,7 +25,7 @@ const OrderReadyButton = ({ order }: Props) => {
                     newStatus: (order.shipping_method === "DELIVERY" ? "WAITING_FOR_DELIVERY" : "WAITING_FOR_PICKUP") as OrderTrackingStatus,
                 }
 
-                await changeOrderTrackingStatus({ orderId: order.id, newStatus })
+                await changeOrderTrackingStatusAction({ orderId: order.id, newStatus })
 
                 toast.dismiss()
                 toast.success("Order marked as ready", { richColors: true })

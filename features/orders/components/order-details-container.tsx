@@ -1,5 +1,5 @@
 import { getUserInfo } from "@/features/layout/actions"
-import { getOrderByIdAction } from "../actions/getOrderByIdAction"
+import { getOrderByIdAction } from "../actions/get-order-by-id.action"
 import { Package } from "lucide-react"
 import { notFound } from "next/navigation"
 import CustomerOrderTracking from "./customer-order-tracking"

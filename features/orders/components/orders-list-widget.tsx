@@ -1,9 +1,9 @@
 import { OrdersListEmpty } from "@/features/orders/components"
-import { getOrdersFromStore } from "@/features/orders/actions/getOrdersFromStore"
+import { getOrdersFromStoreAction } from "@/features/orders/actions/get-orders-from-store.action"
 
 async function OrdersListWidget({ slug }: { slug: string }) {
 
-    const { payload: orders, hasError, message } = await getOrdersFromStore(slug, 5)
+    const { payload: orders, hasError, message } = await getOrdersFromStoreAction(slug, 5)
 
     if (hasError) {
         return <div>Error loading orders: {message || "Unknown error"}</div>

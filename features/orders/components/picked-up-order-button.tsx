@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/features/shadcn/components/ui/button"
-import { changeOrderTrackingStatus } from "@/features/orders/actions/changeOrderTrackingStatus"
+import { changeOrderTrackingStatusAction } from "@/features/orders/actions/change-order-tracking-status.action"
 import { Order, OrderTrackingStatus, OrderTracking, OrderItem, Product, OrderPayment } from "@prisma/client"
 import { Truck, Loader2 } from "lucide-react"
 import { useTransition } from "react"
@@ -27,7 +27,7 @@ const PickedUpOrderButton = ({ order }: Props) => {
                     newStatus: "ON_THE_WAY" as OrderTrackingStatus,
                 }
 
-                await changeOrderTrackingStatus({ orderId: order.id, newStatus })
+                await changeOrderTrackingStatusAction({ orderId: order.id, newStatus })
 
                 toast.dismiss()
                 toast.success("Order marked as picked up", { richColors: true })

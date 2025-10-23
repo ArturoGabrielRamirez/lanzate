@@ -4,7 +4,7 @@ import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { CheckCircle, Loader2 } from "lucide-react"
 import { useTransition } from "react"
 import { toast } from "sonner"
-import { confirmOrderAction } from "../actions/confirmOrderAction"
+import { confirmOrderAction } from "../actions/confirm-order.action"
 import { cn } from "@/lib/utils"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 

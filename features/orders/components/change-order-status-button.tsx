@@ -10,7 +10,7 @@ import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
 import { useState } from "react"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { changeOrderStatus } from "../actions/changeOrderStatus"
+import { changeOrderStatusAction } from "../actions/change-order-status.action"
 import { useTranslations } from "next-intl"
 
 type Props = {
@@ -59,7 +59,7 @@ function ChangeOrderStatusButton({ order, slug, onComplete }: Props) {
             confirmStockRestore: showStockRestoreConfirmation ? confirmStockRestore : false
         }
 
-        return changeOrderStatus(order.id, data, slug)
+        return changeOrderStatusAction(order.id, data, slug)
     }
 
     const getStatusChangeDescription = () => {

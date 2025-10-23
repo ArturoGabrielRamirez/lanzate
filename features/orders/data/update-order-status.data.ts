@@ -11,7 +11,7 @@ type ChangeOrderStatusData = {
     confirmStockRestore: boolean
 }
 
-export async function updateOrderStatus(orderId: number, data: ChangeOrderStatusData, userId: number) {
+export async function updateOrderStatusData(orderId: number, data: ChangeOrderStatusData, userId: number) {
     return actionWrapper(async () => {
 
         /* const client = new PrismaClient() */

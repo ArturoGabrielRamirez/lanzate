@@ -1,6 +1,6 @@
 "use server"
 
-import { updateOrderTrackingData } from "../data/updateOrderTrackingData"
+import { updateOrderTrackingData } from "../data/update-order-tracking.data"
 import { OrderTrackingStatus } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
