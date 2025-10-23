@@ -5,20 +5,7 @@ import { revalidatePath } from "next/cache"
 import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { insertProduct } from "@/features/products/data/insert-product.data"
-
-type CategoryValue = { value: string; label: string }
-
-type InsertProductPayload = {
-    name: string
-    price: number
-    stock: number
-    description?: string
-    categories: CategoryValue[]
-    image?: File
-    is_active?: boolean
-    is_featured?: boolean
-    is_published?: boolean
-}
+import { InsertProductPayload } from "@/features/products/types"
 
 export async function createProductAction(payload: InsertProductPayload, storeId: number, userId: number) {
     return actionWrapper(async () => {

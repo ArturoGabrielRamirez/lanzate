@@ -4,14 +4,7 @@ import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
 import { updateProductsPrices } from "@/features/products/data/update-product-prices.data"
-
-type UpdatePricesActionPayload = {
-    storeId: number
-    amount: number
-    updateType: "fijo" | "porcentaje"
-    productIds?: number[]
-    categoryId?: number
-}
+import { UpdatePricesActionPayload } from "@/features/products/types"
 
 export async function updateProductsPricesAction(payload: UpdatePricesActionPayload) {
     return actionWrapper(async () => {

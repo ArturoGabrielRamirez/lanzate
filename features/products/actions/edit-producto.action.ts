@@ -5,20 +5,7 @@ import { revalidatePath } from "next/cache"
 import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { updateProduct as updateProductInDb } from "@/features/products/data/update-product.data"
-
-type CategoryValue = { value: string; label: string }
-
-type UpdateProductPayload = {
-    name: string
-    price: number
-    stock: number
-    description?: string
-    categories: CategoryValue[]
-    image?: File
-    is_active?: boolean
-    is_featured?: boolean
-    is_published?: boolean
-}
+import { UpdateProductPayload } from "@/features/products/types"
 
 export async function editProductAction(productId: number, data: UpdateProductPayload, slug: string, userId: number) {
     return actionWrapper(async () => {
