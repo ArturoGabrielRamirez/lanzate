@@ -1,25 +1,14 @@
 "use client"
 
-import { Product, ProductVariant } from "@prisma/client"
 import { Boxes, EditIcon, X } from "lucide-react"
 import { useState } from "react"
 
 import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
+import type { VariantsDisplayProps } from "@/features/products/types"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface VariantsDisplayProps {
-    product: Product & {
-        variants: (ProductVariant & {
-            color?: { name: string } | null
-            stocks?: { quantity: number }[]
-            primary_media?: { url: string } | null
-        })[]
-    }
-    slug: string
-    userId: number
-}
 
 function VariantsDisplay({ product, slug }: VariantsDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)

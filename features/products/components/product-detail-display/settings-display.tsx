@@ -1,17 +1,14 @@
 "use client"
 
-import { Product } from "@prisma/client"
 import { Settings, EditIcon, X } from "lucide-react"
 import { useState } from "react"
 
+import type { SettingsDisplayProps } from "@/features/products/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface SettingsDisplayProps {
-    product: Product
-}
 
 function SettingsDisplay({ product }: SettingsDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)

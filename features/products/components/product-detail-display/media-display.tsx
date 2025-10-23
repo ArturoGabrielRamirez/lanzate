@@ -1,19 +1,13 @@
 "use client"
 
-import { Product } from "@prisma/client"
 import { ImageIcon, EditIcon, X } from "lucide-react"
 import { useState } from "react"
 
+import type { MediaDisplayProps } from "@/features/products/types"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface MediaDisplayProps {
-    product: Product & {
-        media?: { id: number; url: string; type: string }[]
-        primary_media?: { id: number; url: string; type: string } | null
-    }
-}
 
 function MediaDisplay({ product }: MediaDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)

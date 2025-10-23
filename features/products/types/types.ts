@@ -237,6 +237,79 @@ export type SectionRefs = {
     variants?: { id: string; sizeOrMeasure?: string; color?: ProductColor }[]
 }
 
+// Component props - product detail display
+export type BasicInfoDisplayProps = {
+    product: Product
+    slug: string
+    userId: number
+}
+
+export type BasicInfoFormValues = {
+    name: string
+    description: string
+    sku: string
+    barcode: string
+}
+
+export type CategoriesDisplayProps = {
+    product: Product & { categories: Category[] }
+}
+
+export type DimensionsDisplayProps = {
+    product: Product
+}
+
+export type MediaDisplayProps = {
+    product: Product & {
+        media?: { id: number; url: string; type: string }[]
+        primary_media?: { id: number; url: string; type: string } | null
+    }
+}
+
+export type PriceStockDisplayProps = {
+    product: Product
+    slug: string
+    userId: number
+}
+
+export type PriceStockFormValues = {
+    price: number
+    stock: number
+}
+
+export type ProductDetailFormProps = {
+    product: Product & {
+        categories: Category[]
+        variants: (ProductVariant & {
+            color?: { name: string } | null
+            stocks?: { quantity: number }[]
+            primary_media?: { url: string } | null
+            price?: number | null
+            size_or_measure?: string | null
+        })[]
+        media?: { id: number; url: string; type: string }[]
+        primary_media?: { id: number; url: string; type: string } | null
+    }
+    slug: string
+    userId: number
+}
+
+export type SettingsDisplayProps = {
+    product: Product
+}
+
+export type VariantsDisplayProps = {
+    product: Product & {
+        variants: (ProductVariant & {
+            color?: { name: string } | null
+            stocks?: { quantity: number }[]
+            primary_media?: { url: string } | null
+        })[]
+    }
+    slug: string
+    userId: number
+}
+
 // Variant update payloads
 export type UpdateVariantBasicInfoPayload = {
     name: string | null

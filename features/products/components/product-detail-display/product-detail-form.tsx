@@ -1,27 +1,11 @@
 "use client"
 
-import { Product, Category, ProductVariant } from "@prisma/client"
 import Link from "next/link"
 
+import type { ProductDetailFormProps } from "@/features/products/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-interface ProductDetailFormProps {
-    product: Product & {
-        categories: Category[]
-        variants: (ProductVariant & {
-            color?: { name: string } | null
-            stocks?: { quantity: number }[]
-            primary_media?: { url: string } | null
-            price?: number | null
-            size_or_measure?: string | null
-        })[]
-        media?: { id: number; url: string; type: string }[]
-        primary_media?: { id: number; url: string; type: string } | null
-    }
-    slug: string
-    userId: number
-}
 
 function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
     const currency = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" })

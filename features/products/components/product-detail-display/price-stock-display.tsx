@@ -1,27 +1,17 @@
 "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Product } from "@prisma/client"
 import { DollarSign, Package, EditIcon, X } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { Form, InputField } from "@/features/layout/components"
 import { editProductSchema } from "@/features/products/schemas/product-schema"
+import type { PriceStockDisplayProps, PriceStockFormValues } from "@/features/products/types"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface PriceStockDisplayProps {
-    product: Product
-    slug: string
-    userId: number
-}
-
-type PriceStockFormValues = {
-    price: number
-    stock: number
-}
 
 function PriceStockDisplay({ product }: PriceStockDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)

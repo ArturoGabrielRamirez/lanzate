@@ -1,19 +1,14 @@
 "use client"
 
-import { Product, Category } from "@prisma/client"
 import { Tags, EditIcon, X } from "lucide-react"
 import { useState } from "react"
 
+import type { CategoriesDisplayProps } from "@/features/products/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-interface CategoriesDisplayProps {
-    product: Product & {
-        categories: Category[]
-    }
-}
 
 function CategoriesDisplay({ product }: CategoriesDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
