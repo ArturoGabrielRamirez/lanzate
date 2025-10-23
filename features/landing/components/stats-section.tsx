@@ -7,7 +7,7 @@ function StatsSection() {
     const t = useTranslations('home');
 
     return (
-        <section className="p-6 my-6 px-0 py-0 mt-0 container mx-auto z-10">
+        <section className="p-6 my-6 px-0 py-0 mt-0">
             <IntegrationsSection/>
             {/* <Marquee className="container mx-auto mask-l-from-60% mask-l-to-90% mask-r-from-60% mask-r-to-90%" pauseOnHover>
                 <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-accent text-primary-foreground">
