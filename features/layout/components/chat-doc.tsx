@@ -8,7 +8,7 @@ import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { X, Minimize2, Maximize2, Loader2 } from "lucide-react"
 import { ChatMessage } from "@/hooks/use-realtime-chat"
 
-const ChatDoc = () => {
+function ChatDoc() {
 
     const {
         isOpen,
@@ -131,4 +131,4 @@ const ChatDoc = () => {
         </div>
     )
 }
-export default ChatDoc
+export { ChatDoc }

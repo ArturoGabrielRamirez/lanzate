@@ -31,4 +31,4 @@ function SidebarOrderBySelect() {
         </Select>
     )
 }
-export default SidebarOrderBySelect
+export { SidebarOrderBySelect }

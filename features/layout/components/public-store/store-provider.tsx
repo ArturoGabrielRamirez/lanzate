@@ -43,4 +43,4 @@ function StoreProvider({ children }: Props) {
     )
 }
 
-export default StoreProvider
+export { StoreProvider }

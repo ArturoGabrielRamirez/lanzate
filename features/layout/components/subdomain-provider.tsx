@@ -43,4 +43,4 @@ function SubdomainProvider({ adminLayout, userLayout }: Props) {
         </>
     )
 }
-export default SubdomainProvider
+export { SubdomainProvider }

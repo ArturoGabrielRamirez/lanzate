@@ -1,8 +1,8 @@
 import { SearchParams } from "nuqs"
 import { Suspense } from "react"
 
+import { SidebarOrderBySelect } from "@/features/layout/components/public-store/sidebar-price-select"
 import { PageContainer } from "@/features/layout/components"
-import SidebarOrderBySelect from "@/features/layout/components/public-store/sidebar-price-select"
 import { ProductCardLoader, ProductList } from "@/features/products/components"
 import { loadFilterParams } from "@/features/products/utils"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"

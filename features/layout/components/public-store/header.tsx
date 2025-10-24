@@ -102,4 +102,4 @@ async function Header({ title = "Store Name", socialMedia, showSocialLinks = tru
 
 }
 
-export default Header
+export { Header }

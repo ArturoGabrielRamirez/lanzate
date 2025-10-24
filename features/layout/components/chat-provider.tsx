@@ -53,7 +53,7 @@ const ChatContext = createContext<{
     selectedRoom: null
 })
 
-export const ChatProvider = ({ children }: Props) => {
+function ChatProvider({ children }: Props) {
     const [isOpen, setIsOpen] = useState(false)
     const [rooms, setRooms] = useState<string[]>([])
     const [chatStates, setChatStates] = useState<ChatState[]>([])
@@ -216,3 +216,5 @@ export const ChatProvider = ({ children }: Props) => {
 export const useChat = () => {
     return useContext(ChatContext)
 }
+
+export { ChatProvider }

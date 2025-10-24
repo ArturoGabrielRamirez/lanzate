@@ -24,7 +24,7 @@ const XformerlyTwitter = ({ className }: { className?: string }) => (
     </svg>
 );
 
-const Footer = ({ title, socialMedia, showSocialLinks }: Props) => {
+function Footer({ title, socialMedia, showSocialLinks }: Props) {
     return (
         <footer>
             <div className="container mx-auto py-4">
@@ -99,4 +99,4 @@ const Footer = ({ title, socialMedia, showSocialLinks }: Props) => {
         </footer>
     )
 }
-export default Footer
+export { Footer }
