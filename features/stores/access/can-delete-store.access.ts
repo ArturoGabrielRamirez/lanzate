@@ -1,6 +1,6 @@
 "use server"
 
-import { getUserById } from "@/features/layout/data/getUserById"
+import { getUserById } from "@/features/global/data/getUserById"
 import { selectStoreByIdData } from "@/features/stores/data"
 
 export async function canDeleteStoreAccess(storeId: number, userId: number) {

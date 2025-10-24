@@ -1,7 +1,7 @@
 "use server"
 import { actionWrapper } from "@/utils/lib"
 import { insertEmployee } from "../data/insertEmployee"
-import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { insertLogEntry } from "@/features/global/data/insertLogEntry"
 
 export async function createEmployee(userId: number, storeId: number, role: string = "EMPLOYEE") {
     return actionWrapper(async () => {

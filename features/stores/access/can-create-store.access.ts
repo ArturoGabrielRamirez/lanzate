@@ -1,6 +1,6 @@
 "use server"
 
-import { getUserById } from "@/features/layout/data/getUserById"
+import { getUserById } from "@/features/global/data/getUserById"
 import { getStoresFromUserData } from "@/features/stores/data"
 
 export async function canCreateStore(userId: number) {

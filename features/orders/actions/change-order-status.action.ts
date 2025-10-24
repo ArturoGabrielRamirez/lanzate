@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
-import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { insertLogEntry } from "@/features/global/data/insertLogEntry"
 import { updateOrderStatusData } from "@/features/orders/data/update-order-status.data"
 import { ChangeOrderStatusData } from "@/features/orders/types"
 

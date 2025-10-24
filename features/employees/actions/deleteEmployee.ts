@@ -3,7 +3,7 @@
 import { actionWrapper } from "@/utils/lib"
 import { deleteEmployee as deleteEmployeeFromDb } from "../data/deleteEmployee"
 import { revalidatePath } from "next/cache"
-import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { insertLogEntry } from "@/features/global/data/insertLogEntry"
 import { canDeleteEmployee } from "../access/canDeleteEmployee"
 
 export async function deleteEmployee(employeeId: number, slug: string, userId: number) {

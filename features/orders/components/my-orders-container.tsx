@@ -6,9 +6,10 @@ import { OrderCard } from "@/features/orders/components/order-card"
 import { OrderWithDetails } from "@/features/orders/types"
 
 async function MyOrdersContainer() {
+
     const { payload: user, hasError: userError } = await getUserInfo()
 
-    if (userError) {
+    if (userError || !user) {
         return (
             <div className="flex flex-col items-center justify-center py-12 text-center">
                 <Package className="w-12 h-12 text-muted-foreground mb-4" />

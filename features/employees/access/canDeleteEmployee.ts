@@ -1,6 +1,6 @@
 "use server"
 
-import { getUserById } from "@/features/layout/data/getUserById"
+import { getUserById } from "@/features/global/data/getUserById"
 import { prisma } from "@/utils/prisma"
 
 export async function canDeleteEmployee(employeeId: number, userId: number) {
