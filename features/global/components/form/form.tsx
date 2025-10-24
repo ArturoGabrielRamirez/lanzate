@@ -5,7 +5,8 @@ import { FormProvider, useForm, UseFormProps, type SubmitHandler, FieldValues, R
 import { toast } from 'sonner'
 
 import LoadingSubmitButtonContext from '@/features/global/components/form/loading-submit-button-context'
-import { FormPropsType, ResponseType } from '@/features/layout/types'
+import { ServerResponse } from '@/features/global/types'
+import { FormPropsType } from '@/features/global/types/form-type'
 import { cn } from '@/lib/utils'
 
 function Form<T extends FieldValues>({
@@ -39,10 +40,10 @@ function Form<T extends FieldValues>({
         if (!formAction) return
 
         return new Promise(async (resolve, reject) => {
-            const promise = formAction(data) as Promise<ResponseType<unknown>>
+            const promise = formAction(data) as Promise<ServerResponse<unknown>>
             toast.promise(promise, {
                 loading: loadingMessage,
-                success: (resp: ResponseType<unknown>) => {
+                success: (resp: ServerResponse<unknown>) => {
                     if (resp && resp.error) throw new Error(resp.message)
                     if (successRedirect) router.push(successRedirect)
                     if (onSuccess && typeof onSuccess === 'function') onSuccess()

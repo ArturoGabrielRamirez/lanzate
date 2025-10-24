@@ -1,14 +1,13 @@
 import { Resolver, FieldValues } from "react-hook-form"
 
-import { ActionFunction } from "@/features/global/types"
-import { ResponseType } from "@/features/layout/types"
+import { ActionFunction, ServerResponse } from "@/features/global/types"
 
 export type FormPropsType<T extends FieldValues> = {
 
     children: React.ReactNode
     resolver?: Resolver<T, unknown, T>
     contentButton: string | React.ReactNode
-    formAction?: (formData: T) => Promise<ResponseType<unknown>> | ActionFunction<T>
+    formAction?: (formData: T) => Promise<ServerResponse<unknown>> | ActionFunction<T>
     successRedirect?: string
     successMessage?: string
     loadingMessage?: string
