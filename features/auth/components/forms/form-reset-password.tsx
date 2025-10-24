@@ -10,7 +10,7 @@ import { handleResetPasswordAction } from '@/features/auth/actions'
 import { changeEmailSchema } from '@/features/auth/schemas'
 import { ChangeEmailFormData } from '@/features/auth/types'
 import { Form } from '@/features/layout/components'
-import { InputField } from '@/features/layout/components/input-field'
+import { InputField } from '@/features/global/components/form/input-field'
 
 
 function ResetPassword() {

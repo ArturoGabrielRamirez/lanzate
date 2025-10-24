@@ -1,4 +1,4 @@
-export * from "@/features/layout/components/form";
+export * from "@/features/global/components/form/form";
 
 import LoadingSubmitButtonContext from "./loading-submit-button-context";
 import LoadingSubmitButton from "./loading-submit-button";
@@ -18,8 +18,8 @@ export {
     SubdomainProvider
 }
 
-export * from "@/features/layout/components/input-field";
+export * from "@/features/global/components/form/input-field";
 export * from "@/features/layout/components/page-container";
-export * from "@/features/layout/components/textarea-field";
+export * from "@/features/global/components/form/textarea-field";
 export * from "@/features/layout/components/page-header";
-export * from "@/features/layout/components/button-with-popup";
+export * from "@/features/global/components/button-with-popup";

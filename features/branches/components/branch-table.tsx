@@ -3,7 +3,7 @@
 import CreateBranchButton from "@/features/branches/components/create-branch-button"
 import EditBranchButton from "@/features/branches/components/edit-branch-button"
 import DeleteBranchButton from "@/features/branches/components/delete-branch-button"
-import { DataTable } from "@/features/layout/components/data-table"
+import { DataTable } from "@/features/global/components/data-table"
 import { Branch } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal, Eye, Trash2, Crown, ArrowUpDown } from "lucide-react"

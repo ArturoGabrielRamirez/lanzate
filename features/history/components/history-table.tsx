@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
-import { DataTable } from "@/features/layout/components/data-table"
+import { DataTable } from "@/features/global/components/data-table"
 
 type ActionLogWithRelations = ActionLog & {
     user?: {

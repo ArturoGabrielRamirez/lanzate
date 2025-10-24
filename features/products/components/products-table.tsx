@@ -8,7 +8,7 @@ import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { useMemo } from "react"
 
-import { DataTable } from "@/features/layout/components/data-table"
+import { DataTable } from "@/features/global/components/data-table"
 import { DeleteProductButton, EditProductButton, DistributeStockButton } from "@/features/products/components"
 import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
 import type { ProductsTableProps, ProductsTableVariantRow } from "@/features/products/types"

@@ -7,7 +7,7 @@ import Link from "next/link"
 import { useTranslations } from "next-intl"
 
 
-import { DataTable } from "@/features/layout/components/data-table"
+import { DataTable } from "@/features/global/components/data-table"
 import { CancelOrderButton } from "@/features/orders/components"
 import { ExportOrdersButton } from "@/features/orders/components"
 import { OrdersTableProps } from "@/features/orders/types"

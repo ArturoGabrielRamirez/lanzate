@@ -1,7 +1,7 @@
 "use client"
 
 import { Employee } from "@/features/employees/types"
-import { DataTable } from "@/features/layout/components/data-table"
+import { DataTable } from "@/features/global/components/data-table"
 import { ColumnDef } from "@tanstack/react-table"
 import CreateEmployeeButton from "@/features/employees/components/create-employee-button"
 import CreateContractButton from "@/features/employees/components/create-contract-button"
