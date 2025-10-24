@@ -1,5 +1,5 @@
-import { FloatingDock } from "@/features/floating-dock/components/floating-dock"
-import { getUserInfo } from "@/features/global/actions/get-user-info.action"
+import { FloatingDock } from "@/features/floating-dock/components"
+import { getUserInfo } from "@/features/global/actions"
 
 async function FloatingDockContainer() {
 
