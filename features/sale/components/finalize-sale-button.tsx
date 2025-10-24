@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 
 import { ButtonWithPopup } from '@/features/global/components/button-with-popup'
 import InputField from '@/features/global/components/form/input'
-import SelectField from '@/features/layout/components/select-field'
+import SelectField from '@/features/global/components/form/select-field'
 import type { FinalizeSaleButtonProps, FinalizeSaleFormData } from '@/features/sale/types'
 import { Label } from '@/features/shadcn/components/ui/label'
 import { Switch } from '@/features/shadcn/components/ui/switch'
