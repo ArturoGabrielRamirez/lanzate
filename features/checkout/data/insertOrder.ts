@@ -1,7 +1,7 @@
 "use server"
 
 import { CartItemType } from "@/features/cart/types"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { getStoreBySubdomainAction } from "@/features/stores/actions/get-store-by-subdomain.action"
 import { actionWrapper } from "@/utils/lib"

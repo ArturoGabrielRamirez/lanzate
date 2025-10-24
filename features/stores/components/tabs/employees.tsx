@@ -4,7 +4,7 @@ import { getEmployeePermissionsAction } from "@/features/employees/actions/get-e
 import { getEmployeesFromStore } from "@/features/employees/actions/getEmployeesFromStore"
 import EmployeesTable from "@/features/employees/components/employees-table"
 import { EmployeesTabProps } from "@/features/employees/types"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getStoresFromSlugAction } from "@/features/stores/actions"
 
 async function EmployeesTab({ slug }: EmployeesTabProps) {

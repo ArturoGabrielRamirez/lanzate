@@ -7,7 +7,7 @@ import { getBranchDetails } from "@/features/branches/actions/getBranchDetails"
 import DeleteBranchButton from "@/features/branches/components/delete-branch-button"
 import EditBranchButton from "@/features/branches/components/edit-branch-button"
 import { BranchDetailPageProps } from "@/features/branches/types"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 

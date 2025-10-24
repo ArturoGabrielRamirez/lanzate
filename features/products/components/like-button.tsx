@@ -1,4 +1,4 @@
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { LikeButtonClient } from "@/features/products/components/like-button-client"
 import { getProductLikeInfoData } from "@/features/products/data/get-product-like-info.data"
 import type { LikeButtonProps } from "@/features/products/types"

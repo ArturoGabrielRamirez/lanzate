@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server"
 
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getOrdersFromStoreAction } from "@/features/orders/actions/get-orders-from-store.action"
 import OrdersTable from "@/features/orders/components/orders-table"
 import { OrdersTabProps } from "@/features/stores/types"

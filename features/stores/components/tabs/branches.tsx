@@ -1,6 +1,6 @@
 import { BranchTable } from "@/features/branches/components/branch-table"
 import { getEmployeePermissionsAction } from "@/features/employees/actions/get-employee-permisions.action"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
 import { BranchesTabProps } from "@/features/stores/types"
 

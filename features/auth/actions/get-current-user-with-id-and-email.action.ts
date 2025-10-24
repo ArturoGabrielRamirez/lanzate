@@ -6,14 +6,19 @@ import { actionWrapper } from "@/features/global/utils"
 export async function getCurrentUserWithIdAndEmailAction() {
   return actionWrapper(async () => {
 
-    const supabaseUser = await getUserData()
-    const localUser = await getUserBySupabaseIdData({ supabaseUser: supabaseUser.payload! })
+    const { payload: supabaseUser } = await getUserData()
+
+    if (!supabaseUser) throw new Error("Usuario no autenticado")
+
+    const localUser = await getUserBySupabaseIdData({ supabaseUserId: supabaseUser.id })
 
     if (!localUser.payload) {
-      const { payload: backupUser } = await getUserByEmailData({ supabaseUser: supabaseUser.payload! })
+      const { payload: backupUser } = await getUserByEmailData({ supabaseUserEmail: supabaseUser.email! })
+
       if (backupUser) {
         localUser.payload = backupUser
       }
+
     }
 
     if (localUser.hasError || !localUser.payload) {
@@ -22,7 +27,7 @@ export async function getCurrentUserWithIdAndEmailAction() {
 
     return {
       hasError: false,
-      payload: { ...supabaseUser.payload, ...localUser.payload },
+      payload: { ...supabaseUser, ...localUser.payload },
       message: "Usuario obtenido exitosamente"
     }
   })

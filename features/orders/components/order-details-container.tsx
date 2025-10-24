@@ -1,7 +1,7 @@
 import { Package } from "lucide-react"
 import { notFound } from "next/navigation"
 
-import { getUserInfo } from "@/features/layout/actions"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getOrderByIdAction } from "@/features/orders/actions/get-order-by-id.action"
 import { CustomerOrderTracking } from "@/features/orders/components/customer-order-tracking"
 import { OrderDetailsContainerProps } from "@/features/orders/types"

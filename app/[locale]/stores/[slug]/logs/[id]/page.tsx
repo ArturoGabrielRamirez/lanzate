@@ -2,7 +2,7 @@ import { ArrowLeft, Activity, User, Clock, Tag, Hash, FileText, Info, UserCheck 
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { getLogDetailsAction} from "@/features/stores/actions/get-log-details.action"

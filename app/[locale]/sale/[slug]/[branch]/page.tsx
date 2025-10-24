@@ -1,7 +1,7 @@
 import { ShoppingBasket } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { Title } from "@/features/layout/components"
 import SaleInterface from "@/features/sale/components/sale-interface"
 import { getStoreBySubdomainAction } from "@/features/stores/actions/get-store-by-subdomain.action"

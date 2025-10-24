@@ -1,6 +1,6 @@
 import { Package } from "lucide-react"
 
-import { getUserInfo } from "@/features/layout/actions"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getUserOrdersAction } from "@/features/orders/actions/get-user-orders.action"
 import { OrderCard } from "@/features/orders/components/order-card"
 import { OrderWithDetails } from "@/features/orders/types"

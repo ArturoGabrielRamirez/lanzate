@@ -2,7 +2,7 @@ import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
 import { DeleteProductButton } from "@/features/products/components"
 import { ProductDetailForm } from "@/features/products/components/product-detail-display"

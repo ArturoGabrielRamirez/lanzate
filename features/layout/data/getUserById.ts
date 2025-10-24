@@ -1,6 +1,7 @@
 "use server"
 
-import { Account,/*  PrismaClient, */ User } from '@prisma/client'
+import { Account, User } from '@prisma/client'
+
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 
