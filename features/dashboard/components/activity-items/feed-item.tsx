@@ -11,10 +11,10 @@ import { useState } from "react" */
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { FeedItemProps } from "@/features/dashboard/types"
 import { extractLink, formatActivityDate, getUserInitials } from "@/features/dashboard/utils/shared-utils"
-import ConfirmOrderButtonIcon from "@/features/orders/components/confirm-order-button-icon"
-import OpenChatButton from "@/features/orders/components/open-chat-button"
+import { OpenChatButton } from "@/features/orders/components/open-chat-button"
 /* import { CancelOrderButton } from "@/features/stores/components" */
 import { cn } from "@/lib/utils"
+import { ConfirmOrderButtonIcon } from "@/features/orders/components"
 
 function FeedItem({ item }: FeedItemProps) {
 

@@ -1,3 +1,5 @@
+"use client"
+
 import { CheckCircle, Loader2 } from "lucide-react"
 import { useTransition } from "react"
 import { toast } from "sonner"

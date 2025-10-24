@@ -1,3 +1,5 @@
+"use client"
+
 import { OrderTrackingStatus } from "@prisma/client"
 import { CheckCircle, Loader2 } from "lucide-react"
 import { useTransition } from "react"
