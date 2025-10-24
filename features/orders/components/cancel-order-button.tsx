@@ -1,16 +1,13 @@
 "use client"
 
-import { ButtonWithPopup } from "@/features/layout/components"
-import { /* Loader2, */ Trash2 } from "lucide-react"
 import { Order } from "@prisma/client"
-import { changeOrderStatusAction } from "../actions/change-order-status.action"
+import { Trash2 } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { cn } from "@/lib/utils"
+
+import { ButtonWithPopup } from "@/features/layout/components"
 import { ResponseType } from "@/features/layout/types"
-/* import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { useTransition } from "react"
-import { toast } from "sonner" */
+import { changeOrderStatusAction } from "@/features/orders/actions/change-order-status.action"
+import { cn } from "@/lib/utils"
 
 
 type Props = {
@@ -28,13 +25,13 @@ function CancelOrderButton({ order, slug, onComplete, className, size = "default
 
     const handleCancelOrder = async (): Promise<ResponseType<unknown>> => {
         try {
-            const { error, message } = await changeOrderStatusAction(order.id, {
+            const { hasError, message } = await changeOrderStatusAction(order.id, {
                 newStatus: "CANCELLED",
                 confirmPayment: false,
                 confirmStockRestore: true
             }, slug)
 
-            if (error) {
+            if (hasError) {
                 return {
                     error: true,
                     message: message,
@@ -43,7 +40,7 @@ function CancelOrderButton({ order, slug, onComplete, className, size = "default
             }
 
             onComplete?.()
-            
+
             return {
                 error: false,
                 message: "Order cancelled successfully",
@@ -84,4 +81,4 @@ function CancelOrderButton({ order, slug, onComplete, className, size = "default
     )
 }
 
-export default CancelOrderButton
+export { CancelOrderButton }

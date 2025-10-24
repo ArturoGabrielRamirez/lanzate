@@ -1,11 +1,12 @@
 "use client"
 
+import { formatDistanceToNow } from "date-fns"
+import { es } from "date-fns/locale"
+
+import { type User, type MessageWithSender } from "@/features/orders/components/order-chat-context"
 import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { cn } from "@/lib/utils"
-import { formatDistanceToNow } from "date-fns"
-import { es } from "date-fns/locale"
-import { type User, type MessageWithSender } from "./order-chat-context"
 
 type Props = {
     messages: MessageWithSender[]
@@ -96,4 +97,4 @@ function OrderChatMessages({ messages, currentUser }: Props) {
     )
 }
 
-export default OrderChatMessages
+export { OrderChatMessages }

@@ -1,15 +1,16 @@
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { cn } from "@/lib/utils"
-import { Clock, CircleCheck, ShoppingBag, MapPin, PartyPopper } from "lucide-react"
 import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { Clock, CircleCheck, ShoppingBag, MapPin, PartyPopper } from "lucide-react"
+
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { cn } from "@/lib/utils"
+import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
 }
 
-const OrderTimelineIcons = ({ order }: Props) => {
+function OrderTimelineIcons({ order }: Props) {
     const isProcessing = order.status === "PROCESSING"
     const isReady = order.status === "READY"
 
@@ -166,4 +167,4 @@ const OrderTimelineIcons = ({ order }: Props) => {
         </div>
     )
 }
-export default OrderTimelineIcons
+export { OrderTimelineIcons }

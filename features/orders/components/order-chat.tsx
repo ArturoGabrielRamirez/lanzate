@@ -1,7 +1,8 @@
-import OrderChatWrapper from "./order-chat-wrapper"
 import { Suspense } from "react"
+
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getMessagesFromOrderAction } from "../actions"
+import { getMessagesFromOrderAction } from "@/features/orders/actions/get-messages-from-order.action"
+import { OrderChatWrapper } from "@/features/orders/components/order-chat-wrapper"
 
 type Props = {
     storeSlug: string
@@ -22,4 +23,4 @@ async function OrderChat({ storeSlug, orderId }: Props) {
         </Suspense>
     )
 }
-export default OrderChat
+export { OrderChat }

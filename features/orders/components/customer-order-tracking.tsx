@@ -2,11 +2,12 @@
 
 import { Order, Store, OrderPayment, Product, OrderItem, OrderTracking, Branch } from "@prisma/client"
 import { useEffect, useState } from "react"
+
+import { OrderDetailsAccordions } from "@/features/orders/components/order-details-accordions"
+import { OrderDetailsArrival } from "@/features/orders/components/order-details-arrival"
+import { OrderDetailsStatus } from "@/features/orders/components/order-details-status"
+import { OrderDetailsStore } from "@/features/orders/components/order-details-store"
 import { createClient } from "@/utils/supabase/client"
-import OrderDetailsStatus from "./order-details-status"
-import OrderDetailsAccordions from "@/features/orders/components/order-details-accordions"
-import OrderDetailsArrival from "./order-details-arrival"
-import OrderDetailsStore from "./order-details-store"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store } & { branch: Branch }
@@ -78,4 +79,4 @@ function CustomerOrderTracking({ order }: Props) {
     )
 }
 
-export default CustomerOrderTracking 
+export { CustomerOrderTracking }

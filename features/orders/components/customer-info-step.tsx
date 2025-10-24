@@ -1,14 +1,15 @@
 "use client"
 
-import { Button } from "@/features/shadcn/components/ui/button"
-import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
-import { cn } from "@/lib/utils"
+import { OrderTrackingStatus } from "@prisma/client"
 import { User, Mail, Phone, MapPin, MessageCircle, Check, Package, Truck, Clock, CheckCircle2, AlertTriangle } from "lucide-react"
 import { useTransition } from "react"
-import { updateOrderTrackingAction } from "../actions/update-order-tracking.action"
-import { finalizeOrderAction } from "../actions/finalize-order.action"
 import { toast } from "sonner"
-import { OrderTrackingStatus } from "@prisma/client"
+
+import { finalizeOrderAction } from "@/features/orders/actions/finalize-order.action"
+import { updateOrderTrackingAction } from "@/features/orders/actions/update-order-tracking.action"
+import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { cn } from "@/lib/utils"
 
 type EmployeePermissions = {
     isAdmin: boolean
@@ -98,7 +99,7 @@ function CustomerInfoStep({ order, employeePermissions }: Props) {
                     newTrackingStatus: newStatus
                 })
 
-                if (result.error) {
+                if (result.hasError) {
                     toast.error(result.message)
                 } else {
                     toast.success("Order tracking updated successfully")
@@ -118,7 +119,7 @@ function CustomerInfoStep({ order, employeePermissions }: Props) {
                     shippingMethod: order.shipping_method
                 })
 
-                if (result.error) {
+                if (result.hasError) {
                     toast.error(result.message)
                 } else {
                     const actionText = isPickup ? "picked up" : "delivered"
@@ -460,4 +461,4 @@ function CustomerInfoStep({ order, employeePermissions }: Props) {
     )
 }
 
-export default CustomerInfoStep 
+export { CustomerInfoStep }

@@ -1,19 +1,19 @@
 "use client"
 
 import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
-import ConfirmOrderButton from "./confirm-order-button"
-import OrderReadyButton from "./order-ready-button"
-import PickedUpOrderButton from "./picked-up-order-button"
-import FinalizeOrderButton from "./finalize-order-button"
-import { CancelOrderButton } from "@/features/stores/components"
-import OrderTimelineIcons from "./order-timeline-icons"
-import OpenChatButton from "./open-chat-button"
+
+import { CancelOrderButton, ConfirmOrderButton } from "@/features/orders/components"
+import { OrderReadyButton } from "@/features/orders/components"
+import { PickedUpOrderButton } from "@/features/orders/components"
+import { FinalizeOrderButton } from "@/features/orders/components"
+import { OrderTimelineIcons } from "@/features/orders/components"
+import { OpenChatButton } from "@/features/orders/components"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
 }
 
-const OrderTimeline = ({ order }: Props) => {
+function OrderTimeline({ order }: Props) {
 
     return (
         <div className="grow flex flex-col">
@@ -69,4 +69,4 @@ const OrderTimeline = ({ order }: Props) => {
     )
 }
 
-export default OrderTimeline
+export { OrderTimeline }

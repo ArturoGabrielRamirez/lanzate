@@ -1,13 +1,14 @@
 "use client"
 
-import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem, InteractiveStepperSeparator } from "@/features/shadcn/components/expansion/interactive-stepper"
-import { StepNavigation } from "@/features/checkout/components/step-navigation"
-import OrderDetailsStep from "./order-details-step"
-import OrderStatusStep from "./order-status-step"
-import CustomerInfoStep from "./customer-info-step"
-import DynamicStepperTrigger from "./dynamic-stepper-trigger"
 import { Order } from "@prisma/client"
 import { Package, Settings, User } from "lucide-react"
+
+import { StepNavigation } from "@/features/checkout/components/step-navigation"
+import { CustomerInfoStep } from "@/features/orders/components"
+import { DynamicStepperTrigger } from "@/features/orders/components/dynamic-stepper-trigger"
+import { OrderDetailsStep } from "@/features/orders/components/order-details-step"
+import { OrderStatusStep } from "@/features/orders/components/order-status-step"
+import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem, InteractiveStepperSeparator } from "@/features/shadcn/components/expansion/interactive-stepper"
 
 type EmployeePermissions = {
     isAdmin: boolean
@@ -154,4 +155,4 @@ function OrderSummarySteps({ order, employeePermissions }: Props) {
     )
 }
 
-export default OrderSummarySteps
+export { OrderSummarySteps }

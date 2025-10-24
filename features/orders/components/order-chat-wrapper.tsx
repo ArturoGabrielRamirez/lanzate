@@ -1,9 +1,10 @@
 "use client"
 
 import { useOptimistic } from "react"
-import { OrderChatContext, type User, type MessageWithSender } from "./order-chat-context"
-import OrderChatMessages from "./order-chat-messages"
-import OrderChatInput from "./order-chat-input"
+
+import { OrderChatContext, type User, type MessageWithSender } from "@/features/orders/components/order-chat-context"
+import { OrderChatInput } from "@/features/orders/components/order-chat-input"
+import { OrderChatMessages } from "@/features/orders/components/order-chat-messages"
 
 type Props = {
     messages: MessageWithSender[]
@@ -33,4 +34,4 @@ function OrderChatWrapper({ messages, currentUser, orderId }: Props) {
     )
 }
 
-export default OrderChatWrapper 
+export { OrderChatWrapper }

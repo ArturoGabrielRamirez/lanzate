@@ -1,17 +1,18 @@
 "use client"
 
-import { Button } from "@/features/shadcn/components/ui/button"
-import { changeOrderTrackingStatusAction } from "@/features/orders/actions/change-order-tracking-status.action"
 import { Order, OrderTrackingStatus, OrderTracking, OrderItem, Product, OrderPayment } from "@prisma/client"
 import { Truck, Loader2 } from "lucide-react"
 import { useTransition } from "react"
 import { toast } from "sonner"
 
+import { changeOrderTrackingStatusAction } from "@/features/orders/actions/change-order-tracking-status.action"
+import { Button } from "@/features/shadcn/components/ui/button"
+
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment }
 }
 
-const PickedUpOrderButton = ({ order }: Props) => {
+function PickedUpOrderButton({ order }: Props) {
 
     const [isPending, startTransition] = useTransition()
 
@@ -51,4 +52,4 @@ const PickedUpOrderButton = ({ order }: Props) => {
     )
 }
 
-export default PickedUpOrderButton
+export { PickedUpOrderButton }

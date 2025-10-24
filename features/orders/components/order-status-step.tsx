@@ -1,12 +1,13 @@
 "use client"
 
-import { Button } from "@/features/shadcn/components/ui/button"
-import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
+import { OrderStatus } from "@prisma/client"
 import { CheckCircle, AlertCircle, AlertTriangle } from "lucide-react"
 import { useTransition } from "react"
-import { confirmOrderAction } from "../actions/confirm-order.action"
 import { toast } from "sonner"
-import { OrderStatus } from "@prisma/client"
+
+import { confirmOrderAction } from "@/features/orders/actions/confirm-order.action"
+import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { cn } from "@/lib/utils"
 
 type EmployeePermissions = {
@@ -116,4 +117,4 @@ function OrderStatusStep({ order, employeePermissions }: Props) {
     )
 }
 
-export default OrderStatusStep 
+export { OrderStatusStep }

@@ -1,17 +1,18 @@
 "use client"
 
-import { ButtonWithPopup } from "@/features/layout/components"
-import { formatErrorResponse } from "@/utils/lib"
-import { Edit } from "lucide-react"
 import { Order, OrderStatus } from "@prisma/client"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
-import { Label } from "@/features/shadcn/components/ui/label"
-import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
-import { useState } from "react"
-import { Badge } from "@/features/shadcn/components/ui/badge"
-import { cn } from "@/lib/utils"
-import { changeOrderStatusAction } from "../actions/change-order-status.action"
+import { Edit } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
+
+import { ButtonWithPopup } from "@/features/layout/components"
+import { changeOrderStatusAction } from "@/features/orders/actions"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
+import { cn } from "@/lib/utils"
+import { formatErrorResponse } from "@/utils/lib"
 
 type Props = {
     order: Order
@@ -217,4 +218,4 @@ function ChangeOrderStatusButton({ order, slug, onComplete }: Props) {
     )
 }
 
-export default ChangeOrderStatusButton 
+export { ChangeOrderStatusButton } 

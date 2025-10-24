@@ -1,8 +1,9 @@
-import { getUserInfo } from "@/features/layout/actions"
-import { getUserOrdersAction } from "../actions/get-user-orders.action"
-import OrderCard from "./order-card"
-import { Package } from "lucide-react"
 import { Order, OrderItem, Product, Store, Branch } from "@prisma/client"
+import { Package } from "lucide-react"
+
+import { getUserInfo } from "@/features/layout/actions"
+import { getUserOrdersAction } from "@/features/orders/actions/get-user-orders.action"
+import { OrderCard } from "@/features/orders/components/order-card"
 
 type OrderWithDetails = Order & {
     items: (OrderItem & {
@@ -13,9 +14,9 @@ type OrderWithDetails = Order & {
 }
 
 async function MyOrdersContainer() {
-    const { payload: user, error: userError } = await getUserInfo()
+    const { payload: user, hasError: userError } = await getUserInfo()
 
-    if (userError || !user) {
+    if (userError) {
         return (
             <div className="flex flex-col items-center justify-center py-12 text-center">
                 <Package className="w-12 h-12 text-muted-foreground mb-4" />
@@ -27,9 +28,9 @@ async function MyOrdersContainer() {
         )
     }
 
-    const { payload: orders, error: ordersError } = await getUserOrdersAction(user.id)
+    const { payload: orders = [], hasError: ordersError } = await getUserOrdersAction(user.id)
 
-    if (ordersError || !orders) {
+    if (ordersError) {
         return (
             <div className="flex flex-col items-center justify-center py-12 text-center">
                 <Package className="w-12 h-12 text-muted-foreground mb-4" />
@@ -41,7 +42,7 @@ async function MyOrdersContainer() {
         )
     }
 
-    if (orders.length === 0) {
+    if (orders?.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-12 text-center">
                 <Package className="w-12 h-12 text-muted-foreground mb-4" />
@@ -55,11 +56,11 @@ async function MyOrdersContainer() {
 
     return (
         <div className="space-y-6">
-            {orders.map((order: OrderWithDetails) => (
+            {orders?.map((order: OrderWithDetails) => (
                 <OrderCard key={order.id} order={order} />
             ))}
         </div>
     )
 }
 
-export default MyOrdersContainer 
+export { MyOrdersContainer }

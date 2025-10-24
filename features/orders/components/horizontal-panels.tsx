@@ -1,7 +1,8 @@
 "use client"
 
-import { cn } from "@/lib/utils"
 import { useState } from "react"
+
+import { cn } from "@/lib/utils"
 
 type Props = {
     leftPanel: React.ReactNode
@@ -37,4 +38,5 @@ function HorizontalPanels({ leftPanel, rightPanel }: Props) {
         </div>
     )
 }
-export default HorizontalPanels
+
+export { HorizontalPanels }

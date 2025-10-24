@@ -1,10 +1,11 @@
 "use client"
 
-import { Button } from "@/features/shadcn/components/ui/button"
+import { Order } from "@prisma/client"
 import { Download } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { Order } from "@prisma/client"
 import * as XLSX from "xlsx-js-style"
+
+import { Button } from "@/features/shadcn/components/ui/button"
 
 type Props = {
     data: Order[]
@@ -196,4 +197,4 @@ function ExportOrdersButton({ data }: Props) {
     )
 }
 
-export default ExportOrdersButton 
+export { ExportOrdersButton }

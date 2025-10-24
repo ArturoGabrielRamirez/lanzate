@@ -1,8 +1,9 @@
 "use client"
 
+import { LucideIcon } from "lucide-react"
+
 import { InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperTitle, InteractiveStepperTrigger, useStepper } from "@/features/shadcn/components/expansion/interactive-stepper"
 import { cn } from "@/lib/utils"
-import { LucideIcon } from "lucide-react"
 
 type StepperTriggerConfig = {
     title: string
@@ -68,4 +69,4 @@ function DynamicStepperTrigger({ config }: Props) {
     )
 }
 
-export default DynamicStepperTrigger 
+export { DynamicStepperTrigger }

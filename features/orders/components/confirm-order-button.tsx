@@ -1,12 +1,14 @@
 "use client"
-import { AlertDescription } from "@/features/shadcn/components/ui/alert"
-import { Alert } from "@/features/shadcn/components/ui/alert"
-import { Button } from "@/features/shadcn/components/ui/button"
+
 import { Order } from "@prisma/client"
 import { AlertTriangle, CheckCircle } from "lucide-react"
 import { useTransition } from "react"
-import { confirmOrderAction } from "../actions/confirm-order.action"
 import { toast } from "sonner"
+
+import { confirmOrderAction } from "@/features/orders/actions/confirm-order.action"
+import { AlertDescription } from "@/features/shadcn/components/ui/alert"
+import { Alert } from "@/features/shadcn/components/ui/alert"
+import { Button } from "@/features/shadcn/components/ui/button"
 
 type EmployeePermissions = {
     isAdmin: boolean
@@ -30,7 +32,7 @@ type Props = {
     size?: "default" | "sm" | "lg"
 }
 
-const ConfirmOrderButton = ({ order, canUpdateOrders, size = "default" }: Props) => {
+function ConfirmOrderButton({ order, canUpdateOrders, size = "default" }: Props) {
 
     const isOrderReady = order.status === "READY"
     const isOrderCompleted = order.status === "COMPLETED"
@@ -41,11 +43,11 @@ const ConfirmOrderButton = ({ order, canUpdateOrders, size = "default" }: Props)
         toast.loading("Confirming order, please wait...")
         startTransition(async () => {
             try {
-                const { error, message } = await confirmOrderAction({
+                const { hasError, message } = await confirmOrderAction({
                     orderId: order.id.toString()
                 })
 
-                if (error) {
+                if (hasError) {
                     throw new Error(message)
                 }
                 toast.dismiss()
@@ -81,4 +83,5 @@ const ConfirmOrderButton = ({ order, canUpdateOrders, size = "default" }: Props)
         </div>
     )
 }
-export default ConfirmOrderButton
+
+export { ConfirmOrderButton }

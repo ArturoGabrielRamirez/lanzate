@@ -1,5 +1,5 @@
-import { OrdersListEmpty } from "@/features/orders/components"
 import { getOrdersFromStoreAction } from "@/features/orders/actions/get-orders-from-store.action"
+import { OrdersListEmpty } from "@/features/orders/components"
 
 async function OrdersListWidget({ slug }: { slug: string }) {
 
@@ -9,7 +9,7 @@ async function OrdersListWidget({ slug }: { slug: string }) {
         return <div>Error loading orders: {message || "Unknown error"}</div>
     }
 
-    if (orders.length === 0) {
+    if (orders && orders.length === 0) {
         return <OrdersListEmpty />
     }
 

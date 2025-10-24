@@ -1,15 +1,16 @@
-import { Button } from "@/features/shadcn/components/ui/button"
-import { changeOrderTrackingStatusAction } from "@/features/orders/actions/change-order-tracking-status.action"
 import { Order, OrderTrackingStatus, OrderTracking, OrderItem, Product, OrderPayment } from "@prisma/client"
 import { CheckCircle, Loader2 } from "lucide-react"
 import { useTransition } from "react"
 import { toast } from "sonner"
 
+import { changeOrderTrackingStatusAction } from "@/features/orders/actions/change-order-tracking-status.action"
+import { Button } from "@/features/shadcn/components/ui/button"
+
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment }
 }
 
-const OrderReadyButton = ({ order }: Props) => {
+function OrderReadyButton({ order }: Props) {
 
     const [isPending, startTransition] = useTransition()
 
@@ -49,4 +50,4 @@ const OrderReadyButton = ({ order }: Props) => {
         </div>
     )
 }
-export default OrderReadyButton
+export { OrderReadyButton }

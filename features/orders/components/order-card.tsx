@@ -1,10 +1,10 @@
 import { Order, OrderItem, Product, Store, Branch } from "@prisma/client"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Calendar, MapPin, Store as StoreIcon, Eye } from "lucide-react"
+import Link from "next/link"
+
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
-import { Calendar, MapPin, Store as StoreIcon, Eye } from "lucide-react"
-import OrderItemComponent from "./order-item"
-import Link from "next/link"
+import { Card, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 type OrderWithDetails = Order & {
     items: (OrderItem & {
@@ -92,4 +92,4 @@ function OrderCard({ order }: Props) {
     )
 }
 
-export default OrderCard 
+export { OrderCard }

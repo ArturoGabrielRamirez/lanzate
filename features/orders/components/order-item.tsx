@@ -42,4 +42,4 @@ function OrderItemComponent({ item }: Props) {
     )
 }
 
-export default OrderItemComponent 
+export { OrderItemComponent }

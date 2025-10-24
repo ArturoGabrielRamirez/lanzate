@@ -1,16 +1,17 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { MapPin, Truck, Store as StoreIcon } from "lucide-react"
-import OrderTimelineIcons from "@/features/orders/components/order-timeline-icons"
 import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
-import { Progress } from "@/features/shadcn/components/ui/progress"
-import { Badge } from "@/features/shadcn/components/ui/badge"
+import { MapPin, Truck, Store as StoreIcon } from "lucide-react"
 import { useMemo } from "react"
+
+import { OrderTimelineIcons } from "@/features/orders/components/order-timeline-icons"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Progress } from "@/features/shadcn/components/ui/progress"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
 }
 
-const OrderDetailsStatus = ({ order }: Props) => {
+function OrderDetailsStatus({ order }: Props) {
 
     const orderDescriptions = {
         PROCESSING: "Be patient, your order is being processed.",
@@ -93,4 +94,5 @@ const OrderDetailsStatus = ({ order }: Props) => {
         </Card>
     )
 }
-export default OrderDetailsStatus
+
+export { OrderDetailsStatus }

@@ -1,15 +1,16 @@
-import { getUserInfo } from "@/features/layout/actions"
-import { getOrderByIdAction } from "../actions/get-order-by-id.action"
 import { Package } from "lucide-react"
 import { notFound } from "next/navigation"
-import CustomerOrderTracking from "./customer-order-tracking"
+
+import { getUserInfo } from "@/features/layout/actions"
+import { getOrderByIdAction } from "@/features/orders/actions/get-order-by-id.action"
+import { CustomerOrderTracking } from "@/features/orders/components/customer-order-tracking"
 
 type Props = {
     orderId: string
 }
 
 async function OrderDetailsContainer({ orderId }: Props) {
-    const { payload: user, error: userError } = await getUserInfo()
+    const { payload: user, hasError: userError } = await getUserInfo()
 
     if (userError || !user) {
         return (
@@ -23,7 +24,7 @@ async function OrderDetailsContainer({ orderId }: Props) {
         )
     }
 
-    const { payload: order, error: orderError } = await getOrderByIdAction(parseInt(orderId), user.id)
+    const { payload: order, hasError: orderError } = await getOrderByIdAction(parseInt(orderId), user.id)
 
     if (orderError || !order) {
         notFound()
@@ -38,4 +39,4 @@ async function OrderDetailsContainer({ orderId }: Props) {
     )
 }
 
-export default OrderDetailsContainer 
+export { OrderDetailsContainer }

@@ -1,15 +1,16 @@
-import { toast } from "sonner"
-import { finalizeOrderAction } from "../actions/finalize-order.action"
 import { Order, OrderTracking } from "@prisma/client"
-import { useTransition } from "react"
-import { Button } from "@/features/shadcn/components/ui/button"
 import { CheckCircle, Loader2 } from "lucide-react"
+import { useTransition } from "react"
+import { toast } from "sonner"
+
+import { finalizeOrderAction } from "@/features/orders/actions/finalize-order.action"
+import { Button } from "@/features/shadcn/components/ui/button"
 
 type Props = {
     order: Order & { tracking: OrderTracking | null }
 }
 
-const FinalizeOrderButton = ({ order }: Props) => {
+function FinalizeOrderButton({ order }: Props) {
 
     const [isFinalizing, startFinalizeTransition] = useTransition()
 
@@ -23,12 +24,12 @@ const FinalizeOrderButton = ({ order }: Props) => {
 
         startFinalizeTransition(async () => {
             try {
-                const { error, message } = await finalizeOrderAction({
+                const { hasError, message } = await finalizeOrderAction({
                     orderId: order.id.toString(),
                     shippingMethod: order.shipping_method
                 })
 
-                if (error) {
+                if (hasError) {
                     throw new Error(message)
                 }
                 toast.dismiss()
@@ -48,4 +49,5 @@ const FinalizeOrderButton = ({ order }: Props) => {
         </Button>
     )
 }
-export default FinalizeOrderButton
+
+export { FinalizeOrderButton }
