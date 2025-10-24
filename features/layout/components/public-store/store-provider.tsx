@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState } from "react"
 
+import { StoreProviderProps } from "@/features/layout/types/types"
 import { StoreContextType } from "@/features/stores/types"
 
 const StoreContext = createContext<StoreContextType>({
@@ -9,13 +10,10 @@ const StoreContext = createContext<StoreContextType>({
     setDisplayType: () => { }
 })
 
-type Props = {
-    children: React.ReactNode
-}
 
 export const useStore = () => useContext(StoreContext)
 
-function StoreProvider({ children }: Props) {
+function StoreProvider({ children }: StoreProviderProps) {
 
     const [displayType, setDisplayType] = useState<"grid" | "list">("grid")
     const [amount, setAmount] = useState(10)

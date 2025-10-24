@@ -1,8 +1,6 @@
-type Props = {
-    children: React.ReactNode
-}
+import { MainContainerProps } from "@/features/layout/types/types"
 
-function MainContainer({ children }: Props) {
+function MainContainer({ children }: MainContainerProps) {
     return (
         <main className='flex flex-col overflow-y-hidden overflow-x-hidden grow bg-background text-foreground @container'>
             {children}

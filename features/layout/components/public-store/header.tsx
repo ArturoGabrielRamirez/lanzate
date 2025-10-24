@@ -5,38 +5,15 @@ import { getTranslations } from "next-intl/server"
 import CartIcon from "@/features/cart/components/cart-icon"
 import { getUserInfo } from "@/features/global/actions"
 import { LandingAccountDropdown } from "@/features/header/components"
+import { XformerlyTwitter } from "@/features/layout/components/public-store/x-formerly-twitter"
+import { HeaderProps } from "@/features/layout/types/types"
 
-type Props = {
-    title?: string
-    socialMedia?: {
-        facebook_url?: string | null
-        instagram_url?: string | null
-        x_url?: string | null
-    } | null
-    showSocialLinks?: boolean
-    logo?: string | null
-}
-
-async function Header({ title = "Store Name", socialMedia, showSocialLinks = true, logo }: Props) {
+async function Header({ title = "Store Name", socialMedia, showSocialLinks = true, logo }: HeaderProps) {
 
     const t = await getTranslations("auth.buttons");
 
     const { payload: user } = await getUserInfo()
 
-    function XformerlyTwitter({ className }: { className?: string }) {
-        return (
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1em"
-                height="1em"
-                fill="none"
-                viewBox="0 0 1200 1227"
-                className={className}
-            >
-                <path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z" />
-            </svg>
-        );
-    }
 
     const hasSocialMedia = socialMedia && (
         socialMedia.facebook_url ||

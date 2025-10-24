@@ -1,32 +1,10 @@
 import { Facebook, Instagram, Rocket } from "lucide-react"
 import Link from "next/link"
 
-type Props = {
-    title?: string
-    socialMedia?: {
-        facebook_url?: string | null
-        instagram_url?: string | null
-        x_url?: string | null
-    } | null
-    showSocialLinks?: boolean
-}
+import { XformerlyTwitter } from "@/features/layout/components/public-store/x-formerly-twitter"
+import { FooterProps } from "@/features/layout/types/types"
 
-function XformerlyTwitter({ className }: { className?: string }) {
-    return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1em"
-            height="1em"
-            fill="none"
-            viewBox="0 0 1200 1227"
-            className={className}
-        >
-            <path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z" />
-        </svg>
-    );
-}
-
-function Footer({ title, socialMedia, showSocialLinks }: Props) {
+function Footer({ title, socialMedia, showSocialLinks }: FooterProps) {
     return (
         <footer>
             <div className="container mx-auto py-4">

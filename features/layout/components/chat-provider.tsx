@@ -4,21 +4,8 @@ import { createContext, useContext, useState } from "react"
 
 import { fetchOrderMessages } from "@/features/chat/actions/getOrderMessages"
 import { fetchOrderStatus } from "@/features/chat/actions/getOrderStatus"
+import { ChatProviderProps, ChatState } from "@/features/layout/types/types"
 import { ChatMessage } from "@/hooks/use-realtime-chat"
-
-type ChatState = {
-    roomId: string
-    isMaximized: boolean
-    messages: ChatMessage[]
-    isLoading: boolean
-    isOrderCompleted: boolean
-    username: string
-    messageType: "STORE_TO_CUSTOMER" | "CUSTOMER_TO_STORE"
-}
-
-type Props = {
-    children: React.ReactNode
-}
 
 const ChatContext = createContext<{
     isOpen: boolean
@@ -54,7 +41,7 @@ const ChatContext = createContext<{
     selectedRoom: null
 })
 
-function ChatProvider({ children }: Props) {
+function ChatProvider({ children }: ChatProviderProps) {
     const [isOpen, setIsOpen] = useState(false)
     const [rooms, setRooms] = useState<string[]>([])
     const [chatStates, setChatStates] = useState<ChatState[]>([])
