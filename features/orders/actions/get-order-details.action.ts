@@ -1,33 +1,20 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { selectOrderById } from "../data/selectOrderById"
-import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
+import { selectOrderByIdData } from "@/features/orders/data/select-order-by-id.data"
 
-type GetOrderDetailsResponse = {
-    payload: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & {
-        store: Store
-    } | null
-    error: boolean
-    message: string
-}
-
-export async function getOrderDetails(id: string): Promise<GetOrderDetailsResponse> {
+export async function getOrderDetailsAction(id: string) {
     return actionWrapper(async () => {
 
         const parsedId = parseInt(id)
 
         if (isNaN(parsedId)) throw new Error("Invalid order id")
 
-        const { payload: order, error, message } = await selectOrderById(parsedId)
+        const { payload: order, hasError: error, message } = await selectOrderByIdData(parsedId)
 
         if (error) throw new Error(message)
 
-        return {
-            payload: order,
-            error: false,
-            message: "Order details fetched successfully"
-        }
+        return formatSuccessResponse("Order details fetched successfully", order)
 
     })
 } 

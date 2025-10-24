@@ -1,24 +1,17 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
 import { ArrowRight, Crown } from "lucide-react"
-import { TopProductData } from "../types"
-import { getTranslations } from "next-intl/server"
 import Link from "next/link"
+import { getTranslations } from "next-intl/server"
 
-type Props = {
-    data: TopProductData[]
-}
+import { TopProductsWidgetProps } from "@/features/overview/types"
+import { formatCurrency } from "@/features/overview/utils"
+import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-async function TopProductsWidget({ data }: Props) {
+async function TopProductsWidget({ data }: TopProductsWidgetProps) {
 
     const t = await getTranslations("overview.top-products")
 
-    const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('es-AR', {
-            style: 'currency',
-            currency: 'ARS'
-        }).format(amount)
-    }
+
 
     return (
         <Card className="grow hover:bg-accent transition-colors duration-200 group">
@@ -74,4 +67,4 @@ async function TopProductsWidget({ data }: Props) {
     )
 }
 
-export default TopProductsWidget 
+export { TopProductsWidget }

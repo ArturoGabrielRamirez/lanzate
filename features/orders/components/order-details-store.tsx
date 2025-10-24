@@ -1,14 +1,11 @@
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/features/shadcn/components/ui/card"
-import OpenChatButton from "@/features/orders/components/open-chat-button"
-import { cn } from "@/lib/utils"
-import { Order, OrderTracking, OrderItem, Product, OrderPayment, Store, Branch } from "@prisma/client"
 import { MapPin, Phone, StoreIcon } from "lucide-react"
 
-type Props = {
-    order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store } & { branch: Branch }
-}
+import { OpenChatButton } from "@/features/orders/components/open-chat-button"
+import { OrderDetailsStoreProps } from "@/features/orders/types"
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/features/shadcn/components/ui/card"
+import { cn } from "@/lib/utils"
 
-const OrderDetailsStore = ({ order }: Props) => {
+function OrderDetailsStore({ order }: OrderDetailsStoreProps) {
 
     return (
         <Card>
@@ -43,4 +40,4 @@ const OrderDetailsStore = ({ order }: Props) => {
         </Card>
     )
 }
-export default OrderDetailsStore
+export { OrderDetailsStore }

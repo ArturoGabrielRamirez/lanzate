@@ -1,18 +1,15 @@
 "use client"
 
+import { ArrowRight, TrendingUp } from "lucide-react"
+import Link from "next/link"
+import { useTranslations } from "next-intl"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+
+import { SalesByMonthWidgetProps } from "@/features/overview/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/features/shadcn/components/ui/chart"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-import { ArrowRight, TrendingUp } from "lucide-react"
-import { SalesByMonthData } from "../types"
-import { useTranslations } from "next-intl"
-import Link from "next/link"
 
-type Props = {
-    data: SalesByMonthData[]
-}
-
-function SalesByMonthWidget({ data }: Props) {
+function SalesByMonthWidget({ data }: SalesByMonthWidgetProps) {
 
     const t = useTranslations("overview.sales-by-month")
 
@@ -72,4 +69,4 @@ function SalesByMonthWidget({ data }: Props) {
     )
 }
 
-export default SalesByMonthWidget 
+export { SalesByMonthWidget }

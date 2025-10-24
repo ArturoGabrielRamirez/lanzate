@@ -1,13 +1,10 @@
-import { Card, CardTitle, CardHeader, CardContent, CardFooter } from "@/features/shadcn/components/ui/card"
 import { MapPin, Timer } from "lucide-react"
-import { Order, OrderTracking, OrderItem, Product, OrderPayment, Store } from "@prisma/client"
+
+import { OrderDetailsArrivalProps } from "@/features/orders/types"
 import { Button } from "@/features/shadcn/components/ui/button"
+import { Card, CardTitle, CardHeader, CardContent, CardFooter } from "@/features/shadcn/components/ui/card"
 
-type Props = {
-    order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
-}
-
-const OrderDetailsArrival = ({ order }: Props) => {
+function OrderDetailsArrival({ order }: OrderDetailsArrivalProps) {
     return (
         <Card>
             <CardHeader>
@@ -32,4 +29,4 @@ const OrderDetailsArrival = ({ order }: Props) => {
         </Card>
     )
 }
-export default OrderDetailsArrival
+export { OrderDetailsArrival }

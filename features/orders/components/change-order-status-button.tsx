@@ -1,26 +1,21 @@
 "use client"
 
-import { ButtonWithPopup } from "@/features/layout/components"
-import { formatErrorResponse } from "@/utils/lib"
+import { OrderStatus } from "@prisma/client"
 import { Edit } from "lucide-react"
-import { Order, OrderStatus } from "@prisma/client"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
-import { Label } from "@/features/shadcn/components/ui/label"
-import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
-import { useState } from "react"
-import { Badge } from "@/features/shadcn/components/ui/badge"
-import { cn } from "@/lib/utils"
-import { changeOrderStatus } from "../actions/changeOrderStatus"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
 
-type Props = {
-    order: Order
-    slug: string
-    userId?: number
-    onComplete?: () => void
-}
+import { ButtonWithPopup } from "@/features/layout/components"
+import { changeOrderStatusAction } from "@/features/orders/actions"
+import { ChangeOrderStatusButtonProps } from "@/features/orders/types"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
+import { cn } from "@/lib/utils"
+import { formatErrorResponse } from "@/utils/lib"
 
-function ChangeOrderStatusButton({ order, slug, onComplete }: Props) {
+function ChangeOrderStatusButton({ order, slug, onComplete }: ChangeOrderStatusButtonProps) {
 
     const [selectedStatus, setSelectedStatus] = useState<OrderStatus>(order.status)
     const [confirmPayment, setConfirmPayment] = useState(false)
@@ -59,7 +54,7 @@ function ChangeOrderStatusButton({ order, slug, onComplete }: Props) {
             confirmStockRestore: showStockRestoreConfirmation ? confirmStockRestore : false
         }
 
-        return changeOrderStatus(order.id, data, slug)
+        return changeOrderStatusAction(order.id, data, slug)
     }
 
     const getStatusChangeDescription = () => {
@@ -217,4 +212,4 @@ function ChangeOrderStatusButton({ order, slug, onComplete }: Props) {
     )
 }
 
-export default ChangeOrderStatusButton 
+export { ChangeOrderStatusButton } 

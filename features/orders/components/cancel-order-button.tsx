@@ -1,40 +1,27 @@
 "use client"
 
-import { ButtonWithPopup } from "@/features/layout/components"
-import { /* Loader2, */ Trash2 } from "lucide-react"
-import { Order } from "@prisma/client"
-import { changeOrderStatus } from "../actions/changeOrderStatus"
+import { Trash2 } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { cn } from "@/lib/utils"
+
+import { ButtonWithPopup } from "@/features/layout/components"
 import { ResponseType } from "@/features/layout/types"
-/* import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { useTransition } from "react"
-import { toast } from "sonner" */
+import { changeOrderStatusAction } from "@/features/orders/actions/change-order-status.action"
+import { CancelOrderButtonProps } from "@/features/orders/types"
+import { cn } from "@/lib/utils"
 
 
-type Props = {
-    order: Order
-    slug: string
-    userId?: number
-    onComplete?: () => void
-    className?: string
-    size?: "default" | "sm" | "lg"
-    onlyIcon?: boolean
-}
-
-function CancelOrderButton({ order, slug, onComplete, className, size = "default", onlyIcon = false }: Props) {
+function CancelOrderButton({ order, slug, onComplete, className, size = "default", onlyIcon = false }: CancelOrderButtonProps) {
     const t = useTranslations("store.cancel-order")
 
     const handleCancelOrder = async (): Promise<ResponseType<unknown>> => {
         try {
-            const { error, message } = await changeOrderStatus(order.id, {
+            const { hasError, message } = await changeOrderStatusAction(order.id, {
                 newStatus: "CANCELLED",
                 confirmPayment: false,
                 confirmStockRestore: true
             }, slug)
 
-            if (error) {
+            if (hasError) {
                 return {
                     error: true,
                     message: message,
@@ -43,7 +30,7 @@ function CancelOrderButton({ order, slug, onComplete, className, size = "default
             }
 
             onComplete?.()
-            
+
             return {
                 error: false,
                 message: "Order cancelled successfully",
@@ -84,4 +71,4 @@ function CancelOrderButton({ order, slug, onComplete, className, size = "default
     )
 }
 
-export default CancelOrderButton
+export { CancelOrderButton }

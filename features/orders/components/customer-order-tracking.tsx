@@ -1,18 +1,16 @@
 "use client"
 
-import { Order, Store, OrderPayment, Product, OrderItem, OrderTracking, Branch } from "@prisma/client"
+import { OrderTracking } from "@prisma/client"
 import { useEffect, useState } from "react"
+
+import { OrderDetailsAccordions } from "@/features/orders/components/order-details-accordions"
+import { OrderDetailsArrival } from "@/features/orders/components/order-details-arrival"
+import { OrderDetailsStatus } from "@/features/orders/components/order-details-status"
+import { OrderDetailsStore } from "@/features/orders/components/order-details-store"
+import { CustomerOrderTrackingProps } from "@/features/orders/types"
 import { createClient } from "@/utils/supabase/client"
-import OrderDetailsStatus from "./order-details-status"
-import OrderDetailsAccordions from "@/features/orders/components/order-details-accordions"
-import OrderDetailsArrival from "./order-details-arrival"
-import OrderDetailsStore from "./order-details-store"
 
-type Props = {
-    order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store } & { branch: Branch }
-}
-
-function CustomerOrderTracking({ order }: Props) {
+function CustomerOrderTracking({ order }: CustomerOrderTrackingProps) {
     const [currentOrder, setCurrentOrder] = useState(order)
 
     useEffect(() => {
@@ -27,7 +25,7 @@ function CustomerOrderTracking({ order }: Props) {
                     schema: 'public',
                     table: "orders"
                 },
-                (payload: { new: Order | null }) => {
+                (payload) => {
                     if (payload.new && payload.new.id === order.id) {
                         setCurrentOrder(prevOrder => ({
                             ...prevOrder,
@@ -43,7 +41,7 @@ function CustomerOrderTracking({ order }: Props) {
                     schema: 'public',
                     table: "order_tracking"
                 },
-                (payload: { new: OrderTracking | null }) => {
+                (payload) => {
 
                     if (payload.new && payload.new.order_id === order.id) {
                         setCurrentOrder(prevOrder => ({
@@ -53,7 +51,7 @@ function CustomerOrderTracking({ order }: Props) {
                     }
                 }
             )
-            .subscribe((status: { new: OrderTracking | null }) => {
+            .subscribe((status) => {
                 console.log("📡 Subscription status:", status)
             })
 
@@ -78,4 +76,4 @@ function CustomerOrderTracking({ order }: Props) {
     )
 }
 
-export default CustomerOrderTracking 
+export { CustomerOrderTracking }

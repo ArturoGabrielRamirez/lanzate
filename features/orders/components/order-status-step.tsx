@@ -1,41 +1,16 @@
 "use client"
 
-import { Button } from "@/features/shadcn/components/ui/button"
-import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
 import { CheckCircle, AlertCircle, AlertTriangle } from "lucide-react"
 import { useTransition } from "react"
-import { confirmOrderAction } from "../actions/confirmOrderAction"
 import { toast } from "sonner"
-import { OrderStatus } from "@prisma/client"
+
+import { confirmOrderAction } from "@/features/orders/actions/confirm-order.action"
+import { OrderStatusStepProps } from "@/features/orders/types"
+import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
+import { Button } from "@/features/shadcn/components/ui/button"
 import { cn } from "@/lib/utils"
 
-type EmployeePermissions = {
-    isAdmin: boolean
-    permissions?: {
-        can_create_orders: boolean
-        can_update_orders: boolean
-        can_create_products: boolean
-        can_update_products: boolean
-        can_manage_stock: boolean
-        can_process_refunds: boolean
-        can_view_reports: boolean
-        can_manage_employees: boolean
-        can_manage_store: boolean
-    }
-}
-
-type Order = {
-    id: number
-    shipping_method: "PICKUP" | "DELIVERY"
-    status: OrderStatus
-}
-
-type Props = {
-    order: Order
-    employeePermissions: EmployeePermissions
-}
-
-function OrderStatusStep({ order, employeePermissions }: Props) {
+function OrderStatusStep({ order, employeePermissions }: OrderStatusStepProps) {
     const [isPending, startTransition] = useTransition()
 
     // Check if user can update orders
@@ -48,7 +23,7 @@ function OrderStatusStep({ order, employeePermissions }: Props) {
                     orderId: order.id.toString()
                 })
 
-                if (result.error) {
+                if (result.hasError) {
                     toast.error(result.message)
                 } else {
                     toast.success("Order confirmed successfully! The customer has been notified.")
@@ -116,4 +91,4 @@ function OrderStatusStep({ order, employeePermissions }: Props) {
     )
 }
 
-export default OrderStatusStep 
+export { OrderStatusStep }

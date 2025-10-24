@@ -1,16 +1,12 @@
-import { Button } from "@/features/shadcn/components/ui/button"
-import { Badge } from "@/features/shadcn/components/ui/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import CreateProductButton from "@/features/products/components/create-product-button"
 import { getTranslations } from "next-intl/server"
 
-type Props = {
-    slug: string
-    storeId: number
-    userId: number
-}
+import { QuickActionsBarProps } from "@/features/overview/types"
+import CreateProductButton from "@/features/products/components/create-product-button"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-async function QuickActionsBar({ storeId, userId }: Props) {
+async function QuickActionsBar({ storeId, userId }: QuickActionsBarProps) {
 
     const t = await getTranslations("overview.quick-actions")
 
@@ -72,4 +68,4 @@ async function QuickActionsBar({ storeId, userId }: Props) {
     )
 }
 
-export default QuickActionsBar 
+export { QuickActionsBar }

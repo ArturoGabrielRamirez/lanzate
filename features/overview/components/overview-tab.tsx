@@ -1,15 +1,11 @@
-import { Suspense } from "react"
-import { getOverviewData } from "../actions/get-overview-data"
-import { getStoresFromSlug } from "@/features/stores/actions/get-stores-from-slug.action"
-import { OverviewTabProps } from "../types"
-import {
-    SalesOverviewWidget,
-    ProductStoreCountWidget,
-    SalesByMonthWidget,
-    TopProductsWidget,
-} from "./index"
-import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { getTranslations } from "next-intl/server"
+import { Suspense } from "react"
+
+import { getOverviewInfoAction } from "@/features/overview/actions/get-overview-info.action"
+import { SalesOverviewWidget, ProductStoreCountWidget, SalesByMonthWidget, TopProductsWidget } from "@/features/overview/components"
+import { OverviewTabProps } from "@/features/overview/types"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
+import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
 
 async function OverviewTab({ slug }: OverviewTabProps) {
 
@@ -17,10 +13,10 @@ async function OverviewTab({ slug }: OverviewTabProps) {
 
     const [
         { payload: data, error, message },
-        { payload: store, error: storeError }
+        { payload: store, hasError: storeError }
     ] = await Promise.all([
-        getOverviewData(slug),
-        getStoresFromSlug(slug)
+        getOverviewInfoAction(slug),
+        getStoresFromSlugAction(slug)
     ])
 
     if (error || !data) {
@@ -74,4 +70,4 @@ function ChartSkeleton() {
     )
 }
 
-export default OverviewTab 
+export { OverviewTab }

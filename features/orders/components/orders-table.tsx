@@ -1,26 +1,22 @@
 "use client"
 
-import { useTranslations } from "next-intl"
-
-import { Badge } from "@/features/shadcn/components/ui/badge"
-import { Button } from "@/features/shadcn/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
-import { DataTable } from "@/features/layout/components/data-table"
-import { cn } from "@/lib/utils"
 import { Order } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, Eye, MapPin, MoreHorizontal, Truck } from "lucide-react"
 import Link from "next/link"
-import CancelOrderButton from "./cancel-order-button"
+import { useTranslations } from "next-intl"
+
+
+import { DataTable } from "@/features/layout/components/data-table"
+import { CancelOrderButton } from "@/features/orders/components"
 import { ExportOrdersButton } from "@/features/orders/components"
+import { OrdersTableProps } from "@/features/orders/types"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
+import { cn } from "@/lib/utils"
 
-type Props = {
-    data: Order[]
-    slug: string
-    userId: number
-}
-
-function OrdersTable({ data, slug, userId }: Props) {
+function OrdersTable({ data, slug }: OrdersTableProps) {
 
     const t = useTranslations("store.orders-table")
 
@@ -217,4 +213,4 @@ function OrdersTable({ data, slug, userId }: Props) {
         />
     )
 }
-export default OrdersTable
+export { OrdersTable }

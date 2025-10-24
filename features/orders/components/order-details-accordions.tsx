@@ -1,15 +1,12 @@
+import { Box, Calendar, Check, MapPin, Package, ShoppingCart, Truck, User } from "lucide-react"
+
+import { OrderDetailsAccordionsProps } from "@/features/orders/types"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { AlertTitle } from "@/features/shadcn/components/ui/alert"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { cn, formatDate } from "@/lib/utils"
-import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
-import { Box, Calendar, Check, MapPin, Package, ShoppingCart, Truck, User } from "lucide-react"
 
-type Props = {
-    order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
-}
-
-const OrderDetailsAccordions = ({ order }: Props) => {
+function OrderDetailsAccordions({ order }: OrderDetailsAccordionsProps) {
 
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('en-US', {
@@ -106,10 +103,10 @@ const OrderDetailsAccordions = ({ order }: Props) => {
                         <span className="text-xs md:text-sm text-muted-foreground">Payment Status</span>
                         <Badge variant={"outline"} className={cn(
                             "text-xs md:text-sm",
-                            order.payment.status === "PAID" && "bg-green-500 text-white"
+                            order.payment?.status === "PAID" && "bg-green-500 text-white"
                         )}>
-                            {order.payment.status === "PAID" && <Check className="w-4 h-4" />}
-                            {order.payment.status}
+                            {order.payment?.status === "PAID" && <Check className="w-4 h-4" />}
+                            {order.payment?.status}
                         </Badge>
                     </div>
                     <div className="flex justify-between items-center">
@@ -146,4 +143,4 @@ const OrderDetailsAccordions = ({ order }: Props) => {
         </Accordion>
     )
 }
-export default OrderDetailsAccordions
+export { OrderDetailsAccordions }

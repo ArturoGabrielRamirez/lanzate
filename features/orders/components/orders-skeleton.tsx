@@ -61,4 +61,4 @@ function OrdersSkeleton() {
     )
 }
 
-export default OrdersSkeleton 
+export { OrdersSkeleton } 

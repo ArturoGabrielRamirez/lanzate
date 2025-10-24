@@ -1,6 +1,6 @@
-const OrderSummarySkeleton = () => {
+function OrderSummarySkeleton() {
     return (
         <div>OrderSummarySkeleton</div>
     )
 }
-export default OrderSummarySkeleton
+export { OrderSummarySkeleton }

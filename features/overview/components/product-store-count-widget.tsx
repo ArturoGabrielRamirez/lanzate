@@ -1,13 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Package, Store, Eye, Activity } from "lucide-react"
-import { ProductStoreCountData } from "../types"
 import { getTranslations } from "next-intl/server"
 
-type Props = {
-    data: ProductStoreCountData
-}
+import { ProductStoreCountWidgetProps } from "@/features/overview/types"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-async function ProductStoreCountWidget({ data }: Props) {
+async function ProductStoreCountWidget({ data }: ProductStoreCountWidgetProps) {
 
     const t = await getTranslations("overview.product-store-count")
 
@@ -64,4 +61,4 @@ async function ProductStoreCountWidget({ data }: Props) {
     )
 }
 
-export default ProductStoreCountWidget 
+export { ProductStoreCountWidget }

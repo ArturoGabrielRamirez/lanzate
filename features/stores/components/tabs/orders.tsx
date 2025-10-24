@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server"
 
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getOrdersFromStore } from "@/features/orders/actions/getOrdersFromStore"
+import { getOrdersFromStoreAction } from "@/features/orders/actions/get-orders-from-store.action"
 import OrdersTable from "@/features/orders/components/orders-table"
 import { OrdersTabProps } from "@/features/stores/types"
 
@@ -15,7 +15,7 @@ async function OrdersTab({ slug }: OrdersTabProps) {
         return console.error(userMessage || t("error-loading-user"))
     }
 
-    const { payload: orders, hasError, message } = await getOrdersFromStore(slug)
+    const { payload: orders, hasError, message } = await getOrdersFromStoreAction(slug)
 
     if (hasError || !orders) {
         return console.log(message || t("error-loading-orders"))

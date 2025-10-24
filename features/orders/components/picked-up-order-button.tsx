@@ -1,17 +1,15 @@
 "use client"
 
-import { Button } from "@/features/shadcn/components/ui/button"
-import { changeOrderTrackingStatus } from "@/features/orders/actions/changeOrderTrackingStatus"
-import { Order, OrderTrackingStatus, OrderTracking, OrderItem, Product, OrderPayment } from "@prisma/client"
+import { OrderTrackingStatus } from "@prisma/client"
 import { Truck, Loader2 } from "lucide-react"
 import { useTransition } from "react"
 import { toast } from "sonner"
 
-type Props = {
-    order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment }
-}
+import { changeOrderTrackingStatusAction } from "@/features/orders/actions/change-order-tracking-status.action"
+import { PickedUpOrderButtonProps } from "@/features/orders/types"
+import { Button } from "@/features/shadcn/components/ui/button"
 
-const PickedUpOrderButton = ({ order }: Props) => {
+function PickedUpOrderButton({ order }: PickedUpOrderButtonProps) {
 
     const [isPending, startTransition] = useTransition()
 
@@ -27,7 +25,7 @@ const PickedUpOrderButton = ({ order }: Props) => {
                     newStatus: "ON_THE_WAY" as OrderTrackingStatus,
                 }
 
-                await changeOrderTrackingStatus({ orderId: order.id, newStatus })
+                await changeOrderTrackingStatusAction({ orderId: order.id, newStatus })
 
                 toast.dismiss()
                 toast.success("Order marked as picked up", { richColors: true })
@@ -51,4 +49,4 @@ const PickedUpOrderButton = ({ order }: Props) => {
     )
 }
 
-export default PickedUpOrderButton
+export { PickedUpOrderButton }

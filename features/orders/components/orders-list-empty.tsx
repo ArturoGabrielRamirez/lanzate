@@ -1,7 +1,7 @@
 import { ShoppingCart } from "lucide-react";
 
-import { Card, CardContent } from "@/features/shadcn/components/ui/card";
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty";
+import { Card, CardContent } from "@/features/shadcn/components/ui/card";
 
 function OrdersListEmpty() {
     return (
