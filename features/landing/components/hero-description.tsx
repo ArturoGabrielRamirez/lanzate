@@ -26,9 +26,6 @@ function HeroDescription({ className }: WithClassName) {
                         {t('buttons.get-started')}
                     </Link>
                 </AnimatedShinyButton>
-                {/* <EyeCatchingButton asChild className="text-xl font-bold">
-                    
-                </EyeCatchingButton> */}
             </div>
         </div>
     )
