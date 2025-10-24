@@ -4,7 +4,7 @@ import { actionWrapper } from "@/utils/lib"
 import { updateEmployee as updateEmployeeInDb } from "../data/updateEmployee"
 import { revalidatePath } from "next/cache"
 import { insertLogEntry } from "@/features/global/data/insertLogEntry"
-import { canEditEmployee } from "../access/canEditEmployee"
+import { canEditEmployee } from "../access/can-edit-employee.access"
 
 export async function editEmployee(employeeId: number, data: any, slug: string, userId: number) {
     return actionWrapper(async () => {
