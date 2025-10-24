@@ -41,7 +41,6 @@ export async function GET(
       )
     }
 
-    // ✅ Agregar headers de cache
     return NextResponse.json(result.payload, {
       headers: {
         'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120'
