@@ -1,9 +1,9 @@
-"use server";
+"use server"
 
-import { User } from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js"
 
-import { getCurrentUserData } from "@/features/auth/data";
-import { actionWrapper } from "@/features/global/utils";
+import { getCurrentUserData } from "@/features/auth/data"
+import { actionWrapper } from "@/features/global/utils"
 
 export async function getCurrentUserAction() {
 
