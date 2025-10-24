@@ -1,8 +1,9 @@
 "use server"
 
+import { SelectBranchByIdProps } from "@/features/branches/types"
 import { prisma } from "@/utils/prisma"
 
-export async function selectBranchById(id: number) {
+export async function selectBranchByIdData({ id }: SelectBranchByIdProps) {
 
     const branch = await prisma.branch.findUnique({
         where: {
@@ -47,7 +48,7 @@ export async function selectBranchById(id: number) {
 
     return {
         payload: branch,
-        error: false,
+        hasError: false,
         message: "Branch details fetched successfully"
     }
 } 

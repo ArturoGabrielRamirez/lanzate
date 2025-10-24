@@ -1,17 +1,19 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { actionWrapper } from "@/utils/lib"
-import { insertBranch } from "@/features/branches/data"
-import { insertLogEntry } from "@/features/layout/data"
 
-export async function createBranch(payload: any, storeId: number, userId: number) {
+import { insertBranchData } from "@/features/branches/data"
+import { CreateBranchAction } from "@/features/branches/types"
+import { insertLogEntry } from "@/features/global/data/insertLogEntry"
+import { actionWrapper } from "@/features/global/utils"
+
+export async function createBranchAction({ payload, storeId, userId }: CreateBranchAction) {
 
     return actionWrapper(async () => {
 
-        const { error, message, payload: branch } = await insertBranch(payload, storeId)
+        const { hasError, message, payload: branch } = await insertBranchData({ name: payload.name, address: "", email: "", phone: "", storeId })
 
-        if (error) throw new Error(message)
+        if (hasError) throw new Error(message)
 
         revalidatePath(`/stores/${storeId}`)
 
@@ -28,7 +30,7 @@ export async function createBranch(payload: any, storeId: number, userId: number
 
 
         return {
-            error: false,
+            hasError: false,
             message: "Branch created successfully",
             payload: branch
         }

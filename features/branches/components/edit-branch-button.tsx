@@ -1,29 +1,42 @@
 "use client"
 
-import { useState } from "react"
 import { Pencil } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
 
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
+import { editBranchAction } from "@/features/branches/actions"
 import { branchUpdateSchema } from "@/features/branches/schemas"
-import { editBranch } from "@/features/branches/actions"
 import { EditBranchButtonProps } from "@/features/branches/types"
-import { Textarea } from "@/features/shadcn/components/ui/textarea"
-import { Label } from "@/features/shadcn/components/ui/label"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import InputField from "@/features/global/components/form/input"
 import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Textarea } from "@/features/shadcn/components/ui/textarea"
 
 function EditBranchButton({ branch, slug, onComplete, userId }: EditBranchButtonProps) {
-    
+
     const [isMain, setIsMain] = useState(branch.is_main)
     const t = useTranslations("store.edit-branch")
 
-    const handleEditBranch = async (payload: any) => {
+    const handleEditBranch = async (payload: {
+        branchId: number
+        data: {
+            name: string
+            description?: string,
+            address: string
+            email: string
+            phone: string
+            is_main: boolean
+        }
+        slug: string
+        userId: number
+    }) => {
         const data = {
             ...payload,
             is_main: isMain
         }
 
-        return editBranch(branch.id, data, slug, userId)
+        return editBranchAction({ branchId: branch.id, data: data.data, slug, userId })
     }
 
     return (
@@ -46,46 +59,46 @@ function EditBranchButton({ branch, slug, onComplete, userId }: EditBranchButton
             }}
             className="bg-transparent w-full justify-start"
         >
-            <InputField 
-                name="name" 
-                label={t("name")} 
-                type="text" 
-                defaultValue={branch.name || ""} 
+            <InputField
+                name="name"
+                label={t("name")}
+                type="text"
+                defaultValue={branch.name || ""}
             />
-            
+
             <div className="space-y-2">
                 <Label htmlFor="description">{t("description")}</Label>
-                <Textarea 
-                    name="description" 
+                <Textarea
+                    name="description"
                     placeholder={t("description-placeholder")}
                     defaultValue={branch.description || ""}
                 />
             </div>
 
-            <InputField 
-                name="address" 
-                label={t("address")} 
-                type="text" 
-                defaultValue={branch.address || ""} 
+            <InputField
+                name="address"
+                label={t("address")}
+                type="text"
+                defaultValue={branch.address || ""}
             />
 
-            <InputField 
-                name="phone" 
-                label={t("phone")} 
-                type="text" 
-                defaultValue={branch.phone || ""} 
+            <InputField
+                name="phone"
+                label={t("phone")}
+                type="text"
+                defaultValue={branch.phone || ""}
             />
 
-            <InputField 
-                name="email" 
-                label={t("email")} 
-                type="email" 
-                defaultValue={branch.email || ""} 
+            <InputField
+                name="email"
+                label={t("email")}
+                type="email"
+                defaultValue={branch.email || ""}
             />
 
             <div className="flex items-center space-x-2">
-                <Checkbox 
-                    id="is_main" 
+                <Checkbox
+                    id="is_main"
                     checked={isMain}
                     onCheckedChange={(checked) => setIsMain(checked as boolean)}
                 />

@@ -1,8 +1,10 @@
 "use server"
 
+import { InsertBranchProps } from "@/features/branches/types"
 import { prisma } from "@/utils/prisma"
 
-export async function insertBranch(payload: any, storeId: number) {
+
+export async function insertBranchData({ name, address, email, phone, storeId }: InsertBranchProps) {
 
     const existingBranches = await prisma.branch.count({
         where: {
@@ -15,16 +17,16 @@ export async function insertBranch(payload: any, storeId: number) {
     const branch = await prisma.branch.create({
         data: {
             store_id: storeId,
-            name: payload.name,
-            address: payload.address,
-            email: payload.email,
-            phone: payload.phone,
+            name: name,
+            address: address,
+            email: email,
+            phone: phone,
             is_main: isFirstBranch
         }
     })
 
     return {
-        error: false,
+        hasError: false,
         message: "Branch created successfully",
         payload: branch
     }

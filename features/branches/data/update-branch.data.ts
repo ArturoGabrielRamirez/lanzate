@@ -1,10 +1,11 @@
 "use server"
 
+import { UpdateBranchProps } from "@/features/branches/types"
 import { prisma } from "@/utils/prisma"
 
-export async function updateBranch(branchId: number, payload: any) {
+export async function updateBranchData({ branchId, data }: UpdateBranchProps) {
 
-    if (payload.is_main === true) {
+    if (data.is_main === true) {
         const currentBranch = await prisma.branch.findUnique({
             where: { id: branchId },
             include: { store: true }
@@ -23,7 +24,7 @@ export async function updateBranch(branchId: number, payload: any) {
         })
     }
 
-    if (payload.is_main === false) {
+    if (data.is_main === false) {
         const currentBranch = await prisma.branch.findUnique({
             where: { id: branchId },
             include: { store: true }
@@ -49,12 +50,12 @@ export async function updateBranch(branchId: number, payload: any) {
             id: branchId
         },
         data: {
-            name: payload.name,
-            description: payload.description,
-            address: payload.address,
-            phone: payload.phone,
-            email: payload.email,
-            is_main: payload.is_main
+            name: data.name,
+            description: data.description,
+            address: data.address,
+            phone: data.phone,
+            email: data.email,
+            is_main: data.is_main
         }
     })
 
