@@ -4,11 +4,7 @@ import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
 import { finalizeOrderData } from "@/features/orders/data/finalize-order.data"
-
-type FinalizeOrderActionProps = {
-    orderId: string
-    shippingMethod: "PICKUP" | "DELIVERY"
-}
+import { FinalizeOrderActionProps } from "@/features/orders/types"
 
 export async function finalizeOrderAction({
     orderId,

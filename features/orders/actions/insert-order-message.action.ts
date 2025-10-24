@@ -1,20 +1,10 @@
 "use server"
 
-import { MessageType } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { insertOrderMessageData } from "@/features/orders/data/insert-order-message.data"
-
-type InsertOrderMessageActionProps = {
-    orderId: string
-    message: string
-    messageType?: MessageType
-    fileUrl?: string
-    fileName?: string
-    fileSize?: number
-    pathname: string
-}
+import { InsertOrderMessageActionProps } from "@/features/orders/types"
 
 export async function insertOrderMessageAction({
     orderId,

@@ -1,17 +1,10 @@
 "use server"
 
-import { OrderTrackingStatus } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { changeOrderTrackingStatusData } from "@/features/orders/data/change-order-tracking-status.data"
-
-type ChangeOrderTrackingStatusActionProps = {
-    orderId: number
-    newStatus: {
-        newStatus: OrderTrackingStatus
-    }
-}
+import { ChangeOrderTrackingStatusActionProps } from "@/features/orders/types"
 
 export async function changeOrderTrackingStatusAction({
     orderId,

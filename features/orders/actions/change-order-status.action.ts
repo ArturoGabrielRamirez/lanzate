@@ -6,12 +6,7 @@ import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { getUserInfo } from "@/features/layout/actions"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
 import { updateOrderStatusData } from "@/features/orders/data/update-order-status.data"
-
-type ChangeOrderStatusData = {
-    newStatus: string
-    confirmPayment: boolean
-    confirmStockRestore: boolean
-}
+import { ChangeOrderStatusData } from "@/features/orders/types"
 
 export async function changeOrderStatusAction(orderId: number, data: ChangeOrderStatusData, slug: string) {
     return actionWrapper(async () => {
