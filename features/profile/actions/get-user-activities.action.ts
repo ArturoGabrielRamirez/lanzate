@@ -2,8 +2,7 @@
 
 import { Prisma } from '@prisma/client'
 
-
-import { getCurrentUser } from '@/features/auth/actions'
+import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
 import { getCachedActivitiesData } from '@/features/profile/data'
 import { GetUserActivitiesParams } from '@/features/profile/types'
@@ -23,7 +22,7 @@ export async function getUserActivitiesAction({
 
         // ✅ Verificar permisos para actividades privadas
         if (includePrivate) {
-            const currentUserResponse = await getCurrentUser()
+            const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
 
             if (!currentUserResponse?.payload || currentUserResponse.payload.id !== userId) {
                 return formatErrorResponse('No autorizado para ver actividades privadas')

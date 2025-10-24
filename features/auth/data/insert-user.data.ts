@@ -1,10 +1,11 @@
 'use server'
 
 import { getCurrentUserAction } from '@/features/auth/actions'
-import { detectOAuthProvider } from "@/features/auth/utils/detect-provider";
+import { InsertUserParams } from '@/features/auth/types'
+import { detectOAuthProvider } from "@/features/auth/utils/detect-provider"
 import { prisma } from '@/utils/prisma'
 
-export async function insertUser({ email, provider, supabaseUserId, avatar, username, name, lastname, phone }: { email: string, provider?: string, supabaseUserId?: string, avatar?: string, username?: string, name?: string, lastname?: string, phone?: string }) {
+export async function insertUserData({ email, provider, supabaseUserId, avatar, username, name, lastname, phone }: InsertUserParams) {
     let finalSupabaseUserId = supabaseUserId;
 
     if (!finalSupabaseUserId) {

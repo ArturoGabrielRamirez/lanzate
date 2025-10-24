@@ -1,12 +1,13 @@
-import { Toaster } from "@/features/shadcn/components/ui/sonner";
-import CartProvider from "@/features/cart/components/cart-provider";
-import { Header } from "@/features/store-landing/components"
-import Footer from "@/features/layout/components/public-store/footer";
-import MainContainer from "@/features/layout/components/public-store/main-container";
-import StoreProvider from "@/features/layout/components/public-store/store-provider";
-import { getStoreWithProductsAction } from "@/features/stores/actions/get-store-with-products.action";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+
+import CartProvider from "@/features/cart/components/cart-provider";
+import Footer from "@/features/layout/components/public-store/footer";
+import Header from "@/features/layout/components/public-store/header";
+import { MainContainer } from "@/features/layout/components/public-store/main-container";
+import StoreProvider from "@/features/layout/components/public-store/store-provider";
+import { Toaster } from "@/features/shadcn/components/ui/sonner";
+import { getStoreWithProductsAction } from "@/features/stores/actions/get-store-with-products.action";
 
 type LayoutProps = {
     children: React.ReactNode;

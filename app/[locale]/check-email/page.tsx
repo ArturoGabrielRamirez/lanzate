@@ -1,5 +1,5 @@
-import CheckEmail from "@/features/auth/components/change-status/check-email";
-import { CheckEmailPageProps } from "@/features/auth/types";
+import CheckEmail from "@/features/auth/components/change-status/check-email"
+import { CheckEmailPageProps } from "@/features/auth/types"
 
 export default async function CheckEmailPage({
     searchParams

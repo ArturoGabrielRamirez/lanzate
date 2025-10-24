@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { useTranslations } from "next-intl";
+import Link from "next/link"
+import { useTranslations } from "next-intl"
 
 function ResetPasswordLink() {
 
-    const t = useTranslations("auth.reset-password.description");
+    const t = useTranslations("auth.reset-password.description")
 
     return (
         <div className="flex gap-2 items-center justify-center w-full">
@@ -14,7 +14,7 @@ function ResetPasswordLink() {
                 {t("reset-password")}
             </Link>
         </div>
-    );
+    )
 }
 
 export { ResetPasswordLink };

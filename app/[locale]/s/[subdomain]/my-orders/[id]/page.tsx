@@ -1,8 +1,8 @@
 import { Suspense } from "react"
+
 import { Title } from "@/features/layout/components"
-import OrderDetailsContainer from "@/features/orders/components/order-details-container"
-import OrderDetailsSkeleton from "@/features/orders/components/order-details-skeleton"
-import PageContainer from "@/features/layout/components/page-container"
+import { PageContainer } from "@/features/layout/components/page-container"
+import { OrderDetailsContainer, OrderDetailsSkeleton } from "@/features/orders/components"
 
 type Props = {
     params: Promise<{

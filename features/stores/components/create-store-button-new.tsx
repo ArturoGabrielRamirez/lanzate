@@ -1,5 +1,7 @@
 "use client"
 
+//TODO:Integrar camera from features/shared
+
 import { yupResolver } from "@hookform/resolvers/yup"
 import { TimePicker } from "antd";
 import dayjs, { Dayjs } from "dayjs";
@@ -11,15 +13,13 @@ import { useEffect, useState, createContext, useContext, useCallback, useRef } f
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
+import { Form, InputField } from "@/features/layout/components"
 import Stepper, { Step } from "@/features/shadcn/components/Stepper"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, DialogDescription } from "@/features/shadcn/components/ui/dialog"
 import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/features/shadcn/components/ui/file-upload"
 import { Progress } from "@/features/shadcn/components/ui/progress"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import CameraComponent from "@/features/auth/components/avatar/camera-component"
-import { useCamera } from "@/features/auth/hooks/use-camera"
-import { Form, InputField } from "@/features/layout/components"
 import { createStoreAction } from "@/features/stores/actions"
 import { basicInfoSchemaNew, addressInfoSchema, contactInfoSchema, settingsSchema, shippingPaymentSchema, BasicInfoFormType, AddressInfoFormType, ContactInfoFormType, SettingsFormType, ShippingPaymentFormType } from "@/features/stores/schemas"
 import { AttentionDateType, ShippingMethod, AttentionDateFormPanelProps, ShippingMethodFormPanelProps, StepIndicatorProps, CreateStoreFormProps, CreateStoreFormValues, CreateStoreContextType } from "@/features/stores/types"
@@ -884,7 +884,7 @@ function BasicInfoFormPanel() {
         }
     }
 
-    const camera = useCamera({
+/*     const camera = useCamera({
         uploadPath: 'store-logos',
         onSuccess: (url) => {
             setValue("basic_info.logo", url)
@@ -896,12 +896,12 @@ function BasicInfoFormPanel() {
         },
         quality: 0.9
     })
-
-    const handleCamera = (e: React.MouseEvent<HTMLButtonElement>) => {
+ */
+  /*   const handleCamera = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         e.stopPropagation()
         camera.openCamera();
-    }
+    } */
 
     const handleFileSelect = (files: File[]) => {
         if (files.length === 0) return
@@ -945,14 +945,14 @@ function BasicInfoFormPanel() {
                                             Click para explorar archivos
                                         </TooltipContent>
                                     </Tooltip>
-                                    <Tooltip>
+                                    {/* <Tooltip>
                                         <TooltipTrigger asChild>
                                             <IconButton icon={Camera} onClick={handleCamera} />
                                         </TooltipTrigger>
                                         <TooltipContent>
                                             Click para tomar foto
                                         </TooltipContent>
-                                    </Tooltip>
+                                    </Tooltip> */}
                                 </div>
                             </div>
                         </FileUploadDropzone>
@@ -972,10 +972,10 @@ function BasicInfoFormPanel() {
                         </div>
                     )}
                 </div>
-                <CameraComponent
+          {/*       <CameraComponent
                     {...camera.cameraProps}
                     title="Tomar foto para logo"
-                />
+                /> */}
                 <div className="space-y-4">
                     <InputField
                         name="basic_info.name"

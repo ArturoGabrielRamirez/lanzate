@@ -1,38 +1,39 @@
 'use client'
 
-import { Smartphone, Upload, Loader2, Check, Camera } from "lucide-react"
+import {/*  Smartphone, *//*  Upload, */ Loader2, Check, Camera } from "lucide-react"
 import { useState, useRef } from 'react'
 import { toast } from "sonner"
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Label } from "@/features/shadcn/components/ui/label"
-import { useCamera } from '@/features/auth/hooks/use-camera'
 import { StoreLogoOption, StoreLogoInlineEditorProps } from '@/features/stores/types'
 import { cn } from "@/lib/utils"
 
 function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoInlineEditorProps) {
   const [showEditor, setShowEditor] = useState(false)
   const [isLoadingOptions, setIsLoadingOptions] = useState(false)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [/* selectedFile, *//*  setSelectedFile */] = useState<File | null>(null)
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
   const [logoOptions, setLogoOptions] = useState<StoreLogoOption[]>([])
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-  const [currentLogoUrl, setCurrentLogoUrl] = useState<string | null>(currentLogo)
+  const [currentLogoUrl, /* setCurrentLogoUrl */] = useState<string | null>(currentLogo)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const camera = useCamera({
-    uploadPath: 'store-logos',
-    onSuccess: (url) => {
-      onLogoUpdate(url)
-      resetState()
-    },
-    onError: (error) => {
-      console.error('Camera upload error:', error)
-      toast.error('Error al subir la foto')
-    },
-    quality: 0.9
-  })
+  console.log(onLogoUpdate)
+
+  /*  const camera = useCamera({
+     uploadPath: 'store-logos',
+     onSuccess: (url) => {
+       onLogoUpdate(url)
+       resetState()
+     },
+     onError: (error) => {
+       console.error('Camera upload error:', error)
+       toast.error('Error al subir la foto')
+     },
+     quality: 0.9
+   }) */
 
   function getDefaultLogo() {
     return `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(storeName)}&backgroundColor=transparent`
@@ -73,13 +74,13 @@ function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLo
       setIsLoadingOptions(false)
     }
   }
-
-  function resetState() {
-    setSelectedFile(null)
-    setSelectedOption(null)
-    setPreviewUrl(null)
-    if (fileInputRef.current) fileInputRef.current.value = ''
-  }
+  /* 
+    function resetState() {
+      setSelectedFile(null)
+      setSelectedOption(null)
+      setPreviewUrl(null)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    } */
 
   function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0]
@@ -102,7 +103,7 @@ function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLo
       return
     }
 
-    setSelectedFile(file)
+/*     setSelectedFile(file) */
     setSelectedOption(null)
 
     const reader = new FileReader()
@@ -116,42 +117,42 @@ function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLo
 
   function handleOptionSelect(optionId: string) {
     setSelectedOption(optionId)
-    setSelectedFile(null)
+/*     setSelectedFile(null) */
     setPreviewUrl(null)
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
-  function handleUseSelectedOption() {
-    const option = logoOptions.find(opt => opt.id === selectedOption)
-    if (option) {
-      onLogoUpdate(option.url)
-      resetState()
-      toast.success('Logo actualizado correctamente')
-    }
-  }
+  /*   function handleUseSelectedOption() {
+      const option = logoOptions.find(opt => opt.id === selectedOption)
+      if (option) {
+        onLogoUpdate(option.url)
+        resetState()
+        toast.success('Logo actualizado correctamente')
+      }
+    } */
 
-  async function handleUpload() {
-    if (!selectedFile) {
-      toast.error('No hay archivo seleccionado')
-      return
-    }
-    try {
-      const formData = new FormData()
-      formData.append('file', selectedFile)
-      formData.append('type', 'store-logo')
-
-      const response = await fetch('/api/store-logo', { method: 'POST', body: formData })
-      if (!response.ok) throw new Error('Error uploading file')
-      const data = await response.json()
-      onLogoUpdate(data.url)
-      resetState()
-      toast.success('Logo subido correctamente')
-    } catch (error) {
-      console.error('Upload error:', error)
-      toast.error('Error al subir el archivo')
-    }
-  }
-
+  /*  async function handleUpload() {
+     if (!selectedFile) {
+       toast.error('No hay archivo seleccionado')
+       return
+     }
+     try {
+       const formData = new FormData()
+       formData.append('file', selectedFile)
+       formData.append('type', 'store-logo')
+ 
+       const response = await fetch('/api/store-logo', { method: 'POST', body: formData })
+       if (!response.ok) throw new Error('Error uploading file')
+       const data = await response.json()
+       onLogoUpdate(data.url)
+       resetState()
+       toast.success('Logo subido correctamente')
+     } catch (error) {
+       console.error('Upload error:', error)
+       toast.error('Error al subir el archivo')
+     }
+   }
+  */
   function getCurrentPreview() {
     if (previewUrl) return previewUrl
     if (selectedOption) {
@@ -180,7 +181,8 @@ function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLo
 
       {showEditor && (
         <>
-          {camera.capturedFile && (
+          {/*           {camera.capturedFile && (
+                  //useCamera calls onSuccess estaba comentado en el onClick del segundo boton
             <div className="p-4 border-2 border-dashed border-primary/20 rounded-lg bg-primary/5">
               <div className="text-center space-y-3">
                 <p className="text-sm font-medium text-muted-foreground">Foto capturada lista para usar</p>
@@ -188,14 +190,14 @@ function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLo
                   <Button type="button" onClick={camera.retakePhoto} variant="outline" size="sm">
                     <Smartphone className="h-4 w-4 mr-2" /> Retomar
                   </Button>
-                  <Button type="button" onClick={async () => { await camera.uploadPhoto(); /* useCamera calls onSuccess */ }} disabled={camera.isUploading} size="sm">
+                  <Button type="button" onClick={async () => { await camera.uploadPhoto();  }} disabled={camera.isUploading} size="sm">
                     {camera.isUploading ? (<><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Subiendo...</>) : 'Usar como Logo'}
                   </Button>
                   <Button type="button" onClick={camera.discardPhoto} variant="destructive" size="sm">Descartar</Button>
                 </div>
               </div>
             </div>
-          )}
+          )} */}
 
 
 
@@ -239,23 +241,23 @@ function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLo
           <div className="space-y-3">
             {/* <Label>Subir imagen</Label> */}
             <div className="flex gap-2">
-              <Button type="button" onClick={() => fileInputRef.current?.click()} variant="outline" className="flex-1" disabled={camera.isUploading}>
+      {/*         <Button type="button" onClick={() => fileInputRef.current?.click()} variant="outline" className="flex-1" disabled={camera.isUploading}>
                 <Upload className="h-4 w-4 mr-2" /> Seleccionar archivo
-              </Button>
+              </Button> */}
             </div>
             <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileSelect} className="hidden" />
           </div>
-          {!camera.capturedFile && (
+          {/* {!camera.capturedFile && (
             <div className="flex gap-2">
               <Button type="button" onClick={() => { camera.openCamera(); }} variant="outline" className="flex-1" disabled={camera.isUploading}>
                 <Smartphone className="h-4 w-4 mr-2" /> Tomar Foto
               </Button>
             </div>
-          )}
-          <div className="flex gap-2">
+          )} */}
+          {/*   <div className="flex gap-2">
             <Button type="button" onClick={() => { handleUseSelectedOption(); const option = logoOptions.find(o => o.id === selectedOption); if (option) { setCurrentLogoUrl(option.url); onLogoUpdate(option.url) } }} disabled={!selectedOption || camera.isUploading} className="flex-1">Usar Logo Seleccionado</Button>
             <Button type="button" onClick={async () => { await handleUpload(); if (previewUrl) { setCurrentLogoUrl(previewUrl) } }} disabled={!selectedFile || camera.isUploading} variant="outline" className="flex-1">Subir Archivo</Button>
-          </div>
+          </div> */}
 
         </>
       )}

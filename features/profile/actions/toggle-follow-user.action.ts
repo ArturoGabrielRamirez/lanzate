@@ -1,16 +1,18 @@
 // features/profile/actions/toggle-follow-optimized.ts
 "use server"
 
+
 import { revalidateTag } from 'next/cache'
 
-import { getCurrentUser } from '@/features/auth/actions'
+import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { actionWrapper } from '@/features/global/utils'
 import { prisma } from '@/utils/prisma'
 
 export async function toggleFollowUserAction(targetUserId: number) {
   return actionWrapper(async () => {
     // 1. Validar usuario actual
-    const { payload: currentUser, error: authError } = await getCurrentUser()
+
+    const { payload: currentUser, hasError: authError } = await getCurrentUserWithIdAndEmailAction()
     if (authError || !currentUser) throw new Error('No autenticado')
 
     if (currentUser.id === targetUserId) {

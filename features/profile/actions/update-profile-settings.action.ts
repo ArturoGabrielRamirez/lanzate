@@ -1,6 +1,6 @@
 'use server'
 
-import { getCurrentUser } from "@/features/auth/actions"
+import { getCurrentUserWithIdAndEmailAction } from "@/features/auth/actions"
 import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { UpdateProfileData } from "@/features/profile/types"
 import { prisma } from "@/utils/prisma"
@@ -8,7 +8,7 @@ import { prisma } from "@/utils/prisma"
 
 export async function updateProfileSettingsAction(data: UpdateProfileData) {
   return actionWrapper(async () => {
-    const { payload: currentUser, error } = await getCurrentUser()
+    const { payload: currentUser, hasError: error } = await getCurrentUserWithIdAndEmailAction()
 
     if (error || !currentUser) throw new Error("Usuario no autenticado")
 

@@ -1,14 +1,14 @@
 'use server'
 
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/utils/lib'
-import { getCurrentUser } from '@/features/auth/actions'
+import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { getUserId } from '@/features/shared/data/get-user-id'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { GetUserUploadsParams } from '../types'
 
 export async function getUserUploadsAction({ type }: GetUserUploadsParams) {
     return actionWrapper(async () => {
-        const currentUserResponse = await getCurrentUser()
+        const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
         if (!currentUserResponse || currentUserResponse.error) {
             return formatErrorResponse('Debes iniciar sesión', null)
         }

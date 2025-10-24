@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useRef } from 'react'
 
-import { handleResetPassword } from '@/features/auth/actions'
+import { handleResetPasswordAction } from '@/features/auth/actions'
 import { changeEmailSchema } from '@/features/auth/schemas'
 import { ChangeEmailFormData } from '@/features/auth/types'
 import { Form } from '@/features/layout/components'
@@ -31,7 +31,7 @@ function ResetPassword() {
 
   const handleSubmit = (data: ChangeEmailFormData) => {
     submittedEmailRef.current = data.email;
-    return handleResetPassword(data);
+    return handleResetPasswordAction(data);
   };
 
   return (

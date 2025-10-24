@@ -28,12 +28,12 @@ export interface UserType {
     first_name: string | null
     last_name: string | null
     username: string | null
-    phone: string | null
-    password: string
-    updated_at: string | Date
+    phone?: string | null  // Esto acepta string, null, o undefined
+    password?: string
+    updated_at?: string | Date
     supabase_user_id: string | null
-    Account: Account[]
-    Store: Store[]
+    Account?: Account[]
+    Store?: Store[]
 }
 
 export interface AvatarOption {

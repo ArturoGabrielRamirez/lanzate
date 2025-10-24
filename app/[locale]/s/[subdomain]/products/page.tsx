@@ -1,20 +1,19 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
-import PageContainer from "@/features/layout/components/page-container"
-import ProductCardLoader from "@/features/products/components/product-card-loader"
-import ProductList from "@/features/products/components/product-list"
-import SidebarOrderBySelect from "@/features/layout/components/public-store/sidebar-price-select"
-import { loadFilterParams } from "@/features/products/utils/load-filter-params"
-import StoreBanner from "@/features/stores/components/public/store-banner"
-import TopCategoriesNavbar from "@/features/stores/components/public/top-categories-navbar"
 import { SearchParams } from "nuqs"
 import { Suspense } from "react"
+
+import { PageContainer } from "@/features/layout/components"
+import SidebarOrderBySelect from "@/features/layout/components/public-store/sidebar-price-select"
+import { ProductCardLoader, ProductList } from "@/features/products/components"
+import { loadFilterParams } from "@/features/products/utils"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
+import { StoreBanner, TopCategoriesNavbar } from "@/features/stores/components/public"
 
 type Props = {
     params: Promise<{ subdomain: string }>
     searchParams: Promise<SearchParams>
 }
 
-const ProductsPage = async ({ params, searchParams }: Props) => {
+async function ProductsPage({ params, searchParams }: Props) {
 
     const { subdomain } = await params
     const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams)

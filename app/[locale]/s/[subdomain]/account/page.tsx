@@ -1,5 +1,5 @@
 import { Title } from "@/features/layout/components"
-import PageContainer from "@/features/layout/components/page-container"
+import {PageContainer} from "@/features/layout/components/page-container"
 
 async function AccountPage() {
     return (

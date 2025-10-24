@@ -2,34 +2,28 @@
 
 import { headers } from 'next/headers'
 
+import { createResetPasswordData } from '@/features/auth/data'
 import { ChangeEmailFormData } from '@/features/auth/types'
 import { extractSubdomainFromHost } from '@/features/auth/utils'
-import { actionWrapper } from '@/utils/lib'
-import { createServerSideClient } from '@/utils/supabase/server'
+import { actionWrapper } from '@/features/global/utils'
 
-export async function handleResetPassword(payload: ChangeEmailFormData) {
+export async function handleResetPasswordAction(payload: ChangeEmailFormData) {
     return actionWrapper(async () => {
-
-        const supabase = createServerSideClient()
         const headersList = await headers()
         const host = headersList.get('host') || ''
         const subdomain = extractSubdomainFromHost(host)
-
         const baseUrl = `${subdomain ?
             `https://${subdomain}.lanzate.app` :
             `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`}`;
+        const { hasError: resetPasswordError, message: resetPasswordMessage } = await createResetPasswordData({ baseUrl, email: payload.email })
 
-        const { error } = await supabase.auth.resetPasswordForEmail(payload.email, {
-            redirectTo: `${baseUrl}/update-password`,
-        })
-
-        if (error) {
-            throw new Error(error.message)
+        if (resetPasswordError) {
+            throw new Error(resetPasswordMessage)
         }
 
         return {
-            error: false,
-            message: "Reset password email sent",
+            hasError: false,
+            message: resetPasswordMessage,
             payload: null
         }
 

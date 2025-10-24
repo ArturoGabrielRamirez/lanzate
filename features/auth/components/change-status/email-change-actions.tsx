@@ -1,9 +1,9 @@
 'use client'
 
-import { RefreshCw, Send, CheckCircle } from "lucide-react";
+import { RefreshCw, Send, CheckCircle } from "lucide-react"
 
-import { Button } from "@/features/shadcn/components/ui/button";
 import { EmailChangeActionsProps } from "@/features/auth/types";
+import { Button } from "@/features/shadcn/components/ui/button";
 
 function EmailChangeActions({
     stepStatus,

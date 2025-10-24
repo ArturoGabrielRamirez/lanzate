@@ -1,21 +1,22 @@
-import { getBranchDetails } from "@/features/branches/actions/getBranchDetails"
-import EditBranchButton from "@/features/branches/components/edit-branch-button"
-import DeleteBranchButton from "@/features/branches/components/delete-branch-button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { BranchDetailPageProps } from "@/features/branches/types"
+import { Order } from "@prisma/client"
 import { ArrowLeft, MapPin, Phone, Mail, Crown, Package, ShoppingCart, DollarSign, Calendar } from "lucide-react"
 import Link from "next/link"
-import { Badge } from "@/features/shadcn/components/ui/badge"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
-import { Order } from "@prisma/client"
+
+import { getBranchDetails } from "@/features/branches/actions/getBranchDetails"
+import DeleteBranchButton from "@/features/branches/components/delete-branch-button"
+import EditBranchButton from "@/features/branches/components/edit-branch-button"
+import { BranchDetailPageProps } from "@/features/branches/types"
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 
 async function BranchDetailPage({ params }: BranchDetailPageProps) {
 
     const { slug, id } = await params
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)

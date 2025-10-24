@@ -32,4 +32,4 @@ function LoginForm() {
     )
 }
 
-export { LoginForm };
+export { LoginForm }

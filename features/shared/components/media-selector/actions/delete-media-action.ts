@@ -8,14 +8,14 @@ import { UPLOAD_TYPES } from "@/features/shared/types"
 import { validateUploadType } from "@/features/shared/utils/validators"
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 import { revalidatePath } from "next/cache"
-import { getCurrentUser } from '@/features/auth/actions'
+import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { DeleteMediaParams } from "../types"
 
 
 export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMediaParams) {
   return actionWrapper(async () => {
     // 1. Autenticación
-    const currentUserResponse = await getCurrentUser()
+    const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
     if (!currentUserResponse || currentUserResponse.error) {
       return formatErrorResponse('Debes iniciar sesión', null)
     }

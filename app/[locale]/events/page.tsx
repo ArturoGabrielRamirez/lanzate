@@ -1,8 +1,9 @@
-import { Title } from "@/features/layout/components"
-import PageContainer from "@/features/layout/components/page-container"
 import { Calendar } from "lucide-react"
 
-const EventsPage = () => {
+import { Title } from "@/features/layout/components"
+import { PageContainer } from "@/features/layout/components/page-container"
+
+function EventsPage() {
     return (
         <PageContainer>
             <Title title={<div className="flex items-center gap-2">
@@ -18,4 +19,4 @@ const EventsPage = () => {
     )
 }
 
-export default EventsPage
+export { EventsPage }

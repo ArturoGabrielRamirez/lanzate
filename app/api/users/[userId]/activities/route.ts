@@ -1,5 +1,5 @@
-// app/api/users/[userId]/activities/route.ts
 import { NextRequest, NextResponse } from 'next/server'
+
 import { getUserActivitiesAction } from '@/features/profile/actions/get-user-activities.action'
 
 export const revalidate = 60 // ✅ Cache por 60 segundos
@@ -41,7 +41,6 @@ export async function GET(
       )
     }
 
-    // ✅ Agregar headers de cache
     return NextResponse.json(result.payload, {
       headers: {
         'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120'

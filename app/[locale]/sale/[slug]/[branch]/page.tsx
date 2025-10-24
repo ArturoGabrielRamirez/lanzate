@@ -1,8 +1,9 @@
 import { ShoppingBasket } from "lucide-react"
-import { Title } from "@/features/layout/components"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { SaleInterface } from "@/features/sale/components"
 import { getTranslations } from "next-intl/server"
+
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { Title } from "@/features/layout/components"
+import SaleInterface from "@/features/sale/components/sale-interface"
 import { getStoreBySubdomainAction } from "@/features/stores/actions/get-store-by-subdomain.action"
 
 type Props = {
@@ -13,13 +14,13 @@ async function SaleStorePage({ params }: Props) {
     const { slug, branch } = await params
     const t = await getTranslations("sale")
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)
     }
 
-    const { payload: store, error: storeError, message: storeMessage } = await getStoreBySubdomainAction(slug)
+    const { payload: store, hasError: storeError, message: storeMessage } = await getStoreBySubdomainAction(slug)
 
     if (storeError || !store) {
         return console.error(storeMessage)

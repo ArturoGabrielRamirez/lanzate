@@ -1,4 +1,4 @@
-// src/features/auth/hooks/use-camera.ts
+/* // src/features/auth/hooks/use-camera.ts
 'use client'
 
 import { useState, useCallback } from 'react'
@@ -147,4 +147,4 @@ export function useCamera({
     // Props para el componente
     cameraProps
   }
-}
+} */

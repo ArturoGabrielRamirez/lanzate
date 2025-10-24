@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
-import { toast } from "sonner";
-import { LastResendInfo, UseResendEmailProps } from '../types';
-import { resendEmailService } from '../services/resend-email-services';
+"use client"
+
+import { useState, useEffect } from 'react'
+import { toast } from "sonner"
+
+import { resendEmailService } from '@/features/auth/services/resend-email-services'
+import { LastResendInfo, UseResendEmailProps } from '@/features/auth/types'
 
 export function useResendEmail({ email, type, emailChangeStatus }: UseResendEmailProps) {
     const [isResending, setIsResending] = useState(false);
@@ -30,7 +33,7 @@ export function useResendEmail({ email, type, emailChangeStatus }: UseResendEmai
             });
 
             toast.success(result.message);
-            
+
             if (result.data) {
                 setLastResendInfo({
                     email: result.data.email,
@@ -38,7 +41,7 @@ export function useResendEmail({ email, type, emailChangeStatus }: UseResendEmai
                     reason: result.data.reason || ''
                 });
             }
-            
+
             setCooldownTime(60);
         } catch (error) {
             // El error ya se maneja en el service con toast
@@ -58,9 +61,9 @@ export function useResendEmail({ email, type, emailChangeStatus }: UseResendEmai
         setIsResending(true);
         try {
             const result = await resendEmailService.resendEmailChange(step);
-            
+
             toast.success(result.message);
-            
+
             if (result.data) {
                 setLastResendInfo({
                     email: result.data.email,
@@ -68,7 +71,7 @@ export function useResendEmail({ email, type, emailChangeStatus }: UseResendEmai
                     reason: result.data.reason || ''
                 });
             }
-            
+
             setCooldownTime(60);
         } catch (error) {
             console.error('Error in handleResendEmailChange:', error);
@@ -92,9 +95,9 @@ export function useResendEmail({ email, type, emailChangeStatus }: UseResendEmai
         setIsResending(true);
         try {
             const result = await resendEmailService.resendSmart(emailChangeStatus.status);
-            
+
             toast.success(result.message);
-            
+
             if (result.data) {
                 setLastResendInfo({
                     email: result.data.email,
@@ -102,7 +105,7 @@ export function useResendEmail({ email, type, emailChangeStatus }: UseResendEmai
                     reason: result.data.reason || ''
                 });
             }
-            
+
             setCooldownTime(60);
         } catch (error) {
             console.error('Error in handleSmartResend:', error);

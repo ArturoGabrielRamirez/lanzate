@@ -3,13 +3,13 @@
 import { Lock } from "lucide-react";
 import { useTranslations } from 'next-intl';
 
-import { Skeleton } from '@/features/shadcn/components/ui/skeleton';
-import { handleEditPassword } from "@/features/auth/actions";
+import { handleEditPasswordAction } from "@/features/auth/actions";
 import { SetupPasswordPrompt } from "@/features/auth/components/change-visual/setup-password-prompt";
 import usePasswordGuard from "@/features/auth/hooks/use-password-guard";
 import { passwordSchema } from "@/features/auth/schemas/password-schema";
 import { ChangePasswordButtonProps } from "@/features/auth/types";
 import { ButtonWithPopup, InputField } from "@/features/layout/components";
+import { Skeleton } from '@/features/shadcn/components/ui/skeleton';
 
 
 function ChangePasswordButton({
@@ -26,7 +26,7 @@ function ChangePasswordButton({
     password: string;
     confirmPassword: string;
   }) {
-    const result = await handleEditPassword(
+    const result = await handleEditPasswordAction(
       formData.currentPassword,
       formData.password
     )

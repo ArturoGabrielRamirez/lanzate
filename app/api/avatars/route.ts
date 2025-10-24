@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server'
+
 import { getAvatarOptionsAction } from '@/features/profile/actions/get-avatar-options.action'
 
 export async function GET() {
   try {
     const result = await getAvatarOptionsAction()
 
-    if (result.error) {
+    if (result.hasError) {
       const statusCode = result.message === 'No autenticado' ? 401 : 404
       return NextResponse.json(
         { error: result.message },

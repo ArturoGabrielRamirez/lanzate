@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getCurrentUser } from '@/features/auth/actions'
+import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { createServerSideClient } from '@/utils/supabase/server'
 import { prisma } from '@/utils/prisma'
 import { SupabaseClient } from '@supabase/supabase-js'
@@ -7,7 +7,7 @@ import { SupabaseClient } from '@supabase/supabase-js'
 
 export async function POST(request: NextRequest) {
   try {
-    const { payload: user } = await getCurrentUser()
+    const { payload: user } = await getCurrentUserWithIdAndEmailAction()
     if (!user) {
       return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
     }

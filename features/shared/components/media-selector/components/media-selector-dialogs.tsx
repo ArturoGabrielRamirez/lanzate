@@ -1,4 +1,4 @@
-import CameraComponent from "@/features/auth/components/avatar/camera-component"
+import CameraComponent from "@/features/shared/components/media-selector/components/camera-component"
 import { ImageCropper } from "../../image-cropper"
 import { OptimizationDialog } from "@/features/profile/components/optimization-dialog"
 import { BackgroundRemover } from "../../background-remover/components"

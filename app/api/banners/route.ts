@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server'
+
 import { getBannerOptionsAction } from '@/features/profile/actions/get-banner-options.action'
 
 export async function GET() {
   try {
     const result = await getBannerOptionsAction()
 
-    if (result.error) {
+    if (result.hasError) {
       const statusCode = result.message === 'No autenticado' ? 401 : 404
       return NextResponse.json(
         { error: result.message },

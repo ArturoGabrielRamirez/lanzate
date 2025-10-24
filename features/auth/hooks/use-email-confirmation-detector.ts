@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect, useRef, useCallback } from 'react';
 import { toast } from 'sonner';
-import { EmailConfirmationDetectorProps } from '../types';
+
+import { EmailConfirmationDetectorProps } from '@/features/auth/types';
 
 export function useEmailConfirmationDetector({ 
     onFirstEmailConfirmed, 

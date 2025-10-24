@@ -1,3 +1,117 @@
+import { Account, User as PrismaUser } from "@prisma/client";
+import { User } from "@supabase/supabase-js"
+import { InferType } from "yup"
+
+import { changeEmailSchema } from "@/features/auth/schemas"
+import { loginFormSchema } from "@/features/auth/schemas"
+import { signUpSchema } from "@/features/auth/schemas"
+import { VALID_STEPS, VALID_TYPES } from '@/features/auth/utils'
+
+
+/* export interface LoginPageProps {
+    searchParams: Promise<{
+        error?: string
+        message?: string
+        subdomain?: string
+        next?: string
+    }>
+}
+
+export type LoginFormPayload = InferType<typeof loginFormSchema> */
+
+
+type BaseUser = Pick<PrismaUser,
+  'id' |
+  'email' |
+  'username' |
+  'avatar' |
+  'banner' |
+  'created_at' |
+  'first_name' |
+  'last_name' |
+  'supabase_user_id'
+> & {
+  created_at: Date | string  // Acepta ambos formatos
+}
+
+
+/* export type LocalUserType = PrismaUser & { Account: Account[] } */
+
+export type LocalUserType = BaseUser &
+  Partial<Omit<PrismaUser, keyof BaseUser | 'created_at' | 'updated_at'>> & {
+    updated_at?: Date | string  // Acepta ambos formatos
+    Account?: Account[]
+  }
+
+
+export type SignupFormPayload = InferType<typeof signUpSchema>
+
+export interface LoginPageProps {
+  searchParams: Promise<{
+    error?: string
+    message?: string
+    subdomain?: string
+    next?: string
+  }>
+}
+
+export type LoginFormPayload = InferType<typeof loginFormSchema>
+
+
+
+export type ChangeEmailFormData = InferType<typeof changeEmailSchema>
+
+export type LoginErrorDisplayProps = {
+  error?: string
+  message?: string
+}
+
+export interface ResendRequestContext {
+  params: ResendEmailParams;
+  timestamp: Date;
+  ip?: string;
+}
+
+export interface ValidationResult {
+  isValid: boolean;
+  error?: string;
+}
+
+export type ResendType = typeof VALID_TYPES[number];
+export type ResendStep = typeof VALID_STEPS[number];
+
+export interface UseResendEmailProps {
+  email?: string;
+  type: 'signup' | 'recovery' | 'smart';
+  emailChangeStatus: { status: EmailChangeStatus };
+}
+
+export interface LastResendInfo {
+  email: string;
+  type: string;
+  reason: string;
+}
+
+export interface EmailTargetInfo {
+  targetEmail: string;
+  message: string;
+  step: string | null;
+}
+
+export interface EmailConfirmationCardProps {
+  type: 'signup' | 'recovery' | 'smart';
+  emailTargetInfo: EmailTargetInfo;
+  lastResendInfo: LastResendInfo | null;
+  isResending: boolean;
+  cooldownTime: number;
+  onResendEmail: () => Promise<void>;
+}
+
+export interface EmailInfoProps {
+  targetEmail: string;
+  /*  lastResendInfo: LastResendInfo | null; */
+}
+
 export type EmailResendType = 'signup' | 'recovery' | 'email_change';
 export type EmailConfirmationType = 'signup' | 'recovery' | 'email_change'; // chequear que se este usando
 export type EmailResendTarget = 'old_email' | 'new_email' | 'single';
@@ -8,6 +122,9 @@ export interface ResendEmailParams {
   step?: 'old_email' | 'new_email';
 }
 
+export type PrismaUserId = {
+  userId: number
+}
 export interface ResendEmailResponse {
   success: boolean;
   message: string;
@@ -28,7 +145,25 @@ export interface SmartResendResponse extends ResendEmailResponse {
 }  // chequear que se este usando
 
 export interface EmailChangeStatus {
-  hasEmailChange: boolean;
+  currentEmail: string | undefined
+  newEmail: string | null
+  emailConfirmed: boolean
+  hasEmailChange: boolean
+  processCompleted: boolean
+  oldEmailConfirmed: boolean
+  newEmailConfirmed: boolean
+  changeWasCancelled: boolean
+  requestId?: string | number
+  expiresAt?: Date
+  oldEmailConfirmedAt?: Date | null
+  newEmailConfirmedAt?: Date | null
+  success?: boolean
+  loading: boolean
+  /*  nextEmailConfirmedAt?: Date | null;
+   nextStepEmail?: { email: string; type: 'old_email' | 'new_email' } | null; */
+}
+
+/*  hasEmailChange: boolean;
   oldEmailConfirmed: boolean;
   newEmailConfirmed: boolean;
   newEmail?: string | null;
@@ -38,14 +173,11 @@ export interface EmailChangeStatus {
   requestId?: number;
   expiresAt?: Date;
   oldEmailConfirmedAt?: Date | null;
-  newEmailConfirmedAt?: Date | null;
-  /*  nextEmailConfirmedAt?: Date | null;
-   nextStepEmail?: { email: string; type: 'old_email' | 'new_email' } | null; */
-}
+  newEmailConfirmedAt?: Date | null; */
 
-export interface EmailChangeStatusResponse extends EmailChangeStatus { }
+export type EmailChangeStatusResponse = EmailChangeStatus;
 
-export interface EmailChangeMonitorStatus extends EmailChangeStatus { } // chequear que se este usando
+export type EmailChangeMonitorStatus = EmailChangeStatus; // chequear que se este usando
 
 export interface CheckEmailProps {
   email?: string;
@@ -231,7 +363,153 @@ export interface UseCameraOptions {
   storeId?: number
 }
 
+export interface EditEmailParams {
+  email: string
+  password: string
+}
 
-export type { FacebookLogoProps } from "./facebook-logo";
-export type { GoogleLogoProps } from "./google-logo";
-export type { LoginErrorDisplayProps } from "./login-error-display";
+export interface CancelChangeEmailRequestParams {
+  userId: number
+  changeRequestId: string
+}
+
+export type CreateChangePasswordParams = {
+  email: string
+  currentPassword: string
+}
+
+export interface NewPassword {
+  newPassword: string
+  confirmNewPassword?: string
+}
+
+export interface CreateChangeEmailRequestParams {
+  userId: number
+  oldEmail: string
+  newEmail: string
+  expiresAt: Date
+  emailConfirmed: boolean
+}
+
+export type UpdateSupabaseIdAndEmailParams = {
+  userId: number
+  supabaseId: string
+  email: string
+  withAccount?: boolean
+}
+
+export type UpdateUserEmailParams = {
+  userId: number
+  email: string
+  withAccount?: boolean
+}
+
+export type UpdateUserEmailConfirmedParams = {
+  newEmail: string
+  email: string
+  redirectTo: string
+  changeRequestId: number
+  userId: number
+}
+
+export interface CreateResetPasswordDataParams {
+  baseUrl: string
+  email: string
+}
+
+export type EmailData = {
+  email: string
+}
+
+export type EmailUsedParams = {
+  email: string
+  userId: number
+}
+
+export type FacebookDataParams = {
+  redirectUrl: string
+}
+export type GoogleDataParams = {
+  redirectUrl: string
+  subdomain: string | null
+}
+
+export type PasswordParams = {
+  password: string
+}
+
+export type SignUpPermissionParams = {
+  email: string
+  password: string
+}
+
+export type GetSupabaseUser = {
+  supabaseUser: User
+}
+
+export type InsertUserParams = {
+  email: string
+  provider?: string
+  supabaseUserId?: string
+  avatar?: string
+  username?: string
+  name?: string
+  lastname?: string
+  phone?: string
+}
+
+export type UpdateCompleteSupabaseProcessParams = {
+  localUser: {
+    payload: {
+      id: number;
+      email: string;
+      email_confirmed_at: Date | null
+    } | null
+  }
+  changeRequest: {
+    id: number;
+    old_email: string;
+    new_email: string;
+    completed: boolean;
+    completed_at: Date | null;
+    new_email_confirmed: boolean;
+    new_email_confirmed_at: Date | null;
+    expires_at: Date;
+  } | null
+}
+
+export type UpdateToCompleteChangeParams = {
+  changeRequestId: number
+  cancelChangeEmail: string
+}
+
+export interface CheckEmailProps {
+  email?: string;
+  type?: 'signup' | 'recovery' | 'smart';
+}
+
+export interface ResendButtonProps {
+  isResending: boolean;
+  cooldownTime: number;
+  onResend: () => Promise<void>;
+}
+
+export type UpdatePasswordPayload = {
+  password?: string | string[]
+}
+
+export interface ProfileEditorProps {
+  currentUsername: string | null
+  currentFirstName: string | null
+  currentLastName: string | null
+  currentPhone: string | null
+  onProfileUpdate: (profile: {
+    username: string | null
+    firstName: string | null
+    lastName: string | null
+    phone: string | null
+  }) => void
+}
+
+export type { FacebookLogoProps } from "@/features/auth/types";
+export type { GoogleLogoProps } from "@/features/auth/types";

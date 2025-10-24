@@ -1,6 +1,6 @@
-// app/api/users/[userId]/liked-products/route.ts
-import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
+import { NextRequest, NextResponse } from 'next/server'
+
 
 const prisma = new PrismaClient()
 
@@ -12,9 +12,9 @@ export async function GET(
     // Await params para obtener los valores en Next.js 15
     const { userId: userIdString } = await params;
     const userId = parseInt(userIdString)
-    
+
     const { searchParams } = new URL(request.url)
-    
+
     const limit = parseInt(searchParams.get('limit') || '20')
     const offset = parseInt(searchParams.get('offset') || '0')
 
@@ -29,11 +29,11 @@ export async function GET(
     // Verificar que el usuario existe y su configuración de privacidad
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { 
+      select: {
         id: true,
         profile_is_public: true,
         show_liked_products: true,
-        username: true 
+        username: true
       }
     })
 
@@ -136,7 +136,7 @@ export async function GET(
   } catch (error) {
     console.error('Error fetching liked products:', error)
     return NextResponse.json(
-      { 
+      {
         error: 'Error interno del servidor',
         details: process.env.NODE_ENV === 'development' ? error : undefined
       },

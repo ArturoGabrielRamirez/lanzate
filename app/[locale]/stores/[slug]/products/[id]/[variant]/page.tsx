@@ -1,7 +1,7 @@
-import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
-import { Card, CardContent } from "@/features/shadcn/components/ui/card"
-import { VariantDetailForm } from "@/features/products/components/variant-detail-display"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
+import { VariantDetailForm } from "@/features/products/components/variant-detail-display"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 /* import { getTranslations } from "next-intl/server" */
 
 type Props = { params: Promise<{ slug: string; id: string; variant: string }> }
@@ -9,13 +9,13 @@ type Props = { params: Promise<{ slug: string; id: string; variant: string }> }
 export default async function ProductVariantDetailPage({ params }: Props) {
     const { slug, id, variant } = await params
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
     if (userError || !user) {
         return console.error(userMessage)
     }
 
-    const { payload: product, error } = await getProductDetailsAction(id)
-    if (error || !product) return null
+    const { payload: product, hasError } = await getProductDetailsAction(id)
+    if (hasError || !product) return null
 
     const variantId = Number(variant)
     const variantData = (product.variants ?? []).find((v: { id: number }) => v.id === variantId)

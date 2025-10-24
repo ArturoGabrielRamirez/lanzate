@@ -1,16 +1,15 @@
-import { CheckoutForm, CheckoutProvider } from "@/features/checkout/components"
 import { CartResume } from "@/features/cart/components"
-import { Title } from "@/features/layout/components"
+import { CheckoutForm, CheckoutProvider } from "@/features/checkout/components"
 import { getUserInfo } from "@/features/layout/actions"
-
-import PageContainer from "@/features/layout/components/page-container"
+import { Title } from "@/features/layout/components"
+import {PageContainer} from "@/features/layout/components/page-container"
 import { getStoreBySubdomainAction } from "@/features/stores/actions"
 
 async function CheckoutPage({ params }: { params: Promise<{ subdomain: string }> }) {
 
     const { subdomain } = await params
-    const { payload: store, error: storeError, message: storeMessage } = await getStoreBySubdomainAction(subdomain)
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: store, hasError: storeError, message: storeMessage } = await getStoreBySubdomainAction(subdomain)
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     const breadcrumbs = [
         { label: "cart", href: "/cart" },

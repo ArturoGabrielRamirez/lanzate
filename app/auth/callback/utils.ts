@@ -3,7 +3,7 @@ import { SupabaseClient, User } from '@supabase/supabase-js'
 
 import { validateNewUserCreationAction } from '@/features/account/actions'
 import { CryptoUtils } from '@/features/account/utils/crypto-utils'
-import { insertUser } from '@/features/auth/data/insert-user.data'
+import { insertUserData } from '@/features/auth/data/insert-user.data'
 import { routing } from '@/i18n/routing'
 
 function generateUsernameFromEmail(email: string | null | undefined): string | null {
@@ -231,7 +231,7 @@ export async function handleUserCreationOrUpdate(user: User, prisma: PrismaClien
 
     const provider = user?.app_metadata?.provider || 'oauth'
     const username = user?.user_metadata?.username ?? generateUsernameFromEmail(user?.email)
-    const insertResult = await insertUser({
+    const insertResult = await insertUserData({
       email: user?.email ?? "",
       provider,
       supabaseUserId: user?.id ?? "",

@@ -1,17 +1,18 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { Suspense, lazy } from "react"
+
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { Card, CardContent, CardHeader , CardTitle } from "@/features/shadcn/components/ui/card"
 
 type Props = {
     params: Promise<{ slug: string, id: string }>
 }
 
-const AnalyticsOptionContainer = async ({ params }: Props) => {
+async function AnalyticsOptionContainer({ params }: Props) {
     const { slug, id } = await params
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)

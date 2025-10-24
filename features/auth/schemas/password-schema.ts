@@ -1,7 +1,6 @@
 
 import * as Yup from 'yup'
 
-// Schema base para contraseña
 export const passwordSchema = Yup.object().shape({
   currentPassword: Yup.string().required('Requerido'),
   password: Yup.string()
@@ -12,7 +11,8 @@ export const passwordSchema = Yup.object().shape({
     .matches(/[0-9]/, "Debe contener al menos un número"),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir')
-    .required("Confirma tu contraseña") 
+    .required('Confirmar contraseña es requerido')
+    .oneOf([Yup.ref('password')], 'Las contraseñas no coinciden')
 });
 
 // Schema extendido con código de verificación

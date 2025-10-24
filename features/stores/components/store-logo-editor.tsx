@@ -8,8 +8,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/features/shadcn/components/ui/dialog"
 import { Label } from "@/features/shadcn/components/ui/label"
-import CameraComponent from '@/features/auth/components/avatar/camera-component'
-import { useCamera } from '@/features/auth/hooks/use-camera'
 import { StoreLogoOption, StoreLogoEditorProps } from '@/features/stores/types'
 import { cn } from "@/lib/utils"
 
@@ -44,7 +42,6 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
     setIsLoadingOptions(true)
 
     try {
-      // Generate suggested logos based on store name
       const diceBearStyles = [
         { style: 'initials', label: 'Iniciales', icon: '🔤' },
         { style: 'identicon', label: 'Identicon', icon: '🔷' },
@@ -60,7 +57,6 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
 
       const options: StoreLogoOption[] = []
 
-      // Add DiceBear generated logos
       for (const { style, label, icon } of diceBearStyles) {
         const diceBearUrl = `https://api.dicebear.com/9.x/${style}/svg?seed=${encodeURIComponent(storeName)}&backgroundColor=transparent`
         options.push({
@@ -73,7 +69,6 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
         })
       }
 
-      // Add current logo if it exists and is not already in options
       if (currentLogo && !options.find(opt => opt.url === currentLogo)) {
         options.unshift({
           id: 'current-logo',
@@ -87,7 +82,6 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
 
       setLogoOptions(options)
 
-      // Set current logo as selected if it exists
       if (currentLogo) {
         const currentOption = options.find(opt => opt.url === currentLogo)
         if (currentOption) {
@@ -101,7 +95,6 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
       console.error('Error loading logo options:', error)
       toast.error('Error cargando opciones de logo')
 
-      // Fallback options
       const fallbackOptions = [
         {
           id: 'dicebear-initials',
@@ -136,7 +129,7 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
       return
     }
 
-    const maxSize = 5 * 1024 * 1024 // 5MB
+    const maxSize = 5 * 1024 * 1024
     if (file.size > maxSize) {
       toast.error(`La imagen debe ser menor a ${maxSize / 1024 / 1024}MB. Tu archivo: ${(file.size / 1024 / 1024).toFixed(2)}MB`)
       return
@@ -257,7 +250,6 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
           </DialogHeader>
 
           <div className="space-y-6">
-            {/* Logo Preview */}
             <div className="flex justify-center">
               <div className="relative">
                 <img
@@ -268,7 +260,6 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
               </div>
             </div>
 
-            {/* Camera Section */}
             {camera.capturedFile && (
               <div className="p-4 border-2 border-dashed border-primary/20 rounded-lg bg-primary/5">
                 <div className="text-center space-y-3">
@@ -353,9 +344,7 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
               </AccordionItem>
             </Accordion>
 
-            {/* File Upload */}
             <div className="space-y-3">
-              {/* <Label>Subir imagen</Label> */}
               <div className="flex gap-2">
                 <Button
                   onClick={() => fileInputRef.current?.click()}
@@ -388,7 +377,6 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
                 </Button>
               </div>
             )}
-            {/* Action Buttons */}
             <div className="flex gap-2">
               <Button
                 onClick={handleUseSelectedOption}

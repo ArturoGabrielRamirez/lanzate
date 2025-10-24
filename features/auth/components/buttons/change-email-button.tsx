@@ -1,6 +1,5 @@
 'use client'
 
-import { Skeleton } from "@/features/shadcn/components/ui/skeleton";
 import { SetupPasswordPrompt } from '@/features/auth/components/change-visual/setup-password-prompt';
 import { EmailChangeDialog, EmailChangeForm, ProgressButton } from '@/features/auth/components/index';
 import { useEmailChange } from '@/features/auth/hooks/use-email-change';
@@ -8,6 +7,7 @@ import usePasswordGuard from '@/features/auth/hooks/use-password-guard';
 import { changeEmailSchema } from '@/features/auth/schemas/change-email-schema';
 import { ChangeEmailButtonProps } from '@/features/auth/types';
 import { ButtonWithPopup } from "@/features/layout/components";
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton";
 
 
 function ChangeEmailButton({
@@ -36,7 +36,7 @@ function ChangeEmailButton({
     }) {
         const result = await originalChangeEmailAction(formData);
         return {
-            error: result.error,
+            hasError: result.error,
             message: result.message ?? "Proceso completado",
             payload: formData
         };

@@ -1,23 +1,23 @@
 'use client'
 
-import { CheckCircle, Clock, ArrowRight } from "lucide-react";
+import { CheckCircle, Clock, ArrowRight } from "lucide-react"
 
-import { EmailStepProgressProps } from "@/features/auth/types";
+import { EmailStepProgressProps } from "@/features/auth/types"
 
 function EmailStepProgress({ status, initialOldEmail, newEmail }: EmailStepProgressProps) {
     const getStepStatus = () => {
         if (!status.hasEmailChange) {
-            return { step1: 'confirmed', step2: 'confirmed', currentStep: 'completed' };
+            return { step1: 'confirmed', step2: 'confirmed', currentStep: 'completed' }
         }
 
         if (status.oldEmailConfirmed) {
-            return { step1: 'confirmed', step2: 'pending', currentStep: 'step2' };
+            return { step1: 'confirmed', step2: 'pending', currentStep: 'step2' }
         }
 
-        return { step1: 'pending', step2: 'waiting', currentStep: 'step1' };
+        return { step1: 'pending', step2: 'waiting', currentStep: 'step1' }
     };
 
-    const stepStatus = getStepStatus();
+    const stepStatus = getStepStatus()
 
     return (
         <div className="space-y-4">

@@ -1,13 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
-import type { ResendEmailParams, ApiErrorResponse, ApiSuccessResponse } from '@/features/auth/types';
-import { validateResendParams } from './validation';
-import { handleResendError } from './error-handling';
-import { EmailService } from '@/features/auth/services/email-services';
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function handleResend(request: NextRequest): Promise<NextResponse> {
+/* import { EmailService } from '@/features/auth/services/email-services' */
+import { ApiErrorResponse, /* ApiSuccessResponse, */ ResendEmailParams } from '@/features/auth/types'
+import { handleResendError, validateResendParams } from '@/features/auth/utils'
+
+export async function handleResend(request: NextRequest)/* : Promise<NextResponse> */ {
   try {
     const body = await parseRequestBody(request);
-    
+
     const validationError = validateResendParams(body);
     if (validationError) {
       return NextResponse.json<ApiErrorResponse>(
@@ -16,16 +16,16 @@ export async function handleResend(request: NextRequest): Promise<NextResponse> 
       );
     }
 
-    const result = await EmailService.resendConfirmation(body);
+    /*   const result = await EmailService.resendConfirmation(body); */
 
-    return NextResponse.json<ApiSuccessResponse>(
-      {
-        error: false,
-        message: result.message,
-        data: result.data
-      },
-      { status: 200 }
-    );
+    /*     return NextResponse.json<ApiSuccessResponse>(
+          {
+            error: false,
+            message: result.message,
+            data: result.data
+          },
+          { status: 200 }
+        ); */
 
   } catch (error) {
     return handleResendError(error);

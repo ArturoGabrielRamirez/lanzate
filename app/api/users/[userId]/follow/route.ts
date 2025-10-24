@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getCurrentUser } from '@/features/auth/actions'
+
+import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { toggleFollowUserAction } from '@/features/profile/actions/toggle-follow-user.action'
 
 export async function POST(request: NextRequest) {
   try {
-    const currentUserResponse = await getCurrentUser()
+    const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
 
-    if (!currentUserResponse || currentUserResponse.error) {
+    if (!currentUserResponse || currentUserResponse.hasError) {
       return NextResponse.json(
         { error: 'Debes iniciar sesión para seguir usuarios' },
         { status: 401 }
@@ -27,7 +28,7 @@ export async function POST(request: NextRequest) {
 
     const result = await toggleFollowUserAction(targetUserId)
 
-    if (result.error) {
+    if (result.hasError) {
       return NextResponse.json(
         { error: result.message },
         { status: 400 }

@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
-import type { EmailServiceError, ApiErrorResponse } from '@/features/auth/types';
+import { NextResponse } from 'next/server'
+
+import type { EmailServiceError, ApiErrorResponse } from '@/features/auth/types'
 
 export function handleResendError(error: unknown): NextResponse {
   console.error('❌ Resend error:', error);

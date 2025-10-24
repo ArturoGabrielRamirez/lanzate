@@ -1,10 +1,10 @@
 'use client'
 
-import { Card, CardContent, CardHeader } from "@/features/shadcn/components/ui/card";
 import { EmailChangeActions, EmailStepInstructions, EmailStepProgress } from "@/features/auth/components";
 import { useEmailChangeStatus } from "@/features/auth/hooks/use-email-change-status";
 import { useResendCooldown } from "@/features/auth/hooks/use-resend-cooldown";
 import { EmailChangeMonitorProps } from "@/features/auth/types";
+import { Card, CardContent, CardHeader } from "@/features/shadcn/components/ui/card";
 
 function EmailChangeMonitor({
     onComplete,
@@ -13,13 +13,13 @@ function EmailChangeMonitor({
 }: EmailChangeMonitorProps) {
 
     const { status, isManuallyChecking, handleManualCheck } = useEmailChangeStatus(initialOldEmail, onComplete);
-    
+
     const resendParams = {
         type: 'email_change' as const,
         email: initialOldEmail,
         step: status.oldEmailConfirmed ? 'new_email' as const : 'old_email' as const
     };
-    
+
     const { isResending, resendCooldown, handleResendEmails } = useResendCooldown(
         resendParams,
         handleManualCheck
@@ -35,12 +35,21 @@ function EmailChangeMonitor({
         return { step1: 'pending', step2: 'waiting', currentStep: 'step1' };
     };
 
+    const statusForActions = {
+        ...status,
+        newEmail: newEmail ?? '',
+        emailConfirmed: status.oldEmailConfirmed && status.newEmailConfirmed,
+        changeWasCancelled: false
+    };
+
+
+
     const stepStatus = getStepStatus();
 
     return (
         <Card className="w-full max-w-md mx-auto bg-transparent border-none">
             <CardHeader className="text-center">
-              {/*   <CardTitle className="flex items-center justify-center gap-2">
+                {/*   <CardTitle className="flex items-center justify-center gap-2">
                                      
                 </CardTitle> */}
             </CardHeader>
@@ -62,7 +71,7 @@ function EmailChangeMonitor({
                         stepStatus={stepStatus}
                         isManuallyChecking={isManuallyChecking}
                         handleManualCheck={handleManualCheck}
-                        status={status}
+                        status={statusForActions}
                         isResending={isResending}
                         resendCooldown={resendCooldown}
                         handleResendEmails={handleResendEmails}

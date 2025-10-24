@@ -1,23 +1,16 @@
-'use client'
-
-import { useTranslations } from "next-intl";
-import { useConfirmationEmailChangeStatus } from "@/features/auth/hooks/use-confirmation-email-change-status";
-import { EmailChangeStatus } from "../../types";
-import { useResendEmail } from "../../hooks/use-resend-email";
-import { LoadingState } from "./loading-state";
-import { getEmailTargetInfo } from "../../utils/email-taget-utils";
-import { EmailConfirmationCard } from "./email-confirmation-card";
-
-
-interface CheckEmailProps {
-    email?: string;
-    type?: 'signup' | 'recovery' | 'smart';
-}
+import { EmailConfirmationCard } from "@/features/auth/components/change-status/email-confirmation-card"
+import { LoadingState } from "@/features/auth/components/change-status/loading-state"
+import { useConfirmationEmailChangeStatus } from "@/features/auth/hooks/use-confirmation-email-change-status"
+import { useResendEmail } from "@/features/auth/hooks/use-resend-email"
+import { CheckEmailProps, EmailChangeStatus } from "@/features/auth/types"
+import { getEmailTargetInfo } from "@/features/auth/utils"
 
 const defaultStatus: EmailChangeStatus = {
     hasEmailChange: false,
     oldEmailConfirmed: false,
     newEmailConfirmed: false,
+    emailConfirmed: false,
+    changeWasCancelled: false,
     newEmail: null,
     currentEmail: '',
     loading: false,
@@ -25,17 +18,19 @@ const defaultStatus: EmailChangeStatus = {
     requestId: undefined,
     expiresAt: undefined,
     oldEmailConfirmedAt: null,
-    newEmailConfirmedAt: null
+    newEmailConfirmedAt: null,
 };
 
 export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
-    const t = useTranslations("auth.check-email");
+    /*  const t = useTranslations("auth.check-email"); */
 
-    
+
+    const confirmationEmailChangeStatus = useConfirmationEmailChangeStatus();
+
     const emailChangeStatus: { status: EmailChangeStatus } =
-    type === 'smart'
-    ? useConfirmationEmailChangeStatus()
-    : { status: defaultStatus };
+        type === 'smart'
+            ? confirmationEmailChangeStatus
+            : { status: defaultStatus };
 
     const {
         isResending,
@@ -43,7 +38,7 @@ export default function CheckEmail({ email, type = 'smart' }: CheckEmailProps) {
         lastResendInfo,
         handleResendEmail
     } = useResendEmail({ email, type, emailChangeStatus });
-    
+
     console.log(emailChangeStatus.status);
     // Mostrar loading si estamos en modo smart y está cargando
     if (type === 'smart' && emailChangeStatus.status.loading) {

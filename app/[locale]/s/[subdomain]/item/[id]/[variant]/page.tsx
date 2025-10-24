@@ -1,13 +1,13 @@
-import { Button } from "@/features/shadcn/components/ui/button"
-import { Title } from "@/features/layout/components"
-import PageContainer from "@/features/layout/components/page-container"
-import AddToCartButton from "@/features/products/components/add-to-cart-button"
-import LikeButton from "@/features/products/components/like-button"
-import { getPublicStoreProductDetailsAction } from "@/features/products/actions/get-public-store-product-details.action"
 import { Category } from "@prisma/client"
 import { Image, Share, ShoppingBag } from "lucide-react"
 import Link from "next/link"
-import VariantDetailClient from "@/features/products/components/variant-detail-client"
+
+import { Title } from "@/features/layout/components"
+import { PageContainer } from "@/features/layout/components/page-container"
+import { getPublicStoreProductDetailsAction } from "@/features/products/actions/get-public-store-product-details.action"
+import { AddToCartButton, LikeButton, VariantDetailClient } from "@/features/products/components"
+import { Button } from "@/features/shadcn/components/ui/button"
+
 import type { Product, ProductVariant, Color } from "@prisma/client"
 
 type Props = {
@@ -17,9 +17,9 @@ type Props = {
 export default async function ProductVariantDetailsPage({ params }: Props) {
     const { id, subdomain, variant } = await params
 
-    const { payload: product, error, message } = await getPublicStoreProductDetailsAction(id, subdomain, variant)
+    const { payload: product, hasError, message } = await getPublicStoreProductDetailsAction(id, subdomain, variant)
 
-    if (error || !product) {
+    if (hasError || !product) {
         return (
             <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
                 <Title

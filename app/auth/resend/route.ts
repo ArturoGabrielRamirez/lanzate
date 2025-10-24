@@ -1,5 +1,6 @@
-import { getApiInfo, handleResend } from '@/features/auth/actions/resend/handle-resend';
-import { NextRequest/* , NextResponse */ } from 'next/server';
+import { NextRequest/* , NextResponse */ } from 'next/server'
+
+import { getApiInfo, handleResend } from '@/features/auth/utils/handle-resend'
 
 
 export async function POST(request: NextRequest) {
