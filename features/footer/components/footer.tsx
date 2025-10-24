@@ -1,5 +1,5 @@
 import { FooterSection } from "@/features/footer/components";
-import { getUserInfo } from "@/features/global/actions/get-user-info.action";
+import { getUserInfo } from "@/features/global/actions";
 
 async function Footer() {
 
