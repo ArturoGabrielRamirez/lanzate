@@ -1,12 +1,15 @@
 "use server"
 
-import { GetSupabaseUser } from "@/features/auth/types"
+import { GetUserBySupabaseIdParams } from "@/features/auth/types"
 import { prisma } from "@/utils/prisma"
 
-export async function getUserBySupabaseIdData({ supabaseUser }: GetSupabaseUser) {
+export async function getUserBySupabaseIdData({ supabaseUserId }: GetUserBySupabaseIdParams) {
+    
+    if (!supabaseUserId) throw new Error("Supabase user ID is required")
+
     const localUser = await prisma.user.findUnique({
         where: {
-            supabase_user_id: supabaseUser.id
+            supabase_user_id: supabaseUserId as string
         },
         select: {
             id: true,

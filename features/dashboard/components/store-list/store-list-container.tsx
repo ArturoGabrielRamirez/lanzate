@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server"
 import { getDashboardStoresAction } from "@/features/dashboard/actions"
 import { StoreListError } from "@/features/dashboard/components"
 import { StoreList } from "@/features/dashboard/components"
-import { getUserInfo } from "@/features/layout/actions"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { SectionContainer } from "@/features/stores/components"
 import { redirect } from "@/i18n/naviation"
 

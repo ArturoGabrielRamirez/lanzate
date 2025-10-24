@@ -1,1 +1,0 @@
-export { getUserInfo } from "./getUserInfo"

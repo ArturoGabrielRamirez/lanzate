@@ -1,14 +1,15 @@
 import { FieldValues } from "react-hook-form";
 import { ObjectSchema } from "yup";
 
-import { ResponseType } from ".";
+import { ServerResponse } from '@/features/global/types';
+
 
 export type ButtonWithPopupPropsType<P extends FieldValues> = {
     text: string | React.ReactNode
     children?: React.ReactNode
     title: string
     description: string
-    action: (payload: P) => Promise<ResponseType<unknown>>
+    action: (payload: P) => Promise<ServerResponse<unknown>>
     disabled?: boolean
     messages: {
         success: string

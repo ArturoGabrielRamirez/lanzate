@@ -5,7 +5,7 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { TimePicker } from "antd";
 import dayjs, { Dayjs } from "dayjs";
-import { Calendar, Camera, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Loader, Mail, MapPin, Phone, Plus, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
+import { Calendar, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Loader, Mail, MapPin, Phone, Plus, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
 import { useRouter } from "next/navigation"
@@ -13,7 +13,9 @@ import { useEffect, useState, createContext, useContext, useCallback, useRef } f
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
-import { Form, InputField } from "@/features/layout/components"
+import { Form } from "@/features/global/components/form/form"
+import { InputField } from "@/features/global/components/form/input-field"
+import { TextareaField } from "@/features/global/components/form/textarea-field";
 import Stepper, { Step } from "@/features/shadcn/components/Stepper"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, DialogDescription } from "@/features/shadcn/components/ui/dialog"
@@ -405,7 +407,7 @@ function ShippingMethodFormPanel({ method, index, onCancel, onSave }: ShippingMe
                     inputMode="numeric"
                     type="number"
                     placeholder="Ej: 10000"
-                    value={minPurchase}
+                    defaultValue={minPurchase}
                     onChange={(e) => setMinPurchase(e.target.value.replace(/[^0-9]/g, ""))}
                 />
                 <InputField
@@ -414,7 +416,7 @@ function ShippingMethodFormPanel({ method, index, onCancel, onSave }: ShippingMe
                     inputMode="numeric"
                     type="number"
                     placeholder="Ej: 20000"
-                    value={freeShippingMin}
+                    defaultValue={freeShippingMin}
                     onChange={(e) => setFreeShippingMin(e.target.value.replace(/[^0-9]/g, ""))}
                 />
                 <InputField
@@ -423,7 +425,7 @@ function ShippingMethodFormPanel({ method, index, onCancel, onSave }: ShippingMe
                     inputMode="numeric"
                     type="number"
                     placeholder="Ej: 1500"
-                    value={deliveryPrice}
+                    defaultValue={deliveryPrice}
                     onChange={(e) => {
                         const v = e.target.value.replace(/[^0-9]/g, "")
                         setDeliveryPrice(v)
@@ -666,14 +668,14 @@ function ContactFormPanel() {
                             name="contact_info.contact_phone"
                             label="Phone"
                             placeholder="Ej: 1234567890"
-                            startContent={<Phone />}
+                            startIcon={<Phone />}
                             isRequired
                         />
                         <InputField
                             name="contact_info.contact_email"
                             label="Email"
                             placeholder="Ej: test@example.com"
-                            startContent={<Mail />}
+                            startIcon={<Mail />}
                             type="email"
                             isRequired
                         />
@@ -686,20 +688,20 @@ function ContactFormPanel() {
                             name="contact_info.facebook_url"
                             label="Facebook"
                             placeholder="Ej: https://www.facebook.com/your-page"
-                            startContent={<Facebook />}
+                            startIcon={<Facebook />}
                         />
                         <InputField
                             name="contact_info.instagram_url"
                             label="Instagram"
                             placeholder="Ej: https://www.instagram.com/your-page"
-                            startContent={<Instagram />}
+                            startIcon={<Instagram />}
                             type="email"
                         />
                         <InputField
                             name="contact_info.x_url"
                             label="X (Twitter)"
                             placeholder="Ej: https://x.com/your-page"
-                            startContent={<Twitter />}
+                            startIcon={<Twitter />}
                             type="url"
                         />
                     </div>
@@ -773,28 +775,28 @@ function AddressFormPanel() {
                         name="address_info.address"
                         label="Address"
                         placeholder="Ej: 123 Main St"
-                        startContent={<MapPin />}
+                        startIcon={<MapPin />}
                         isRequired
                     />
                     <InputField
                         name="address_info.city"
                         label="City"
                         placeholder="Ej: New York"
-                        startContent={<MapPin />}
+                        startIcon={<MapPin />}
                         isRequired
                     />
                     <InputField
                         name="address_info.province"
                         label="Province"
                         placeholder="Ej: New York"
-                        startContent={<MapPin />}
+                        startIcon={<MapPin />}
                         isRequired
                     />
                     <InputField
                         name="address_info.country"
                         label="Country"
                         placeholder="Ej: United States"
-                        startContent={<MapPin />}
+                        startIcon={<MapPin />}
                         isRequired
                     />
                 </div>
@@ -884,24 +886,24 @@ function BasicInfoFormPanel() {
         }
     }
 
-/*     const camera = useCamera({
-        uploadPath: 'store-logos',
-        onSuccess: (url) => {
-            setValue("basic_info.logo", url)
-            setLogo([])
-        },
-        onError: (error) => {
-            console.error('Camera upload error:', error)
-            toast.error('Error al subir la foto')
-        },
-        quality: 0.9
-    })
- */
-  /*   const handleCamera = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        e.stopPropagation()
-        camera.openCamera();
-    } */
+    /*     const camera = useCamera({
+            uploadPath: 'store-logos',
+            onSuccess: (url) => {
+                setValue("basic_info.logo", url)
+                setLogo([])
+            },
+            onError: (error) => {
+                console.error('Camera upload error:', error)
+                toast.error('Error al subir la foto')
+            },
+            quality: 0.9
+        })
+     */
+    /*   const handleCamera = (e: React.MouseEvent<HTMLButtonElement>) => {
+          e.preventDefault()
+          e.stopPropagation()
+          camera.openCamera();
+      } */
 
     const handleFileSelect = (files: File[]) => {
         if (files.length === 0) return
@@ -972,7 +974,7 @@ function BasicInfoFormPanel() {
                         </div>
                     )}
                 </div>
-          {/*       <CameraComponent
+                {/*       <CameraComponent
                     {...camera.cameraProps}
                     title="Tomar foto para logo"
                 /> */}
@@ -981,7 +983,7 @@ function BasicInfoFormPanel() {
                         name="basic_info.name"
                         label="Name"
                         placeholder="Ej: My Store"
-                        startContent={<StoreIcon />}
+                        startIcon={<StoreIcon />}
                         isRequired
                     />
                     <InputField
@@ -990,8 +992,8 @@ function BasicInfoFormPanel() {
                         placeholder="Ej: my-store"
                         type="url"
                         inputMode="url"
-                        startContent={<Globe />}
-                        endContent={(
+                        startIcon={<Globe />}
+                        endText={(
                             <span>
                                 .lanzate.com
                             </span>
@@ -1005,11 +1007,10 @@ function BasicInfoFormPanel() {
                     />
                 </div>
             </div>
-            <InputField
+            <TextareaField
                 name="basic_info.description"
                 label="Description"
                 placeholder="Ej: My Store Description"
-                isTextArea
             />
         </>
     )

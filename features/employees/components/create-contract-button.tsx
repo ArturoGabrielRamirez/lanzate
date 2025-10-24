@@ -8,7 +8,6 @@ import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Badge } from "@/features/shadcn/components/ui/badge"
-import { ResponseType } from "@/features/layout/types"
 import { insertContract, getContracts, checkStorageBucket } from "@/features/employees/data"
 import { Contract } from "@/features/employees/types"
 import { toast } from "sonner"
@@ -64,7 +63,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
         }
     }
 
-    const handleCreateContract = async (data: any): Promise<ResponseType<any>> => {
+    const handleCreateContract = async (data: any) => {
         try {
             // Validar que se haya subido un archivo
             if (files.length === 0) {

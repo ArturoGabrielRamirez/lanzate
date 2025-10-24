@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 
 import { actionWrapper } from "@/features/global/utils"
-import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { insertLogEntry } from "@/features/global/data/insertLogEntry"
 import { canDeleteStoreAccess } from "@/features/stores/access"
 import { deleteStoreData } from "@/features/stores/data"
 

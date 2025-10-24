@@ -4,7 +4,8 @@ import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 import { UpdatePasswordPayload } from '@/features/auth/types'
-import { Form, InputField } from '@/features/layout/components'
+import { Form } from '@/features/global/components/form/form'
+import { InputField } from '@/features/global/components/form/input-field'
 import { formatErrorResponse } from '@/utils/lib'
 
 export default function UpdatePasswordForm() {
@@ -49,7 +50,7 @@ export default function UpdatePasswordForm() {
                     loadingMessage={t("toast-message.updating-password")}
                     className="flex flex-col w-full max-w-xl gap-4 p-8 sm:gap-6"
                 >
-                    <InputField name='password' label={t("reset-password.new-password")} type='password' />
+                    <InputField name='password' label={t("reset-password.new-password")} type='password' placeholder={t("reset-password.new-password")} />
                 </Form>
             )}
         </>)

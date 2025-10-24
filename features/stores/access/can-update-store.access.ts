@@ -1,6 +1,6 @@
 "use server"
 
-import { getUserById } from "@/features/layout/data/getUserById"
+import { getUserById } from "@/features/global/data/getUserById"
 import { selectStoreBySlugData } from "@/features/stores/data"
 
 export async function canUpdateStore(slug: string, userId: number) {

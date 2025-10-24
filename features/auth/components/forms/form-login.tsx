@@ -6,8 +6,8 @@ import { useTranslations } from 'next-intl'
 
 import { handleLogInAction } from '@/features/auth/actions'
 import { loginFormSchema } from '@/features/auth/schemas'
-import { Form } from '@/features/layout/components'
-import { InputField } from '@/features/layout/components/input-field'
+import { Form } from '@/features/global/components/form/form'
+import { InputField } from '@/features/global/components/form/input-field'
 
 function LoginForm() {
 

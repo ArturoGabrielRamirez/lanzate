@@ -4,10 +4,10 @@ import { Trash2 } from "lucide-react"
 import { redirect } from "next/navigation"
 import { useTranslations } from "next-intl"
 
-import { ButtonWithPopup } from "@/features/layout/components"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import { formatErrorResponse } from "@/features/global/utils"
 import { deleteStoreAction } from "@/features/stores/actions"
 import { DeleteStoreButtonProps } from "@/features/stores/types"
-import { formatErrorResponse } from "@/utils/lib"
 
 function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
 
@@ -26,7 +26,7 @@ function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
             }
 
         } catch (error) {
-            return formatErrorResponse(t("messages.error"), error, null)
+            return formatErrorResponse(t("messages.error"))
         }
     }
 

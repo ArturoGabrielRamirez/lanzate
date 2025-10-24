@@ -3,8 +3,7 @@
 import { Trash2 } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-import { ButtonWithPopup } from "@/features/layout/components"
-import { ResponseType } from "@/features/layout/types"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
 import { changeOrderStatusAction } from "@/features/orders/actions/change-order-status.action"
 import { CancelOrderButtonProps } from "@/features/orders/types"
 import { cn } from "@/lib/utils"
@@ -13,7 +12,7 @@ import { cn } from "@/lib/utils"
 function CancelOrderButton({ order, slug, onComplete, className, size = "default", onlyIcon = false }: CancelOrderButtonProps) {
     const t = useTranslations("store.cancel-order")
 
-    const handleCancelOrder = async (): Promise<ResponseType<unknown>> => {
+    const handleCancelOrder = async () => {
         try {
             const { hasError, message } = await changeOrderStatusAction(order.id, {
                 newStatus: "CANCELLED",

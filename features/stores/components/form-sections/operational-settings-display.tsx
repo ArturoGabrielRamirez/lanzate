@@ -6,10 +6,12 @@ import { Truck, CreditCard, Edit as EditIcon, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
+import CheckboxField from "@/features/global/components/form/checkbox-field"
+import { Form } from "@/features/global/components/form/form"
+import { InputField } from "@/features/global/components/form/input-field"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { Form, InputField, CheckboxField } from "@/features/layout/components"
 import { EditOperationalSettingsButton } from "@/features/stores/components"
 import { PaymentMethodsSwitches } from "@/features/stores/components/payment-methods-switches"
 import { editOperationalSettingsSchema } from "@/features/stores/schemas/operational-settings-schema"
@@ -139,6 +141,7 @@ function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) 
                                                 type="number"
                                                 defaultValue={storeOperationalSettings?.delivery_price?.toString() || "0"}
                                                 disabled={!isEditing || !offersDelivery}
+                                                placeholder="Delivery Price"
                                             />
                                         </div>
                                         <div className="space-y-1">
@@ -148,6 +151,7 @@ function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) 
                                                 type="number"
                                                 defaultValue={storeOperationalSettings?.free_delivery_minimum?.toString() || "0"}
                                                 disabled={!isEditing || !offersDelivery}
+                                                placeholder="Free Delivery Minimum"
                                             />
                                         </div>
                                         <div className="space-y-1">
@@ -157,6 +161,7 @@ function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) 
                                                 type="number"
                                                 defaultValue={storeOperationalSettings?.delivery_radius_km?.toString() || "5"}
                                                 disabled={!isEditing || !offersDelivery}
+                                                placeholder="Delivery Radius (km)"
                                             />
                                         </div>
                                     </>
@@ -196,6 +201,7 @@ function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) 
                                         type="number"
                                         defaultValue={branchOperationalSettings?.minimum_order_amount?.toString() || storeOperationalSettings?.minimum_order_amount?.toString() || "0"}
                                         disabled={!isEditing}
+                                        placeholder="Minimum Order Amount"
                                     />
                                 </div>
                             </div>

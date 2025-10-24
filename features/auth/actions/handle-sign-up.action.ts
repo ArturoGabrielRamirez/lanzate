@@ -3,8 +3,8 @@
 import { validateNewUserCreationAction } from '@/features/account/actions'
 import { findUserAnonymizedData, getSignUpPermissionData, insertUserData } from '@/features/auth/data'
 import { SignupFormPayload } from '@/features/auth/types'
+import { insertLogEntry } from '@/features/global/data/insertLogEntry'
 import { actionWrapper } from '@/features/global/utils'
-import { insertLogEntry } from '@/features/layout/data'
 
 export async function handleSignup(payload: SignupFormPayload) {
     return actionWrapper(async () => {

@@ -2,7 +2,7 @@ import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { Suspense } from "react"
 
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { OrderSummarySkeleton, OrderSummaryStepsContainer } from "@/features/orders/components"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { OrderDetailPageProps } from "@/features/stores/types"

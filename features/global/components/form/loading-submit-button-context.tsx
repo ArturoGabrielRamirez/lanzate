@@ -1,9 +1,10 @@
 "use client"
 
-import { Button } from "@/features/shadcn/components/ui/button"
 import { Loader } from "lucide-react"
 import { useFormContext } from "react-hook-form"
-import { Props } from "../types/loading-submit-button-type"
+
+import { Props } from "@/features/global/types/loading-submit-button-type"
+import { Button } from "@/features/shadcn/components/ui/button"
 
 function LoadingSubmitButtonContext({ text = "Submit", disabled = false }: Props) {
 

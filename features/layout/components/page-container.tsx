@@ -1,4 +1,4 @@
-import { PageContainerProps } from "@/features/layout/types"
+import { PageContainerProps } from "@/features/layout/types/page-container.types"
 import { cn } from "@/lib/utils"
 
 function PageContainer({ children, className }: PageContainerProps) {

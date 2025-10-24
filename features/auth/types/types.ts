@@ -447,6 +447,14 @@ export type GetSupabaseUser = {
   supabaseUser: User
 }
 
+export type GetUserBySupabaseIdParams = {
+  supabaseUserId: Pick<PrismaUser, "supabase_user_id">["supabase_user_id"]
+}
+
+export type GetUserByEmailParams = {
+  supabaseUserEmail: Pick<User, "email">["email"]
+}
+
 export type InsertUserParams = {
   email: string
   provider?: string

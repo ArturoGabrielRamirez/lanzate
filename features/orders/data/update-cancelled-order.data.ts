@@ -1,8 +1,8 @@
 "use server"
 
 import { formatSuccessResponse } from "@/features/global/utils"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
+import { insertLogEntry } from "@/features/global/data/insertLogEntry"
 import { UpdateCancelledOrderProps } from "@/features/orders/types"
 import { prisma } from "@/utils/prisma"
 

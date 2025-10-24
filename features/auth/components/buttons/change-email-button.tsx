@@ -6,7 +6,7 @@ import { useEmailChange } from '@/features/auth/hooks/use-email-change';
 import usePasswordGuard from '@/features/auth/hooks/use-password-guard';
 import { changeEmailSchema } from '@/features/auth/schemas/change-email-schema';
 import { ChangeEmailButtonProps } from '@/features/auth/types';
-import { ButtonWithPopup } from "@/features/layout/components";
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup";
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton";
 
 

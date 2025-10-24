@@ -8,7 +8,8 @@ import { SetupPasswordPrompt } from "@/features/auth/components/change-visual/se
 import usePasswordGuard from "@/features/auth/hooks/use-password-guard";
 import { passwordSchema } from "@/features/auth/schemas/password-schema";
 import { ChangePasswordButtonProps } from "@/features/auth/types";
-import { ButtonWithPopup, InputField } from "@/features/layout/components";
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup";
+import InputField from "@/features/global/components/form/input";
 import { Skeleton } from '@/features/shadcn/components/ui/skeleton';
 
 

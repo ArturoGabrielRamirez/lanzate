@@ -6,16 +6,18 @@ import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
+import CheckboxField from "@/features/global/components/form/checkbox-field"
+import { Form } from "@/features/global/components/form/form"
+import { InputField } from "@/features/global/components/form/input-field"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { Form, InputField, CheckboxField } from "@/features/layout/components"
 import { EditAddressButton } from "@/features/stores/components/section-buttons"
 import { editAddressSchema } from "@/features/stores/schemas/address-schema"
 import { AddressDisplayProps, AddressFormValues } from "@/features/stores/types"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 function AddressDisplay({ store, userId }: AddressDisplayProps) {
-    
+
     const t = useTranslations("store.edit-store")
     const mainBranch = store.branches?.find((branch) => branch.is_main)
     const [isEditing, setIsEditing] = useState(false)
@@ -108,6 +110,7 @@ function AddressDisplay({ store, userId }: AddressDisplayProps) {
                                     <InputField
                                         name="address"
                                         label={t("address")}
+                                        placeholder={t("address")}
                                         defaultValue={mainBranch?.address || ""}
                                         disabled={!isEditing || !isPhysicalStore}
                                     />
@@ -116,6 +119,7 @@ function AddressDisplay({ store, userId }: AddressDisplayProps) {
                                     <InputField
                                         name="city"
                                         label={t("city")}
+                                        placeholder={t("city")}
                                         defaultValue={mainBranch?.city || ""}
                                         disabled={!isEditing || !isPhysicalStore}
                                     />
@@ -124,6 +128,7 @@ function AddressDisplay({ store, userId }: AddressDisplayProps) {
                                     <InputField
                                         name="province"
                                         label={t("province")}
+                                        placeholder={t("province")}
                                         defaultValue={mainBranch?.province || ""}
                                         disabled={!isEditing || !isPhysicalStore}
                                     />
@@ -132,6 +137,7 @@ function AddressDisplay({ store, userId }: AddressDisplayProps) {
                                     <InputField
                                         name="country"
                                         label={t("country")}
+                                        placeholder={t("country")}
                                         defaultValue={mainBranch?.country || ""}
                                         disabled={!isEditing || !isPhysicalStore}
                                     />

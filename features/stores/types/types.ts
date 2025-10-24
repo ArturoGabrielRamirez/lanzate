@@ -5,7 +5,7 @@ import { ReactNode } from "react"
 import * as yup from "yup"
 
 import { DashboardStore } from "@/features/dashboard/types"
-import { ResponseType } from "@/features/layout/types"
+import { ServerResponse } from "@/features/global/types"
 import { editOperationalSettingsSchema, editSocialMediaSchema, editContactSchema } from "@/features/stores/schemas"
 
 // ============================================================================
@@ -528,7 +528,7 @@ export type StoreFormButtonProps = {
     mode: 'create' | 'edit'
     userId: number
     schema: yup.ObjectSchema<Record<string, unknown>>
-    action: (payload: StoreFormData) => Promise<ResponseType<unknown>>
+    action: (payload: StoreFormData) => Promise<ServerResponse<unknown>>
     messages: {
         success: string
         error: string

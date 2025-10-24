@@ -4,11 +4,12 @@ import { Category } from "@prisma/client"
 import { useTranslations } from "next-intl"
 import { useState, useEffect } from "react"
 
-import { Label } from "@/features/shadcn/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import InputField from "@/features/global/components/form/input"
 import { getProductsCountByCategoryAction } from "@/features/products/actions/get-products-count-by-category.action"
 import { updateProductsPricesAction } from "@/features/products/actions/update-products-prices.action"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import { getCategoriesAction } from "@/features/stores/actions/get-categories.action"
 import { UpdatePricesButtonProps, PriceUpdateType } from "@/features/stores/types"
 import { formatErrorResponse } from "@/utils/lib"
@@ -26,9 +27,10 @@ function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) 
 
     useEffect(() => {
         const fetchCategories = async () => {
-            const { payload, error } = await getCategoriesAction()
-            if (!error && payload) {
-                setCategories(payload)
+            const { payload, hasError } = await getCategoriesAction()
+
+            if (!hasError && payload) {
+                setCategories(payload as Category[])
             }
         }
         fetchCategories()
@@ -39,11 +41,11 @@ function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) 
             if (selectedCategory) {
                 setIsLoadingCount(true)
                 try {
-                    const { payload, error } = await getProductsCountByCategoryAction(
+                    const { payload, hasError } = await getProductsCountByCategoryAction(
                         parseInt(selectedCategory),
                         storeId
                     )
-                    if (!error && payload !== null) {
+                    if (!hasError && payload !== null) {
                         setProductsInCategory(payload)
                     } else {
                         setProductsInCategory(0)
@@ -102,15 +104,15 @@ function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) 
 
             console.log("Updating prices with payload:", payload)
 
-            const { error, message, payload: result } = await updateProductsPricesAction(payload)
+            const { hasError, message, payload: result } = await updateProductsPricesAction(payload)
 
-            if (error) {
+            if (hasError) {
                 throw new Error(message)
             }
 
             return {
                 error: false,
-                message: `${t("messages.success")} - ${result?.updatedCount || 0} productos actualizados`,
+                message: `${t("messages.success")} - ${result?.payload?.updatedCount || 0} productos actualizados`,
                 payload: result
             }
         } catch (error) {
@@ -168,9 +170,9 @@ function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) 
                                 <SelectValue placeholder={t("choose-category")} />
                             </SelectTrigger>
                             <SelectContent>
-                                {categories.map((category) => (
-                                    <SelectItem key={category.id} value={category.id.toString()}>
-                                        {category.name}
+                                {categories.map((category: Category) => (
+                                    <SelectItem key={category.id} value={category.id?.toString()}>
+                                        {category.name?.toString()}
                                     </SelectItem>
                                 ))}
                             </SelectContent>
@@ -249,6 +251,6 @@ function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) 
             {renderContent()}
         </ButtonWithPopup>
     )
-} 
+}
 
 export { UpdatePricesButton }

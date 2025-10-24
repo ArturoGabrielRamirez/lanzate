@@ -1,4 +1,4 @@
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
 import { VariantDetailForm } from "@/features/products/components/variant-detail-display"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"

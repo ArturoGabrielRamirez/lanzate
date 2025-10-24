@@ -4,9 +4,9 @@ import { EyeIcon, EyeOffIcon, InfoIcon } from "lucide-react";
 import { useState } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/features/shadcn/components/field";
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupText } from "@/features/shadcn/components/input-group";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 
 function InputField({
     name,
@@ -20,6 +20,10 @@ function InputField({
     type = "text",
     tooltip,
     isRequired = false,
+    defaultValue,
+    disabled = false,
+    inputMode = "text",
+    onChange,
 }: {
     name: string,
     label: string,
@@ -27,18 +31,28 @@ function InputField({
     startIcon?: React.ReactNode,
     startText?: string,
     endIcon?: React.ReactNode,
-    endText?: string,
+    endText?: string | React.ReactNode,
     description?: string | React.ReactNode,
     type?: string,
-    tooltip?: string | React.ReactNode
-    isRequired?: boolean
+    tooltip?: string | React.ReactNode,
+    defaultValue?: string,
+    isRequired?: boolean,
+    disabled?: boolean,
+    inputMode?: "text" | "email" | "search" | "tel" | "url" | "none" | "decimal" | "numeric" | undefined
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }) {
 
     const { control } = useFormContext();
     const [showPassword, setShowPassword] = useState(false);
-    
+
     const handleTogglePasswordVisibility = () => {
         setShowPassword(!showPassword);
+    }
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (typeof onChange === 'function' && onChange !== undefined) {
+            onChange(e);
+        }
     }
 
     return (
@@ -66,6 +80,10 @@ function InputField({
                             id={field.name}
                             type={showPassword ? "text" : type}
                             className=""
+                            defaultValue={defaultValue}
+                            disabled={disabled}
+                            inputMode={inputMode}
+                            onChange={handleChange}
                         />
                         {endText && (
                             <InputGroupText>

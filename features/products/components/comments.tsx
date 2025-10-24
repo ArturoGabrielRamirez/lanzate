@@ -1,4 +1,4 @@
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { CommentsClient } from "@/features/products/components/comments-client"
 import { getProductCommentsData } from "@/features/products/data/get-product-comments.data"
 import type { CommentsProps } from "@/features/products/types"

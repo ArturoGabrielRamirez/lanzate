@@ -2,12 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-type Props = {
-    adminLayout: React.ReactNode
-    userLayout: React.ReactNode
-}
+import { SubdomainProviderProps } from "@/features/layout/types/types";
+import { getSubdomainRegex } from "@/features/layout/utils/get-subdomain-regex";
 
-function SubdomainProvider({ adminLayout, userLayout }: Props) {
+function SubdomainProvider({ adminLayout, userLayout }: SubdomainProviderProps) {
 
     const [hasSubdomain, setHasSubdomain] = useState(false)
 
@@ -16,31 +14,10 @@ function SubdomainProvider({ adminLayout, userLayout }: Props) {
         setHasSubdomain(subdomain !== null)
     }, [])
 
-    function getSubdomainRegex(url: string) {
-        try {
-            const { hostname } = new URL(url);
-
-            const parts = hostname.split('.');
-
-            if (parts.length >= 3) {
-                const subdomain = parts[0];
-
-                if (subdomain === 'www') {
-                    return null;
-                }
-                return subdomain;
-            }
-
-            return null;
-        } catch {
-            return null;
-        }
-    }
-
     return (
         <>
             {!hasSubdomain ? adminLayout : userLayout}
         </>
     )
 }
-export default SubdomainProvider
+export { SubdomainProvider }

@@ -3,7 +3,7 @@
 import { actionWrapper } from "@/utils/lib"
 import { updateEmployee as updateEmployeeInDb } from "../data/updateEmployee"
 import { revalidatePath } from "next/cache"
-import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { insertLogEntry } from "@/features/global/data/insertLogEntry"
 import { canEditEmployee } from "../access/canEditEmployee"
 
 export async function editEmployee(employeeId: number, data: any, slug: string, userId: number) {

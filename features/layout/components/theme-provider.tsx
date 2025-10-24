@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const initialRender = process.env.NODE_ENV === "production";
 
-export default function NextThemeProvider(props: ThemeProviderProps) {
+function NextThemeProvider(props: ThemeProviderProps) {
   const [shouldRender, setShouldRender] = useState(initialRender);
   useEffect(() => {
     if (!initialRender) {
@@ -14,3 +14,4 @@ export default function NextThemeProvider(props: ThemeProviderProps) {
   }, []);
   return shouldRender ? <ThemeProvider {...props} /> : props.children;
 }
+export { NextThemeProvider }

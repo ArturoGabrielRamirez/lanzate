@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server"
 import { getEmployeeDetails } from "@/features/employees/actions/getEmployeeDetails"
 import { DeleteEmployeeButton, EditEmployeeButton } from "@/features/employees/components"
 import { EmployeeDetailPageProps } from "@/features/employees/types"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 

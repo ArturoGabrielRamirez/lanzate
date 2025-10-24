@@ -4,7 +4,8 @@ import { Edit, Shield } from "lucide-react"
 
 import { handleSetupPasswordAction } from "@/features/auth/actions"
 import {  passwordSchema } from "@/features/auth/schemas"
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup";
+import InputField from "@/features/global/components/form/input";
 
 interface SetupPasswordPromptProps {
   operationName: string

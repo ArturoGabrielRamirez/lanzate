@@ -7,7 +7,6 @@ import { KeyboardEvent, useState } from "react"
 import { toast } from "sonner"
 import { getEmployeesByFilter } from "../actions/getEmployeesByFilter"
 import { createEmployee } from "../actions/createEmployee"
-import { ResponseType } from "@/features/layout/types"
 import { CreateEmployeeButtonProps, UserWithEmployeeStatus, Contract } from "../types"
 import { useTranslations } from "next-intl"
 import { assignContractToEmployee } from "../data"
@@ -22,7 +21,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
     const [isSearching, setIsSearching] = useState(false)
     const t = useTranslations("store.create-employee")
 
-    const handleAddEmployee = async (): Promise<ResponseType<any>> => {
+    const handleAddEmployee = async () => {
         if (!selectedUser) {
             return {
                 error: true,

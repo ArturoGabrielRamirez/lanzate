@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getMessagesFromOrderAction } from "@/features/orders/actions/get-messages-from-order.action"
 import { OrderChatWrapper } from "@/features/orders/components/order-chat-wrapper"
 import { OrderChatProps } from "@/features/orders/types"

@@ -1,8 +1,6 @@
 import { redirect } from 'next/navigation'
-import { getTranslations } from 'next-intl/server'
 
 import UpdatePasswordForm from '@/features/auth/components/forms/update-password-form'
-import Title from '@/features/layout/components/title'
 import { createServerSideClient } from '@/utils/supabase/server'
 
 
@@ -14,11 +12,8 @@ export default async function UpdatePasswordPage() {
         redirect('/error')
     }
 
-    const t = await getTranslations("auth");
-
     return (
         <div className='flex flex-col p-4 grow z-10'>
-            <Title title={t("reset-password.title")} />
             <section className='flex flex-col items-center justify-center w-full grow'>
                 <UpdatePasswordForm />
             </section>

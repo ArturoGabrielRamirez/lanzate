@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server"
 
 import { getEmployeePermissionsAction } from "@/features/employees/actions/get-employee-permisions.action"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { ProductsTable } from "@/features/products/components/products-table"
 import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
 import { ProductsTabProps } from "@/features/stores/types"
