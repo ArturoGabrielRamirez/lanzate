@@ -3,11 +3,8 @@
 import { formatSuccessResponse } from "@/features/global/utils"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { UpdateCancelledOrderProps } from "@/features/orders/types"
 import { prisma } from "@/utils/prisma"
-
-type UpdateCancelledOrderProps = {
-    orderId: string
-}
 
 export async function updateCancelledOrderData({ orderId }: UpdateCancelledOrderProps) {
         // Get current user

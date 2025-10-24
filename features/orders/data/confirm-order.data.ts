@@ -1,8 +1,7 @@
-import { prisma } from "@/utils/prisma"
+"use server"
 
-type ConfirmOrderDataProps = {
-    orderId: number
-}
+import { ConfirmOrderDataProps } from "@/features/orders/types"
+import { prisma } from "@/utils/prisma"
 
 export async function confirmOrderData({ orderId }: ConfirmOrderDataProps) {
     // Update order status to READY

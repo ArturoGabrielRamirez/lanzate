@@ -42,3 +42,51 @@ export type ChangeOrderTrackingStatusActionProps = {
     }
 }
 
+// Data layer types
+export type ChangeOrderTrackingStatusProps = {
+    orderId: number
+    newStatus: {
+        newStatus: OrderTrackingStatus
+    }
+}
+
+export type ConfirmOrderDataProps = {
+    orderId: number
+}
+
+export type FinalizeOrderDataProps = {
+    orderId: number
+    shippingMethod: "PICKUP" | "DELIVERY"
+}
+
+export type GetMessagesFromOrderProps = {
+    storeSlug: string
+    orderId: string
+}
+
+export type UpdateOrderTrackingDataProps = {
+    orderId: number
+    newTrackingStatus: OrderTrackingStatus
+}
+
+export type UpdateCancelledOrderProps = {
+    orderId: string
+}
+
+export type UpdateCompletedOrderProps = {
+    orderId: string
+}
+
+export type UpdateDeliveredOrderProps = {
+    orderId: string
+}
+
+export type InsertOrderMessageProps = {
+    orderId: string
+    message: string
+    messageType?: MessageType
+    fileUrl?: string
+    fileName?: string
+    fileSize?: number
+}
+

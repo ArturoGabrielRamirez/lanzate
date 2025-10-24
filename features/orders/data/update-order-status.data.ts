@@ -2,13 +2,8 @@
 
 import { formatSuccessResponse } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { ChangeOrderStatusData } from "@/features/orders/types"
 import { prisma } from "@/utils/prisma"
-
-type ChangeOrderStatusData = {
-    newStatus: string
-    confirmPayment: boolean
-    confirmStockRestore: boolean
-}
 
 export async function updateOrderStatusData(orderId: number, data: ChangeOrderStatusData, userId: number) {
 

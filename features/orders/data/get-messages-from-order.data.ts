@@ -1,11 +1,7 @@
 "use server"
 
+import { GetMessagesFromOrderProps } from "@/features/orders/types"
 import { prisma } from "@/utils/prisma"
-
-type GetMessagesFromOrderProps = {
-    storeSlug: string
-    orderId: string
-}
 
 export async function getMessagesFromOrderData({ storeSlug, orderId }: GetMessagesFromOrderProps) {
 

@@ -3,11 +3,8 @@
 import { formatSuccessResponse } from "@/features/global/utils"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { insertLogEntry } from "@/features/layout/data/insertLogEntry"
+import { UpdateDeliveredOrderProps } from "@/features/orders/types"
 import { prisma } from "@/utils/prisma"
-
-type UpdateDeliveredOrderProps = {
-    orderId: string
-}
 
 export async function updateDeliveredOrderData({ orderId }: UpdateDeliveredOrderProps) {
     // Get current user

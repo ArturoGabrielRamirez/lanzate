@@ -1,13 +1,7 @@
-import { OrderTrackingStatus } from "@prisma/client"
+"use server"
 
+import { ChangeOrderTrackingStatusProps } from "@/features/orders/types"
 import { prisma } from "@/utils/prisma"
-
-type ChangeOrderTrackingStatusProps = {
-    orderId: number
-    newStatus: {
-        newStatus: OrderTrackingStatus
-    }
-}
 
 export async function changeOrderTrackingStatusData({
     orderId,

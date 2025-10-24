@@ -1,19 +1,9 @@
 "use server"
 
-import { MessageType } from "@prisma/client"
-
 import { formatSuccessResponse } from "@/features/global/utils"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { InsertOrderMessageProps } from "@/features/orders/types"
 import { prisma } from "@/utils/prisma"
-
-type InsertOrderMessageProps = {
-    orderId: string
-    message: string
-    messageType?: MessageType
-    fileUrl?: string
-    fileName?: string
-    fileSize?: number
-}
 
 export async function insertOrderMessageData({
     orderId,

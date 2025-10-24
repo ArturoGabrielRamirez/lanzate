@@ -1,9 +1,7 @@
-import { prisma } from "@/utils/prisma"
+"use server"
 
-type FinalizeOrderDataProps = {
-    orderId: number
-    shippingMethod: "PICKUP" | "DELIVERY"
-}
+import { FinalizeOrderDataProps } from "@/features/orders/types"
+import { prisma } from "@/utils/prisma"
 
 export async function finalizeOrderData({
     orderId,
