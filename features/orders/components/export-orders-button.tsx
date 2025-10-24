@@ -1,17 +1,13 @@
 "use client"
 
-import { Order } from "@prisma/client"
 import { Download } from "lucide-react"
 import { useTranslations } from "next-intl"
 import * as XLSX from "xlsx-js-style"
 
+import { ExportOrdersButtonProps } from "@/features/orders/types"
 import { Button } from "@/features/shadcn/components/ui/button"
 
-type Props = {
-    data: Order[]
-}
-
-function ExportOrdersButton({ data }: Props) {
+function ExportOrdersButton({ data }: ExportOrdersButtonProps) {
     const t = useTranslations("store.orders-table")
 
     const handleExport = () => {

@@ -4,12 +4,9 @@ import { notFound } from "next/navigation"
 import { getUserInfo } from "@/features/layout/actions"
 import { getOrderByIdAction } from "@/features/orders/actions/get-order-by-id.action"
 import { CustomerOrderTracking } from "@/features/orders/components/customer-order-tracking"
+import { OrderDetailsContainerProps } from "@/features/orders/types"
 
-type Props = {
-    orderId: string
-}
-
-async function OrderDetailsContainer({ orderId }: Props) {
+async function OrderDetailsContainer({ orderId }: OrderDetailsContainerProps) {
     const { payload: user, hasError: userError } = await getUserInfo()
 
     if (userError || !user) {

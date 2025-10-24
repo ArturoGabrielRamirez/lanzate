@@ -1,26 +1,16 @@
 "use client"
 
-import { Order } from "@prisma/client"
 import { Trash2 } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { ButtonWithPopup } from "@/features/layout/components"
 import { ResponseType } from "@/features/layout/types"
 import { changeOrderStatusAction } from "@/features/orders/actions/change-order-status.action"
+import { CancelOrderButtonProps } from "@/features/orders/types"
 import { cn } from "@/lib/utils"
 
 
-type Props = {
-    order: Order
-    slug: string
-    userId?: number
-    onComplete?: () => void
-    className?: string
-    size?: "default" | "sm" | "lg"
-    onlyIcon?: boolean
-}
-
-function CancelOrderButton({ order, slug, onComplete, className, size = "default", onlyIcon = false }: Props) {
+function CancelOrderButton({ order, slug, onComplete, className, size = "default", onlyIcon = false }: CancelOrderButtonProps) {
     const t = useTranslations("store.cancel-order")
 
     const handleCancelOrder = async (): Promise<ResponseType<unknown>> => {

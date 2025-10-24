@@ -1,26 +1,10 @@
 "use client"
 
-import { LucideIcon } from "lucide-react"
-
+import { DynamicStepperTriggerProps } from "@/features/orders/types"
 import { InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperTitle, InteractiveStepperTrigger, useStepper } from "@/features/shadcn/components/expansion/interactive-stepper"
 import { cn } from "@/lib/utils"
 
-type StepperTriggerConfig = {
-    title: string
-    description: string
-    completed?: boolean
-    icon?: LucideIcon
-    iconClassName?: string
-    titleClassName?: string
-    descriptionClassName?: string
-    step?: number
-}
-
-type Props = {
-    config: StepperTriggerConfig
-}
-
-function DynamicStepperTrigger({ config }: Props) {
+function DynamicStepperTrigger({ config }: DynamicStepperTriggerProps) {
     const {
         title,
         description,

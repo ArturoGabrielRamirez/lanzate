@@ -1,17 +1,9 @@
-import { Order, OrderItem, Product, Store, Branch } from "@prisma/client"
 import { Package } from "lucide-react"
 
 import { getUserInfo } from "@/features/layout/actions"
 import { getUserOrdersAction } from "@/features/orders/actions/get-user-orders.action"
 import { OrderCard } from "@/features/orders/components/order-card"
-
-type OrderWithDetails = Order & {
-    items: (OrderItem & {
-        product: Product
-    })[]
-    store: Store
-    branch: Branch
-}
+import { OrderWithDetails } from "@/features/orders/types"
 
 async function MyOrdersContainer() {
     const { payload: user, hasError: userError } = await getUserInfo()

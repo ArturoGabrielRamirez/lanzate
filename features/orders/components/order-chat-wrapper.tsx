@@ -2,17 +2,12 @@
 
 import { useOptimistic } from "react"
 
-import { OrderChatContext, type User, type MessageWithSender } from "@/features/orders/components/order-chat-context"
+import { OrderChatContext } from "@/features/orders/components/order-chat-context"
 import { OrderChatInput } from "@/features/orders/components/order-chat-input"
 import { OrderChatMessages } from "@/features/orders/components/order-chat-messages"
+import { OrderChatWrapperProps, MessageWithSender } from "@/features/orders/types"
 
-type Props = {
-    messages: MessageWithSender[]
-    currentUser: User | null
-    orderId: string
-}
-
-function OrderChatWrapper({ messages, currentUser, orderId }: Props) {
+function OrderChatWrapper({ messages, currentUser, orderId }: OrderChatWrapperProps) {
     const [optimisticMessages, addOptimisticMessage] = useOptimistic(
         messages,
         (currentMessages, newMessage: MessageWithSender) => {

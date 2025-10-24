@@ -1,15 +1,11 @@
-import { Order, OrderTracking, OrderItem, Product, OrderPayment, Store, Branch } from "@prisma/client"
 import { MapPin, Phone, StoreIcon } from "lucide-react"
 
 import { OpenChatButton } from "@/features/orders/components/open-chat-button"
+import { OrderDetailsStoreProps } from "@/features/orders/types"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/features/shadcn/components/ui/card"
 import { cn } from "@/lib/utils"
 
-type Props = {
-    order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store } & { branch: Branch }
-}
-
-function OrderDetailsStore({ order }: Props) {
+function OrderDetailsStore({ order }: OrderDetailsStoreProps) {
 
     return (
         <Card>

@@ -3,13 +3,9 @@ import { Suspense } from "react"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getMessagesFromOrderAction } from "@/features/orders/actions/get-messages-from-order.action"
 import { OrderChatWrapper } from "@/features/orders/components/order-chat-wrapper"
+import { OrderChatProps } from "@/features/orders/types"
 
-type Props = {
-    storeSlug: string
-    orderId: string
-}
-
-async function OrderChat({ storeSlug, orderId }: Props) {
+async function OrderChat({ storeSlug, orderId }: OrderChatProps) {
     const { payload: user } = await getUserInfo()
     const { payload: messages } = await getMessagesFromOrderAction({ storeSlug, orderId })
 

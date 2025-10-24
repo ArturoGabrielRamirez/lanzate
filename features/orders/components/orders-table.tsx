@@ -10,18 +10,13 @@ import { useTranslations } from "next-intl"
 import { DataTable } from "@/features/layout/components/data-table"
 import { CancelOrderButton } from "@/features/orders/components"
 import { ExportOrdersButton } from "@/features/orders/components"
+import { OrdersTableProps } from "@/features/orders/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 
-type Props = {
-    data: Order[]
-    slug: string
-    userId: number
-}
-
-function OrdersTable({ data, slug }: Props) {
+function OrdersTable({ data, slug }: OrdersTableProps) {
 
     const t = useTranslations("store.orders-table")
 

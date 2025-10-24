@@ -6,16 +6,12 @@ import { useState, useTransition } from "react"
 import { toast } from "sonner"
 
 import { insertOrderMessageAction } from "@/features/orders/actions/insert-order-message.action"
-import { useOrderChat, type User, type MessageWithSender } from "@/features/orders/components/order-chat-context"
+import { useOrderChat } from "@/features/orders/components/order-chat-context"
+import { OrderChatInputProps, MessageWithSender } from "@/features/orders/types"
 import { AutosizeTextarea } from "@/features/shadcn/components/expansion/autosize-textarea"
 import { Button } from "@/features/shadcn/components/ui/button"
 
-type Props = {
-    orderId: string
-    user: User | null
-}
-
-function OrderChatInput({ orderId, user }: Props) {
+function OrderChatInput({ orderId, user }: OrderChatInputProps) {
     const [message, setMessage] = useState("")
     const [isPending, startTransition] = useTransition()
     const pathname = usePathname()

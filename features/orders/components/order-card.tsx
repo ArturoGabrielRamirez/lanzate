@@ -1,24 +1,12 @@
-import { Order, OrderItem, Product, Store, Branch } from "@prisma/client"
 import { Calendar, MapPin, Store as StoreIcon, Eye } from "lucide-react"
 import Link from "next/link"
 
+import { OrderCardProps } from "@/features/orders/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-type OrderWithDetails = Order & {
-    items: (OrderItem & {
-        product: Product
-    })[]
-    store: Store
-    branch: Branch
-}
-
-type Props = {
-    order: OrderWithDetails
-}
-
-function OrderCard({ order }: Props) {
+function OrderCard({ order }: OrderCardProps) {
     const formatDate = (date: Date) => {
         return new Date(date).toLocaleDateString('en-US', {
             year: 'numeric',

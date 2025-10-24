@@ -3,17 +3,12 @@
 import { formatDistanceToNow } from "date-fns"
 import { es } from "date-fns/locale"
 
-import { type User, type MessageWithSender } from "@/features/orders/components/order-chat-context"
+import { OrderChatMessagesProps, MessageWithSender } from "@/features/orders/types"
 import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { cn } from "@/lib/utils"
 
-type Props = {
-    messages: MessageWithSender[]
-    currentUser: User | null
-}
-
-function OrderChatMessages({ messages, currentUser }: Props) {
+function OrderChatMessages({ messages, currentUser }: OrderChatMessagesProps) {
     if (!messages || messages.length === 0) {
         return (
             <div className="flex-1 flex items-center justify-center p-8">

@@ -2,14 +2,10 @@
 
 import { useState } from "react"
 
+import { HorizontalPanelsProps } from "@/features/orders/types"
 import { cn } from "@/lib/utils"
 
-type Props = {
-    leftPanel: React.ReactNode
-    rightPanel: React.ReactNode
-}
-
-function HorizontalPanels({ leftPanel, rightPanel }: Props) {
+function HorizontalPanels({ leftPanel, rightPanel }: HorizontalPanelsProps) {
 
     const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(false)
 

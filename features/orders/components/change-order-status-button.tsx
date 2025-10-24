@@ -1,12 +1,13 @@
 "use client"
 
-import { Order, OrderStatus } from "@prisma/client"
+import { OrderStatus } from "@prisma/client"
 import { Edit } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import { ButtonWithPopup } from "@/features/layout/components"
 import { changeOrderStatusAction } from "@/features/orders/actions"
+import { ChangeOrderStatusButtonProps } from "@/features/orders/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
 import { Label } from "@/features/shadcn/components/ui/label"
@@ -14,14 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { cn } from "@/lib/utils"
 import { formatErrorResponse } from "@/utils/lib"
 
-type Props = {
-    order: Order
-    slug: string
-    userId?: number
-    onComplete?: () => void
-}
-
-function ChangeOrderStatusButton({ order, slug, onComplete }: Props) {
+function ChangeOrderStatusButton({ order, slug, onComplete }: ChangeOrderStatusButtonProps) {
 
     const [selectedStatus, setSelectedStatus] = useState<OrderStatus>(order.status)
     const [confirmPayment, setConfirmPayment] = useState(false)

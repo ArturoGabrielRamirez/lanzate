@@ -1,19 +1,16 @@
 "use client"
 
-import { Order, OrderTracking, OrderTrackingStatus } from "@prisma/client"
+import { OrderTrackingStatus } from "@prisma/client"
 import { Clock, Package, CheckCircle2, Truck } from "lucide-react"
 import { useTransition } from "react"
 import { toast } from "sonner"
 
 import { finalizeOrderAction } from "@/features/orders/actions/finalize-order.action"
 import { updateOrderTrackingAction } from "@/features/orders/actions/update-order-tracking.action"
+import { OrderActionButtonsProps } from "@/features/orders/types"
 import { Button } from "@/features/shadcn/components/ui/button"
 
-type Props = {
-    order: Order & { tracking: OrderTracking | null }
-}
-
-function OrderActionButtons({ order }: Props) {
+function OrderActionButtons({ order }: OrderActionButtonsProps) {
 
     const [isPending, startTransition] = useTransition()
     const [isFinalizing, startFinalizeTransition] = useTransition()

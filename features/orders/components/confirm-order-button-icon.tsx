@@ -5,15 +5,12 @@ import { useTransition } from "react"
 import { toast } from "sonner"
 
 import { confirmOrderAction } from "@/features/orders/actions/confirm-order.action"
+import { ConfirmOrderButtonIconProps } from "@/features/orders/types"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
-type Props = {
-    orderId: number
-}
-
-function ConfirmOrderButtonIcon({ orderId }: Props) {
+function ConfirmOrderButtonIcon({ orderId }: ConfirmOrderButtonIconProps) {
     const [isPending, startTransition] = useTransition()
 
     const handleConfirmOrder = () => {

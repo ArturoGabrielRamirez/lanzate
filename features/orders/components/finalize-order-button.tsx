@@ -1,16 +1,12 @@
-import { Order, OrderTracking } from "@prisma/client"
 import { CheckCircle, Loader2 } from "lucide-react"
 import { useTransition } from "react"
 import { toast } from "sonner"
 
 import { finalizeOrderAction } from "@/features/orders/actions/finalize-order.action"
+import { FinalizeOrderButtonProps } from "@/features/orders/types"
 import { Button } from "@/features/shadcn/components/ui/button"
 
-type Props = {
-    order: Order & { tracking: OrderTracking | null }
-}
-
-function FinalizeOrderButton({ order }: Props) {
+function FinalizeOrderButton({ order }: FinalizeOrderButtonProps) {
 
     const [isFinalizing, startFinalizeTransition] = useTransition()
 

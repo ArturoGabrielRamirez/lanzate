@@ -4,16 +4,11 @@ import { getEmployeePermissionsAction } from "@/features/employees/actions/get-e
 import { getOrderDetailsAction } from "@/features/orders/actions"
 import { OrderDetailsAccordions } from "@/features/orders/components/order-details-accordions"
 import { OrderTimeline } from "@/features/orders/components/order-timeline"
+import { OrderSummaryStepsContainerProps } from "@/features/orders/types"
 import { formatDate } from "@/lib/utils"
 
 
-type Props = {
-    userId: number
-    orderId: string
-    storeSlug: string
-}
-
-async function OrderSummaryStepsContainer({ userId, orderId, storeSlug }: Props) {
+async function OrderSummaryStepsContainer({ userId, orderId, storeSlug }: OrderSummaryStepsContainerProps) {
     const [
         { payload: order, hasError: orderError },
         { payload: employeePermissions, hasError: permissionsError }

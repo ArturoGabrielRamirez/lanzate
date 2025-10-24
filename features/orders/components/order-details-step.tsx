@@ -1,37 +1,13 @@
 "use client"
 
-import { Order } from "@prisma/client"
 import { Package, User, Store, Globe, MapPin, Truck, Check, Clock, X, Loader2 } from "lucide-react"
 import React from "react"
 
+import { OrderDetailsStepProps, OrderItemWithProduct } from "@/features/orders/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { cn } from "@/lib/utils"
 
-type OrderItemWithProduct = {
-    id: number
-    quantity: number
-    price: number
-    product: {
-        id: number
-        name: string
-        image: string | null
-    }
-}
-
-type Props = {
-    order: Order & {
-        items: OrderItemWithProduct[]
-        payment: {
-            status: "PENDING" | "PAID"
-        }
-        customer_name?: string | null
-        customer_email?: string | null
-        customer_phone?: string | null
-    }
-    showFullDetails?: boolean
-}
-
-function OrderDetailsStep({ order, showFullDetails = false }: Props) {
+function OrderDetailsStep({ order, showFullDetails = false }: OrderDetailsStepProps) {
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',

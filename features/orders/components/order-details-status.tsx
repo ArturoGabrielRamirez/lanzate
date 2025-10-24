@@ -1,17 +1,13 @@
-import { Order, OrderItem, OrderPayment, OrderTracking, Product, Store } from "@prisma/client"
 import { MapPin, Truck, Store as StoreIcon } from "lucide-react"
 import { useMemo } from "react"
 
 import { OrderTimelineIcons } from "@/features/orders/components/order-timeline-icons"
+import { OrderDetailsStatusProps } from "@/features/orders/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Progress } from "@/features/shadcn/components/ui/progress"
 
-type Props = {
-    order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment } & { store: Store }
-}
-
-function OrderDetailsStatus({ order }: Props) {
+function OrderDetailsStatus({ order }: OrderDetailsStatusProps) {
 
     const orderDescriptions = {
         PROCESSING: "Be patient, your order is being processed.",

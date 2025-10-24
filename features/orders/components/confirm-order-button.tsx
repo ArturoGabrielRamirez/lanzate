@@ -1,38 +1,16 @@
 "use client"
 
-import { Order } from "@prisma/client"
 import { AlertTriangle, CheckCircle } from "lucide-react"
 import { useTransition } from "react"
 import { toast } from "sonner"
 
 import { confirmOrderAction } from "@/features/orders/actions/confirm-order.action"
+import { ConfirmOrderButtonProps } from "@/features/orders/types"
 import { AlertDescription } from "@/features/shadcn/components/ui/alert"
 import { Alert } from "@/features/shadcn/components/ui/alert"
 import { Button } from "@/features/shadcn/components/ui/button"
 
-type EmployeePermissions = {
-    isAdmin: boolean
-    permissions?: {
-        can_create_orders: boolean
-        can_update_orders: boolean
-        can_create_products: boolean
-        can_update_products: boolean
-        can_manage_stock: boolean
-        can_process_refunds: boolean
-        can_view_reports: boolean
-        can_manage_employees: boolean
-        can_manage_store: boolean
-    }
-}
-
-type Props = {
-    order: Order
-    employeePermissions?: EmployeePermissions
-    canUpdateOrders: boolean
-    size?: "default" | "sm" | "lg"
-}
-
-function ConfirmOrderButton({ order, canUpdateOrders, size = "default" }: Props) {
+function ConfirmOrderButton({ order, canUpdateOrders, size = "default" }: ConfirmOrderButtonProps) {
 
     const isOrderReady = order.status === "READY"
     const isOrderCompleted = order.status === "COMPLETED"

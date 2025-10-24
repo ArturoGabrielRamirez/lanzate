@@ -1,14 +1,6 @@
-import { OrderItem, Product } from "@prisma/client"
+import { OrderItemComponentProps } from "@/features/orders/types"
 
-type OrderItemWithProduct = OrderItem & {
-    product: Product
-}
-
-type Props = {
-    item: OrderItemWithProduct
-}
-
-function OrderItemComponent({ item }: Props) {
+function OrderItemComponent({ item }: OrderItemComponentProps) {
     return (
         <div className="flex items-center justify-between py-2 border-b border-muted last:border-b-0">
             <div className="flex items-center space-x-3">
