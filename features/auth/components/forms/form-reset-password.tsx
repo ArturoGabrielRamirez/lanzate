@@ -9,7 +9,7 @@ import { useRef } from 'react'
 import { handleResetPasswordAction } from '@/features/auth/actions'
 import { changeEmailSchema } from '@/features/auth/schemas'
 import { ChangeEmailFormData } from '@/features/auth/types'
-import { Form } from '@/features/layout/components'
+import { Form } from '@/features/global/components/form/form'
 import { InputField } from '@/features/global/components/form/input-field'
 
 

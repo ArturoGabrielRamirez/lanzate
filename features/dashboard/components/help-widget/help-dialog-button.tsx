@@ -2,7 +2,9 @@
 
 import { useTranslations } from "next-intl"
 
-import { ButtonWithPopup, InputField, TextareaField } from "@/features/layout/components"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup";
+import InputField from "@/features/global/components/form/input";
+import { TextareaField } from "@/features/global/components/form/textarea-field";
 
 function HelpDialogButton() {
     const t = useTranslations("dashboard.help")

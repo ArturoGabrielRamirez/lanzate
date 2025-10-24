@@ -9,7 +9,7 @@ import { useRef } from 'react'
 import { handleSignup } from '@/features/auth/actions'
 import { signUpSchema } from '@/features/auth/schemas'
 import { SignupFormPayload } from '@/features/auth/types'
-import { Form } from '@/features/layout/components'
+import { Form } from '@/features/global/components/form/form'
 import { InputField } from '@/features/global/components/form/input-field'
 
 

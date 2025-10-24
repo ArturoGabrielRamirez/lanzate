@@ -4,9 +4,10 @@ import { MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
-import { AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { InputField, CheckboxField } from "@/features/layout/components"
+import CheckboxField from "@/features/global/components/form/checkbox-field"
+import { InputField } from "@/features/global/components/form/input-field"
+import { AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
 import { AddressSectionProps } from "@/features/stores/types"
 
 function AddressSection({ store, mode }: AddressSectionProps) {
@@ -35,6 +36,7 @@ function AddressSection({ store, mode }: AddressSectionProps) {
                 <InputField
                     name="address"
                     label={t("address")}
+                    placeholder={t("address")}
                     type="text"
                     defaultValue={mainBranch?.address || ""}
                     disabled={!isPhysicalStore}
@@ -42,6 +44,7 @@ function AddressSection({ store, mode }: AddressSectionProps) {
                 <InputField
                     name="city"
                     label={t("city")}
+                    placeholder={t("city")}
                     type="text"
                     defaultValue={mainBranch?.city || ""}
                     disabled={!isPhysicalStore}
@@ -49,6 +52,7 @@ function AddressSection({ store, mode }: AddressSectionProps) {
                 <InputField
                     name="province"
                     label={t("province")}
+                    placeholder={t("province")}
                     type="text"
                     defaultValue={mainBranch?.province || ""}
                     disabled={!isPhysicalStore}
@@ -56,6 +60,7 @@ function AddressSection({ store, mode }: AddressSectionProps) {
                 <InputField
                     name="country"
                     label={t("country")}
+                    placeholder={t("country")}
                     type="text"
                     defaultValue={mainBranch?.country || ""}
                     disabled={!isPhysicalStore}
