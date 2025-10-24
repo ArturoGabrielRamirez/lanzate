@@ -503,6 +503,9 @@
                 "title": "Comunidad"
             },
             "copyright": "© Copyright 2025. Todos los derechos reservados."
+        },
+        "announcement": {
+            "last-update": "Última actualización"
         }
     },
     "layout": {
