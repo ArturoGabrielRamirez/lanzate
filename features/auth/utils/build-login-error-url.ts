@@ -1,9 +1,12 @@
+"use server"
+
 import { headers } from 'next/headers'
+
 import { routing } from '@/i18n/routing'
 
 export async function buildLoginErrorUrl(
-    subdomain: string | null, 
-    error: string, 
+    subdomain: string | null,
+    error: string,
     message?: string
 ): Promise<string> {
     const headersList = await headers()
@@ -19,6 +22,6 @@ export async function buildLoginErrorUrl(
         ...(message && { message }),
         ...(subdomain && { subdomain }),
     })
-    
+
     return `${baseUrl}/${locale}/login?${params.toString()}`
 }

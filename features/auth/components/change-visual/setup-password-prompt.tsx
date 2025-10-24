@@ -1,51 +1,53 @@
 'use client'
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
+
 import { Edit, Shield } from "lucide-react"
-import { handleSetupPassword } from "../../actions/handle-setup-password"
-import { newPasswordSchema } from "../../schemas/new-password-schema"
+
+import { handleSetupPasswordAction } from "@/features/auth/actions"
+import {  passwordSchema } from "@/features/auth/schemas"
+import { ButtonWithPopup, InputField } from "@/features/layout/components"
 
 interface SetupPasswordPromptProps {
   operationName: string
   onPasswordSet?: () => void
 }
 
-export function SetupPasswordPrompt({ 
-  operationName, 
-  onPasswordSet 
+export function SetupPasswordPrompt({
+  operationName,
+  onPasswordSet
 }: SetupPasswordPromptProps) {
-  
+
   async function setupPasswordAction(formData: {
     password: string;
     confirmPassword: string;
   }) {
     console.log('SetupPasswordPrompt - Iniciando acción', formData); // Debug
-    
-    const result = await handleSetupPassword(formData.password)
-    
+
+    const result = await handleSetupPasswordAction({ newPassword: formData.password, confirmNewPassword: formData.confirmPassword })
+
     console.log('SetupPasswordPrompt - Resultado:', result); // Debug
-    
-    if (!result.error && onPasswordSet) {
+
+    if (!result.hasError && onPasswordSet) {
       onPasswordSet()
     }
-    
+
     return result
   }
 
   return (
     <div>
-      
+
       <ButtonWithPopup
         text={<Edit className="w-4 h-4" />}
         title="Configurar Contraseña de Seguridad"
         description={`Para ${operationName}, necesitas una contraseña como medida de seguridad adicional.`}
         action={setupPasswordAction}
-        schema={newPasswordSchema}
+        schema={passwordSchema}
         messages={{
           success: "Contraseña configurada correctamente",
           error: "Error al configurar la contraseña",
           loading: "Configurando contraseña..."
         }}
-       /*  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl" */
+        /*  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl" */
         variant="default"
         onlyIcon={true}
       >
@@ -62,7 +64,7 @@ export function SetupPasswordPrompt({
               </p>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <InputField
               name="password"

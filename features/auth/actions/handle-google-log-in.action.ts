@@ -1,48 +1,36 @@
 'use server'
-import { redirect } from 'next/navigation'
+
 import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
+
+import { getGoogleData } from "@/features/auth/data"
 import { extractSubdomainFromHost, buildLoginErrorUrl } from '@/features/auth/utils'
-import { createServerSideClient } from '@/utils/supabase/server'
 import { actionWrapper } from '@/utils/lib'
 
-export async function handleFacebookLogin() {
+export async function handleGoogleLogInAction() {
     const result = await actionWrapper(async () => {
-        const supabase = createServerSideClient()
         const headersList = await headers()
         const host = headersList.get('host') || ''
         const subdomain = extractSubdomainFromHost(host)
         const redirectUrl = `https://lanzate.app/auth/callback${subdomain ?
             `?subdomain=${subdomain}` : ''}`
-        
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'facebook',
-            options: {
-                redirectTo: redirectUrl,
-                scopes: 'email,public_profile',
-                queryParams: {
-                    display: 'popup',
-                    auth_type: 'rerequest',
-                    response_type: 'code',
-                },
-            },
-        })
+        const { payload: googleData, hasError: googleError, message: googleMessage } = await getGoogleData({ redirectUrl, subdomain })
 
-        if (error) {
-            throw new Error(error.message)
+        if (googleError) {
+            throw new Error(googleMessage)
         }
 
-        if (!data.url) {
-            throw new Error('No URL returned from OAuth provider')
+        if (!googleData?.url) {
+            throw new Error('No se obtuvo la URL del proveedor de OAuth')
         }
 
         return {
             error: false,
-            message: 'Facebook login initiated successfully',
-            payload: { url: data.url, subdomain }
+            message: 'Se inició sesión con Google correctamente',
+            payload: { url: googleData.url, subdomain: googleData.subdomain }
         }
     })
 
-    // Manejo de redirects fuera del wrapper
     if (result.error) {
         const headersList = await headers()
         const host = headersList.get('host') || ''
@@ -55,7 +43,6 @@ export async function handleFacebookLogin() {
         redirect(result.payload.url)
     }
 
-    // Fallback redirect
     const headersList = await headers()
     const host = headersList.get('host') || ''
     const subdomain = extractSubdomainFromHost(host)

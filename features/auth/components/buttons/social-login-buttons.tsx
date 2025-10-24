@@ -2,7 +2,7 @@ import { getTranslations } from 'next-intl/server'
 
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
-import { handleFacebookLogin, handleGoogleLogIn } from '@/features/auth/actions'
+import { handleFacebookLoginAction, handleGoogleLogInAction } from '@/features/auth/actions'
 import { FacebookLogo, GoogleLogo } from '@/features/auth/components'
 
 async function SocialLoginButtons() {
@@ -15,7 +15,7 @@ async function SocialLoginButtons() {
                 {t("description.or-login-with")}
             </Label>
             <div className='flex flex-col gap-2 w-full'>
-                <form action={handleGoogleLogIn}>
+                <form action={handleGoogleLogInAction}>
                     <Button
                         type="submit"
                         className="w-full bg-gradient-to-t from-chart-5 to-primary"
@@ -24,7 +24,7 @@ async function SocialLoginButtons() {
                         Google
                     </Button>
                 </form>
-                <form action={handleFacebookLogin}>
+                <form action={handleFacebookLoginAction}>
                     <Button
                         type="submit"
                         className="w-full bg-gradient-to-t from-chart-5 to-primary"

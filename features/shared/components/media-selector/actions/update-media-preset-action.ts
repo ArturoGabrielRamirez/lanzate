@@ -3,7 +3,7 @@
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 import { UpdateMediaPresetParams } from "../types"
 import { getUserId } from "@/features/shared/data/get-user-id"
-import { getCurrentUser } from "@/features/auth/actions"
+import { getCurrentUserWithIdAndEmailAction } from "@/features/auth/actions"
 import { validateUploadType } from "@/features/shared/utils/validators"
 import { UPLOAD_TYPES } from "@/features/shared/types"
 import { updateUserAvatar, updateUserBanner } from "@/features/shared/data"
@@ -12,7 +12,7 @@ import { revalidatePath } from "next/cache"
 export async function updateMediaPresetAction({ type, presetUrl }: UpdateMediaPresetParams) {
     return actionWrapper(async () => {
         // 1. Autenticación
-        const currentUserResponse = await getCurrentUser()
+        const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
         if (!currentUserResponse || currentUserResponse.error) {
             return formatErrorResponse('Debes iniciar sesión', null)
         }

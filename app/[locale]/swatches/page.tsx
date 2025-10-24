@@ -1,5 +1,6 @@
-import Button from "@/features/layout/components/universal-button"
 import { Store } from "lucide-react"
+
+import Button from "@/features/layout/components/universal-button"
 
 function Swatches() {
     return (

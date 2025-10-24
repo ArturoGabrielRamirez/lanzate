@@ -1,5 +1,7 @@
-import { requestDeletionAction } from '@/features/account/actions'
 import { NextRequest, NextResponse } from 'next/server'
+
+import { requestDeletionAction } from '@/features/account/actions'
+
 
 
 export async function POST(request: NextRequest) {

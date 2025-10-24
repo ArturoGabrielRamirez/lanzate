@@ -1,17 +1,18 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { OrderDetailPageProps } from "@/features/stores/types/order-detail-page-type"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { Suspense } from "react"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import OrderSummaryStepsContainer from "@/features/orders/components/order-sumarry-steps-container"
-import { Suspense } from "react"
 import OrderSummarySkeleton from "@/features/orders/components/order-summary-skeleton"
+import { OrderDetailPageProps } from "@/features/stores/types"
 
 async function OrderDetailPage({ params }: OrderDetailPageProps) {
 
     const { slug, id } = await params
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)

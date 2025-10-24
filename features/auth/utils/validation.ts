@@ -1,6 +1,7 @@
-import type { ResendEmailParams } from '@/features/auth/types';
-import { isValidEmail } from '../../utils/resend-utils';
-import { VALID_STEPS, VALID_TYPES } from './constants';
+import type { ResendEmailParams } from '@/features/auth/types'
+import { VALID_STEPS, VALID_TYPES } from '@/features/auth/utils'
+import { isValidEmail } from '@/features/auth/utils/resend-utils'
+
 
 export function validateResendParams(params: ResendEmailParams): string | null {
 
@@ -8,7 +9,7 @@ export function validateResendParams(params: ResendEmailParams): string | null {
         return 'El campo "type" es requerido';
     }
 
-    if (!VALID_TYPES.includes(params.type as any)) {
+    if (!VALID_TYPES.includes(params.type)) {
         return `Tipo inválido. Debe ser uno de: ${VALID_TYPES.join(', ')}`;
     }
 
@@ -39,7 +40,7 @@ function validateEmailRequirement(params: ResendEmailParams): string | null {
 
 function validateStep(params: ResendEmailParams): string | null {
     if (params.type === 'email_change' && params.step) {
-        if (!VALID_STEPS.includes(params.step as any)) {
+        if (!VALID_STEPS.includes(params.step)) {
             return `Step inválido. Debe ser uno de: ${VALID_STEPS.join(', ')}`;
         }
     }

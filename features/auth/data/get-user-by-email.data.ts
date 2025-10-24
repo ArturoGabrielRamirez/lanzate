@@ -1,11 +1,9 @@
 "use server"
 
-import { User } from "@supabase/supabase-js"
-
+import { GetSupabaseUser } from "@/features/auth/types"
 import { prisma } from "@/utils/prisma"
 
-export async function getUserByEmail(supabaseUser: User) {
-
+export async function getUserByEmailData({ supabaseUser }: GetSupabaseUser) {
     const backupUser = await prisma.user.findUnique({
         where: { email: supabaseUser.email! },
         select: {

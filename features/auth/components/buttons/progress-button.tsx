@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { ProgressButtonProps } from "@/features/auth/types";
+import { Button } from "@/components/ui/button"
+import { ProgressButtonProps } from "@/features/auth/types"
 
 function ProgressButton({
     hasPendingChange,

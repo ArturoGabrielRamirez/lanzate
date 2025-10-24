@@ -1,7 +1,7 @@
 /* "use server" */
 
 import { NextRequest, NextResponse } from 'next/server'
-import { getCurrentUser } from '@/features/auth/actions'
+import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { createStorageService } from '../../../features/shared/services/storage'
 import {
   ValidationError,
@@ -23,7 +23,7 @@ import { getUserId } from '@/features/shared/data/get-user-id'
 export async function POST(request: NextRequest) {
   try {
 
-    const currentUserResponse = await getCurrentUser()
+    const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
 
     if (!currentUserResponse || currentUserResponse.error) {
       return NextResponse.json(

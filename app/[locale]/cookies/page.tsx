@@ -13,7 +13,7 @@ function CookiesPolicy() {
                     <h2 className="text-2xl font-bold mb-4">INTRODUCTION</h2>
                     <div className="mb-4">
                         <p className="text-sm leading-relaxed mb-4">
-                            This Cookies Policy explains how Lanzate (&quot;we,&quot; &quot;us,&quot; &quot;our&quot;) uses cookies and similar technologies when you visit our website <a href="https://www.lanzate.app" target="_blank" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> and use our mobile application Lanzate App (collectively, the &quot;Services&quot;).
+                            This Cookies Policy explains how Lanzate (&quot;we,&quot; &quot;us,&quot; &quot;our&quot;) uses cookies and similar technologies when you visit our website <a href="https://www.lanzate.app" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> and use our mobile application Lanzate App (collectively, the &quot;Services&quot;).
                         </p>
 
                         <p className="text-sm leading-relaxed mb-4">
@@ -279,9 +279,9 @@ function CookiesPolicy() {
                         </p>
 
                         <ul className="list-disc ml-6 space-y-2">
-                            <li><a href="http://www.aboutads.info/choices/" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Digital Advertising Alliance</a></li>
-                            <li><a href="http://www.youronlinechoices.com/" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Your Online Choices</a></li>
-                            <li><a href="https://www.networkadvertising.org/choices/" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Network Advertising Initiative</a></li>
+                            <li><a href="http://www.aboutads.info/choices/"/*  target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Digital Advertising Alliance</a></li>
+                            <li><a href="http://www.youronlinechoices.com/"/*  target="_blank"  */className="text-blue-600 hover:text-blue-800 underline">Your Online Choices</a></li>
+                            <li><a href="https://www.networkadvertising.org/choices/"/*  target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Network Advertising Initiative</a></li>
                         </ul>
                     </div>
                 </section>
@@ -296,19 +296,19 @@ function CookiesPolicy() {
                         <h3 className="text-lg font-bold mb-3 mt-6">Third-Party Services We Use</h3>
 
                         <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Google Analytics:</strong> We use Google Analytics to analyze the use of our Services. Google Analytics gathers information about website use by means of cookies. For more information about Google Analytics cookies, please see <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Google Analytics Cookie Usage</a>.</p>
+                            <p><strong>Google Analytics:</strong> We use Google Analytics to analyze the use of our Services. Google Analytics gathers information about website use by means of cookies. For more information about Google Analytics cookies, please see <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage"/*  target="_blank"  */className="text-blue-600 hover:text-blue-800 underline">Google Analytics Cookie Usage</a>.</p>
                         </div>
 
                         <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Google Ads:</strong> We use Google Ads for advertising purposes. Google may use cookies to serve ads based on your prior visits to our website. For more information, please see <a href="https://policies.google.com/technologies/ads" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Google Advertising</a>.</p>
+                            <p><strong>Google Ads:</strong> We use Google Ads for advertising purposes. Google may use cookies to serve ads based on your prior visits to our website. For more information, please see <a href="https://policies.google.com/technologies/ads"/*  target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Google Advertising</a>.</p>
                         </div>
 
                         <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Facebook Pixel:</strong> We use Facebook Pixel to track conversions and build audiences for advertising campaigns. For more information, please see <a href="https://www.facebook.com/privacy/explanation" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Facebook Privacy Policy</a>.</p>
+                            <p><strong>Facebook Pixel:</strong> We use Facebook Pixel to track conversions and build audiences for advertising campaigns. For more information, please see <a href="https://www.facebook.com/privacy/explanation" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Facebook Privacy Policy</a>.</p>
                         </div>
 
                         <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Hotjar:</strong> We use Hotjar to understand how users interact with our Services. For more information, please see <a href="https://www.hotjar.com/legal/policies/privacy/" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Hotjar Privacy Policy</a>.</p>
+                            <p><strong>Hotjar:</strong> We use Hotjar to understand how users interact with our Services. For more information, please see <a href="https://www.hotjar.com/legal/policies/privacy/" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Hotjar Privacy Policy</a>.</p>
                         </div>
                     </div>
                 </section>
@@ -328,21 +328,21 @@ function CookiesPolicy() {
                         <p>Here are links to cookie settings for popular browsers:</p>
 
                         <ul className="list-disc ml-6 space-y-2">
-                            <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Google Chrome</a></li>
-                            <li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Mozilla Firefox</a></li>
-                            <li><a href="https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Internet Explorer</a></li>
-                            <li><a href="https://support.apple.com/en-us/HT201265" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Safari (Desktop)</a></li>
-                            <li><a href="https://support.apple.com/en-us/HT201265" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Safari (Mobile)</a></li>
-                            <li><a href="https://support.google.com/chrome/answer/2392971" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Chrome (Mobile)</a></li>
+                            <li><a href="https://support.google.com/chrome/answer/95647" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Google Chrome</a></li>
+                            <li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Mozilla Firefox</a></li>
+                            <li><a href="https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies" /* target="_blank"  */className="text-blue-600 hover:text-blue-800 underline">Internet Explorer</a></li>
+                            <li><a href="https://support.apple.com/en-us/HT201265"/*  target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Safari (Desktop)</a></li>
+                            <li><a href="https://support.apple.com/en-us/HT201265" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Safari (Mobile)</a></li>
+                            <li><a href="https://support.google.com/chrome/answer/2392971" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Chrome (Mobile)</a></li>
                         </ul>
 
                         <h3 className="text-lg font-bold mb-3 mt-6">Opt-Out Links</h3>
                         <p>For specific third-party services, you can use the following opt-out links:</p>
 
                         <ul className="list-disc ml-6 space-y-2">
-                            <li><strong>Google Analytics:</strong> <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Google Analytics Opt-out Browser Add-on</a></li>
-                            <li><strong>Facebook:</strong> <a href="https://www.facebook.com/settings?tab=ads" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Facebook Ad Preferences</a></li>
-                            <li><strong>Hotjar:</strong> <a href="https://www.hotjar.com/legal/compliance/opt-out" target="_blank" className="text-blue-600 hover:text-blue-800 underline">Hotjar Opt-out</a></li>
+                            <li><strong>Google Analytics:</strong> <a href="https://tools.google.com/dlpage/gaoptout" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Google Analytics Opt-out Browser Add-on</a></li>
+                            <li><strong>Facebook:</strong> <a href="https://www.facebook.com/settings?tab=ads" /* target="_blank"  */className="text-blue-600 hover:text-blue-800 underline">Facebook Ad Preferences</a></li>
+                            <li><strong>Hotjar:</strong> <a href="https://www.hotjar.com/legal/compliance/opt-out" /* target="_blank"  */className="text-blue-600 hover:text-blue-800 underline">Hotjar Opt-out</a></li>
                         </ul>
 
                         <h3 className="text-lg font-bold mb-3 mt-6">Do Not Track</h3>

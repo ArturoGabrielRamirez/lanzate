@@ -1,27 +1,24 @@
 'use server'
 
-import { getCurrentUser } from '@/features/auth/actions'
-import { LoginFormPayload } from '@/features/auth/types';
-import { actionWrapper } from '@/features/global/utils';
+import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
+import { getLogInPermissionData } from '@/features/auth/data'
+import { LoginFormPayload } from '@/features/auth/types'
+import { actionWrapper } from '@/features/global/utils'
 import { insertLogEntry } from '@/features/layout/data'
-import { createServerSideClient } from '@/utils/supabase/server';
+
 
 export async function handleLogInAction(formData: LoginFormPayload) {
   return actionWrapper(async () => {
-
-    const supabase = createServerSideClient()
-
-    const { error: signInError } = await (await supabase).auth.signInWithPassword({
-      email: formData.email,
-      password: formData.password
+    const signInError = await getLogInPermissionData({
+      email: typeof formData.email === 'string' ? formData.email : (formData.email)?.email,
+      password: typeof formData.password === 'string' ? formData.password : (formData.password)?.password
     })
 
     if (signInError) throw new Error(signInError.message)
 
-    const { payload: localUser, error: localUserError } = await getCurrentUser()
+    const { payload: localUser, hasError: localUserError } = await getCurrentUserWithIdAndEmailAction()
 
     if (localUserError) throw new Error('User not found')
-
     if (!localUser) throw new Error('User not found')
 
     insertLogEntry({

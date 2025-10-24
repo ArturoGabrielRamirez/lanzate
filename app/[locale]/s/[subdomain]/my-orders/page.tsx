@@ -1,7 +1,8 @@
-import { Title } from "@/features/layout/components"
-import PageContainer from "@/features/layout/components/page-container"
-import { MyOrdersContainer, OrdersSkeleton } from "@/features/store-orders/components"
 import { Suspense } from "react"
+
+import { Title } from "@/features/layout/components"
+import {PageContainer} from "@/features/layout/components/page-container"
+import { MyOrdersContainer, OrdersSkeleton } from "@/features/store-orders/components"
 
 async function MyOrdersPage() {
     return (

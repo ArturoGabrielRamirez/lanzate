@@ -1,6 +1,8 @@
 'use client'
 
-import { Camera, Image as ImageIcon, Upload, Loader2 } from 'lucide-react'
+//TODO:Integrar camera con completa, desde features/sahred
+
+/* import { Camera, Image as ImageIcon, Upload, Loader2 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
@@ -8,134 +10,135 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { TooltipContent } from '@/components/ui/tooltip'
-import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
-import { useCamera } from '@/features/auth/hooks/use-camera'
+import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip' */
+/* import { useCamera } from '@/features/auth/hooks/use-camera' */
 import { StoreBannerEditorProps } from '@/features/stores/types'
-import { IconButton } from '@/src/components/ui/shadcn-io/icon-button'
+/* import { IconButton } from '@/src/components/ui/shadcn-io/icon-button' */
 
 function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: StoreBannerEditorProps) {
-    const [isOpen, setIsOpen] = useState(false)
-    const [selectedFile, setSelectedFile] = useState<File | null>(null)
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-    const fileInputRef = useRef<HTMLInputElement>(null)
-    const [isUploading, setIsUploading] = useState(false)
-    const [suggestedIds, setSuggestedIds] = useState<number[]>([])
-
-    const camera = useCamera({
-        uploadPath: 'store-banners',
-        onSuccess: (url) => {
-            onBannerUpdate(url)
-            setIsOpen(false)
-            resetState()
-        },
-        onError: () => toast.error('Error al subir la foto'),
-        quality: 0.9
-    })
-
-    function resetState() {
-        setSelectedFile(null)
-        setPreviewUrl(null)
-        if (fileInputRef.current) fileInputRef.current.value = ''
-    }
-
-    function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
-        const file = event.target.files?.[0]
-        if (!file) return
-
-        if (!file.type.startsWith('image/')) {
-            toast.error('Selecciona una imagen válida')
-            return
-        }
-
-        const maxSize = 8 * 1024 * 1024
-        if (file.size > maxSize) {
-            toast.error(`La imagen debe ser menor a ${maxSize / 1024 / 1024}MB`)
-            return
-        }
-
-        setSelectedFile(file)
-
-        const reader = new FileReader()
-        reader.onload = (e) => setPreviewUrl(e.target?.result as string)
-        reader.readAsDataURL(file)
-    }
-
-    async function handleUpload() {
-        if (!selectedFile) {
-            toast.error('No hay archivo seleccionado')
-            return
-        }
-        setIsUploading(true)
-        toast.promise(
-            (async () => {
-                const formData = new FormData()
-                formData.append('file', selectedFile)
-                formData.append('type', 'store-banner')
-
-                const response = await fetch('/api/store-banner', { method: 'POST', body: formData })
-                if (!response.ok) throw new Error('Error uploading file')
-                const data = await response.json()
-                onBannerUpdate(data.url)
+    console.log(currentBanner, storeName, onBannerUpdate)
+    /*     const [isOpen, setIsOpen] = useState(false)
+        const [selectedFile, setSelectedFile] = useState<File | null>(null)
+        const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+        const fileInputRef = useRef<HTMLInputElement>(null)
+        const [isUploading, setIsUploading] = useState(false)
+        const [suggestedIds, setSuggestedIds] = useState<number[]>([])
+     */
+    /*     const camera = useCamera({
+            uploadPath: 'store-banners',
+            onSuccess: (url) => {
+                onBannerUpdate(url)
                 setIsOpen(false)
                 resetState()
-            })(),
-            {
-                loading: 'Subiendo banner...',
-                success: 'Banner subido correctamente',
-                error: (error) => error.message,
-                finally: () => setIsUploading(false)
+            },
+            onError: () => toast.error('Error al subir la foto'),
+            quality: 0.9
+        })
+     */
+    /*     function resetState() {
+            setSelectedFile(null)
+            setPreviewUrl(null)
+            if (fileInputRef.current) fileInputRef.current.value = ''
+        }
+    
+        function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
+            const file = event.target.files?.[0]
+            if (!file) return
+    
+            if (!file.type.startsWith('image/')) {
+                toast.error('Selecciona una imagen válida')
+                return
             }
-        )
-    }
-
-    async function handleUploadSuggested(id: number) {
-        const url = `https://picsum.photos/id/${id}/1200/400`
-        setIsUploading(true)
-        toast.promise(
-            (async () => {
-                const res = await fetch(url, { cache: 'no-store' })
-                if (!res.ok) throw new Error('No se pudo descargar la imagen')
-                const blob = await res.blob()
-                const mimeType = blob.type || 'image/jpeg'
-                const extension = mimeType.split('/')[1] || 'jpg'
-                const file = new File([blob], `suggested-${id}.${extension}`, { type: mimeType })
-
-                const formData = new FormData()
-                formData.append('file', file)
-                formData.append('type', 'store-banner')
-
-                const response = await fetch('/api/store-banner', { method: 'POST', body: formData })
-                if (!response.ok) {
-                    let message = 'Error uploading file'
-                    try {
-                        const err = await response.json()
-                        if (err?.error) message = err.error
-                    } catch { }
-                    throw new Error(message)
-                }
-                const data = await response.json()
-                onBannerUpdate(data.url)
-                setIsOpen(false)
-                resetState()
-            })(),
-            {
-                loading: 'Subiendo banner...',
-                success: 'Banner subido correctamente',
-                error: (error) => error.message,
-                finally: () => setIsUploading(false)
+    
+            const maxSize = 8 * 1024 * 1024
+            if (file.size > maxSize) {
+                toast.error(`La imagen debe ser menor a ${maxSize / 1024 / 1024}MB`)
+                return
             }
-        )
-    }
+    
+            setSelectedFile(file)
+    
+            const reader = new FileReader()
+            reader.onload = (e) => setPreviewUrl(e.target?.result as string)
+            reader.readAsDataURL(file)
+        } */
 
-    function getPreview() {
-        if (camera.capturedFile) return camera.capturedFile.preview
-        if (previewUrl) return previewUrl
-        return (
-            currentBanner || `https://api.dicebear.com/9.x/shapes/svg?seed=${encodeURIComponent(storeName)}&backgroundColor=transparent`
-        )
-    }
+    /*    async function handleUpload() {
+           if (!selectedFile) {
+               toast.error('No hay archivo seleccionado')
+               return
+           }
+           setIsUploading(true)
+           toast.promise(
+               (async () => {
+                   const formData = new FormData()
+                   formData.append('file', selectedFile)
+                   formData.append('type', 'store-banner')
+   
+                   const response = await fetch('/api/store-banner', { method: 'POST', body: formData })
+                   if (!response.ok) throw new Error('Error uploading file')
+                   const data = await response.json()
+                   onBannerUpdate(data.url)
+                   setIsOpen(false)
+                   resetState()
+               })(),
+               {
+                   loading: 'Subiendo banner...',
+                   success: 'Banner subido correctamente',
+                   error: (error) => error.message,
+                   finally: () => setIsUploading(false)
+               }
+           )
+       } */
 
-    useEffect(() => {
+    /*  async function handleUploadSuggested(id: number) {
+         const url = `https://picsum.photos/id/${id}/1200/400`
+         setIsUploading(true)
+         toast.promise(
+             (async () => {
+                 const res = await fetch(url, { cache: 'no-store' })
+                 if (!res.ok) throw new Error('No se pudo descargar la imagen')
+                 const blob = await res.blob()
+                 const mimeType = blob.type || 'image/jpeg'
+                 const extension = mimeType.split('/')[1] || 'jpg'
+                 const file = new File([blob], `suggested-${id}.${extension}`, { type: mimeType })
+ 
+                 const formData = new FormData()
+                 formData.append('file', file)
+                 formData.append('type', 'store-banner')
+ 
+                 const response = await fetch('/api/store-banner', { method: 'POST', body: formData })
+                 if (!response.ok) {
+                     let message = 'Error uploading file'
+                     try {
+                         const err = await response.json()
+                         if (err?.error) message = err.error
+                     } catch { }
+                     throw new Error(message)
+                 }
+                 const data = await response.json()
+                 onBannerUpdate(data.url)
+                 setIsOpen(false)
+                 resetState()
+             })(),
+             {
+                 loading: 'Subiendo banner...',
+                 success: 'Banner subido correctamente',
+                 error: (error) => error.message,
+                 finally: () => setIsUploading(false)
+             }
+         )
+     } */
+
+    /*   function getPreview() {
+          if (camera.capturedFile) return camera.capturedFile.preview
+          if (previewUrl) return previewUrl
+          return (
+              currentBanner || `https://api.dicebear.com/9.x/shapes/svg?seed=${encodeURIComponent(storeName)}&backgroundColor=transparent`
+          )
+      } */
+
+    /* useEffect(() => {
         if (!isOpen) {
             resetState()
             camera.discardPhoto()
@@ -148,9 +151,9 @@ function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: StoreBa
         }
         setSuggestedIds(ids)
     }, [isOpen])
-
+ */
     return (
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+       /*  <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
                 <div>
                     <Tooltip>
@@ -172,8 +175,8 @@ function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: StoreBa
                         <ImageIcon className="h-5 w-5" />
                         Cambiar banner de la tienda
                     </DialogTitle>
-                </DialogHeader>
-                <div className="space-y-6">
+                </DialogHeader> */
+                {/* <div className="space-y-6">
                     <div className="rounded-md overflow-hidden border">
                         <img src={getPreview()} alt="Store banner preview" className="w-full h-40 object-cover" />
                     </div>
@@ -274,9 +277,9 @@ function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: StoreBa
                             Cancelar
                         </Button>
                     </div>
-                </div>
-            </DialogContent>
-        </Dialog>
+                </div> */}
+     /*        </DialogContent>
+        </Dialog> */
     )
 }
 

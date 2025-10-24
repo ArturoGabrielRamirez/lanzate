@@ -1,8 +1,9 @@
 import { redirect } from 'next/navigation'
-import { createServerSideClient } from '@/utils/supabase/server'
+import { getTranslations } from 'next-intl/server'
+
 import UpdatePasswordForm from '@/features/auth/components/forms/update-password-form'
 import Title from '@/features/layout/components/title'
-import { getTranslations } from 'next-intl/server'
+import { createServerSideClient } from '@/utils/supabase/server'
 
 
 export default async function UpdatePasswordPage() {

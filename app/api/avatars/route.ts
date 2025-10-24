@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+
 import { getAvatarOptions } from '@/features/profile/actions/get-avatar-options'
 
 export async function GET() {

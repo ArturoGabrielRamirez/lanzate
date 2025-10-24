@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+
 import { getBannerOptions } from '@/features/profile/actions/get-banner-options'
 
 export async function GET() {

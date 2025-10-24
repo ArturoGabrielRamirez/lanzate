@@ -1,5 +1,7 @@
 'use client'
 
+//TODO:iMPLEMENTAR CHAMARA DESDE FEATURE/SHARED
+
 import { Loader2, Check, Camera, Store, Smartphone, Upload } from "lucide-react"
 import { useState, useRef, useEffect } from 'react'
 import { toast } from "sonner"
@@ -8,8 +10,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
-import CameraComponent from '@/features/auth/components/avatar/camera-component'
-import { useCamera } from '@/features/auth/hooks/use-camera'
+import CameraComponent from '@/features/shared/components/media-selector/components/camera-component'
+/* import { useCamera } from '@/features/auth/hooks/use-camera' */
 import { StoreLogoOption, StoreLogoEditorProps } from '@/features/stores/types'
 import { cn } from "@/lib/utils"
 

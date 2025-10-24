@@ -1,8 +1,9 @@
-import { insertLogEntry } from '@/features/layout/data/insertLogEntry'
-import { createServerSideClient } from '@/utils/supabase/server'
 import { NextResponse } from 'next/server'
+
+import { buildErrorRedirectUrl, buildSuccessRedirectUrl, detectOAuthCancellation, extractRequestParams, handleAnonymizedUserCheck, handleUserCreationOrUpdate } from '@/app/auth/callback/utils'
+import { insertLogEntry } from '@/features/layout/data/insertLogEntry'
 import { prisma } from '@/utils/prisma'
-import { buildErrorRedirectUrl, buildSuccessRedirectUrl, detectOAuthCancellation, extractRequestParams, handleAnonymizedUserCheck, handleUserCreationOrUpdate } from './utils'
+import { createServerSideClient } from '@/utils/supabase/server'
 
 
 export async function GET(request: Request) {

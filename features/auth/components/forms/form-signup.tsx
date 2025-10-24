@@ -16,10 +16,12 @@ import { InputField } from '@/features/layout/components/input-field'
 function SignupForm() {
     const t = useTranslations("auth");
     const router = useRouter();
-    const submittedEmailRef = useRef<string>('');
+    const submittedEmailRef = useRef<{ email: string }>({
+        email: ''
+    });
 
     const handleSuccess = () => {
-        const email = submittedEmailRef.current;
+        const { email } = submittedEmailRef.current;
         if (email) {
             const url = `/check-email?email=${encodeURIComponent(email)}&type=signup`;
             router.push(url);

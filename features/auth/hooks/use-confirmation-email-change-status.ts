@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react';
-import { getEmailChangeStatus } from '../actions/index';
-import { EmailChangeStatus } from '../types';
+import { useState, useEffect, useRef, useCallback } from 'react'
+
+import { getEmailChangeStatusAction } from '@/features/auth/actions'
+import { EmailChangeStatus } from '@/features/auth/types'
 
 export function useConfirmationEmailChangeStatus() {
     const [status, setStatus] = useState<EmailChangeStatus>({
@@ -12,19 +13,29 @@ export function useConfirmationEmailChangeStatus() {
         newEmail: null,
         currentEmail: '',
         loading: true,
-        processCompleted: false
+        processCompleted: false,
+        success: false,
+        emailConfirmed: false,
+        changeWasCancelled: false
     });
 
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const mountedRef = useRef(true);
     const lastUpdateRef = useRef<string>('');
-    
-    const checkStatus = async () => {
+
+    const clearPolling = useCallback(() => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+    }, []);
+
+    const checkStatus = useCallback(async () => {
         try {
-            const result = await getEmailChangeStatus();
+            const result = await getEmailChangeStatusAction();
             console.log('Email change status en useConfirmationEmailChangeStatus:', result);
 
-            if (result.payload.success && result.payload && mountedRef.current) {
+            if (result.payload?.success && result.payload && mountedRef.current) {
                 const newStatus: EmailChangeStatus = {
                     hasEmailChange: result.payload?.hasEmailChange,
                     oldEmailConfirmed: result.payload?.oldEmailConfirmed,
@@ -36,9 +47,11 @@ export function useConfirmationEmailChangeStatus() {
                     requestId: result.payload?.requestId,
                     expiresAt: result.payload?.expiresAt ? new Date(result.payload.expiresAt) : undefined,
                     oldEmailConfirmedAt: result.payload?.oldEmailConfirmedAt ?
-                     new Date(result.payload.oldEmailConfirmedAt) : null,
+                        new Date(result.payload.oldEmailConfirmedAt) : null,
                     newEmailConfirmedAt: result.payload?.newEmailConfirmedAt ?
-                     new Date(result.payload.newEmailConfirmedAt) : null,
+                        new Date(result.payload.newEmailConfirmedAt) : null,
+                    emailConfirmed: result.payload?.emailConfirmed || false,
+                    changeWasCancelled: result.payload?.changeWasCancelled || false,
                 };
 
                 const statusHash = `${newStatus.hasEmailChange}-${newStatus.oldEmailConfirmed}
@@ -62,19 +75,14 @@ export function useConfirmationEmailChangeStatus() {
                 setStatus(prev => ({ ...prev, loading: false }));
             }
         }
-    };
+    }, [clearPolling]);
 
-    const clearPolling = () => {
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-        }
-    };
 
-    const startPolling = () => {
+
+    const startPolling = useCallback(() => {
         clearPolling();
         intervalRef.current = setInterval(checkStatus, 3000);
-    };
+    }, [clearPolling, checkStatus]);
 
     useEffect(() => {
         mountedRef.current = true;
@@ -84,7 +92,7 @@ export function useConfirmationEmailChangeStatus() {
             mountedRef.current = false;
             clearPolling();
         };
-    }, []);
+    }, [checkStatus, clearPolling]);
 
     useEffect(() => {
         clearPolling();
@@ -98,7 +106,7 @@ export function useConfirmationEmailChangeStatus() {
         }
 
         return clearPolling;
-    }, [status.hasEmailChange, status.processCompleted, status.loading]);
+    }, [status.hasEmailChange, status.processCompleted, status.loading, startPolling, clearPolling]);
 
     console.log('Email change status:', status);
 

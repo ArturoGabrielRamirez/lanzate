@@ -4,12 +4,12 @@ import { prisma } from "@/utils/prisma"
 
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 import { UpdateProfileData } from "../types"
-import { getCurrentUser } from "@/features/auth/actions"
+import { getCurrentUserWithIdAndEmailAction } from "@/features/auth/actions"
 
 
 export async function updateProfileSettings(data: UpdateProfileData) {
   return actionWrapper(async () => {
-    const { payload: currentUser, error } = await getCurrentUser()
+    const { payload: currentUser, error } = await getCurrentUserWithIdAndEmailAction()
 
     if (error || !currentUser) {
       return formatErrorResponse("Usuario no autenticado", null)

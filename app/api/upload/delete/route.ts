@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getCurrentUser } from '@/features/auth/actions'
+import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { getUserId } from '@/features/shared/data/get-user-id'
 import { createStorageService } from '@/features/shared/services/storage'
 
@@ -10,7 +10,7 @@ import { handleUserDelete } from '@/features/shared/actions/handle-user-delete'
 export async function POST(request: NextRequest) {
     try {
         // Verificar autenticación
-        const currentUserResponse = await getCurrentUser()
+        const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
         if (!currentUserResponse || currentUserResponse.error) {
             return NextResponse.json(
                 { error: 'Debes iniciar sesión para eliminar archivos' },

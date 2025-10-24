@@ -1,10 +1,10 @@
 import { lazy, Suspense } from "react"
 
-import AccountSkeleton from "@/features/stores/components/tabs/account-skeleton"
-import AnalyticsSkeleton from "@/features/stores/components/tabs/analytics-skeleton"
-import OverviewSkeleton from "@/features/stores/components/tabs/overview-skeleton"
-import StylesSkeleton from "@/features/stores/components/tabs/styles-skeleton"
-import TableSkeleton from "@/features/stores/components/tabs/table-skeleton"
+import {AccountSkeleton} from "@/features/stores/components/tabs/account-skeleton"
+import {AnalyticsSkeleton} from "@/features/stores/components/tabs/analytics-skeleton"
+import {OverviewSkeleton} from "@/features/stores/components/tabs/overview-skeleton"
+import {StylesSkeleton} from "@/features/stores/components/tabs/styles-skeleton"
+import {TableSkeleton} from "@/features/stores/components/tabs/table-skeleton"
 import { TabPageProps } from "@/features/stores/types"
 
 async function TabPage({ params }: TabPageProps) {

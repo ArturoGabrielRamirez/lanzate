@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { toast } from 'sonner';
-import { ResendEmailParams } from '../types';
+import { useState, useRef, useEffect, useCallback } from 'react'
+import { toast } from 'sonner'
+
+import { ResendEmailParams } from '@/features/auth/types'
 
 export function useResendCooldown(
     resendParams: ResendEmailParams,

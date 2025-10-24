@@ -1,5 +1,5 @@
 export * from "@/features/auth/components/buttons/index"
 export * from "@/features/auth/components/forms/index"
 export * from "@/features/auth/components/change-status/index"
-export * from "@/features/auth/components/social-logo/index";
-export * from "@/features/auth/components/change-visual/index";
+export * from "@/features/auth/components/social-logo/index"
+export * from "@/features/auth/components/change-visual/index"

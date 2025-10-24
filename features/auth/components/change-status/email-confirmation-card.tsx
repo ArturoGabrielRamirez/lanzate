@@ -1,14 +1,11 @@
-import { EmailConfirmationCardProps } from "../../types";
-import { ResendButton } from "../change-visual/resend-button";
-import { SupportLink } from "../change-visual/suppor-link";
-import { EmailIcon } from "./email-icon";
-import { EmailInfo } from "./email-info";
-
+import { EmailIcon, EmailInfo } from "@/features/auth/components/change-status";
+import { SupportLink, ResendButton } from "@/features/auth/components/change-visual/"
+import { EmailConfirmationCardProps } from "@/features/auth/types";
 
 export function EmailConfirmationCard({
     type,
     emailTargetInfo,
-    lastResendInfo,
+/*     lastResendInfo, */
     isResending,
     cooldownTime,
     onResendEmail
@@ -32,7 +29,7 @@ export function EmailConfirmationCard({
 
             <EmailInfo
                 targetEmail={emailTargetInfo.targetEmail}
-                lastResendInfo={lastResendInfo}
+           /*      lastResendInfo={lastResendInfo} */
             />
 
             <div className="space-y-4">

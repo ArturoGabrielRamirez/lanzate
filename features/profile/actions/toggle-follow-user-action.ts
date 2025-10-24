@@ -2,14 +2,14 @@
 "use server"
 
 import { prisma } from '@/utils/prisma'
-import { getCurrentUser } from '@/features/auth/actions'
+import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { actionWrapper } from '@/utils/lib'
 import { revalidateTag } from 'next/cache'
 
 export async function toggleFollowUser(targetUserId: number) {
   return actionWrapper(async () => {
     // 1. Validar usuario actual
-    const { payload: currentUser, error: authError } = await getCurrentUser()
+    const { payload: currentUser, error: authError } = await getCurrentUserWithIdAndEmailAction()
     if (authError || !currentUser) {
       return {
         error: true,

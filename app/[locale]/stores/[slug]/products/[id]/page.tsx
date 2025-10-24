@@ -1,21 +1,21 @@
-import { getProductDetails } from "@/features/products/actions/getProductDetails"
-
-import { DeleteProductButton } from "@/features/products/components"
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
-import { ProductDetailForm } from "@/features/products/components/product-detail-display"
-
-import { ProductDetailPageProps } from "@/features/products/type"
-
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
+
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getProductDetails } from "@/features/products/actions/getProductDetails"
+import { DeleteProductButton } from "@/features/products/components"
+import { ProductDetailForm } from "@/features/products/components/product-detail-display"
+import { ProductDetailPageProps } from "@/features/products/type"
+
+
 
 async function ProductDetailPage({ params }: ProductDetailPageProps) {
 
     const { slug, id } = await params
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)

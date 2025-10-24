@@ -1,15 +1,17 @@
-import { Button } from "@/components/ui/button"
-import { Title } from "@/features/layout/components"
-import PageContainer from "@/features/layout/components/page-container"
-import AddToCartButton from "@/features/store-landing/components/add-to-cart-button"
-import LikeButton from "@/features/store-landing/components/like-button"
-import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"
 import { Category } from "@prisma/client"
 import { Image, Share, ShoppingBag } from "lucide-react"
 import Link from "next/link"
-import VariantDetailClient from "@/features/subdomain/components/variant-detail-client"
-import type { Product, ProductVariant, Color } from "@prisma/client"
 
+
+import { Button } from "@/components/ui/button"
+import { Title } from "@/features/layout/components"
+import { PageContainer } from "@/features/layout/components/page-container"
+import AddToCartButton from "@/features/store-landing/components/add-to-cart-button"
+import LikeButton from "@/features/store-landing/components/like-button"
+import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"
+import VariantDetailClient from "@/features/subdomain/components/variant-detail-client"
+
+import type { Product, ProductVariant, Color } from "@prisma/client"
 type Props = {
     params: Promise<{ id: string; subdomain: string; variant: string }>
 }

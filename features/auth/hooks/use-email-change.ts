@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react';
-import { getEmailChangeStatus } from '../actions/index';
-import { handleEditEmail } from "../actions";
-import { PendingChangeData } from '../types';
+import { useState, useEffect, useCallback } from 'react'
+
+import { getEmailChangeStatusAction } from '@/features/auth/actions'
+import { handleEditEmailAction } from "@/features/auth/actions"
+import { PendingChangeData } from '@/features/auth/types'
 
 export function useEmailChange(currentEmail: string) {
     const [showMonitor, setShowMonitor] = useState(false);
@@ -28,23 +29,24 @@ export function useEmailChange(currentEmail: string) {
         });
     };
 
-    const checkPendingChange = async () => {
+    const checkPendingChange = useCallback(async () => {
+
         if (isLoading) return;
 
         setIsLoading(true);
         try {
-            const { payload: result } = await getEmailChangeStatus();
+            const { payload: result, hasError, message } = await getEmailChangeStatusAction();
 
-            if (result.success && result.data?.hasEmailChange) {
+            if (result?.success && result.hasEmailChange) {
                 const pendingData: PendingChangeData = {
-                    oldEmailConfirmed: result.data.oldEmailConfirmed || false,
-                    newEmailConfirmed: result.data.newEmailConfirmed || false,
-                    newEmail: result.data.newEmail || '',
-                    processCompleted: result.data.processCompleted || false
+                    oldEmailConfirmed: result.oldEmailConfirmed || false,
+                    newEmailConfirmed: result.newEmailConfirmed || false,
+                    newEmail: result.newEmail || '',
+                    processCompleted: result.processCompleted || false
                 };
 
                 setHasPendingChange(true);
-                setNewEmail(result.data.newEmail || '');
+                setNewEmail(result.newEmail || '');
                 setPendingChangeData(pendingData);
 
                 if (pendingData.processCompleted) {
@@ -53,23 +55,23 @@ export function useEmailChange(currentEmail: string) {
                     }, 2000);
                 }
 
-            } else if (result.success) {
+            } else if (result?.success) {
                 resetState();
-            } else if (result.error) {
-                console.error('❌ Error checking email status:', result.error);
+            } else if (hasError) {
+                console.error('❌ Error al obtener el estado del cambio de email:', message);
                 resetState();
             }
-        } catch (error) {
-            console.error('❌ ChangeEmailButton: Error checking pending change:', error);
+        } catch (hasError) {
+            console.error('❌ ChangeEmailButton: Error checking pending change:', hasError);
             resetState();
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [isLoading])
 
     useEffect(() => {
         checkPendingChange();
-    }, [currentEmail]);
+    }, [currentEmail, checkPendingChange]);
 
     const changeEmailAction = async (formData: {
         currentPassword: string;
@@ -95,19 +97,19 @@ export function useEmailChange(currentEmail: string) {
         setIsLoading(true);
 
         try {
-            const result = await handleEditEmail(formData.email, formData.currentPassword) as { error: boolean | string, message?: string, data?: any };
+            const result = await handleEditEmailAction({ email: formData.email, password: formData.currentPassword }) /* as { error: boolean | string, message?: string, data?: any } */;
 
             console.log('🔍 Result from handleEditEmail:', result); // Para debug
 
             // Manejo consistente de errores
-            if (result.error) {
+            if (result.hasError) {
                 // Resetear estado en caso de error para evitar que se "atasque"
                 resetState();
 
                 return {
                     error: true,
-                    message: typeof result.error === 'string'
-                        ? result.error
+                    message: typeof result.hasError === 'string'
+                        ? result.hasError
                         : result.message || "Ocurrió un error",
                     payload: null
                 };
@@ -129,7 +131,7 @@ export function useEmailChange(currentEmail: string) {
             return {
                 error: false,
                 message: result.message || "Proceso iniciado. Revisa ambos emails para confirmar.",
-                payload: result.data || formData
+                payload: result || formData
             };
 
         } catch (error) {

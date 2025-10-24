@@ -1,5 +1,5 @@
-// app/api/users/[userId]/activities/route.ts
 import { NextRequest, NextResponse } from 'next/server'
+
 import { getUserActivitiesAction } from '@/features/profile/actions/get-user-activities'
 
 export const revalidate = 60 // ✅ Cache por 60 segundos

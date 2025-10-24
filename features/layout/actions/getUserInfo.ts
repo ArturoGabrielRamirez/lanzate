@@ -1,13 +1,13 @@
 "use server";
 
-import { getCurrentUser } from "@/features/auth/actions";
+import { getCurrentUserWithIdAndEmailAction } from "@/features/auth/actions";
 import { actionWrapper } from "@/features/global/utils";
 
 export async function getUserInfo() {
 
     return actionWrapper(async () => {
 
-        const { payload: localUser, error: errorUser, message: messageUser } = await getCurrentUser();
+        const { payload: localUser, error: errorUser, message: messageUser } = await getCurrentUserWithIdAndEmailAction();
 
         if (errorUser || !localUser) throw new Error(messageUser)
 

@@ -1,9 +1,9 @@
 "use server"
 
-import { prisma } from "@/utils/prisma";
+import { UpdateSupabaseIdAndEmailParams } from "@/features/auth/types"
+import { prisma } from "@/utils/prisma"
 
-export async function updateUserSupabaseIdAndEmail(userId: number, supabaseId: string, email: string, withAccount: boolean = true) {
-
+export async function updateUserSupabaseIdAndEmailData({ userId, supabaseId, email, withAccount = true }: UpdateSupabaseIdAndEmailParams) {
     const user = await prisma.user.update({
         where: { id: userId },
         data: {

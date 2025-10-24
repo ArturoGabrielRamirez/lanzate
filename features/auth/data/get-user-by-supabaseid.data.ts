@@ -1,10 +1,9 @@
 "use server"
-import { User } from "@supabase/supabase-js"
 
+import { GetSupabaseUser } from "@/features/auth/types"
 import { prisma } from "@/utils/prisma"
 
-export async function getUserBySupabaseId(supabaseUser: User) {
-
+export async function getUserBySupabaseIdData({ supabaseUser }: GetSupabaseUser) {
     const localUser = await prisma.user.findUnique({
         where: {
             supabase_user_id: supabaseUser.id

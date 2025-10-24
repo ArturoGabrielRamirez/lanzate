@@ -1,7 +1,7 @@
-import { getProductDetails } from "@/features/products/actions/getProductDetails"
 import { Card, CardContent } from "@/components/ui/card"
-import { VariantDetailForm } from "@/features/products/components/variant-detail-display"
 import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { getProductDetails } from "@/features/products/actions/getProductDetails"
+import { VariantDetailForm } from "@/features/products/components/variant-detail-display"
 /* import { getTranslations } from "next-intl/server" */
 
 type Props = { params: Promise<{ slug: string; id: string; variant: string }> }
@@ -9,7 +9,7 @@ type Props = { params: Promise<{ slug: string; id: string; variant: string }> }
 export default async function ProductVariantDetailPage({ params }: Props) {
     const { slug, id, variant } = await params
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
     if (userError || !user) {
         return console.error(userMessage)
     }

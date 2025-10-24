@@ -1,15 +1,13 @@
 "use server"
 
-import { User } from "@supabase/supabase-js"
-
 import { getCurrentUserData } from "@/features/auth/data"
 import { actionWrapper } from "@/features/global/utils"
 
 export async function getCurrentUserAction() {
 
-  return actionWrapper<User>(async () => {
+  return actionWrapper(async () => {
 
-    const { user, error, message } = await getCurrentUserData();
+    const { user, error, message } = await getCurrentUserData()
 
     if (error) throw new Error(message)
 
@@ -17,7 +15,6 @@ export async function getCurrentUserAction() {
       hasError: false,
       message: message,
       payload: user
-    };
-  });
-
+    }
+  })
 }

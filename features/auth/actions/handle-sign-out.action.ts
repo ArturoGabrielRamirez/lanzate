@@ -1,18 +1,16 @@
 'use server'
 
+import { getCurrentUserData, getSignOutData } from '@/features/auth/data'
 import { actionWrapper } from '@/features/global/utils'
-import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function handleSignOut() {
     return actionWrapper(async () => {
 
-        const supabase = createServerSideClient()
+        const { user: userData } = await getCurrentUserData()
 
-        const { data: { user } } = await supabase.auth.getUser()
+        if (userData) {
+            const error = await getSignOutData()
 
-        if (user) {
-            const { error } = await supabase.auth.signOut()
-            console.log(error)
             if (error) {
                 throw new Error(error.message)
             }
@@ -21,7 +19,7 @@ export async function handleSignOut() {
         return {
             hasError: false,
             payload: null,
-            message: 'Logged out successfully'
+            message: 'Sesión cerrada exitosamente'
         }
     })
 }

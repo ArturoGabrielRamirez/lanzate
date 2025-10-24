@@ -1,5 +1,7 @@
 "use client"
 
+//TODO:Integrar camera from features/shared
+
 import { yupResolver } from "@hookform/resolvers/yup"
 import { TimePicker } from "antd";
 import dayjs, { Dayjs } from "dayjs";
@@ -17,8 +19,8 @@ import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, Dialog
 import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/components/ui/file-upload"
 import { Progress } from "@/components/ui/progress"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import CameraComponent from "@/features/auth/components/avatar/camera-component"
-import { useCamera } from "@/features/auth/hooks/use-camera"
+import CameraComponent from "@/features/shared/components/media-selector/components/camera-component"
+/* import { useCamera } from "@/features/auth/hooks/use-camera" */
 import { Form, InputField } from "@/features/layout/components"
 import { createStoreAction } from "@/features/stores/actions"
 import { basicInfoSchemaNew, addressInfoSchema, contactInfoSchema, settingsSchema, shippingPaymentSchema, BasicInfoFormType, AddressInfoFormType, ContactInfoFormType, SettingsFormType, ShippingPaymentFormType } from "@/features/stores/schemas"
@@ -884,7 +886,7 @@ function BasicInfoFormPanel() {
         }
     }
 
-    const camera = useCamera({
+/*     const camera = useCamera({
         uploadPath: 'store-logos',
         onSuccess: (url) => {
             setValue("basic_info.logo", url)
@@ -896,12 +898,12 @@ function BasicInfoFormPanel() {
         },
         quality: 0.9
     })
-
-    const handleCamera = (e: React.MouseEvent<HTMLButtonElement>) => {
+ */
+  /*   const handleCamera = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         e.stopPropagation()
         camera.openCamera();
-    }
+    } */
 
     const handleFileSelect = (files: File[]) => {
         if (files.length === 0) return
@@ -945,14 +947,14 @@ function BasicInfoFormPanel() {
                                             Click para explorar archivos
                                         </TooltipContent>
                                     </Tooltip>
-                                    <Tooltip>
+                                    {/* <Tooltip>
                                         <TooltipTrigger asChild>
                                             <IconButton icon={Camera} onClick={handleCamera} />
                                         </TooltipTrigger>
                                         <TooltipContent>
                                             Click para tomar foto
                                         </TooltipContent>
-                                    </Tooltip>
+                                    </Tooltip> */}
                                 </div>
                             </div>
                         </FileUploadDropzone>
@@ -972,10 +974,10 @@ function BasicInfoFormPanel() {
                         </div>
                     )}
                 </div>
-                <CameraComponent
+          {/*       <CameraComponent
                     {...camera.cameraProps}
                     title="Tomar foto para logo"
-                />
+                /> */}
                 <div className="space-y-4">
                     <InputField
                         name="basic_info.name"

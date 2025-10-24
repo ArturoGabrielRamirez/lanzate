@@ -17,7 +17,7 @@ function TermsAndConditions() {
                         </p>
 
                         <p className="text-sm leading-relaxed mb-4">
-                            We operate the website <a href="https://www.lanzate.app" target="_blank" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> (the &quot;Site&quot;), the mobile application Lanzate App (the &quot;App&quot;), as well as any other related products and services that refer or link to these legal terms (the &quot;Legal Terms&quot;) (collectively, the &quot;Services&quot;).
+                            We operate the website <a href="https://www.lanzate.app" /* target="_blank"  */className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> (the &quot;Site&quot;), the mobile application Lanzate App (the &quot;App&quot;), as well as any other related products and services that refer or link to these legal terms (the &quot;Legal Terms&quot;) (collectively, the &quot;Services&quot;).
                         </p>
 
                         <p className="text-sm leading-relaxed mb-4">

@@ -1,3 +1,7 @@
+import { Category } from "@prisma/client"
+import { ShoppingBag } from "lucide-react"
+import Link from "next/link"
+
 // import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Title } from "@/features/layout/components"
@@ -6,13 +10,10 @@ import AddToCartButton from "@/features/store-landing/components/add-to-cart-but
 // import LikeButton from "@/features/store-landing/components/like-button"
 import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"
 import Comments from "@/features/subdomain/components/comments"
-import { Category } from "@prisma/client"
-import VariantDetailClient from "@/features/subdomain/components/variant-detail-client"
-import type { Product, ProductVariant, Color } from "@prisma/client"
-import { ShoppingBag } from "lucide-react"
-import Link from "next/link"
 import RelatedProducts from "@/features/subdomain/components/related-products"
+import VariantDetailClient from "@/features/subdomain/components/variant-detail-client"
 
+import type { Product, ProductVariant, Color } from "@prisma/client"
 type Props = {
     params: Promise<{ id: string; subdomain: string; variant?: string }>
     searchParams: Promise<Record<string, string | string[] | undefined>>

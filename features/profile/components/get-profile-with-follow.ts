@@ -3,12 +3,12 @@
 
 import { prisma } from "@/utils/prisma"
 import { actionWrapper, formatSuccessResponse } from "@/utils/lib"
-import { getCurrentUser } from "@/features/auth/actions" // ✅ Ahora retorna Prisma user
+import { getCurrentUserWithIdAndEmailAction } from "@/features/auth/actions" // ✅ Ahora retorna Prisma user
 
 export async function getProfileWithFollowStatus(username: string) {
   return actionWrapper(async () => {
     // 1. Obtener currentUser (ya viene con ID numérico de Prisma)
-    const { payload: currentUser } = await getCurrentUser()
+    const { payload: currentUser } = await getCurrentUserWithIdAndEmailAction()
     
     // 2. ✅ SINGLE OPTIMIZED QUERY con JOIN condicional
     const user = await prisma.user.findUnique({

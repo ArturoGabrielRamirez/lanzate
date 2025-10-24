@@ -1,18 +1,19 @@
-import { getEmployeeDetails } from "@/features/employees/actions/getEmployeeDetails"
-import { DeleteEmployeeButton, EditEmployeeButton } from "@/features/employees/components"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { EmployeeDetailPageProps } from "@/features/employees/types"
 import { ArrowLeft, UserCheck, UserX, Calendar, Building, Briefcase, DollarSign, Shield, FileText } from "lucide-react"
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
+
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { getEmployeeDetails } from "@/features/employees/actions/getEmployeeDetails"
+import { DeleteEmployeeButton, EditEmployeeButton } from "@/features/employees/components"
+import { EmployeeDetailPageProps } from "@/features/employees/types"
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 
 async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
 
     const { slug, id } = await params
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)

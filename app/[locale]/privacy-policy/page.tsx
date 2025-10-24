@@ -17,7 +17,7 @@ function PrivacyPolicy() {
                         </p>
                         
                         <p className="text-sm leading-relaxed mb-4">
-                            We are Lanzate, a company registered in Argentina at Las Palmas 735, no, Atlantida, Santa Clara del Mar, Buenos Aires 7609. We operate the website <a href="https://www.lanzate.app" target="_blank" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> and the mobile application Lanzate App.
+                            We are Lanzate, a company registered in Argentina at Las Palmas 735, no, Atlantida, Santa Clara del Mar, Buenos Aires 7609. We operate the website <a href="https://www.lanzate.app" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> and the mobile application Lanzate App.
                         </p>
                         
                         <p className="text-sm leading-relaxed mb-4">

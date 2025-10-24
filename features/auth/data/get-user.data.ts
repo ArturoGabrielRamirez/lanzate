@@ -2,7 +2,7 @@
 
 import { createServerSideClient } from "@/utils/supabase/server"
 
-export async function getUser() {
+export async function getUserData() {
     const supabase = createServerSideClient()
     const { data: { user: supabaseUser }, error } = await supabase.auth.getUser()
 

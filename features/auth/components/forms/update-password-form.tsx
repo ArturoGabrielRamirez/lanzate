@@ -3,18 +3,23 @@
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
+import { UpdatePasswordPayload } from '@/features/auth/types'
 import { Form, InputField } from '@/features/layout/components'
 import { formatErrorResponse } from '@/utils/lib'
 
 export default function UpdatePasswordForm() {
 
+
+
     const [done, setDone] = useState(false)
 
     const t = useTranslations("auth");
 
-    const handleSubmit = async (payload: any) => {
+    const handleSubmit = async (payload: UpdatePasswordPayload) => {
         try {
-            const password = payload.password?.toString() || ''
+            const password = Array.isArray(payload.password)
+                ? payload.password[0]?.toString() || ''
+                : payload.password?.toString() || ''
             const res = await fetch('/auth/update-password', {
                 method: 'POST',
                 body: new URLSearchParams({ password }),

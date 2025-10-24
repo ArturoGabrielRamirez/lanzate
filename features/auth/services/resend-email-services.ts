@@ -1,5 +1,6 @@
-import { toast } from "sonner";
-import { EmailChangeStatus } from "../types";
+import { toast } from "sonner"
+
+import { EmailChangeStatus } from "@/features/auth/types"
 // 🔥 MANTENER TU FETCH ORIGINAL - no server action
 
 interface ResendParams {
@@ -55,8 +56,8 @@ class ResendEmailService {
         };
     }
 
-    private handleErrorResponse(error: any) {
-        const message = error.message || 'Error desconocido';
+    private handleErrorResponse(error: string) {
+        const message = error || 'Error desconocido';
 
         if (message.includes('rate limit') || message.includes('too many') || message.includes('Demasiadas solicitudes')) {
             toast.error("Demasiadas solicitudes. Espera 5 minutos antes de intentar nuevamente.");
@@ -84,7 +85,7 @@ class ResendEmailService {
         const data = await response.json();
 
         if (!response.ok || data.error) {
-            this.handleErrorResponse({ message: data.message });
+            this.handleErrorResponse(data.message);
             throw new Error(data.message || `HTTP error! status: ${response.status}`);
         }
 
@@ -98,7 +99,7 @@ class ResendEmailService {
         try {
             const payload = this.buildPayload(params);
             console.log('🔄 Resending email with payload:', payload);
-            
+
             // 🔥 MANTENER TU FETCH ORIGINAL
             const response = await fetch('/auth/resend', {
                 method: 'POST',
@@ -112,7 +113,7 @@ class ResendEmailService {
 
         } catch (error) {
             console.error('❌ Error in resend service:', error);
-            this.handleErrorResponse(error);
+            this.handleErrorResponse(error as unknown as string);
             throw error;
         }
     }

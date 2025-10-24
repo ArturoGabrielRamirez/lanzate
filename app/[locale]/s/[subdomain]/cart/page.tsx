@@ -1,9 +1,10 @@
+import { useTranslations } from "next-intl";
+
 import CartList from "@/features/cart/components/cart-list"
 import CartResume from "@/features/cart/components/cart-resume"
 import { CheckoutProvider } from "@/features/checkout/components/checkout-context";
 import { Title } from "@/features/layout/components"
-import PageContainer from "@/features/layout/components/page-container"
-import { useTranslations } from "next-intl";
+import { PageContainer } from "@/features/layout/components/page-container"
 
 function CartPage() {
     const t = useTranslations("cart");

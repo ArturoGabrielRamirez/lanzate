@@ -1,8 +1,9 @@
 import { ShoppingBasket } from "lucide-react"
-import { Title } from "@/features/layout/components"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { SaleInterface } from "@/features/sale/components"
 import { getTranslations } from "next-intl/server"
+
+import { getUserInfo } from "@/features/layout/actions/getUserInfo"
+import { Title } from "@/features/layout/components"
+import { SaleInterface } from "@/features/sale/components"
 import { getStoreBySubdomain } from "@/features/subdomain/actions/getStoreBySubdomain"
 
 type Props = {
@@ -13,7 +14,7 @@ async function SaleStorePage({ params }: Props) {
     const { slug, branch } = await params
     const t = await getTranslations("sale")
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)

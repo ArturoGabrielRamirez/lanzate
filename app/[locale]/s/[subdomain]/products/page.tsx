@@ -1,20 +1,21 @@
+import { SearchParams } from "nuqs"
+import { Suspense } from "react"
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import PageContainer from "@/features/layout/components/page-container"
+import { PageContainer } from "@/features/layout/components/page-container"
 import ProductCardLoader from "@/features/store-landing/components/product-card-loader"
 import ProductList from "@/features/store-landing/components/product-list"
 import SidebarOrderBySelect from "@/features/store-landing/components/sidebar-price-select"
 import { loadFilterParams } from "@/features/store-landing/utils/load-filter-params"
 import StoreBanner from "@/features/store-layout/components/store-banner"
 import TopCategoriesNavbar from "@/features/store-layout/components/top-categories-navbar"
-import { SearchParams } from "nuqs"
-import { Suspense } from "react"
 
 type Props = {
     params: Promise<{ subdomain: string }>
     searchParams: Promise<SearchParams>
 }
 
-const ProductsPage = async ({ params, searchParams }: Props) => {
+async function ProductsPage({ params, searchParams }: Props) {
 
     const { subdomain } = await params
     const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams)
