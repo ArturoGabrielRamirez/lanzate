@@ -1,43 +1,23 @@
 "use client"
 
-import CreateBranchButton from "@/features/branches/components/create-branch-button"
-import EditBranchButton from "@/features/branches/components/edit-branch-button"
-import DeleteBranchButton from "@/features/branches/components/delete-branch-button"
-import { DataTable } from "@/features/global/components/data-table"
 import { Branch } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal, Eye, Trash2, Crown, ArrowUpDown } from "lucide-react"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
-import { Button } from "@/features/shadcn/components/ui/button"
-import { Badge } from "@/features/shadcn/components/ui/badge"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
+
+import CreateBranchButton from "@/features/branches/components/create-branch-button"
+import DeleteBranchButton from "@/features/branches/components/delete-branch-button"
+import EditBranchButton from "@/features/branches/components/edit-branch-button"
+import { BranchTableProps } from "@/features/branches/types"
+import { DataTable } from "@/features/global/components/data-table"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 
-type EmployeePermissions = {
-    isAdmin: boolean
-    permissions?: {
-        can_create_orders: boolean
-        can_update_orders: boolean
-        can_create_products: boolean
-        can_update_products: boolean
-        can_manage_stock: boolean
-        can_process_refunds: boolean
-        can_view_reports: boolean
-        can_manage_employees: boolean
-        can_manage_store: boolean
-    }
-}
 
-type Props = {
-    branches: Branch[]
-    storeId: number
-    userId: number
-    slug: string
-    employeePermissions: EmployeePermissions
-}
-
-function BranchTable({ branches, storeId, userId, slug, employeePermissions }: Props) {
+function BranchTable({ branches, storeId, userId, slug, employeePermissions }: BranchTableProps) {
 
     const t = useTranslations("store.branch-table")
 

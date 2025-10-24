@@ -1,12 +1,14 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { prisma } from "@/utils/prisma"
-import { actionWrapper } from "@/utils/lib"
-import { updateBranch as updateBranchInDb } from "@/features/branches/data"
-import { insertLogEntry } from "@/features/layout/data"
 
-export async function editBranch(branchId: number, data: any, slug: string, userId: number) {
+import { updateBranchData } from "@/features/branches/data"
+import { EditBranchAction } from "@/features/branches/types"
+import { insertLogEntry } from "@/features/global/data/insertLogEntry"
+import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
+
+export async function editBranchAction({ branchId, data, slug, userId }: EditBranchAction) {
     return actionWrapper(async () => {
 
         const branch = await prisma.branch.findUnique({
@@ -17,7 +19,7 @@ export async function editBranch(branchId: number, data: any, slug: string, user
         if (!branch) throw new Error("Branch not found")
         if (branch.store.user_id !== userId) throw new Error("User does not have permission to edit this branch")
 
-        const { error, payload, message } = await updateBranchInDb(branchId, data)
+        const { error, payload, message } = await updateBranchData({ branchId, data })
 
         if (error) throw new Error(message)
 

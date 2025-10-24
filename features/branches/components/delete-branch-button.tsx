@@ -1,22 +1,22 @@
 "use client"
 
-import { redirect } from "next/navigation"
 import { Trash2 } from "lucide-react"
+import { redirect } from "next/navigation"
 import { useTranslations } from "next-intl"
+
+import { deleteBranchAction } from "@/features/branches/actions"
+import { DeleteBranchButtonProps } from "@/features/branches/types"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
 import { formatErrorResponse } from "@/utils/lib"
 
-import { ButtonWithPopup } from "@/features/layout/components"
-import { deleteBranch } from "@/features/branches/actions"
-import { DeleteBranchButtonProps } from "@/features/branches/types"
-
 function DeleteBranchButton({ branchId, slug, onComplete, userId }: DeleteBranchButtonProps) {
-    
+
     const t = useTranslations("store.delete-branch")
-    
+
     const handleDeleteBranch = async () => {
         try {
-            const { error, message, payload } = await deleteBranch(branchId, slug, userId)
-            if (error) throw new Error(message)
+            const { hasError, message, payload } = await deleteBranchAction({ branchId, slug, userId })
+            if (hasError) throw new Error(message)
             return {
                 error: false,
                 message: t("messages.success"),

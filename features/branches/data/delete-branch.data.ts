@@ -1,8 +1,9 @@
 "use server"
 
+import { DeleteBranchDataProps } from "@/features/branches/types"
 import { prisma } from "@/utils/prisma"
 
-export async function deleteBranch(branchId: number) {
+export async function deleteBranchData({ branchId }: DeleteBranchDataProps) {
 
     const branch = await prisma.branch.findUnique({
         where: {
@@ -23,7 +24,7 @@ export async function deleteBranch(branchId: number) {
     })
 
     return {
-        error: false,
+        hasError: false,
         message: "Branch deleted successfully",
         payload: deletedBranch
     }

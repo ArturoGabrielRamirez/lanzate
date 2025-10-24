@@ -1,17 +1,13 @@
-import { AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
-import { cn } from "@/lib/utils"
 import { useFormContext } from "react-hook-form"
 
-type Props = {
-    keys: string[]
-    completeKeys?: string[]
-    children: React.ReactNode
-}
+import { AccordionTriggerProps } from "@/features/branches/types"
+import { AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
+import { cn } from "@/lib/utils"
 
-const AccordionTriggerWithValidation = ({ keys = [], completeKeys, children }: Props) => {
+function AccordionTriggerWithValidation({ keys = [], completeKeys, children }: AccordionTriggerProps) {
     const { formState: { errors }, watch } = useFormContext()
 
-    const hasErrors = keys.some(key => (errors as any)[key])
+    const hasErrors = keys.some(key => (errors)[key])
 
     const keysToCheck = completeKeys && completeKeys.length > 0 ? completeKeys : keys
     const values = keysToCheck.map((k) => watch(k))
@@ -39,4 +35,4 @@ const AccordionTriggerWithValidation = ({ keys = [], completeKeys, children }: P
         </AccordionTrigger>
     )
 }
-export default AccordionTriggerWithValidation
+export { AccordionTriggerWithValidation }

@@ -1,2 +1,2 @@
-export { canEditBranch } from "./canEditBranch"
-export { canDeleteBranch } from "./canDeleteBranch" 
+export * from "@/features/branches/access/can-edit-branch"
+export * from "@/features/branches/access/can-delete-branch"

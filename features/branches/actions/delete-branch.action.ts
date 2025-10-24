@@ -1,16 +1,16 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { deleteBranch as deleteBranchFromDb } from "@/features/branches/data"
 import { revalidatePath } from "next/cache"
-import { insertLogEntry } from "@/features/layout/data"
 
+import { deleteBranchData } from "@/features/branches/data"
+import { DeleteBranchAction } from "@/features/branches/types"
+import { insertLogEntry } from "@/features/global/data/insertLogEntry"
+import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
-export async function deleteBranch(branchId: number, slug: string, userId: number) {
+export async function deleteBranchAction({ branchId, slug, userId }: DeleteBranchAction) {
     return actionWrapper(async () => {
 
-        
         const branch = await prisma.branch.findUnique({
             where: { id: branchId },
             include: { store: true }
@@ -23,8 +23,8 @@ export async function deleteBranch(branchId: number, slug: string, userId: numbe
             throw new Error("Cannot delete the main branch. You must designate another branch as main before deleting this one.")
         }
 
-        const { error, message, payload } = await deleteBranchFromDb(branchId)
-        if (error) throw new Error(message)
+        const { hasError, message, payload } = await deleteBranchData({ branchId })
+        if (hasError) throw new Error(message)
 
         revalidatePath(`/stores/${slug}`)
 
@@ -40,7 +40,7 @@ export async function deleteBranch(branchId: number, slug: string, userId: numbe
         if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
 
         return {
-            error: false,
+            hasError: false,
             message: "Branch deleted successfully",
             payload: payload
         }
