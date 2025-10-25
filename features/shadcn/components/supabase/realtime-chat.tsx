@@ -4,10 +4,10 @@ import { MessageType } from '@prisma/client'
 import { Send } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
+import { createNewOrderMessageAction } from '@/features/chat/actions/create-new-order-message.action'
+import { ChatMessageItem } from '@/features/shadcn/components/supabase/chat-message'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Input } from '@/features/shadcn/components/ui/input'
-import { createNewOrderMessage } from '@/features/chat/actions/createNewOrderMessage'
-import { ChatMessageItem } from '@/features/shadcn/components/supabase/chat-message'
 import { useChatScroll } from '@/hooks/use-chat-scroll'
 import { type ChatMessage, useRealtimeChat } from '@/hooks/use-realtime-chat'
 import { cn } from '@/lib/utils'
@@ -87,7 +87,7 @@ export function RealtimeChat({
 
       sendMessage(newMessage)
       //add a new action function to store the message in the database
-      createNewOrderMessage(Number(roomName), newMessage, messageType)
+      createNewOrderMessageAction({ orderId: Number(roomName), message: newMessage, messageType })
       setNewMessage('')
     },
     [newMessage, isConnected, sendMessage, disabled, roomName, messageType]

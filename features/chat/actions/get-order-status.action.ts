@@ -1,0 +1,17 @@
+"use server"
+
+import { getOrderStatusData } from "@/features/chat/data/get-order-status.data"
+import { OrderIdProp } from "@/features/chat/types"
+import { actionWrapper } from "@/utils/lib"
+
+export async function fetchOrderStatusAction({ orderId }: OrderIdProp) {
+    return actionWrapper(async () => {
+        const order = await getOrderStatusData({ orderId })
+
+        return {
+            error: false,
+            message: "Order status fetched successfully",
+            payload: order
+        }
+    })
+}

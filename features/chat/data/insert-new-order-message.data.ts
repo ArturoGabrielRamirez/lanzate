@@ -1,11 +1,10 @@
 "use server"
 
+import { InsertNewOrderMessageDataProps } from "@/features/chat/types"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { prisma } from "@/utils/prisma"
-import { MessageType } from "@prisma/client"
 
-
-export async function insertNewOrderMessage(orderId: number, message: string, messageType: MessageType) {
+export async function insertNewOrderMessageData({ orderId, message, messageType }: InsertNewOrderMessageDataProps) {
 
     const { payload: user, hasError: error, message: userMessage } = await getUserInfo()
 

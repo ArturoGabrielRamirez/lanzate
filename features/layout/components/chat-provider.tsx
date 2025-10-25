@@ -2,8 +2,8 @@
 
 import { createContext, useContext, useState } from "react"
 
-import { fetchOrderMessages } from "@/features/chat/actions/getOrderMessages"
-import { fetchOrderStatus } from "@/features/chat/actions/getOrderStatus"
+import { fetchOrderMessagesAction } from "@/features/chat/actions/get-order-messages.action"
+import { fetchOrderStatusAction } from "@/features/chat/actions/get-order-status.action"
 import { ChatProviderProps, ChatState } from "@/features/layout/types/types"
 import { ChatMessage } from "@/hooks/use-realtime-chat"
 
@@ -48,19 +48,19 @@ function ChatProvider({ children }: ChatProviderProps) {
     const [selectedRoom, setSelectedRoom] = useState<string | null>(null)
 
     const handleOpenChat = async (
-        roomId: string, 
-        username: string = "Store", 
+        roomId: string,
+        username: string = "Store",
         messageType: "STORE_TO_CUSTOMER" | "CUSTOMER_TO_STORE" = "STORE_TO_CUSTOMER"
     ) => {
         setIsOpen(true)
         setSelectedRoom(roomId)
-        
+
         // Si el chat no existe, agregarlo maximizado y cargar mensajes
         if (!rooms.includes(roomId)) {
             // Agregar el chat inmediatamente con estado de carga
             setRooms([...rooms, roomId])
-            setChatStates([...chatStates, { 
-                roomId, 
+            setChatStates([...chatStates, {
+                roomId,
                 isMaximized: true,
                 messages: [],
                 isLoading: true,
@@ -72,10 +72,10 @@ function ChatProvider({ children }: ChatProviderProps) {
             try {
                 // Cargar mensajes previos y estado de la orden en paralelo
                 const [messagesResult, orderStatusResult] = await Promise.all([
-                    fetchOrderMessages(Number(roomId)),
-                    fetchOrderStatus(Number(roomId))
+                    fetchOrderMessagesAction({ orderId: Number(roomId) }),
+                    fetchOrderStatusAction({ orderId: Number(roomId) })
                 ])
-                
+
                 if (messagesResult.error) {
                     console.error('Error loading messages:', messagesResult.error)
                 }
@@ -87,12 +87,12 @@ function ChatProvider({ children }: ChatProviderProps) {
                 const isCompleted = orderStatusResult.payload?.status === "COMPLETED"
 
                 // Actualizar el estado del chat con los mensajes cargados y el estado de la orden
-                setChatStates(prevStates => 
-                    prevStates.map(chat => 
-                        chat.roomId === roomId 
-                            ? { 
-                                ...chat, 
-                                messages: messagesResult.payload || [], 
+                setChatStates(prevStates =>
+                    prevStates.map(chat =>
+                        chat.roomId === roomId
+                            ? {
+                                ...chat,
+                                messages: messagesResult.payload || [],
                                 isLoading: false,
                                 isOrderCompleted: isCompleted
                             }
@@ -102,12 +102,12 @@ function ChatProvider({ children }: ChatProviderProps) {
             } catch (error) {
                 console.error('Error opening chat:', error)
                 // Si hay error, mantener el chat pero sin mensajes
-                setChatStates(prevStates => 
-                    prevStates.map(chat => 
-                        chat.roomId === roomId 
-                            ? { 
-                                ...chat, 
-                                messages: [], 
+                setChatStates(prevStates =>
+                    prevStates.map(chat =>
+                        chat.roomId === roomId
+                            ? {
+                                ...chat,
+                                messages: [],
                                 isLoading: false,
                                 isOrderCompleted: false
                             }
@@ -124,11 +124,11 @@ function ChatProvider({ children }: ChatProviderProps) {
     const handleCloseChat = (roomId: string) => {
         setRooms(rooms.filter((room) => room !== roomId))
         setChatStates(chatStates.filter((chat) => chat.roomId !== roomId))
-        
+
         if (selectedRoom === roomId) {
             setSelectedRoom(null)
         }
-        
+
         if (rooms.length === 1) {
             setIsOpen(false)
         }
@@ -139,16 +139,16 @@ function ChatProvider({ children }: ChatProviderProps) {
     }
 
     const handleMaximizeChat = (roomId: string) => {
-        setChatStates(chatStates.map((chat) => 
-            chat.roomId === roomId 
+        setChatStates(chatStates.map((chat) =>
+            chat.roomId === roomId
                 ? { ...chat, isMaximized: true }
                 : chat
         ))
     }
 
     const handleMinimizeChat = (roomId: string) => {
-        setChatStates(chatStates.map((chat) => 
-            chat.roomId === roomId 
+        setChatStates(chatStates.map((chat) =>
+            chat.roomId === roomId
                 ? { ...chat, isMaximized: false }
                 : chat
         ))
@@ -179,11 +179,11 @@ function ChatProvider({ children }: ChatProviderProps) {
     }
 
     return (
-        <ChatContext.Provider value={{ 
-            isOpen, 
-            handleOpenChat, 
-            handleCloseChat, 
-            handleToggleChat, 
+        <ChatContext.Provider value={{
+            isOpen,
+            handleOpenChat,
+            handleCloseChat,
+            handleToggleChat,
             handleMaximizeChat,
             handleMinimizeChat,
             isChatMaximized,
@@ -192,9 +192,9 @@ function ChatProvider({ children }: ChatProviderProps) {
             isOrderCompleted,
             getChatUsername,
             getChatMessageType,
-            rooms, 
+            rooms,
             chatStates,
-            selectedRoom 
+            selectedRoom
         }}>
             {children}
         </ChatContext.Provider>

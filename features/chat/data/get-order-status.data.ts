@@ -1,8 +1,9 @@
 "use server"
 
+import { OrderIdProp } from "@/features/chat/types"
 import { prisma } from "@/utils/prisma"
 
-export async function getOrderStatus(orderId: number) {
+export async function getOrderStatusData({ orderId }: OrderIdProp) {
     try {
         const order = await prisma.order.findUnique({
             where: { id: orderId },

@@ -1,9 +1,10 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
+import { OrderIdProp } from "@/features/chat/types"
 import { ChatMessage } from "@/hooks/use-realtime-chat"
+import { prisma } from "@/utils/prisma"
 
-export async function getOrderMessages(orderId: number): Promise<ChatMessage[]> {
+export async function getOrderMessagesData({ orderId }: OrderIdProp): Promise<ChatMessage[]> {
     try {
         const messages = await prisma.orderMessage.findMany({
             where: {
