@@ -16,8 +16,8 @@ export async function deleteEmployeeAction(employeeId: number, slug: string, use
         if (!canDelete) throw new Error("User does not have permission to delete this employee")
 
         // Delete employee from database
-        const { error, message, payload } = await deleteEmployeeFromDb(employeeId)
-        if (error) throw new Error(message)
+        const { hasError, message, payload } = await deleteEmployeeFromDb(employeeId)
+        if (hasError) throw new Error(message)
 
         // Revalidate path
         revalidatePath(`/stores/${slug}`)

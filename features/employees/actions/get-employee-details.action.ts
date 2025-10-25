@@ -9,9 +9,9 @@ export async function getEmployeeDetailsAction(id: string) {
 
         if (isNaN(parsedId)) throw new Error("Invalid employee id")
 
-        const { payload: employee, error, message } = await selectEmployeeByIdData(parsedId)
+        const { payload: employee, hasError, message } = await selectEmployeeByIdData(parsedId)
 
-        if (error) throw new Error(message)
+        if (hasError) throw new Error(message)
 
         return {
             payload: employee,

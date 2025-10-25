@@ -32,6 +32,7 @@ export async function selectEmployeeByIdData(id: number) {
 
     return {
         payload: employee,
-        hasError: false
+        hasError: false,
+        message: "Employee details fetched successfully"
     }
 }

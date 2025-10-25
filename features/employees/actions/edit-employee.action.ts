@@ -35,9 +35,9 @@ export async function editEmployeeAction(employeeId: number, data: EditEmployeeP
         if (!canEdit) throw new Error("User does not have permission to edit this employee")
 
         // Update employee in database
-        const { error, payload, message } = await updateEmployeeInDb(employeeId, data)
+        const { hasError, payload, message } = await updateEmployeeInDb(employeeId, data)
 
-        if (error) throw new Error(message)
+        if (hasError) throw new Error(message)
 
         revalidatePath(`/stores/${slug}`)
 

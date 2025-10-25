@@ -7,7 +7,7 @@ import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 export async function createEmployeeAction(userId: number, storeId: number, role: string = "EMPLOYEE") {
 
     return actionWrapper(async () => {
-        const { payload: employee, error: employeeError, message: employeeMessage } = await insertEmployeeData(userId, storeId, role)
+        const { payload: employee, hasError: employeeError, message: employeeMessage } = await insertEmployeeData(userId, storeId, role)
         if (employeeError || !employee) throw new Error(employeeMessage)
 
         // Create action log
