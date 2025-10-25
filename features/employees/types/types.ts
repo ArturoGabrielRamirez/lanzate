@@ -1,4 +1,4 @@
-import type { EmployeeRole } from "@prisma/client"
+import type { EmployeeRole, Store, User } from "@prisma/client"
 import type { AnyObjectSchema } from "yup"
 
 // Tipos para el botón de crear empleado
@@ -58,7 +58,7 @@ export type Employee = {
   notes?: string | null
   created_at: string
   updated_at: string
-  user?: any // Puede ser extendido con los datos del usuario
+  user?: User // Puede ser extendido con los datos del usuario
 }
 
 export type EmployeesTableProps = {
@@ -110,8 +110,8 @@ export type Contract = {
   created_at: string | Date
   updated_at: string | Date
   created_by: number
-  store?: any
-  created_by_user?: any
+  store?: Store
+  created_by_user?: User
   assignments?: ContractAssignment[]
   responses?: ContractResponse[]
 }
@@ -126,7 +126,7 @@ export type ContractAssignment = {
   assigned_by: number
   contract?: Contract
   employee?: Employee
-  assigned_by_user?: any
+  assigned_by_user?: User
   responses?: ContractResponse[]
 }
 

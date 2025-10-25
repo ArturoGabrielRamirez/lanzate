@@ -68,7 +68,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
             // Validar que se haya subido un archivo
             if (files.length === 0) {
                 return {
-                    error: true,
+                    hasError: true,
                     message: "Debes subir un archivo PDF",
                     payload: null
                 }
@@ -84,7 +84,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
             // Si hay error, retornarlo
             if (result.hasError) {
                 return {
-                    error: true,
+                    hasError: true,
                     message: result.message,
                     payload: null
                 }
@@ -95,14 +95,14 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
             await loadContracts()
 
             return {
-                error: false,
+                hasError: false,
                 message: "Contrato creado exitosamente",
                 payload: result.payload
             }
         } catch (error) {
             console.error("Error creating contract:", error)
             return {
-                error: true,
+                hasError: true,
                 message: error instanceof Error ? error.message : "Error creating contract",
                 payload: null
             }
@@ -171,7 +171,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                     loadingMessage="Creando contrato..."
                     onSuccess={handleSuccess}
                     disabled={false}
-                    resolver={yupResolverFlexible(contractCreateSchema)}
+                    resolver={yupResolverFlexible<FormData>(contractCreateSchema as never)}
                 >
                     <Accordion type="single" collapsible defaultValue="item-1">
                         <AccordionItem value="item-1">
@@ -203,7 +203,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                                                 <CardContent className="p-0">
                                                     <div className="flex items-center justify-between">
                                                         <div className="text-sm text-muted-foreground">
-                                                            Creado: {formatDate(contract.created_at)}
+                                                            Creado: {formatDate(contract.created_at as string)}
                                                         </div>
                                                         <div className="flex gap-2">
                                                             <Button
@@ -313,7 +313,6 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                                             name="comments"
                                             label="Comentarios adicionales"
                                             placeholder="Agrega cualquier comentario o nota adicional sobre el contrato"
-                                            rows={4}
                                         />
                                     </div>
                                 )}

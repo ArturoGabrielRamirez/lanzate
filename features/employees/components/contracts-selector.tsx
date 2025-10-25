@@ -138,7 +138,7 @@ function ContractsSelector({ storeId, selectedContractId, onContractSelect, empl
                     <CardContent className="p-0">
                         <div className="flex items-center justify-between">
                             <div className="text-xs text-muted-foreground">
-                                Creado: {formatDate(contract.created_at)}
+                                Creado: {formatDate(contract.created_at as string)}
                             </div>
                             <div className="flex gap-1">
                                 <Button
