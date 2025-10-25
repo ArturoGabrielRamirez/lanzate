@@ -1,7 +1,8 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState } from "react"
-import { CartContextType, CartItemType } from "@/features/cart/types"
+
+import { CartContextType, CartItemType, ProviderProps } from "@/features/cart/types"
 
 const CartContext = createContext<CartContextType>({
     cart: [],
@@ -12,13 +13,9 @@ const CartContext = createContext<CartContextType>({
     quantity: 0,
 })
 
-type Props = {
-    children: React.ReactNode
-}
-
 export const useCart = () => useContext(CartContext)
 
-function CartProvider({ children }: Props) {
+function CartProvider({ children }: ProviderProps) {
 
     const [cart, setCart] = useState<CartItemType[]>([])
     const [total, setTotal] = useState(0)
@@ -67,9 +64,9 @@ function CartProvider({ children }: Props) {
     }
 
     const removeFromCart = (productId: string) => {
-        let newCart = cart.filter(item => item.id !== productId)
-        let newTotal = total - (cart.find(item => item.id === productId)?.price || 0) * (cart.find(item => item.id === productId)?.quantity || 0)
-        let newQuantity = quantity - (cart.find(item => item.id === productId)?.quantity || 0)
+        const newCart = cart.filter(item => item.id !== productId)
+        const newTotal = total - (cart.find(item => item.id === productId)?.price || 0) * (cart.find(item => item.id === productId)?.quantity || 0)
+        const newQuantity = quantity - (cart.find(item => item.id === productId)?.quantity || 0)
         setCart(newCart)
         setTotal(newTotal)
         setQuantity(newQuantity)
