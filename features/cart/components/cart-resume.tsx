@@ -1,10 +1,11 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { useCart } from "@/features/cart/components"
-import { useTranslations } from "next-intl"
 import { StoreOperationalSettings } from "@prisma/client"
+import { useTranslations } from "next-intl"
+
+import { useCart } from "@/features/cart/components"
 import { useCheckout } from "@/features/checkout/components/checkout-context"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 interface CartResumeProps {
     operationalSettings?: StoreOperationalSettings | null
@@ -17,8 +18,8 @@ function CartResume({ operationalSettings }: CartResumeProps) {
     const { shippingMethod } = useCheckout()
 
     // Calculate delivery cost
-    const deliveryCost = operationalSettings?.offers_delivery && shippingMethod === "DELIVERY" 
-        ? (operationalSettings.delivery_price || 0) 
+    const deliveryCost = operationalSettings?.offers_delivery && shippingMethod === "DELIVERY"
+        ? (operationalSettings.delivery_price || 0)
         : 0
 
     // Calculate final total including delivery
