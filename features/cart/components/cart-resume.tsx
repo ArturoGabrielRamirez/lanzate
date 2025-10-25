@@ -1,15 +1,12 @@
 "use client"
 
-import { StoreOperationalSettings } from "@prisma/client"
 import { useTranslations } from "next-intl"
 
 import { useCart } from "@/features/cart/components"
+import { CartResumeProps } from "@/features/cart/types"
 import { useCheckout } from "@/features/checkout/components/checkout-context"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-interface CartResumeProps {
-    operationalSettings?: StoreOperationalSettings | null
-}
 
 function CartResume({ operationalSettings }: CartResumeProps) {
 

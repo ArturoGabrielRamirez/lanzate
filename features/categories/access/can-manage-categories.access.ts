@@ -1,8 +1,9 @@
 "use server"
 
+import { CanManageCategoriesAccessProps } from "@/features/categories/types"
 import { prisma } from "@/utils/prisma"
 
-export async function canManageCategories(userId: number, storeId: number): Promise<boolean> {
+export async function canManageCategoriesAccess({ userId, storeId }: CanManageCategoriesAccessProps): Promise<boolean> {
     try {
         const store = await prisma.store.findFirst({
             where: {
