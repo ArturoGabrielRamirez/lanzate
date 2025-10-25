@@ -1,17 +1,19 @@
 "use client"
 
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
-import { employeeUpdateSchema } from "../schemas/employee-schema"
-import { editEmployee } from "../actions/editEmployee"
 import { Pencil } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
+
+import { editEmployeeAction } from "@/features/employees/actions/edit-employee.action"
+import { employeeUpdateSchema } from "@/features/employees/schemas/employee-schema"
 import { EditEmployeeButtonProps } from "@/features/employees/types"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import { InputField } from "@/features/global/components/form/input-field"
 import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+import { Input } from "@/features/shadcn/components/ui/input"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import { Textarea } from "@/features/shadcn/components/ui/textarea"
-import { Input } from "@/features/shadcn/components/ui/input"
-import { useState } from "react"
-import { useTranslations } from "next-intl"
 
 function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployeeButtonProps) {
     
@@ -41,7 +43,7 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
             salary: salary ? parseFloat(salary) : undefined,
         }
 
-        return editEmployee(employee.id, data, slug, userId)
+        return editEmployeeAction(employee.id, data, slug, userId)
     }
 
     const handlePermissionChange = (permission: keyof typeof permissions, checked: boolean) => {
@@ -118,12 +120,14 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                     label={t("position")} 
                     type="text" 
                     defaultValue={employee.position || ""} 
+                    placeholder={t("position-placeholder")}
                 />
                 <InputField 
                     name="department" 
                     label={t("department")} 
                     type="text" 
                     defaultValue={employee.department || ""} 
+                    placeholder={t("department-placeholder")}
                 />
                 
                 {/* Salary - now controlled */}
@@ -254,4 +258,4 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
     )
 }
 
-export default EditEmployeeButton 
+export { EditEmployeeButton }

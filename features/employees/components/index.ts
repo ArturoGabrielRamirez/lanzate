@@ -1,11 +1,6 @@
-import CreateEmployeeButton from "./create-employee-button";
-import DeleteEmployeeButton from "./delete-employee-button";
-import EditEmployeeButton from "./edit-employee-button";
-import EmployeesTable from "./employees-table";
-
-export {
-    CreateEmployeeButton,
-    DeleteEmployeeButton,
-    EditEmployeeButton,
-    EmployeesTable
-} 
+export * from "@/features/employees/components/contracts-selector"
+export * from "@/features/employees/components/create-contract-button"
+export * from "@/features/employees/components/create-employee-button"
+export * from "@/features/employees/components/delete-employee-button"
+export * from "@/features/employees/components/edit-employee-button"
+export * from "@/features/employees/components/employees-table"

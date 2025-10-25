@@ -1,7 +1,7 @@
 "use server"
 
 import { formatSuccessResponse } from "@/features/global/utils"
-import { insertLogEntry } from "@/features/global/data/insertLogEntry"
+import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
 import { ChangeOrderStatusData } from "@/features/orders/types"
 import { prisma } from "@/utils/prisma"
 

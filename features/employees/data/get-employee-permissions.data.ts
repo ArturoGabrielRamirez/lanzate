@@ -1,27 +1,7 @@
 "use server"
 
+import { GetEmployeePermissionsReturn } from "@/features/employees/types/types"
 import { prisma } from "@/utils/prisma"
-
-type EmployeePermissions = {
-    isAdmin: boolean
-    permissions?: {
-        can_create_orders: boolean
-        can_update_orders: boolean
-        can_create_products: boolean
-        can_update_products: boolean
-        can_manage_stock: boolean
-        can_process_refunds: boolean
-        can_view_reports: boolean
-        can_manage_employees: boolean
-        can_manage_store: boolean
-    }
-}
-
-type GetEmployeePermissionsReturn = {
-    message: string
-    payload: EmployeePermissions | null
-    error: boolean
-}
 
 export async function getEmployeePermissionsData(userId: number, slug: string): Promise<GetEmployeePermissionsReturn> {
     const store = await prisma.store.findUnique({

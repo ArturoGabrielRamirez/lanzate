@@ -1,7 +1,7 @@
 import { CustomerSearchData } from "@/features/global-search/types"
 import { createServerSideClient } from "@/utils/supabase/server"
 
-export async function searchCustomersData(searchTerm: string, storeIds: number[], limit: number): Promise<CustomerSearchData[]> {
+export async function searchCustomersData(searchTerm: string, storeIds: number[], limit: number) {
     const supabase = createServerSideClient()
 
     const { data: customers, error: customersError } = await supabase

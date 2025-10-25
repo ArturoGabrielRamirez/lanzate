@@ -1,0 +1,1 @@
+export * from "@/features/global/data/insert-log-entry.data"

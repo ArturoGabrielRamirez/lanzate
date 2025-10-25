@@ -507,6 +507,9 @@
                 "title": "Community"
             },
             "copyright": "© Copyright 2025. All Rights Reserved."
+        },
+        "announcement": {
+            "last-update": "Last update"
         }
     },
     "sale": {

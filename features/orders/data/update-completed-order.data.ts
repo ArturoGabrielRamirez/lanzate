@@ -2,7 +2,7 @@
 
 import { formatSuccessResponse } from "@/features/global/utils"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
-import { insertLogEntry } from "@/features/global/data/insertLogEntry"
+import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
 import { UpdateCompletedOrderProps } from "@/features/orders/types"
 import { prisma } from "@/utils/prisma"
 

@@ -1,21 +1,14 @@
 "use client"
 
+import { Eye, Download, Check, Loader } from "lucide-react"
 import { useState, useEffect } from "react"
-import { getContracts } from "@/features/employees/data"
-import { Contract } from "@/features/employees/types"
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+
+import { Contract, ContractsSelectorProps } from "@/features/employees/types/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
-import { Eye, Download, Check, Loader } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-type ContractsSelectorProps = {
-    storeId: number
-    selectedContractId?: number | null
-    onContractSelect: (contract: Contract | null) => void
-    employeeId?: number // Para filtrar contratos ya asignados a este empleado
-}
-
-export default function ContractsSelector({ storeId, selectedContractId, onContractSelect, employeeId }: ContractsSelectorProps) {
+function ContractsSelector({ storeId, selectedContractId, onContractSelect, employeeId }: ContractsSelectorProps) {
     const [contracts, setContracts] = useState<Contract[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -24,11 +17,15 @@ export default function ContractsSelector({ storeId, selectedContractId, onContr
         const loadContracts = async () => {
             setLoading(true)
             setError(null)
-            
+
             try {
-                const result = await getContracts(storeId)
-                
-                if (result.error) {
+                const result = {
+                    message: "Contracts fetched successfully",
+                    payload: contracts,
+                    hasError: false
+                }
+
+                if (result.hasError) {
                     setError(result.message || "Error al cargar contratos")
                     return
                 }
@@ -68,15 +65,15 @@ export default function ContractsSelector({ storeId, selectedContractId, onContr
     const availableContracts = contracts.filter(contract => {
         // Solo contratos pendientes
         if (contract.status !== 'PENDING') return false
-        
+
         // Si no hay employeeId, mostrar todos los contratos pendientes
         if (!employeeId) return true
-        
+
         // Filtrar contratos que ya están asignados a este empleado
         const isAlreadyAssigned = contract.assignments?.some(
             assignment => assignment.employee_id === employeeId
         )
-        
+
         return !isAlreadyAssigned
     })
 
@@ -117,13 +114,12 @@ export default function ContractsSelector({ storeId, selectedContractId, onContr
         <div className="space-y-3">
             <h4 className="text-sm font-medium">Contratos Pendientes Disponibles</h4>
             {availableContracts.map((contract) => (
-                <Card 
-                    key={contract.id} 
-                    className={`p-3 cursor-pointer transition-colors ${
-                        selectedContractId === contract.id 
-                            ? 'border-primary bg-primary/5' 
-                            : 'hover:bg-gray-50'
-                    }`}
+                <Card
+                    key={contract.id}
+                    className={`p-3 cursor-pointer transition-colors ${selectedContractId === contract.id
+                        ? 'border-primary bg-primary/5'
+                        : 'hover:bg-gray-50'
+                        }`}
                     onClick={() => onContractSelect(selectedContractId === contract.id ? null : contract)}
                 >
                     <CardHeader className="p-0 pb-2">
@@ -142,7 +138,7 @@ export default function ContractsSelector({ storeId, selectedContractId, onContr
                     <CardContent className="p-0">
                         <div className="flex items-center justify-between">
                             <div className="text-xs text-muted-foreground">
-                                Creado: {formatDate(contract.created_at)}
+                                Creado: {formatDate(contract.created_at as string)}
                             </div>
                             <div className="flex gap-1">
                                 <Button
@@ -182,4 +178,6 @@ export default function ContractsSelector({ storeId, selectedContractId, onContr
             ))}
         </div>
     )
-} 
+}
+
+export { ContractsSelector }

@@ -15,8 +15,8 @@ import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 function FloatingDock() {
 
     const pathname = usePathname() 
-    const pathnameParts = pathname.split("/") // ["", "stores", "FXx550w2", "account"]
-    const slug = pathnameParts[2] // "FXx550w2"
+    const pathnameParts = pathname.split("/")
+    const slug = pathnameParts[2] 
     const [showSearch, setShowSearch] = useState(false)
     const showDock = useMedia("(max-width: 1180px)")
     const isStorePage = pathname.includes(`/stores/`)

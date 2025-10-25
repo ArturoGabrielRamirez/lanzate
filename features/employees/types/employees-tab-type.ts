@@ -1,4 +1,1 @@
-export type Props = {
-    slug: string
-    userId: number
-} 
+export * from '@/features/employees/types/types'

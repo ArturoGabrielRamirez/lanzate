@@ -10,6 +10,7 @@ import { RotatingText } from "@/features/shadcn/components/shadcn-io/rotating-te
 async function HeroSection() {
 
     const t = await getTranslations("home")
+    
     const words = [t("slogan.word-1"), t("slogan.word-2"), t("slogan.word-3")]
 
     return (
@@ -17,7 +18,7 @@ async function HeroSection() {
             <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-[1fr_auto] md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:items-end md:pb-12 lg:pb-20">
                 <div className="flex flex-col items-center pt-4 md:items-start md:pt-0 z-10">
                     <Announcement className="border-primary mb-12">
-                        <AnnouncementTag className="bg-primary/20">Last update</AnnouncementTag>
+                        <AnnouncementTag className="bg-primary/20">{t('announcement.last-update')}Last update</AnnouncementTag>
                         <AnnouncementTitle>
                             New cash register added
                             <ArrowUpRightIcon className="shrink-0 text-muted-foreground" size={16} />
