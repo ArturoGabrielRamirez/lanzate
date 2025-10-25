@@ -9,7 +9,7 @@ import { checkStorageBucketData } from "@/features/employees/data/check-storage-
 import { getContractsData } from "@/features/employees/data/get-contracts.data"
 import { insertContractData } from "@/features/employees/data/insert-contract.data"
 import { contractCreateSchema } from "@/features/employees/schemas/employee-schema"
-import { Contract } from "@/features/employees/types"
+import { Contract, CreateContractButtonProps } from "@/features/employees/types"
 import { yupResolverFlexible } from "@/features/employees/types/yup-resolver-flexible"
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
@@ -20,11 +20,6 @@ import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
 import { FileUpload, FileUploadDropzone, FileUploadList, FileUploadTrigger, FileUploadItem, FileUploadItemPreview, FileUploadItemMetadata, FileUploadItemDelete } from "@/features/shadcn/components/ui/file-upload"
-
-type CreateContractButtonProps = {
-    storeId: number
-    userId: number
-}
 
 function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
     const [files, setFiles] = useState<File[]>([])

@@ -1,26 +1,7 @@
 "use server"
 
-import { EmployeeRole } from "@prisma/client"
-
+import { EditEmployeePayload } from "@/features/employees/types/types"
 import { prisma } from "@/utils/prisma"
-
-type EditEmployeePayload = {
-    role: EmployeeRole
-    position: string
-    department: string
-    salary: string
-    notes: string
-    can_create_orders: boolean
-    can_update_orders: boolean
-    can_create_products: boolean
-    can_update_products: boolean
-    can_manage_stock: boolean
-    can_process_refunds: boolean
-    can_view_reports: boolean
-    can_manage_employees: boolean
-    can_manage_store: boolean
-    is_active: boolean
-}
 
 
 export async function updateEmployeeData(employeeId: number, data: EditEmployeePayload) {

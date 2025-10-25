@@ -3,17 +3,10 @@
 import { Eye, Download, Check, Loader } from "lucide-react"
 import { useState, useEffect } from "react"
 
-import { Contract } from "@/features/employees/types"
+import { Contract, ContractsSelectorProps } from "@/features/employees/types/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-
-type ContractsSelectorProps = {
-    storeId: number
-    selectedContractId?: number | null
-    onContractSelect: (contract: Contract | null) => void
-    employeeId?: number // Para filtrar contratos ya asignados a este empleado
-}
 
 function ContractsSelector({ storeId, selectedContractId, onContractSelect, employeeId }: ContractsSelectorProps) {
     const [contracts, setContracts] = useState<Contract[]>([])

@@ -1,30 +1,12 @@
 "use server"
 
-import { EmployeeRole } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 import { canEditEmployee } from "@/features/employees/access/can-edit-employee.access"
 import { updateEmployeeData as updateEmployeeInDb } from "@/features/employees/data/update-employee.data"
+import { EditEmployeePayload } from "@/features/employees/types/types"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
 import { actionWrapper } from "@/utils/lib"
-
-type EditEmployeePayload = {
-    role: EmployeeRole
-    position: string
-    department: string
-    salary: string
-    notes: string
-    can_create_orders: boolean
-    can_update_orders: boolean
-    can_create_products: boolean
-    can_update_products: boolean
-    can_manage_stock: boolean
-    can_process_refunds: boolean
-    can_view_reports: boolean
-    can_manage_employees: boolean
-    can_manage_store: boolean
-    is_active: boolean
-}
 
 export async function editEmployeeAction(employeeId: number, data: EditEmployeePayload, slug: string, userId: number) {
     return actionWrapper(async () => {
