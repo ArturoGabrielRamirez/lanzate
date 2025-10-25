@@ -1,12 +1,13 @@
 "use server"
 
+import { OrderStatus, PaymentMethod } from "@prisma/client"
+
 import { CartItemType } from "@/features/cart/types"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
 import { getStoreBySubdomainAction } from "@/features/stores/actions/get-store-by-subdomain.action"
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
-import { OrderStatus, PaymentMethod } from "@prisma/client"
 
 
 type insertOrderProps = {
@@ -51,11 +52,11 @@ export async function insertOrder({
 }: insertOrderProps) {
     return actionWrapper(async () => {
 
-        const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+        const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
         if (userError || !user) throw new Error(userMessage)
 
-        const { payload: store, error: storeError, message: storeMessage } = await getStoreBySubdomainAction(subdomain)
+        const { payload: store, hasError: storeError, message: storeMessage } = await getStoreBySubdomainAction(subdomain)
 
         if (storeError || !store) throw new Error(storeMessage)
 
