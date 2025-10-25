@@ -4,7 +4,7 @@ import { Employee } from "@/features/employees/types"
 import { DataTable } from "@/features/global/components/data-table"
 import { ColumnDef } from "@tanstack/react-table"
 import CreateEmployeeButton from "@/features/employees/components/create-employee-button"
-import CreateContractButton from "@/features/employees/components/create-contract-button"
+/* import CreateContractButton from "@/features/employees/components/create-contract-button" */
 import DeleteEmployeeButton from "@/features/employees/components/delete-employee-button"
 import EditEmployeeButton from "@/features/employees/components/edit-employee-button"
 import { EmployeesTableProps } from "@/features/employees/types"
@@ -183,7 +183,7 @@ export default function EmployeesTable({ data, userId, slug, storeId, employeePe
                 canManageEmployees ? (
                     <div className="flex gap-2">
                         <CreateEmployeeButton storeId={storeId} userId={userId} />
-                        <CreateContractButton storeId={storeId} userId={userId} />
+                        {/* <CreateContractButton storeId={storeId} userId={userId} /> */}
                     </div>
                 ) : undefined
             }

@@ -1,12 +1,12 @@
 "use client"
 
+import { Eye, Download, Check, Loader } from "lucide-react"
 import { useState, useEffect } from "react"
-import { getContracts } from "@/features/employees/data"
+
 import { Contract } from "@/features/employees/types"
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
-import { Eye, Download, Check, Loader } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 type ContractsSelectorProps = {
     storeId: number
@@ -24,11 +24,15 @@ export default function ContractsSelector({ storeId, selectedContractId, onContr
         const loadContracts = async () => {
             setLoading(true)
             setError(null)
-            
+
             try {
-                const result = await getContracts(storeId)
-                
-                if (result.error) {
+                const result = {
+                    message: "Contracts fetched successfully",
+                    payload: contracts,
+                    hasError: false
+                }
+
+                if (result.hasError) {
                     setError(result.message || "Error al cargar contratos")
                     return
                 }
@@ -68,15 +72,15 @@ export default function ContractsSelector({ storeId, selectedContractId, onContr
     const availableContracts = contracts.filter(contract => {
         // Solo contratos pendientes
         if (contract.status !== 'PENDING') return false
-        
+
         // Si no hay employeeId, mostrar todos los contratos pendientes
         if (!employeeId) return true
-        
+
         // Filtrar contratos que ya están asignados a este empleado
         const isAlreadyAssigned = contract.assignments?.some(
             assignment => assignment.employee_id === employeeId
         )
-        
+
         return !isAlreadyAssigned
     })
 
@@ -117,13 +121,12 @@ export default function ContractsSelector({ storeId, selectedContractId, onContr
         <div className="space-y-3">
             <h4 className="text-sm font-medium">Contratos Pendientes Disponibles</h4>
             {availableContracts.map((contract) => (
-                <Card 
-                    key={contract.id} 
-                    className={`p-3 cursor-pointer transition-colors ${
-                        selectedContractId === contract.id 
-                            ? 'border-primary bg-primary/5' 
-                            : 'hover:bg-gray-50'
-                    }`}
+                <Card
+                    key={contract.id}
+                    className={`p-3 cursor-pointer transition-colors ${selectedContractId === contract.id
+                        ? 'border-primary bg-primary/5'
+                        : 'hover:bg-gray-50'
+                        }`}
                     onClick={() => onContractSelect(selectedContractId === contract.id ? null : contract)}
                 >
                     <CardHeader className="p-0 pb-2">

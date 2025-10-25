@@ -1,21 +1,26 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { FileText, X, Download, Eye, FilePlus } from "lucide-react"
-import { Form, InputField, TextareaField } from "@/features/layout/components"
-import { FileUpload, FileUploadDropzone, FileUploadList, FileUploadTrigger, FileUploadItem, FileUploadItemPreview, FileUploadItemMetadata, FileUploadItemDelete } from "@/features/shadcn/components/ui/file-upload"
-import { Button } from "@/features/shadcn/components/ui/button"
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Badge } from "@/features/shadcn/components/ui/badge"
-import { insertContract, getContracts, checkStorageBucket } from "@/features/employees/data"
-import { Contract } from "@/features/employees/types"
+import { useState, useEffect } from "react"
 import { toast } from "sonner"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
+
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { yupResolver } from "@hookform/resolvers/yup"
+import { checkStorageBucketData } from "@/features/employees/data/check-storage-bucket.data"
+import { getContractsData } from "@/features/employees/data/get-contracts.data"
 import { contractCreateSchema } from "@/features/employees/schemas/employee-schema"
-import { yupResolverFlexible } from "../types/yup-resolver-flexible"
+import { Contract } from "@/features/employees/types"
+import { yupResolverFlexible } from "@/features/employees/types/yup-resolver-flexible"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
+import { FileUpload, FileUploadDropzone, FileUploadList, FileUploadTrigger, FileUploadItem, FileUploadItemPreview, FileUploadItemMetadata, FileUploadItemDelete } from "@/features/shadcn/components/ui/file-upload"
+import { insertContractData } from "../data/insert-contract.data"
+import { Form } from "@/features/global/components/form/form"
+import { InputField } from "@/features/global/components/form/input-field"
+import { TextareaField } from "@/features/global/components/form/textarea-field"
+
 type CreateContractButtonProps = {
     storeId: number
     userId: number
@@ -38,8 +43,8 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
 
     const checkBucket = async () => {
         try {
-            const result = await checkStorageBucket()
-            if (result.error) {
+            const result = await checkStorageBucketData()
+            if (result.hasError) {
                 toast.error(result.message)
             }
             setBucketChecked(true)
@@ -52,8 +57,8 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
     const loadContracts = async () => {
         setLoading(true)
         try {
-            const result = await getContracts(storeId)
-            if (!result.error && result.payload) {
+            const result = await getContractsData(storeId)
+            if (!result.hasError && result.payload) {
                 setContracts(result.payload)
             }
         } catch (error) {
@@ -63,7 +68,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
         }
     }
 
-    const handleCreateContract = async (data: any) => {
+    const handleCreateContract = async (data: FormData) => {
         try {
             // Validar que se haya subido un archivo
             if (files.length === 0) {
@@ -79,10 +84,10 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                 file: files
             }
 
-            const result = await insertContract(payload, storeId, userId)
+            const result = await insertContractData(payload, storeId, userId)
 
             // Si hay error, retornarlo
-            if (result.error) {
+            if (result.hasError) {
                 return {
                     error: true,
                     message: result.message,
@@ -259,6 +264,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                                             name="title"
                                             label="Título del contrato"
                                             type="text"
+                                            placeholder="Título del contrato"
                                         />
 
                                         {/* PDF Upload */}
