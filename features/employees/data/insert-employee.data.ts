@@ -1,6 +1,7 @@
 "use server"
 
-/* import { PrismaClient } from '@prisma/client' */
+import { EmployeeRole } from "@prisma/client"
+
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
 
@@ -27,7 +28,7 @@ export async function insertEmployee(userId: number, storeId: number, role: stri
             data: {
                 user_id: userId,
                 store_id: storeId,
-                role: role as any, // Cast to EmployeeRole enum
+                role: role as EmployeeRole, // Cast to EmployeeRole enum
                 can_create_orders: false,
                 can_update_orders: false,
                 can_create_products: false,

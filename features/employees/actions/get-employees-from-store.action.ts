@@ -1,5 +1,5 @@
 "use server"
-import { selectEmployeesFromStore } from "@/features/employees/data/selectEmployeesFromStore"
+import { selectEmployeesFromStore } from "@/features/employees/data/select-employee-from-store.data"
 import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
 import { actionWrapper } from "@/utils/lib"
 

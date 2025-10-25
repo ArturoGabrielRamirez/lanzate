@@ -1,6 +1,6 @@
 "use server"
 
-import { selectUsersByFilter } from "@/features/employees/data/selectUsersByFilter"
+import { selectUsersByFilter } from "@/features/employees/data/select-users-by-filter.data"
 import { actionWrapper } from "@/utils/lib"
 
 export async function getEmployeesByFilterAction(filter: string, storeId: number, userId: number) {

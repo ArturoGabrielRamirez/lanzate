@@ -1,6 +1,6 @@
 "use server"
 
-import { insertEmployee } from "@/features/employees/data/insertEmployee"
+import { insertEmployee } from "@/features/employees/data/insert-employee.data"
 import { insertLogEntry } from "@/features/global/data"
 import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 

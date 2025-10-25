@@ -4,7 +4,7 @@ import { EmployeeRole } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 import { canEditEmployee } from "@/features/employees/access/can-edit-employee.access"
-import { updateEmployee as updateEmployeeInDb } from "@/features/employees/data/updateEmployee"
+import { updateEmployee as updateEmployeeInDb } from "@/features/employees/data/update-employee.data"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
 import { actionWrapper } from "@/utils/lib"
 

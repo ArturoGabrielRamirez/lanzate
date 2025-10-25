@@ -1,6 +1,6 @@
 "use server"
 
-import { selectEmployeeById } from "@/features/employees/data/selectEmployeeById"
+import { selectEmployeeById } from "@/features/employees/data/select-employee-by-id.data"
 import { actionWrapper } from "@/utils/lib"
 
 export async function getEmployeeDetailsAction(id: string) {
