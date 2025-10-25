@@ -1,13 +1,14 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
+import { GetStoreIdBySubdomainAction } from "@/features/categories/types"
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
-export async function getStoreIdBySlug(slug: string) {
+export async function getStoreIdBySubdomainData({ subdomain }: GetStoreIdBySubdomainAction) {
     return actionWrapper(async () => {
         const store = await prisma.store.findUnique({
             where: {
-                slug: slug
+                subdomain: subdomain
             },
             select: {
                 id: true
@@ -20,4 +21,4 @@ export async function getStoreIdBySlug(slug: string) {
             message: "Store ID obtenido exitosamente"
         }
     })
-} 
+}

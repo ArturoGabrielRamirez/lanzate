@@ -1,15 +1,10 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
+import { InsertCategoryAction } from "@/features/categories/types"
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
-export async function insertCategory(storeId: number, payload: {
-    name: string
-    description?: string
-    image?: string
-    sort_order?: number
-    is_default?: boolean
-}) {
+export async function insertCategoryData({ storeId, payload }: InsertCategoryAction) {
     return actionWrapper(async () => {
         // Generar slug único para la tienda
         const baseSlug = payload.name.toLowerCase()

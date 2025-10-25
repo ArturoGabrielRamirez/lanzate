@@ -1,9 +1,10 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
+import { SearchCategoriesAction } from "@/features/categories/types"
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
-export async function searchCategories(storeId: number, searchTerm: string) {
+export async function searchCategories({ storeId, searchTerm }: SearchCategoriesAction) {
     return actionWrapper(async () => {
         const categories = await prisma.category.findMany({
             where: {

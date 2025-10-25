@@ -1,19 +1,10 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
+import { UpdateCategoryAction } from "@/features/categories/types"
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
-export async function updateCategory(
-    storeId: number, 
-    categoryId: number, 
-    payload: {
-        name?: string
-        description?: string
-        image?: string
-        sort_order?: number
-        is_active?: boolean
-    }
-) {
+export async function updateCategory({ storeId, categoryId, payload }: UpdateCategoryAction) {
     return actionWrapper(async () => {
         // Verificar que la categoría pertenece a la tienda
         const existingCategory = await prisma.category.findFirst({

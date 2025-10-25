@@ -4,9 +4,9 @@ import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
+import { createCategoryDynamicAction } from "@/features/categories/actions/create-category-dynamic.action";
 import MultipleSelector from "@/features/shadcn/components/expansion/multiple-selector";
 import { Label } from "@/features/shadcn/components/ui/label";
-import { createCategoryDynamic } from "@/features/categories/actions/createCategoryDynamic";
 import { getCategoriesAction } from "@/features/stores/actions/get-categories.action";
 import { cn } from "@/lib/utils";
 
@@ -93,7 +93,7 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId, cla
 
                 try {
                     // Crear la nueva categoría
-                    const { payload, error } = await createCategoryDynamic(storeId, option.label)
+                    const { payload, error } = await createCategoryDynamicAction({storeId, categoryName:option.label})
                     if (error) {
                         toast.error(t("error-creating"))
                         continue

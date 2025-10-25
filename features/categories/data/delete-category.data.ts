@@ -1,9 +1,10 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
+import { DeleteCategoryAction } from "@/features/categories/types"
 import { actionWrapper } from "@/utils/lib"
+import { prisma } from "@/utils/prisma"
 
-export async function deleteCategory(storeId: number, categoryId: number) {
+export async function deleteCategoryData({ storeId, categoryId }: DeleteCategoryAction) {
     return actionWrapper(async () => {
         // Verificar que la categoría pertenece a la tienda
         const existingCategory = await prisma.category.findFirst({

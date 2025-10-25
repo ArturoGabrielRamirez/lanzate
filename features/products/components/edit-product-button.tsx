@@ -6,7 +6,7 @@ import { useCallback, useState, useEffect } from "react"
 import { toast } from "sonner"
 
 import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { getStoreIdBySlug } from "@/features/categories/data/getStoreIdBySlug"
+import { getStoreIdBySlugData } from "@/features/categories/data/get-store-id-by-slug.data"
 import { Form } from "@/features/layout/components"
 import { editProductAction } from "@/features/products/actions/edit-producto.action"
 import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
@@ -51,7 +51,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
     // Obtener el storeId a partir del slug
     useEffect(() => {
         const fetchStoreId = async () => {
-            const { payload, error } = await getStoreIdBySlug(slug)
+            const { payload, error } = await getStoreIdBySlugData(slug)
             if (!error && payload) {
                 setStoreId(payload)
             }
