@@ -1,9 +1,10 @@
 "use client"
 
-import { Button } from "@/features/shadcn/components/ui/button"
 import { ArrowLeft, ArrowRight } from "lucide-react"
-import { useStepper } from "@/features/shadcn/components/expansion/interactive-stepper"
 import { useTranslations } from "next-intl"
+
+import { useStepper } from "@/features/shadcn/components/expansion/interactive-stepper"
+import { Button } from "@/features/shadcn/components/ui/button"
 
 export function StepNavigation() {
     const { currentStep, nextStep, prevStep, hasNext } = useStepper()

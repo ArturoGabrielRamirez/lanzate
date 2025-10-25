@@ -22,13 +22,6 @@ const paymentMethodSchema = {
     paymentMethod: yup.string().oneOf(['CASH', 'CREDIT_CARD', 'DEBIT_CARD', 'TRANSFER', 'MERCADO_PAGO', 'PAYPAL', 'CRYPTO']).required('Payment method is required'),
 }
 
-const cardInfoSchema = {
-    cardNumber: yup.string().required('Card number is required'),
-    cardHolder: yup.string().required('Cardholder name is required'),
-    expiryDate: yup.string().required('Expiry date is required'),
-    cvv: yup.string().required('CVV is required'),
-}
-
 export const pickupOrderSchema = yup.object({
     ...personalInfoSchema,
     ...orderMethodSchema,

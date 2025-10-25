@@ -1,7 +1,8 @@
 "use client"
 
-import { InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperSeparator, InteractiveStepperTitle, InteractiveStepperTrigger } from "@/features/shadcn/components/expansion/interactive-stepper"
 import { useFormContext } from "react-hook-form"
+
+import { InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperSeparator, InteractiveStepperTitle, InteractiveStepperTrigger } from "@/features/shadcn/components/expansion/interactive-stepper"
 import { cn } from "@/lib/utils"
 
 interface CheckoutStepItemProps {
