@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import { buildErrorRedirectUrl, buildSuccessRedirectUrl, detectOAuthCancellation, extractRequestParams, handleAnonymizedUserCheck, handleUserCreationOrUpdate } from '@/app/auth/callback/utils'
-import { insertLogEntry } from '@/features/global/data/insertLogEntry'
+import { insertLogEntry } from '@/features/global/data/insert-log-entry.data'
 import { prisma } from '@/utils/prisma'
 import { createServerSideClient } from '@/utils/supabase/server'
 

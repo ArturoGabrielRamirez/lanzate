@@ -1,9 +1,9 @@
 "use server"
 
+import { selectEmployeeById } from "@/features/employees/data/selectEmployeeById"
 import { actionWrapper } from "@/utils/lib"
-import { selectEmployeeById } from "../data/selectEmployeeById"
 
-export async function getEmployeeDetails(id: string) {
+export async function getEmployeeDetailsAction(id: string) {
     return actionWrapper(async () => {
         const parsedId = parseInt(id)
 

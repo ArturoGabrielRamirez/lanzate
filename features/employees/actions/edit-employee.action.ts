@@ -1,12 +1,32 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { updateEmployee as updateEmployeeInDb } from "../data/updateEmployee"
+import { EmployeeRole } from "@prisma/client"
 import { revalidatePath } from "next/cache"
-import { insertLogEntry } from "@/features/global/data/insertLogEntry"
-import { canEditEmployee } from "../access/can-edit-employee.access"
 
-export async function editEmployee(employeeId: number, data: any, slug: string, userId: number) {
+import { canEditEmployee } from "@/features/employees/access/can-edit-employee.access"
+import { updateEmployee as updateEmployeeInDb } from "@/features/employees/data/updateEmployee"
+import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
+import { actionWrapper } from "@/utils/lib"
+
+type EditEmployeePayload = {
+    role: EmployeeRole
+    position: string
+    department: string
+    salary: string
+    notes: string
+    can_create_orders: boolean
+    can_update_orders: boolean
+    can_create_products: boolean
+    can_update_products: boolean
+    can_manage_stock: boolean
+    can_process_refunds: boolean
+    can_view_reports: boolean
+    can_manage_employees: boolean
+    can_manage_store: boolean
+    is_active: boolean
+}
+
+export async function editEmployeeAction(employeeId: number, data: EditEmployeePayload, slug: string, userId: number) {
     return actionWrapper(async () => {
 
         // Check user can edit employee (must be store owner)

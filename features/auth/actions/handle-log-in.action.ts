@@ -3,7 +3,7 @@
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { getLogInPermissionData } from '@/features/auth/data'
 import { LoginFormPayload } from '@/features/auth/types'
-import { insertLogEntry } from '@/features/global/data/insertLogEntry'
+import { insertLogEntry } from '@/features/global/data/insert-log-entry.data'
 import { actionWrapper } from '@/features/global/utils'
 
 

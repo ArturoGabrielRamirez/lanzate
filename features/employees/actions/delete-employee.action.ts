@@ -1,12 +1,13 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
-import { deleteEmployee as deleteEmployeeFromDb } from "../data/deleteEmployee"
 import { revalidatePath } from "next/cache"
-import { insertLogEntry } from "@/features/global/data/insertLogEntry"
-import { canDeleteEmployee } from "../access/can-delete-employee.access"
 
-export async function deleteEmployee(employeeId: number, slug: string, userId: number) {
+import { canDeleteEmployee } from "@/features/employees/access/can-delete-employee.access"
+import { deleteEmployee as deleteEmployeeFromDb } from "@/features/employees/data/deleteEmployee"
+import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
+import { actionWrapper } from "@/utils/lib"
+
+export async function deleteEmployeeAction(employeeId: number, slug: string, userId: number) {
     return actionWrapper(async () => {
 
         // Check user can delete employee (must be store owner)

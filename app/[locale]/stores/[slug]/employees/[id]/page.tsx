@@ -2,7 +2,7 @@ import { ArrowLeft, UserCheck, UserX, Calendar, Building, Briefcase, DollarSign,
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 
-import { getEmployeeDetails } from "@/features/employees/actions/getEmployeeDetails"
+import { getEmployeeDetailsAction } from "@/features/employees/actions/get-employee-details.action"
 import { DeleteEmployeeButton, EditEmployeeButton } from "@/features/employees/components"
 import { EmployeeDetailPageProps } from "@/features/employees/types"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
@@ -19,7 +19,7 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
         return console.error(userMessage)
     }
 
-    const { payload: employee, error } = await getEmployeeDetails(id)
+    const { payload: employee, error } = await getEmployeeDetailsAction(id)
 
     if (error || !employee) {
         return console.log(error)

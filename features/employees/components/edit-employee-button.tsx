@@ -2,7 +2,7 @@
 
 import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { employeeUpdateSchema } from "../schemas/employee-schema"
-import { editEmployee } from "../actions/editEmployee"
+import { editEmployeeAction } from "../actions/edit-employee.action"
 import { Pencil } from "lucide-react"
 import { EditEmployeeButtonProps } from "@/features/employees/types"
 import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
@@ -41,7 +41,7 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
             salary: salary ? parseFloat(salary) : undefined,
         }
 
-        return editEmployee(employee.id, data, slug, userId)
+        return editEmployeeAction(employee.id, data, slug, userId)
     }
 
     const handlePermissionChange = (permission: keyof typeof permissions, checked: boolean) => {

@@ -1,11 +1,11 @@
 "use server"
+import { selectEmployeesFromStore } from "@/features/employees/data/selectEmployeesFromStore"
+import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
 import { actionWrapper } from "@/utils/lib"
-import { selectEmployeesFromStore } from "../data/selectEmployeesFromStore"
-import { getStoresFromSlug } from "@/features/stores/actions/get-stores-from-slug.action"
 
-export async function getEmployeesFromStore(slug: string) {
+export async function getEmployeesFromStoreAction(slug: string) {
     return actionWrapper(async () => {
-        const { payload: store, error: storeError, message: storeMessage } = await getStoresFromSlug(slug)
+        const { payload: store, hasError: storeError, message: storeMessage } = await getStoresFromSlugAction(slug)
         if (storeError || !store) throw new Error(storeMessage)
         const { payload: employees, error: employeesError, message: employeesMessage } = await selectEmployeesFromStore(Number(store.id))
         if (employeesError || !employees) throw new Error(employeesMessage)

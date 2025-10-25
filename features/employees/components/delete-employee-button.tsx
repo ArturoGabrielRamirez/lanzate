@@ -1,7 +1,7 @@
 "use client"
 
 import { ButtonWithPopup } from "@/features/layout/components"
-import { deleteEmployee } from "../actions/deleteEmployee"
+import { deleteEmployeeAction } from "../actions/delete-employee.action"
 import { formatErrorResponse } from "@/utils/lib"
 import { redirect } from "next/navigation"
 import { Trash2 } from "lucide-react"
@@ -14,7 +14,7 @@ function DeleteEmployeeButton({ employeeId, slug, onComplete, userId }: DeleteEm
     
     const handleDeleteEmployee = async () => {
         try {
-            const { error, message, payload } = await deleteEmployee(employeeId, slug, userId)
+            const { error, message, payload } = await deleteEmployeeAction(employeeId, slug, userId)
             if (error) throw new Error(message)
             return {
                 error: false,

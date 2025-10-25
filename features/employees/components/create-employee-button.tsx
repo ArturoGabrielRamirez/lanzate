@@ -5,8 +5,8 @@ import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { Plus, Search, Check, UserCheck, Loader, FileText } from "lucide-react"
 import { KeyboardEvent, useState } from "react"
 import { toast } from "sonner"
-import { getEmployeesByFilter } from "../actions/getEmployeesByFilter"
-import { createEmployee } from "../actions/createEmployee"
+import { getEmployeesByFilterAction } from "../actions/get-employees-by-filter.action"
+import { createEmployeeAction } from "../actions/create-employee.action"
 import { CreateEmployeeButtonProps, UserWithEmployeeStatus, Contract } from "../types"
 import { useTranslations } from "next-intl"
 import { assignContractToEmployee } from "../data"
@@ -40,7 +40,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
         }
 
         try {
-            const { payload: employee, error, message } = await createEmployee(selectedUser.id, storeId)
+            const { payload: employee, error, message } = await createEmployeeAction(selectedUser.id, storeId)
             if (error) {
                 return {
                     error: true,
@@ -95,7 +95,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
         })
 
         try {
-            const { payload: users, error, message } = await getEmployeesByFilter(search, storeId, userId)
+            const { payload: users, error, message } = await getEmployeesByFilterAction(search, storeId, userId)
             if (error) {
                 toast.error(message || t("messages.search-error"))
                 return

@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server"
 
 import { getEmployeePermissionsAction } from "@/features/employees/actions/get-employee-permisions.action"
-import { getEmployeesFromStore } from "@/features/employees/actions/getEmployeesFromStore"
+import { getEmployeesFromStoreAction } from "@/features/employees/actions/get-employees-from-store.action"
 import EmployeesTable from "@/features/employees/components/employees-table"
 import { EmployeesTabProps } from "@/features/employees/types"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
@@ -22,7 +22,7 @@ async function EmployeesTab({ slug }: EmployeesTabProps) {
         { payload: store, hasError: storeError },
         { payload: employeePermissions, hasError: permissionsError }
     ] = await Promise.all([
-        getEmployeesFromStore(slug),
+        getEmployeesFromStoreAction(slug),
         getStoresFromSlugAction(slug),
         getEmployeePermissionsAction(user.id, slug)
     ])

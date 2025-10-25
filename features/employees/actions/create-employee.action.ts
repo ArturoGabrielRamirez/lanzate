@@ -1,9 +1,11 @@
 "use server"
-import { actionWrapper } from "@/utils/lib"
-import { insertEmployee } from "../data/insertEmployee"
-import { insertLogEntry } from "@/features/global/data/insertLogEntry"
 
-export async function createEmployee(userId: number, storeId: number, role: string = "EMPLOYEE") {
+import { insertEmployee } from "@/features/employees/data/insertEmployee"
+import { insertLogEntry } from "@/features/global/data"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
+
+export async function createEmployeeAction(userId: number, storeId: number, role: string = "EMPLOYEE") {
+
     return actionWrapper(async () => {
         const { payload: employee, error: employeeError, message: employeeMessage } = await insertEmployee(userId, storeId, role)
         if (employeeError || !employee) throw new Error(employeeMessage)
@@ -20,10 +22,6 @@ export async function createEmployee(userId: number, storeId: number, role: stri
 
         if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
 
-        return {
-            message: "Employee created successfully",
-            payload: employee,
-            error: false
-        }
+        return formatSuccessResponse("Employee created successfully", employee)
     })
 } 
