@@ -1,6 +1,6 @@
 "use server"
 
-import { selectEmployeeById } from "@/features/employees/data/select-employee-by-id.data"
+import { selectEmployeeByIdData } from "@/features/employees/data/select-employee-by-id.data"
 import { actionWrapper } from "@/utils/lib"
 
 export async function getEmployeeDetailsAction(id: string) {
@@ -9,7 +9,7 @@ export async function getEmployeeDetailsAction(id: string) {
 
         if (isNaN(parsedId)) throw new Error("Invalid employee id")
 
-        const { payload: employee, error, message } = await selectEmployeeById(parsedId)
+        const { payload: employee, error, message } = await selectEmployeeByIdData(parsedId)
 
         if (error) throw new Error(message)
 

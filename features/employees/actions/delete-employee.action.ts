@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 
 import { canDeleteEmployee } from "@/features/employees/access/can-delete-employee.access"
-import { deleteEmployee as deleteEmployeeFromDb } from "@/features/employees/data/delete-employee.data"
+import { deleteEmployeeData as deleteEmployeeFromDb } from "@/features/employees/data/delete-employee.data"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
 import { actionWrapper } from "@/utils/lib"
 

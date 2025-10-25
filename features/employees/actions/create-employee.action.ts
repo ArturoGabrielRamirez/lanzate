@@ -1,13 +1,13 @@
 "use server"
 
-import { insertEmployee } from "@/features/employees/data/insert-employee.data"
+import { insertEmployeeData } from "@/features/employees/data/insert-employee.data"
 import { insertLogEntry } from "@/features/global/data"
 import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 
 export async function createEmployeeAction(userId: number, storeId: number, role: string = "EMPLOYEE") {
 
     return actionWrapper(async () => {
-        const { payload: employee, error: employeeError, message: employeeMessage } = await insertEmployee(userId, storeId, role)
+        const { payload: employee, error: employeeError, message: employeeMessage } = await insertEmployeeData(userId, storeId, role)
         if (employeeError || !employee) throw new Error(employeeMessage)
 
         // Create action log

@@ -9,7 +9,7 @@ import { getEmployeesByFilterAction } from "../actions/get-employees-by-filter.a
 import { createEmployeeAction } from "../actions/create-employee.action"
 import { CreateEmployeeButtonProps, UserWithEmployeeStatus, Contract } from "../types"
 import { useTranslations } from "next-intl"
-import { assignContractToEmployee } from "../data"
+import { assignContractToEmployeeData } from "../data"
 import ContractsSelector from "./contracts-selector"
 
 export default function CreateEmployeeButton({ storeId, userId }: CreateEmployeeButtonProps) {
@@ -52,7 +52,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
             // Si hay un contrato seleccionado, asignarlo al empleado
             if (selectedContract && employee) {
                 try {
-                    const contractResult = await assignContractToEmployee(selectedContract.id, employee.id, userId)
+                    const contractResult = await assignContractToEmployeeData(selectedContract.id, employee.id, userId)
                     if (contractResult.error) {
                         console.error("Error assigning contract:", contractResult.message)
                         // No fallamos la creación del empleado si falla la asignación del contrato
