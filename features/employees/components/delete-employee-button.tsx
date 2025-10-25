@@ -1,12 +1,13 @@
 "use client"
 
-import { ButtonWithPopup } from "@/features/layout/components"
-import { deleteEmployeeAction } from "../actions/delete-employee.action"
-import { formatErrorResponse } from "@/utils/lib"
-import { redirect } from "next/navigation"
 import { Trash2 } from "lucide-react"
-import { DeleteEmployeeButtonProps } from "@/features/employees/types"
+import { redirect } from "next/navigation"
 import { useTranslations } from "next-intl"
+
+import { deleteEmployeeAction } from "@/features/employees/actions/delete-employee.action"
+import { DeleteEmployeeButtonProps } from "@/features/employees/types"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import { formatErrorResponse } from "@/utils/lib"
 
 function DeleteEmployeeButton({ employeeId, slug, onComplete, userId }: DeleteEmployeeButtonProps) {
     
@@ -52,4 +53,5 @@ function DeleteEmployeeButton({ employeeId, slug, onComplete, userId }: DeleteEm
         />
     )
 }
-export default DeleteEmployeeButton 
+
+export { DeleteEmployeeButton }

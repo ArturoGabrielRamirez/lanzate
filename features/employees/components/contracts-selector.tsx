@@ -15,7 +15,7 @@ type ContractsSelectorProps = {
     employeeId?: number // Para filtrar contratos ya asignados a este empleado
 }
 
-export default function ContractsSelector({ storeId, selectedContractId, onContractSelect, employeeId }: ContractsSelectorProps) {
+function ContractsSelector({ storeId, selectedContractId, onContractSelect, employeeId }: ContractsSelectorProps) {
     const [contracts, setContracts] = useState<Contract[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -185,4 +185,6 @@ export default function ContractsSelector({ storeId, selectedContractId, onContr
             ))}
         </div>
     )
-} 
+}
+
+export { ContractsSelector }

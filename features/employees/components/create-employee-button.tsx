@@ -1,18 +1,20 @@
 "use client"
 
-import { Button } from "@/features/shadcn/components/ui/button"
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
 import { Plus, Search, Check, UserCheck, Loader, FileText } from "lucide-react"
-import { KeyboardEvent, useState } from "react"
-import { toast } from "sonner"
-import { getEmployeesByFilterAction } from "../actions/get-employees-by-filter.action"
-import { createEmployeeAction } from "../actions/create-employee.action"
-import { CreateEmployeeButtonProps, UserWithEmployeeStatus, Contract } from "../types"
 import { useTranslations } from "next-intl"
-import { assignContractToEmployeeData } from "../data"
-import ContractsSelector from "./contracts-selector"
+import { useState } from "react"
+import { toast } from "sonner"
 
-export default function CreateEmployeeButton({ storeId, userId }: CreateEmployeeButtonProps) {
+import { createEmployeeAction } from "@/features/employees/actions/create-employee.action"
+import { getEmployeesByFilterAction } from "@/features/employees/actions/get-employees-by-filter.action"
+import { ContractsSelector } from "@/features/employees/components/contracts-selector"
+import { assignContractToEmployeeData } from "@/features/employees/data/assign-contract-to-employee.data"
+import { CreateEmployeeButtonProps, UserWithEmployeeStatus, Contract } from "@/features/employees/types"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import { InputField } from "@/features/global/components/form/input-field"
+import { Button } from "@/features/shadcn/components/ui/button"
+
+function CreateEmployeeButton({ storeId, userId }: CreateEmployeeButtonProps) {
 
     const [search, setSearch] = useState('')
     const [users, setUsers] = useState<UserWithEmployeeStatus[]>([])
@@ -40,8 +42,8 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
         }
 
         try {
-            const { payload: employee, error, message } = await createEmployeeAction(selectedUser.id, storeId)
-            if (error) {
+            const { payload: employee, hasError, message } = await createEmployeeAction(selectedUser.id, storeId)
+            if (hasError) {
                 return {
                     error: true,
                     message: message,
@@ -53,7 +55,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
             if (selectedContract && employee) {
                 try {
                     const contractResult = await assignContractToEmployeeData(selectedContract.id, employee.id, userId)
-                    if (contractResult.error) {
+                    if (contractResult.hasError) {
                         console.error("Error assigning contract:", contractResult.message)
                         // No fallamos la creación del empleado si falla la asignación del contrato
                         toast.warning("Empleado creado pero hubo un problema al asignar el contrato")
@@ -133,11 +135,11 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
         setSelectedContract(contract)
     }
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    /* const handleKeyDown = (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (e.key === 'Enter') {
             handleSearch()
         }
-    }
+    } */
 
     return (
         <ButtonWithPopup
@@ -158,7 +160,7 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
             formDisabled={!selectedUser}
         >
             <div className="flex gap-2 items-end">
-                <InputField name="user_search" label={t("search-user")} type="text" containerClassName="w-full" onChange={handleChange} value={search} onKeyDown={handleKeyDown} />
+                <InputField name="user_search" label={t("search-user")} type="text" onChange={handleChange} placeholder={t("search-user-placeholder")} />
                 <Button onClick={handleSearch} type="button" disabled={isSearching}>
                     {isSearching ? <Loader className="w-4 h-4 animate-spin" /> : <Search />}
                     {t("search-button")}
@@ -250,3 +252,5 @@ export default function CreateEmployeeButton({ storeId, userId }: CreateEmployee
         </ButtonWithPopup>
     )
 } 
+
+export { CreateEmployeeButton }
