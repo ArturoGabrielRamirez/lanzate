@@ -7,7 +7,7 @@ import type { SettingsDisplayProps } from "@/features/products/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function SettingsDisplay({ product }: SettingsDisplayProps) {

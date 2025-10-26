@@ -10,7 +10,7 @@ import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { FileUpload, FileUploadDropzone, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {

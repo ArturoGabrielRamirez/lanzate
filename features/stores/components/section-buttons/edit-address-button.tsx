@@ -8,7 +8,7 @@ import { toast } from "sonner"
 import { updateStoreAddressAction } from "@/features/stores/actions/update-store-address.action"
 import { EditAddressButtonProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function EditAddressButton({ store, userId, onSuccess }: EditAddressButtonProps) {
     const { getValues, formState: { isValid } } = useFormContext()

@@ -9,7 +9,7 @@ import type { VariantPriceDisplayProps, VariantPriceFormValues } from "@/feature
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function VariantPriceDisplay({ variant, productPrice }: VariantPriceDisplayProps) {

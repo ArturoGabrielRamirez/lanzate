@@ -8,7 +8,7 @@ import { toast } from "sonner"
 import { updateStoreBasicInfoAction } from "@/features/stores/actions/update-store-basics.action"
 import { EditBasicInfoButtonProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function EditBasicInfoButton({ store, userId, onSuccess }: EditBasicInfoButtonProps) {
     const { getValues, formState: { isValid } } = useFormContext()

@@ -12,7 +12,7 @@ import { Form, InputField } from "@/features/layout/components"
 import { EditSocialMediaButton } from "@/features/stores/components/section-buttons"
 import { editSocialMediaSchema } from "@/features/stores/schemas/social-media-schema"
 import { EditSocialMediaData, SocialMediaDisplayProps } from "@/features/stores/types"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function SocialMediaDisplay({ store }: SocialMediaDisplayProps) {
     const t = useTranslations("store.edit-store")

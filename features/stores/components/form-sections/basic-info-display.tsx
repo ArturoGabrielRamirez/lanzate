@@ -11,7 +11,7 @@ import { Form, InputField } from "@/features/layout/components"
 import { EditBasicInfoButton } from "@/features/stores/components/section-buttons"
 import { editBasicInfoSchema } from "@/features/stores/schemas/basic-info-schema"
 import { BasicInfoDisplayProps, BasicInfoFormValues } from "@/features/stores/types"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function BasicInfoDisplay({ store, userId }: BasicInfoDisplayProps) {

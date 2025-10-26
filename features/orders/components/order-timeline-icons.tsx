@@ -4,7 +4,7 @@ import { OrderTimelineIconsProps } from "@/features/orders/types"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function OrderTimelineIcons({ order }: OrderTimelineIconsProps) {
     const isProcessing = order.status === "PROCESSING"

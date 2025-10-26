@@ -14,7 +14,7 @@ import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/features/shadcn/components/ui/select"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function VariantStockDisplay({ variant }: VariantStockDisplayProps) {

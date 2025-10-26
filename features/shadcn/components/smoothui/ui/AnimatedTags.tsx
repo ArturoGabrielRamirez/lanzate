@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
 import { CircleX, Plus } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
+import { useState } from "react"
 
 export interface AnimatedTagsProps {
   initialTags?: string[]

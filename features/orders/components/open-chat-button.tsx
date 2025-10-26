@@ -4,7 +4,7 @@ import { MessageCircle } from "lucide-react"
 
 import { useChat } from "@/features/layout/components/chat-provider"
 import { Button } from "@/features/shadcn/components/ui/button"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 type OpenChatButtonProps = {
     roomId: string

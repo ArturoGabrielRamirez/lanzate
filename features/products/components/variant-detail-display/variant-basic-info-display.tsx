@@ -16,7 +16,7 @@ import { editVariantSchema } from "@/features/products/schemas/product-schema"
 import type { VariantBasicInfoDisplayProps } from "@/features/products/types"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function ToggleEditButton({ isEditing, onToggle, onCancel, variant }: {

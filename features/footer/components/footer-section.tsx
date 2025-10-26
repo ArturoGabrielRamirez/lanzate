@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 
-import { IconButton } from '@/src/components/ui/shadcn-io/icon-button'
+import { IconButton } from '@/features/shadcn/components/shadcn-io/icon-button'
 
 const links = [
     {

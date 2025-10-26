@@ -12,7 +12,7 @@ import type { GridCardProps } from "@/features/products/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardContent, CardFooter, CardHeader } from "@/features/shadcn/components/ui/card"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function GridCard({ product, href }: GridCardProps) {
 

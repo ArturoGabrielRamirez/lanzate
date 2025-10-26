@@ -14,7 +14,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/compo
 import { EditAddressButton } from "@/features/stores/components/section-buttons"
 import { editAddressSchema } from "@/features/stores/schemas/address-schema"
 import { AddressDisplayProps, AddressFormValues } from "@/features/stores/types"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function AddressDisplay({ store, userId }: AddressDisplayProps) {
 

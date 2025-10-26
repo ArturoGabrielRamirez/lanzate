@@ -12,7 +12,7 @@ import { Form, InputField } from "@/features/layout/components"
 import { EditContactButton } from "@/features/stores/components/section-buttons"
 import { editContactSchema } from "@/features/stores/schemas/contact-schema"
 import { ContactDisplayProps, EditContactData } from "@/features/stores/types"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function ContactDisplay({ store }: ContactDisplayProps) {
     const t = useTranslations("store.edit-store")
