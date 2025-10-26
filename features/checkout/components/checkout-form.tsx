@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import { useCart } from "@/features/cart/components/cart-provider"
-import { createNewCheckoutOrder } from "@/features/checkout/actions/create-new-checkout-order.action"
+import { createNewCheckoutOrderAction } from "@/features/checkout/actions/create-new-checkout-order.action"
 import { BranchSelector } from "@/features/checkout/components/branch-selector"
 import { useCheckout } from "@/features/checkout/components/checkout-context"
 import { CheckoutStepItem } from "@/features/checkout/components/checkout-step-item"
@@ -50,7 +50,7 @@ function CheckoutForm({
 
     const handleSubmit = async (formData: any) => {
 
-        const { hasError: error, message, payload } = await createNewCheckoutOrder({
+        const { hasError: error, message, payload } = await createNewCheckoutOrderAction({
             branch_id: selectedBranchId as number,
             customer_info: {
                 name: formData.name,

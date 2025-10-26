@@ -36,7 +36,7 @@ type insertOrderProps = {
     status?: OrderStatus
 }
 
-export async function insertOrder({
+export async function insertOrderData({
     branch_id,
     total_price,
     total_quantity,
