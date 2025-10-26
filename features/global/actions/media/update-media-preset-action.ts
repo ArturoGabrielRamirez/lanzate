@@ -1,13 +1,14 @@
 "use server"
 
-import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
+import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '../../utils'
 import { UpdateMediaPresetParams } from "../../components/media-selector/types"
 import { getUserId } from "@/features/auth/data/get-user-id"
 import { getCurrentUserWithIdAndEmailAction } from "@/features/auth/actions"
 import { validateUploadType } from "@/features/global/utils/media/validators"
-import { UPLOAD_TYPES } from "@/features/shared/types"
-import { updateUserAvatar, updateUserBanner } from "@/features/shared/data"
 import { revalidatePath } from "next/cache"
+import { UPLOAD_TYPES } from "../../types/media"
+import { updateUserBanner } from '@/features/auth/data/update-user-banner'
+import { updateUserAvatar } from '@/features/auth/data/update-user-avatar'
 
 export async function updateMediaPresetAction({ type, presetUrl }: UpdateMediaPresetParams) {
     return actionWrapper(async () => {

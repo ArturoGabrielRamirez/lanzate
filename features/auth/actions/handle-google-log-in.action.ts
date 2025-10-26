@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 
 import { getGoogleData } from "@/features/auth/data"
 import { extractSubdomainFromHost, buildLoginErrorUrl } from '@/features/auth/utils'
-import { actionWrapper } from '@/utils/lib'
+import { actionWrapper } from '@/features/global/utils'
 
 export async function handleGoogleLogInAction() {
     const result = await actionWrapper(async () => {
@@ -25,13 +25,13 @@ export async function handleGoogleLogInAction() {
         }
 
         return {
-            error: false,
+            hasError: false,
             message: 'Se inició sesión con Google correctamente',
             payload: { url: googleData.url, subdomain: googleData.subdomain }
         }
     })
 
-    if (result.error) {
+    if (result.hasError) {
         const headersList = await headers()
         const host = headersList.get('host') || ''
         const subdomain = extractSubdomainFromHost(host)

@@ -1,12 +1,13 @@
 'use client'
 
 import { Trash2 } from 'lucide-react'
-import { MediaSelectorContentProps } from '../types'
-import { ConfirmDialog } from './confirm-dialog'
-import { useConfirm } from '../hooks/use-confirm'
-import { UploadProgress } from '../upload-progress'
-import { Button } from '@/features/shadcn/components/ui/button'
+
+import { ConfirmDialog } from '@/features/global/components/media-selector/confirm-dialog'
 import { AvatarLayout, BannerLayout } from '@/features/global/components/media-selector/index'
+import { UploadProgress } from '@/features/global/components/upload-progress'
+import { useConfirm } from '@/features/global/hooks/use-confirm'
+import { MediaSelectorContentProps } from '@/features/global/types/media'
+import { Button } from '@/features/shadcn/components/ui/button'
 
 
 export function MediaSelectorContent({
@@ -158,7 +159,7 @@ export function MediaSelectorContent({
       {/* Confirm Dialog */}
       <ConfirmDialog
         open={confirm.isOpen}
-        onOpenChange={(open) => !open && confirm.handleCancel()}
+        onOpenChange={(open: boolean) => !open && confirm.handleCancel()}
         title={`¿Eliminar ${type}?`}
         description={`Esta acción eliminará tu ${type} actual del servidor. Esta acción no se puede deshacer.`}
         confirmText="Eliminar"

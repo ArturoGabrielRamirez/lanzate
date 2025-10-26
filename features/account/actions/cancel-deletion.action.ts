@@ -4,7 +4,7 @@ import { headers } from 'next/headers'
 
 import { DELETION_CONFIG } from "@/features/account/config/deletion.config"
 import { getCurrentUserForDeletion } from "@/features/account/data/index"
-import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
+import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
 import { prisma } from '@/utils/prisma'
 
 export async function cancelDeletionAction(reason: string) {
@@ -18,7 +18,7 @@ export async function cancelDeletionAction(reason: string) {
         const currentUser = await getCurrentUserForDeletion()
 
         if (!currentUser) {
-            return formatErrorResponse('Usuario no encontrado', null)
+            return formatErrorResponse('Usuario no encontrado')
         }
 
         const cancelledAt = new Date()

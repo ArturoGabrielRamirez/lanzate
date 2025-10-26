@@ -8,11 +8,12 @@ import { useFormContext } from "react-hook-form"
 
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/features/shadcn/components/ui/tooltip"
-import { Form, InputField } from "@/features/layout/components"
 import { EditContactButton } from "@/features/stores/components/section-buttons"
 import { editContactSchema } from "@/features/stores/schemas/contact-schema"
 import { ContactDisplayProps, EditContactData } from "@/features/stores/types"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { Form } from "@/features/global/components/form/form"
+import { InputField } from "@/features/global/components/form/input-field"
 
 function ContactDisplay({ store }: ContactDisplayProps) {
     const t = useTranslations("store.edit-store")

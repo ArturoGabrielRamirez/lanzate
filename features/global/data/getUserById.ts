@@ -2,7 +2,7 @@
 
 import { Account, User } from '@prisma/client'
 
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from '@/features/global/utils'
 import { prisma } from "@/utils/prisma"
 
 

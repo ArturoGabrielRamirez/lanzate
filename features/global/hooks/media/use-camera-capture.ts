@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import type { CapturedFile, UseCameraCaptureProps } from '../types'
-import { createPreviewUrl, revokePreviewUrl } from '../../../shared/hooks'
+
+import type { CapturedFile, UseCameraCaptureProps } from '@/features/global/types/media'
+import { createPreviewUrl, revokePreviewUrl } from '@/features/global/utils/media/preview-manager'
 
 
 export function useCameraCapture({

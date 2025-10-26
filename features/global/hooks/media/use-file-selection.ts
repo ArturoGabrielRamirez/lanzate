@@ -2,9 +2,10 @@
 
 import { useState, useCallback, useRef } from 'react'
 import { toast } from 'sonner'
+
+import type { UseFileSelectionProps } from '@/features/global/types/media'
+import { createPreviewUrl, revokePreviewUrl } from '@/features/global/utils/media/preview-manager'
 import { fileValidation } from '@/features/profile/utils/file-validation-client'
-import { createPreviewUrl, revokePreviewUrl } from '../../../shared/hooks'
-import type { UseFileSelectionProps } from '../types'
 
 export function useFileSelection({
   validationOptions,

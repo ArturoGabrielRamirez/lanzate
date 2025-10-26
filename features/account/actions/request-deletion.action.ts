@@ -6,7 +6,7 @@ import { DELETION_CONFIG, getGracePeriod } from "@/features/account/config/delet
 import { getCurrentUserForDeletion, verifyUserPassword } from "@/features/account/data/index"
 import { calculateScheduledDeletionDate } from "@/features/account/utils/deletion-calculator"
 import { getDisplayScheduledDate } from "@/features/account/utils/deletion-helpers"
-import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
+import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
 import { prisma } from '@/utils/prisma'
 
 export async function requestDeletionAction(reason: string, password: string) {
@@ -19,13 +19,13 @@ export async function requestDeletionAction(reason: string, password: string) {
         const currentUser = await getCurrentUserForDeletion()
 
         if (!currentUser) {
-            return formatErrorResponse('Usuario no encontrado', null)
+            return formatErrorResponse('Usuario no encontrado')
         }
 
         const isPasswordValid = await verifyUserPassword(currentUser.email, password)
 
         if (!isPasswordValid) {
-            return formatErrorResponse('Contraseña incorrecta', null)
+            return formatErrorResponse('Contraseña incorrecta')
         }
 
         const deletionRequestedAt = new Date()

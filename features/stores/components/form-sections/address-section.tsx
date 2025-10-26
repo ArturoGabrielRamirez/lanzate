@@ -4,7 +4,7 @@ import { MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
+import { AccordionTriggerWithValidation } from "@/features/branches/components/accordion-trigger-with-validation"
 import CheckboxField from "@/features/global/components/form/checkbox-field"
 import { InputField } from "@/features/global/components/form/input-field"
 import { AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"

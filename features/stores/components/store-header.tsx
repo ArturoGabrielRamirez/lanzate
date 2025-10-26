@@ -1,11 +1,10 @@
 "use client"
 
-import { Store } from "lucide-react"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
 import { Card, CardAction, CardContent } from "@/features/shadcn/components/ui/card"
-import { Title } from "@/features/layout/components"
+/* import { Title } from "@/features/layout/components" */
 import { getStoreHeaderBySlugAction, updateStoreBannerAction, updateStoreLogoAction } from "@/features/stores/actions"
 import { StoreBannerEditor, StoreLogoEditor } from "@/features/stores/components"
 import { StoreHeaderProps, StoreHeaderData } from "@/features/stores/types"
@@ -102,7 +101,7 @@ function StoreHeader({ slug }: StoreHeaderProps) {
 
     return (
         <>
-            <Title
+            {/* <Title
                 title={(
                     <div className="flex items-center gap-2">
                         <Store />
@@ -120,7 +119,7 @@ function StoreHeader({ slug }: StoreHeaderProps) {
                     }
                 ]}
                 showDate
-            />
+            /> */}
             <section className="items-center gap-4 flex mb-2 md:mb-0">
                 <Card className="w-full relative overflow-hidden group/store-banner">
                     <img

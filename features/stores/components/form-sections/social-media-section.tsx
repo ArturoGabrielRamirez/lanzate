@@ -3,9 +3,9 @@
 import { MessageCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
 
+import { AccordionTriggerWithValidation } from "@/features/branches/components/accordion-trigger-with-validation"
+import { InputField } from "@/features/global/components/form/input-field"
 import { AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { InputField } from "@/features/layout/components"
 import { SocialMediaSectionProps } from "@/features/stores/types"
 
 function SocialMediaSection({ mode }: SocialMediaSectionProps) {
@@ -23,18 +23,21 @@ function SocialMediaSection({ mode }: SocialMediaSectionProps) {
                 <InputField
                     name="facebook_url"
                     label={t("facebook-url")}
+                    placeholder={t("facebook-url")}
                     type="url"
                     defaultValue={/* store?.facebook_url || */ ""}
                 />
                 <InputField
                     name="instagram_url"
                     label={t("instagram-url")}
+                    placeholder={t("instagram-url")}
                     type="url"
                     defaultValue={/* store?.instagram_url || */ ""}
                 />
                 <InputField
                     name="x_url"
                     label={t("x-url")}
+                    placeholder={t("x-url")}
                     type="url"
                     defaultValue={/* store?.x_url || */ ""}
                 />

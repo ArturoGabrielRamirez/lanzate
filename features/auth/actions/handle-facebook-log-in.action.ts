@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 
 import { getFacebookData } from "@/features/auth/data"
 import { extractSubdomainFromHost, buildLoginErrorUrl } from '@/features/auth/utils'
-import { actionWrapper } from '@/utils/lib'
+import { actionWrapper } from '@/features/global/utils'
 
 export async function handleFacebookLoginAction() {
     const result = await actionWrapper(async () => {
@@ -25,13 +25,13 @@ export async function handleFacebookLoginAction() {
         }
 
         return {
-            error: false,
+            hasError: false,
             message: 'Facebook login initiated successfully',
             payload: { url: facebookData.url, subdomain }
         }
     })
 
-    if (result.error) {
+    if (result.hasError) {
         const headersList = await headers()
         const host = headersList.get('host') || ''
         const subdomain = extractSubdomainFromHost(host)

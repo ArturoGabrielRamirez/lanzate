@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import { formatErrorResponse } from "@/features/global/utils"
 import { changeOrderStatusAction } from "@/features/orders/actions"
 import { ChangeOrderStatusButtonProps } from "@/features/orders/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
@@ -13,7 +14,6 @@ import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import { cn } from "@/lib/utils"
-import { formatErrorResponse } from "@/utils/lib"
 
 function ChangeOrderStatusButton({ order, slug, onComplete }: ChangeOrderStatusButtonProps) {
 
@@ -45,7 +45,7 @@ function ChangeOrderStatusButton({ order, slug, onComplete }: ChangeOrderStatusB
 
     const handleChangeStatus = async () => {
         if (!isFormValid()) {
-            return formatErrorResponse(t("messages.confirm-required"), null, null)
+            return formatErrorResponse(t("messages.confirm-required"))
         }
 
         const data = {

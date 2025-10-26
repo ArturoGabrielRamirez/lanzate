@@ -1,6 +1,6 @@
 'use server'
 
-import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/utils/lib'
+import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '../../utils'
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { getUserId } from '@/features/auth/data/get-user-id'
 import { createServerSideClient } from '@/utils/supabase/server'

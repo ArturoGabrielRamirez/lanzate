@@ -7,7 +7,7 @@ import { useFormContext } from "react-hook-form"
 
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/features/shadcn/components/ui/dialog"
-import { Form } from "@/features/layout/components"
+import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
 import { TextareaField } from "@/features/global/components/form/textarea-field"
 import { ScrollArea } from "@/features/shadcn/components/scroll-area"

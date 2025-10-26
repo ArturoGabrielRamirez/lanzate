@@ -6,13 +6,13 @@ import { useState, useEffect } from "react"
 
 import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
 import InputField from "@/features/global/components/form/input"
+import { formatErrorResponse } from "@/features/global/utils"
 import { getProductsCountByCategoryAction } from "@/features/products/actions/get-products-count-by-category.action"
 import { updateProductsPricesAction } from "@/features/products/actions/update-products-prices.action"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import { getCategoriesAction } from "@/features/stores/actions/get-categories.action"
 import { UpdatePricesButtonProps, PriceUpdateType } from "@/features/stores/types"
-import { formatErrorResponse } from "@/utils/lib"
 
 function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) {
     const [categories, setCategories] = useState<Category[]>([])
@@ -117,7 +117,7 @@ function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) 
             }
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : t("messages.error")
-            return formatErrorResponse(errorMessage, error, null)
+            return formatErrorResponse(errorMessage)
         }
     }
 

@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { UpdatePasswordPayload } from '@/features/auth/types'
 import { Form } from '@/features/global/components/form/form'
 import { InputField } from '@/features/global/components/form/input-field'
-import { formatErrorResponse } from '@/utils/lib'
+import { formatErrorResponse } from '@/features/global/utils'
 
 export default function UpdatePasswordForm() {
 
@@ -32,7 +32,7 @@ export default function UpdatePasswordForm() {
                 payload: null
             }
         } catch (error) {
-            return formatErrorResponse("Error updating password", error, null)
+            return formatErrorResponse("Error updating password")
         }
     }
 

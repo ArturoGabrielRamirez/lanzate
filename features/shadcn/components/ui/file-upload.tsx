@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import * as React from "react";
 
-import { MediaSelector } from "@/features/shared/components/media-selector/types/index";
+import { MediaSelector } from "@/features/global/components/media-selector/media-selector";
 import { cn } from "@/lib/utils";
 
 const ROOT_NAME = "FileUpload";

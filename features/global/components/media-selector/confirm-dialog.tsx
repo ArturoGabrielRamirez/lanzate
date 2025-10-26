@@ -10,7 +10,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/features/shadcn/components/ui/alert-dialog'
-import { ConfirmDialogProps } from '../types'
+import { ConfirmDialogProps } from '../../types/media'
 
 export function ConfirmDialog({
   open,

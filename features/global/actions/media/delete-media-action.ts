@@ -1,15 +1,18 @@
 "use server"
 
 import { getDefaultBannerForUser } from "@/features/profile/utils/get-default-banner-for-user"
-import { deleteProductMedia, getProductMediaById, getUserMediaByType, updateUserMedia } from "@/features/shared/data"
 import { getUserId } from "@/features/auth/data/get-user-id"
 import { createStorageService } from "@/features/global/services/storage"
-import { UPLOAD_TYPES } from "@/features/shared/types"
 import { validateUploadType } from "@/features/global/utils/media/validators"
-import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 import { revalidatePath } from "next/cache"
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { DeleteMediaParams } from "../../components/media-selector/types"
+import { UPLOAD_TYPES } from "../../types/media"
+import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "../../utils"
+import { getProductMediaById } from "@/features/products/data/get-product-media-by-id"
+import { deleteProductMedia } from "@/features/products/data/delete-product-media"
+import { getUserMediaByType } from "@/features/auth/data/get-user-media-by-type"
+import { updateUserMedia } from "@/features/auth/data/update-user-media"
 
 
 export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMediaParams) {

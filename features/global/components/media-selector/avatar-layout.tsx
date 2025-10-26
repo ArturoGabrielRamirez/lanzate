@@ -6,11 +6,11 @@ import { Card } from '@/features/shadcn/components/ui/card'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
 import { MediaPreview } from './media-preview'
-import { ToolButton } from './components/tool-button'
 import { MediaTabs } from './media-tabs'
 import { MediaGrid } from './media-grid'
 import { EmptyState } from './empty-state'
 import { AvatarLayoutProps } from '../types'
+import { ToolButton } from '.'
 
 export function AvatarLayout({
     previewUrl,

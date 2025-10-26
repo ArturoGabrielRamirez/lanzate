@@ -6,9 +6,10 @@ import { useState, useEffect, useCallback } from 'react'
 import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/features/shadcn/components/ui/dialog'
 import { ActionButtons, EditorView, InitialPreview, ProcessingView } from '@/features/global/components/background-remover'
-import { useBackgroundRemover, useCanvasEditor } from '@/features/shared/hooks/hooks'
 import { BackgroundRemoverProps } from '@/features/shared/types'
 import { createFileFromBlob, optimizeImage } from '@/features/global/utils/media/canvas.utils'
+import { useBackgroundRemover } from '../../hooks/media/use-background-remover'
+import { useCanvasEditor } from '../../hooks/media/use-canvas-editor'
 
 export function BackgroundRemover({
     isOpen,

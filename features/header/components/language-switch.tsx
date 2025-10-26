@@ -1,17 +1,17 @@
 "use client"
 
+import { useLocale } from "next-intl";
 import { useEffect, useState } from "react"
 
-import { Switch } from "@/features/shadcn/components/ui/switch"
 import { isActiveRoute } from '@/features/header/utils';
+import { Switch } from "@/features/shadcn/components/ui/switch"
 import { usePathname } from "@/i18n/naviation"
 import { cn } from "@/lib/utils"
-import { useChangeLocale, useCurrentLocale } from "@/locales/client"
 
 function LanguageSwitch() {
 
-    const changeLocale = useChangeLocale()
-    const currentLocale = useCurrentLocale()
+    /* const changeLocale = useChangeLocale() */
+    const currentLocale = useLocale()
     const pathname = usePathname()
     const isHome = isActiveRoute(pathname, "/")
 
@@ -23,7 +23,7 @@ function LanguageSwitch() {
 
     const handleChange = (nextChecked: boolean) => {
         setIsChecked(nextChecked)
-        changeLocale(nextChecked ? "en" : "es")
+        /* changeLocale(nextChecked ? "en" : "es") */
     }
 
 

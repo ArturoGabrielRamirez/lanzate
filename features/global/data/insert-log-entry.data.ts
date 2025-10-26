@@ -1,7 +1,7 @@
 "use server"
 
 import { InsertLogEntryProps } from "@/features/global/types/types"
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from '@/features/global/utils'
 import { prisma } from "@/utils/prisma"
 
 export async function insertLogEntry({ action, entity_id, entity_type, details, action_initiator, user_id }: InsertLogEntryProps) {
@@ -20,7 +20,7 @@ export async function insertLogEntry({ action, entity_id, entity_type, details, 
 
         return {
             payload: logEntry,
-            error: false,
+            hasError: false,
             message: "Log entry created"
         }
     })
