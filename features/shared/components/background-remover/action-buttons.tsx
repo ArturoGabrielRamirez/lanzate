@@ -1,6 +1,7 @@
 import { Loader2, Sparkles } from 'lucide-react'
+
 import { Button } from '@/features/shadcn/components/ui/button'
-import { ActionButtonsProps } from '../types'
+import { ActionButtonsProps } from '@/features/shared/types'
 
 export function ActionButtons({
     hasProcessedBlob,

@@ -1,16 +1,16 @@
 "use server"
 
-import { StorageService } from "@/features/shared/services/storage"
-import { FileUploadData, UploadResult } from "@/features/shared/types/types"
-import { actionWrapper, formatSuccessResponse } from "@/utils/lib"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import {
     updateProductPrimaryImage,
     createProductMedia,
     verifyProductOwnership,
     deleteProductMedia
-} from "@/features/shared/data/index"
+} from "@/features/shared/data"
+import { StorageService } from "@/features/shared/services/storage"
+import { FileUploadData, UploadResult } from "@/features/shared/types"
 
-export async function handleProductUpload(
+export async function handleProductUploadAction(
     uploadData: FileUploadData,
     userId: number,
     username: string,

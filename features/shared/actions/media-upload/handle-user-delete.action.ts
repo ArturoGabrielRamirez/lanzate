@@ -1,12 +1,12 @@
 "use server"
 
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
+import { updateUserBanner, updateUserAvatar } from "@/features/shared/data"
+import { getCurrentUser } from "@/features/shared/data/get-current-user"
 import { StorageService } from "@/features/shared/services/storage"
-import { UPLOAD_TYPES, DeleteResult } from "@/features/shared/types/types"
-import { actionWrapper, formatSuccessResponse } from "@/utils/lib"
-import { updateUserBanner, updateUserAvatar } from "@/features/shared/data/index"
-import { getCurrentUser } from "../data/get-current-user"
+import { UPLOAD_TYPES, DeleteResult } from "@/features/shared/types"
 
-export async function handleUserDelete(
+export async function handleUserDeleteAction(
     type: typeof UPLOAD_TYPES.AVATAR | typeof UPLOAD_TYPES.BANNER,
     userId: number,
     username: string,

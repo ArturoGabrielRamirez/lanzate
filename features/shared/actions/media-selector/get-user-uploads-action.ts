@@ -4,7 +4,7 @@ import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/uti
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { getUserId } from '@/features/shared/data/get-user-id'
 import { createServerSideClient } from '@/utils/supabase/server'
-import { GetUserUploadsParams } from '../types'
+import { GetUserUploadsParams } from '../../components/media-selector/types'
 
 export async function getUserUploadsAction({ type }: GetUserUploadsParams) {
     return actionWrapper(async () => {

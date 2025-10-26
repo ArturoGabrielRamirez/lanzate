@@ -1,7 +1,9 @@
+import Image from 'next/image'
+
 import { Label } from '@/features/shadcn/components/ui/label'
 import { Slider } from '@/features/shadcn/components/ui/slider'
-import { CheckerboardBackground } from '@/features/shared/components/background-remover/components/index'
-import { CompareViewProps } from '../types'
+import { CheckerboardBackground } from '@/features/shared/components/background-remover'
+import { CompareViewProps } from '@/features/shared/types'
 
 export function CompareView({ originalUrl, editor }: CompareViewProps) {
     return (
@@ -11,7 +13,7 @@ export function CompareView({ originalUrl, editor }: CompareViewProps) {
                     <p className="text-sm font-medium text-center">Original</p>
                     <div className="relative h-64 rounded-lg overflow-hidden bg-muted border-2">
                         {originalUrl && (
-                            <img
+                            <Image
                                 src={originalUrl}
                                 alt="Original"
                                 className="w-full h-full object-contain"
@@ -44,7 +46,7 @@ export function CompareView({ originalUrl, editor }: CompareViewProps) {
                             />
                         ) : (
                             editor.previewUrl && (
-                                <img
+                                <Image
                                     src={editor.previewUrl}
                                     alt="Procesada"
                                     className="relative w-full h-full object-contain"

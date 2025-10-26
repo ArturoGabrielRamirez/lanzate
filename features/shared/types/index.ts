@@ -1,1 +1,1 @@
-export * from './types'
+export * from '@/features/shared/types/types'

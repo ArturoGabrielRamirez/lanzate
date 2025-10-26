@@ -9,7 +9,7 @@ import { removeMedia } from '@/features/shared/utils/remove-media'
 import { MediaSelectorProps } from '@/features/shared/types'
 import { PresetOption } from '@/features/shared/types'
 import { MediaSelectorTrigger } from './media-selector-trigger'
-import { MediaSelectorContent } from '../media-selector-content'
+import { MediaSelectorContent } from './media-selector-content'
 import { MediaSelectorDialogs } from './media-selector-dialogs'
 
 export function MediaSelector({

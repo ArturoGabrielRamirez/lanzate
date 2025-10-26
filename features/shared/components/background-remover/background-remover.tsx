@@ -1,13 +1,14 @@
 "use client"
 
-import { useState, useEffect, useCallback } from 'react'
 import { Sparkles } from 'lucide-react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/features/shadcn/components/ui/dialog'
+import { useState, useEffect, useCallback } from 'react'
+
 import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
-import { ActionButtons, EditorView, InitialPreview, ProcessingView } from '@/features/shared/components/background-remover/components/index'
-import {  useBackgroundRemover, useCanvasEditor } from '@/features/shared/components/background-remover/hooks/index'
-import { BackgroundRemoverProps } from '../types'
-import { createFileFromBlob, optimizeImage } from '../utils/canvas.utils'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/features/shadcn/components/ui/dialog'
+import { ActionButtons, EditorView, InitialPreview, ProcessingView } from '@/features/shared/components/background-remover'
+import { useBackgroundRemover, useCanvasEditor } from '@/features/shared/hooks/hooks'
+import { BackgroundRemoverProps } from '@/features/shared/types'
+import { createFileFromBlob, optimizeImage } from '@/features/shared/utils/canvas.utils'
 
 export function BackgroundRemover({
     isOpen,
@@ -24,6 +25,15 @@ export function BackgroundRemover({
         processedBlob: remover.processedBlob,
         isOpen
     })
+
+    const handleClose = useCallback(() => {
+        if (originalUrl) URL.revokeObjectURL(originalUrl)
+        setOriginalUrl(null)
+        setIsOptimizing(false)
+        remover.cleanup()
+        editor.cleanup()
+        onClose()
+    }, [originalUrl, remover, editor, onClose])
 
     useEffect(() => {
         if (imageFile && isOpen) {
@@ -52,16 +62,9 @@ export function BackgroundRemover({
         } finally {
             setIsOptimizing(false)
         }
-    }, [imageFile, onProcessed, editor.canvasRef])
+    }, [imageFile, onProcessed, editor.canvasRef, handleClose])
 
-    const handleClose = useCallback(() => {
-        if (originalUrl) URL.revokeObjectURL(originalUrl)
-        setOriginalUrl(null)
-        setIsOptimizing(false)
-        remover.cleanup()
-        editor.cleanup()
-        onClose()
-    }, [originalUrl, remover, editor, onClose])
+
 
     return (
         <Dialog open={isOpen} onOpenChange={handleClose}>

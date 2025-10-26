@@ -1,6 +1,7 @@
 import { Eraser, Sparkles, Undo2, Redo2, RotateCcw } from 'lucide-react'
+
 import { Button } from '@/features/shadcn/components/ui/button'
-import {  EditorToolbarProps } from '../types'
+import { EditorToolbarProps } from '@/features/shared/types'
 
 export function EditorToolbar({
     editMode,

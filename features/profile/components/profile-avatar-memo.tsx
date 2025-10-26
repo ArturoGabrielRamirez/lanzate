@@ -4,7 +4,7 @@ import { memo } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
-import { MediaSelector } from "@/features/shared/components/media-selector/components/media-selector"
+import { MediaSelector } from "@/features/shared/components/media-selector/media-selector"
 
 
 const ProfileAvatar = memo(({

@@ -1,12 +1,14 @@
+import Image from 'next/image'
+
 import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
-import { InitialPreviewProps } from '../types'
+import { InitialPreviewProps } from '@/features/shared/types'
 
 export function InitialPreview({ originalUrl }: InitialPreviewProps) {
     return (
         <div className="space-y-3">
             <div className="relative w-full h-64 rounded-lg overflow-hidden bg-muted">
                 {originalUrl && (
-                    <img
+                    <Image
                         src={originalUrl}
                         alt="Original"
                         className="w-full h-full object-contain"

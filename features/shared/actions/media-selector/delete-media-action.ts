@@ -9,7 +9,7 @@ import { validateUploadType } from "@/features/shared/utils/validators"
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
 import { revalidatePath } from "next/cache"
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
-import { DeleteMediaParams } from "../types"
+import { DeleteMediaParams } from "../../components/media-selector/types"
 
 
 export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMediaParams) {

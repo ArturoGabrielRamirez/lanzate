@@ -2,9 +2,9 @@
 
 import { Trash2 } from 'lucide-react'
 import { MediaSelectorContentProps } from '../types'
-import { ConfirmDialog } from '../confirm-dialog'
+import { ConfirmDialog } from './confirm-dialog'
 import { useConfirm } from '../hooks/use-confirm'
-import { UploadProgress } from '../../upload-progress'
+import { UploadProgress } from '../upload-progress'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { AvatarLayout, BannerLayout } from '@/features/shared/components/media-selector/index'
 

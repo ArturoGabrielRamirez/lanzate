@@ -1,11 +1,11 @@
 "use server"
 
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
+import { updateStoreBanner, updateStoreLogo, verifyStoreOwnership } from "@/features/shared/data"
 import { StorageService } from "@/features/shared/services/storage"
-import { FileUploadData, UPLOAD_TYPES, UploadResult } from "@/features/shared/types/types"
-import { actionWrapper, formatSuccessResponse } from "@/utils/lib"
-import { updateStoreBanner, updateStoreLogo, verifyStoreOwnership } from "@/features/shared/data/index"
+import { FileUploadData, UPLOAD_TYPES, UploadResult } from "@/features/shared/types"
 
-export async function handleStoreUpload(
+export async function handleStoreUploadAction(
     uploadData: FileUploadData,
     userId: number,
     username: string,

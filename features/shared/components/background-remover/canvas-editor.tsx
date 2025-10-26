@@ -1,13 +1,14 @@
 import { Loader2 } from 'lucide-react'
+
 import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
-import { CanvasEditorProps } from '../types'
+import { CanvasEditorProps } from '@/features/shared/types'
 
 export function CanvasEditor({
     canvasRef,
     canvasInitialized,
     zoom,
     editMode,
-    isDrawing,
+    /*  isDrawing, */
     onDrawStart,
     onDrawMove,
     onDrawEnd

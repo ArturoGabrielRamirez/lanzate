@@ -4,8 +4,8 @@ import { useState, useEffect, useCallback } from 'react'
 
 import { toast } from 'sonner'
 
-import { deleteMediaAction } from '../components/media-selector/actions/delete-media-action'
-import { getUserUploadsAction } from '../components/media-selector/actions/get-user-uploads-action'
+import { deleteMediaAction } from '../actions/media-selector/delete-media-action'
+import { getUserUploadsAction } from '../actions/media-selector/get-user-uploads-action'
 
 export function useUploadHistory(type: 'avatar' | 'banner') {
     const [uploads, setUploads] = useState<string[]>([])

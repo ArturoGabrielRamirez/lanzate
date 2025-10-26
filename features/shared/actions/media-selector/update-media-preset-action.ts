@@ -1,7 +1,7 @@
 "use server"
 
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/utils/lib"
-import { UpdateMediaPresetParams } from "../types"
+import { UpdateMediaPresetParams } from "../../components/media-selector/types"
 import { getUserId } from "@/features/shared/data/get-user-id"
 import { getCurrentUserWithIdAndEmailAction } from "@/features/auth/actions"
 import { validateUploadType } from "@/features/shared/utils/validators"

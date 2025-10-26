@@ -3,7 +3,7 @@
 import { useState, useCallback, useRef } from 'react'
 import { toast } from 'sonner'
 import type { UploadMethod, UseFileUploadProps } from '../types'
-import { updateMediaPresetAction } from '../components/media-selector/actions/update-media-preset-action'
+import { updateMediaPresetAction } from '../actions/media-selector/update-media-preset-action'
 
 
 export function useFileUpload({ type, onSuccess, onError }: UseFileUploadProps) {

@@ -1,5 +1,5 @@
 export async function optimizeImage(canvas: HTMLCanvasElement): Promise<Blob> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
         const maxDimension = 2048
         let width = canvas.width
         let height = canvas.height

@@ -1,5 +1,6 @@
 import { Loader2 } from 'lucide-react'
-import { ProcessingViewProps } from '../types'
+
+import { ProcessingViewProps } from '@/features/shared/types'
 
 export function ProcessingView({ progress }: ProcessingViewProps) {
     return (
