@@ -1,40 +1,11 @@
 "use server"
 
-import { OrderStatus, PaymentMethod } from "@prisma/client"
-
-import { CartItemType } from "@/features/cart/types"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
 import { getStoreBySubdomainAction } from "@/features/stores/actions/get-store-by-subdomain.action"
+import { InsertOrderProps } from "@/features/checkout/types"
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
-
-
-type insertOrderProps = {
-    subdomain: string,
-    branch_id: number,
-    total_price: number,
-    total_quantity: number,
-    shipping_method: "DELIVERY" | "PICKUP",
-    processed_by_user_id: number,
-    payment_method: PaymentMethod,
-    cart: CartItemType[],
-    isWalkIn: boolean,
-    isPaid: boolean,
-    customer_info?: {
-        name?: string,
-        phone?: string,
-        email?: string,
-        id?: number,
-        address_one?: string,
-        address_two?: string,
-        city?: string,
-        state?: string,
-        zip_code?: string,
-        country?: string
-    },
-    status?: OrderStatus
-}
 
 export async function insertOrderData({
     branch_id,
@@ -49,7 +20,7 @@ export async function insertOrderData({
     cart,
     subdomain,
     status
-}: insertOrderProps) {
+}: InsertOrderProps) {
     return actionWrapper(async () => {
 
         const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()

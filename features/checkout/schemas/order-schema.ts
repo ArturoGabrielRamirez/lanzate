@@ -1,4 +1,5 @@
 import * as yup from 'yup'
+import { validateCardInfo } from '@/features/checkout/utils'
 
 const personalInfoSchema = {
     name: yup.string().required('Name is required'),
@@ -27,12 +28,9 @@ export const pickupOrderSchema = yup.object({
     ...orderMethodSchema,
     ...paymentMethodSchema,
 }).test('card-info-required', 'Card information is required for credit/debit payment', function(value: any) {
-    if (value.paymentMethod === 'credit-debit') {
-        const cardFields = ['cardNumber', 'cardHolder', 'expiryDate', 'cvv']
-        const missingFields = cardFields.filter(field => !value[field])
-        if (missingFields.length > 0) {
-            return this.createError({ message: 'Card information is required for credit/debit payment' })
-        }
+    const result = validateCardInfo(value.paymentMethod, value)
+    if (result !== true) {
+        return this.createError({ message: result })
     }
     return true
 })
@@ -43,12 +41,9 @@ export const deliveryOrderSchema = yup.object({
     ...paymentMethodSchema,
     ...shippingInfoSchema,
 }).test('card-info-required', 'Card information is required for credit/debit payment', function(value: any) {
-    if (value.paymentMethod === 'credit-debit') {
-        const cardFields = ['cardNumber', 'cardHolder', 'expiryDate', 'cvv']
-        const missingFields = cardFields.filter(field => !value[field])
-        if (missingFields.length > 0) {
-            return this.createError({ message: 'Card information is required for credit/debit payment' })
-        }
+    const result = validateCardInfo(value.paymentMethod, value)
+    if (result !== true) {
+        return this.createError({ message: result })
     }
     return true
 })

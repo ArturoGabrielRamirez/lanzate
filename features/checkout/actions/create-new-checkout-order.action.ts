@@ -1,34 +1,8 @@
 "use server"
 
-import { PaymentMethod, ShippingMethod } from "@prisma/client"
-
-import { CartItemType } from "@/features/cart/types"
 import { insertOrderData } from "@/features/checkout/data/insert-order.data"
+import { CreateNewCheckoutOrderFormData } from "@/features/checkout/types"
 import { actionWrapper } from "@/features/global/utils"
-
-
-type CreateNewCheckoutOrderFormData = {
-    branch_id: number
-    total_price: number
-    total_quantity: number
-    subdomain: string
-    payment_method: PaymentMethod
-    cart: CartItemType[]
-    processed_by_user_id: number
-    shipping_method: ShippingMethod
-    customer_info: {
-        name: string
-        phone: string
-        email: string
-        id?: number
-        address_one?: string
-        address_two?: string
-        city?: string
-        state?: string
-        zip_code?: string
-        country?: string
-    }
-}
 
 export async function createNewCheckoutOrderAction({
     branch_id,
