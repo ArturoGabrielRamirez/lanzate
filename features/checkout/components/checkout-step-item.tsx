@@ -2,9 +2,9 @@
 
 import { useFormContext } from "react-hook-form"
 
+import { CheckoutStepItemProps } from "@/features/checkout/types/types"
 import { InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperSeparator, InteractiveStepperTitle, InteractiveStepperTrigger } from "@/features/shadcn/components/expansion/interactive-stepper"
 import { cn } from "@/lib/utils"
-import { CheckoutStepItemProps } from "@/features/checkout/types/types"
 
 function CheckoutStepItem({ title, description, errorFields = [] }: CheckoutStepItemProps) {
     const { formState: { errors } } = useFormContext()

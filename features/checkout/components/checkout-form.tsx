@@ -15,12 +15,12 @@ import { PaymentInformation } from "@/features/checkout/components/payment-infor
 import { ShippingMethodSelector } from "@/features/checkout/components/shipping-method-selector"
 import { StepNavigation } from "@/features/checkout/components/step-navigation"
 import { deliveryOrderSchema, pickupOrderSchema } from "@/features/checkout/schemas/order-schema"
+import { computeDeliveryCost, computeFinalTotal } from "@/features/checkout/utils"
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
 import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem } from "@/features/shadcn/components/expansion/interactive-stepper"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Label } from "@/features/shadcn/components/ui/label"
-import { computeDeliveryCost, computeFinalTotal } from "@/features/checkout/utils"
 
 function CheckoutForm({
     userId,

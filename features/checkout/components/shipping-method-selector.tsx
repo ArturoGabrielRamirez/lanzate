@@ -6,10 +6,10 @@ import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 
+import { ShippingMethodSelectorProps } from "@/features/checkout/types/types"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { cn } from "@/lib/utils"
-import { ShippingMethodSelectorProps } from "@/features/checkout/types/types"
 
 function ShippingMethodSelector({ value, onChange, offersDelivery, deliveryPrice }: ShippingMethodSelectorProps) {
     const { setValue } = useFormContext()

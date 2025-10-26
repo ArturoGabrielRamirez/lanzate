@@ -2,6 +2,7 @@
 
 import { ShippingMethod } from "@prisma/client"
 import { createContext, useContext, useState } from "react"
+
 import { CheckoutContextType, CheckoutProviderProps } from "@/features/checkout/types/types"
 
 const CheckoutContext = createContext<CheckoutContextType | undefined>(undefined)
