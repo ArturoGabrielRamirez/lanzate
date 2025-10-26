@@ -1,8 +1,8 @@
 import { Suspense } from "react"
 
 import { HelpCard } from "@/features/dashboard/components"
+import { getUserInfo } from "@/features/global/actions"
 import { GlobalSearch } from "@/features/global-search/components"
-import { getUserInfo } from "@/features/layout/actions"
 import { PageContainer } from "@/features/layout/components"
 import { OrdersListWidget, OrdersListWidgetSkeleton } from "@/features/orders/components"
 import { Item, ItemContent, ItemGroup, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
