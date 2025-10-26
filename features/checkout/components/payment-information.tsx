@@ -16,7 +16,7 @@ interface PaymentInformationProps {
     allowedPaymentMethods: PaymentMethod[]
 }
 
-export function PaymentInformation({ paymentMethod, onChange, allowedPaymentMethods }: PaymentInformationProps) {
+function PaymentInformation({ paymentMethod, onChange, allowedPaymentMethods }: PaymentInformationProps) {
     const { setValue } = useFormContext()
     const t = useTranslations("checkout.payment")
 
@@ -142,3 +142,5 @@ export function PaymentInformation({ paymentMethod, onChange, allowedPaymentMeth
         </div>
     )
 } 
+
+export { PaymentInformation }

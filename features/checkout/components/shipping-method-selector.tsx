@@ -17,7 +17,7 @@ interface ShippingMethodSelectorProps {
     deliveryPrice: number
 }
 
-export function ShippingMethodSelector({ value, onChange, offersDelivery, deliveryPrice }: ShippingMethodSelectorProps) {
+function ShippingMethodSelector({ value, onChange, offersDelivery, deliveryPrice }: ShippingMethodSelectorProps) {
     const { setValue } = useFormContext()
     const t = useTranslations("checkout.delivery.method-selector")
 
@@ -88,3 +88,5 @@ export function ShippingMethodSelector({ value, onChange, offersDelivery, delive
         </div>
     )
 } 
+
+export { ShippingMethodSelector }

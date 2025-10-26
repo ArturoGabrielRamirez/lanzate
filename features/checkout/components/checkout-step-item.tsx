@@ -12,7 +12,7 @@ interface CheckoutStepItemProps {
     errorFields?: string[]
 }
 
-export function CheckoutStepItem({ title, description, errorFields = [] }: CheckoutStepItemProps) {
+function CheckoutStepItem({ title, description, errorFields = [] }: CheckoutStepItemProps) {
     const { formState: { errors } } = useFormContext()
 
     const hasErrors = errorFields.some(field => errors[field])
@@ -34,3 +34,5 @@ export function CheckoutStepItem({ title, description, errorFields = [] }: Check
         </>
     )
 } 
+
+export { CheckoutStepItem }
