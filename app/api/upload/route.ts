@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
-import { createStorageService } from '../../../features/shared/services/storage'
+import { createStorageService } from '../../../features/global/services/storage'
 import {
   ValidationError,
   validateUploadType,
@@ -11,13 +11,13 @@ import {
   validateFileType,
   validatePresetType,
   validatePresetData
-} from '../../../features/shared/utils/validators'
-import { PresetRequest, UPLOAD_TYPES, type FileUploadData } from '../../../features/shared/types/types'
-import { handlePresetUploadAction } from '@/features/shared/actions/media-upload/handle-preset-upload.action'
-import { handleUserUploadAction } from '@/features/shared/actions/media-upload/handle-user-upload.action'
-import { handleProductUploadAction } from '@/features/shared/actions/media-upload/handle-product-upload.action'
-import { handleStoreUploadAction } from '@/features/shared/actions/media-upload/handle-store-upload.action'
-import { getUserId } from '@/features/shared/data/get-user-id'
+} from '../../../features/global/utils/media/validators'
+import { PresetRequest, UPLOAD_TYPES, type FileUploadData } from '../../../features/global/types/media'
+import { handlePresetUploadAction } from '@/features/global/actions/media/handle-preset-upload.action'
+import { handleUserUploadAction } from '@/features/auth/actions/handle-user-upload.action'
+import { handleProductUploadAction } from '@/features/products/actions/handle-product-upload.action'
+import { handleStoreUploadAction } from '@/features/stores/actions/handle-store-upload.action'
+import { getUserId } from '@/features/auth/data/get-user-id'
 
 
 export async function POST(request: NextRequest) {

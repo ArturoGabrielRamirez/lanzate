@@ -5,7 +5,7 @@ import { PRESET_BANNERS } from "@/features/profile/constants"
 import { BannerSectionProps } from "@/features/profile/types"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
-import { MediaSelector } from "@/features/shared/components/media-selector/media-selector"
+import { MediaSelector } from "@/features/global/components/media-selector/media-selector"
 
 function BannerSection({
     bannerUrl,
