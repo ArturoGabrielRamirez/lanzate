@@ -1,3 +1,3 @@
-export * from "./validate-card-info"
-export * from "./calculate-delivery-cost"
-export * from "./get-available-payment-methods"
+export * from "@/features/checkout/utils/compute-delivery-cost"
+export * from "@/features/checkout/utils/compute-final-total"
+

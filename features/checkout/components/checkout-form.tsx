@@ -15,12 +15,12 @@ import { PaymentInformation } from "@/features/checkout/components/payment-infor
 import { ShippingMethodSelector } from "@/features/checkout/components/shipping-method-selector"
 import { StepNavigation } from "@/features/checkout/components/step-navigation"
 import { deliveryOrderSchema, pickupOrderSchema } from "@/features/checkout/schemas/order-schema"
-import { calculateDeliveryCost } from "@/features/checkout/utils"
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
 import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem } from "@/features/shadcn/components/expansion/interactive-stepper"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Label } from "@/features/shadcn/components/ui/label"
+import { computeDeliveryCost, computeFinalTotal } from "@/features/checkout/utils"
 
 function CheckoutForm({
     userId,
@@ -41,15 +41,8 @@ function CheckoutForm({
     const router = useRouter()
     const t = useTranslations("checkout")
 
-    // Calculate delivery cost
-    const deliveryCost = calculateDeliveryCost(
-        operationalSettings?.offers_delivery || false,
-        shippingMethod,
-        operationalSettings?.delivery_price || 0
-    )
-
-    // Calculate final total including delivery
-    const finalTotal = total + deliveryCost
+    const deliveryCost = computeDeliveryCost(operationalSettings, shippingMethod)
+    const finalTotal = computeFinalTotal(total, deliveryCost)
 
     const handleSubmit = async (formData: any) => {
 

@@ -1,11 +1,15 @@
 "use server"
 
+import { OrderStatus, PaymentMethod } from "@prisma/client"
+
+import { CartItemType } from "@/features/cart/types"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
 import { getStoreBySubdomainAction } from "@/features/stores/actions/get-store-by-subdomain.action"
-import { InsertOrderProps } from "@/features/checkout/types"
 import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
+import { InsertOrderProps } from "@/features/checkout/types/types"
+
 
 export async function insertOrderData({
     branch_id,

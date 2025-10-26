@@ -1,12 +1,13 @@
 "use client"
 
+import { Branch } from "@prisma/client"
 import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 
-import { BranchSelectorProps } from "@/features/checkout/types"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
+import { BranchSelectorProps } from "@/features/checkout/types/types"
 
 function BranchSelector({ branches, value, onChange }: BranchSelectorProps) {
     const { setValue } = useFormContext()

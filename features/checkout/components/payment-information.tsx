@@ -1,16 +1,15 @@
 "use client"
 
 import { PaymentMethod } from "@prisma/client"
-import { Banknote, Smartphone } from "lucide-react"
+import { CreditCard, Banknote, Smartphone } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useFormContext } from "react-hook-form"
 
-import { PaymentInformationProps } from "@/features/checkout/types"
-import { getAvailablePaymentMethods } from "@/features/checkout/utils"
 import { InputField } from "@/features/global/components/form/input-field"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
+import { PaymentInformationProps } from "@/features/checkout/types/types"
 
 function PaymentInformation({ paymentMethod, onChange, allowedPaymentMethods }: PaymentInformationProps) {
     const { setValue } = useFormContext()
@@ -26,14 +25,15 @@ function PaymentInformation({ paymentMethod, onChange, allowedPaymentMethods }: 
     }
 
     // Filter payment methods based on what the store allows
-    const availablePaymentMethods = getAvailablePaymentMethods(allowedPaymentMethods, {
-        cash: t("method-selector.cash"),
-        creditDebitCard: t("method-selector.credit-debit-card"),
-        bankTransfer: t("method-selector.bank-transfer"),
-        mercadoPago: t("method-selector.mercado-pago"),
-        paypal: t("method-selector.paypal"),
-        crypto: t("method-selector.crypto"),
-    })
+    const availablePaymentMethods = [
+        { value: "CASH" as PaymentMethod, label: t("method-selector.cash"), icon: Banknote },
+        { value: "CREDIT_CARD" as PaymentMethod, label: t("method-selector.credit-debit-card"), icon: CreditCard },
+        { value: "DEBIT_CARD" as PaymentMethod, label: t("method-selector.credit-debit-card"), icon: CreditCard },
+        { value: "TRANSFER" as PaymentMethod, label: t("method-selector.bank-transfer"), icon: Banknote },
+        { value: "MERCADO_PAGO" as PaymentMethod, label: t("method-selector.mercado-pago"), icon: Smartphone },
+        { value: "PAYPAL" as PaymentMethod, label: t("method-selector.paypal"), icon: CreditCard },
+        { value: "CRYPTO" as PaymentMethod, label: t("method-selector.crypto"), icon: CreditCard },
+    ].filter(method => allowedPaymentMethods.includes(method.value))
     
     return (
         <div className="flex flex-col gap-6">
