@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 import { useStepper } from "@/features/shadcn/components/expansion/interactive-stepper"
 import { Button } from "@/features/shadcn/components/ui/button"
 
-export function StepNavigation() {
+function StepNavigation() {
     const { currentStep, nextStep, prevStep, hasNext } = useStepper()
     const t = useTranslations("checkout.navigation")
 
@@ -35,3 +35,5 @@ export function StepNavigation() {
         </div>
     )
 } 
+
+export { StepNavigation }

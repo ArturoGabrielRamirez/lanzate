@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import { useState, useRef } from 'react'
 
 import { CartItemType } from '@/features/cart/types'
-import { createNewWalkInOrder } from '@/features/checkout/actions/create-new-walk-in-order.action'
+import { createNewWalkInOrderAction } from '@/features/checkout/actions/create-new-walk-in-order.action'
 import { searchProductByBarcodeAction } from '@/features/products/actions/search-product-by-barcode.action'
 import { ActionsSection, BarcodeScannerUSB, CartSection, ProductResults, SearchSection } from '@/features/sale/components'
 import type { ScannedProduct, ProductSearchResult, CartItem, ProductSearchByNameResult, SaleInterfaceProps, CustomerInfo, SearchSectionRef } from '@/features/sale/types'
@@ -164,7 +164,7 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
   const handleFinalizeSale = async (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => {
     return actionWrapper(async () => {
 
-      const { error, message, payload } = await createNewWalkInOrder({
+      const { error, message, payload } = await createNewWalkInOrderAction({
         branch_id: branchId,
         subdomain: subdomain,
         cart: cartItems.map(item => ({

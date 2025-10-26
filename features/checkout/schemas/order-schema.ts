@@ -1,5 +1,8 @@
 import * as yup from 'yup'
 
+import { validateCardInfo } from '@/features/checkout/utils/validate-card-info'
+
+
 const personalInfoSchema = {
     name: yup.string().required('Name is required'),
     email: yup.string().email('Email must be a valid email').required('Email is required'),
@@ -26,13 +29,10 @@ export const pickupOrderSchema = yup.object({
     ...personalInfoSchema,
     ...orderMethodSchema,
     ...paymentMethodSchema,
-}).test('card-info-required', 'Card information is required for credit/debit payment', function(value: any) {
-    if (value.paymentMethod === 'credit-debit') {
-        const cardFields = ['cardNumber', 'cardHolder', 'expiryDate', 'cvv']
-        const missingFields = cardFields.filter(field => !value[field])
-        if (missingFields.length > 0) {
-            return this.createError({ message: 'Card information is required for credit/debit payment' })
-        }
+}).test('card-info-required', 'Card information is required for credit/debit payment', function (value) {
+    const result = validateCardInfo(value.paymentMethod, value)
+    if (result !== true) {
+        return this.createError({ message: result as string })
     }
     return true
 })
@@ -42,13 +42,10 @@ export const deliveryOrderSchema = yup.object({
     ...orderMethodSchema,
     ...paymentMethodSchema,
     ...shippingInfoSchema,
-}).test('card-info-required', 'Card information is required for credit/debit payment', function(value: any) {
-    if (value.paymentMethod === 'credit-debit') {
-        const cardFields = ['cardNumber', 'cardHolder', 'expiryDate', 'cvv']
-        const missingFields = cardFields.filter(field => !value[field])
-        if (missingFields.length > 0) {
-            return this.createError({ message: 'Card information is required for credit/debit payment' })
-        }
+}).test('card-info-required', 'Card information is required for credit/debit payment', function (value) {
+    const result = validateCardInfo(value.paymentMethod, value)
+    if (result !== true) {
+        return this.createError({ message: result as string })
     }
     return true
 })

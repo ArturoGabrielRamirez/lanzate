@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import { useCart } from "@/features/cart/components/cart-provider"
-import { createNewCheckoutOrder } from "@/features/checkout/actions/create-new-checkout-order.action"
+import { createNewCheckoutOrderAction } from "@/features/checkout/actions/create-new-checkout-order.action"
 import { BranchSelector } from "@/features/checkout/components/branch-selector"
 import { useCheckout } from "@/features/checkout/components/checkout-context"
 import { CheckoutStepItem } from "@/features/checkout/components/checkout-step-item"
@@ -15,6 +15,7 @@ import { PaymentInformation } from "@/features/checkout/components/payment-infor
 import { ShippingMethodSelector } from "@/features/checkout/components/shipping-method-selector"
 import { StepNavigation } from "@/features/checkout/components/step-navigation"
 import { deliveryOrderSchema, pickupOrderSchema } from "@/features/checkout/schemas/order-schema"
+import { computeDeliveryCost, computeFinalTotal } from "@/features/checkout/utils"
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
 import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem } from "@/features/shadcn/components/expansion/interactive-stepper"
@@ -40,17 +41,12 @@ function CheckoutForm({
     const router = useRouter()
     const t = useTranslations("checkout")
 
-    // Calculate delivery cost
-    const deliveryCost = operationalSettings?.offers_delivery && shippingMethod === "DELIVERY"
-        ? (operationalSettings.delivery_price || 0)
-        : 0
-
-    // Calculate final total including delivery
-    const finalTotal = total + deliveryCost
+    const deliveryCost = computeDeliveryCost(operationalSettings, shippingMethod)
+    const finalTotal = computeFinalTotal(total, deliveryCost)
 
     const handleSubmit = async (formData: any) => {
 
-        const { hasError: error, message, payload } = await createNewCheckoutOrder({
+        const { hasError: error, message, payload } = await createNewCheckoutOrderAction({
             branch_id: selectedBranchId as number,
             customer_info: {
                 name: formData.name,

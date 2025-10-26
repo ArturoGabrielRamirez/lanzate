@@ -1,29 +1,10 @@
 "use server"
 
-import { PaymentMethod } from "@prisma/client"
-
-import { CartItemType } from "@/features/cart/types"
-import { insertOrder } from "@/features/checkout/data/insert-order.data"
+import { insertOrderData } from "@/features/checkout/data/insert-order.data"
+import { CreateNewWalkInOrderFormData } from "@/features/checkout/types"
 import { actionWrapper } from "@/features/global/utils"
 
-type CreateNewWalkInOrderFormData = {
-    branch_id: number
-    total_price: number
-    total_quantity: number
-    subdomain: string
-    isPaid: boolean
-    payment_method: PaymentMethod
-    cart: CartItemType[]
-    processed_by_user_id: number
-    customer_info: {
-        name?: string
-        phone?: string
-        email?: string
-        id?: number
-    }
-}
-
-export async function createNewWalkInOrder({
+export async function createNewWalkInOrderAction({
     branch_id,
     total_price,
     total_quantity,
@@ -37,7 +18,7 @@ export async function createNewWalkInOrder({
 
     return actionWrapper(async () => {
 
-        const { error, message, payload: order } = await insertOrder({
+        const { error, message, payload: order } = await insertOrderData({
             branch_id: branch_id,
             isPaid: isPaid,
             isWalkIn: true,
