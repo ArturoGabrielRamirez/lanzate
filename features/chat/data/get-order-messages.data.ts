@@ -1,7 +1,7 @@
 "use server"
 
 import { OrderIdProp } from "@/features/chat/types"
-import { ChatMessage } from "@/hooks/use-realtime-chat"
+import { ChatMessage } from "@/features/shadcn/hooks/use-realtime-chat"
 import { prisma } from "@/utils/prisma"
 
 export async function getOrderMessagesData({ orderId }: OrderIdProp): Promise<ChatMessage[]> {

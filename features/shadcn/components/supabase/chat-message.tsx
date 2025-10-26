@@ -1,4 +1,4 @@
-import type { ChatMessage } from '@/hooks/use-realtime-chat'
+import type { ChatMessage } from '@/features/shadcn/hooks/use-realtime-chat'
 import { cn } from '@/lib/utils'
 
 interface ChatMessageItemProps {

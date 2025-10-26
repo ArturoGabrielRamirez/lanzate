@@ -5,7 +5,7 @@ import { createContext, useContext, useState } from "react"
 import { fetchOrderMessagesAction } from "@/features/chat/actions/get-order-messages.action"
 import { fetchOrderStatusAction } from "@/features/chat/actions/get-order-status.action"
 import { ChatProviderProps, ChatState } from "@/features/layout/types/types"
-import { ChatMessage } from "@/hooks/use-realtime-chat"
+import { ChatMessage } from "@/features/shadcn/hooks/use-realtime-chat"
 
 const ChatContext = createContext<{
     isOpen: boolean

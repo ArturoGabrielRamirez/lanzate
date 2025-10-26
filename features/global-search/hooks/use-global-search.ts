@@ -5,8 +5,8 @@ import { toast } from "sonner"
 
 import { searchGlobalAction } from "@/features/global-search/actions"
 import { SEARCH_CONFIG } from "@/features/global-search/constants"
+import { useDebounce } from "@/features/global-search/hooks/use-debounce"
 import { SearchResult, UseGlobalSearchReturn } from "@/features/global-search/types"
-import { useDebounce } from "@/hooks/use-debounce"
 
 export function useGlobalSearch(userId: number): UseGlobalSearchReturn {
     const [query, setQuery] = useState('')

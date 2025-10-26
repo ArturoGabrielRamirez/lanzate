@@ -11,7 +11,7 @@ import welcomeImage from "@/features/dashboard/assets/we are open-pana.svg"
 import { WelcomeTutorialWidget } from "@/features/dashboard/components/welcome-tutorial"
 import { Button } from "@/features/shadcn/components/button"
 import { SectionContainer } from "@/features/stores/components"
-import { useStep } from "@/hooks/use-step"
+import { useStep } from "@/features/shadcn/hooks/use-step"
 
 function WelcomeTutorial() {
 

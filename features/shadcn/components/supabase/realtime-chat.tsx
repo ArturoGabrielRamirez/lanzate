@@ -8,8 +8,8 @@ import { createNewOrderMessageAction } from '@/features/chat/actions/create-new-
 import { ChatMessageItem } from '@/features/shadcn/components/supabase/chat-message'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Input } from '@/features/shadcn/components/ui/input'
-import { useChatScroll } from '@/hooks/use-chat-scroll'
-import { type ChatMessage, useRealtimeChat } from '@/hooks/use-realtime-chat'
+import { useChatScroll } from '@/features/shadcn/hooks/use-chat-scroll'
+import { type ChatMessage, useRealtimeChat } from '@/features/shadcn/hooks/use-realtime-chat'
 import { cn } from '@/lib/utils'
 
 interface RealtimeChatProps {

@@ -6,7 +6,7 @@ import * as motion from "motion/react-client"
 
 import { useChat } from "@/features/layout/components/chat-provider"
 import { RealtimeChat } from "@/features/shadcn/components/supabase/realtime-chat"
-import { ChatMessage } from "@/hooks/use-realtime-chat"
+import { ChatMessage } from "@/features/shadcn/hooks/use-realtime-chat"
 import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 
 function ChatDoc() {
