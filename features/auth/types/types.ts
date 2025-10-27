@@ -1,4 +1,4 @@
-import { Account, User as PrismaUser } from "@prisma/client";
+import { Account, Prisma, User as PrismaUser } from "@prisma/client";
 import { User } from "@supabase/supabase-js"
 import { InferType } from "yup"
 
@@ -449,10 +449,12 @@ export type GetSupabaseUser = {
 
 export type GetUserBySupabaseIdParams = {
   supabaseUserId: Pick<PrismaUser, "supabase_user_id">["supabase_user_id"]
+  select?: Prisma.UserSelect
 }
 
 export type GetUserByEmailParams = {
   supabaseUserEmail: Pick<User, "email">["email"]
+  select?: Prisma.UserSelect
 }
 
 export type InsertUserParams = {

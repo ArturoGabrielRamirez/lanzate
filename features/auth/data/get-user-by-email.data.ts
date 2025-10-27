@@ -3,13 +3,11 @@
 import { GetUserByEmailParams } from "@/features/auth/types"
 import { prisma } from "@/utils/prisma"
 
-export async function getUserByEmailData({ supabaseUserEmail }: GetUserByEmailParams) {
-
-    if (!supabaseUserEmail) throw new Error("Email is required")
+export async function getUserByEmailData({ supabaseUserEmail, select }: GetUserByEmailParams) {
 
     const backupUser = await prisma.user.findUnique({
         where: { email: supabaseUserEmail },
-        select: {
+        select: select || {
             id: true,
             username: true,
             email: true,

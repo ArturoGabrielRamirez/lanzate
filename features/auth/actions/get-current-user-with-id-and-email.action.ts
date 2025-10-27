@@ -9,11 +9,18 @@ export async function getCurrentUserWithIdAndEmailAction() {
     const { payload: supabaseUser } = await getUserData()
 
     if (!supabaseUser) throw new Error("Usuario no autenticado")
+    if (!supabaseUser.id) throw new Error("ID no encontrado")
 
-    const localUser = await getUserBySupabaseIdData({ supabaseUserId: supabaseUser.id })
+    const localUser = await getUserBySupabaseIdData({
+      supabaseUserId: supabaseUser.id
+    })
+
 
     if (!localUser.payload) {
-      const { payload: backupUser } = await getUserByEmailData({ supabaseUserEmail: supabaseUser.email! })
+
+      const { payload: backupUser } = await getUserByEmailData({
+        supabaseUserEmail: supabaseUser.email!
+      })
 
       if (backupUser) {
         localUser.payload = backupUser
