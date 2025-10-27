@@ -3,9 +3,9 @@
 import { Phone } from "lucide-react"
 import { useTranslations } from "next-intl"
 
+import { AccordionTriggerWithValidation } from "@/features/branches/components/accordion-trigger-with-validation"
+import { InputField } from "@/features/global/components/form/input-field"
 import { AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { InputField } from "@/features/layout/components"
 import { ContactSectionProps } from "@/features/stores/types"
 
 function ContactSection({ store, mode }: ContactSectionProps) {
@@ -23,12 +23,14 @@ function ContactSection({ store, mode }: ContactSectionProps) {
                 <InputField
                     name="contact_phone"
                     label={t("contact-phone")}
+                    placeholder={t("contact-phone")}
                     type="tel"
                     defaultValue={store?.branches?.[0]?.phone || ""}
                 />
                 <InputField
                     name="contact_email"
                     label="Email"
+                    placeholder="Email"
                     type="email"
                     defaultValue={store?.branches?.[0]?.email || ""}
                 />

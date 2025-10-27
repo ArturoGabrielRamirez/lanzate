@@ -7,7 +7,7 @@ import { useState } from "react"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function LandingAccountDropdown() {
     const [open, setOpen] = useState(false)

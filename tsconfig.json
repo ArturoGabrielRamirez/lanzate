@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.mjs", ".next/types/**/*.ts", "app/auth/confirm-first-email", "features/shared/components/media-selector/actions"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.mjs", ".next/types/**/*.ts", "app/auth/confirm-first-email", "features/global/components/media-selector/actions"],
   "exclude": ["node_modules"]
 }

@@ -7,7 +7,7 @@ import { DeleteVariantButton } from "@/features/products/components/delete-varia
 import type { VariantsDisplayProps } from "@/features/products/types"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function VariantsDisplay({ product, slug }: VariantsDisplayProps) {

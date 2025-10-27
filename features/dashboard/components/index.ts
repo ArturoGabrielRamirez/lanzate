@@ -5,3 +5,5 @@ export * from "@/features/dashboard/components/welcome-tutorial"
 export * from "@/features/dashboard/components/dashboard-error"
 export * from "@/features/dashboard/components/help-widget"
 export * from "@/features/dashboard/components/welcome-widget"
+
+export * from "@/features/dashboard/components/page-header"

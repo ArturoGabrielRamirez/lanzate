@@ -11,7 +11,7 @@ import { toast } from "sonner"
 import { updateOperationalSettingsAction } from "@/features/stores/actions"
 import { EditOperationalSettingsButtonProps, OperationalSettingsFormPayload } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function EditOperationalSettingsButton({ storeId, store, onSuccess }: EditOperationalSettingsButtonProps) {

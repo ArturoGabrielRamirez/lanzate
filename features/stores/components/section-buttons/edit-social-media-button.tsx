@@ -8,7 +8,7 @@ import { toast } from "sonner"
 import { updateStoreSocialMediaAction } from "@/features/stores/actions"
 import { EditSocialMediaButtonProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function EditSocialMediaButton({ store, onSuccess }: EditSocialMediaButtonProps) {
     const { getValues, formState: { isValid } } = useFormContext()

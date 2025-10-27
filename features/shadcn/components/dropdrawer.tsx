@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import * as React from "react";
 
+import { useIsMobile } from "@/features/global/hooks/use-mobile";
 import {
   Drawer,
   DrawerClose,
@@ -24,7 +25,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/features/shadcn/components/ui/dropdown-menu";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
 const DropDrawerContext = React.createContext<{ isMobile: boolean }>({

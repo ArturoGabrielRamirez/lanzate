@@ -2,7 +2,7 @@
 
 import { insertNewOrderMessageData } from "@/features/chat/data/insert-new-order-message.data"
 import { CreateNewOrderMessageAction } from "@/features/chat/types"
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from '@/features/global/utils'
 
 export async function createNewOrderMessageAction({ orderId, message, messageType }: CreateNewOrderMessageAction) {
 
@@ -13,7 +13,7 @@ export async function createNewOrderMessageAction({ orderId, message, messageTyp
         if (!newMessage) throw new Error("Error creating message")
 
         return {
-            error: false,
+            hasError: false,
             message: "Message created successfully",
             payload: null
         }

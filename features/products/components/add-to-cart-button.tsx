@@ -6,7 +6,7 @@ import { useState } from "react"
 import { useCart } from "@/features/cart/components/cart-provider"
 import type { AddToCartButtonProps } from "@/features/products/types"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function AddToCartButton({ product, canBeAddedToCart, overrideId, overrideName, overridePrice, overrideImage }: AddToCartButtonProps) {
     const { addToCart } = useCart()

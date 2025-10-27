@@ -16,7 +16,7 @@ import { EditOperationalSettingsButton } from "@/features/stores/components"
 import { PaymentMethodsSwitches } from "@/features/stores/components/payment-methods-switches"
 import { editOperationalSettingsSchema } from "@/features/stores/schemas/operational-settings-schema"
 import { EditOperationalSettingsData, OperationalSettingsDisplayProps } from "@/features/stores/types"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) {
     const storeOperationalSettings = store.operational_settings

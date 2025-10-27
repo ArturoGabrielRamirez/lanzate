@@ -3,7 +3,7 @@
 import { BadgeCheckIcon, ChevronRightIcon } from "lucide-react"
 
 import { Item, ItemActions, ItemContent, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function WelcomeTutorialWidget({ onRetakeTutorial }: { onRetakeTutorial: () => void }) {
 

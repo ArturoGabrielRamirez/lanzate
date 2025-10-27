@@ -8,7 +8,7 @@ import { ButtonWithPopup } from "@/features/layout/components"
 import { deleteProductVariantAction } from "@/features/products/actions/delete-product-variant.action"
 import type { DeleteVariantButtonProps } from "@/features/products/types"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { formatErrorResponse } from "@/utils/lib"
 
 function DeleteVariantButton({ variantId, slug, productId, onlyIcon = false }: DeleteVariantButtonProps) {

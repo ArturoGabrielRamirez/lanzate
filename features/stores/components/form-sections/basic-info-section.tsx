@@ -3,9 +3,9 @@
 import { StoreIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
+import { AccordionTriggerWithValidation } from "@/features/branches/components/accordion-trigger-with-validation"
+import { InputField } from "@/features/global/components/form/input-field"
 import { AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { InputField } from "@/features/layout/components"
 import { BasicInfoSectionProps } from "@/features/stores/types"
 
 function BasicInfoSection({ store, subdomain, onSubdomainChange, mode, onNameChange }: BasicInfoSectionProps) {
@@ -23,6 +23,7 @@ function BasicInfoSection({ store, subdomain, onSubdomainChange, mode, onNameCha
                 <InputField
                     name="name"
                     label={t("name")}
+                    placeholder={t("name")}
                     type="text"
                     defaultValue={store?.name}
                     onChange={onNameChange ?? undefined}
@@ -30,6 +31,7 @@ function BasicInfoSection({ store, subdomain, onSubdomainChange, mode, onNameCha
                 <InputField
                     name="description"
                     label={t("description-field")}
+                    placeholder={t("description-field")}
                     type="text"
                     defaultValue={store?.description || ""}
                 />
@@ -38,8 +40,9 @@ function BasicInfoSection({ store, subdomain, onSubdomainChange, mode, onNameCha
                         name="subdomain"
                         label={t("subdomain")}
                         type="text"
+                        placeholder={t("subdomain")}
                         onChange={onSubdomainChange}
-                        value={subdomain}
+                        defaultValue={subdomain}
                     />
                     <span className="text-muted-foreground pointer-events-none select-none">
                         .lanzate.com

@@ -26,10 +26,10 @@ import { createStoreAction } from "@/features/stores/actions"
 import { basicInfoSchemaNew, addressInfoSchema, contactInfoSchema, settingsSchema, shippingPaymentSchema, BasicInfoFormType, AddressInfoFormType, ContactInfoFormType, SettingsFormType, ShippingPaymentFormType } from "@/features/stores/schemas"
 import { AttentionDateType, ShippingMethod, AttentionDateFormPanelProps, ShippingMethodFormPanelProps, StepIndicatorProps, CreateStoreFormProps, CreateStoreFormValues, CreateStoreContextType } from "@/features/stores/types"
 import { processOpeningHours, processShippingMethods, processPaymentMethods, slugify } from "@/features/stores/utils"
-import { useStep } from "@/hooks/use-step"
+import { useStep } from "@/features/shadcn/hooks/use-step"
 import { cn } from "@/lib/utils"
-import AnimatedTags from "@/src/components/smoothui/ui/AnimatedTags"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 const CreateStoreContext = createContext<CreateStoreContextType | null>(null)

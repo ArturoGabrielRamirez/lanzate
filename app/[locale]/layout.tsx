@@ -1,18 +1,18 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
-import { Toaster } from "@/features/shadcn/components/ui/sonner"
 import { GlobalEmailConfirmationDetector } from '@/features/auth/components';
 import { FloatingDockContainer } from '@/features/floating-dock/components';
 import { Footer } from "@/features/footer/components";
 import { Header } from "@/features/header/components";
 import { NextThemeProvider, SubdomainProvider } from "@/features/layout/components";
-import ChatDoc from "@/features/layout/components/chat-doc";
+import { ChatDoc } from "@/features/layout/components/chat-doc";
 import { ChatProvider } from "@/features/layout/components/chat-provider";
-import { LayoutProps } from "@/features/layout/types";
-import { BProgressProvider } from "@/src/components/bprogress-provider";
+import { LayoutType } from '@/features/layout/types';
+import { BProgressProvider } from "@/features/shadcn/components/bprogress-provider";
+import { Toaster } from "@/features/shadcn/components/ui/sonner"
 
-export default async function RootLayout({ children, params }: LayoutProps) {
+export default async function RootLayout({ children, params }: LayoutType) {
 
   const { locale } = await params;
   

@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
-import { getUserId } from '@/features/shared/data/get-user-id'
-import { createStorageService } from '@/features/shared/services/storage'
+import { getUserId } from '@/features/auth/data/get-user-id'
+import { createStorageService } from '@/features/global/services/storage'
 
-import { UPLOAD_TYPES } from '@/features/shared/types/types'
-import { ValidationError } from '@/features/shared/utils/validators'
-import { handleUserDelete } from '@/features/shared/actions/handle-user-delete'
+import { UPLOAD_TYPES } from '@/features/global/types/media'
+import { ValidationError } from '@/features/global/utils/media/validators'
+import { handleUserDeleteAction } from '@/features/auth/actions/handle-user-delete.action'
 
 export async function POST(request: NextRequest) {
     try {
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
         const storage = createStorageService()
 
         // Ejecutar eliminación
-        const result = await handleUserDelete(
+        const result = await handleUserDeleteAction(
             type,
             user.id,
             user.username,

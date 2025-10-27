@@ -2,7 +2,7 @@
 
 import { Menu } from "lucide-react";
 
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button";
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button";
 
 function HamburguerIcon() {
     return (

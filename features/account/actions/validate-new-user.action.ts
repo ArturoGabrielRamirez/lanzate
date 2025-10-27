@@ -3,7 +3,7 @@
 import { DELETION_CONFIG } from "@/features/account/config/deletion.config"
 import { findUserByEmail, findAnonymizedUserByEmailHash } from "@/features/account/data/index"
 import { CryptoUtils } from "@/features/account/utils/crypto-utils"
-import { actionWrapper, formatSuccessResponse } from "@/utils/lib"
+import { actionWrapper, formatSuccessResponse } from '@/features/global/utils'
 
 export async function validateNewUserCreationAction(email: string) {
     return actionWrapper(async () => {
@@ -23,7 +23,7 @@ export async function validateNewUserCreationAction(email: string) {
 
         return formatSuccessResponse('Validación completada', {
             canCreate: true,
-            reason: null,
+            reason: '',
             conflict: false,
             previouslyAnonymized: !!anonymizedUser,
             anonymizedAt: anonymizedUser?.anonymized_at,

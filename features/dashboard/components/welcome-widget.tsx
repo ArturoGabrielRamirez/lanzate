@@ -1,5 +1,5 @@
+import { PageHeader } from "@/features/dashboard/components/page-header"
 import { WelcomeWidgetProps } from "@/features/dashboard/types"
-import { PageHeader } from "@/features/layout/components"
 
 function WelcomeWidget({ user }: WelcomeWidgetProps) {
     return (

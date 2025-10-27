@@ -13,5 +13,5 @@ export function formatErrorResponse(message: string): ServerError {
 }
 
 export function formatSuccessResponse<T>(message: string, payload: T): ServerSuccess<T> {
-    return formatResponse(message, payload, false) as ServerSuccess<T>;
+    return formatResponse<T>(message, payload, false) as ServerSuccess<T>;
 }

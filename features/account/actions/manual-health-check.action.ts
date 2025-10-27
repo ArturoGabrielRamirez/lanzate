@@ -2,7 +2,7 @@
 
 import { DELETION_CONFIG } from "@/features/account/config/deletion.config"
 import { getStatsFromData } from "@/features/account/data/index"
-import { actionWrapper, formatSuccessResponse } from "@/utils/lib"
+import { actionWrapper, formatSuccessResponse } from '@/features/global/utils'
 
 /**
  * Solo para testing/debug manual del sistema

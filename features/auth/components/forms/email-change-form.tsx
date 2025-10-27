@@ -1,6 +1,6 @@
 import { EmailStatusAlerts } from "@/features/auth/components"
 import { EmailChangeFormProps } from "@/features/auth/types"
-import { InputField } from "@/features/layout/components"
+import { InputField } from "@/features/global/components/form/input-field";
 
 function EmailChangeForm({
     currentEmail,

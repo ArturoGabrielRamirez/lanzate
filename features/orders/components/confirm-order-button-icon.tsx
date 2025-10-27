@@ -8,7 +8,7 @@ import { confirmOrderAction } from "@/features/orders/actions/confirm-order.acti
 import { ConfirmOrderButtonIconProps } from "@/features/orders/types"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function ConfirmOrderButtonIcon({ orderId }: ConfirmOrderButtonIconProps) {
     const [isPending, startTransition] = useTransition()

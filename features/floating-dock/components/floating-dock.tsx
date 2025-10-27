@@ -9,7 +9,7 @@ import { useMedia } from "react-use"
 import { Input } from "@/features/shadcn/components/input"
 import { Link, usePathname } from "@/i18n/naviation"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function FloatingDock() {

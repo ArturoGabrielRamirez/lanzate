@@ -13,7 +13,7 @@ import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/
 import { deleteStoreAction } from "@/features/stores/actions"
 import { StoreCardLogo } from "@/features/stores/components"
 import { StoreCardComponentProps } from "@/features/stores/types"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function StoreCard({ store, userId }: StoreCardComponentProps) {

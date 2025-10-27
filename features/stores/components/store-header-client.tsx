@@ -1,6 +1,6 @@
 "use client"
 
-import { PageHeader } from "@/features/layout/components"
+import { PageHeader } from "@/features/dashboard/components/page-header"
 import { StoreCardLogo } from "@/features/stores/components"
 import { StoreHeaderClientProps } from "@/features/stores/types"
 import { usePathname } from "@/i18n/naviation"

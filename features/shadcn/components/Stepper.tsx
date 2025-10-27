@@ -5,7 +5,7 @@ import React, { useState, Children, useRef, useLayoutEffect, HTMLAttributes, Rea
 import '@/features/shadcn/components/Stepper.css';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shadcn/components/ui/tooltip';
 import { cn } from '@/lib/utils';
-import { IconButton } from '@/src/components/ui/shadcn-io/icon-button';
+import { IconButton } from '@/features/shadcn/components/shadcn-io/icon-button';
 
 interface StepperProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
