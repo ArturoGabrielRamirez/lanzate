@@ -7,7 +7,7 @@ import { PageContainer } from "@/features/layout/components"
 import { OrdersListWidget, OrdersListWidgetSkeleton } from "@/features/orders/components"
 import { Item, ItemContent, ItemGroup, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
 import { getStoreBasicsBySlugAction } from "@/features/stores/actions"
-import { /* MobileSidebar, */ SectionContainer, StoreBalanceBig, StoreBalanceBigSkeleton, StoreHeaderServer, StoreHeaderSkeleton, StoreHeaderTinyWidgets } from "@/features/stores/components"
+import { SectionContainer, StoreBalanceBig, StoreBalanceBigSkeleton, StoreHeaderServer, StoreHeaderSkeleton, StoreHeaderTinyWidgets } from "@/features/stores/components"
 import { STORES_NAVIGATION_LINKS } from "@/features/stores/constants"
 import { StoreDetailsLayoutProps } from "@/features/stores/types"
 import { Link, redirect } from "@/i18n/naviation"
@@ -95,7 +95,6 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                         </ItemGroup>
                     </SectionContainer>
                 </div>
-                {/* <MobileSidebar slug={slug} userId={user.id} /> */}
                 <div className="hidden lg:grid lg:grid-cols-[1fr_2fr] lg:gap-8">
                     <div className="flex flex-col gap-8 sticky top-24">
                         <Suspense fallback={<StoreHeaderSkeleton />}>

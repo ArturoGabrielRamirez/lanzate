@@ -2,15 +2,10 @@
 
 import { Fragment } from "react"
 
+import { PageHeaderProps } from "@/features/dashboard/types"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/features/shadcn/components/breadcrumb"
 import { Link } from "@/i18n/naviation"
 
-interface PageHeaderProps {
-    title: string | React.ReactNode
-    subtitle?: string | React.ReactNode
-    breadcrumbs?: { label: string, href: string }[]
-    media?: React.ReactNode | string
-}
 
 function PageHeader({ title, subtitle, breadcrumbs, media }: PageHeaderProps) {
 

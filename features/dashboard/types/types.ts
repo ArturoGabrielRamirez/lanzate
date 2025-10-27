@@ -230,8 +230,15 @@ export type ActivityFeedItemSkeletonProps = {
   index: number
 }
 
-export type ExtractLinkItem = SocialActivity & { 
-  store: Store, 
-  product: Product, 
-  order: Order 
+export type ExtractLinkItem = SocialActivity & {
+  store: Store,
+  product: Product,
+  order: Order
+}
+
+export interface PageHeaderProps {
+  title: string | React.ReactNode
+  subtitle?: string | React.ReactNode
+  breadcrumbs?: { label: string, href: string }[]
+  media?: React.ReactNode | string
 }
