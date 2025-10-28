@@ -3,7 +3,7 @@ import { ArrowUpRightIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 /* import heroImage from "@/features/landing/assets/Startup life-pana 1.svg"; */
-import { HeroDescription } from "@/features/landing/components";
+import { BackgroundPattern, HeroDescription } from "@/features/landing/components";
 import { Announcement, AnnouncementTitle, AnnouncementTag } from "@/features/shadcn/components/shadcn-io/announcement";
 import { RotatingText } from "@/features/shadcn/components/shadcn-io/rotating-text";
 
@@ -55,53 +55,7 @@ async function HeroSection() {
                         className="w-full antialiased object-bottom"
                     /> */}
                 </div>
-                <div
-                    className="absolute inset-0 -z-1"
-                    style={{
-                        backgroundImage: `
-        linear-gradient(to right, var(--border) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--border) 1px, transparent 1px)
-      `,
-                        backgroundSize: "20px 20px",
-                        backgroundPosition: "0 0, 0 0",
-                        maskImage: `
-       repeating-linear-gradient(
-              to right,
-              black 0px,
-              black 3px,
-              transparent 3px,
-              transparent 8px
-            ),
-            repeating-linear-gradient(
-              to bottom,
-              black 0px,
-              black 3px,
-              transparent 3px,
-              transparent 8px
-            ),
-          radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-      `,
-                        WebkitMaskImage: `
- repeating-linear-gradient(
-              to right,
-              black 0px,
-              black 3px,
-              transparent 3px,
-              transparent 8px
-            ),
-            repeating-linear-gradient(
-              to bottom,
-              black 0px,
-              black 3px,
-              transparent 3px,
-              transparent 8px
-            ),
-          radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-      `,
-                        maskComposite: "intersect",
-                        WebkitMaskComposite: "source-in",
-                    }}
-                />
+                <BackgroundPattern />
             </div>
 
         </section>
