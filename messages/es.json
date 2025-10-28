@@ -353,7 +353,8 @@
             "4": "posible.",
             "word-1": "soñá",
             "word-2": "emprende",
-            "word-3": "crecé"
+            "word-3": "crecé",
+            "finish": "lo hace posible"
         },
         "beam": {
             "sales": {
@@ -505,7 +506,8 @@
             "copyright": "© Copyright 2025. Todos los derechos reservados."
         },
         "announcement": {
-            "last-update": "Última actualización"
+            "last-update": "Última actualización",
+            "title": "Nueva caja registradora agregada"
         }
     },
     "layout": {

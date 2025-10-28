@@ -355,9 +355,10 @@
             "2": "dream it. ",
             "3": "Lanzate makes it",
             "4": "happen.",
-            "word-1": "dream it. ",
-            "word-2": "build it.",
-            "word-3": "grow it."
+            "word-1": "dream it",
+            "word-2": "build it",
+            "word-3": "grow it",
+            "finish": "makes it happen"
         },
         "beam": {
             "sales": {
@@ -509,7 +510,8 @@
             "copyright": "© Copyright 2025. All Rights Reserved."
         },
         "announcement": {
-            "last-update": "Last update"
+            "last-update": "Last update",
+            "title": "New cash register added"
         }
     },
     "sale": {

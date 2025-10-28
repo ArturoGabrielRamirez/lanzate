@@ -12,7 +12,7 @@ function HeroDescription({ className }: WithClassName) {
 
     return (
         <div className={cn("flex flex-col gap-12", className)}>
-            <p className="text-lg lg:text-xl text-center md:text-left font-quattrocento text-balance text-primary-foreground">
+            <p className="text-lg lg:text-xl text-center md:text-left font-quattrocento text-balance">
                 {t("description.slogan")}
             </p>
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
