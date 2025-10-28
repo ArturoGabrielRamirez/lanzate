@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl"
 
 import { WithClassName } from "@/features/global/types";
 import { AnimatedShinyButton } from "@/features/shadcn/components/animated-shiny-button";
-import { Button } from "@/features/shadcn/components/ui/button"
+import { Button } from "@/features/shadcn/components/button"
 import { cn } from "@/lib/utils";
 
 function HeroDescription({ className }: WithClassName) {
@@ -15,8 +15,8 @@ function HeroDescription({ className }: WithClassName) {
             <p className="text-lg lg:text-xl text-center md:text-left font-quattrocento text-balance">
                 {t("description.slogan")}
             </p>
-            <div className="flex flex-wrap justify-center md:justify-start gap-4">
-                <Button variant="outline" className="text-xl font-bold" size="lg">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+                <Button variant="outline" className="font-bold" size="lg">
                     <Link href="/about">
                         {t('buttons.learn-more')}
                     </Link>

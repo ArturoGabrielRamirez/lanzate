@@ -1,8 +1,8 @@
 import { ArrowUpRightIcon } from "lucide-react";
-import Image from "next/image";
+/* import Image from "next/image"; */
 import { getTranslations } from "next-intl/server";
 
-import heroImage from "@/features/landing/assets/Startup life-pana 1.svg";
+/* import heroImage from "@/features/landing/assets/Startup life-pana 1.svg"; */
 import { HeroDescription } from "@/features/landing/components";
 import { Announcement, AnnouncementTitle, AnnouncementTag } from "@/features/shadcn/components/shadcn-io/announcement";
 import { RotatingText } from "@/features/shadcn/components/shadcn-io/rotating-text";
@@ -47,13 +47,13 @@ async function HeroSection() {
                     <HeroDescription className="hidden md:flex" />
                 </div>
                 <HeroDescription className="flex md:hidden" />
-                <div className="relative aspect-[576/738] w-xl flex items-end">
-                    <Image
+                <div /* className="relative aspect-[576/738] w-xl flex items-end" */>
+                    {/* <Image
                         src={heroImage}
                         alt="Hero Image"
                         width={5}
                         className="w-full antialiased object-bottom"
-                    />
+                    /> */}
                 </div>
                 <div
                     className="absolute inset-0 -z-1"
