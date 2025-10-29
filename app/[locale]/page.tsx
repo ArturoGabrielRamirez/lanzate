@@ -1,4 +1,4 @@
-import { FeaturesSection, HeroSection } from "@/features/landing/components";
+import { FeaturesSection, HeroSection, IntegrationsSection } from "@/features/landing/components";
 
 import type { Metadata } from "next";
 
@@ -14,6 +14,7 @@ export default function Home() {
     <>
       <HeroSection />
       <FeaturesSection />
+      <IntegrationsSection />
     </>
   );
 }

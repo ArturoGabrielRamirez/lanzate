@@ -28,7 +28,7 @@ async function FeaturesSection() {
                     <div className="relative z-20">
                         <div className="mb-8 flex items-center gap-2 text-primary">
                             <Home />
-                            <h2 className="text-2xl font-bold">{t('home.features.title')}</h2>
+                            <h2 className="text-2xl font-bold font-oswald">{t('home.features.title')}</h2>
                         </div>
                         <div className="relative z-10 grid grid-cols-6 gap-6">
                             <Card className="relative col-span-full hover:drop-shadow-xl hover:-translate-y-1 transition-all flex overflow-hidden lg:col-span-2">
@@ -157,15 +157,15 @@ async function FeaturesSection() {
                         <div className="mb-2 text-sm font-medium text-primary">
                             {t('home.who-we-are.title')}
                         </div>
-                        <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
+                        <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
                             {t('home.who-we-are.description')}
                         </h2>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground font-quattrocento">
                             {t('home.who-we-are.description-long')}
                         </p>
                     </div>
 
-                    <div className="space-y-6">
+                    <div className="space-y-6 font-quattrocento">
                         <p className="text-muted-foreground">
                             {t('home.who-we-are.description-long-2')}
                         </p>
@@ -176,20 +176,20 @@ async function FeaturesSection() {
 
                     <div className="grid grid-cols-2 gap-4 border-t pt-8 md:grid-cols-4">
                         <div>
-                            <div className="text-2xl font-bold">2025</div>
-                            <div className="text-sm text-muted-foreground">{t('home.who-we-are.founded')}</div>
+                            <div className="text-2xl font-bold font-oswald">2025</div>
+                            <div className="text-sm text-muted-foreground font-quattrocento">{t('home.who-we-are.founded')}</div>
                         </div>
                         <div>
-                            <div className="text-2xl font-bold">+100</div>
-                            <div className="text-sm text-muted-foreground">{t('home.who-we-are.users')}</div>
+                            <div className="text-2xl font-bold font-oswald">+100</div>
+                            <div className="text-sm text-muted-foreground font-quattrocento">{t('home.who-we-are.users')}</div>
                         </div>
                         <div>
-                            <div className="text-2xl font-bold">3</div>
-                            <div className="text-sm text-muted-foreground">{t('home.who-we-are.country')}</div>
+                            <div className="text-2xl font-bold font-oswald">3</div>
+                            <div className="text-sm text-muted-foreground font-quattrocento">{t('home.who-we-are.country')}</div>
                         </div>
                         <div>
-                            <div className="text-2xl font-bold">+$100K</div>
-                            <div className="text-sm text-muted-foreground">{t('home.who-we-are.sold')}</div>
+                            <div className="text-2xl font-bold font-oswald">+$100K</div>
+                            <div className="text-sm text-muted-foreground font-quattrocento">{t('home.who-we-are.sold')}</div>
                         </div>
                     </div>
 

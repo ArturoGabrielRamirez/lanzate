@@ -38,7 +38,6 @@ export default async function RootLayout({ children, params }: LayoutType) {
                     <Footer />
                     <ChatDoc />
                     <Toaster position="top-center" richColors />
-                    {/* <LayoutBackgroundEffects /> */}
                     <GlobalEmailConfirmationDetector />
                   </>
                 )}
