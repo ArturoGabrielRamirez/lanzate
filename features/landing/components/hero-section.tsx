@@ -14,7 +14,7 @@ async function HeroSection() {
     const words = [t("slogan.word-1"), t("slogan.word-2"), t("slogan.word-3")]
 
     return (
-        <section className="min-h-dvh relative pt-17 flex">
+        <section className="min-h-dvh relative pt-17 flex snap-start">
             <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-[1fr_auto] md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:items-end relative md:pb-12 lg:pb-20">
                 <div className="flex flex-col items-center pt-4 md:items-start md:pt-0 z-10">
                     <Announcement className="border-primary mb-12">

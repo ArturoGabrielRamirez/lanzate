@@ -15,7 +15,7 @@ async function MobileDrawer() {
     const t = await getTranslations();
 
     return (
-        <DropDrawer>
+        <DropDrawer shouldScaleBackground={true}>
             <DropDrawerTrigger className="rounded-full border-none outline-none ml-4" asChild>
                 <div>
                     {user && <UserAvatar user={user} size="sm" />}

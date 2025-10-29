@@ -1,4 +1,4 @@
-import { HeroSection } from "@/features/landing/components";
+import { FeaturesSection, HeroSection } from "@/features/landing/components";
 
 import type { Metadata } from "next";
 
@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      
+      <FeaturesSection />
     </>
   );
 }
