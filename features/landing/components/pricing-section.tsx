@@ -3,7 +3,7 @@ import { Home } from "lucide-react"
 import { BackgroundPattern } from "@/features/landing/components"
 import { PriceCard, OfferingWrapper, Offering, ProductName, Price, Description } from "@/features/shadcn/components/lukacho/pricing-card"
 
-function IntegrationsSection() {
+function PricingSection() {
     return (
         <section className="min-h-dvh relative pt-17 flex snap-start flex-col items-center">
             <div className="container grid items-center gap-12 lg:grid-cols-[1fr_3fr] mx-auto px-4 relative h-fit">
@@ -72,4 +72,4 @@ function IntegrationsSection() {
     )
 }
 
-export { IntegrationsSection }
+export { PricingSection }
