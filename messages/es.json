@@ -530,7 +530,12 @@
             "description": "En una mision para ayudarte a lanzar tu negocio",
             "description-long": "En Lanzate, creemos que cada emprendedor merece las herramientas                              adecuadas para hacer realidad sus ideas. Nuestra plataforma te                              proporciona todo lo necesario para crear, gestionar y hacer crecer                              tu negocio digital desde el primer día, sin complicaciones técnicas.",
             "description-long-2": "Sabemos que iniciar un negocio puede ser abrumador. Por eso hemos                              creado una solución integral que elimina las barreras técnicas y                              te permite enfocarte en lo que realmente importa: tu visión. Desde                              tu sitio web personalizado hasta la gestión de clientes, todo está                              diseñado para ser simple, rápido y efectivo.",
-            "description-long-3": "Nuestro compromiso va más allá de una simple plataforma. Estamos                              construyendo una comunidad de emprendedores valientes que comparten                              el sueño de crear algo propio. Al elegir Lanzate, no solo obtienes                              una herramienta poderosa, te unes a un ecosistema diseñado para                              impulsar tu éxito y el de tu negocio."
+            "description-long-3": "Nuestro compromiso va más allá de una simple plataforma. Estamos                              construyendo una comunidad de emprendedores valientes que comparten                              el sueño de crear algo propio. Al elegir Lanzate, no solo obtienes                              una herramienta poderosa, te unes a un ecosistema diseñado para                              impulsar tu éxito y el de tu negocio.",
+            "founded": "Fundado",
+            "users": "Usuarios",
+            "country": "Paises",
+            "sold": "Vendido",
+            "learn-more": "Conocé más sobre nuestra app"
         }
     },
     "layout": {

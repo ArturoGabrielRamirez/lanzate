@@ -1,4 +1,4 @@
-import { Heart, Home, MessageCircleMore, ShoppingCart, Users, Zap } from 'lucide-react'
+import { ChevronRight, Heart, Home, MessageCircleMore, ShoppingCart, Users, Zap } from 'lucide-react'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
@@ -7,6 +7,7 @@ import domainImage from "@/features/landing/assets/Domain names-pana.svg"
 import speedImage from "@/features/landing/assets/Speed test-pana.svg"
 import { BackgroundPattern } from "@/features/landing/components"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
+import { Link } from '@/i18n/naviation'
 
 async function FeaturesSection() {
 
@@ -176,41 +177,29 @@ async function FeaturesSection() {
                     <div className="grid grid-cols-2 gap-4 border-t pt-8 md:grid-cols-4">
                         <div>
                             <div className="text-2xl font-bold">2025</div>
-                            <div className="text-sm text-muted-foreground">Founded</div>
+                            <div className="text-sm text-muted-foreground">{t('home.who-we-are.founded')}</div>
                         </div>
                         <div>
                             <div className="text-2xl font-bold">+100</div>
-                            <div className="text-sm text-muted-foreground">Users</div>
+                            <div className="text-sm text-muted-foreground">{t('home.who-we-are.users')}</div>
                         </div>
                         <div>
                             <div className="text-2xl font-bold">3</div>
-                            <div className="text-sm text-muted-foreground">Country</div>
+                            <div className="text-sm text-muted-foreground">{t('home.who-we-are.country')}</div>
                         </div>
                         <div>
                             <div className="text-2xl font-bold">+$100K</div>
-                            <div className="text-sm text-muted-foreground">Sold</div>
+                            <div className="text-sm text-muted-foreground">{t('home.who-we-are.sold')}</div>
                         </div>
                     </div>
 
-                    <a
-                        href="#"
+                    <Link
+                        href="/about"
                         className="inline-flex items-center text-primary hover:text-primary/80"
                     >
-                        Learn more about our company
-                        <svg
-                            className="ml-2 size-4"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 5l7 7-7 7"
-                            />
-                        </svg>
-                    </a>
+                        {t('home.who-we-are.learn-more')}
+                        <ChevronRight className="size-4 ml-2" />
+                    </Link>
                 </div>
 
             </div>
