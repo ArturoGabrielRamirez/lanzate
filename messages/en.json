@@ -512,6 +512,29 @@
         "announcement": {
             "last-update": "Last update",
             "title": "New cash register added"
+        },
+        "features": {
+            "title": "Features",
+            "feature": {
+                "customizable": "Customizable",
+                "all-in-one": {
+                    "description": "Manage your store from anywhere, available on all your devices.",
+                    "title": "All-in-one"
+                },
+                "custom-domain": {
+                    "title": "Custom domain",
+                    "description": {
+                        "own-brand": "Get your own domain URL and publish your products under your brand!"
+                    }
+                }
+            }
+        },
+        "who-we-are": {
+            "title": "Who we are",
+            "description": "On a mission to help you launch your business",
+            "description-long": "We believe that every entrepreneur deserves the tools                              to make their ideas a reality. Our platform provides everything you                              need to create, manage and grow your digital business from day one,                              without technical complications.",
+            "description-long-2": "We know that starting a business can be overwhelming. That's why we've created an integrated solution that eliminates technical barriers and allows you to focus on what really matters: your vision. From your custom website to customer management, everything is designed to be simple, fast and effective.",
+            "description-long-3": "Our commitment goes beyond software. We're building a community of brave entrepreneurs who share the dream of creating something own. By choosing Lanzate, you not only get a powerful tool, you join a community designed to help you succeed and grow your business."
         }
     },
     "sale": {
@@ -1458,5 +1481,15 @@
             }
         }
     },
-    "address-section": "Address"
+    "address-section": "Address",
+    "features": {
+        "speed": {
+            "headline": "Faster than light!",
+            "description": "Lanzate loads instantly; ensuring that your customers have a fast and fluid experience at all times."
+        },
+        "stay-connected": {
+            "headline": "Stay connected",
+            "description": "Stay connected with your customers through our integrated social media features."
+        }
+    }
 }
