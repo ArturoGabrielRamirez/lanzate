@@ -49,18 +49,18 @@ function IntegrationSection() {
     ];
 
     return (
-        <section className="relative pb-17 flex snap-start flex-col items-center">
+        <section className="relative py-17 flex snap-start flex-col items-center">
             <div className="container mx-auto px-4 relative h-full grow w-full">
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-6 lg:gap-8 z-20 relative">
+                <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-6 lg:gap-8 z-20 relative items-end mb-10">
                     <div>
                         <div className="mb-10 flex items-center gap-2 text-primary">
                             <Home />
                             <h2 className="text-2xl font-bold font-oswald">Integrations</h2>
                         </div>
-                        <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
+                        <h2 className="text-3xl font-bold tracking-tight md:text-4xl font-oswald">
                             All your favorite tools. One single place.
                         </h2>
                     </div>

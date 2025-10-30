@@ -14,7 +14,7 @@ async function FeaturesSection() {
     const t = await getTranslations("")
 
     return (
-        <section className="min-h-dvh relative pt-17 flex snap-start">
+        <section className="relative py-17 flex snap-start">
             <div className="container grid items-center gap-12 lg:grid-cols-[3fr_2fr] mx-auto px-4 relative h-fit">
 
                 <div className='dark:brightness-75 absolute inset-0'>
