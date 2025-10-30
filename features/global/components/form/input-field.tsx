@@ -70,7 +70,7 @@ function InputField({
                         <FieldLabel htmlFor={field.name}>
                             {label}{isRequired && <span className="text-red-500">*</span>}
                         </FieldLabel>
-                        <InputGroup>
+                        <InputGroup className="bg-background">
                             {startIcon && (
                                 <InputGroupAddon>
                                     {startIcon}

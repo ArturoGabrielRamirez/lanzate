@@ -1,5 +1,6 @@
 'use client'
 
+import { ListIcon, MailIcon, UserIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Form } from "@/features/global/components/form/form"
@@ -57,7 +58,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             contentButton={t("send-message")}
             successMessage="¡Mensaje enviado con éxito! Nuestro equipo se pondrá en contacto contigo pronto."
             loadingMessage={t("dialog.messages.loading")}
-            className="space-y-6 !bg-transparent !border-none !shadow-none !p-0 !rounded-none"
+            className="!bg-transparent !border-none !shadow-none !p-0 !rounded-none"
             onSuccess={onSuccess}
             resetOnSuccess={true}
         >
@@ -68,6 +69,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                 placeholder={t("dialog.name")}
                 tooltip="Ingrese su nombre completo"
                 isRequired
+                startIcon={<UserIcon />}
             />
 
             <InputField
@@ -77,6 +79,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                 placeholder={t("dialog.email")}
                 isRequired
                 tooltip="Ingrese un email al que podamos contactarnos con usted"
+                startIcon={<MailIcon />}
             />
 
             <SelectField
@@ -86,6 +89,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                 options={categories}
                 isRequired
                 tooltip="Seleccione la categoría que mejor describa su consulta"
+                startIcon={<ListIcon />}
             />
 
             <TextareaField

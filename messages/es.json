@@ -147,7 +147,9 @@
             "verifying-updating": "Verificando y actualizando contraseña..."
         },
         "close": "Cerrar",
-        "try-facebook-again": "Intentar con Facebook de nuevo"
+        "try-facebook-again": "Intentar con Facebook de nuevo",
+        "help": "Contactanos",
+        "back-to-home": "Volver al inicio"
     },
     "cart": {
         "title": "Carrito",

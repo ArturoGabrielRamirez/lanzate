@@ -40,7 +40,7 @@ function TextareaField({
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid}>
           <FieldLabel htmlFor={field.name}>{label}{isRequired && <span className="text-red-500">*</span>}</FieldLabel>
-          <InputGroup>
+          <InputGroup className="bg-background">
             {startIcon && (
               <InputGroupAddon>
                 {startIcon}

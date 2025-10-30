@@ -148,7 +148,9 @@
             "verifying-updating": "Verifying and updating password..."
         },
         "close": "Close",
-        "try-facebook-again": "Try with Facebook again"
+        "try-facebook-again": "Try with Facebook again",
+        "help": "Contact us",
+        "back-to-home": "Back to homepage"
     },
     "cart": {
         "title": "Cart",
