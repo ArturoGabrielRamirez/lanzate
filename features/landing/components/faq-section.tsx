@@ -1,4 +1,4 @@
-import { CircleHelp, Home } from "lucide-react";
+import { CircleHelp } from "lucide-react";
 
 import { BackgroundPattern } from "@/features/landing/components";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion";
@@ -14,7 +14,7 @@ function FaqSection() {
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-6 lg:gap-20 z-20 relative">
                     <div>
                         <div className="mb-10 flex items-center gap-2 text-primary">
-                            <Home />
+                            <CircleHelp />
                             <h2 className="text-2xl font-bold font-oswald">FAQ</h2>
                         </div>
                         <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">

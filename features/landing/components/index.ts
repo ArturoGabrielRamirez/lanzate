@@ -5,3 +5,4 @@ export * from "@/features/landing/components/features-section";
 export * from "@/features/landing/components/pricing-section";
 export * from "@/features/landing/components/integration-section";
 export * from "@/features/landing/components/faq-section";
+export * from "@/features/landing/components/contact-section";

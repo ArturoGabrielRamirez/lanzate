@@ -1,4 +1,4 @@
-import { FaqSection, FeaturesSection, HeroSection, IntegrationSection, PricingSection } from "@/features/landing/components";
+import { ContactSection, FaqSection, FeaturesSection, HeroSection, IntegrationSection, PricingSection } from "@/features/landing/components";
 
 import type { Metadata } from "next";
 
@@ -16,6 +16,7 @@ export default function Home() {
       <FeaturesSection />
       <IntegrationSection />
       <FaqSection />
+      <ContactSection />
       <PricingSection />
     </>
   );

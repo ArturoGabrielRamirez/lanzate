@@ -1,4 +1,4 @@
-import { ChevronRight, Heart, Home, MessageCircleMore, ShoppingCart, Users, Zap } from 'lucide-react'
+import { ChevronRight, Heart, MessageCircleMore, Rocket, ShoppingCart, Users, Zap } from 'lucide-react'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
@@ -27,7 +27,7 @@ async function FeaturesSection() {
 
                     <div className="relative z-20">
                         <div className="mb-8 flex items-center gap-2 text-primary">
-                            <Home />
+                            <Rocket />
                             <h2 className="text-2xl font-bold font-oswald">{t('home.features.title')}</h2>
                         </div>
                         <div className="relative z-10 grid grid-cols-6 gap-6">

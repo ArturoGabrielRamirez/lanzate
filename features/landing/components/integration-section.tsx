@@ -1,4 +1,4 @@
-import { Home } from "lucide-react";
+import { Plug } from "lucide-react";
 
 import { BackgroundPattern } from "@/features/landing/components"
 import { MarqueeLogoScroller } from "@/features/shadcn/components/marquee-logo"
@@ -57,7 +57,7 @@ function IntegrationSection() {
                 <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-6 lg:gap-8 z-20 relative items-end mb-10">
                     <div>
                         <div className="mb-10 flex items-center gap-2 text-primary">
-                            <Home />
+                            <Plug />
                             <h2 className="text-2xl font-bold font-oswald">Integrations</h2>
                         </div>
                         <h2 className="text-3xl font-bold tracking-tight md:text-4xl font-oswald">
