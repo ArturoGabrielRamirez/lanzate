@@ -1,8 +1,11 @@
-/* "use server" */
-
 import { NextRequest, NextResponse } from 'next/server'
+
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
-import { createStorageService } from '../../../features/global/services/storage'
+import { handleUserUploadAction } from '@/features/auth/actions/handle-user-upload.action'
+import { getUserId } from '@/features/auth/data/get-user-id'
+import { handlePresetUploadAction } from '@/features/global/actions/media/handle-preset-upload.action'
+import { createStorageService } from '@/features/global/services/storage'
+import { PresetRequest, UPLOAD_TYPES, type FileUploadData } from '@/features/global/types/media'
 import {
   ValidationError,
   validateUploadType,
@@ -11,13 +14,9 @@ import {
   validateFileType,
   validatePresetType,
   validatePresetData
-} from '../../../features/global/utils/media/validators'
-import { PresetRequest, UPLOAD_TYPES, type FileUploadData } from '../../../features/global/types/media'
-import { handlePresetUploadAction } from '@/features/global/actions/media/handle-preset-upload.action'
-import { handleUserUploadAction } from '@/features/auth/actions/handle-user-upload.action'
+} from '@/features/global/utils/media/validators'
 import { handleProductUploadAction } from '@/features/products/actions/handle-product-upload.action'
 import { handleStoreUploadAction } from '@/features/stores/actions/handle-store-upload.action'
-import { getUserId } from '@/features/auth/data/get-user-id'
 
 
 export async function POST(request: NextRequest) {
@@ -25,17 +24,19 @@ export async function POST(request: NextRequest) {
 
     const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
 
-    if (!currentUserResponse || currentUserResponse.error) {
+    if (!currentUserResponse || currentUserResponse.hasError) {
       return NextResponse.json(
         { error: 'Debes iniciar sesión para subir archivos' },
         { status: 401 }
       )
     }
 
-    const user = await getUserId({
-      ...currentUserResponse,
-      error: currentUserResponse.message
-    })
+    /*    const user = await getUserId({
+         ...currentUserResponse,
+         error: currentUserResponse.message
+       }) */
+
+    const user = await getUserId({ payload: { id: currentUserResponse.payload?.id }, error: currentUserResponse.message })
     const contentType = request.headers.get('content-type')
 
     if (contentType?.includes('application/json')) {
@@ -52,7 +53,7 @@ export async function POST(request: NextRequest) {
           user.username
         )
 
-        if (result.error) {
+        if (result.hasError) {
           return NextResponse.json(
             { error: result.message },
             { status: 500 }
@@ -108,7 +109,7 @@ export async function POST(request: NextRequest) {
         throw new ValidationError('Tipo de upload no soportado')
       }
 
-      if (actionResult.error) {
+      if (actionResult.hasError) {
         return NextResponse.json(
           { error: actionResult.message },
           { status: 500 }

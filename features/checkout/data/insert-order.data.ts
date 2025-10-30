@@ -3,10 +3,9 @@
 import { InsertOrderProps } from "@/features/checkout/types/types"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
+import { actionWrapper } from "@/features/global/utils"
 import { getStoreBySubdomainAction } from "@/features/stores/actions/get-store-by-subdomain.action"
-import { actionWrapper } from "@/utils/lib"
 import { prisma } from "@/utils/prisma"
-
 
 export async function insertOrderData({
     branch_id,
@@ -228,7 +227,7 @@ export async function insertOrderData({
         })
 
         return {
-            error: false,
+            hasError: false,
             message: "Order created successfully",
             payload: order
         }

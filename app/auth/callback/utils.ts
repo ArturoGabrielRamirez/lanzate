@@ -209,7 +209,7 @@ export async function handleUserCreationOrUpdate(user: User, prisma: PrismaClien
 
       /*  UserDeletionSystem.validateNewUserCreation(user.email) */
 
-      if (!validation.payload.canCreate && validation.payload.conflict) {
+      if (!validation.payload?.canCreate && validation.payload?.conflict) {
         console.error(`❌ Email ${user.email} ya está en uso por cuenta activa`)
         return {
           error: true,

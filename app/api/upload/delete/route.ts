@@ -1,27 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server'
+
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
+import { handleUserDeleteAction } from '@/features/auth/actions/handle-user-delete.action'
 import { getUserId } from '@/features/auth/data/get-user-id'
 import { createStorageService } from '@/features/global/services/storage'
-
 import { UPLOAD_TYPES } from '@/features/global/types/media'
 import { ValidationError } from '@/features/global/utils/media/validators'
-import { handleUserDeleteAction } from '@/features/auth/actions/handle-user-delete.action'
 
 export async function POST(request: NextRequest) {
     try {
         // Verificar autenticación
         const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
-        if (!currentUserResponse || currentUserResponse.error) {
+        if (!currentUserResponse || currentUserResponse.hasError) {
             return NextResponse.json(
-                { error: 'Debes iniciar sesión para eliminar archivos' },
+                { hasError: true, message: 'No autenticado' },
                 { status: 401 }
             )
         }
 
-        const user = await getUserId({
-            ...currentUserResponse,
-            error: currentUserResponse.message
-        })
+        /*  const user = await getUserId({
+             ...currentUserResponse,
+             error: currentUserResponse.message
+         }) */
+
+        const user = await getUserId({ payload: { id: currentUserResponse.payload?.id }, error: currentUserResponse.message })
 
         // Parsear body
         const body = await request.json()
@@ -47,7 +49,7 @@ export async function POST(request: NextRequest) {
             storage
         )
 
-        if (result.error) {
+        if (result.hasError) {
             return NextResponse.json(
                 { error: result.message },
                 { status: 500 }

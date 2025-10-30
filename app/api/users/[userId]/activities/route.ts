@@ -24,7 +24,7 @@ export async function GET(
       includePrivate
     })
 
-    if (result.error) {
+    if (result.hasError) {
       const statusMap: Record<string, number> = {
         'ID de usuario inválido': 400,
         'Usuario no encontrado': 404,

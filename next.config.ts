@@ -2,8 +2,11 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 import type { NextConfig } from "next";
 
-const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin')
-
+// Importación dinámica para el plugin de Prisma
+const withPrismaPlugin = async () => {
+  const { PrismaPlugin } = await import('@prisma/nextjs-monorepo-workaround-plugin');
+  return PrismaPlugin;
+};
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -28,12 +31,18 @@ const nextConfig: NextConfig = {
       },
       {
         hostname: "picsum.photos"
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/**",
       }
     ]
   },
-  webpack: (config, { isServer }) => {
+  webpack: async (config, { isServer }) => {
     if (isServer) {
-      config.plugins = [...config.plugins, new PrismaPlugin()]
+      const PrismaPlugin = await withPrismaPlugin();
+      config.plugins = [...config.plugins, new PrismaPlugin()];
     }
 
     if (!isServer) {
@@ -43,10 +52,10 @@ const nextConfig: NextConfig = {
         net: false,
         tls: false,
         crypto: false,
-      }
+      };
     }
 
-    return config
+    return config;
   },
 };
 

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
+
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
-import { createServerSideClient } from '@/utils/supabase/server'
-import { prisma } from '@/utils/prisma'
 import { cleanupOldUploads } from '@/features/profile/utils/cleanup-old-uploads'
+import { prisma } from '@/utils/prisma'
+import { createServerSideClient } from '@/utils/supabase/server'
 
 export async function POST(request: NextRequest) {
   try {
