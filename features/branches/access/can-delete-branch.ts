@@ -1,6 +1,6 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
 export async function canDeleteBranch(branchId: number, userId: number) {
@@ -22,7 +22,7 @@ export async function canDeleteBranch(branchId: number, userId: number) {
         const canDelete = isOwner && !isMainBranch
 
         return {
-            error: false,
+            hasError: false,
             message: canDelete ? "User can delete branch" : "User cannot delete branch",
             payload: canDelete
         }

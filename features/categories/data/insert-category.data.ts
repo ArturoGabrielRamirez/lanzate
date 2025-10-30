@@ -1,7 +1,7 @@
 "use server"
 
 import { InsertCategoryAction } from "@/features/categories/types"
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
 export async function insertCategoryData({ storeId, payload }: InsertCategoryAction) {
@@ -45,7 +45,7 @@ export async function insertCategoryData({ storeId, payload }: InsertCategoryAct
 
         return {
             payload: category,
-            error: false,
+            hasError: false,
             message: "Categoría creada exitosamente"
         }
     })

@@ -1,7 +1,7 @@
 "use server"
 
 import { SearchCategoriesAction } from "@/features/categories/types"
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
 export async function searchCategories({ storeId, searchTerm }: SearchCategoriesAction) {
@@ -23,7 +23,7 @@ export async function searchCategories({ storeId, searchTerm }: SearchCategories
 
         return {
             payload: categories,
-            error: false,
+            hasError: false,
             message: "Categorías encontradas"
         }
     })

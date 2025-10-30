@@ -7,7 +7,8 @@ import { useTranslations } from "next-intl"
 import { deleteBranchAction } from "@/features/branches/actions"
 import { DeleteBranchButtonProps } from "@/features/branches/types"
 import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
-import { formatErrorResponse } from "@/utils/lib"
+import { formatErrorResponse } from "@/features/global/utils"
+
 
 function DeleteBranchButton({ branchId, slug, onComplete, userId }: DeleteBranchButtonProps) {
 
@@ -23,7 +24,7 @@ function DeleteBranchButton({ branchId, slug, onComplete, userId }: DeleteBranch
                 payload: payload
             }
         } catch (error) {
-            return formatErrorResponse(t("messages.error"), error, null)
+            return formatErrorResponse(t("messages.error"))
         }
     }
 

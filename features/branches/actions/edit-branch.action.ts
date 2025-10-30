@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache"
 
 import { updateBranchData } from "@/features/branches/data"
 import { EditBranchAction } from "@/features/branches/types"
-import { insertLogEntry } from "@/features/global/data/insertLogEntry"
-import { actionWrapper } from "@/utils/lib"
+import { insertLogEntry } from "@/features/global/data"
+import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
 export async function editBranchAction({ branchId, data, slug, userId }: EditBranchAction) {
@@ -25,7 +25,7 @@ export async function editBranchAction({ branchId, data, slug, userId }: EditBra
 
         revalidatePath(`/stores/${slug}`)
 
-        const { error: logError } = await insertLogEntry({
+        const { hasError: logError } = await insertLogEntry({
             action: "UPDATE",
             entity_type: "BRANCH",
             entity_id: branchId,
@@ -39,7 +39,7 @@ export async function editBranchAction({ branchId, data, slug, userId }: EditBra
         return {
             message: "Branch updated successfully",
             payload: payload,
-            error: false
+            hasError: false
         }
 
     })

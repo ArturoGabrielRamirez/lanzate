@@ -1,6 +1,6 @@
 "use server"
 
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
 export async function canEditBranch(branchId: number, userId: number) {
@@ -20,7 +20,7 @@ export async function canEditBranch(branchId: number, userId: number) {
         const isOwner = branch.store.user_id === userId
 
         return {
-            error: false,
+            hasError: false,
             message: isOwner ? "User can edit branch" : "User cannot edit branch",
             payload: isOwner
         }

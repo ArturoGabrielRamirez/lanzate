@@ -1,15 +1,14 @@
-// features/profile/actions/get-profile-with-follow.ts
 'use server'
 
 import { getCurrentUserWithIdAndEmailAction } from "@/features/auth/actions" // ✅ Ahora retorna Prisma user
-import { actionWrapper, formatSuccessResponse } from "@/utils/lib"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
 export async function getProfileWithFollowStatusAction(username: string) {
   return actionWrapper(async () => {
     // 1. Obtener currentUser (ya viene con ID numérico de Prisma)
     const { payload: currentUser } = await getCurrentUserWithIdAndEmailAction()
-    
+
     // 2. ✅ SINGLE OPTIMIZED QUERY con JOIN condicional
     const user = await prisma.user.findUnique({
       where: { username },
@@ -51,7 +50,7 @@ export async function getProfileWithFollowStatusAction(username: string) {
 
     if (!user) {
       return {
-        error: true,
+        hasError: true,
         message: 'Usuario no encontrado',
         payload: null
       }

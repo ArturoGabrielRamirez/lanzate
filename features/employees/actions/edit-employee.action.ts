@@ -6,7 +6,7 @@ import { canEditEmployee } from "@/features/employees/access/can-edit-employee.a
 import { updateEmployeeData as updateEmployeeInDb } from "@/features/employees/data/update-employee.data"
 import { EditEmployeePayload } from "@/features/employees/types/types"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from "@/features/global/utils"
 
 export async function editEmployeeAction(employeeId: number, data: EditEmployeePayload, slug: string, userId: number) {
     return actionWrapper(async () => {
@@ -24,7 +24,7 @@ export async function editEmployeeAction(employeeId: number, data: EditEmployeeP
         revalidatePath(`/stores/${slug}`)
 
         // Create action log
-        const { error: logError } = await insertLogEntry({
+        const { hasError: logError } = await insertLogEntry({
             action: "UPDATE",
             entity_type: "EMPLOYEE",
             entity_id: employeeId,
@@ -38,7 +38,7 @@ export async function editEmployeeAction(employeeId: number, data: EditEmployeeP
         return {
             message: "Employee updated successfully",
             payload: payload,
-            error: false
+            hasError: false
         }
 
     })

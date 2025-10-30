@@ -1,7 +1,7 @@
 "use server"
 
 import { UpdateCategoryAction } from "@/features/categories/types"
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
 export async function updateCategory({ storeId, categoryId, payload }: UpdateCategoryAction) {
@@ -56,7 +56,7 @@ export async function updateCategory({ storeId, categoryId, payload }: UpdateCat
 
         return {
             payload: category,
-            error: false,
+            hasError: false,
             message: "Categoría actualizada exitosamente"
         }
     })
