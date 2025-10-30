@@ -1,7 +1,7 @@
 "use server"
 
 import { GetStoreIdBySubdomainAction } from "@/features/categories/types"
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
 export async function getStoreIdBySubdomainData({ subdomain }: GetStoreIdBySubdomainAction) {
@@ -17,7 +17,7 @@ export async function getStoreIdBySubdomainData({ subdomain }: GetStoreIdBySubdo
 
         return {
             payload: store?.id || null,
-            error: false,
+            hasError: false,
             message: "Store ID obtenido exitosamente"
         }
     })

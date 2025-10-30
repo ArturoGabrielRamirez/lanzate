@@ -9,8 +9,9 @@ import { branchCreateSchema } from "@/features/branches/schemas"
 import { CreateBranchButtonProps } from "@/features/branches/types"
 import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
 import InputField from "@/features/global/components/form/input"
+import { formatErrorResponse } from "@/features/global/utils"
 import { Accordion, AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
-import { formatErrorResponse } from "@/utils/lib"
+
 
 function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
 
@@ -32,7 +33,7 @@ function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
                 payload: branch
             }
         } catch (error) {
-            return formatErrorResponse(t("messages.error"), error, null)
+            return formatErrorResponse(t("messages.error"))
         }
     }
 

@@ -1,146 +1,165 @@
+import Link from "next/link";
+
 function CookiesPolicy() {
     return (
-        <section className="max-w-4xl mx-auto px-4 py-8 pt-17">
+        <section className="max-w-4xl mx-auto px-4 py-8 pt-17 relative">
             <div className="text-left">
                 <div className="mb-6">
-                    <h1 className="text-3xl font-bold mb-2">COOKIES POLICY</h1>
+                    <h1 className="text-3xl font-bold mb-2">POLÍTICA DE COOKIES</h1>
                     <div className="text-sm mb-4">
-                        <strong>Last updated</strong> <strong>July 30, 2025</strong>
+                        <strong>Última actualización:</strong> <strong>30 de octubre de 2025</strong>
                     </div>
                 </div>
 
                 <div className="mb-8">
-                    <h2 className="text-2xl font-bold mb-4">INTRODUCTION</h2>
+                    <h2 className="text-2xl font-bold mb-4">INTRODUCCIÓN</h2>
                     <div className="mb-4">
                         <p className="text-sm leading-relaxed mb-4">
-                            This Cookies Policy explains how Lanzate (&quot;we,&quot; &quot;us,&quot; &quot;our&quot;) uses cookies and similar technologies when you visit our website <a href="https://www.lanzate.app" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> and use our mobile application Lanzate App (collectively, the &quot;Services&quot;).
+                            Esta Política de Cookies explica cómo Lanzáte (&quot;nosotros&quot;, &quot;nuestro&quot;, &quot;la Empresa&quot;) utiliza cookies y tecnologías similares cuando visitás nuestro sitio web <a href="https://www.lanzate.app" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> y usás nuestra aplicación móvil Lanzáte App (en conjunto, los &quot;Servicios&quot;).
                         </p>
 
                         <p className="text-sm leading-relaxed mb-4">
-                            This policy explains what these technologies are, why we use them, and your rights to control our use of them. In some cases, we may use cookies and similar technologies to collect personal information, or information that becomes personal information if we combine it with other information.
+                            Esta política explica qué son estas tecnologías, por qué las usamos, y tus derechos para controlar nuestro uso de ellas. En algunos casos, podemos usar cookies y tecnologías similares para recolectar información personal, o información que se convierte en personal si la combinamos con otra información.
+                        </p>
+
+                        <p className="text-sm leading-relaxed mb-4">
+                            Esta Política de Cookies se complementa con nuestra <Link href="/privacy-policy" className="text-blue-600 hover:text-blue-800 underline">Política de Privacidad</Link> y nuestros <Link href="/terms-and-conditions" className="text-blue-600 hover:text-blue-800 underline">Términos y Condiciones</Link>. El uso de cookies está sujeto a la Ley 25.326 de Protección de Datos Personales de la República Argentina y las disposiciones de la Dirección Nacional de Protección de Datos Personales (DNPDP).
                         </p>
 
                         <p className="text-sm leading-relaxed mb-6">
-                            For more information about how we process your personal data, please review our Privacy Policy at <a href="https://www.lanzate.app/privacy-policy" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app/privacy-policy</a>.
+                            Para más información sobre cómo procesamos tus datos personales, por favor revisá nuestra Política de Privacidad en <Link href="/privacy-policy" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app/privacy-policy</Link>.
                         </p>
                     </div>
                 </div>
 
                 <div className="mb-8">
-                    <h2 className="text-2xl font-bold mb-6">TABLE OF CONTENTS</h2>
+                    <h2 className="text-2xl font-bold mb-6">ÍNDICE</h2>
                     <div className="space-y-2 text-sm">
-                        <div><a href="#what-are-cookies" className="text-blue-600 hover:text-blue-800 underline">1. WHAT ARE COOKIES?</a></div>
-                        <div><a href="#why-we-use-cookies" className="text-blue-600 hover:text-blue-800 underline">2. WHY DO WE USE COOKIES?</a></div>
-                        <div><a href="#types-of-cookies" className="text-blue-600 hover:text-blue-800 underline">3. TYPES OF COOKIES WE USE</a></div>
-                        <div><a href="#essential-cookies" className="text-blue-600 hover:text-blue-800 underline">4. ESSENTIAL COOKIES</a></div>
-                        <div><a href="#performance-cookies" className="text-blue-600 hover:text-blue-800 underline">5. PERFORMANCE AND ANALYTICS COOKIES</a></div>
-                        <div><a href="#functionality-cookies" className="text-blue-600 hover:text-blue-800 underline">6. FUNCTIONALITY COOKIES</a></div>
-                        <div><a href="#targeting-cookies" className="text-blue-600 hover:text-blue-800 underline">7. TARGETING AND ADVERTISING COOKIES</a></div>
-                        <div><a href="#third-party-cookies" className="text-blue-600 hover:text-blue-800 underline">8. THIRD-PARTY COOKIES</a></div>
-                        <div><a href="#how-to-control" className="text-blue-600 hover:text-blue-800 underline">9. HOW TO CONTROL COOKIES</a></div>
-                        <div><a href="#mobile-app" className="text-blue-600 hover:text-blue-800 underline">10. MOBILE APPLICATION</a></div>
-                        <div><a href="#updates" className="text-blue-600 hover:text-blue-800 underline">11. UPDATES TO THIS POLICY</a></div>
-                        <div><a href="#contact" className="text-blue-600 hover:text-blue-800 underline">12. CONTACT US</a></div>
+                        <div><a href="#que-son-cookies" className="text-blue-600 hover:text-blue-800 underline">1. ¿QUÉ SON LAS COOKIES?</a></div>
+                        <div><a href="#por-que-usamos" className="text-blue-600 hover:text-blue-800 underline">2. ¿POR QUÉ USAMOS COOKIES?</a></div>
+                        <div><a href="#tipos-cookies" className="text-blue-600 hover:text-blue-800 underline">3. TIPOS DE COOKIES QUE USAMOS</a></div>
+                        <div><a href="#cookies-esenciales" className="text-blue-600 hover:text-blue-800 underline">4. COOKIES ESENCIALES</a></div>
+                        <div><a href="#cookies-rendimiento" className="text-blue-600 hover:text-blue-800 underline">5. COOKIES DE RENDIMIENTO Y ANALÍTICAS</a></div>
+                        <div><a href="#cookies-funcionalidad" className="text-blue-600 hover:text-blue-800 underline">6. COOKIES DE FUNCIONALIDAD</a></div>
+                        <div><a href="#cookies-publicidad" className="text-blue-600 hover:text-blue-800 underline">7. COOKIES DE PUBLICIDAD Y MARKETING</a></div>
+                        <div><a href="#cookies-terceros" className="text-blue-600 hover:text-blue-800 underline">8. COOKIES DE TERCEROS</a></div>
+                        <div><a href="#como-controlar" className="text-blue-600 hover:text-blue-800 underline">9. CÓMO CONTROLAR LAS COOKIES</a></div>
+                        <div><a href="#app-movil" className="text-blue-600 hover:text-blue-800 underline">10. APLICACIÓN MÓVIL</a></div>
+                        <div><a href="#actualizaciones" className="text-blue-600 hover:text-blue-800 underline">11. ACTUALIZACIONES DE ESTA POLÍTICA</a></div>
+                        <div><a href="#contacto" className="text-blue-600 hover:text-blue-800 underline">12. CONTACTO</a></div>
                     </div>
                 </div>
 
-                <section id="what-are-cookies" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">1. WHAT ARE COOKIES?</h2>
+                <section id="que-son-cookies" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">1. ¿QUÉ SON LAS COOKIES?</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            Cookies are small data files that are placed on your computer or mobile device when you visit a website. Cookies are widely used by website owners in order to make their websites work, or to work more efficiently, as well as to provide reporting information.
+                            Las cookies son pequeños archivos de datos que se colocan en tu computadora o dispositivo móvil cuando visitás un sitio web. Las cookies son ampliamente utilizadas por los propietarios de sitios web para hacer que sus sitios funcionen, o para que funcionen de manera más eficiente, así como para proporcionar información estadística.
                         </p>
 
                         <p>
-                            Cookies set by the website owner (in this case, Lanzate) are called &quot;first-party cookies.&quot; Cookies set by parties other than the website owner are called &quot;third-party cookies.&quot; Third-party cookies enable third-party features or functionality to be provided on or through the website (e.g., advertising, interactive content, and analytics). The parties that set these third-party cookies can recognize your computer both when it visits the website in question and also when it visits certain other websites.
+                            Las cookies establecidas por el propietario del sitio web (en este caso, Lanzáte) se llaman &quot;cookies propias&quot; o &quot;cookies de primera parte&quot;. Las cookies establecidas por partes distintas al propietario del sitio web se llaman &quot;cookies de terceros&quot;. Las cookies de terceros permiten que se proporcionen características o funcionalidades de terceros en o a través del sitio web (por ejemplo, publicidad, contenido interactivo y análisis). Las partes que establecen estas cookies de terceros pueden reconocer tu computadora tanto cuando visita el sitio web en cuestión como cuando visita ciertos otros sitios web.
                         </p>
 
-                        <h3 className="text-lg font-bold mb-3 mt-6">Similar Technologies</h3>
+                        <h3 className="text-lg font-bold mb-3 mt-6">Tecnologías Similares</h3>
                         <p>
-                            We also use other similar technologies like web beacons (sometimes called &quot;tracking pixels&quot; or &quot;clear gifs&quot;). These are tiny graphics files that contain a unique identifier that enables us to recognize when someone has visited our Services or opened an email that we have sent them. This allows us, for example, to monitor the traffic patterns of users from one page within our Services to another, to deliver or communicate with cookies, to understand whether you have come to our Services from an online advertisement displayed on a third-party website, to improve site performance, and to measure the success of email marketing campaigns.
+                            También usamos otras tecnologías similares como web beacons (a veces llamados &quot;píxeles de seguimiento&quot; o &quot;gifs transparentes&quot;). Estos son archivos gráficos diminutos que contienen un identificador único que nos permite reconocer cuando alguien ha visitado nuestros Servicios o abierto un correo electrónico que le hemos enviado. Esto nos permite, por ejemplo, monitorear los patrones de tráfico de los usuarios de una página dentro de nuestros Servicios a otra, entregar o comunicarnos con cookies, entender si has llegado a nuestros Servicios desde un anuncio en línea mostrado en un sitio web de terceros, mejorar el rendimiento del sitio y medir el éxito de las campañas de marketing por correo electrónico.
+                        </p>
+
+                        <p className="mt-4">
+                            Conforme a la Ley 25.326 y las disposiciones de la DNPDP, el uso de cookies que recolecten datos personales requiere de tu consentimiento informado, excepto para aquellas estrictamente necesarias para el funcionamiento del servicio.
                         </p>
                     </div>
                 </section>
 
-                <section id="why-we-use-cookies" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">2. WHY DO WE USE COOKIES?</h2>
+                <section id="por-que-usamos" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">2. ¿POR QUÉ USAMOS COOKIES?</h2>
                     <div className="text-sm leading-relaxed space-y-4">
-                        <p>We use first-party and third-party cookies for several reasons:</p>
+                        <p>Usamos cookies propias y de terceros por varias razones:</p>
 
                         <ul className="list-disc ml-6 space-y-2">
-                            <li><strong>Essential functionality:</strong> Some cookies are required for technical reasons in order for our Services to operate. We refer to these as &quot;essential&quot; or &quot;strictly necessary&quot; cookies.</li>
-                            <li><strong>Performance and analytics:</strong> Other cookies enable us to track and target the interests of our users to enhance the experience on our Services.</li>
-                            <li><strong>Personalization:</strong> Cookies help us provide you with personalized content and remember your preferences.</li>
-                            <li><strong>Security:</strong> Cookies help us identify and prevent security risks.</li>
-                            <li><strong>Advertising:</strong> Third parties serve cookies through our Services for advertising, analytics, and other purposes.</li>
+                            <li><strong>Funcionalidad esencial:</strong> Algunas cookies son requeridas por razones técnicas para que nuestros Servicios operen. Nos referimos a estas como cookies &quot;esenciales&quot; o &quot;estrictamente necesarias&quot;. Estas cookies no requieren tu consentimiento según la legislación argentina.</li>
+                            <li><strong>Rendimiento y análisis:</strong> Otras cookies nos permiten rastrear y orientar los intereses de nuestros usuarios para mejorar la experiencia en nuestros Servicios. Estas cookies requieren tu consentimiento.</li>
+                            <li><strong>Personalización:</strong> Las cookies nos ayudan a proporcionarte contenido personalizado y recordar tus preferencias. Requieren tu consentimiento.</li>
+                            <li><strong>Seguridad:</strong> Las cookies nos ayudan a identificar y prevenir riesgos de seguridad. Algunas son esenciales y otras requieren consentimiento.</li>
+                            <li><strong>Publicidad:</strong> Terceros sirven cookies a través de nuestros Servicios con fines publicitarios, analíticos y otros propósitos. Estas cookies siempre requieren tu consentimiento.</li>
                         </ul>
                     </div>
                 </section>
 
-                <section id="types-of-cookies" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">3. TYPES OF COOKIES WE USE</h2>
+                <section id="tipos-cookies" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">3. TIPOS DE COOKIES QUE USAMOS</h2>
                     <div className="text-sm leading-relaxed space-y-4">
-                        <p>We use several different types of cookies, which can be categorized as follows:</p>
+                        <p>Usamos varios tipos diferentes de cookies, que pueden categorizarse de la siguiente manera:</p>
 
-                        <h3 className="text-lg font-bold mb-3 mt-6">By Duration</h3>
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Session Cookies:</strong> These cookies are temporary and are deleted when you close your browser.</p>
+                        <h3 className="text-lg font-bold mb-3 mt-6">Por Duración</h3>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Cookies de Sesión:</strong> Estas cookies son temporales y se eliminan cuando cerrás tu navegador.</p>
                         </div>
 
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Persistent Cookies:</strong> These cookies remain on your device for a set period of time or until you delete them.</p>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Cookies Persistentes:</strong> Estas cookies permanecen en tu dispositivo por un período de tiempo establecido o hasta que las eliminés manualmente.</p>
                         </div>
 
-                        <h3 className="text-lg font-bold mb-3 mt-6">By Purpose</h3>
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Strictly Necessary Cookies:</strong> These cookies are essential for the operation of our Services.</p>
+                        <h3 className="text-lg font-bold mb-3 mt-6">Por Finalidad</h3>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Cookies Estrictamente Necesarias:</strong> Estas cookies son esenciales para el funcionamiento de nuestros Servicios. No requieren consentimiento según la legislación argentina.</p>
                         </div>
 
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Performance Cookies:</strong> These cookies collect information about how visitors use our Services.</p>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Cookies de Rendimiento:</strong> Estas cookies recolectan información sobre cómo los visitantes usan nuestros Servicios. Requieren tu consentimiento.</p>
                         </div>
 
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Functionality Cookies:</strong> These cookies allow our Services to remember choices you make.</p>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Cookies de Funcionalidad:</strong> Estas cookies permiten que nuestros Servicios recuerden las elecciones que hacés. Requieren tu consentimiento.</p>
                         </div>
 
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Targeting/Advertising Cookies:</strong> These cookies are used to deliver advertisements relevant to you.</p>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Cookies de Publicidad/Marketing:</strong> Estas cookies se utilizan para entregar anuncios relevantes para vos. Siempre requieren tu consentimiento.</p>
                         </div>
                     </div>
                 </section>
 
-                <section id="essential-cookies" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">4. ESSENTIAL COOKIES</h2>
+                <section id="cookies-esenciales" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">4. COOKIES ESENCIALES</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            These cookies are strictly necessary to provide you with services available through our Services and to use some of its features, such as access to secure areas. Because these cookies are strictly necessary to deliver the Services, you cannot refuse them without impacting how our Services function.
+                            Estas cookies son estrictamente necesarias para proporcionarte servicios disponibles a través de nuestros Servicios y para usar algunas de sus características, como el acceso a áreas seguras. Debido a que estas cookies son estrictamente necesarias para entregar los Servicios, no podés rechazarlas sin afectar el funcionamiento de nuestros Servicios.
+                        </p>
+
+                        <p className="rounded-lg">
+                            <strong>Base Legal:</strong> Estas cookies no requieren tu consentimiento conforme a la legislación argentina, ya que son indispensables para prestar el servicio que solicitaste.
                         </p>
 
                         <div className="overflow-x-auto">
-                            <table className="min-w-full bg-white border border-gray-300 mt-4">
-                                <thead className="bg-gray-50">
+                            <table className="min-w-full border border-primary p-4 border border-primary mt-4">
+                                <thead className="bg-accent">
                                     <tr>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Cookie Name</th>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Purpose</th>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Duration</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Nombre de Cookie</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Finalidad</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Duración</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td className="px-4 py-2 border-b">lanzate_session</td>
-                                        <td className="px-4 py-2 border-b">Maintains your login session</td>
-                                        <td className="px-4 py-2 border-b">Session</td>
+                                        <td className="px-4 py-2 border-b">Mantiene tu sesión de inicio de sesión activa</td>
+                                        <td className="px-4 py-2 border-b">Sesión</td>
                                     </tr>
                                     <tr>
                                         <td className="px-4 py-2 border-b">csrf_token</td>
-                                        <td className="px-4 py-2 border-b">Security protection against cross-site request forgery</td>
-                                        <td className="px-4 py-2 border-b">Session</td>
+                                        <td className="px-4 py-2 border-b">Protección de seguridad contra falsificación de solicitudes entre sitios (CSRF)</td>
+                                        <td className="px-4 py-2 border-b">Sesión</td>
                                     </tr>
                                     <tr>
                                         <td className="px-4 py-2 border-b">cookie_consent</td>
-                                        <td className="px-4 py-2 border-b">Remembers your cookie preferences</td>
-                                        <td className="px-4 py-2 border-b">1 year</td>
+                                        <td className="px-4 py-2 border-b">Recuerda tus preferencias de cookies</td>
+                                        <td className="px-4 py-2 border-b">1 año</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="px-4 py-2 border-b-primary">auth_token</td>
+                                        <td className="px-4 py-2 border-b-primary">Token de autenticación para mantener tu sesión segura</td>
+                                        <td className="px-4 py-2 border-b-primary">7 días</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -148,47 +167,51 @@ function CookiesPolicy() {
                     </div>
                 </section>
 
-                <section id="performance-cookies" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">5. PERFORMANCE AND ANALYTICS COOKIES</h2>
+                <section id="cookies-rendimiento" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">5. COOKIES DE RENDIMIENTO Y ANALÍTICAS</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            These cookies collect information about how visitors use our Services, for instance which pages visitors go to most often, and if they get error messages from web pages. These cookies don&apos;t collect information that identifies a visitor. All information these cookies collect is aggregated and therefore anonymous. It is only used to improve how our Services work.
+                            Estas cookies recolectan información sobre cómo los visitantes usan nuestros Servicios, por ejemplo, qué páginas visitan los visitantes con más frecuencia, y si reciben mensajes de error de las páginas web. Estas cookies no recolectan información que identifique a un visitante. Toda la información que estas cookies recolectan es agregada y, por lo tanto, anónima. Solo se usa para mejorar cómo funcionan nuestros Servicios.
+                        </p>
+
+                        <p className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary">
+                            <strong>Tu Consentimiento:</strong> Estas cookies requieren tu consentimiento explícito. Podés aceptarlas o rechazarlas a través del panel de gestión de cookies que aparece al visitar nuestro sitio por primera vez.
                         </p>
 
                         <div className="overflow-x-auto">
-                            <table className="min-w-full bg-white border border-gray-300 mt-4">
-                                <thead className="bg-gray-50">
+                            <table className="min-w-full border border-primary p-4 border border-primary mt-4">
+                                <thead className="bg-accent">
                                     <tr>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Cookie Name</th>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Provider</th>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Purpose</th>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Duration</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Nombre de Cookie</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Proveedor</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Finalidad</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Duración</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td className="px-4 py-2 border-b">_ga</td>
                                         <td className="px-4 py-2 border-b">Google Analytics</td>
-                                        <td className="px-4 py-2 border-b">Distinguishes unique users</td>
-                                        <td className="px-4 py-2 border-b">2 years</td>
+                                        <td className="px-4 py-2 border-b">Distingue usuarios únicos asignando un número generado aleatoriamente</td>
+                                        <td className="px-4 py-2 border-b">2 años</td>
                                     </tr>
                                     <tr>
                                         <td className="px-4 py-2 border-b">_ga_[ID]</td>
                                         <td className="px-4 py-2 border-b">Google Analytics</td>
-                                        <td className="px-4 py-2 border-b">Persists session state</td>
-                                        <td className="px-4 py-2 border-b">2 years</td>
+                                        <td className="px-4 py-2 border-b">Persiste el estado de la sesión de Google Analytics</td>
+                                        <td className="px-4 py-2 border-b">2 años</td>
                                     </tr>
                                     <tr>
                                         <td className="px-4 py-2 border-b">_gid</td>
                                         <td className="px-4 py-2 border-b">Google Analytics</td>
-                                        <td className="px-4 py-2 border-b">Distinguishes users</td>
-                                        <td className="px-4 py-2 border-b">24 hours</td>
+                                        <td className="px-4 py-2 border-b">Distingue usuarios para estadísticas diarias</td>
+                                        <td className="px-4 py-2 border-b">24 horas</td>
                                     </tr>
                                     <tr>
-                                        <td className="px-4 py-2 border-b">_gat</td>
-                                        <td className="px-4 py-2 border-b">Google Analytics</td>
-                                        <td className="px-4 py-2 border-b">Throttles request rate</td>
-                                        <td className="px-4 py-2 border-b">1 minute</td>
+                                        <td className="px-4 py-2 border-b-primary">_gat</td>
+                                        <td className="px-4 py-2 border-b-primary">Google Analytics</td>
+                                        <td className="px-4 py-2 border-b-primary">Limita la tasa de solicitudes para no sobrecargar servidores</td>
+                                        <td className="px-4 py-2 border-b-primary">1 minuto</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -196,37 +219,46 @@ function CookiesPolicy() {
                     </div>
                 </section>
 
-                <section id="functionality-cookies" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">6. FUNCTIONALITY COOKIES</h2>
+                <section id="cookies-funcionalidad" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">6. COOKIES DE FUNCIONALIDAD</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            These cookies allow our Services to remember choices you make (such as your user name, language, or the region you are in) and provide enhanced, more personal features. These cookies can also be used to remember changes you have made to text size, fonts, and other parts of web pages that you can customize.
+                            Estas cookies permiten que nuestros Servicios recuerden las elecciones que hacés (como tu nombre de usuario, idioma o la región en la que te encontrás) y proporcionan características mejoradas y más personales. Estas cookies también pueden usarse para recordar cambios que hayas realizado en el tamaño del texto, fuentes y otras partes de páginas web que podés personalizar.
+                        </p>
+
+                        <p className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary">
+                            <strong>Tu Consentimiento:</strong> Estas cookies requieren tu consentimiento. Podés gestionarlas a través del panel de preferencias de cookies.
                         </p>
 
                         <div className="overflow-x-auto">
-                            <table className="min-w-full bg-white border border-gray-300 mt-4">
-                                <thead className="bg-gray-50">
+                            <table className="min-w-full border border-primary p-4 border border-primary mt-4">
+                                <thead className="bg-accent">
                                     <tr>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Cookie Name</th>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Purpose</th>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Duration</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Nombre de Cookie</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Finalidad</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Duración</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td className="px-4 py-2 border-b">language_preference</td>
-                                        <td className="px-4 py-2 border-b">Remembers your language selection</td>
-                                        <td className="px-4 py-2 border-b">1 year</td>
+                                        <td className="px-4 py-2 border-b">Recuerda tu selección de idioma para mostrarte contenido en tu idioma preferido</td>
+                                        <td className="px-4 py-2 border-b">1 año</td>
                                     </tr>
                                     <tr>
                                         <td className="px-4 py-2 border-b">theme_preference</td>
-                                        <td className="px-4 py-2 border-b">Remembers your theme preference (dark/light mode)</td>
-                                        <td className="px-4 py-2 border-b">1 year</td>
+                                        <td className="px-4 py-2 border-b">Recuerda tu preferencia de tema (modo oscuro/claro)</td>
+                                        <td className="px-4 py-2 border-b">1 año</td>
                                     </tr>
                                     <tr>
                                         <td className="px-4 py-2 border-b">user_preferences</td>
-                                        <td className="px-4 py-2 border-b">Stores your customized settings</td>
-                                        <td className="px-4 py-2 border-b">6 months</td>
+                                        <td className="px-4 py-2 border-b">Almacena tus configuraciones personalizadas de la plataforma</td>
+                                        <td className="px-4 py-2 border-b">6 meses</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="px-4 py-2 border-b">dashboard_layout</td>
+                                        <td className="px-4 py-2 border-b">Recuerda cómo configuraste tu panel de control</td>
+                                        <td className="px-4 py-2 border-b">1 año</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -234,187 +266,308 @@ function CookiesPolicy() {
                     </div>
                 </section>
 
-                <section id="targeting-cookies" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">7. TARGETING AND ADVERTISING COOKIES</h2>
+                <section id="cookies-publicidad" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">7. COOKIES DE PUBLICIDAD Y MARKETING</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            These cookies are used to deliver advertisements more relevant to you and your interests. They are also used to limit the number of times you see an advertisement as well as help measure the effectiveness of the advertising campaign. They remember that you have visited a website and this information may be shared with other organizations such as advertisers.
+                            Estas cookies se utilizan para entregar anuncios más relevantes para vos y tus intereses. También se usan para limitar la cantidad de veces que ves un anuncio, así como para ayudar a medir la efectividad de la campaña publicitaria. Recuerdan que has visitado un sitio web y esta información puede ser compartida con otras organizaciones, como anunciantes.
+                        </p>
+
+                        <p className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary">
+                            <strong>Tu Consentimiento:</strong> Estas cookies siempre requieren tu consentimiento explícito. Sin tu consentimiento, no se instalarán ni activarán estas cookies.
                         </p>
 
                         <div className="overflow-x-auto">
-                            <table className="min-w-full bg-white border border-gray-300 mt-4">
-                                <thead className="bg-gray-50">
+                            <table className="min-w-full border border-primary p-4 border border-primary mt-4">
+                                <thead className="bg-accent">
                                     <tr>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Cookie Name</th>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Provider</th>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Purpose</th>
-                                        <th className="px-4 py-2 border-b text-left font-bold">Duration</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Nombre de Cookie</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Proveedor</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Finalidad</th>
+                                        <th className="px-4 py-2 border-b text-left font-bold">Duración</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td className="px-4 py-2 border-b">_fbp</td>
                                         <td className="px-4 py-2 border-b">Facebook</td>
-                                        <td className="px-4 py-2 border-b">Tracks visits across websites for advertising</td>
-                                        <td className="px-4 py-2 border-b">3 months</td>
+                                        <td className="px-4 py-2 border-b">Rastrea visitas a través de sitios web para publicidad dirigida</td>
+                                        <td className="px-4 py-2 border-b">3 meses</td>
                                     </tr>
                                     <tr>
                                         <td className="px-4 py-2 border-b">_gcl_au</td>
                                         <td className="px-4 py-2 border-b">Google AdSense</td>
-                                        <td className="px-4 py-2 border-b">Tracks ad clicks and conversions</td>
-                                        <td className="px-4 py-2 border-b">3 months</td>
+                                        <td className="px-4 py-2 border-b">Rastrea clics en anuncios y conversiones de Google Ads</td>
+                                        <td className="px-4 py-2 border-b">3 meses</td>
                                     </tr>
                                     <tr>
-                                        <td className="px-4 py-2 border-b">IDE</td>
-                                        <td className="px-4 py-2 border-b">Google DoubleClick</td>
-                                        <td className="px-4 py-2 border-b">Measures ad effectiveness and targets ads</td>
-                                        <td className="px-4 py-2 border-b">1 year</td>
+                                        <td className="px-4 py-2 border-b-primary">IDE</td>
+                                        <td className="px-4 py-2 border-b-primary">Google DoubleClick</td>
+                                        <td className="px-4 py-2 border-b-primary">Mide la efectividad de anuncios y orienta publicidad relevante</td>
+                                        <td className="px-4 py-2 border-b-primary">1 año</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
                         <p className="mt-4">
-                            <strong>Note:</strong> You can opt out of targeted advertising by visiting the following links:
+                            <strong>Opciones de Exclusión (Opt-Out):</strong> Podés excluirte de la publicidad dirigida visitando los siguientes enlaces:
                         </p>
 
                         <ul className="list-disc ml-6 space-y-2">
-                            <li><a href="http://www.aboutads.info/choices/"/*  target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Digital Advertising Alliance</a></li>
-                            <li><a href="http://www.youronlinechoices.com/"/*  target="_blank"  */className="text-blue-600 hover:text-blue-800 underline">Your Online Choices</a></li>
-                            <li><a href="https://www.networkadvertising.org/choices/"/*  target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Network Advertising Initiative</a></li>
+                            <li><a href="http://www.aboutads.info/choices/" className="text-blue-600 hover:text-blue-800 underline">Digital Advertising Alliance (EE.UU.)</a></li>
+                            <li><a href="http://www.youronlinechoices.com/" className="text-blue-600 hover:text-blue-800 underline">Your Online Choices (Europa)</a></li>
+                            <li><a href="https://www.networkadvertising.org/choices/" className="text-blue-600 hover:text-blue-800 underline">Network Advertising Initiative</a></li>
+                            <li><a href="https://www.facebook.com/settings?tab=ads" className="text-blue-600 hover:text-blue-800 underline">Preferencias de Anuncios de Facebook</a></li>
+                            <li><a href="https://adssettings.google.com/" className="text-blue-600 hover:text-blue-800 underline">Configuración de Anuncios de Google</a></li>
                         </ul>
                     </div>
                 </section>
 
-                <section id="third-party-cookies" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">8. THIRD-PARTY COOKIES</h2>
+                <section id="cookies-terceros" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">8. COOKIES DE TERCEROS</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            In addition to our own cookies, we may also use various third-party cookies to report usage statistics of the Services, deliver advertisements on and through the Services, and so on. These third-party cookies are governed by the respective privacy policies of the parties setting them.
+                            Además de nuestras propias cookies, también podemos usar varias cookies de terceros para reportar estadísticas de uso de los Servicios, entregar anuncios en y a través de los Servicios, entre otros. Estas cookies de terceros están regidas por las políticas de privacidad respectivas de las partes que las establecen.
                         </p>
 
-                        <h3 className="text-lg font-bold mb-3 mt-6">Third-Party Services We Use</h3>
+                        <h3 className="text-lg font-bold mb-3 mt-6">Servicios de Terceros que Usamos</h3>
 
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Google Analytics:</strong> We use Google Analytics to analyze the use of our Services. Google Analytics gathers information about website use by means of cookies. For more information about Google Analytics cookies, please see <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage"/*  target="_blank"  */className="text-blue-600 hover:text-blue-800 underline">Google Analytics Cookie Usage</a>.</p>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Google Analytics:</strong> Usamos Google Analytics para analizar el uso de nuestros Servicios. Google Analytics recopila información sobre el uso del sitio web mediante cookies. Para más información sobre las cookies de Google Analytics, por favor visitá <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage" className="text-blue-600 hover:text-blue-800 underline">Uso de Cookies de Google Analytics</a>.</p>
+                            <p className="mt-2"><strong>Política de Privacidad:</strong> <a href="https://policies.google.com/privacy" className="text-blue-600 hover:text-blue-800 underline">Política de Privacidad de Google</a></p>
                         </div>
 
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Google Ads:</strong> We use Google Ads for advertising purposes. Google may use cookies to serve ads based on your prior visits to our website. For more information, please see <a href="https://policies.google.com/technologies/ads"/*  target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Google Advertising</a>.</p>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Google Ads:</strong> Usamos Google Ads para fines publicitarios. Google puede usar cookies para mostrar anuncios basados en tus visitas anteriores a nuestro sitio web. Para más información, por favor visitá <a href="https://policies.google.com/technologies/ads" className="text-blue-600 hover:text-blue-800 underline">Publicidad de Google</a>.</p>
+                            <p className="mt-2"><strong>Política de Privacidad:</strong> <a href="https://policies.google.com/privacy" className="text-blue-600 hover:text-blue-800 underline">Política de Privacidad de Google</a></p>
                         </div>
 
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Facebook Pixel:</strong> We use Facebook Pixel to track conversions and build audiences for advertising campaigns. For more information, please see <a href="https://www.facebook.com/privacy/explanation" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Facebook Privacy Policy</a>.</p>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Facebook Pixel:</strong> Usamos Facebook Pixel para rastrear conversiones y crear audiencias para campañas publicitarias. Para más información, por favor visitá <a href="https://www.facebook.com/privacy/explanation" className="text-blue-600 hover:text-blue-800 underline">Política de Privacidad de Facebook</a>.</p>
+                            <p className="mt-2"><strong>Política de Privacidad:</strong> <a href="https://www.facebook.com/privacy/explanation" className="text-blue-600 hover:text-blue-800 underline">Política de Privacidad de Facebook</a></p>
                         </div>
 
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Hotjar:</strong> We use Hotjar to understand how users interact with our Services. For more information, please see <a href="https://www.hotjar.com/legal/policies/privacy/" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Hotjar Privacy Policy</a>.</p>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Hotjar:</strong> Usamos Hotjar para entender cómo los usuarios interactúan con nuestros Servicios mediante mapas de calor y grabaciones de sesiones. Para más información, por favor visitá <a href="https://www.hotjar.com/legal/policies/privacy/" className="text-blue-600 hover:text-blue-800 underline">Política de Privacidad de Hotjar</a>.</p>
+                            <p className="mt-2"><strong>Exclusión (Opt-out):</strong> <a href="https://www.hotjar.com/legal/compliance/opt-out" className="text-blue-600 hover:text-blue-800 underline">Excluirse de Hotjar</a></p>
                         </div>
-                    </div>
-                </section>
 
-                <section id="how-to-control" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">9. HOW TO CONTROL COOKIES</h2>
-                    <div className="text-sm leading-relaxed space-y-4">
-                        <p>
-                            You have the right to decide whether to accept or reject cookies. You can exercise your cookie rights by setting your preferences in the Cookie Consent Manager that appears when you first visit our Services, or by modifying your web browser controls.
-                        </p>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Mercado Pago:</strong> Usamos cookies de Mercado Pago para procesar pagos de forma segura. Mercado Pago establece sus propias cookies para gestionar transacciones y prevenir fraudes.</p>
+                            <p className="mt-2"><strong>Política de Privacidad:</strong> <a href="https://www.mercadopago.com.ar/privacidad" className="text-blue-600 hover:text-blue-800 underline">Política de Privacidad de Mercado Pago</a></p>
+                        </div>
 
-                        <h3 className="text-lg font-bold mb-3 mt-6">Browser Controls</h3>
-                        <p>
-                            Most web browsers allow you to control cookies through their settings preferences. However, if you limit the ability of websites to set cookies, you may worsen your overall user experience, since some functionality may no longer work properly.
-                        </p>
-
-                        <p>Here are links to cookie settings for popular browsers:</p>
-
-                        <ul className="list-disc ml-6 space-y-2">
-                            <li><a href="https://support.google.com/chrome/answer/95647" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Google Chrome</a></li>
-                            <li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Mozilla Firefox</a></li>
-                            <li><a href="https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies" /* target="_blank"  */className="text-blue-600 hover:text-blue-800 underline">Internet Explorer</a></li>
-                            <li><a href="https://support.apple.com/en-us/HT201265"/*  target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Safari (Desktop)</a></li>
-                            <li><a href="https://support.apple.com/en-us/HT201265" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Safari (Mobile)</a></li>
-                            <li><a href="https://support.google.com/chrome/answer/2392971" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Chrome (Mobile)</a></li>
-                        </ul>
-
-                        <h3 className="text-lg font-bold mb-3 mt-6">Opt-Out Links</h3>
-                        <p>For specific third-party services, you can use the following opt-out links:</p>
-
-                        <ul className="list-disc ml-6 space-y-2">
-                            <li><strong>Google Analytics:</strong> <a href="https://tools.google.com/dlpage/gaoptout" /* target="_blank" */ className="text-blue-600 hover:text-blue-800 underline">Google Analytics Opt-out Browser Add-on</a></li>
-                            <li><strong>Facebook:</strong> <a href="https://www.facebook.com/settings?tab=ads" /* target="_blank"  */className="text-blue-600 hover:text-blue-800 underline">Facebook Ad Preferences</a></li>
-                            <li><strong>Hotjar:</strong> <a href="https://www.hotjar.com/legal/compliance/opt-out" /* target="_blank"  */className="text-blue-600 hover:text-blue-800 underline">Hotjar Opt-out</a></li>
-                        </ul>
-
-                        <h3 className="text-lg font-bold mb-3 mt-6">Do Not Track</h3>
-                        <p>
-                            Some browsers include a &quot;Do Not Track&quot; feature that lets you tell websites that you do not want to have your online activities tracked. These features are not yet uniform, and our Services do not currently respond to those signals.
+                        <p className="mt-6">
+                            <strong>Importante:</strong> No controlamos las cookies de terceros y te recomendamos que revises las políticas de privacidad de estos terceros para entender cómo usan tus datos.
                         </p>
                     </div>
                 </section>
 
-                <section id="mobile-app" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">10. MOBILE APPLICATION</h2>
+                <section id="como-controlar" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">9. CÓMO CONTROLAR LAS COOKIES</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            Our mobile application may use similar technologies to cookies to collect and store information. While mobile applications do not use cookies in the same way as websites, they may use other technologies such as:
+                            Tenés derecho a decidir si aceptás o rechazás cookies. Conforme a la legislación argentina, te solicitaremos tu consentimiento explícito para las cookies no esenciales antes de que sean instaladas en tu dispositivo.
                         </p>
 
+                        <h3 className="text-lg font-bold mb-3 mt-6">Panel de Gestión de Cookies</h3>
+                        <p>
+                            Podés ejercer tus derechos sobre cookies configurando tus preferencias en el Panel de Gestión de Consentimiento de Cookies que aparece cuando visitás nuestros Servicios por primera vez. Para modificar tus preferencias posteriormente, podés:
+                        </p>
                         <ul className="list-disc ml-6 space-y-2">
-                            <li><strong>SDKs (Software Development Kits):</strong> Third-party SDKs that provide analytics, crash reporting, and advertising services.</li>
-                            <li><strong>Local Storage:</strong> Information stored locally on your device to remember your preferences and improve app performance.</li>
-                            <li><strong>Device Identifiers:</strong> Unique identifiers associated with your device for analytics and advertising purposes.</li>
+                            <li>Hacer clic en el enlace &quot;Gestionar Cookies&quot; en el pie de página de nuestro sitio web</li>
+                            <li>Acceder a la configuración de cookies desde tu perfil de usuario</li>
+                            <li>Borrar las cookies de tu navegador y volver a visitar nuestro sitio (aparecerá nuevamente el panel)</li>
                         </ul>
 
+                        <h3 className="text-lg font-bold mb-3 mt-6">Controles del Navegador</h3>
                         <p>
-                            You can control some of these technologies through your device settings:
+                            La mayoría de los navegadores web te permiten controlar las cookies a través de sus configuraciones de preferencias. Sin embargo, si limitás la capacidad de los sitios web para establecer cookies, podés empeorar tu experiencia general de usuario, ya que algunas funcionalidades pueden dejar de funcionar correctamente.
                         </p>
 
+                        <p>Aquí tenés enlaces para configurar cookies en los navegadores más populares:</p>
+
                         <ul className="list-disc ml-6 space-y-2">
-                            <li><strong>iOS:</strong> Settings {'>'} Privacy & Security {'>'} Apple Advertising {'>'} Personalized Ads</li>
-                            <li><strong>Android:</strong> Settings {'>'} Google {'>'} Ads {'>'} Opt out of Ads Personalization</li>
+                            <li><a href="https://support.google.com/chrome/answer/95647" className="text-blue-600 hover:text-blue-800 underline">Google Chrome</a></li>
+                            <li><a href="https://support.mozilla.org/es/kb/cookies-informacion-que-los-sitios-web-guardan-en-" className="text-blue-600 hover:text-blue-800 underline">Mozilla Firefox</a></li>
+                            <li><a href="https://support.microsoft.com/es-es/microsoft-edge/eliminar-las-cookies-en-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" className="text-blue-600 hover:text-blue-800 underline">Microsoft Edge</a></li>
+                            <li><a href="https://support.apple.com/es-es/HT201265" className="text-blue-600 hover:text-blue-800 underline">Safari (Desktop)</a></li>
+                            <li><a href="https://support.apple.com/es-es/HT201265" className="text-blue-600 hover:text-blue-800 underline">Safari (Mobile)</a></li>
+                            <li><a href="https://support.google.com/chrome/answer/2392971" className="text-blue-600 hover:text-blue-800 underline">Chrome (Mobile)</a></li>
+                            <li><a href="https://help.opera.com/es/latest/web-preferences/#cookies" className="text-blue-600 hover:text-blue-800 underline">Opera</a></li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Enlaces de Exclusión (Opt-Out)</h3>
+                        <p>Para servicios específicos de terceros, podés usar los siguientes enlaces de exclusión:</p>
+
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li><strong>Google Analytics:</strong> <a href="https://tools.google.com/dlpage/gaoptout" className="text-blue-600 hover:text-blue-800 underline">Complemento de Inhabilitación para Navegadores de Google Analytics</a></li>
+                            <li><strong>Facebook:</strong> <a href="https://www.facebook.com/settings?tab=ads" className="text-blue-600 hover:text-blue-800 underline">Preferencias de Anuncios de Facebook</a></li>
+                            <li><strong>Hotjar:</strong> <a href="https://www.hotjar.com/legal/compliance/opt-out" className="text-blue-600 hover:text-blue-800 underline">Excluirse de Hotjar</a></li>
+                            <li><strong>Google Ads:</strong> <a href="https://adssettings.google.com/" className="text-blue-600 hover:text-blue-800 underline">Configuración de Anuncios de Google</a></li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Do Not Track (No Rastrear)</h3>
+                        <p>
+                            Algunos navegadores incluyen una función &quot;Do Not Track&quot; (No Rastrear) que te permite indicar a los sitios web que no querés que tu actividad en línea sea rastreada. Estas funciones aún no son uniformes, y actualmente nuestros Servicios no responden a estas señales de &quot;Do Not Track&quot;. Sin embargo, respetamos tus preferencias de cookies establecidas en nuestro panel de gestión.
+                        </p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Consecuencias de Deshabilitar Cookies</h3>
+                        <p>
+                            Si elegís deshabilitar o rechazar cookies:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Algunas funcionalidades de nuestros Servicios pueden no estar disponibles</li>
+                            <li>Es posible que tengas que iniciar sesión cada vez que visitás nuestro sitio</li>
+                            <li>Tus preferencias personalizadas no se recordarán</li>
+                            <li>La experiencia de usuario puede verse reducida</li>
+                            <li>Algunas páginas pueden no cargarse correctamente</li>
                         </ul>
                     </div>
                 </section>
 
-                <section id="updates" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">11. UPDATES TO THIS POLICY</h2>
+                <section id="app-movil" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">10. APLICACIÓN MÓVIL</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            We may update this Cookies Policy from time to time in order to reflect changes to the cookies we use or for other operational, legal, or regulatory reasons. We will notify you of any material changes by posting the new Cookies Policy on this page with a new effective date.
+                            Nuestra aplicación móvil puede usar tecnologías similares a las cookies para recolectar y almacenar información. Si bien las aplicaciones móviles no usan cookies de la misma manera que los sitios web, pueden usar otras tecnologías tales como:
                         </p>
 
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li><strong>SDKs (Kits de Desarrollo de Software):</strong> SDKs de terceros que proporcionan servicios de análisis, informes de errores y servicios publicitarios.</li>
+                            <li><strong>Almacenamiento Local:</strong> Información almacenada localmente en tu dispositivo para recordar tus preferencias y mejorar el rendimiento de la aplicación.</li>
+                            <li><strong>Identificadores de Dispositivo:</strong> Identificadores únicos asociados con tu dispositivo para fines analíticos y publicitarios.</li>
+                            <li><strong>Tokens de Sesión:</strong> Para mantener tu sesión activa de forma segura.</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">SDKs de Terceros en la Aplicación</h3>
                         <p>
-                            We encourage you to review this Cookies Policy regularly to stay informed about our use of cookies and related technologies.
+                            Nuestra aplicación móvil puede incluir los siguientes SDKs de terceros:
                         </p>
 
-                        <p>
-                            If you have disabled one or more cookies, we may still use information collected from cookies prior to your disabled preference being set. However, we will stop using the disabled cookie to collect any further information.
-                        </p>
-                    </div>
-                </section>
-
-                <section id="contact" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">12. CONTACT US</h2>
-                    <div className="text-sm leading-relaxed space-y-4">
-                        <p>If you have any questions about our use of cookies or this Cookies Policy, please contact us:</p>
-
-                        <div className="bg-gray-50 p-4 rounded-lg">
-                            <p><strong>Lanzate</strong></p>
-                            <p>Las Palmas 735, no</p>
-                            <p>Atlantida, Santa Clara del Mar, Buenos Aires 7609</p>
-                            <p>Argentina</p>
-                            <p>Phone: +5491135069709</p>
-                            <p>Email: info@lanzate.app</p>
-                            <p>Website: <a href="https://www.lanzate.app" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a></p>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Google Analytics para Firebase:</strong> Para análisis de uso de la aplicación</p>
                         </div>
 
-                        <p className="mt-4">
-                            For more information about our privacy practices, please review our Privacy Policy at <a href="https://www.lanzate.app/privacy-policy" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app/privacy-policy</a>.
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Facebook SDK:</strong> Para inicio de sesión con Facebook e Instagram</p>
+                        </div>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Mercado Pago SDK:</strong> Para procesar pagos de forma segura</p>
+                        </div>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Controlar Tecnologías en la Aplicación Móvil</h3>
+                        <p>
+                            Podés controlar algunas de estas tecnologías a través de la configuración de tu dispositivo:
                         </p>
+
+                        <h4 className="font-bold mb-2 mt-4">iOS (iPhone/iPad):</h4>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Configuración → Privacidad y Seguridad → Publicidad de Apple → Personalizar Anuncios (desactivar)</li>
+                            <li>Configuración → Privacidad y Seguridad → Seguimiento → Permitir que las apps soliciten rastrearte (desactivar)</li>
+                            <li>Configuración → [Nombre de la App] → Permisos</li>
+                        </ul>
+
+                        <h4 className="font-bold mb-2 mt-4">Android:</h4>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Configuración → Google → Anuncios → Inhabilitar Personalización de Anuncios</li>
+                            <li>Configuración → Google → Anuncios → Restablecer ID de Publicidad</li>
+                            <li>Configuración → Aplicaciones → [Nombre de la App] → Permisos</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Permisos de la Aplicación</h3>
+                        <p>
+                            Nuestra aplicación puede solicitar los siguientes permisos:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li><strong>Cámara:</strong> Para escanear códigos de barras de productos y códigos QR</li>
+                            <li><strong>Almacenamiento:</strong> Para guardar imágenes de productos y documentos</li>
+                            <li><strong>Ubicación:</strong> Para funciones relacionadas con la ubicación de tu tienda (opcional)</li>
+                            <li><strong>Notificaciones:</strong> Para enviarte alertas sobre ventas, stock bajo, etc.</li>
+                        </ul>
+                        <p className="mt-2">
+                            Podés gestionar estos permisos en cualquier momento desde la configuración de tu dispositivo.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="actualizaciones" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">11. ACTUALIZACIONES DE ESTA POLÍTICA</h2>
+                    <div className="text-sm leading-relaxed space-y-4">
+                        <p>
+                            Podemos actualizar esta Política de Cookies periódicamente para reflejar cambios en las cookies que usamos o por otras razones operativas, legales o regulatorias. Por favor, visitá esta Política de Cookies regularmente para estar informado sobre nuestro uso de cookies y tecnologías relacionadas.
+                        </p>
+
+                        <p>
+                            Te notificaremos sobre cualquier cambio material publicando la nueva Política de Cookies en esta página y actualizando la fecha de &quot;Última actualización&quot; en la parte superior.
+                        </p>
+
+                        <p>
+                            Para cambios significativos en cómo usamos cookies, también te notificaremos mediante:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Un aviso destacado en nuestro sitio web</li>
+                            <li>Un correo electrónico a la dirección registrada en tu cuenta</li>
+                            <li>Una notificación en la aplicación móvil</li>
+                            <li>Solicitándote nuevamente tu consentimiento cuando sea necesario</li>
+                        </ul>
+
+                        <p>
+                            La fecha que figura en la parte superior de esta Política de Cookies indica cuándo fue actualizada por última vez.
+                        </p>
+
+                        <p>
+                            Si has deshabilitado una o más cookies, podemos seguir usando información recolectada de cookies antes de que se estableciera tu preferencia de inhabilitación. Sin embargo, dejaremos de usar la cookie inhabilitada para recolectar cualquier información adicional.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="contacto" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">12. CONTACTO</h2>
+                    <div className="text-sm leading-relaxed space-y-4">
+                        <p>Si tenés alguna pregunta sobre nuestro uso de cookies o esta Política de Cookies, por favor contactanos:</p>
+
+                        <div className="bg-accent text-accent-foreground p-6 rounded-lg border-2 border-primary">
+                            <p className="font-bold text-lg mb-3">Lanzáte</p>
+                            <p><strong>Domicilio Legal:</strong></p>
+                            <p>Las Palmas 735</p>
+                            <p>Atlántida, Santa Clara del Mar</p>
+                            <p>Buenos Aires, CP 7609</p>
+                            <p>República Argentina</p>
+                            <p className="mt-4"><strong>Contacto:</strong></p>
+                            <p>Teléfono: <a href="tel:+5491135069709" className="text-blue-600 hover:text-blue-800 underline">+54 9 11 3506-9709</a></p>
+                            <p>Email: <a href="mailto:info@lanzate.app" className="text-blue-600 hover:text-blue-800 underline">info@lanzate.app</a></p>
+                            <p>Sitio Web: <a href="https://www.lanzate.app" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a></p>
+                            <p className="mt-4"><strong>Responsable de Protección de Datos:</strong></p>
+                            <p>Email: <a href="mailto:info@lanzate.app" className="text-blue-600 hover:text-blue-800 underline">info@lanzate.app</a></p>
+                        </div>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-6">
+                            <p className="font-bold mb-2">Horario de Atención:</p>
+                            <p>Lunes a Viernes de 9:00 a 18:00 hs (hora de Argentina)</p>
+                            <p className="text-xs mt-2">Tiempo de respuesta estimado: 10 días hábiles</p>
+                        </div>
+
+                        <p className="mt-6">
+                            Para más información sobre nuestras prácticas de privacidad, por favor revisá nuestra Política de Privacidad en <Link href="/privacy-policy" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app/privacy-policy</Link>.
+                        </p>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-6">
+                            <p className="font-bold mb-2">Dirección Nacional de Protección de Datos Personales (DNPDP):</p>
+                            <p>Si tenés alguna inquietud sobre cómo manejamos las cookies o considerás que tus derechos no han sido respetados, podés contactar a la autoridad de protección de datos:</p>
+                            <p className="mt-2">Agencia de Acceso a la Información Pública</p>
+                            <p>Av. Pte. Gral. Julio A. Roca 710, Piso 3º</p>
+                            <p>C1067ABP - Ciudad Autónoma de Buenos Aires</p>
+                            <p>Tel: 0800-222-DATOS (3286)</p>
+                            <p>Web: <a href="https://www.argentina.gob.ar/aaip" className="text-blue-600 hover:text-blue-800 underline">www.argentina.gob.ar/aaip</a></p>
+                        </div>
                     </div>
                 </section>
             </div>
         </section>
-    )
+    );
 }
-export default CookiesPolicy
+
+export default CookiesPolicy;

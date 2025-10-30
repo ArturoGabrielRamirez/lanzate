@@ -1,23 +1,23 @@
-import { ArrowRight, BookA, Candy, Eye, Milk, Utensils } from "lucide-react";
-import Link from "next/link";
-import { SearchParams } from "nuqs";
-import { Suspense } from "react";
+import { ArrowRight, BookA, Candy, Eye, Milk, Utensils } from "lucide-react"
+import Link from "next/link"
+import { SearchParams } from "nuqs"
+import { Suspense } from "react"
 
 /* import { Title } from "@/features/layout/components"; */
-import { Card, CardContent } from "@/features/shadcn/components/ui/card";
-import { PageContainer } from "@/features/layout/components";
 /* import PaginationNav from "@/features/store-landing/components/pagination-nav";
 import ProductAmountDisplay from "@/features/store-landing/components/product-amount-display"; */
-import ProductCardLoader from "@/features/products/components/product-card-loader";
-import ProductList from "@/features/products/components/product-list";
 /* import ProductListDisplay from "@/features/store-landing/components/product-list-display"; */
 /* import SectionContainer from "@/features/store-landing/components/section-container";
 import SidebarFilters from "@/features/store-landing/components/sidebar-filters"; */
-import { loadFilterParams } from "@/features/products/utils/load-filter-params";
-import StoreBanner from "@/features/stores/components/public/store-banner";
-import TopCategoriesNavbar from "@/features/stores/components/public/top-categories-navbar";
 /* import { getStoreProductAmount } from "@/features/subdomain/actions/getStoreProductAmount"; */
 /* import Image from "next/image"; */
+import { PageContainer } from "@/features/layout/components";
+import { ProductCardLoader } from "@/features/products/components/product-card-loader";
+import { ProductList } from "@/features/products/components/product-list";
+import { loadFilterParams } from "@/features/products/utils/load-filter-params";
+import { Card, CardContent } from "@/features/shadcn/components/ui/card";
+import { StoreBanner } from "@/features/stores/components/public/store-banner";
+import { TopCategoriesNavbar } from "@/features/stores/components/public/top-categories-navbar";
 
 type Props = {
     params: Promise<{ subdomain: string }>
@@ -27,7 +27,6 @@ type Props = {
 export default async function StorePage({ params, searchParams }: Props) {
     const { subdomain } = await params
     const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams)
-
     /* const { payload: productAmount } = await getStoreProductAmount(subdomain); */
     /* const t = await getTranslations("subdomain"); */
 

@@ -1,10 +1,10 @@
 "use server"
 
-import { CreateCategoryDynamicAction  } from "@/features/categories/types"
-import { actionWrapper } from "@/utils/lib"
+import { CreateCategoryDynamicAction } from "@/features/categories/types"
+import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
-export async function getStoreCategoriesData({ storeId }: CreateCategoryDynamicAction ) {
+export async function getStoreCategoriesData({ storeId }: CreateCategoryDynamicAction) {
     return actionWrapper(async () => {
         const categories = await prisma.category.findMany({
             where: {
@@ -31,7 +31,7 @@ export async function getStoreCategoriesData({ storeId }: CreateCategoryDynamicA
         })
 
         return {
-            error: false,
+            hasError: false,
             message: "Categories fetched successfully",
             payload: categories
         }

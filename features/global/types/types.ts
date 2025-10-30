@@ -49,3 +49,12 @@ export type SelectFieldProps = {
     disabled?: boolean
     startIcon?: React.ReactNode
 }
+
+export interface ReplyData {
+    recipientEmail: string;
+    recipientName?: string;
+    category?: string;
+    originalMessage: string;
+    replyMessage: string;
+    agentName?: string;
+}

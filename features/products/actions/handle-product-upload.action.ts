@@ -1,14 +1,9 @@
 "use server"
 
-import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
-import {
-    updateProductPrimaryImage,
-    createProductMedia,
-    verifyProductOwnership,
-    deleteProductMedia
-} from "@/features/shared/data"
 import { StorageService } from "@/features/global/services/storage"
-import { FileUploadData, UploadResult } from "@/features/shared/types"
+import { FileUploadData, UploadResult } from "@/features/global/types/media"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
+import { createProductMediaData, deleteProductMediaData, updateProductPrimaryImageData, verifyProductOwnershipData } from "@/features/products/data"
 
 export async function handleProductUploadAction(
     uploadData: FileUploadData,
@@ -23,7 +18,7 @@ export async function handleProductUploadAction(
             throw new Error('productId es requerido para subir media de productos')
         }
 
-        const product = await verifyProductOwnership(productId, userId)
+        const product = await verifyProductOwnershipData(productId, userId)
 
         if (!product) {
             throw new Error('Producto no encontrado o sin permisos')
@@ -37,14 +32,14 @@ export async function handleProductUploadAction(
             await storage.deleteFile(product.image, 'product-images')
 
             // Eliminar registro de la base de datos
-            await deleteProductMedia(product.primary_media_id)
+            await deleteProductMediaData(product.primary_media_id)
 
             console.log('Imagen principal antigua eliminada correctamente')
         }
 
         const publicUrl = await storage.uploadFile(file, type, userId)
 
-        const mediaRecord = await createProductMedia(
+        const mediaRecord = await createProductMediaData(
             productId,
             publicUrl,
             file,
@@ -53,7 +48,7 @@ export async function handleProductUploadAction(
 
         // Verificar si es imagen basándonos en el tipo del registro creado
         if (mediaRecord.type === 'IMAGE') {
-            await updateProductPrimaryImage(
+            await updateProductPrimaryImageData(
                 productId,
                 publicUrl,
                 mediaRecord.id

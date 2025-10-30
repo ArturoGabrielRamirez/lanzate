@@ -1,12 +1,8 @@
+import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 import type { NextConfig } from "next";
 
-// Importación dinámica para el plugin de Prisma
-const withPrismaPlugin = async () => {
-  const { PrismaPlugin } = await import('@prisma/nextjs-monorepo-workaround-plugin');
-  return PrismaPlugin;
-};
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -39,12 +35,10 @@ const nextConfig: NextConfig = {
       }
     ]
   },
-  webpack: async (config, { isServer }) => {
+  webpack: (config, { isServer }) => {
     if (isServer) {
-      const PrismaPlugin = await withPrismaPlugin();
       config.plugins = [...config.plugins, new PrismaPlugin()];
     }
-
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -54,11 +48,9 @@ const nextConfig: NextConfig = {
         crypto: false,
       };
     }
-
     return config;
   },
 };
 
 const withNextIntl = createNextIntlPlugin();
-
 export default withNextIntl(nextConfig);

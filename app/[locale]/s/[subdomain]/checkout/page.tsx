@@ -1,7 +1,7 @@
 import { CartResume } from "@/features/cart/components"
 import { CheckoutForm, CheckoutProvider } from "@/features/checkout/components"
-import { getUserInfo } from "@/features/layout/actions"
-import { Title } from "@/features/layout/components"
+import { getUserInfo } from "@/features/global/actions"
+/* import { Title } from "@/features/layout/components" */
 import {PageContainer} from "@/features/layout/components/page-container"
 import { getStoreBySubdomainAction } from "@/features/stores/actions"
 
@@ -11,10 +11,10 @@ async function CheckoutPage({ params }: { params: Promise<{ subdomain: string }>
     const { payload: store, hasError: storeError, message: storeMessage } = await getStoreBySubdomainAction(subdomain)
     const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
-    const breadcrumbs = [
+  /*   const breadcrumbs = [
         { label: "cart", href: "/cart" },
         { label: "checkout", href: "/checkout" }
-    ]
+    ] */
 
     if (userError || !user) {
         return console.error(userMessage)
@@ -27,7 +27,7 @@ async function CheckoutPage({ params }: { params: Promise<{ subdomain: string }>
     return (
         <CheckoutProvider>
             <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
-                <Title title="Checkout" breadcrumbs={breadcrumbs} homePath="/"/>
+                {/* <Title title="Checkout" breadcrumbs={breadcrumbs} homePath="/"/> */}
                 <div className="flex flex-col gap-4 lg:flex-row">
                     <CheckoutForm 
                         subdomain={subdomain} 

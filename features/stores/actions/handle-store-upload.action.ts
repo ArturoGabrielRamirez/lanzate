@@ -1,9 +1,10 @@
 "use server"
 
-import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
-import { updateStoreBanner, updateStoreLogo, verifyStoreOwnership } from "@/features/shared/data"
 import { StorageService } from "@/features/global/services/storage"
-import { FileUploadData, UPLOAD_TYPES, UploadResult } from "@/features/shared/types"
+import { FileUploadData, UPLOAD_TYPES, UploadResult } from "@/features/global/types/media"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
+import { updateStoreBannerData, updateStoreLogoData, verifyStoreOwnershipData } from "@/features/stores/data"
+
 
 export async function handleStoreUploadAction(
     uploadData: FileUploadData,
@@ -18,7 +19,7 @@ export async function handleStoreUploadAction(
             throw new Error('storeId es requerido para subir archivos de tiendas')
         }
 
-        const store = await verifyStoreOwnership(storeId, userId)
+        const store = await verifyStoreOwnershipData(storeId, userId)
 
         if (!store) {
             throw new Error('Tienda no encontrada o sin permisos')
@@ -40,8 +41,8 @@ export async function handleStoreUploadAction(
 
         // Actualizar en la base de datos
         const updatedStore = type === UPLOAD_TYPES.STORE_BANNER
-            ? await updateStoreBanner(storeId, publicUrl)
-            : await updateStoreLogo(storeId, publicUrl)
+            ? await updateStoreBannerData(storeId, publicUrl)
+            : await updateStoreLogoData(storeId, publicUrl)
 
         const result: UploadResult = {
             message: `${type} subido correctamente`,

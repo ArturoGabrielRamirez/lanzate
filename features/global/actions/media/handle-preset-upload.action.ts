@@ -1,8 +1,8 @@
 "use server"
 
+import { updateUserAvatarData, updateUserBannerData } from "@/features/auth/data"
+import { PresetRequest, UPLOAD_TYPES, UploadResult } from "@/features/global/types/media"
 import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
-import { updateUserAvatar, updateUserBanner } from "@/features/shared/data"
-import { PresetRequest, UPLOAD_TYPES, UploadResult } from "@/features/shared/types"
 
 export async function handlePresetUploadAction(
     data: PresetRequest,
@@ -13,8 +13,8 @@ export async function handlePresetUploadAction(
         const { type, presetUrl } = data
 
         const updatedUser = type === UPLOAD_TYPES.BANNER
-            ? await updateUserBanner(userId, presetUrl)
-            : await updateUserAvatar(userId, presetUrl)
+            ? await updateUserBannerData(userId, presetUrl)
+            : await updateUserAvatarData(userId, presetUrl)
 
         const result: UploadResult = {
             message: `${type === UPLOAD_TYPES.BANNER ? 'Banner' : 'Avatar'} actualizado correctamente`,

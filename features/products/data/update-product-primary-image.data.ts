@@ -1,6 +1,6 @@
 import { prisma } from "@/utils/prisma";
 
-export async function updateProductPrimaryImage(
+export async function updateProductPrimaryImageData(
     productId: number,
     imageUrl: string,
     mediaId: number

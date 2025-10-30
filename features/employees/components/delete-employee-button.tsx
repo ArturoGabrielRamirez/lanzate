@@ -7,23 +7,24 @@ import { useTranslations } from "next-intl"
 import { deleteEmployeeAction } from "@/features/employees/actions/delete-employee.action"
 import { DeleteEmployeeButtonProps } from "@/features/employees/types"
 import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
-import { formatErrorResponse } from "@/utils/lib"
+import { formatErrorResponse } from "@/features/global/utils"
+
 
 function DeleteEmployeeButton({ employeeId, slug, onComplete, userId }: DeleteEmployeeButtonProps) {
-    
+
     const t = useTranslations("store.delete-employee")
-    
+
     const handleDeleteEmployee = async () => {
         try {
-            const { error, message, payload } = await deleteEmployeeAction(employeeId, slug, userId)
-            if (error) throw new Error(message)
+            const { hasError, message, payload } = await deleteEmployeeAction(employeeId, slug, userId)
+            if (hasError) throw new Error(message)
             return {
                 error: false,
                 message: t("messages.success"),
                 payload: payload
             }
         } catch (error) {
-            return formatErrorResponse(t("messages.error"), error, null)
+            return formatErrorResponse(t("messages.error"))
         }
     }
 
