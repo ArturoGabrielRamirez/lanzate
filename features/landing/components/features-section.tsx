@@ -46,7 +46,7 @@ async function FeaturesSection() {
                                         </svg>
                                         <span className="mx-auto block w-fit text-5xl font-semibold">100%</span>
                                     </div>
-                                    <h2 className="mt-6 text-center text-3xl font-semibold">{t('home.features.feature.customizable')}</h2>
+                                    <h2 className="mt-6 text-center text-3xl font-semibold font-geist">{t('home.features.feature.customizable')}</h2>
                                 </CardContent>
                             </Card>
                             <Card className="relative col-span-full hover:drop-shadow-xl hover:-translate-y-1 transition-all overflow-hidden sm:col-span-3 lg:col-span-2">
@@ -59,8 +59,8 @@ async function FeaturesSection() {
                                         />
                                     </div>
                                     <div className="relative z-10 space-y-2 text-center">
-                                        <h3 className="text-lg font-medium">{t('home.features.feature.all-in-one.title')}</h3>
-                                        <p className='text-sm text-muted-foreground'>{t('home.features.feature.all-in-one.description')}</p>
+                                        <h3 className="text-lg font-medium  font-geist">{t('home.features.feature.all-in-one.title')}</h3>
+                                        <p className='text-sm text-muted-foreground font-geist font-light'>{t('home.features.feature.all-in-one.description')}</p>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -74,8 +74,8 @@ async function FeaturesSection() {
                                         />
                                     </div>
                                     <div className="relative z-10 space-y-2 text-center mt-auto">
-                                        <h3 className="text-lg font-medium">{t('home.features.feature.custom-domain.title')}</h3>
-                                        <p className='text-sm text-muted-foreground'>{t('home.features.feature.custom-domain.description.own-brand')}</p>
+                                        <h3 className="text-lg font-medium font-geist">{t('home.features.feature.custom-domain.title')}</h3>
+                                        <p className='text-sm text-muted-foreground font-geist font-light'>{t('home.features.feature.custom-domain.description.own-brand')}</p>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -86,10 +86,10 @@ async function FeaturesSection() {
                                             <Zap className="m-auto size-6" strokeWidth={1} />
                                         </div>
                                         <div className="space-y-2">
-                                            <h2 className="group-hover:text-secondary-950 text-lg font-medium text-zinc-800 transition dark:text-white">
+                                            <h2 className="group-hover:text-secondary-950 text-lg font-medium text-zinc-800 transition dark:text-white font-geist">
                                                 {t('features.speed.headline')}
                                             </h2>
-                                            <p className="text-foreground">
+                                            <p className="text-foreground font-geist font-light">
                                                 {t('features.speed.description')}
                                             </p>
                                         </div>
@@ -115,10 +115,10 @@ async function FeaturesSection() {
                                             <Users className="m-auto size-6" strokeWidth={1} />
                                         </div>
                                         <div className="space-y-2">
-                                            <h2 className="text-lg font-medium transition">
+                                            <h2 className="text-lg font-medium transition font-geist">
                                                 {t('features.stay-connected.headline')}
                                             </h2>
-                                            <p className="text-foreground">
+                                            <p className="text-foreground font-geist font-light">
                                                 {t('features.stay-connected.description')}
                                             </p>
                                         </div>

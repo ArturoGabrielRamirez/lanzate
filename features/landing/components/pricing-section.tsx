@@ -5,7 +5,7 @@ import { PriceCard, OfferingWrapper, Offering, ProductName, Price, Description }
 
 function PricingSection() {
     return (
-        <section className="relative py-17 flex snap-start flex-col items-center">
+        <section className="relative py-17 flex snap-start flex-col items-center font-geist">
             <div className="container grid items-center gap-12 lg:grid-cols-[1fr_3fr] mx-auto px-4 relative h-fit">
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />
@@ -22,7 +22,7 @@ function PricingSection() {
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, vero eius, in quasi hic nemo magnam assumenda accusamus dolorem fugiat quia provident inventore enim vitae nobis? Cupiditate quibusdam saepe temporibus?
                     </p>
                 </div>
-                <div className="container grid items-center pt-10 gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full">
+                <div className="container grid items-center pt-10 gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist">
                     <PriceCard contactPageHref="/login" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 scale-90">
                         <ProductName>Starter</ProductName>
                         <Price>$0 / FREE</Price>

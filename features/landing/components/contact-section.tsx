@@ -24,7 +24,7 @@ function ContactSection() {
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-col items-center gap-4">
-                        <p className="text-muted-foreground font-quattrocento text-center text-balance">
+                        <p className="text-muted-foreground font-geist font-light text-center text-balance">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, vero eius, in quasi hic nemo magnam assumenda accusamus dolorem fugiat quia provident inventore enim vitae nobis? Cupiditate quibusdam saepe temporibus?
                         </p>
                         <AnimatedShinyButton>
