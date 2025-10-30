@@ -48,3 +48,12 @@ export type SelectFieldProps = {
     isRequired?: boolean
     disabled?: boolean
 }
+
+export interface ReplyData {
+    recipientEmail: string;
+    recipientName?: string;
+    category?: string;
+    originalMessage: string;
+    replyMessage: string;
+    agentName?: string;
+}

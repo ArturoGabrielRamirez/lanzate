@@ -1,13 +1,6 @@
-import { useState } from "react";
+import { useState } from "react"
 
-interface ReplyData {
-  recipientEmail: string;
-  recipientName?: string;
-  category?: string;
-  originalMessage: string;
-  replyMessage: string;
-  agentName?: string;
-}
+import { ReplyData } from "@/features/global/types"
 
 export function useReplySupport() {
   const [loading, setLoading] = useState(false);
