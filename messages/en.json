@@ -1499,5 +1499,10 @@
             "headline": "Stay connected",
             "description": "Stay connected with your customers through our integrated social media features."
         }
+    },
+    "landing": {
+        "contact-section": {
+            "contact-us": "Contact us"
+        }
     }
 }

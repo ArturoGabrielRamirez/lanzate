@@ -10,13 +10,13 @@ import { Dialog, DialogContent, DialogTrigger } from "@/features/shadcn/componen
 
 
 
-function HelpDialogButton() {
+function HelpDialogButton({ asChild = false }: { asChild?: boolean }) {
     const t = useTranslations("dashboard.help");
     const [open, setOpen] = useState(false);
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
+            <DialogTrigger asChild={asChild}>
                 <Button variant="outline" className="w-full">
                     {t("send-message")}
                 </Button>

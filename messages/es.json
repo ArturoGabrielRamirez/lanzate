@@ -1494,5 +1494,10 @@
             "headline": "Mantente conectado",
             "description": "Mantente conectado con tus clientes a través de nuestras características integradas de redes sociales."
         }
+    },
+    "landing": {
+        "contact-section": {
+            "contact-us": "Contactanos"
+        }
     }
 }
