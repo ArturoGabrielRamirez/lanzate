@@ -11,7 +11,7 @@ function FaqSection() {
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-6 lg:gap-20 z-20 relative">
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-6 lg:gap-20 z-20 relative">
                     <div>
                         <div className="mb-10 flex items-center gap-2 text-primary">
                             <Home />
