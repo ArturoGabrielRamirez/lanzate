@@ -52,9 +52,9 @@ export function AnimatedShinyButton({
 
         .shiny-cta,
         .shiny-cta-link {
-          --shiny-cta-bg: #000000;
-          --shiny-cta-bg-subtle: color-mix(in srgb, var(--primary) 50%, transparent);
-          --shiny-cta-fg: var(--primary-foreground);
+          --shiny-cta-bg: var(--background);
+          --shiny-cta-bg-subtle: color-mix(in srgb, var(--primary) 90%, transparent);
+          --shiny-cta-fg: var(--foreground);
           --shiny-cta-highlight: var(--primary);
           --shiny-cta-highlight-subtle: color-mix(in srgb, var(--primary) 50%, black);
           --animation: gradient-angle linear infinite;
@@ -68,8 +68,7 @@ export function AnimatedShinyButton({
           cursor: pointer;
           outline-offset: 4px;
           padding: 0.75rem 1.5rem;
-          font-family: "Inter", sans-serif;
-          font-size: 1rem;
+          font-size: 0.875rem;
           line-height: 1.2;
           font-weight: 500;
           border: 1px solid transparent;

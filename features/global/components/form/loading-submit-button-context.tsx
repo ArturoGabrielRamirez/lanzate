@@ -4,7 +4,7 @@ import { Loader } from "lucide-react"
 import { useFormContext } from "react-hook-form"
 
 import { Props } from "@/features/global/types/loading-submit-button-type"
-import { Button } from "@/features/shadcn/components/ui/button"
+import { Button } from "@/features/shadcn/components/button"
 
 function LoadingSubmitButtonContext({ text = "Submit", disabled = false }: Props) {
 

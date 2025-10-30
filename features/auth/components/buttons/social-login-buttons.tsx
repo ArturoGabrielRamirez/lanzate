@@ -2,7 +2,7 @@ import { getTranslations } from 'next-intl/server'
 
 import { handleFacebookLoginAction, handleGoogleLogInAction } from '@/features/auth/actions'
 import { FacebookLogo, GoogleLogo } from '@/features/auth/components'
-import { Button } from '@/features/shadcn/components/ui/button'
+import { Button } from '@/features/shadcn/components/button'
 import { Label } from '@/features/shadcn/components/ui/label'
 
 async function SocialLoginButtons() {
@@ -18,7 +18,7 @@ async function SocialLoginButtons() {
                 <form action={handleGoogleLogInAction}>
                     <Button
                         type="submit"
-                        className="w-full bg-gradient-to-t from-chart-5 to-primary"
+                        className="w-full"
                     >
                         <GoogleLogo className='size-6' />
                         Google
@@ -27,7 +27,7 @@ async function SocialLoginButtons() {
                 <form action={handleFacebookLoginAction}>
                     <Button
                         type="submit"
-                        className="w-full bg-gradient-to-t from-chart-5 to-primary"
+                        className="w-full"
                     >
                         <FacebookLogo className='size-6' />
                         Facebook

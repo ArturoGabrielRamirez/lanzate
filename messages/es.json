@@ -354,7 +354,8 @@
             "4": "posible.",
             "word-1": "soñá",
             "word-2": "emprende",
-            "word-3": "crecé"
+            "word-3": "crecé",
+            "finish": "lo hace posible"
         },
         "beam": {
             "sales": {
@@ -506,7 +507,36 @@
             "copyright": "© Copyright 2025. Todos los derechos reservados."
         },
         "announcement": {
-            "last-update": "Última actualización"
+            "last-update": "Última actualización",
+            "title": "Nueva caja registradora agregada"
+        },
+        "features": {
+            "title": "Características",
+            "feature": {
+                "customizable": "Personalizable",
+                "all-in-one": {
+                    "description": "Gestiona tu tienda donde sea, disponible en todos tus dispositivos.",
+                    "title": "Todo-en-uno"
+                },
+                "custom-domain": {
+                    "title": "Dominio personalizado",
+                    "description": {
+                        "own-brand": "¡Consigue tu dominio personalizado y publica tus productos bajo tu marca!"
+                    }
+                }
+            }
+        },
+        "who-we-are": {
+            "title": "Quienes somos",
+            "description": "En una mision para ayudarte a lanzar tu negocio",
+            "description-long": "En Lanzate, creemos que cada emprendedor merece las herramientas                              adecuadas para hacer realidad sus ideas. Nuestra plataforma te                              proporciona todo lo necesario para crear, gestionar y hacer crecer                              tu negocio digital desde el primer día, sin complicaciones técnicas.",
+            "description-long-2": "Sabemos que iniciar un negocio puede ser abrumador. Por eso hemos                              creado una solución integral que elimina las barreras técnicas y                              te permite enfocarte en lo que realmente importa: tu visión. Desde                              tu sitio web personalizado hasta la gestión de clientes, todo está                              diseñado para ser simple, rápido y efectivo.",
+            "description-long-3": "Nuestro compromiso va más allá de una simple plataforma. Estamos                              construyendo una comunidad de emprendedores valientes que comparten                              el sueño de crear algo propio. Al elegir Lanzate, no solo obtienes                              una herramienta poderosa, te unes a un ecosistema diseñado para                              impulsar tu éxito y el de tu negocio.",
+            "founded": "Fundado",
+            "users": "Usuarios",
+            "country": "Paises",
+            "sold": "Vendido",
+            "learn-more": "Conocé más sobre nuestra app"
         }
     },
     "layout": {
@@ -1454,5 +1484,15 @@
             }
         }
     },
-    "address-section": "Dirección"
+    "address-section": "Dirección",
+    "features": {
+        "speed": {
+            "headline": "¡Más rápido que la luz!",
+            "description": "Lanzate carga al instante; garantizando que tus clientes tengan una experiencia veloz y fluida en todo momento."
+        },
+        "stay-connected": {
+            "headline": "Mantente conectado",
+            "description": "Mantente conectado con tus clientes a través de nuestras características integradas de redes sociales."
+        }
+    }
 }

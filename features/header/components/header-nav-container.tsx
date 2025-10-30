@@ -28,7 +28,7 @@ function HeaderNavContainer({ children }: { children: ReactNode }) {
 
 
     return (
-        <nav className={cn("hidden xl:flex items-center fixed left-1/2 -translate-x-1/2 gap-4 transition-all", shouldBlurBackground && "backdrop-blur-sm bg-primary/50 border-t border-t-[color-mix(in_oklch,var(--primary),white_30%)] border-b border-b-[color-mix(in_oklch,var(--primary)_50%,black_5%)] rounded-full py-3 mt-4 px-6 shadow-2xl drop-shadow-2xl")}>
+        <nav className={cn("hidden xl:flex items-center fixed left-1/2 -translate-x-1/2 gap-4 transition-all", shouldBlurBackground && "backdrop-blur-sm bg-background/50 border-t border-t-[color-mix(in_oklch,var(--background),white_30%)] border-b border-b-[color-mix(in_oklch,var(--background)_50%,black_5%)] rounded-full py-3 mt-4 px-6 shadow-2xl drop-shadow-2xl")}>
             {shouldBlurBackground && (
                 <motion.div {...headerLogoConfig}>
                     <BrandLogo hasText={false} />

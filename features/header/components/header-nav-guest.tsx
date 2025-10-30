@@ -1,9 +1,9 @@
 'use client';
 
-import { useMotionValueEvent, useScroll } from 'motion/react';
+/* import { useMotionValueEvent, useScroll } from 'motion/react'; */
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 /* import { handleGoogleLogIn } from '@/features/auth/actions'; */
 /* import { GoogleAuthButton } from '@/features/auth/shared/components/google-auth-button'; */
@@ -21,17 +21,17 @@ function HeaderNavGuest() {
     const router = useRouter();
     const pathname = usePathname();
     const isHome = isActiveRoute(pathname, '/');
-    const { scrollY } = useScroll()
+    /* const { scrollY } = useScroll() */
 
-    const [isFloating, setIsFloating] = useState(false)
+    /* const [isFloating, setIsFloating] = useState(false) */
 
-    useMotionValueEvent(scrollY, "change", (latest) => {
+    /* useMotionValueEvent(scrollY, "change", (latest) => {
         if (latest > 100) {
             setIsFloating(true)
         } else {
             setIsFloating(false)
         }
-    })
+    }) */
 
     /* const handleGoogleAuthClick = useCallback(async () => {
         await handleGoogleLogIn();
@@ -53,7 +53,7 @@ function HeaderNavGuest() {
             <NavigationMenuList>
                 {NAV_MENU_ITEMS_GUEST.map((menuItem) => (
                     <NavigationMenuItem key={menuItem.label}>
-                        <NavigationMenuTrigger className={cn("bg-transparent", !isHome && "text-foreground", isFloating && "text-white")}>
+                        <NavigationMenuTrigger className={cn("bg-transparent", !isHome && "text-foreground")}>
                             {t(menuItem.label)}
                         </NavigationMenuTrigger>
                         <NavigationMenuContent>

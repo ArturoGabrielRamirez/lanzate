@@ -19,6 +19,7 @@
     "hooks": "@/features/shadcn/hooks"
   },
   "registries": {
-    "@eldoraui": "https://eldoraui.site/r/{name}.json"
+    "@eldoraui": "https://eldoraui.site/r/{name}.json",
+    "@tailark": "https://tailark.com/r/{name}.json"
   }
 }
