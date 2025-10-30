@@ -100,7 +100,7 @@ const MarqueeLogoScroller = React.forwardRef<HTMLDivElement, MarqueeLogoScroller
                                     <img
                                         src={logo.src}
                                         alt={logo.alt}
-                                        className="relative h-3/4 w-auto object-contain"
+                                        className="relative size-10 group-hover:size-16 transition-all duration-300 ease-in-out w-auto object-contain"
                                     />
                                 </div>
                             ))}
