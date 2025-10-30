@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 
 import { deleteBranchData } from "@/features/branches/data"
 import { DeleteBranchAction } from "@/features/branches/types"
-import { insertLogEntry } from "@/features/global/data/insertLogEntry"
+import { insertLogEntry } from "@/features/global/data"
 import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
@@ -28,7 +28,7 @@ export async function deleteBranchAction({ branchId, slug, userId }: DeleteBranc
 
         revalidatePath(`/stores/${slug}`)
 
-        const { error: logError } = await insertLogEntry({
+        const { hasError: logError } = await insertLogEntry({
             action: "DELETE",
             entity_type: "BRANCH",
             entity_id: branchId,

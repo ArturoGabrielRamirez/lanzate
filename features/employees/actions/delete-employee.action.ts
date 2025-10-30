@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache"
 import { canDeleteEmployee } from "@/features/employees/access/can-delete-employee.access"
 import { deleteEmployeeData as deleteEmployeeFromDb } from "@/features/employees/data/delete-employee.data"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from "@/features/global/utils"
 
 export async function deleteEmployeeAction(employeeId: number, slug: string, userId: number) {
     return actionWrapper(async () => {
@@ -23,7 +23,7 @@ export async function deleteEmployeeAction(employeeId: number, slug: string, use
         revalidatePath(`/stores/${slug}`)
 
         // Create action log
-        const { error: logError } = await insertLogEntry({
+        const { hasError: logError } = await insertLogEntry({
             action: "DELETE",
             entity_type: "EMPLOYEE",
             entity_id: employeeId,
@@ -35,7 +35,7 @@ export async function deleteEmployeeAction(employeeId: number, slug: string, use
         if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
 
         return {
-            error: false,
+            hasError: false,
             message: "Employee deleted successfully",
             payload: payload
         }

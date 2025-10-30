@@ -1,6 +1,10 @@
 import type { EmployeeRole, Store, User } from "@prisma/client"
 import type { AnyObjectSchema } from "yup"
 
+// Tipos parciales para las relaciones
+type EmployeeUser = Pick<User, 'id' | 'email' | 'first_name' | 'last_name' | 'avatar' | 'created_at'>
+type EmployeeStore = Pick<Store, 'id' | 'name' | 'slug'>
+
 // Tipos para el botón de crear empleado
 export type CreateEmployeeButtonProps = {
     storeId: number
@@ -34,31 +38,32 @@ export type EmployeesTabProps = {
     userId: number
 }
 
-// Tipos para la tabla de empleados
+// Tipos para la tabla de empleados - USA EL TIPO DE PRISMA CON RELACIONES PARCIALES
 export type Employee = {
-  id: number
-  user_id: number
-  store_id: number
-  role: string
-  can_create_orders: boolean
-  can_update_orders: boolean
-  can_create_products: boolean
-  can_update_products: boolean
-  can_manage_stock: boolean
-  can_process_refunds: boolean
-  can_view_reports: boolean
-  can_manage_employees: boolean
-  can_manage_store: boolean
-  is_active: boolean
-  hired_at: string
-  fired_at?: string | null
-  position?: string | null
-  department?: string | null
-  salary?: number | null
-  notes?: string | null
-  created_at: string
-  updated_at: string
-  user?: User // Puede ser extendido con los datos del usuario
+    id: number
+    user_id: number
+    store_id: number
+    role: EmployeeRole
+    can_create_orders: boolean
+    can_update_orders: boolean
+    can_create_products: boolean
+    can_update_products: boolean
+    can_manage_stock: boolean
+    can_process_refunds: boolean
+    can_view_reports: boolean
+    can_manage_employees: boolean
+    can_manage_store: boolean
+    is_active: boolean
+    hired_at: Date
+    fired_at?: Date | null
+    position?: string | null
+    department?: string | null
+    salary?: number | null
+    notes?: string | null
+    created_at: Date
+    updated_at: Date
+    user?: EmployeeUser  // Solo los campos que realmente usas
+    store?: EmployeeStore  // Solo los campos que realmente usas
 }
 
 export type EmployeesTableProps = {
@@ -84,64 +89,64 @@ export type EmployeesTableProps = {
 
 // Tipo para usuarios con estado de empleado
 export type UserWithEmployeeStatus = {
-  id: number
-  email: string
-  first_name: string | null
-  last_name: string | null
-  avatar: string | null
-  created_at: Date
-  isEmployee: boolean
-  employeeData: {
     id: number
-    role: string
-    is_active: boolean
-    hired_at: string
-  } | null
+    email: string
+    first_name: string | null
+    last_name: string | null
+    avatar: string | null
+    created_at: Date
+    isEmployee: boolean
+    employeeData: {
+        id: number
+        role: string
+        is_active: boolean
+        hired_at: string
+    } | null
 }
 
 // Tipos para contratos
 export type Contract = {
-  id: number
-  store_id: number
-  title: string
-  file_url: string
-  comments?: string | null
-  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
-  created_at: string | Date
-  updated_at: string | Date
-  created_by: number
-  store?: Store
-  created_by_user?: User
-  assignments?: ContractAssignment[]
-  responses?: ContractResponse[]
+    id: number
+    store_id: number
+    title: string
+    file_url: string
+    comments?: string | null
+    status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
+    created_at: Date
+    updated_at: Date
+    created_by: number
+    store?: Store
+    created_by_user?: User
+    assignments?: ContractAssignment[]
+    responses?: ContractResponse[]
 }
 
 // Nuevo tipo para asignaciones de contratos
 export type ContractAssignment = {
-  id: number
-  contract_id: number
-  employee_id: number
-  assigned_at: string
-  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
-  assigned_by: number
-  contract?: Contract
-  employee?: Employee
-  assigned_by_user?: User
-  responses?: ContractResponse[]
+    id: number
+    contract_id: number
+    employee_id: number
+    assigned_at: string
+    status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
+    assigned_by: number
+    contract?: Contract
+    employee?: Employee
+    assigned_by_user?: User
+    responses?: ContractResponse[]
 }
 
 export type ContractResponse = {
-  id: number
-  contract_id: number
-  employee_id: number
-  assignment_id?: number | null
-  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
-  comments?: string | null
-  created_at: string | Date
-  updated_at: string | Date
-  contract?: Contract
-  employee?: Employee
-  assignment?: ContractAssignment
+    id: number
+    contract_id: number
+    employee_id: number
+    assignment_id?: number | null
+    status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
+    comments?: string | null
+    created_at: Date
+    updated_at: Date
+    contract?: Contract
+    employee?: Employee
+    assignment?: ContractAssignment
 }
 
 // Tipos para el botón de crear contrato
@@ -158,13 +163,13 @@ export type ContractsTableProps = {
     storeId: number
 }
 
-// Payload para editar empleado (centralizado)
+// Payload para editar empleado (centralizado) - QUITA EL ANY
 export type EditEmployeePayload = {
     role: EmployeeRole
-    position: string
-    department: string
-    salary: string
-    notes: string
+    position?: string
+    department?: string
+    salary?: number
+    notes?: string
     can_create_orders: boolean
     can_update_orders: boolean
     can_create_products: boolean
@@ -209,7 +214,5 @@ export type ContractsSelectorProps = {
 
 // Utilidad: Inferir valores de formulario de Yup
 export type InferFormValues<T extends AnyObjectSchema> = T extends AnyObjectSchema
-  ? ReturnType<T['cast']>
-  : never
-
-
+    ? ReturnType<T['cast']>
+    : never

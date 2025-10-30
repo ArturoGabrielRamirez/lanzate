@@ -5,9 +5,10 @@ import { useTranslations } from "next-intl"
 import { useCallback, useState, useEffect } from "react"
 import { toast } from "sonner"
 
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
+import { AccordionTriggerWithValidation } from "@/features/branches/components/accordion-trigger-with-validation"
 import { getStoreIdBySlugData } from "@/features/categories/data/get-store-id-by-slug.data"
-import { Form } from "@/features/layout/components"
+import { Form } from "@/features/global/components/form/form"
+import { formatErrorResponse } from "@/features/global/utils"
 import { editProductAction } from "@/features/products/actions/edit-producto.action"
 import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
 import { BasicInfoSection } from "@/features/products/components/sections/basic-info-section"
@@ -19,7 +20,7 @@ import { EditProductButtonProps } from "@/features/products/types"
 import { Accordion, AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
-import { formatErrorResponse } from "@/utils/lib"
+
 
 
 type CategoryValue = { value: string; label: string }
@@ -51,8 +52,8 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
     // Obtener el storeId a partir del slug
     useEffect(() => {
         const fetchStoreId = async () => {
-            const { payload, error } = await getStoreIdBySlugData(slug)
-            if (!error && payload) {
+            const { payload, hasError } = await getStoreIdBySlugData({ slug })
+            if (!hasError && payload) {
                 setStoreId(payload)
             }
         }
@@ -109,9 +110,9 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
             is_published: isPublished
         }
 
-        if (!payload.name) return formatErrorResponse(t("validation.name-required"), null, null)
-        if (payload.price == null) return formatErrorResponse(t("validation.price-required"), null, null)
-        if (payload.stock == null) return formatErrorResponse(t("validation.stock-required"), null, null)
+        if (!payload.name) return formatErrorResponse(t("validation.name-required"))
+        if (payload.price == null) return formatErrorResponse(t("validation.price-required"))
+        if (payload.stock == null) return formatErrorResponse(t("validation.stock-required"))
         return editProductAction(product.id, data, slug, userId)
     }
 

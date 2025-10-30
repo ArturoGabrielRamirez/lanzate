@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 
 import { insertBranchData } from "@/features/branches/data"
 import { CreateBranchAction } from "@/features/branches/types"
-import { insertLogEntry } from "@/features/global/data/insertLogEntry"
+import { insertLogEntry } from "@/features/global/data"
 import { actionWrapper } from "@/features/global/utils"
 
 export async function createBranchAction({ payload, storeId, userId }: CreateBranchAction) {
@@ -17,7 +17,7 @@ export async function createBranchAction({ payload, storeId, userId }: CreateBra
 
         revalidatePath(`/stores/${storeId}`)
 
-        const { error: logError } = await insertLogEntry({
+        const { hasError: logError } = await insertLogEntry({
             action: "CREATE",
             entity_type: "BRANCH",
             entity_id: branch.id,

@@ -4,15 +4,16 @@ import { Trash2 } from "lucide-react"
 import { redirect } from "next/navigation"
 import { useTranslations } from "next-intl"
 
-import { ButtonWithPopup } from "@/features/layout/components"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import { formatErrorResponse } from "@/features/global/utils"
 import { deleteProductAction } from "@/features/products/actions/delete-product.action"
 import { DeleteProductButtonProps } from "@/features/products/types"
-import { formatErrorResponse } from "@/utils/lib"
+
 
 function DeleteProductButton({ productId, slug, onComplete, userId }: DeleteProductButtonProps) {
-    
+
     const t = useTranslations("store.delete-product")
-    
+
     const handleDeleteProduct = async () => {
         try {
             const { hasError, message, payload } = await deleteProductAction(productId, slug, userId)
@@ -23,7 +24,7 @@ function DeleteProductButton({ productId, slug, onComplete, userId }: DeleteProd
                 payload: payload
             }
         } catch (error) {
-            return formatErrorResponse(t("messages.error"), error, null)
+            return formatErrorResponse(t("messages.error"))
         }
     }
 

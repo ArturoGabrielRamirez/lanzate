@@ -1,10 +1,10 @@
 "use server"
 
-import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
-import { updateUserBanner, updateUserAvatar } from "@/features/shared/data"
+import { updateUserAvatarData, updateUserBannerData } from "@/features/auth/data"
 import { getCurrentUserMediaData } from "@/features/auth/data/get-current-user-media.data"
 import { StorageService } from "@/features/global/services/storage"
-import { UPLOAD_TYPES, DeleteResult } from "@/features/shared/types"
+import { DeleteResult, UPLOAD_TYPES } from "@/features/global/types/media"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 
 export async function handleUserDeleteAction(
     type: typeof UPLOAD_TYPES.AVATAR | typeof UPLOAD_TYPES.BANNER,
@@ -28,8 +28,8 @@ export async function handleUserDeleteAction(
 
         // Actualizar la base de datos poniendo null
         const updatedUser = type === UPLOAD_TYPES.BANNER
-            ? await updateUserBanner(userId, null)
-            : await updateUserAvatar(userId, null)
+            ? await updateUserBannerData(userId, null)
+            : await updateUserAvatarData(userId, null)
 
         const result: DeleteResult = {
             message: `${type} eliminado correctamente`,

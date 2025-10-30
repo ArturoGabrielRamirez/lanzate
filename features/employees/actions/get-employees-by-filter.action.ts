@@ -1,7 +1,7 @@
 "use server"
 
 import { selectUsersByFilterData } from "@/features/employees/data/select-users-by-filter.data"
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from "@/features/global/utils"
 
 export async function getEmployeesByFilterAction(filter: string, storeId: number, userId: number) {
     return actionWrapper(async () => {
@@ -13,7 +13,7 @@ export async function getEmployeesByFilterAction(filter: string, storeId: number
         return {
             message: "Users fetched successfully",
             payload: users,
-            error: false
+            hasError: false
         }
     })
 } 

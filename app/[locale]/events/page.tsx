@@ -24,4 +24,4 @@ function EventsPage() {
     )
 }
 
-export { EventsPage }
+export default EventsPage

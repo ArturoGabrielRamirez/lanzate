@@ -4,12 +4,13 @@ import { Trash2 } from "lucide-react"
 import { redirect } from "next/navigation"
 import { useTranslations } from "next-intl"
 
-import { ButtonWithPopup } from "@/features/layout/components"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import { formatErrorResponse } from "@/features/global/utils"
 import { deleteProductVariantAction } from "@/features/products/actions/delete-product-variant.action"
 import type { DeleteVariantButtonProps } from "@/features/products/types"
-import { cn } from "@/lib/utils"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
-import { formatErrorResponse } from "@/utils/lib"
+import { cn } from "@/lib/utils"
+
 
 function DeleteVariantButton({ variantId, slug, productId, onlyIcon = false }: DeleteVariantButtonProps) {
     const t = useTranslations("store.delete-variant")
@@ -20,7 +21,7 @@ function DeleteVariantButton({ variantId, slug, productId, onlyIcon = false }: D
             if (hasError) throw new Error(message)
             return { error: false, message: t("messages.success"), payload: null }
         } catch (error) {
-            return formatErrorResponse(t("messages.error"), error, null)
+            return formatErrorResponse(t("messages.error"))
         }
     }
 

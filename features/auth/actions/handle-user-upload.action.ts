@@ -1,11 +1,10 @@
 "use server"
 
-import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
-import { updateUserBanner, updateUserAvatar } from "@/features/shared/data"
+import { updateUserAvatarData, updateUserBannerData } from "@/features/auth/data"
 import { getCurrentUserMediaData } from "@/features/auth/data/get-current-user-media.data"
 import { StorageService } from "@/features/global/services/storage"
-import { FileUploadData, UPLOAD_TYPES, UploadResult } from "@/features/shared/types"
-
+import { FileUploadData, UPLOAD_TYPES, UploadResult } from "@/features/global/types/media"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 
 export async function handleUserUploadAction(
     uploadData: FileUploadData,
@@ -24,8 +23,8 @@ export async function handleUserUploadAction(
             await storage.deleteUserFile(currentUrl)
         }
         const updatedUser = type === UPLOAD_TYPES.BANNER
-            ? await updateUserBanner(userId, publicUrl)
-            : await updateUserAvatar(userId, publicUrl)
+            ? await updateUserBannerData(userId, publicUrl)
+            : await updateUserAvatarData(userId, publicUrl)
         const result: UploadResult = {
             message: `${type} subido correctamente`,
             url: publicUrl,

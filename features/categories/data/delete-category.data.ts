@@ -1,7 +1,7 @@
 "use server"
 
 import { DeleteCategoryAction } from "@/features/categories/types"
-import { actionWrapper } from "@/utils/lib"
+import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
 export async function deleteCategoryData({ storeId, categoryId }: DeleteCategoryAction) {
@@ -41,7 +41,7 @@ export async function deleteCategoryData({ storeId, categoryId }: DeleteCategory
 
         return {
             payload: category,
-            error: false,
+            hasError: false,
             message: "Categoría eliminada exitosamente"
         }
     })

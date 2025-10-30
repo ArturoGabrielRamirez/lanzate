@@ -1,7 +1,7 @@
 "use server"
 import { selectEmployeesFromStoreData } from "@/features/employees/data/select-employee-from-store.data"
+import { actionWrapper } from "@/features/global/utils"
 import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
-import { actionWrapper } from "@/utils/lib"
 
 export async function getEmployeesFromStoreAction(slug: string) {
     return actionWrapper(async () => {
@@ -12,7 +12,7 @@ export async function getEmployeesFromStoreAction(slug: string) {
         return {
             message: "Employees fetched successfully",
             payload: employees,
-            error: false
+            hasError: false
         }
     })
 } 

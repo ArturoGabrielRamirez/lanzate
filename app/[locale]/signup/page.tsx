@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+/* import { Metadata } from 'next'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
@@ -41,4 +41,4 @@ export default async function HelpPage() {
       </div>
     </section>
   )
-}
+} */

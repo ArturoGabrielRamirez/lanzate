@@ -1,9 +1,9 @@
 
 import { ProductMediaResponse, UploadType } from "@/features/global/types/media"
+import { getMediaType } from "@/features/global/utils/media/get-media-type"
 import { prisma } from "@/utils/prisma"
-import { getMediaType } from "../../global/utils/media/get-media-type"
 
-export async function createProductMedia(
+export async function createProductMediaData(
     productId: number,
     url: string,
     file: File,

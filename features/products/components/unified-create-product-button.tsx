@@ -7,8 +7,9 @@ import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { Form } from "@/features/layout/components"
+import { AccordionTriggerWithValidation } from "@/features/branches/components/accordion-trigger-with-validation"
+import { Form } from "@/features/global/components/form/form"
+import { formatErrorResponse } from "@/features/global/utils"
 import { createUnifiedProductAction } from "@/features/products/actions/create-unified-product.action"
 import { BasicInfoSection } from "@/features/products/components/sections/basic-info-section"
 import { CategoriesSection } from "@/features/products/components/sections/categories-section"
@@ -24,6 +25,7 @@ import { productCreateSchema } from "@/features/products/schemas/product-schema"
 import type { CreateUnifiedProductArgs, UnifiedCreateProductButtonProps } from "@/features/products/types"
 import type { MediaSectionData, CategoriesSectionData, SizesSectionData, ColorsSectionData, SettingsSectionData, CategoryValue, DimensionsSectionData, ProductColor } from "@/features/products/types"
 import { mapUnifiedCreatePayload } from "@/features/products/utils/map-unified-create-payload"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Accordion, AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
@@ -32,8 +34,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/features/shadcn/components/ui/switch"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
-import { formatErrorResponse } from "@/utils/lib"
+
 
 type CreateProductPayload = {
     name: string
@@ -96,9 +97,9 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
             const measures = (sizesRef.current?.measures ?? []).map((m: Option) => m.value)
             const isUniqueSize = sizesRef.current?.isUniqueSize === true
             const colors = colorsRef.current?.colors ?? []
-            
+
             let variantsList: { size?: string, measure?: string }[] = []
-            
+
             if (isUniqueSize) {
                 variantsList = [{ size: undefined, measure: undefined }]
             } else {
@@ -116,7 +117,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
 
             const colorList: (ProductColor | undefined)[] = (colors?.length ?? 0) > 0 ? colors as ProductColor[] : [undefined]
             const exclusions: string[] = (payload as unknown as { variantExclusions?: string[] }).variantExclusions ?? []
-            
+
             const variants = variantsList.length === 0 && colorList[0] === undefined
                 ? []
                 : variantsList.flatMap((variant) => colorList.map((c: ProductColor | undefined) => {
@@ -155,9 +156,9 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
 
             const { hasError, message, payload: created } = await createUnifiedProductAction(args as CreateUnifiedProductArgs)
             if (hasError) throw new Error(message)
-            return { error: false, message: t("messages.success"), payload: created }
+            return { hasError: false, message: t("messages.success"), payload: created }
         } catch (error) {
-            return formatErrorResponse(t("messages.error"), error, null)
+            return formatErrorResponse(t("messages.error"))
         }
     }
 
@@ -186,9 +187,9 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                         </TooltipContent>
                     </Tooltip>
                 ) : (
-                <Button disabled={false} variant="default" type="button" className={cn("w-full", buttonClassName)}>
-                    {buttonIcon}
-                    <span className="hidden md:block">{t("button")}</span>
+                    <Button disabled={false} variant="default" type="button" className={cn("w-full", buttonClassName)}>
+                        {buttonIcon}
+                        <span className="hidden md:block">{t("button")}</span>
                     </Button>)}
             </DialogTrigger>
             <DialogContent className="max-h-[80vh] overflow-y-auto">
