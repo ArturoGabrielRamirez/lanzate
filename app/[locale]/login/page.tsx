@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
 import loginImage from '@/features/auth/assets/Tablet login-pana.svg'
-import { LoginForm, ResetPasswordLink, LoginErrorDisplay, SocialLoginButtons } from '@/features/auth/components'
+import { LoginForm, ResetPasswordLink, LoginErrorDisplay, SocialLoginButtons, JoinWaitlistAlert } from '@/features/auth/components'
 import { LoginPageProps } from '@/features/auth/types'
 import { Link } from '@/i18n/naviation'
 
@@ -21,6 +21,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     return (
         <section className="md:min-h-dvh relative pt-17 flex">
             <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:pb-12 lg:pb-20">
+                <JoinWaitlistAlert />
                 <div className='w-full flex flex-col gap-8 lg:max-w-md md:justify-self-end'>
                     <LoginErrorDisplay
                         error={params.error}
@@ -57,6 +58,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                         </div>
                     </div>
                 </div>
+
                 <div className="relative aspect-square w-full hidden md:flex items-end max-w-xl justify-self-start">
                     <Image
                         src={loginImage}
@@ -64,6 +66,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                         width={5}
                         className="w-full antialiased object-bottom drop-shadow-xl drop-shadow-primary/30"
                     />
+
                 </div>
             </div>
         </section>

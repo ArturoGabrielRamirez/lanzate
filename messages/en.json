@@ -44,7 +44,9 @@
             "signing-in": "Signing in...",
             "signing-up": "Signing up...",
             "reset-password": "Sending reset link...",
-            "updating-password": "Updating password..."
+            "updating-password": "Updating password...",
+            "success-joined-waitlist": "You have succesfully joined the waitlist",
+            "joining-waitlist": "Joining the waitlist"
         },
         "reset-password": {
             "new-password": "New Password",
@@ -150,7 +152,8 @@
         "close": "Close",
         "try-facebook-again": "Try with Facebook again",
         "help": "Contact us",
-        "back-to-home": "Back to homepage"
+        "back-to-home": "Back to homepage",
+        "join-waitlist": "Join"
     },
     "cart": {
         "title": "Cart",

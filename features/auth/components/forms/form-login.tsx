@@ -24,9 +24,10 @@ function LoginForm() {
                 successMessage={t("toast-message.success-logged-in")}
                 loadingMessage={t("toast-message.signing-in")}
                 className="flex flex-col gap-3 sm:row-start-2 sm:col-start-1 sm:min-w-full sm:justify-center"
+                disabled
             >
-                <InputField name="email" label={t("email")} placeholder={t("email-placeholder")} startIcon={<MailIcon />} tooltip="Enter the email address associated with your account." type="email" isRequired/>
-                <InputField name="password" label={t("password")} placeholder={t("password")} startIcon={<LockIcon />} tooltip="Enter the password associated with your account." type="password" isRequired/>
+                <InputField name="email" label={t("email")} placeholder={t("email-placeholder")} startIcon={<MailIcon />} tooltip="Enter the email address associated with your account." type="email" isRequired disabled/>
+                <InputField name="password" label={t("password")} placeholder={t("password")} startIcon={<LockIcon />} tooltip="Enter the password associated with your account." type="password" isRequired disabled/>
             </Form>
         </>
     )
