@@ -716,3 +716,19 @@ export interface UploadTabProps {
   isActionDisabled: boolean
   uploadLimitReached: boolean
 }
+
+export type GetUserUploadsResponse = {
+  uploads: string[]
+  count: number
+}
+
+export type DeleteMediaResponse = {
+  mediaId?: number
+  user?: {
+    avatar: string | null
+    banner: string | null
+    id: number
+    username: string
+  }
+  deletedFromStorage?: boolean
+}

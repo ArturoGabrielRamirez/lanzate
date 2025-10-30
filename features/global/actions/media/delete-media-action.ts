@@ -1,32 +1,28 @@
 "use server"
 
-import { getDefaultBannerForUser } from "@/features/profile/utils/get-default-banner-for-user"
-import { getUserId } from "@/features/auth/data/get-user-id"
-import { createStorageService } from "@/features/global/services/storage"
-import { validateUploadType } from "@/features/global/utils/media/validators"
 import { revalidatePath } from "next/cache"
+
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
-import { DeleteMediaParams } from "../../components/media-selector/types"
-import { UPLOAD_TYPES } from "../../types/media"
-import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "../../utils"
-import { getProductMediaById } from "@/features/products/data/get-product-media-by-id"
-import { deleteProductMedia } from "@/features/products/data/delete-product-media"
+import { getUserId } from "@/features/auth/data/get-user-id"
 import { getUserMediaByType } from "@/features/auth/data/get-user-media-by-type"
 import { updateUserMedia } from "@/features/auth/data/update-user-media"
-
+import { createStorageService } from "@/features/global/services/storage"
+import { DeleteMediaParams, DeleteMediaResponse, UPLOAD_TYPES } from "@/features/global/types/media"
+import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/features/global/utils"
+import { validateUploadType } from "@/features/global/utils/media/validators"
+import { deleteProductMedia } from "@/features/products/data/delete-product-media"
+import { getProductMediaById } from "@/features/products/data/get-product-media-by-id"
+import { getDefaultBannerForUser } from "@/features/profile/utils/get-default-banner-for-user"
 
 export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMediaParams) {
-  return actionWrapper(async () => {
+  return actionWrapper<DeleteMediaResponse>(async () => {
     // 1. Autenticación
     const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
-    if (!currentUserResponse || currentUserResponse.error) {
-      return formatErrorResponse('Debes iniciar sesión', null)
+    if (!currentUserResponse || currentUserResponse.hasError) {
+      return formatErrorResponse('Debes iniciar sesión')
     }
 
-    const user = await getUserId({
-      ...currentUserResponse,
-      error: currentUserResponse.message
-    })
+    const user = await getUserId({ payload: { id: currentUserResponse.payload?.id }, error: currentUserResponse.message })
 
     // 2. Validación
     validateUploadType(type)
@@ -37,11 +33,11 @@ export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMedia
       const media = await getProductMediaById(mediaId)
 
       if (!media) {
-        return formatErrorResponse('Media no encontrada', null)
+        return formatErrorResponse('Media no encontrada')
       }
 
       if (media.product.owner_id !== user.id) {
-        return formatErrorResponse('Sin permisos', null)
+        return formatErrorResponse('Sin permisos')
       }
 
       // Eliminar del storage si es upload personalizado
@@ -63,7 +59,7 @@ export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMedia
       const userData = await getUserMediaByType(user.id, type)
 
       if (!userData) {
-        return formatErrorResponse('Usuario no encontrado', null)
+        return formatErrorResponse('Usuario no encontrado')
       }
 
       const currentUrl = type === 'avatar' ? userData.avatar : userData.banner
@@ -107,6 +103,6 @@ export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMedia
       )
     }
 
-    return formatErrorResponse('Tipo de eliminación no válido', null)
+    return formatErrorResponse('Tipo de eliminación no válido')
   })
 }

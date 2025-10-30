@@ -1,22 +1,19 @@
 'use server'
 
-import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '../../utils'
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
 import { getUserId } from '@/features/auth/data/get-user-id'
+import { GetUserUploadsParams, GetUserUploadsResponse } from '@/features/global/types/media'
+import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
 import { createServerSideClient } from '@/utils/supabase/server'
-import { GetUserUploadsParams } from '../../components/media-selector/types'
 
 export async function getUserUploadsAction({ type }: GetUserUploadsParams) {
-    return actionWrapper(async () => {
+    return actionWrapper<GetUserUploadsResponse>(async () => {
         const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
-        if (!currentUserResponse || currentUserResponse.error) {
-            return formatErrorResponse('Debes iniciar sesión', null)
+        if (!currentUserResponse || currentUserResponse.hasError) {
+            return formatErrorResponse('Debes iniciar sesión')
         }
 
-        const user = await getUserId({
-            ...currentUserResponse,
-            error: currentUserResponse.message
-        })
+        const user = await getUserId({ payload: { id: currentUserResponse.payload?.id }, error: currentUserResponse.message })
 
         const supabase = createServerSideClient()
 
@@ -30,7 +27,10 @@ export async function getUserUploadsAction({ type }: GetUserUploadsParams) {
             })
 
         if (!files?.length) {
-            return formatSuccessResponse('No hay uploads', { uploads: [] })
+            return formatSuccessResponse('No hay uploads', {
+                uploads: [],
+                count: 0
+            })
         }
 
         const regex = new RegExp(`^${type}-${user.id}-\\d+`, 'i')
