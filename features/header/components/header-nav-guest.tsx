@@ -1,12 +1,9 @@
 'use client';
 
-/* import { useMotionValueEvent, useScroll } from 'motion/react'; */
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
-/* import { handleGoogleLogIn } from '@/features/auth/actions'; */
-/* import { GoogleAuthButton } from '@/features/auth/shared/components/google-auth-button'; */
 import { useSmoothScroll } from '@/features/global/hooks/use-smooth-scroll';
 import { HEADER_OFFSET_DESKTOP, NAV_MENU_ITEMS_GUEST } from '@/features/header/constants';
 import { isActiveRoute } from '@/features/header/utils';
@@ -21,21 +18,6 @@ function HeaderNavGuest() {
     const router = useRouter();
     const pathname = usePathname();
     const isHome = isActiveRoute(pathname, '/');
-    /* const { scrollY } = useScroll() */
-
-    /* const [isFloating, setIsFloating] = useState(false) */
-
-    /* useMotionValueEvent(scrollY, "change", (latest) => {
-        if (latest > 100) {
-            setIsFloating(true)
-        } else {
-            setIsFloating(false)
-        }
-    }) */
-
-    /* const handleGoogleAuthClick = useCallback(async () => {
-        await handleGoogleLogIn();
-    }, []); */
 
     const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();

@@ -16,7 +16,8 @@ export function SelectField({
     description,
     tooltip,
     isRequired = false,
-    disabled = false
+    disabled = false,
+    startIcon
 }: SelectFieldProps) {
     const { control } = useFormContext();
 
@@ -24,41 +25,48 @@ export function SelectField({
         <Controller
             name={name}
             control={control}
-            render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
+            render={({ field, fieldState }) => {
+                console.log("🚀 ~ SelectField ~ field:", field)
+                return <Field data-invalid={fieldState.invalid}>
                     <FieldLabel htmlFor={field.name}>
                         {label}{isRequired && <span className="text-red-500">*</span>}
                     </FieldLabel>
-                    <InputGroup>
-                        <div className="relative flex-1">
-                            <Select
-                                value={field.value || ''}
-                                onValueChange={field.onChange}
+                    <InputGroup className="bg-background focus:!ring-primary focus-within:!ring-primary focus-visible:!ring-primary">
+                        {startIcon && (
+                            <InputGroupAddon>
+                                {startIcon}
+                            </InputGroupAddon>
+                        )}
+                        <Select
+                            value={field.value || ''}
+                            onValueChange={field.onChange}
+                            disabled={disabled}
+                            data-slot="input-group-control"
+                        >
+                            <SelectTrigger
+                                id={field.name}
+                                aria-invalid={fieldState.invalid}
+                                className="w-full h-10 px-3 !bg-transparent !outline-none !border-none !ring-0"
+                                ref={field.ref}
+                                onBlur={field.onBlur}
                                 disabled={disabled}
                             >
-                                <SelectTrigger
-                                    id={field.name}
-                                    aria-invalid={fieldState.invalid}
-                                    className="w-full h-10 px-3 bg-transparent border-2 border-zinc-700 rounded-lg text-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#e56c43]/30 focus-visible:border-[#e56c43] hover:border-[#e56c43]/50 disabled:cursor-not-allowed disabled:opacity-50 data-[state=open]:border-[#e56c43] data-[state=open]:ring-4 data-[state=open]:ring-[#e56c43]/30"
-                                    style={{
-                                        boxShadow: fieldState.invalid ? '0 0 0 2px rgba(229, 108, 67, 0.3)' : undefined
-                                    }}
-                                >
-                                    <SelectValue placeholder={placeholder || `Seleccione ${label.toLowerCase()}`} />
-                                </SelectTrigger>
-                                <SelectContent className="bg-zinc-800 border-zinc-700">
-                                    {options.map((option) => (
-                                        <SelectItem
-                                            key={option.value}
-                                            value={option.value}
-                                            className="cursor-pointer hover:bg-[#e56c43]/10 focus:bg-[#e56c43]/20 text-white"
-                                        >
-                                            {option.label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
+                                <SelectValue placeholder={placeholder || `Seleccione ${label.toLowerCase()}`} >
+                                    {field.value || placeholder || `Seleccione ${label.toLowerCase()}`}
+                                </SelectValue>
+                            </SelectTrigger>
+                            <SelectContent className="bg-zinc-800 border-zinc-700">
+                                {options.map((option) => (
+                                    <SelectItem
+                                        key={option.value}
+                                        value={option.value}
+                                        className="cursor-pointer hover:bg-[#e56c43]/10 focus:bg-[#e56c43]/20 text-white"
+                                    >
+                                        {option.label}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                         {tooltip && (
                             <InputGroupAddon align="inline-end">
                                 <Tooltip>
@@ -84,8 +92,8 @@ export function SelectField({
                         </FieldDescription>
                     )}
                     {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                </Field>
-            )}
+                </Field>;
+            }}
         />
     )
 }

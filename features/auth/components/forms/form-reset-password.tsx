@@ -36,7 +36,7 @@ function ResetPassword() {
 
   return (
     <>
-      <h2 className='text-2xl font-bold text-center'>{t("reset-password.title")}</h2>
+      {/* <h2 className='text-2xl font-bold text-center'>{t("reset-password.title")}</h2> */}
       <Form
         resolver={yupResolver(changeEmailSchema as never)}
         formAction={handleSubmit}
@@ -46,7 +46,7 @@ function ResetPassword() {
         onSuccess={handleSuccess}
         className="flex flex-col gap-3 sm:row-start-2 sm:col-start-1 sm:min-w-full sm:justify-center"
       >
-        <InputField name="email" label={t("email")} placeholder={t("email-placeholder")} startIcon={<MailIcon />} tooltip="Enter the email address associated with your account." type="email" description="Please enter the email address associated with your account. We will send a reset link to your email."/>
+        <InputField name="email" label={t("email")} placeholder={t("email-placeholder")} startIcon={<MailIcon />} tooltip="Enter the email address associated with your account." type="email" description="Please enter the email address associated with your account. We will send a reset link to your email." isRequired/>
       </Form>
     </>
   )

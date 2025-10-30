@@ -51,7 +51,7 @@ async function HeroSection() {
                     <Image
                         src={heroImage}
                         alt="Hero Image"
-                        className="w-full antialiased object-contain object-bottom drop-shadow-md"
+                        className="w-full antialiased object-contain object-bottom drop-shadow-xl drop-shadow-primary/30 dark:drop-shadow-primary/20"
                         fill
                     />
                 </div>

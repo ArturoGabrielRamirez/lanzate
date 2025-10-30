@@ -1,9 +1,10 @@
+import { KeyRound } from 'lucide-react'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
 import loginImage from '@/features/auth/assets/Tablet login-pana.svg'
-import { LoginForm, ResetPasswordLink, LoginErrorDisplay, SocialLoginButtons } from '@/features/auth/components'
+import { LoginForm, ResetPasswordLink, LoginErrorDisplay, SocialLoginButtons, JoinWaitlistAlert } from '@/features/auth/components'
 import { LoginPageProps } from '@/features/auth/types'
 import { Link } from '@/i18n/naviation'
 
@@ -18,13 +19,23 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     const params = await searchParams
 
     return (
-        <section className="min-h-dvh relative pt-17 flex">
+        <section className="md:min-h-dvh relative pt-17 flex">
             <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:pb-12 lg:pb-20">
+                <JoinWaitlistAlert />
                 <div className='w-full flex flex-col gap-8 lg:max-w-md md:justify-self-end'>
                     <LoginErrorDisplay
                         error={params.error}
                         message={params.message}
                     />
+                    <div className="mb-6">
+                        <div className="flex items-center gap-2 text-primary">
+                            <KeyRound />
+                            <h2 className="text-2xl font-bold font-oswald">Iniciar sesión</h2>
+                        </div>
+                        <p className="text-muted-foreground font-quattrocento">
+                            Inicia sesión para ingresar a tu cuenta
+                        </p>
+                    </div>
                     <LoginForm />
                     <SocialLoginButtons />
                     <div className='w-full'>
@@ -37,15 +48,25 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                                 {t("signup")}
                             </Link>
                         </div>
+                        <div className="flex gap-2 items-center justify-center w-full">
+                            <h3 className="text-sm text-gray-600 dark:text-gray-400">
+                                Necesitas ayuda?{" "}
+                            </h3>
+                            <Link href="/help" className="text-sm text-blue-500 hover:underline">
+                                {t("help")}
+                            </Link>
+                        </div>
                     </div>
                 </div>
+
                 <div className="relative aspect-square w-full hidden md:flex items-end max-w-xl justify-self-start">
                     <Image
                         src={loginImage}
                         alt="Hero Image"
                         width={5}
-                        className="w-full antialiased object-bottom"
+                        className="w-full antialiased object-bottom drop-shadow-xl drop-shadow-primary/30"
                     />
+
                 </div>
             </div>
         </section>

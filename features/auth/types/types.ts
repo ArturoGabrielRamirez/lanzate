@@ -2,7 +2,7 @@ import { Account, Prisma, User as PrismaUser } from "@prisma/client";
 import { User } from "@supabase/supabase-js"
 import { InferType } from "yup"
 
-import { changeEmailSchema } from "@/features/auth/schemas"
+import { changeEmailSchema, joinWaitlistSchema } from "@/features/auth/schemas"
 import { loginFormSchema } from "@/features/auth/schemas"
 import { signUpSchema } from "@/features/auth/schemas"
 import { VALID_STEPS, VALID_TYPES } from '@/features/auth/utils'
@@ -57,7 +57,7 @@ export interface LoginPageProps {
 
 export type LoginFormPayload = InferType<typeof loginFormSchema>
 
-
+export type JoinWaitlistFormPayload = InferType<typeof joinWaitlistSchema>
 
 export type ChangeEmailFormData = InferType<typeof changeEmailSchema>
 

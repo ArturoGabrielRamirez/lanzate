@@ -23,6 +23,7 @@ function InputField({
     defaultValue,
     disabled = false,
     inputMode = "text",
+    hideLabel = false,
     onChange,
 }: {
     name: string,
@@ -40,6 +41,7 @@ function InputField({
     disabled?: boolean,
     inputMode?: "text" | "email" | "search" | "tel" | "url" | "none" | "decimal" | "numeric" | undefined
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    hideLabel?: boolean
 }) {
 
     const { control } = useFormContext();
@@ -58,7 +60,7 @@ function InputField({
                 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                     // Primero ejecuta el onChange de react-hook-form (crítico para la validación)
                     field.onChange(e);
-                    
+
                     // Luego ejecuta el onChange custom si fue proporcionado
                     if (onChange) {
                         onChange(e);
@@ -67,10 +69,12 @@ function InputField({
 
                 return (
                     <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor={field.name}>
-                            {label}{isRequired && <span className="text-red-500">*</span>}
-                        </FieldLabel>
-                        <InputGroup>
+                        {!hideLabel && (
+                            <FieldLabel htmlFor={field.name}>
+                                {label}{isRequired && <span className="text-red-500">*</span>}
+                            </FieldLabel>
+                        )}
+                        <InputGroup className="bg-background">
                             {startIcon && (
                                 <InputGroupAddon>
                                     {startIcon}

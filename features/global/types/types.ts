@@ -47,6 +47,7 @@ export type SelectFieldProps = {
     tooltip?: string | React.ReactNode
     isRequired?: boolean
     disabled?: boolean
+    startIcon?: React.ReactNode
 }
 
 export interface ReplyData {

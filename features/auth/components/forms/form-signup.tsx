@@ -31,13 +31,13 @@ function SignupForm() {
     };
 
     const handleSubmit = (data: SignupFormPayload) => {
-        submittedEmailRef.current = data.email;
+        submittedEmailRef.current = { email: data.email };
         return handleSignup(data);
     }
 
     return (
         <>
-            <h2 className='text-2xl font-bold'>{t("signup")}</h2>
+            {/* <h2 className='text-2xl font-bold'>{t("signup")}</h2> */}
             <Form
                 resolver={yupResolver(signUpSchema as never)}
                 formAction={handleSubmit}
@@ -47,10 +47,10 @@ function SignupForm() {
                 onSuccess={handleSuccess}
                 className="flex flex-col gap-4 w-full max-w-xl"
             >
-                <InputField name="email" label={t("email")} placeholder={t("email-placeholder")} startIcon={<MailIcon />} tooltip="Enter the email address associated with your account." type="email" />
-                <InputField name="username" label={t("username")} placeholder={t("username")} startIcon={<UserIcon />} tooltip="Enter the username associated with your account." />
-                <InputField name="password" label={t("password")} placeholder={t("password")} startIcon={<LockIcon />} tooltip="Enter the password associated with your account." type="password" />
-                <InputField name="confirm-password" label={t("confirm-password")} placeholder={t("confirm-password")} startIcon={<LockIcon />} tooltip="Enter the password associated with your account." type="password" />
+                <InputField name="email" label={t("email")} placeholder={t("email-placeholder")} startIcon={<MailIcon />} tooltip="Enter the email address associated with your account." type="email" isRequired/>
+                <InputField name="username" label={t("username")} placeholder={t("username")} startIcon={<UserIcon />} tooltip="Enter the username associated with your account." isRequired/>
+                <InputField name="password" label={t("password")} placeholder={t("password")} startIcon={<LockIcon />} tooltip="Enter the password associated with your account." type="password" isRequired/>
+                <InputField name="confirm-password" label={t("confirm-password")} placeholder={t("confirm-password")} startIcon={<LockIcon />} tooltip="Enter the password associated with your account." type="password" isRequired/>
             </Form>
         </>
     )

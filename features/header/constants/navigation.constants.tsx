@@ -96,7 +96,7 @@ const ABOUT_ITEM = {
 
 const CONTACT_ITEM = {
     label: 'feature/header.navigation.contact',
-    href: '/contact',
+    href: '/help',
     description: 'feature/header.navigation.sections.contactDesc',
     icon: <PhoneIcon className='size-6 lg:size-4 group-hover:text-inherit' />
 }

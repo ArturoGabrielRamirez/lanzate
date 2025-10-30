@@ -44,7 +44,9 @@
             "signing-in": "Signing in...",
             "signing-up": "Signing up...",
             "reset-password": "Sending reset link...",
-            "updating-password": "Updating password..."
+            "updating-password": "Updating password...",
+            "success-joined-waitlist": "You have succesfully joined the waitlist",
+            "joining-waitlist": "Joining the waitlist"
         },
         "reset-password": {
             "new-password": "New Password",
@@ -148,7 +150,10 @@
             "verifying-updating": "Verifying and updating password..."
         },
         "close": "Close",
-        "try-facebook-again": "Try with Facebook again"
+        "try-facebook-again": "Try with Facebook again",
+        "help": "Contact us",
+        "back-to-home": "Back to homepage",
+        "join-waitlist": "Join"
     },
     "cart": {
         "title": "Cart",
@@ -1498,6 +1503,11 @@
         "stay-connected": {
             "headline": "Stay connected",
             "description": "Stay connected with your customers through our integrated social media features."
+        }
+    },
+    "landing": {
+        "contact-section": {
+            "contact-us": "Contact us"
         }
     }
 }

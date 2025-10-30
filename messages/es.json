@@ -43,7 +43,9 @@
             "signing-in": "Iniciando sesión...",
             "signing-up": "Registrándose...",
             "reset-password": "Enviando enlace de recuperación...",
-            "updating-password": "Actualizando contraseña..."
+            "updating-password": "Actualizando contraseña...",
+            "success-joined-waitlist": "Te has unido exitosamente a la lista de espera",
+            "joining-waitlist": "Uniendose a la lista de espera"
         },
         "reset-password": {
             "new-password": "Nueva contraseña",
@@ -147,7 +149,10 @@
             "verifying-updating": "Verificando y actualizando contraseña..."
         },
         "close": "Cerrar",
-        "try-facebook-again": "Intentar con Facebook de nuevo"
+        "try-facebook-again": "Intentar con Facebook de nuevo",
+        "help": "Contactanos",
+        "back-to-home": "Volver al inicio",
+        "join-waitlist": "Unirme"
     },
     "cart": {
         "title": "Carrito",
@@ -1493,6 +1498,11 @@
         "stay-connected": {
             "headline": "Mantente conectado",
             "description": "Mantente conectado con tus clientes a través de nuestras características integradas de redes sociales."
+        }
+    },
+    "landing": {
+        "contact-section": {
+            "contact-us": "Contactanos"
         }
     }
 }

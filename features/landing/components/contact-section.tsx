@@ -1,10 +1,15 @@
 import { MessageCircle } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 import { BackgroundPattern } from "@/features/landing/components";
 import { AnimatedShinyButton } from "@/features/shadcn/components/animated-shiny-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
+import { Link } from "@/i18n/naviation";
 
-function ContactSection() {
+async function ContactSection() {
+
+    const t = await getTranslations("landing.contact-section");
+
     return (
         <section className="relative py-17 flex snap-start flex-col items-center">
             <div className="container mx-auto px-4 relative h-full grow w-full">
@@ -27,8 +32,10 @@ function ContactSection() {
                         <p className="text-muted-foreground font-geist font-light text-center text-balance">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, vero eius, in quasi hic nemo magnam assumenda accusamus dolorem fugiat quia provident inventore enim vitae nobis? Cupiditate quibusdam saepe temporibus?
                         </p>
-                        <AnimatedShinyButton>
-                            Contact Us
+                        <AnimatedShinyButton asChild>
+                            <Link href="/help">
+                                {t("contact-us")}
+                            </Link>
                         </AnimatedShinyButton>
                     </CardContent>
                 </Card>

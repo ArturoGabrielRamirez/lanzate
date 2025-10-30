@@ -1,10 +1,11 @@
-// middleware.ts - VERSIÓN SIMPLIFICADA
 import { createServerClient } from '@supabase/ssr'
-import createIntlMiddleware from 'next-intl/middleware'
 import { NextRequest, NextResponse } from 'next/server'
-import { extractSubdomain } from '@/features/subdomain/middleware'
+import createIntlMiddleware from 'next-intl/middleware'
+
 import { validateSubdomainAction } from '@/features/subdomain/actions/validate-subdomain.action'
-import { routing } from '@/i18n/routing'
+import { extractSubdomain } from '@/features/subdomain/middleware'
+import { Locale, routing } from '@/i18n/routing'
+
 import type { User } from '@supabase/supabase-js'
 
 const intlMiddleware = createIntlMiddleware(routing)
@@ -23,7 +24,7 @@ function extractLocaleFromPath(pathname: string): { locale: string | null; pathW
   const segments = pathname.split('/').filter(Boolean)
   const firstSegment = segments[0]
 
-  if (routing.locales.includes(firstSegment as any)) {
+  if (routing.locales.includes(firstSegment as Locale)) {
     return {
       locale: firstSegment,
       pathWithoutLocale: '/' + segments.slice(1).join('/')
@@ -173,6 +174,7 @@ export async function updateSession(request: NextRequest) {
     '/privacy-policy',
     '/terms-and-conditions',
     '/cookies',
+    '/help',
   ]
 
   // Verificar si es una ruta de perfil público (no requiere autenticación)

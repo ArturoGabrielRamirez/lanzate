@@ -19,6 +19,8 @@ async function SocialLoginButtons() {
                     <Button
                         type="submit"
                         className="w-full"
+                        size={"lg"}
+                        disabled
                     >
                         <GoogleLogo className='size-6' />
                         Google
@@ -28,6 +30,8 @@ async function SocialLoginButtons() {
                     <Button
                         type="submit"
                         className="w-full"
+                        size={"lg"}
+                        disabled
                     >
                         <FacebookLogo className='size-6' />
                         Facebook
