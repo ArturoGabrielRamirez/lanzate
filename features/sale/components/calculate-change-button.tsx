@@ -5,14 +5,15 @@ import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import * as Yup from 'yup'
 
-import { ButtonWithPopup, InputField } from '@/features/layout/components'
+import { ButtonWithPopup } from '@/features/global/components/button-with-popup'
+import InputField from '@/features/global/components/form/input'
 import type { CalculateChangeButtonProps, ChangeFormData } from '@/features/sale/types'
 
 const changeSchema = Yup.object({
   paymentAmount: Yup.string()
     .required('El monto de pago es requerido')
     .matches(/^\d+(\.\d{1,2})?$/, 'Solo se permiten números con máximo 2 decimales')
-    .test('min-amount', 'El monto debe ser mayor al total', function(value) {
+    .test('min-amount', 'El monto debe ser mayor al total', function (value) {
       const cartTotal = this.options.context?.cartTotal || 0
       const paymentAmount = parseFloat(value || '0')
       return paymentAmount >= cartTotal

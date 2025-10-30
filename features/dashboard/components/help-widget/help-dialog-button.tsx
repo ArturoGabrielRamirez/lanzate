@@ -1,39 +1,40 @@
-'use client'
+'use client';
 
-import { useTranslations } from "next-intl"
+import { useTranslations } from "next-intl";
+import { useState } from 'react';
 
-import { ButtonWithPopup } from "@/features/global/components/button-with-popup";
-import InputField from "@/features/global/components/form/input";
-import { TextareaField } from "@/features/global/components/form/textarea-field";
+
+import { ContactForm } from "@/features/global/components/contact-us/contact-form";
+import { Button } from "@/features/shadcn/components/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/features/shadcn/components/ui/dialog";
+
+
 
 function HelpDialogButton() {
-    const t = useTranslations("dashboard.help")
-
-    const handleContactUs = async () => {
-        return {
-            error: true,
-            message: "Contact us",
-            payload: null
-        }
-    }
+    const t = useTranslations("dashboard.help");
+    const [open, setOpen] = useState(false);
 
     return (
-        <ButtonWithPopup
-            title={t("dialog.title")}
-            action={handleContactUs}
-            description={t("dialog.description")}
-            text={t("send-message")}
-            messages={{
-                success: t("dialog.messages.success"),
-                error: t("dialog.messages.error"),
-                loading: t("dialog.messages.loading")
-            }}
-            className="w-full"
-        >
-            <InputField type="email" name="email" label={t("dialog.email")} placeholder={t("dialog.email")} />
-            <TextareaField name="message" label={t("dialog.message")} placeholder={t("dialog.message")} />
-        </ButtonWithPopup>
-    )
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button variant="outline" className="w-full">
+                    {t("send-message")}
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <h2 className="text-2xl font-bold text-foreground">
+                            {t("dialog.title")}
+                        </h2>
+                        <p className="text-muted-foreground">
+                            {t("dialog.description")}
+                        </p>
+                    </div>
+                    <ContactForm onSuccess={() => setOpen(false)} />
+                </div>
+            </DialogContent>
+        </Dialog>)
 }
 
-export { HelpDialogButton }
+export { HelpDialogButton };

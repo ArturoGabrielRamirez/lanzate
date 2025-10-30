@@ -22,9 +22,10 @@ function Form<T extends FieldValues>({
     onSuccess,
     onError,
     disabled = false,
-    submitButton = true
+    submitButton = true,
+    resetOnSuccess = false
 
-}: FormPropsType<T>) {
+}: FormPropsType<T> & { resetOnSuccess?: boolean }) {
     const config: UseFormProps<T> = { mode: "onChange" }
 
     if (resolver) config.resolver = resolver as Resolver<T, unknown, T>
@@ -32,7 +33,7 @@ function Form<T extends FieldValues>({
     const router = useRouter()
     const methods = useForm<T>(config)
 
-    const { handleSubmit } = methods
+    const { handleSubmit, reset } = methods
 
 
     const onSubmit: SubmitHandler<T> = async (data) => {
@@ -44,10 +45,18 @@ function Form<T extends FieldValues>({
             toast.promise(promise, {
                 loading: loadingMessage,
                 success: (resp: ServerResponse<unknown>) => {
-                    if (resp && resp.error) throw new Error(resp.message)
+                    if (resp && resp?.hasError) throw new Error(resp.message)
+                    
+                    // Reset form si resetOnSuccess está activado
+                    if (resetOnSuccess) {
+                        reset()
+                    }
+                    
                     if (successRedirect) router.push(successRedirect)
                     if (onSuccess && typeof onSuccess === 'function') onSuccess()
-                    return successMessage
+                    
+                    // Usar el mensaje de la respuesta si existe, sino usar el successMessage por defecto
+                    return resp?.message || successMessage
                 },
                 error: (error) => {
                     if (onError && typeof onError === 'function') onError()

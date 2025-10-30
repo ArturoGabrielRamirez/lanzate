@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
     const result = await cancelDeletionAction(reason)
 
-    if (result.error) {
+    if (result.hasError) {
       return NextResponse.json(
         { error: result.message, details: result.payload },
         { status: 400 }

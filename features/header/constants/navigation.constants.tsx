@@ -1,4 +1,4 @@
-import { CogIcon, HelpCircleIcon, HomeIcon, InfoIcon, KeyRoundIcon, LayoutDashboard, LogInIcon, PhoneIcon, PlayCircleIcon, PlusCircle, Store, UserIcon, UserPlusIcon } from 'lucide-react';
+import { CogIcon, HelpCircleIcon, HomeIcon, InfoIcon, KeyRoundIcon, LayoutDashboard, LogInIcon, PhoneIcon, PlayCircleIcon, PlusCircle, Store, UserIcon, UserPlusIcon, CircleQuestionMarkIcon } from 'lucide-react';
 
 import { NavMenuItem, NavSubItem } from '@/features/header/types';
 
@@ -101,6 +101,14 @@ const CONTACT_ITEM = {
     icon: <PhoneIcon className='size-6 lg:size-4 group-hover:text-inherit' />
 }
 
+const HELP_ITEM = {
+    label: 'feature/header.navigation.help',
+    href: '/help',
+    description: 'feature/header.navigation.sections.helpDesc',
+    icon: <CircleQuestionMarkIcon className='size-6 lg:size-4 group-hover:text-inherit' />
+
+}
+
 
 export const NAV_MENU_ITEMS_GUEST: NavMenuItem[] = [
     {
@@ -140,6 +148,7 @@ export const NAV_MENU_ITEMS_AUTH: NavSubItem[] = [
     NEW_SALE_ITEM,
     STORES_ITEM,
     ACCOUNT_ITEM,
+    HELP_ITEM
 ]
 
 export const DRAWER_MENU_ITEMS_GUEST: NavSubItem[] = [

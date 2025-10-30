@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
 
 import { StoreListContainer, StoreListSkeleton } from "@/features/dashboard/components"
-import { Title } from "@/features/layout/components"
+/* import { Title } from "@/features/layout/components" */
 import { PageContainer } from "@/features/layout/components/page-container"
 
 export const metadata: Metadata = {
@@ -17,15 +17,15 @@ async function StoresPage() {
 
     return (
         <PageContainer>
-            <Title title={<div className="flex items-center gap-2">
+            {/* <Title title={ */}<div className="flex items-center gap-2">
                 <Store />
                 {t("title")}
-            </div>} breadcrumbs={[
+            </div>{/* } breadcrumbs={[
                 {
                     label: t("title"),
                     href: "/stores"
                 }
-            ]} showDate />
+            ]} showDate /> */}
 
             <Suspense fallback={<StoreListSkeleton />}>
                 <StoreListContainer />

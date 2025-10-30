@@ -1,11 +1,11 @@
 "use client"
 
-import { EyeIcon, EyeOffIcon, InfoIcon } from "lucide-react";
-import { useState } from "react";
-import { useFormContext, Controller } from "react-hook-form";
+import { EyeIcon, EyeOffIcon, InfoIcon } from "lucide-react"
+import { useState } from "react"
+import { useFormContext, Controller } from "react-hook-form"
 
-import { Field, FieldDescription, FieldError, FieldLabel } from "@/features/shadcn/components/field";
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupText } from "@/features/shadcn/components/input-group";
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/features/shadcn/components/field"
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupText } from "@/features/shadcn/components/input-group"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 
 function InputField({
@@ -49,91 +49,104 @@ function InputField({
         setShowPassword(!showPassword);
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (typeof onChange === 'function' && onChange !== undefined) {
-            onChange(e);
-        }
-    }
-
     return (
         <Controller
             name={name}
             control={control}
-            render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>{label}{isRequired && <span className="text-red-500">*</span>}</FieldLabel>
-                    <InputGroup>
-                        {startIcon && (
-                            <InputGroupAddon>
-                                {startIcon}
-                            </InputGroupAddon>
+            render={({ field, fieldState }) => {
+                // Función que combina el onChange de react-hook-form con el onChange custom
+                const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+                    // Primero ejecuta el onChange de react-hook-form (crítico para la validación)
+                    field.onChange(e);
+                    
+                    // Luego ejecuta el onChange custom si fue proporcionado
+                    if (onChange) {
+                        onChange(e);
+                    }
+                }
+
+                return (
+                    <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor={field.name}>
+                            {label}{isRequired && <span className="text-red-500">*</span>}
+                        </FieldLabel>
+                        <InputGroup>
+                            {startIcon && (
+                                <InputGroupAddon>
+                                    {startIcon}
+                                </InputGroupAddon>
+                            )}
+                            {startText && (
+                                <InputGroupText>
+                                    {startText}
+                                </InputGroupText>
+                            )}
+                            <InputGroupInput
+                                placeholder={placeholder}
+                                value={field.value || ''}
+                                aria-invalid={fieldState.invalid}
+                                autoComplete="off"
+                                id={field.name}
+                                name={field.name}
+                                onBlur={field.onBlur}
+                                ref={field.ref}
+                                type={showPassword ? "text" : type}
+                                className=""
+                                defaultValue={defaultValue}
+                                disabled={disabled}
+                                inputMode={inputMode}
+                                onChange={handleChange}
+                            />
+                            {endText && (
+                                <InputGroupText>
+                                    {endText}
+                                </InputGroupText>
+                            )}
+                            {endIcon && (
+                                <InputGroupAddon align="inline-end">
+                                    {endIcon}
+                                </InputGroupAddon>
+                            )}
+                            {type === "password" && (
+                                <InputGroupAddon align="inline-end">
+                                    <InputGroupButton
+                                        variant="ghost"
+                                        aria-label="Toggle password visibility"
+                                        size="icon-xs"
+                                        onClick={handleTogglePasswordVisibility}
+                                    >
+                                        {!showPassword ? <EyeIcon /> : <EyeOffIcon />}
+                                    </InputGroupButton>
+                                </InputGroupAddon>
+                            )}
+                            {tooltip && (
+                                <InputGroupAddon align="inline-end">
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <InputGroupButton
+                                                variant="ghost"
+                                                aria-label="Info"
+                                                size="icon-xs"
+                                            >
+                                                <InfoIcon />
+                                            </InputGroupButton>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p>{tooltip}</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </InputGroupAddon>
+                            )}
+                        </InputGroup>
+                        {description && (
+                            <FieldDescription>
+                                {description}
+                            </FieldDescription>
                         )}
-                        {startText && (
-                            <InputGroupText>
-                                {startText}
-                            </InputGroupText>
-                        )}
-                        <InputGroupInput
-                            placeholder={placeholder} {...field}
-                            aria-invalid={fieldState.invalid}
-                            autoComplete="off"
-                            id={field.name}
-                            type={showPassword ? "text" : type}
-                            className=""
-                            defaultValue={defaultValue}
-                            disabled={disabled}
-                            inputMode={inputMode}
-                            onChange={handleChange}
-                        />
-                        {endText && (
-                            <InputGroupText>
-                                {endText}
-                            </InputGroupText>
-                        )}
-                        {endIcon && (
-                            <InputGroupAddon align="inline-end">
-                                {endIcon}
-                            </InputGroupAddon>
-                        )}
-                        {type === "password" && (
-                            <InputGroupAddon align="inline-end">
-                                <InputGroupButton
-                                    variant="ghost"
-                                    aria-label="Toggle password visibility"
-                                    size="icon-xs"
-                                    onClick={handleTogglePasswordVisibility}
-                                >
-                                    {!showPassword ? <EyeIcon /> : <EyeOffIcon />}
-                                </InputGroupButton>
-                            </InputGroupAddon>
-                        )}
-                        {tooltip && (
-                            <InputGroupAddon align="inline-end">
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <InputGroupButton
-                                            variant="ghost"
-                                            aria-label="Info"
-                                            size="icon-xs"
-                                        >
-                                            <InfoIcon />
-                                        </InputGroupButton>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p>{tooltip}</p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </InputGroupAddon>
-                        )}
-                    </InputGroup>
-                    {description && (
-                        <FieldDescription>
-                            {description}
-                        </FieldDescription>
-                    )}
-                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                </Field>
-            )}
+                        {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                    </Field>
+                )
+            }}
         />
     )
 }

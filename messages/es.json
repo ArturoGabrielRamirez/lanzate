@@ -320,13 +320,14 @@
         },
         "help": {
             "title": "¿Necesitas ayuda?",
-            "contact-us": "Contáctanos",
+            "contact-us": "Contactanos",
             "description": "Nuestros expertos están aquí para ayudarte.",
             "send-message": "Enviar mensaje",
             "dialog": {
-                "title": "Contáctanos",
+                "title": "Contactanos",
                 "description": "Envíanos un mensaje y te responderemos lo antes posible.",
                 "email": "Email",
+                "name": "Nombre",
                 "message": "Mensaje",
                 "messages": {
                     "success": "Mensaje enviado",
@@ -1423,6 +1424,7 @@
             "signout": "Cerrar sesión",
             "access": "Acceso",
             "moreInfo": "Más información",
+            "help": "Ayuda",
             "sections": {
                 "hero": "Hero",
                 "heroDesc": "Descripción del hero",
@@ -1447,7 +1449,8 @@
                 "forgotPassword": "Olvidé mi contraseña",
                 "forgotPasswordDesc": "Descripción de la sección de olvidé mi contraseña",
                 "googleAuth": "Autenticación con Google",
-                "dashboard": "Dashboard"
+                "dashboard": "Dashboard",
+                "helpDesc": "Si necesitas ayuda, contáctanos"
             }
         }
     },

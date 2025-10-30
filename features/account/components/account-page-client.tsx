@@ -3,7 +3,6 @@
 import { User, AlertTriangle, Settings } from "lucide-react"
 import { useState, useEffect, useCallback } from "react"
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/features/shadcn/components/ui/tabs"
 import { AccountBannerHeader, AccountDetailsTab, DangerZoneTab, DeletionRequestedView } from "@/features/account/components"
 import { LoadingSkeleton } from "@/features/account/components/loading-skeleton"
 import useDeletionStatus from "@/features/account/hooks/use-deletion-status"
@@ -11,7 +10,8 @@ import useUserData from "@/features/account/hooks/use-user-data"
 import { AccountPageClientProps } from "@/features/account/types"
 import { EmailStatusBanner } from "@/features/auth/components/index"
 import { PageContainer } from "@/features/layout/components"
-import { Title } from "@/features/layout/components"
+/* import { Title } from "@/features/layout/components" */
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/features/shadcn/components/ui/tabs"
 
 export function AccountPageClient({ user: initialUser, translations: t }: AccountPageClientProps) {
     const { user, immediateData, handleAvatarUpdate, handleProfileUpdate } = useUserData(initialUser)
@@ -59,21 +59,21 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
     return (
         <PageContainer>
             <div className="flex-shrink-0 mb-2 md:mb-4">
-                <Title
-                    title={(
+               {/*  <Title
+                    title={( */}
                         <div className="flex items-center gap-2">
                             <User />
                             {t.title}
                         </div>
-                    )}
-                    breadcrumbs={[
-                        {
+                  {/*   )} */}
+              {/*       breadcrumbs={[ */}
+                    {/*     {
                             label: t.title,
                             href: "/account"
-                        }
-                    ]}
-                    showDate
-                />
+                        } */}
+              {/*       ]} */}
+                    {/*  showDate */}
+            {/*     /> */}
                 <EmailStatusBanner />
 
                 <AccountBannerHeader

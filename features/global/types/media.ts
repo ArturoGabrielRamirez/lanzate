@@ -240,7 +240,7 @@ export interface SimpleUser {
 // Tipo para getCurrentUser response
 export interface CurrentUserResponse {
   payload: {
-    id: string | number
+    id: number | undefined | string
   }
   error?: string
 }

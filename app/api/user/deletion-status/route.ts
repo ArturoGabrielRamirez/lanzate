@@ -6,7 +6,7 @@ export async function GET(/* request: NextRequest */) {
   try {
     const result = await getDeletionStatusAction()
 
-    if (result.error) {
+    if (result.hasError) {
       return NextResponse.json(
         { error: result.message },
         { status: 400 }

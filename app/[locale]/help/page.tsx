@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
-import contactImage from '@/features/global/assets/Contact-us-pana.png'
+import contactImage from '@/features/global/assets/Contact us-pana.png'
 import { ContactForm } from '@/features/global/components/contact-us/contact-form'
 
 export const metadata: Metadata = {

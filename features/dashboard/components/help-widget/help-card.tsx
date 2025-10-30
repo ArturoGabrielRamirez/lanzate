@@ -1,10 +1,10 @@
 'use client'
 
-import { Headset, MessageCircle } from "lucide-react"
+import { /* Headset, */ MessageCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { HelpDialogButton } from "@/features/dashboard/components"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { SectionContainer } from "@/features/stores/components"
 
 function HelpCard() {
