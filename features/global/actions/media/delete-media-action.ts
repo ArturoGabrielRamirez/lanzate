@@ -10,8 +10,8 @@ import { createStorageService } from "@/features/global/services/storage"
 import { DeleteMediaParams, DeleteMediaResponse, UPLOAD_TYPES } from "@/features/global/types/media"
 import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/features/global/utils"
 import { validateUploadType } from "@/features/global/utils/media/validators"
-import { deleteProductMedia } from "@/features/products/data/delete-product-media"
-import { getProductMediaById } from "@/features/products/data/get-product-media-by-id"
+import { deleteProductMediaData } from "@/features/products/data/delete-product-media.data"
+import { getProductMediaByIdData } from "@/features/products/data/get-product-media-by-id.data"
 import { getDefaultBannerForUser } from "@/features/profile/utils/get-default-banner-for-user"
 
 export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMediaParams) {
@@ -30,7 +30,7 @@ export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMedia
 
     // 3. CASO: Eliminar media de producto
     if (mediaId) {
-      const media = await getProductMediaById(mediaId)
+      const media = await getProductMediaByIdData(mediaId)
 
       if (!media) {
         return formatErrorResponse('Media no encontrada')
@@ -48,7 +48,7 @@ export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMedia
         }
       }
 
-      await deleteProductMedia(mediaId)
+      await deleteProductMediaData(mediaId)
       revalidatePath('/products')
 
       return formatSuccessResponse('Media eliminado', { mediaId })

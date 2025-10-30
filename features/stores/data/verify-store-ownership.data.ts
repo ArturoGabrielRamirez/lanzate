@@ -1,6 +1,6 @@
 import { prisma } from "@/utils/prisma";
 
-export async function verifyStoreOwnership(storeId: number, userId: number) {
+export async function verifyStoreOwnershipData(storeId: number, userId: number) {
     const store = await prisma.store.findFirst({
         where: {
             id: storeId,

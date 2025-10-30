@@ -1,6 +1,6 @@
 import { prisma } from "@/utils/prisma";
 
-export async function getProductMediaById(mediaId: number) {
+export async function getProductMediaByIdData(mediaId: number) {
     return await prisma.productMedia.findUnique({
         where: { id: mediaId },
         include: {
