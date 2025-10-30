@@ -1,8 +1,8 @@
-import { Category } from "@prisma/client"
-import { Image, Share, ShoppingBag } from "lucide-react"
+/* import { Category } from "@prisma/client" */
+import { Image as ImageIcon, Share, ShoppingBag } from "lucide-react"
 import Link from "next/link"
 
-import { Title } from "@/features/layout/components"
+/* import { Title } from "@/features/layout/components" */
 import { PageContainer } from "@/features/layout/components/page-container"
 import { getPublicStoreProductDetailsAction } from "@/features/products/actions/get-public-store-product-details.action"
 import { AddToCartButton, LikeButton, VariantDetailClient } from "@/features/products/components"
@@ -22,11 +22,11 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
     if (hasError || !product) {
         return (
             <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
-                <Title
+                {/* <Title
                     title="Product Not Found"
                     breadcrumbs={[{ label: "Product Not Found", href: `/item/${id}/${variant}` }]}
                     homePath={`/`}
-                />
+                /> */}
                 <p className="text-red-500 mt-4">{message}</p>
             </PageContainer>
         )
@@ -34,7 +34,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
 
     return (
         <PageContainer>
-            <Title
+      {/*       <Title
                 title={product.name}
                 breadcrumbs={[
                     ...product.categories.map((category: Category) => ({
@@ -44,7 +44,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                     { label: product.name, href: `/item/${id}/${variant}` }
                 ]}
                 homePath={`/`}
-            />
+            /> */}
 
             <div className="grow flex flex-col">
                 <div className="grid grid-cols-1 md:grid-cols-[minmax(min(400px,100%),1fr)_1fr] gap-12 grow">
@@ -52,7 +52,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                         <div className="flex flex-col gap-4 max-w-28 w-full">
                             <div className="flex flex-col gap-4 bg-gray-100 rounded-lg p-2">
                                 <div className="text-gray-400 flex flex-col items-center justify-center gap-2 aspect-square">
-                                    <Image className="size-10" />
+                                    <ImageIcon className="size-10" />
                                     <p className="text-sm text-muted-foreground text-center">No image</p>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                                 />
                             ) : (
                                 <div className="text-gray-400 flex flex-col items-center justify-center gap-2">
-                                    <Image className="size-16" />
+                                    <ImageIcon className="size-16" />
                                     <p className="text-sm text-muted-foreground">No image available</p>
                                 </div>
                             )}
