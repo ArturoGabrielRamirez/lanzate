@@ -16,8 +16,8 @@
     },
     "Auth": {},
     "auth": {
-        "login": "Log In",
-        "signup": "Sign Up",
+        "_legacy_login": "Log In",
+        "_legacy_signup": "Sign Up",
         "email": "Email",
         "email-placeholder": "email@example.com",
         "password": "Password",
@@ -153,7 +153,317 @@
         "try-facebook-again": "Try with Facebook again",
         "help": "Contact us",
         "back-to-home": "Back to homepage",
-        "join-waitlist": "Join"
+        "join-waitlist": "Join",
+        "login": {
+            "page": {
+                "title": "Login",
+                "description": "Login to your account",
+                "header": {
+                    "title": "Log In",
+                    "description": "Sign in to access your account"
+                },
+                "links": {
+                    "noAccount": "Don't have an account?",
+                    "needHelp": "Need help?",
+                    "signupLink": "Sign Up",
+                    "helpLink": "Contact us"
+                },
+                "image": {
+                    "alt": "Login illustration"
+                }
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@example.com",
+                        "tooltip": "Enter the email address associated with your account."
+                    },
+                    "password": {
+                        "label": "Password",
+                        "placeholder": "Password",
+                        "tooltip": "Enter the password associated with your account."
+                    }
+                },
+                "actions": {
+                    "submit": "Log In"
+                },
+                "messages": {
+                    "success": "You have been logged in successfully",
+                    "loading": "Signing in..."
+                }
+            },
+            "social": {
+                "label": "Or login with",
+                "providers": {
+                    "google": "Google",
+                    "facebook": "Facebook"
+                }
+            },
+            "errors": {
+                "oauth": {
+                    "cancelled": {
+                        "title": "Login cancelled",
+                        "description": "You can try again with the same method or use your email and password.",
+                        "action": "Try again"
+                    },
+                    "failed": {
+                        "title": "Authentication error",
+                        "description": "There was a problem with authentication. Try again or use another method."
+                    },
+                    "temporary": {
+                        "title": "Service unavailable",
+                        "description": "The service is temporarily unavailable. Try again in a few minutes."
+                    },
+                    "invalid": {
+                        "title": "Invalid request",
+                        "description": "The request is invalid. Please try again."
+                    },
+                    "unexpected": {
+                        "title": "Unexpected error",
+                        "description": "An unexpected error occurred. Please try again."
+                    },
+                    "generic": {
+                        "title": "Authentication error",
+                        "description": "Try again or use your email and password."
+                    }
+                },
+                "close": "Close"
+            },
+            "resetPassword": {
+                "question": "Forgot password?",
+                "link": "Reset your password"
+            }
+        },
+        "signup": {
+            "page": {
+                "title": "Signup",
+                "description": "Signup to your account",
+                "header": {
+                    "title": "Sign Up",
+                    "description": "Create your account to get started"
+                },
+                "links": {
+                    "hasAccount": "Already have an account?",
+                    "needHelp": "Need help?",
+                    "loginLink": "Log In",
+                    "helpLink": "Contact us"
+                },
+                "image": {
+                    "alt": "Sign up illustration"
+                }
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@example.com",
+                        "tooltip": "Enter the email address associated with your account."
+                    },
+                    "username": {
+                        "label": "Username",
+                        "placeholder": "Username",
+                        "tooltip": "Enter the username associated with your account."
+                    },
+                    "password": {
+                        "label": "Password",
+                        "placeholder": "Password",
+                        "tooltip": "Enter the password associated with your account."
+                    },
+                    "confirmPassword": {
+                        "label": "Confirm Password",
+                        "placeholder": "Confirm Password",
+                        "tooltip": "Enter the password associated with your account."
+                    }
+                },
+                "actions": {
+                    "submit": "Sign Up"
+                },
+                "messages": {
+                    "success": "You have been registered successfully",
+                    "loading": "Signing up..."
+                }
+            },
+            "social": {
+                "label": "Or sign up with",
+                "providers": {
+                    "google": "Google",
+                    "facebook": "Facebook"
+                }
+            }
+        },
+        "resetPassword": {
+            "page": {
+                "title": "Reset Password",
+                "description": "Reset your password",
+                "header": {
+                    "title": "Reset Password",
+                    "description": "Recover your password to access your account"
+                },
+                "links": {
+                    "rememberedPassword": "Remembered your password?",
+                    "loginLink": "Log In",
+                    "noAccount": "Don't have an account?",
+                    "signupLink": "Sign Up",
+                    "needHelp": "Need help?",
+                    "helpLink": "Contact us"
+                },
+                "image": {
+                    "alt": "Reset password illustration"
+                }
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@example.com",
+                        "tooltip": "Enter the email address associated with your account.",
+                        "description": "Please enter the email address associated with your account. We will send a reset link to your email."
+                    }
+                },
+                "actions": {
+                    "submit": "Send Reset Link"
+                },
+                "messages": {
+                    "success": "Reset link sent!",
+                    "loading": "Sending reset link..."
+                }
+            }
+        },
+        "updatePassword": {
+            "form": {
+                "fields": {
+                    "newPassword": {
+                        "label": "New Password",
+                        "placeholder": "New Password"
+                    }
+                },
+                "actions": {
+                    "submit": "Update Password"
+                },
+                "messages": {
+                    "success": "Password updated!",
+                    "loading": "Updating password...",
+                    "completed": "Password updated! You can now log in."
+                }
+            }
+        },
+        "waitlist": {
+            "alert": {
+                "title": "Join the waitlist",
+                "description1": "Lanzate is still in development, but you can already join the waitlist.",
+                "description2": "Leave us your email and we'll notify you when the product is available.",
+                "button": "Join the waitlist"
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@example.com",
+                        "tooltip": "Enter the email address to join the waitlist"
+                    }
+                },
+                "actions": {
+                    "submit": "Join"
+                },
+                "messages": {
+                    "success": "You have successfully joined the waitlist",
+                    "loading": "Joining the waitlist"
+                }
+            },
+            "page": {
+                "title": "Join the waitlist",
+                "description": "Join the waitlist to receive notifications when the product is available",
+                "header": {
+                    "title": "Waitlist",
+                    "description": "Join the waitlist to receive notifications when the product is available"
+                },
+                "links": {
+                    "needHelp": "Need help?",
+                    "helpLink": "Contact us",
+                    "hasAccount": "Already have an account?",
+                    "loginLink": "Log In",
+                    "backToHomeLabel": "Back to homepage",
+                    "backToHomeLink": "Back to homepage"
+                },
+                "image": {
+                    "alt": "Waitlist illustration"
+                }
+            },
+            "success": {
+                "page": {
+                    "title": "Congratulations!",
+                    "description": "We'll notify you when the product is available. You can close this window and continue with your day.",
+                    "link": {
+                        "text": "Back to homepage"
+                    },
+                    "image": {
+                        "alt": "Success illustration"
+                    }
+                }
+            }
+        },
+        "contact": {
+            "page": {
+                "title": "Help",
+                "description": "Contact us for help",
+                "header": {
+                    "title": "Help",
+                    "description": "Contact us for help"
+                },
+                "links": {
+                    "hasAccount": "Already have an account?",
+                    "loginLink": "Log In",
+                    "solvedProblem": "Problem solved?",
+                    "backToHome": "Back to homepage"
+                },
+                "image": {
+                    "alt": "Contact us illustration"
+                }
+            },
+            "form": {
+                "fields": {
+                    "name": {
+                        "label": "Name",
+                        "placeholder": "Name",
+                        "tooltip": "Enter your full name"
+                    },
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "Email",
+                        "tooltip": "Enter an email address where we can contact you"
+                    },
+                    "category": {
+                        "label": "Category",
+                        "placeholder": "Select the type of inquiry",
+                        "tooltip": "Select the category that best describes your inquiry"
+                    },
+                    "message": {
+                        "label": "Message",
+                        "placeholder": "Message",
+                        "tooltip": "How can we help you?"
+                    }
+                },
+                "categories": {
+                    "technical": "Technical issue",
+                    "products": "Product management",
+                    "ecommerce": "E-commerce and sales",
+                    "subdomain": "Subdomains and custom domain",
+                    "billing": "Account and billing",
+                    "integrations": "Integrations",
+                    "general": "General inquiry"
+                },
+                "actions": {
+                    "submit": "Send message"
+                },
+                "messages": {
+                    "success": "Message sent successfully! Our team will contact you soon. We typically respond within 24-48 hours.",
+                    "successShort": "Message sent successfully! Our team will contact you soon.",
+                    "loading": "Sending message...",
+                    "error": "Error sending message"
+                }
+            }
+        }
     },
     "cart": {
         "title": "Cart",
@@ -685,7 +995,79 @@
         }
     },
     "layout": {
-        "title": "Home"
+        "title": "Home",
+        "header": {
+            "navigation": {
+                "home": "Home",
+                "about": "About",
+                "contact": "Contact",
+                "help": "Help",
+                "access": "Access",
+                "moreInfo": "More",
+                "auth": {
+                    "login": "Login",
+                    "signup": "Signup",
+                    "signout": "Signout",
+                    "forgotPassword": "Forgot password",
+                    "googleAuth": "Google auth"
+                },
+                "sections": {
+                    "hero": "Hero",
+                    "heroDesc": "Hero description",
+                    "howItWorks": "How it works",
+                    "howItWorksDesc": "How it works description",
+                    "integrations": "Integrations",
+                    "integrationsDesc": "Integrations description",
+                    "faq": "FAQ",
+                    "faqDesc": "FAQ description",
+                    "dashboard": "Dashboard",
+                    "dashboardDesc": "Dashboard description",
+                    "newSale": "New sale",
+                    "newSaleDesc": "New sale description",
+                    "stores": "Stores",
+                    "storesDesc": "Stores description",
+                    "account": "Account",
+                    "accountDesc": "Account description",
+                    "aboutDesc": "About description",
+                    "contactDesc": "Contact description",
+                    "loginDesc": "Login description",
+                    "signupDesc": "Signup description",
+                    "forgotPasswordDesc": "Forgot password description",
+                    "googleAuthDesc": "Google auth description",
+                    "helpDesc": "If you need help, contact us"
+                }
+            },
+            "mobileDrawer": {
+                "welcome": "Welcome!",
+                "menu": "Menu",
+                "settings": "Settings"
+            },
+            "accountDropdown": {
+                "account": "Account",
+                "cart": "Cart",
+                "myOrders": "My Orders",
+                "signOut": "Sign out"
+            }
+        },
+        "footer": {
+            "links": {
+                "termsAndConditions": "Terms and Conditions",
+                "privacyPolicy": "Privacy Policy",
+                "cookiePolicy": "Cookie Policy",
+                "contactUs": "Contact Us"
+            },
+            "copyright": {
+                "text": "© {year} Lanzate, All rights reserved",
+                "year": "2025"
+            },
+            "socialMedia": {
+                "ariaLabels": {
+                    "twitter": "X/Twitter",
+                    "facebook": "Facebook",
+                    "instagram": "Instagram"
+                }
+            }
+        }
     },
     "store": {
         "title": "Store",
@@ -1508,6 +1890,185 @@
     "landing": {
         "contact-section": {
             "contact-us": "Contact us"
+        },
+        "hero": {
+            "announcement": {
+                "badge": "Last update",
+                "title": "New cash register added"
+            },
+            "slogan": {
+                "prefix": "You",
+                "rotatingWords": {
+                    "word1": "dream it",
+                    "word2": "build it",
+                    "word3": "grow it"
+                },
+                "brandName": "Lanzate",
+                "suffix": "makes it happen"
+            },
+            "description": {
+                "text": "Manage your business has never been easier. Focus on growth while we give you full control"
+            },
+            "actions": {
+                "learnMore": "Learn more",
+                "getStarted": "Get started"
+            }
+        },
+        "features": {
+            "header": {
+                "label": "Features",
+                "title": "Features"
+            },
+            "highlights": {
+                "customizable": {
+                    "percentage": "100%",
+                    "title": "Customizable"
+                },
+                "allInOne": {
+                    "title": "All-in-one",
+                    "description": "Manage your store from anywhere, available on all your devices."
+                },
+                "customDomain": {
+                    "title": "Custom domain",
+                    "description": "Get your own domain URL and publish your products under your brand!"
+                },
+                "speed": {
+                    "title": "Faster than light!",
+                    "description": "Lanzate loads instantly; ensuring that your customers have a fast and fluid experience at all times."
+                },
+                "stayConnected": {
+                    "title": "Stay connected",
+                    "description": "Stay connected with your customers through our integrated social media features."
+                }
+            },
+            "about": {
+                "label": "Who we are",
+                "title": "On a mission to help you launch your business",
+                "description": {
+                    "paragraph1": "We believe that every entrepreneur deserves the tools to make their ideas a reality. Our platform provides everything you need to create, manage and grow your digital business from day one, without technical complications.",
+                    "paragraph2": "We know that starting a business can be overwhelming. That's why we've created an integrated solution that eliminates technical barriers and allows you to focus on what really matters: your vision. From your custom website to customer management, everything is designed to be simple, fast and effective.",
+                    "paragraph3": "Our commitment goes beyond software. We're building a community of brave entrepreneurs who share the dream of creating something own. By choosing Lanzate, you not only get a powerful tool, you join a community designed to help you succeed and grow your business."
+                },
+                "stats": {
+                    "founded": {
+                        "value": "2025",
+                        "label": "Founded"
+                    },
+                    "users": {
+                        "value": "+100",
+                        "label": "Users"
+                    },
+                    "countries": {
+                        "value": "3",
+                        "label": "Countries"
+                    },
+                    "sales": {
+                        "value": "+$100K",
+                        "label": "Sold"
+                    }
+                },
+                "link": "Learn more about our company"
+            }
+        },
+        "integrations": {
+            "header": {
+                "label": "Integrations",
+                "title": "All your favorite tools. One single place.",
+                "description": "Connect seamlessly with the platforms and services you already use. Our integrations make it easy to sync your data, manage your workflow, and grow your business without switching between multiple tools."
+            },
+            "marquee": {
+                "title": "Trusted by Businesses Worldwide",
+                "description": "Founders, developers, and business leaders across the globe chose us for their digital asset operations."
+            }
+        },
+        "faq": {
+            "header": {
+                "label": "FAQ",
+                "title": "Frequently Asked Questions",
+                "description": "Find answers to common questions about Lanzate. If you can't find what you're looking for, feel free to contact our support team."
+            },
+            "items": {
+                "item1": {
+                    "question": "What is Lanzate?",
+                    "answer": "Lanzate is a comprehensive all-in-one platform designed to help entrepreneurs and businesses create, manage, and scale their online presence. Our platform combines product management, inventory tracking, social media integration, and sales analytics into a single, powerful solution. Whether you're just starting out or looking to expand your existing business, Lanzate provides the tools you need to manage multiple stores, track your products, engage with customers through social media, and grow your brand—all from one intuitive dashboard."
+                },
+                "item2": {
+                    "question": "How much does Lanzate cost?",
+                    "answer": "Lanzate offers flexible pricing options to suit businesses of all sizes. Our Starter plan is completely free and perfect for getting started—it includes up to 2 stores and branches, management for up to 500 products, basic analytics, and social media integration. For growing businesses, our Business plan costs $10 per month and expands your capabilities with up to 5 stores and branches, support for up to 2,000 products, custom branding options, and AI-powered features. Our Enterprise plan, priced at $25 per month, is designed for larger operations and includes unlimited stores and branches, unlimited products, advanced inventory management, comprehensive analytics with custom reports, and dedicated support. You can upgrade or downgrade your plan at any time."
+                },
+                "item3": {
+                    "question": "What features are included in Lanzate?",
+                    "answer": "Lanzate provides a complete suite of features to manage your online business efficiently. Our platform includes 100% customizable storefronts, allowing you to create a unique brand experience. You can manage multiple stores and branches from a single dashboard, track inventory in real-time, and organize up to hundreds or thousands of products depending on your plan. We seamlessly integrate with popular social media platforms, enabling you to engage with customers through likes, comments, and direct order management. Additionally, Lanzate offers custom domain support so you can build your brand with your own domain name, comprehensive sales analytics to track performance, and AI-powered features to help optimize your business operations. All features are designed to work together seamlessly for a streamlined experience."
+                },
+                "item4": {
+                    "question": "Can I use my own domain name with Lanzate?",
+                    "answer": "Yes, absolutely! Lanzate supports custom domain names, allowing you to establish a professional online presence with your own branded domain. This feature enables you to build trust with your customers by using a domain that reflects your brand identity rather than a generic subdomain. Setting up your custom domain is straightforward—simply connect your domain through our dashboard, and we'll guide you through the configuration process. Custom domain support is available on our Business and Enterprise plans, giving you the flexibility to scale your brand as your business grows. This is a key feature for businesses looking to establish a strong, recognizable online presence."
+                },
+                "item5": {
+                    "question": "How do I get started with Lanzate?",
+                    "answer": "Getting started with Lanzate is quick and easy. Simply sign up for a free account to access our Starter plan—no credit card required. Once you've created your account, you can immediately start setting up your first store, adding products, and configuring your inventory. Our intuitive dashboard will guide you through the initial setup process, and you'll have access to all the core features right away. If you need assistance, our community support is available to help answer questions and guide you through any challenges. As your business grows, you can seamlessly upgrade to a plan that better suits your needs, unlocking additional features like custom domains, advanced analytics, and AI tools. Start building your online business today with Lanzate's free plan!"
+                }
+            }
+        },
+        "contact": {
+            "header": {
+                "label": "Contact",
+                "title": "Contact Us",
+                "description": "Have questions or need help? We're here to assist you. Reach out to our team and we'll get back to you as soon as possible."
+            },
+            "actions": {
+                "button": "Contact us"
+            }
+        },
+        "pricing": {
+            "header": {
+                "label": "Pricing",
+                "title": "Simple, transparent pricing for every business",
+                "description": "Choose the plan that fits your business needs. Start free and scale as you grow with our flexible pricing options designed for businesses of all sizes."
+            },
+            "actions": {
+                "button": "Get started"
+            },
+            "plans": {
+                "starter": {
+                    "name": "Starter",
+                    "price": "$0 / FREE",
+                    "description": "Perfect for getting started. Manage your products and sales without any initial cost.",
+                    "features": {
+                        "feature1": "All-in-one product and inventory management",
+                        "feature2": "Social media integration",
+                        "feature3": "Up to 2 free store and branch",
+                        "feature4": "Up to 500 products",
+                        "feature5": "Basic sales analytics",
+                        "feature6": "Community support"
+                    }
+                },
+                "business": {
+                    "name": "Business",
+                    "price": "$10/mo",
+                    "description": "Ideal for growing businesses that want to expand their reach with advanced tools.",
+                    "features": {
+                        "feature1": "Everything in Starter plan",
+                        "feature2": "Up to 5 stores and branches",
+                        "feature3": "Up to 2000 products",
+                        "feature4": "Custom branding options",
+                        "feature5": "AI features"
+                    }
+                },
+                "enterprise": {
+                    "name": "Enterprise",
+                    "price": "$25/mo",
+                    "description": "For businesses looking to scale. Complete management with premium tools and dedicated support.",
+                    "features": {
+                        "feature1": "Everything in Business plan",
+                        "feature2": "Unlimited stores and branches",
+                        "feature3": "Unlimited products",
+                        "feature4": "Advanced inventory management",
+                        "feature5": "Advanced analytics & custom reports",
+                        "feature6": "Dedicated support team"
+                    }
+                }
+            }
         }
     }
 }

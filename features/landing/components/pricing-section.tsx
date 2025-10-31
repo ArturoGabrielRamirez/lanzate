@@ -1,9 +1,12 @@
 import { Home } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 
 import { BackgroundPattern } from "@/features/landing/components"
 import { PriceCard, OfferingWrapper, Offering, ProductName, Price, Description } from "@/features/shadcn/components/lukacho/pricing-card"
 
-function PricingSection() {
+async function PricingSection() {
+    const t = await getTranslations("landing.pricing");
+
     return (
         <section className="relative py-17 flex snap-start flex-col items-center font-geist">
             <div className="container grid items-center gap-12 lg:grid-cols-[1fr_3fr] mx-auto px-4 relative h-fit">
@@ -13,57 +16,58 @@ function PricingSection() {
                 <div className="h-full">
                     <div className="mb-10 flex items-center gap-2 text-primary">
                         <Home />
-                        <h2 className="text-2xl font-bold font-oswald">Pricing</h2>
+                        <h2 className="text-2xl font-bold font-oswald">{t('header.label')}</h2>
                     </div>
                     <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
-                        Lorem ipsum dolor sit amet.
+                        {t('header.title')}
                     </h2>
                     <p className="text-muted-foreground font-quattrocento">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, vero eius, in quasi hic nemo magnam assumenda accusamus dolorem fugiat quia provident inventore enim vitae nobis? Cupiditate quibusdam saepe temporibus?
+                        {t('header.description')}
                     </p>
                 </div>
                 <div className="container grid items-center pt-10 gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist">
-                    <PriceCard contactPageHref="/login" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 scale-90">
-                        <ProductName>Starter</ProductName>
-                        <Price>$0 / FREE</Price>
+                    <PriceCard contactPageHref="/login" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 scale-90" actionText={t('actions.button')}>
+                        <ProductName>{t('plans.starter.name')}</ProductName>
+                        <Price>{t('plans.starter.price')}</Price>
                         <Description>
-                            Perfecto para comenzar tu negocio online. Gestiona tus productos y ventas sin costo inicial.
+                            {t('plans.starter.description')}
                         </Description>
                         <OfferingWrapper>
-                            <Offering>All-in-one product and inventory management</Offering>
-                            <Offering>Social media integration</Offering>
-                            <Offering>Up to 2 free store and branch</Offering>
-                            <Offering>Up to 500 products</Offering>
-                            <Offering>Basic sales analytics</Offering>
-                            <Offering>Community support</Offering>
+                            <Offering>{t('plans.starter.features.feature1')}</Offering>
+                            <Offering>{t('plans.starter.features.feature2')}</Offering>
+                            <Offering>{t('plans.starter.features.feature3')}</Offering>
+                            <Offering>{t('plans.starter.features.feature4')}</Offering>
+                            <Offering>{t('plans.starter.features.feature5')}</Offering>
+                            <Offering>{t('plans.starter.features.feature6')}</Offering>
                         </OfferingWrapper>
                     </PriceCard>
-                    <PriceCard contactPageHref="/contact" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 bg-card">
-                        <ProductName>Business</ProductName>
-                        <Price>$10/mo</Price>
+                    <PriceCard contactPageHref="/contact" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 bg-card" actionText={t('actions.button')}>
+                        <ProductName>{t('plans.business.name')}</ProductName>
+                        <Price>{t('plans.business.price')}</Price>
                         <Description>
-                            Ideal para negocios en crecimiento que quieren ampliar su alcance con herramientas avanzadas.
+                            {t('plans.business.description')}
                         </Description>
                         <OfferingWrapper>
-                            <Offering>Todo del plan Starter</Offering>
-                            <Offering>Up to 5 stores and branches</Offering>
-                            <Offering>Up to 2000 products</Offering>
-                            <Offering>Custom branding options</Offering>
-                            <Offering>AI features</Offering>
+                            <Offering>{t('plans.business.features.feature1')}</Offering>
+                            <Offering>{t('plans.business.features.feature2')}</Offering>
+                            <Offering>{t('plans.business.features.feature3')}</Offering>
+                            <Offering>{t('plans.business.features.feature4')}</Offering>
+                            <Offering>{t('plans.business.features.feature5')}</Offering>
                         </OfferingWrapper>
                     </PriceCard>
-                    <PriceCard contactPageHref="/contact" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 scale-90">
-                        <ProductName>Enterprise</ProductName>
-                        <Price>$25/mo</Price>
+                    <PriceCard contactPageHref="/contact" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 scale-90" actionText={t('actions.button')}>
+                        <ProductName>{t('plans.enterprise.name')}</ProductName>
+                        <Price>{t('plans.enterprise.price')}</Price>
                         <Description>
-                            Para empresas que buscan escalar. Gestión completa con herramientas premium y soporte dedicado.                    </Description>
+                            {t('plans.enterprise.description')}
+                        </Description>
                         <OfferingWrapper>
-                            <Offering>Todo del plan Business</Offering>
-                            <Offering>Unlimited stores and branches</Offering>
-                            <Offering>Unlimited products</Offering>
-                            <Offering>Advanced inventory management</Offering>
-                            <Offering>Advanced analytics & custom reports</Offering>
-                            <Offering>Dedicated support team</Offering>
+                            <Offering>{t('plans.enterprise.features.feature1')}</Offering>
+                            <Offering>{t('plans.enterprise.features.feature2')}</Offering>
+                            <Offering>{t('plans.enterprise.features.feature3')}</Offering>
+                            <Offering>{t('plans.enterprise.features.feature4')}</Offering>
+                            <Offering>{t('plans.enterprise.features.feature5')}</Offering>
+                            <Offering>{t('plans.enterprise.features.feature6')}</Offering>
                         </OfferingWrapper>
                     </PriceCard>
                 </div>

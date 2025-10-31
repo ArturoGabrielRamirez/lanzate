@@ -12,7 +12,7 @@ export default function UpdatePasswordForm() {
 
     const [done, setDone] = useState(false)
 
-    const t = useTranslations("auth");
+    const t = useTranslations("auth.updatePassword.form");
 
     const handleSubmit = async (payload: UpdatePasswordPayload) => {
         try {
@@ -26,7 +26,7 @@ export default function UpdatePasswordForm() {
             if (res.ok) setDone(true)
             return {
                 hasError: false,
-                message: "Password updated",
+                message: t("messages.success"),
                 payload: null
             }
         } catch (error) {
@@ -38,17 +38,17 @@ export default function UpdatePasswordForm() {
         <>
             {done ? (
                 <div className="flex flex-col items-center justify-center h-full">
-                    <p>{t("reset-password.description.password-updated")}</p>
+                    <p>{t("messages.completed")}</p>
                 </div>
             ) : (
                 <Form
                     formAction={handleSubmit}
-                    contentButton={t("buttons.update-password")}
-                    successMessage={t("toast-message.success-password-updated")}
-                    loadingMessage={t("toast-message.updating-password")}
+                    contentButton={t("actions.submit")}
+                    successMessage={t("messages.success")}
+                    loadingMessage={t("messages.loading")}
                     className="flex flex-col w-full max-w-xl gap-4 p-8 sm:gap-6"
                 >
-                    <InputField name='password' label={t("reset-password.new-password")} type='password' placeholder={t("reset-password.new-password")} />
+                    <InputField name='password' label={t("fields.newPassword.label")} type='password' placeholder={t("fields.newPassword.placeholder")} />
                 </Form>
             )}
         </>)

@@ -11,7 +11,7 @@ import { Link } from '@/i18n/naviation'
 
 async function FeaturesSection() {
 
-    const t = await getTranslations("")
+    const t = await getTranslations("landing.features")
 
     return (
         <section className="relative py-17 flex snap-start">
@@ -28,7 +28,7 @@ async function FeaturesSection() {
                     <div className="relative z-20">
                         <div className="mb-8 flex items-center gap-2 text-primary">
                             <Rocket />
-                            <h2 className="text-2xl font-bold font-oswald">{t('home.features.title')}</h2>
+                            <h2 className="text-2xl font-bold font-oswald">{t('header.label')}</h2>
                         </div>
                         <div className="relative z-10 grid grid-cols-6 gap-6">
                             <Card className="relative col-span-full hover:drop-shadow-xl hover:-translate-y-1 transition-all flex overflow-hidden lg:col-span-2">
@@ -44,9 +44,9 @@ async function FeaturesSection() {
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="mx-auto block w-fit text-5xl font-semibold">100%</span>
+                                        <span className="mx-auto block w-fit text-5xl font-semibold">{t('highlights.customizable.percentage')}</span>
                                     </div>
-                                    <h2 className="mt-6 text-center text-3xl font-semibold font-geist">{t('home.features.feature.customizable')}</h2>
+                                    <h2 className="mt-6 text-center text-3xl font-semibold font-geist">{t('highlights.customizable.title')}</h2>
                                 </CardContent>
                             </Card>
                             <Card className="relative col-span-full hover:drop-shadow-xl hover:-translate-y-1 transition-all overflow-hidden sm:col-span-3 lg:col-span-2">
@@ -59,8 +59,8 @@ async function FeaturesSection() {
                                         />
                                     </div>
                                     <div className="relative z-10 space-y-2 text-center">
-                                        <h3 className="text-lg font-medium  font-geist">{t('home.features.feature.all-in-one.title')}</h3>
-                                        <p className='text-sm text-muted-foreground font-geist font-light'>{t('home.features.feature.all-in-one.description')}</p>
+                                        <h3 className="text-lg font-medium  font-geist">{t('highlights.allInOne.title')}</h3>
+                                        <p className='text-sm text-muted-foreground font-geist font-light'>{t('highlights.allInOne.description')}</p>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -74,8 +74,8 @@ async function FeaturesSection() {
                                         />
                                     </div>
                                     <div className="relative z-10 space-y-2 text-center mt-auto">
-                                        <h3 className="text-lg font-medium font-geist">{t('home.features.feature.custom-domain.title')}</h3>
-                                        <p className='text-sm text-muted-foreground font-geist font-light'>{t('home.features.feature.custom-domain.description.own-brand')}</p>
+                                        <h3 className="text-lg font-medium font-geist">{t('highlights.customDomain.title')}</h3>
+                                        <p className='text-sm text-muted-foreground font-geist font-light'>{t('highlights.customDomain.description')}</p>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -87,10 +87,10 @@ async function FeaturesSection() {
                                         </div>
                                         <div className="space-y-2">
                                             <h2 className="group-hover:text-secondary-950 text-lg font-medium text-zinc-800 transition dark:text-white font-geist">
-                                                {t('features.speed.headline')}
+                                                {t('highlights.speed.title')}
                                             </h2>
                                             <p className="text-foreground font-geist font-light">
-                                                {t('features.speed.description')}
+                                                {t('highlights.speed.description')}
                                             </p>
                                         </div>
                                     </div>
@@ -116,10 +116,10 @@ async function FeaturesSection() {
                                         </div>
                                         <div className="space-y-2">
                                             <h2 className="text-lg font-medium transition font-geist">
-                                                {t('features.stay-connected.headline')}
+                                                {t('highlights.stayConnected.title')}
                                             </h2>
                                             <p className="text-foreground font-geist font-light">
-                                                {t('features.stay-connected.description')}
+                                                {t('highlights.stayConnected.description')}
                                             </p>
                                         </div>
                                     </div>
@@ -155,41 +155,41 @@ async function FeaturesSection() {
                 <div className="space-y-8 z-20">
                     <div>
                         <div className="mb-2 text-sm font-medium text-primary">
-                            {t('home.who-we-are.title')}
+                            {t('about.label')}
                         </div>
                         <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
-                            {t('home.who-we-are.description')}
+                            {t('about.title')}
                         </h2>
                         <p className="text-muted-foreground font-quattrocento">
-                            {t('home.who-we-are.description-long')}
+                            {t('about.description.paragraph1')}
                         </p>
                     </div>
 
                     <div className="space-y-6 font-quattrocento">
                         <p className="text-muted-foreground">
-                            {t('home.who-we-are.description-long-2')}
+                            {t('about.description.paragraph2')}
                         </p>
                         <p className="text-muted-foreground">
-                            {t('home.who-we-are.description-long-3')}
+                            {t('about.description.paragraph3')}
                         </p>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 border-t pt-8 md:grid-cols-4">
                         <div>
-                            <div className="text-2xl font-bold font-oswald">2025</div>
-                            <div className="text-sm text-muted-foreground font-quattrocento">{t('home.who-we-are.founded')}</div>
+                            <div className="text-2xl font-bold font-oswald">{t('about.stats.founded.value')}</div>
+                            <div className="text-sm text-muted-foreground font-quattrocento">{t('about.stats.founded.label')}</div>
                         </div>
                         <div>
-                            <div className="text-2xl font-bold font-oswald">+100</div>
-                            <div className="text-sm text-muted-foreground font-quattrocento">{t('home.who-we-are.users')}</div>
+                            <div className="text-2xl font-bold font-oswald">{t('about.stats.users.value')}</div>
+                            <div className="text-sm text-muted-foreground font-quattrocento">{t('about.stats.users.label')}</div>
                         </div>
                         <div>
-                            <div className="text-2xl font-bold font-oswald">3</div>
-                            <div className="text-sm text-muted-foreground font-quattrocento">{t('home.who-we-are.country')}</div>
+                            <div className="text-2xl font-bold font-oswald">{t('about.stats.countries.value')}</div>
+                            <div className="text-sm text-muted-foreground font-quattrocento">{t('about.stats.countries.label')}</div>
                         </div>
                         <div>
-                            <div className="text-2xl font-bold font-oswald">+$100K</div>
-                            <div className="text-sm text-muted-foreground font-quattrocento">{t('home.who-we-are.sold')}</div>
+                            <div className="text-2xl font-bold font-oswald">{t('about.stats.sales.value')}</div>
+                            <div className="text-sm text-muted-foreground font-quattrocento">{t('about.stats.sales.label')}</div>
                         </div>
                     </div>
 
@@ -197,7 +197,7 @@ async function FeaturesSection() {
                         href="/about"
                         className="inline-flex items-center text-primary hover:text-primary/80"
                     >
-                        {t('home.who-we-are.learn-more')}
+                        {t('about.link')}
                         <ChevronRight className="size-4 ml-2" />
                     </Link>
                 </div>

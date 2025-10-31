@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import { LoginErrorDisplayProps } from '@/features/auth/types'
 
 function LoginErrorDisplay({ error, message }: LoginErrorDisplayProps) {
-    const t = useTranslations("auth")
+    const t = useTranslations("auth.login.errors")
     const router = useRouter()
     const searchParams = useSearchParams()
     const [isVisible, setIsVisible] = useState(false)
@@ -39,30 +39,30 @@ function LoginErrorDisplay({ error, message }: LoginErrorDisplayProps) {
     const getErrorTitle = (errorType: string) => {
         switch (errorType) {
             case 'cancelled':
-                return t("errors.oauth.cancelled.title")
+                return t("oauth.cancelled.title")
             case 'oauth_failed':
-                return t("errors.oauth.failed.title")
+                return t("oauth.failed.title")
             case 'temporary':
-                return t("errors.oauth.temporary.title")
+                return t("oauth.temporary.title")
             case 'invalid':
-                return t("errors.oauth.invalid.title")
+                return t("oauth.invalid.title")
             case 'unexpected':
-                return t("errors.oauth.unexpected.title")
+                return t("oauth.unexpected.title")
             default:
-                return t("errors.oauth.generic.title")
+                return t("oauth.generic.title")
         }
     }
 
     const getErrorDescription = (errorType: string) => {
         switch (errorType) {
             case 'cancelled':
-                return t("errors.oauth.cancelled.description")
+                return t("oauth.cancelled.description")
             case 'oauth_failed':
-                return t("errors.oauth.failed.description")
+                return t("oauth.failed.description")
             case 'temporary':
-                return t("errors.oauth.temporary.description")
+                return t("oauth.temporary.description")
             default:
-                return t("errors.oauth.generic.description")
+                return t("oauth.generic.description")
         }
     }
 
@@ -96,7 +96,7 @@ function LoginErrorDisplay({ error, message }: LoginErrorDisplayProps) {
                         onClick={handleClose}
                         className="text-xs bg-red-100 hover:bg-red-200 px-3 py-1 rounded text-red-700"
                     >
-                        {t("try-facebook-again")}
+                        {t("oauth.cancelled.action")}
                     </button>
                 </div>
             )}

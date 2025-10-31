@@ -11,7 +11,7 @@ import { InputField } from '@/features/global/components/form/input-field'
 
 function LoginForm() {
 
-    const t = useTranslations("auth");
+    const t = useTranslations("auth.login.form");
 
     return (
         <>
@@ -19,15 +19,15 @@ function LoginForm() {
             <Form
                 resolver={yupResolver(loginFormSchema)}
                 formAction={handleLogInAction}
-                contentButton={t("login")}
+                contentButton={t("actions.submit")}
                 successRedirect="/dashboard"
-                successMessage={t("toast-message.success-logged-in")}
-                loadingMessage={t("toast-message.signing-in")}
+                successMessage={t("messages.success")}
+                loadingMessage={t("messages.loading")}
                 className="flex flex-col gap-3 sm:row-start-2 sm:col-start-1 sm:min-w-full sm:justify-center"
                 disabled
             >
-                <InputField name="email" label={t("email")} placeholder={t("email-placeholder")} startIcon={<MailIcon />} tooltip="Enter the email address associated with your account." type="email" isRequired disabled/>
-                <InputField name="password" label={t("password")} placeholder={t("password")} startIcon={<LockIcon />} tooltip="Enter the password associated with your account." type="password" isRequired disabled/>
+                <InputField name="email" label={t("fields.email.label")} placeholder={t("fields.email.placeholder")} startIcon={<MailIcon />} tooltip={t("fields.email.tooltip")} type="email" isRequired disabled/>
+                <InputField name="password" label={t("fields.password.label")} placeholder={t("fields.password.placeholder")} startIcon={<LockIcon />} tooltip={t("fields.password.tooltip")} type="password" isRequired disabled/>
             </Form>
         </>
     )

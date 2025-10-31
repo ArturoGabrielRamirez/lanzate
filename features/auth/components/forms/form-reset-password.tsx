@@ -14,7 +14,7 @@ import { InputField } from '@/features/global/components/form/input-field'
 
 
 function ResetPassword() {
-  const t = useTranslations("auth");
+  const t = useTranslations("auth.resetPassword.form");
   const router = useRouter();
   const submittedEmailRef = useRef<string>('');
 
@@ -40,13 +40,13 @@ function ResetPassword() {
       <Form
         resolver={yupResolver(changeEmailSchema as never)}
         formAction={handleSubmit}
-        contentButton={t("buttons.send-reset-link")}
-        successMessage={t("toast-message.success-reset-password")}
-        loadingMessage={t("toast-message.reset-password")}
+        contentButton={t("actions.submit")}
+        successMessage={t("messages.success")}
+        loadingMessage={t("messages.loading")}
         onSuccess={handleSuccess}
         className="flex flex-col gap-3 sm:row-start-2 sm:col-start-1 sm:min-w-full sm:justify-center"
       >
-        <InputField name="email" label={t("email")} placeholder={t("email-placeholder")} startIcon={<MailIcon />} tooltip="Enter the email address associated with your account." type="email" description="Please enter the email address associated with your account. We will send a reset link to your email." isRequired/>
+        <InputField name="email" label={t("fields.email.label")} placeholder={t("fields.email.placeholder")} startIcon={<MailIcon />} tooltip={t("fields.email.tooltip")} type="email" description={t("fields.email.description")} isRequired/>
       </Form>
     </>
   )
