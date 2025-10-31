@@ -1,8 +1,6 @@
 import { cancelDeletionAction, getDeletionStatusAction, requestDeletionAction } from "@/features/account/actions";
-import { UserDeletionStatus, DeleteRequestParams, CancelDeletionParams, AccountDeletedParams, UserType } from "@/features/account/types"
+import { UserDeletionStatus, DeleteRequestParams, CancelDeletionParams, AccountDeletedParams, UserType, DeletionActionResponse } from "@/features/account/types"
 import { notifyError, handleDeletionResponse } from "@/features/account/utils";
-/* import { SUBTLE_BANNERS } from "./banners-presets"; */
-
 
 export const getBaseUrl = (): string => {
   if (process.env.NODE_ENV === 'development') {
@@ -19,8 +17,13 @@ export async function fetchDeletionStatus(
   try {
     const result = await getDeletionStatusAction();
 
-    if (result.error === false && result.payload) {
-      setDeletionStatus(result.payload);
+    if (result.hasError === false && result.payload) {
+      // ✅ Cast el legalStatus si viene como string
+      const status: UserDeletionStatus = {
+        ...result.payload,
+        legalStatus: (result.payload.legalStatus as UserDeletionStatus['legalStatus']) || 'active'
+      };
+      setDeletionStatus(status);
       onStatusChange?.();
     }
   } catch (error) {
@@ -59,8 +62,24 @@ export function createDeleteRequestHandler(params: DeleteRequestParams) {
     try {
       const result = await requestDeletionAction(reason, password);
 
-      if (result.error === false && result.payload) {
-        handleDeletionResponse(result.payload, 'request');
+      if (result.hasError === false && result.payload) {
+        // ✅ Adapta el payload al tipo DeletionActionResponse
+        const response: DeletionActionResponse = {
+          success: true,
+          message: 'Solicitud procesada',
+          deletionInfo: {
+            requestedAt: result.payload.deletionRequestedAt,
+            scheduledAt: result.payload.deletionScheduledAt,
+            displayScheduledAt: result.payload.displayScheduledAt,
+            canDeleteUntil: new Date(), // Ajusta según tu lógica
+            canCancelUntil: new Date(), // Ajusta según tu lógica
+            actionWindowMinutes: 0, // Ajusta según tu lógica
+            processingMethod: result.payload.processingMethod,
+            testingMode: result.payload.testingMode
+          }
+        };
+
+        handleDeletionResponse(response, 'request');
 
         setShowDeleteDialog(false);
         setReason('');
@@ -94,8 +113,23 @@ export function createCancelDeletionHandler(params: CancelDeletionParams) {
     try {
       const result = await cancelDeletionAction(cancelReason);
 
-      if (result.error === false && result.payload) {
-        handleDeletionResponse(result.payload, 'cancel');
+      if (result.hasError === false && result.payload) {
+        // ✅ Adapta el payload al tipo DeletionActionResponse
+        const response: DeletionActionResponse = {
+          success: true,
+          message: 'Cancelación procesada',
+          cancellationInfo: {
+            cancelledAt: result.payload.cancelledAt,
+            reason: cancelReason,
+            originalRequestAt: new Date(), // Ajusta según tu lógica
+            actionLimitWas: new Date(), // Ajusta según tu lógica
+            cancelledWithMinutesToSpare: 0, // Ajusta según tu lógica
+            processingMethod: result.payload.processingMethod,
+            automaticProcessing: result.payload.automaticProcessing
+          }
+        };
+
+        handleDeletionResponse(response, 'cancel');
         setShowCancelDialog(false);
         setCancelReason('');
 
@@ -197,14 +231,8 @@ export function getDisplayName(user: UserType): string {
   return user.email
 }
 
-/* export function getDefaultBannerForUser(userId: number | string): string {
-  const userIdAsNumber = typeof userId === 'string' ? parseInt(userId, 10) : userId
-  const index = isNaN(userIdAsNumber) ? 0 : userIdAsNumber % SUBTLE_BANNERS.length
-  return SUBTLE_BANNERS[index].url
-} */
-
 export function formatJoinDate(date: Date | string): string {
-  const joinDate = new Date(date)
+  const joinDate = typeof date === 'string' ? new Date(date) : date
   return new Intl.DateTimeFormat('es', {
     month: 'long',
     year: 'numeric'
