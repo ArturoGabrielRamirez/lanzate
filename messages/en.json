@@ -349,6 +349,12 @@
             }
         },
         "waitlist": {
+            "alert": {
+                "title": "Join the waitlist",
+                "description1": "Lanzate is still in development, but you can already join the waitlist.",
+                "description2": "Leave us your email and we'll notify you when the product is available.",
+                "button": "Join the waitlist"
+            },
             "form": {
                 "fields": {
                     "email": {
