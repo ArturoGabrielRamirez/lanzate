@@ -1,11 +1,17 @@
-import { Title } from "@/features/layout/components"
-import PageContainer from "@/features/layout/components/page-container"
 import { Calendar } from "lucide-react"
 
-const EventsPage = () => {
+/* import { Title } from "@/features/layout/components" */
+import { PageHeader } from "@/features/dashboard/components"
+import { PageContainer } from "@/features/layout/components/page-container"
+
+function EventsPage() {
     return (
         <PageContainer>
-            <Title title={<div className="flex items-center gap-2">
+            <PageHeader
+                title={
+                    <Calendar /> + "Eventos"
+                } />
+            {/* <Title title={<div className="flex items-center gap-2">
                 <Calendar />
                 Events
             </div>} breadcrumbs={[
@@ -13,7 +19,7 @@ const EventsPage = () => {
                     label: "Events",
                     href: "/events"
                 }
-            ]} showDate />
+            ]} showDate /> */}
         </PageContainer>
     )
 }

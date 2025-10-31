@@ -1,23 +1,11 @@
-import { EmailChangeStatus } from "../types";
+import { EmailTargetInfo, EmailTargetParams } from "@/features/auth/types"
 
-
-interface EmailTargetParams {
-    type: 'signup' | 'recovery' | 'smart';
-    email?: string;
-    emailChangeStatus: EmailChangeStatus;
-}
-
-export interface EmailTargetInfo {
-    targetEmail: string;
-    message: string;
-    step: string | null;
-}
 
 export function getEmailTargetInfo({ type, email, emailChangeStatus }: EmailTargetParams): EmailTargetInfo {
     if (type === 'smart' && emailChangeStatus.hasEmailChange) {
         if (!emailChangeStatus.oldEmailConfirmed) {
             return {
-                targetEmail: emailChangeStatus.currentEmail,
+                targetEmail: emailChangeStatus.currentEmail || '',
                 message: `Confirma tu email actual (${emailChangeStatus.currentEmail}) para continuar`,
                 step: '1/2'
             };

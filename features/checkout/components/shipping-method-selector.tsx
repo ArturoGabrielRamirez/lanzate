@@ -1,22 +1,17 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { cn } from "@/lib/utils"
+import { ShippingMethod } from "@prisma/client"
 import { MapPin, Truck } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
-import { ShippingMethod } from "@prisma/client"
-import { useTranslations } from "next-intl"
 
-interface ShippingMethodSelectorProps {
-    value: ShippingMethod
-    onChange: (method: ShippingMethod) => void
-    offersDelivery: boolean
-    deliveryPrice: number
-}
+import { ShippingMethodSelectorProps } from "@/features/checkout/types/types"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { cn } from "@/lib/utils"
 
-export function ShippingMethodSelector({ value, onChange, offersDelivery, deliveryPrice }: ShippingMethodSelectorProps) {
+function ShippingMethodSelector({ value, onChange, offersDelivery, deliveryPrice }: ShippingMethodSelectorProps) {
     const { setValue } = useFormContext()
     const t = useTranslations("checkout.delivery.method-selector")
 
@@ -87,3 +82,5 @@ export function ShippingMethodSelector({ value, onChange, offersDelivery, delive
         </div>
     )
 } 
+
+export { ShippingMethodSelector }

@@ -1,8 +1,8 @@
 import { Suspense } from "react"
-import { Title } from "@/features/layout/components"
-import OrderDetailsContainer from "@/features/store-orders/components/order-details-container"
-import OrderDetailsSkeleton from "@/features/store-orders/components/order-details-skeleton"
-import PageContainer from "@/features/layout/components/page-container"
+
+/* import { Title } from "@/features/layout/components" */
+import { PageContainer } from "@/features/layout/components/page-container"
+import { OrderDetailsContainer, OrderDetailsSkeleton } from "@/features/orders/components"
 
 type Props = {
     params: Promise<{
@@ -15,7 +15,7 @@ export default async function OrderDetailsPage({ params }: Props) {
 
     return (
         <PageContainer>
-            <Title
+         {/*    <Title
                 title={`Order #${id}`}
                 breadcrumbs={[
                     { label: "Account", href: "/account" },
@@ -23,7 +23,7 @@ export default async function OrderDetailsPage({ params }: Props) {
                     { label: `Order #${id}`, href: `/my-orders/${id}` }
                 ]}
                 homePath="/"
-            />
+            /> */}
 
             <div className="grow flex flex-col">
                 <Suspense fallback={<OrderDetailsSkeleton />}>

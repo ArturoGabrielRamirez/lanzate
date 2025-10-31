@@ -1,36 +1,14 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
-import { cn } from "@/lib/utils"
-import { Order } from "@prisma/client"
-import { Package, User, Store, Globe, MapPin, Truck, CheckCircle, Check, Clock, X, Loader2 } from "lucide-react"
+import { Package, User, Store, Globe, MapPin, Truck, Check, Clock, X, Loader2 } from "lucide-react"
+import Image from "next/image"
 import React from "react"
 
-type OrderItemWithProduct = {
-    id: number
-    quantity: number
-    price: number
-    product: {
-        id: number
-        name: string
-        image: string | null
-    }
-}
+import { OrderDetailsStepProps, OrderItemWithProduct } from "@/features/orders/types"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { cn } from "@/lib/utils"
 
-type Props = {
-    order: Order & {
-        items: OrderItemWithProduct[]
-        payment: {
-            status: "PENDING" | "PAID"
-        }
-        customer_name?: string | null
-        customer_email?: string | null
-        customer_phone?: string | null
-    }
-    showFullDetails?: boolean
-}
-
-function OrderDetailsStep({ order, showFullDetails = false }: Props) {
+function OrderDetailsStep({ order, showFullDetails = false }: OrderDetailsStepProps) {
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -212,7 +190,7 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
                             <div className="flex items-center gap-3">
                                 <div className="flex items-center justify-center w-12 h-12 overflow-hidden rounded-md bg-secondary">
                                     {item.product.image ? (
-                                        <img
+                                        <Image
                                             src={item.product.image}
                                             alt={item.product.name}
                                             className="object-cover w-full h-full"
@@ -239,4 +217,4 @@ function OrderDetailsStep({ order, showFullDetails = false }: Props) {
     )
 }
 
-export default OrderDetailsStep 
+export { OrderDetailsStep }

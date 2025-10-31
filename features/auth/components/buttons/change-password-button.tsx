@@ -1,16 +1,19 @@
 'use client'
-import { useTranslations } from 'next-intl';
-import { handleEditPassword } from "../../actions";
-import { ChangePasswordButtonProps } from '../../types';
-import { ButtonWithPopup, InputField } from "@/features/layout/components";
-import { SetupPasswordPrompt } from '../change-visual/setup-password-prompt';
-import usePasswordGuard from '../../hooks/use-password-guard';
+
 import { Lock } from "lucide-react";
-import { passwordSchema } from '../../schemas/password-schema';
-import { Skeleton } from '@/components/ui/skeleton';
+import { useTranslations } from 'next-intl';
+
+import { handleEditPasswordAction } from "@/features/auth/actions";
+import { SetupPasswordPrompt } from "@/features/auth/components/change-visual/setup-password-prompt";
+import usePasswordGuard from "@/features/auth/hooks/use-password-guard";
+import { changePasswordSchema } from "@/features/auth/schemas/password-schema";
+import { ChangePasswordButtonProps } from "@/features/auth/types";
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup";
+import InputField from "@/features/global/components/form/input";
+import { Skeleton } from '@/features/shadcn/components/ui/skeleton';
 
 
-export default function ChangePasswordButton({
+function ChangePasswordButton({
   buttonText,
   title,
   /*  className  */
@@ -24,7 +27,7 @@ export default function ChangePasswordButton({
     password: string;
     confirmPassword: string;
   }) {
-    const result = await handleEditPassword(
+    const result = await handleEditPasswordAction(
       formData.currentPassword,
       formData.password
     )
@@ -55,7 +58,7 @@ export default function ChangePasswordButton({
         title={title}
         description={t("security-description")}
         action={changePasswordAction}
-        schema={passwordSchema}
+        schema={changePasswordSchema}
         messages={{
           success: t("password-updated"),
           error: t("error-updating-password"),
@@ -103,3 +106,5 @@ export default function ChangePasswordButton({
     </div>
   )
 }
+
+export { ChangePasswordButton };

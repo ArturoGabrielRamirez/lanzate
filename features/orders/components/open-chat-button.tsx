@@ -1,9 +1,10 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { useChat } from "@/features/layout/components/chat-provider"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { MessageCircle } from "lucide-react"
+
+import { useChat } from "@/features/layout/components/chat-provider"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { Button } from "@/features/shadcn/components/ui/button"
 
 type OpenChatButtonProps = {
     roomId: string
@@ -12,12 +13,12 @@ type OpenChatButtonProps = {
     messageType?: "STORE_TO_CUSTOMER" | "CUSTOMER_TO_STORE"
 }
 
-const OpenChatButton = ({ 
-    roomId, 
-    onlyIcon = false, 
+function OpenChatButton({
+    roomId,
+    onlyIcon = false,
     username = "Store",
     messageType = "STORE_TO_CUSTOMER"
-}: OpenChatButtonProps) => {
+}: OpenChatButtonProps) {
 
     const { handleOpenChat } = useChat()
 
@@ -34,7 +35,7 @@ const OpenChatButton = ({
             <IconButton icon={MessageCircle} onClick={handleOpenChatWithRoomId} />
         )
     }
-    
+
 
     return (
         <Button onClick={handleOpenChatWithRoomId}>
@@ -43,4 +44,5 @@ const OpenChatButton = ({
         </Button>
     )
 }
-export default OpenChatButton
+
+export { OpenChatButton }

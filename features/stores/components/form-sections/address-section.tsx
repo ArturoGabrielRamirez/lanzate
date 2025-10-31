@@ -1,19 +1,16 @@
 "use client"
 
-import { InputField, CheckboxField } from "@/features/layout/components"
 import { MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { Store, Branch } from "@prisma/client"
 import { useState } from "react"
 
-interface AddressSectionProps {
-    store?: Store & { branches: Branch[] }
-    mode: 'create' | 'edit'
-}
+import { AccordionTriggerWithValidation } from "@/features/branches/components/accordion-trigger-with-validation"
+import CheckboxField from "@/features/global/components/form/checkbox-field"
+import { InputField } from "@/features/global/components/form/input-field"
+import { AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
+import { AddressSectionProps } from "@/features/stores/types"
 
-const AddressSection = ({ store, mode }: AddressSectionProps) => {
+function AddressSection({ store, mode }: AddressSectionProps) {
     
     const t = useTranslations(mode === 'create' ? "store.create-store" : "store.edit-store")
     const [isPhysicalStore, setIsPhysicalStore] = useState(store?.is_physical_store || false)
@@ -39,6 +36,7 @@ const AddressSection = ({ store, mode }: AddressSectionProps) => {
                 <InputField
                     name="address"
                     label={t("address")}
+                    placeholder={t("address")}
                     type="text"
                     defaultValue={mainBranch?.address || ""}
                     disabled={!isPhysicalStore}
@@ -46,6 +44,7 @@ const AddressSection = ({ store, mode }: AddressSectionProps) => {
                 <InputField
                     name="city"
                     label={t("city")}
+                    placeholder={t("city")}
                     type="text"
                     defaultValue={mainBranch?.city || ""}
                     disabled={!isPhysicalStore}
@@ -53,6 +52,7 @@ const AddressSection = ({ store, mode }: AddressSectionProps) => {
                 <InputField
                     name="province"
                     label={t("province")}
+                    placeholder={t("province")}
                     type="text"
                     defaultValue={mainBranch?.province || ""}
                     disabled={!isPhysicalStore}
@@ -60,6 +60,7 @@ const AddressSection = ({ store, mode }: AddressSectionProps) => {
                 <InputField
                     name="country"
                     label={t("country")}
+                    placeholder={t("country")}
                     type="text"
                     defaultValue={mainBranch?.country || ""}
                     disabled={!isPhysicalStore}
@@ -69,4 +70,4 @@ const AddressSection = ({ store, mode }: AddressSectionProps) => {
     )
 }
 
-export default AddressSection
+export { AddressSection }

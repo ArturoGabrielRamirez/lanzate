@@ -1,16 +1,13 @@
 "use client"
 
-import { createContext, useContext, useState, ReactNode } from "react"
 import { ShippingMethod } from "@prisma/client"
+import { createContext, useContext, useState } from "react"
 
-interface CheckoutContextType {
-    shippingMethod: ShippingMethod
-    setShippingMethod: (method: ShippingMethod) => void
-}
+import { CheckoutContextType, CheckoutProviderProps } from "@/features/checkout/types/types"
 
 const CheckoutContext = createContext<CheckoutContextType | undefined>(undefined)
 
-export function useCheckout() {
+function useCheckout() {
     const context = useContext(CheckoutContext)
     if (context === undefined) {
         throw new Error("useCheckout must be used within a CheckoutProvider")
@@ -18,12 +15,7 @@ export function useCheckout() {
     return context
 }
 
-interface CheckoutProviderProps {
-    children: ReactNode
-    initialShippingMethod?: ShippingMethod
-}
-
-export function CheckoutProvider({ children, initialShippingMethod = "PICKUP" }: CheckoutProviderProps) {
+function CheckoutProvider({ children, initialShippingMethod = "PICKUP" }: CheckoutProviderProps) {
     const [shippingMethod, setShippingMethod] = useState<ShippingMethod>(initialShippingMethod)
 
     return (
@@ -31,4 +23,6 @@ export function CheckoutProvider({ children, initialShippingMethod = "PICKUP" }:
             {children}
         </CheckoutContext.Provider>
     )
-} 
+}
+
+export { CheckoutProvider, useCheckout }

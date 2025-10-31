@@ -1,2 +1,2 @@
-export { createCategorySchema } from "./category-schema"
-export { updateCategorySchema } from "./category-schema" 
+export { createCategorySchema } from "@/features/categories/schemas/category-schema"
+export { updateCategorySchema } from "@/features/categories/schemas/category-schema"

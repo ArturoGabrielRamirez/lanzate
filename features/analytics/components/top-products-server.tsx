@@ -1,4 +1,4 @@
-import { getTopProductsAction } from "../actions/get-top-products-action"
+/* import { getTopProductsAction } from "../actions/get-top-products-action.action"
 import TopProductsChartClient from "./top-products-chart-client"
 
 type TopProductsServerProps = {
@@ -30,4 +30,4 @@ export default async function TopProductsServer({ slug }: TopProductsServerProps
     }))
 
     return <TopProductsChartClient data={chartData} pieData={pieData} />
-} 
+}  */

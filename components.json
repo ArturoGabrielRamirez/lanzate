@@ -10,12 +10,16 @@
     "cssVariables": true,
     "prefix": ""
   },
+  "iconLibrary": "lucide",
   "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
+    "components": "@/features/shadcn/components",
+    "utils": "@/features/shadcn/utils",
+    "ui": "@/features/shadcn/components/ui",
+    "lib": "@/features/shadcn/lib",
+    "hooks": "@/features/shadcn/hooks"
   },
-  "iconLibrary": "lucide"
+  "registries": {
+    "@eldoraui": "https://eldoraui.site/r/{name}.json",
+    "@tailark": "https://tailark.com/r/{name}.json"
+  }
 }

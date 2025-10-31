@@ -1,11 +1,13 @@
 "use client"
-import { ButtonWithPopup } from "@/features/layout/components"
-import { deleteStore } from "../actions/deleteStore"
-import { formatErrorResponse } from "@/utils/lib"
-import { redirect } from "next/navigation"
+
 import { Trash2 } from "lucide-react"
-import { DeleteStoreButtonProps } from "@/features/stores/types"
+import { redirect } from "next/navigation"
 import { useTranslations } from "next-intl"
+
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import { formatErrorResponse } from "@/features/global/utils"
+import { deleteStoreAction } from "@/features/stores/actions"
+import { DeleteStoreButtonProps } from "@/features/stores/types"
 
 function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
 
@@ -13,18 +15,18 @@ function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
 
     const handleDeleteStore = async () => {
         try {
-            const { error, message, payload } = await deleteStore(storeId,userId)
+            const { hasError, message } = await deleteStoreAction(storeId, userId)
 
-            if (error) throw new Error(message)
+            if (hasError) throw new Error(message)
 
             return {
-                error: false,
+                hasError: false,
                 message: t("messages.success"),
-                payload: payload
+                payload: null
             }
 
         } catch (error) {
-            return formatErrorResponse(t("messages.error"), error, null)
+            return formatErrorResponse(t("messages.error"))
         }
     }
 
@@ -53,4 +55,4 @@ function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
         />
     )
 }
-export default DeleteStoreButton
+export { DeleteStoreButton }

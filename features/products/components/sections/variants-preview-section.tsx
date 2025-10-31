@@ -1,10 +1,10 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import type { ProductColor } from "@/features/products/type/product-color"
 import { useFormContext } from "react-hook-form"
-import type { VariantPreview } from "@/features/products/type/create-form-extra"
+
+import type { ProductColor, VariantsPreviewSectionProps } from "@/features/products/types"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Button } from "@/features/shadcn/components/ui/button"
 
 type Variant = {
     id: string
@@ -12,7 +12,7 @@ type Variant = {
     color?: ProductColor
 }
 
-export function VariantsPreviewSection({ onEditVariant }: { onEditVariant?: (v: VariantPreview) => void }) {
+function VariantsPreviewSection({ onEditVariant }: VariantsPreviewSectionProps) {
     const { watch, setValue } = useFormContext()
     const isUniqueSize = (watch('isUniqueSize') as boolean | undefined) ?? false
     const sizes = (watch('sizes') as { label: string; value: string }[] | undefined)?.map(s => s.value) ?? []
@@ -127,6 +127,6 @@ export function VariantsPreviewSection({ onEditVariant }: { onEditVariant?: (v: 
     )
 }
 
-export default VariantsPreviewSection
+export { VariantsPreviewSection }
 
 

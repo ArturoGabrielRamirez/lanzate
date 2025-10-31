@@ -1,15 +1,16 @@
-import { getStoresFromSlug } from "../../actions/getStoresFromSlug"
-import { getEmployeePermissions } from "../../actions/getEmployeePermissions"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { AccountTabProps } from "@/features/stores/types"
-import StoreInformationForm from "../store-information-form"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import DeleteStoreButton from "../delete-store-button"
 import { getTranslations } from "next-intl/server"
+
+import { getEmployeePermissionsAction } from "@/features/employees/actions/get-employee-permisions.action"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
+import { DeleteStoreButton } from "@/features/stores/components/delete-store-button"
+import { StoreInformationForm } from "@/features/stores/components/store-information-form"
+import { AccountTabProps } from "@/features/stores/types"
 
 async function AccountTab({ slug }: AccountTabProps) {
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
     const t = await getTranslations("store.account-tab")
     if (userError || !user) {
         console.error(userMessage)
@@ -17,11 +18,11 @@ async function AccountTab({ slug }: AccountTabProps) {
     }
 
     const [
-        { payload: store, error: storeError },
-        { payload: employeePermissions, error: permissionsError }
+        { payload: store, hasError: storeError },
+        { payload: employeePermissions, hasError: permissionsError }
     ] = await Promise.all([
-        getStoresFromSlug(slug),
-        getEmployeePermissions(user.id, slug)
+        getStoresFromSlugAction(slug),
+        getEmployeePermissionsAction(user.id, slug)
     ])
 
     if (storeError || !store) {
@@ -62,4 +63,4 @@ async function AccountTab({ slug }: AccountTabProps) {
     )
 }
 
-export default AccountTab
+export { AccountTab }

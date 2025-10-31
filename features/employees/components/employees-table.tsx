@@ -1,22 +1,22 @@
 "use client"
 
-import { Employee } from "@/features/employees/types"
-import { DataTable } from "@/features/layout/components/data-table"
 import { ColumnDef } from "@tanstack/react-table"
-import CreateEmployeeButton from "@/features/employees/components/create-employee-button"
-import CreateContractButton from "@/features/employees/components/create-contract-button"
-import DeleteEmployeeButton from "@/features/employees/components/delete-employee-button"
-import EditEmployeeButton from "@/features/employees/components/edit-employee-button"
-import { EmployeesTableProps } from "@/features/employees/types"
 import { MoreHorizontal, Eye, ArrowUpDown } from "lucide-react"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
-import { Badge } from "@/components/ui/badge"
+
+import { CreateEmployeeButton } from "@/features/employees/components/create-employee-button"
+import { DeleteEmployeeButton } from "@/features/employees/components/delete-employee-button"
+import { EditEmployeeButton } from "@/features/employees/components/edit-employee-button"
+import { Employee } from "@/features/employees/types"
+import { EmployeesTableProps } from "@/features/employees/types"
+import { DataTable } from "@/features/global/components/data-table"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 
-export default function EmployeesTable({ data, userId, slug, storeId, employeePermissions }: EmployeesTableProps) {
+function EmployeesTable({ data, userId, slug, storeId, employeePermissions }: EmployeesTableProps) {
 
     const t = useTranslations("store.employees-table")
 
@@ -66,7 +66,7 @@ export default function EmployeesTable({ data, userId, slug, storeId, employeePe
             cell: ({ row }) => {
                 const role = row.original.role
                 return (
-                    <Badge variant="outline" className={cn(role === "EMPLOYEE" && "border-blue-500 text-blue-500", role === "ADMIN" && "border-red-500 text-red-500")}>{role}</Badge>
+                    <Badge variant="outline" className={cn(role === "EMPLOYEE" && "border-blue-500 text-blue-500",/*  role === "ADMIN" && "border-red-500 text-red-500" */)}>{role}</Badge>
                 )
             }
         },
@@ -183,10 +183,12 @@ export default function EmployeesTable({ data, userId, slug, storeId, employeePe
                 canManageEmployees ? (
                     <div className="flex gap-2">
                         <CreateEmployeeButton storeId={storeId} userId={userId} />
-                        <CreateContractButton storeId={storeId} userId={userId} />
+                        {/* <CreateContractButton storeId={storeId} userId={userId} /> */}
                     </div>
                 ) : undefined
             }
         />
     )
-} 
+}
+
+export { EmployeesTable }

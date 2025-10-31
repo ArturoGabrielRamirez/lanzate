@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from "@/utils/prisma";
-import { UpdateData } from '@/features/auth/types';
+import { NextRequest, NextResponse } from 'next/server'
+
+import { UpdateData } from '@/features/auth/types'
+import { prisma } from "@/utils/prisma"
 
 export async function POST(request: NextRequest) {
     try {
@@ -20,8 +21,8 @@ export async function POST(request: NextRequest) {
         const newEmail = record.new_email;
 
         let localUser = await prisma.user.findUnique({
-            where: { 
-                supabase_user_id: supabaseUserId 
+            where: {
+                supabase_user_id: supabaseUserId
             }
         });
 
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
             if (localUser) {
                 localUser = await prisma.user.update({
                     where: { id: localUser.id },
-                    data: { 
+                    data: {
                         supabase_user_id: supabaseUserId,
                         updated_at: new Date()
                     }
@@ -79,7 +80,7 @@ export async function POST(request: NextRequest) {
 
             await prisma.user.update({
                 where: { id: localUser.id },
-                data: { 
+                data: {
                     email: changeRequest.new_email,
                     updated_at: new Date()
                 }
@@ -92,7 +93,7 @@ export async function POST(request: NextRequest) {
                 data: updateData
             });
 
-            return NextResponse.json({ 
+            return NextResponse.json({
                 status: 'updated',
                 requestId: updatedRequest.id,
                 changes: updateData
@@ -103,9 +104,9 @@ export async function POST(request: NextRequest) {
 
     } catch (error) {
         console.error('❌ Webhook error:', error);
-        return NextResponse.json({ 
-            status: 'error', 
-            message: error instanceof Error ? error.message : 'Unknown error' 
+        return NextResponse.json({
+            status: 'error',
+            message: error instanceof Error ? error.message : 'Unknown error'
         }, { status: 500 });
     }
 }

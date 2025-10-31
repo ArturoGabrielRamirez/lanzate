@@ -3,8 +3,10 @@
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
-import { Form, InputField } from '@/features/layout/components'
-import { formatErrorResponse } from '@/utils/lib'
+import { UpdatePasswordPayload } from '@/features/auth/types'
+import { Form } from '@/features/global/components/form/form'
+import { InputField } from '@/features/global/components/form/input-field'
+import { formatErrorResponse } from '@/features/global/utils'
 
 export default function UpdatePasswordForm() {
 
@@ -12,21 +14,23 @@ export default function UpdatePasswordForm() {
 
     const t = useTranslations("auth");
 
-    const handleSubmit = async (payload: any) => {
+    const handleSubmit = async (payload: UpdatePasswordPayload) => {
         try {
-            const password = payload.password?.toString() || ''
+            const password = Array.isArray(payload.password)
+                ? payload.password[0]?.toString() || ''
+                : payload.password?.toString() || ''
             const res = await fetch('/auth/update-password', {
                 method: 'POST',
                 body: new URLSearchParams({ password }),
             })
             if (res.ok) setDone(true)
             return {
-                error: false,
+                hasError: false,
                 message: "Password updated",
                 payload: null
             }
         } catch (error) {
-            return formatErrorResponse("Error updating password", error, null)
+            return formatErrorResponse("Error updating password")
         }
     }
 
@@ -44,7 +48,7 @@ export default function UpdatePasswordForm() {
                     loadingMessage={t("toast-message.updating-password")}
                     className="flex flex-col w-full max-w-xl gap-4 p-8 sm:gap-6"
                 >
-                    <InputField name='password' label={t("reset-password.new-password")} type='password' />
+                    <InputField name='password' label={t("reset-password.new-password")} type='password' placeholder={t("reset-password.new-password")} />
                 </Form>
             )}
         </>)

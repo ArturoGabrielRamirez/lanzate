@@ -1,26 +1,16 @@
-'use client'
+/* 'use client'
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, PieChart, Pie, Cell, LineChart, Line, Area, AreaChart } from "recharts"
 import { useState } from "react"
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, PieChart, Pie, Cell, LineChart, Line, Area, AreaChart } from "recharts"
 
-type ChartData = {
-    name: string
-    revenue: number
-    orders: number
-    quantity: number
-    averageOrder: number
-}
-
-type SalesByMonthChartClientProps = {
-    data: ChartData[]
-}
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { SalesByMonthChartClientProps } from "@/features/analytics/types"
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#FFC658', '#FF6B6B', '#4ECDC4', '#45B7D1']
 
-export default function SalesByMonthChartClient({ data }: SalesByMonthChartClientProps) {
+export function SalesByMonthChartClient({ data }: SalesByMonthChartClientProps) {
     const [chartType, setChartType] = useState<'bar' | 'line' | 'area'>('bar')
     const [metric, setMetric] = useState<'revenue' | 'orders' | 'quantity' | 'averageOrder'>('revenue')
 
@@ -44,7 +34,7 @@ export default function SalesByMonthChartClient({ data }: SalesByMonthChartClien
                 <div className="flex items-center justify-between">
                     <CardTitle>Sales by Month</CardTitle>
                     <div className="flex items-center gap-2">
-                        <Select value={metric} onValueChange={(value: any) => setMetric(value)}>
+                        <Select value={metric} onValueChange={(value: 'revenue' | 'orders' | 'quantity' | 'averageOrder') => setMetric(value)}>
                             <SelectTrigger className="w-32">
                                 <SelectValue />
                             </SelectTrigger>
@@ -74,43 +64,43 @@ export default function SalesByMonthChartClient({ data }: SalesByMonthChartClien
                     {chartType === 'bar' ? (
                         <BarChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis 
-                                dataKey="name" 
+                            <XAxis
+                                dataKey="name"
                                 angle={-45}
                                 textAnchor="end"
                                 height={100}
                                 fontSize={12}
                             />
                             <YAxis domain={[0, yAxisMax]} />
-                            <Tooltip formatter={(value: any) => [value, getMetricLabel(metric)]} />
+                            <Tooltip formatter={(value) => [value, getMetricLabel(metric)]} />
                             <Bar dataKey={metric} fill="#8884d8" radius={[2, 2, 0, 0]} />
                         </BarChart>
                     ) : chartType === 'line' ? (
                         <LineChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis 
-                                dataKey="name" 
+                            <XAxis
+                                dataKey="name"
                                 angle={-45}
                                 textAnchor="end"
                                 height={100}
                                 fontSize={12}
                             />
                             <YAxis domain={[0, yAxisMax]} />
-                            <Tooltip formatter={(value: any) => [value, getMetricLabel(metric)]} />
+                            <Tooltip formatter={(value) => [value, getMetricLabel(metric)]} />
                             <Line type="monotone" dataKey={metric} stroke="#8884d8" strokeWidth={3} dot={{ fill: '#8884d8', strokeWidth: 2, r: 4 }} />
                         </LineChart>
                     ) : (
                         <AreaChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis 
-                                dataKey="name" 
+                            <XAxis
+                                dataKey="name"
                                 angle={-45}
                                 textAnchor="end"
                                 height={100}
                                 fontSize={12}
                             />
                             <YAxis domain={[0, yAxisMax]} />
-                            <Tooltip formatter={(value: any) => [value, getMetricLabel(metric)]} />
+                            <Tooltip formatter={(value) => [value, getMetricLabel(metric)]} />
                             <Area type="monotone" dataKey={metric} stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
                         </AreaChart>
                     )}
@@ -118,4 +108,4 @@ export default function SalesByMonthChartClient({ data }: SalesByMonthChartClien
             </CardContent>
         </Card>
     )
-} 
+}  */

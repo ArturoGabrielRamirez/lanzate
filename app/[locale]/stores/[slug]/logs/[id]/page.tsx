@@ -1,26 +1,27 @@
-import { getLogDetails } from "@/features/stores/actions/getLogDetails"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { LogDetailPageProps } from "@/features/stores/types"
 import { ArrowLeft, Activity, User, Clock, Tag, Hash, FileText, Info, UserCheck } from "lucide-react"
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
+
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { getLogDetailsAction} from "@/features/stores/actions/get-log-details.action"
+import { LogDetailPageProps } from "@/features/stores/types"
 
 async function LogDetailPage({ params }: LogDetailPageProps) {
 
     const { slug, id } = await params
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)
     }
 
-    const { payload: log, error } = await getLogDetails(id)
+    const { payload: log, hasError } = await getLogDetailsAction(id)
 
-    if (error || !log) {
-        return console.log(error)
+    if (hasError || !log) {
+        return console.log(hasError)
     }
 
     const formatDate = (dateString: string | Date) => {

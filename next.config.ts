@@ -1,34 +1,44 @@
-import type { NextConfig } from "next";
+import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
 import createNextIntlPlugin from 'next-intl/plugin';
-const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin')
+
+import type { NextConfig } from "next";
 
 
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ["lanzate.app","lodemauri.lanzate.app","www.lanzate.app"],
+  allowedDevOrigins: ["lanzate.app", "lodemauri.lanzate.app", "www.lanzate.app"],
   experimental: {
     serverActions: {
       bodySizeLimit: '3mb',
     },
   },
+  devIndicators: {
+    position: "top-right"
+  },
   images: {
     remotePatterns: [
       {
-        hostname: "api.dicebear.com"
+        protocol: "https",
+        hostname: "api.dicebear.com",
+        pathname: "/**",
       },
       {
         hostname: "ugsxvnqkbxihxjxchckw.supabase.co"
       },
       {
         hostname: "picsum.photos"
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/**",
       }
     ]
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
-      config.plugins = [...config.plugins, new PrismaPlugin()]
+      config.plugins = [...config.plugins, new PrismaPlugin()];
     }
-
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -36,13 +46,11 @@ const nextConfig: NextConfig = {
         net: false,
         tls: false,
         crypto: false,
-      }
+      };
     }
-
-    return config
+    return config;
   },
 };
 
 const withNextIntl = createNextIntlPlugin();
-
 export default withNextIntl(nextConfig);

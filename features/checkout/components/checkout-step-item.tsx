@@ -1,17 +1,12 @@
 "use client"
 
-import { InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperSeparator, InteractiveStepperTitle, InteractiveStepperTrigger } from "@/components/expansion/interactive-stepper"
 import { useFormContext } from "react-hook-form"
+
+import { CheckoutStepItemProps } from "@/features/checkout/types/types"
+import { InteractiveStepperDescription, InteractiveStepperIndicator, InteractiveStepperSeparator, InteractiveStepperTitle, InteractiveStepperTrigger } from "@/features/shadcn/components/expansion/interactive-stepper"
 import { cn } from "@/lib/utils"
 
-interface CheckoutStepItemProps {
-    step: number
-    title: string
-    description: string
-    errorFields?: string[]
-}
-
-export function CheckoutStepItem({ title, description, errorFields = [] }: CheckoutStepItemProps) {
+function CheckoutStepItem({ title, description, errorFields = [] }: CheckoutStepItemProps) {
     const { formState: { errors } } = useFormContext()
 
     const hasErrors = errorFields.some(field => errors[field])
@@ -33,3 +28,5 @@ export function CheckoutStepItem({ title, description, errorFields = [] }: Check
         </>
     )
 } 
+
+export { CheckoutStepItem }

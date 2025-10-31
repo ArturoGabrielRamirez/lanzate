@@ -1,10 +1,11 @@
-import { AccountPageClient } from "@/features/account/components";
-import { getUserInfo } from "@/features/layout/actions/getUserInfo";
 import { getTranslations } from "next-intl/server";
+
+import { AccountPageClient } from "@/features/account/components";
+import { getUserInfo } from "@/features/global/actions/get-user-info.action";
 
 
 export default async function AccountPage() {
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
     const t = await getTranslations("account");
 
     if (userError || !user) {

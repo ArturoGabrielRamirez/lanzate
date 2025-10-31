@@ -1,4 +1,4 @@
-import { Suspense } from "react"
+/* import { Suspense } from "react"
 import SalesByMonthServer from "./sales-by-month-server"
 import SalesTrendServer from "./sales-trend-server"
 import SalesPerformanceServer from "./sales-performance-server"
@@ -24,4 +24,4 @@ export default function SalesByMonth({ slug }: SalesByMonthProps) {
             </Suspense>
         </div>
     )
-} 
+}  */

@@ -1,16 +1,13 @@
 "use client"
 
 import { Boxes } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
-interface VariantLinkCardProps {
-    variant: any
-    slug: string
-    productId: string | number
-    productPrice?: number
-}
+import type { VariantLinkCardProps } from "@/features/products/types"
 
-export const VariantLinkCard = ({ variant, slug, productId, productPrice }: VariantLinkCardProps) => {
+
+function VariantLinkCard({ variant, slug, productId, productPrice }: VariantLinkCardProps) {
     const total = (variant.stocks ?? []).reduce((s: number, x: { quantity: number }) => s + (x.quantity ?? 0), 0)
     const size = variant.size
     const measure = variant.measure
@@ -22,7 +19,7 @@ export const VariantLinkCard = ({ variant, slug, productId, productPrice }: Vari
             className="rounded-md border p-3 flex items-center gap-3 hover:bg-secondary/50 transition-colors"
         >
             {variant.primary_media?.url ? (
-                <img
+                <Image
                     src={variant.primary_media.url}
                     alt={variantName}
                     className="h-12 w-12 rounded object-cover"
@@ -42,3 +39,5 @@ export const VariantLinkCard = ({ variant, slug, productId, productPrice }: Vari
         </Link>
     )
 }
+
+export { VariantLinkCard }

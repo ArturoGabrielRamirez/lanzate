@@ -1,27 +1,17 @@
 "use client"
 
-import { Boxes, EditIcon, X, Trash2 } from "lucide-react"
-import { Product, ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Boxes, EditIcon, X } from "lucide-react"
+import Image from "next/image"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import DeleteVariantButton from "../delete-variant-button"
 
-interface VariantsDisplayProps {
-    product: Product & {
-        variants: (ProductVariant & {
-            color?: { name: string } | null
-            stocks?: { quantity: number }[]
-            primary_media?: { url: string } | null
-        })[]
-    }
-    slug: string
-    userId: number
-}
+import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
+import type { VariantsDisplayProps } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 
-const VariantsDisplay = ({ product, slug, userId }: VariantsDisplayProps) => {
+
+function VariantsDisplay({ product, slug }: VariantsDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
 
     const handleOpenEdit = () => {
@@ -94,7 +84,7 @@ const VariantsDisplay = ({ product, slug, userId }: VariantsDisplayProps) => {
                                     return (
                                         <div key={variant.id} className="rounded-md border p-3 flex items-center gap-3">
                                             {variant.primary_media?.url ? (
-                                                <img 
+                                                <Image 
                                                     src={variant.primary_media.url} 
                                                     alt={label} 
                                                     className="h-12 w-12 rounded object-cover" 
@@ -142,4 +132,4 @@ const VariantsDisplay = ({ product, slug, userId }: VariantsDisplayProps) => {
     )
 }
 
-export default VariantsDisplay
+export { VariantsDisplay }

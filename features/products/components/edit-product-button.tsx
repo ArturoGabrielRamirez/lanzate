@@ -1,24 +1,26 @@
 "use client"
-import { editProduct } from "../actions/editProduct"
-import { formatErrorResponse } from "@/utils/lib"
+
 import { Pencil, Box, Settings } from "lucide-react"
-import { EditProductButtonProps } from "@/features/products/type"
+import Image from "next/image"
+import { useTranslations } from "next-intl"
 import { useCallback, useState, useEffect } from "react"
 import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
-import { useTranslations } from "next-intl"
-import { getStoreIdBySlug } from "@/features/categories/data/getStoreIdBySlug"
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { Form } from "@/features/layout/components"
-import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion"
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import BasicInfoSection from "./sections/basic-info-section"
-import MediaSection from "./sections/media-section"
-import PriceStockSection from "./sections/price-stock-section"
-import CategoriesSection from "./sections/categories-section"
-import SettingsSection from "./sections/settings-section"
-import { getProductDetails } from "@/features/stores/actions/getProductDetails"
 
+import { AccordionTriggerWithValidation } from "@/features/branches/components/accordion-trigger-with-validation"
+import { getStoreIdBySlugData } from "@/features/categories/data/get-store-id-by-slug.data"
+import { Form } from "@/features/global/components/form/form"
+import { formatErrorResponse } from "@/features/global/utils"
+import { editProductAction } from "@/features/products/actions/edit-producto.action"
+import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
+import { BasicInfoSection } from "@/features/products/components/sections/basic-info-section"
+import { CategoriesSection } from "@/features/products/components/sections/categories-section"
+import { MediaSection } from "@/features/products/components/sections/media-section"
+import { PriceStockSection } from "@/features/products/components/sections/price-stock-section"
+import { SettingsSection } from "@/features/products/components/sections/settings-section"
+import { EditProductButtonProps } from "@/features/products/types"
+import { Accordion, AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
 
 type CategoryValue = { value: string; label: string }
 
@@ -49,8 +51,8 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
     // Obtener el storeId a partir del slug
     useEffect(() => {
         const fetchStoreId = async () => {
-            const { payload, error } = await getStoreIdBySlug(slug)
-            if (!error && payload) {
+            const { payload, hasError } = await getStoreIdBySlugData({ slug })
+            if (!hasError && payload) {
                 setStoreId(payload)
             }
         }
@@ -80,7 +82,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
     useEffect(() => {
         const load = async () => {
             if (!open) return
-            const { payload } = await getProductDetails(String(product.id))
+            const { payload } = await getProductDetailsAction(String(product.id))
             if (payload) setProductDetails({ media: payload.media as { id: number; url: string }[] | undefined, primary_media: payload.primary_media as { id: number; url: string } | null })
         }
         load()
@@ -107,10 +109,10 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
             is_published: isPublished
         }
 
-        if (!payload.name) return formatErrorResponse(t("validation.name-required"), null, null)
-        if (payload.price == null) return formatErrorResponse(t("validation.price-required"), null, null)
-        if (payload.stock == null) return formatErrorResponse(t("validation.stock-required"), null, null)
-        return editProduct(product.id, data, slug, userId)
+        if (!payload.name) return formatErrorResponse(t("validation.name-required"))
+        if (payload.price == null) return formatErrorResponse(t("validation.price-required"))
+        if (payload.stock == null) return formatErrorResponse(t("validation.stock-required"))
+        return editProductAction(product.id, data, slug, userId)
     }
 
     const handleSuccess = async () => {
@@ -157,8 +159,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                                                 <label className="text-sm font-medium">Imagen principal</label>
                                                 <div className="relative w-full max-w-sm aspect-[3/4] overflow-hidden rounded-lg border bg-secondary">
                                                     {productDetails.primary_media?.url ? (
-                                                        // eslint-disable-next-line @next/next/no-img-element
-                                                        <img src={productDetails.primary_media.url} alt="Primary image" className="object-cover h-full w-full" />
+                                                        <Image src={productDetails.primary_media.url} alt="Primary image" className="object-cover h-full w-full" />
                                                     ) : (
                                                         <div className="flex flex-col items-center justify-center h-full p-4 text-sm text-muted-foreground">Sin imagen principal</div>
                                                     )}
@@ -170,8 +171,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                                                     <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                                                         {productDetails.media.map((m) => (
                                                             <div key={m.id} className={`relative aspect-square overflow-hidden rounded-md bg-secondary border ${productDetails.primary_media?.id === m.id ? 'border-primary ring-2 ring-primary' : 'border-border'}`}>
-                                                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                                <img src={m.url} alt="Product media" className="object-cover h-full w-full" />
+                                                                <Image src={m.url} alt="Product media" className="object-cover h-full w-full" />
                                                             </div>
                                                         ))}
                                                     </div>
@@ -205,4 +205,4 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
     )
 }
 
-export default EditProductButton 
+export { EditProductButton } 

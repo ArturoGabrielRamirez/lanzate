@@ -1,9 +1,10 @@
-import { routing } from '@/i18n/routing'
-import { UserDeletionSystem } from '@/features/account/utils/user-deletion-system'
-import { CryptoUtils } from '@/features/account/utils/crypto-utils'
-import { insertUser } from '@/features/auth/data/insertUser'
-import { SupabaseClient, User } from '@supabase/supabase-js'
 import { PrismaClient } from '@prisma/client'
+import { SupabaseClient, User } from '@supabase/supabase-js'
+
+import { validateNewUserCreationAction } from '@/features/account/actions'
+import { CryptoUtils } from '@/features/account/utils/crypto-utils'
+import { insertUserData } from '@/features/auth/data/insert-user.data'
+import { routing } from '@/i18n/routing'
 
 function generateUsernameFromEmail(email: string | null | undefined): string | null {
   if (!email) return null
@@ -204,9 +205,11 @@ export async function handleUserCreationOrUpdate(user: User, prisma: PrismaClien
 
   if (!existingUser && user?.email) {
     try {
-      const validation = await UserDeletionSystem.validateNewUserCreation(user.email)
+      const validation = await validateNewUserCreationAction(user.email)
 
-      if (!validation.canCreate && validation.conflict) {
+      /*  UserDeletionSystem.validateNewUserCreation(user.email) */
+
+      if (!validation.payload?.canCreate && validation.payload?.conflict) {
         console.error(`❌ Email ${user.email} ya está en uso por cuenta activa`)
         return {
           error: true,
@@ -228,18 +231,18 @@ export async function handleUserCreationOrUpdate(user: User, prisma: PrismaClien
 
     const provider = user?.app_metadata?.provider || 'oauth'
     const username = user?.user_metadata?.username ?? generateUsernameFromEmail(user?.email)
-    const insertResult = await insertUser(
-      user?.email ?? "",
+    const insertResult = await insertUserData({
+      email: user?.email ?? "",
       provider,
-      user?.id ?? "",
-      user?.user_metadata?.avatar_url ?? null,
+      supabaseUserId: user?.id ?? "",
+      avatar: user?.user_metadata?.avatar_url ?? null,
       username,
-      user?.user_metadata?.name ?? null,
-      user?.user_metadata?.lastname ?? null,
-      user?.user_metadata?.phone ?? null
-    )
+      name: user?.user_metadata?.name ?? null,
+      lastname: user?.user_metadata?.lastname ?? null,
+      phone: user?.user_metadata?.phone ?? null
+    })
 
-    if (insertResult.error || !insertResult.payload) {
+    if (insertResult.hasError || !insertResult.payload) {
       console.error('❌ Error inserting user into database:', insertResult.message)
       return {
         error: true,

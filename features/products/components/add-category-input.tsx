@@ -1,6 +1,8 @@
 "use client"
-import { InputTags } from "@/components/ui/tag-input"
+
 import { useState } from "react"
+
+import { InputTags } from "@/features/shadcn/components/ui/tag-input"
 
 function AddCategoryInput() {
 
@@ -10,4 +12,4 @@ function AddCategoryInput() {
         <InputTags value={categories} onChange={setCategories} />
     )
 }
-export default AddCategoryInput
+export { AddCategoryInput }

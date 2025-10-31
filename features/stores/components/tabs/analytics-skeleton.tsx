@@ -1,8 +1,9 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { DollarSign, ShoppingCart, TrendingUp, Package, Store, Eye, Activity, Crown } from "lucide-react"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import * as motion from "motion/react-client"
+
+import { Avatar, AvatarFallback } from "@/features/shadcn/components/ui/avatar"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 
 function AnalyticsSkeleton() {
     return (
@@ -194,4 +195,4 @@ function AnalyticsSkeleton() {
     )
 }
 
-export default AnalyticsSkeleton 
+export { AnalyticsSkeleton }

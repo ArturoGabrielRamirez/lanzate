@@ -1,30 +1,19 @@
 "use client"
 
 import { Settings2, EditIcon, X, Check, Loader2 } from "lucide-react"
-import { ProductMedia, Product, ProductVariant } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form } from "@/features/layout/components"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-// removed unused resolver/schema
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
-import { updateVariantFlags } from "../../actions/updateVariantFlags"
 import { toast } from "sonner"
 
-interface VariantConfigDisplayProps {
-    variant: ProductVariant
-    product: Product & {
-        variants: (ProductVariant & {
-            color?: { name: string } | null
-            stocks?: { quantity: number; branch_id: number }[]
-            primary_media?: ProductMedia | null
-        })[]
-    }
-}
+import { Form } from "@/features/global/components/form/form"
+import { updateVariantFlagsData } from "@/features/products/data/update-variant-flags.data"
+import type { VariantConfigDisplayProps } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Switch } from "@/features/shadcn/components/ui/switch"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 
-const VariantConfigDisplay = ({ variant }: VariantConfigDisplayProps) => {
+function VariantConfigDisplay({ variant }: VariantConfigDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
     const [active, setActive] = useState<boolean>(!!variant.is_active)
@@ -59,8 +48,8 @@ const VariantConfigDisplay = ({ variant }: VariantConfigDisplayProps) => {
                                                 try {
                                                     setIsSaving(true)
                                                     const payload = { is_active: active, is_published: published, is_featured: featured }
-                                                    const { error, message } = await updateVariantFlags(variant.id, payload)
-                                                    if (error) {
+                                                    const { hasError, message } = await updateVariantFlagsData(variant.id, payload)
+                                                    if (hasError) {
                                                         toast.error(message || "Error al guardar configuración")
                                                         setIsSaving(false)
                                                         return
@@ -146,4 +135,4 @@ const VariantConfigDisplay = ({ variant }: VariantConfigDisplayProps) => {
     )
 }
 
-export default VariantConfigDisplay
+export { VariantConfigDisplay }

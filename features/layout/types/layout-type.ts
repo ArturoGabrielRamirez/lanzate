@@ -7,4 +7,4 @@ type RootLayoutProps = {
     }>;
 };
 
-export type Props = Readonly<RootLayoutProps>
+export type LayoutType = Readonly<RootLayoutProps>

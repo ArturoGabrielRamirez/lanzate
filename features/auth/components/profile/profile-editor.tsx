@@ -1,32 +1,22 @@
 'use client'
 
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Edit, Loader2, Save } from "lucide-react"
+import { useState } from 'react'
 import { toast } from "sonner"
 
-interface ProfileEditorProps {
-  currentUsername: string | null
-  currentFirstName: string | null
-  currentLastName: string | null
-  currentPhone: string | null
-  onProfileUpdate: (profile: {
-    username: string | null
-    firstName: string | null
-    lastName: string | null
-    phone: string | null
-  }) => void
-}
+import { ProfileEditorProps } from '@/features/auth/types'
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/features/shadcn/components/ui/dialog"
+import { Input } from "@/features/shadcn/components/ui/input"
+import { Label } from "@/features/shadcn/components/ui/label"
 
-export function ProfileEditor({ 
-  currentUsername, 
-  currentFirstName, 
-  currentLastName, 
+
+export function ProfileEditor({
+  currentUsername,
+  currentFirstName,
+  currentLastName,
   currentPhone,
-  onProfileUpdate 
+  onProfileUpdate
 }: ProfileEditorProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
@@ -57,7 +47,7 @@ export function ProfileEditor({
     if (formData.firstName && formData.firstName.length > 50) {
       newErrors.firstName = 'El nombre debe tener máximo 50 caracteres'
     }
-    
+
     if (formData.lastName && formData.lastName.length > 50) {
       newErrors.lastName = 'El apellido debe tener máximo 50 caracteres'
     }
@@ -81,7 +71,7 @@ export function ProfileEditor({
       ...prev,
       [field]: value
     }))
-    
+
     // Limpiar error del campo cuando el usuario empiece a escribir
     if (errors[field]) {
       setErrors(prev => ({
@@ -98,7 +88,7 @@ export function ProfileEditor({
     }
 
     setIsUpdating(true)
-    
+
     try {
       const response = await fetch('/api/user/profile', {
         method: 'PATCH',
@@ -131,7 +121,7 @@ export function ProfileEditor({
 
       toast.success('Perfil actualizado correctamente')
       setIsOpen(false)
-      
+
     } catch (error) {
       console.error('Error updating profile:', error)
       toast.error(error instanceof Error ? error.message : 'Error al actualizar el perfil')
@@ -162,7 +152,7 @@ export function ProfileEditor({
           Editar perfil
         </Button>
       </DialogTrigger>
-      
+
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
@@ -170,7 +160,7 @@ export function ProfileEditor({
             Editar perfil
           </DialogTitle>
         </DialogHeader>
-        
+
         <div className="space-y-4">
           {/* Username */}
           <div className="space-y-2">

@@ -1,18 +1,14 @@
 "use client"
 
-import { InputField } from "@/features/layout/components"
 import { Phone } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { AccordionContent, AccordionItem } from "@/components/ui/accordion"
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { Store, Branch } from "@prisma/client"
 
-interface ContactSectionProps {
-    store?: Store & { branches: Branch[] }
-    mode: 'create' | 'edit'
-}
+import { AccordionTriggerWithValidation } from "@/features/branches/components/accordion-trigger-with-validation"
+import { InputField } from "@/features/global/components/form/input-field"
+import { AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
+import { ContactSectionProps } from "@/features/stores/types"
 
-const ContactSection = ({ store, mode }: ContactSectionProps) => {
+function ContactSection({ store, mode }: ContactSectionProps) {
     const t = useTranslations(mode === 'create' ? "store.create-store" : "store.edit-store")
 
     return (
@@ -27,12 +23,14 @@ const ContactSection = ({ store, mode }: ContactSectionProps) => {
                 <InputField
                     name="contact_phone"
                     label={t("contact-phone")}
+                    placeholder={t("contact-phone")}
                     type="tel"
                     defaultValue={store?.branches?.[0]?.phone || ""}
                 />
                 <InputField
                     name="contact_email"
                     label="Email"
+                    placeholder="Email"
                     type="email"
                     defaultValue={store?.branches?.[0]?.email || ""}
                 />
@@ -41,4 +39,4 @@ const ContactSection = ({ store, mode }: ContactSectionProps) => {
     )
 }
 
-export default ContactSection
+export { ContactSection }

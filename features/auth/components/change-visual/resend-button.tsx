@@ -1,10 +1,6 @@
-import { Button } from "@/components/ui/button";
+import { ResendButtonProps } from "@/features/auth/types"
+import { Button } from "@/features/shadcn/components/ui/button";
 
-interface ResendButtonProps {
-    isResending: boolean;
-    cooldownTime: number;
-    onResend: () => Promise<void>;
-}
 
 export function ResendButton({ isResending, cooldownTime, onResend }: ResendButtonProps) {
     const getButtonText = () => {
@@ -17,15 +13,15 @@ export function ResendButton({ isResending, cooldownTime, onResend }: ResendButt
 
     const getButtonClassName = () => {
         const baseClasses = 'px-6 py-3 rounded-lg font-medium transition-all w-full';
-        
+
         if (cooldownTime > 0) {
             return `${baseClasses} bg-yellow-600 text-gray-300 cursor-not-allowed`;
         }
-        
+
         if (isResending) {
             return `${baseClasses} bg-secondary-foreground text-white cursor-not-allowed`;
         }
-        
+
         return `${baseClasses} bg-gradient-to-t from-chart-5 to-primary hover:bg-chart-1 text-white hover:scale-105`;
     };
 

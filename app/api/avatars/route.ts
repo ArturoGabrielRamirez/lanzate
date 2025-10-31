@@ -1,199 +1,31 @@
-import { /* NextRequest, */ NextResponse } from 'next/server'
-import { createServerSideClient } from '@/utils/supabase/server'
-import { prisma } from '@/utils/prisma'
-import { AvatarOption } from '@/features/account/types'
+import { NextResponse } from 'next/server'
 
-export async function GET(/* request: NextRequest */) {
+import { getAvatarOptionsAction } from '@/features/profile/actions/get-avatar-options.action'
+
+export async function GET() {
   try {
-    const supabase = await createServerSideClient()
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    const result = await getAvatarOptionsAction()
 
-    if (userError || !user) {
-      return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
-    }
-
-    // Usuario en DB
-    const dbUser = await prisma.user.findFirst({
-      where: { supabase_user_id: user.id },
-      select: { id: true, email: true, avatar: true }
-    })
-    if (!dbUser) {
-      return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 })
-    }
-
-    const options: AvatarOption[] = []
-
-    // --- 1. Avatares OAuth ---
-    const googleAvatar = user.user_metadata?.avatar_url || user.user_metadata?.picture
-    if (googleAvatar) {
-      options.push({
-        id: 'google-metadata',
-        url: googleAvatar,
-        provider: 'Google',
-        label: 'Avatar de Google',
-        icon: '🟦'
-      })
-    }
-
-    if (user.identities?.length) {
-      for (const identity of user.identities) {
-        let avatarUrl: string | null = null
-        let label = ''
-        let icon = ''
-
-        switch (identity.provider) {
-          case 'google':
-            avatarUrl = identity.identity_data?.avatar_url ||
-              identity.identity_data?.picture ||
-              identity.identity_data?.image_url
-            label = 'Google'
-            icon = '🟦'
-            break
-          case 'facebook':
-            avatarUrl = identity.identity_data?.avatar_url ||
-              identity.identity_data?.picture?.data?.url
-            label = 'Facebook'
-            icon = '📘'
-            break
-          /*        case 'github':
-                   avatarUrl = identity.identity_data?.avatar_url
-                   label = 'GitHub'
-                   icon = '🐙'
-                   break
-                 case 'discord':
-                   if (identity.identity_data?.id && identity.identity_data?.avatar) {
-                     avatarUrl = `https://cdn.discordapp.com/avatars/${identity.identity_data.id}/${identity.identity_data.avatar}.png`
-                   } else {
-                     avatarUrl = identity.identity_data?.avatar_url
-                   }
-                   label = 'Discord'
-                   icon = '🎮'
-                   break
-                 case 'twitter':
-                   avatarUrl = identity.identity_data?.avatar_url ||
-                               identity.identity_data?.profile_image_url
-                   label = 'Twitter'
-                   icon = '🐦'
-                   break */
-        }
-
-        if (avatarUrl?.startsWith('http')) {
-          options.push({
-            id: `${identity.provider}-identity`,
-            url: avatarUrl,
-            provider: label,
-            label: `Avatar de ${label}`,
-            icon
-          })
-        }
-      }
-    }
-
-    // --- 2. DiceBear ---
-    const diceBearStyles = [
-      { style: 'adventurer', label: 'Aventurero', icon: '⚔️' },
-      { style: 'adventurer-neutral', label: 'Aventurero Neutral', icon: '🛡️' },
-      { style: 'avataaars', label: 'Avataaars', icon: '👤' },
-      { style: 'avataaars-neutral', label: 'Avataaars Neutral', icon: '🧍‍♂️' },
-      { style: 'big-ears', label: 'Orejas Grandes', icon: '👂' },
-      { style: 'big-ears-neutral', label: 'Orejas Grandes Neutro', icon: '👂' },
-      { style: 'big-smile', label: 'Gran Sonrisa', icon: '😁' },
-      { style: 'bottts', label: 'Robot', icon: '🤖' },
-      { style: 'bottts-neutral', label: 'Robot Neutro', icon: '🤖' },
-      { style: 'croodles', label: 'Croodles', icon: '🎨' },
-      { style: 'croodles-neutral', label: 'Croodles Neutro', icon: '🎨' },
-      { style: 'dylan', label: 'Dylan', icon: '👨‍🎨' },
-      { style: 'fun-emoji', label: 'Emoji Divertido', icon: '😄' },
-      { style: 'glass', label: 'Vidrio', icon: '🥽' },
-      { style: 'icons', label: 'Iconos', icon: '🔰' },
-      { style: 'identicon', label: 'Identicon', icon: '🔷' },
-      { style: 'initials', label: 'Iniciales', icon: '🔤' },
-      { style: 'lorelei', label: 'Lorelei', icon: '🧝‍♀️' },
-      { style: 'lorelei-neutral', label: 'Lorelei Neutro', icon: '🧝‍♀️' },
-      { style: 'micah', label: 'Micah', icon: '🧑' },
-      { style: 'miniavs', label: 'Mini Avatar', icon: '🎭' },
-      { style: 'notionists', label: 'Notionists', icon: '🧠' },
-      { style: 'notionists-neutral', label: 'Notionists Neutro', icon: '🧠' },
-      { style: 'open-peeps', label: 'Open Peeps', icon: '🖊️' },
-      { style: 'personas', label: 'Personas', icon: '👨' },
-      { style: 'pixel-art', label: 'Pixel Art', icon: '🎮' },
-      { style: 'pixel-art-neutral', label: 'Pixel Art Neutro', icon: '🟦' },
-      { style: 'rings', label: 'Anillos', icon: '💍' },
-      { style: 'shapes', label: 'Formas', icon: '🔵' },
-      { style: 'thumbs', label: 'Pulgar', icon: '👍' }
-    ];
-
-    for (const { style, label, icon } of diceBearStyles) {
-      const diceBearUrl = `https://api.dicebear.com/9.x/${style}/svg?seed=${encodeURIComponent(dbUser.email)}&backgroundColor=transparent`;
-      options.push({
-        id: `dicebear-${style}`,
-        url: diceBearUrl,
-        provider: 'DiceBear',
-        label: `${label} Generado`,
-        icon,
-        isExternal: false
-      });
-    }
-
-
-    // --- 3. Storage personalizado ---
-    const { data: files } = await supabase.storage
-      .from('user-uploads')
-      .list('avatars', { limit: 50, sortBy: { column: 'updated_at', order: 'desc' } })
-
-    if (files?.length) {
-      const userFiles = files.filter(file =>
-        file.name.includes(user.id) || file.name.includes(dbUser.id.toString())
+    if (result.hasError) {
+      const statusCode = result.message === 'No autenticado' ? 401 : 404
+      return NextResponse.json(
+        { error: result.message },
+        { status: statusCode }
       )
-
-      for (const file of userFiles) {
-        const { data: publicUrlData } = supabase.storage
-          .from('user-uploads')
-          .getPublicUrl(`avatars/${file.name}`)
-
-        if (publicUrlData?.publicUrl) {
-          options.push({
-            id: `storage-${file.name}`,
-            url: publicUrlData.publicUrl,
-            provider: 'Personalizado',
-            label: 'Avatar Subido',
-            icon: '📸',
-            fileName: file.name,
-            size: file.metadata?.size,
-            uploadedAt: file.updated_at || file.created_at
-          })
-        }
-      }
     }
-
-    // --- 4. Normalizar ---
-    const uniqueOptions = options.filter(
-      (opt, i, arr) => i === arr.findIndex(o => o.url === opt.url)
-    )
-
-    const optionsWithStatus = uniqueOptions.map(opt => ({
-      ...opt,
-      isCurrentlyUsed: dbUser.avatar === opt.url
-    }))
-
-    optionsWithStatus.sort((a, b) => {
-      if (a.isCurrentlyUsed && !b.isCurrentlyUsed) return -1
-      if (!a.isCurrentlyUsed && b.isCurrentlyUsed) return 1
-      const order = ['Google', 'Facebook', 'GitHub', 'Discord', 'Twitter', 'Personalizado', 'DiceBear']
-      return order.indexOf(a.provider) - order.indexOf(b.provider)
-    })
 
     return NextResponse.json({
       success: true,
-      options: optionsWithStatus,
-      total: optionsWithStatus.length,
-      currentAvatar: dbUser.avatar
+      ...result.payload
     })
   } catch (error) {
     console.error('❌ Error en GET /api/avatars:', error)
-    return NextResponse.json({
-      error: 'Error interno del servidor',
-      details: error instanceof Error ? error.message : 'Error desconocido'
-    }, { status: 500 })
+    return NextResponse.json(
+      {
+        error: 'Error interno del servidor',
+        details: error instanceof Error ? error.message : 'Error desconocido'
+      },
+      { status: 500 }
+    )
   }
 }

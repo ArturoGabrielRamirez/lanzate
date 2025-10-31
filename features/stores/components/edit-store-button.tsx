@@ -1,33 +1,18 @@
 "use client"
 
-import { updateStore } from "../actions/updateStore"
-import { editSchema } from "../schemas/store-schema"
-import { EditStoreButtonProps } from "@/features/stores/types"
 import { useTranslations } from "next-intl"
-import StoreFormButton from "./store-form-button"
 
-type EditStorePayload = {
-    name: string
-    description?: string
-    subdomain: string
-    contact_phone?: string
-    contact_whatsapp?: string
-    facebook_url?: string
-    instagram_url?: string
-    x_url?: string
-    is_physical_store?: boolean
-    address?: string
-    city?: string
-    province?: string
-    country?: string
-}
+import { updateStoreAction } from "@/features/stores/actions"
+import { StoreFormButton } from "@/features/stores/components"
+import { editSchema } from "@/features/stores/schemas"
+import { EditStoreButtonProps, EditStorePayload } from "@/features/stores/types"
 
 function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
 
     const t = useTranslations("store.edit-store")
 
     const handleEditStore = async (payload: EditStorePayload) => {
-        return updateStore(slug, {
+        return updateStoreAction(slug, {
             ...payload,
             subdomain: payload.subdomain,
             contact_phone: payload.contact_phone || "",
@@ -35,11 +20,11 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
             facebook_url: payload.facebook_url || "",
             instagram_url: payload.instagram_url || "",
             x_url: payload.x_url || "",
-            is_physical_store: payload.is_physical_store || false,
-            address: payload.address || "",
+            /* is_physical_store: payload.is_physical_store || false, */
+            /* address: payload.address || "",
             city: payload.city || "",
             province: payload.province || "",
-            country: payload.country || "",
+            country: payload.country || "", */
         }, userId)
     }
 
@@ -61,4 +46,4 @@ function EditStoreButton({ userId, slug, store }: EditStoreButtonProps) {
     )
 }
 
-export default EditStoreButton
+export { EditStoreButton }

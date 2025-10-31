@@ -1,3 +1,5 @@
+import { ProcessedOpeningHour, ProcessedShippingMethod, ProcessedPaymentMethod } from "@/features/stores/types"
+
 export const mapPaymentMethod = (label: string): string | null => {
   switch (label) {
     case 'Efectivo': return 'CASH'
@@ -35,22 +37,6 @@ export const parseTimeToMinutes = (hhmm?: string | null): number | null => {
   return (hh * 60) + mm
 }
 
-export type ProcessedOpeningHour = {
-  day: number
-  start: string
-  end: string
-}
-
-export type ProcessedShippingMethod = {
-  provider: string
-  min_order_amount: number | null
-  free_shipping_min: number | null
-  eta_minutes: number | null
-  delivery_price: number | null
-  active: boolean
-}
-
-export type ProcessedPaymentMethod = string
 
 export function processOpeningHours(attentionDates?: Array<{
   days?: string[]

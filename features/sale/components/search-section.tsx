@@ -1,22 +1,12 @@
 "use client"
 
-import { useState, useEffect, useImperativeHandle, forwardRef } from 'react'
 import { Search, Loader2 } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { searchProductsByNameAction } from '../actions/search-products-by-name'
-import type { ScannedProduct, ProductSearchByNameResult } from '../types'
 import { useTranslations } from 'next-intl'
+import { useState, useEffect, useImperativeHandle, forwardRef, useCallback } from 'react'
 
-type SearchSectionProps = {
-  storeId: number
-  onAddToCart: (product: ScannedProduct) => void
-  onSearchResults: (results: ProductSearchByNameResult) => void
-}
-
-export type SearchSectionRef = {
-  clearSearch: () => void
-}
+import { searchProductsByNameAction } from '@/features/products/actions/search-products-by-name.action'
+import type { ProductSearchByNameResult, SearchSectionProps, SearchSectionRef } from '@/features/sale/types'
+import { Input } from '@/features/shadcn/components/ui/input'
 
 const SearchSection = forwardRef<SearchSectionRef, SearchSectionProps>(({ storeId, onSearchResults }, ref) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -40,46 +30,34 @@ const SearchSection = forwardRef<SearchSectionRef, SearchSectionProps>(({ storeI
     onSearchResults(emptyResult)
   }
 
-  useImperativeHandle(ref, () => ({
-    clearSearch
-  }))
+  useImperativeHandle(ref, () => ({ clearSearch }))
 
-  const handleSearch = async (term: string) => {
+  const handleSearch = useCallback(async (term: string) => {
     if (!term.trim()) {
-      const emptyResult = {
-        products: [],
-        message: '',
-        isLoading: false,
-        error: false
-      }
+      const emptyResult = { products: [], message: '', isLoading: false, error: false }
       setSearchResult(emptyResult)
       onSearchResults(emptyResult)
       return
     }
 
-    const loadingResult = {
-      products: [],
-      message: t('searching'),
-      isLoading: true,
-      error: false
-    }
+    const loadingResult = { products: [], message: t('searching'), isLoading: true, error: false }
     setSearchResult(loadingResult)
     onSearchResults(loadingResult)
 
     try {
-      const { error, payload, message } = await searchProductsByNameAction(term, storeId)
+      const { hasError, payload, message } = await searchProductsByNameAction(term, storeId)
 
       let result: ProductSearchByNameResult
-      if (error || !payload) {
-        result = {
-          products: [],
-          message: message || t('error'),
-          isLoading: false,
-          error: true
-        }
+      if (hasError || !payload) {
+        result = { products: [], message: message || t('error'), isLoading: false, error: true }
       } else {
         result = {
-          products: payload,
+          products: payload.map(p => ({
+            ...p,
+            barcode: p.barcode ?? '',
+            description: p.description ?? '',
+            image: p.image ?? '', // 👈 convierte null → '' //TODO:Revisar estos tipos.
+          })),
           message: payload.length > 0 ? t('found', { count: payload.length }) : t('no-results'),
           isLoading: false,
           error: payload.length === 0
@@ -90,16 +68,11 @@ const SearchSection = forwardRef<SearchSectionRef, SearchSectionProps>(({ storeI
       onSearchResults(result)
     } catch (error) {
       console.error('Error buscando productos:', error)
-      const errorResult = {
-        products: [],
-        message: t('error'),
-        isLoading: false,
-        error: true
-      }
+      const errorResult = { products: [], message: t('error'), isLoading: false, error: true }
       setSearchResult(errorResult)
       onSearchResults(errorResult)
     }
-  }
+  }, [storeId, onSearchResults, t])
 
   // Debounce search
   useEffect(() => {
@@ -108,7 +81,7 @@ const SearchSection = forwardRef<SearchSectionRef, SearchSectionProps>(({ storeI
     }, 300)
 
     return () => clearTimeout(timer)
-  }, [searchTerm, storeId])
+  }, [searchTerm, handleSearch])
 
   return (
     <div className="relative flex items-center h-full">
@@ -126,4 +99,6 @@ const SearchSection = forwardRef<SearchSectionRef, SearchSectionProps>(({ storeI
   )
 })
 
-export default SearchSection 
+SearchSection.displayName = 'SearchSection'
+
+export { SearchSection }

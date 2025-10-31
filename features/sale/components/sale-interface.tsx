@@ -1,36 +1,16 @@
 "use client"
 
-import { useState, useRef } from 'react'
-import { searchProductByBarcode } from '../actions/search-product-by-barcode'
-import type { ScannedProduct, ProductSearchResult, CartItem, ProductSearchByNameResult } from '../types'
-import type { SearchSectionRef } from './search-section'
-import CartSection from './cart-section'
-import SearchSection from './search-section'
-import ActionsSection from './actions-section'
-import ProductResults from './product-results'
-import BarcodeScannerUSB from './barcode-scanner-usb'
+import { PaymentMethod } from '@prisma/client'
 import { useTranslations } from 'next-intl'
-import { createNewWalkInOrder } from '@/features/checkout/actions/createNewWalkInOrder'
-import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
+import { useState, useRef } from 'react'
+
 import { CartItemType } from '@/features/cart/types'
-import { actionWrapper } from '@/utils/lib'
-import BarcodeScannerCammeraButton from './barcode-scanner-cammera-button'
+import { createNewWalkInOrderAction } from '@/features/checkout/actions/create-new-walk-in-order.action'
+import { actionWrapper } from '@/features/global/utils'
+import { searchProductByBarcodeAction } from '@/features/products/actions/search-product-by-barcode.action'
+import { ActionsSection, BarcodeScannerUSB, CartSection, ProductResults, SearchSection } from '@/features/sale/components'
+import type { ScannedProduct, ProductSearchResult, CartItem, ProductSearchByNameResult, SaleInterfaceProps, CustomerInfo, SearchSectionRef } from '@/features/sale/types'
 
-type SaleInterfaceProps = {
-  storeName: string
-  storeDescription?: string
-  storeId: number
-  branchId: number
-  subdomain: string
-  processed_by_user_id: number
-  branchName?: string
-}
-
-type CustomerInfo = {
-  name: string
-  phone: string
-  email: string
-}
 
 function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, branchName }: SaleInterfaceProps) {
   /* const [scannedProducts, setScannedProducts] = useState<ScannedProduct[]>([]) */
@@ -76,9 +56,9 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
     })
 
     try {
-      const { error, payload, message } = await searchProductByBarcode(barcode, storeId)
+      const { hasError, payload, message } = await searchProductByBarcodeAction(barcode, storeId)
 
-      if (error || !payload) {
+      if (hasError || !payload) {
         setBarcodeResult({
           product: null,
           message: message || t('product-not-found'),
@@ -86,13 +66,21 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
           error: true
         })
       } else {
+        // SOLUCIÓN ERROR 1: Convertir propiedades null a undefined (solo las que existen en payload)
+        const scannedProduct: ScannedProduct = {
+          ...payload,
+          description: payload.description ?? undefined,
+          barcode: payload.barcode ?? undefined,
+          sku: payload.sku ?? undefined,
+          image: payload.image ?? undefined,
+        }
+        
         setBarcodeResult({
-          product: payload,
+          product: scannedProduct,
           message: t('product-found'),
           isLoading: false,
           error: false
         })
-
       }
     } catch (error) {
       console.error('Error buscando producto:', error)
@@ -182,10 +170,10 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
   const cartTotal = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0)
   const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
+  // SOLUCIÓN ERROR 2: Wrapper que convierte el formato de respuesta
   const handleFinalizeSale = async (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => {
-    return actionWrapper(async () => {
-      
-      const { error, message, payload } = await createNewWalkInOrder({
+    const result = await actionWrapper(async () => {
+      const { hasError, message, payload } = await createNewWalkInOrderAction({
         branch_id: branchId,
         subdomain: subdomain,
         cart: cartItems.map(item => ({
@@ -204,8 +192,8 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
           email: formData.customerInfo.email,
         },
       })
-      
-      if (error) {
+
+      if (hasError) {
         throw new Error(message)
       }
 
@@ -219,13 +207,19 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
         error: false
       })
 
-
       return {
-        error: false,
+        hasError: false,
         message: "Order created successfully",
         payload: payload
       }
     })
+
+    // Convertir hasError a error para cumplir con el tipo esperado
+    return {
+      error: result.hasError,
+      payload: result.payload,
+      message: result.message
+    }
   }
 
   const handleRefund = () => {
@@ -271,8 +265,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
           ref={searchSectionRef}
         />
 
-        
-
         <BarcodeScannerUSB onProductScanned={handleProductScanned} />
       </div>
 
@@ -288,7 +280,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
       />
-
 
       <ActionsSection
         cartTotal={cartTotal}
@@ -309,4 +300,4 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
   )
 }
 
-export default SaleInterface 
+export default SaleInterface

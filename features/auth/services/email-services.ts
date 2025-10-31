@@ -1,7 +1,8 @@
+/* 
 import { createServerSideClient } from '@/utils/supabase/server';
 import { extractSubdomainFromHost } from '@/features/auth/utils';
 import { prisma } from '@/utils/prisma';
-import { getCurrentUser } from '../actions';
+import { getCurrentUserWithIdAndEmailAction } from '../actions';
 import { headers } from 'next/headers';
 import type { 
   ResendEmailParams, 
@@ -110,7 +111,7 @@ export class EmailService {
     baseUrl: string, 
     step?: 'old_email' | 'new_email'
   ): Promise<ResendEmailResponse> {
-    const { payload: user, error: userError } = await getCurrentUser();
+    const { payload: user, error: userError } = await getCurrentUserWithIdAndEmailAction();
     if (userError || !user) {
       const authError = new Error('Usuario no autenticado');
       (authError as any).status = 401;
@@ -304,4 +305,4 @@ export class EmailService {
       throw new Error('El cambio de email ya está completado');
     }
   }
-}
+} */

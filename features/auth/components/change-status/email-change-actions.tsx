@@ -1,10 +1,11 @@
 'use client'
 
-import { Button } from "@/components/ui/button";
-import { RefreshCw, Send, CheckCircle } from "lucide-react";
-import { EmailChangeActionsProps } from "../../types";
+import { RefreshCw, Send, CheckCircle } from "lucide-react"
 
-export default function EmailChangeActions({
+import { EmailChangeActionsProps } from "@/features/auth/types";
+import { Button } from "@/features/shadcn/components/ui/button";
+
+function EmailChangeActions({
     stepStatus,
     isManuallyChecking,
     handleManualCheck,
@@ -75,3 +76,5 @@ export default function EmailChangeActions({
         </div>
     );
 }
+
+export { EmailChangeActions };

@@ -1,14 +1,11 @@
 "use client"
 
-import { cn } from "@/lib/utils"
 import { useState } from "react"
 
-type Props = {
-    leftPanel: React.ReactNode
-    rightPanel: React.ReactNode
-}
+import { HorizontalPanelsProps } from "@/features/orders/types"
+import { cn } from "@/lib/utils"
 
-function HorizontalPanels({ leftPanel, rightPanel }: Props) {
+function HorizontalPanels({ leftPanel, rightPanel }: HorizontalPanelsProps) {
 
     const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(false)
 
@@ -37,4 +34,5 @@ function HorizontalPanels({ leftPanel, rightPanel }: Props) {
         </div>
     )
 }
-export default HorizontalPanels
+
+export { HorizontalPanels }

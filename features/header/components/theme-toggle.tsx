@@ -1,8 +1,9 @@
 "use client"
 
-import { useTheme } from "next-themes"
 import { Moon, Sun } from "lucide-react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { useTheme } from "next-themes"
+
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function ThemeToggle() {
 
@@ -16,4 +17,4 @@ function ThemeToggle() {
         />
     )
 }
-export default ThemeToggle
+export { ThemeToggle }

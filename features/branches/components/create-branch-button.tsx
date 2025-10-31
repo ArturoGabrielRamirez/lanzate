@@ -2,32 +2,38 @@
 
 import { Phone, Plus, User } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { formatErrorResponse } from "@/utils/lib"
 
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
-
-import { CreateBranchButtonProps } from "@/features/branches/types"
+import { createBranchAction } from "@/features/branches/actions"
+import { AccordionTriggerWithValidation } from "@/features/branches/components"
 import { branchCreateSchema } from "@/features/branches/schemas"
-import { createBranch } from "@/features/branches/actions"
-import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion"
-import AccordionTriggerWithValidation from "./accordion-trigger-with-validation"
+import { CreateBranchButtonProps } from "@/features/branches/types"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import InputField from "@/features/global/components/form/input"
+import { formatErrorResponse } from "@/features/global/utils"
+import { Accordion, AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
+
 
 function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
 
     const t = useTranslations("store.create-branch")
 
-    const handleCreateProduct = async (payload: any) => {
+    const handleCreateProduct = async (payload: {
+        name: string,
+        address: string,
+        email: string,
+        phone: string
+    }) => {
         try {
 
-            const { error, message, payload: branch } = await createBranch(payload, storeId, userId)
-            if (error) throw new Error(message)
+            const { hasError, message, payload: branch } = await createBranchAction({ payload, storeId, userId })
+            if (hasError) throw new Error(message)
             return {
-                error: false,
+                hasError: false,
                 message: t("messages.success"),
                 payload: branch
             }
         } catch (error) {
-            return formatErrorResponse(t("messages.error"), error, null)
+            return formatErrorResponse(t("messages.error"))
         }
     }
 

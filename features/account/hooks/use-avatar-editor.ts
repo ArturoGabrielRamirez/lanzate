@@ -1,6 +1,7 @@
-import { useState, useCallback, useRef } from 'react'
+/* import { useState, useCallback, useRef } from 'react'
 import { toast } from "sonner"
 import { AvatarOption } from '@/features/account/types'
+import { removeMedia } from '@/features/shared/components/media-selector/utils/remove-media'
 
 interface UseAvatarEditorProps {
   currentAvatar: string | null
@@ -24,8 +25,8 @@ export function useAvatarEditor({
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
   const [avatarOptions, setAvatarOptions] = useState<AvatarOption[]>([])
   const [optionsCache, setOptionsCache] = useState<{ data: AvatarOption[], timestamp: number } | null>(null)
-  
-  // Cache por 10 minutos (más tiempo para opciones dinámicas)
+
+  // Cache por 10 minutos
   const CACHE_DURATION = 10 * 60 * 1000
   const abortControllerRef = useRef<AbortController | null>(null)
 
@@ -37,8 +38,6 @@ export function useAvatarEditor({
     // Verificar cache
     if (optionsCache && (Date.now() - optionsCache.timestamp) < CACHE_DURATION) {
       setAvatarOptions(optionsCache.data)
-      
-      // Verificar avatar actual
       if (currentAvatar) {
         const matchingOption = optionsCache.data.find(option => option.url === currentAvatar)
         if (matchingOption) {
@@ -49,16 +48,14 @@ export function useAvatarEditor({
     }
 
     setIsLoadingOptions(true)
-    
+
     // Cancelar petición anterior si existe
     if (abortControllerRef.current) {
       abortControllerRef.current.abort()
     }
-    
     abortControllerRef.current = new AbortController()
 
     try {
-      // Usar el endpoint mejorado
       const response = await fetch('/api/avatars', {
         signal: abortControllerRef.current.signal,
         headers: {
@@ -72,19 +69,18 @@ export function useAvatarEditor({
       }
 
       const data = await response.json()
-      
+
       if (!data.success) {
         throw new Error(data.error || 'Error en la respuesta del servidor')
       }
 
       const options = data.options || []
-      
+
       // Actualizar cache
       setOptionsCache({
         data: options,
         timestamp: Date.now()
       })
-      
       setAvatarOptions(options)
 
       // Verificar avatar actual
@@ -104,14 +100,13 @@ export function useAvatarEditor({
       } else {
         toast.info('No se encontraron opciones de avatar adicionales')
       }
-
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') {
         return
       }
       console.error('❌ Error loading avatar options:', error)
 
-      // En caso de error, al menos cargar avatares generados básicos
+      // En caso de error, cargar avatar básico
       const fallbackOptions = [
         {
           id: 'dicebear-initials',
@@ -122,27 +117,29 @@ export function useAvatarEditor({
         }
       ]
       setAvatarOptions(fallbackOptions)
-      
     } finally {
       setIsLoadingOptions(false)
     }
-  }, [currentAvatar, optionsCache, CACHE_DURATION, getDefaultAvatar, userEmail])
+  }, [currentAvatar, optionsCache, CACHE_DURATION, getDefaultAvatar])
 
   const handleFileSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) return
 
+    // Validar que sea imagen
     if (!file.type.startsWith('image/')) {
       toast.error('Por favor selecciona una imagen válida')
       return
     }
 
-    const maxSize = 5 * 1024 * 1024 // 5MB
+    // Validar tamaño (5MB máximo)
+    const maxSize = 5 * 1024 * 1024
     if (file.size > maxSize) {
       toast.error(`La imagen debe ser menor a ${maxSize / 1024 / 1024}MB. Tu archivo: ${(file.size / 1024 / 1024).toFixed(2)}MB`)
       return
     }
 
+    // Validar formato
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
     if (!allowedTypes.includes(file.type)) {
       toast.error('Formato no soportado. Usa JPG, PNG, GIF o WebP')
@@ -152,7 +149,7 @@ export function useAvatarEditor({
     setSelectedFile(file)
     setSelectedOption(null)
 
-
+    // Crear preview
     const reader = new FileReader()
     reader.onload = (e) => {
       const result = e.target?.result as string
@@ -166,16 +163,25 @@ export function useAvatarEditor({
   }, [])
 
   const handleOptionSelect = useCallback((optionId: string) => {
-/*     const option = avatarOptions.find(opt => opt.id === optionId) */
-    
     setSelectedOption(optionId)
     setSelectedFile(null)
     setPreviewUrl(null)
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
-  }, [avatarOptions, fileInputRef])
+  }, [fileInputRef])
 
+  // ✅ DECLARAR resetState ANTES de usarlo
+  const resetState = useCallback(() => {
+    setPreviewUrl(null)
+    setSelectedFile(null)
+    setSelectedOption(null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
+  }, [fileInputRef])
+
+  // SUBIR ARCHIVO PERSONALIZADO
   const handleUpload = useCallback(async () => {
     if (!selectedFile) {
       toast.error('No hay archivo seleccionado')
@@ -183,61 +189,41 @@ export function useAvatarEditor({
     }
 
     setIsUploading(true)
-
     try {
+      // Crear FormData
       const formData = new FormData()
       formData.append('file', selectedFile)
       formData.append('type', 'avatar')
 
-      const uploadResponse = await fetch('/api/upload', {
+      // Subir archivo al nuevo endpoint
+      const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
       })
 
-      if (!uploadResponse.ok) {
-        const errorData = await uploadResponse.json().catch(() => ({}))
-        throw new Error(errorData.error || `Error HTTP ${uploadResponse.status}`)
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || `Error HTTP ${response.status}`)
       }
 
-      const uploadData = await uploadResponse.json()
-  
+      const data = await response.json()
 
-      // Actualizar avatar en la base de datos
-
-      const updateResponse = await fetch('/api/user/avatar', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          avatarUrl: uploadData.url
-        }),
-      })
-
-      if (!updateResponse.ok) {
-        const errorData = await updateResponse.json().catch(() => ({}))
-        throw new Error(errorData.error || 'Error actualizando avatar')
-      }
-
-   /*    const updateData = await updateResponse.json() */
-
-
-      // Invalidar cache para forzar recarga
+      // El nuevo endpoint ya actualiza la BD automáticamente
+      // Solo necesitas invalidar cache y actualizar estado
       setOptionsCache(null)
-      
-      onAvatarUpdate(uploadData.url)
+      onAvatarUpdate(data.url)
       toast.success('Avatar personalizado subido correctamente')
       onClose()
       resetState()
-
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('❌ Error uploading avatar:', error)
-      toast.error(`Error subiendo avatar: ${error.message}`)
+      toast.error(`Error subiendo avatar: ${error instanceof Error ? error.message : String(error)}`)
     } finally {
       setIsUploading(false)
     }
-  }, [selectedFile, onAvatarUpdate, onClose])
+  }, [selectedFile, onAvatarUpdate, onClose, resetState])
 
+  // USAR OPCIÓN PREDEFINIDA (PRESET)
   const useSelectedOption = useCallback(async () => {
     if (!selectedOption) {
       toast.error('No hay opción seleccionada')
@@ -251,15 +237,16 @@ export function useAvatarEditor({
     }
 
     setIsUploading(true)
-
     try {
-      const response = await fetch('/api/user/avatar', {
-        method: 'PATCH',
+      // Usar preset con el nuevo endpoint
+      const response = await fetch('/api/upload', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          avatarUrl: option.url
+          type: 'avatar',
+          presetUrl: option.url
         }),
       })
 
@@ -268,55 +255,42 @@ export function useAvatarEditor({
         throw new Error(errorData.error || `Error HTTP ${response.status}`)
       }
 
-     /*  const data = await response.json() */
-
-      onAvatarUpdate(option.url)
+      const data = await response.json()
+      onAvatarUpdate(data.url)
       toast.success(`Avatar de ${option.provider} actualizado`)
       onClose()
       resetState()
-
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('❌ Error updating avatar:', error)
-      toast.error(`Error actualizando avatar: ${error.message}`)
+      toast.error(`Error actualizando avatar: ${error instanceof Error ? error.message : String(error)}`)
     } finally {
       setIsUploading(false)
     }
-  }, [selectedOption, avatarOptions, onAvatarUpdate, onClose])
+  }, [selectedOption, avatarOptions, onAvatarUpdate, onClose, resetState])
 
+  // ✅ ELIMINAR AVATAR - Refactorizado con removeMedia
   const removeAvatar = useCallback(async () => {
     setIsUploading(true)
-
     try {
-      const response = await fetch('/api/user/avatar', {
-        method: 'DELETE',
+      await removeMedia('avatar', {
+        showConfirm: false,
+        onSuccess: () => {
+          onAvatarUpdate(null)
+          toast.success('Avatar removido')
+          onClose()
+          resetState()
+        },
+        onError: (error) => {
+          toast.error(`Error removiendo avatar: ${error.message}`)
+        }
       })
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        throw new Error(errorData.error || `Error HTTP ${response.status}`)
-      }
-
-      onAvatarUpdate(null)
-      toast.success('Avatar removido')
-      onClose()
-      resetState()
-
-    } catch (error: any) {
+    } catch (error: unknown) {
+      // El error ya fue manejado en onError
       console.error('❌ Error removing avatar:', error)
-      toast.error(`Error removiendo avatar: ${error.message}`)
     } finally {
       setIsUploading(false)
     }
-  }, [onAvatarUpdate, onClose])
-
-  const resetState = useCallback(() => {
-    setPreviewUrl(null)
-    setSelectedFile(null)
-    setSelectedOption(null)
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ''
-    }
-  }, [fileInputRef])
+  }, [onAvatarUpdate, onClose, resetState])
 
   const getCurrentPreview = useCallback(() => {
     if (previewUrl) return previewUrl
@@ -337,19 +311,18 @@ export function useAvatarEditor({
   }, [invalidateCache, loadAvatarOptions])
 
   return {
+    // Estados
     isUploading,
     isLoadingOptions,
     previewUrl,
     selectedFile,
     selectedOption,
     avatarOptions,
-    
-   
+    // Setters
     setSelectedFile,
     setSelectedOption,
     setPreviewUrl,
-    
-    
+    // Métodos
     loadAvatarOptions,
     handleFileSelect,
     handleOptionSelect,
@@ -362,4 +335,4 @@ export function useAvatarEditor({
     invalidateCache,
     refreshOptions
   }
-}
+} */

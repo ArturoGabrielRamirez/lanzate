@@ -1,15 +1,15 @@
-import { Button } from "@/components/ui/button"
-import { changeOrderTrackingStatus } from "@/features/orders/actions/changeOrderTrackingStatus"
-import { Order, OrderTrackingStatus, OrderTracking, OrderItem, Product, OrderPayment } from "@prisma/client"
+"use client"
+
+import { OrderTrackingStatus } from "@prisma/client"
 import { CheckCircle, Loader2 } from "lucide-react"
 import { useTransition } from "react"
 import { toast } from "sonner"
 
-type Props = {
-    order: Order & { tracking: OrderTracking | null, items: (OrderItem & { product: Product })[] } & { payment: OrderPayment }
-}
+import { changeOrderTrackingStatusAction } from "@/features/orders/actions/change-order-tracking-status.action"
+import { OrderReadyButtonProps } from "@/features/orders/types"
+import { Button } from "@/features/shadcn/components/ui/button"
 
-const OrderReadyButton = ({ order }: Props) => {
+function OrderReadyButton({ order }: OrderReadyButtonProps) {
 
     const [isPending, startTransition] = useTransition()
 
@@ -25,7 +25,7 @@ const OrderReadyButton = ({ order }: Props) => {
                     newStatus: (order.shipping_method === "DELIVERY" ? "WAITING_FOR_DELIVERY" : "WAITING_FOR_PICKUP") as OrderTrackingStatus,
                 }
 
-                await changeOrderTrackingStatus({ orderId: order.id, newStatus })
+                await changeOrderTrackingStatusAction({ orderId: order.id, newStatus })
 
                 toast.dismiss()
                 toast.success("Order marked as ready", { richColors: true })
@@ -49,4 +49,4 @@ const OrderReadyButton = ({ order }: Props) => {
         </div>
     )
 }
-export default OrderReadyButton
+export { OrderReadyButton }

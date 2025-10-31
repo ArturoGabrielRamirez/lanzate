@@ -1,23 +1,22 @@
 "use client"
 
+import { yupResolver } from "@hookform/resolvers/yup"
 import { MessageCircle, Edit as EditIcon, X } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { Branch, Store, StoreOperationalSettings } from "@prisma/client"
-import { EditSocialMediaButton } from "../section-buttons"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, InputField } from "@/features/layout/components"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { editSocialMediaSchema, type EditSocialMediaData } from "../../schemas/social-media-schema"
 import { useFormContext } from "react-hook-form"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
-interface SocialMediaDisplayProps {
-    store: Store & { operational_settings: StoreOperationalSettings | null, branches: Branch[] }
-}
+import { Form } from "@/features/global/components/form/form"
+import InputField from "@/features/global/components/form/input"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { EditSocialMediaButton } from "@/features/stores/components/section-buttons"
+import { editSocialMediaSchema } from "@/features/stores/schemas/social-media-schema"
+import { EditSocialMediaData, SocialMediaDisplayProps } from "@/features/stores/types"
 
-const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
+
+function SocialMediaDisplay({ store }: SocialMediaDisplayProps) {
     const t = useTranslations("store.edit-store")
     const [isEditing, setIsEditing] = useState(false)
     const mainBranch = store.branches?.find((branch) => branch.is_main)
@@ -116,4 +115,4 @@ const SocialMediaDisplay = ({ store }: SocialMediaDisplayProps) => {
     )
 }
 
-export default SocialMediaDisplay
+export { SocialMediaDisplay }

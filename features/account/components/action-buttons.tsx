@@ -1,8 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { Loader2, Check, Upload, X } from "lucide-react"
-import { ActionButtonsProps } from "../types"
+/* import { Loader2, Check, Upload, X } from "lucide-react"
 
-export default function ActionButtons({
+import { Button } from "@/components/ui/button"
+import { ActionButtonsProps } from "@/features/account/types"
+
+export function ActionButtons({
     selectedOption,
     selectedFile,
     currentAvatar,
@@ -86,3 +87,4 @@ export default function ActionButtons({
         </div>
     )
 }
+ */

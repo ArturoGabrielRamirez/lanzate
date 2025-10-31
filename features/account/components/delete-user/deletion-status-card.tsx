@@ -1,14 +1,15 @@
-import { AlertTriangle, ShieldUser, Clock, X } from "lucide-react";
-import { UserDeletionStatus } from "../../types";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import DeletionHelpers from "../../utils/deletion-helpers";
+import { AlertTriangle, ShieldUser, Clock } from "lucide-react";
 
-export default function DeletionStatusCard({
+import { UserDeletionStatus } from "@/features/account/types";
+import { getUrgencyLevel, getUrgencyLevelFromMinutes } from "@/features/account/utils/deletion-helpers";
+import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert";
+import { Badge } from "@/features/shadcn/components/ui/badge";
+import { Button } from "@/features/shadcn/components/ui/button";
+
+export function DeletionStatusCard({
     status,
     onCancelClick,
-    scheduledDate
+    /*  scheduledDate */
 }: {
     status: UserDeletionStatus & {
         canDeleteUntil?: Date | null;
@@ -23,7 +24,8 @@ export default function DeletionStatusCard({
     onCancelClick: () => void;
     scheduledDate: Date | null;
 }) {
-    const canActuallyCancelNow = status.isWithinActionWindow && status.canCancel;
+
+    const canActuallyCancelNow = status.canCancel;
 
     const getTimeUntilActionLimit = () => {
         if (!status.canCancelUntil) return null;
@@ -38,8 +40,8 @@ export default function DeletionStatusCard({
 
     const timeUntilLimit = getTimeUntilActionLimit();
 
-    const deletionUrgency = DeletionHelpers.getUrgencyLevel(status.daysRemaining || 0);
-    const actionUrgency = timeUntilLimit ? DeletionHelpers.getUrgencyLevelFromMinutes(timeUntilLimit.totalMinutes) : 'critical';
+    const deletionUrgency = getUrgencyLevel(status.daysRemaining || 0);
+    const actionUrgency = timeUntilLimit ? getUrgencyLevelFromMinutes(timeUntilLimit.totalMinutes) : 'critical';
 
     const getUrgencyColors = (urgency: string) => {
         switch (urgency) {
@@ -107,7 +109,7 @@ export default function DeletionStatusCard({
                     </span>
                 </div>
 
-                {timeUntilLimit && timeUntilLimit.totalMinutes <= 30 && (
+                {timeUntilLimit && (timeUntilLimit.totalMinutes <= 60 || status.isWithinActionWindow) && (
                     <div className="flex items-center justify-between text-sm">
                         <span className="text-gray-300">Tiempo restante:</span>
                         <span className={`font-mono font-bold ${actionColors.text}`}>
@@ -133,20 +135,20 @@ export default function DeletionStatusCard({
                 disabled={!canActuallyCancelNow}
                 size="sm"
                 className={`w-full ${canActuallyCancelNow
-                        ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                        : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                    : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                     }`}
             >
                 <ShieldUser className="h-3 w-3 mr-1" />
                 {canActuallyCancelNow ? 'Cancelar eliminación' : 'Período expirado'}
             </Button>
 
-            {timeUntilLimit && timeUntilLimit.totalMinutes <= 10 && canActuallyCancelNow && (
+            {status.isWithinActionWindow && canActuallyCancelNow && (
                 <Alert className={`${actionColors.bg} ${actionColors.border} mt-2`}>
                     <Clock className={`h-3 w-3 ${actionColors.icon}`} />
                     <AlertDescription className="text-gray-300 text-xs">
-                        <span className={`font-medium ${actionColors.text}`}>Últimos minutos:</span>{' '}
-                        {timeUntilLimit.minutes} min para cancelar.
+                        <span className={`font-medium ${actionColors.text}`}>⚠️ Últimos minutos:</span>{' '}
+                        La eliminación es inminente. Actúa ahora si quieres cancelar.
                     </AlertDescription>
                 </Alert>
             )}

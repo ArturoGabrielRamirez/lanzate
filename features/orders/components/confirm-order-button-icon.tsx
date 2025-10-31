@@ -1,18 +1,16 @@
 "use client"
 
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
 import { CheckCircle, Loader2 } from "lucide-react"
 import { useTransition } from "react"
 import { toast } from "sonner"
-import { confirmOrderAction } from "../actions/confirmOrderAction"
+
+import { confirmOrderAction } from "@/features/orders/actions/confirm-order.action"
+import { ConfirmOrderButtonIconProps } from "@/features/orders/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
-type Props = {
-    orderId: number
-}
-
-const ConfirmOrderButtonIcon = ({ orderId }: Props) => {
+function ConfirmOrderButtonIcon({ orderId }: ConfirmOrderButtonIconProps) {
     const [isPending, startTransition] = useTransition()
 
     const handleConfirmOrder = () => {
@@ -20,11 +18,11 @@ const ConfirmOrderButtonIcon = ({ orderId }: Props) => {
         toast.loading("Confirming order, please wait...", { richColors: true })
         startTransition(async () => {
             try {
-                const { error, message } = await confirmOrderAction({
+                const { hasError, message } = await confirmOrderAction({
                     orderId: orderId.toString()
                 })
 
-                if (error) {
+                if (hasError) {
                     throw new Error(message)
                 }
                 toast.dismiss()
@@ -52,4 +50,5 @@ const ConfirmOrderButtonIcon = ({ orderId }: Props) => {
         </Tooltip>
     )
 }
-export default ConfirmOrderButtonIcon
+
+export { ConfirmOrderButtonIcon }

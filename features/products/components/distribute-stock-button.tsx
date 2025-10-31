@@ -1,33 +1,23 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useTranslations } from "next-intl"
-
 import { Package } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useState, useEffect } from "react"
 
-import { ButtonWithPopup } from "@/features/layout/components"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import { distributeProductStockData } from "@/features/products/data/distribute-product-stock.data"
+import type { DistributeStockButtonProps } from "@/features/products/types"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Input } from "@/features/shadcn/components/ui/input"
+import { Label } from "@/features/shadcn/components/ui/label"
 
-import { distributeProductStock } from "@/features/products/data/distributeProductStock"
-import { Branch, ProductStock } from "@prisma/client"
-
-type Props = {
-    productId: number
-    productName: string
-    availableStock: number
-    branches: (Branch & { stock: ProductStock[] })[]
-    variantStocks?: { branch_id: number; quantity: number }[]
-}
-
-export default function DistributeStockButton({
+function DistributeStockButton({
     productId,
     productName,
     availableStock,
     branches,
     variantStocks
-}: Props) {
+}: DistributeStockButtonProps) {
     const t = useTranslations("store.products-table")
     const [distributions, setDistributions] = useState<{ [branchId: number]: number }>({})
     const [totalDistributed, setTotalDistributed] = useState(0)
@@ -71,7 +61,7 @@ export default function DistributeStockButton({
                 quantity
             }))
 
-        return await distributeProductStock({
+        return await distributeProductStockData({
             productId,
             distributions: distributionArray
         })
@@ -166,3 +156,5 @@ export default function DistributeStockButton({
         </ButtonWithPopup>
     )
 }
+
+export { DistributeStockButton }

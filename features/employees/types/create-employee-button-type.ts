@@ -1,4 +1,1 @@
-export type Props = {
-    storeId: number
-    userId: number
-} 
+export * from '@/features/employees/types/types'

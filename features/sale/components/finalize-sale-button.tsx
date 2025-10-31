@@ -1,42 +1,16 @@
 "use client"
 
 import { CreditCard } from 'lucide-react'
-import { ButtonWithPopup } from '@/features/layout/components'
 import { useTranslations } from 'next-intl'
-import * as Yup from 'yup'
-import InputField from '@/features/layout/components/input'
-import SelectField from '@/features/settings/components/select-field'
-import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
 import { useState } from 'react'
-import type { PaymentMethod } from '@/features/dashboard/types/operational-settings'
+import * as Yup from 'yup'
 
-type CustomerInfo = {
-  name: string
-  phone: string
-  email: string
-}
-
-type FinalizeSaleButtonProps = {
-  cartTotal: number
-  cartItemCount: number
-  disabled?: boolean
-  className?: string
-  onConfirm: (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => Promise<{ error: boolean; payload: FinalizeSaleFormData; message: string }>
-  selectedPaymentMethod: PaymentMethod
-  setSelectedPaymentMethod: (method: PaymentMethod) => void
-  customerInfo: CustomerInfo
-  setCustomerInfo: (info: CustomerInfo) => void
-  branchName?: string
-}
-
-type FinalizeSaleFormData = {
-  paymentMethod: PaymentMethod
-  includeCustomerInfo: boolean
-  name: string
-  phone: string
-  email: string
-}
+import { ButtonWithPopup } from '@/features/global/components/button-with-popup'
+import InputField from '@/features/global/components/form/input'
+import { SelectField } from '@/features/global/components/form/select-field'
+import type { FinalizeSaleButtonProps, FinalizeSaleFormData } from '@/features/sale/types'
+import { Label } from '@/features/shadcn/components/ui/label'
+import { Switch } from '@/features/shadcn/components/ui/switch'
 
 const finalizeSaleSchema = Yup.object({
   paymentMethod: Yup.string()
@@ -119,7 +93,7 @@ function FinalizeSaleButton({
       }
     })
 
-    return { error, message, payload }
+    return { hasError: error, message, payload }
   }
 
   return (
@@ -213,4 +187,4 @@ function FinalizeSaleButton({
   )
 }
 
-export default FinalizeSaleButton 
+export { FinalizeSaleButton }

@@ -1,0 +1,44 @@
+"use client"
+
+import { createContext, useContext, useState } from "react"
+
+import { StoreProviderProps } from "@/features/layout/types/types"
+import { StoreContextType } from "@/features/stores/types"
+
+const StoreContext = createContext<StoreContextType>({
+    displayType: "grid",
+    setDisplayType: () => { }
+})
+
+
+export const useStore = () => useContext(StoreContext)
+
+function StoreProvider({ children }: StoreProviderProps) {
+
+    const [displayType, setDisplayType] = useState<"grid" | "list">("grid")
+    const [amount, setAmount] = useState(10)
+    const [page, setPage] = useState(1)
+    const [offset, setOffset] = useState(0)
+    const [limit, setLimit] = useState(10)
+
+    const contextValue = {
+        displayType,
+        setDisplayType,
+        amount,
+        setAmount,
+        page,
+        setPage,
+        offset,
+        setOffset,
+        limit,
+        setLimit
+    }
+
+    return (
+        <StoreContext.Provider value={contextValue}>
+            {children}
+        </StoreContext.Provider>
+    )
+}
+
+export { StoreProvider }

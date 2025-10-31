@@ -1,3 +1,6 @@
-export { schema as loginUserSchema } from "./log-user-schema";
-export { schema as emailSchema } from "./email-schema";
-export { schema as signUpSchema/* , type SignupFormData  */} from "./sign-up-schema";
+export * from "@/features/auth/schemas/change-email-schema"
+export * from "@/features/auth/schemas/email-schema"
+export * from "@/features/auth/schemas/log-user-schema"
+export * from "@/features/auth/schemas/sign-up-schema"
+/* export * from "@/features/auth/schemas/new-password-schema" */
+export * from "@/features/auth/schemas/password-schema"

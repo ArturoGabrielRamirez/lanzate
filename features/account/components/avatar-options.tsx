@@ -1,10 +1,11 @@
+/* import { Loader2, Check } from "lucide-react"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Label } from "@/components/ui/label"
-import { Loader2, Check } from "lucide-react"
+import { AvatarOptionsProps } from "@/features/account/types"
 import { cn } from "@/lib/utils"
-import { AvatarOptionsProps } from "../types"
 
-export default function AvatarOptions({
+export function AvatarOptions({
   isLoading,
   options,
   selectedOption,
@@ -58,3 +59,4 @@ export default function AvatarOptions({
     </div>
   )
 }
+ */

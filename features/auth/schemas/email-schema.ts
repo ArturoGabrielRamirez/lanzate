@@ -1,5 +1,3 @@
 import * as yup from 'yup'
 
-export const schema = yup.object({
-    email: yup.string().email('Email must be a valid email').required('Email is required'),
-})
+export const emailSchema = yup.string().email('Debe ser un email válido').required('El email es requerido')

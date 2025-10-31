@@ -1,26 +1,19 @@
 "use client"
 
-import { useState } from 'react'
 import { Calculator } from 'lucide-react'
-import { ButtonWithPopup, InputField } from '@/features/layout/components'
 import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 import * as Yup from 'yup'
 
-type CalculateChangeButtonProps = {
-  cartTotal: number
-  disabled?: boolean
-  className?: string
-}
-
-type ChangeFormData = {
-  paymentAmount: string
-}
+import { ButtonWithPopup } from '@/features/global/components/button-with-popup'
+import InputField from '@/features/global/components/form/input'
+import type { CalculateChangeButtonProps, ChangeFormData } from '@/features/sale/types'
 
 const changeSchema = Yup.object({
   paymentAmount: Yup.string()
     .required('El monto de pago es requerido')
     .matches(/^\d+(\.\d{1,2})?$/, 'Solo se permiten números con máximo 2 decimales')
-    .test('min-amount', 'El monto debe ser mayor al total', function(value) {
+    .test('min-amount', 'El monto debe ser mayor al total', function (value) {
       const cartTotal = this.options.context?.cartTotal || 0
       const paymentAmount = parseFloat(value || '0')
       return paymentAmount >= cartTotal
@@ -60,7 +53,7 @@ function CalculateChangeButton({ cartTotal, disabled = false, className }: Calcu
   const handleCalculateChange = async (data: ChangeFormData) => {
     // Esta función no hace nada real, solo simula el cálculo
     // En una implementación real, podría guardar el cambio en algún estado global
-    return { error: false, payload: data, message: 'Cambio calculado correctamente' }
+    return { hasError: false, payload: data, message: 'Cambio calculado correctamente' }
   }
 
   return (
@@ -148,4 +141,4 @@ function CalculateChangeButton({ cartTotal, disabled = false, className }: Calcu
   )
 }
 
-export default CalculateChangeButton 
+export { CalculateChangeButton }

@@ -1,94 +1,75 @@
-import { DotPattern } from "@/components/magicui/dot-pattern";
-import { cn } from "@/lib/utils";
-import * as motion from "motion/react-client"
+import { Home } from "lucide-react"
 
-import { useTranslations } from "next-intl";
-import { HoverEffect } from "@/components/ui/card-hover-effect";
-import SectionTitle from "./section-title";
+import { BackgroundPattern } from "@/features/landing/components"
+import { PriceCard, OfferingWrapper, Offering, ProductName, Price, Description } from "@/features/shadcn/components/lukacho/pricing-card"
 
 function PricingSection() {
-
-    const t = useTranslations('home');
-
-    const pricingPlans = [
-        {
-            id: 1,
-            title: t('description.plan.personal.title'),
-            price: t('description.plan.personal.price'),
-            priceDescription: "",
-            benefits: [
-                t('description.plan.personal.benefits.1'),
-                t('description.plan.personal.benefits.2'),
-                t('description.plan.personal.benefits.3'),
-                t('description.plan.personal.benefits.4'),
-                t('description.plan.personal.benefits.5'),
-            ],
-            buttonText: t('buttons.subscribe'),
-            link: "/login"
-        },
-        {
-            id: 2,
-            title: t('description.plan.professional.title'),
-            price: "$10",
-            originalPrice: "$12",
-            priceDescription: t('description.plan.professional.price'),
-            benefits: [
-                t('description.plan.professional.benefits.1'),
-                t('description.plan.professional.benefits.2'),
-                t('description.plan.professional.benefits.3'),
-                t('description.plan.professional.benefits.4'),
-                t('description.plan.professional.benefits.5'),
-                t('description.plan.professional.benefits.6'),
-            ],
-            buttonText: t('buttons.subscribe'),
-            link: "/login"
-        },
-        {
-            id: 3,
-            title: t('description.plan.enterprise.title'),
-            price: "$30",
-            originalPrice: "$40",
-            priceDescription: t('description.plan.enterprise.price'),
-            benefits: [
-                t('description.plan.enterprise.benefits.1'),
-                t('description.plan.enterprise.benefits.2'),
-                t('description.plan.enterprise.benefits.3'),
-                t('description.plan.enterprise.benefits.4'),
-                t('description.plan.enterprise.benefits.5'),
-                t('description.plan.enterprise.benefits.6'),
-                t('description.plan.enterprise.benefits.7'),
-            ],
-            buttonText: t('buttons.subscribe'),
-            link: "/login"
-        }
-    ];
-
     return (
-        <section className="py-6 relative container mx-auto z-10">
-            <div className="container mx-auto p-4 sm:p-10">
-                <div className="mb-16 space-y-4 text-center">
-                    {/* <SectionTitle title={t('description.plan.title')} /> */}
-                    <h2 className="text-balance text-4xl font-semibold lg:text-6xl"><span className="text-primary">Pricing</span> that scales with you</h2>
-                    <motion.p
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        className="block mb-2 font-medium text-center max-w-3xl mx-auto text-lg lg:text-xl"
-                    >
-                        {t('description.plan.description')}
-                    </motion.p>
+        <section className="relative py-17 flex snap-start flex-col items-center font-geist">
+            <div className="container grid items-center gap-12 lg:grid-cols-[1fr_3fr] mx-auto px-4 relative h-fit">
+                <div className='brightness-90 dark:brightness-100 absolute inset-0'>
+                    <BackgroundPattern />
                 </div>
-                <div className="flex justify-center mb-8">
-                    <button className="px-4 py-1 font-semibold border rounded-l-lg bg-primary border-primary">{t('buttons.monthly')}</button>
-                    <button className="px-4 py-1 border rounded-r-lg border-primary">
-                        {t('buttons.annually')}
-                    </button>
+                <div className="h-full">
+                    <div className="mb-10 flex items-center gap-2 text-primary">
+                        <Home />
+                        <h2 className="text-2xl font-bold font-oswald">Pricing</h2>
+                    </div>
+                    <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
+                        Lorem ipsum dolor sit amet.
+                    </h2>
+                    <p className="text-muted-foreground font-quattrocento">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, vero eius, in quasi hic nemo magnam assumenda accusamus dolorem fugiat quia provident inventore enim vitae nobis? Cupiditate quibusdam saepe temporibus?
+                    </p>
                 </div>
-                <HoverEffect
-                    items={pricingPlans}
-                    className="mx-auto lg:max-w-full"
-                />
+                <div className="container grid items-center pt-10 gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist">
+                    <PriceCard contactPageHref="/login" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 scale-90">
+                        <ProductName>Starter</ProductName>
+                        <Price>$0 / FREE</Price>
+                        <Description>
+                            Perfecto para comenzar tu negocio online. Gestiona tus productos y ventas sin costo inicial.
+                        </Description>
+                        <OfferingWrapper>
+                            <Offering>All-in-one product and inventory management</Offering>
+                            <Offering>Social media integration</Offering>
+                            <Offering>Up to 2 free store and branch</Offering>
+                            <Offering>Up to 500 products</Offering>
+                            <Offering>Basic sales analytics</Offering>
+                            <Offering>Community support</Offering>
+                        </OfferingWrapper>
+                    </PriceCard>
+                    <PriceCard contactPageHref="/contact" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 bg-card">
+                        <ProductName>Business</ProductName>
+                        <Price>$10/mo</Price>
+                        <Description>
+                            Ideal para negocios en crecimiento que quieren ampliar su alcance con herramientas avanzadas.
+                        </Description>
+                        <OfferingWrapper>
+                            <Offering>Todo del plan Starter</Offering>
+                            <Offering>Up to 5 stores and branches</Offering>
+                            <Offering>Up to 2000 products</Offering>
+                            <Offering>Custom branding options</Offering>
+                            <Offering>AI features</Offering>
+                        </OfferingWrapper>
+                    </PriceCard>
+                    <PriceCard contactPageHref="/contact" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 scale-90">
+                        <ProductName>Enterprise</ProductName>
+                        <Price>$25/mo</Price>
+                        <Description>
+                            Para empresas que buscan escalar. Gestión completa con herramientas premium y soporte dedicado.                    </Description>
+                        <OfferingWrapper>
+                            <Offering>Todo del plan Business</Offering>
+                            <Offering>Unlimited stores and branches</Offering>
+                            <Offering>Unlimited products</Offering>
+                            <Offering>Advanced inventory management</Offering>
+                            <Offering>Advanced analytics & custom reports</Offering>
+                            <Offering>Dedicated support team</Offering>
+                        </OfferingWrapper>
+                    </PriceCard>
+                </div>
             </div>
         </section>
     )
 }
-export default PricingSection
+
+export { PricingSection }

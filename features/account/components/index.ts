@@ -1,13 +1,16 @@
-export { default as AccountDetailsTab } from './account-details-tab'
-export { default as AccountHeader } from './account-header'
-export { default as AccountPageClient } from './account-page-client'
-export { default as ActionButtons } from './action-buttons'
-export { default as AvatarEditor } from './avatar-editor'
-export { default as AvatarOptions } from './avatar-options'
-export { default as AvatarPreview } from './avatar-preview'
-
-export { FileUploadSection } from './file-upload-section'
-export { default } from './account-page-client'
-export { LoadingSkeleton } from './loading-skeleton'
-export { DeletionRequestedView } from './deletion-requested-view'
-
+export * from '@/features/account/components/account-banner-header'
+export * from '@/features/account/components/account-details-tab'
+export * from '@/features/account/components/account-page-client'
+/* export * from '@/features/account/components/action-buttons'
+export * from '@/features/account/components/avatar-options' */
+/* export * from '@/features/account/components/avatar-preview' */
+export * from '@/features/account/components/basic-info-card'
+export * from '@/features/account/components/danger-deep-zone-skeleton'
+export * from '@/features/account/components/danger-zone-skeleton'
+export * from '@/features/account/components/danger-zone-tab'
+export * from '@/features/account/components/deletion-requested-view'
+/* export * from '@/features/account/components/file-upload-section' */
+export * from '@/features/account/components/loading-skeleton'
+export * from '@/features/account/components/security-card'
+export * from '@/features/account/components/security-skeleton'
+export * from '@/features/account/components/stats-card'

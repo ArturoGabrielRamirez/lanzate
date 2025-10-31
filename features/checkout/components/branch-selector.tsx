@@ -1,19 +1,14 @@
 "use client"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
-import { Branch } from "@prisma/client"
+import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
-import { useTranslations } from "next-intl"
 
-interface BranchSelectorProps {
-    branches: Branch[]
-    value: number | null
-    onChange: (branchId: number) => void
-}
+import { BranchSelectorProps } from "@/features/checkout/types/types"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 
-export function BranchSelector({ branches, value, onChange }: BranchSelectorProps) {
+function BranchSelector({ branches, value, onChange }: BranchSelectorProps) {
     const { setValue } = useFormContext()
     const t = useTranslations("checkout.delivery.branch-selector")
 
@@ -58,4 +53,6 @@ export function BranchSelector({ branches, value, onChange }: BranchSelectorProp
             </Select>
         </div>
     )
-} 
+}
+
+export { BranchSelector }

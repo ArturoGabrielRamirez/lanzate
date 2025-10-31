@@ -1,30 +1,34 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, InputField } from "@/features/layout/components"
-import { useState } from "react"
-import { deliveryOrderSchema, pickupOrderSchema } from "../schemas/order-schema"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { createNewCheckoutOrder } from "../actions/createNewCheckoutOrder"
 import { Branch, PaymentMethod, StoreOperationalSettings } from "@prisma/client"
-import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem } from "@/components/expansion/interactive-stepper"
-import { ShippingMethodSelector } from "./shipping-method-selector"
-import { BranchSelector } from "./branch-selector"
-import { PaymentInformation } from "./payment-information"
-import { CheckoutStepItem } from "./checkout-step-item"
-import { StepNavigation } from "./step-navigation"
-import { Label } from "@/components/ui/label"
-import { useCart } from "@/features/cart/components/cart-provider"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { useCheckout } from "./checkout-context"
+import { useState } from "react"
 
-function CheckoutForm({ 
-    userId, 
-    branches, 
-    subdomain, 
-    operationalSettings 
-}: { 
+import { useCart } from "@/features/cart/components/cart-provider"
+import { createNewCheckoutOrderAction } from "@/features/checkout/actions/create-new-checkout-order.action"
+import { BranchSelector } from "@/features/checkout/components/branch-selector"
+import { useCheckout } from "@/features/checkout/components/checkout-context"
+import { CheckoutStepItem } from "@/features/checkout/components/checkout-step-item"
+import { PaymentInformation } from "@/features/checkout/components/payment-information"
+import { ShippingMethodSelector } from "@/features/checkout/components/shipping-method-selector"
+import { StepNavigation } from "@/features/checkout/components/step-navigation"
+import { deliveryOrderSchema, pickupOrderSchema } from "@/features/checkout/schemas/order-schema"
+import { CheckFormData } from "@/features/checkout/types"
+import { computeDeliveryCost, computeFinalTotal } from "@/features/checkout/utils"
+import { Form } from "@/features/global/components/form/form"
+import { InputField } from "@/features/global/components/form/input-field"
+import { InteractiveStepper, InteractiveStepperContent, InteractiveStepperItem } from "@/features/shadcn/components/expansion/interactive-stepper"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Label } from "@/features/shadcn/components/ui/label"
+
+function CheckoutForm({
+    userId,
+    branches,
+    subdomain,
+    operationalSettings
+}: {
     subdomain: string
     userId: string
     branches: Branch[]
@@ -38,17 +42,12 @@ function CheckoutForm({
     const router = useRouter()
     const t = useTranslations("checkout")
 
-    // Calculate delivery cost
-    const deliveryCost = operationalSettings?.offers_delivery && shippingMethod === "DELIVERY" 
-        ? (operationalSettings.delivery_price || 0) 
-        : 0
+    const deliveryCost = computeDeliveryCost(operationalSettings, shippingMethod)
+    const finalTotal = computeFinalTotal(total, deliveryCost)
 
-    // Calculate final total including delivery
-    const finalTotal = total + deliveryCost
+    const handleSubmit = async (formData: CheckFormData) => {
 
-    const handleSubmit = async (formData: any) => {
-
-        const { error, message, payload } = await createNewCheckoutOrder({
+        const { hasError: error, message, payload } = await createNewCheckoutOrderAction({
             branch_id: selectedBranchId as number,
             customer_info: {
                 name: formData.name,
@@ -68,15 +67,15 @@ function CheckoutForm({
             cart: cart,
             processed_by_user_id: Number(userId)
         })
-        
+
         if (error) throw new Error(message)
 
         clearCart()
 
-        router.push(`/my-orders/${payload.id}`)
+        router.push(`/my-orders/${payload?.id}`)
 
         return {
-            error: false,
+            hasError: false,
             message: t("messages.order-created"),
             payload: payload
         }
@@ -121,9 +120,9 @@ function CheckoutForm({
                             <CardTitle>{t("steps.personal-information.title")}</CardTitle>
                         </CardHeader>
                         <CardContent className="flex flex-col gap-4">
-                            <InputField name="name" label={t("personal-info.name")} />
-                            <InputField name="email" label={t("personal-info.email")} />
-                            <InputField name="phone" label={t("personal-info.phone")} />
+                            <InputField name="name" label={t("personal-info.name")} placeholder={t("personal-info.name")} />
+                            <InputField name="email" label={t("personal-info.email")} placeholder={t("personal-info.email")} />
+                            <InputField name="phone" label={t("personal-info.phone")} placeholder={t("personal-info.phone")} />
                             <StepNavigation />
                         </CardContent>
                     </Card>
@@ -152,12 +151,12 @@ function CheckoutForm({
                                 <div className="space-y-4">
                                     <Label className="text-base font-medium block">{t("delivery.address.label")}</Label>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <InputField name="address" label={t("delivery.address.address")} />
-                                        <InputField name="city" label={t("delivery.address.city")} />
+                                        <InputField name="address" label={t("delivery.address.address")} placeholder={t("delivery.address.address")} />
+                                        <InputField name="city" label={t("delivery.address.city")} placeholder={t("delivery.address.city")} />
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <InputField name="state" label={t("delivery.address.state")} />
-                                        <InputField name="country" label={t("delivery.address.country")} />
+                                        <InputField name="state" label={t("delivery.address.state")} placeholder={t("delivery.address.state")} />
+                                        <InputField name="country" label={t("delivery.address.country")} placeholder={t("delivery.address.country")} />
                                     </div>
                                 </div>
                             )}
@@ -188,4 +187,4 @@ function CheckoutForm({
     )
 }
 
-export default CheckoutForm
+export { CheckoutForm }

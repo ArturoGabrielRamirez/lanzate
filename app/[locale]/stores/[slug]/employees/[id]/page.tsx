@@ -1,31 +1,34 @@
-import { getEmployeeDetails } from "@/features/employees/actions/getEmployeeDetails"
-import { DeleteEmployeeButton, EditEmployeeButton } from "@/features/employees/components"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { EmployeeDetailPageProps } from "@/features/employees/types"
 import { ArrowLeft, UserCheck, UserX, Calendar, Building, Briefcase, DollarSign, Shield, FileText } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
+
+import { getEmployeeDetailsAction } from "@/features/employees/actions/get-employee-details.action"
+import { DeleteEmployeeButton, EditEmployeeButton } from "@/features/employees/components"
+import { EmployeeDetailPageProps } from "@/features/employees/types"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
 
     const { slug, id } = await params
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)
     }
 
-    const { payload: employee, error } = await getEmployeeDetails(id)
+    const { payload: employee, hasError } = await getEmployeeDetailsAction(id)
 
-    if (error || !employee) {
-        return console.log(error)
+    if (hasError || !employee) {
+        return console.log(hasError)
     }
 
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
+    const formatDate = (date: Date | string) => {
+        const dateObj = typeof date === 'string' ? new Date(date) : date
+        return dateObj.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
@@ -61,20 +64,20 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                     {/* Employee Avatar */}
                     <div className="w-full h-35 lg:h-full lg:w-60 xl:w-80 overflow-hidden rounded-md group bg-secondary relative flex items-center justify-center">
                         {employee.user?.avatar ? (
-                            <img
+                            <Image
                                 src={employee.user.avatar}
                                 alt={`${employee.user.first_name || 'Employee'} avatar`}
                                 className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 rounded-md"
                             />
                         ) : (
-                            <img 
-                                src={`https://api.dicebear.com/9.x/initials/svg?seed=${employee.user?.first_name || 'Employee'} ${employee.user?.last_name || ''}`} 
-                                alt="Employee Avatar" 
-                                className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 rounded-md" 
+                            <Image
+                                src={`https://api.dicebear.com/9.x/initials/svg?seed=${employee.user?.first_name || 'Employee'} ${employee.user?.last_name || ''}`}
+                                alt="Employee Avatar"
+                                className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 rounded-md"
                             />
                         )}
                     </div>
-                    
+
                     {/* Employee Details */}
                     <div className="flex flex-col gap-4">
                         <div>
@@ -156,8 +159,8 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                             </h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                                 {permissions.map((permission) => (
-                                    <Badge 
-                                        key={permission.key} 
+                                    <Badge
+                                        key={permission.key}
                                         variant={permission.value ? "default" : "outline"}
                                         className="justify-start"
                                     >
@@ -171,15 +174,15 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                         {/* Action Buttons */}
                         <div className="flex justify-center md:justify-end mt-auto">
                             <div className="grid grid-cols-2 gap-4 mt-auto justify-end max-w-xs">
-                                <DeleteEmployeeButton 
-                                    employeeId={employee.id} 
-                                    slug={slug} 
-                                    userId={user.id} 
+                                <DeleteEmployeeButton
+                                    employeeId={employee.id}
+                                    slug={slug}
+                                    userId={user.id}
                                 />
-                                <EditEmployeeButton 
-                                    employee={employee} 
-                                    slug={slug} 
-                                    userId={user.id} 
+                                <EditEmployeeButton
+                                    employee={employee}
+                                    slug={slug}
+                                    userId={user.id}
                                 />
                             </div>
                         </div>

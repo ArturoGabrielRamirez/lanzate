@@ -1,20 +1,23 @@
 "use client"
 
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
-import { employeeUpdateSchema } from "../schemas/employee-schema"
-import { editEmployee } from "../actions/editEmployee"
+import { EmployeeRole } from "@prisma/client"
 import { Pencil } from "lucide-react"
-import { EditEmployeeButtonProps } from "@/features/employees/types"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { Input } from "@/components/ui/input"
-import { useState } from "react"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
+
+import { editEmployeeAction } from "@/features/employees/actions/edit-employee.action"
+/* import { employeeUpdateSchema } from "@/features/employees/schemas/employee-schema" */
+import { EditEmployeeButtonProps, EditEmployeePayload } from "@/features/employees/types"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import { InputField } from "@/features/global/components/form/input-field"
+import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+import { Input } from "@/features/shadcn/components/ui/input"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
+import { Textarea } from "@/features/shadcn/components/ui/textarea"
 
 function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployeeButtonProps) {
-    
+
     const [permissions, setPermissions] = useState({
         can_create_orders: employee.can_create_orders,
         can_update_orders: employee.can_update_orders,
@@ -28,20 +31,20 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
     })
 
     const [isActive, setIsActive] = useState(employee.is_active)
-    const [selectedRole, setSelectedRole] = useState(employee.role)
+    const [selectedRole, setSelectedRole] = useState<string>(employee.role) // ✅ Cambiar a string
     const [salary, setSalary] = useState(employee.salary?.toString() || "")
     const t = useTranslations("store.edit-employee")
 
-    const handleEditEmployee = async (payload: any) => {
-        const data = {
+    const handleEditEmployee = async (payload: EditEmployeePayload) => {
+        const data: EditEmployeePayload = {
             ...payload,
             ...permissions,
             is_active: isActive,
-            role: selectedRole,
-            salary: salary ? parseFloat(salary) : undefined,
+            role: selectedRole as EmployeeRole, // ✅ Cast aquí
+          /*   salary: salary ? parseFloat(salary) : undefined, */
         }
 
-        return editEmployee(employee.id, data, slug, userId)
+        return editEmployeeAction(employee.id, data, slug, userId)
     }
 
     const handlePermissionChange = (permission: keyof typeof permissions, checked: boolean) => {
@@ -69,7 +72,7 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                 </>
             )}
             title={t("title")}
-            schema={employeeUpdateSchema}
+          /*   schema={employeeUpdateSchema} */
             description={t("description")}
             action={handleEditEmployee}
             onComplete={onComplete}
@@ -113,24 +116,26 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                 </div>
 
                 {/* Basic fields */}
-                <InputField 
-                    name="position" 
-                    label={t("position")} 
-                    type="text" 
-                    defaultValue={employee.position || ""} 
+                <InputField
+                    name="position"
+                    label={t("position")}
+                    type="text"
+                    defaultValue={employee.position || ""}
+                    placeholder={t("position-placeholder")}
                 />
-                <InputField 
-                    name="department" 
-                    label={t("department")} 
-                    type="text" 
-                    defaultValue={employee.department || ""} 
+                <InputField
+                    name="department"
+                    label={t("department")}
+                    type="text"
+                    defaultValue={employee.department || ""}
+                    placeholder={t("department-placeholder")}
                 />
-                
+
                 {/* Salary - now controlled */}
                 <div className="space-y-2">
                     <Label htmlFor="salary">{t("salary")}</Label>
-                    <Input 
-                        type="number" 
+                    <Input
+                        type="number"
                         value={salary}
                         onChange={(e) => setSalary(e.target.value)}
                         placeholder={t("salary-placeholder")}
@@ -140,8 +145,8 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                 {/* Notes */}
                 <div className="space-y-2">
                     <Label htmlFor="notes">{t("notes")}</Label>
-                    <Textarea 
-                        name="notes" 
+                    <Textarea
+                        name="notes"
                         placeholder={t("notes-placeholder")}
                         defaultValue={employee.notes || ""}
                     />
@@ -149,13 +154,13 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
 
                 {/* Active status */}
                 <div className="flex items-center space-x-2">
-                    <Checkbox 
-                        id="is_active" 
-                        checked={isActive} 
+                    <Checkbox
+                        id="is_active"
+                        checked={isActive}
                         onCheckedChange={(checked) => setIsActive(checked === true)}
                     />
-                    <Label 
-                        htmlFor="is_active" 
+                    <Label
+                        htmlFor="is_active"
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                         {t("employee-active")}
@@ -165,11 +170,11 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                 {/* Permissions section */}
                 <div className="space-y-4">
                     <h4 className="text-sm font-medium">{t("permissions-title")}</h4>
-                    
+
                     <div className="grid grid-cols-1 gap-3">
                         <div className="flex items-center space-x-2">
-                            <Checkbox 
-                                id="can_create_orders" 
+                            <Checkbox
+                                id="can_create_orders"
                                 checked={permissions.can_create_orders}
                                 onCheckedChange={(checked) => handlePermissionChange('can_create_orders', checked as boolean)}
                             />
@@ -177,8 +182,8 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox 
-                                id="can_update_orders" 
+                            <Checkbox
+                                id="can_update_orders"
                                 checked={permissions.can_update_orders}
                                 onCheckedChange={(checked) => handlePermissionChange('can_update_orders', checked as boolean)}
                             />
@@ -186,8 +191,8 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox 
-                                id="can_create_products" 
+                            <Checkbox
+                                id="can_create_products"
                                 checked={permissions.can_create_products}
                                 onCheckedChange={(checked) => handlePermissionChange('can_create_products', checked as boolean)}
                             />
@@ -195,8 +200,8 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox 
-                                id="can_update_products" 
+                            <Checkbox
+                                id="can_update_products"
                                 checked={permissions.can_update_products}
                                 onCheckedChange={(checked) => handlePermissionChange('can_update_products', checked as boolean)}
                             />
@@ -204,8 +209,8 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox 
-                                id="can_manage_stock" 
+                            <Checkbox
+                                id="can_manage_stock"
                                 checked={permissions.can_manage_stock}
                                 onCheckedChange={(checked) => handlePermissionChange('can_manage_stock', checked as boolean)}
                             />
@@ -213,8 +218,8 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox 
-                                id="can_process_refunds" 
+                            <Checkbox
+                                id="can_process_refunds"
                                 checked={permissions.can_process_refunds}
                                 onCheckedChange={(checked) => handlePermissionChange('can_process_refunds', checked as boolean)}
                             />
@@ -222,8 +227,8 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox 
-                                id="can_view_reports" 
+                            <Checkbox
+                                id="can_view_reports"
                                 checked={permissions.can_view_reports}
                                 onCheckedChange={(checked) => handlePermissionChange('can_view_reports', checked as boolean)}
                             />
@@ -231,8 +236,8 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox 
-                                id="can_manage_employees" 
+                            <Checkbox
+                                id="can_manage_employees"
                                 checked={permissions.can_manage_employees}
                                 onCheckedChange={(checked) => handlePermissionChange('can_manage_employees', checked as boolean)}
                             />
@@ -240,8 +245,8 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox 
-                                id="can_manage_store" 
+                            <Checkbox
+                                id="can_manage_store"
                                 checked={permissions.can_manage_store}
                                 onCheckedChange={(checked) => handlePermissionChange('can_manage_store', checked as boolean)}
                             />
@@ -254,4 +259,4 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
     )
 }
 
-export default EditEmployeeButton 
+export { EditEmployeeButton }

@@ -1,16 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { CardAction } from "@/components/ui/card"
-import { StoreBannerEditor } from "./store-banner-editor"
-import { updateStoreBanner } from "../actions/updateStoreBanner"
 import { toast } from "sonner"
 
-type StoreBannerEditorWrapperProps = {
-    currentBanner: string | null
-    storeName: string
-    storeId: number
-}
+import { CardAction } from "@/features/shadcn/components/ui/card"
+import { updateStoreBannerAction } from "@/features/stores/actions"
+import { StoreBannerEditor } from "@/features/stores/components"
+import { StoreBannerEditorWrapperProps } from "@/features/stores/types"
 
 function StoreBannerEditorWrapper({ currentBanner, storeName, storeId }: StoreBannerEditorWrapperProps) {
     const [banner, setBanner] = useState<string | null>(currentBanner)
@@ -20,8 +16,8 @@ function StoreBannerEditorWrapper({ currentBanner, storeName, storeId }: StoreBa
             setBanner(newBannerUrl)
             if (newBannerUrl) {
                 toast.loading('Updating store banner...')
-                const { error, message } = await updateStoreBanner(storeId, newBannerUrl)
-                if (error) {
+                const { hasError, message } = await updateStoreBannerAction(storeId, newBannerUrl)
+                if (hasError) {
                     toast.dismiss()
                     toast.error(message)
                 } else {
@@ -46,4 +42,4 @@ function StoreBannerEditorWrapper({ currentBanner, storeName, storeId }: StoreBa
     )
 }
 
-export default StoreBannerEditorWrapper
+export { StoreBannerEditorWrapper }

@@ -1,20 +1,16 @@
 "use client"
 
 import { Tags, EditIcon, X } from "lucide-react"
-import { Product, Category } from "@prisma/client"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
-interface CategoriesDisplayProps {
-    product: Product & {
-        categories: Category[]
-    }
-}
+import type { CategoriesDisplayProps } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 
-const CategoriesDisplay = ({ product }: CategoriesDisplayProps) => {
+
+function CategoriesDisplay({ product }: CategoriesDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
 
     const handleOpenEdit = () => {
@@ -106,4 +102,4 @@ const CategoriesDisplay = ({ product }: CategoriesDisplayProps) => {
     )
 }
 
-export default CategoriesDisplay
+export { CategoriesDisplay }

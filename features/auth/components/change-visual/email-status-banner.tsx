@@ -1,14 +1,15 @@
 'use client'
 
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
-import { CheckCircle, Clock, Mail, RefreshCw } from 'lucide-react';
-import { useConfirmationEmailChangeStatus } from '../../hooks/use-confirmation-email-change-status';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
-import { toast } from 'sonner';
+import { CheckCircle, Clock, Mail, RefreshCw } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
-export default function EmailStatusBanner() {
+import { useConfirmationEmailChangeStatus } from '@/features/auth/hooks/use-confirmation-email-change-status';
+import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert';
+import { Button } from '@/features/shadcn/components/ui/button';
+
+function EmailStatusBanner() {
     const { status } = useConfirmationEmailChangeStatus();
     const [isResending, setIsResending] = useState(false);
     const t = useTranslations("Auth");
@@ -18,7 +19,7 @@ export default function EmailStatusBanner() {
 
         console.log('Resending email for status en EmailStatusBanner:', status);
         try {
-            let payload: any = {
+            const payload: { type: 'email_change'; step?: 'old_email' | 'new_email' } = {
                 type: 'email_change'
             };
 
@@ -42,11 +43,11 @@ export default function EmailStatusBanner() {
 
             if (!response.ok || data.error) {
                 if (response.status === 429) {
-                    toast.error("Demasiadas solicitudes. Espera 5 minutos.");
+                    toast.error("Demasiadas solicitudes. Espera 5 minutos.")
                 } else if (response.status === 401) {
-                    toast.error("Usuario no autenticado. Por favor, inicia sesión.");
+                    toast.error("Usuario no autenticado. Por favor, inicia sesión.")
                 } else {
-                    toast.error(data.message || "Error al reenviar email");
+                    toast.error(data.message || "Error al reenviar email")
                 }
                 return;
             }
@@ -54,7 +55,7 @@ export default function EmailStatusBanner() {
             toast.success(data.message);
 
             if (data.data) {
-                const { email, resendType, reason } = data.data;
+                const { email, resendType/* , reason */ } = data.data;
                 const typeLabel = resendType === 'old_email' ? 'email actual' :
                     resendType === 'new_email' ? 'email nuevo' :
                         'email';
@@ -83,7 +84,7 @@ export default function EmailStatusBanner() {
                 <AlertDescription className="text-green-700 dark:text-green-300">
                     <div className="flex items-center justify-between">
                         <span>
-                            {t("updated-successfully", { email: status.currentEmail })}
+                            {t("updated-successfully", { email: status.currentEmail ?? '' })}
                         </span>
                         <Button
                             variant="outline"
@@ -161,3 +162,5 @@ export default function EmailStatusBanner() {
         </Alert>
     );
 }
+
+export { EmailStatusBanner };

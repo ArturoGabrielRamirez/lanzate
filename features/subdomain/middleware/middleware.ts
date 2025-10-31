@@ -1,4 +1,5 @@
 import { type NextRequest } from 'next/server';
+
 import { rootDomain } from '@/lib/utils';
 
 export function extractSubdomain(request: NextRequest): string | null {

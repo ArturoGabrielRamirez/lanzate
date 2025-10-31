@@ -1,6 +1,6 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton";
 
-export default function DangerDeepZoneSkeleton() {
+export function DangerDeepZoneSkeleton() {
     return (
         <div className="bg-red-50 border border-red-200 rounded-lg p-6">
             <div className="flex items-center gap-2 mb-4">

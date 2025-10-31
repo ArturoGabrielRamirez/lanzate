@@ -1,18 +1,16 @@
 "use client"
 
-import { useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { ColorPicker, ColorPickerSelection, ColorPickerHue, ColorPickerAlpha, ColorPickerOutput, ColorPickerFormat } from "@/components/ui/shadcn-io/color-picker"
 import Color, { ColorLike } from "color"
+import { useState } from "react"
 import { toast } from "sonner"
-import { createStoreColor } from "../data/createStoreColor"
 
-type Props = {
-    onCreated?: (color: { id: number; name: string; hex: string }) => void
-}
+import { createStoreColorData } from "@/features/products/data/create-store-color.data"
+import type { CreateColorInlineProps } from "@/features/products/types"
+import { ColorPicker, ColorPickerSelection, ColorPickerHue, ColorPickerAlpha, ColorPickerOutput, ColorPickerFormat } from "@/features/shadcn/components/shadcn-io/color-picker"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Input } from "@/features/shadcn/components/ui/input"
 
-export default function CreateColorInline({ onCreated }: Props) {
+function CreateColorInline({ onCreated }: CreateColorInlineProps) {
     const [name, setName] = useState("")
     const [hex, setHex] = useState("#ff0000")
     const [isSaving, setIsSaving] = useState(false)
@@ -55,8 +53,8 @@ export default function CreateColorInline({ onCreated }: Props) {
                     onClick={async () => {
                         try {
                             setIsSaving(true)
-                            const { error, message, payload } = await createStoreColor({ name, hex })
-                            if (error || !payload) {
+                            const { hasError, message, payload } = await createStoreColorData({ name, hex })
+                            if (hasError || !payload) {
                                 toast.error(message || "Error al crear color")
                                 setIsSaving(false)
                                 return

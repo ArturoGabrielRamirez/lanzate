@@ -1,13 +1,14 @@
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { AlertTriangle, X } from "lucide-react";
-import { validators, DELETION_CONSTANTS } from "../../utils/utils";
-import { useState } from "react";
+import { AlertTriangle, X } from "lucide-react"
+import { useState } from "react"
 
-export default function DeleteConfirmationModal({
+import { validators, DELETION_CONSTANTS } from "@/features/account/utils/utils"
+import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Input } from "@/features/shadcn/components/ui/input"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Textarea } from "@/features/shadcn/components/ui/textarea"
+
+export function DeleteConfirmationModal({
     isOpen,
     onClose,
     onConfirm,
@@ -86,19 +87,19 @@ export default function DeleteConfirmationModal({
                     </Button>
                 </div>
 
-        
+
                 <div className="p-6 space-y-4">
-           
+
                     <Alert className="bg-red-500/10 border-red-500/30">
                         <AlertTriangle className="h-4 w-4 text-red-400" />
                         <AlertDescription className="text-red-400">
                             <span className="font-semibold">¡Atención!</span>{' '}
-                            Esta acción no se puede deshacer. Tu cuenta y todos tus datos 
+                            Esta acción no se puede deshacer. Tu cuenta y todos tus datos
                             serán eliminados permanentemente después de {DELETION_CONSTANTS.GRACE_PERIOD_DAYS} días.
                         </AlertDescription>
                     </Alert>
 
-       
+
                     <div className="space-y-2">
                         <Label htmlFor="reason" className="text-gray-300">
                             Motivo de eliminación *
@@ -108,9 +109,8 @@ export default function DeleteConfirmationModal({
                             value={reason}
                             onChange={(e) => handleReasonChange(e.target.value)}
                             placeholder="Explica brevemente por qué deseas eliminar tu cuenta..."
-                            className={`bg-gray-900 border-gray-600 text-white placeholder-gray-400 resize-none focus:border-red-400 ${
-                                errors.reason ? 'border-red-500' : ''
-                            }`}
+                            className={`bg-gray-900 border-gray-600 text-white placeholder-gray-400 resize-none focus:border-red-400 ${errors.reason ? 'border-red-500' : ''
+                                }`}
                             rows={3}
                             minLength={DELETION_CONSTANTS.MIN_REASON_LENGTH}
                         />
@@ -132,9 +132,8 @@ export default function DeleteConfirmationModal({
                             value={password}
                             onChange={(e) => handlePasswordChange(e.target.value)}
                             placeholder="Ingresa tu contraseña actual"
-                            className={`bg-gray-900 border-gray-600 text-white placeholder-gray-400 focus:border-red-400 ${
-                                errors.password ? 'border-red-500' : ''
-                            }`}
+                            className={`bg-gray-900 border-gray-600 text-white placeholder-gray-400 focus:border-red-400 ${errors.password ? 'border-red-500' : ''
+                                }`}
                         />
                         {errors.password && (
                             <p className="text-red-400 text-sm">{errors.password}</p>
@@ -143,7 +142,7 @@ export default function DeleteConfirmationModal({
 
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                         <p className="text-blue-300 text-sm">
-                            💡 <span className="font-semibold">Período de gracia:</span> Tendrás {DELETION_CONSTANTS.GRACE_PERIOD_DAYS} días 
+                            💡 <span className="font-semibold">Período de gracia:</span> Tendrás {DELETION_CONSTANTS.GRACE_PERIOD_DAYS} días
                             para cambiar de opinión y cancelar la eliminación.
                         </p>
                     </div>

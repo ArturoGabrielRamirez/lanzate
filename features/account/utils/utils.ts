@@ -1,7 +1,6 @@
-// utils/deletionUtils.ts - CORREGIDO para eliminar timeRemaining
-import { UserDeletionStatus, DeleteRequestParams, CancelDeletionParams, AccountDeletedParams } from "../types/types";
-import { notifyError, handleDeletionResponse, handleDeletionError } from "./notification-service";
-import { cancelDeletionAction, fetchDeletionStatusAction, requestDeletionAction } from "../actions";
+import { cancelDeletionAction, getDeletionStatusAction, requestDeletionAction } from "@/features/account/actions";
+import { UserDeletionStatus, DeleteRequestParams, CancelDeletionParams, AccountDeletedParams, UserType, DeletionActionResponse } from "@/features/account/types"
+import { notifyError, handleDeletionResponse } from "@/features/account/utils";
 
 export const getBaseUrl = (): string => {
   if (process.env.NODE_ENV === 'development') {
@@ -11,17 +10,20 @@ export const getBaseUrl = (): string => {
   return process.env.NEXTAUTH_URL || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 };
 
-// FUNCIÓN PARA OBTENER ESTADO DE ELIMINACIÓN - CORREGIDA
 export async function fetchDeletionStatus(
   setDeletionStatus: React.Dispatch<React.SetStateAction<UserDeletionStatus>>,
   onStatusChange?: () => void
 ): Promise<void> {
   try {
-    // FORMATO CORRECTO: actionWrapper devuelve { error, message, payload }
-    const result = await fetchDeletionStatusAction();
+    const result = await getDeletionStatusAction();
 
-    if (result.error === false && result.payload) {
-      setDeletionStatus(result.payload);
+    if (result.hasError === false && result.payload) {
+      // ✅ Cast el legalStatus si viene como string
+      const status: UserDeletionStatus = {
+        ...result.payload,
+        legalStatus: (result.payload.legalStatus as UserDeletionStatus['legalStatus']) || 'active'
+      };
+      setDeletionStatus(status);
       onStatusChange?.();
     }
   } catch (error) {
@@ -30,7 +32,6 @@ export async function fetchDeletionStatus(
   }
 }
 
-// FUNCIÓN FACTORY PARA SOLICITAR ELIMINACIÓN - CORREGIDA
 export function createDeleteRequestHandler(params: DeleteRequestParams) {
   const {
     reason,
@@ -44,7 +45,6 @@ export function createDeleteRequestHandler(params: DeleteRequestParams) {
   } = params;
 
   return async (): Promise<void> => {
-    // Validaciones usando validators existentes
     const reasonValidation = validators.deletionReason(reason);
     if (!reasonValidation.isValid) {
       notifyError(reasonValidation.error!);
@@ -60,24 +60,35 @@ export function createDeleteRequestHandler(params: DeleteRequestParams) {
     setIsLoading(true);
 
     try {
-      // FORMATO CORRECTO: actionWrapper devuelve { error, message, payload }
       const result = await requestDeletionAction(reason, password);
 
-      if (result.error === false && result.payload) {
-        // Usar funciones de notificaciones para manejar respuesta exitosa
-        handleDeletionResponse(result.payload, 'request');
+      if (result.hasError === false && result.payload) {
+        // ✅ Adapta el payload al tipo DeletionActionResponse
+        const response: DeletionActionResponse = {
+          success: true,
+          message: 'Solicitud procesada',
+          deletionInfo: {
+            requestedAt: result.payload.deletionRequestedAt,
+            scheduledAt: result.payload.deletionScheduledAt,
+            displayScheduledAt: result.payload.displayScheduledAt,
+            canDeleteUntil: new Date(), // Ajusta según tu lógica
+            canCancelUntil: new Date(), // Ajusta según tu lógica
+            actionWindowMinutes: 0, // Ajusta según tu lógica
+            processingMethod: result.payload.processingMethod,
+            testingMode: result.payload.testingMode
+          }
+        };
 
-        // Limpiar formulario
+        handleDeletionResponse(response, 'request');
+
         setShowDeleteDialog(false);
         setReason('');
         setPassword('');
 
-        // Actualizar estado
         await fetchDeletionStatus(setDeletionStatus, onStatusChange);
       }
 
     } catch (error) {
-      // Los errores del actionWrapper llegan aquí
       const errorMessage = error instanceof Error ? error.message : 'Error desconocido';
       notifyError(errorMessage);
     } finally {
@@ -86,7 +97,6 @@ export function createDeleteRequestHandler(params: DeleteRequestParams) {
   };
 }
 
-// FUNCIÓN FACTORY PARA CANCELAR ELIMINACIÓN - CORREGIDA
 export function createCancelDeletionHandler(params: CancelDeletionParams) {
   const {
     setShowCancelDialog,
@@ -101,23 +111,32 @@ export function createCancelDeletionHandler(params: CancelDeletionParams) {
     setIsLoading(true);
 
     try {
-      // FORMATO CORRECTO: actionWrapper devuelve { error, message, payload }
       const result = await cancelDeletionAction(cancelReason);
 
-      if (result.error === false && result.payload) {
-        // Usar funciones de notificaciones para manejar respuesta exitosa
-        handleDeletionResponse(result.payload, 'cancel');
+      if (result.hasError === false && result.payload) {
+        // ✅ Adapta el payload al tipo DeletionActionResponse
+        const response: DeletionActionResponse = {
+          success: true,
+          message: 'Cancelación procesada',
+          cancellationInfo: {
+            cancelledAt: result.payload.cancelledAt,
+            reason: cancelReason,
+            originalRequestAt: new Date(), // Ajusta según tu lógica
+            actionLimitWas: new Date(), // Ajusta según tu lógica
+            cancelledWithMinutesToSpare: 0, // Ajusta según tu lógica
+            processingMethod: result.payload.processingMethod,
+            automaticProcessing: result.payload.automaticProcessing
+          }
+        };
 
-        // Limpiar formulario
+        handleDeletionResponse(response, 'cancel');
         setShowCancelDialog(false);
         setCancelReason('');
 
-        // Actualizar estado
         await fetchDeletionStatus(setDeletionStatus, onStatusChange);
       }
 
     } catch (error) {
-      // Los errores del actionWrapper llegan aquí
       const errorMessage = error instanceof Error ? error.message : 'Error al cancelar';
       notifyError(errorMessage);
     } finally {
@@ -126,7 +145,6 @@ export function createCancelDeletionHandler(params: CancelDeletionParams) {
   };
 }
 
-// FUNCIÓN FACTORY PARA MANEJAR CUENTA ELIMINADA - Sin cambios
 export function createAccountDeletedHandler(params: AccountDeletedParams) {
   const { onStatusChange, setDeletionStatus } = params;
 
@@ -140,7 +158,6 @@ export function createAccountDeletedHandler(params: AccountDeletedParams) {
   };
 }
 
-// ESTADO INICIAL CORREGIDO: timeRemaining eliminado
 export const initialDeletionStatus: UserDeletionStatus = {
   isDeletionRequested: false,
   deletionRequestedAt: null,
@@ -150,7 +167,6 @@ export const initialDeletionStatus: UserDeletionStatus = {
   canCancel: false,
   daysRemaining: 0,
   minutesRemaining: 0,
-  // timeRemaining: null, // ❌ ELIMINADO
   canDeleteUntil: null,
   canCancelUntil: null,
   isWithinActionWindow: false,
@@ -158,7 +174,6 @@ export const initialDeletionStatus: UserDeletionStatus = {
   legalStatus: 'active',
 };
 
-// VALIDADORES REUTILIZABLES - Sin cambios
 export const validators = {
   deletionReason: (reason: string): { isValid: boolean; error?: string } => {
     if (!reason.trim()) {
@@ -178,7 +193,6 @@ export const validators = {
   }
 };
 
-// CONSTANTES REUTILIZABLES - Sin cambios
 export const DELETION_CONSTANTS = {
   MIN_REASON_LENGTH: 10,
   GRACE_PERIOD_DAYS: 30,
@@ -196,7 +210,6 @@ export const DELETION_CONSTANTS = {
   }
 } as const;
 
-// FUNCIONES COMENTADAS se mantienen como estaban
 export function maskEmail(email: string): string {
   const [localPart, domain] = email.split('@')
   if (localPart.length <= 2) {
@@ -206,56 +219,22 @@ export function maskEmail(email: string): string {
   return `${maskedLocal}@${domain}`
 }
 
-/* export function getMinutesUntil(targetDate: Date | string | null): number | null {
-  if (!targetDate) return null;
-  
-  const now = new Date();
-  const target = new Date(targetDate);
-  const diff = target.getTime() - now.getTime();
-  
-  return Math.max(0, Math.floor(diff / (1000 * 60)));
-} */
-
-/* export function formatTimeRemaining(minutes: number | null): string {
-  if (minutes === null || minutes <= 0) return 'Expirado';
-  
-  if (minutes < 60) {
-    return `${minutes} min`;
+export function getDisplayName(user: UserType): string {
+  if (user.username?.trim()) {
+    return user.username
   }
-  
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-  
-  if (hours < 24) {
-    return remainingMinutes > 0 ? `${hours}h ${remainingMinutes}min` : `${hours}h`;
+  const firstName = user.first_name?.trim()
+  const lastName = user.last_name?.trim()
+  if (firstName || lastName) {
+    return [firstName, lastName].filter(Boolean).join(' ')
   }
-  
-  const days = Math.floor(hours / 24);
-  const remainingHours = hours % 24;
-  
-  return remainingHours > 0 ? `${days}d ${remainingHours}h` : `${days}d`;
-} */
+  return user.email
+}
 
-/* export function getUrgencyLevel(minutesRemaining: number | null): 'low' | 'medium' | 'high' | 'critical' | 'expired' {
-  if (minutesRemaining === null || minutesRemaining <= 0) return 'expired';
-  if (minutesRemaining <= 5) return 'critical';
-  if (minutesRemaining <= 30) return 'high';
-  if (minutesRemaining <= 60) return 'medium';
-  return 'low';
-} */
-
-/* export function getUrgencyColors(urgency: ReturnType<typeof getUrgencyLevel>): {
-  text: string;
-  bg: string;
-  border: string;
-} {
-  const colors = {
-    expired: { text: 'text-gray-400', bg: 'bg-gray-500/10', border: 'border-gray-500/30' },
-    critical: { text: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/30' },
-    high: { text: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/30' },
-    medium: { text: 'text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/30' },
-    low: { text: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30' },
-  };
-
-  return colors[urgency];
-} */
+export function formatJoinDate(date: Date | string): string {
+  const joinDate = typeof date === 'string' ? new Date(date) : date
+  return new Intl.DateTimeFormat('es', {
+    month: 'long',
+    year: 'numeric'
+  }).format(joinDate)
+}

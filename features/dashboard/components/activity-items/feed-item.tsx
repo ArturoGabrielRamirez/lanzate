@@ -1,23 +1,23 @@
 "use client"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Contract, ContractAssignment, Order, OrderTracking, Product, SocialActivity, Store, User } from "@prisma/client"
-import { extractLink, formatActivityDate, getUserInitials } from "./shared-utils"
+
 import { FileCheck, Flame, MapPin, MessageCircle, ShoppingBag, Truck } from "lucide-react"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { CancelOrderButton } from "@/features/stores/components"
-import ConfirmOrderButtonIcon from "@/features/orders/components/confirm-order-button-icon"
+
+import { FeedItemProps } from "@/features/dashboard/types"
+import { extractLink, formatActivityDate, getUserInitials } from "@/features/dashboard/utils/shared-utils"
+import { ConfirmOrderButtonIcon } from "@/features/orders/components"
+import { OpenChatButton } from "@/features/orders/components/open-chat-button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { cn } from "@/lib/utils"
+
+/* import { CancelOrderButton } from "@/features/stores/components" */
 /* import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { useState } from "react" */
-import OpenChatButton from "@/features/orders/components/open-chat-button"
 
-type Props = {
-    item: SocialActivity & { user: User, store: Store, product: Product, order: Order & { tracking: OrderTracking }, contract: ContractAssignment & { contract: Contract } }
-}
-const FeedItem = ({ item }: Props) => {
+function FeedItem({ item }: FeedItemProps) {
 
     /* const [open, setOpen] = useState(false)
 
@@ -30,7 +30,7 @@ const FeedItem = ({ item }: Props) => {
 
             <Card
                 className="h-full group not-dark:bg-gradient-to-br not-dark:to-background not-dark:from-transparent not-dark:to-120% border-white/5 backdrop-blur-sm hover:!shadow-2xl dark:via-background hover:border-white/40 relative dark:hover:to-primary/20 dark:bg-card group"
-                // onClick={handleOpen}
+            // onClick={handleOpen}
             >
                 <CardHeader className="flex gap-2">
                     <Avatar className="h-10 w-10">
@@ -78,10 +78,10 @@ const FeedItem = ({ item }: Props) => {
                             {item.activity_type === "CONTRACT_ASSIGNED" && "Asignó un contrato"}
                         </span>
                         <Link href={extractLink(item) || ''} className="font-medium text-primary">
-                            {item.activity_type === "PRODUCT_LIKE" && `@${item.product.name}`}
-                            {item.activity_type === "PRODUCT_COMMENT" && `@${item.product.name}`}
-                            {item.activity_type === "ORDER_CREATED" && `#${item.order.id}`}
-                            {item.activity_type === "CONTRACT_ASSIGNED" && `@${item.contract.contract.title}`}
+                            {item.activity_type === "PRODUCT_LIKE" && `@${item.product?.name}`}
+                            {item.activity_type === "PRODUCT_COMMENT" && `@${item.product?.name}`}
+                            {item.activity_type === "ORDER_CREATED" && `#${item.order?.id}`}
+                            {item.activity_type === "CONTRACT_ASSIGNED" && `@${item.contract?.contract.title}`}
                         </Link>
                     </p>
                     <div className="flex items-center gap-2">
@@ -89,23 +89,23 @@ const FeedItem = ({ item }: Props) => {
                             <Tooltip>
                                 <TooltipTrigger>
                                     <Badge variant="outline" className={cn(
-                                        item.order.status === "PROCESSING" && "border-yellow-500 text-yellow-500",
-                                        item.order.status === "READY" && "border-blue-500 text-blue-500",
-                                        item.order.status === "COMPLETED" && "border-green-500 text-green-500",
-                                        item.order.status === "CANCELLED" && "border-red-500 text-red-500",
+                                        item.order?.status === "PROCESSING" && "border-yellow-500 text-yellow-500",
+                                        item.order?.status === "READY" && "border-blue-500 text-blue-500",
+                                        item.order?.status === "COMPLETED" && "border-green-500 text-green-500",
+                                        item.order?.status === "CANCELLED" && "border-red-500 text-red-500",
                                     )}>
-                                        {item.order.status === "READY" ? "CONFIRMED" : item.order.status}
+                                        {item.order?.status === "READY" ? "CONFIRMED" : item.order?.status}
                                     </Badge>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    {item.order.status === "PROCESSING" && "Orden en proceso"}
-                                    {item.order.status === "READY" && "Orden confirmada"}
-                                    {item.order.status === "COMPLETED" && "Orden completada"}
-                                    {item.order.status === "CANCELLED" && "Orden cancelada"}
+                                    {item.order?.status === "PROCESSING" && "Orden en proceso"}
+                                    {item.order?.status === "READY" && "Orden confirmada"}
+                                    {item.order?.status === "COMPLETED" && "Orden completada"}
+                                    {item.order?.status === "CANCELLED" && "Orden cancelada"}
                                 </TooltipContent>
                             </Tooltip>
                         )}
-                        {item.activity_type === "ORDER_CREATED" && item.order.tracking && (
+                        {item.activity_type === "ORDER_CREATED" && item.order?.tracking && (
                             <Tooltip>
                                 <TooltipTrigger>
                                     <Badge variant="outline" >
@@ -130,25 +130,25 @@ const FeedItem = ({ item }: Props) => {
                         {item.activity_type === "ORDER_CREATED" && (
                             <Tooltip>
                                 <TooltipTrigger className="text-muted-foreground group-hover:text-primary transition-colors">
-                                    {item.order.shipping_method === "DELIVERY" && <Truck />}
-                                    {item.order.shipping_method === "PICKUP" && <MapPin />}
+                                    {item.order?.shipping_method === "DELIVERY" && <Truck />}
+                                    {item.order?.shipping_method === "PICKUP" && <MapPin />}
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    {item.order.shipping_method === "DELIVERY" && "Delivery to customer's address"}
-                                    {item.order.shipping_method === "PICKUP" && "Pick up at store"}
+                                    {item.order?.shipping_method === "DELIVERY" && "Delivery to customer's address"}
+                                    {item.order?.shipping_method === "PICKUP" && "Pick up at store"}
                                 </TooltipContent>
                             </Tooltip>
                         )}
                     </div>
                 </CardContent>
                 <CardFooter className="flex justify-end items-center gap-2">
-                    {item.activity_type === "ORDER_CREATED" && item.order.status === "PROCESSING" && (
+                    {item.activity_type === "ORDER_CREATED" && item.order?.status === "PROCESSING" && (
                         <ConfirmOrderButtonIcon orderId={item.order?.id || 0} />
                     )}
-                    {item.activity_type === "ORDER_CREATED" && (
+                    {/* {item.activity_type === "ORDER_CREATED" && (
                         <CancelOrderButton order={item.order} slug={item.store.slug} size="sm" onlyIcon className="" />
-                    )}
-                    {item.activity_type === "ORDER_CREATED" && <OpenChatButton roomId={String(item.order.id)} onlyIcon username="Store" messageType="STORE_TO_CUSTOMER" />}
+                    )} */}
+                    {item.activity_type === "ORDER_CREATED" && <OpenChatButton roomId={String(item.order?.id)} onlyIcon username="Store" messageType="STORE_TO_CUSTOMER" />}
                 </CardFooter>
             </Card>
 
@@ -160,4 +160,5 @@ const FeedItem = ({ item }: Props) => {
         </>
     )
 }
-export default FeedItem
+
+export { FeedItem }

@@ -3,490 +3,742 @@ function PrivacyPolicy() {
         <section className="max-w-4xl mx-auto px-4 py-8 pt-17 relative">
             <div className="text-left">
                 <div className="mb-6">
-                    <h1 className="text-3xl font-bold mb-2">PRIVACY POLICY</h1>
+                    <h1 className="text-3xl font-bold mb-2">POLÍTICA DE PRIVACIDAD</h1>
                     <div className="text-sm mb-4">
-                        <strong>Last updated</strong> <strong>July 30, 2025</strong>
+                        <strong>Última actualización:</strong> <strong>30 de octubre de 2025</strong>
                     </div>
                 </div>
 
                 <div className="mb-8">
-                    <h2 className="text-2xl font-bold mb-4">INTRODUCTION</h2>
+                    <h2 className="text-2xl font-bold mb-4">INTRODUCCIÓN</h2>
                     <div className="mb-4">
                         <p className="text-sm leading-relaxed mb-4">
-                            Lanzate (&quot;we,&quot; &quot;us,&quot; &quot;our&quot;) respects your privacy and is committed to protecting your personal data. This Privacy Policy tells you how we look after your personal data when you visit our website (regardless of where you visit it from) and tells you about your privacy rights and how the law protects you.
+                            Lanzáte (&quot;nosotros&quot;, &quot;nuestro&quot;, &quot;la Empresa&quot;) respeta tu privacidad y está comprometida con la protección de tus datos personales conforme a la Ley 25.326 de Protección de Datos Personales de la República Argentina y sus normas complementarias.
                         </p>
-                        
+
                         <p className="text-sm leading-relaxed mb-4">
-                            We are Lanzate, a company registered in Argentina at Las Palmas 735, no, Atlantida, Santa Clara del Mar, Buenos Aires 7609. We operate the website <a href="https://www.lanzate.app" target="_blank" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> and the mobile application Lanzate App.
+                            Somos Lanzáte, con domicilio legal en Las Palmas 735, Atlántida, Santa Clara del Mar, Buenos Aires 7609, Argentina. Operamos el sitio web <a href="https://www.lanzate.app" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> y la aplicación móvil Lanzáte App.
                         </p>
-                        
+
                         <p className="text-sm leading-relaxed mb-4">
-                            This Privacy Policy is provided in a layered format so you can click through to the specific areas set out below. Please also use the Glossary to understand the meaning of some of the terms used in this Privacy Policy.
+                            Esta Política de Privacidad te informa sobre cómo recolectamos, usamos, compartimos y protegemos tu información personal cuando usás nuestros servicios. También te explica tus derechos como titular de datos personales según la legislación argentina vigente.
                         </p>
-                        
+
                         <p className="text-sm leading-relaxed mb-6">
-                            If you have any questions about this Privacy Policy, including any requests to exercise your legal rights, please contact us using the details set out below.
+                            Si tenés alguna pregunta sobre esta Política de Privacidad o querés ejercer tus derechos, podés contactarnos usando los datos que aparecen al final de este documento.
                         </p>
                     </div>
                 </div>
 
                 <div className="mb-8">
-                    <h2 className="text-2xl font-bold mb-6">TABLE OF CONTENTS</h2>
+                    <h2 className="text-2xl font-bold mb-6">ÍNDICE</h2>
                     <div className="space-y-2 text-sm">
-                        <div><a href="#important-info" className="text-blue-600 hover:text-blue-800 underline">1. IMPORTANT INFORMATION AND WHO WE ARE</a></div>
-                        <div><a href="#data-we-collect" className="text-blue-600 hover:text-blue-800 underline">2. THE DATA WE COLLECT ABOUT YOU</a></div>
-                        <div><a href="#how-we-collect" className="text-blue-600 hover:text-blue-800 underline">3. HOW IS YOUR PERSONAL DATA COLLECTED</a></div>
-                        <div><a href="#how-we-use" className="text-blue-600 hover:text-blue-800 underline">4. HOW WE USE YOUR PERSONAL DATA</a></div>
-                        <div><a href="#disclosures" className="text-blue-600 hover:text-blue-800 underline">5. DISCLOSURES OF YOUR PERSONAL DATA</a></div>
-                        <div><a href="#international-transfers" className="text-blue-600 hover:text-blue-800 underline">6. INTERNATIONAL TRANSFERS</a></div>
-                        <div><a href="#data-security" className="text-blue-600 hover:text-blue-800 underline">7. DATA SECURITY</a></div>
-                        <div><a href="#data-retention" className="text-blue-600 hover:text-blue-800 underline">8. DATA RETENTION</a></div>
-                        <div><a href="#your-rights" className="text-blue-600 hover:text-blue-800 underline">9. YOUR LEGAL RIGHTS</a></div>
-                        <div><a href="#cookies" className="text-blue-600 hover:text-blue-800 underline">10. COOKIES</a></div>
-                        <div><a href="#third-party-links" className="text-blue-600 hover:text-blue-800 underline">11. THIRD-PARTY LINKS</a></div>
-                        <div><a href="#children" className="text-blue-600 hover:text-blue-800 underline">12. CHILDREN&apos;S PRIVACY</a></div>
-                        <div><a href="#changes" className="text-blue-600 hover:text-blue-800 underline">13. CHANGES TO PRIVACY POLICY</a></div>
-                        <div><a href="#contact" className="text-blue-600 hover:text-blue-800 underline">14. CONTACT US</a></div>
+                        <div><a href="#informacion-importante" className="text-blue-600 hover:text-blue-800 underline">1. INFORMACIÓN IMPORTANTE Y RESPONSABLE</a></div>
+                        <div><a href="#datos-recolectados" className="text-blue-600 hover:text-blue-800 underline">2. DATOS PERSONALES QUE RECOLECTAMOS</a></div>
+                        <div><a href="#como-recolectamos" className="text-blue-600 hover:text-blue-800 underline">3. CÓMO RECOLECTAMOS TUS DATOS</a></div>
+                        <div><a href="#como-usamos" className="text-blue-600 hover:text-blue-800 underline">4. CÓMO USAMOS TUS DATOS PERSONALES</a></div>
+                        <div><a href="#compartir-datos" className="text-blue-600 hover:text-blue-800 underline">5. COMPARTIR TUS DATOS PERSONALES</a></div>
+                        <div><a href="#integraciones-terceros" className="text-blue-600 hover:text-blue-800 underline">6. INTEGRACIONES CON TERCEROS</a></div>
+                        <div><a href="#transferencias" className="text-blue-600 hover:text-blue-800 underline">7. TRANSFERENCIAS INTERNACIONALES</a></div>
+                        <div><a href="#seguridad" className="text-blue-600 hover:text-blue-800 underline">8. SEGURIDAD DE LOS DATOS</a></div>
+                        <div><a href="#retencion" className="text-blue-600 hover:text-blue-800 underline">9. RETENCIÓN DE DATOS</a></div>
+                        <div><a href="#tus-derechos" className="text-blue-600 hover:text-blue-800 underline">10. TUS DERECHOS COMO TITULAR</a></div>
+                        <div><a href="#cookies" className="text-blue-600 hover:text-blue-800 underline">11. COOKIES Y TECNOLOGÍAS SIMILARES</a></div>
+                        <div><a href="#menores" className="text-blue-600 hover:text-blue-800 underline">12. PRIVACIDAD DE MENORES</a></div>
+                        <div><a href="#cambios" className="text-blue-600 hover:text-blue-800 underline">13. CAMBIOS A ESTA POLÍTICA</a></div>
+                        <div><a href="#contacto" className="text-blue-600 hover:text-blue-800 underline">14. CONTACTO</a></div>
                     </div>
                 </div>
 
-                <section id="important-info" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">1. IMPORTANT INFORMATION AND WHO WE ARE</h2>
+                <section id="informacion-importante" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">1. INFORMACIÓN IMPORTANTE Y RESPONSABLE</h2>
                     <div className="text-sm leading-relaxed space-y-4">
-                        <h3 className="text-lg font-bold mb-3">Purpose of this Privacy Policy</h3>
+                        <h3 className="text-lg font-bold mb-3">Responsable del Tratamiento</h3>
                         <p>
-                            This Privacy Policy aims to give you information on how Lanzate collects and processes your personal data through your use of this website and mobile application, including any data you may provide through this website when you sign up to our newsletter, purchase a product or service, or take part in a competition.
+                            Lanzáte es el responsable del tratamiento de tus datos personales conforme a la Ley 25.326 y las Disposiciones de la Dirección Nacional de Protección de Datos Personales (DNPDP).
                         </p>
-                        
-                        <p>
-                            This website and mobile application are not intended for children and we do not knowingly collect data relating to children.
-                        </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Controller</h3>
-                        <p>
-                            Lanzate is the controller and responsible for your personal data (collectively referred to as &quot;Lanzate,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot; in this Privacy Policy).
-                        </p>
-                        
-                        <p>
-                            We have appointed a data protection officer (DPO) who is responsible for overseeing questions in relation to this Privacy Policy. If you have any questions about this Privacy Policy, including any requests to exercise your legal rights, please contact the DPO using the details set out below.
-                        </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Contact Details</h3>
-                        <div className="bg-gray-50 p-4 rounded-lg">
-                            <p><strong>Full name of legal entity:</strong> Lanzate</p>
-                            <p><strong>Email address:</strong> info@lanzate.app</p>
-                            <p><strong>Postal address:</strong> Las Palmas 735, no, Atlantida, Santa Clara del Mar, Buenos Aires 7609, Argentina</p>
-                            <p><strong>Telephone number:</strong> +5491135069709</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Datos de Contacto</h3>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary">
+                            <p><strong>Razón Social:</strong> Lanzáte</p>
+                            <p><strong>Correo electrónico:</strong> info@lanzate.app</p>
+                            <p><strong>Domicilio Legal:</strong> Las Palmas 735, Atlántida, Santa Clara del Mar, Buenos Aires 7609, Argentina</p>
+                            <p><strong>Teléfono:</strong> +54 9 11 3506-9709</p>
+                            <p><strong>Responsable de Protección de Datos:</strong> info@lanzate.app</p>
                         </div>
-                        
+
                         <p className="mt-4">
-                            You have the right to make a complaint at any time to the National Directorate for Personal Data Protection (Dirección Nacional de Protección de Datos Personales), the Argentine supervisory authority for data protection issues. We would, however, appreciate the chance to deal with your concerns before you approach the supervisory authority so please contact us in the first instance.
+                            Tenés derecho a presentar una denuncia ante la Dirección Nacional de Protección de Datos Personales (DNPDP), Organismo de Control de la Ley 25.326, ubicado en Sarmiento 1118, Piso 5º, C.A.B.A., o a través de su sitio web <a href="https://www.argentina.gob.ar/aaip" className="text-blue-600 hover:text-blue-800 underline">www.argentina.gob.ar/aaip</a>. Sin embargo, te agradeceríamos que nos contactes primero para poder resolver tus inquietudes.
                         </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Changes to the Privacy Policy and your duty to inform us of changes</h3>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Base de Datos Registrada</h3>
                         <p>
-                            This version was last updated on July 30, 2025, and historic versions can be obtained by contacting us.
+                            Nuestras bases de datos se encuentran debidamente inscriptas ante el Registro Nacional de Bases de Datos de la DNPDP, conforme lo exige la legislación argentina vigente.
                         </p>
-                        
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Finalidad de esta Política</h3>
                         <p>
-                            It is important that the personal data we hold about you is accurate and current. Please keep us informed if your personal data changes during your relationship with us.
+                            Esta Política de Privacidad te explica cómo Lanzáte recolecta y procesa tu información personal cuando:
                         </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Third-party links</h3>
-                        <p>
-                            This website and mobile application may include links to third-party websites, plug-ins and applications. Clicking on those links or enabling those connections may allow third parties to collect or share data about you. We do not control these third-party websites and are not responsible for their privacy statements. When you leave our website, we encourage you to read the privacy policy of every website you visit.
+                        <ul className="list-disc ml-6 space-y-2 mt-2">
+                            <li>Te registrás en nuestra plataforma</li>
+                            <li>Usás nuestros servicios de gestión de tiendas, stock y empleados</li>
+                            <li>Te conectás mediante redes sociales (Google, Facebook, Instagram, X)</li>
+                            <li>Realizás pagos a través de Mercado Pago</li>
+                            <li>Creás o gestionás subtiendas</li>
+                            <li>Navegás por nuestro sitio web o aplicación móvil</li>
+                        </ul>
+
+                        <p className="mt-4">
+                            Este sitio web y aplicación móvil están dirigidos a personas mayores de 18 años. No recolectamos intencionalmente datos de menores de edad.
                         </p>
                     </div>
                 </section>
 
-                <section id="data-we-collect" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">2. THE DATA WE COLLECT ABOUT YOU</h2>
+                <section id="datos-recolectados" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">2. DATOS PERSONALES QUE RECOLECTAMOS</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            Personal data, or personal information, means any information about an individual from which that person can be identified. It does not include data where the identity has been removed (anonymous data).
+                            Conforme a la Ley 25.326, recolectamos solo aquellos datos personales que sean necesarios para cumplir con la finalidad de nuestros servicios. Los datos personales son cualquier información que permite identificarte como persona.
                         </p>
-                        
-                        <p>We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows:</p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Identity Data</h3>
-                        <p>Includes first name, maiden name, last name, username or similar identifier, marital status, title, date of birth and gender.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Contact Data</h3>
-                        <p>Includes billing address, delivery address, email address and telephone numbers.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Financial Data</h3>
-                        <p>Includes bank account and payment card details.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Transaction Data</h3>
-                        <p>Includes details about payments to and from you and other details of products and services you have purchased from us.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Technical Data</h3>
-                        <p>Includes internet protocol (IP) address, your login data, browser type and version, time zone setting and location, browser plug-in types and versions, operating system and platform, and other technology on the devices you use to access this website.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Profile Data</h3>
-                        <p>Includes your username and password, purchases or orders made by you, your interests, preferences, feedback and survey responses.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Usage Data</h3>
-                        <p>Includes information about how you use our website, products and services.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Marketing and Communications Data</h3>
-                        <p>Includes your preferences in receiving marketing from us and our third parties and your communication preferences.</p>
-                        
+
+                        <p>Podemos recolectar, usar, almacenar y transferir las siguientes categorías de datos personales:</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Datos de Identidad</h3>
+                        <p>Incluyen nombre, apellido, DNI/CUIL/CUIT, fecha de nacimiento, sexo, imagen de perfil.</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Datos de Contacto</h3>
+                        <p>Incluyen dirección postal, dirección de facturación, dirección de entrega, correo electrónico y números de teléfono.</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Datos Financieros</h3>
+                        <p>Incluyen datos de cuentas bancarias, CBU/CVU, datos de tarjetas de crédito/débito, información de Mercado Pago. <strong>Importante:</strong> No almacenamos datos completos de tarjetas; estos son procesados directamente por los proveedores de pago.</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Datos Transaccionales</h3>
+                        <p>Incluyen detalles sobre pagos realizados, productos y servicios adquiridos o vendidos, historial de transacciones, facturación.</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Datos Técnicos</h3>
+                        <p>Incluyen dirección IP, datos de inicio de sesión, tipo y versión de navegador, configuración de zona horaria y ubicación, tipo y versión de extensiones del navegador, sistema operativo y plataforma, y otras tecnologías en los dispositivos que usás para acceder a nuestra plataforma.</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Datos de Perfil</h3>
+                        <p>Incluyen tu nombre de usuario y contraseña, compras o pedidos realizados, preferencias, intereses, opiniones y respuestas a encuestas.</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Datos de Uso</h3>
+                        <p>Incluyen información sobre cómo usás nuestro sitio web, productos y servicios, incluyendo datos de navegación, páginas visitadas, tiempo de permanencia.</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Datos Comerciales</h3>
+                        <p>Si operás una tienda o subtienda: inventario de productos, gestión de stock, información de empleados (con su consentimiento), datos de ventas, reportes comerciales.</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Datos de Redes Sociales</h3>
+                        <p>Si te conectás mediante Google, Facebook, Instagram o X: nombre de usuario, correo electrónico, foto de perfil, lista de amigos/seguidores (según los permisos que otorgues).</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Datos de Marketing y Comunicaciones</h3>
+                        <p>Incluyen tus preferencias para recibir comunicaciones comerciales nuestras y de terceros, y tus preferencias de comunicación.</p>
+
                         <p className="mt-6">
-                            We also collect, use and share <strong>Aggregated Data</strong> such as statistical or demographic data for any purpose. Aggregated Data could be derived from your personal data but is not considered personal data in law as this data will not directly or indirectly reveal your identity.
+                            También recolectamos, usamos y compartimos <strong>Datos Agregados</strong> como datos estadísticos o demográficos. Los Datos Agregados pueden derivarse de tus datos personales pero no se consideran datos personales legalmente ya que no revelan directa ni indirectamente tu identidad.
                         </p>
-                        
+
                         <p>
-                            We do not collect any <strong>Special Categories of Personal Data</strong> about you (this includes details about your race or ethnicity, religious or philosophical beliefs, sex life, sexual orientation, political opinions, trade union membership, information about your health, and genetic and biometric data). Nor do we collect any information about criminal convictions and offences.
+                            <strong>No recolectamos Datos Sensibles</strong> (origen racial o étnico, opiniones políticas, convicciones religiosas o filosóficas, afiliación sindical, información sobre salud, vida sexual u orientación sexual) salvo que sea estrictamente necesario y contemos con tu consentimiento explícito o esté permitido por ley.
                         </p>
                     </div>
                 </section>
 
-                <section id="how-we-collect" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">3. HOW IS YOUR PERSONAL DATA COLLECTED</h2>
+                <section id="como-recolectamos" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">3. CÓMO RECOLECTAMOS TUS DATOS</h2>
                     <div className="text-sm leading-relaxed space-y-4">
-                        <p>We use different methods to collect data from and about you including through:</p>
-                        
-                        <h3 className="text-lg font-bold mb-3">Direct interactions</h3>
-                        <p>You may give us your Identity, Contact and Financial Data by filling in forms or by corresponding with us by post, phone, email or otherwise. This includes personal data you provide when you:</p>
+                        <p>Usamos diferentes métodos para recolectar datos personales de vos y sobre vos, incluyendo:</p>
+
+                        <h3 className="text-lg font-bold mb-3">Interacciones Directas</h3>
+                        <p>Nos podés proporcionar tus datos de Identidad, Contacto y Financieros completando formularios o comunicándote con nosotros. Esto incluye datos personales que proporcionás cuando:</p>
                         <ul className="list-disc ml-6 space-y-2">
-                            <li>apply for our products or services</li>
-                            <li>create an account on our website or mobile application</li>
-                            <li>subscribe to our service or publications</li>
-                            <li>request marketing to be sent to you</li>
-                            <li>enter a competition, promotion or survey</li>
-                            <li>give us feedback or contact us</li>
+                            <li>Te registrás en nuestra plataforma</li>
+                            <li>Creás una tienda o subtienda</li>
+                            <li>Agregás empleados a tu negocio</li>
+                            <li>Cargás productos o gestionás tu inventario</li>
+                            <li>Realizás o recibís pagos</li>
+                            <li>Te suscribís a nuestro servicio o boletines</li>
+                            <li>Solicitás que te enviemos información comercial</li>
+                            <li>Participás en sorteos, promociones o encuestas</li>
+                            <li>Nos brindás comentarios o nos contactás</li>
                         </ul>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Automated technologies or interactions</h3>
-                        <p>As you interact with our website and mobile application, we will automatically collect Technical Data about your equipment, browsing actions and patterns. We collect this personal data by using cookies, server logs and other similar technologies.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Third parties or publicly available sources</h3>
-                        <p>We will receive personal data about you from various third parties and public sources as set out below:</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Tecnologías Automatizadas</h3>
+                        <p>Al interactuar con nuestro sitio web y aplicación móvil, recolectamos automáticamente Datos Técnicos sobre tu equipo, acciones de navegación y patrones de uso. Recolectamos estos datos usando cookies, registros del servidor y otras tecnologías similares.</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Inicio de Sesión con Redes Sociales</h3>
+                        <p>Si elegís iniciar sesión mediante Google, Facebook, Instagram o X, recibiremos la información que hayas autorizado compartir según la configuración de privacidad de esas plataformas. Esto puede incluir:</p>
                         <ul className="list-disc ml-6 space-y-2">
-                            <li>Technical Data from analytics providers such as Google based outside the EU</li>
-                            <li>Contact, Financial and Transaction Data from providers of technical, payment and delivery services</li>
-                            <li>Identity and Contact Data from data brokers or aggregators based inside OR outside the EU</li>
-                            <li>Identity and Contact Data from publicly available sources</li>
+                            <li>Nombre y apellido</li>
+                            <li>Dirección de correo electrónico</li>
+                            <li>Foto de perfil</li>
+                            <li>Lista de contactos (solo si lo autorizás)</li>
+                            <li>Información pública de tu perfil</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Terceros y Fuentes Públicas</h3>
+                        <p>Podemos recibir datos personales sobre vos de varios terceros y fuentes públicas:</p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Datos Técnicos de proveedores de análisis como Google Analytics</li>
+                            <li>Datos de Contacto, Financieros y Transaccionales de proveedores de servicios de pago como Mercado Pago</li>
+                            <li>Datos de Identidad y Contacto de plataformas de redes sociales (Google, Facebook, Instagram, X) cuando las conectás con tu cuenta</li>
+                            <li>Datos de Identidad y Contacto de fuentes de acceso público (registros públicos, directorios comerciales)</li>
                         </ul>
                     </div>
                 </section>
 
-                <section id="how-we-use" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">4. HOW WE USE YOUR PERSONAL DATA</h2>
+                <section id="como-usamos" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">4. CÓMO USAMOS TUS DATOS PERSONALES</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:
+                            Solo usaremos tus datos personales cuando la ley argentina nos lo permita. Conforme al Artículo 5 de la Ley 25.326, requerimos tu consentimiento previo, informado y libre para el tratamiento de tus datos, excepto en los casos previstos por la ley.
                         </p>
-                        
+
+                        <p>Más comúnmente, usaremos tus datos personales en las siguientes circunstancias:</p>
+
                         <ul className="list-disc ml-6 space-y-2">
-                            <li>Where we need to perform the contract we are about to enter into or have entered into with you.</li>
-                            <li>Where it is necessary for our legitimate interests (or those of a third party) and your interests and fundamental rights do not override those interests.</li>
-                            <li>Where we need to comply with a legal obligation.</li>
+                            <li>Cuando sea necesario para ejecutar un contrato que hayamos celebrado con vos</li>
+                            <li>Cuando sea necesario para cumplir con una obligación legal (facturación, reportes impositivos, etc.)</li>
+                            <li>Cuando sea necesario para nuestros intereses legítimos (mejorar nuestros servicios, prevenir fraude) y tus derechos no prevalezcan sobre esos intereses</li>
+                            <li>Cuando hayas dado tu consentimiento explícito</li>
                         </ul>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Purposes for which we will use your personal data</h3>
-                        <p>We have set out below, in a table format, a description of all the ways we plan to use your personal data, and which of the legal bases we rely on to do so:</p>
-                        
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Purpose:</strong> To register you as a new customer</p>
-                            <p><strong>Type of data:</strong> Identity, Contact</p>
-                            <p><strong>Lawful basis:</strong> Performance of a contract with you</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Finalidades Específicas</h3>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Finalidad:</strong> Registrarte como usuario</p>
+                            <p><strong>Datos usados:</strong> Identidad, Contacto</p>
+                            <p><strong>Base legal:</strong> Ejecución del contrato</p>
                         </div>
-                        
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Purpose:</strong> To process and deliver your order including managing payments, fees and charges, and collecting and recovering money owed to us</p>
-                            <p><strong>Type of data:</strong> Identity, Contact, Financial, Transaction, Marketing and Communications</p>
-                            <p><strong>Lawful basis:</strong> Performance of a contract with you, Necessary for our legitimate interests</p>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Finalidad:</strong> Crear y gestionar tu tienda/subtienda</p>
+                            <p><strong>Datos usados:</strong> Identidad, Contacto, Comerciales, Datos de Empleados</p>
+                            <p><strong>Base legal:</strong> Ejecución del contrato, Consentimiento</p>
                         </div>
-                        
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Purpose:</strong> To manage our relationship with you including notifying you about changes to our terms or privacy policy and asking you to leave a review or take a survey</p>
-                            <p><strong>Type of data:</strong> Identity, Contact, Profile, Marketing and Communications</p>
-                            <p><strong>Lawful basis:</strong> Performance of a contract with you, Necessary to comply with a legal obligation, Necessary for our legitimate interests</p>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Finalidad:</strong> Procesar pagos y transacciones (mediante Mercado Pago)</p>
+                            <p><strong>Datos usados:</strong> Identidad, Contacto, Financieros, Transaccionales</p>
+                            <p><strong>Base legal:</strong> Ejecución del contrato, Obligación legal</p>
                         </div>
-                        
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Purpose:</strong> To enable you to partake in a prize draw, competition or complete a survey</p>
-                            <p><strong>Type of data:</strong> Identity, Contact, Profile, Usage, Marketing and Communications</p>
-                            <p><strong>Lawful basis:</strong> Performance of a contract with you, Necessary for our legitimate interests</p>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Finalidad:</strong> Gestionar inventario y stock</p>
+                            <p><strong>Datos usados:</strong> Identidad, Comerciales</p>
+                            <p><strong>Base legal:</strong> Ejecución del contrato</p>
                         </div>
-                        
-                        <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                            <p><strong>Purpose:</strong> To administer and protect our business and this website (including troubleshooting, data analysis, testing, system maintenance, support, reporting and hosting of data)</p>
-                            <p><strong>Type of data:</strong> Identity, Contact, Technical</p>
-                            <p><strong>Lawful basis:</strong> Necessary for our legitimate interests, Necessary to comply with a legal obligation</p>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Finalidad:</strong> Gestionar permisos y accesos de empleados</p>
+                            <p><strong>Datos usados:</strong> Identidad, Contacto, Perfil</p>
+                            <p><strong>Base legal:</strong> Ejecución del contrato, Consentimiento de los empleados</p>
                         </div>
-                        
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Finalidad:</strong> Permitir inicio de sesión mediante redes sociales</p>
+                            <p><strong>Datos usados:</strong> Identidad, Contacto, Datos de Redes Sociales</p>
+                            <p><strong>Base legal:</strong> Consentimiento</p>
+                        </div>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Finalidad:</strong> Administrar y proteger nuestro negocio y plataforma (solución de problemas, análisis de datos, pruebas, mantenimiento, soporte, reportes y hosting)</p>
+                            <p><strong>Datos usados:</strong> Identidad, Contacto, Técnicos</p>
+                            <p><strong>Base legal:</strong> Intereses legítimos, Obligación legal</p>
+                        </div>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Finalidad:</strong> Enviarte comunicaciones comerciales (solo con tu consentimiento)</p>
+                            <p><strong>Datos usados:</strong> Identidad, Contacto, Marketing</p>
+                            <p><strong>Base legal:</strong> Consentimiento (podés retirarlo en cualquier momento)</p>
+                        </div>
+
                         <h3 className="text-lg font-bold mb-3 mt-6">Marketing</h3>
                         <p>
-                            We strive to provide you with choices regarding certain personal data uses, particularly around marketing and advertising. We have established the following personal data control mechanisms:
+                            Te enviaremos comunicaciones comerciales solo si nos diste tu consentimiento explícito. Podés retirar tu consentimiento en cualquier momento usando el enlace de &quot;darme de baja&quot; en los correos electrónicos o contactándonos directamente.
                         </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Promotional offers from us</h3>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Cambio de Finalidad</h3>
                         <p>
-                            We may use your Identity, Contact, Technical, Usage and Profile Data to form a view on what we think you may want or need, or what may be of interest to you. This is how we decide which products, services and offers may be relevant for you (we call this marketing).
-                        </p>
-                        
-                        <p>
-                            You will receive marketing communications from us if you have requested information from us or purchased goods or services from us and you have not opted out of receiving that marketing.
-                        </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Third-party marketing</h3>
-                        <p>
-                            We will get your express opt-in consent before we share your personal data with any third party for marketing purposes.
-                        </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Opting out</h3>
-                        <p>
-                            You can ask us or third parties to stop sending you marketing messages at any time by logging into the website and checking or unchecking relevant boxes to adjust your marketing preferences, by following the opt-out links on any marketing message sent to you, or by contacting us at any time.
-                        </p>
-                        
-                        <p>
-                            Where you opt out of receiving these marketing messages, this will not apply to personal data provided to us as a result of a product/service purchase, warranty registration, product/service experience or other transactions.
-                        </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Cookies</h3>
-                        <p>
-                            You can set your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies. If you disable or refuse cookies, please note that some parts of this website may become inaccessible or not function properly. For more information about the cookies we use, please see section 10 below.
-                        </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Change of purpose</h3>
-                        <p>
-                            We will only use your personal data for the purposes for which we collected it, unless we reasonably consider that we need to use it for another reason and that reason is compatible with the original purpose. If you wish to get an explanation as to how the processing for the new purpose is compatible with the original purpose, please contact us.
-                        </p>
-                        
-                        <p>
-                            If we need to use your personal data for an unrelated purpose, we will notify you and we will explain the legal basis which allows us to do so.
-                        </p>
-                        
-                        <p>
-                            Please note that we may process your personal data without your knowledge or consent, in compliance with the above rules, where this is required or permitted by law.
+                            Solo usaremos tus datos personales para las finalidades para las cuales los recolectamos, salvo que consideremos razonablemente que necesitamos usarlos por otra razón compatible con la finalidad original. Si necesitamos usar tus datos para una finalidad no relacionada, te notificaremos y te explicaremos la base legal que nos permite hacerlo.
                         </p>
                     </div>
                 </section>
 
-                <section id="disclosures" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">5. DISCLOSURES OF YOUR PERSONAL DATA</h2>
+                <section id="compartir-datos" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">5. COMPARTIR TUS DATOS PERSONALES</h2>
                     <div className="text-sm leading-relaxed space-y-4">
-                        <p>We may have to share your personal data with the parties set out below for the purposes set out in the table above:</p>
-                        
+                        <p>Podemos compartir tus datos personales con las siguientes categorías de terceros:</p>
+
+                        <h3 className="text-lg font-bold mb-3">Terceros Internos</h3>
                         <ul className="list-disc ml-6 space-y-2">
-                            <li>Internal Third Parties as set out in the Glossary</li>
-                            <li>External Third Parties as set out in the Glossary</li>
-                            <li>Third parties to whom we may choose to sell, transfer or merge parts of our business or our assets. Alternatively, we may seek to acquire other businesses or merge with them. If a change happens to our business, then the new owners may use your personal data in the same way as set out in this privacy policy.</li>
+                            <li>Otras empresas del Grupo Lanzáte (si las hubiera)</li>
+                            <li>Personal autorizado de Lanzáte que necesite acceder a tus datos para prestar los servicios</li>
                         </ul>
-                        
-                        <p>We require all third parties to respect the security of your personal data and to treat it in accordance with the law. We do not allow our third-party service providers to use your personal data for their own purposes and only permit them to process your personal data for specified purposes and in accordance with our instructions.</p>
-                    </div>
-                </section>
 
-                <section id="international-transfers" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">6. INTERNATIONAL TRANSFERS</h2>
-                    <div className="text-sm leading-relaxed space-y-4">
-                        <p>
-                            We share your personal data within the Lanzate Group. This will involve transferring your data outside Argentina.
-                        </p>
-                        
-                        <p>
-                            Many of our external third parties are based outside Argentina so their processing of your personal data will involve a transfer of data outside Argentina.
-                        </p>
-                        
-                        <p>
-                            Whenever we transfer your personal data out of Argentina, we ensure a similar degree of protection is afforded to it by ensuring at least one of the following safeguards is implemented:
-                        </p>
-                        
+                        <h3 className="text-lg font-bold mb-3 mt-6">Terceros Externos - Proveedores de Servicios</h3>
                         <ul className="list-disc ml-6 space-y-2">
-                            <li>We will only transfer your personal data to countries that have been deemed to provide an adequate level of protection for personal data by the Argentine National Directorate for Personal Data Protection.</li>
-                            <li>Where we use certain service providers, we may use specific contracts approved by the Argentine National Directorate for Personal Data Protection which give personal data the same protection it has in Argentina.</li>
-                            <li>Where we use providers based in the US, we may transfer data to them if they are part of the Privacy Shield which requires them to provide similar protection to personal data shared between Argentina and the US.</li>
+                            <li><strong>Mercado Pago:</strong> Para procesar pagos y transacciones. Sus datos se comparten según su política de privacidad.</li>
+                            <li><strong>Proveedores de hosting y servidores:</strong> Para almacenar y procesar tu información de manera segura</li>
+                            <li><strong>Proveedores de servicios de análisis:</strong> Como Google Analytics, para entender cómo se usan nuestros servicios</li>
+                            <li><strong>Proveedores de servicios de email:</strong> Para enviarte comunicaciones autorizadas</li>
+                            <li><strong>Proveedores de servicios de soporte técnico:</strong> Para brindarte asistencia cuando la necesités</li>
                         </ul>
-                        
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Redes Sociales</h3>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li><strong>Google:</strong> Cuando usás Login con Google</li>
+                            <li><strong>Facebook/Meta:</strong> Cuando usás Login con Facebook o Instagram</li>
+                            <li><strong>X (anteriormente Twitter):</strong> Cuando usás Login con X</li>
+                        </ul>
+                        <p className="mt-2">Cada red social tiene su propia política de privacidad que gobierna el uso de tus datos en sus plataformas.</p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Autoridades Gubernamentales</h3>
+                        <p>Podemos compartir tus datos con autoridades gubernamentales argentinas cuando:</p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Sea requerido por ley (ARCA, otros organismos de control)</li>
+                            <li>Sea necesario para proteger nuestros derechos legales</li>
+                            <li>Sea necesario para prevenir fraude o actividades ilegales</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Compradores de Nuestro Negocio</h3>
                         <p>
-                            Please contact us if you want further information on the specific mechanism used by us when transferring your personal data out of Argentina.
+                            En caso de que vendamos, transfiramos o fusionemos partes de nuestro negocio o activos, tus datos personales pueden ser compartidos con los potenciales o nuevos propietarios. Te notificaremos sobre cualquier cambio de propiedad.
+                        </p>
+
+                        <p className="mt-4">
+                            <strong>Importante:</strong> Requerimos a todos los terceros que respeten la seguridad de tus datos personales y que los traten conforme a la ley argentina. No permitimos que nuestros proveedores de servicios usen tus datos personales para sus propios fines comerciales y solo les permitimos procesarlos para finalidades específicas y según nuestras instrucciones.
+                        </p>
+
+                        <p>
+                            Antes de compartir tus datos con terceros para fines de marketing, te pediremos tu consentimiento explícito.
                         </p>
                     </div>
                 </section>
 
-                <section id="data-security" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">7. DATA SECURITY</h2>
+                <section id="integraciones-terceros" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">6. INTEGRACIONES CON TERCEROS</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorised way, altered or disclosed. In addition, we limit access to your personal data to those employees, agents, contractors and other third parties who have a business need to know. They will only process your personal data on our instructions and they are subject to a duty of confidentiality.
+                            Nuestra plataforma se integra con varios servicios de terceros. Es importante que entiendas cómo funcionan estas integraciones:
                         </p>
-                        
+
+                        <h3 className="text-lg font-bold mb-3">Mercado Pago</h3>
                         <p>
-                            We have put in place procedures to deal with any suspected personal data breach and will notify you and any applicable regulator of a breach where we are legally required to do so.
+                            Usamos Mercado Pago como procesador de pagos. Cuando realizás o recibís un pago:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Mercado Pago recolecta y procesa tus datos financieros directamente</li>
+                            <li>No almacenamos datos completos de tarjetas de crédito/débito</li>
+                            <li>Mercado Pago tiene su propia Política de Privacidad que deberías revisar</li>
+                            <li>Los datos de transacciones son compartidos entre Lanzáte y Mercado Pago para completar el servicio</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Login Social (Google, Facebook, Instagram, X)</h3>
+                        <p>
+                            Si elegís iniciar sesión mediante redes sociales:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Solo accedemos a la información que vos autorizás compartir</li>
+                            <li>Podés revisar y modificar los permisos en cualquier momento desde tu cuenta de la red social</li>
+                            <li>Tu relación con estas plataformas se rige por sus propias políticas de privacidad</li>
+                            <li>Podés desconectar tu cuenta de redes sociales en cualquier momento desde tu perfil de Lanzáte</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Google Analytics y Servicios de Análisis</h3>
+                        <p>
+                            Usamos herramientas de análisis para entender cómo se usan nuestros servicios:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Estas herramientas pueden usar cookies y tecnologías similares</li>
+                            <li>Recolectan información sobre tu uso de la plataforma de forma anónima o pseudónima</li>
+                            <li>Podés desactivar estas herramientas ajustando la configuración de cookies</li>
+                        </ul>
+
+                        <p className="mt-4">
+                            <strong>Responsabilidad sobre Integraciones:</strong> No somos responsables por las prácticas de privacidad de estos terceros. Te recomendamos que revises sus políticas de privacidad antes de usar sus servicios a través de nuestra plataforma.
                         </p>
                     </div>
                 </section>
 
-                <section id="data-retention" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">8. DATA RETENTION</h2>
+                <section id="transferencias" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">7. TRANSFERENCIAS INTERNACIONALES</h2>
                     <div className="text-sm leading-relaxed space-y-4">
-                        <h3 className="text-lg font-bold mb-3">How long will you use my personal data for?</h3>
                         <p>
-                            We will only retain your personal data for as long as reasonably necessary to fulfil the purposes we collected it for, including for the purposes of satisfying any legal, regulatory, tax, accounting or reporting requirements. We may retain your personal data for a longer period in the event of a complaint or if we reasonably believe there is a prospect of litigation in respect to our relationship with you.
+                            Algunos de nuestros proveedores de servicios están ubicados fuera de Argentina, lo que implica que tus datos personales pueden ser transferidos y procesados en otros países.
                         </p>
-                        
+
                         <p>
-                            To determine the appropriate retention period for personal data, we consider the amount, nature and sensitivity of the personal data, the potential risk of harm from unauthorised use or disclosure of your personal data, the purposes for which we process your personal data and whether we can achieve those purposes through other means, and the applicable legal, regulatory, tax, accounting or other requirements.
+                            Conforme al Artículo 12 de la Ley 25.326 y la Disposición DNPDP 60/2016, cuando transferimos datos personales fuera de Argentina, aseguramos que:
                         </p>
-                        
+
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>El país de destino proporcione un nivel de protección adecuado a los datos personales, según lo determinado por la DNPDP</li>
+                            <li>Se implementen cláusulas contractuales apropiadas que garanticen la protección de tus datos</li>
+                            <li>Exista una autorización previa de la DNPDP cuando sea requerida</li>
+                            <li>Se obtenga tu consentimiento explícito cuando sea necesario</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Países con Nivel Adecuado de Protección</h3>
                         <p>
-                            Details of retention periods for different aspects of your personal data are available in our retention policy which you can request from us by contacting us.
+                            Según la normativa argentina, los siguientes países/regiones son considerados con nivel adecuado de protección:
                         </p>
-                        
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Países miembros de la Unión Europea</li>
+                            <li>Países que han sido declarados con nivel adecuado por la DNPDP</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Transferencias a Estados Unidos</h3>
                         <p>
-                            In some circumstances you can ask us to delete your data: see your legal rights below for further information.
+                            Algunos de nuestros proveedores (como Google, Facebook, X) están basados en Estados Unidos. Para estas transferencias:
                         </p>
-                        
-                        <p>
-                            In some circumstances we will anonymise your personal data (so that it can no longer be associated with you) for research or statistical purposes, in which case we may use this information indefinitely without further notice to you.
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Utilizamos cláusulas contractuales estándar aprobadas</li>
+                            <li>Verificamos que cumplan con el EU-U.S. Data Privacy Framework cuando aplique</li>
+                            <li>Implementamos medidas de seguridad adicionales</li>
+                        </ul>
+
+                        <p className="mt-4">
+                            Si querés más información sobre las salvaguardias específicas que implementamos para proteger tus datos en transferencias internacionales, podés contactarnos.
                         </p>
                     </div>
                 </section>
 
-                <section id="your-rights" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">9. YOUR LEGAL RIGHTS</h2>
+                <section id="seguridad" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">8. SEGURIDAD DE LOS DATOS</h2>
                     <div className="text-sm leading-relaxed space-y-4">
-                        <p>Under certain circumstances, you have rights under data protection laws in relation to your personal data:</p>
-                        
-                        <h3 className="text-lg font-bold mb-3">Request access to your personal data</h3>
-                        <p>This enables you to receive a copy of the personal data we hold about you and to check that we are lawfully processing it.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3">Request correction of your personal data</h3>
-                        <p>This enables you to have any incomplete or inaccurate data we hold about you corrected, though we may need to verify the accuracy of the new data you provide to us.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3">Request erasure of your personal data</h3>
-                        <p>This enables you to ask us to delete or remove personal data where there is no good reason for us continuing to process it. You also have the right to ask us to delete or remove your personal data where you have successfully exercised your right to object to processing (see below), where we may have processed your information unlawfully or where we are required to erase your personal data to comply with local law.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3">Object to processing of your personal data</h3>
-                        <p>Where we are relying on a legitimate interest (or those of a third party) and there is something about your particular situation which makes you want to object to processing on this ground as you feel it impacts on your fundamental rights and freedoms. You also have the right to object where we are processing your personal data for direct marketing purposes.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3">Request restriction of processing your personal data</h3>
-                        <p>This enables you to ask us to suspend the processing of your personal data in the following scenarios: (a) if you want us to establish the data&apos;s accuracy; (b) where our use of the data is unlawful but you do not want us to erase it; (c) where you need us to hold the data even if we no longer require it as you need it to establish, exercise or defend legal claims; or (d) you have objected to our use of your data but we need to verify whether we have overriding legitimate grounds to use it.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3">Request transfer of your personal data</h3>
-                        <p>We will provide to you, or a third party you have chosen, your personal data in a structured, commonly used, machine-readable format. Note that this right only applies to automated information which you initially provided consent for us to use or where we used the information to perform a contract with you.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3">Right to withdraw consent</h3>
-                        <p>At any time where we are relying on consent to process your personal data. However, this will not affect the lawfulness of any processing carried out before you withdraw your consent. If you withdraw your consent, we may not be able to provide certain products or services to you. We will advise you if this is the case at the time you withdraw your consent.</p>
-                        
-                        <p className="mt-6">
-                            If you wish to exercise any of the rights set out above, please contact us.
-                        </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">No fee usually required</h3>
                         <p>
-                            You will not have to pay a fee to access your personal data (or to exercise any of the other rights). However, we may charge a reasonable fee if your request is clearly unfounded, repetitive or excessive. Alternatively, we could refuse to comply with your request in these circumstances.
+                            Conforme al Artículo 9 de la Ley 25.326, implementamos medidas técnicas y organizativas apropiadas para proteger tus datos personales contra pérdida accidental, uso no autorizado, acceso, alteración o divulgación.
                         </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">What we may need from you</h3>
+
+                        <h3 className="text-lg font-bold mb-3">Medidas de Seguridad Técnicas</h3>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Encriptación de datos en tránsito (SSL/TLS)</li>
+                            <li>Encriptación de datos sensibles en reposo</li>
+                            <li>Firewalls y sistemas de detección de intrusiones</li>
+                            <li>Autenticación de dos factores disponible</li>
+                            <li>Backups regulares y seguros</li>
+                            <li>Protección contra malware y virus</li>
+                            <li>Monitoreo continuo de seguridad</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Medidas de Seguridad Organizativas</h3>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Acceso limitado a datos personales solo a empleados, agentes y contratistas que necesiten conocerlos por motivos comerciales</li>
+                            <li>Acuerdos de confidencialidad con todo el personal con acceso a datos</li>
+                            <li>Capacitación en protección de datos para el personal</li>
+                            <li>Procedimientos de gestión de incidentes de seguridad</li>
+                            <li>Revisiones periódicas de seguridad</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Notificación de Brechas de Seguridad</h3>
                         <p>
-                            We may need to request specific information from you to help us confirm your identity and ensure your right to access your personal data (or to exercise any of your other rights). This is a security measure to ensure that personal data is not disclosed to any person who has no right to receive it. We may also contact you to ask you for further information in relation to your request to speed up our response.
+                            En caso de una brecha de seguridad que afecte tus datos personales, te notificaremos dentro de las 72 horas de tomar conocimiento del incidente, según lo requiere la normativa argentina. También notificaremos a la DNPDP cuando corresponda.
                         </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Time limit to respond</h3>
+
+                        <p className="mt-4">
+                            <strong>Tu Responsabilidad:</strong> Vos también tenés responsabilidad en mantener la seguridad de tu cuenta:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Mantené tu contraseña segura y no la compartas</li>
+                            <li>No uses la misma contraseña en múltiples sitios</li>
+                            <li>Cerrá sesión cuando uses computadoras compartidas</li>
+                            <li>Habilitá la autenticación de dos factores</li>
+                            <li>Notificanos inmediatamente si sospechás un uso no autorizado de tu cuenta</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="retencion" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">9. RETENCIÓN DE DATOS</h2>
+                    <div className="text-sm leading-relaxed space-y-4">
+                        <h3 className="text-lg font-bold mb-3">¿Por cuánto tiempo conservamos tus datos?</h3>
                         <p>
-                            We try to respond to all legitimate requests within one month. Occasionally it could take us longer than a month if your request is particularly complex or you have made a number of requests. In this case, we will notify you and keep you updated.
+                            Solo retendremos tus datos personales durante el tiempo necesario para cumplir con las finalidades para las cuales fueron recolectados, incluyendo el cumplimiento de requisitos legales, contables, impositivos o de reporte.
                         </p>
+
+                        <p>
+                            Para determinar el período apropiado de retención, consideramos:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>La cantidad, naturaleza y sensibilidad de los datos personales</li>
+                            <li>El riesgo potencial de daño por uso no autorizado o divulgación</li>
+                            <li>Las finalidades del tratamiento</li>
+                            <li>Si podemos lograr esas finalidades por otros medios</li>
+                            <li>Los requisitos legales, regulatorios, impositivos y contables aplicables</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Períodos de Retención Específicos</h3>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Datos de cuenta activa:</strong> Mientras tu cuenta esté activa</p>
+                        </div>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Datos transaccionales y de facturación:</strong> 10 años desde la última transacción (requisito legal de ARCA)</p>
+                        </div>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Datos de empleados:</strong> Según lo requiera la legislación laboral argentina (mínimo 2 años después de finalizada la relación laboral)</p>
+                        </div>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Datos de marketing:</strong> Hasta que retires tu consentimiento o 2 años de inactividad</p>
+                        </div>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Datos técnicos y de uso:</strong> 2 años desde la última actividad</p>
+                        </div>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-4">
+                            <p><strong>Cuenta cerrada:</strong> 90 días después del cierre (salvo obligaciones legales de retención)</p>
+                        </div>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Eliminación y Anonimización</h3>
+                        <p>
+                            Una vez transcurrido el período de retención:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Eliminaremos de forma segura tus datos personales de nuestros sistemas activos</li>
+                            <li>Podemos anonimizar tus datos para fines estadísticos o de investigación, de modo que ya no te identifiquen</li>
+                            <li>Podemos retener información anónima o agregada indefinidamente</li>
+                        </ul>
+
+                        <p className="mt-4">
+                            Podés solicitarnos que eliminemos tus datos antes del período de retención (ver sección &quot;Tus Derechos&quot;). Sin embargo, podemos necesitar retener cierta información para cumplir con obligaciones legales o resolver disputas.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="tus-derechos" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">10. TUS DERECHOS COMO TITULAR</h2>
+                    <div className="text-sm leading-relaxed space-y-4">
+                        <p>
+                            Conforme a la Ley 25.326, tenés los siguientes derechos respecto a tus datos personales:
+                        </p>
+
+                        <h3 className="text-lg font-bold mb-3">Derecho de Acceso</h3>
+                        <p>
+                            Tenés derecho a solicitar y obtener información sobre qué datos personales tuyos estamos procesando, con qué finalidad, a quién se los compartimos, y por cuánto tiempo los conservaremos. Este derecho lo podés ejercer de forma gratuita cada 6 meses, salvo que exista un interés legítimo.
+                        </p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Derecho de Rectificación</h3>
+                        <p>
+                            Tenés derecho a solicitar la corrección de datos inexactos o desactualizados, o a completar datos incompletos. Podés actualizar muchos de tus datos directamente desde tu perfil.
+                        </p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Derecho de Supresión (&quot;Derecho al Olvido&quot;)</h3>
+                        <p>
+                            Tenés derecho a solicitar la eliminación de tus datos personales cuando:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Ya no sean necesarios para las finalidades para las cuales fueron recolectados</li>
+                            <li>Retires tu consentimiento y no haya otra base legal para el tratamiento</li>
+                            <li>Te opongas al tratamiento y no haya motivos legítimos prevalentes</li>
+                            <li>Hayamos tratado tus datos de manera ilícita</li>
+                            <li>Deban eliminarse para cumplir con una obligación legal</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Derecho de Oposición</h3>
+                        <p>
+                            Tenés derecho a oponerte al tratamiento de tus datos personales en cualquier momento, particularmente cuando:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Usamos tus datos con fines de marketing directo (podés darte de baja en cualquier momento)</li>
+                            <li>Procesamos tus datos basándonos en intereses legítimos</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Derecho a Retirar el Consentimiento</h3>
+                        <p>
+                            Cuando el tratamiento se base en tu consentimiento, tenés derecho a retirarlo en cualquier momento. Esto no afectará la licitud del tratamiento anterior al retiro del consentimiento.
+                        </p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Derecho de Portabilidad</h3>
+                        <p>
+                            Tenés derecho a recibir tus datos personales en un formato estructurado, de uso común y lectura mecánica, y a transmitirlos a otro responsable sin impedimentos.
+                        </p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Derecho a la Limitación del Tratamiento</h3>
+                        <p>
+                            Tenés derecho a solicitar la suspensión del tratamiento de tus datos cuando:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Impugnes la exactitud de los datos</li>
+                            <li>El tratamiento sea ilícito pero no quieras que se eliminen</li>
+                            <li>Ya no necesitemos los datos pero vos los necesites para reclamaciones legales</li>
+                            <li>Te hayas opuesto al tratamiento mientras verificamos si nuestros motivos legítimos prevalecen</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Cómo Ejercer tus Derechos</h3>
+                        <p>
+                            Para ejercer cualquiera de estos derechos, podés:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Enviar un correo electrónico a: <strong>info@lanzate.app</strong></li>
+                            <li>Acceder a la configuración de tu cuenta (para algunos derechos)</li>
+                            <li>Enviarnos una carta a nuestra dirección postal</li>
+                        </ul>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Sin Costo</h3>
+                        <p>
+                            No tenés que pagar ninguna tarifa para ejercer tus derechos. Sin embargo, podemos cobrar una tarifa razonable si tu solicitud es manifiestamente infundada, repetitiva o excesiva. También podemos negarnos a cumplir con la solicitud en estas circunstancias.
+                        </p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Verificación de Identidad</h3>
+                        <p>
+                            Podemos necesitar solicitarte información específica para confirmar tu identidad y garantizar tu derecho a acceder a tus datos personales. Esta es una medida de seguridad para asegurar que los datos no se divulguen a ninguna persona que no tenga derecho a recibirlos.
+                        </p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Plazo de Respuesta</h3>
+                        <p>
+                            Intentaremos responder a todas las solicitudes legítimas dentro de los 10 días hábiles conforme establece la Ley 25.326. Ocasionalmente, podría tomarnos más tiempo si tu solicitud es particularmente compleja o si has realizado varias solicitudes. En este caso, te notificaremos y te mantendremos actualizado.
+                        </p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Reclamo ante la Autoridad</h3>
+                        <p>
+                            Si considerás que no hemos atendido adecuadamente tus derechos, tenés derecho a presentar un reclamo ante la Dirección Nacional de Protección de Datos Personales (DNPDP):
+                        </p>
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-2">
+                            <p><strong>Dirección Nacional de Protección de Datos Personales</strong></p>
+                            <p>Agencia de Acceso a la Información Pública</p>
+                            <p>Av. Pte. Gral. Julio A. Roca 710, Piso 3º</p>
+                            <p>C1067ABP - Ciudad Autónoma de Buenos Aires</p>
+                            <p>Tel: 0800-222-DATOS (3286)</p>
+                            <p>Web: <a href="https://www.argentina.gob.ar/aaip" className="text-blue-600 hover:text-blue-800 underline">www.argentina.gob.ar/aaip</a></p>
+                        </div>
                     </div>
                 </section>
 
                 <section id="cookies" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">10. COOKIES</h2>
+                    <h2 className="text-xl font-bold mb-4">11. COOKIES Y TECNOLOGÍAS SIMILARES</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            Our website uses cookies to distinguish you from other users of our website. This helps us to provide you with a good experience when you browse our website and also allows us to improve our site.
+                            Nuestro sitio web y aplicación utilizan cookies y tecnologías similares para mejorar tu experiencia, personalizar contenido y analizar cómo se usan nuestros servicios.
                         </p>
-                        
-                        <h3 className="text-lg font-bold mb-3">What are cookies?</h3>
+
+                        <h3 className="text-lg font-bold mb-3">¿Qué son las Cookies?</h3>
                         <p>
-                            Cookies are small text files that are placed on your computer by websites that you visit. They are widely used in order to make websites work, or work more efficiently, as well as to provide information to the owners of the site.
+                            Las cookies son pequeños archivos de texto que se colocan en tu dispositivo (computadora, celular, tablet) cuando visitás sitios web. Se usan ampliamente para hacer que los sitios web funcionen de manera más eficiente y para proporcionar información a los propietarios del sitio.
                         </p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">Types of cookies we use</h3>
-                        
-                        <h4 className="font-bold mb-2">Strictly necessary cookies</h4>
-                        <p>These are cookies that are required for the operation of our website. They include, for example, cookies that enable you to log into secure areas of our website, use a shopping cart or make use of e-billing services.</p>
-                        
-                        <h4 className="font-bold mb-2 mt-4">Analytical/performance cookies</h4>
-                        <p>They allow us to recognise and count the number of visitors and to see how visitors move around our website when they are using it. This helps us to improve the way our website works, for example, by ensuring that users are finding what they are looking for easily.</p>
-                        
-                        <h4 className="font-bold mb-2 mt-4">Functionality cookies</h4>
-                        <p>These are used to recognise you when you return to our website. This enables us to personalise our content for you, greet you by name and remember your preferences (for example, your choice of language or region).</p>
-                        
-                        <h4 className="font-bold mb-2 mt-4">Targeting cookies</h4>
-                        <p>These cookies record your visit to our website, the pages you have visited and the links you have followed. We will use this information to make our website and the advertising displayed on it more relevant to your interests. We may also share this information with third parties for this purpose.</p>
-                        
-                        <h3 className="text-lg font-bold mb-3 mt-6">How to control cookies</h3>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Tipos de Cookies que Usamos</h3>
+
+                        <h4 className="font-bold mb-2">1. Cookies Estrictamente Necesarias</h4>
+                        <p>Son esenciales para que puedas navegar por el sitio y usar sus funciones. Sin estas cookies, servicios como el carrito de compras o la facturación electrónica no funcionarían. <strong>Estas cookies no requieren tu consentimiento</strong> según la normativa argentina.</p>
+
+                        <h4 className="font-bold mb-2 mt-4">2. Cookies de Rendimiento/Analíticas</h4>
+                        <p>Nos permiten reconocer y contar el número de visitantes y ver cómo se mueven por nuestro sitio. Esto nos ayuda a mejorar la forma en que funciona, por ejemplo, asegurando que los usuarios encuentren fácilmente lo que buscan. <strong>Requieren tu consentimiento.</strong></p>
+                        <p className="text-xs mt-1">Ejemplo: Google Analytics</p>
+
+                        <h4 className="font-bold mb-2 mt-4">3. Cookies de Funcionalidad</h4>
+                        <p>Se usan para reconocerte cuando volvés a nuestro sitio. Esto nos permite personalizar el contenido, saludarte por tu nombre y recordar tus preferencias (por ejemplo, tu elección de idioma o región). <strong>Requieren tu consentimiento.</strong></p>
+
+                        <h4 className="font-bold mb-2 mt-4">4. Cookies de Publicidad/Marketing</h4>
+                        <p>Registran tu visita a nuestro sitio, las páginas que visitaste y los enlaces que seguiste. Usaremos esta información para hacer que nuestro sitio y la publicidad que se muestra sean más relevantes para tus intereses. <strong>Requieren tu consentimiento.</strong></p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Cómo Controlar las Cookies</h3>
                         <p>
-                            You can control and/or delete cookies as you wish. You can delete all cookies that are already on your computer and you can set most browsers to prevent them from being placed. If you do this, however, you may have to manually adjust some preferences every time you visit a site and some services and functionalities may not work.
+                            Tenés varias opciones para controlar las cookies:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li><strong>Panel de Preferencias:</strong> Cuando visitás nuestro sitio por primera vez, te mostramos un banner donde podés aceptar o rechazar diferentes tipos de cookies</li>
+                            <li><strong>Configuración del Navegador:</strong> Podés configurar tu navegador para rechazar todas o algunas cookies, o para que te avise cuando los sitios establezcan o accedan a cookies</li>
+                            <li><strong>Eliminar Cookies:</strong> Podés eliminar todas las cookies que ya están en tu dispositivo</li>
+                        </ul>
+
+                        <p className="mt-4">
+                            <strong>Importante:</strong> Si desactivás o rechazás cookies, algunas partes de nuestro sitio pueden volverse inaccesibles o no funcionar correctamente.
+                        </p>
+
+                        <h3 className="text-lg font-bold mb-3 mt-6">Cookies de Terceros</h3>
+                        <p>
+                            Algunos de nuestros socios comerciales (como Google Analytics, Facebook Pixel) también pueden colocar cookies en tu dispositivo cuando usás nuestros servicios. No controlamos estas cookies de terceros y te recomendamos que revises las políticas de privacidad de estos terceros.
                         </p>
                     </div>
                 </section>
 
-                <section id="third-party-links" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">11. THIRD-PARTY LINKS</h2>
+                <section id="menores" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">12. PRIVACIDAD DE MENORES</h2>
                     <div className="text-sm leading-relaxed space-y-4">
                         <p>
-                            This website may include links to third-party websites, plug-ins and applications. Clicking on those links or enabling those connections may allow third parties to collect or share data about you. We do not control these third-party websites and are not responsible for their privacy statements.
+                            Nuestros servicios están dirigidos a personas mayores de 18 años. Conforme a la Ley 25.326, no recolectamos intencionalmente datos personales de menores de 18 años sin el consentimiento de sus padres o tutores legales.
                         </p>
-                        
+
                         <p>
-                            When you leave our website, we encourage you to read the privacy policy of every website you visit.
+                            Si sos menor de 18 años, <strong>no uses nuestros servicios</strong> sin el consentimiento y supervisión de tus padres o tutores legales.
+                        </p>
+
+                        <p>
+                            Si sos padre, madre o tutor legal y descubrís que tu hijo/a menor de 18 años nos ha proporcionado datos personales sin tu consentimiento, por favor contactanos inmediatamente. Tomaremos medidas para eliminar esa información de nuestros servidores.
+                        </p>
+
+                        <p>
+                            <strong>Para empleados menores de edad:</strong> Si un comercio registra empleados menores de 18 años (lo cual está permitido bajo ciertas condiciones en la legislación laboral argentina), requerimos:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Autorización expresa del padre, madre o tutor legal</li>
+                            <li>Cumplimiento con toda la normativa laboral aplicable a menores</li>
+                            <li>Documentación de autorización de trabajo si corresponde</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="cambios" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">13. CAMBIOS A ESTA POLÍTICA</h2>
+                    <div className="text-sm leading-relaxed space-y-4">
+                        <p>
+                            Podemos actualizar nuestra Política de Privacidad periódicamente para reflejar cambios en nuestras prácticas, en la legislación, o por otros motivos operativos, legales o regulatorios.
+                        </p>
+
+                        <p>
+                            Te notificaremos sobre cualquier cambio publicando la nueva Política de Privacidad en esta página y actualizando la fecha de &quot;Última actualización&quot; en la parte superior.
+                        </p>
+
+                        <p>
+                            Para cambios significativos, también te notificaremos por:
+                        </p>
+                        <ul className="list-disc ml-6 space-y-2">
+                            <li>Correo electrónico (a la dirección registrada en tu cuenta)</li>
+                            <li>Un aviso destacado en nuestro sitio web y aplicación</li>
+                            <li>Una notificación push en la aplicación móvil</li>
+                        </ul>
+
+                        <p>
+                            Te aconsejamos revisar esta Política de Privacidad periódicamente para estar al tanto de cualquier cambio. Los cambios a esta Política de Privacidad son efectivos cuando se publican en esta página.
+                        </p>
+
+                        <p>
+                            <strong>Tu consentimiento:</strong> Al continuar usando nuestros servicios después de que los cambios entren en vigencia, estás aceptando la Política de Privacidad revisada. Si no estás de acuerdo con los cambios, deberías dejar de usar nuestros servicios y podés solicitar la eliminación de tu cuenta.
                         </p>
                     </div>
                 </section>
 
-                <section id="children" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">12. CHILDREN&apos;S PRIVACY</h2>
+                <section id="contacto" className="mb-8">
+                    <h2 className="text-xl font-bold mb-4">14. CONTACTO</h2>
                     <div className="text-sm leading-relaxed space-y-4">
-                        <p>
-                            Our Service does not address anyone under the age of 18 (&quot;Children&quot;).
-                        </p>
-                        
-                        <p>
-                            We do not knowingly collect personally identifiable information from anyone under the age of 18. If you are a parent or guardian and you are aware that your child has provided us with Personal Data, please contact us. If we become aware that we have collected Personal Data from children without verification of parental consent, we take steps to remove that information from our servers.
-                        </p>
-                        
-                        <p>
-                            If we need to rely on consent as a legal basis for processing your information and your country requires consent from a parent, we may require your parent&apos;s consent before we collect and use that information.
-                        </p>
-                    </div>
-                </section>
+                        <p>Si tenés alguna pregunta sobre esta Política de Privacidad o querés ejercer tus derechos, por favor contactanos:</p>
 
-                <section id="changes" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">13. CHANGES TO PRIVACY POLICY</h2>
-                    <div className="text-sm leading-relaxed space-y-4">
-                        <p>
-                            We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.
-                        </p>
-                        
-                        <p>
-                            We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective and update the &quot;Last updated&quot; date at the top of this Privacy Policy.
-                        </p>
-                        
-                        <p>
-                            You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.
-                        </p>
-                    </div>
-                </section>
+                        <div className="bg-accent text-accent-foreground p-6 rounded-lg border-2 border-primary">
+                            <p className="font-bold text-lg mb-3">Lanzáte</p>
+                            <p><strong>Domicilio Legal:</strong></p>
+                            <p>Las Palmas 735</p>
+                            <p>Atlántida, Santa Clara del Mar</p>
+                            <p>Buenos Aires, CP 7609</p>
+                            <p>República Argentina</p>
 
-                <section id="contact" className="mb-8">
-                    <h2 className="text-xl font-bold mb-4">14. CONTACT US</h2>
-                    <div className="text-sm leading-relaxed space-y-4">
-                        <p>If you have any questions about this Privacy Policy, please contact us:</p>
-                        
-                        <div className="bg-gray-50 p-4 rounded-lg">
-                            <p><strong>Lanzate</strong></p>
-                            <p>Las Palmas 735, no</p>
-                            <p>Atlantida, Santa Clara del Mar, Buenos Aires 7609</p>
-                            <p>Argentina</p>
-                            <p>Phone: +5491135069709</p>
-                            <p>Email: info@lanzate.app</p>
-                            <p>Website: <a href="https://www.lanzate.app" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a></p>
+                            <p className="mt-4"><strong>Contacto:</strong></p>
+                            <p>Teléfono: +54 9 11 3506-9709</p>
+                            <p>Email: <a href="mailto:info@lanzate.app" className="text-blue-600 hover:text-blue-800 underline">info@lanzate.app</a></p>
+                            <p>Sitio Web: <a href="https://www.lanzate.app" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a></p>
+
+                            <p className="mt-4"><strong>Responsable de Protección de Datos:</strong></p>
+                            <p>Email: <a href="mailto:info@lanzate.app" className="text-blue-600 hover:text-blue-800 underline">info@lanzate.app</a></p>
+                        </div>
+
+                        <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary mt-6">
+                            <p className="font-bold mb-2">Horario de Atención:</p>
+                            <p>Lunes a Viernes de 9:00 a 18:00 hs (hora de Argentina)</p>
+                            <p className="text-xs mt-2">Tiempo de respuesta estimado: 10 días hábiles</p>
                         </div>
                     </div>
                 </section>
@@ -494,4 +746,5 @@ function PrivacyPolicy() {
         </section>
     )
 }
+
 export default PrivacyPolicy

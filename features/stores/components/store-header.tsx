@@ -1,28 +1,16 @@
 "use client"
 
-import { Card, CardAction, CardContent } from "@/components/ui/card"
-import { Title } from "@/features/layout/components"
-import { Store } from "lucide-react"
-import StoreLogoEditor from "./store-logo-editor"
+import Image from "next/image"
 import { useEffect, useState } from "react"
-import { getStoreHeaderBySlug } from "../actions/getStoreHeaderBySlug"
-import { updateStoreLogo } from "../actions/updateStoreLogo"
 import { toast } from "sonner"
-import { StoreBannerEditor } from "./store-banner-editor"
-import { updateStoreBanner } from "../actions/updateStoreBanner"
 
-type StoreHeaderProps = {
-    slug: string
-}
+import { Card, CardAction, CardContent } from "@/features/shadcn/components/ui/card"
+/* import { Title } from "@/features/layout/components" */
+import { getStoreHeaderBySlugAction/* , updateStoreBannerAction */, updateStoreLogoAction } from "@/features/stores/actions"
+import { /* StoreBannerEditor, */ StoreLogoEditor } from "@/features/stores/components"
+import { StoreHeaderProps, StoreHeaderData } from "@/features/stores/types"
 
 function StoreHeader({ slug }: StoreHeaderProps) {
-    type StoreHeaderData = {
-        id: number
-        name: string
-        description: string | null
-        logo: string | null
-        banner: string | null
-    }
     const [store, setStore] = useState<StoreHeaderData | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -30,7 +18,7 @@ function StoreHeader({ slug }: StoreHeaderProps) {
     useEffect(() => {
         const loadStore = async () => {
             try {
-                const { payload, error: hasError, message } = await getStoreHeaderBySlug(slug)
+                const { payload, hasError: hasError, message } = await getStoreHeaderBySlugAction(slug)
                 if (hasError) setError(message)
                 else setStore(payload)
             } catch {
@@ -59,8 +47,8 @@ function StoreHeader({ slug }: StoreHeaderProps) {
                 // Actualizar en la base de datos
                 if (newLogoUrl) {
                     toast.loading('Updating store logo...')
-                    const { error, message } = await updateStoreLogo(store.id, newLogoUrl)
-                    if (error) {
+                    const { hasError, message } = await updateStoreLogoAction(store.id, newLogoUrl)
+                    if (hasError) {
                         toast.dismiss()
                         toast.error(message)
                     } else {
@@ -75,7 +63,7 @@ function StoreHeader({ slug }: StoreHeaderProps) {
         }
     }
 
-    const handleBannerUpdate = async (newBannerUrl: string | null) => {
+    /* const handleBannerUpdate = async (newBannerUrl: string | null) => {
         if (store) {
             if (!store.id) {
                 toast.error('Missing store id')
@@ -88,8 +76,8 @@ function StoreHeader({ slug }: StoreHeaderProps) {
                 })
                 if (newBannerUrl) {
                     toast.loading('Updating store banner...')
-                    const { error, message } = await updateStoreBanner(store.id, newBannerUrl)
-                    if (error) {
+                    const { hasError, message } = await updateStoreBannerAction(store.id, newBannerUrl)
+                    if (hasError) {
                         toast.dismiss()
                         toast.error(message)
                     } else {
@@ -103,7 +91,7 @@ function StoreHeader({ slug }: StoreHeaderProps) {
             }
         }
     }
-
+ */
     if (loading) {
         return <div>Loading store header...</div>
     }
@@ -114,7 +102,7 @@ function StoreHeader({ slug }: StoreHeaderProps) {
 
     return (
         <>
-            <Title
+            {/* <Title
                 title={(
                     <div className="flex items-center gap-2">
                         <Store />
@@ -132,17 +120,17 @@ function StoreHeader({ slug }: StoreHeaderProps) {
                     }
                 ]}
                 showDate
-            />
+            /> */}
             <section className="items-center gap-4 flex mb-2 md:mb-0">
                 <Card className="w-full relative overflow-hidden group/store-banner">
-                    <img
+                    <Image
                         src={store.banner || `https://api.dicebear.com/9.x/shapes/svg?seed=${store.name}&backgroundColor=transparent`}
                         alt="Store banner"
                         className="w-full h-40 object-cover absolute top-0 left-0 brightness-[30%]"
                     />
                     <CardContent className="flex items-center gap-4 w-full z-10">
                         <div className="relative">
-                            <img
+                            <Image
 
                                 src={store.logo || `https://api.dicebear.com/9.x/initials/svg?seed=${store.name}`}
                                 alt="Store logo"
@@ -166,11 +154,11 @@ function StoreHeader({ slug }: StoreHeaderProps) {
                             </p>
                         </div>
                         <CardAction className="group-hover/store-banner:opacity-100 opacity-0 transition-opacity duration-300">
-                            <StoreBannerEditor
+                           {/*  <StoreBannerEditor
                                 currentBanner={store.banner}
                                 storeName={store.name}
                                 onBannerUpdate={handleBannerUpdate}
-                            />
+                            /> */}
                         </CardAction>
                     </CardContent>
                 </Card>

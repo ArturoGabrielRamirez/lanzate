@@ -1,4 +1,4 @@
-"use server"
+/* "use server"
 import { cookies } from "next/headers";
 
 export default async function getAuthHeaders(): Promise<HeadersInit> {
@@ -6,7 +6,6 @@ export default async function getAuthHeaders(): Promise<HeadersInit> {
 
     return {
         'Content-Type': 'application/json',
-        // Pasar todas las cookies (incluyendo tokens de sesión)
         'Cookie': cookieStore.toString(),
     };
-};
+}; */

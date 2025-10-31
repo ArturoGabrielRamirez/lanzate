@@ -1,30 +1,32 @@
-import { getBranchDetails } from "@/features/branches/actions/getBranchDetails"
-import EditBranchButton from "@/features/branches/components/edit-branch-button"
-import DeleteBranchButton from "@/features/branches/components/delete-branch-button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { BranchDetailPageProps } from "@/features/branches/types"
-import { ArrowLeft, MapPin, Phone, Mail, Crown, Package, ShoppingCart, DollarSign, Calendar } from "lucide-react"
-import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
-import { getTranslations } from "next-intl/server"
 import { Order } from "@prisma/client"
+import { ArrowLeft, MapPin, Phone, Mail, Crown, Package, ShoppingCart, DollarSign, Calendar } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { getTranslations } from "next-intl/server"
+
+import { getBranchDetailsAction } from "@/features/branches/actions/get-branch-details.action"
+import DeleteBranchButton from "@/features/branches/components/delete-branch-button"
+import EditBranchButton from "@/features/branches/components/edit-branch-button"
+import { BranchDetailPageProps } from "@/features/branches/types"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 
 async function BranchDetailPage({ params }: BranchDetailPageProps) {
 
     const { slug, id } = await params
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)
     }
 
-    const { payload: branch, error } = await getBranchDetails(id)
+    const { payload: branch, hasError } = await getBranchDetailsAction(id)
 
-    if (error || !branch) {
-        return console.log(error)
+    if (hasError || !branch) {
+        return console.log(hasError)
     }
 
     const formatDate = (dateString: string | Date) => {
@@ -39,7 +41,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
 
     const totalProducts = branch.stock?.length || 0
     const totalOrders = branch.orders?.length || 0
-    const totalRevenue = branch.orders?.reduce((sum: number, order: Order) => sum + order.total_price, 0) || 0
+    const totalRevenue = (branch.orders as Order[] | undefined)?.reduce((sum: number, order: Order) => sum + order.total_price, 0) || 0
 
     return (
         <Card>
@@ -55,10 +57,12 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                 <div className="grid grid-cols-1 lg:grid-cols-[max-content_1fr] grid-rows-[auto_1fr] lg:grid-rows-1 gap-6 w-full">
                     {/* Branch Icon/Image */}
                     <div className="relative flex items-center justify-center w-full overflow-hidden rounded-md h-35 lg:h-full lg:w-60 xl:w-80 group bg-secondary">
-                        <img
+                        <Image
                             src={`https://api.dicebear.com/9.x/initials/svg?seed=${branch.name}`}
                             alt="Branch Icon"
                             className="object-cover w-full h-full transition-all duration-300 bg-center rounded-md group-hover:scale-105"
+                            height={24}
+                            width={24}
                         />
                     </div>
 
@@ -153,7 +157,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                             <div>
                                 <h4 className="mb-2 text-lg font-semibold">{t("recent-orders")}</h4>
                                 <div className="space-y-2">
-                                    {branch.orders.slice(0, 5).map((order: Order) => (
+                                    {(branch.orders as Order[]).slice(0, 5).map((order: Order) => (
                                         <div key={order.id} className="flex items-center justify-between p-2 rounded bg-secondary/30">
                                             <div>
                                                 <p className="text-sm font-medium">{t("order")}#{order.id}</p>
@@ -197,4 +201,4 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
     )
 }
 
-export default BranchDetailPage 
+export default BranchDetailPage

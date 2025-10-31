@@ -1,4 +1,4 @@
-import { getTopCategoriesAction } from "../actions/get-top-categories-action"
+/* import { getTopCategoriesAction } from "../actions/get-top-categories-action.action"
 import TopCategoriesChartClient from "./top-categories-chart-client"
 
 type TopCategoriesServerProps = {
@@ -31,4 +31,4 @@ export default async function TopCategoriesServer({ slug }: TopCategoriesServerP
     }))
 
     return <TopCategoriesChartClient data={chartData} pieData={pieData} />
-} 
+}  */

@@ -1,8 +1,8 @@
-'use client'
+/* 'use client'
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-/* import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select" */
+//import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, PieChart, Pie, Cell, LineChart, Line } from "recharts"
 import { useState } from "react"
 import { BarChartBig } from "lucide-react"
@@ -30,7 +30,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D'
 
 export default function TopCategoriesChartClient({ data, pieData }: TopCategoriesChartClientProps) {
     const [chartType, setChartType] = useState<'bar' | 'pie' | 'line'>('bar')
-    /* const [timeRange, setTimeRange] = useState('30') */
+    //const [timeRange, setTimeRange] = useState('30')
 
     // Calculate max value for Y axis with some padding
     const maxQuantity = Math.max(...data.map(item => item.quantity), 0)
@@ -42,7 +42,7 @@ export default function TopCategoriesChartClient({ data, pieData }: TopCategorie
                 <div className="flex items-center justify-between">
                     <CardTitle>Top Categories</CardTitle>
                     <div className="flex items-center gap-2">
-                        {/* <Select value={timeRange} onValueChange={setTimeRange}>
+                        <Select value={timeRange} onValueChange={setTimeRange}>
                             <SelectTrigger className="w-32">
                                 <SelectValue />
                             </SelectTrigger>
@@ -51,7 +51,7 @@ export default function TopCategoriesChartClient({ data, pieData }: TopCategorie
                                 <SelectItem value="30">Last Month</SelectItem>
                                 <SelectItem value="365">Last Year</SelectItem>
                             </SelectContent>
-                        </Select> */}
+                        </Select>
                         <Button
                             variant="outline"
                             size="sm"
@@ -120,4 +120,4 @@ export default function TopCategoriesChartClient({ data, pieData }: TopCategorie
             </CardContent>
         </Card>
     )
-} 
+}  */

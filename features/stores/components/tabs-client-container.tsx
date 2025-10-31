@@ -1,11 +1,11 @@
 "use client"
 
-import { Tabs } from "@/components/ui/tabs"
 import { usePathname } from "next/navigation"
 
-import { TabClientContainerProps } from "@/features/stores/types"
+import { Tabs } from "@/features/shadcn/components/ui/tabs"
+import { TabProps } from "@/features/stores/types"
 
-function TabsClientContainer({ children }: TabClientContainerProps) {
+function TabsClientContainer({ children }: TabProps) {
 
     const pathname = usePathname()
     const tab = pathname.split("/").pop()
@@ -16,4 +16,5 @@ function TabsClientContainer({ children }: TabClientContainerProps) {
         </Tabs>
     )
 }
-export default TabsClientContainer
+
+export { TabsClientContainer }

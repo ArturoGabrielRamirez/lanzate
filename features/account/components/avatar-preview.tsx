@@ -1,7 +1,9 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { AvatarPreviewProps } from "../types"
+/* import Image from "next/image"
 
-export default function AvatarPreview({ previewUrl, getDefaultAvatar }: AvatarPreviewProps) {
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { AvatarPreviewProps } from "@/features/account/types"
+
+export function AvatarPreview({ previewUrl, getDefaultAvatar }: AvatarPreviewProps) {
   return (
     <div className="flex justify-center">
       <Avatar className="h-32 w-32 border-2 border-primary bg-chart-4">
@@ -10,7 +12,7 @@ export default function AvatarPreview({ previewUrl, getDefaultAvatar }: AvatarPr
           alt="Preview avatar"
         />
         <AvatarFallback>
-          <img
+          <Image
             src={getDefaultAvatar()}
             alt="Default avatar"
             className="h-full w-full"
@@ -19,4 +21,4 @@ export default function AvatarPreview({ previewUrl, getDefaultAvatar }: AvatarPr
       </Avatar>
     </div>
   )
-}
+} */

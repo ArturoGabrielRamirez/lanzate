@@ -1,41 +1,40 @@
 "use client"
 
-// import { createProduct } from "../actions/createProduct"
-import { productCreateSchema } from "../schemas/product-schema"
-import { formatErrorResponse } from "@/utils/lib"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { AnimatePresence, motion } from "framer-motion"
 import { Plus, ShoppingCart, Box, ImageIcon, Boxes, Ruler, Tags, Palette, Settings, DollarSign } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { useTranslations } from "next-intl"
-import { UnifiedCreateProductButtonProps } from "../type"
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { Form } from "@/features/layout/components"
-import { cn } from "@/lib/utils"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion"
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { AnimatePresence, motion } from "framer-motion"
 
-import BasicInfoSection from "./sections/basic-info-section"
-import MediaSection from "./sections/media-section"
-import PriceStockSection from "./sections/price-stock-section"
-import CategoriesSection from "./sections/categories-section"
-import SizesSection from "./sections/sizes-section"
-import SettingsSection from "./sections/settings-section"
-import ColorsSection from "./sections/colors-section"
-import DimensionsSection from "./sections/dimensions-section"
-import VariantsPreviewSection from "./sections/variants-preview-section"
-import VariantsEditor from "./sections/variants-editor"
-import type { MediaSectionData, CategoriesSectionData, SizesSectionData, ColorsSectionData, SettingsSectionData, CategoryValue, DimensionsSectionData } from "../type/create-form-extra"
-import type { ProductColor } from "../type/product-color"
-import { mapUnifiedCreatePayload } from "../utils/mapUnifiedCreatePayload"
-import { createUnifiedProduct, type CreateUnifiedProductArgs } from "../actions/createUnifiedProduct"
+import { AccordionTriggerWithValidation } from "@/features/branches/components/accordion-trigger-with-validation"
+import { Form } from "@/features/global/components/form/form"
+import { formatErrorResponse } from "@/features/global/utils"
+import { createUnifiedProductAction } from "@/features/products/actions/create-unified-product.action"
+import { BasicInfoSection } from "@/features/products/components/sections/basic-info-section"
+import { CategoriesSection } from "@/features/products/components/sections/categories-section"
+import { ColorsSection } from "@/features/products/components/sections/colors-section"
+import { DimensionsSection } from "@/features/products/components/sections/dimensions-section"
+import { MediaSection } from "@/features/products/components/sections/media-section"
+import { PriceStockSection } from "@/features/products/components/sections/price-stock-section"
+import { SettingsSection } from "@/features/products/components/sections/settings-section"
+import { SizesSection } from "@/features/products/components/sections/sizes-section"
+import { VariantsEditor } from "@/features/products/components/sections/variants-editor"
+import { VariantsPreviewSection } from "@/features/products/components/sections/variants-preview-section"
+import { productCreateSchema } from "@/features/products/schemas/product-schema"
+import type { CreateUnifiedProductArgs, UnifiedCreateProductButtonProps } from "@/features/products/types"
+import type { MediaSectionData, CategoriesSectionData, SizesSectionData, ColorsSectionData, SettingsSectionData, CategoryValue, DimensionsSectionData, ProductColor } from "@/features/products/types"
+import { mapUnifiedCreatePayload } from "@/features/products/utils/map-unified-create-payload"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { Accordion, AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
+import { Switch } from "@/features/shadcn/components/ui/switch"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { cn } from "@/lib/utils"
+
 
 type CreateProductPayload = {
     name: string
@@ -98,9 +97,9 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
             const measures = (sizesRef.current?.measures ?? []).map((m: Option) => m.value)
             const isUniqueSize = sizesRef.current?.isUniqueSize === true
             const colors = colorsRef.current?.colors ?? []
-            
+
             let variantsList: { size?: string, measure?: string }[] = []
-            
+
             if (isUniqueSize) {
                 variantsList = [{ size: undefined, measure: undefined }]
             } else {
@@ -118,7 +117,7 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
 
             const colorList: (ProductColor | undefined)[] = (colors?.length ?? 0) > 0 ? colors as ProductColor[] : [undefined]
             const exclusions: string[] = (payload as unknown as { variantExclusions?: string[] }).variantExclusions ?? []
-            
+
             const variants = variantsList.length === 0 && colorList[0] === undefined
                 ? []
                 : variantsList.flatMap((variant) => colorList.map((c: ProductColor | undefined) => {
@@ -155,11 +154,11 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                 props.userId,
             )
 
-            const { error, message, payload: created } = await createUnifiedProduct(args as CreateUnifiedProductArgs)
-            if (error) throw new Error(message)
-            return { error: false, message: t("messages.success"), payload: created }
+            const { hasError, message, payload: created } = await createUnifiedProductAction(args as CreateUnifiedProductArgs)
+            if (hasError) throw new Error(message)
+            return { hasError: false, message: t("messages.success"), payload: created }
         } catch (error) {
-            return formatErrorResponse(t("messages.error"), error, null)
+            return formatErrorResponse(t("messages.error"))
         }
     }
 
@@ -188,9 +187,9 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
                         </TooltipContent>
                     </Tooltip>
                 ) : (
-                <Button disabled={false} variant="default" type="button" className={cn("w-full", buttonClassName)}>
-                    {buttonIcon}
-                    <span className="hidden md:block">{t("button")}</span>
+                    <Button disabled={false} variant="default" type="button" className={cn("w-full", buttonClassName)}>
+                        {buttonIcon}
+                        <span className="hidden md:block">{t("button")}</span>
                     </Button>)}
             </DialogTrigger>
             <DialogContent className="max-h-[80vh] overflow-y-auto">
@@ -400,4 +399,4 @@ function UnifiedCreateProductButton(props: UnifiedCreateProductButtonProps) {
     )
 }
 
-export default UnifiedCreateProductButton 
+export { UnifiedCreateProductButton } 

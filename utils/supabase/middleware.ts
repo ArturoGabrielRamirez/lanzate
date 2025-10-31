@@ -1,10 +1,11 @@
-// middleware.ts - VERSIÓN SIMPLIFICADA
 import { createServerClient } from '@supabase/ssr'
-import createIntlMiddleware from 'next-intl/middleware'
 import { NextRequest, NextResponse } from 'next/server'
-import { extractSubdomain } from '@/features/subdomain/middleware/middleware'
-import { validateSubdomain } from '@/features/subdomain/actions/validateSubdomain'
-import { routing } from '@/i18n/routing'
+import createIntlMiddleware from 'next-intl/middleware'
+
+import { validateSubdomainAction } from '@/features/subdomain/actions/validate-subdomain.action'
+import { extractSubdomain } from '@/features/subdomain/middleware'
+import { Locale, routing } from '@/i18n/routing'
+
 import type { User } from '@supabase/supabase-js'
 
 const intlMiddleware = createIntlMiddleware(routing)
@@ -23,7 +24,7 @@ function extractLocaleFromPath(pathname: string): { locale: string | null; pathW
   const segments = pathname.split('/').filter(Boolean)
   const firstSegment = segments[0]
 
-  if (routing.locales.includes(firstSegment as any)) {
+  if (routing.locales.includes(firstSegment as Locale)) {
     return {
       locale: firstSegment,
       pathWithoutLocale: '/' + segments.slice(1).join('/')
@@ -42,6 +43,11 @@ function createCookieConfig() {
     secure: true,
     sameSite: 'none' as const
   }
+}
+
+// Función para verificar si es una ruta de perfil público
+function isPublicProfileRoute(pathWithoutLocale: string): boolean {
+  return pathWithoutLocale.match(/^\/u\/[a-zA-Z0-9_-]+$/) !== null
 }
 
 export async function updateSession(request: NextRequest) {
@@ -111,7 +117,7 @@ export async function updateSession(request: NextRequest) {
     }
 
     try {
-      const { payload: exists } = await validateSubdomain(subdomain)
+      const { payload: exists } = await validateSubdomainAction(subdomain)
       if (!exists) {
         const url = new URL('/not-found', `https://${rootDomain}`)
         return NextResponse.redirect(url)
@@ -152,6 +158,11 @@ export async function updateSession(request: NextRequest) {
       return NextResponse.rewrite(url, response)
     }
 
+    // Permitir rutas de perfil público en subdominios también
+    if (isPublicProfileRoute(pathWithoutLocale)) {
+      return response
+    }
+
     return response
   }
 
@@ -163,9 +174,16 @@ export async function updateSession(request: NextRequest) {
     '/privacy-policy',
     '/terms-and-conditions',
     '/cookies',
+    '/help',
+    '/waitlist',
+    '/waitlist-success',
   ]
+
+  // Verificar si es una ruta de perfil público (no requiere autenticación)
+  const isPublicProfile = isPublicProfileRoute(pathWithoutLocale)
+
   // Redirecciones de autenticación simples
-  if (!user && !publicRoutes.includes(pathWithoutLocale)) {
+  if (!user && !publicRoutes.includes(pathWithoutLocale) && !isPublicProfile) {
     const url = new URL(`/${currentLocale}/login`, `https://${rootDomain}`)
     return NextResponse.redirect(url)
   }
@@ -177,7 +195,6 @@ export async function updateSession(request: NextRequest) {
 
   return response
 }
-
 /* export const config = {
   matcher: [
     '/((?!api|_next/static|_next/image|favicon.ico).*)',

@@ -1,8 +1,9 @@
-import { createServerSideClient } from '@/utils/supabase/server'
 import { NextResponse } from 'next/server'
 
+import { createServerSideClient } from '@/utils/supabase/server'
+
 export async function POST(request: Request) {
-  const supabase = await createServerSideClient()
+  const supabase = createServerSideClient()
   const formData = await request.formData()
   const password = formData.get('password')?.toString()
 

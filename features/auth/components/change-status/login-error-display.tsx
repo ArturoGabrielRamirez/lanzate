@@ -1,12 +1,12 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
 import { LoginErrorDisplayProps } from '@/features/auth/types'
 
-const LoginErrorDisplay = ({ error, message }: LoginErrorDisplayProps) => {
+function LoginErrorDisplay({ error, message }: LoginErrorDisplayProps) {
     const t = useTranslations("auth")
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -104,4 +104,4 @@ const LoginErrorDisplay = ({ error, message }: LoginErrorDisplayProps) => {
     )
 }
 
-export default LoginErrorDisplay;
+export { LoginErrorDisplay };

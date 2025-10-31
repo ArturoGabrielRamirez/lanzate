@@ -1,1 +1,1 @@
-export { canManageCategories } from "./canManageCategories" 
+export { canManageCategoriesAccess as canManageCategories } from "@/features/categories/access/can-manage-categories.access" 

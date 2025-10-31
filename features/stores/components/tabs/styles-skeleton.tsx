@@ -1,11 +1,12 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Settings, AppWindow, Filter, IdCard } from "lucide-react"
-import { Switch } from "@/components/ui/switch"
-import { Select, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import * as motion from "motion/react-client"
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Card } from "@/features/shadcn/components/ui/card"
+import { Select, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
+import { Switch } from "@/features/shadcn/components/ui/switch"
 
 function StylesSkeleton() {
     return (
@@ -241,4 +242,4 @@ function StylesSkeleton() {
     )
 }
 
-export default StylesSkeleton 
+export { StylesSkeleton }

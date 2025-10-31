@@ -1,14 +1,12 @@
 "use client"
 
-import { useCart } from "@/features/cart/components"
-import { Button } from "@/components/ui/button"
 import { Trash2 } from "lucide-react"
-import { CartItemType } from "@/features/cart/types"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
-type CartItemProps = {
-    item: CartItemType
-}
+
+import { useCart } from "@/features/cart/components"
+import { CartItemProps } from "@/features/cart/types"
+import { Button } from "@/features/shadcn/components/ui/button"
 
 function CartItem({ item }: CartItemProps) {
 
@@ -31,7 +29,7 @@ function CartItem({ item }: CartItemProps) {
                         className="rounded-md"
                     />
                 ) : (
-                    <img src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 scale-y-95 scale-x-93 rounded-md max-w-20" />
+                    <Image src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 scale-y-95 scale-x-93 rounded-md max-w-20" width={48} height={48} />
                 )}
             </div>
             <div className="flex justify-between items-start">

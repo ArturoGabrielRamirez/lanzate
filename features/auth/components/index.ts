@@ -1,21 +1,5 @@
-export { default as LoginForm } from "./forms/form-login";
-export { default as SignupForm } from "./forms/form-signup";
-export { default as ResetPassword } from "./forms/form-reset-password";
-export { default as UpdatePasswordForm } from "./forms/update-password-form";
-export { default as ResetPasswordLink } from "./change-visual/reset-password-link";
-export { default as SocialLoginButtons } from "./buttons/social-login-buttons";
-export { default as LoginErrorDisplay } from "./change-status/login-error-display";
-export { default as FacebookLogo } from "./social-logo/facebook-logo";
-export { default as GoogleLogo } from "./social-logo/google-logo";
-export { default as ChangeEmailButton } from "./buttons/change-email-button";
-export { default as ChangePasswordButton } from "./buttons/change-password-button";
-export { default as EmailChangeActions } from "./change-status/email-change-actions";
-export { default as EmailChangeMonitor } from "./change-status/email-change-monitor";
-export { default as EmailStatusBanner } from "./change-visual/email-status-banner";
-export { default as EmailStepInstructions } from "./change-visual/email-step-instructions";
-export { default as EmailStepProgress } from "./change-visual/email-step-progress";
-export { default as GlobalEmailConfirmationDetector } from "./change-status/global-email-confirmation-detector";
-export { default as EmailChangeForm } from "./forms/email-change-form";
-export { default as EmailChangeDialog } from "./change-visual/email-change-dialog";
-export { default as ProgressButton } from "./buttons/progress-button";
-export { default as EmailStatusAlerts } from "./change-visual/email-status-alerts";
+export * from "@/features/auth/components/buttons/index"
+export * from "@/features/auth/components/forms/index"
+export * from "@/features/auth/components/change-status/index"
+export * from "@/features/auth/components/social-logo/index"
+export * from "@/features/auth/components/change-visual/index"

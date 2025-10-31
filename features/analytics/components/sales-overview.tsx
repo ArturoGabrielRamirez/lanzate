@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+/* import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 
 type SalesOverviewProps = {
     slug: string
@@ -12,4 +12,4 @@ export default function SalesOverview({ slug }: SalesOverviewProps) {
             </CardHeader>
         </Card>
     )
-} 
+}  */

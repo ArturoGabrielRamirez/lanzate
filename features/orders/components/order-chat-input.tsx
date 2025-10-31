@@ -1,20 +1,17 @@
 "use client"
 
-import { AutosizeTextarea } from "@/components/expansion/autosize-textarea"
-import { Button } from "@/components/ui/button"
 import { Paperclip } from "lucide-react"
-import { useState, useTransition } from "react"
 import { usePathname } from "next/navigation"
-import { insertOrderMessageAction } from "../actions"
+import { useState, useTransition } from "react"
 import { toast } from "sonner"
-import { useOrderChat, type User, type MessageWithSender } from "./order-chat-context"
 
-type Props = {
-    orderId: string
-    user: User | null
-}
+import { insertOrderMessageAction } from "@/features/orders/actions/insert-order-message.action"
+import { useOrderChat } from "@/features/orders/components/order-chat-context"
+import { OrderChatInputProps, MessageWithSender } from "@/features/orders/types"
+import { AutosizeTextarea } from "@/features/shadcn/components/expansion/autosize-textarea"
+import { Button } from "@/features/shadcn/components/ui/button"
 
-function OrderChatInput({ orderId, user }: Props) {
+function OrderChatInput({ orderId, user }: OrderChatInputProps) {
     const [message, setMessage] = useState("")
     const [isPending, startTransition] = useTransition()
     const pathname = usePathname()
@@ -67,14 +64,14 @@ function OrderChatInput({ orderId, user }: Props) {
 
         startTransition(async () => {
             try {
-                const result = await insertOrderMessageAction({
+                const { hasError, message } = await insertOrderMessageAction({
                     orderId,
                     message: messageToSend,
                     pathname
                 })
 
-                if (result.error) {
-                    toast.error(result.message)
+                if (hasError) {
+                    toast.error(message)
                     setMessage(messageToSend) // Restore message on error
                 } else {
                     toast.success("Message sent successfully")
@@ -96,16 +93,16 @@ function OrderChatInput({ orderId, user }: Props) {
 
     return (
         <div className="flex items-center relative">
-            <Button 
-                variant="outline" 
-                size="icon" 
+            <Button
+                variant="outline"
+                size="icon"
                 className="absolute left-2"
                 disabled={isPending}
             >
                 <Paperclip />
             </Button>
-            <AutosizeTextarea 
-                className="w-full pr-22 pl-14" 
+            <AutosizeTextarea
+                className="w-full pr-22 pl-14"
                 placeholder="Type your message..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -114,7 +111,7 @@ function OrderChatInput({ orderId, user }: Props) {
                 maxLength={1000}
                 minHeight={40}
             />
-            <Button 
+            <Button
                 className="absolute right-2"
                 onClick={handleSendMessage}
                 disabled={isPending || !message.trim()}
@@ -125,4 +122,4 @@ function OrderChatInput({ orderId, user }: Props) {
     )
 }
 
-export default OrderChatInput 
+export { OrderChatInput }

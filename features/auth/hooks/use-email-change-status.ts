@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react';
-import { getEmailChangeStatus } from '../actions/index';
+import { useState, useEffect, useRef, useCallback } from 'react'
+
+import { getEmailChangeStatusAction } from '@/features/auth/actions'
 
 export function useEmailChangeStatus(initialOldEmail: string,
     onComplete: () => void) {
@@ -20,7 +21,7 @@ export function useEmailChangeStatus(initialOldEmail: string,
     const isCheckingRef = useRef(false);
     const lastStatusRef = useRef('');
 
-    const checkStatus = async (force = false, isManual = false) => {
+    const checkStatus = useCallback(async (force = false, isManual = false) => {
         if (isCheckingRef.current && !force) return;
         isCheckingRef.current = true;
 
@@ -31,10 +32,10 @@ export function useEmailChangeStatus(initialOldEmail: string,
         console.log('Checking email change status...');
 
         try {
-            const result = await getEmailChangeStatus();
+            const result = await getEmailChangeStatusAction();
             console.log('Email change status result:', result);
 
-            if (result.payload && !result.error) {
+            if (result.payload) {
                 const newStatus = {
                     oldEmailConfirmed: result.payload.oldEmailConfirmed || false,
                     newEmailConfirmed: result.payload.newEmailConfirmed || false,
@@ -79,7 +80,7 @@ export function useEmailChangeStatus(initialOldEmail: string,
                 }, 800);
             }
         }
-    };
+    }, [initialOldEmail, onComplete]);
 
     const handleManualCheck = () => {
         checkStatus(true, true);
@@ -101,7 +102,7 @@ export function useEmailChangeStatus(initialOldEmail: string,
                 intervalRef.current = null;
             }
         };
-    }, [initialOldEmail]);
+    }, [initialOldEmail, checkStatus]);
 
     useEffect(() => {
         if (!status.hasEmailChange || status.processCompleted) {

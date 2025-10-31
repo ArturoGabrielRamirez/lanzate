@@ -18,7 +18,10 @@
         "login": "Iniciar sesión",
         "signup": "Registrarse",
         "email": "Correo electrónico",
+        "email-placeholder": "mi.correo@ejemplo.com",
         "password": "Contraseña",
+        "username": "Nombre de usuario",
+        "confirm-password": "Confirmar contraseña",
         "buttons": {
             "login": "Iniciar sesión",
             "sign-up": "Registrarse",
@@ -40,14 +43,16 @@
             "signing-in": "Iniciando sesión...",
             "signing-up": "Registrándose...",
             "reset-password": "Enviando enlace de recuperación...",
-            "updating-password": "Actualizando contraseña..."
+            "updating-password": "Actualizando contraseña...",
+            "success-joined-waitlist": "Te has unido exitosamente a la lista de espera",
+            "joining-waitlist": "Uniendose a la lista de espera"
         },
         "reset-password": {
             "new-password": "Nueva contraseña",
             "title": "Restablecer contraseña",
             "description": {
                 "forgot-password": "¿Olvidaste tu contraseña?",
-                "reset-password": "Restablece tu contraseña haciendo clic acá",
+                "reset-password": "Restablece tu contraseña",
                 "password-updated": "¡Contraseña actualizada! Ahora puedes iniciar sesión."
             }
         },
@@ -144,7 +149,10 @@
             "verifying-updating": "Verificando y actualizando contraseña..."
         },
         "close": "Cerrar",
-        "try-facebook-again": "Intentar con Facebook de nuevo"
+        "try-facebook-again": "Intentar con Facebook de nuevo",
+        "help": "Contactanos",
+        "back-to-home": "Volver al inicio",
+        "join-waitlist": "Unirme"
     },
     "cart": {
         "title": "Carrito",
@@ -208,7 +216,7 @@
         "create-product": {
             "button": "Crear Producto",
             "title": "Crear nuevo producto",
-            "description": "¡Creá un nuevo producto para comenzar a vender tus productos! Elegí un nombre para tu producto y hacé clic en el botón de abajo, podés continuar agregando más detalles del producto una vez que esté creado.",
+            "description": "Descripción",
             "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
             "drag-drop": "Arrastrá y soltá archivos aquí",
             "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
@@ -216,7 +224,6 @@
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
-            "description": "Descripción",
             "file-rejected": "\"{filename}\" ha sido rechazado",
             "messages": {
                 "success": "¡Producto creado exitosamente!",
@@ -318,13 +325,14 @@
         },
         "help": {
             "title": "¿Necesitas ayuda?",
-            "contact-us": "Contáctanos",
+            "contact-us": "Contactanos",
             "description": "Nuestros expertos están aquí para ayudarte.",
             "send-message": "Enviar mensaje",
             "dialog": {
-                "title": "Contáctanos",
+                "title": "Contactanos",
                 "description": "Envíanos un mensaje y te responderemos lo antes posible.",
                 "email": "Email",
+                "name": "Nombre",
                 "message": "Mensaje",
                 "messages": {
                     "success": "Mensaje enviado",
@@ -351,7 +359,8 @@
             "4": "posible.",
             "word-1": "soñá",
             "word-2": "emprende",
-            "word-3": "crecé"
+            "word-3": "crecé",
+            "finish": "lo hace posible"
         },
         "beam": {
             "sales": {
@@ -501,6 +510,38 @@
                 "title": "Comunidad"
             },
             "copyright": "© Copyright 2025. Todos los derechos reservados."
+        },
+        "announcement": {
+            "last-update": "Última actualización",
+            "title": "Nueva caja registradora agregada"
+        },
+        "features": {
+            "title": "Características",
+            "feature": {
+                "customizable": "Personalizable",
+                "all-in-one": {
+                    "description": "Gestiona tu tienda donde sea, disponible en todos tus dispositivos.",
+                    "title": "Todo-en-uno"
+                },
+                "custom-domain": {
+                    "title": "Dominio personalizado",
+                    "description": {
+                        "own-brand": "¡Consigue tu dominio personalizado y publica tus productos bajo tu marca!"
+                    }
+                }
+            }
+        },
+        "who-we-are": {
+            "title": "Quienes somos",
+            "description": "En una mision para ayudarte a lanzar tu negocio",
+            "description-long": "En Lanzate, creemos que cada emprendedor merece las herramientas                              adecuadas para hacer realidad sus ideas. Nuestra plataforma te                              proporciona todo lo necesario para crear, gestionar y hacer crecer                              tu negocio digital desde el primer día, sin complicaciones técnicas.",
+            "description-long-2": "Sabemos que iniciar un negocio puede ser abrumador. Por eso hemos                              creado una solución integral que elimina las barreras técnicas y                              te permite enfocarte en lo que realmente importa: tu visión. Desde                              tu sitio web personalizado hasta la gestión de clientes, todo está                              diseñado para ser simple, rápido y efectivo.",
+            "description-long-3": "Nuestro compromiso va más allá de una simple plataforma. Estamos                              construyendo una comunidad de emprendedores valientes que comparten                              el sueño de crear algo propio. Al elegir Lanzate, no solo obtienes                              una herramienta poderosa, te unes a un ecosistema diseñado para                              impulsar tu éxito y el de tu negocio.",
+            "founded": "Fundado",
+            "users": "Usuarios",
+            "country": "Paises",
+            "sold": "Vendido",
+            "learn-more": "Conocé más sobre nuestra app"
         }
     },
     "layout": {
@@ -1000,7 +1041,7 @@
         "create-product": {
             "button": "Crear Producto",
             "title": "Crear nuevo producto",
-            "description": "¡Creá un nuevo producto para comenzar a vender tus productos! Elegí un nombre para tu producto y hacé clic en el botón de abajo, podés continuar agregando más detalles del producto una vez que esté creado.",
+            "description": "Descripción",
             "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
             "drag-drop": "Arrastrá y soltá archivos aquí",
             "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
@@ -1008,7 +1049,6 @@
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
-            "description": "Descripción",
             "file-rejected": "\"{filename}\" ha sido rechazado",
             "messages": {
                 "success": "¡Producto creado exitosamente!",
@@ -1019,14 +1059,13 @@
         "edit-product": {
             "button": "Editar Producto",
             "title": "Editar producto",
-            "description": "Editá los detalles de tu producto",
+            "description": "Descripción",
             "drag-drop": "Arrastrá y soltá archivos aquí",
             "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
             "browse-files": "Explorar archivos",
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
-            "description": "Descripción",
             "file-rejected": "\"{filename}\" ha sido rechazado",
             "validation": {
                 "name-required": "El nombre es requerido",
@@ -1408,6 +1447,62 @@
                 "3": "productos",
                 "4": "producto"
             }
+        }
+    },
+    "feature/header": {
+        "navigation": {
+            "home": "Inicio",
+            "about": "Acerca de",
+            "contact": "Contacto",
+            "login": "Iniciar sesión",
+            "signup": "Registrarse",
+            "signout": "Cerrar sesión",
+            "access": "Acceso",
+            "moreInfo": "Más",
+            "help": "Ayuda",
+            "sections": {
+                "hero": "Hero",
+                "heroDesc": "Descripción del hero",
+                "howItWorks": "Cómo funciona",
+                "integrations": "Integraciones",
+                "faq": "FAQ",
+                "faqDesc": "Descripción de la FAQ",
+                "howItWorksDesc": "Descripción de cómo funciona",
+                "integrationsDesc": "Descripción de las integraciones",
+                "dashboardDesc": "Descripción del dashboard",
+                "newSale": "Nueva venta",
+                "newSaleDesc": "Descripción de la nueva venta",
+                "stores": "Tiendas",
+                "storesDesc": "Descripción de las tiendas",
+                "account": "Cuenta",
+                "accountDesc": "Descripción de la cuenta",
+                "googleAuthDesc": "Descripción de la autenticación con Google",
+                "aboutDesc": "Descripción de la sección de acerca de",
+                "contactDesc": "Descripción de la sección de contacto",
+                "loginDesc": "Descripción de la sección de inicio de sesión",
+                "signupDesc": "Descripción de la sección de registrarse",
+                "forgotPassword": "Olvidé mi contraseña",
+                "forgotPasswordDesc": "Descripción de la sección de olvidé mi contraseña",
+                "googleAuth": "Autenticación con Google",
+                "dashboard": "Dashboard",
+                "helpDesc": "Si necesitas ayuda, contáctanos"
+            }
+        }
+    },
+    "address-section": "Dirección",
+    "features": {
+        "speed": {
+            "headline": "¡Más rápido que la luz!",
+            "description": "Lanzate carga al instante; garantizando que tus clientes tengan una experiencia veloz y fluida en todo momento."
+        },
+        "stay-connected": {
+            "headline": "Mantente conectado",
+            "description": "Mantente conectado con tus clientes a través de nuestras características integradas de redes sociales."
+        }
+    },
+    "landing": {
+        "contact-section": {
+            "contact-us": "Contactanos"
         }
     }
 }

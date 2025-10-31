@@ -1,12 +1,13 @@
-import { Toaster } from "@/components/ui/sonner";
-import CartProvider from "@/features/cart/components/cart-provider";
-import { Header } from "@/features/store-landing/components"
-import Footer from "@/features/store-landing/components/footer";
-import MainContainer from "@/features/store-landing/components/main-container";
-import StoreProvider from "@/features/store-landing/components/store-provider";
-import { getStoreWithProducts } from "@/features/subdomain/actions/getStoreWithProducts";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+
+import CartProvider from "@/features/cart/components/cart-provider";
+import { Footer } from "@/features/layout/components/public-store/footer";
+import { Header } from "@/features/layout/components/public-store/header";
+import { MainContainer } from "@/features/layout/components/public-store/main-container";
+import { StoreProvider } from "@/features/layout/components/public-store/store-provider";
+import { Toaster } from "@/features/shadcn/components/ui/sonner";
+import { getStoreWithProductsAction } from "@/features/stores/actions/get-store-with-products.action";
 
 type LayoutProps = {
     children: React.ReactNode;
@@ -21,7 +22,7 @@ export default async function Layout({ children, params }: LayoutProps) {
 
     const { subdomain } = await params;
 
-    const { payload: storeData, error } = await getStoreWithProducts(
+    const { payload: storeData, hasError } = await getStoreWithProductsAction(
         subdomain,
         undefined,
         undefined,
@@ -34,7 +35,7 @@ export default async function Layout({ children, params }: LayoutProps) {
 
     const t = await getTranslations("store");
 
-    if (error || !storeData) {
+    if (hasError || !storeData) {
         return <div>{t("store-not-found")}</div>;
     }
 

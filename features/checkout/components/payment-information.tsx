@@ -1,21 +1,17 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
-import { InputField } from "@/features/layout/components"
-import { CreditCard, Banknote, Smartphone } from "lucide-react"
-import { useFormContext } from "react-hook-form"
 import { PaymentMethod } from "@prisma/client"
+import { CreditCard, Banknote, Smartphone } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useFormContext } from "react-hook-form"
 
-interface PaymentInformationProps {
-    paymentMethod: PaymentMethod
-    onChange: (method: PaymentMethod) => void
-    allowedPaymentMethods: PaymentMethod[]
-}
+import { PaymentInformationProps } from "@/features/checkout/types/types"
+import { InputField } from "@/features/global/components/form/input-field"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 
-export function PaymentInformation({ paymentMethod, onChange, allowedPaymentMethods }: PaymentInformationProps) {
+function PaymentInformation({ paymentMethod, onChange, allowedPaymentMethods }: PaymentInformationProps) {
     const { setValue } = useFormContext()
     const t = useTranslations("checkout.payment")
 
@@ -141,3 +137,5 @@ export function PaymentInformation({ paymentMethod, onChange, allowedPaymentMeth
         </div>
     )
 } 
+
+export { PaymentInformation }

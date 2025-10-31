@@ -1,18 +1,16 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Order, OrderTracking, OrderTrackingStatus } from "@prisma/client"
+import { OrderTrackingStatus } from "@prisma/client"
 import { Clock, Package, CheckCircle2, Truck } from "lucide-react"
 import { useTransition } from "react"
-import { updateOrderTrackingAction } from "../actions/updateOrderTrackingAction"
 import { toast } from "sonner"
-import { finalizeOrderAction } from "../actions/finalizeOrderAction"
 
-type Props = {
-    order: Order & { tracking: OrderTracking | null }
-}
+import { finalizeOrderAction } from "@/features/orders/actions/finalize-order.action"
+import { updateOrderTrackingAction } from "@/features/orders/actions/update-order-tracking.action"
+import { OrderActionButtonsProps } from "@/features/orders/types"
+import { Button } from "@/features/shadcn/components/ui/button"
 
-const OrderActionButtons = ({ order }: Props) => {
+function OrderActionButtons({ order }: OrderActionButtonsProps) {
 
     const [isPending, startTransition] = useTransition()
     const [isFinalizing, startFinalizeTransition] = useTransition()
@@ -33,12 +31,12 @@ const OrderActionButtons = ({ order }: Props) => {
 
         startTransition(async () => {
             try {
-                const { error, message } = await updateOrderTrackingAction({
+                const { hasError, message } = await updateOrderTrackingAction({
                     orderId: order.id.toString(),
                     newTrackingStatus: newStatus
                 })
 
-                if (error) {
+                if (hasError) {
                     throw new Error(message)
                 }
                 toast.dismiss()
@@ -59,13 +57,13 @@ const OrderActionButtons = ({ order }: Props) => {
 
         startFinalizeTransition(async () => {
             try {
-                const { error, message } = await finalizeOrderAction({
+                const { hasError, message } = await finalizeOrderAction({
                     orderId: order.id.toString(),
                     shippingMethod: order.shipping_method
                 })
 
 
-                if (error) {
+                if (hasError) {
                     throw new Error(message)
                 }
                 toast.dismiss()
@@ -156,4 +154,4 @@ const OrderActionButtons = ({ order }: Props) => {
         </div>
     )
 }
-export default OrderActionButtons
+export { OrderActionButtons }

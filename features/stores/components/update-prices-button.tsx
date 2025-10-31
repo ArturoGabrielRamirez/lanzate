@@ -1,30 +1,24 @@
 "use client"
 
-import { ButtonWithPopup, InputField } from "@/features/layout/components"
-import { Pencil } from "lucide-react"
-import { useState, useEffect } from "react"
+import { Category } from "@prisma/client"
 import { useTranslations } from "next-intl"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
-import { RowModel } from "@tanstack/react-table"
-import { getCategories } from "@/features/store-landing/actions/getCategories"
-import { getProductsCountByCategoryAction } from "@/features/products/actions/getProductsCountByCategory"
-import { updateProductsPricesAction } from "@/features/products/actions/updateProductsPrices"
-import { formatErrorResponse } from "@/utils/lib"
-import { Category, Product } from "@prisma/client"
+import { useState, useEffect } from "react"
 
-type UpdatePricesButtonProps = {
-    selectedRows: RowModel<Product & { categories: Category[] }>
-    storeId: number
-}
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
+import InputField from "@/features/global/components/form/input"
+import { formatErrorResponse } from "@/features/global/utils"
+import { getProductsCountByCategoryAction } from "@/features/products/actions/get-products-count-by-category.action"
+import { updateProductsPricesAction } from "@/features/products/actions/update-products-prices.action"
+import { Label } from "@/features/shadcn/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
+import { getCategoriesAction } from "@/features/stores/actions/get-categories.action"
+import { UpdatePricesButtonProps, PriceUpdateType } from "@/features/stores/types"
 
-type UpdateType = "fijo" | "porcentaje"
-
-export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) {
+function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) {
     const [categories, setCategories] = useState<Category[]>([])
     const [selectedCategory, setSelectedCategory] = useState<string>("")
     const [amount, setAmount] = useState<string>("")
-    const [updateType, setUpdateType] = useState<UpdateType>("fijo")
+    const [updateType, setUpdateType] = useState<PriceUpdateType>("fijo")
     const [productsInCategory, setProductsInCategory] = useState<number>(0)
     const [isLoadingCount, setIsLoadingCount] = useState(false)
     const t = useTranslations("store.update-prices")
@@ -33,9 +27,10 @@ export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButton
 
     useEffect(() => {
         const fetchCategories = async () => {
-            const { payload, error } = await getCategories()
-            if (!error && payload) {
-                setCategories(payload)
+            const { payload, hasError } = await getCategoriesAction()
+
+            if (!hasError && payload) {
+                setCategories(payload as Category[])
             }
         }
         fetchCategories()
@@ -46,11 +41,11 @@ export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButton
             if (selectedCategory) {
                 setIsLoadingCount(true)
                 try {
-                    const { payload, error } = await getProductsCountByCategoryAction(
+                    const { payload, hasError } = await getProductsCountByCategoryAction(
                         parseInt(selectedCategory),
                         storeId
                     )
-                    if (!error && payload !== null) {
+                    if (!hasError && payload !== null) {
                         setProductsInCategory(payload)
                     } else {
                         setProductsInCategory(0)
@@ -81,7 +76,7 @@ export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButton
             let payload: {
                 storeId: number
                 amount: number
-                updateType: UpdateType
+                updateType: PriceUpdateType
                 productIds?: number[]
                 categoryId?: number
             }
@@ -109,20 +104,20 @@ export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButton
 
             console.log("Updating prices with payload:", payload)
 
-            const { error, message, payload: result } = await updateProductsPricesAction(payload)
+            const { hasError, message, payload: result } = await updateProductsPricesAction(payload)
 
-            if (error) {
+            if (hasError) {
                 throw new Error(message)
             }
 
             return {
-                error: false,
-                message: `${t("messages.success")} - ${result?.updatedCount || 0} productos actualizados`,
+                hasError: false,
+                message: `${t("messages.success")} - ${result?.payload?.updatedCount || 0} productos actualizados`,
                 payload: result
             }
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : t("messages.error")
-            return formatErrorResponse(errorMessage, error, null)
+            return formatErrorResponse(errorMessage)
         }
     }
 
@@ -147,7 +142,7 @@ export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButton
                         </div>
                         <div className="w-full flex flex-col gap-2">
                             <Label htmlFor="update-type">{t("update-type")}</Label>
-                            <Select value={updateType} onValueChange={(value: UpdateType) => setUpdateType(value)}>
+                            <Select value={updateType} onValueChange={(value: PriceUpdateType) => setUpdateType(value)}>
                                 <SelectTrigger className="w-full min-h-10 mb-0">
                                     <SelectValue />
                                 </SelectTrigger>
@@ -175,9 +170,9 @@ export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButton
                                 <SelectValue placeholder={t("choose-category")} />
                             </SelectTrigger>
                             <SelectContent>
-                                {categories.map((category) => (
-                                    <SelectItem key={category.id} value={category.id.toString()}>
-                                        {category.name}
+                                {categories.map((category: Category) => (
+                                    <SelectItem key={category.id} value={category.id?.toString()}>
+                                        {category.name?.toString()}
                                     </SelectItem>
                                 ))}
                             </SelectContent>
@@ -207,7 +202,7 @@ export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButton
                                     </div>
                                     <div className="flex flex-col gap-2 w-full">
                                         <Label htmlFor="update-type">{t("update-type")}</Label>
-                                        <Select value={updateType} onValueChange={(value: UpdateType) => setUpdateType(value)}>
+                                        <Select value={updateType} onValueChange={(value: PriceUpdateType) => setUpdateType(value)}>
                                             <SelectTrigger className="w-full mb-0 min-h-10">
                                                 <SelectValue />
                                             </SelectTrigger>
@@ -256,4 +251,6 @@ export function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButton
             {renderContent()}
         </ButtonWithPopup>
     )
-} 
+}
+
+export { UpdatePricesButton }

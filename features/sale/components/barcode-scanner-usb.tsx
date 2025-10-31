@@ -1,19 +1,15 @@
 "use client"
 
-import { useState } from 'react'
-import { Card, CardContent } from '@/components/ui/card'
-import { useBarcodeScanner } from '../lib/use-barcode-scanner'
-import type { ScannedData } from '../types'
-import { useTranslations } from 'next-intl'
-import BarcodeScannerCammeraButton from './barcode-scanner-cammera-button'
 import { ScanBarcode } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 
-type BarcodeScannerUSBProps = {
-  onProductScanned?: (barcode: string) => void
-  className?: string
-}
+import { BarcodeScannerCammeraButton } from '@/features/sale/components'
+import { useBarcodeScanner } from '@/features/sale/lib/use-barcode-scanner'
+import type { ScannedData, BarcodeScannerUSBProps } from '@/features/sale/types'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Card, CardContent } from '@/features/shadcn/components/ui/card'
+import { cn } from '@/lib/utils'
 
 function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBProps) {
   const [enabled, setEnabled] = useState(true)
@@ -71,4 +67,4 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
   )
 }
 
-export default BarcodeScannerUSB 
+export { BarcodeScannerUSB }

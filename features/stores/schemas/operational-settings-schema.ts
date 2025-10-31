@@ -1,5 +1,5 @@
-import * as yup from "yup"
 import { PaymentMethod } from "@prisma/client"
+import * as yup from "yup"
 
 export const editOperationalSettingsSchema = yup.object({
     offers_delivery: yup.boolean().required(),
@@ -30,7 +30,6 @@ export const editOperationalSettingsSchema = yup.object({
         .matches(/^\d+(?:\.\d+)?$/, "Must be a valid number"),
 })
 
-export type EditOperationalSettingsData = yup.InferType<typeof editOperationalSettingsSchema>
 
 export const operationalSettingsSchema = yup.object({
   offers_delivery: yup.boolean().required(),

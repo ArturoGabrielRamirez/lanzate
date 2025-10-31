@@ -1,23 +1,15 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { /* ArrowRight, */ DollarSign, ShoppingCart, TrendingUp } from "lucide-react"
-import { SalesOverviewData } from "../types"
+import { DollarSign, ShoppingCart, TrendingUp } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-/* import Link from "next/link" */
 
-type Props = {
-    data: SalesOverviewData
-}
+import { SalesOverviewWidgetProps } from "@/features/overview/types"
+import { formatCurrency } from "@/features/overview/utils"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-async function SalesOverviewWidget({ data }: Props) {
+async function SalesOverviewWidget({ data }: SalesOverviewWidgetProps) {
 
     const t = await getTranslations("overview.sales-overview")
 
-    const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('es-AR', {
-            style: 'currency',
-            currency: 'ARS'
-        }).format(amount)
-    }
+    
 
     return (
         <Card className="hover:bg-accent transition-colors duration-200 group">
@@ -69,4 +61,4 @@ async function SalesOverviewWidget({ data }: Props) {
     )
 }
 
-export default SalesOverviewWidget 
+export { SalesOverviewWidget }

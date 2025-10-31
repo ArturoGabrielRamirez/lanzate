@@ -1,32 +1,23 @@
 "use client"
 
+import { yupResolver } from "@hookform/resolvers/yup"
 import { MapPin, Edit as EditIcon, X } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { Store, Branch } from "@prisma/client"
-import { EditAddressButton } from "../section-buttons"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, InputField, CheckboxField } from "@/features/layout/components"
 import { useEffect, useState } from "react"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { editAddressSchema } from "../../schemas/address-schema"
 import { useFormContext } from "react-hook-form"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
-interface AddressDisplayProps {
-    store: Store & { branches: Branch[] }
-    userId: number
-}
+import CheckboxField from "@/features/global/components/form/checkbox-field"
+import { Form } from "@/features/global/components/form/form"
+import { InputField } from "@/features/global/components/form/input-field"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { EditAddressButton } from "@/features/stores/components/section-buttons"
+import { editAddressSchema } from "@/features/stores/schemas/address-schema"
+import { AddressDisplayProps, AddressFormValues } from "@/features/stores/types"
 
-type AddressFormValues = {
-    is_physical_store: boolean
-    address?: string
-    city?: string
-    province?: string
-    country?: string
-}
+function AddressDisplay({ store, userId }: AddressDisplayProps) {
 
-const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
     const t = useTranslations("store.edit-store")
     const mainBranch = store.branches?.find((branch) => branch.is_main)
     const [isEditing, setIsEditing] = useState(false)
@@ -47,8 +38,8 @@ const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
     function ToggleEditButton() {
         const { reset } = useFormContext<AddressFormValues>()
 
-        const initialValues: AddressFormValues = {
-            is_physical_store: Boolean(store.is_physical_store),
+        const initialValues = {
+            /* is_physical_store: store.is_physical_store, */
             address: mainBranch?.address || "",
             city: mainBranch?.city || "",
             province: mainBranch?.province || "",
@@ -58,7 +49,7 @@ const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
         const onClick = () => {
             if (isEditing) {
                 reset(initialValues)
-                setIsPhysicalStore(initialValues.is_physical_store)
+                /* setIsPhysicalStore(initialValues.is_physical_store) */
                 handleCloseEdit()
                 return
             }
@@ -119,6 +110,7 @@ const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
                                     <InputField
                                         name="address"
                                         label={t("address")}
+                                        placeholder={t("address")}
                                         defaultValue={mainBranch?.address || ""}
                                         disabled={!isEditing || !isPhysicalStore}
                                     />
@@ -127,6 +119,7 @@ const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
                                     <InputField
                                         name="city"
                                         label={t("city")}
+                                        placeholder={t("city")}
                                         defaultValue={mainBranch?.city || ""}
                                         disabled={!isEditing || !isPhysicalStore}
                                     />
@@ -135,6 +128,7 @@ const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
                                     <InputField
                                         name="province"
                                         label={t("province")}
+                                        placeholder={t("province")}
                                         defaultValue={mainBranch?.province || ""}
                                         disabled={!isEditing || !isPhysicalStore}
                                     />
@@ -143,6 +137,7 @@ const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
                                     <InputField
                                         name="country"
                                         label={t("country")}
+                                        placeholder={t("country")}
                                         defaultValue={mainBranch?.country || ""}
                                         disabled={!isEditing || !isPhysicalStore}
                                     />
@@ -156,4 +151,4 @@ const AddressDisplay = ({ store, userId }: AddressDisplayProps) => {
     )
 }
 
-export default AddressDisplay
+export { AddressDisplay }

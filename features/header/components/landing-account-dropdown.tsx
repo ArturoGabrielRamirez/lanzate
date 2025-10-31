@@ -1,12 +1,13 @@
 "use client"
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
 import { User } from "lucide-react"
-import { useState } from "react"
 import Link from "next/link"
+import { useState } from "react"
+
 import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 
 function LandingAccountDropdown() {
     const [open, setOpen] = useState(false)
@@ -55,4 +56,4 @@ function LandingAccountDropdown() {
     )
 }
 
-export default LandingAccountDropdown
+export { LandingAccountDropdown }

@@ -1,26 +1,25 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { FileText, X, Download, Eye, FilePlus } from "lucide-react"
-import { Form, InputField, TextareaField } from "@/features/layout/components"
-import { FileUpload, FileUploadDropzone, FileUploadList, FileUploadTrigger, FileUploadItem, FileUploadItemPreview, FileUploadItemMetadata, FileUploadItemDelete } from "@/components/ui/file-upload"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ResponseType } from "@/features/layout/types"
-import { insertContract, getContracts, checkStorageBucket } from "@/features/employees/data"
-import { Contract } from "@/features/employees/types"
+import { useState, useEffect, useCallback } from "react"
 import { toast } from "sonner"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
-import { yupResolver } from "@hookform/resolvers/yup"
+
+import { AccordionTriggerWithValidation } from "@/features/branches/components/accordion-trigger-with-validation"
+import { checkStorageBucketData } from "@/features/employees/data/check-storage-bucket.data"
+import { getContractsData } from "@/features/employees/data/get-contracts.data"
+import { insertContractData } from "@/features/employees/data/insert-contract.data"
 import { contractCreateSchema } from "@/features/employees/schemas/employee-schema"
-import { yupResolverFlexible } from "../types/yup-resolver-flexible"
-type CreateContractButtonProps = {
-    storeId: number
-    userId: number
-}
+import { Contract, CreateContractButtonProps, InsertContractPayload } from "@/features/employees/types"
+import { yupResolverFlexible } from "@/features/employees/types/yup-resolver-flexible"
+import { Form } from "@/features/global/components/form/form"
+import { InputField } from "@/features/global/components/form/input-field"
+import { TextareaField } from "@/features/global/components/form/textarea-field"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
+import { FileUpload, FileUploadDropzone, FileUploadList, FileUploadTrigger, FileUploadItem, FileUploadItemPreview, FileUploadItemMetadata, FileUploadItemDelete } from "@/features/shadcn/components/ui/file-upload"
 
 function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
     const [files, setFiles] = useState<File[]>([])
@@ -29,18 +28,32 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
     const [loading, setLoading] = useState(false)
     const [bucketChecked, setBucketChecked] = useState(false)
 
+    const loadContracts = useCallback(async () => {
+        setLoading(true)
+        try {
+            const result = await getContractsData(storeId)
+            if (!result.hasError && result.payload) {
+                setContracts(result.payload)
+            }
+        } catch (error) {
+            console.error("Error loading contracts:", error)
+        } finally {
+            setLoading(false)
+        }
+    }, [storeId])
+
     // Cargar contratos existentes cuando se abre el popup
     useEffect(() => {
         if (open) {
             loadContracts()
             checkBucket()
         }
-    }, [open])
+    }, [open, loadContracts])
 
     const checkBucket = async () => {
         try {
-            const result = await checkStorageBucket()
-            if (result.error) {
+            const result = await checkStorageBucketData()
+            if (result.hasError) {
                 toast.error(result.message)
             }
             setBucketChecked(true)
@@ -50,66 +63,55 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
         }
     }
 
-    const loadContracts = async () => {
-        setLoading(true)
-        try {
-            const result = await getContracts(storeId)
-            if (!result.error && result.payload) {
-                setContracts(result.payload)
-            }
-        } catch (error) {
-            console.error("Error loading contracts:", error)
-        } finally {
-            setLoading(false)
-        }
-    }
 
-    const handleCreateContract = async (data: any): Promise<ResponseType<any>> => {
-        try {
-            // Validar que se haya subido un archivo
-            if (files.length === 0) {
-                return {
-                    error: true,
-                    message: "Debes subir un archivo PDF",
-                    payload: null
-                }
-            }
 
-            const payload = {
-                ...data,
-                file: files
-            }
-
-            const result = await insertContract(payload, storeId, userId)
-
-            // Si hay error, retornarlo
-            if (result.error) {
-                return {
-                    error: true,
-                    message: result.message,
-                    payload: null
-                }
-            }
-
-            // Limpiar archivos y recargar contratos
-            setFiles([])
-            await loadContracts()
-
+    const handleCreateContract = async (data: FormData) => {
+    try {
+        // Validar que se haya subido un archivo
+        if (files.length === 0) {
             return {
-                error: false,
-                message: "Contrato creado exitosamente",
-                payload: result.payload
-            }
-        } catch (error) {
-            console.error("Error creating contract:", error)
-            return {
-                error: true,
-                message: error instanceof Error ? error.message : "Error creating contract",
+                hasError: true,
+                message: "Debes subir un archivo PDF",
                 payload: null
             }
         }
-    }
 
+        // ✅ Extraer los valores de FormData correctamente
+        const payload: InsertContractPayload = {
+            title: data.get('title') as string,
+            comments: data.get('comments') as string | null,
+            file: files
+        }
+
+        const result = await insertContractData(payload, storeId, userId)
+
+        // Si hay error, retornarlo
+        if (result.hasError) {
+            return {
+                hasError: true,
+                message: result.message,
+                payload: null
+            }
+        }
+
+        // Limpiar archivos y recargar contratos
+        setFiles([])
+        await loadContracts()
+
+        return {
+            hasError: false,
+            message: "Contrato creado exitosamente",
+            payload: result.payload
+        }
+    } catch (error) {
+        console.error("Error creating contract:", error)
+        return {
+            hasError: true,
+            message: error instanceof Error ? error.message : "Error creating contract",
+            payload: null
+        }
+    }
+}
     const handleOpenChange = (isOpen: boolean) => {
         setOpen(isOpen)
         if (!isOpen) {
@@ -140,8 +142,10 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
         }
     }
 
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('es-ES', {
+    // ✅ Actualizado para aceptar Date o string
+    const formatDate = (date: Date | string) => {
+        const dateObj = typeof date === 'string' ? new Date(date) : date
+        return dateObj.toLocaleDateString('es-ES', {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
@@ -172,7 +176,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                     loadingMessage="Creando contrato..."
                     onSuccess={handleSuccess}
                     disabled={false}
-                    resolver={yupResolverFlexible(contractCreateSchema)}
+                    resolver={yupResolverFlexible<FormData>(contractCreateSchema as never)}
                 >
                     <Accordion type="single" collapsible defaultValue="item-1">
                         <AccordionItem value="item-1">
@@ -260,6 +264,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                                             name="title"
                                             label="Título del contrato"
                                             type="text"
+                                            placeholder="Título del contrato"
                                         />
 
                                         {/* PDF Upload */}
@@ -313,7 +318,6 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                                             name="comments"
                                             label="Comentarios adicionales"
                                             placeholder="Agrega cualquier comentario o nota adicional sobre el contrato"
-                                            rows={4}
                                         />
                                     </div>
                                 )}
@@ -326,4 +330,4 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
     )
 }
 
-export default CreateContractButton 
+export { CreateContractButton }

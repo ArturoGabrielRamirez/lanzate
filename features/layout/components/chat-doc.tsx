@@ -1,14 +1,15 @@
 "use client"
 
+import { X, Minimize2, Maximize2, Loader2 } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
-import { useChat } from "./chat-provider"
-import { RealtimeChat } from "@/components/realtime-chat"
-import { IconButton } from "@/src/components/ui/shadcn-io/icon-button"
-import { X, Minimize2, Maximize2, Loader2 } from "lucide-react"
-import { ChatMessage } from "@/hooks/use-realtime-chat"
 
-const ChatDoc = () => {
+import { useChat } from "@/features/layout/components/chat-provider"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { RealtimeChat } from "@/features/shadcn/components/supabase/realtime-chat"
+import { ChatMessage } from "@/features/shadcn/hooks/use-realtime-chat"
+
+function ChatDoc() {
 
     const {
         isOpen,
@@ -131,4 +132,5 @@ const ChatDoc = () => {
         </div>
     )
 }
-export default ChatDoc
+
+export { ChatDoc }

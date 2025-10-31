@@ -14,11 +14,15 @@
             "currently-not-available": "Currently not available"
         }
     },
+    "Auth": {},
     "auth": {
         "login": "Log In",
         "signup": "Sign Up",
         "email": "Email",
+        "email-placeholder": "email@example.com",
         "password": "Password",
+        "username": "Username",
+        "confirm-password": "Confirm Password",
         "buttons": {
             "login": "Log In",
             "sign-up": "Sign Up",
@@ -40,14 +44,16 @@
             "signing-in": "Signing in...",
             "signing-up": "Signing up...",
             "reset-password": "Sending reset link...",
-            "updating-password": "Updating password..."
+            "updating-password": "Updating password...",
+            "success-joined-waitlist": "You have succesfully joined the waitlist",
+            "joining-waitlist": "Joining the waitlist"
         },
         "reset-password": {
             "new-password": "New Password",
             "title": "Reset Password",
             "description": {
                 "forgot-password": "Forgot password?",
-                "reset-password": "Reset your password clicking here",
+                "reset-password": "Reset your password",
                 "password-updated": "Password updated! You can now log in."
             }
         },
@@ -144,7 +150,10 @@
             "verifying-updating": "Verifying and updating password..."
         },
         "close": "Close",
-        "try-facebook-again": "Try with Facebook again"
+        "try-facebook-again": "Try with Facebook again",
+        "help": "Contact us",
+        "back-to-home": "Back to homepage",
+        "join-waitlist": "Join"
     },
     "cart": {
         "title": "Cart",
@@ -208,7 +217,7 @@
         "create-product": {
             "button": "Create Product",
             "title": "Create new product",
-            "description": "Select a store and create a new product to start selling!",
+            "description": "Description",
             "popup-description": "Select a store and create a new product to start selling!",
             "select-store": "Select Store",
             "choose-store": "Choose a store...",
@@ -219,7 +228,6 @@
             "product-name": "Product Name",
             "price": "Price",
             "stock": "Stock",
-            "description": "Description",
             "messages": {
                 "select-store-first": "Please select a store first",
                 "success": "Product created successfully!",
@@ -319,28 +327,6 @@
             "see-all": "See All",
             "new-store": "New Store"
         },
-        "create-product": {
-            "button": "Create Product",
-            "title": "Create new product",
-            "description": "Select a store and create a new product to start selling!",
-            "popup-description": "Select a store and create a new product to start selling!",
-            "select-store": "Select Store",
-            "choose-store": "Choose a store...",
-            "product-will-be-created": "Product will be created in: {storeName}",
-            "drag-drop-image": "Drag & drop product image",
-            "click-browse": "Or click to browse (max 1 file, up to 2MB)",
-            "browse-files": "Browse files",
-            "product-name": "Product Name",
-            "price": "Price",
-            "stock": "Stock",
-            "description": "Description",
-            "messages": {
-                "select-store-first": "Please select a store first",
-                "success": "Product created successfully!",
-                "error": "Failed to create product",
-                "loading": "Creating product..."
-            }
-        },
         "help": {
             "title": "Need help?",
             "contact-us": "Contact us",
@@ -350,6 +336,7 @@
                 "title": "Contact us",
                 "description": "Send us a message and we will get back to you as soon as possible.",
                 "email": "Email",
+                "name": "Name",
                 "message": "Message",
                 "messages": {
                     "success": "Message sent",
@@ -374,9 +361,10 @@
             "2": "dream it. ",
             "3": "Lanzate makes it",
             "4": "happen.",
-            "word-1": "dream it. ",
-            "word-2": "build it.",
-            "word-3": "grow it."
+            "word-1": "dream it",
+            "word-2": "build it",
+            "word-3": "grow it",
+            "finish": "makes it happen"
         },
         "beam": {
             "sales": {
@@ -397,7 +385,7 @@
             }
         },
         "description": {
-            "slogan": "Manage your business has never been easier. Focus on growth while we give you full control:",
+            "slogan": "Manage your business has never been easier. Focus on growth while we give you full control",
             "slogan-items": {
                 "1": "manage your products",
                 "2": "process sales",
@@ -526,6 +514,38 @@
                 "title": "Community"
             },
             "copyright": "© Copyright 2025. All Rights Reserved."
+        },
+        "announcement": {
+            "last-update": "Last update",
+            "title": "New cash register added"
+        },
+        "features": {
+            "title": "Features",
+            "feature": {
+                "customizable": "Customizable",
+                "all-in-one": {
+                    "description": "Manage your store from anywhere, available on all your devices.",
+                    "title": "All-in-one"
+                },
+                "custom-domain": {
+                    "title": "Custom domain",
+                    "description": {
+                        "own-brand": "Get your own domain URL and publish your products under your brand!"
+                    }
+                }
+            }
+        },
+        "who-we-are": {
+            "title": "Who we are",
+            "description": "On a mission to help you launch your business",
+            "description-long": "We believe that every entrepreneur deserves the tools                              to make their ideas a reality. Our platform provides everything you                              need to create, manage and grow your digital business from day one,                              without technical complications.",
+            "description-long-2": "We know that starting a business can be overwhelming. That's why we've created an integrated solution that eliminates technical barriers and allows you to focus on what really matters: your vision. From your custom website to customer management, everything is designed to be simple, fast and effective.",
+            "description-long-3": "Our commitment goes beyond software. We're building a community of brave entrepreneurs who share the dream of creating something own. By choosing Lanzate, you not only get a powerful tool, you join a community designed to help you succeed and grow your business.",
+            "founded": "Founded",
+            "users": "Users",
+            "country": "Countries",
+            "sold": "Sold",
+            "learn-more": "Learn more about our company"
         }
     },
     "sale": {
@@ -1162,7 +1182,7 @@
         "create-product": {
             "button": "Create Product",
             "title": "Create new product",
-            "description": "Create a new product to start selling your products! Choose a name for your product and click on the button below, you can continue to add more details of the product once it's created.",
+            "description": "Description",
             "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
             "drag-drop": "Drag & drop files here",
             "click-browse": "Or click to browse (max 1 files, up to 2MB each)",
@@ -1170,7 +1190,6 @@
             "name": "Name",
             "price": "Price",
             "stock": "Stock",
-            "description": "Description",
             "file-rejected": "\"{filename}\" has been rejected",
             "messages": {
                 "success": "Product created successfully!",
@@ -1181,14 +1200,13 @@
         "edit-product": {
             "button": "Edit Product",
             "title": "Edit product",
-            "description": "Edit the details of your product",
+            "description": "Description",
             "drag-drop": "Drag & drop files here",
             "click-browse": "Or click to browse (max 1 files, up to 2MB each)",
             "browse-files": "Browse files",
             "name": "Name",
             "price": "Price",
             "stock": "Stock",
-            "description": "Description",
             "file-rejected": "\"{filename}\" has been rejected",
             "validation": {
                 "name-required": "Name is required",
@@ -1434,6 +1452,62 @@
                 "3": "items",
                 "4": "item"
             }
+        }
+    },
+    "feature/header": {
+        "navigation": {
+            "home": "Home",
+            "about": "About",
+            "contact": "Contact",
+            "login": "Login",
+            "signup": "Signup",
+            "signout": "Signout",
+            "access": "Access",
+            "moreInfo": "More",
+            "help": "Help",
+            "sections": {
+                "hero": "Hero",
+                "heroDesc": "Hero description",
+                "howItWorks": "How it works",
+                "howItWorksDesc": "How it works description",
+                "integrations": "Integrations",
+                "integrationsDesc": "Integrations description",
+                "faq": "FAQ",
+                "faqDesc": "FAQ description",
+                "dashboardDesc": "Dashboard description",
+                "newSale": "New sale",
+                "newSaleDesc": "New sale description",
+                "stores": "Stores",
+                "storesDesc": "Stores description",
+                "account": "Account",
+                "accountDesc": "Account description",
+                "googleAuthDesc": "Google auth description",
+                "aboutDesc": "About description",
+                "contactDesc": "Contact description",
+                "loginDesc": "Login description",
+                "signupDesc": "Signup description",
+                "forgotPassword": "Forgot password",
+                "forgotPasswordDesc": "Forgot password description",
+                "googleAuth": "Google auth",
+                "dashboard": "Dashboard",
+                "helpDesc": "If you need help, contact us"
+            }
+        }
+    },
+    "address-section": "Address",
+    "features": {
+        "speed": {
+            "headline": "Faster than light!",
+            "description": "Lanzate loads instantly; ensuring that your customers have a fast and fluid experience at all times."
+        },
+        "stay-connected": {
+            "headline": "Stay connected",
+            "description": "Stay connected with your customers through our integrated social media features."
+        }
+    },
+    "landing": {
+        "contact-section": {
+            "contact-us": "Contact us"
         }
     }
 }

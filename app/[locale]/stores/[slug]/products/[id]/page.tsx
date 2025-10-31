@@ -1,28 +1,27 @@
-import { getProductDetails } from "@/features/stores/actions/getProductDetails"
-
-import { DeleteProductButton } from "@/features/products/components"
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
-import { ProductDetailForm } from "@/features/products/components/product-detail-display"
-
-import { ProductDetailPageProps } from "@/features/products/type"
-
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { getUserInfo } from "@/features/layout/actions/getUserInfo"
 import { getTranslations } from "next-intl/server"
+
+import { getUserInfo } from "@/features/global/actions/get-user-info.action"
+import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
+import { DeleteProductButton } from "@/features/products/components"
+import { ProductDetailForm } from "@/features/products/components/product-detail-display"
+import { ProductDetailPageProps } from "@/features/products/types"
+import { Card, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+
+
 
 async function ProductDetailPage({ params }: ProductDetailPageProps) {
 
     const { slug, id } = await params
 
-    const { payload: user, error: userError, message: userMessage } = await getUserInfo()
+    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
         return console.error(userMessage)
     }
 
-    const { payload: product, error } = await getProductDetails(id)
-    console.log("🚀 ~ ProductDetailPage ~ product:", product)
+    const { payload: product, hasError: error } = await getProductDetailsAction(id)
 
     if (error || !product) {
         return console.log(error)

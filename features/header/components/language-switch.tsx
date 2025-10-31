@@ -1,13 +1,24 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { Switch } from "@/components/ui/switch"
-import { useChangeLocale, useCurrentLocale } from "@/locales/client"
+import { useParams } from "next/navigation";
+import { useLocale } from "next-intl";
+import { useEffect, useState, useTransition } from "react"
+
+import { isActiveRoute } from '@/features/header/utils';
+import { Switch } from "@/features/shadcn/components/ui/switch"
+import { usePathname, useRouter } from "@/i18n/naviation"
+import { cn } from "@/lib/utils"
 
 function LanguageSwitch() {
 
-    const changeLocale = useChangeLocale()
-    const currentLocale = useCurrentLocale()
+    const currentLocale = useLocale()
+    const pathname = usePathname()
+    const params = useParams()
+    const [isPending, startTransition] = useTransition();
+    const router = useRouter();
+
+
+    const isHome = isActiveRoute(pathname, "/")
 
     const [isChecked, setIsChecked] = useState(currentLocale !== "es")
 
@@ -16,17 +27,26 @@ function LanguageSwitch() {
     }, [currentLocale])
 
     const handleChange = (nextChecked: boolean) => {
-        setIsChecked(nextChecked)
-        changeLocale(nextChecked ? "en" : "es")
+        startTransition(() => {
+            setIsChecked(nextChecked)
+            router.replace(
+                // @ts-expect-error -- TypeScript will validate that only known `params`
+                // are used in combination with a given `pathname`. Since the two will
+                // always match for the current route, we can skip runtime checks.
+                { pathname, params },
+                { locale: nextChecked ? "en" : "es" }
+            )
+        })
     }
 
 
     return (
         <div className="flex items-center gap-2 cursor-pointer">
-            <p className="text-sm">ES</p>
-            <Switch checked={isChecked} onCheckedChange={handleChange} className="cursor-pointer"/>
-            <p className="text-sm">EN</p>
+            <p className={cn("text-sm", !isHome && "text-foreground")}>ES</p>
+            <Switch checked={isChecked} onCheckedChange={handleChange} className="cursor-pointer" disabled={isPending} />
+            <p className={cn("text-sm", !isHome && "text-foreground")}>EN</p>
         </div>
     )
 }
-export default LanguageSwitch
+
+export { LanguageSwitch }

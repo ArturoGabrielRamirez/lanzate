@@ -1,13 +1,14 @@
-import { Button } from "@/components/ui/button"
-import { Title } from "@/features/layout/components"
-import PageContainer from "@/features/layout/components/page-container"
-import AddToCartButton from "@/features/store-landing/components/add-to-cart-button"
-import LikeButton from "@/features/store-landing/components/like-button"
-import { getProductDetails } from "@/features/subdomain/actions/getProductDetails"
-import { Category } from "@prisma/client"
-import { Image, Share, ShoppingBag } from "lucide-react"
+/* import { Category } from "@prisma/client" */
+import { Image as ImageIcon, Share, ShoppingBag } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
-import VariantDetailClient from "@/features/subdomain/components/variant-detail-client"
+
+/* import { Title } from "@/features/layout/components" */
+import { PageContainer } from "@/features/layout/components/page-container"
+import { getPublicStoreProductDetailsAction } from "@/features/products/actions/get-public-store-product-details.action"
+import { AddToCartButton, LikeButton, VariantDetailClient } from "@/features/products/components"
+import { Button } from "@/features/shadcn/components/ui/button"
+
 import type { Product, ProductVariant, Color } from "@prisma/client"
 
 type Props = {
@@ -17,16 +18,16 @@ type Props = {
 export default async function ProductVariantDetailsPage({ params }: Props) {
     const { id, subdomain, variant } = await params
 
-    const { payload: product, error, message } = await getProductDetails(id, subdomain, variant)
+    const { payload: product, hasError, message } = await getPublicStoreProductDetailsAction(id, subdomain, variant)
 
-    if (error || !product) {
+    if (hasError || !product) {
         return (
             <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
-                <Title
+                {/* <Title
                     title="Product Not Found"
                     breadcrumbs={[{ label: "Product Not Found", href: `/item/${id}/${variant}` }]}
                     homePath={`/`}
-                />
+                /> */}
                 <p className="text-red-500 mt-4">{message}</p>
             </PageContainer>
         )
@@ -34,7 +35,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
 
     return (
         <PageContainer>
-            <Title
+      {/*       <Title
                 title={product.name}
                 breadcrumbs={[
                     ...product.categories.map((category: Category) => ({
@@ -44,7 +45,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                     { label: product.name, href: `/item/${id}/${variant}` }
                 ]}
                 homePath={`/`}
-            />
+            /> */}
 
             <div className="grow flex flex-col">
                 <div className="grid grid-cols-1 md:grid-cols-[minmax(min(400px,100%),1fr)_1fr] gap-12 grow">
@@ -52,22 +53,21 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                         <div className="flex flex-col gap-4 max-w-28 w-full">
                             <div className="flex flex-col gap-4 bg-gray-100 rounded-lg p-2">
                                 <div className="text-gray-400 flex flex-col items-center justify-center gap-2 aspect-square">
-                                    <Image className="size-10" />
+                                    <ImageIcon className="size-10" />
                                     <p className="text-sm text-muted-foreground text-center">No image</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-gray-100 rounded-lg flex items-center justify-center grow">
+                        <div className="bg-gray-100 relative rounded-lg flex items-center justify-center grow">
                             {product.image ? (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
+                                <Image
                                     src={product.image}
                                     alt={product.name}
                                     className="w-full h-full object-cover rounded-lg"
                                 />
                             ) : (
                                 <div className="text-gray-400 flex flex-col items-center justify-center gap-2">
-                                    <Image className="size-16" />
+                                    <ImageIcon className="size-16" />
                                     <p className="text-sm text-muted-foreground">No image available</p>
                                 </div>
                             )}

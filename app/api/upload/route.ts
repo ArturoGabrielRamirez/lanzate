@@ -1,108 +1,143 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getCurrentUser } from '@/features/auth/actions'
-import { createServerSideClient } from '@/utils/supabase/server'
-import { prisma } from '@/utils/prisma'
-import { SupabaseClient } from '@supabase/supabase-js'
+
+import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
+import { handleUserUploadAction } from '@/features/auth/actions/handle-user-upload.action'
+import { getUserId } from '@/features/auth/data/get-user-id'
+import { handlePresetUploadAction } from '@/features/global/actions/media/handle-preset-upload.action'
+import { createStorageService } from '@/features/global/services/storage'
+import { PresetRequest, UPLOAD_TYPES, type FileUploadData } from '@/features/global/types/media'
+import {
+  ValidationError,
+  validateUploadType,
+  validateFile,
+  validateFileSize,
+  validateFileType,
+  validatePresetType,
+  validatePresetData
+} from '@/features/global/utils/media/validators'
+import { handleProductUploadAction } from '@/features/products/actions/handle-product-upload.action'
+import { handleStoreUploadAction } from '@/features/stores/actions/handle-store-upload.action'
 
 
 export async function POST(request: NextRequest) {
   try {
-    const { payload: user } = await getCurrentUser()
-    if (!user) {
-      return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
+
+    const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
+
+    if (!currentUserResponse || currentUserResponse.hasError) {
+      return NextResponse.json(
+        { error: 'Debes iniciar sesión para subir archivos' },
+        { status: 401 }
+      )
     }
 
-    // Buscar usuario en la DB (Prisma)
-    const dbUser = await prisma.user.findUnique({
-      where: { email: user.email },
-      select: { id: true }
-    })
+    /*    const user = await getUserId({
+         ...currentUserResponse,
+         error: currentUserResponse.message
+       }) */
 
-    if (!dbUser) {
-      return NextResponse.json({ error: 'Usuario no encontrado en DB' }, { status: 404 })
+    const user = await getUserId({ payload: { id: currentUserResponse.payload?.id }, error: currentUserResponse.message })
+    const contentType = request.headers.get('content-type')
+
+    if (contentType?.includes('application/json')) {
+      const data = await request.json()
+
+      try {
+        validatePresetData(data)
+        validateUploadType(data.type)
+        validatePresetType(data.type)
+
+        const result = await handlePresetUploadAction(
+          data as PresetRequest,
+          user.id,
+          user.username
+        )
+
+        if (result.hasError) {
+          return NextResponse.json(
+            { error: result.message },
+            { status: 500 }
+          )
+        }
+
+        return NextResponse.json(result.payload)
+      } catch (error) {
+        if (error instanceof ValidationError) {
+          return NextResponse.json(
+            { error: error.message },
+            { status: error.statusCode }
+          )
+        }
+        throw error
+      }
     }
 
-    const data = await request.formData()
-    const file: File | null = data.get('file') as unknown as File
-    const type: string = (data.get('type') as string) || 'avatar'
+    const formData = await request.formData()
+    const file = formData.get('file') as File
+    const type = formData.get('type') as string
+    const productId = formData.get('productId')
+      ? parseInt(formData.get('productId') as string)
+      : null
+    const storeId = formData.get('storeId')
+      ? parseInt(formData.get('storeId') as string)
+      : null
 
-    if (!file) {
-      return NextResponse.json({ error: 'No se encontró archivo' }, { status: 400 })
+
+    try {
+      validateFile(file)
+      validateUploadType(type)
+      validateFileSize(file)
+      validateFileType(file)
+
+      const uploadData: FileUploadData = {
+        file,
+        type,
+        productId,
+        storeId
+      }
+
+      const storage = createStorageService()
+      let actionResult
+
+      if (type === UPLOAD_TYPES.AVATAR || type === UPLOAD_TYPES.BANNER) {
+        actionResult = await handleUserUploadAction(uploadData, user.id, user.username, storage)
+      } else if (type === UPLOAD_TYPES.PRODUCT_IMAGE || type === UPLOAD_TYPES.PRODUCT_VIDEO) {
+        actionResult = await handleProductUploadAction(uploadData, user.id, user.username, storage)
+      } else if (type === UPLOAD_TYPES.STORE_LOGO || type === UPLOAD_TYPES.STORE_BANNER) {
+        actionResult = await handleStoreUploadAction(uploadData, user.id, user.username, storage)
+      } else {
+        throw new ValidationError('Tipo de upload no soportado')
+      }
+
+      if (actionResult.hasError) {
+        return NextResponse.json(
+          { error: actionResult.message },
+          { status: 500 }
+        )
+      }
+
+      return NextResponse.json(actionResult.payload)
+
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        return NextResponse.json(
+          { error: error.message },
+          { status: error.statusCode }
+        )
+      }
+      throw error
     }
 
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
-    if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json({ error: 'Tipo de archivo no válido' }, { status: 400 })
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: 'Archivo muy grande. Máximo 5MB' }, { status: 400 })
-    }
-
-    const arrayBuffer = await file.arrayBuffer()
-    const buffer = new Uint8Array(arrayBuffer)
-
-    const fileExtension =
-      file.type.split('/')[1] || file.name.split('.').pop() || 'jpg'
-
-    // 🔑 Usamos SIEMPRE el dbUser.id en el nombre
-    const fileName = `${dbUser.id}-${type}-${Date.now()}.${fileExtension}`
-    const filePath = `avatars/${fileName}`
-
-    const supabase = await createServerSideClient()
-
-    const { error: uploadError } = await supabase.storage
-      .from('user-uploads')
-      .upload(filePath, buffer, {
-        contentType: file.type,
-        upsert: true
-      })
-
-    if (uploadError) {
-      return NextResponse.json({ error: 'Error subiendo archivo', details: uploadError.message }, { status: 500 })
-    }
-
-    const { data: publicUrlData } = supabase.storage
-      .from('user-uploads')
-      .getPublicUrl(filePath)
-
-    if (!publicUrlData?.publicUrl) {
-      return NextResponse.json({ error: 'No se pudo generar URL pública' }, { status: 500 })
-    }
-
-    // Opcional: limpieza de archivos viejos
-    cleanupOldUploads(supabase, dbUser.id.toString(), type).catch(console.error)
-
-    return NextResponse.json({
-      success: true,
-      url: publicUrlData.publicUrl,
-      fileName,
-      size: file.size,
-      type: file.type,
-      path: filePath
-    })
   } catch (error) {
+    console.error('Error crítico en API:', error)
     return NextResponse.json(
-      { error: 'Error interno del servidor', details: error instanceof Error ? error.message : String(error) },
+      {
+        error: 'Error interno del servidor',
+        details: process.env.NODE_ENV === 'development'
+          ? (error instanceof Error ? error.message : String(error))
+          : undefined
+      },
       { status: 500 }
     )
-  }
-}
-
-async function cleanupOldUploads(supabase: SupabaseClient, userId: string, type: string) {
-  try {
-    const { data: files } = await supabase.storage
-      .from('user-uploads')
-      .list('avatars', { search: `${userId}-${type}`, sortBy: { column: 'updated_at', order: 'desc' } })
-
-    if (!files) return
-
-    const filesToDelete = files.slice(3)
-    if (filesToDelete.length > 0) {
-      const pathsToDelete = filesToDelete.map((f: { name: string }) => `avatars/${f.name}`)
-      await supabase.storage.from('user-uploads').remove(pathsToDelete)
-    }
-  } catch (err) {
-    console.error('Error limpiando uploads antiguos:', err)
   }
 }

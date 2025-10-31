@@ -1,20 +1,22 @@
+/* // src/features/auth/hooks/use-camera.ts
 'use client'
 
 import { useState, useCallback } from 'react'
-import { toast } from 'sonner'
 
-interface UseCameraProps {
-  uploadPath: string // 'avatar', 'product', 'document', etc.
+interface CapturedFile {
+  file: File
+  preview: string
+}
+
+interface UseCameraOptions {
+  uploadPath: 'avatar' | 'banner' | 'product-image' | 'product-video' | 'store-logos' | 'store-banners'
   onSuccess?: (url: string) => void
   onError?: (error: string) => void
   maxWidth?: number
   maxHeight?: number
   quality?: number
-}
-
-interface CameraFile {
-  file: File
-  preview: string
+  productId?: number  // Opcional: para productos
+  storeId?: number    // Opcional: para tiendas
 }
 
 export function useCamera({
@@ -23,84 +25,41 @@ export function useCamera({
   onError,
   maxWidth = 1920,
   maxHeight = 1080,
-  quality = 0.8
-}: UseCameraProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  quality = 0.8,
+  productId,
+  storeId
+}: UseCameraOptions) {
+  const [capturedFile, setCapturedFile] = useState<CapturedFile | null>(null)
   const [isUploading, setIsUploading] = useState(false)
-  const [capturedFile, setCapturedFile] = useState<CameraFile | null>(null)
+  const [isCameraOpen, setIsCameraOpen] = useState(false)
 
+  // Abrir cámara
   const openCamera = useCallback(() => {
-    setIsOpen(true)
+    setIsCameraOpen(true)
   }, [])
 
+  // Cerrar cámara
   const closeCamera = useCallback(() => {
-    setIsOpen(false)
-    // Limpiar archivo capturado después de cerrar
-    setTimeout(() => {
-      if (capturedFile) {
-        URL.revokeObjectURL(capturedFile.preview)
-        setCapturedFile(null)
-      }
-    }, 100)
-  }, [capturedFile])
+    setIsCameraOpen(false)
+  }, [])
 
+  // Capturar foto desde el componente de cámara
   const handleCapture = useCallback((file: File) => {
     const preview = URL.createObjectURL(file)
     setCapturedFile({ file, preview })
-    setIsOpen(false)
+    setIsCameraOpen(false)
   }, [])
 
-  const uploadPhoto = useCallback(async () => {
-    if (!capturedFile) {
-      toast.error('No hay foto para subir')
-      return
-    }
-
-    setIsUploading(true)
-
-    try {
-      console.log('Subiendo foto desde cámara:', capturedFile.file.name)
-      
-      const formData = new FormData()
-      formData.append('file', capturedFile.file)
-      formData.append('type', uploadPath)
-
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        throw new Error(errorData.error || 'Error al subir la foto')
-      }
-
-      const data = await response.json()
-
-      if (!data.url) {
-        throw new Error('No se recibió URL del archivo')
-      }
-
-      // Limpiar archivo local
+  // Retomar foto
+  const retakePhoto = useCallback(() => {
+    if (capturedFile) {
       URL.revokeObjectURL(capturedFile.preview)
       setCapturedFile(null)
-
-      toast.success('Foto subida correctamente')
-      onSuccess?.(data.url)
-
-      return data
-
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Error desconocido'
-      console.error('Error uploading photo:', error)
-      toast.error(errorMessage)
-      onError?.(errorMessage)
-      throw error
-    } finally {
-      setIsUploading(false)
     }
-  }, [capturedFile, uploadPath, onSuccess, onError])
+    setIsCameraOpen(true)
+  }, [capturedFile])
 
+  // Descartar foto
   const discardPhoto = useCallback(() => {
     if (capturedFile) {
       URL.revokeObjectURL(capturedFile.preview)
@@ -108,32 +67,84 @@ export function useCamera({
     }
   }, [capturedFile])
 
-  const retakePhoto = useCallback(() => {
-    discardPhoto()
-    setIsOpen(true)
-  }, [discardPhoto])
+  // Subir foto usando la nueva API modularizada
+  const uploadPhoto = useCallback(async () => {
+    if (!capturedFile) {
+      onError?.('No hay foto para subir')
+      return
+    }
+
+    setIsUploading(true)
+    try {
+      // Crear FormData
+      const formData = new FormData()
+      formData.append('file', capturedFile.file)
+      formData.append('type', uploadPath)
+
+      // Agregar IDs opcionales
+      if (productId) {
+        formData.append('productId', productId.toString())
+      }
+      if (storeId) {
+        formData.append('storeId', storeId.toString())
+      }
+
+      // Subir al nuevo endpoint
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || 'Error al subir la imagen')
+      }
+
+      const data = await response.json()
+
+      if (!data.url) {
+        throw new Error('La respuesta no contiene la URL del archivo')
+      }
+
+      // Limpiar archivo capturado
+      URL.revokeObjectURL(capturedFile.preview)
+      setCapturedFile(null)
+
+      // Callback de éxito
+      onSuccess?.(data.url)
+
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Error desconocido'
+      onError?.(errorMessage)
+    } finally {
+      setIsUploading(false)
+    }
+  }, [capturedFile, uploadPath, productId, storeId, onSuccess, onError])
+
+  // Props para el componente de cámara
+  const cameraProps = {
+    isOpen: isCameraOpen,
+    onClose: closeCamera,
+    onCapture: handleCapture,
+    maxWidth,
+    maxHeight,
+    quality
+  }
 
   return {
-    // Estados
-    isOpen,
-    isUploading,
+    // Estado
     capturedFile,
+    isUploading,
+    isCameraOpen,
 
-    // Propiedades para el componente de cámara
-    cameraProps: {
-      isOpen,
-      onClose: closeCamera,
-      onCapture: handleCapture,
-      maxWidth,
-      maxHeight,
-      quality
-    },
-
-    // Acciones
+    // Métodos
     openCamera,
     closeCamera,
-    uploadPhoto,
+    retakePhoto,
     discardPhoto,
-    retakePhoto
+    uploadPhoto,
+
+    // Props para el componente
+    cameraProps
   }
-}
+} */

@@ -1,72 +1,18 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { cn } from "@/lib/utils"
+import { OrderTrackingStatus } from "@prisma/client"
 import { User, Mail, Phone, MapPin, MessageCircle, Check, Package, Truck, Clock, CheckCircle2, AlertTriangle } from "lucide-react"
 import { useTransition } from "react"
-import { updateOrderTrackingAction } from "../actions/updateOrderTrackingAction"
-import { finalizeOrderAction } from "../actions/finalizeOrderAction"
 import { toast } from "sonner"
-import { OrderTrackingStatus } from "@prisma/client"
 
-type EmployeePermissions = {
-    isAdmin: boolean
-    permissions?: {
-        can_create_orders: boolean
-        can_update_orders: boolean
-        can_create_products: boolean
-        can_update_products: boolean
-        can_manage_stock: boolean
-        can_process_refunds: boolean
-        can_view_reports: boolean
-        can_manage_employees: boolean
-        can_manage_store: boolean
-    }
-}
+import { finalizeOrderAction } from "@/features/orders/actions/finalize-order.action"
+import { updateOrderTrackingAction } from "@/features/orders/actions/update-order-tracking.action"
+import { CustomerInfoStepProps } from "@/features/orders/types"
+import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { cn } from "@/lib/utils"
 
-type Order = {
-    id: number
-    shipping_method: "PICKUP" | "DELIVERY"
-    status: "PENDING" | "PROCESSING" | "READY" | "SHIPPED" | "DELIVERED" | "CANCELLED" | "COMPLETED"
-    customer_name: string | null
-    customer_email: string | null
-    customer_phone: string | null
-    address_one?: string | null
-    address_two?: string | null
-    city?: string | null
-    state?: string | null
-    zip_code?: string | null
-    country?: string | null
-    branch?: {
-        name: string
-        address: string
-    } | null
-    created_by_employee?: {
-        user?: {
-            first_name: string | null
-            last_name: string | null
-            email: string
-        }
-    } | null
-    updated_by_employee?: {
-        user?: {
-            first_name: string | null
-            last_name: string | null
-            email: string
-        }
-    } | null
-    tracking?: {
-        tracking_status: OrderTrackingStatus
-    } | null
-}
-
-type Props = {
-    order: Order
-    employeePermissions: EmployeePermissions
-}
-
-function CustomerInfoStep({ order, employeePermissions }: Props) {
+function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps) {
     const [isPending, startTransition] = useTransition()
     const [isFinalizing, startFinalizeTransition] = useTransition()
     const isPickup = order.shipping_method === "PICKUP"
@@ -98,7 +44,7 @@ function CustomerInfoStep({ order, employeePermissions }: Props) {
                     newTrackingStatus: newStatus
                 })
 
-                if (result.error) {
+                if (result.hasError) {
                     toast.error(result.message)
                 } else {
                     toast.success("Order tracking updated successfully")
@@ -118,7 +64,7 @@ function CustomerInfoStep({ order, employeePermissions }: Props) {
                     shippingMethod: order.shipping_method
                 })
 
-                if (result.error) {
+                if (result.hasError) {
                     toast.error(result.message)
                 } else {
                     const actionText = isPickup ? "picked up" : "delivered"
@@ -460,4 +406,4 @@ function CustomerInfoStep({ order, employeePermissions }: Props) {
     )
 }
 
-export default CustomerInfoStep 
+export { CustomerInfoStep }
