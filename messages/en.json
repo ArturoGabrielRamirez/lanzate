@@ -685,7 +685,79 @@
         }
     },
     "layout": {
-        "title": "Home"
+        "title": "Home",
+        "header": {
+            "navigation": {
+                "home": "Home",
+                "about": "About",
+                "contact": "Contact",
+                "help": "Help",
+                "access": "Access",
+                "moreInfo": "More",
+                "auth": {
+                    "login": "Login",
+                    "signup": "Signup",
+                    "signout": "Signout",
+                    "forgotPassword": "Forgot password",
+                    "googleAuth": "Google auth"
+                },
+                "sections": {
+                    "hero": "Hero",
+                    "heroDesc": "Hero description",
+                    "howItWorks": "How it works",
+                    "howItWorksDesc": "How it works description",
+                    "integrations": "Integrations",
+                    "integrationsDesc": "Integrations description",
+                    "faq": "FAQ",
+                    "faqDesc": "FAQ description",
+                    "dashboard": "Dashboard",
+                    "dashboardDesc": "Dashboard description",
+                    "newSale": "New sale",
+                    "newSaleDesc": "New sale description",
+                    "stores": "Stores",
+                    "storesDesc": "Stores description",
+                    "account": "Account",
+                    "accountDesc": "Account description",
+                    "aboutDesc": "About description",
+                    "contactDesc": "Contact description",
+                    "loginDesc": "Login description",
+                    "signupDesc": "Signup description",
+                    "forgotPasswordDesc": "Forgot password description",
+                    "googleAuthDesc": "Google auth description",
+                    "helpDesc": "If you need help, contact us"
+                }
+            },
+            "mobileDrawer": {
+                "welcome": "Welcome!",
+                "menu": "Menu",
+                "settings": "Settings"
+            },
+            "accountDropdown": {
+                "account": "Account",
+                "cart": "Cart",
+                "myOrders": "My Orders",
+                "signOut": "Sign out"
+            }
+        },
+        "footer": {
+            "links": {
+                "termsAndConditions": "Terms and Conditions",
+                "privacyPolicy": "Privacy Policy",
+                "cookiePolicy": "Cookie Policy",
+                "contactUs": "Contact Us"
+            },
+            "copyright": {
+                "text": "© {year} Lanzate, All rights reserved",
+                "year": "2025"
+            },
+            "socialMedia": {
+                "ariaLabels": {
+                    "twitter": "X/Twitter",
+                    "facebook": "Facebook",
+                    "instagram": "Instagram"
+                }
+            }
+        }
     },
     "store": {
         "title": "Store",

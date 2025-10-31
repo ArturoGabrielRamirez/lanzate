@@ -12,7 +12,8 @@ import { Link } from "@/i18n/naviation";
 async function MobileDrawer() {
 
     const { payload: user } = await getUserInfo()
-    const t = await getTranslations();
+    const t = await getTranslations('layout.header.mobileDrawer');
+    const tNav = await getTranslations();
 
     return (
         <DropDrawer shouldScaleBackground={true}>
@@ -27,7 +28,7 @@ async function MobileDrawer() {
             <DropDrawerContent className="outline-none">
                 {user && (
                     <DropDrawerGroup>
-                        <DropDrawerLabel>Welcome!</DropDrawerLabel>
+                        <DropDrawerLabel>{t('welcome')}</DropDrawerLabel>
                         <DropDrawerItem>
                             <div className="mx-auto flex items-center gap-2">
                                 <UserAvatar user={user} size="md" className="md:hidden" />
@@ -38,26 +39,26 @@ async function MobileDrawer() {
                 )}
                 {user && (
                     <DropDrawerGroup>
-                        <DropDrawerLabel>Menu</DropDrawerLabel>
+                        <DropDrawerLabel>{t('menu')}</DropDrawerLabel>
                         {NAV_MENU_ITEMS_AUTH.map((item) => (
                             <DropDrawerItem key={item.href} icon={item.icon}>
-                                <Link href={item.href}>{t(item.label)}</Link>
+                                <Link href={item.href}>{tNav(item.label)}</Link>
                             </DropDrawerItem>
                         ))}
                     </DropDrawerGroup>
                 )}
                 {!user && (
                     <DropDrawerGroup>
-                        <DropDrawerLabel>Menu</DropDrawerLabel>
+                        <DropDrawerLabel>{t('menu')}</DropDrawerLabel>
                         {DRAWER_MENU_ITEMS_GUEST.map((item) => (
                             <DropDrawerItem key={item.href} icon={item.icon}>
-                                <Link href={item.href} className="w-full">{t(item.label)}</Link>
+                                <Link href={item.href} className="w-full">{tNav(item.label)}</Link>
                             </DropDrawerItem>
                         ))}
                     </DropDrawerGroup>
                 )}
                 <DropDrawerGroup className="md:hidden">
-                    <DropDrawerLabel>Settings</DropDrawerLabel>
+                    <DropDrawerLabel>{t('settings')}</DropDrawerLabel>
                     <DropDrawerItem className="justify-center">
                         <div className="mx-auto">
                             <SettingsToolbar />

@@ -8,7 +8,7 @@ import { Link, redirect } from "@/i18n/naviation";
 
 function LogoutLink() {
 
-    const t = useTranslations('')
+    const t = useTranslations('layout.header.navigation.auth')
 
     const handleLogoutClick = async () => {
         const res = await handleSignOut()
@@ -21,7 +21,7 @@ function LogoutLink() {
     }
 
     return (
-        <Link href="#" onClick={handleLogoutClick}>{t('feature/header.navigation.signout')}</Link>
+        <Link href="#" onClick={handleLogoutClick}>{t('signout')}</Link>
     )
 }
 

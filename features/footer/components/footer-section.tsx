@@ -1,29 +1,31 @@
 'use client'
 
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 import { IconButton } from '@/features/shadcn/components/shadcn-io/icon-button'
 
-const links = [
-    {
-        title: 'Terms and Conditions',
-        href: '/terms-and-conditions',
-    },
-    {
-        title: 'Privacy Policy',
-        href: '/privacy-policy',
-    },
-    {
-        title: 'Cookie Policy',
-        href: '/cookies',
-    },
-    {
-        title: 'Contact Us',
-        href: '/contact-us',
-    },
-]
-
 function FooterSection() {
+    const t = useTranslations('layout.footer')
+
+    const links = [
+        {
+            title: t('links.termsAndConditions'),
+            href: '/terms-and-conditions',
+        },
+        {
+            title: t('links.privacyPolicy'),
+            href: '/privacy-policy',
+        },
+        {
+            title: t('links.cookiePolicy'),
+            href: '/cookies',
+        },
+        {
+            title: t('links.contactUs'),
+            href: '/contact-us',
+        },
+    ]
     return (
         <footer className="pt-16 pb-24 md:py-16 mx-auto container z-10 relative">
             <div className="mx-auto max-w-5xl">
@@ -47,7 +49,7 @@ function FooterSection() {
                         href="#"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="X/Twitter"
+                        aria-label={t('socialMedia.ariaLabels.twitter')}
                         className="text-muted-foreground hover:text-primary block">
                         <IconButton icon={
                             () =>
@@ -68,7 +70,7 @@ function FooterSection() {
                         href="#"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Facebook"
+                        aria-label={t('socialMedia.ariaLabels.facebook')}
                         className="text-muted-foreground hover:text-primary block">
                         <IconButton icon={
                             () => <svg
@@ -89,7 +91,7 @@ function FooterSection() {
                         href="#"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Instagram"
+                        aria-label={t('socialMedia.ariaLabels.instagram')}
                         className="text-muted-foreground hover:text-primary block">
                         <IconButton icon={
                             () => <svg
@@ -107,7 +109,7 @@ function FooterSection() {
                     </Link>
 
                 </div>
-                <span className="text-muted-foreground block text-center text-sm"> © {new Date().getFullYear()} Lanzate, All rights reserved</span>
+                <span className="text-muted-foreground block text-center text-sm">{t('copyright.text', { year: new Date().getFullYear() })}</span>
             </div>
         </footer>
     )

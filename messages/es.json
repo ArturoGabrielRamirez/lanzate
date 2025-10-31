@@ -545,7 +545,79 @@
         }
     },
     "layout": {
-        "title": "Inicio"
+        "title": "Inicio",
+        "header": {
+            "navigation": {
+                "home": "Inicio",
+                "about": "Acerca de",
+                "contact": "Contacto",
+                "help": "Ayuda",
+                "access": "Acceso",
+                "moreInfo": "Más",
+                "auth": {
+                    "login": "Iniciar sesión",
+                    "signup": "Registrarse",
+                    "signout": "Cerrar sesión",
+                    "forgotPassword": "Olvidé mi contraseña",
+                    "googleAuth": "Autenticación con Google"
+                },
+                "sections": {
+                    "hero": "Hero",
+                    "heroDesc": "Descripción del hero",
+                    "howItWorks": "Cómo funciona",
+                    "howItWorksDesc": "Descripción de cómo funciona",
+                    "integrations": "Integraciones",
+                    "integrationsDesc": "Descripción de las integraciones",
+                    "faq": "FAQ",
+                    "faqDesc": "Descripción de la FAQ",
+                    "dashboard": "Dashboard",
+                    "dashboardDesc": "Descripción del dashboard",
+                    "newSale": "Nueva venta",
+                    "newSaleDesc": "Descripción de la nueva venta",
+                    "stores": "Tiendas",
+                    "storesDesc": "Descripción de las tiendas",
+                    "account": "Cuenta",
+                    "accountDesc": "Descripción de la cuenta",
+                    "aboutDesc": "Descripción de la sección de acerca de",
+                    "contactDesc": "Descripción de la sección de contacto",
+                    "loginDesc": "Descripción de la sección de inicio de sesión",
+                    "signupDesc": "Descripción de la sección de registrarse",
+                    "forgotPasswordDesc": "Descripción de la sección de olvidé mi contraseña",
+                    "googleAuthDesc": "Descripción de la autenticación con Google",
+                    "helpDesc": "Si necesitas ayuda, contáctanos"
+                }
+            },
+            "mobileDrawer": {
+                "welcome": "¡Bienvenido!",
+                "menu": "Menú",
+                "settings": "Configuración"
+            },
+            "accountDropdown": {
+                "account": "Cuenta",
+                "cart": "Carrito",
+                "myOrders": "Mis Pedidos",
+                "signOut": "Cerrar sesión"
+            }
+        },
+        "footer": {
+            "links": {
+                "termsAndConditions": "Términos y condiciones",
+                "privacyPolicy": "Política de privacidad",
+                "cookiePolicy": "Política de cookies",
+                "contactUs": "Contactanos"
+            },
+            "copyright": {
+                "text": "© {year} Lanzate, Todos los derechos reservados",
+                "year": "2025"
+            },
+            "socialMedia": {
+                "ariaLabels": {
+                    "twitter": "X/Twitter",
+                    "facebook": "Facebook",
+                    "instagram": "Instagram"
+                }
+            }
+        }
     },
     "store": {
         "title": "Tienda",
