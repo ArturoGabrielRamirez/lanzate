@@ -1,22 +1,29 @@
 import { AlertCircleIcon } from 'lucide-react'
 
-import { JoinWaitlist } from '@/features/auth/components'
+import { AnimatedShinyButton } from '@/features/shadcn/components/animated-shiny-button'
 import { Alert, AlertDescription, AlertTitle } from '@/features/shadcn/components/ui/alert'
+import { Link } from '@/i18n/naviation'
 
 function JoinWaitlistAlert() {
     return (
-        <Alert className='sticky top-[70px] md:top-24 col-span-full z-20 max-w-2xl mx-auto mb-10 md:mb-0'>
+        <Alert className='col-span-full'>
             <AlertCircleIcon />
             <AlertTitle>
                 <h3 className="text-lg font-bold">
                     Únete a la lista de espera
                 </h3>
             </AlertTitle>
-            <AlertDescription className='gap-0'>
-                <p>Lanzate esta en desarrollo aun, pero ya puedes unirte a la lista de espera.</p>
-                <p>Dejanos tu email y te notificaremos cuando el producto esté disponible.</p>
+            <AlertDescription className='gap-0 flex justify-between'>
+                <div>
+                    <p>Lanzate esta en desarrollo aun, pero ya puedes unirte a la lista de espera.</p>
+                    <p>Dejanos tu email y te notificaremos cuando el producto esté disponible.</p>
+                </div>
+                <AnimatedShinyButton asChild>
+                    <Link href="/waitlist">
+                        Únete a la lista de espera
+                    </Link>
+                </AnimatedShinyButton>
             </AlertDescription>
-            <JoinWaitlist />
         </Alert>
     )
 }
