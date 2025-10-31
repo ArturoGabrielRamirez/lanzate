@@ -5,7 +5,7 @@ import { selectStoreByIdData } from "@/features/stores/data"
 
 export async function canDeleteStoreAccess(storeId: number, userId: number) {
     try {
-        const { payload: user, error: userError } = await getUserById(userId)
+        const { payload: user, hasError: userError } = await getUserById(userId)
 
         if (userError || !user) return false
 
