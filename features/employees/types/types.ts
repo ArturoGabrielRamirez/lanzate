@@ -168,7 +168,7 @@ export type EditEmployeePayload = {
     role: EmployeeRole
     position?: string
     department?: string
-    salary?: number
+    salary?: string 
     notes?: string
     can_create_orders: boolean
     can_update_orders: boolean
