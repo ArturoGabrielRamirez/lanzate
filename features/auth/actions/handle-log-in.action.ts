@@ -10,8 +10,8 @@ import { actionWrapper } from '@/features/global/utils'
 export async function handleLogInAction(formData: LoginFormPayload) {
   return actionWrapper(async () => {
     const signInError = await getLogInPermissionData({
-      email: typeof formData.email === 'string' ? formData.email : (formData.email)?.email,
-      password: typeof formData.password === 'string' ? formData.password : (formData.password)?.password
+      email: typeof formData.email === 'string' ? formData.email : formData.email,
+      password: typeof formData.password === 'string' ? formData.password : formData.password
     })
 
     if (signInError) throw new Error(signInError.message)
