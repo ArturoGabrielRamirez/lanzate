@@ -370,6 +370,37 @@
                     "success": "You have successfully joined the waitlist",
                     "loading": "Joining the waitlist"
                 }
+            },
+            "page": {
+                "title": "Join the waitlist",
+                "description": "Join the waitlist to receive notifications when the product is available",
+                "header": {
+                    "title": "Waitlist",
+                    "description": "Join the waitlist to receive notifications when the product is available"
+                },
+                "links": {
+                    "needHelp": "Need help?",
+                    "helpLink": "Contact us",
+                    "hasAccount": "Already have an account?",
+                    "loginLink": "Log In",
+                    "backToHomeLabel": "Back to homepage",
+                    "backToHomeLink": "Back to homepage"
+                },
+                "image": {
+                    "alt": "Waitlist illustration"
+                }
+            },
+            "success": {
+                "page": {
+                    "title": "Congratulations!",
+                    "description": "We'll notify you when the product is available. You can close this window and continue with your day.",
+                    "link": {
+                        "text": "Back to homepage"
+                    },
+                    "image": {
+                        "alt": "Success illustration"
+                    }
+                }
             }
         },
         "contact": {

@@ -369,6 +369,37 @@
                     "success": "Te has unido exitosamente a la lista de espera",
                     "loading": "Uniéndote a la lista de espera"
                 }
+            },
+            "page": {
+                "title": "Únete a la lista de espera",
+                "description": "Únete a la lista de espera para recibir notificaciones cuando el producto esté disponible",
+                "header": {
+                    "title": "Lista de espera",
+                    "description": "Únete a la lista de espera para recibir notificaciones cuando el producto esté disponible"
+                },
+                "links": {
+                    "needHelp": "¿Necesitas ayuda?",
+                    "helpLink": "Contáctanos",
+                    "hasAccount": "¿Ya tienes una cuenta?",
+                    "loginLink": "Iniciar sesión",
+                    "backToHomeLabel": "Volver a la página de inicio",
+                    "backToHomeLink": "Volver a la página de inicio"
+                },
+                "image": {
+                    "alt": "Ilustración de lista de espera"
+                }
+            },
+            "success": {
+                "page": {
+                    "title": "¡Felicidades!",
+                    "description": "Te notificaremos cuando el producto esté disponible. Podes cerrar esta ventana y continuar con tu día.",
+                    "link": {
+                        "text": "Volver al inicio"
+                    },
+                    "image": {
+                        "alt": "Ilustración de éxito"
+                    }
+                }
             }
         },
         "contact": {
