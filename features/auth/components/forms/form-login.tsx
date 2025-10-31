@@ -1,11 +1,11 @@
 'use client'
 
-/* import { yupResolver } from '@hookform/resolvers/yup' */
+import { yupResolver } from '@hookform/resolvers/yup'
 import { LockIcon, MailIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import { handleLogInAction } from '@/features/auth/actions'
-/* import { loginFormSchema } from '@/features/auth/schemas' */
+import { loginFormSchema } from '@/features/auth/schemas'
 import { Form } from '@/features/global/components/form/form'
 import { InputField } from '@/features/global/components/form/input-field'
 
@@ -17,7 +17,7 @@ function LoginForm() {
         <>
             {/* <h2 className='text-2xl font-bold text-center'>{t("login")}</h2> */}
             <Form
-               /*  resolver={yupResolver(loginFormSchema as never)} */
+                resolver={yupResolver(loginFormSchema)}
                 formAction={handleLogInAction}
                 contentButton={t("login")}
                 successRedirect="/dashboard"
