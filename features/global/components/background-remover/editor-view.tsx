@@ -1,6 +1,6 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/features/shadcn/components/ui/tabs'
 import { CompareView, EditView } from '@/features/global/components/background-remover'
-import { EditorViewProps } from '@/features/shared/types'
+import { EditorViewProps } from '@/features/global/types/media'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/features/shadcn/components/ui/tabs'
 
 export function EditorView({ originalUrl, editor }: EditorViewProps) {
     return (

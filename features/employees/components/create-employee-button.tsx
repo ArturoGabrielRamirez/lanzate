@@ -97,8 +97,8 @@ function CreateEmployeeButton({ storeId, userId }: CreateEmployeeButtonProps) {
         })
 
         try {
-            const { payload: users, error, message } = await getEmployeesByFilterAction(search, storeId, userId)
-            if (error) {
+            const { payload: users, hasError, message } = await getEmployeesByFilterAction(search, storeId, userId)
+            if (hasError) {
                 toast.error(message || t("messages.search-error"))
                 return
             }

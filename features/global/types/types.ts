@@ -1,4 +1,5 @@
 import { ActionType, EntityType } from "@prisma/client"
+import { KeyboardEvent } from 'react'
 
 export type InsertLogEntryProps = {
     action: ActionType
@@ -57,4 +58,36 @@ export interface ReplyData {
     originalMessage: string;
     replyMessage: string;
     agentName?: string;
+}
+
+export interface CheckboxFieldProps {
+    name: string
+    label: string
+    defaultValue?: boolean
+    onChange?: (checked: boolean) => void
+    className?: string
+    containerClassName?: string
+    disabled?: boolean
+}
+
+export type InputFieldProps = {
+    name: string
+    label: string
+    type?: string
+    defaultValue?: string
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    value?: string
+    className?: string
+    containerClassName?: string
+    onKeyDown?: (e: (React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) | KeyboardEvent<HTMLInputElement>) => void
+    startContent?: React.ReactNode
+    endContent?: React.ReactNode
+    placeholder?: string,
+    disabled?: boolean
+
+    isTextArea?: boolean
+    isRequired?: boolean
+    inputMode?: "search" | "text" | "numeric" | "none" | "tel" | "url" | "email" | "decimal" | undefined
+    maxLength?: number
+
 }

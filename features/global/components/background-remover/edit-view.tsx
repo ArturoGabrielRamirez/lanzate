@@ -1,7 +1,7 @@
 import { RefObject } from 'react'
 
 import { CanvasEditor, EditorControls, EditorToolbar } from '@/features/global/components/background-remover'
-import { EditViewProps } from '@/features/shared/types'
+import { EditViewProps } from '@/features/global/types/media'
 
 export function EditView({ editor }: EditViewProps) {
     return (
