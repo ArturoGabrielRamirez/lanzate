@@ -2,7 +2,8 @@
 
 import { useState, useCallback } from 'react'
 import { toast } from 'sonner'
-import { UseBackgroundRemoverProps } from '../types'
+
+import { UseBackgroundRemoverProps } from '@/features/global/types/media'
 
 export function useBackgroundRemoverModal({
   onProcessed

@@ -2,8 +2,9 @@
 
 import { useState, useCallback } from 'react'
 import { toast } from 'sonner'
-import type { UseImageOptimizationProps } from '../types'
-import { resizeImage } from '../../utils/media/image-utils'
+
+import type { UseImageOptimizationProps } from '@/features/global/types/media'
+import { resizeImage } from '@/features/global/utils/media/image-utils'
 
 export function useImageOptimization({
   validationOptions,

@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
 import { Trash2 } from 'lucide-react'
-import { MediaGridProps } from '../types'
+import Image from 'next/image'
+import { useState } from 'react'
+
+import { MediaGridProps } from '@/features/global/types/media'
 
 export function MediaGrid({
     items,
@@ -45,7 +47,7 @@ export function MediaGrid({
                                 }`}
                             style={{ aspectRatio: type === 'avatar' ? '1/1' : '16/9' }}
                         >
-                            <img src={item.url} alt={item.name || 'Media'} className="w-full h-full object-cover" />
+                            <Image src={item.url} alt={item.name || 'Media'} className="w-full h-full object-cover" />
                         </button>
 
                         {onDelete && (

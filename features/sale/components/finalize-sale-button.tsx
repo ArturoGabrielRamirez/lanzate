@@ -93,7 +93,7 @@ function FinalizeSaleButton({
       }
     })
 
-    return { error, message, payload }
+    return { hasError: error, message, payload }
   }
 
   return (

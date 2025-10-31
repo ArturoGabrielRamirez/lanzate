@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl"
 import { useMemo } from "react"
 
 import { DataTable } from "@/features/global/components/data-table"
-import { DeleteProductButton, EditProductButton, DistributeStockButton } from "@/features/products/components"
+import { DeleteProductButton, EditProductButton/* , DistributeStockButton  */} from "@/features/products/components"
 import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
 import type { ProductsTableProps, ProductsTableVariantRow } from "@/features/products/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
@@ -19,7 +19,7 @@ import { DropdownMenu } from "@/features/shadcn/components/ui/dropdown-menu"
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 
-function ProductsTable({ data, userId, slug, employeePermissions, branches }: ProductsTableProps) {
+function ProductsTable({ data, userId, slug, employeePermissions/* , branches */ }: ProductsTableProps) {
 
     const t = useTranslations("store.products-table")
 
@@ -285,10 +285,10 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
                             {(employeePermissions.isAdmin || employeePermissions.permissions?.can_manage_stock) && (
                                 <>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem asChild>
+                                   {/*  <DropdownMenuItem asChild>
                                         {(() => {
                                             const currentVariantStocks = row.original.variant_id
-                                                ? (row.original as any).variants?.find((v: any) => v.id === row.original.variant_id)?.stocks as
+                                                ? (row.original as any).variants?.find((v: { id: number | undefined }) => v.id === row.original.variant_id)?.stocks as
                                                     | { branch_id: number; quantity: number }[]
                                                     | undefined
                                                 : undefined
@@ -302,7 +302,7 @@ function ProductsTable({ data, userId, slug, employeePermissions, branches }: Pr
                                                 />
                                             )
                                         })()}
-                                    </DropdownMenuItem>
+                                    </DropdownMenuItem> */}
                                 </>
                             )}
                             {employeePermissions.isAdmin && (

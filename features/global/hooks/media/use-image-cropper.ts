@@ -2,7 +2,8 @@
 
 import { useState, useCallback } from 'react'
 import { toast } from 'sonner'
-import { UseImageCropperProps } from '../types'
+
+import { UseImageCropperProps } from '@/features/global/types/media'
 
 export function useImageCropper({
   aspectRatio,

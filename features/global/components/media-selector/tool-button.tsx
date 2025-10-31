@@ -1,7 +1,8 @@
 'use client'
 
 import React from 'react'
-import { ToolButtonProps } from '../types'
+
+import { ToolButtonProps } from '@/features/global/types/media'
 
 export function ToolButton({
     icon: Icon,
