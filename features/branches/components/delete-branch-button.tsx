@@ -19,7 +19,7 @@ function DeleteBranchButton({ branchId, slug, onComplete, userId }: DeleteBranch
             const { hasError, message, payload } = await deleteBranchAction({ branchId, slug, userId })
             if (hasError) throw new Error(message)
             return {
-                error: false,
+                hasError: false,
                 message: t("messages.success"),
                 payload: payload
             }
