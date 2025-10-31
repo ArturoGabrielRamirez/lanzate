@@ -53,8 +53,8 @@ function CreateColorInline({ onCreated }: CreateColorInlineProps) {
                     onClick={async () => {
                         try {
                             setIsSaving(true)
-                            const { error, message, payload } = await createStoreColorData({ name, hex })
-                            if (error || !payload) {
+                            const { hasError, message, payload } = await createStoreColorData({ name, hex })
+                            if (hasError || !payload) {
                                 toast.error(message || "Error al crear color")
                                 setIsSaving(false)
                                 return
