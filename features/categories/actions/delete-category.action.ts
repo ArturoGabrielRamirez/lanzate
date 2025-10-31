@@ -6,9 +6,9 @@ import { deleteCategory as deleteCategoryFromDb } from "@/features/categories/da
 import { DeleteCategoryAction } from "@/features/categories/types"
 
 export async function deleteCategoryAction({ storeId, categoryId }: DeleteCategoryAction) {
-    const { error, message, payload: category } = await deleteCategoryFromDb({ storeId, categoryId })
+    const { hasError, message, payload: category } = await deleteCategoryFromDb({ storeId, categoryId })
 
-    if (error) {
+    if (hasError) {
         throw new Error(message)
     }
 

@@ -3,18 +3,19 @@
 import { FileCheck, Flame, MapPin, MessageCircle, ShoppingBag, Truck } from "lucide-react"
 import Link from "next/link"
 
+import { FeedItemProps } from "@/features/dashboard/types"
+import { extractLink, formatActivityDate, getUserInitials } from "@/features/dashboard/utils/shared-utils"
+import { ConfirmOrderButtonIcon } from "@/features/orders/components"
+import { OpenChatButton } from "@/features/orders/components/open-chat-button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { cn } from "@/lib/utils"
+
+/* import { CancelOrderButton } from "@/features/stores/components" */
 /* import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { useState } from "react" */
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { FeedItemProps } from "@/features/dashboard/types"
-import { extractLink, formatActivityDate, getUserInitials } from "@/features/dashboard/utils/shared-utils"
-import { OpenChatButton } from "@/features/orders/components/open-chat-button"
-/* import { CancelOrderButton } from "@/features/stores/components" */
-import { cn } from "@/lib/utils"
-import { ConfirmOrderButtonIcon } from "@/features/orders/components"
 
 function FeedItem({ item }: FeedItemProps) {
 
@@ -77,10 +78,10 @@ function FeedItem({ item }: FeedItemProps) {
                             {item.activity_type === "CONTRACT_ASSIGNED" && "Asignó un contrato"}
                         </span>
                         <Link href={extractLink(item) || ''} className="font-medium text-primary">
-                            {item.activity_type === "PRODUCT_LIKE" && `@${item.product.name}`}
-                            {item.activity_type === "PRODUCT_COMMENT" && `@${item.product.name}`}
-                            {item.activity_type === "ORDER_CREATED" && `#${item.order.id}`}
-                            {item.activity_type === "CONTRACT_ASSIGNED" && `@${item.contract.contract.title}`}
+                            {item.activity_type === "PRODUCT_LIKE" && `@${item.product?.name}`}
+                            {item.activity_type === "PRODUCT_COMMENT" && `@${item.product?.name}`}
+                            {item.activity_type === "ORDER_CREATED" && `#${item.order?.id}`}
+                            {item.activity_type === "CONTRACT_ASSIGNED" && `@${item.contract?.contract.title}`}
                         </Link>
                     </p>
                     <div className="flex items-center gap-2">
@@ -88,23 +89,23 @@ function FeedItem({ item }: FeedItemProps) {
                             <Tooltip>
                                 <TooltipTrigger>
                                     <Badge variant="outline" className={cn(
-                                        item.order.status === "PROCESSING" && "border-yellow-500 text-yellow-500",
-                                        item.order.status === "READY" && "border-blue-500 text-blue-500",
-                                        item.order.status === "COMPLETED" && "border-green-500 text-green-500",
-                                        item.order.status === "CANCELLED" && "border-red-500 text-red-500",
+                                        item.order?.status === "PROCESSING" && "border-yellow-500 text-yellow-500",
+                                        item.order?.status === "READY" && "border-blue-500 text-blue-500",
+                                        item.order?.status === "COMPLETED" && "border-green-500 text-green-500",
+                                        item.order?.status === "CANCELLED" && "border-red-500 text-red-500",
                                     )}>
-                                        {item.order.status === "READY" ? "CONFIRMED" : item.order.status}
+                                        {item.order?.status === "READY" ? "CONFIRMED" : item.order?.status}
                                     </Badge>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    {item.order.status === "PROCESSING" && "Orden en proceso"}
-                                    {item.order.status === "READY" && "Orden confirmada"}
-                                    {item.order.status === "COMPLETED" && "Orden completada"}
-                                    {item.order.status === "CANCELLED" && "Orden cancelada"}
+                                    {item.order?.status === "PROCESSING" && "Orden en proceso"}
+                                    {item.order?.status === "READY" && "Orden confirmada"}
+                                    {item.order?.status === "COMPLETED" && "Orden completada"}
+                                    {item.order?.status === "CANCELLED" && "Orden cancelada"}
                                 </TooltipContent>
                             </Tooltip>
                         )}
-                        {item.activity_type === "ORDER_CREATED" && item.order.tracking && (
+                        {item.activity_type === "ORDER_CREATED" && item.order?.tracking && (
                             <Tooltip>
                                 <TooltipTrigger>
                                     <Badge variant="outline" >
@@ -129,25 +130,25 @@ function FeedItem({ item }: FeedItemProps) {
                         {item.activity_type === "ORDER_CREATED" && (
                             <Tooltip>
                                 <TooltipTrigger className="text-muted-foreground group-hover:text-primary transition-colors">
-                                    {item.order.shipping_method === "DELIVERY" && <Truck />}
-                                    {item.order.shipping_method === "PICKUP" && <MapPin />}
+                                    {item.order?.shipping_method === "DELIVERY" && <Truck />}
+                                    {item.order?.shipping_method === "PICKUP" && <MapPin />}
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    {item.order.shipping_method === "DELIVERY" && "Delivery to customer's address"}
-                                    {item.order.shipping_method === "PICKUP" && "Pick up at store"}
+                                    {item.order?.shipping_method === "DELIVERY" && "Delivery to customer's address"}
+                                    {item.order?.shipping_method === "PICKUP" && "Pick up at store"}
                                 </TooltipContent>
                             </Tooltip>
                         )}
                     </div>
                 </CardContent>
                 <CardFooter className="flex justify-end items-center gap-2">
-                    {item.activity_type === "ORDER_CREATED" && item.order.status === "PROCESSING" && (
+                    {item.activity_type === "ORDER_CREATED" && item.order?.status === "PROCESSING" && (
                         <ConfirmOrderButtonIcon orderId={item.order?.id || 0} />
                     )}
                     {/* {item.activity_type === "ORDER_CREATED" && (
                         <CancelOrderButton order={item.order} slug={item.store.slug} size="sm" onlyIcon className="" />
                     )} */}
-                    {item.activity_type === "ORDER_CREATED" && <OpenChatButton roomId={String(item.order.id)} onlyIcon username="Store" messageType="STORE_TO_CUSTOMER" />}
+                    {item.activity_type === "ORDER_CREATED" && <OpenChatButton roomId={String(item.order?.id)} onlyIcon username="Store" messageType="STORE_TO_CUSTOMER" />}
                 </CardFooter>
             </Card>
 
