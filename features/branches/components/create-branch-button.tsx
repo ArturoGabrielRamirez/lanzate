@@ -28,7 +28,7 @@ function CreateBranchButton({ storeId, userId }: CreateBranchButtonProps) {
             const { hasError, message, payload: branch } = await createBranchAction({ payload, storeId, userId })
             if (hasError) throw new Error(message)
             return {
-                error: false,
+                hasError: false,
                 message: t("messages.success"),
                 payload: branch
             }
