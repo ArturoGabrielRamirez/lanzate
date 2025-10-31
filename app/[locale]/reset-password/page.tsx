@@ -9,7 +9,7 @@ import { Link } from '@/i18n/naviation'
 
 export default async function ResetPage() {
 
-  const t = await getTranslations("auth")
+  const t = await getTranslations("auth.resetPassword.page")
 
   return (
     <section className="md:min-h-dvh relative pt-17 flex flex-col gap-10">
@@ -24,36 +24,36 @@ export default async function ResetPage() {
           <div>
             <div className="flex items-center gap-2 text-primary">
               <KeyRound />
-              <h2 className="text-2xl font-bold font-oswald">Recuperar contraseña</h2>
+              <h2 className="text-2xl font-bold font-oswald">{t('header.title')}</h2>
             </div>
             <p className="text-muted-foreground font-quattrocento">
-              Recupera tu contraseña para ingresar a tu cuenta
+              {t('header.description')}
             </p>
           </div>
           <ResetPassword />
           <div>
             <div className="flex gap-2 items-center justify-center w-full">
               <h3 className="text-sm text-gray-600 dark:text-gray-400">
-                Ya recordaste tu contraseña?{" "}
+                {t('links.rememberedPassword')}{" "}
               </h3>
               <Link href="/login" className="text-sm text-blue-500 hover:underline">
-                Iniciar sesión
+                {t('links.loginLink')}
               </Link>
             </div>
             <div className="flex gap-2 items-center justify-center w-full">
               <h3 className="text-sm text-gray-600 dark:text-gray-400">
-                No tenés una cuenta?{" "}
+                {t('links.noAccount')}{" "}
               </h3>
-              <Link href="/login" className="text-sm text-blue-500 hover:underline">
-                Registrate
+              <Link href="/signup" className="text-sm text-blue-500 hover:underline">
+                {t('links.signupLink')}
               </Link>
             </div>
             <div className="flex gap-2 items-center justify-center w-full">
               <h3 className="text-sm text-gray-600 dark:text-gray-400">
-                Necesitas ayuda?{" "}
+                {t('links.needHelp')}{" "}
               </h3>
               <Link href="/help" className="text-sm text-blue-500 hover:underline">
-                {t("help")}
+                {t('links.helpLink')}
               </Link>
             </div>
           </div>
@@ -61,7 +61,7 @@ export default async function ResetPage() {
         <div className="relative aspect-square w-full hidden md:flex items-end max-w-md justify-self-start">
           <Image
             src={resetPasswordImage}
-            alt="Hero Image"
+            alt={t('image.alt')}
             width={5}
             className="w-full antialiased object-bottom drop-shadow-xl drop-shadow/20"
           />

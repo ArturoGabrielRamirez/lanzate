@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
 
-    const t = await getTranslations("auth")
+    const t = await getTranslations("auth.login.page")
     const params = await searchParams
 
     return (
@@ -36,10 +36,10 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                     <div>
                         <div className="flex items-center gap-2 text-primary">
                             <KeyRound />
-                            <h2 className="text-2xl font-bold font-oswald">Iniciar sesión</h2>
+                            <h2 className="text-2xl font-bold font-oswald">{t('header.title')}</h2>
                         </div>
                         <p className="text-muted-foreground font-quattrocento">
-                            Inicia sesión para ingresar a tu cuenta
+                            {t('header.description')}
                         </p>
                     </div>
                     <LoginForm />
@@ -48,18 +48,18 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                         <ResetPasswordLink />
                         <div className="flex gap-2 items-center justify-center w-full">
                             <h3 className="text-sm text-gray-600 dark:text-gray-400">
-                                No tienes una cuenta?{" "}
+                                {t('links.noAccount')}{" "}
                             </h3>
                             <Link href="/signup" className="text-sm text-blue-500 hover:underline">
-                                {t("signup")}
+                                {t('links.signupLink')}
                             </Link>
                         </div>
                         <div className="flex gap-2 items-center justify-center w-full">
                             <h3 className="text-sm text-gray-600 dark:text-gray-400">
-                                Necesitas ayuda?{" "}
+                                {t('links.needHelp')}{" "}
                             </h3>
                             <Link href="/help" className="text-sm text-blue-500 hover:underline">
-                                {t("help")}
+                                {t('links.helpLink')}
                             </Link>
                         </div>
                     </div>
@@ -68,7 +68,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 <div className="relative aspect-square w-full hidden md:flex items-end max-w-md justify-self-start">
                     <Image
                         src={loginImage}
-                        alt="Hero Image"
+                        alt={t('image.alt')}
                         width={5}
                         className="w-full antialiased object-bottom drop-shadow-xl drop-shadow/20"
                     />

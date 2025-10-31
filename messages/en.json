@@ -16,8 +16,8 @@
     },
     "Auth": {},
     "auth": {
-        "login": "Log In",
-        "signup": "Sign Up",
+        "_legacy_login": "Log In",
+        "_legacy_signup": "Sign Up",
         "email": "Email",
         "email-placeholder": "email@example.com",
         "password": "Password",
@@ -153,7 +153,219 @@
         "try-facebook-again": "Try with Facebook again",
         "help": "Contact us",
         "back-to-home": "Back to homepage",
-        "join-waitlist": "Join"
+        "join-waitlist": "Join",
+        "login": {
+            "page": {
+                "title": "Login",
+                "description": "Login to your account",
+                "header": {
+                    "title": "Log In",
+                    "description": "Sign in to access your account"
+                },
+                "links": {
+                    "noAccount": "Don't have an account?",
+                    "needHelp": "Need help?",
+                    "signupLink": "Sign Up",
+                    "helpLink": "Contact us"
+                },
+                "image": {
+                    "alt": "Login illustration"
+                }
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@example.com",
+                        "tooltip": "Enter the email address associated with your account."
+                    },
+                    "password": {
+                        "label": "Password",
+                        "placeholder": "Password",
+                        "tooltip": "Enter the password associated with your account."
+                    }
+                },
+                "actions": {
+                    "submit": "Log In"
+                },
+                "messages": {
+                    "success": "You have been logged in successfully",
+                    "loading": "Signing in..."
+                }
+            },
+            "social": {
+                "label": "Or login with",
+                "providers": {
+                    "google": "Google",
+                    "facebook": "Facebook"
+                }
+            },
+            "errors": {
+                "oauth": {
+                    "cancelled": {
+                        "title": "Login cancelled",
+                        "description": "You can try again with the same method or use your email and password.",
+                        "action": "Try again"
+                    },
+                    "failed": {
+                        "title": "Authentication error",
+                        "description": "There was a problem with authentication. Try again or use another method."
+                    },
+                    "temporary": {
+                        "title": "Service unavailable",
+                        "description": "The service is temporarily unavailable. Try again in a few minutes."
+                    },
+                    "invalid": {
+                        "title": "Invalid request",
+                        "description": "The request is invalid. Please try again."
+                    },
+                    "unexpected": {
+                        "title": "Unexpected error",
+                        "description": "An unexpected error occurred. Please try again."
+                    },
+                    "generic": {
+                        "title": "Authentication error",
+                        "description": "Try again or use your email and password."
+                    }
+                },
+                "close": "Close"
+            },
+            "resetPassword": {
+                "question": "Forgot password?",
+                "link": "Reset your password"
+            }
+        },
+        "signup": {
+            "page": {
+                "title": "Signup",
+                "description": "Signup to your account",
+                "header": {
+                    "title": "Sign Up",
+                    "description": "Create your account to get started"
+                },
+                "links": {
+                    "hasAccount": "Already have an account?",
+                    "needHelp": "Need help?",
+                    "loginLink": "Log In",
+                    "helpLink": "Contact us"
+                },
+                "image": {
+                    "alt": "Sign up illustration"
+                }
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@example.com",
+                        "tooltip": "Enter the email address associated with your account."
+                    },
+                    "username": {
+                        "label": "Username",
+                        "placeholder": "Username",
+                        "tooltip": "Enter the username associated with your account."
+                    },
+                    "password": {
+                        "label": "Password",
+                        "placeholder": "Password",
+                        "tooltip": "Enter the password associated with your account."
+                    },
+                    "confirmPassword": {
+                        "label": "Confirm Password",
+                        "placeholder": "Confirm Password",
+                        "tooltip": "Enter the password associated with your account."
+                    }
+                },
+                "actions": {
+                    "submit": "Sign Up"
+                },
+                "messages": {
+                    "success": "You have been registered successfully",
+                    "loading": "Signing up..."
+                }
+            },
+            "social": {
+                "label": "Or sign up with",
+                "providers": {
+                    "google": "Google",
+                    "facebook": "Facebook"
+                }
+            }
+        },
+        "resetPassword": {
+            "page": {
+                "title": "Reset Password",
+                "description": "Reset your password",
+                "header": {
+                    "title": "Reset Password",
+                    "description": "Recover your password to access your account"
+                },
+                "links": {
+                    "rememberedPassword": "Remembered your password?",
+                    "loginLink": "Log In",
+                    "noAccount": "Don't have an account?",
+                    "signupLink": "Sign Up",
+                    "needHelp": "Need help?",
+                    "helpLink": "Contact us"
+                },
+                "image": {
+                    "alt": "Reset password illustration"
+                }
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@example.com",
+                        "tooltip": "Enter the email address associated with your account.",
+                        "description": "Please enter the email address associated with your account. We will send a reset link to your email."
+                    }
+                },
+                "actions": {
+                    "submit": "Send Reset Link"
+                },
+                "messages": {
+                    "success": "Reset link sent!",
+                    "loading": "Sending reset link..."
+                }
+            }
+        },
+        "updatePassword": {
+            "form": {
+                "fields": {
+                    "newPassword": {
+                        "label": "New Password",
+                        "placeholder": "New Password"
+                    }
+                },
+                "actions": {
+                    "submit": "Update Password"
+                },
+                "messages": {
+                    "success": "Password updated!",
+                    "loading": "Updating password...",
+                    "completed": "Password updated! You can now log in."
+                }
+            }
+        },
+        "waitlist": {
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@example.com",
+                        "tooltip": "Enter the email address to join the waitlist"
+                    }
+                },
+                "actions": {
+                    "submit": "Join"
+                },
+                "messages": {
+                    "success": "You have successfully joined the waitlist",
+                    "loading": "Joining the waitlist"
+                }
+            }
+        }
     },
     "cart": {
         "title": "Cart",

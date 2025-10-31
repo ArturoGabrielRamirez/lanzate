@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default async function SignupPage() {
 
-  const t = await getTranslations("auth")
+  const t = await getTranslations("auth.signup.page")
 
   return (
     <section className="md:min-h-dvh relative pt-17 flex flex-col gap-10">
@@ -30,10 +30,10 @@ export default async function SignupPage() {
           <div>
             <div className="flex items-center gap-2 text-primary">
               <KeyRound />
-              <h2 className="text-2xl font-bold font-oswald">Registrarse</h2>
+              <h2 className="text-2xl font-bold font-oswald">{t('header.title')}</h2>
             </div>
             <p className="text-muted-foreground font-quattrocento">
-              Regístrate para crear tu cuenta
+              {t('header.description')}
             </p>
           </div>
           <SignupForm />
@@ -41,18 +41,18 @@ export default async function SignupPage() {
           <div className='w-full'>
             <div className="flex gap-2 items-center justify-center w-full">
               <h3 className="text-sm text-gray-600 dark:text-gray-400">
-                No tienes una cuenta?{" "}
+                {t('links.hasAccount')}{" "}
               </h3>
               <Link href="/login" className="text-sm text-blue-500 hover:underline">
-                {t("login")}
+                {t('links.loginLink')}
               </Link>
             </div>
             <div className="flex gap-2 items-center justify-center w-full">
               <h3 className="text-sm text-gray-600 dark:text-gray-400">
-                Necesitas ayuda?{" "}
+                {t('links.needHelp')}{" "}
               </h3>
               <Link href="/help" className="text-sm text-blue-500 hover:underline">
-                {t("help")}
+                {t('links.helpLink')}
               </Link>
             </div>
           </div>
@@ -60,7 +60,7 @@ export default async function SignupPage() {
         <div className="relative aspect-square w-full hidden md:flex items-end max-w-md justify-self-start">
           <Image
             src={signupImage}
-            alt="Hero Image"
+            alt={t('image.alt')}
             width={5}
             className="w-full antialiased object-bottom drop-shadow-xl drop-shadow/20"
           />

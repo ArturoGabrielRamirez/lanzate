@@ -15,8 +15,8 @@
         }
     },
     "auth": {
-        "login": "Iniciar sesión",
-        "signup": "Registrarse",
+        "_legacy_login": "Iniciar sesión",
+        "_legacy_signup": "Registrarse",
         "email": "Correo electrónico",
         "email-placeholder": "mi.correo@ejemplo.com",
         "password": "Contraseña",
@@ -152,7 +152,219 @@
         "try-facebook-again": "Intentar con Facebook de nuevo",
         "help": "Contactanos",
         "back-to-home": "Volver al inicio",
-        "join-waitlist": "Unirme"
+        "join-waitlist": "Unirme",
+        "login": {
+            "page": {
+                "title": "Iniciar sesión",
+                "description": "Inicia sesión en tu cuenta",
+                "header": {
+                    "title": "Iniciar sesión",
+                    "description": "Inicia sesión para ingresar a tu cuenta"
+                },
+                "links": {
+                    "noAccount": "¿No tienes una cuenta?",
+                    "needHelp": "¿Necesitas ayuda?",
+                    "signupLink": "Registrarse",
+                    "helpLink": "Contáctanos"
+                },
+                "image": {
+                    "alt": "Ilustración de inicio de sesión"
+                }
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@ejemplo.com",
+                        "tooltip": "Ingresá la dirección de email asociada con tu cuenta."
+                    },
+                    "password": {
+                        "label": "Contraseña",
+                        "placeholder": "Contraseña",
+                        "tooltip": "Ingresá la contraseña asociada con tu cuenta."
+                    }
+                },
+                "actions": {
+                    "submit": "Iniciar sesión"
+                },
+                "messages": {
+                    "success": "Has iniciado sesión exitosamente",
+                    "loading": "Iniciando sesión..."
+                }
+            },
+            "social": {
+                "label": "O iniciá sesión con",
+                "providers": {
+                    "google": "Google",
+                    "facebook": "Facebook"
+                }
+            },
+            "errors": {
+                "oauth": {
+                    "cancelled": {
+                        "title": "Inicio de sesión cancelado",
+                        "description": "Podés intentar nuevamente con el mismo método o usar tu email y contraseña.",
+                        "action": "Intentar de nuevo"
+                    },
+                    "failed": {
+                        "title": "Error de autenticación",
+                        "description": "Hubo un problema con la autenticación. Intentá de nuevo o usá otro método."
+                    },
+                    "temporary": {
+                        "title": "Servicio no disponible",
+                        "description": "El servicio no está disponible temporalmente. Intentá de nuevo en unos minutos."
+                    },
+                    "invalid": {
+                        "title": "Solicitud inválida",
+                        "description": "La solicitud es inválida. Por favor intentá de nuevo."
+                    },
+                    "unexpected": {
+                        "title": "Error inesperado",
+                        "description": "Ocurrió un error inesperado. Por favor intentá de nuevo."
+                    },
+                    "generic": {
+                        "title": "Error de autenticación",
+                        "description": "Intentá de nuevo o usá tu email y contraseña."
+                    }
+                },
+                "close": "Cerrar"
+            },
+            "resetPassword": {
+                "question": "¿Olvidaste tu contraseña?",
+                "link": "Restablecer tu contraseña"
+            }
+        },
+        "signup": {
+            "page": {
+                "title": "Registrarse",
+                "description": "Crea tu cuenta",
+                "header": {
+                    "title": "Registrarse",
+                    "description": "Regístrate para crear tu cuenta"
+                },
+                "links": {
+                    "hasAccount": "¿Ya tenés una cuenta?",
+                    "needHelp": "¿Necesitas ayuda?",
+                    "loginLink": "Iniciar sesión",
+                    "helpLink": "Contáctanos"
+                },
+                "image": {
+                    "alt": "Ilustración de registro"
+                }
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@ejemplo.com",
+                        "tooltip": "Ingresá la dirección de email asociada con tu cuenta."
+                    },
+                    "username": {
+                        "label": "Nombre de usuario",
+                        "placeholder": "Nombre de usuario",
+                        "tooltip": "Ingresá el nombre de usuario asociado con tu cuenta."
+                    },
+                    "password": {
+                        "label": "Contraseña",
+                        "placeholder": "Contraseña",
+                        "tooltip": "Ingresá la contraseña asociada con tu cuenta."
+                    },
+                    "confirmPassword": {
+                        "label": "Confirmar contraseña",
+                        "placeholder": "Confirmar contraseña",
+                        "tooltip": "Ingresá la contraseña asociada con tu cuenta."
+                    }
+                },
+                "actions": {
+                    "submit": "Registrarse"
+                },
+                "messages": {
+                    "success": "Te has registrado exitosamente",
+                    "loading": "Registrándote..."
+                }
+            },
+            "social": {
+                "label": "O registrate con",
+                "providers": {
+                    "google": "Google",
+                    "facebook": "Facebook"
+                }
+            }
+        },
+        "resetPassword": {
+            "page": {
+                "title": "Restablecer contraseña",
+                "description": "Restablecer tu contraseña",
+                "header": {
+                    "title": "Recuperar contraseña",
+                    "description": "Recupera tu contraseña para ingresar a tu cuenta"
+                },
+                "links": {
+                    "rememberedPassword": "¿Ya recordaste tu contraseña?",
+                    "loginLink": "Iniciar sesión",
+                    "noAccount": "¿No tenés una cuenta?",
+                    "signupLink": "Registrate",
+                    "needHelp": "¿Necesitas ayuda?",
+                    "helpLink": "Contáctanos"
+                },
+                "image": {
+                    "alt": "Ilustración de recuperar contraseña"
+                }
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@ejemplo.com",
+                        "tooltip": "Ingresá la dirección de email asociada con tu cuenta.",
+                        "description": "Por favor ingresá la dirección de email asociada con tu cuenta. Te enviaremos un enlace de restablecimiento a tu email."
+                    }
+                },
+                "actions": {
+                    "submit": "Enviar enlace de restablecimiento"
+                },
+                "messages": {
+                    "success": "¡Enlace de restablecimiento enviado!",
+                    "loading": "Enviando enlace de restablecimiento..."
+                }
+            }
+        },
+        "updatePassword": {
+            "form": {
+                "fields": {
+                    "newPassword": {
+                        "label": "Nueva contraseña",
+                        "placeholder": "Nueva contraseña"
+                    }
+                },
+                "actions": {
+                    "submit": "Actualizar contraseña"
+                },
+                "messages": {
+                    "success": "¡Contraseña actualizada!",
+                    "loading": "Actualizando contraseña...",
+                    "completed": "¡Contraseña actualizada! Ahora podés iniciar sesión."
+                }
+            }
+        },
+        "waitlist": {
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@ejemplo.com",
+                        "tooltip": "Ingresá la dirección de email para unirte a la lista de espera"
+                    }
+                },
+                "actions": {
+                    "submit": "Unirse"
+                },
+                "messages": {
+                    "success": "Te has unido exitosamente a la lista de espera",
+                    "loading": "Uniéndote a la lista de espera"
+                }
+            }
+        }
     },
     "cart": {
         "title": "Carrito",
