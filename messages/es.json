@@ -1503,6 +1503,182 @@
     "landing": {
         "contact-section": {
             "contact-us": "Contactanos"
+        },
+        "hero": {
+            "announcement": {
+                "badge": "Última actualización",
+                "title": "Nueva caja registradora agregada"
+            },
+            "slogan": {
+                "prefix": "Vos",
+                "rotatingWords": {
+                    "word1": "soñá",
+                    "word2": "emprende",
+                    "word3": "crecé"
+                },
+                "brandName": "Lanzate",
+                "suffix": "lo hace posible"
+            },
+            "description": {
+                "text": "Gestionar tu negocio online nunca fue tan fácil. Enfocate en crecer mientras te damos el control total"
+            },
+            "actions": {
+                "learnMore": "Conocer más",
+                "getStarted": "Empezar"
+            }
+        },
+        "features": {
+            "header": {
+                "label": "Características",
+                "title": "Características"
+            },
+            "highlights": {
+                "customizable": {
+                    "percentage": "100%",
+                    "title": "Personalizable"
+                },
+                "allInOne": {
+                    "title": "Todo-en-uno",
+                    "description": "Gestiona tu tienda donde sea, disponible en todos tus dispositivos."
+                },
+                "customDomain": {
+                    "title": "Dominio personalizado",
+                    "description": "¡Consigue tu dominio personalizado y publica tus productos bajo tu marca!"
+                },
+                "speed": {
+                    "title": "¡Más rápido que la luz!",
+                    "description": "Lanzate carga al instante; garantizando que tus clientes tengan una experiencia veloz y fluida en todo momento."
+                },
+                "stayConnected": {
+                    "title": "Mantente conectado",
+                    "description": "Mantente conectado con tus clientes a través de nuestras características integradas de redes sociales."
+                }
+            },
+            "about": {
+                "label": "Quienes somos",
+                "title": "En una mision para ayudarte a lanzar tu negocio",
+                "description": {
+                    "paragraph1": "En Lanzate, creemos que cada emprendedor merece las herramientas adecuadas para hacer realidad sus ideas. Nuestra plataforma te proporciona todo lo necesario para crear, gestionar y hacer crecer tu negocio digital desde el primer día, sin complicaciones técnicas.",
+                    "paragraph2": "Sabemos que iniciar un negocio puede ser abrumador. Por eso hemos creado una solución integral que elimina las barreras técnicas y te permite enfocarte en lo que realmente importa: tu visión. Desde tu sitio web personalizado hasta la gestión de clientes, todo está diseñado para ser simple, rápido y efectivo.",
+                    "paragraph3": "Nuestro compromiso va más allá de una simple plataforma. Estamos construyendo una comunidad de emprendedores valientes que comparten el sueño de crear algo propio. Al elegir Lanzate, no solo obtienes una herramienta poderosa, te unes a un ecosistema diseñado para impulsar tu éxito y el de tu negocio."
+                },
+                "stats": {
+                    "founded": {
+                        "value": "2025",
+                        "label": "Fundado"
+                    },
+                    "users": {
+                        "value": "+100",
+                        "label": "Usuarios"
+                    },
+                    "countries": {
+                        "value": "3",
+                        "label": "Paises"
+                    },
+                    "sales": {
+                        "value": "+$100K",
+                        "label": "Vendido"
+                    }
+                },
+                "link": "Conocé más sobre nuestra app"
+            }
+        },
+        "integrations": {
+            "header": {
+                "label": "Integraciones",
+                "title": "Todas tus herramientas favoritas. Un solo lugar.",
+                "description": "Conectate sin problemas con las plataformas y servicios que ya usás. Nuestras integraciones facilitan sincronizar tus datos, gestionar tu flujo de trabajo y hacer crecer tu negocio sin cambiar entre múltiples herramientas."
+            },
+            "marquee": {
+                "title": "Confiable por Empresas en Todo el Mundo",
+                "description": "Fundadores, desarrolladores y líderes empresariales de todo el mundo nos eligieron para sus operaciones de activos digitales."
+            }
+        },
+        "faq": {
+            "header": {
+                "label": "FAQ",
+                "title": "Preguntas Frecuentes",
+                "description": "Encontrá respuestas a preguntas comunes sobre Lanzate. Si no encontrás lo que buscás, no dudes en contactar a nuestro equipo de soporte."
+            },
+            "items": {
+                "item1": {
+                    "question": "¿Qué es Lanzate?",
+                    "answer": "Lanzate es una plataforma integral todo-en-uno diseñada para ayudar a emprendedores y negocios a crear, gestionar y escalar su presencia online. Nuestra plataforma combina gestión de productos, seguimiento de inventario, integración con redes sociales y análisis de ventas en una solución única y potente. Ya sea que recién estés comenzando o busques expandir tu negocio existente, Lanzate te proporciona las herramientas que necesitás para gestionar múltiples tiendas, hacer seguimiento de tus productos, interactuar con clientes a través de redes sociales y hacer crecer tu marca—todo desde un panel intuitivo."
+                },
+                "item2": {
+                    "question": "¿Cuánto cuesta Lanzate?",
+                    "answer": "Lanzate ofrece opciones de precios flexibles para adaptarse a negocios de todos los tamaños. Nuestro plan Starter es completamente gratuito y perfecto para comenzar—incluye hasta 2 tiendas y sucursales, gestión de hasta 500 productos, análisis básicos e integración con redes sociales. Para negocios en crecimiento, nuestro plan Business cuesta $10 por mes y amplía tus capacidades con hasta 5 tiendas y sucursales, soporte para hasta 2.000 productos, opciones de marca personalizada y funciones con IA. Nuestro plan Enterprise, con un precio de $25 por mes, está diseñado para operaciones más grandes e incluye tiendas y sucursales ilimitadas, productos ilimitados, gestión avanzada de inventario, análisis completos con informes personalizados y soporte dedicado. Podés actualizar o reducir tu plan en cualquier momento."
+                },
+                "item3": {
+                    "question": "¿Qué características incluye Lanzate?",
+                    "answer": "Lanzate proporciona un conjunto completo de características para gestionar tu negocio online de manera eficiente. Nuestra plataforma incluye escaparates 100% personalizables, permitiéndote crear una experiencia de marca única. Podés gestionar múltiples tiendas y sucursales desde un solo panel, hacer seguimiento del inventario en tiempo real y organizar hasta cientos o miles de productos dependiendo de tu plan. Nos integramos perfectamente con plataformas de redes sociales populares, permitiéndote interactuar con clientes a través de likes, comentarios y gestión directa de pedidos. Además, Lanzate ofrece soporte para dominio personalizado para que puedas construir tu marca con tu propio nombre de dominio, análisis completos de ventas para hacer seguimiento del rendimiento y funciones con IA para ayudar a optimizar las operaciones de tu negocio. Todas las características están diseñadas para trabajar juntas sin problemas para una experiencia fluida."
+                },
+                "item4": {
+                    "question": "¿Puedo usar mi propio nombre de dominio con Lanzate?",
+                    "answer": "¡Sí, absolutamente! Lanzate soporta nombres de dominio personalizados, permitiéndote establecer una presencia online profesional con tu propio dominio de marca. Esta característica te permite generar confianza con tus clientes usando un dominio que refleje tu identidad de marca en lugar de un subdominio genérico. Configurar tu dominio personalizado es sencillo—simplemente conectá tu dominio a través de nuestro panel y te guiaremos a través del proceso de configuración. El soporte para dominio personalizado está disponible en nuestros planes Business y Enterprise, dándote la flexibilidad para escalar tu marca a medida que tu negocio crece. Esta es una característica clave para negocios que buscan establecer una presencia online fuerte y reconocible."
+                },
+                "item5": {
+                    "question": "¿Cómo comienzo con Lanzate?",
+                    "answer": "Comenzar con Lanzate es rápido y fácil. Simplemente registrate para una cuenta gratuita para acceder a nuestro plan Starter—no se requiere tarjeta de crédito. Una vez que hayas creado tu cuenta, podés comenzar inmediatamente a configurar tu primera tienda, agregar productos y configurar tu inventario. Nuestro panel intuitivo te guiará a través del proceso de configuración inicial y tendrás acceso a todas las características principales de inmediato. Si necesitás ayuda, nuestro soporte comunitario está disponible para responder preguntas y guiarte a través de cualquier desafío. A medida que tu negocio crece, podés actualizar sin problemas a un plan que mejor se adapte a tus necesidades, desbloqueando características adicionales como dominios personalizados, análisis avanzados y herramientas de IA. ¡Comenzá a construir tu negocio online hoy con el plan gratuito de Lanzate!"
+                }
+            }
+        },
+        "contact": {
+            "header": {
+                "label": "Contacto",
+                "title": "Contactanos",
+                "description": "¿Tenés preguntas o necesitás ayuda? Estamos acá para ayudarte. Contactá a nuestro equipo y te responderemos lo antes posible."
+            },
+            "actions": {
+                "button": "Contactanos"
+            }
+        },
+        "pricing": {
+            "header": {
+                "label": "Precios",
+                "title": "Precios simples y transparentes para cada negocio",
+                "description": "Elegí el plan que se adapte a las necesidades de tu negocio. Comenzá gratis y escalá a medida que creces con nuestras opciones de precios flexibles diseñadas para negocios de todos los tamaños."
+            },
+            "plans": {
+                "starter": {
+                    "name": "Starter",
+                    "price": "$0 / GRATIS",
+                    "description": "Perfecto para comenzar tu negocio online. Gestiona tus productos y ventas sin costo inicial.",
+                    "features": {
+                        "feature1": "Gestión completa de productos e inventario todo-en-uno",
+                        "feature2": "Integración con redes sociales",
+                        "feature3": "Hasta 2 tiendas y sucursales gratis",
+                        "feature4": "Hasta 500 productos",
+                        "feature5": "Análisis básicos de ventas",
+                        "feature6": "Soporte de la comunidad"
+                    }
+                },
+                "business": {
+                    "name": "Business",
+                    "price": "$10/mes",
+                    "description": "Ideal para negocios en crecimiento que quieren ampliar su alcance con herramientas avanzadas.",
+                    "features": {
+                        "feature1": "Todo del plan Starter",
+                        "feature2": "Hasta 5 tiendas y sucursales",
+                        "feature3": "Hasta 2000 productos",
+                        "feature4": "Opciones de marca personalizada",
+                        "feature5": "Funciones con IA"
+                    }
+                },
+                "enterprise": {
+                    "name": "Enterprise",
+                    "price": "$25/mes",
+                    "description": "Para empresas que buscan escalar. Gestión completa con herramientas premium y soporte dedicado.",
+                    "features": {
+                        "feature1": "Todo del plan Business",
+                        "feature2": "Tiendas y sucursales ilimitadas",
+                        "feature3": "Productos ilimitados",
+                        "feature4": "Gestión avanzada de inventario",
+                        "feature5": "Análisis avanzados e informes personalizados",
+                        "feature6": "Equipo de soporte dedicado"
+                    }
+                }
+            }
         }
     }
 }
