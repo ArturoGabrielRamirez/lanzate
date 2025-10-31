@@ -1,4 +1,5 @@
 import { ListChecks } from "lucide-react";
+import { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
@@ -6,6 +7,11 @@ import waitlistImage from "@/features/auth/assets/Waiting-pana.svg";
 import { JoinWaitlist } from "@/features/auth/components";
 import { BackgroundPattern } from "@/features/landing/components";
 import { Link } from "@/i18n/naviation";
+
+export const metadata: Metadata = {
+    title: "Join the waitlist",
+    description: "Join the waitlist to receive notifications when the product is available",
+}
 
 export default async function WaitlistPage() {
 
