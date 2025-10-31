@@ -1,2 +1,2 @@
-export { branchCreateSchema } from "@/features/branches/schemas/branch-schema"
-export { branchUpdateSchema } from "@/features/branches/schemas/branch-schema"
+export { branchUpdateFormSchema as branchCreateSchema } from "@/features/branches/schemas/branch-schema"
+export { branchUpdateActionSchema as branchUpdateSchema } from "@/features/branches/schemas/branch-schema"
