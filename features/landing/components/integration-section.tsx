@@ -1,9 +1,12 @@
 import { Plug } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 import { BackgroundPattern } from "@/features/landing/components"
 import { MarqueeLogoScroller } from "@/features/shadcn/components/marquee-logo"
 
-function IntegrationSection() {
+async function IntegrationSection() {
+
+    const t = await getTranslations("landing.integrations");
 
     const partners = [
         {
@@ -58,19 +61,19 @@ function IntegrationSection() {
                     <div>
                         <div className="mb-10 flex items-center gap-2 text-primary">
                             <Plug />
-                            <h2 className="text-2xl font-bold font-oswald">Integrations</h2>
+                            <h2 className="text-2xl font-bold font-oswald">{t('header.label')}</h2>
                         </div>
                         <h2 className="text-3xl font-bold tracking-tight md:text-4xl font-oswald">
-                            All your favorite tools. One single place.
+                            {t('header.title')}
                         </h2>
                     </div>
                     <p className="text-muted-foreground font-quattrocento">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, vero eius, in quasi hic nemo magnam assumenda accusamus dolorem fugiat quia provident inventore enim vitae nobis? Cupiditate quibusdam saepe temporibus?
+                        {t('header.description')}
                     </p>
                 </div>
                 <MarqueeLogoScroller
-                    title="Trusted by Businesses Worldwide"
-                    description="Founders, developers, and business leaders across the globe chose us for their digital asset operations."
+                    title={t('marquee.title')}
+                    description={t('marquee.description')}
                     logos={partners}
                     speed="normal"
                 />
