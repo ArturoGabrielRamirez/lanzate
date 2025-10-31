@@ -1,6 +1,6 @@
 "use client";
 
-//TODO: SEPARAR ESTO
+//TODO: SEPARAR Y REPARAR ESTO
 
 import { Slot } from "@radix-ui/react-slot";
 import { Camera } from "lucide-react";
@@ -1166,7 +1166,7 @@ function FileUploadItemPreview(props: FileUploadItemPreviewProps) {
 
         return (
           <div className="relative">
-            <Image src={url} alt={file.name} className="object-cover" />
+            <Image src={url} alt={file.name} className="object-cover absolute" />
           </div>
         );
       }
