@@ -62,7 +62,7 @@ export default async function SignupPage() {
             src={signupImage}
             alt="Hero Image"
             width={5}
-            className="w-full antialiased object-bottom drop-shadow-xl drop-shadow-primary/30"
+            className="w-full antialiased object-bottom drop-shadow-xl drop-shadow/20"
           />
         </div>
       </div>
