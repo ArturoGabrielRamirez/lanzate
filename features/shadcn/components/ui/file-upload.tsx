@@ -1,5 +1,7 @@
 "use client";
 
+//TODO: SEPARAR ESTO
+
 import { Slot } from "@radix-ui/react-slot";
 import { Camera } from "lucide-react";
 import {
@@ -11,6 +13,7 @@ import {
   FileTextIcon,
   FileVideoIcon,
 } from "lucide-react";
+import Image from "next/image";
 import * as React from "react";
 
 import { MediaSelector } from "@/features/global/components/media-selector/media-selector";
@@ -892,10 +895,10 @@ function FileUploadCameraTrigger(props: FileUploadCameraTriggerProps) {
       fetch(url)
         .then(res => res.blob())
         .then(blob => {
-          const file = new File([blob], `capture-${Date.now()}.jpg`, { 
-            type: 'image/jpeg' 
+          const file = new File([blob], `capture-${Date.now()}.jpg`, {
+            type: 'image/jpeg'
           });
-          
+
           const inputElement = context.inputRef.current;
           if (!inputElement) return;
 
@@ -1056,9 +1059,8 @@ function FileUploadItem(props: FileUploadItemProps) {
         id={id}
         aria-setsize={fileCount}
         aria-posinset={fileIndex}
-        aria-describedby={`${nameId} ${sizeId} ${statusId} ${
-          fileState.error ? messageId : ""
-        }`}
+        aria-describedby={`${nameId} ${sizeId} ${statusId} ${fileState.error ? messageId : ""
+          }`}
         aria-labelledby={nameId}
         data-slot="file-upload-item"
         dir={context.dir}
@@ -1163,7 +1165,9 @@ function FileUploadItemPreview(props: FileUploadItemPreviewProps) {
         }
 
         return (
-          <img src={url} alt={file.name} className="size-full object-cover" />
+          <div className="relative">
+            <Image src={url} alt={file.name} className="object-cover" />
+          </div>
         );
       }
 

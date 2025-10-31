@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 
 import type { ProductDetailFormProps } from "@/features/products/types"
@@ -22,8 +23,7 @@ function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
                         <label className="text-sm font-medium">Imagen principal</label>
                         <div className="relative w-full max-w-sm aspect-[3/4] overflow-hidden rounded-lg border bg-secondary">
                             {product.primary_media?.url ? (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img src={product.primary_media.url} alt="Primary image" className="object-cover h-full w-full" />
+                                <Image src={product.primary_media.url} alt="Primary image" className="object-cover h-full w-full" />
                             ) : (
                                 <div className="flex items-center justify-center h-full text-sm text-muted-foreground">Sin imagen principal</div>
                             )}
@@ -35,8 +35,7 @@ function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
                             <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                                 {product.media.map((m) => (
                                     <div key={m.id} className="relative aspect-square overflow-hidden rounded-md bg-secondary border">
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img src={m.url} alt="Product media" className="object-cover h-full w-full" />
+                                        <Image src={m.url} alt="Product media" className="object-cover h-full w-full" />
                                     </div>
                                 ))}
                             </div>
@@ -97,10 +96,9 @@ function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
                                 const total = (v.stocks ?? []).reduce((s: number, x: { quantity: number }) => s + (x.quantity ?? 0), 0)
                                 const label = [v.size_or_measure, v.color?.name].filter(Boolean).join(" · ") || `Variante ${v.id}`
                                 return (
-                                    <Link key={v.id} href={`/stores/${slug}/products/${product.id}/${v.id}`} className="rounded-md border p-3 flex items-center gap-3 hover:bg-muted">
+                                    <Link key={v.id} href={`/stores/${slug}/products/${product.id}/${v.id}`} className="rounded-md relative border p-3 flex items-center gap-3 hover:bg-muted">
                                         {v.primary_media?.url ? (
-                                            // eslint-disable-next-line @next/next/no-img-element
-                                            <img src={v.primary_media.url} alt={label} className="h-12 w-12 rounded object-cover" />
+                                            <Image src={v.primary_media.url} alt={label} className="rounded object-cover" />
                                         ) : (
                                             <div className="h-12 w-12 rounded bg-secondary" />
                                         )}

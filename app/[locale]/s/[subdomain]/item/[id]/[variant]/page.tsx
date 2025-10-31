@@ -1,5 +1,6 @@
 /* import { Category } from "@prisma/client" */
 import { Image as ImageIcon, Share, ShoppingBag } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
 /* import { Title } from "@/features/layout/components" */
@@ -57,10 +58,9 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-gray-100 rounded-lg flex items-center justify-center grow">
+                        <div className="bg-gray-100 relative rounded-lg flex items-center justify-center grow">
                             {product.image ? (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
+                                <Image
                                     src={product.image}
                                     alt={product.name}
                                     className="w-full h-full object-cover rounded-lg"

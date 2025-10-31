@@ -1,6 +1,7 @@
 "use client"
 
 import { Product, ProductVariant, Color, ProductMedia } from "@prisma/client"
+import Image from "next/image"
 import { useQueryState } from "nuqs"
 import { useMemo, useState, useEffect } from "react"
 
@@ -83,7 +84,7 @@ function VariantDetailClient({ product, initialVariantId }: Props) {
         <div className="bg-muted rounded-md overflow-hidden aspect-square flex items-center justify-center">
           {galleryImages[0] ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={galleryImages[0]} alt={displayName} className="object-cover w-full h-full" />
+            <Image src={galleryImages[0]} alt={displayName} className="object-cover w-full h-full" />
           ) : (
             <div className="text-muted-foreground/60">No image available</div>
           )}
@@ -91,7 +92,7 @@ function VariantDetailClient({ product, initialVariantId }: Props) {
         <div className="flex flex-col gap-2 max-h-[380px] overflow-auto pr-1">
           {galleryImages.slice(1).map((src) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={src} src={src} alt={displayName} className="rounded-md object-cover aspect-square w-full cursor-pointer hover:opacity-90" />
+            <Image key={src} src={src} alt={displayName} className="rounded-md object-cover aspect-square w-full cursor-pointer hover:opacity-90" />
           ))}
         </div>
       </div>

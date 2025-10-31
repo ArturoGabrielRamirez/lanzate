@@ -1,6 +1,7 @@
 "use client"
 
 import { Pencil, Box, Settings } from "lucide-react"
+import Image from "next/image"
 import { useTranslations } from "next-intl"
 import { useCallback, useState, useEffect } from "react"
 import { toast } from "sonner"
@@ -20,8 +21,6 @@ import { EditProductButtonProps } from "@/features/products/types"
 import { Accordion, AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
-
-
 
 type CategoryValue = { value: string; label: string }
 
@@ -160,8 +159,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                                                 <label className="text-sm font-medium">Imagen principal</label>
                                                 <div className="relative w-full max-w-sm aspect-[3/4] overflow-hidden rounded-lg border bg-secondary">
                                                     {productDetails.primary_media?.url ? (
-                                                        // eslint-disable-next-line @next/next/no-img-element
-                                                        <img src={productDetails.primary_media.url} alt="Primary image" className="object-cover h-full w-full" />
+                                                        <Image src={productDetails.primary_media.url} alt="Primary image" className="object-cover h-full w-full" />
                                                     ) : (
                                                         <div className="flex flex-col items-center justify-center h-full p-4 text-sm text-muted-foreground">Sin imagen principal</div>
                                                     )}
@@ -173,8 +171,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                                                     <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                                                         {productDetails.media.map((m) => (
                                                             <div key={m.id} className={`relative aspect-square overflow-hidden rounded-md bg-secondary border ${productDetails.primary_media?.id === m.id ? 'border-primary ring-2 ring-primary' : 'border-border'}`}>
-                                                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                                <img src={m.url} alt="Product media" className="object-cover h-full w-full" />
+                                                                <Image src={m.url} alt="Product media" className="object-cover h-full w-full" />
                                                             </div>
                                                         ))}
                                                     </div>
