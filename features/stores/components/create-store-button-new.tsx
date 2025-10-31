@@ -1181,37 +1181,43 @@ function CreateStoreButtonNew({ userId }: { userId: number }) {
         }
     }, [step, createdSlug, router])
 
-    const handleCreateStore = async (data: CreateStoreFormValues) => {
-        const isPhysical = !!data.address_info?.is_physical_store
-        const processedData = {
-            ...data,
-            // If online store, clear address fields to avoid backend validations
-            address_info: isPhysical ? data.address_info : { is_physical_store: false },
-            processedOpeningHours: processOpeningHours(data.settings?.attention_dates as { days?: string[]; startTime?: string; endTime?: string }[] | undefined),
-            processedShippingMethods: processShippingMethods(data.shipping_info?.methods as { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice?: string }[] | undefined),
-            processedPaymentMethods: processPaymentMethods(data.payment_info?.payment_methods as string[] | undefined),
-        }
+const handleCreateStore = async (data: CreateStoreFormValues) => {
+    const isPhysical = !!data.address_info?.is_physical_store
+    const processedData = {
+        ...data,
+        // If online store, clear address fields to avoid backend validations
+        address_info: isPhysical ? data.address_info : { is_physical_store: false },
+        processedOpeningHours: processOpeningHours(data.settings?.attention_dates as { days?: string[]; startTime?: string; endTime?: string }[] | undefined),
+        processedShippingMethods: processShippingMethods(data.shipping_info?.methods as { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice?: string }[] | undefined),
+        processedPaymentMethods: processPaymentMethods(data.payment_info?.payment_methods as string[] | undefined),
+    }
 
-        setStep(6)
-        const { hasError, message, payload } = await createStoreAction(processedData, userId)
+    setStep(6)
+    const { hasError, message, payload } = await createStoreAction(processedData, userId)
 
-        if (hasError) {
-            toast.error(message)
-            // return the form to the last step for correction
-            setStep(5)
-            return { error: true, message, payload: null }
-        }
-
-        // On success: move to success step and redirect shortly
-        setCreatedSlug(payload?.slug || null)
-        setStep(7)
-
-        return {
-            error: false,
-            message: "Store created successfully",
-            payload: payload
+    if (hasError) {
+        toast.error(message)
+        // return the form to the last step for correction
+        setStep(5)
+        return { 
+            success: false, 
+            error: true,
+            message: message,
+            data: null 
         }
     }
+
+    // On success: move to success step and redirect shortly
+    setCreatedSlug(payload?.slug || null)
+    setStep(7)
+
+    return {
+        success: true,
+        error: false,
+        message: "Store created successfully",
+        data: payload
+    }
+}
 
     const descriptions = {
         1: "Choose a name, logo and shipping methods to get started; you can edit your store details later.",
