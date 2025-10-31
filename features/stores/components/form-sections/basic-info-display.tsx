@@ -5,14 +5,14 @@ import { StoreIcon, EditIcon, X } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 
+import { Form } from "@/features/global/components/form/form"
+import InputField from "@/features/global/components/form/input"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { EditBasicInfoButton } from "@/features/stores/components/section-buttons"
 import { editBasicInfoSchema } from "@/features/stores/schemas/basic-info-schema"
 import { BasicInfoDisplayProps, BasicInfoFormValues } from "@/features/stores/types"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
-import { Form } from "@/features/global/components/form/form"
-import { InputField } from "@/features/global/components/form/input-field"
 
 
 function BasicInfoDisplay({ store, userId }: BasicInfoDisplayProps) {

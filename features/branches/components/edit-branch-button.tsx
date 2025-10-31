@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import { editBranchAction } from "@/features/branches/actions"
-import { branchUpdateSchema } from "@/features/branches/schemas"
+import { branchUpdatePayloadSchema/* , branchUpdateSchema */ } from "@/features/branches/schemas"
 import { EditBranchButtonProps } from "@/features/branches/types"
 import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
 import InputField from "@/features/global/components/form/input"
@@ -48,7 +48,7 @@ function EditBranchButton({ branch, slug, onComplete, userId }: EditBranchButton
                 </>
             )}
             title={t("title")}
-            schema={branchUpdateSchema}
+            schema={branchUpdatePayloadSchema}
             description={t("description-popup")}
             action={handleEditBranch}
             onComplete={onComplete}

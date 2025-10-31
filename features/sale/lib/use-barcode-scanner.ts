@@ -1,19 +1,26 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react'
 
 import { getCharByKeyCode } from '@/features/sale/lib/keyboard-utils'
-import type { BarcodeScannerConfig, BarcodeScannerHookOptions, BarcodeScannerHookReturn, ScannedData } from '@/features/sale/types'
+import type {
+  BarcodeScannerConfig,
+  BarcodeScannerHookOptions,
+  BarcodeScannerHookReturn,
+  ScannedData
+} from '@/features/sale/types'
 
 const DEFAULT_CONFIG: BarcodeScannerConfig = {
-  intervalBetweenKeyPress: 50, // 50ms between keypresses (scanners are typically ~25ms)
-  scanningEndTimeout: 100, // 100ms timeout after scanning ends
-  historyLength: 50, // Keep last 50 scans in history
-  ignoreOnInputs: true, // Ignore when cursor is in input/textarea
+  intervalBetweenKeyPress: 50, // 50ms between keypresses
+  scanningEndTimeout: 100,     // 100ms timeout after scanning ends
+  historyLength: 50,            // Keep last 50 scans in history
+  ignoreOnInputs: true,         // Ignore when cursor is in input/textarea
   debug: false
 }
 
-export function useBarcodeScanner(options: BarcodeScannerHookOptions = {}): BarcodeScannerHookReturn {
+export function useBarcodeScanner(
+  options: BarcodeScannerHookOptions = {}
+): BarcodeScannerHookReturn {
   const {
     enabled = true,
     config: userConfig = {},
@@ -22,121 +29,97 @@ export function useBarcodeScanner(options: BarcodeScannerHookOptions = {}): Barc
     onScanEnd
   } = options
 
-  const config = { ...DEFAULT_CONFIG, ...userConfig }
+  // Memorizar configuración para evitar recrearla en cada render
+  const config = useMemo(() => ({ ...DEFAULT_CONFIG, ...userConfig }), [userConfig])
 
   const [isScanning, setIsScanning] = useState(false)
   const [lastScanned, setLastScanned] = useState<string | null>(null)
   const [scanHistory, setScanHistory] = useState<string[]>([])
 
-  // Use refs to store mutable values that don't trigger re-renders
   const isBusyRef = useRef<NodeJS.Timeout | null>(null)
   const keyDownTimeRef = useRef<number | null>(null)
   const inputTextRef = useRef<string>('')
 
   const log = useCallback((...args: unknown[]) => {
-    if (config.debug) {
-      console.debug('[BarcodeScanner]', ...args)
-    }
+    if (config.debug) console.debug('[BarcodeScanner]', ...args)
   }, [config.debug])
 
-  const handleKeydown = useCallback((event: KeyboardEvent) => {
-    if (!enabled) return
+  const handleKeydown = useCallback(
+    (event: KeyboardEvent) => {
+      if (!enabled) return
 
-    const currentTime = Date.now()
-    const character = getCharByKeyCode(event.keyCode, event.shiftKey)
+      const currentTime = Date.now()
+      const character = getCharByKeyCode(event.keyCode, event.shiftKey)
 
-    // Ignore keypresses without character
-    if (character === '') return
+      if (character === '') return
 
-    // Prevent Firefox fast search '/' when scanning is active
-    if (isBusyRef.current) {
-      event.preventDefault()
-    }
+      if (isBusyRef.current) event.preventDefault()
 
-    // Ignore if cursor is in input/textarea and ignoreOnInputs is enabled
-    if (config.ignoreOnInputs &&
-      event.target instanceof HTMLElement &&
-      (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA')) {
-      return
-    }
+      if (
+        config.ignoreOnInputs &&
+        event.target instanceof HTMLElement &&
+        (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA')
+      ) return
 
-    if (keyDownTimeRef.current === null) {
-      // First keypress - start timer
-      keyDownTimeRef.current = currentTime
-      inputTextRef.current = character
-      log('First keypress detected')
-    } else {
-      const timeDiff = currentTime - keyDownTimeRef.current
+      if (keyDownTimeRef.current === null) {
+        keyDownTimeRef.current = currentTime
+        inputTextRef.current = character
+        log('First keypress detected')
+      } else {
+        const timeDiff = currentTime - keyDownTimeRef.current
 
-      if (timeDiff < config.intervalBetweenKeyPress) {
-        // Fast keypresses detected - this is likely a barcode scanner
-        inputTextRef.current += character
+        if (timeDiff < config.intervalBetweenKeyPress) {
+          inputTextRef.current += character
 
-        if (isBusyRef.current === null) {
-          // First fast keypress - start scanning mode
-          setIsScanning(true)
-          onScanStart?.()
-          log('Scanning started')
-        }
-
-        // Clear previous timeout and set new one
-        if (isBusyRef.current) {
-          clearTimeout(isBusyRef.current)
-        }
-
-        isBusyRef.current = setTimeout(() => {
-          // Scanning finished
-          const scannedData = inputTextRef.current
-          const scanData: ScannedData = {
-            data: scannedData,
-            timestamp: new Date()
+          if (isBusyRef.current === null) {
+            setIsScanning(true)
+            onScanStart?.()
+            log('Scanning started')
           }
 
-          log('Scan completed:', scannedData)
+          if (isBusyRef.current) clearTimeout(isBusyRef.current)
 
-          setLastScanned(scannedData)
-          setScanHistory(prev => {
-            const newHistory = [scannedData, ...prev].slice(0, config.historyLength)
-            return newHistory
-          })
+          isBusyRef.current = setTimeout(() => {
+            const scannedData = inputTextRef.current
+            const scanData: ScannedData = { data: scannedData, timestamp: new Date() }
 
-          onScanned?.(scanData)
-          onScanEnd?.()
+            setLastScanned(scannedData)
+            setScanHistory(prev => [scannedData, ...prev].slice(0, config.historyLength))
 
-          // Reset state
-          setIsScanning(false)
-          isBusyRef.current = null
-          inputTextRef.current = ''
-          log('Scanning ended')
-        }, config.scanningEndTimeout)
-      } else {
-        // Slow keypress - reset to single character
-        inputTextRef.current = character
+            onScanned?.(scanData)
+            onScanEnd?.()
+
+            setIsScanning(false)
+            isBusyRef.current = null
+            inputTextRef.current = ''
+            log('Scanning ended')
+          }, config.scanningEndTimeout)
+        } else {
+          inputTextRef.current = character
+        }
+
+        keyDownTimeRef.current = currentTime
       }
-
-      keyDownTimeRef.current = currentTime
-    }
-  }, [enabled, config, onScanned, onScanStart, onScanEnd, log])
+    },
+    [enabled, config, onScanned, onScanStart, onScanEnd, log]
+  )
 
   useEffect(() => {
     if (!enabled) return
 
     log('Scanner enabled with config:', config)
-
     window.addEventListener('keydown', handleKeydown)
 
     return () => {
       window.removeEventListener('keydown', handleKeydown)
-      if (isBusyRef.current) {
-        clearTimeout(isBusyRef.current)
-      }
+      if (isBusyRef.current) clearTimeout(isBusyRef.current)
       log('Scanner disabled')
     }
-  }, [handleKeydown, enabled, config, log])
+  }, [enabled, handleKeydown, log, config])
 
   return {
     isScanning,
     lastScanned,
     scanHistory
   }
-} 
+}

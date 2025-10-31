@@ -1,4 +1,5 @@
 import { Box, Calendar, Check, MapPin, Package, ShoppingCart, Truck, User } from "lucide-react"
+import Image from "next/image"
 
 import { OrderDetailsAccordionsProps } from "@/features/orders/types"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
@@ -55,7 +56,7 @@ function OrderDetailsAccordions({ order }: OrderDetailsAccordionsProps) {
                                 <div className="flex items-center gap-3">
                                     <div className="flex items-center justify-center w-12 h-12 overflow-hidden rounded-md bg-secondary">
                                         {item.product.image ? (
-                                            <img
+                                            <Image
                                                 src={item.product.image}
                                                 alt={item.product.name}
                                                 className="object-cover w-full h-full"

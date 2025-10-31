@@ -3,7 +3,7 @@
 import { Edit, Shield } from "lucide-react"
 
 import { handleSetupPasswordAction } from "@/features/auth/actions"
-import {  passwordSchema } from "@/features/auth/schemas"
+import { changePasswordSchema } from "@/features/auth/schemas"
 import { ButtonWithPopup } from "@/features/global/components/button-with-popup";
 import InputField from "@/features/global/components/form/input";
 
@@ -42,7 +42,7 @@ export function SetupPasswordPrompt({
         title="Configurar Contraseña de Seguridad"
         description={`Para ${operationName}, necesitas una contraseña como medida de seguridad adicional.`}
         action={setupPasswordAction}
-        schema={passwordSchema}
+        schema={changePasswordSchema}
         messages={{
           success: "Contraseña configurada correctamente",
           error: "Error al configurar la contraseña",

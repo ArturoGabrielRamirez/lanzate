@@ -21,7 +21,7 @@ export async function distributeProductStockData(data: DistributeStockData) {
 
         if (!product) {
             return {
-                error: true,
+                hasError: true,
                 message: "Product not found",
                 payload: null
             }
@@ -36,7 +36,7 @@ export async function distributeProductStockData(data: DistributeStockData) {
         // Validate that we're not creating stock out of thin air
         if (totalRequestedDistribution > totalCurrentStock) {
             return {
-                error: true,
+                hasError: true,
                 message: "Cannot distribute more stock than currently available across all branches",
                 payload: null
             }
@@ -79,14 +79,14 @@ export async function distributeProductStockData(data: DistributeStockData) {
         })
 
         return {
-            error: false,
+            hasError: false,
             message: "Stock redistributed successfully",
             payload: null
         }
     } catch (error) {
         console.error("Error redistributing stock:", error)
         return {
-            error: true,
+            hasError: true,
             message: "Failed to redistribute stock",
             payload: null
         }

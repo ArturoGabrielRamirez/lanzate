@@ -1,15 +1,15 @@
 import { AlertTriangle, ShieldUser, Clock } from "lucide-react";
 
+import { UserDeletionStatus } from "@/features/account/types";
+import { getUrgencyLevel, getUrgencyLevelFromMinutes } from "@/features/account/utils/deletion-helpers";
 import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert";
 import { Badge } from "@/features/shadcn/components/ui/badge";
 import { Button } from "@/features/shadcn/components/ui/button";
-import { UserDeletionStatus } from "@/features/account/types/index";
-import { getUrgencyLevel, getUrgencyLevelFromMinutes } from "@/features/account/utils/deletion-helpers";
 
 export function DeletionStatusCard({
     status,
     onCancelClick,
-   /*  scheduledDate */
+    /*  scheduledDate */
 }: {
     status: UserDeletionStatus & {
         canDeleteUntil?: Date | null;

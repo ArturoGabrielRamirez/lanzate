@@ -1,9 +1,9 @@
 import Image from 'next/image'
 
+import { CheckerboardBackground } from '@/features/global/components/background-remover'
+import { CompareViewProps } from '@/features/global/types/media'
 import { Label } from '@/features/shadcn/components/ui/label'
 import { Slider } from '@/features/shadcn/components/ui/slider'
-import { CheckerboardBackground } from '@/features/global/components/background-remover'
-import { CompareViewProps } from '@/features/shared/types'
 
 export function CompareView({ originalUrl, editor }: CompareViewProps) {
     return (

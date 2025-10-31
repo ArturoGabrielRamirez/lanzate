@@ -26,7 +26,7 @@ function CreateEmployeeButton({ storeId, userId }: CreateEmployeeButtonProps) {
     const handleAddEmployee = async () => {
         if (!selectedUser) {
             return {
-                error: true,
+                hasError: true,
                 message: t("messages.select-user-first"),
                 payload: null
             }
@@ -35,7 +35,7 @@ function CreateEmployeeButton({ storeId, userId }: CreateEmployeeButtonProps) {
         // Check if user is already an employee
         if (selectedUser.isEmployee) {
             return {
-                error: true,
+                hasError: true,
                 message: t("messages.user-already-employee"),
                 payload: null
             }
@@ -45,7 +45,7 @@ function CreateEmployeeButton({ storeId, userId }: CreateEmployeeButtonProps) {
             const { payload: employee, hasError, message } = await createEmployeeAction(selectedUser.id, storeId)
             if (hasError) {
                 return {
-                    error: true,
+                    hasError: true,
                     message: message,
                     payload: null
                 }
@@ -75,13 +75,13 @@ function CreateEmployeeButton({ storeId, userId }: CreateEmployeeButtonProps) {
             setSearch('')
 
             return {
-                error: false,
+                hasError: false,
                 message: t("messages.success"),
                 payload: employee
             }
         } catch (error) {
             return {
-                error: true,
+                hasError: true,
                 message: t("messages.error"),
                 payload: null
             }
@@ -97,8 +97,8 @@ function CreateEmployeeButton({ storeId, userId }: CreateEmployeeButtonProps) {
         })
 
         try {
-            const { payload: users, error, message } = await getEmployeesByFilterAction(search, storeId, userId)
-            if (error) {
+            const { payload: users, hasError, message } = await getEmployeesByFilterAction(search, storeId, userId)
+            if (hasError) {
                 toast.error(message || t("messages.search-error"))
                 return
             }

@@ -1,7 +1,7 @@
 "use server"
 
-import { formatSuccessResponse } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
+import { formatSuccessResponse } from "@/features/global/utils"
 import { ChangeOrderStatusData } from "@/features/orders/types"
 import { prisma } from "@/utils/prisma"
 
@@ -174,7 +174,7 @@ export async function updateOrderStatusData(orderId: number, data: ChangeOrderSt
         })
 
         // Crear log de la acción (fuera de la transacción para evitar problemas)
-        const { error: logError } = await insertLogEntry({
+        const { hasError: logError } = await insertLogEntry({
             action: "UPDATE",
             entity_type: "ORDER",
             entity_id: orderId,

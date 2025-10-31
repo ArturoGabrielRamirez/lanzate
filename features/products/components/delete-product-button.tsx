@@ -19,7 +19,7 @@ function DeleteProductButton({ productId, slug, onComplete, userId }: DeleteProd
             const { hasError, message, payload } = await deleteProductAction(productId, slug, userId)
             if (hasError) throw new Error(message)
             return {
-                error: false,
+                hasError: false,
                 message: t("messages.success"),
                 payload: payload
             }

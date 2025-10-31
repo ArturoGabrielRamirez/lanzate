@@ -1,9 +1,9 @@
 import { MessageCircleDashed } from "lucide-react";
 
-import { Button } from "@/features/shadcn/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
 import { DashboardErrorProps } from "@/features/dashboard/types";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty";
+import { Button } from "@/features/shadcn/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
 import { Link } from "@/i18n/naviation";
 
 function DashboardError({ message }: DashboardErrorProps) {

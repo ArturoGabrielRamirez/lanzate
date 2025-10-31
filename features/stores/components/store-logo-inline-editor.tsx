@@ -1,6 +1,7 @@
 'use client'
 
 import {/*  Smartphone, *//*  Upload, */ Loader2, Check, Camera } from "lucide-react"
+import Image from "next/image"
 import { useState, useRef } from 'react'
 import { toast } from "sonner"
 
@@ -166,7 +167,7 @@ function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLo
     <div className="space-y-6">
       <div className="flex justify-center">
         <div className="relative">
-          <img src={getCurrentPreview()} alt="Store logo preview" className="size-24 rounded-full object-cover border-2 border-muted" />
+          <Image src={getCurrentPreview()} alt="Store logo preview" className="size-24 rounded-full object-cover border-2 border-muted" />
           <Button
             type="button"
             variant="ghost"
@@ -216,7 +217,7 @@ function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLo
                       {logoOptions.map((option) => (
                         <div key={option.id} className={cn("relative cursor-pointer rounded-lg border-2 p-2 transition-all hover:bg-accent", selectedOption === option.id ? "border-primary bg-accent" : "border-muted")} onClick={() => handleOptionSelect(option.id)}>
                           <div className="flex flex-col items-center gap-2">
-                            <img src={option.url} alt={`${option.provider} logo`} className="h-12 w-12 rounded-full object-cover" />
+                            <Image src={option.url} alt={`${option.provider} logo`} className="h-12 w-12 rounded-full object-cover" />
                             <div className="text-center">
                               <p className="text-xs font-medium">{option.label}</p>
                               <p className="text-xs text-muted-foreground">{option.provider}</p>

@@ -5,10 +5,10 @@ import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { updateStoreBasicInfoAction } from "@/features/stores/actions/update-store-basics.action"
 import { EditBasicInfoButtonProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function EditBasicInfoButton({ store, userId, onSuccess }: EditBasicInfoButtonProps) {
     const { getValues, formState: { isValid } } = useFormContext()

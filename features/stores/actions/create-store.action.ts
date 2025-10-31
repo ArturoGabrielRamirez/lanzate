@@ -2,8 +2,8 @@
 
 import { revalidatePath } from "next/cache"
 
-import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
+import { actionWrapper } from "@/features/global/utils"
 import { canCreateStore } from "@/features/stores/access"
 import { insertStoreData } from "@/features/stores/data"
 import { ProcessedCreateStoreData } from "@/features/stores/types"
@@ -31,7 +31,7 @@ export async function createStoreAction(payload: ProcessedCreateStoreData, userI
         revalidatePath("/stores")
 
         // Create action log
-        const { error: logError } = await insertLogEntry({
+        const { hasError: logError } = await insertLogEntry({
             action: "CREATE",
             entity_type: "STORE",
             entity_id: newStore.id,

@@ -19,7 +19,7 @@ function DeleteVariantButton({ variantId, slug, productId, onlyIcon = false }: D
         try {
             const { hasError, message } = await deleteProductVariantAction(variantId, slug)
             if (hasError) throw new Error(message)
-            return { error: false, message: t("messages.success"), payload: null }
+            return { hasError: false, message: t("messages.success"), payload: null }
         } catch (error) {
             return formatErrorResponse(t("messages.error"))
         }

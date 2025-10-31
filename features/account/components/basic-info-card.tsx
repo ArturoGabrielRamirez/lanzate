@@ -1,7 +1,7 @@
 import { Calendar, Phone, User } from "lucide-react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
 import { AccountDetailsTabProps, UserType } from "@/features/account/types";
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
 
 export function BasicInfoCard({ user, immediateData }: { user: UserType; immediateData?: AccountDetailsTabProps['immediateData'] }) {
     const formatDate = (date: string | Date) => {

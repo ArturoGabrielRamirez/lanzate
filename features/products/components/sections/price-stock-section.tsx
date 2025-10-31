@@ -2,7 +2,7 @@
 
 import { DollarSign, Package } from "lucide-react"
 
-import { InputField } from "@/features/layout/components"
+import InputField from "@/features/global/components/form/input"
 import type { PriceStockSectionProps } from "@/features/products/types"
 
 function PriceStockSection({ defaults }: PriceStockSectionProps) {

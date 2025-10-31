@@ -1,10 +1,11 @@
 'use client'
 
 import { Upload, ImageIcon } from 'lucide-react'
+
+import { EmptyStateProps } from '@/features/global/types/media'
+import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Card } from '@/features/shadcn/components/ui/card'
-import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
-import { EmptyStateProps } from '../types'
 
 export function EmptyState({
   type,

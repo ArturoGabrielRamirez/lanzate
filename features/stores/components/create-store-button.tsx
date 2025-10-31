@@ -5,14 +5,14 @@ import { Globe, Plus, Store } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 
-import { Button } from "@/features/shadcn/components/ui/button"
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/features/shadcn/components/ui/dialog"
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
 import { TextareaField } from "@/features/global/components/form/textarea-field"
 import { ScrollArea } from "@/features/shadcn/components/scroll-area"
-import { basicInfoSchema } from "@/features/stores/schemas"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/features/shadcn/components/ui/dialog"
 import { useStep } from "@/features/shadcn/hooks/use-step"
+import { basicInfoSchema } from "@/features/stores/schemas"
 import { cn } from "@/lib/utils"
 
 function StepIndicator({ step, isCurrent }: { step: number, isCurrent: boolean }) {

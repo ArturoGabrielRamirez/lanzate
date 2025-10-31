@@ -1,8 +1,8 @@
-import { ShoppingBasket } from "lucide-react"
-import { getTranslations } from "next-intl/server"
+/* import { ShoppingBasket } from "lucide-react" */
+/* import { getTranslations } from "next-intl/server" */
 
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
-import { Title } from "@/features/layout/components"
+/* import { Title } from "@/features/layout/components" */
 import SaleInterface from "@/features/sale/components/sale-interface"
 import { getStoreBySubdomainAction } from "@/features/stores/actions/get-store-by-subdomain.action"
 
@@ -12,7 +12,7 @@ type Props = {
 
 async function SaleStorePage({ params }: Props) {
     const { slug, branch } = await params
-    const t = await getTranslations("sale")
+    /* const t = await getTranslations("sale") */
 
     const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
@@ -28,7 +28,7 @@ async function SaleStorePage({ params }: Props) {
 
     return (
         <section className="p-2 md:p-4 flex flex-col pt-13 md:pt-24 grow mx-auto container z-10 xl:px-0 pb-26">
-            <Title title={(
+           {/*  <Title title={(
                 <div className="flex items-center gap-2">
                     <ShoppingBasket />
                     {t("title")} - {store.name}
@@ -42,7 +42,7 @@ async function SaleStorePage({ params }: Props) {
                     label: store.name,
                     href: `/sale/${slug}`
                 }
-            ]} className="hidden md:block" />
+            ]} className="hidden md:block" /> */}
 
             <SaleInterface
                 storeName={store.name}

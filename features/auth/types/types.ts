@@ -521,5 +521,17 @@ export interface ProfileEditorProps {
   }) => void
 }
 
+export interface EmailTargetParams {
+  type: 'signup' | 'recovery' | 'smart';
+  email?: string;
+  emailChangeStatus: EmailChangeStatus;
+}
+
+export interface EmailTargetInfo {
+  targetEmail: string;
+  message: string;
+  step: string | null;
+}
+
 export type { FacebookLogoProps } from "@/features/auth/types";
 export type { GoogleLogoProps } from "@/features/auth/types";

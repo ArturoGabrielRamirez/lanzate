@@ -1,16 +1,18 @@
 'use client'
 
-import { useState } from 'react'
 import { Upload, Camera, Scissors, Sparkles, AlertCircle } from 'lucide-react'
-import { Card } from '@/features/shadcn/components/ui/card'
-import { Button } from '@/features/shadcn/components/ui/button'
+import { useState } from 'react'
+
+import { EmptyState } from '@/features/global/components/media-selector/empty-state'
+import { MediaGrid } from '@/features/global/components/media-selector/media-grid'
+import { MediaPreview } from '@/features/global/components/media-selector/media-preview'
+import { MediaTabs } from '@/features/global/components/media-selector/media-tabs'
+import { ToolButton } from '@/features/global/components/media-selector/tool-button'
+import { BannerLayoutProps } from '@/features/global/types/media'
+import { Button } from '@/features/shadcn/components/button'
 import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
-import { MediaPreview } from './media-preview'
-import { ToolButton } from './tool-button'
-import { MediaTabs } from './media-tabs'
-import { MediaGrid } from './media-grid'
-import { EmptyState } from './empty-state'
-import { BannerLayoutProps } from '../types'
+import { Card } from '@/features/shadcn/components/ui/card'
+
 
 export function BannerLayout({
     previewUrl,
@@ -129,8 +131,8 @@ export function BannerLayout({
                         <MediaGrid
                             items={myFiles}
                             type="banner"
-                            onSelect={(url) => mediaUpload.usePreset(url)}
-                            onDelete={(url) => mediaUpload.uploadHistory.removeUpload(url)}
+                            onSelect={(url: string) => mediaUpload.usePreset(url)}
+                            onDelete={(url: string) => mediaUpload.uploadHistory.removeUpload(url)}
                             selectedUrl={previewUrl}
                         />
                     )
@@ -162,7 +164,7 @@ export function BannerLayout({
                                 <MediaGrid
                                     items={allOptions}
                                     type="banner"
-                                    onSelect={(url) => mediaUpload.usePreset(url)}
+                                    onSelect={(url: string) => mediaUpload.usePreset(url)}
                                     selectedUrl={previewUrl}
                                 />
                             </div>

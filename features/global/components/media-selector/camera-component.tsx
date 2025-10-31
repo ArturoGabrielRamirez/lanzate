@@ -1,7 +1,9 @@
 'use client'
 
+import { Camera, /* X, */ RotateCcw, Check } from 'lucide-react'
+import Image from 'next/image'
 import React, { useRef, useEffect, useState, useCallback } from 'react'
-import { Camera, X, RotateCcw, Check } from 'lucide-react'
+
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
 
@@ -27,7 +29,7 @@ export default function CameraComponent({
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
-  
+
   const [isStreaming, setIsStreaming] = useState(false)
   const [capturedImage, setCapturedImage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -49,7 +51,7 @@ export default function CameraComponent({
   const startCamera = useCallback(async () => {
     try {
       setError(null)
-      
+
       if (streamRef.current) {
         streamRef.current.getTracks().forEach(track => track.stop())
       }
@@ -65,7 +67,7 @@ export default function CameraComponent({
 
       const stream = await navigator.mediaDevices.getUserMedia(constraints)
       streamRef.current = stream
-      
+
       if (videoRef.current) {
         videoRef.current.srcObject = stream
         videoRef.current.play()
@@ -110,6 +112,17 @@ export default function CameraComponent({
     }, 'image/jpeg', quality)
   }, [maxWidth, maxHeight, quality, stopCamera])
 
+  // Cerrar modal
+  const handleClose = useCallback(() => {
+    stopCamera()
+    if (capturedImage) {
+      URL.revokeObjectURL(capturedImage)
+      setCapturedImage(null)
+    }
+    setError(null)
+    onClose()
+  }, [stopCamera, capturedImage, onClose])
+
   // Confirmar y enviar foto
   const confirmPhoto = useCallback(() => {
     if (!canvasRef.current || !capturedImage) return
@@ -122,7 +135,7 @@ export default function CameraComponent({
         handleClose()
       }
     }, 'image/jpeg', quality)
-  }, [capturedImage, onCapture, quality])
+  }, [capturedImage, onCapture, quality, handleClose])
 
   // Retomar foto
   const retakePhoto = useCallback(() => {
@@ -138,17 +151,6 @@ export default function CameraComponent({
     setFacingMode(prev => prev === 'user' ? 'environment' : 'user')
   }, [])
 
-  // Cerrar modal
-  const handleClose = useCallback(() => {
-    stopCamera()
-    if (capturedImage) {
-      URL.revokeObjectURL(capturedImage)
-      setCapturedImage(null)
-    }
-    setError(null)
-    onClose()
-  }, [stopCamera, capturedImage, onClose])
-
   // Efectos
   useEffect(() => {
     if (isOpen) {
@@ -160,7 +162,7 @@ export default function CameraComponent({
     if (isOpen && !capturedImage) {
       startCamera()
     }
-    
+
     return () => {
       stopCamera()
     }
@@ -188,9 +190,9 @@ export default function CameraComponent({
               </Button>
             </div>
           ) : capturedImage ? (
-            <img 
-              src={capturedImage} 
-              alt="Captured" 
+            <Image
+              src={capturedImage}
+              alt="Captured"
               className="max-w-full max-h-full object-contain"
             />
           ) : (
@@ -201,7 +203,7 @@ export default function CameraComponent({
                 playsInline
                 muted
               />
-              
+
               {/* Loading overlay */}
               {!isStreaming && (
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -253,10 +255,10 @@ export default function CameraComponent({
               </Button>
             </div>
           )}
-          
+
           <p className="text-center text-muted-foreground text-sm mt-4">
-            {capturedImage 
-              ? "Revisa tu foto y confirma si te gusta" 
+            {capturedImage
+              ? "Revisa tu foto y confirma si te gusta"
               : "Posiciona el objeto y presiona para tomar la foto"
             }
           </p>

@@ -8,7 +8,7 @@ import { prisma } from "@/utils/prisma"
 
 export async function getUserById(id: number): Promise<{
     payload: User & { Account: Account[] } | null,
-    error: Boolean,
+    hasError: boolean,
     message: string
 }> {
     return actionWrapper(async () => {
@@ -30,8 +30,8 @@ export async function getUserById(id: number): Promise<{
 
         return {
             payload: user,
-            error: false,
-            message: "User found"
+            hasError: false,
+            message: "User found",
         }
 
     })

@@ -1,16 +1,17 @@
 "use client"
 
 import { ImageIcon, EditIcon, X, Check, Upload, Loader2 } from "lucide-react"
+import Image from "next/image"
 import { useState } from "react"
 import { toast } from "sonner"
 
 import { updateVariantMediaData } from "@/features/products/data/update-variant-media.data"
 import type { VariantMediaDisplayProps } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { FileUpload, FileUploadDropzone, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
@@ -46,7 +47,7 @@ function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
         try {
             if (pendingPrimaryId !== null && pendingPrimaryId !== variant.primary_media?.id) {
                 const response = await updateVariantMediaData(variant.id, { primary_media_id: pendingPrimaryId })
-                if (response.error) {
+                if (response.hasError) {
                     toast.error(response.message || "Error al actualizar la imagen")
                     return
                 }
@@ -121,7 +122,7 @@ function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
                         <div className="flex items-start gap-4 flex-col">
                             <div className="relative w-full max-w-sm aspect-[3/4] overflow-hidden rounded-lg border bg-secondary">
                                 {effectivePrimaryUrl ? (
-                                    <img
+                                    <Image
                                         src={effectivePrimaryUrl}
                                         alt="Variant image"
                                         className="object-cover h-full w-full"
@@ -162,7 +163,7 @@ function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
                                             setPendingPrimaryId(media.id)
                                         }}
                                     >
-                                        <img
+                                        <Image
                                             src={media.url}
                                             alt="Product media"
                                             className="object-cover h-full w-full"
@@ -194,7 +195,7 @@ function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
                                 onValueChange={async (files) => {
                                     if (files.length === 0) return
                                     const response = await updateVariantMediaData(variant.id, { files })
-                                    if (response.error) {
+                                    if (response.hasError) {
                                         toast.error(response.message || "Error al subir la imagen")
                                         return
                                     }

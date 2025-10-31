@@ -100,13 +100,13 @@ function CategorySelect({ onChange, defaultValue, withLabel = true, storeId, cla
                     }
 
                     // Agregar la nueva categoría al estado local
-                    const newCategory = { label: payload.name, value: payload.id }
+                    const newCategory = { label: payload!.name, value: payload!.id }
                     setCategories(prev => [...prev, newCategory])
 
                     // Actualizar el valor de la opción con el ID real
-                    option.value = payload.id.toString()
+                    option.value = payload!.id.toString()
 
-                    toast.success(t("category-created", { name: payload.name }))
+                    toast.success(t("category-created", { name: payload!.name }))
                 } catch {
                     toast.error(t("error-creating"))
                 } finally {

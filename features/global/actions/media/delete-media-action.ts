@@ -56,7 +56,7 @@ export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMedia
 
     // 4. CASO: Eliminar avatar/banner de usuario
     if (type === UPLOAD_TYPES.AVATAR || type === UPLOAD_TYPES.BANNER) {
-      const userData = await getUserMediaByType(user.id, type)
+      const userData = await getUserMediaByType(user.id/* , type */) //TODO: Revisar si es necesario type
 
       if (!userData) {
         return formatErrorResponse('Usuario no encontrado')

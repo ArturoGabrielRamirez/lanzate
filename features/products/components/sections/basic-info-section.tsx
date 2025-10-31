@@ -4,7 +4,7 @@ import { Box, Barcode, FileText, Link, Tag } from "lucide-react"
 import { useRef } from "react"
 import { useFormContext } from "react-hook-form"
 
-import { InputField } from "@/features/layout/components"
+import InputField from "@/features/global/components/form/input"
 import type { BasicInfoSectionProps } from "@/features/products/types"
 
 function BasicInfoSection({ defaults }: BasicInfoSectionProps) {

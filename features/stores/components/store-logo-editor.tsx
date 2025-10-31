@@ -1,232 +1,236 @@
 'use client'
 
-import { Loader2, Check, Camera, Store, Smartphone, Upload } from "lucide-react"
-import { useState, useRef, useEffect } from 'react'
-import { toast } from "sonner"
+import {/*  Loader2, Check,  */Camera, Store/* , Smartphone, Upload */ } from "lucide-react"
+/* import Image from "next/image" */
+import { useState/* , useRef, useEffect */ } from 'react'
+/* import { toast } from "sonner" */
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/features/shadcn/components/ui/dialog"
 import { Label } from "@/features/shadcn/components/ui/label"
-import { StoreLogoOption, StoreLogoEditorProps } from '@/features/stores/types'
-import { cn } from "@/lib/utils"
+import { /* StoreLogoOption, */ StoreLogoEditorProps } from '@/features/stores/types'
+/* import { cn } from "@/lib/utils" */
 
 function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEditorProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [isLoadingOptions, setIsLoadingOptions] = useState(false)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const [selectedOption, setSelectedOption] = useState<string | null>(null)
-  const [logoOptions, setLogoOptions] = useState<StoreLogoOption[]>([])
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const data = [currentLogo, storeName, onLogoUpdate]
+  console.log(data)
 
-  const camera = useCamera({
-    uploadPath: 'store-logos',
-    onSuccess: (url) => {
-      onLogoUpdate(url)
-      setIsOpen(false)
-      resetState()
-    },
-    onError: (error) => {
-      console.error('Camera upload error:', error)
-      toast.error('Error al subir la foto')
-    },
-    quality: 0.9
-  })
+  /*   const [isLoadingOptions, setIsLoadingOptions] = useState(false)
+    const [selectedFile, setSelectedFile] = useState<File | null>(null)
+    const [selectedOption, setSelectedOption] = useState<string | null>(null)
+    const [logoOptions, setLogoOptions] = useState<StoreLogoOption[]>([])
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+    const fileInputRef = useRef<HTMLInputElement>(null) */
 
-  const getDefaultLogo = () => {
-    return `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(storeName)}&backgroundColor=transparent`
-  }
+  /*   const camera = useCamera({
+      uploadPath: 'store-logos',
+      onSuccess: (url) => {
+        onLogoUpdate(url)
+        setIsOpen(false)
+        resetState()
+      },
+      onError: (error) => {
+        console.error('Camera upload error:', error)
+        toast.error('Error al subir la foto')
+      },
+      quality: 0.9
+    }) */
+  /* 
+    const getDefaultLogo = () => {
+      return `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(storeName)}&backgroundColor=transparent`
+    } */
 
-  const loadLogoOptions = async () => {
-    setIsLoadingOptions(true)
-
-    try {
-      const diceBearStyles = [
-        { style: 'initials', label: 'Iniciales', icon: '🔤' },
-        { style: 'identicon', label: 'Identicon', icon: '🔷' },
-        { style: 'shapes', label: 'Formas', icon: '🔵' },
-        { style: 'rings', label: 'Anillos', icon: '💍' },
-        { style: 'icons', label: 'Iconos', icon: '🔰' },
-        { style: 'bottts', label: 'Robot', icon: '🤖' },
-        { style: 'avataaars', label: 'Avataaars', icon: '👤' },
-        { style: 'personas', label: 'Personas', icon: '👨' },
-        { style: 'pixel-art', label: 'Pixel Art', icon: '🎮' },
-        { style: 'lorelei', label: 'Lorelei', icon: '🧝‍♀' }
-      ]
-
-      const options: StoreLogoOption[] = []
-
-      for (const { style, label, icon } of diceBearStyles) {
-        const diceBearUrl = `https://api.dicebear.com/9.x/${style}/svg?seed=${encodeURIComponent(storeName)}&backgroundColor=transparent`
-        options.push({
-          id: `dicebear-${style}`,
-          url: diceBearUrl,
-          provider: 'DiceBear',
-          label: `${label} Generado`,
-          icon,
-          isCurrentlyUsed: currentLogo === diceBearUrl
-        })
-      }
-
-      if (currentLogo && !options.find(opt => opt.url === currentLogo)) {
-        options.unshift({
-          id: 'current-logo',
-          url: currentLogo,
-          provider: 'Actual',
-          label: 'Logo Actual',
-          icon: '🏪',
-          isCurrentlyUsed: true
-        })
-      }
-
-      setLogoOptions(options)
-
-      if (currentLogo) {
-        const currentOption = options.find(opt => opt.url === currentLogo)
-        if (currentOption) {
-          setSelectedOption(currentOption.id)
+  /*   const loadLogoOptions = async () => {
+      setIsLoadingOptions(true)
+  
+      try {
+        const diceBearStyles = [
+          { style: 'initials', label: 'Iniciales', icon: '🔤' },
+          { style: 'identicon', label: 'Identicon', icon: '🔷' },
+          { style: 'shapes', label: 'Formas', icon: '🔵' },
+          { style: 'rings', label: 'Anillos', icon: '💍' },
+          { style: 'icons', label: 'Iconos', icon: '🔰' },
+          { style: 'bottts', label: 'Robot', icon: '🤖' },
+          { style: 'avataaars', label: 'Avataaars', icon: '👤' },
+          { style: 'personas', label: 'Personas', icon: '👨' },
+          { style: 'pixel-art', label: 'Pixel Art', icon: '🎮' },
+          { style: 'lorelei', label: 'Lorelei', icon: '🧝‍♀' }
+        ]
+  
+        const options: StoreLogoOption[] = []
+  
+        for (const { style, label, icon } of diceBearStyles) {
+          const diceBearUrl = `https://api.dicebear.com/9.x/${style}/svg?seed=${encodeURIComponent(storeName)}&backgroundColor=transparent`
+          options.push({
+            id: `dicebear-${style}`,
+            url: diceBearUrl,
+            provider: 'DiceBear',
+            label: `${label} Generado`,
+            icon,
+            isCurrentlyUsed: currentLogo === diceBearUrl
+          })
         }
-      }
-
-      toast.success(`${options.length} opciones de logo cargadas`)
-
-    } catch (error) {
-      console.error('Error loading logo options:', error)
-      toast.error('Error cargando opciones de logo')
-
-      const fallbackOptions = [
-        {
-          id: 'dicebear-initials',
-          url: getDefaultLogo(),
-          provider: 'DiceBear',
-          label: 'Iniciales Generadas',
-          icon: '🔤',
-          isCurrentlyUsed: currentLogo === getDefaultLogo()
+  
+        if (currentLogo && !options.find(opt => opt.url === currentLogo)) {
+          options.unshift({
+            id: 'current-logo',
+            url: currentLogo,
+            provider: 'Actual',
+            label: 'Logo Actual',
+            icon: '🏪',
+            isCurrentlyUsed: true
+          })
         }
-      ]
-      setLogoOptions(fallbackOptions)
-    } finally {
-      setIsLoadingOptions(false)
-    }
-  }
-
-  const resetState = () => {
-    setSelectedFile(null)
-    setSelectedOption(null)
-    setPreviewUrl(null)
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ''
-    }
-  }
-
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (!file) return
-
-    if (!file.type.startsWith('image/')) {
-      toast.error('Por favor selecciona una imagen válida')
-      return
-    }
-
-    const maxSize = 5 * 1024 * 1024
-    if (file.size > maxSize) {
-      toast.error(`La imagen debe ser menor a ${maxSize / 1024 / 1024}MB. Tu archivo: ${(file.size / 1024 / 1024).toFixed(2)}MB`)
-      return
-    }
-
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
-    if (!allowedTypes.includes(file.type)) {
-      toast.error('Formato no soportado. Usa JPG, PNG, GIF o WebP')
-      return
-    }
-
-    setSelectedFile(file)
-    setSelectedOption(null)
-
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      const result = e.target?.result as string
-      setPreviewUrl(result)
-    }
-    reader.onerror = () => {
-      console.error('Error leyendo archivo')
-      toast.error('Error al leer el archivo')
-    }
-    reader.readAsDataURL(file)
-  }
-
-  const handleOptionSelect = (optionId: string) => {
-    setSelectedOption(optionId)
-    setSelectedFile(null)
-    setPreviewUrl(null)
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ''
-    }
-  }
-
-  const handleUseSelectedOption = () => {
-    const option = logoOptions.find(opt => opt.id === selectedOption)
-    if (option) {
-      onLogoUpdate(option.url)
-      setIsOpen(false)
-      resetState()
-      toast.success('Logo actualizado correctamente')
-    }
-  }
-
-  const handleUpload = async () => {
-    if (!selectedFile) {
-      toast.error('No hay archivo seleccionado')
-      return
-    }
-
-    try {
-      const formData = new FormData()
-      formData.append('file', selectedFile)
-      formData.append('type', 'store-logo')
-
-      const response = await fetch('/api/store-logo', {
-        method: 'POST',
-        body: formData
-      })
-
-      if (!response.ok) {
-        throw new Error('Error uploading file')
+  
+        setLogoOptions(options)
+  
+        if (currentLogo) {
+          const currentOption = options.find(opt => opt.url === currentLogo)
+          if (currentOption) {
+            setSelectedOption(currentOption.id)
+          }
+        }
+  
+        toast.success(`${options.length} opciones de logo cargadas`)
+  
+      } catch (error) {
+        console.error('Error loading logo options:', error)
+        toast.error('Error cargando opciones de logo')
+  
+        const fallbackOptions = [
+          {
+            id: 'dicebear-initials',
+            url: getDefaultLogo(),
+            provider: 'DiceBear',
+            label: 'Iniciales Generadas',
+            icon: '🔤',
+            isCurrentlyUsed: currentLogo === getDefaultLogo()
+          }
+        ]
+        setLogoOptions(fallbackOptions)
+      } finally {
+        setIsLoadingOptions(false)
       }
+    } */
 
-      const data = await response.json()
-      onLogoUpdate(data.url)
-      setIsOpen(false)
-      resetState()
-      toast.success('Logo subido correctamente')
-    } catch (error) {
-      console.error('Upload error:', error)
-      toast.error('Error al subir el archivo')
-    }
-  }
+  /*  const resetState = () => {
+     setSelectedFile(null)
+     setSelectedOption(null)
+     setPreviewUrl(null)
+     if (fileInputRef.current) {
+       fileInputRef.current.value = ''
+     }
+   }
+ 
+   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+     const file = event.target.files?.[0]
+     if (!file) return
+ 
+     if (!file.type.startsWith('image/')) {
+       toast.error('Por favor selecciona una imagen válida')
+       return
+     }
+ 
+     const maxSize = 5 * 1024 * 1024
+     if (file.size > maxSize) {
+       toast.error(`La imagen debe ser menor a ${maxSize / 1024 / 1024}MB. Tu archivo: ${(file.size / 1024 / 1024).toFixed(2)}MB`)
+       return
+     }
+ 
+     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
+     if (!allowedTypes.includes(file.type)) {
+       toast.error('Formato no soportado. Usa JPG, PNG, GIF o WebP')
+       return
+     }
+ 
+     setSelectedFile(file)
+     setSelectedOption(null)
+ 
+     const reader = new FileReader()
+     reader.onload = (e) => {
+       const result = e.target?.result as string
+       setPreviewUrl(result)
+     }
+     reader.onerror = () => {
+       console.error('Error leyendo archivo')
+       toast.error('Error al leer el archivo')
+     }
+     reader.readAsDataURL(file)
+   }
+ 
+   const handleOptionSelect = (optionId: string) => {
+     setSelectedOption(optionId)
+     setSelectedFile(null)
+     setPreviewUrl(null)
+     if (fileInputRef.current) {
+       fileInputRef.current.value = ''
+     }
+   } */
 
-  const getCurrentPreview = () => {
-    if (previewUrl) return previewUrl
-    if (selectedOption) {
+  /*   const handleUseSelectedOption = () => {
       const option = logoOptions.find(opt => opt.id === selectedOption)
-      return option?.url || getDefaultLogo()
-    }
-    return currentLogo || getDefaultLogo()
-  }
+      if (option) {
+        onLogoUpdate(option.url)
+        setIsOpen(false)
+        resetState()
+        toast.success('Logo actualizado correctamente')
+      }
+    } */
 
-  useEffect(() => {
-    if (isOpen) {
-      loadLogoOptions()
-    }
-  }, [isOpen, storeName, currentLogo])
+  /*  const handleUpload = async () => {
+     if (!selectedFile) {
+       toast.error('No hay archivo seleccionado')
+       return
+     } */
+  /* 
+      try {
+        const formData = new FormData()
+        formData.append('file', selectedFile)
+        formData.append('type', 'store-logo')
+  
+        const response = await fetch('/api/store-logo', {
+          method: 'POST',
+          body: formData
+        })
+  
+        if (!response.ok) {
+          throw new Error('Error uploading file')
+        }
+  
+        const data = await response.json()
+        onLogoUpdate(data.url)
+        setIsOpen(false)
+        resetState()
+        toast.success('Logo subido correctamente')
+      } catch (error) {
+        console.error('Upload error:', error)
+        toast.error('Error al subir el archivo')
+      }
+    } */
 
-  const getActualPreview = () => {
-    if (camera.capturedFile) {
-      return camera.capturedFile.preview
-    }
-    return getCurrentPreview()
-  }
+  /*   const getCurrentPreview = () => {
+      if (previewUrl) return previewUrl
+      if (selectedOption) {
+        const option = logoOptions.find(opt => opt.id === selectedOption)
+        return option?.url || getDefaultLogo()
+      }
+      return currentLogo || getDefaultLogo()
+    } */
+
+  /*   useEffect(() => {
+      if (isOpen) {
+        loadLogoOptions()
+      }
+    }, [isOpen, storeName, currentLogo, loadLogoOptions])
+  
+    const getActualPreview = () => {
+      if (camera.capturedFile) {
+        return camera.capturedFile.preview
+      }
+      return getCurrentPreview()
+    } */
 
   return (
     <>
@@ -252,15 +256,15 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
           <div className="space-y-6">
             <div className="flex justify-center">
               <div className="relative">
-                <img
+                {/*  <Image
                   src={getActualPreview()}
                   alt="Store logo preview"
                   className="size-24 rounded-full object-cover border-2 border-muted"
-                />
+                /> */}
               </div>
             </div>
 
-            {camera.capturedFile && (
+            {/*      {camera.capturedFile && (
               <div className="p-4 border-2 border-dashed border-primary/20 rounded-lg bg-primary/5">
                 <div className="text-center space-y-3">
                   <p className="text-sm font-medium text-muted-foreground">
@@ -292,7 +296,7 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
 
 
 
@@ -302,7 +306,7 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
                 <AccordionContent>
                   <div className="space-y-3">
                     <Label>Logos sugeridos</Label>
-                    {isLoadingOptions ? (
+                    {/* {isLoadingOptions ? (
                       <div className="flex justify-center py-4">
                         <Loader2 className="h-6 w-6 animate-spin" />
                       </div>
@@ -320,7 +324,7 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
                             onClick={() => handleOptionSelect(option.id)}
                           >
                             <div className="flex flex-col items-center gap-2">
-                              <img
+                              <Image
                                 src={option.url}
                                 alt={`${option.provider} logo`}
                                 className="h-12 w-12 rounded-full object-cover"
@@ -338,7 +342,7 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
                           </div>
                         ))}
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -346,7 +350,7 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
 
             <div className="space-y-3">
               <div className="flex gap-2">
-                <Button
+                {/*       <Button
                   onClick={() => fileInputRef.current?.click()}
                   variant="outline"
                   className="flex-1"
@@ -354,17 +358,17 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
                 >
                   <Upload className="h-4 w-4 mr-2" />
                   Seleccionar archivo
-                </Button>
+                </Button> */}
               </div>
-              <input
+              {/*   <input
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
                 onChange={handleFileSelect}
                 className="hidden"
-              />
+              /> */}
             </div>
-            {!camera.capturedFile && (
+            {/*      {!camera.capturedFile && (
               <div className="flex gap-2">
                 <Button
                   onClick={camera.openCamera}
@@ -376,8 +380,8 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
                   Tomar Foto
                 </Button>
               </div>
-            )}
-            <div className="flex gap-2">
+            )} */}
+            {/*      <div className="flex gap-2">
               <Button
                 onClick={handleUseSelectedOption}
                 disabled={!selectedOption || camera.isUploading}
@@ -403,15 +407,15 @@ function StoreLogoEditor({ currentLogo, storeName, onLogoUpdate }: StoreLogoEdit
               >
                 Cancelar
               </Button>
-            </div>
+            </div> */}
           </div>
         </DialogContent>
       </Dialog>
 
-      <CameraComponent
+      {/*    <CameraComponent
         {...camera.cameraProps}
         title="Tomar Foto para Logo"
-      />
+      /> */}
     </>
   )
 }

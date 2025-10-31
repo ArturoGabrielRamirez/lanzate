@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 import { getProfileWithFollowStatusAction } from '@/features/profile/actions/get-profile-with-follow.action';
-import UserNotFound from '@/features/profile/components/not-found'
+import { UserNotFound } from '@/features/profile/components/not-found'
 import { PublicProfileClient } from '@/features/profile/components/public-profile-client'
 
 export async function generateMetadata(

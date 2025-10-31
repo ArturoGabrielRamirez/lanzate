@@ -5,7 +5,7 @@ import { getStoresFromUserData } from "@/features/stores/data"
 
 export async function canCreateStore(userId: number) {
     try {
-        const { payload: user, error: userError } = await getUserById(userId)
+        const { payload: user, hasError: userError } = await getUserById(userId)
 
         if (userError || !user) {
             return false

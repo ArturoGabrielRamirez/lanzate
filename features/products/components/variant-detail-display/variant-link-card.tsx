@@ -1,6 +1,7 @@
 "use client"
 
 import { Boxes } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
 import type { VariantLinkCardProps } from "@/features/products/types"
@@ -18,7 +19,7 @@ function VariantLinkCard({ variant, slug, productId, productPrice }: VariantLink
             className="rounded-md border p-3 flex items-center gap-3 hover:bg-secondary/50 transition-colors"
         >
             {variant.primary_media?.url ? (
-                <img
+                <Image
                     src={variant.primary_media.url}
                     alt={variantName}
                     className="h-12 w-12 rounded object-cover"

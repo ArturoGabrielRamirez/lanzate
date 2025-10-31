@@ -1,9 +1,11 @@
 'use client'
 
-import { useCallback } from 'react'
 import {/*  Upload, */ X, Image as ImageIcon } from 'lucide-react'
+import Image from 'next/image'
+import { useCallback } from 'react'
+
+import { MyFilesTabProps } from '@/features/global/types/media'
 import { Button } from '@/features/shadcn/components/ui/button'
-import { MyFilesTabProps } from '../types'
 
 export function MyFilesTab({
     type,
@@ -47,7 +49,7 @@ export function MyFilesTab({
                         onClick={() => handleSelectUpload(url)}
                         disabled={isActionDisabled}
                     >
-                        <img
+                        <Image
                             src={url}
                             alt="Upload"
                             className="w-full h-full object-cover"

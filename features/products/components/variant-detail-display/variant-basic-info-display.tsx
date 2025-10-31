@@ -8,16 +8,16 @@ import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
-import { Form, InputField } from "@/features/layout/components"
+import { Form } from "@/features/global/components/form/form"
+import InputField from "@/features/global/components/form/input"
 import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
 import { VariantLinkCard } from "@/features/products/components/variant-detail-display/variant-link-card"
 import { updateVariantBasicInfoData } from "@/features/products/data/update-variant-basic-info.data"
 import { editVariantSchema } from "@/features/products/schemas/product-schema"
 import type { VariantBasicInfoDisplayProps } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
-
 
 function ToggleEditButton({ isEditing, onToggle, onCancel, variant }: {
     isEditing: boolean
@@ -87,18 +87,33 @@ function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantB
                             barcode: data.barcode || null,
                             description: data.description || null
                         })
+                        
+                        // ✅ Normaliza la respuesta al formato ServerResponse
                         if (result.hasError) {
                             toast.error("Error al actualizar la variante", {
                                 description: result.message
                             })
-                            return result
+                            return { 
+                                hasError: true, 
+                                message: result.message, 
+                                payload: null 
+                            }
                         }
+                        
                         toast.success("Variante actualizada correctamente")
-                        return result
+                        return { 
+                            hasError: false, 
+                            message: result.message, 
+                            payload: result.payload 
+                        }
                     } catch (error) {
                         console.error("Error updating variant:", error)
                         toast.error("Error al actualizar la variante")
-                        return { error: true, message: "Error al actualizar la variante", payload: null }
+                        return { 
+                            hasError: true, 
+                            message: "Error al actualizar la variante", 
+                            payload: null 
+                        }
                     }
                 }}
             >
@@ -149,9 +164,6 @@ function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantB
                     </div>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                    {/* Lista de variantes */}
-
-
                     {/* Formulario de información básica */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         <div className="space-y-1">
@@ -197,7 +209,7 @@ function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantB
                             <label className="text-sm font-medium">Otras variantes del producto</label>
                             <div className="grid gap-2 sm:grid-cols-2">
                                 {product.variants
-                                    .filter((v: ProductVariant) => v.id !== variant.id)
+                                    ?.filter((v: ProductVariant) => v.id !== variant.id)
                                     .map((otherVariant) => (
                                         <VariantLinkCard
                                             key={otherVariant.id}

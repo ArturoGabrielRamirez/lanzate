@@ -4,10 +4,10 @@ import { User } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
-import { Button } from "@/features/shadcn/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 
 function LandingAccountDropdown() {
     const [open, setOpen] = useState(false)

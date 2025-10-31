@@ -76,12 +76,12 @@ function ChatProvider({ children }: ChatProviderProps) {
                     fetchOrderStatusAction({ orderId: Number(roomId) })
                 ])
 
-                if (messagesResult.error) {
-                    console.error('Error loading messages:', messagesResult.error)
+                if (messagesResult.hasError) {
+                    console.error('Error loading messages:', messagesResult.hasError)
                 }
 
-                if (orderStatusResult.error) {
-                    console.error('Error loading order status:', orderStatusResult.error)
+                if (orderStatusResult.hasError) {
+                    console.error('Error loading order status:', orderStatusResult.hasError)
                 }
 
                 const isCompleted = orderStatusResult.payload?.status === "COMPLETED"

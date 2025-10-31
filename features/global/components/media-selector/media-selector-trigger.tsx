@@ -1,9 +1,10 @@
 'use client'
 
-import { Button } from "@/features/shadcn/components/ui/button"
 import Image from "next/image"
-import { MediaSelectorTriggerProps } from "../types"
 import { forwardRef, Ref } from "react"
+
+import { MediaSelectorTriggerProps } from "@/features/global/types/media"
+import { Button } from "@/features/shadcn/components/ui/button"
 
 export const MediaSelectorTrigger = forwardRef<HTMLButtonElement, MediaSelectorTriggerProps>(
   ({ triggerButton, defaultTitle, className = '', ...props }, ref) => {

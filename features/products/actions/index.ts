@@ -1,5 +1,4 @@
 export * from "@/features/products/actions/add-product-comment.action"
-export * from "@/features/products/actions/create-product.action"
 export * from "@/features/products/actions/create-unified-product.action"
 export * from "@/features/products/actions/delete-product-variant.action"
 export * from "@/features/products/actions/delete-product.action"

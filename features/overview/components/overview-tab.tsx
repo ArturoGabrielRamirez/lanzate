@@ -12,14 +12,14 @@ async function OverviewTab({ slug }: OverviewTabProps) {
     const t = await getTranslations("overview")
 
     const [
-        { payload: data, error, message },
+        { payload: data, hasError, message },
         { payload: store, hasError: storeError }
     ] = await Promise.all([
         getOverviewInfoAction(slug),
         getStoresFromSlugAction(slug)
     ])
 
-    if (error || !data) {
+    if (hasError || !data) {
         return (
             <div className="text-center p-8">
                 <p className="text-muted-foreground">

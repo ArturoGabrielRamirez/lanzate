@@ -111,7 +111,7 @@ function UpdatePricesButton({ selectedRows, storeId }: UpdatePricesButtonProps) 
             }
 
             return {
-                error: false,
+                hasError: false,
                 message: `${t("messages.success")} - ${result?.payload?.updatedCount || 0} productos actualizados`,
                 payload: result
             }

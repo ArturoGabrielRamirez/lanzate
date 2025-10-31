@@ -22,7 +22,7 @@ function CancelOrderButton({ order, slug, onComplete, className, size = "default
 
             if (hasError) {
                 return {
-                    error: true,
+                    hasError: true,
                     message: message,
                     payload: null
                 }
@@ -31,13 +31,13 @@ function CancelOrderButton({ order, slug, onComplete, className, size = "default
             onComplete?.()
 
             return {
-                error: false,
+                hasError: false,
                 message: "Order cancelled successfully",
                 payload: null
             }
         } catch (error) {
             return {
-                error: true,
+                hasError: true,
                 message: error instanceof Error ? error.message : "Failed to cancel order",
                 payload: null
             }

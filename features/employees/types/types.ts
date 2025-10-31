@@ -100,7 +100,7 @@ export type UserWithEmployeeStatus = {
         id: number
         role: string
         is_active: boolean
-        hired_at: string
+        hired_at: Date  // ✅ Cambiar de string a Date
     } | null
 }
 
@@ -126,7 +126,7 @@ export type ContractAssignment = {
     id: number
     contract_id: number
     employee_id: number
-    assigned_at: string
+    assigned_at: Date  // ✅ Cambiar de string a Date
     status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
     assigned_by: number
     contract?: Contract
@@ -146,7 +146,7 @@ export type ContractResponse = {
     updated_at: Date
     contract?: Contract
     employee?: Employee
-    assignment?: ContractAssignment
+    assignment?: ContractAssignment | null
 }
 
 // Tipos para el botón de crear contrato
@@ -163,12 +163,12 @@ export type ContractsTableProps = {
     storeId: number
 }
 
-// Payload para editar empleado (centralizado) - QUITA EL ANY
+// Payload para editar empleado (centralizado)
 export type EditEmployeePayload = {
     role: EmployeeRole
     position?: string
     department?: string
-    salary?: number
+    salary?: string 
     notes?: string
     can_create_orders: boolean
     can_update_orders: boolean
@@ -216,3 +216,9 @@ export type ContractsSelectorProps = {
 export type InferFormValues<T extends AnyObjectSchema> = T extends AnyObjectSchema
     ? ReturnType<T['cast']>
     : never
+
+export type InsertContractPayload = {
+    title: string
+    comments?: string | null
+    file: File[]
+}

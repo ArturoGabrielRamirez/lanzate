@@ -1,7 +1,7 @@
 import { BookOpenText, Building2, UsersRound, Box, Store, ShoppingCart, Settings, ChartLine, Clock, Paintbrush } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
-import { PageHeader } from "@/features/layout/components"
+import { PageHeader } from "@/features/dashboard/components"
 import { TabLayoutProps } from "@/features/stores/types"
 
 async function TabLayout({ children, params }: TabLayoutProps) {

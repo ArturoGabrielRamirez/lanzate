@@ -1,8 +1,8 @@
+import { BackgroundRemover } from "@/features/global/components/background-remover"
+import { ImageCropper } from "@/features/global/components/image-cropper"
 import CameraComponent from "@/features/global/components/media-selector/camera-component"
-import { ImageCropper } from "../image-cropper"
+import { MediaSelectorDialogsProps } from "@/features/global/types/media"
 import { OptimizationDialog } from "@/features/profile/components/optimization-dialog"
-import { BackgroundRemover } from "../background-remover"
-import { MediaSelectorDialogsProps } from "../types"
 
 
 export function MediaSelectorDialogs({

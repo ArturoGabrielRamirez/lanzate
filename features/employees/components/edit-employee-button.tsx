@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import { editEmployeeAction } from "@/features/employees/actions/edit-employee.action"
-import { employeeUpdateSchema } from "@/features/employees/schemas/employee-schema"
+/* import { employeeUpdateSchema } from "@/features/employees/schemas/employee-schema" */
 import { EditEmployeeButtonProps, EditEmployeePayload } from "@/features/employees/types"
 import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
 import { InputField } from "@/features/global/components/form/input-field"
@@ -41,7 +41,7 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
             ...permissions,
             is_active: isActive,
             role: selectedRole as EmployeeRole, // ✅ Cast aquí
-            salary: salary ? parseFloat(salary) : undefined,
+          /*   salary: salary ? parseFloat(salary) : undefined, */
         }
 
         return editEmployeeAction(employee.id, data, slug, userId)
@@ -72,7 +72,7 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
                 </>
             )}
             title={t("title")}
-            schema={employeeUpdateSchema}
+          /*   schema={employeeUpdateSchema} */
             description={t("description")}
             action={handleEditEmployee}
             onComplete={onComplete}

@@ -1,12 +1,13 @@
 "use client"
 
 import { ImageIcon, EditIcon, X } from "lucide-react"
+import Image from "next/image"
 import { useState } from "react"
 
 import type { MediaDisplayProps } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function MediaDisplay({ product }: MediaDisplayProps) {
@@ -73,7 +74,7 @@ function MediaDisplay({ product }: MediaDisplayProps) {
                         <label className="text-sm font-medium">Imagen principal</label>
                         <div className="w-full h-48 overflow-hidden rounded-md bg-secondary relative">
                             {product.primary_media?.url ? (
-                                <img
+                                <Image
                                     src={product.primary_media.url}
                                     alt={`${product.name} image`}
                                     className="object-cover h-full w-full"
@@ -92,7 +93,7 @@ function MediaDisplay({ product }: MediaDisplayProps) {
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                                 {product.media.map((media) => (
                                     <div key={media.id} className="aspect-square overflow-hidden rounded-md bg-secondary">
-                                        <img
+                                        <Image
                                             src={media.url}
                                             alt={`${product.name} media`}
                                             className="object-cover h-full w-full"

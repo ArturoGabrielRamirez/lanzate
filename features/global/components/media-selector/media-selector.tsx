@@ -2,15 +2,14 @@
 
 import { useState, useEffect, useMemo, useOptimistic } from 'react'
 import { toast } from 'sonner'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/features/shadcn/components/ui/dialog'
+
+import { MediaSelectorTrigger, MediaSelectorContent, MediaSelectorDialogs } from '@/features/global/components/media-selector'
+import { useMediaOptions } from '@/features/global/hooks/media/use-media-options'
 import { useMediaUpload } from '@/features/global/hooks/media/use-media-upload'
+import { MediaSelectorProps, PresetOption } from '@/features/global/types/media'
 import { removeMedia } from '@/features/global/utils/media/remove-media'
-import { MediaSelectorProps } from '@/features/shared/types'
-import { PresetOption } from '@/features/shared/types'
-import { MediaSelectorTrigger } from './media-selector-trigger'
-import { MediaSelectorContent } from './media-selector-content'
-import { MediaSelectorDialogs } from './media-selector-dialogs'
-import { useMediaOptions } from '../../hooks/media/use-media-options'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/features/shadcn/components/ui/dialog'
+
 
 export function MediaSelector({
   type,
@@ -25,7 +24,8 @@ export function MediaSelector({
   loadApiAvatars = false,
 }: MediaSelectorProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [_optimisticUrl, setOptimisticUrl] = useOptimistic(currentUrl)
+  const [/* optimisticUrl */, setOptimisticUrl] = useOptimistic(currentUrl)
+
 
 
   const mediaOptions = useMediaOptions({ type, loadApiAvatars })
@@ -33,12 +33,12 @@ export function MediaSelector({
 
   const mediaUpload = useMediaUpload({
     type,
-    onSuccess: (url) => {
+    onSuccess: (url: string) => {
       onUpdate(url)
       setIsDialogOpen(false)
     },
-    onError: (error) => {
-      console.error(`Error uploading ${type}:`, error)
+    onError: (hasError: Error | string) => {
+      console.error(`Error uploading ${type}:`, hasError)
       toast.error(`Error al subir ${type}. Inténtalo de nuevo.`)
     },
     autoRevalidate: true,

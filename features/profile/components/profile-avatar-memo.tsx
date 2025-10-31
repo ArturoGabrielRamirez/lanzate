@@ -1,10 +1,10 @@
 import { Camera } from "lucide-react"
 import { memo } from "react"
 
+import { MediaSelector } from "@/features/global/components/media-selector/media-selector"
 import { Avatar, AvatarFallback, AvatarImage } from "@/features/shadcn/components/ui/avatar"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
-import { MediaSelector } from "@/features/global/components/media-selector/media-selector"
 
 
 const ProfileAvatar = memo(({

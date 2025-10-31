@@ -10,8 +10,6 @@ import { formatErrorResponse } from '@/features/global/utils'
 
 export default function UpdatePasswordForm() {
 
-
-
     const [done, setDone] = useState(false)
 
     const t = useTranslations("auth");
@@ -27,7 +25,7 @@ export default function UpdatePasswordForm() {
             })
             if (res.ok) setDone(true)
             return {
-                error: false,
+                hasError: false,
                 message: "Password updated",
                 payload: null
             }

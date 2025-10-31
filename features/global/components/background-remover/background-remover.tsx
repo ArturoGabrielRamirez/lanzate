@@ -3,13 +3,13 @@
 import { Sparkles } from 'lucide-react'
 import { useState, useEffect, useCallback } from 'react'
 
+import { ActionButtons, EditorView, InitialPreview, ProcessingView } from '@/features/global/components/background-remover'
+import { useBackgroundRemover } from '@/features/global/hooks/media/use-background-remover'
+import { useCanvasEditor } from '@/features/global/hooks/media/use-canvas-editor'
+import { BackgroundRemoverProps } from '@/features/global/types/media'
+import { createFileFromBlob, optimizeImage } from '@/features/global/utils/media/canvas.utils'
 import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/features/shadcn/components/ui/dialog'
-import { ActionButtons, EditorView, InitialPreview, ProcessingView } from '@/features/global/components/background-remover'
-import { BackgroundRemoverProps } from '@/features/shared/types'
-import { createFileFromBlob, optimizeImage } from '@/features/global/utils/media/canvas.utils'
-import { useBackgroundRemover } from '../../hooks/media/use-background-remover'
-import { useCanvasEditor } from '../../hooks/media/use-canvas-editor'
 
 export function BackgroundRemover({
     isOpen,
@@ -65,7 +65,7 @@ export function BackgroundRemover({
         }
     }, [imageFile, onProcessed, editor.canvasRef, handleClose])
 
-
+    //TODO: RESOLVER TEMA DE aCTIONbUTTON, TIENE UN PARHE, CREO
 
     return (
         <Dialog open={isOpen} onOpenChange={handleClose}>
@@ -104,6 +104,7 @@ export function BackgroundRemover({
                 </div>
 
                 <DialogFooter>
+                    {/* @ts-expect-error - Type mismatch, will be fixed after type sync */}
                     <ActionButtons
                         hasProcessedBlob={!!remover.processedBlob}
                         isProcessing={remover.isProcessing}

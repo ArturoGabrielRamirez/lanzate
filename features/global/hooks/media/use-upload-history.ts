@@ -1,28 +1,22 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-
 import { toast } from 'sonner'
 
-import { deleteMediaAction } from '../../actions/media/delete-media-action'
-import { getUserUploadsAction } from '../../actions/media/get-user-uploads-action'
+import { deleteMediaAction } from '@/features/global/actions/media/delete-media-action'
+import { getUserUploadsAction } from '@/features/global/actions/media/get-user-uploads-action'
 
 export function useUploadHistory(type: 'avatar' | 'banner') {
     const [uploads, setUploads] = useState<string[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const MAX_UPLOADS = 4
 
-    // Cargar uploads al montar
-    useEffect(() => {
-        loadUploads()
-    }, [type])
-
     const loadUploads = useCallback(async () => {
         setIsLoading(true)
         try {
             const result = await getUserUploadsAction({ type })
 
-            if (result.error) {
+            if (result.hasError) {
                 console.error('Error loading uploads:', result.message)
                 return
             }
@@ -34,6 +28,13 @@ export function useUploadHistory(type: 'avatar' | 'banner') {
             setIsLoading(false)
         }
     }, [type])
+
+    // Cargar uploads al montar
+    useEffect(() => {
+        loadUploads()
+    }, [type, loadUploads])
+
+
 
     const addUpload = useCallback((url: string) => {
         setUploads(prev => {
@@ -49,7 +50,7 @@ export function useUploadHistory(type: 'avatar' | 'banner') {
         try {
             const result = await deleteMediaAction({ type, mediaUrl: url })
 
-            if (result.error) {
+            if (result.hasError) {
                 toast.error(result.message, { id: loadingToast })
                 return
             }

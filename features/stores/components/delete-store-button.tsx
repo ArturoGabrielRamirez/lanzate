@@ -20,7 +20,7 @@ function DeleteStoreButton({ storeId, userId }: DeleteStoreButtonProps) {
             if (hasError) throw new Error(message)
 
             return {
-                error: false,
+                hasError: false,
                 message: t("messages.success"),
                 payload: null
             }

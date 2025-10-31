@@ -6,9 +6,9 @@ import { updateCategory as updateCategoryInDb } from "@/features/categories/data
 import { UpdateCategoryAction } from "@/features/categories/types"
 
 export async function updateCategoryAction({ storeId, categoryId, payload }: UpdateCategoryAction) {
-    const { error, message, payload: category } = await updateCategoryInDb({ storeId, categoryId, payload })
+    const { hasError, message, payload: category } = await updateCategoryInDb({ storeId, categoryId, payload })
 
-    if (error) {
+    if (hasError) {
         throw new Error(message)
     }
 

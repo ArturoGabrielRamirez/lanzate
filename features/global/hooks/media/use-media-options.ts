@@ -1,9 +1,10 @@
 'use client'
 
-import { AvatarOption, BannerOption } from '@/features/shared/types'
 import { useState, useCallback } from 'react'
 import { toast } from 'sonner'
-import { UseMediaOptionsProps } from '../types'
+
+import { AvatarOption, BannerOption } from '@/features/global/types/media'
+import { UseMediaOptionsProps } from '@/features/global/types/media'
 
 export function useMediaOptions({ type, loadApiAvatars }: UseMediaOptionsProps) {
     const [apiAvatars, setApiAvatars] = useState<AvatarOption[]>([])

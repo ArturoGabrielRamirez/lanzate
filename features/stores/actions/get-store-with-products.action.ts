@@ -13,7 +13,7 @@ export async function getStoreWithProductsAction(subdomain: string, category: st
         return {
             message: "Store with products fetched successfully",
             payload: storeData,
-            error: false
+            hasError: false
         };
 
     } catch (error) {
