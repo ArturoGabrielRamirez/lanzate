@@ -364,6 +364,67 @@
                     "loading": "Uniéndote a la lista de espera"
                 }
             }
+        },
+        "contact": {
+            "page": {
+                "title": "Ayuda",
+                "description": "Contactanos para obtener ayuda",
+                "header": {
+                    "title": "Ayuda",
+                    "description": "Contacta con nosotros para obtener ayuda"
+                },
+                "links": {
+                    "hasAccount": "¿Ya tienes una cuenta?",
+                    "loginLink": "Iniciar sesión",
+                    "solvedProblem": "¿Ya solucionaste tu problema?",
+                    "backToHome": "Volver al inicio"
+                },
+                "image": {
+                    "alt": "Ilustración de contacto"
+                }
+            },
+            "form": {
+                "fields": {
+                    "name": {
+                        "label": "Nombre",
+                        "placeholder": "Nombre",
+                        "tooltip": "Ingrese su nombre completo"
+                    },
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "Email",
+                        "tooltip": "Ingrese un email al que podamos contactarnos con usted"
+                    },
+                    "category": {
+                        "label": "Categoría",
+                        "placeholder": "Seleccione el tipo de consulta",
+                        "tooltip": "Seleccione la categoría que mejor describa su consulta"
+                    },
+                    "message": {
+                        "label": "Mensaje",
+                        "placeholder": "Mensaje",
+                        "tooltip": "¿En qué podemos ayudarlo?"
+                    }
+                },
+                "categories": {
+                    "technical": "Problema técnico",
+                    "products": "Gestión de productos",
+                    "ecommerce": "E-commerce y ventas",
+                    "subdomain": "Subdominios y dominio personalizado",
+                    "billing": "Cuenta y facturación",
+                    "integrations": "Integraciones",
+                    "general": "Consulta general"
+                },
+                "actions": {
+                    "submit": "Enviar mensaje"
+                },
+                "messages": {
+                    "success": "¡Mensaje enviado con éxito! Nuestro equipo se pondrá en contacto contigo pronto. Por lo general, respondemos en un plazo de 24-48 horas.",
+                    "successShort": "¡Mensaje enviado con éxito! Nuestro equipo se pondrá en contacto contigo pronto.",
+                    "loading": "Enviando mensaje...",
+                    "error": "Error al enviar mensaje"
+                }
+            }
         }
     },
     "cart": {

@@ -365,6 +365,67 @@
                     "loading": "Joining the waitlist"
                 }
             }
+        },
+        "contact": {
+            "page": {
+                "title": "Help",
+                "description": "Contact us for help",
+                "header": {
+                    "title": "Help",
+                    "description": "Contact us for help"
+                },
+                "links": {
+                    "hasAccount": "Already have an account?",
+                    "loginLink": "Log In",
+                    "solvedProblem": "Problem solved?",
+                    "backToHome": "Back to homepage"
+                },
+                "image": {
+                    "alt": "Contact us illustration"
+                }
+            },
+            "form": {
+                "fields": {
+                    "name": {
+                        "label": "Name",
+                        "placeholder": "Name",
+                        "tooltip": "Enter your full name"
+                    },
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "Email",
+                        "tooltip": "Enter an email address where we can contact you"
+                    },
+                    "category": {
+                        "label": "Category",
+                        "placeholder": "Select the type of inquiry",
+                        "tooltip": "Select the category that best describes your inquiry"
+                    },
+                    "message": {
+                        "label": "Message",
+                        "placeholder": "Message",
+                        "tooltip": "How can we help you?"
+                    }
+                },
+                "categories": {
+                    "technical": "Technical issue",
+                    "products": "Product management",
+                    "ecommerce": "E-commerce and sales",
+                    "subdomain": "Subdomains and custom domain",
+                    "billing": "Account and billing",
+                    "integrations": "Integrations",
+                    "general": "General inquiry"
+                },
+                "actions": {
+                    "submit": "Send message"
+                },
+                "messages": {
+                    "success": "Message sent successfully! Our team will contact you soon. We typically respond within 24-48 hours.",
+                    "successShort": "Message sent successfully! Our team will contact you soon.",
+                    "loading": "Sending message...",
+                    "error": "Error sending message"
+                }
+            }
         }
     },
     "cart": {
