@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
+import { InitialPreviewProps } from '@/features/global/types/media'
 import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
-import { InitialPreviewProps } from '@/features/shared/types'
 
 export function InitialPreview({ originalUrl }: InitialPreviewProps) {
     return (
