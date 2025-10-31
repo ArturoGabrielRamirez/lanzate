@@ -1,11 +1,11 @@
 import { Edit, Key, Mail, Monitor, Shield, Smartphone } from "lucide-react"
 
-import { Badge } from "@/features/shadcn/components/ui/badge"
-import { Button } from "@/features/shadcn/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { UserType } from "@/features/account/types"
 import { maskEmail } from "@/features/account/utils"
 import { ChangeEmailButton, ChangePasswordButton } from "@/features/auth/components"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Button } from "@/features/shadcn/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 export function SecurityCard({ user }: { user: UserType }) {
     const truncateEmail = (email: string, maxLength: number = 20) => {
