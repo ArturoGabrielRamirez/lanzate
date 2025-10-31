@@ -25,7 +25,7 @@ export default async function SignupPage() {
       <div className="container mx-auto p-4 z-20 relative">
         <JoinWaitlistAlert />
       </div>
-      <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:pb-12 lg:pb-20 z-20 relative">
+      <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:pb-12 lg:pb-20 z-20 relative grow">
         <div className='w-full flex flex-col gap-8 lg:max-w-md md:justify-self-end'>
           <div>
             <div className="flex items-center gap-2 text-primary">

@@ -6,10 +6,10 @@ import { Link } from '@/i18n/naviation'
 
 function JoinWaitlistAlert() {
     return (
-        <Alert className='col-span-full'>
-            <AlertCircleIcon />
+        <Alert className='col-span-full bg-chart-2/20 border-chart-2/50 text-chart-2'>
+            <AlertCircleIcon className='text-chart-2 stroke-chart-2' />
             <AlertTitle>
-                <h3 className="text-lg font-bold">
+                <h3 className="text-lg font-bold text-chart-2 leading-5">
                     Únete a la lista de espera
                 </h3>
             </AlertTitle>
