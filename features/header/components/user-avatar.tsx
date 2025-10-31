@@ -1,7 +1,7 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/features/shadcn/components/ui/avatar';
 import type { UserAvatarProps } from '@/features/header/types';
+import { Avatar, AvatarFallback, AvatarImage } from '@/features/shadcn/components/ui/avatar';
 import { cn } from '@/lib/utils';
 
 const sizeToClass: Record<NonNullable<UserAvatarProps['size']>, string> = {
