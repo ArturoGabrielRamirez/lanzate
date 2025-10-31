@@ -1,11 +1,11 @@
-import { Image } from "lucide-react"
+import { Image as ImageIcon } from "lucide-react"
 
+import { MediaSelector } from "@/features/global/components/media-selector/media-selector"
 import { BannerImage } from "@/features/profile/components/banner-image-memo"
 import { PRESET_BANNERS } from "@/features/profile/constants"
 import { BannerSectionProps } from "@/features/profile/types"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
-import { MediaSelector } from "@/features/global/components/media-selector/media-selector"
 
 function BannerSection({
     bannerUrl,
@@ -36,7 +36,7 @@ function BannerSection({
                     />
                     {hasError && (
                         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-orange-500/20 to-amber-500/20">
-                            <Image className={`${iconSize} opacity-50 text-white`} />
+                            <ImageIcon className={`${iconSize} opacity-50 text-white`} />
                         </div>
                     )}
                 </>
@@ -58,7 +58,7 @@ function BannerSection({
                                     variant="secondary"
                                     className="text-xs h-7 px-2 bg-black/40 backdrop-blur-md text-white border-white/30 hover:bg-black/50"
                                 >
-                                    <Image className="w-3 h-3 mr-1" />
+                                    <ImageIcon className="w-3 h-3 mr-1" />
                                     Banner
                                 </Button>
                             ) : (
@@ -66,7 +66,7 @@ function BannerSection({
                                     variant="secondary"
                                     className="bg-black/40 backdrop-blur-md text-white border-white/30 hover:bg-black/50"
                                 >
-                                    <Image className="w-4 h-4 mr-2" />
+                                    <ImageIcon className="w-4 h-4 mr-2" />
                                     Cambiar Banner
                                 </Button>
                             )

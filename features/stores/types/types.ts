@@ -637,4 +637,12 @@ export type EditContactData = yup.InferType<typeof editContactSchema>
 export type StoreContextType = {
     displayType: "grid" | "list"
     setDisplayType: (displayType: "grid" | "list") => void
-}  
+}
+
+export type ShippingMethod = {
+    providers: string[]        // Requerido
+    minPurchase: string        // Requerido
+    freeShippingMin: string    // Requerido
+    estimatedTime: string      // Requerido
+    deliveryPrice?: string     // Opcional
+}

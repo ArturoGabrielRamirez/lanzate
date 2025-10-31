@@ -8,6 +8,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { Calendar, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, Instagram, Loader, Mail, MapPin, Phone, Plus, Store, StoreIcon, Trash, Truck, Twitter, Upload } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
+import Image from "next/image";
 import { useRouter } from "next/navigation"
 import { useEffect, useState, createContext, useContext, useCallback, useRef } from "react"
 import { useFormContext } from "react-hook-form"
@@ -16,20 +17,20 @@ import { toast } from "sonner"
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
 import { TextareaField } from "@/features/global/components/form/textarea-field";
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
 import Stepper, { Step } from "@/features/shadcn/components/Stepper"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, DialogDescription } from "@/features/shadcn/components/ui/dialog"
 import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/features/shadcn/components/ui/file-upload"
 import { Progress } from "@/features/shadcn/components/ui/progress"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { useStep } from "@/features/shadcn/hooks/use-step"
 import { createStoreAction } from "@/features/stores/actions"
 import { basicInfoSchemaNew, addressInfoSchema, contactInfoSchema, settingsSchema, shippingPaymentSchema, BasicInfoFormType, AddressInfoFormType, ContactInfoFormType, SettingsFormType, ShippingPaymentFormType } from "@/features/stores/schemas"
-import { AttentionDateType, ShippingMethod, AttentionDateFormPanelProps, ShippingMethodFormPanelProps, StepIndicatorProps, CreateStoreFormProps, CreateStoreFormValues, CreateStoreContextType } from "@/features/stores/types"
+import { AttentionDateType, AttentionDateFormPanelProps, ShippingMethodFormPanelProps, StepIndicatorProps, CreateStoreFormProps, CreateStoreFormValues, CreateStoreContextType, ShippingMethod } from "@/features/stores/types"
 import { processOpeningHours, processShippingMethods, processPaymentMethods, slugify } from "@/features/stores/utils"
-import { useStep } from "@/features/shadcn/hooks/use-step"
 import { cn } from "@/lib/utils"
-import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 const CreateStoreContext = createContext<CreateStoreContextType | null>(null)
@@ -107,7 +108,7 @@ function ShippingFormPanel() {
         if (Array.isArray(existingPayments)) {
             setValueAny("payment_info.payment_methods", existingPayments, { shouldValidate: true })
         }
-    }, [getValues, setValue, values.shipping_info, values.payment_info])
+    }, [getValues, setValue, values.shipping_info, values.payment_info, setValueAny])
 
     useEffect(() => {
         const sub = watch((v) => {
@@ -930,7 +931,7 @@ function BasicInfoFormPanel() {
                                     <FileUploadItemPreview className="w-full h-full rounded-full" />
                                 </FileUploadItem>
                             ) : logoUrl ? (
-                                <img src={logoUrl} alt="Logo" className="w-full h-full rounded-full object-cover absolute" />
+                                <Image src={logoUrl} alt="Logo" className="w-full h-full rounded-full object-cover absolute" />
                             ) : (
                                 <div className="group-hover/dropzone:hidden flex flex-col items-center gap-1 text-center">
                                     <ImageIcon className="text-muted-foreground" />

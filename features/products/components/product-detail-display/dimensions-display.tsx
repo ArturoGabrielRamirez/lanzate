@@ -4,9 +4,9 @@ import { Ruler, EditIcon, X } from "lucide-react"
 import { useState } from "react"
 
 import type { DimensionsDisplayProps } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function DimensionsDisplay({ product }: DimensionsDisplayProps) {

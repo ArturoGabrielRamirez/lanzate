@@ -15,7 +15,7 @@ export function useBannerState(userId: string, initialBanner: string | null) {
         if (initialBanner !== bannerUrl && initialBanner !== null) {
             setBannerUrl(initialBanner || getDefaultBannerForUser(userId))
         }
-    }, [initialBanner, userId])
+    }, [initialBanner, userId, bannerUrl])
 
     const handleLoad = useCallback(() => {
         setIsLoading(false)

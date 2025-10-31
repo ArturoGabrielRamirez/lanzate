@@ -6,11 +6,11 @@ import { usePathname } from "next/navigation"
 import { useOptimistic, useState, useTransition } from "react"
 
 import { toggleLikeAction } from "@/features/products/actions/toggle-like.action"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 type User = {
     id: number

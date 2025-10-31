@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 import { cn } from '@/lib/utils'; // Assuming a `cn` utility for classnames
@@ -97,7 +98,7 @@ const MarqueeLogoScroller = React.forwardRef<HTMLDivElement, MarqueeLogoScroller
                                         className="absolute inset-0 scale-150 opacity-0 transition-all duration-700 ease-out group-hover:opacity-100 group-hover:scale-100 bg-gradient-to-br from-[var(--from)] via-[var(--via)] to-[var(--to)]"
                                     />
                                     {/* Logo Image */}
-                                    <img
+                                    <Image
                                         src={logo.src}
                                         alt={logo.alt}
                                         className="relative size-10 group-hover:size-16 transition-all duration-300 ease-in-out w-auto object-contain"

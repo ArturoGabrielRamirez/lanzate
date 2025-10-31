@@ -2,8 +2,8 @@
 
 import { revalidatePath } from "next/cache"
 
-import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
+import { actionWrapper } from "@/features/global/utils"
 import { deleteProductData as deleteProductFromDb } from "@/features/products/data/delete-product.data"
 
 
@@ -20,7 +20,7 @@ export async function deleteProductAction(productId: number, slug: string, userI
         revalidatePath(`/stores/${slug}`)
 
         // Create action log
-        const { error: logError } = await insertLogEntry({
+        const { hasError: logError } = await insertLogEntry({
             action: "DELETE",
             entity_type: "PRODUCT",
             entity_id: productId,

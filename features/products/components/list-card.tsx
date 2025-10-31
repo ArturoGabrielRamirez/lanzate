@@ -18,10 +18,10 @@ function ListCard({ product, href }: ListCardProps) {
                             className="rounded-md object-cover"
                         />
                     ) : (
-                        <img 
-                            src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" 
-                            alt="Product Image" 
-                            className="rounded-md w-full h-full object-cover" 
+                        <Image
+                            src="https://api.dicebear.com/9.x/icons/svg?seed=boxes"
+                            alt="Product Image"
+                            className="rounded-md w-full h-full object-cover"
                         />
                     )}
                 </div>

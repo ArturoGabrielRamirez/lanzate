@@ -6,9 +6,9 @@ import { useTranslations } from "next-intl"
 import * as XLSX from "xlsx-js-style"
 
 import type { ExportProductsButtonProps } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function ExportProductsButton({ data, onlyIcon }: ExportProductsButtonProps) {
     const t = useTranslations("store.products-table")

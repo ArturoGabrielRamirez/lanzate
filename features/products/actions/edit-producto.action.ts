@@ -2,8 +2,8 @@
 
 import { revalidatePath } from "next/cache"
 
-import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
+import { actionWrapper } from "@/features/global/utils"
 import { updateProductData as updateProductInDb } from "@/features/products/data/update-product.data"
 import { UpdateProductPayload } from "@/features/products/types"
 
@@ -22,7 +22,7 @@ export async function editProductAction(productId: number, data: UpdateProductPa
         revalidatePath(`/stores/${slug}`)
 
         //Create action log
-        const { error: logError } = await insertLogEntry({
+        const { hasError: logError } = await insertLogEntry({
             action: "UPDATE",
             entity_type: "PRODUCT",
             entity_id: productId,

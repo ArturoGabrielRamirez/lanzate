@@ -2,8 +2,8 @@
 
 import { Plus } from "lucide-react"
 
-import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { Empty, EmptyHeader, EmptyTitle, EmptyMedia, EmptyDescription, EmptyContent } from "@/features/shadcn/components/empty"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { CreateStoreButton } from "@/features/stores/components"
 import { NewStoreCardProps } from "@/features/stores/types"
 /* import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new" */
