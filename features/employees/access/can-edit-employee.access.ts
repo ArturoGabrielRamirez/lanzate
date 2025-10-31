@@ -4,7 +4,7 @@ import { getUserById } from "@/features/global/data/getUserById"
 import { prisma } from "@/utils/prisma"
 
 export async function canEditEmployee(employeeId: number, userId: number) {
-    const { payload: user, error: userError } = await getUserById(userId)
+    const { payload: user, hasError: userError } = await getUserById(userId)
 
     if (userError || !user) return false
 
