@@ -1,6 +1,6 @@
 import { prisma } from "@/utils/prisma"
 
-export async function getUserMediaByType(userId: number, type: 'avatar' | 'banner') {
+export async function getUserMediaByType(userId: number,/*  _type: 'avatar' | 'banner' */) {
     return await prisma.user.findUnique({
         where: { id: userId },
         select: {
