@@ -4,10 +4,10 @@ import { Tags, EditIcon, X } from "lucide-react"
 import { useState } from "react"
 
 import type { CategoriesDisplayProps } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function CategoriesDisplay({ product }: CategoriesDisplayProps) {

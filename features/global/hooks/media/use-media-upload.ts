@@ -2,133 +2,165 @@
 
 import { useCallback } from 'react'
 import { toast } from 'sonner'
+
+import { useBackgroundRemoverModal } from '@/features/global/hooks/media/use-background-remover-modal'
+import { useCameraCapture } from '@/features/global/hooks/media/use-camera-capture'
+import { useFileSelection } from '@/features/global/hooks/media/use-file-selection'
+import { useFileUpload } from '@/features/global/hooks/media/use-file-upload'
+import { useImageCropper } from '@/features/global/hooks/media/use-image-cropper'
+import { useImageOptimization } from '@/features/global/hooks/media/use-image-optimization'
+import { useUploadHistory } from '@/features/global/hooks/media/use-upload-history'
+import type { UseMediaUploadOptions, UploadMethod } from '@/features/global/types/media'
 import { AVATAR_OPTIONS, BANNER_OPTIONS } from '@/features/profile/constants'
-import { useFileSelection } from './use-file-selection'
-import { useImageCropper } from './use-image-cropper'
-import { useBackgroundRemoverModal } from './use-background-remover-modal'
-import { useImageOptimization } from './use-image-optimization'
-import { useCameraCapture } from './use-camera-capture'
-import { useFileUpload } from './use-file-upload'
-import { useUploadHistory } from './use-upload-history'
-import type { UseMediaUploadOptions, UploadMethod } from '../types'
 
 export function useMediaUpload({
   type,
   onSuccess,
   onError,
   validationOptions,
-  autoRevalidate = true
 }: UseMediaUploadOptions) {
-  const resolvedValidationOptions = validationOptions ||
-    (type === 'avatar' ? AVATAR_OPTIONS : BANNER_OPTIONS)
+  const resolvedValidationOptions =
+    validationOptions || (type === 'avatar' ? AVATAR_OPTIONS : BANNER_OPTIONS)
 
-  // Hook de historial
+  // ====== Hooks base ======
   const uploadHistory = useUploadHistory(type)
 
-  // Hook de cropping
   const cropper = useImageCropper({
     aspectRatio: type === 'avatar' ? 1 : 16 / 9,
     maxWidth: resolvedValidationOptions.maxWidth || 1920,
     maxHeight: resolvedValidationOptions.maxHeight || 1080,
-    onCropComplete: (croppedFile) => {
-      fileSelection.updateSelectedFile(croppedFile)
-    }
+    onCropComplete: (croppedFile) => updateSelectedFile(croppedFile),
   })
 
-  // Hook de optimización
   const optimization = useImageOptimization({
     validationOptions: resolvedValidationOptions,
-    onOptimized: (file) => {
-      fileSelection.updateSelectedFile(file)
-    },
-    onNeedsCropping: (file) => {
-      cropper.startCropping(file)
-    }
+    onOptimized: (file) => updateSelectedFile(file),
+    onNeedsCropping: (file) => startCropping(file),
   })
 
-  // Hook de selección de archivos
   const fileSelection = useFileSelection({
     validationOptions: resolvedValidationOptions,
     onValidationError: onError,
-    onNeedsCropping: (file) => cropper.startCropping(file),
-    onNeedsOptimization: (file) => optimization.checkOptimization(file)
+    onNeedsCropping: (file) => startCropping(file),
+    onNeedsOptimization: (file) => checkOptimization(file),
   })
 
-  // Hook de upload
   const fileUpload = useFileUpload({
     type,
     onSuccess: (url = '', method = 'file') => {
-      // Agregar al historial después de upload exitoso
       if (url && url.includes('user-uploads')) {
         uploadHistory.addUpload(url)
       }
       resetState()
       onSuccess?.(url, method as UploadMethod)
     },
-    onError
+    onError,
   })
 
-  // Hook de cámara
   const camera = useCameraCapture({
     type,
     validationOptions: resolvedValidationOptions,
-    onCapture: (file) => {
-      optimization.checkOptimization(file)
-    }
+    onCapture: (file) => checkOptimization(file),
   })
 
-  // Hook de background remover
   const bgRemover = useBackgroundRemoverModal({
-    onProcessed: (processedFile) => {
-      fileSelection.updateSelectedFile(processedFile)
-    }
+    onProcessed: (processedFile) => updateSelectedFile(processedFile),
   })
 
-  /**
-   * Obtiene la preview actual (declarada primero para poder usarla en otros callbacks)
-   */
+  // ====== Desestructuración (para dependencias estables) ======
+  const {
+    selectedFile,
+    updateSelectedFile,
+    handleFileSelect,
+    openFileSelector,
+    clearSelection,
+    previewUrl,
+    fileInputProps,
+  } = fileSelection
+
+  const {
+    uploadFile,
+    usePreset,
+    cancelUpload,
+    isUploading,
+    uploadProgress,
+    isLoadingPreset,
+  } = fileUpload
+
+  const {
+    startCropping,
+    cancelCropping,
+    handleCropComplete,
+    fileForCropping,
+    isCropperOpen,
+    cropperProps,
+  } = cropper
+
+  const {
+    checkOptimization,
+    closeOptimizationDialog,
+    handleOptimizationDecision,
+    showCropDialog,
+    pendingFile,
+  } = optimization
+
+  const {
+    openBackgroundRemover,
+    handleBackgroundRemoved,
+    backgroundRemoverProps,
+    showBackgroundRemover,
+    pendingFileForBgRemoval,
+    closeBackgroundRemover,
+  } = bgRemover
+
+  const {
+    openCamera,
+    closeCamera,
+    retakePhoto,
+    cameraProps,
+    capturedFile,
+    isCameraOpen,
+    clearCapture,
+  } = camera
+
+  // ====== Utilidades ======
   const getCurrentPreview = useCallback(() => {
-    return fileSelection.previewUrl || camera.capturedFile?.preview || null
-  }, [fileSelection.previewUrl, camera.capturedFile])
+    return previewUrl || capturedFile?.preview || null
+  }, [previewUrl, capturedFile])
 
-  /**
-   * Limpia todos los estados
-   */
   const resetState = useCallback(() => {
-    fileSelection.clearSelection()
-    camera.clearCapture()
-    cropper.cancelCropping()
-    optimization.closeOptimizationDialog()
-    bgRemover.closeBackgroundRemover()
-  }, [fileSelection, camera, cropper, optimization, bgRemover])
+    clearSelection()
+    clearCapture()
+    cancelCropping()
+    closeOptimizationDialog()
+    closeBackgroundRemover()
+  }, [
+    clearSelection,
+    clearCapture,
+    cancelCropping,
+    closeOptimizationDialog,
+    closeBackgroundRemover,
+  ])
 
-  /**
-   * ✅ NUEVO: Abre el cropper manualmente para cualquier imagen
-   */
+  // ====== Cropper manual ======
   const openCropper = useCallback(async () => {
     try {
-      // Caso 1: Hay archivo seleccionado
-      if (fileSelection.selectedFile) {
-        cropper.startCropping(fileSelection.selectedFile)
+      if (selectedFile) {
+        startCropping(selectedFile)
         return
       }
 
-      // Caso 2: Hay foto capturada
-      if (camera.capturedFile) {
-        cropper.startCropping(camera.capturedFile.file)
+      if (capturedFile) {
+        startCropping(capturedFile.file)
         return
       }
 
-      // Caso 3: Solo hay preview (preset o URL de historial)
       const currentPreview = getCurrentPreview()
       if (currentPreview) {
         toast.info('Convirtiendo imagen...')
 
-        // Convertir URL a File
         const response = await fetch(currentPreview)
-        if (!response.ok) {
-          throw new Error('No se pudo cargar la imagen')
-        }
+        if (!response.ok) throw new Error('No se pudo cargar la imagen')
 
         const blob = await response.blob()
         const file = new File(
@@ -137,132 +169,111 @@ export function useMediaUpload({
           { type: blob.type }
         )
 
-        // Actualizar selectedFile y abrir cropper
-        fileSelection.updateSelectedFile(file)
-        cropper.startCropping(file)
+        updateSelectedFile(file)
+        startCropping(file)
         return
       }
 
-      // Caso 4: No hay nada que recortar
       toast.error('Selecciona una imagen primero')
-
     } catch (error) {
       console.error('Error opening cropper:', error)
       toast.error('No se pudo abrir el recortador')
     }
-  }, [
-    fileSelection.selectedFile,
-    camera.capturedFile,
-    getCurrentPreview,
-    cropper.startCropping,
-    fileSelection.updateSelectedFile,
-    type
-  ])
+  }, [selectedFile, capturedFile, getCurrentPreview, startCropping, updateSelectedFile, type])
 
-  /**
-   * Sube el archivo seleccionado
-   */
+  // ====== Upload ======
   const uploadSelectedFile = useCallback(() => {
-    const fileToUpload = camera.capturedFile?.file || fileSelection.selectedFile
+    const fileToUpload = capturedFile?.file || selectedFile
 
     if (!fileToUpload) {
       onError?.('No hay archivo seleccionado para subir.')
       return
     }
 
-    // Verificar límite
     if (!uploadHistory.canUploadMore) {
       toast.error(`Has alcanzado el límite de 4 ${type}s. Elimina uno existente para subir uno nuevo.`)
       return
     }
 
-    const method: UploadMethod = camera.capturedFile ? 'camera' : 'file'
-    return fileUpload.uploadFile(fileToUpload, method)
-  }, [
-    fileSelection.selectedFile,
-    camera.capturedFile,
-    fileUpload.uploadFile,
-    onError,
-    uploadHistory.canUploadMore,
-    type
-  ])
+    const method: UploadMethod = capturedFile ? 'camera' : 'file'
+    return uploadFile(fileToUpload, method)
+  }, [capturedFile, selectedFile, uploadFile, onError, uploadHistory.canUploadMore, type])
 
-  /**
-   * Abre el removedor de fondo
-   */
-  const openBackgroundRemover = useCallback(() => {
-    const fileToProcess = fileSelection.selectedFile || camera.capturedFile?.file
-    bgRemover.openBackgroundRemover(fileToProcess || null)
-  }, [fileSelection.selectedFile, camera.capturedFile, bgRemover])
+  // ====== Background remover ======
+  const openBackgroundRemoverHandler = useCallback(() => {
+    const fileToProcess = selectedFile || capturedFile?.file
+    openBackgroundRemover(fileToProcess || null)
+  }, [selectedFile, capturedFile, openBackgroundRemover])
 
-  // Estados derivados
-  const hasSelectedFile = !!(fileSelection.selectedFile || camera.capturedFile)
+  // ====== Estados derivados ======
+  const hasSelectedFile = !!(selectedFile || capturedFile)
   const hasPreview = !!getCurrentPreview()
-  const isFromCamera = !!camera.capturedFile
-  const needsCropping = !!cropper.fileForCropping
+  const isFromCamera = !!capturedFile
+  const needsCropping = !!fileForCropping
 
+  // ====== Retorno ======
   return {
     // Estados principales
-    isUploading: fileUpload.isUploading,
-    uploadProgress: fileUpload.uploadProgress,
-    isLoadingPreset: fileUpload.isLoadingPreset,
-    selectedFile: fileSelection.selectedFile,
-    capturedFile: camera.capturedFile,
+    isUploading,
+    uploadProgress,
+    isLoadingPreset,
+    selectedFile,
+    capturedFile,
     previewUrl: getCurrentPreview(),
     hasSelectedFile,
     hasPreview,
     isFromCamera,
     needsCropping,
 
-    // Estados de historial
+    // Historial
     uploadHistory,
 
-    // Estados de componentes
-    isCameraOpen: camera.isCameraOpen,
-    isCropperOpen: cropper.isCropperOpen,
-    showCropDialog: optimization.showCropDialog,
-    showBackgroundRemover: bgRemover.showBackgroundRemover,
-    fileForCropping: cropper.fileForCropping,
-    pendingFile: optimization.pendingFile,
-    pendingFileForBgRemoval: bgRemover.pendingFileForBgRemoval,
+    // Componentes
+    isCameraOpen,
+    isCropperOpen,
+    showCropDialog,
+    showBackgroundRemover,
+    fileForCropping,
+    pendingFile,
+    pendingFileForBgRemoval,
 
-    // Métodos de selección
-    handleFileSelect: fileSelection.handleFileSelect,
-    openFileSelector: fileSelection.openFileSelector,
-
-    // Métodos de cámara
-    openCamera: camera.openCamera,
-    closeCamera: camera.closeCamera,
-    retakePhoto: camera.retakePhoto,
-
-    // Métodos de upload
+    // Métodos principales
     uploadSelectedFile,
-    usePreset: fileUpload.usePreset,
-    cancelUpload: fileUpload.cancelUpload,
+    usePreset,
+    cancelUpload,
 
-    // Métodos de cropping
-    openCropper,  // ✅ NUEVO
-    handleCropComplete: cropper.handleCropComplete,
+    // Selección de archivos
+    handleFileSelect,
+    openFileSelector,
 
-    // Métodos de optimización
-    handleOptimizationDecision: optimization.handleOptimizationDecision,
-    handleOptimizationDialogClose: optimization.closeOptimizationDialog,
+    // Cámara
+    openCamera,
+    closeCamera,
+    retakePhoto,
 
-    // Métodos de background remover
-    openBackgroundRemover,
-    handleBackgroundRemoved: bgRemover.handleBackgroundRemoved,
+    // Cropper
+    openCropper,
+    handleCropComplete,
 
-    // Métodos generales
+    // Optimización
+    handleOptimizationDecision,
+    handleOptimizationDialogClose: closeOptimizationDialog,
+
+    // Background remover
+    openBackgroundRemover: openBackgroundRemoverHandler,
+    handleBackgroundRemoved,
+
+    // Generales
     resetState,
     getCurrentPreview,
 
-    // Props para componentes
-    cameraProps: camera.cameraProps,
-    fileInputProps: fileSelection.fileInputProps,
-    cropperProps: cropper.cropperProps,
-    backgroundRemoverProps: bgRemover.backgroundRemoverProps,
+    // Props
+    cameraProps,
+    fileInputProps,
+    cropperProps,
+    backgroundRemoverProps,
 
     // Configuración
-    resolvedValidationOptions
+    resolvedValidationOptions,
   }
 }

@@ -1,8 +1,8 @@
 "use server"
 
-import { formatSuccessResponse } from "@/features/global/utils"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
+import { formatSuccessResponse } from "@/features/global/utils"
 import { UpdateDeliveredOrderProps } from "@/features/orders/types"
 import { prisma } from "@/utils/prisma"
 
@@ -83,7 +83,7 @@ export async function updateDeliveredOrderData({ orderId }: UpdateDeliveredOrder
     })
 
     // Create audit log
-    const { error: logError } = await insertLogEntry({
+    const { hasError: logError } = await insertLogEntry({
         action: "UPDATE",
         entity_type: "ORDER",
         entity_id: parseInt(orderId),

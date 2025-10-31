@@ -6,12 +6,12 @@ import { toast } from "sonner"
 
 import { updateVariantDimensionsData } from "@/features/products/data/update-variant-dimensions.data"
 import type { VariantDimensionsDisplayProps } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 const lengthUnits = ["MM", "CM", "M", "IN", "FT"] as const
 const weightUnits = ["MG", "G", "KG", "OZ", "LB"] as const
@@ -141,7 +141,7 @@ function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplay
                                 </Select>
                             </div>
                             <p className="text-xs text-muted-foreground/50">
-                                Alto base del producto: {product.height ? `${product.height} ${product.heightUnit || "CM"}` : "No especificado"}
+                                Alto base del producto: {product.height ? `${product.height} ${product.height_unit || "CM"}` : "No especificado"}
                             </p>
                         </div>
 
@@ -169,7 +169,7 @@ function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplay
                                 </Select>
                             </div>
                             <p className="text-xs text-muted-foreground/50">
-                                Ancho base del producto: {product.width ? `${product.width} ${product.widthUnit || "CM"}` : "No especificado"}
+                                Ancho base del producto: {product.width ? `${product.width} ${product.width_unit || "CM"}` : "No especificado"}
                             </p>
                         </div>
 
@@ -197,7 +197,7 @@ function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplay
                                 </Select>
                             </div>
                             <p className="text-xs text-muted-foreground/50">
-                                Profundidad base del producto: {product.depth ? `${product.depth} ${product.depthUnit || "CM"}` : "No especificado"}
+                                Profundidad base del producto: {product.depth ? `${product.depth} ${product.depth_unit || "CM"}` : "No especificado"}
                             </p>
                         </div>
 
@@ -225,7 +225,7 @@ function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplay
                                 </Select>
                             </div>
                             <p className="text-xs text-muted-foreground/50">
-                                Diámetro base del producto: {product.diameter ? `${product.diameter} ${product.diameterUnit || "CM"}` : "No especificado"}
+                                Diámetro base del producto: {product.diameter ? `${product.diameter} ${product.diameter_unit || "CM"}` : "No especificado"}
                             </p>
                         </div>
 
@@ -253,7 +253,7 @@ function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplay
                                 </Select>
                             </div>
                             <p className="text-xs text-muted-foreground/50">
-                                Peso base del producto: {product.weight ? `${product.weight} ${product.weightUnit || "KG"}` : "No especificado"}
+                                Peso base del producto: {product.weight ? `${product.weight} ${product.weight_unit || "KG"}` : "No especificado"}
                             </p>
                         </div>
                     </div>

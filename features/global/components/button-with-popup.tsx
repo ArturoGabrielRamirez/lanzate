@@ -5,12 +5,12 @@ import { FieldValues } from "react-hook-form"
 
 import { yupResolverFlexible } from "@/features/employees/types/yup-resolver-flexible"
 import { Form } from "@/features/global/components/form/form"
-import { ButtonWithPopupPropsType } from "@/features/layout/types"
+import { ButtonWithPopupPropsType } from "@/features/global/types/button-with-popup-type"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function ButtonWithPopup<P extends FieldValues>({
   text,
@@ -68,7 +68,7 @@ function ButtonWithPopup<P extends FieldValues>({
 
         <Form<P>
           resolver={yupResolverFlexible<P>(schema as never)}
-          formAction={action as (formData: P) => Promise<{ error: boolean; message: string; payload: unknown }>}
+          formAction={action as (formData: P) => Promise<{ hasError: boolean; message: string; payload: unknown }>}
           contentButton={contentButton || text}
           successMessage={messages.success}
           loadingMessage={messages.loading}

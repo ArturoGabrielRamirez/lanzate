@@ -1,15 +1,15 @@
 "use client"
 
 import { FileText, X, Download, Eye, FilePlus } from "lucide-react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { toast } from "sonner"
 
-import AccordionTriggerWithValidation from "@/features/branches/components/accordion-trigger-with-validation"
+import { AccordionTriggerWithValidation } from "@/features/branches/components/accordion-trigger-with-validation"
 import { checkStorageBucketData } from "@/features/employees/data/check-storage-bucket.data"
 import { getContractsData } from "@/features/employees/data/get-contracts.data"
 import { insertContractData } from "@/features/employees/data/insert-contract.data"
 import { contractCreateSchema } from "@/features/employees/schemas/employee-schema"
-import { Contract, CreateContractButtonProps } from "@/features/employees/types"
+import { Contract, CreateContractButtonProps, InsertContractPayload } from "@/features/employees/types"
 import { yupResolverFlexible } from "@/features/employees/types/yup-resolver-flexible"
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
@@ -28,13 +28,27 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
     const [loading, setLoading] = useState(false)
     const [bucketChecked, setBucketChecked] = useState(false)
 
+    const loadContracts = useCallback(async () => {
+        setLoading(true)
+        try {
+            const result = await getContractsData(storeId)
+            if (!result.hasError && result.payload) {
+                setContracts(result.payload)
+            }
+        } catch (error) {
+            console.error("Error loading contracts:", error)
+        } finally {
+            setLoading(false)
+        }
+    }, [storeId])
+
     // Cargar contratos existentes cuando se abre el popup
     useEffect(() => {
         if (open) {
             loadContracts()
             checkBucket()
         }
-    }, [open])
+    }, [open, loadContracts])
 
     const checkBucket = async () => {
         try {
@@ -49,66 +63,55 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
         }
     }
 
-    const loadContracts = async () => {
-        setLoading(true)
-        try {
-            const result = await getContractsData(storeId)
-            if (!result.hasError && result.payload) {
-                setContracts(result.payload)
-            }
-        } catch (error) {
-            console.error("Error loading contracts:", error)
-        } finally {
-            setLoading(false)
-        }
-    }
+
 
     const handleCreateContract = async (data: FormData) => {
-        try {
-            // Validar que se haya subido un archivo
-            if (files.length === 0) {
-                return {
-                    hasError: true,
-                    message: "Debes subir un archivo PDF",
-                    payload: null
-                }
-            }
-
-            const payload = {
-                ...data,
-                file: files
-            }
-
-            const result = await insertContractData(payload, storeId, userId)
-
-            // Si hay error, retornarlo
-            if (result.hasError) {
-                return {
-                    hasError: true,
-                    message: result.message,
-                    payload: null
-                }
-            }
-
-            // Limpiar archivos y recargar contratos
-            setFiles([])
-            await loadContracts()
-
-            return {
-                hasError: false,
-                message: "Contrato creado exitosamente",
-                payload: result.payload
-            }
-        } catch (error) {
-            console.error("Error creating contract:", error)
+    try {
+        // Validar que se haya subido un archivo
+        if (files.length === 0) {
             return {
                 hasError: true,
-                message: error instanceof Error ? error.message : "Error creating contract",
+                message: "Debes subir un archivo PDF",
                 payload: null
             }
         }
-    }
 
+        // ✅ Extraer los valores de FormData correctamente
+        const payload: InsertContractPayload = {
+            title: data.get('title') as string,
+            comments: data.get('comments') as string | null,
+            file: files
+        }
+
+        const result = await insertContractData(payload, storeId, userId)
+
+        // Si hay error, retornarlo
+        if (result.hasError) {
+            return {
+                hasError: true,
+                message: result.message,
+                payload: null
+            }
+        }
+
+        // Limpiar archivos y recargar contratos
+        setFiles([])
+        await loadContracts()
+
+        return {
+            hasError: false,
+            message: "Contrato creado exitosamente",
+            payload: result.payload
+        }
+    } catch (error) {
+        console.error("Error creating contract:", error)
+        return {
+            hasError: true,
+            message: error instanceof Error ? error.message : "Error creating contract",
+            payload: null
+        }
+    }
+}
     const handleOpenChange = (isOpen: boolean) => {
         setOpen(isOpen)
         if (!isOpen) {
@@ -139,8 +142,10 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
         }
     }
 
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('es-ES', {
+    // ✅ Actualizado para aceptar Date o string
+    const formatDate = (date: Date | string) => {
+        const dateObj = typeof date === 'string' ? new Date(date) : date
+        return dateObj.toLocaleDateString('es-ES', {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
@@ -203,7 +208,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                                                 <CardContent className="p-0">
                                                     <div className="flex items-center justify-between">
                                                         <div className="text-sm text-muted-foreground">
-                                                            Creado: {formatDate(contract.created_at as string)}
+                                                            Creado: {formatDate(contract.created_at)}
                                                         </div>
                                                         <div className="flex gap-2">
                                                             <Button

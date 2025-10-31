@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 import { OrderItemComponentProps } from "@/features/orders/types"
 
 function OrderItemComponent({ item }: OrderItemComponentProps) {
@@ -6,7 +8,7 @@ function OrderItemComponent({ item }: OrderItemComponentProps) {
             <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 bg-muted rounded-md flex items-center justify-center">
                     {item.product.image ? (
-                        <img
+                        <Image
                             src={item.product.image}
                             alt={item.product.name}
                             className="w-full h-full object-cover rounded-md"

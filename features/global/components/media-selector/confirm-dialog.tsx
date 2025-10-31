@@ -1,5 +1,6 @@
 'use client'
 
+import { ConfirmDialogProps } from '@/features/global/types/media'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,7 +11,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/features/shadcn/components/ui/alert-dialog'
-import { ConfirmDialogProps } from '../../types/media'
 
 export function ConfirmDialog({
   open,

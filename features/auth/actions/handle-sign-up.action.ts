@@ -31,7 +31,7 @@ export async function handleSignup(payload: SignupFormPayload) {
         try {
             const validation = await validateNewUserCreationAction(emailStr)
 
-            if (!validation.payload.canCreate && validation.payload.conflict) {
+            if (!validation.payload?.canCreate && validation.payload?.conflict) {
                 throw new Error('El usuario con este correo electrónico ya existe')
             }
 

@@ -5,9 +5,9 @@ import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
 
 import { useChat } from "@/features/layout/components/chat-provider"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { RealtimeChat } from "@/features/shadcn/components/supabase/realtime-chat"
 import { ChatMessage } from "@/features/shadcn/hooks/use-realtime-chat"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 function ChatDoc() {
 

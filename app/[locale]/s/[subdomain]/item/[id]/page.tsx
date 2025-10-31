@@ -1,8 +1,8 @@
-import { Category } from "@prisma/client"
+/* import { Category } from "@prisma/client" */
 import { ShoppingBag } from "lucide-react"
 import Link from "next/link"
 
-import { Title } from "@/features/layout/components"
+/* import { Title } from "@/features/layout/components" */
 import { PageContainer } from "@/features/layout/components"
 import { getPublicStoreProductDetailsAction } from "@/features/products/actions/get-public-store-product-details.action"
 import { Comments, RelatedProducts, VariantDetailClient } from "@/features/products/components"
@@ -26,11 +26,11 @@ async function ProductDetailsPage({ params, searchParams }: Props) {
     if (hasError || !product) {
         return (
             <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
-                <Title
+             {/*    <Title
                     title="Product Not Found"
                     breadcrumbs={[{ label: "Product Not Found", href: `/item/${id}` }]}
                     homePath={`/`}
-                />
+                /> */}
                 <p className="text-red-500 mt-4">{message}</p>
             </PageContainer>
         )
@@ -38,7 +38,7 @@ async function ProductDetailsPage({ params, searchParams }: Props) {
 
     return (
         <PageContainer>
-            <Title
+           {/*  <Title
                 title={product.name}
                 breadcrumbs={[
                     ...product.categories.map((category: Category) => ({
@@ -48,7 +48,7 @@ async function ProductDetailsPage({ params, searchParams }: Props) {
                     { label: product.name, href: `/item/${id}` }
                 ]}
                 homePath={`/`}
-            />
+            /> */}
 
             <div className="grow flex flex-col">
                 <div className="space-y-6 text-primary overflow-y-auto max-h-[calc(100vh-205px)] pr-0 lg:pr-4 relative">

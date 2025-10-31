@@ -1,13 +1,14 @@
 "use client"
 
 import { Boxes, EditIcon, X } from "lucide-react"
+import Image from "next/image"
 import { useState } from "react"
 
 import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
 import type { VariantsDisplayProps } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function VariantsDisplay({ product, slug }: VariantsDisplayProps) {
@@ -83,7 +84,7 @@ function VariantsDisplay({ product, slug }: VariantsDisplayProps) {
                                     return (
                                         <div key={variant.id} className="rounded-md border p-3 flex items-center gap-3">
                                             {variant.primary_media?.url ? (
-                                                <img 
+                                                <Image 
                                                     src={variant.primary_media.url} 
                                                     alt={label} 
                                                     className="h-12 w-12 rounded object-cover" 

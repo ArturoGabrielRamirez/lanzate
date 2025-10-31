@@ -1,35 +1,16 @@
 'use client'
 
+
 import { useFormContext, get } from 'react-hook-form'
+
+import { InputFieldProps } from '@/features/global/types'
 import { Input } from '@/features/shadcn/components/ui/input'
 import { Label } from '@/features/shadcn/components/ui/label'
-import { cn } from '@/lib/utils'
 import { Textarea } from '@/features/shadcn/components/ui/textarea'
-import { KeyboardEvent } from 'react'
+import { cn } from '@/lib/utils'
 
-type InputFieldProps = {
-  name: string
-  label: string
-  type?: string
-  defaultValue?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  value?: string
-  className?: string
-  containerClassName?: string
-  onKeyDown?: (e: (React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) | KeyboardEvent<HTMLInputElement>) => void
-  startContent?: React.ReactNode
-  endContent?: React.ReactNode
-  placeholder?: string,
-  disabled?: boolean
 
-  isTextArea?: boolean
-  isRequired?: boolean
-  inputMode?: "search" | "text" | "numeric" | "none" | "tel" | "url" | "email" | "decimal" | undefined
-  maxLength?: number
-
-}
-
-const InputField = ({
+function InputField({
   name,
   label,
   type = 'text',
@@ -46,8 +27,8 @@ const InputField = ({
   isTextArea = false,
   isRequired = false,
   inputMode = "text",
-  maxLength    
-}: InputFieldProps) => {
+  maxLength
+}: InputFieldProps) {
   const {
     register,
     formState: { errors },

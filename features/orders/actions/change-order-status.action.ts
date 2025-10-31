@@ -26,7 +26,7 @@ export async function changeOrderStatusAction(orderId: number, data: ChangeOrder
         revalidatePath(`/stores/${slug}`)
 
         // Create action log
-        const { error: logError } = await insertLogEntry({
+        const { hasError: logError } = await insertLogEntry({
             action: "UPDATE",
             entity_type: "ORDER",
             entity_id: orderId,

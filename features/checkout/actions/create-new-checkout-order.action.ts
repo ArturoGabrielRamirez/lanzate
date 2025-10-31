@@ -18,7 +18,7 @@ export async function createNewCheckoutOrderAction({
 
     return actionWrapper(async () => {
 
-        const { error, message, payload } = await insertOrderData({
+        const { hasError, message, payload } = await insertOrderData({
             branch_id: branch_id,
             isPaid: true,
             isWalkIn: false,
@@ -32,7 +32,7 @@ export async function createNewCheckoutOrderAction({
             customer_info: customer_info
         })
 
-        if (error) throw new Error(message)
+        if (hasError) throw new Error(message)
 
         return {
             hasError: false,

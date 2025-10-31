@@ -66,7 +66,7 @@ function EmployeesTable({ data, userId, slug, storeId, employeePermissions }: Em
             cell: ({ row }) => {
                 const role = row.original.role
                 return (
-                    <Badge variant="outline" className={cn(role === "EMPLOYEE" && "border-blue-500 text-blue-500", role === "ADMIN" && "border-red-500 text-red-500")}>{role}</Badge>
+                    <Badge variant="outline" className={cn(role === "EMPLOYEE" && "border-blue-500 text-blue-500",/*  role === "ADMIN" && "border-red-500 text-red-500" */)}>{role}</Badge>
                 )
             }
         },

@@ -19,7 +19,7 @@ function DeleteEmployeeButton({ employeeId, slug, onComplete, userId }: DeleteEm
             const { hasError, message, payload } = await deleteEmployeeAction(employeeId, slug, userId)
             if (hasError) throw new Error(message)
             return {
-                error: false,
+                hasError: false,
                 message: t("messages.success"),
                 payload: payload
             }

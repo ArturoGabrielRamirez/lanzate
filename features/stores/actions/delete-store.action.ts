@@ -2,8 +2,8 @@
 
 import { revalidatePath } from "next/cache"
 
-import { actionWrapper } from "@/features/global/utils"
 import { insertLogEntry } from "@/features/global/data/insert-log-entry.data"
+import { actionWrapper } from "@/features/global/utils"
 import { canDeleteStoreAccess } from "@/features/stores/access"
 import { deleteStoreData } from "@/features/stores/data"
 
@@ -19,7 +19,7 @@ export async function deleteStoreAction(storeId: number, userId: number) {
         revalidatePath("/stores")
         revalidatePath(`/dashboard`)
 
-        const { error: logError } = await insertLogEntry({
+        const { hasError: logError } = await insertLogEntry({
             action: "DELETE",
             entity_type: "STORE",
             entity_id: storeId,

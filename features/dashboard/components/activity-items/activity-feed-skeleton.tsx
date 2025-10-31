@@ -1,8 +1,8 @@
 import * as motion from "motion/react-client"
 
+import { ActivityFeedItemSkeletonProps } from "@/features/dashboard/types"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
-import { ActivityFeedItemSkeletonProps } from "@/features/dashboard/types"
 
 function ActivityFeedItemSkeleton({ index }: ActivityFeedItemSkeletonProps) {
     const baseDelay = index * 0.1

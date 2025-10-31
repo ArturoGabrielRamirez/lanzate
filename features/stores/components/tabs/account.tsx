@@ -1,8 +1,8 @@
 import { getTranslations } from "next-intl/server"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { getEmployeePermissionsAction } from "@/features/employees/actions/get-employee-permisions.action"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
 import { DeleteStoreButton } from "@/features/stores/components/delete-store-button"
 import { StoreInformationForm } from "@/features/stores/components/store-information-form"

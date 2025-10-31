@@ -15,6 +15,7 @@ import { PaymentInformation } from "@/features/checkout/components/payment-infor
 import { ShippingMethodSelector } from "@/features/checkout/components/shipping-method-selector"
 import { StepNavigation } from "@/features/checkout/components/step-navigation"
 import { deliveryOrderSchema, pickupOrderSchema } from "@/features/checkout/schemas/order-schema"
+import { CheckFormData } from "@/features/checkout/types"
 import { computeDeliveryCost, computeFinalTotal } from "@/features/checkout/utils"
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
@@ -44,7 +45,7 @@ function CheckoutForm({
     const deliveryCost = computeDeliveryCost(operationalSettings, shippingMethod)
     const finalTotal = computeFinalTotal(total, deliveryCost)
 
-    const handleSubmit = async (formData: any) => {
+    const handleSubmit = async (formData: CheckFormData) => {
 
         const { hasError: error, message, payload } = await createNewCheckoutOrderAction({
             branch_id: selectedBranchId as number,
@@ -71,7 +72,7 @@ function CheckoutForm({
 
         clearCart()
 
-        router.push(`/my-orders/${payload.id}`)
+        router.push(`/my-orders/${payload?.id}`)
 
         return {
             hasError: false,

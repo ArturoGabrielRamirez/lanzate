@@ -1,8 +1,8 @@
 import * as motion from "motion/react-client"
 
+import { StoreCardSkeletonProps } from "@/features/dashboard/types"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
-import { StoreCardSkeletonProps } from "@/features/dashboard/types"
 
 function StoreCardSkeleton({ index }: StoreCardSkeletonProps) {
     const baseDelay = index * 0.1

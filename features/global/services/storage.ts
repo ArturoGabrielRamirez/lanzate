@@ -1,8 +1,8 @@
-import { createServerSideClient } from '@/utils/supabase/server'
-import type { UploadType } from '../types/media'
-import { getStoragePath } from '@/features/global/utils/media/get-storege-path'
-import { generateFileName } from '@/features/global/utils/media/generate-file-name'
+import type { UploadType } from '@/features/global/types/media'
 import { extractFilePathFromUrl } from '@/features/global/utils/media/extract-file-path-from-url'
+import { generateFileName } from '@/features/global/utils/media/generate-file-name'
+import { getStoragePath } from '@/features/global/utils/media/get-storege-path'
+import { createServerSideClient } from '@/utils/supabase/server'
 
 export class StorageService {
     private supabase: Awaited<ReturnType<typeof createServerSideClient>>
@@ -17,7 +17,7 @@ export class StorageService {
         const { bucket, folder } = getStoragePath(type)
         const filePath = folder ? `${folder}/${fileName}` : fileName
 
-        const { data, error } = await this.supabase.storage
+        const { /* data, */ error } = await this.supabase.storage
             .from(bucket)
             .upload(filePath, file, {
                 contentType: file.type,

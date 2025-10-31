@@ -1,7 +1,7 @@
 import { formatDistance } from "date-fns"
 import { es } from "date-fns/locale"
 
-import { ExtractLinkItem } from "@/features/dashboard/types"
+import { ActivityWithRelations } from "@/features/dashboard/types"
 
 export function getUserInitials(firstName?: string | null, lastName?: string | null) {
     return `${firstName?.charAt(0) || ''}${lastName?.charAt(0) || ''}`.toUpperCase()
@@ -11,14 +11,24 @@ export function formatActivityDate(date: Date) {
     return formatDistance(new Date(date), new Date(), { addSuffix: true, locale: es })
 }
 
-export function extractLink(item: ExtractLinkItem) {
+export function extractLink(item: ActivityWithRelations): string | null {
     switch (item.activity_type) {
         case 'PRODUCT_LIKE':
-            return `/stores/${item.store.slug}/products/${item.product.id}`
         case 'PRODUCT_COMMENT':
+            if (!item.store || !item.product) return null
             return `/stores/${item.store.slug}/products/${item.product.id}`
+
         case 'ORDER_CREATED':
+            if (!item.store || !item.order) return null
             return `/stores/${item.store.slug}/orders/${item.order.id}`
+
+        case 'CONTRACT_ASSIGNED':
+            if (!item.contract) return null
+            // Ajusta la ruta según tu aplicación
+            return `/contracts/${item.contract.id}`
+
+        default:
+            return null
     }
 }
 

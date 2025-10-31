@@ -154,133 +154,134 @@ function StoreBannerEditor({ currentBanner, storeName, onBannerUpdate }: StoreBa
     }, [isOpen])
  */
     return (
-       /*  <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>
-                <div>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <IconButton
-                                size='md'
-                                icon={ImageIcon}
-                            />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            Cambiar banner de la tienda
-                        </TooltipContent>
-                    </Tooltip>
-                </div>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
-                        <ImageIcon className="h-5 w-5" />
-                        Cambiar banner de la tienda
-                    </DialogTitle>
-                </DialogHeader> */
-                {/* <div className="space-y-6">
-                    <div className="rounded-md overflow-hidden border">
-                        <img src={getPreview()} alt="Store banner preview" className="w-full h-40 object-cover" />
-                    </div>
+        <></>
+        /*  <Dialog open={isOpen} onOpenChange={setIsOpen}>
+             <DialogTrigger asChild>
+                 <div>
+                     <Tooltip>
+                         <TooltipTrigger asChild>
+                             <IconButton
+                                 size='md'
+                                 icon={ImageIcon}
+                             />
+                         </TooltipTrigger>
+                         <TooltipContent>
+                             Cambiar banner de la tienda
+                         </TooltipContent>
+                     </Tooltip>
+                 </div>
+             </DialogTrigger>
+             <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+                 <DialogHeader>
+                     <DialogTitle className="flex items-center gap-2">
+                         <ImageIcon className="h-5 w-5" />
+                         Cambiar banner de la tienda
+                     </DialogTitle>
+                 </DialogHeader> */
+        /*  { *//* <div className="space-y-6">
+             <div className="rounded-md overflow-hidden border">
+                 <img src={getPreview()} alt="Store banner preview" className="w-full h-40 object-cover" />
+             </div>
 
-                    {camera.capturedFile ? (
-                        <div className="flex gap-2">
-                            <Button onClick={camera.retakePhoto} variant="outline" size="sm" disabled={camera.isUploading || isUploading}>
-                                <Camera className="h-4 w-4 mr-2" />
-                                Retomar
-                            </Button>
-                            <Button
-                                onClick={() =>
-                                    toast.promise(camera.uploadPhoto(), {
-                                        loading: 'Subiendo banner...',
-                                        success: 'Banner subido correctamente',
-                                        error: 'Error al subir la foto'
-                                    })
-                                }
-                                disabled={camera.isUploading}
-                                size="sm"
-                            >
-                                {camera.isUploading ? (
-                                    <>
-                                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                                        Subiendo...
-                                    </>
-                                ) : (
-                                    'Usar como Banner'
-                                )}
-                            </Button>
-                            <Button onClick={camera.discardPhoto} variant="destructive" size="sm" disabled={camera.isUploading || isUploading}>
-                                Descartar
-                            </Button>
-                        </div>
-                    ) : (
-                        <div className="flex gap-2">
-                            <Button onClick={camera.openCamera} variant="outline" className="flex-1" disabled={isUploading}>
-                                <Camera className="h-4 w-4 mr-2" />
-                                Tomar Foto
-                            </Button>
-                            <Button onClick={() => fileInputRef.current?.click()} variant="outline" className="flex-1" disabled={isUploading}>
-                                <Upload className="h-4 w-4 mr-2" />
-                                Seleccionar archivo
-                            </Button>
-                            <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileSelect} className="hidden" />
-                        </div>
-                    )}
+             {camera.capturedFile ? (
+                 <div className="flex gap-2">
+                     <Button onClick={camera.retakePhoto} variant="outline" size="sm" disabled={camera.isUploading || isUploading}>
+                         <Camera className="h-4 w-4 mr-2" />
+                         Retomar
+                     </Button>
+                     <Button
+                         onClick={() =>
+                             toast.promise(camera.uploadPhoto(), {
+                                 loading: 'Subiendo banner...',
+                                 success: 'Banner subido correctamente',
+                                 error: 'Error al subir la foto'
+                             })
+                         }
+                         disabled={camera.isUploading}
+                         size="sm"
+                     >
+                         {camera.isUploading ? (
+                             <>
+                                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                 Subiendo...
+                             </>
+                         ) : (
+                             'Usar como Banner'
+                         )}
+                     </Button>
+                     <Button onClick={camera.discardPhoto} variant="destructive" size="sm" disabled={camera.isUploading || isUploading}>
+                         Descartar
+                     </Button>
+                 </div>
+             ) : (
+                 <div className="flex gap-2">
+                     <Button onClick={camera.openCamera} variant="outline" className="flex-1" disabled={isUploading}>
+                         <Camera className="h-4 w-4 mr-2" />
+                         Tomar Foto
+                     </Button>
+                     <Button onClick={() => fileInputRef.current?.click()} variant="outline" className="flex-1" disabled={isUploading}>
+                         <Upload className="h-4 w-4 mr-2" />
+                         Seleccionar archivo
+                     </Button>
+                     <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileSelect} className="hidden" />
+                 </div>
+             )}
 
-                    <div>
-                        <Accordion type="single" collapsible>
-                            <AccordionItem value="upload">
-                                <AccordionTrigger>
-                                    Opciones sugeridas
-                                </AccordionTrigger>
-                                <AccordionContent>
-                                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                                        {suggestedIds.map((id) => (
-                                            <button
-                                                key={id}
-                                                type="button"
-                                                onClick={() => handleUploadSuggested(id)}
-                                                disabled={isUploading || camera.isUploading}
-                                                className="relative rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
-                                            >
-                                                <img
-                                                    src={`https://picsum.photos/id/${id}/200/300`}
-                                                    alt={`Sugerencia ${id}`}
-                                                    className="w-full h-24 object-cover"
-                                                />
-                                            </button>
-                                        ))}
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
-                        </Accordion>
-                    </div>
+             <div>
+                 <Accordion type="single" collapsible>
+                     <AccordionItem value="upload">
+                         <AccordionTrigger>
+                             Opciones sugeridas
+                         </AccordionTrigger>
+                         <AccordionContent>
+                             <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                                 {suggestedIds.map((id) => (
+                                     <button
+                                         key={id}
+                                         type="button"
+                                         onClick={() => handleUploadSuggested(id)}
+                                         disabled={isUploading || camera.isUploading}
+                                         className="relative rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+                                     >
+                                         <img
+                                             src={`https://picsum.photos/id/${id}/200/300`}
+                                             alt={`Sugerencia ${id}`}
+                                             className="w-full h-24 object-cover"
+                                         />
+                                     </button>
+                                 ))}
+                             </div>
+                         </AccordionContent>
+                     </AccordionItem>
+                 </Accordion>
+             </div>
 
-                    <div className="flex gap-2">
-                        <Button onClick={handleUpload} disabled={!selectedFile || camera.isUploading || isUploading} className="flex-1">
-                            {isUploading ? (
-                                <>
-                                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                                    Subiendo...
-                                </>
-                            ) : (
-                                'Subir Archivo'
-                            )}
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                setIsOpen(false)
-                                resetState()
-                                camera.discardPhoto()
-                            }}
-                            variant="secondary"
-                            disabled={isUploading}
-                        >
-                            Cancelar
-                        </Button>
-                    </div>
-                </div> */}
-     /*        </DialogContent>
-        </Dialog> */
+             <div className="flex gap-2">
+                 <Button onClick={handleUpload} disabled={!selectedFile || camera.isUploading || isUploading} className="flex-1">
+                     {isUploading ? (
+                         <>
+                             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                             Subiendo...
+                         </>
+                     ) : (
+                         'Subir Archivo'
+                     )}
+                 </Button>
+                 <Button
+                     onClick={() => {
+                         setIsOpen(false)
+                         resetState()
+                         camera.discardPhoto()
+                     }}
+                     variant="secondary"
+                     disabled={isUploading}
+                 >
+                     Cancelar
+                 </Button>
+             </div>
+         </div> *//* } */
+        /*        </DialogContent>
+           </Dialog> */
     )
 }
 

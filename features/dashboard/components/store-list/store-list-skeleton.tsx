@@ -1,8 +1,8 @@
 import { ArrowRight, Store } from "lucide-react"
 import * as motion from "motion/react-client"
 
-import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { StoreCardSkeleton } from "@/features/dashboard/components/store-list"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 
 function StoreListSkeleton() {
     return (

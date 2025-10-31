@@ -1,23 +1,15 @@
 "use client"
 
-import { useFormContext } from "react-hook-form"
-import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
-import { Label } from "@/features/shadcn/components/ui/label"
-import { cn } from "@/lib/utils"
 import { useEffect } from "react"
+import { useFormContext } from "react-hook-form"
+
+/* import { Checkbox } from "@/features/shadcn/components/ui/checkbox" */
+import { CheckboxFieldProps } from "@/features/global/types"
+import { Label } from "@/features/shadcn/components/ui/label"
 import { Switch } from "@/features/shadcn/components/ui/switch"
+import { cn } from "@/lib/utils"
 
-interface CheckboxFieldProps {
-  name: string
-  label: string
-  defaultValue?: boolean
-  onChange?: (checked: boolean) => void
-  className?: string
-  containerClassName?: string
-  disabled?: boolean
-}
-
-const CheckboxField = ({
+function CheckboxField({
   name,
   label,
   defaultValue,
@@ -25,7 +17,7 @@ const CheckboxField = ({
   className,
   containerClassName,
   disabled = false,
-}: CheckboxFieldProps) => {
+}: CheckboxFieldProps) {
   const {
     register,
     formState: { errors },

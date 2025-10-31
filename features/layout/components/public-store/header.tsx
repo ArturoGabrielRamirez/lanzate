@@ -1,4 +1,5 @@
 import { Rocket, Facebook, Instagram } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 
@@ -25,7 +26,7 @@ async function Header({ title = "Store Name", socialMedia, showSocialLinks = tru
         <div className="container mx-auto flex items-center justify-between ">
             <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
                 {logo ? (
-                    <img src={logo} alt={title} width={32} height={32} />
+                    <Image src={logo} alt={title} width={32} height={32} />
                 ) : (
                     <Rocket className="text-primary [display:var(--show-brand-logo)]" />
                 )}

@@ -11,7 +11,7 @@ export async function createEmployeeAction(userId: number, storeId: number, role
         if (employeeError || !employee) throw new Error(employeeMessage)
 
         // Create action log
-        const { error: logError } = await insertLogEntry({
+        const { hasError: logError } = await insertLogEntry({
             action: "CREATE",
             entity_type: "EMPLOYEE",
             entity_id: employee.id,

@@ -1,9 +1,11 @@
 'use client'
 
 import { X, Image as ImageIcon } from 'lucide-react'
+import Image from 'next/image'
+
+import { MediaPreviewWithRemoveProps } from '@/features/global/types/media'
 import { Avatar, AvatarFallback, AvatarImage } from '@/features/shadcn/components/ui/avatar'
 import { Button } from '@/features/shadcn/components/ui/button'
-import { MediaPreviewWithRemoveProps } from '../types'
 
 export function MediaPreview({
   type,
@@ -38,7 +40,7 @@ export function MediaPreview({
     <div className="relative w-full h-40 rounded-lg overflow-hidden bg-muted group">
       {previewUrl ? (
         <>
-          <img
+          <Image
             src={previewUrl}
             alt="Preview"
             className="w-full h-full object-cover"

@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server"
 
 import { QuickActionsBarProps } from "@/features/overview/types"
-import CreateProductButton from "@/features/products/components/create-product-button"
+import { CreateProductButton } from "@/features/products/components/create-product-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
@@ -21,11 +21,11 @@ async function QuickActionsBar({ storeId, userId }: QuickActionsBarProps) {
             <CardContent>
                 <div className="flex flex-col space-y-4">
                     <h3 className="text-sm font-semibold">{t("title")}</h3>
-                    
+
                     <div className="flex flex-wrap gap-3">
                         {/* Create Product Button */}
                         <CreateProductButton storeId={storeId} userId={userId} />
-                        
+
                         {/* Coming Soon Buttons */}
                         <div className="relative">
                             <Button
@@ -36,14 +36,14 @@ async function QuickActionsBar({ storeId, userId }: QuickActionsBarProps) {
                             >
                                 <span>{t("advanced-analytics")}</span>
                             </Button>
-                            <Badge 
-                                variant="secondary" 
+                            <Badge
+                                variant="secondary"
                                 className="absolute -top-2 -right-2 text-xs px-1 py-0"
                             >
                                 {t("coming-soon")}
                             </Badge>
                         </div>
-                        
+
                         <div className="relative">
                             <Button
                                 variant="outline"
@@ -53,8 +53,8 @@ async function QuickActionsBar({ storeId, userId }: QuickActionsBarProps) {
                             >
                                 <span>{t("marketing-tools")}</span>
                             </Button>
-                            <Badge 
-                                variant="secondary" 
+                            <Badge
+                                variant="secondary"
                                 className="absolute -top-2 -right-2 text-xs px-1 py-0"
                             >
                                 {t("coming-soon")}

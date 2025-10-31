@@ -7,7 +7,7 @@ export function useAvatarState(initialAvatar: string | null) {
         if (initialAvatar !== avatarUrl) {
             setAvatarUrl(initialAvatar)
         }
-    }, [initialAvatar])
+    }, [initialAvatar, avatarUrl])
 
     const updateAvatar = useCallback((url: string | null) => {
         setAvatarUrl(url)

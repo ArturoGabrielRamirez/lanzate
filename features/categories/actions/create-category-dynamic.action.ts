@@ -7,7 +7,7 @@ import { CreateCategoryDynamicAction } from "@/features/categories/types"
 
 
 export async function createCategoryDynamicAction({ storeId, categoryName }: CreateCategoryDynamicAction) {
-    const { error, message, payload: category } = await insertCategory({
+    const { hasError, message, payload: category } = await insertCategory({
         storeId, payload: {
             name: categoryName,
             sort_order: 999, // Colocar al final
@@ -17,7 +17,7 @@ export async function createCategoryDynamicAction({ storeId, categoryName }: Cre
         }
     })
 
-    if (error) {
+    if (hasError) {
         return {
             payload: null,
             error: true,

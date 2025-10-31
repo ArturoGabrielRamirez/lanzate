@@ -1,4 +1,4 @@
-import { MAX_FILE_SIZE, ALLOWED_IMAGE_TYPES, UPLOAD_TYPES, type UploadType } from '../../types/media'
+import { MAX_FILE_SIZE, ALLOWED_IMAGE_TYPES, UPLOAD_TYPES, type UploadType } from '@/features/global/types/media'
 
 export class ValidationError extends Error {
     constructor(message: string, public statusCode: number = 400) {

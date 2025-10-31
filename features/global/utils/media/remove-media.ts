@@ -1,4 +1,4 @@
-import { MediaType } from "@/features/shared/types"
+import { MediaType } from "@/features/global/types/media"
 
 export async function removeMedia(
   type: MediaType,

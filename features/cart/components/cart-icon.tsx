@@ -5,8 +5,8 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 
 import { useCart } from "@/features/cart/components"
-import { Badge } from "@/features/shadcn/components/ui/badge"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 
 function CartIcon() {
 

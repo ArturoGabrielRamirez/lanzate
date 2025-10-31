@@ -53,7 +53,7 @@ function CalculateChangeButton({ cartTotal, disabled = false, className }: Calcu
   const handleCalculateChange = async (data: ChangeFormData) => {
     // Esta función no hace nada real, solo simula el cálculo
     // En una implementación real, podría guardar el cambio en algún estado global
-    return { error: false, payload: data, message: 'Cambio calculado correctamente' }
+    return { hasError: false, payload: data, message: 'Cambio calculado correctamente' }
   }
 
   return (

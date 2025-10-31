@@ -1,7 +1,7 @@
 import { Loader2 } from 'lucide-react'
 
+import { CanvasEditorProps } from '@/features/global/types/media'
 import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
-import { CanvasEditorProps } from '@/features/shared/types'
 
 export function CanvasEditor({
     canvasRef,

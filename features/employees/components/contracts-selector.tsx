@@ -42,7 +42,7 @@ function ContractsSelector({ storeId, selectedContractId, onContractSelect, empl
         }
 
         loadContracts()
-    }, [storeId])
+    }, [storeId, contracts])
 
     if (loading) {
         return (
@@ -102,7 +102,7 @@ function ContractsSelector({ storeId, selectedContractId, onContractSelect, empl
         }
     }
 
-    const formatDate = (dateString: string) => {
+    const formatDate = (dateString: Date) => {
         return new Date(dateString).toLocaleDateString('es-ES', {
             year: 'numeric',
             month: 'short',
@@ -138,7 +138,7 @@ function ContractsSelector({ storeId, selectedContractId, onContractSelect, empl
                     <CardContent className="p-0">
                         <div className="flex items-center justify-between">
                             <div className="text-xs text-muted-foreground">
-                                Creado: {formatDate(contract.created_at as string)}
+                                Creado: {formatDate(contract.created_at)}
                             </div>
                             <div className="flex gap-1">
                                 <Button

@@ -6,16 +6,22 @@ import { formatSuccessResponse } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 import { createServerSideClient } from "@/utils/supabase/server"
 
+// ✅ Define el tipo del payload
+type InsertContractPayload = {
+    title: string
+    comments?: string | null
+    file: File[]
+}
 
-export async function insertContractData(payload: any, storeId: number, userId: number) {
-
-    /* const client = new PrismaClient() */
+export async function insertContractData(
+    payload: InsertContractPayload, 
+    storeId: number, 
+    userId: number
+) {
     const supabase = createServerSideClient()
-
 
     // Usar transacción para asegurar consistencia
     const contract = await prisma.$transaction(async (tx) => {
-
         const store = await tx.store.findUnique({
             where: {
                 id: storeId
@@ -87,4 +93,4 @@ export async function insertContractData(payload: any, storeId: number, userId: 
     })
 
     return formatSuccessResponse("Contract created successfully", contract)
-} 
+}

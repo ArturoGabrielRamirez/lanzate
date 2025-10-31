@@ -1,12 +1,13 @@
 "use client"
 
+import Image from "next/image"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
 import { Card, CardAction, CardContent } from "@/features/shadcn/components/ui/card"
 /* import { Title } from "@/features/layout/components" */
-import { getStoreHeaderBySlugAction, updateStoreBannerAction, updateStoreLogoAction } from "@/features/stores/actions"
-import { StoreBannerEditor, StoreLogoEditor } from "@/features/stores/components"
+import { getStoreHeaderBySlugAction/* , updateStoreBannerAction */, updateStoreLogoAction } from "@/features/stores/actions"
+import { /* StoreBannerEditor, */ StoreLogoEditor } from "@/features/stores/components"
 import { StoreHeaderProps, StoreHeaderData } from "@/features/stores/types"
 
 function StoreHeader({ slug }: StoreHeaderProps) {
@@ -62,7 +63,7 @@ function StoreHeader({ slug }: StoreHeaderProps) {
         }
     }
 
-    const handleBannerUpdate = async (newBannerUrl: string | null) => {
+    /* const handleBannerUpdate = async (newBannerUrl: string | null) => {
         if (store) {
             if (!store.id) {
                 toast.error('Missing store id')
@@ -90,7 +91,7 @@ function StoreHeader({ slug }: StoreHeaderProps) {
             }
         }
     }
-
+ */
     if (loading) {
         return <div>Loading store header...</div>
     }
@@ -122,14 +123,14 @@ function StoreHeader({ slug }: StoreHeaderProps) {
             /> */}
             <section className="items-center gap-4 flex mb-2 md:mb-0">
                 <Card className="w-full relative overflow-hidden group/store-banner">
-                    <img
+                    <Image
                         src={store.banner || `https://api.dicebear.com/9.x/shapes/svg?seed=${store.name}&backgroundColor=transparent`}
                         alt="Store banner"
                         className="w-full h-40 object-cover absolute top-0 left-0 brightness-[30%]"
                     />
                     <CardContent className="flex items-center gap-4 w-full z-10">
                         <div className="relative">
-                            <img
+                            <Image
 
                                 src={store.logo || `https://api.dicebear.com/9.x/initials/svg?seed=${store.name}`}
                                 alt="Store logo"
@@ -153,11 +154,11 @@ function StoreHeader({ slug }: StoreHeaderProps) {
                             </p>
                         </div>
                         <CardAction className="group-hover/store-banner:opacity-100 opacity-0 transition-opacity duration-300">
-                            <StoreBannerEditor
+                           {/*  <StoreBannerEditor
                                 currentBanner={store.banner}
                                 storeName={store.name}
                                 onBannerUpdate={handleBannerUpdate}
-                            />
+                            /> */}
                         </CardAction>
                     </CardContent>
                 </Card>

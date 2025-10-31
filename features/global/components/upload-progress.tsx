@@ -1,9 +1,11 @@
 'use client'
+
+import { X, Check, FileImage } from 'lucide-react'
+
+import { UploadProgressProps } from '@/features/global/types/media'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Progress } from '@/features/shadcn/components/ui/progress'
-import { X, Check, FileImage } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { UploadProgressProps } from '../types'
 
 export function UploadProgress({
   progress,

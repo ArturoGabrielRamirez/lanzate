@@ -1,14 +1,16 @@
 'use client'
 
-import { useState, useRef, useCallback, useEffect } from 'react'
-import { Button } from '@/features/shadcn/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/features/shadcn/components/ui/dialog'
 import { Check, X, Loader2, ZoomIn, ZoomOut, Minimize2, Maximize2, Lock, Unlock } from 'lucide-react'
+import Image from 'next/image'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import ReactCrop, { Crop, PixelCrop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
+
+import { ImageCropperProps } from '@/features/global/types/media'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/features/shadcn/components/ui/dialog'
 import { Slider } from '@/features/shadcn/components/ui/slider'
 /* import { Label } from '@/components/ui/label' */
-import { ImageCropperProps } from '../types'
 
 export function ImageCropper({
   isOpen,
@@ -27,7 +29,7 @@ export function ImageCropper({
   const [zoom, setZoom] = useState(100)
   const [aspectLocked, setAspectLocked] = useState(true)
   const [cropMode, setCropMode] = useState<'normal' | 'maximized'>('normal')
-  const [imgDimensions, setImgDimensions] = useState<{ width: number; height: number }>()
+  const [/* imgDimensions */, setImgDimensions] = useState<{ width: number; height: number }>()
   const imgRef = useRef<HTMLImageElement>(null)
   const previewCanvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -56,16 +58,16 @@ export function ImageCropper({
         URL.revokeObjectURL(previewUrl)
       }
     }
-  }, [isOpen, imageFile])
+  }, [isOpen, imageFile, previewUrl])
 
   // Inicializar crop cuando la imagen se carga
   const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const { width, height, naturalWidth, naturalHeight } = e.currentTarget
+    const { /* width, height, */ naturalWidth, naturalHeight } = e.currentTarget
     setImgDimensions({ width: naturalWidth, height: naturalHeight })
 
     // Calcular crop inicial según el tipo de imagen
     let cropSize: number
-    
+
     if (aspectRatio === 1) {
       // Avatar: más grande y cuadrado (65% del área)
       cropSize = 65
@@ -91,8 +93,20 @@ export function ImageCropper({
     setCrop(initialCrop)
   }
 
+  const handleClose = useCallback(() => {
+    onClose()
+    setPreviewUrl(null)
+    setCrop(undefined)
+    setCompletedCrop(undefined)
+    setZoom(100)
+    setCropMode('normal')
+    setImgDimensions(undefined)
+  }, [onClose])
+
   const cropImage = useCallback(async () => {
     if (!imgRef.current || !previewCanvasRef.current || !completedCrop) return
+
+
 
     setIsProcessing(true)
     try {
@@ -105,10 +119,10 @@ export function ImageCropper({
       const scaleY = image.naturalHeight / image.height
 
       // Dimensiones del crop en píxeles naturales
-      let sourceWidth = completedCrop.width * scaleX
-      let sourceHeight = completedCrop.height * scaleY
-      let sourceX = completedCrop.x * scaleX
-      let sourceY = completedCrop.y * scaleY
+      const sourceWidth = completedCrop.width * scaleX
+      const sourceHeight = completedCrop.height * scaleY
+      const sourceX = completedCrop.x * scaleX
+      const sourceY = completedCrop.y * scaleY
 
       // Aplicar límites máximos manteniendo aspect ratio
       let finalWidth = sourceWidth
@@ -168,16 +182,16 @@ export function ImageCropper({
       console.error('Error al recortar imagen:', error)
       setIsProcessing(false)
     }
-  }, [completedCrop, maxWidth, maxHeight, quality, onCropComplete])
+  }, [completedCrop, maxWidth, maxHeight, quality, onCropComplete, handleClose])
 
   const handleResetCrop = () => {
     if (!imgRef.current) return
-    
+
     setCropMode('normal')
-    
+
     // Calcular tamaño según el tipo
     let cropSize: number
-    
+
     if (aspectRatio === 1) {
       cropSize = 65 // Avatar: más grande y cuadrado
     } else if (aspectRatio === 16 / 9) {
@@ -219,25 +233,16 @@ export function ImageCropper({
     setAspectLocked(!aspectLocked)
   }
 
-  const handleClose = () => {
-    onClose()
-    setPreviewUrl(null)
-    setCrop(undefined)
-    setCompletedCrop(undefined)
-    setZoom(100)
-    setCropMode('normal')
-    setImgDimensions(undefined)
-  }
 
   if (!isOpen || !imageFile) {
     return null
   }
 
-  const cropTitle = aspectRatio === 1 
-    ? 'Avatar (1:1)' 
-    : aspectRatio === 16 / 9 
-    ? 'Banner (16:9)' 
-    : `Custom (${aspectRatio.toFixed(2)}:1)`
+  const cropTitle = aspectRatio === 1
+    ? 'Avatar (1:1)'
+    : aspectRatio === 16 / 9
+      ? 'Banner (16:9)'
+      : `Custom (${aspectRatio.toFixed(2)}:1)`
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
@@ -333,7 +338,7 @@ export function ImageCropper({
           {/* Área de recorte */}
           <div className="flex items-center justify-center overflow-auto bg-muted/20 rounded-lg p-4 min-h-[400px]">
             {previewUrl ? (
-              <div style={{ 
+              <div style={{
                 transform: `scale(${zoom / 100})`,
                 transformOrigin: 'center',
                 transition: 'transform 0.2s ease',
@@ -346,11 +351,11 @@ export function ImageCropper({
                   minWidth={50}
                   minHeight={50}
                 >
-                  <img
+                  <Image
                     ref={imgRef}
                     src={previewUrl}
                     alt="Vista previa"
-                    style={{ 
+                    style={{
                       maxWidth: '800px',
                       maxHeight: '500px',
                       width: 'auto',

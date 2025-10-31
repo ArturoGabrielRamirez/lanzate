@@ -108,4 +108,13 @@ export type InsertOrderProps = {
     status?: OrderStatus
 }
 
-
+export interface CheckFormData {
+    name: string
+    email: string
+    phone: string
+    address?: string
+    city?: string
+    state?: string
+    country?: string
+    zip_code?: string
+}

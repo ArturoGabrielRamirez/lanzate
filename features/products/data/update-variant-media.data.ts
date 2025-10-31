@@ -44,7 +44,7 @@ export async function updateVariantMediaData(variantId: number, data: UpdateVari
         const slug = variantWithProduct.product ? (await prisma.store.findFirst({ where: { id: variantWithProduct.product.store_id }, select: { slug: true } }))?.slug : undefined
         if (slug) revalidatePath(`/stores/${slug}/products/${variantWithProduct.product.id}/${variantId}`, "page")
 
-        return { error: false, message: "Imagen subida y asignada correctamente", payload: updatedVariant }
+        return { hasError: false, message: "Imagen subida y asignada correctamente", payload: updatedVariant }
     }
 
     // Si no hay archivos nuevos pero hay un primary_media_id, actualizar solo eso
@@ -65,7 +65,7 @@ export async function updateVariantMediaData(variantId: number, data: UpdateVari
         }
 
         return {
-            error: false,
+            hasError: false,
             message: "Imagen principal actualizada correctamente",
             payload: variant
         }

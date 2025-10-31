@@ -3,15 +3,15 @@
 import Image from "next/image"
 import { useEffect, useState } from "react"
 
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
 import shareStoreImage from "@/features/dashboard/assets/Ecommerce web page-pana.svg"
 import createStoreImage from "@/features/dashboard/assets/fashion shop-pana.svg"
 import createProductImage from "@/features/dashboard/assets/Niche service marketplace-pana.svg"
 import welcomeImage from "@/features/dashboard/assets/we are open-pana.svg"
 import { WelcomeTutorialWidget } from "@/features/dashboard/components/welcome-tutorial"
 import { Button } from "@/features/shadcn/components/button"
-import { SectionContainer } from "@/features/stores/components"
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
 import { useStep } from "@/features/shadcn/hooks/use-step"
+import { SectionContainer } from "@/features/stores/components"
 
 function WelcomeTutorial() {
 

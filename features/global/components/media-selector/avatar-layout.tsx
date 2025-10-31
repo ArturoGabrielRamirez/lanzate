@@ -1,20 +1,22 @@
 'use client'
 
-import { useState } from 'react'
 import { Upload, Camera, Scissors, Sparkles, AlertCircle } from 'lucide-react'
-import { Card } from '@/features/shadcn/components/ui/card'
-import { Button } from '@/features/shadcn/components/ui/button'
+import { useState } from 'react'
+
+import { EmptyState } from '@/features/global/components/media-selector/empty-state'
+import { MediaGrid } from '@/features/global/components/media-selector/media-grid'
+import { MediaPreview } from '@/features/global/components/media-selector/media-preview'
+import { MediaTabs } from '@/features/global/components/media-selector/media-tabs'
+import { ToolButton } from '@/features/global/components/media-selector/tool-button'
+import { AvatarLayoutProps } from '@/features/global/types/media'
 import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
-import { MediaPreview } from './media-preview'
-import { MediaTabs } from './media-tabs'
-import { MediaGrid } from './media-grid'
-import { EmptyState } from './empty-state'
-import { AvatarLayoutProps } from '../types'
-import { ToolButton } from '.'
+import { Button } from '@/features/shadcn/components/ui/button'
+import { Card } from '@/features/shadcn/components/ui/card'
+
 
 export function AvatarLayout({
     previewUrl,
-    showUploadButton,
+    /*     showUploadButton, */ //TODO: ver si se sigue necesitando esto y agregar a index todos los media que vienen de la misma ruta.
     uploadLimitReached,
     isActionDisabled,
     uploadsCount,
@@ -123,8 +125,8 @@ export function AvatarLayout({
                                 <MediaGrid
                                     items={myFiles}
                                     type="avatar"
-                                    onSelect={(url) => mediaUpload.usePreset(url)}
-                                    onDelete={(url) => mediaUpload.uploadHistory.removeUpload(url)}
+                                    onSelect={(url: string) => mediaUpload.usePreset(url)}
+                                    onDelete={(url: string) => mediaUpload.uploadHistory.removeUpload(url)}
                                     selectedUrl={previewUrl}
                                 />
                             )
@@ -156,7 +158,7 @@ export function AvatarLayout({
                                         <MediaGrid
                                             items={allOptions}
                                             type="avatar"
-                                            onSelect={(url) => mediaUpload.usePreset(url)}
+                                            onSelect={(url: string) => mediaUpload.usePreset(url)}
                                             selectedUrl={previewUrl}
                                         />
                                     </div>

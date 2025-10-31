@@ -2,9 +2,9 @@
 
 import { useState, useCallback, useRef } from 'react'
 import { toast } from 'sonner'
-import type { UploadMethod, UseFileUploadProps } from '../types'
-import { updateMediaPresetAction } from '../../actions/media/update-media-preset-action'
 
+import { updateMediaPresetAction } from '@/features/global/actions/media/update-media-preset-action'
+import type { UploadMethod, UseFileUploadProps } from '@/features/global/types/media'
 
 export function useFileUpload({ type, onSuccess, onError }: UseFileUploadProps) {
   const [isUploading, setIsUploading] = useState(false)
@@ -88,7 +88,7 @@ export function useFileUpload({ type, onSuccess, onError }: UseFileUploadProps) 
 
         setUploadProgress(70) // Procesando respuesta
 
-        if (result.error) {
+        if (result.hasError) {
           throw new Error(result.message)
         }
 
