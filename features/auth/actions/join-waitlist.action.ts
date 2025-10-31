@@ -1,17 +1,16 @@
 "use server"
 
+import { joinWaitlistData } from "@/features/auth/data"
 import { JoinWaitlistFormPayload } from "@/features/auth/types"
-import { actionWrapper } from "@/features/global/utils"
+import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 
 export async function joinWaitlistAction(formData: JoinWaitlistFormPayload) {
     return actionWrapper(async () => {
 
-        console.log(formData)
+        const { hasError, message, payload } = await joinWaitlistData({ email: formData.email })
 
-        return {
-            hasError: false,
-            message: "Joined waitlist successfully",
-            payload: null
-        }
+        if (hasError) throw new Error(message)
+
+        return formatSuccessResponse(message, payload)
     })
 }
