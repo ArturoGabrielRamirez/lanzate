@@ -6,6 +6,7 @@ import { getTranslations } from 'next-intl/server'
 import loginImage from '@/features/auth/assets/Tablet login-pana.svg'
 import { LoginForm, ResetPasswordLink, LoginErrorDisplay, SocialLoginButtons, JoinWaitlistAlert } from '@/features/auth/components'
 import { LoginPageProps } from '@/features/auth/types'
+import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
 
 export const metadata: Metadata = {
@@ -20,10 +21,13 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 
     return (
         <section className="md:min-h-dvh relative pt-17 flex flex-col gap-10">
-            <div className="container mx-auto p-4">
+            <div className='brightness-95 dark:brightness-60 absolute inset-0'>
+                <BackgroundPattern />
+            </div>
+            <div className="container mx-auto p-4 z-20 relative">
                 <JoinWaitlistAlert />
             </div>
-            <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 xl:[row-gap:0] justify-center items-center md:pb-12 lg:pb-20">
+            <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 xl:[row-gap:0] justify-center items-center md:pb-12 lg:pb-20 z-20 relative">
                 <div className='w-full flex flex-col gap-8 lg:max-w-md md:justify-self-end'>
                     <LoginErrorDisplay
                         error={params.error}
