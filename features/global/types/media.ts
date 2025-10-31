@@ -396,8 +396,8 @@ export interface ActionButtonsProps {
   canvasInitialized: boolean
   imageFile: File | null
   onClose: () => void
-  onRemoveBackground: () => void
-  onConfirm: () => void
+  onRemoveBackground: () => Promise<void>
+  onConfirm: () => Promise<void>
 }
 
 export interface CanvasEditorReturn {
