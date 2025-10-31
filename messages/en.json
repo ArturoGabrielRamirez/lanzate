@@ -1644,6 +1644,9 @@
                 "title": "Simple, transparent pricing for every business",
                 "description": "Choose the plan that fits your business needs. Start free and scale as you grow with our flexible pricing options designed for businesses of all sizes."
             },
+            "actions": {
+                "button": "Get started"
+            },
             "plans": {
                 "starter": {
                     "name": "Starter",

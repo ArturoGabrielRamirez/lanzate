@@ -1639,6 +1639,9 @@
                 "title": "Precios simples y transparentes para cada negocio",
                 "description": "Elegí el plan que se adapte a las necesidades de tu negocio. Comenzá gratis y escalá a medida que creces con nuestras opciones de precios flexibles diseñadas para negocios de todos los tamaños."
             },
+            "actions": {
+                "button": "Comenzar"
+            },
             "plans": {
                 "starter": {
                     "name": "Starter",
