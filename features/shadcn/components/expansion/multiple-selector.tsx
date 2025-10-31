@@ -315,8 +315,8 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
       };
 
       void exec();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debouncedSearchTerm, groupBy, open, triggerSearchOnFocus]);
+ 
+    }, [debouncedSearchTerm, groupBy, open, triggerSearchOnFocus, onSearchSync]);//TODO: onSearchSync noe staba, revisar si es necesario.
 
     useEffect(() => {
       /** async search */
@@ -341,8 +341,8 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
       };
 
       void exec();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debouncedSearchTerm, groupBy, open, triggerSearchOnFocus]);
+    
+    }, [debouncedSearchTerm, groupBy, open, triggerSearchOnFocus, onSearch]);//TODO:onSearch no estaba, revisar si es necesario
 
     function CreatableItem() {
       if (!creatable) return undefined;

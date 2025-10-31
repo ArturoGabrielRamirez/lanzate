@@ -138,7 +138,7 @@ export async function insertUnifiedProductData(args: UnifiedArgs) {
                 data: {
                     product_id: product.id,
                     // Datos heredados del producto
-                    name: product.name + (v.size ? ` - ${v.size}` : '') + (v.measure ? ` - ${v.measure}` : '') + (v.color?.name ? ` - ${v.color.name}` : ''),
+                   /*  name: product.name + (v.size ? ` - ${v.size}` : '') + (v.measure ? ` - ${v.measure}` : '') + (v.color?.name ? ` - ${v.color.name}` : ''), */
                     description: product.description,
                     price: product.price,
                     barcode: product.barcode,
@@ -155,8 +155,8 @@ export async function insertUnifiedProductData(args: UnifiedArgs) {
                     ...(product.diameter ? { diameter: product.diameter, diameter_unit: product.diameter_unit } : {}),
                     ...(product.weight ? { weight: product.weight, weight_unit: product.weight_unit } : {}),
                     // Detalles específicos de la variante
-                    size: v.size ?? null,
-                    measure: v.measure ?? null,
+                  /*   size: v.size ?? null,
+                    measure: v.measure ?? null, */
                     color_id: colorId,
                     // Precios adicionales
                     compare_price: null,
