@@ -4,7 +4,7 @@
  * @param value - The form values object containing card fields
  * @returns true if validation passes, error message if fails
  */
-export function validateCardInfo(paymentMethod: string, value: any): boolean | string {
+export function validateCardInfo(paymentMethod: string, value: Record<string, unknown>): string | true {
     if (paymentMethod === 'credit-debit' || paymentMethod === 'CREDIT_CARD' || paymentMethod === 'DEBIT_CARD') {
         const cardFields = ['cardNumber', 'cardHolder', 'expiryDate', 'cvv']
         const missingFields = cardFields.filter(field => !value[field])
