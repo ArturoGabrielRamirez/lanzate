@@ -2,7 +2,8 @@
 
 import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 
-import { getUserInfo } from '@/features/layout/actions'
+
+import { getUserInfo } from '@/features/global/actions'
 import { CurrentUser, UserContextType, UserProviderProps } from '@/features/profile/types'
 import { revalidateCache } from '@/features/profile/utils/cache'
 
