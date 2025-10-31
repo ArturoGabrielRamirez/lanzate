@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import { ObjectSchema } from "yup"
 import { Resolver, FieldValues } from "react-hook-form"
+import { ObjectSchema } from "yup"
 
 export function yupResolverFlexible<P extends FieldValues>(
     schema?: ObjectSchema<P>

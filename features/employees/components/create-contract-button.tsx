@@ -9,7 +9,7 @@ import { checkStorageBucketData } from "@/features/employees/data/check-storage-
 import { getContractsData } from "@/features/employees/data/get-contracts.data"
 import { insertContractData } from "@/features/employees/data/insert-contract.data"
 import { contractCreateSchema } from "@/features/employees/schemas/employee-schema"
-import { Contract, CreateContractButtonProps } from "@/features/employees/types"
+import { Contract, CreateContractButtonProps, InsertContractPayload } from "@/features/employees/types"
 import { yupResolverFlexible } from "@/features/employees/types/yup-resolver-flexible"
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
@@ -66,51 +66,52 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
 
 
     const handleCreateContract = async (data: FormData) => {
-        try {
-            // Validar que se haya subido un archivo
-            if (files.length === 0) {
-                return {
-                    hasError: true,
-                    message: "Debes subir un archivo PDF",
-                    payload: null
-                }
-            }
-
-            const payload = {
-                ...data,
-                file: files
-            }
-
-            const result = await insertContractData(payload, storeId, userId)
-
-            // Si hay error, retornarlo
-            if (result.hasError) {
-                return {
-                    hasError: true,
-                    message: result.message,
-                    payload: null
-                }
-            }
-
-            // Limpiar archivos y recargar contratos
-            setFiles([])
-            await loadContracts()
-
-            return {
-                hasError: false,
-                message: "Contrato creado exitosamente",
-                payload: result.payload
-            }
-        } catch (error) {
-            console.error("Error creating contract:", error)
+    try {
+        // Validar que se haya subido un archivo
+        if (files.length === 0) {
             return {
                 hasError: true,
-                message: error instanceof Error ? error.message : "Error creating contract",
+                message: "Debes subir un archivo PDF",
                 payload: null
             }
         }
-    }
 
+        // ✅ Extraer los valores de FormData correctamente
+        const payload: InsertContractPayload = {
+            title: data.get('title') as string,
+            comments: data.get('comments') as string | null,
+            file: files
+        }
+
+        const result = await insertContractData(payload, storeId, userId)
+
+        // Si hay error, retornarlo
+        if (result.hasError) {
+            return {
+                hasError: true,
+                message: result.message,
+                payload: null
+            }
+        }
+
+        // Limpiar archivos y recargar contratos
+        setFiles([])
+        await loadContracts()
+
+        return {
+            hasError: false,
+            message: "Contrato creado exitosamente",
+            payload: result.payload
+        }
+    } catch (error) {
+        console.error("Error creating contract:", error)
+        return {
+            hasError: true,
+            message: error instanceof Error ? error.message : "Error creating contract",
+            payload: null
+        }
+    }
+}
     const handleOpenChange = (isOpen: boolean) => {
         setOpen(isOpen)
         if (!isOpen) {

@@ -18,7 +18,7 @@ export async function createNewWalkInOrderAction({
 
     return actionWrapper(async () => {
 
-        const { error, message, payload: order } = await insertOrderData({
+        const { hasError, message, payload: order } = await insertOrderData({
             branch_id: branch_id,
             isPaid: isPaid,
             isWalkIn: true,
@@ -33,7 +33,7 @@ export async function createNewWalkInOrderAction({
             status: "COMPLETED"
         })
 
-        if (error) throw new Error(message)
+        if (hasError) throw new Error(message)
 
         return {
             hasError: false,

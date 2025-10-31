@@ -100,7 +100,7 @@ export type UserWithEmployeeStatus = {
         id: number
         role: string
         is_active: boolean
-        hired_at: string
+        hired_at: Date  // ✅ Cambiar de string a Date
     } | null
 }
 
@@ -216,3 +216,9 @@ export type ContractsSelectorProps = {
 export type InferFormValues<T extends AnyObjectSchema> = T extends AnyObjectSchema
     ? ReturnType<T['cast']>
     : never
+
+export type InsertContractPayload = {
+    title: string
+    comments?: string | null
+    file: File[]
+}
