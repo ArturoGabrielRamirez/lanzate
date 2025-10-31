@@ -3,14 +3,14 @@
 import { DollarSign, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
 
-import { Form, InputField } from "@/features/layout/components"
+import { Form } from "@/features/global/components/form/form"
+import InputField from "@/features/global/components/form/input"
 import { updateVariantPriceData } from "@/features/products/data/update-variant-price.data"
 import type { VariantPriceDisplayProps, VariantPriceFormValues } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
-
 
 function VariantPriceDisplay({ variant, productPrice }: VariantPriceDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
@@ -135,7 +135,7 @@ function VariantPriceDisplay({ variant, productPrice }: VariantPriceDisplayProps
                                 </div>
                             )}
                         </div>
-                        
+
                         <div className="space-y-2">
                             <div className="flex items-center gap-2 text-muted-foreground/50">
                                 <DollarSign className="size-4" />

@@ -5,13 +5,13 @@ import { Box, EditIcon, X } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 
-import { Form, InputField } from "@/features/layout/components"
+import { Form } from "@/features/global/components/form/form"
+import InputField from "@/features/global/components/form/input"
 import { editProductSchema } from "@/features/products/schemas/product-schema"
 import type { BasicInfoDisplayProps, BasicInfoFormValues } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
-
 
 function BasicInfoDisplay({ product }: BasicInfoDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)

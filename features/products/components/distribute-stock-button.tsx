@@ -4,8 +4,7 @@ import { Package } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState, useEffect } from "react"
 
-
-import { ButtonWithPopup } from "@/features/layout/components"
+import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
 import { distributeProductStockData } from "@/features/products/data/distribute-product-stock.data"
 import type { DistributeStockButtonProps } from "@/features/products/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"

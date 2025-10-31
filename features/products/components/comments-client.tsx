@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation"
 import { useOptimistic, useState, useTransition } from "react"
 import { toast } from "sonner"
 
-import { Form, InputField } from "@/features/layout/components"
+import { Form } from "@/features/global/components/form/form"
+import InputField from "@/features/global/components/form/input"
 import { addProductCommentAction } from "@/features/products/actions/add-product-comment.action"
 import type { CommentsClientProps, ProductComment } from "@/features/products/types"
 
@@ -24,15 +25,15 @@ function CommentsClient({ productId, user, initialComments }: CommentsClientProp
         console.log("🚀 ~ handleFormAction ~ data:", data)
         if (!user) {
             toast.error("Please login to leave a comment")
-            return { error: true, message: "Login required", payload: null }
+            return { hasError: true, message: "Login required", payload: null }
         }
 
         if (!data.content || data.content.trim().length === 0) {
-            return { error: true, message: "Please enter a comment", payload: null }
+            return { hasError: true, message: "Please enter a comment", payload: null }
         }
 
         if (data.content.trim().length > 500) {
-            return { error: true, message: "Comment cannot exceed 500 characters", payload: null }
+            return { hasError: true, message: "Comment cannot exceed 500 characters", payload: null }
         }
 
         const optimisticComment: ProductComment = {
@@ -72,7 +73,7 @@ function CommentsClient({ productId, user, initialComments }: CommentsClientProp
             console.error("Error adding comment:", error)
             // Revert optimistic update on error
             setComments(comments)
-            return { error: true, message: "Failed to add comment", payload: null }
+            return { hasError: true, message: "Failed to add comment", payload: null }
         }
     }
 

@@ -1,4 +1,4 @@
-import { Category, Color, Product, ProductVariant, StoreCustomization, Store, ProductMedia, ProductVariantStock, Branch, ProductStock } from "@prisma/client";
+import { Category, Color, Product, ProductVariant, StoreCustomization, Store, ProductMedia, /* ProductVariantStock, */ Branch, ProductStock } from "@prisma/client";
 
 // Main product types
 export type GetProductDetailsReturn = {
@@ -368,7 +368,7 @@ export type VariantDimensionsDisplayProps = VariantDisplayBaseProps & {
 }
 
 export type VariantLinkCardProps = {
-    variant: VariantWithMedia & { stocks: ProductVariantStock[]; color: Color; primary_media: ProductMedia }
+    variant: VariantFull  // ✅ Usa el tipo completo que ya está definido
     slug: string
     productId: string | number
     productPrice?: number

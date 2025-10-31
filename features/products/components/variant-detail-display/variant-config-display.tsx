@@ -4,15 +4,14 @@ import { Settings2, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { Form } from "@/features/layout/components"
+import { Form } from "@/features/global/components/form/form"
 import { updateVariantFlagsData } from "@/features/products/data/update-variant-flags.data"
 import type { VariantConfigDisplayProps } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Switch } from "@/features/shadcn/components/ui/switch"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
-
 
 function VariantConfigDisplay({ variant }: VariantConfigDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)

@@ -4,15 +4,13 @@ import { Palette, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { Form } from "@/features/layout/components"
+import { Form } from "@/features/global/components/form/form"
 import { CreateColorInline } from "@/features/products/components/create-color-inline"
 import { updateVariantColorData } from "@/features/products/data/update-variant-color.data"
 import type { ProductColor, VariantColorDisplayProps } from "@/features/products/types"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
-
- 
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip" 
 
 function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
@@ -107,11 +105,11 @@ function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
                             <div className="flex items-center gap-3">
                                 <div
                                     className="size-10 rounded-full border"
-                                    style={{ backgroundColor: variant.color.hex }}
+                             /*        style={{ backgroundColor: variant.color.hex }} */
                                 />
                                 <div>
                                     <p className="font-medium">{variant.color.name}</p>
-                                    <p className="text-sm text-muted-foreground">{variant.color.hex}</p>
+                                    {/* <p className="text-sm text-muted-foreground">{variant.color.hex}</p> */}
                                 </div>
                             </div>
                         ) : (

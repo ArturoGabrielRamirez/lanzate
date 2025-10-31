@@ -5,16 +5,16 @@ import { useEffect, useMemo, useState } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
-import { Form } from "@/features/layout/components"
+import { Form } from "@/features/global/components/form/form"
 import { getBranchesForVariantData } from "@/features/products/data/get-branches-for-variant.data"
 import { updateVariantStocksData } from "@/features/products/data/update-variant-stocks.data"
 import type { VariantStockDisplayProps, VariantStockFormValues } from "@/features/products/types"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/features/shadcn/components/ui/select"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 
 function VariantStockDisplay({ variant }: VariantStockDisplayProps) {

@@ -126,7 +126,7 @@ export type ContractAssignment = {
     id: number
     contract_id: number
     employee_id: number
-    assigned_at: string
+    assigned_at: Date  // ✅ Cambiar de string a Date
     status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' | 'EXPIRED'
     assigned_by: number
     contract?: Contract
@@ -146,7 +146,7 @@ export type ContractResponse = {
     updated_at: Date
     contract?: Contract
     employee?: Employee
-    assignment?: ContractAssignment
+    assignment?: ContractAssignment | null
 }
 
 // Tipos para el botón de crear contrato
@@ -163,7 +163,7 @@ export type ContractsTableProps = {
     storeId: number
 }
 
-// Payload para editar empleado (centralizado) - QUITA EL ANY
+// Payload para editar empleado (centralizado)
 export type EditEmployeePayload = {
     role: EmployeeRole
     position?: string
