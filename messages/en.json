@@ -1004,7 +1004,6 @@
                 "help": "Help",
                 "access": "Access",
                 "moreInfo": "More",
-                "pricing": "Pricing",
                 "auth": {
                     "login": "Login",
                     "signup": "Signup",
@@ -1873,8 +1872,7 @@
                 "forgotPasswordDesc": "Forgot password description",
                 "googleAuth": "Google auth",
                 "dashboard": "Dashboard",
-                "helpDesc": "If you need help, contact us",
-                "pricingDesc": "Know our plans"
+                "helpDesc": "If you need help, contact us"
             }
         }
     },
@@ -1895,8 +1893,8 @@
         },
         "hero": {
             "announcement": {
-                "badge": "Last update",
-                "title": "New cash register added"
+                "badge": "New version",
+                "title": "Beta! We open soon..."
             },
             "slogan": {
                 "prefix": "You",

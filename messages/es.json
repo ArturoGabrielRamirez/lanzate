@@ -864,7 +864,6 @@
                 "help": "Ayuda",
                 "access": "Acceso",
                 "moreInfo": "Más",
-                "pricing": "Precios",
                 "auth": {
                     "login": "Iniciar sesión",
                     "signup": "Registrarse",
@@ -895,8 +894,7 @@
                     "signupDesc": "Crea tu cuenta",
                     "forgotPasswordDesc": "Resetea tu contraseña manualmente",
                     "googleAuthDesc": "Accede con tu cuenta de Google",
-                    "helpDesc": "Si necesitas ayuda, contáctanos",
-                    "pricingDesc": "Conoce nuestros planes"
+                    "helpDesc": "Si necesitas ayuda, contáctanos"
                 }
             },
             "mobileDrawer": {
@@ -1890,8 +1888,8 @@
         },
         "hero": {
             "announcement": {
-                "badge": "Última actualización",
-                "title": "Nueva caja registradora agregada"
+                "badge": "Nueva version",
+                "title": "Beta! Abrimos proximamente..."
             },
             "slogan": {
                 "prefix": "Vos",
