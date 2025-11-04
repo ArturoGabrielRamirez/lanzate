@@ -1004,6 +1004,7 @@
                 "help": "Help",
                 "access": "Access",
                 "moreInfo": "More",
+                "pricing": "Pricing",
                 "auth": {
                     "login": "Login",
                     "signup": "Signup",
@@ -1034,7 +1035,8 @@
                     "signupDesc": "Create your account",
                     "forgotPasswordDesc": "Reset your password manually",
                     "googleAuthDesc": "Access using your Google account",
-                    "helpDesc": "If you need help, contact us"
+                    "helpDesc": "If you need help, contact us",
+                    "pricingDesc": "Know our plans"
                 }
             },
             "mobileDrawer": {
