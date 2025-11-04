@@ -1004,6 +1004,7 @@
                 "help": "Help",
                 "access": "Access",
                 "moreInfo": "More",
+                "pricing": "Pricing",
                 "auth": {
                     "login": "Login",
                     "signup": "Signup",
@@ -1029,7 +1030,7 @@
                     "account": "Account",
                     "accountDesc": "Account description",
                     "aboutDesc": "About description",
-                    "contactDesc": "Contact description",
+                    "contactDesc": "Contact us",
                     "loginDesc": "Access your account",
                     "signupDesc": "Create your account",
                     "forgotPasswordDesc": "Reset your password manually",
@@ -1872,7 +1873,8 @@
                 "forgotPasswordDesc": "Forgot password description",
                 "googleAuth": "Google auth",
                 "dashboard": "Dashboard",
-                "helpDesc": "If you need help, contact us"
+                "helpDesc": "If you need help, contact us",
+                "pricingDesc": "Know our plans"
             }
         }
     },

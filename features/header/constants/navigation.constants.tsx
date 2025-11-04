@@ -26,7 +26,7 @@ const INTEGRATIONS_ITEM = {
 const FAQ_ITEM = {
     label: 'layout.header.navigation.sections.faq',
     description: 'layout.header.navigation.sections.faqDesc',
-    href: '/#pricing',
+    href: '/#faq',
     icon: <HelpCircleIcon className='size-6 lg:size-4 group-hover:text-inherit' />
 }
 
@@ -96,14 +96,14 @@ const ABOUT_ITEM = {
 
 const CONTACT_ITEM = {
     label: 'layout.header.navigation.contact',
-    href: '/help',
+    href: '/#contact',
     description: 'layout.header.navigation.sections.contactDesc',
     icon: <PhoneIcon className='size-6 lg:size-4 group-hover:text-inherit' />
 }
 
 const HELP_ITEM = {
     label: 'layout.header.navigation.help',
-    href: '/help',
+    href: '/#help',
     description: 'layout.header.navigation.sections.helpDesc',
     icon: <CircleQuestionMarkIcon className='size-6 lg:size-4 group-hover:text-inherit' />
 }
@@ -111,7 +111,7 @@ const HELP_ITEM = {
 
 const PRICING_ITEM = {
     label: 'layout.header.navigation.pricing', 
-    href: '/pricing',
+    href: '/#pricing',
     description: 'layout.header.navigation.sections.pricingDesc',
     icon: <DollarSignIcon className='size-6 lg:size-4 group-hover:text-inherit' />
 }

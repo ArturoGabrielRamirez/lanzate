@@ -8,7 +8,7 @@ async function PricingSection() {
     const t = await getTranslations("landing.pricing");
 
     return (
-        <section className="relative py-17 flex snap-start flex-col items-center font-geist">
+        <section className="relative py-17 flex snap-start flex-col items-center font-geist" id="pricing">
             <div className="container grid items-center gap-12 lg:grid-cols-[1fr_3fr] mx-auto px-4 relative h-fit">
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />

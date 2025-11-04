@@ -864,6 +864,7 @@
                 "help": "Ayuda",
                 "access": "Acceso",
                 "moreInfo": "Más",
+                "pricing": "Precios",
                 "auth": {
                     "login": "Iniciar sesión",
                     "signup": "Registrarse",
@@ -889,12 +890,13 @@
                     "account": "Cuenta",
                     "accountDesc": "Descripción de la cuenta",
                     "aboutDesc": "Descripción de la sección de acerca de",
-                    "contactDesc": "Descripción de la sección de contacto",
+                    "contactDesc": "Contactanos",
                     "loginDesc": "Ingresa a tu cuenta",
                     "signupDesc": "Crea tu cuenta",
                     "forgotPasswordDesc": "Resetea tu contraseña manualmente",
                     "googleAuthDesc": "Accede con tu cuenta de Google",
-                    "helpDesc": "Si necesitas ayuda, contáctanos"
+                    "helpDesc": "Si necesitas ayuda, contáctanos",
+                    "pricingDesc": "Conoce nuestros planes"
                 }
             },
             "mobileDrawer": {
