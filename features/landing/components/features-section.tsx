@@ -22,7 +22,7 @@ async function FeaturesSection() {
                 </div>
                 <div className="relative h-fit">
 
-                    <div className="z-10 absolute -inset-24 brightness-90 dark:brightness-100">
+                    <div className="z-10 absolute inset-0 md:-inset-24 brightness-90 dark:brightness-100">
                     </div>
 
                     <div className="relative z-20">

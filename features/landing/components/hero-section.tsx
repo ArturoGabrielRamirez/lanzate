@@ -54,7 +54,7 @@ async function HeroSection() {
                     <HeroDescription className="hidden md:flex" />
                 </div>
                 <HeroDescription className="flex md:hidden" />
-                <div className="relative w-md xl:w-xl h-full flex items-end">
+                <div className="relative w-full md:w-md xl:w-xl h-full flex items-end">
                     <Image
                         src={heroImage}
                         alt="Hero Image"
