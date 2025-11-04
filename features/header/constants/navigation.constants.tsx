@@ -118,7 +118,7 @@ export const NAV_MENU_ITEMS_GUEST: NavMenuItem[] = [
                 label: 'layout.header.navigation.sections.hero',
                 href: `/`,
                 description: 'layout.header.navigation.sections.heroDesc',
-                icon: <HomeIcon className='size-6 text-inherit' />
+                icon: <HomeIcon className='size-4 text-inherit' />
             },
             HOW_IT_WORKS_ITEM,
             INTEGRATIONS_ITEM,
