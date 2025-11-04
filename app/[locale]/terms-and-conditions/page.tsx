@@ -49,7 +49,7 @@ function TermsAndConditions() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-8">
-                    <div className="sticky top-20 self-start mb-8 lg:mb-0">
+                    <div className="md:sticky md:top-20 self-start mb-8 lg:mb-0">
                         <h2 className="text-2xl font-bold mb-6">ÍNDICE</h2>
                         <div className="space-y-2 text-sm">
                             <div><a href="#servicios" className="text-blue-600 hover:text-blue-800 underline">1. NUESTROS SERVICIOS</a></div>
