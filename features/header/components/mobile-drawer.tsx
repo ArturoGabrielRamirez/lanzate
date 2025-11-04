@@ -51,7 +51,7 @@ async function MobileDrawer() {
                     <DropDrawerGroup>
                         <DropDrawerLabel>{t('menu')}</DropDrawerLabel>
                         {DRAWER_MENU_ITEMS_GUEST.map((item) => (
-                            <DropDrawerItem key={item.href} icon={item.icon}>
+                            <DropDrawerItem key={item.href} icon={item.icon} asChild>
                                 <Link href={item.href} className="w-full">{tNav(item.label)}</Link>
                             </DropDrawerItem>
                         ))}
