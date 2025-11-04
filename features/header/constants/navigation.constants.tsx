@@ -1,4 +1,4 @@
-import { CogIcon, HelpCircleIcon, HomeIcon, InfoIcon, KeyRoundIcon, LayoutDashboard, LogInIcon, PhoneIcon, PlayCircleIcon, PlusCircle, Store, UserIcon, UserPlusIcon, CircleQuestionMarkIcon } from 'lucide-react';
+import { CogIcon, HelpCircleIcon, HomeIcon, InfoIcon, KeyRoundIcon, LayoutDashboard, LogInIcon, PhoneIcon, PlayCircleIcon, PlusCircle, Store, UserIcon, UserPlusIcon, CircleQuestionMarkIcon, DollarSignIcon } from 'lucide-react';
 
 import { NavMenuItem, NavSubItem } from '@/features/header/types';
 
@@ -106,9 +106,15 @@ const HELP_ITEM = {
     href: '/help',
     description: 'layout.header.navigation.sections.helpDesc',
     icon: <CircleQuestionMarkIcon className='size-6 lg:size-4 group-hover:text-inherit' />
-
 }
 
+
+const PRICING_ITEM = {
+    label: 'layout.header.navigation.pricing', 
+    href: '/pricing',
+    description: 'layout.header.navigation.sections.pricingDesc',
+    icon: <DollarSignIcon className='size-6 lg:size-4 group-hover:text-inherit' />
+}
 
 export const NAV_MENU_ITEMS_GUEST: NavMenuItem[] = [
     {
@@ -123,6 +129,8 @@ export const NAV_MENU_ITEMS_GUEST: NavMenuItem[] = [
             HOW_IT_WORKS_ITEM,
             INTEGRATIONS_ITEM,
             FAQ_ITEM,
+            CONTACT_ITEM,
+            PRICING_ITEM,
         ],
     },
     {

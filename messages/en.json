@@ -1030,10 +1030,10 @@
                     "accountDesc": "Account description",
                     "aboutDesc": "About description",
                     "contactDesc": "Contact description",
-                    "loginDesc": "Login description",
-                    "signupDesc": "Signup description",
-                    "forgotPasswordDesc": "Forgot password description",
-                    "googleAuthDesc": "Google auth description",
+                    "loginDesc": "Access your account",
+                    "signupDesc": "Create your account",
+                    "forgotPasswordDesc": "Reset your password manually",
+                    "googleAuthDesc": "Access using your Google account",
                     "helpDesc": "If you need help, contact us"
                 }
             },
