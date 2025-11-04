@@ -41,9 +41,9 @@ export default function RootLayout({ children }: WithChildren) {
     return (
         <html suppressHydrationWarning>
             <body className={cn("min-h-dvh flex flex-col overflow-x-hidden relative bg-gradient-to-br from-background to-primary/20", geist.variable, quattrocento.variable, oswald.variable)}>
-                <div vaul-drawer-wrapper="" data-vaul-drawer-wrapper="">
+                {/* <div vaul-drawer-wrapper="" data-vaul-drawer-wrapper=""> */}
                     {children}
-                </div>
+                {/* </div> */}
             </body>
         </html>
     )

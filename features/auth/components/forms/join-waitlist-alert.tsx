@@ -16,12 +16,12 @@ async function JoinWaitlistAlert() {
                     {t('title')}
                 </h3>
             </AlertTitle>
-            <AlertDescription className='gap-0 flex justify-between'>
+            <AlertDescription className='gap-2 flex justify-between'>
                 <div>
                     <p>{t('description1')}</p>
-                    <p>{t('description2')}</p>
+                    <p className='hidden md:block'>{t('description2')}</p>
                 </div>
-                <AnimatedShinyButton asChild>
+                <AnimatedShinyButton asChild className='shrink-0 self-end'>
                     <Link href="/waitlist">
                         {t('button')}
                     </Link>
