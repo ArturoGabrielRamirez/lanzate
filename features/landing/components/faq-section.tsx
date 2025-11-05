@@ -2,7 +2,7 @@ import { CircleHelp } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
-import { BackgroundPattern, SmallMutedText } from "@/features/landing/components";
+import { BackgroundPattern, SectionSubtitle, SmallMutedText } from "@/features/landing/components";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion";
 import { Card, CardContent, CardHeader } from "@/features/shadcn/components/ui/card";
 
@@ -20,9 +20,9 @@ async function FaqSection() {
                         <LandingSectionIconTitle icon={<CircleHelp />}>
                             {t('header.label')}
                         </LandingSectionIconTitle>
-                        <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
+                        <SectionSubtitle>
                             {t('header.title')}
-                        </h2>
+                        </SectionSubtitle>
                         <LandingText>
                             {t('header.description')}
                         </LandingText>

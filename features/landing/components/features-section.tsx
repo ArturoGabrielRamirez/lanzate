@@ -8,7 +8,7 @@ import barcodeImage from "@/features/landing/assets/Barcode-pana.svg"
 import devicesImage from "@/features/landing/assets/Devices-pana.svg"
 import domainImage from "@/features/landing/assets/Domain names-pana.svg"
 import speedImage from "@/features/landing/assets/Speed test-pana.svg"
-import { BackgroundPattern, SmallMutedText } from "@/features/landing/components"
+import { BackgroundPattern, SectionSubtitle, SmallMutedText } from "@/features/landing/components"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { Link } from '@/i18n/naviation'
 
@@ -19,15 +19,10 @@ async function FeaturesSection() {
     return (
         <section className="relative pt-17 md:py-17 flex snap-start" id="how-it-works">
             <div className="container grid items-center gap-12 lg:grid-cols-[3fr_2fr] mx-auto px-4 relative h-fit">
-
                 <div className='dark:brightness-75 absolute inset-0'>
                     <BackgroundPattern />
                 </div>
                 <div className="relative h-fit">
-
-                    <div className="z-10 absolute inset-0 md:-inset-24 brightness-90 dark:brightness-100">
-                    </div>
-
                     <div className="relative z-20">
                         <LandingSectionIconTitle icon={<Rocket />}>
                             {t('header.label')}
@@ -145,17 +140,15 @@ async function FeaturesSection() {
                             </Card>
                         </div>
                     </div>
-
                 </div>
-
                 <div className="space-y-8 z-20">
                     <div className='text-center text-balance md:text-left'>
-                        <div className="mb-2 text-sm font-medium text-primary">
+                        <p className="mb-2 text-sm font-medium text-primary">
                             {t('about.label')}
-                        </div>
-                        <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
+                        </p>
+                        <SectionSubtitle>
                             {t('about.title')}
-                        </h2>
+                        </SectionSubtitle>
                         <LandingText>
                             {t('about.description.paragraph1')}
                         </LandingText>
@@ -172,19 +165,19 @@ async function FeaturesSection() {
 
                     <div className="grid grid-cols-2 gap-4 border-t pt-8 md:grid-cols-4">
                         <div className='text-center md:text-left'>
-                            <div className="text-2xl font-bold font-oswald">{t('about.stats.founded.value')}</div>
+                            <SectionSubtitle>{t('about.stats.founded.value')}</SectionSubtitle>
                             <LandingText>{t('about.stats.founded.label')}</LandingText>
                         </div>
                         <div className='text-center md:text-left'>
-                            <div className="text-2xl font-bold font-oswald">{t('about.stats.users.value')}</div>
+                            <SectionSubtitle>{t('about.stats.users.value')}</SectionSubtitle>
                             <LandingText>{t('about.stats.users.label')}</LandingText>
                         </div>
                         <div className='text-center md:text-left'>
-                            <div className="text-2xl font-bold font-oswald">{t('about.stats.countries.value')}</div>
+                            <SectionSubtitle>{t('about.stats.countries.value')}</SectionSubtitle>
                             <LandingText>{t('about.stats.countries.label')}</LandingText>
                         </div>
                         <div className='text-center md:text-left'>
-                            <div className="text-2xl font-bold font-oswald">{t('about.stats.sales.value')}</div>
+                            <SectionSubtitle>{t('about.stats.sales.value')}</SectionSubtitle>
                             <LandingText>{t('about.stats.sales.label')}</LandingText>
                         </div>
                     </div>

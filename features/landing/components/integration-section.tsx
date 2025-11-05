@@ -2,7 +2,7 @@ import { Plug } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
-import { BackgroundPattern } from "@/features/landing/components"
+import { BackgroundPattern, SectionSubtitle } from "@/features/landing/components"
 import { MarqueeLogoScroller } from "@/features/shadcn/components/marquee-logo"
 
 async function IntegrationSection() {
@@ -63,9 +63,9 @@ async function IntegrationSection() {
                         <LandingSectionIconTitle icon={<Plug />}>
                             {t('header.label')}
                         </LandingSectionIconTitle>
-                        <h2 className="text-3xl font-bold tracking-tight md:text-4xl font-oswald">
+                        <SectionSubtitle>
                             {t('header.title')}
-                        </h2>
+                        </SectionSubtitle>
                     </div>
                     <LandingText>
                         {t('header.description')}

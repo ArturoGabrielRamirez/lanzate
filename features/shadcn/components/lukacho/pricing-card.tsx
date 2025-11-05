@@ -2,7 +2,7 @@
 import { CheckCircle } from 'lucide-react';
 import React from 'react'
 
-import { SmallMutedText } from '@/features/landing/components';
+import { SectionSubtitle, SmallMutedText } from '@/features/landing/components';
 import { Button } from '@/features/shadcn/components/button';
 import { Link } from '@/i18n/naviation';
 import { cn } from '@/lib/utils'
@@ -45,7 +45,7 @@ export function Price({ children, className }: { children: React.ReactNode; clas
     return (
         <div className={cn('mt-10 mb-7', className)}>
             <div className={'flex items-end gap-1 p-0'}>
-                <p className={'text-4xl font-bold block'}>{children}</p>
+                <SectionSubtitle>{children}</SectionSubtitle>
             </div>
         </div>
     )
