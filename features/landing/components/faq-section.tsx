@@ -9,14 +9,14 @@ async function FaqSection() {
     const t = await getTranslations("landing.faq");
 
     return (
-        <section className="relative py-17 flex flex-col snap-start" id="faq">
+        <section className="relative pt-17 md:py-17 flex flex-col snap-start" id="faq">
             <div className="container mx-auto px-4 relative h-full grow w-full">
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-6 lg:gap-20 z-20 relative">
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-6 lg:gap-20 z-20 relative text-center text-balance md:text-left">
                     <div>
-                        <div className="mb-10 flex items-center gap-2 text-primary">
+                        <div className="mb-10 flex items-center gap-2 text-primary justify-center md:justify-start">
                             <CircleHelp />
                             <h2 className="text-2xl font-bold font-oswald">{t('header.label')}</h2>
                         </div>
@@ -27,7 +27,7 @@ async function FaqSection() {
                             {t('header.description')}
                         </p>
                     </div>
-                    <Card className="mt-20">
+                    <Card className="md:mt-20">
                         <CardHeader>
                             <CardContent>
                                 <Accordion type="single" collapsible defaultValue="item-1">

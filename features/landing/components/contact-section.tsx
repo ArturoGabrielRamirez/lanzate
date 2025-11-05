@@ -11,12 +11,12 @@ async function ContactSection() {
     const t = await getTranslations("landing.contact");
 
     return (
-        <section className="relative py-17 flex snap-start flex-col items-center" id="contact">
+        <section className="relative pt-17 md:py-17 flex snap-start flex-col items-center" id="contact">
             <div className="container mx-auto px-4 relative h-full grow w-full">
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />
                 </div>
-                <div className="mb-10 flex items-center gap-2 text-primary">
+                <div className="mb-10 flex items-center gap-2 text-primary justify-center md:justify-start">
                     <MessageCircle />
                     <h2 className="text-2xl font-bold font-oswald">{t('header.label')}</h2>
                 </div>

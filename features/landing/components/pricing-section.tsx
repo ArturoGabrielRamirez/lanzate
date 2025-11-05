@@ -8,13 +8,13 @@ async function PricingSection() {
     const t = await getTranslations("landing.pricing");
 
     return (
-        <section className="relative py-17 flex snap-start flex-col items-center font-geist" id="pricing">
+        <section className="relative pt-17 md:py-17 flex snap-start flex-col items-center font-geist" id="pricing">
             <div className="container grid items-center gap-12 lg:grid-cols-[1fr_3fr] mx-auto px-4 relative h-fit">
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />
                 </div>
-                <div className="h-full">
-                    <div className="mb-10 flex items-center gap-2 text-primary">
+                <div className="h-full text-center text-balance md:text-left">
+                    <div className="mb-10 flex items-center gap-2 text-primary justify-center md:justify-start">
                         <Home />
                         <h2 className="text-2xl font-bold font-oswald">{t('header.label')}</h2>
                     </div>

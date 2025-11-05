@@ -14,7 +14,7 @@ async function FeaturesSection() {
     const t = await getTranslations("landing.features")
 
     return (
-        <section className="relative py-17 flex snap-start" id="how-it-works">
+        <section className="relative pt-17 md:py-17 flex snap-start" id="how-it-works">
             <div className="container grid items-center gap-12 lg:grid-cols-[3fr_2fr] mx-auto px-4 relative h-fit">
 
                 <div className='dark:brightness-75 absolute inset-0'>
@@ -26,7 +26,7 @@ async function FeaturesSection() {
                     </div>
 
                     <div className="relative z-20">
-                        <div className="mb-8 flex items-center gap-2 text-primary">
+                        <div className="mb-8 flex items-center gap-2 text-primary justify-center md:justify-start">
                             <Rocket />
                             <h2 className="text-2xl font-bold font-oswald">{t('header.label')}</h2>
                         </div>
@@ -153,7 +153,7 @@ async function FeaturesSection() {
                 </div>
 
                 <div className="space-y-8 z-20">
-                    <div>
+                    <div className='text-center text-balance md:text-left'>
                         <div className="mb-2 text-sm font-medium text-primary">
                             {t('about.label')}
                         </div>
@@ -165,7 +165,7 @@ async function FeaturesSection() {
                         </p>
                     </div>
 
-                    <div className="space-y-6 font-quattrocento">
+                    <div className="space-y-6 font-quattrocento text-center text-balance md:text-left">
                         <p className="text-muted-foreground">
                             {t('about.description.paragraph2')}
                         </p>
@@ -175,19 +175,19 @@ async function FeaturesSection() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 border-t pt-8 md:grid-cols-4">
-                        <div>
+                        <div className='text-center md:text-left'>
                             <div className="text-2xl font-bold font-oswald">{t('about.stats.founded.value')}</div>
                             <div className="text-sm text-muted-foreground font-quattrocento">{t('about.stats.founded.label')}</div>
                         </div>
-                        <div>
+                        <div className='text-center md:text-left'>
                             <div className="text-2xl font-bold font-oswald">{t('about.stats.users.value')}</div>
                             <div className="text-sm text-muted-foreground font-quattrocento">{t('about.stats.users.label')}</div>
                         </div>
-                        <div>
+                        <div className='text-center md:text-left'>
                             <div className="text-2xl font-bold font-oswald">{t('about.stats.countries.value')}</div>
                             <div className="text-sm text-muted-foreground font-quattrocento">{t('about.stats.countries.label')}</div>
                         </div>
-                        <div>
+                        <div className='text-center md:text-left'>
                             <div className="text-2xl font-bold font-oswald">{t('about.stats.sales.value')}</div>
                             <div className="text-sm text-muted-foreground font-quattrocento">{t('about.stats.sales.label')}</div>
                         </div>
@@ -195,7 +195,7 @@ async function FeaturesSection() {
 
                     <Link
                         href="/about"
-                        className="inline-flex items-center text-primary hover:text-primary/80"
+                        className="flex items-center text-primary hover:text-primary/80 justify-center md:justify-start"
                     >
                         {t('about.link')}
                         <ChevronRight className="size-4 ml-2" />
