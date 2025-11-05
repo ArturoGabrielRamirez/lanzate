@@ -11,7 +11,7 @@ async function ContactSection() {
     const t = await getTranslations("landing.contact");
 
     return (
-        <section className="relative py-17 flex snap-start flex-col items-center">
+        <section className="relative py-17 flex snap-start flex-col items-center" id="contact">
             <div className="container mx-auto px-4 relative h-full grow w-full">
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />

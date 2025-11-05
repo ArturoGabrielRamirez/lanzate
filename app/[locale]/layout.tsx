@@ -10,6 +10,7 @@ import { ChatDoc } from "@/features/layout/components/chat-doc";
 import { ChatProvider } from "@/features/layout/components/chat-provider";
 import { LayoutType } from '@/features/layout/types';
 import { BProgressProvider } from "@/features/shadcn/components/bprogress-provider";
+import { CookiePanel } from '@/features/shadcn/components/ui/cookie-banner-1';
 import { Toaster } from "@/features/shadcn/components/ui/sonner"
 
 export default async function RootLayout({ children, params }: LayoutType) {
@@ -39,6 +40,10 @@ export default async function RootLayout({ children, params }: LayoutType) {
                     <ChatDoc />
                     <Toaster position="top-center" richColors />
                     <GlobalEmailConfirmationDetector />
+                    <CookiePanel
+                      privacyHref='/privacy-policy'
+                      termsHref='/terms-and-conditions'
+                    />
                   </>
                 )}
                 userLayout={(

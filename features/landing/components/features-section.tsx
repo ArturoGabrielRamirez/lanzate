@@ -14,7 +14,7 @@ async function FeaturesSection() {
     const t = await getTranslations("landing.features")
 
     return (
-        <section className="relative py-17 flex snap-start">
+        <section className="relative py-17 flex snap-start" id="how-it-works">
             <div className="container grid items-center gap-12 lg:grid-cols-[3fr_2fr] mx-auto px-4 relative h-fit">
 
                 <div className='dark:brightness-75 absolute inset-0'>
@@ -22,7 +22,7 @@ async function FeaturesSection() {
                 </div>
                 <div className="relative h-fit">
 
-                    <div className="z-10 absolute -inset-24 brightness-90 dark:brightness-100">
+                    <div className="z-10 absolute inset-0 md:-inset-24 brightness-90 dark:brightness-100">
                     </div>
 
                     <div className="relative z-20">

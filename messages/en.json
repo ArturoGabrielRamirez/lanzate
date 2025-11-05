@@ -353,7 +353,7 @@
                 "title": "Join the waitlist",
                 "description1": "Lanzate is still in development, but you can already join the waitlist.",
                 "description2": "Leave us your email and we'll notify you when the product is available.",
-                "button": "Join the waitlist"
+                "button": "Join"
             },
             "form": {
                 "fields": {
@@ -1004,6 +1004,7 @@
                 "help": "Help",
                 "access": "Access",
                 "moreInfo": "More",
+                "pricing": "Pricing",
                 "auth": {
                     "login": "Login",
                     "signup": "Signup",
@@ -1012,14 +1013,14 @@
                     "googleAuth": "Google auth"
                 },
                 "sections": {
-                    "hero": "Hero",
-                    "heroDesc": "Hero description",
-                    "howItWorks": "How it works",
-                    "howItWorksDesc": "How it works description",
+                    "hero": "Start",
+                    "heroDesc": "Get started with Lanzate",
+                    "howItWorks": "Features",
+                    "howItWorksDesc": "Get to know how it works",
                     "integrations": "Integrations",
-                    "integrationsDesc": "Integrations description",
+                    "integrationsDesc": "Integrate with your favorite tools",
                     "faq": "FAQ",
-                    "faqDesc": "FAQ description",
+                    "faqDesc": "Frequently asked questions",
                     "dashboard": "Dashboard",
                     "dashboardDesc": "Dashboard description",
                     "newSale": "New sale",
@@ -1029,12 +1030,13 @@
                     "account": "Account",
                     "accountDesc": "Account description",
                     "aboutDesc": "About description",
-                    "contactDesc": "Contact description",
-                    "loginDesc": "Login description",
-                    "signupDesc": "Signup description",
-                    "forgotPasswordDesc": "Forgot password description",
-                    "googleAuthDesc": "Google auth description",
-                    "helpDesc": "If you need help, contact us"
+                    "contactDesc": "Contact us",
+                    "loginDesc": "Access your account",
+                    "signupDesc": "Create your account",
+                    "forgotPasswordDesc": "Reset your password manually",
+                    "googleAuthDesc": "Access using your Google account",
+                    "helpDesc": "If you need help, contact us",
+                    "pricingDesc": "Know our plans"
                 }
             },
             "mobileDrawer": {
@@ -1893,8 +1895,8 @@
         },
         "hero": {
             "announcement": {
-                "badge": "Last update",
-                "title": "New cash register added"
+                "badge": "New version",
+                "title": "Beta! We open soon..."
             },
             "slogan": {
                 "prefix": "You",

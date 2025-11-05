@@ -1,4 +1,4 @@
-import { CogIcon, HelpCircleIcon, HomeIcon, InfoIcon, KeyRoundIcon, LayoutDashboard, LogInIcon, PhoneIcon, PlayCircleIcon, PlusCircle, Store, UserIcon, UserPlusIcon, CircleQuestionMarkIcon } from 'lucide-react';
+import { CogIcon, HelpCircleIcon, HomeIcon, InfoIcon, KeyRoundIcon, LayoutDashboard, LogInIcon, PhoneIcon, PlayCircleIcon, PlusCircle, Store, UserIcon, UserPlusIcon, CircleQuestionMarkIcon, DollarSignIcon } from 'lucide-react';
 
 import { NavMenuItem, NavSubItem } from '@/features/header/types';
 
@@ -26,7 +26,7 @@ const INTEGRATIONS_ITEM = {
 const FAQ_ITEM = {
     label: 'layout.header.navigation.sections.faq',
     description: 'layout.header.navigation.sections.faqDesc',
-    href: '/#pricing',
+    href: '/#faq',
     icon: <HelpCircleIcon className='size-6 lg:size-4 group-hover:text-inherit' />
 }
 
@@ -96,19 +96,25 @@ const ABOUT_ITEM = {
 
 const CONTACT_ITEM = {
     label: 'layout.header.navigation.contact',
-    href: '/help',
+    href: '/#contact',
     description: 'layout.header.navigation.sections.contactDesc',
     icon: <PhoneIcon className='size-6 lg:size-4 group-hover:text-inherit' />
 }
 
 const HELP_ITEM = {
     label: 'layout.header.navigation.help',
-    href: '/help',
+    href: '/#help',
     description: 'layout.header.navigation.sections.helpDesc',
     icon: <CircleQuestionMarkIcon className='size-6 lg:size-4 group-hover:text-inherit' />
-
 }
 
+
+const PRICING_ITEM = {
+    label: 'layout.header.navigation.pricing', 
+    href: '/#pricing',
+    description: 'layout.header.navigation.sections.pricingDesc',
+    icon: <DollarSignIcon className='size-6 lg:size-4 group-hover:text-inherit' />
+}
 
 export const NAV_MENU_ITEMS_GUEST: NavMenuItem[] = [
     {
@@ -118,11 +124,13 @@ export const NAV_MENU_ITEMS_GUEST: NavMenuItem[] = [
                 label: 'layout.header.navigation.sections.hero',
                 href: `/`,
                 description: 'layout.header.navigation.sections.heroDesc',
-                icon: <HomeIcon className='size-6 text-inherit' />
+                icon: <HomeIcon className='size-4 text-inherit' />
             },
             HOW_IT_WORKS_ITEM,
             INTEGRATIONS_ITEM,
             FAQ_ITEM,
+            CONTACT_ITEM,
+            PRICING_ITEM,
         ],
     },
     {

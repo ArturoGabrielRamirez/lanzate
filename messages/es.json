@@ -352,7 +352,7 @@
                 "title": "Únete a la lista de espera",
                 "description1": "Lanzate está en desarrollo aún, pero ya puedes unirte a la lista de espera.",
                 "description2": "Dejanos tu email y te notificaremos cuando el producto esté disponible.",
-                "button": "Únete a la lista de espera"
+                "button": "Unite"
             },
             "form": {
                 "fields": {
@@ -864,6 +864,7 @@
                 "help": "Ayuda",
                 "access": "Acceso",
                 "moreInfo": "Más",
+                "pricing": "Precios",
                 "auth": {
                     "login": "Iniciar sesión",
                     "signup": "Registrarse",
@@ -872,14 +873,14 @@
                     "googleAuth": "Autenticación con Google"
                 },
                 "sections": {
-                    "hero": "Hero",
-                    "heroDesc": "Descripción del hero",
-                    "howItWorks": "Cómo funciona",
-                    "howItWorksDesc": "Descripción de cómo funciona",
+                    "hero": "Inicio",
+                    "heroDesc": "Comenza a usar Lanzate",
+                    "howItWorks": "Caracteristicas",
+                    "howItWorksDesc": "Enterate como funciona",
                     "integrations": "Integraciones",
-                    "integrationsDesc": "Descripción de las integraciones",
+                    "integrationsDesc": "Integra con tus herramientas favoritas",
                     "faq": "FAQ",
-                    "faqDesc": "Descripción de la FAQ",
+                    "faqDesc": "Preguntas frecuentes",
                     "dashboard": "Dashboard",
                     "dashboardDesc": "Descripción del dashboard",
                     "newSale": "Nueva venta",
@@ -889,12 +890,13 @@
                     "account": "Cuenta",
                     "accountDesc": "Descripción de la cuenta",
                     "aboutDesc": "Descripción de la sección de acerca de",
-                    "contactDesc": "Descripción de la sección de contacto",
-                    "loginDesc": "Descripción de la sección de inicio de sesión",
-                    "signupDesc": "Descripción de la sección de registrarse",
-                    "forgotPasswordDesc": "Descripción de la sección de olvidé mi contraseña",
-                    "googleAuthDesc": "Descripción de la autenticación con Google",
-                    "helpDesc": "Si necesitas ayuda, contáctanos"
+                    "contactDesc": "Contactanos",
+                    "loginDesc": "Ingresa a tu cuenta",
+                    "signupDesc": "Crea tu cuenta",
+                    "forgotPasswordDesc": "Resetea tu contraseña manualmente",
+                    "googleAuthDesc": "Accede con tu cuenta de Google",
+                    "helpDesc": "Si necesitas ayuda, contáctanos",
+                    "pricingDesc": "Conoce nuestros planes"
                 }
             },
             "mobileDrawer": {
@@ -1888,8 +1890,8 @@
         },
         "hero": {
             "announcement": {
-                "badge": "Última actualización",
-                "title": "Nueva caja registradora agregada"
+                "badge": "Nueva version",
+                "title": "Beta! Abrimos proximamente..."
             },
             "slogan": {
                 "prefix": "Vos",

@@ -9,7 +9,7 @@ async function FaqSection() {
     const t = await getTranslations("landing.faq");
 
     return (
-        <section className="relative py-17 flex flex-col snap-start">
+        <section className="relative py-17 flex flex-col snap-start" id="faq">
             <div className="container mx-auto px-4 relative h-full grow w-full">
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />
