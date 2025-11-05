@@ -84,7 +84,8 @@ const GOOGLE_AUTH_ITEM = {
     label: 'layout.header.navigation.auth.googleAuth',
     href: '/auth/google',
     description: 'layout.header.navigation.sections.googleAuthDesc',
-    icon: <KeyRoundIcon className='size-6 lg:size-4 group-hover:text-inherit' />
+    icon: <KeyRoundIcon className='size-6 lg:size-4 group-hover:text-inherit' />,
+    isGoogleAuth: true,
 }
 
 const ABOUT_ITEM = {
