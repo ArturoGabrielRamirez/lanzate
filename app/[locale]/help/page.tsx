@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server'
 
 import { JoinWaitlistAlert } from '@/features/auth/components'
 import contactImage from '@/features/global/assets/Contact us-pana.svg'
+import { LandingText } from '@/features/global/components'
 import { ContactForm } from '@/features/global/components/contact-us'
 import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
@@ -34,9 +35,9 @@ export default async function HelpPage() {
               <MessageCircle />
               <h2 className="text-2xl font-bold font-oswald">{t('header.title')}</h2>
             </div>
-            <p className="text-muted-foreground font-quattrocento">
+            <LandingText>
               {t('header.description')}
-            </p>
+            </LandingText>
           </div>
           <ContactForm />
           <div className='w-full'>

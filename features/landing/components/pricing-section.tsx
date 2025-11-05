@@ -1,7 +1,7 @@
 import { Home } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
-import { LandingText } from "@/features/global/components";
+import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
 import { BackgroundPattern } from "@/features/landing/components"
 import { PriceCard, OfferingWrapper, Offering, ProductName, Price, Description } from "@/features/shadcn/components/lukacho/pricing-card"
 
@@ -15,10 +15,9 @@ async function PricingSection() {
                     <BackgroundPattern />
                 </div>
                 <div className="h-full text-center text-balance md:text-left">
-                    <div className="mb-10 flex items-center gap-2 text-primary justify-center md:justify-start">
-                        <Home />
-                        <h2 className="text-2xl font-bold font-oswald">{t('header.label')}</h2>
-                    </div>
+                    <LandingSectionIconTitle icon={<Home />}>
+                        {t('header.label')}
+                    </LandingSectionIconTitle>
                     <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
                         {t('header.title')}
                     </h2>

@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-import { LandingText } from "@/features/global/components";
+import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
 import { BackgroundPattern } from "@/features/landing/components";
 import { AnimatedShinyButton } from "@/features/shadcn/components/animated-shiny-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
@@ -17,10 +17,9 @@ async function ContactSection() {
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />
                 </div>
-                <div className="mb-10 flex items-center gap-2 text-primary justify-center md:justify-start">
-                    <MessageCircle />
-                    <h2 className="text-2xl font-bold font-oswald">{t('header.label')}</h2>
-                </div>
+                <LandingSectionIconTitle icon={<MessageCircle />}>
+                    {t('header.label')}
+                </LandingSectionIconTitle>
                 <Card className="relative z-20">
                     <CardHeader>
                         <CardTitle>

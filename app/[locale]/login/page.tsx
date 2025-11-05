@@ -6,6 +6,7 @@ import { getTranslations } from 'next-intl/server'
 import loginImage from '@/features/auth/assets/Tablet login-pana.svg'
 import { LoginForm, ResetPasswordLink, LoginErrorDisplay, SocialLoginButtons, JoinWaitlistAlert } from '@/features/auth/components'
 import { LoginPageProps } from '@/features/auth/types'
+import { LandingText } from '@/features/global/components'
 import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
 
@@ -38,9 +39,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                             <KeyRound />
                             <h2 className="text-2xl font-bold font-oswald">{t('header.title')}</h2>
                         </div>
-                        <p className="text-muted-foreground font-quattrocento">
+                        <LandingText>
                             {t('header.description')}
-                        </p>
+                        </LandingText>
                     </div>
                     <LoginForm />
                     <SocialLoginButtons />

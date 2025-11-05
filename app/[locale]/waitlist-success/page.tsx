@@ -1,9 +1,10 @@
 import { PartyPopper } from "lucide-react"
-import Image from "next/image"
 import { Metadata } from "next"
+import Image from "next/image"
 import { getTranslations } from "next-intl/server"
 
 import waitlistSuccessImage from "@/features/auth/assets/Starting a business project-pana.svg"
+import { LandingText } from "@/features/global/components"
 import { BackgroundPattern } from "@/features/landing/components"
 import { Link } from "@/i18n/naviation"
 
@@ -29,9 +30,9 @@ export default async function WaitlistSuccessPage() {
                         <PartyPopper />
                         <h2 className="text-5xl font-bold font-oswald">{t('title')}</h2>
                     </div>
-                    <p className="text-muted-foreground font-quattrocento text-center font-medium text-lg max-w-md text-balance">
+                    <LandingText className="text-center max-w-md text-balance">
                         {t('description')}
-                    </p>
+                    </LandingText>
                     <Link href="/" className="text-sm text-blue-500 hover:underline mx-auto">
                         {t('link.text')}
                     </Link>

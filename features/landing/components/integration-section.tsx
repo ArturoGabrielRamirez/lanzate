@@ -1,7 +1,7 @@
 import { Plug } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-import { LandingText } from "@/features/global/components";
+import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
 import { BackgroundPattern } from "@/features/landing/components"
 import { MarqueeLogoScroller } from "@/features/shadcn/components/marquee-logo"
 
@@ -60,10 +60,9 @@ async function IntegrationSection() {
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-6 lg:gap-8 z-20 relative items-end mb-10 text-center text-balance md:text-left">
                     <div>
-                        <div className="mb-10 flex items-center gap-2 text-primary justify-center md:justify-start">
-                            <Plug />
-                            <h2 className="text-2xl font-bold font-oswald">{t('header.label')}</h2>
-                        </div>
+                        <LandingSectionIconTitle icon={<Plug />}>
+                            {t('header.label')}
+                        </LandingSectionIconTitle>
                         <h2 className="text-3xl font-bold tracking-tight md:text-4xl font-oswald">
                             {t('header.title')}
                         </h2>

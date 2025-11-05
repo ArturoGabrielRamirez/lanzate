@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server'
 
 import signupImage from '@/features/auth/assets/Sign up-pana.svg'
 import { JoinWaitlistAlert, SignupForm, SocialLoginButtons } from '@/features/auth/components'
+import { LandingText } from '@/features/global/components'
 import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
 
@@ -32,9 +33,9 @@ export default async function SignupPage() {
               <KeyRound />
               <h2 className="text-2xl font-bold font-oswald">{t('header.title')}</h2>
             </div>
-            <p className="text-muted-foreground font-quattrocento">
+            <LandingText>
               {t('header.description')}
-            </p>
+            </LandingText>
           </div>
           <SignupForm />
           <SocialLoginButtons />
