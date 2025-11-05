@@ -40,7 +40,10 @@ export default async function RootLayout({ children, params }: LayoutType) {
                     <ChatDoc />
                     <Toaster position="top-center" richColors />
                     <GlobalEmailConfirmationDetector />
-                    <CookiePanel/>
+                    <CookiePanel
+                      privacyHref='/privacy-policy'
+                      termsHref='/terms-and-conditions'
+                    />
                   </>
                 )}
                 userLayout={(
