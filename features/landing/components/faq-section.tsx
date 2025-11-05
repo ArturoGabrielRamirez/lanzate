@@ -1,6 +1,7 @@
 import { CircleHelp } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+import { LandingText } from "@/features/global/components";
 import { BackgroundPattern } from "@/features/landing/components";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion";
 import { Card, CardContent, CardHeader } from "@/features/shadcn/components/ui/card";
@@ -23,9 +24,9 @@ async function FaqSection() {
                         <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
                             {t('header.title')}
                         </h2>
-                        <p className="text-muted-foreground font-quattrocento">
+                        <LandingText>
                             {t('header.description')}
-                        </p>
+                        </LandingText>
                     </div>
                     <Card className="md:mt-20">
                         <CardHeader>

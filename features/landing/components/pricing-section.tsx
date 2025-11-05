@@ -1,6 +1,7 @@
 import { Home } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
+import { LandingText } from "@/features/global/components";
 import { BackgroundPattern } from "@/features/landing/components"
 import { PriceCard, OfferingWrapper, Offering, ProductName, Price, Description } from "@/features/shadcn/components/lukacho/pricing-card"
 
@@ -21,9 +22,9 @@ async function PricingSection() {
                     <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
                         {t('header.title')}
                     </h2>
-                    <p className="text-muted-foreground font-quattrocento">
+                    <LandingText>
                         {t('header.description')}
-                    </p>
+                    </LandingText>
                 </div>
                 <div className="container grid items-center pt-10 gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist">
                     <PriceCard contactPageHref="/login" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 md:scale-90" actionText={t('actions.button')}>

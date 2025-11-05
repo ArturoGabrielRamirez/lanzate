@@ -2,6 +2,7 @@ import { ChevronRight, Heart, MessageCircleMore, Rocket, ShoppingCart, Users, Za
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
+import { LandingText } from '@/features/global/components'
 import devicesImage from "@/features/landing/assets/Devices-pana.svg"
 import domainImage from "@/features/landing/assets/Domain names-pana.svg"
 import speedImage from "@/features/landing/assets/Speed test-pana.svg"
@@ -160,36 +161,36 @@ async function FeaturesSection() {
                         <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
                             {t('about.title')}
                         </h2>
-                        <p className="text-muted-foreground font-quattrocento">
+                        <LandingText>
                             {t('about.description.paragraph1')}
-                        </p>
+                        </LandingText>
                     </div>
 
                     <div className="space-y-6 font-quattrocento text-center text-balance md:text-left">
-                        <p className="text-muted-foreground">
+                        <LandingText>
                             {t('about.description.paragraph2')}
-                        </p>
-                        <p className="text-muted-foreground">
+                        </LandingText>
+                        <LandingText>
                             {t('about.description.paragraph3')}
-                        </p>
+                        </LandingText>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 border-t pt-8 md:grid-cols-4">
                         <div className='text-center md:text-left'>
                             <div className="text-2xl font-bold font-oswald">{t('about.stats.founded.value')}</div>
-                            <div className="text-sm text-muted-foreground font-quattrocento">{t('about.stats.founded.label')}</div>
+                            <LandingText>{t('about.stats.founded.label')}</LandingText>
                         </div>
                         <div className='text-center md:text-left'>
                             <div className="text-2xl font-bold font-oswald">{t('about.stats.users.value')}</div>
-                            <div className="text-sm text-muted-foreground font-quattrocento">{t('about.stats.users.label')}</div>
+                            <LandingText>{t('about.stats.users.label')}</LandingText>
                         </div>
                         <div className='text-center md:text-left'>
                             <div className="text-2xl font-bold font-oswald">{t('about.stats.countries.value')}</div>
-                            <div className="text-sm text-muted-foreground font-quattrocento">{t('about.stats.countries.label')}</div>
+                            <LandingText>{t('about.stats.countries.label')}</LandingText>
                         </div>
                         <div className='text-center md:text-left'>
                             <div className="text-2xl font-bold font-oswald">{t('about.stats.sales.value')}</div>
-                            <div className="text-sm text-muted-foreground font-quattrocento">{t('about.stats.sales.label')}</div>
+                            <LandingText>{t('about.stats.sales.label')}</LandingText>
                         </div>
                     </div>
 

@@ -1,6 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+import { LandingText } from "@/features/global/components";
 import { BackgroundPattern } from "@/features/landing/components";
 import { AnimatedShinyButton } from "@/features/shadcn/components/animated-shiny-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
@@ -29,9 +30,12 @@ async function ContactSection() {
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-col items-center gap-4">
-                        <p className="text-muted-foreground font-geist font-light text-center text-balance">
+                        {/* <p className="text-muted-foreground font-geist font-light text-center text-balance">
                             {t('header.description')}
-                        </p>
+                        </p> */}
+                        <LandingText>
+                            {t('header.description')}
+                        </LandingText>
                         <AnimatedShinyButton asChild>
                             <Link href="/help">
                                 {t("actions.button")}

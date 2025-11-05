@@ -1,6 +1,7 @@
 import { Plug } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+import { LandingText } from "@/features/global/components";
 import { BackgroundPattern } from "@/features/landing/components"
 import { MarqueeLogoScroller } from "@/features/shadcn/components/marquee-logo"
 
@@ -67,9 +68,9 @@ async function IntegrationSection() {
                             {t('header.title')}
                         </h2>
                     </div>
-                    <p className="text-muted-foreground font-quattrocento">
+                    <LandingText>
                         {t('header.description')}
-                    </p>
+                    </LandingText>
                 </div>
                 <MarqueeLogoScroller
                     title={t('marquee.title')}
