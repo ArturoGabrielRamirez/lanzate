@@ -2,6 +2,7 @@
 import { CheckCircle } from 'lucide-react';
 import React from 'react'
 
+import { SmallMutedText } from '@/features/landing/components';
 import { Button } from '@/features/shadcn/components/button';
 import { Link } from '@/i18n/naviation';
 import { cn } from '@/lib/utils'
@@ -52,7 +53,7 @@ export function Price({ children, className }: { children: React.ReactNode; clas
 export function Description({ children, className }: { children: React.ReactNode; className?: string }) {
     return (
         <div className={cn('h-20 text-muted-foreground', className)}>
-            <p className={'leading-[2] text-sm'}>{children}</p>
+            <SmallMutedText>{children}</SmallMutedText>
         </div>
     )
 }

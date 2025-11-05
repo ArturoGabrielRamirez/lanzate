@@ -6,7 +6,7 @@ import { getTranslations } from 'next-intl/server'
 import loginImage from '@/features/auth/assets/Tablet login-pana.svg'
 import { LoginForm, ResetPasswordLink, LoginErrorDisplay, SocialLoginButtons, JoinWaitlistAlert } from '@/features/auth/components'
 import { LoginPageProps } from '@/features/auth/types'
-import { LandingText } from '@/features/global/components'
+import { LandingSectionIconTitle, LandingText } from '@/features/global/components'
 import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
 
@@ -35,10 +35,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                         message={params.message}
                     />
                     <div>
-                        <div className="flex items-center gap-2 text-primary">
-                            <KeyRound />
-                            <h2 className="text-2xl font-bold font-oswald">{t('header.title')}</h2>
-                        </div>
+                        <LandingSectionIconTitle icon={<KeyRound />}>
+                            {t('header.title')}
+                        </LandingSectionIconTitle>
                         <LandingText>
                             {t('header.description')}
                         </LandingText>

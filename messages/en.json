@@ -1924,7 +1924,8 @@
             "highlights": {
                 "customizable": {
                     "percentage": "100%",
-                    "title": "Customizable"
+                    "title": "Barcode support",
+                    "description": "USB barcode reader gun support"
                 },
                 "allInOne": {
                     "title": "All-in-one",

@@ -5,7 +5,7 @@ import { getTranslations } from 'next-intl/server'
 
 import { JoinWaitlistAlert } from '@/features/auth/components'
 import contactImage from '@/features/global/assets/Contact us-pana.svg'
-import { LandingText } from '@/features/global/components'
+import { LandingSectionIconTitle, LandingText } from '@/features/global/components'
 import { ContactForm } from '@/features/global/components/contact-us'
 import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
@@ -31,10 +31,9 @@ export default async function HelpPage() {
       <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:pb-12 lg:pb-20 z-20 relative grow">
         <div className='w-full flex flex-col gap-8 lg:max-w-md md:justify-self-end'>
           <div>
-            <div className="flex items-center gap-2 text-primary">
-              <MessageCircle />
-              <h2 className="text-2xl font-bold font-oswald">{t('header.title')}</h2>
-            </div>
+            <LandingSectionIconTitle icon={<MessageCircle />}>
+              {t('header.title')}
+            </LandingSectionIconTitle>
             <LandingText>
               {t('header.description')}
             </LandingText>

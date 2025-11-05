@@ -2,7 +2,7 @@ import { CircleHelp } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
-import { BackgroundPattern } from "@/features/landing/components";
+import { BackgroundPattern, SmallMutedText } from "@/features/landing/components";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion";
 import { Card, CardContent, CardHeader } from "@/features/shadcn/components/ui/card";
 
@@ -39,9 +39,7 @@ async function FaqSection() {
                                             </h3>
                                         </AccordionTrigger>
                                         <AccordionContent>
-                                            <p className="text-muted-foreground font-geist font-light">
-                                                {t('items.item1.answer')}
-                                            </p>
+                                            <SmallMutedText>{t('items.item1.answer')}</SmallMutedText>
                                         </AccordionContent>
                                     </AccordionItem>
                                     <AccordionItem value="item-2">
@@ -52,9 +50,7 @@ async function FaqSection() {
                                             </h3>
                                         </AccordionTrigger>
                                         <AccordionContent>
-                                            <p className="text-muted-foreground font-geist font-light">
-                                                {t('items.item2.answer')}
-                                            </p>
+                                            <SmallMutedText>{t('items.item2.answer')}</SmallMutedText>
                                         </AccordionContent>
                                     </AccordionItem>
                                     <AccordionItem value="item-3">
@@ -65,9 +61,7 @@ async function FaqSection() {
                                             </h3>
                                         </AccordionTrigger>
                                         <AccordionContent>
-                                            <p className="text-muted-foreground font-geist font-light">
-                                                {t('items.item3.answer')}
-                                            </p>
+                                            <SmallMutedText>{t('items.item3.answer')}</SmallMutedText>
                                         </AccordionContent>
                                     </AccordionItem>
                                     <AccordionItem value="item-4">
@@ -78,9 +72,7 @@ async function FaqSection() {
                                             </h3>
                                         </AccordionTrigger>
                                         <AccordionContent>
-                                            <p className="text-muted-foreground font-geist font-light">
-                                                {t('items.item4.answer')}
-                                            </p>
+                                            <SmallMutedText>{t('items.item4.answer')}</SmallMutedText>
                                         </AccordionContent>
                                     </AccordionItem>
                                     <AccordionItem value="item-5">
@@ -91,9 +83,7 @@ async function FaqSection() {
                                             </h3>
                                         </AccordionTrigger>
                                         <AccordionContent>
-                                            <p className="text-muted-foreground font-geist font-light">
-                                                {t('items.item5.answer')}
-                                            </p>
+                                            <SmallMutedText>{t('items.item5.answer')}</SmallMutedText>
                                         </AccordionContent>
                                     </AccordionItem>
                                 </Accordion>

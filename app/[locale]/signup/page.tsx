@@ -5,7 +5,7 @@ import { getTranslations } from 'next-intl/server'
 
 import signupImage from '@/features/auth/assets/Sign up-pana.svg'
 import { JoinWaitlistAlert, SignupForm, SocialLoginButtons } from '@/features/auth/components'
-import { LandingText } from '@/features/global/components'
+import { LandingSectionIconTitle, LandingText } from '@/features/global/components'
 import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
 
@@ -29,10 +29,9 @@ export default async function SignupPage() {
       <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:pb-12 lg:pb-20 z-20 relative grow">
         <div className='w-full flex flex-col gap-8 lg:max-w-md md:justify-self-end'>
           <div>
-            <div className="flex items-center gap-2 text-primary">
-              <KeyRound />
-              <h2 className="text-2xl font-bold font-oswald">{t('header.title')}</h2>
-            </div>
+            <LandingSectionIconTitle icon={<KeyRound />}>
+              {t('header.title')}
+            </LandingSectionIconTitle>
             <LandingText>
               {t('header.description')}
             </LandingText>

@@ -1919,7 +1919,8 @@
             "highlights": {
                 "customizable": {
                     "percentage": "100%",
-                    "title": "Personalizable"
+                    "title": "Codigo de barras",
+                    "description": "Soporte para lectoras de codigo de barra por USB"
                 },
                 "allInOne": {
                     "title": "Todo-en-uno",
