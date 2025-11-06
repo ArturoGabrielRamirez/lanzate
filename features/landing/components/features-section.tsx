@@ -142,7 +142,7 @@ async function FeaturesSection() {
                     </div>
                 </div>
                 <div className="space-y-8 z-20">
-                    <div className='text-center text-balance md:text-left'>
+                    <div className='text-center max-md:text-balance md:text-left'>
                         <p className="mb-2 text-sm font-medium text-primary">
                             {t('about.label')}
                         </p>
@@ -154,7 +154,7 @@ async function FeaturesSection() {
                         </LandingText>
                     </div>
 
-                    <div className="space-y-6 font-quattrocento text-center text-balance md:text-left">
+                    <div className="space-y-6 font-quattrocento text-center max-md:text-balance md:text-left">
                         <LandingText>
                             {t('about.description.paragraph2')}
                         </LandingText>
