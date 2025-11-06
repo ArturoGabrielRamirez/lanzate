@@ -102,6 +102,13 @@ const CONTACT_ITEM = {
     icon: <PhoneIcon className='size-6 lg:size-4 group-hover:text-inherit' />
 }
 
+const CONTACT_PAGE_ITEM = {
+    label: 'layout.header.navigation.contact',
+    href: '/contact',
+    description: 'layout.header.navigation.sections.contactDesc',
+    icon: <PhoneIcon className='size-6 lg:size-4 group-hover:text-inherit' />
+}
+
 const HELP_ITEM = {
     label: 'layout.header.navigation.help',
     href: '/#help',
@@ -147,7 +154,7 @@ export const NAV_MENU_ITEMS_GUEST: NavMenuItem[] = [
         label: 'layout.header.navigation.moreInfo',
         items: [
             ABOUT_ITEM,
-            CONTACT_ITEM,
+            CONTACT_PAGE_ITEM,
         ],
     },
 ];

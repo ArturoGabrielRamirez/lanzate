@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 
+import { SOCIAL_MEDIA_LINKS } from '@/features/global/constants'
 import { IconButton } from '@/features/shadcn/components/shadcn-io/icon-button'
 
 function FooterSection() {
@@ -23,7 +24,7 @@ function FooterSection() {
         },
         {
             title: t('links.contactUs'),
-            href: '/contact-us',
+            href: '/help',
         },
     ]
     return (
@@ -46,7 +47,7 @@ function FooterSection() {
                 </div>
                 <div className="my-4 md:my-8 flex flex-wrap justify-center gap-6 text-sm">
                     <Link
-                        href="#"
+                        href={SOCIAL_MEDIA_LINKS.X}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={t('socialMedia.ariaLabels.twitter')}
@@ -67,7 +68,7 @@ function FooterSection() {
                         </IconButton>
                     </Link>
                     <Link
-                        href="#"
+                        href={SOCIAL_MEDIA_LINKS.FACEBOOK}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={t('socialMedia.ariaLabels.facebook')}
@@ -88,7 +89,7 @@ function FooterSection() {
 
                     </Link>
                     <Link
-                        href="#"
+                        href={SOCIAL_MEDIA_LINKS.INSTAGRAM}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={t('socialMedia.ariaLabels.instagram')}
