@@ -1919,7 +1919,8 @@
             "highlights": {
                 "customizable": {
                     "percentage": "100%",
-                    "title": "Personalizable"
+                    "title": "Codigo de barras",
+                    "description": "Soporte para lectoras de codigo de barra por USB"
                 },
                 "allInOne": {
                     "title": "Todo-en-uno",
@@ -1942,9 +1943,9 @@
                 "label": "Quienes somos",
                 "title": "En una mision para ayudarte a lanzar tu negocio",
                 "description": {
-                    "paragraph1": "En Lanzate, creemos que cada emprendedor merece las herramientas adecuadas para hacer realidad sus ideas. Nuestra plataforma te proporciona todo lo necesario para crear, gestionar y hacer crecer tu negocio digital desde el primer día, sin complicaciones técnicas.",
-                    "paragraph2": "Sabemos que iniciar un negocio puede ser abrumador. Por eso hemos creado una solución integral que elimina las barreras técnicas y te permite enfocarte en lo que realmente importa: tu visión. Desde tu sitio web personalizado hasta la gestión de clientes, todo está diseñado para ser simple, rápido y efectivo.",
-                    "paragraph3": "Nuestro compromiso va más allá de una simple plataforma. Estamos construyendo una comunidad de emprendedores valientes que comparten el sueño de crear algo propio. Al elegir Lanzate, no solo obtienes una herramienta poderosa, te unes a un ecosistema diseñado para impulsar tu éxito y el de tu negocio."
+                    "paragraph1": "Lanzate es una aplicación web todo en uno diseñada para que puedas administrar tu tienda desde cualquier lugar y dispositivo. Desde el control de stock y ventas hasta el uso de lectores de código de barras, Lanzate te da las herramientas necesarias para operar tu negocio de forma simple y rápida.",
+                    "paragraph2": "Olvidate de las instalaciones complicadas: accedé desde tu navegador, gestioná tus productos, pedidos, clientes y facturación en tiempo real. Todo sincronizado en la nube.",
+                    "paragraph3": "You can also customize your store with your own domain, connect your social media, and enjoy a modern, fast, and flexible sales experience built around your workflow.  Lanzate is more than an app: it’s your launchpad to digitize your business and grow it with accessible, secure, and limitless technology."
                 },
                 "stats": {
                     "founded": {

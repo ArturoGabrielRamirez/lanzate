@@ -4,10 +4,13 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
+import { handleGoogleLogInAction } from '@/features/auth/actions';
+import { GoogleLogo } from '@/features/auth/components';
 import { useSmoothScroll } from '@/features/global/hooks/use-smooth-scroll';
 import { HEADER_OFFSET_DESKTOP, NAV_MENU_ITEMS_GUEST } from '@/features/header/constants';
 import { isActiveRoute } from '@/features/header/utils';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from '@/features/shadcn/components';
+import { Button } from '@/features/shadcn/components/button';
 import { Link, usePathname } from '@/i18n/naviation';
 import { cn } from '@/lib/utils';
 
@@ -30,6 +33,10 @@ function HeaderNavGuest() {
         }
     }, [scrollToAnchor, router]);
 
+    const handleGoogleAuthClick = useCallback(() => {
+        handleGoogleLogInAction();
+    }, []);
+
     return (
         <NavigationMenu>
             <NavigationMenuList>
@@ -44,7 +51,7 @@ function HeaderNavGuest() {
 
                                     if (item.isGoogleAuth) {
                                         return (
-                                            <li key={item.label} className='row-span-3 col-start-1 row-start-1 flex flex-col gap-2'>
+                                            <li key={item.label} className='row-span-3 col-start-1 row-start-1 flex flex-col gap-2 p-2'>
                                                 <div className="text-sm font-medium leading-none inline-flex items-center gap-2">
                                                     <div className="group-hover:text-primary">
                                                         {item.icon}
@@ -56,18 +63,17 @@ function HeaderNavGuest() {
                                                         {t(item.description)}
                                                     </p>
                                                 )}
-                                                {/* <GoogleAuthButton
-                                                    label={t(item.label)}
-                                                    onClick={handleGoogleAuthClick}
-                                                    className="w-full grow justify-center"
-                                                /> */}
+                                                <Button className='w-full grow justify-center' variant="secondary" onClick={handleGoogleAuthClick} disabled>
+                                                    <GoogleLogo />
+                                                    {t(item.label)}
+                                                </Button>
                                             </li>
                                         );
                                     }
 
                                     return (
                                         <li key={item.label}>
-                                            <NavigationMenuLink asChild>
+                                            <NavigationMenuLink>
                                                 <Link
                                                     href={item.href || '#'}
                                                     data-href={item.href}

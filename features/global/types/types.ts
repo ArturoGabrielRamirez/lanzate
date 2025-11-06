@@ -91,3 +91,15 @@ export type InputFieldProps = {
     maxLength?: number
 
 }
+
+export type LandingSectionIconTitleProps = {
+    icon?: React.ReactNode
+    children: React.ReactNode
+    containerClassName?: string
+    titleClassName?: string
+}
+
+export type LandingSectionTitleProps = {
+    children: React.ReactNode
+    className?: string
+}

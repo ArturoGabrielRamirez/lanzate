@@ -1,29 +1,29 @@
 import { Home } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
-import { BackgroundPattern } from "@/features/landing/components"
+import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
+import { BackgroundPattern, SectionSubtitle } from "@/features/landing/components"
 import { PriceCard, OfferingWrapper, Offering, ProductName, Price, Description } from "@/features/shadcn/components/lukacho/pricing-card"
 
 async function PricingSection() {
     const t = await getTranslations("landing.pricing");
 
     return (
-        <section className="relative py-17 flex snap-start flex-col items-center font-geist" id="pricing">
+        <section className="relative pt-17 md:py-17 flex snap-start flex-col items-center font-geist" id="pricing">
             <div className="container grid items-center gap-12 lg:grid-cols-[1fr_3fr] mx-auto px-4 relative h-fit">
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />
                 </div>
-                <div className="h-full">
-                    <div className="mb-10 flex items-center gap-2 text-primary">
-                        <Home />
-                        <h2 className="text-2xl font-bold font-oswald">{t('header.label')}</h2>
-                    </div>
-                    <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
+                <div className="h-full text-center text-balance md:text-left">
+                    <LandingSectionIconTitle icon={<Home />}>
+                        {t('header.label')}
+                    </LandingSectionIconTitle>
+                    <SectionSubtitle className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald">
                         {t('header.title')}
-                    </h2>
-                    <p className="text-muted-foreground font-quattrocento">
+                    </SectionSubtitle>
+                    <LandingText>
                         {t('header.description')}
-                    </p>
+                    </LandingText>
                 </div>
                 <div className="container grid items-center pt-10 gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist">
                     <PriceCard contactPageHref="/login" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 md:scale-90" actionText={t('actions.button')}>

@@ -6,3 +6,6 @@ export * from "@/features/landing/components/pricing-section";
 export * from "@/features/landing/components/integration-section";
 export * from "@/features/landing/components/faq-section";
 export * from "@/features/landing/components/contact-section";
+export * from "@/features/landing/components/small-muted-text";
+export * from "@/features/landing/components/section-subtitle";
+export * from "@/features/landing/components/section-subtitle-small";
