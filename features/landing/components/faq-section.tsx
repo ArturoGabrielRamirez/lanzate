@@ -2,7 +2,7 @@ import { CircleHelp } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
-import { BackgroundPattern, SectionSubtitle, SmallMutedText } from "@/features/landing/components";
+import { BackgroundPattern, SectionSubtitle, SectionSubtitleSmall, SmallMutedText } from "@/features/landing/components";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion";
 import { Card, CardContent, CardHeader } from "@/features/shadcn/components/ui/card";
 
@@ -33,10 +33,12 @@ async function FaqSection() {
                                 <Accordion type="single" collapsible defaultValue="item-1">
                                     <AccordionItem value="item-1">
                                         <AccordionTrigger>
-                                            <h3 className="text-2xl font-bold font-oswald flex items-center gap-2">
-                                                <CircleHelp className="size-6 text-primary" />
-                                                {t('items.item1.question')}
-                                            </h3>
+                                            <div className="flex items-center gap-2">
+                                                <CircleHelp className="size-5 text-primary" />
+                                                <SectionSubtitleSmall as="span">
+                                                    {t('items.item1.question')}
+                                                </SectionSubtitleSmall>
+                                            </div>
                                         </AccordionTrigger>
                                         <AccordionContent>
                                             <SmallMutedText>{t('items.item1.answer')}</SmallMutedText>
@@ -44,10 +46,12 @@ async function FaqSection() {
                                     </AccordionItem>
                                     <AccordionItem value="item-2">
                                         <AccordionTrigger>
-                                            <h3 className="text-2xl font-bold font-oswald flex items-center gap-2">
-                                                <CircleHelp className="size-6 text-primary" />
-                                                {t('items.item2.question')}
-                                            </h3>
+                                            <div className="flex items-center gap-2">
+                                                <CircleHelp className="size-5 text-primary" />
+                                                <SectionSubtitleSmall as="span">
+                                                    {t('items.item2.question')}
+                                                </SectionSubtitleSmall>
+                                            </div>
                                         </AccordionTrigger>
                                         <AccordionContent>
                                             <SmallMutedText>{t('items.item2.answer')}</SmallMutedText>
@@ -55,10 +59,12 @@ async function FaqSection() {
                                     </AccordionItem>
                                     <AccordionItem value="item-3">
                                         <AccordionTrigger>
-                                            <h3 className="text-2xl font-bold font-oswald flex items-center gap-2">
+                                            <div className="flex items-center gap-2">
                                                 <CircleHelp className="size-6 text-primary" />
-                                                {t('items.item3.question')}
-                                            </h3>
+                                                <SectionSubtitleSmall as="span">
+                                                    {t('items.item3.question')}
+                                                </SectionSubtitleSmall>
+                                            </div>
                                         </AccordionTrigger>
                                         <AccordionContent>
                                             <SmallMutedText>{t('items.item3.answer')}</SmallMutedText>
@@ -66,10 +72,12 @@ async function FaqSection() {
                                     </AccordionItem>
                                     <AccordionItem value="item-4">
                                         <AccordionTrigger>
-                                            <h3 className="text-2xl font-bold font-oswald flex items-center gap-2">
+                                            <div className="flex items-center gap-2">
                                                 <CircleHelp className="size-6 text-primary" />
-                                                {t('items.item4.question')}
-                                            </h3>
+                                                <SectionSubtitleSmall as="span">
+                                                    {t('items.item4.question')}
+                                                </SectionSubtitleSmall>
+                                            </div>
                                         </AccordionTrigger>
                                         <AccordionContent>
                                             <SmallMutedText>{t('items.item4.answer')}</SmallMutedText>
@@ -77,10 +85,12 @@ async function FaqSection() {
                                     </AccordionItem>
                                     <AccordionItem value="item-5">
                                         <AccordionTrigger>
-                                            <h3 className="text-2xl font-bold font-oswald flex items-center gap-2">
+                                            <div className="flex items-center gap-2">
                                                 <CircleHelp className="size-6 text-primary" />
-                                                {t('items.item5.question')}
-                                            </h3>
+                                                <SectionSubtitleSmall as="span">
+                                                    {t('items.item5.question')}
+                                                </SectionSubtitleSmall>
+                                            </div>
                                         </AccordionTrigger>
                                         <AccordionContent>
                                             <SmallMutedText>{t('items.item5.answer')}</SmallMutedText>

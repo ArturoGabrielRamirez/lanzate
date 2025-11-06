@@ -8,7 +8,7 @@ import barcodeImage from "@/features/landing/assets/Barcode-pana.svg"
 import devicesImage from "@/features/landing/assets/Devices-pana.svg"
 import domainImage from "@/features/landing/assets/Domain names-pana.svg"
 import speedImage from "@/features/landing/assets/Speed test-pana.svg"
-import { BackgroundPattern, SectionSubtitle, SmallMutedText } from "@/features/landing/components"
+import { BackgroundPattern, SectionSubtitle, SectionSubtitleSmall, SmallMutedText } from "@/features/landing/components"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { Link } from '@/i18n/naviation'
 
@@ -165,19 +165,19 @@ async function FeaturesSection() {
 
                     <div className="grid grid-cols-2 gap-4 border-t pt-8 md:grid-cols-4">
                         <div className='text-center md:text-left'>
-                            <SectionSubtitle>{t('about.stats.founded.value')}</SectionSubtitle>
+                            <SectionSubtitleSmall>{t('about.stats.founded.value')}</SectionSubtitleSmall>
                             <LandingText>{t('about.stats.founded.label')}</LandingText>
                         </div>
                         <div className='text-center md:text-left'>
-                            <SectionSubtitle>{t('about.stats.users.value')}</SectionSubtitle>
+                            <SectionSubtitleSmall>{t('about.stats.users.value')}</SectionSubtitleSmall>
                             <LandingText>{t('about.stats.users.label')}</LandingText>
                         </div>
                         <div className='text-center md:text-left'>
-                            <SectionSubtitle>{t('about.stats.countries.value')}</SectionSubtitle>
+                            <SectionSubtitleSmall>{t('about.stats.countries.value')}</SectionSubtitleSmall>
                             <LandingText>{t('about.stats.countries.label')}</LandingText>
                         </div>
                         <div className='text-center md:text-left'>
-                            <SectionSubtitle>{t('about.stats.sales.value')}</SectionSubtitle>
+                            <SectionSubtitleSmall>{t('about.stats.sales.value')}</SectionSubtitleSmall>
                             <LandingText>{t('about.stats.sales.label')}</LandingText>
                         </div>
                     </div>
