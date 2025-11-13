@@ -12,7 +12,7 @@ export const metadata: Metadata = {
         template: 'Lanzate | %s',
         absolute: 'Lanzate',
     },
-    description: 'A customizable E-commerce platform.',
+    description: "Elevate your buisness with Lanzate&apos;s all-in-one store management solution.",
     authors: [
         { name: 'Arturo Gabriel Ramirez', url: 'https://github.com/ArturoGabrielRamirez' },
         { name: 'Horacio Gutierrez Estevez', url: 'https://github.com/HoracioGutierrez' },
@@ -41,9 +41,7 @@ export default function RootLayout({ children }: WithChildren) {
     return (
         <html suppressHydrationWarning>
             <body className={cn("min-h-dvh flex flex-col overflow-x-hidden relative bg-gradient-to-br from-background to-primary/20", geist.variable, quattrocento.variable, oswald.variable)}>
-                <div vaul-drawer-wrapper="" data-vaul-drawer-wrapper="">
-                    {children}
-                </div>
+                {children}
             </body>
         </html>
     )

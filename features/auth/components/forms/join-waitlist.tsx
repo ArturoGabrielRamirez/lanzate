@@ -11,20 +11,20 @@ import { InputField } from "@/features/global/components/form/input-field"
 
 function JoinWaitlist() {
 
-    const t = useTranslations("auth")
+    const t = useTranslations("auth.waitlist.form")
 
     return (
         <Form
             resolver={yupResolver(joinWaitlistSchema as never)}
             formAction={joinWaitlistAction}
-            contentButton={t("join-waitlist")}
+            contentButton={t("actions.submit")}
             successRedirect="/waitlist-success"
-            successMessage={t("toast-message.success-joined-waitlist")}
-            loadingMessage={t("toast-message.joining-waitlist")}
+            successMessage={t("messages.success")}
+            loadingMessage={t("messages.loading")}
             resetOnSuccess
             className="flex md:flex-row flex-col  items-end w-full col-start-2 mt-4"
         >
-            <InputField name="email" label={t("email")} placeholder={t("email-placeholder")} startIcon={<MailIcon />} tooltip="Enter the email address to join the waitlist" type="email" isRequired hideLabel />
+            <InputField name="email" label={t("fields.email.label")} placeholder={t("fields.email.placeholder")} startIcon={<MailIcon />} tooltip={t("fields.email.tooltip")} type="email" isRequired hideLabel />
         </Form>
     )
 }

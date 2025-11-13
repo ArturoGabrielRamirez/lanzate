@@ -14,7 +14,7 @@ import { InputField } from '@/features/global/components/form/input-field'
 
 
 function SignupForm() {
-    const t = useTranslations("auth");
+    const t = useTranslations("auth.signup.form");
     const router = useRouter();
     const submittedEmailRef = useRef<{ email: string }>({
         email: ''
@@ -41,17 +41,17 @@ function SignupForm() {
             <Form
                 resolver={yupResolver(signUpSchema as never)}
                 formAction={handleSubmit}
-                contentButton={<span>{t("signup")}</span>}
-                successMessage={t("toast-message.success-registered")}
-                loadingMessage={t("toast-message.signing-up")}
+                contentButton={<span>{t("actions.submit")}</span>}
+                successMessage={t("messages.success")}
+                loadingMessage={t("messages.loading")}
                 onSuccess={handleSuccess}
                 className="flex flex-col gap-4 w-full max-w-xl"
                 disabled
             >
-                <InputField name="email" label={t("email")} placeholder={t("email-placeholder")} startIcon={<MailIcon />} tooltip="Enter the email address associated with your account." type="email" isRequired disabled/>
-                <InputField name="username" label={t("username")} placeholder={t("username")} startIcon={<UserIcon />} tooltip="Enter the username associated with your account." isRequired disabled/>
-                <InputField name="password" label={t("password")} placeholder={t("password")} startIcon={<LockIcon />} tooltip="Enter the password associated with your account." type="password" isRequired disabled/>
-                <InputField name="confirm-password" label={t("confirm-password")} placeholder={t("confirm-password")} startIcon={<LockIcon />} tooltip="Enter the password associated with your account." type="password" isRequired disabled/>
+                <InputField name="email" label={t("fields.email.label")} placeholder={t("fields.email.placeholder")} startIcon={<MailIcon />} tooltip={t("fields.email.tooltip")} type="email" isRequired disabled/>
+                <InputField name="username" label={t("fields.username.label")} placeholder={t("fields.username.placeholder")} startIcon={<UserIcon />} tooltip={t("fields.username.tooltip")} isRequired disabled/>
+                <InputField name="password" label={t("fields.password.label")} placeholder={t("fields.password.placeholder")} startIcon={<LockIcon />} tooltip={t("fields.password.tooltip")} type="password" isRequired disabled/>
+                <InputField name="confirm-password" label={t("fields.confirmPassword.label")} placeholder={t("fields.confirmPassword.placeholder")} startIcon={<LockIcon />} tooltip={t("fields.confirmPassword.tooltip")} type="password" isRequired disabled/>
             </Form>
         </>
     )

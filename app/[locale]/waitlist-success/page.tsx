@@ -1,11 +1,24 @@
 import { PartyPopper } from "lucide-react"
+import { Metadata } from "next"
 import Image from "next/image"
+import { getTranslations } from "next-intl/server"
 
 import waitlistSuccessImage from "@/features/auth/assets/Starting a business project-pana.svg"
+import { LandingText } from "@/features/global/components"
 import { BackgroundPattern } from "@/features/landing/components"
 import { Link } from "@/i18n/naviation"
 
+export async function generateMetadata(): Promise<Metadata> {
+    const t = await getTranslations("auth.waitlist.success.page")
+    return {
+        title: t('title'),
+        description: t('description'),
+    }
+}
+
 export default async function WaitlistSuccessPage() {
+    const t = await getTranslations("auth.waitlist.success.page")
+    
     return (
         <section className="md:min-h-dvh relative pt-17 flex">
             <div className='brightness-95 dark:brightness-60 absolute inset-0'>
@@ -15,19 +28,19 @@ export default async function WaitlistSuccessPage() {
                 <div className="mb-10 flex flex-col items-center gap-4">
                     <div className="flex items-center gap-2 text-primary justify-center mb-4">
                         <PartyPopper />
-                        <h2 className="text-5xl font-bold font-oswald">Felicidades!</h2>
+                        <h2 className="text-5xl font-bold font-oswald">{t('title')}</h2>
                     </div>
-                    <p className="text-muted-foreground font-quattrocento text-center font-medium text-lg max-w-md text-balance">
-                        Te notificaremos cuando el producto esté disponible. Podes cerrar esta ventana y continuar con tu día.
-                    </p>
+                    <LandingText className="text-center max-w-md text-balance">
+                        {t('description')}
+                    </LandingText>
                     <Link href="/" className="text-sm text-blue-500 hover:underline mx-auto">
-                        Volver al inicio
+                        {t('link.text')}
                     </Link>
                 </div>
                 <div className="relative w-full hidden md:flex items-end max-w-md justify-self-start">
                     <Image
                         src={waitlistSuccessImage}
-                        alt="Hero Image"
+                        alt={t('image.alt')}
                         className="w-full antialiased object-bottom drop-shadow-xl drop-shadow/20 size-96"
                     />
                 </div>

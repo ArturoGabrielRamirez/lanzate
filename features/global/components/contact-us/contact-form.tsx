@@ -11,16 +11,16 @@ import { contactResolver, ContactFormData } from "@/features/global/schemas/cont
 import { ContactFormProps } from "@/features/global/types"
 
 export function ContactForm({ onSuccess }: ContactFormProps) {
-    const t = useTranslations("dashboard.help");
+    const t = useTranslations("auth.contact.form");
 
     const categories = [
-        { value: "technical", label: "Problema técnico" },
-        { value: "products", label: "Gestión de productos" },
-        { value: "ecommerce", label: "E-commerce y ventas" },
-        { value: "subdomain", label: "Subdominios y dominio personalizado" },
-        { value: "billing", label: "Cuenta y facturación" },
-        { value: "integrations", label: "Integraciones" },
-        { value: "general", label: "Consulta general" },
+        { value: "technical", label: t("categories.technical") },
+        { value: "products", label: t("categories.products") },
+        { value: "ecommerce", label: t("categories.ecommerce") },
+        { value: "subdomain", label: t("categories.subdomain") },
+        { value: "billing", label: t("categories.billing") },
+        { value: "integrations", label: t("categories.integrations") },
+        { value: "general", label: t("categories.general") },
     ];
 
     const handleSubmit = async (data: ContactFormData) => {
@@ -35,7 +35,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
         if (!res.ok) {
             return {
                 error: true,
-                message: responseData.error || t("dialog.messages.error"),
+                message: responseData.error || t("messages.error"),
                 payload: null,
                 hasError: true
             };
@@ -45,7 +45,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
 
         return {
             error: false,
-            message: "¡Mensaje enviado con éxito! Nuestro equipo se pondrá en contacto contigo pronto. Por lo general, respondemos en un plazo de 24-48 horas.",
+            message: t("messages.success"),
             payload: responseData.data,
             hasError: false
         };
@@ -55,9 +55,9 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
         <Form<ContactFormData>
             resolver={contactResolver}
             formAction={handleSubmit}
-            contentButton={t("send-message")}
-            successMessage="¡Mensaje enviado con éxito! Nuestro equipo se pondrá en contacto contigo pronto."
-            loadingMessage={t("dialog.messages.loading")}
+            contentButton={t("actions.submit")}
+            successMessage={t("messages.successShort")}
+            loadingMessage={t("messages.loading")}
             className="!bg-transparent !border-none !shadow-none !p-0 !rounded-none"
             onSuccess={onSuccess}
             resetOnSuccess={true}
@@ -65,9 +65,9 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             <InputField
                 type="text"
                 name="name"
-                label={t("dialog.name")}
-                placeholder={t("dialog.name")}
-                tooltip="Ingrese su nombre completo"
+                label={t("fields.name.label")}
+                placeholder={t("fields.name.placeholder")}
+                tooltip={t("fields.name.tooltip")}
                 isRequired
                 startIcon={<UserIcon />}
             />
@@ -75,29 +75,29 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             <InputField
                 type="email"
                 name="email"
-                label={t("dialog.email")}
-                placeholder={t("dialog.email")}
+                label={t("fields.email.label")}
+                placeholder={t("fields.email.placeholder")}
                 isRequired
-                tooltip="Ingrese un email al que podamos contactarnos con usted"
+                tooltip={t("fields.email.tooltip")}
                 startIcon={<MailIcon />}
             />
 
             <SelectField
                 name="category"
-                label="Categoría"
-                placeholder="Seleccione el tipo de consulta"
+                label={t("fields.category.label")}
+                placeholder={t("fields.category.placeholder")}
                 options={categories}
                 isRequired
-                tooltip="Seleccione la categoría que mejor describa su consulta"
+                tooltip={t("fields.category.tooltip")}
                 startIcon={<ListIcon />}
             />
 
             <TextareaField
                 name="message"
-                label={t("dialog.message")}
-                placeholder={t("dialog.message")}
+                label={t("fields.message.label")}
+                placeholder={t("fields.message.placeholder")}
                 isRequired
-                tooltip="¿En qué podemos ayudarlo?"
+                tooltip={t("fields.message.tooltip")}
             />
         </Form>
     );

@@ -5,17 +5,18 @@ import { getTranslations } from 'next-intl/server'
 
 import signupImage from '@/features/auth/assets/Sign up-pana.svg'
 import { JoinWaitlistAlert, SignupForm, SocialLoginButtons } from '@/features/auth/components'
+import { LandingSectionIconTitle, LandingText } from '@/features/global/components'
 import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
 
 export const metadata: Metadata = {
   title: "Signup",
-  description: "Signup to your account",
+  description: "Create your account to start using Lanzate",
 }
 
 export default async function SignupPage() {
 
-  const t = await getTranslations("auth")
+  const t = await getTranslations("auth.signup.page")
 
   return (
     <section className="md:min-h-dvh relative pt-17 flex flex-col gap-10">
@@ -28,31 +29,30 @@ export default async function SignupPage() {
       <div className="container mx-auto px-4 flex flex-col md:grid md:grid-cols-2 md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:pb-12 lg:pb-20 z-20 relative grow">
         <div className='w-full flex flex-col gap-8 lg:max-w-md md:justify-self-end'>
           <div>
-            <div className="flex items-center gap-2 text-primary">
-              <KeyRound />
-              <h2 className="text-2xl font-bold font-oswald">Registrarse</h2>
-            </div>
-            <p className="text-muted-foreground font-quattrocento">
-              Regístrate para crear tu cuenta
-            </p>
+            <LandingSectionIconTitle icon={<KeyRound />}>
+              {t('header.title')}
+            </LandingSectionIconTitle>
+            <LandingText>
+              {t('header.description')}
+            </LandingText>
           </div>
           <SignupForm />
           <SocialLoginButtons />
           <div className='w-full'>
             <div className="flex gap-2 items-center justify-center w-full">
               <h3 className="text-sm text-gray-600 dark:text-gray-400">
-                No tienes una cuenta?{" "}
+                {t('links.hasAccount')}{" "}
               </h3>
               <Link href="/login" className="text-sm text-blue-500 hover:underline">
-                {t("login")}
+                {t('links.loginLink')}
               </Link>
             </div>
             <div className="flex gap-2 items-center justify-center w-full">
               <h3 className="text-sm text-gray-600 dark:text-gray-400">
-                Necesitas ayuda?{" "}
+                {t('links.needHelp')}{" "}
               </h3>
               <Link href="/help" className="text-sm text-blue-500 hover:underline">
-                {t("help")}
+                {t('links.helpLink')}
               </Link>
             </div>
           </div>
@@ -60,7 +60,7 @@ export default async function SignupPage() {
         <div className="relative aspect-square w-full hidden md:flex items-end max-w-md justify-self-start">
           <Image
             src={signupImage}
-            alt="Hero Image"
+            alt={t('image.alt')}
             width={5}
             className="w-full antialiased object-bottom drop-shadow-xl drop-shadow/20"
           />

@@ -994,6 +994,20 @@ model ProductMedia {
   @@map("product_medias")
 }
 
+model Waitlist {
+  id              Int                @id @default(autoincrement())
+  email           String             @unique
+  status          WaitlistStatus     @default(PENDING)
+  contact_amount  Int                @default(0)
+  created_at      DateTime           @default(now())
+  updated_at      DateTime           @updatedAt
+}
+
+enum WaitlistStatus {
+  PENDING
+  CONTACTED
+}
+
 enum NotificationType {
   SYSTEM
   PRODUCT_LIKE
@@ -1308,3 +1322,4 @@ enum DiscountType {
   FIXED_AMOUNT
   SPECIAL
 }
+

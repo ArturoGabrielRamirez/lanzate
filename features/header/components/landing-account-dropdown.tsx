@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { User } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
@@ -10,6 +11,7 @@ import { Button } from "@/features/shadcn/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 
 function LandingAccountDropdown() {
+    const t = useTranslations('layout.header.accountDropdown')
     const [open, setOpen] = useState(false)
 
     const handleClick = () => {
@@ -34,13 +36,13 @@ function LandingAccountDropdown() {
             </DropdownMenuTrigger>
             <DropdownMenuContent side="bottom" align="end">
                 <DropdownMenuItem onClick={handleClick}>
-                    <Link href="/account">Account</Link>
+                    <Link href="/account">{t('account')}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleClick}>
-                    <Link href="/cart">Cart</Link>
+                    <Link href="/cart">{t('cart')}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleClick}>
-                    <Link href="/my-orders">My Orders</Link>
+                    <Link href="/my-orders">{t('myOrders')}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
@@ -48,7 +50,7 @@ function LandingAccountDropdown() {
                         onClick={handleSignOut}
                         className="w-full text-left cursor-pointer"
                     >
-                        Sign out
+                        {t('signOut')}
                     </Button>
                 </DropdownMenuItem>
             </DropdownMenuContent>

@@ -1,9 +1,13 @@
 import { Plug } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
-import { BackgroundPattern } from "@/features/landing/components"
+import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
+import { BackgroundPattern, SectionSubtitle } from "@/features/landing/components"
 import { MarqueeLogoScroller } from "@/features/shadcn/components/marquee-logo"
 
-function IntegrationSection() {
+async function IntegrationSection() {
+
+    const t = await getTranslations("landing.integrations");
 
     const partners = [
         {
@@ -49,28 +53,27 @@ function IntegrationSection() {
     ];
 
     return (
-        <section className="relative py-17 flex snap-start flex-col items-center">
+        <section className="relative pt-17 md:py-17 flex snap-start flex-col items-center" id="integrations">
             <div className="container mx-auto px-4 relative h-full grow w-full">
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-6 lg:gap-8 z-20 relative items-end mb-10">
+                <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-6 lg:gap-8 z-20 relative items-end mb-10 text-center text-balance md:text-left">
                     <div>
-                        <div className="mb-10 flex items-center gap-2 text-primary">
-                            <Plug />
-                            <h2 className="text-2xl font-bold font-oswald">Integrations</h2>
-                        </div>
-                        <h2 className="text-3xl font-bold tracking-tight md:text-4xl font-oswald">
-                            All your favorite tools. One single place.
-                        </h2>
+                        <LandingSectionIconTitle icon={<Plug />}>
+                            {t('header.label')}
+                        </LandingSectionIconTitle>
+                        <SectionSubtitle>
+                            {t('header.title')}
+                        </SectionSubtitle>
                     </div>
-                    <p className="text-muted-foreground font-quattrocento">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, vero eius, in quasi hic nemo magnam assumenda accusamus dolorem fugiat quia provident inventore enim vitae nobis? Cupiditate quibusdam saepe temporibus?
-                    </p>
+                    <LandingText>
+                        {t('header.description')}
+                    </LandingText>
                 </div>
                 <MarqueeLogoScroller
-                    title="Trusted by Businesses Worldwide"
-                    description="Founders, developers, and business leaders across the globe chose us for their digital asset operations."
+                    title={t('marquee.title')}
+                    description={t('marquee.description')}
                     logos={partners}
                     speed="normal"
                 />

@@ -1,40 +1,40 @@
 import { MessageCircle } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-import { BackgroundPattern } from "@/features/landing/components";
+import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
+import { BackgroundPattern, SectionSubtitle } from "@/features/landing/components";
 import { AnimatedShinyButton } from "@/features/shadcn/components/animated-shiny-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
 import { Link } from "@/i18n/naviation";
 
 async function ContactSection() {
 
-    const t = await getTranslations("landing.contact-section");
+    const t = await getTranslations("landing.contact");
 
     return (
-        <section className="relative py-17 flex snap-start flex-col items-center">
+        <section className="relative pt-17 md:py-17 flex snap-start flex-col items-center" id="contact">
             <div className="container mx-auto px-4 relative h-full grow w-full">
                 <div className='brightness-90 dark:brightness-100 absolute inset-0'>
                     <BackgroundPattern />
                 </div>
-                <div className="mb-10 flex items-center gap-2 text-primary">
-                    <MessageCircle />
-                    <h2 className="text-2xl font-bold font-oswald">Contact</h2>
-                </div>
+                <LandingSectionIconTitle icon={<MessageCircle />}>
+                    {t('header.label')}
+                </LandingSectionIconTitle>
                 <Card className="relative z-20">
                     <CardHeader>
                         <CardTitle>
-                            <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald text-center">
-                                Contact Us
-                            </h2>
+                            <SectionSubtitle className="mb-4 text-3xl font-bold tracking-tight md:text-4xl font-oswald text-center">
+                                {t('header.title')}
+                            </SectionSubtitle>
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-col items-center gap-4">
-                        <p className="text-muted-foreground font-geist font-light text-center text-balance">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, vero eius, in quasi hic nemo magnam assumenda accusamus dolorem fugiat quia provident inventore enim vitae nobis? Cupiditate quibusdam saepe temporibus?
-                        </p>
+                        <LandingText>
+                            {t('header.description')}
+                        </LandingText>
                         <AnimatedShinyButton asChild>
                             <Link href="/help">
-                                {t("contact-us")}
+                                {t("actions.button")}
                             </Link>
                         </AnimatedShinyButton>
                     </CardContent>

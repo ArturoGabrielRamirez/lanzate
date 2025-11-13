@@ -7,12 +7,12 @@ import { Label } from '@/features/shadcn/components/ui/label'
 
 async function SocialLoginButtons() {
 
-    const t = await getTranslations("auth")
+    const t = await getTranslations("auth.login.social")
 
     return (
         <div className="grid w-full place-content-left max-w-xl">
             <Label htmlFor='google' className='justify-center w-full mb-2 text-center'>
-                {t("description.or-login-with")}
+                {t("label")}
             </Label>
             <div className='flex flex-col gap-2 w-full'>
                 <form action={handleGoogleLogInAction}>
@@ -23,7 +23,7 @@ async function SocialLoginButtons() {
                         disabled
                     >
                         <GoogleLogo className='size-6' />
-                        Google
+                        {t("providers.google")}
                     </Button>
                 </form>
                 <form action={handleFacebookLoginAction}>
@@ -34,7 +34,7 @@ async function SocialLoginButtons() {
                         disabled
                     >
                         <FacebookLogo className='size-6' />
-                        Facebook
+                        {t("providers.facebook")}
                     </Button>
                 </form>
             </div>

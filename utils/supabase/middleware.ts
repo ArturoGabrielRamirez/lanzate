@@ -177,6 +177,7 @@ export async function updateSession(request: NextRequest) {
     '/help',
     '/waitlist',
     '/waitlist-success',
+    '/about',
   ]
 
   // Verificar si es una ruta de perfil público (no requiere autenticación)

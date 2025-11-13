@@ -8,22 +8,22 @@ import { cn } from "@/lib/utils";
 
 function HeroDescription({ className }: WithClassName) {
 
-    const t = useTranslations('home');
+    const t = useTranslations('landing.hero');
 
     return (
         <div className={cn("flex flex-col gap-12", className)}>
             <p className="text-lg lg:text-xl text-center md:text-left font-quattrocento text-balance">
-                {t("description.slogan")}
+                {t("description.text")}
             </p>
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                 <Button variant="outline" className="font-bold" size="lg">
                     <Link href="/about">
-                        {t('buttons.learn-more')}
+                        {t('actions.learnMore')}
                     </Link>
                 </Button>
                 <AnimatedShinyButton asChild>
                     <Link href="/login">
-                        {t('buttons.get-started')}
+                        {t('actions.getStarted')}
                     </Link>
                 </AnimatedShinyButton>
             </div>
