@@ -1,4 +1,5 @@
 import { KeyRound } from 'lucide-react'
+import { Metadata } from 'next'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
@@ -7,6 +8,11 @@ import { JoinWaitlistAlert, ResetPassword } from '@/features/auth/components'
 import { LandingSectionIconTitle, LandingText } from '@/features/global/components'
 import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
+
+export const metadata: Metadata = {
+  title: "Reset Password",
+  description: "Reset your password to regain access to your account",
+}
 
 export default async function ResetPage() {
 

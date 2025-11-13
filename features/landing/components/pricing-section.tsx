@@ -25,7 +25,7 @@ async function PricingSection() {
                         {t('header.description')}
                     </LandingText>
                 </div>
-                <div className="container grid items-center pt-10 gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist">
+                <div className="container grid items-center md:pt-10 gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist">
                     <PriceCard contactPageHref="/login" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 md:scale-90" actionText={t('actions.button')}>
                         <ProductName>{t('plans.starter.name')}</ProductName>
                         <Price>{t('plans.starter.price')}</Price>
@@ -41,7 +41,7 @@ async function PricingSection() {
                             <Offering>{t('plans.starter.features.feature6')}</Offering>
                         </OfferingWrapper>
                     </PriceCard>
-                    <PriceCard contactPageHref="/contact" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 bg-card" actionText={t('actions.button')}>
+                    <PriceCard contactPageHref="/waitlist" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 bg-card" actionText={t('actions.button')}>
                         <ProductName>{t('plans.business.name')}</ProductName>
                         <Price>{t('plans.business.price')}</Price>
                         <Description>
@@ -55,7 +55,7 @@ async function PricingSection() {
                             <Offering>{t('plans.business.features.feature5')}</Offering>
                         </OfferingWrapper>
                     </PriceCard>
-                    <PriceCard contactPageHref="/contact" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 md:scale-90" actionText={t('actions.button')}>
+                    <PriceCard contactPageHref="/waitlist" className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 md:scale-90" actionText={t('actions.button')}>
                         <ProductName>{t('plans.enterprise.name')}</ProductName>
                         <Price>{t('plans.enterprise.price')}</Price>
                         <Description>

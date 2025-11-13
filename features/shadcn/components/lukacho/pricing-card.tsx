@@ -32,7 +32,7 @@ export function OfferingWrapper({ children, className }: { children: React.React
 export function Offering({ children, className }: { children: React.ReactNode; className?: string }) {
     return (
         <li className={cn('flex gap-2 items-center font-medium', className)}>
-            <CheckCircle className='size-6 text-primary' />
+            <CheckCircle className='size-6 text-primary shrink-0' />
             <div>{children}</div>
         </li>
     )

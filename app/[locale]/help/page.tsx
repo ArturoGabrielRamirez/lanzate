@@ -13,7 +13,7 @@ import { Link } from '@/i18n/naviation'
 
 export const metadata: Metadata = {
   title: "Help",
-  description: "Contact us for help",
+  description: "Get help with your account or store. Contact our support team for assistance.",
 }
 
 export default async function HelpPage() {
