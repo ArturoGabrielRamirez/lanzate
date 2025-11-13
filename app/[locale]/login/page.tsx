@@ -12,7 +12,7 @@ import { Link } from '@/i18n/naviation'
 
 export const metadata: Metadata = {
     title: "Login",
-    description: "Login to your account",
+    description: "Access your account to manage your store",
 }
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {

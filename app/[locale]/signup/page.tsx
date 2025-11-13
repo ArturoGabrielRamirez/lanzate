@@ -11,7 +11,7 @@ import { Link } from '@/i18n/naviation'
 
 export const metadata: Metadata = {
   title: "Signup",
-  description: "Signup to your account",
+  description: "Create your account to start using Lanzate",
 }
 
 export default async function SignupPage() {
