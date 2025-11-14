@@ -254,87 +254,114 @@ export const ROUTES = {
 
 **Impacto:** Mejora significativa en mantenibilidad. Cambios de rutas ahora se hacen en un solo lugar, reduciendo el riesgo de inconsistencias y errores.
 
-### 5. Clases CSS Repetidas
+### 5. Clases CSS Repetidas ⚠️ **ANÁLISIS ACTUALIZADO - NO NECESARIO**
 
-**Problema:** Clases repetidas en múltiples lugares:
+**Estado:** ✅ **YA SOLUCIONADO** (a través de refactorizaciones anteriores)
 
-- `container mx-auto px-4` aparece en todas las secciones
-- `text-center text-balance md:text-left` aparece en múltiples lugares
-- `relative z-20` usado para contenido sobre BackgroundPattern
+**Análisis post-refactorización:**
 
-**Solución propuesta:** Extraer a constantes o componentes:
+Después de implementar `LandingSectionWrapper` y `SectionHeader`, se revisó el estado actual de las clases CSS repetidas:
 
-```tsx
-// features/landing/components/landing-container.tsx
-export const landingContainerClasses = "container mx-auto px-4";
-export const landingContentClasses = "relative z-20";
-export const landingTextAlignmentClasses = "text-center text-balance md:text-left";
-```
+#### 1. `container mx-auto px-4` ✅ **YA CENTRALIZADO**
+- **Estado:** ✅ Completamente centralizado en `LandingSectionWrapper` (línea 29)
+- **Uso restante:** Solo aparece una vez más en `pricing-section.tsx` (línea 27) en un `<div>` específico para el grid de cards de precios
+- **Conclusión:** ✅ No es un problema - el caso en pricing es legítimo (container adicional para layout específico)
+
+#### 2. `text-center text-balance md:text-left` ⚠️ **CASOS ESPECÍFICOS**
+- **Estado:** Aparece en varios lugares pero en contextos diferentes:
+  - `integration-section.tsx` (línea 60): En un div de grid layout específico
+  - `faq-section.tsx` (línea 16): En un div de grid layout específico
+  - `pricing-section.tsx` (línea 25): En `containerClassName` del `SectionHeader` (caso específico)
+  - `features-section.tsx` (líneas 146, 158, 168): En divs con diferentes propósitos dentro de un layout complejo
+  - `hero-description.tsx` (línea 16): En un párrafo específico con contexto único
+- **Análisis:** Cada uso tiene un contexto semántico diferente. No es repetición problemática sino uso apropiado de clases utilitarias de Tailwind
+- **Conclusión:** ⚠️ **NO RECOMENDADO** extraer - sería over-engineering. Las clases utilitarias de Tailwind están diseñadas para usarse directamente.
+
+#### 3. `relative z-20` ✅ **YA CENTRALIZADO**
+- **Estado:** ✅ Completamente centralizado en `LandingSectionWrapper` (líneas 38, 42)
+- **Uso restante:** 
+  - `contact-section.tsx` (línea 25): Card que necesita estar sobre el pattern (caso especial legítimo)
+  - `features-section.tsx` (líneas 26, 145): Casos específicos dentro de un grid complejo con `noContentWrapper`
+- **Conclusión:** ✅ No es un problema - los casos restantes son legítimos y específicos
+
+**Decisión final:** ❌ **NO IMPLEMENTAR**
+
+**Razones:**
+1. ✅ Las clases principales (`container mx-auto px-4` y `relative z-20`) ya están centralizadas en `LandingSectionWrapper`
+2. ✅ Las clases restantes (`text-center text-balance md:text-left`) son clases utilitarias de Tailwind diseñadas para usarse directamente
+3. ✅ Los casos donde aparecen tienen contextos semánticos diferentes, no son repetición problemática
+4. ✅ Extraer estas clases a constantes agregaría complejidad sin beneficio real
+5. ✅ Tailwind CSS está diseñado para usar clases directamente - extraerlas va contra las mejores prácticas del framework
+
+**Recomendación:** Mantener el código actual. Las clases utilitarias de Tailwind deben usarse directamente cuando tienen sentido semántico, y eso es exactamente lo que está pasando aquí.
+
+**Impacto:** El problema original ya está resuelto a través de las refactorizaciones anteriores. No se requiere acción adicional.
 
 ---
 
 ## 🧩 Falta de Modularización
 
-### 1. HeroDescription como Componente Cliente en Servidor
+### 1. HeroDescription como Componente Cliente en Servidor ✅ **SOLUCIONADO**
 
-**Problema:** `HeroDescription` es un componente cliente (`'use client'`) pero se usa dentro de `HeroSection` que es un componente servidor.
+**Estado:** ✅ **YA IMPLEMENTADO**
 
-**Ubicación:** 
-- `features/landing/components/hero-description.tsx` (línea 1: `'use client'`)
-- `features/landing/components/hero-section.tsx` (líneas 54, 56)
+**Problema original:** `HeroDescription` era un componente cliente (`'use client'`) pero se usaba dentro de `HeroSection` que es un componente servidor.
 
-**Impacto:** Esto puede causar problemas de hidratación y bundle splitting subóptimo.
+**Estado actual:** ✅ El componente `HeroDescription` ya es un componente servidor que usa `getTranslations` de `next-intl/server`, eliminando el problema de hidratación y mejorando el bundle splitting.
 
-**Solución propuesta:**
-```tsx
-// Opción 1: Hacer HeroDescription servidor y pasar traducciones como props
-async function HeroDescription({ className }: WithClassName) {
-  const t = await getTranslations('landing.hero');
-  // ... resto del código
-}
+**Ubicación actual:** 
+- `features/landing/components/hero-description.tsx` - Usa `getTranslations` de servidor
+- `features/landing/components/hero-section.tsx` - Usa `HeroDescription` como servidor
 
-// Opción 2: Separar la lógica de cliente en un componente más pequeño
-// Mantener solo los botones como cliente si necesitan interactividad
-```
+**Impacto:** ✅ Problema resuelto - no hay problemas de hidratación y el bundle splitting es óptimo.
 
-### 2. BackgroundPattern con Estilos Inline Complejos
+### 2. BackgroundPattern con Estilos Inline Complejos ✅ **COMPLETADO** (Sin implementar)
+
+**Estado:** ✅ **DECISIÓN TOMADA - NO IMPLEMENTAR**
 
 **Problema:** `BackgroundPattern` tiene estilos inline muy complejos que dificultan el mantenimiento.
 
 **Ubicación:** `features/landing/components/background-pattern.tsx` (líneas 6-48)
 
-**Solución propuesta:** Mover estilos a CSS o usar variables CSS:
+**Decisión:** Se decidió mantener los estilos inline tal como están. Los estilos complejos con máscaras y gradientes funcionan correctamente y moverlos a CSS no aportaría beneficios significativos en este caso.
+
+**Razón:** Los estilos inline con variables CSS (`var(--border)`) ya proporcionan suficiente flexibilidad y mantenerlos inline facilita la comprensión del componente completo en un solo lugar.
+
+### 3. Integraciones Hardcodeadas ✅ **SOLUCIONADO**
+
+**Estado:** ✅ **IMPLEMENTADO**
+
+**Problema original:** La lista de partners/integraciones estaba hardcodeada en el componente, dificultando el mantenimiento.
+
+**Solución implementada:** Se movió la lista de integraciones a un archivo de constantes siguiendo la arquitectura del proyecto:
 
 ```tsx
-// app/globals.css o un archivo específico
-.background-pattern {
-  background-image: 
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 20px 20px;
-  /* ... resto de estilos ... */
-}
-```
-
-### 3. Integraciones Hardcodeadas
-
-**Problema:** La lista de partners/integraciones está hardcodeada en el componente.
-
-**Ubicación:** `features/landing/components/integration-section.tsx` (líneas 12-53)
-
-**Solución propuesta:** Mover a archivo de configuración:
-
-```tsx
-// features/landing/config/integrations.ts
+// features/landing/constants/integrations.ts
 export const INTEGRATION_PARTNERS = [
   {
     src: 'https://svgl.app/library/whatsapp-icon.svg',
     alt: 'WhatsApp',
     gradient: { from: '#67F0D1', via: '#2AE5B9', to: '#1B8F72' },
   },
-  // ... resto
+  // ... resto de partners
 ] as const;
 ```
+
+**Estructura creada:**
+- ✅ `features/landing/constants/integrations.ts` - Constante con todos los partners
+- ✅ `features/landing/constants/index.ts` - Exporta las constantes del feature
+
+**Componente refactorizado:**
+- ✅ `integration-section.tsx` - Ahora importa `INTEGRATION_PARTNERS` desde las constantes
+
+**Beneficios obtenidos:**
+- ✅ Separación de datos y lógica de presentación
+- ✅ Facilita agregar/remover/modificar partners sin tocar el componente
+- ✅ Reutilizable en otros componentes si es necesario
+- ✅ Type safety con `as const`
+- ✅ Sigue la arquitectura del proyecto (constants dentro del feature)
+
+**Impacto:** Mejora en mantenibilidad y organización del código. Los datos de integraciones están centralizados y son fáciles de modificar.
 
 ### 4. FAQ Items Hardcodeados
 
@@ -773,14 +800,21 @@ export const metadata: Metadata = {
 
 ### Estado de Implementación
 
-- ✅ **Completado:**
+- ✅ **Completado - Repeticiones Evitables:**
   - Patrón de sección repetido (Punto 1) - `LandingSectionWrapper` implementado
   - BackgroundPattern con configuración repetida (Punto 2) - Solucionado a través del wrapper
   - Estructura de Header repetida (Punto 3) - `SectionHeader` implementado
   - Rutas hardcodeadas (Punto 4) - `ROUTES` constantes implementadas
+  - Clases CSS repetidas (Punto 5) - Analizado y determinado como no necesario
+
+- ✅ **Completado - Falta de Modularización:**
+  - HeroDescription como componente cliente (Punto 1) - Ya estaba solucionado (componente servidor)
+  - BackgroundPattern con estilos inline (Punto 2) - Decisión tomada: mantener inline
+  - Integraciones hardcodeadas (Punto 3) - `INTEGRATION_PARTNERS` constantes implementadas
   
 - 🔄 **En progreso/Pendiente:**
-  - Resto de mejoras de repeticiones evitables (Clases CSS repetidas)
+  - FAQ Items hardcodeados (Punto 4 de Modularización)
+  - Pricing Cards con estructura repetida (Punto 5 de Modularización)
   - Optimizaciones de performance
   - Configuración global
   - Otras mejoras
