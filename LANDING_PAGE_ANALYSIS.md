@@ -608,37 +608,127 @@ const PricingSection = dynamic(
 
 **Impacto:** Mejora significativa en performance inicial. El bundle inicial es más pequeño y las secciones críticas cargan primero, mientras que las secciones below-the-fold se cargan bajo demanda cuando el usuario hace scroll.
 
-### 3. Bundle Splitting
+### 3. Bundle Splitting ✅ **SOLUCIONADO**
 
-**Problema:** Todos los componentes de landing se importan directamente, aumentando el bundle inicial.
+**Estado:** ✅ **YA IMPLEMENTADO** (a través de Lazy Loading de Secciones)
 
-**Solución:** Usar dynamic imports para secciones no críticas (ver punto anterior).
+**Problema original:** Todos los componentes de landing se importaban directamente, aumentando el bundle inicial.
 
-### 4. Memoización de Componentes
+**Solución implementada:** El bundle splitting ya está implementado a través del lazy loading de secciones (Punto 2). Las secciones no críticas (FAQ, Contact, Pricing) se cargan dinámicamente, creando chunks separados y reduciendo el bundle inicial.
 
-**Problema:** Componentes como `BackgroundPattern` se recrean en cada render.
+**Impacto:** ✅ Ya resuelto - el bundle inicial es más pequeño gracias a los dynamic imports implementados en el punto 2.
 
-**Solución:**
+### 4. Memoización de Componentes ✅ **SOLUCIONADO**
+
+**Estado:** ✅ **IMPLEMENTADO**
+
+**Problema original:** Algunos componentes se recreaban en cada render innecesariamente, causando re-renders innecesarios y afectando el performance.
+
+**Análisis completo de componentes de la landing page:**
+
+**Componentes analizados:**
+1. ✅ **`BackgroundPattern`** - Componente puro sin props, usado múltiples veces en `LandingSectionWrapper`
+   - **Problema:** Se recreaba en cada render del wrapper
+   - **Solución:** ✅ Memoizado con `React.memo`
+   - **Impacto:** Evita recreación innecesaria cuando el wrapper se re-renderiza
+
+2. ✅ **`FooterSection`** - Componente cliente (`'use client'`) usado en layout global
+   - **Problema:** Se re-renderizaba cuando el layout cambiaba, y el array `links` se recreaba en cada render
+   - **Solución:** ✅ Memoizado con `React.memo` y `useMemo` para el array `links`
+   - **Impacto:** Evita re-renders innecesarios del footer cuando otros componentes del layout cambian
+
+3. ✅ **`SectionSkeleton`** - Componente servidor usado en lazy loading
+   - **Análisis:** No necesita memoización (componente servidor, se renderiza una vez)
+
+4. ✅ **`Header`** - Componente servidor (`async function`)
+   - **Análisis:** No necesita memoización (componente servidor, se renderiza una vez)
+
+5. ✅ **`LandingSectionWrapper`** - Componente servidor
+   - **Análisis:** No necesita memoización (componente servidor, props cambian legítimamente)
+
+6. ✅ **`SectionHeader`** - Componente servidor async
+   - **Análisis:** No necesita memoización (componente servidor, props cambian legítimamente)
+
+**Componentes memoizados:**
+
+1. **BackgroundPattern** (`features/landing/components/background-pattern.tsx`):
 ```tsx
-export const BackgroundPattern = memo(function BackgroundPattern() {
+import { memo } from "react";
+
+const BackgroundPattern = memo(function BackgroundPattern() {
   // ... código existente
 });
+
+BackgroundPattern.displayName = "BackgroundPattern";
 ```
 
-### 5. Optimización de Fuentes
+2. **FooterSection** (`features/footer/components/footer-section.tsx`):
+```tsx
+import { memo, useMemo } from 'react';
 
-**Problema:** Se cargan todos los pesos de Geist (100-900) aunque no todos se usen.
+const FooterSection = memo(function FooterSection() {
+  const t = useTranslations('layout.footer');
+  
+  const links = useMemo(() => [
+    // ... links array
+  ], [t]);
+  
+  // ... resto del componente
+});
+
+FooterSection.displayName = "FooterSection";
+```
+
+**Componentes que NO necesitan memoización:**
+- Componentes servidor (async functions) - Se renderizan una vez en el servidor
+- Componentes con props que cambian legítimamente - La memoización sería contraproducente
+- Componentes que no se re-renderizan frecuentemente
+
+**Beneficios obtenidos:**
+- ✅ Reducción de re-renders innecesarios
+- ✅ Mejor performance en componentes que se usan múltiples veces (`BackgroundPattern`)
+- ✅ Mejor performance en componentes globales que se re-renderizan frecuentemente (`FooterSection`)
+- ✅ Uso apropiado de `useMemo` para arrays que se recreaban en cada render
+
+**Impacto:** Mejora en performance, especialmente en `BackgroundPattern` que se usa múltiples veces en la página y en `FooterSection` que es parte del layout global.
+
+### 5. Optimización de Fuentes ✅ **SOLUCIONADO**
+
+**Estado:** ✅ **IMPLEMENTADO**
+
+**Problema original:** Se cargaban todos los pesos de Geist (100-900) aunque no todos se usaban, aumentando innecesariamente el tamaño de las fuentes descargadas.
 
 **Ubicación:** `app/layout.tsx` (línea 24)
 
-**Solución:**
+**Análisis de uso de fuentes:**
+- **Geist:** Se usa con pesos `400`, `500`, `600`, `700` en la landing (font-medium, font-bold, etc.)
+- **Quattrocento:** Ya optimizado con `400` y `700`
+- **Oswald:** Ya optimizado con `400` y `700`
+
+**Solución implementada:**
 ```tsx
+// app/layout.tsx
 const geist = Geist({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'], // Solo los pesos usados
-  variable: '--font-geist',
+    subsets: ['latin'],
+    weight: ['400', '500', '600', '700'], // Solo los pesos usados
+    variable: '--font-geist',
 });
 ```
+
+**Cambio realizado:**
+- ❌ Antes: `weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']` (9 pesos)
+- ✅ Ahora: `weight: ['400', '500', '600', '700']` (4 pesos)
+
+**Componente refactorizado:**
+- ✅ `app/layout.tsx` - Geist ahora solo carga los pesos necesarios
+
+**Beneficios obtenidos:**
+- ✅ Reducción del tamaño de descarga de fuentes (~55% menos pesos)
+- ✅ Mejor tiempo de carga inicial
+- ✅ Menor uso de ancho de banda
+- ✅ Mejor performance en dispositivos móviles
+
+**Impacto:** Reducción significativa en el tamaño de las fuentes descargadas. Solo se cargan los pesos realmente utilizados en la aplicación, mejorando el tiempo de carga inicial.
 
 ### 6. Preload de Recursos Críticos
 
@@ -978,11 +1068,11 @@ export const metadata: Metadata = {
 - ✅ **Completado - Optimizaciones de Performance:**
   - Optimización de imágenes (Punto 1) - `sizes` y `priority` implementados
   - Lazy loading de secciones (Punto 2) - Dynamic imports implementados para FAQ, Contact y Pricing
+  - Bundle splitting (Punto 3) - Ya implementado a través de lazy loading
+  - Memoización de componentes (Punto 4) - `BackgroundPattern` y `FooterSection` memoizados
+  - Optimización de fuentes (Punto 5) - Geist optimizado a solo pesos necesarios (400, 500, 600, 700)
   
 - 🔄 **En progreso/Pendiente:**
-  - Bundle splitting (Punto 3 de Optimización)
-  - Memoización de componentes (Punto 4 de Optimización)
-  - Optimización de fuentes (Punto 5 de Optimización)
   - Preload de recursos críticos (Punto 6 de Optimización)
   - Configuración global
   - Otras mejoras

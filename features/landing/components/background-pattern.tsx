@@ -1,4 +1,6 @@
-function BackgroundPattern() {
+import { memo } from "react";
+
+const BackgroundPattern = memo(function BackgroundPattern() {
     return (
         <div
             className="absolute inset-0 -z-1"
@@ -47,7 +49,9 @@ function BackgroundPattern() {
                 WebkitMaskComposite: "source-in",
             }}
         />
-    )
-}
+    );
+});
 
-export { BackgroundPattern }
+BackgroundPattern.displayName = "BackgroundPattern";
+
+export { BackgroundPattern };
