@@ -1,6 +1,7 @@
 import * as yup from 'yup'
 
-import { passwordSchema, emailSchema } from '@/features/auth/schemas'
+import { emailSchema } from '@/features/auth/schemas/email-schema'
+import { passwordSchema } from '@/features/auth/schemas/password-schema'
 
 export const loginFormSchema = yup.object({
   password: passwordSchema,
