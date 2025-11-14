@@ -1,14 +1,15 @@
 import Link from "next/link";
-import { useTranslations } from "next-intl"
+import { getTranslations } from "next-intl/server";
 
+import { ROUTES } from "@/features/global/constants";
 import { WithClassName } from "@/features/global/types";
 import { AnimatedShinyButton } from "@/features/shadcn/components/animated-shiny-button";
 import { Button } from "@/features/shadcn/components/button"
 import { cn } from "@/lib/utils";
 
-function HeroDescription({ className }: WithClassName) {
+async function HeroDescription({ className }: WithClassName) {
 
-    const t = useTranslations('landing.hero');
+    const t = await getTranslations('landing.hero');
 
     return (
         <div className={cn("flex flex-col gap-12", className)}>
@@ -17,12 +18,12 @@ function HeroDescription({ className }: WithClassName) {
             </p>
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                 <Button variant="outline" className="font-bold" size="lg">
-                    <Link href="/about">
+                    <Link href={ROUTES.ABOUT}>
                         {t('actions.learnMore')}
                     </Link>
                 </Button>
                 <AnimatedShinyButton asChild>
-                    <Link href="/login">
+                    <Link href={ROUTES.LOGIN}>
                         {t('actions.getStarted')}
                     </Link>
                 </AnimatedShinyButton>

@@ -2,14 +2,15 @@
 
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import { memo, useMemo } from 'react'
 
 import { SOCIAL_MEDIA_LINKS } from '@/features/global/constants'
 import { IconButton } from '@/features/shadcn/components/shadcn-io/icon-button'
 
-function FooterSection() {
+const FooterSection = memo(function FooterSection() {
     const t = useTranslations('layout.footer')
 
-    const links = [
+    const links = useMemo(() => [
         {
             title: t('links.termsAndConditions'),
             href: '/terms-and-conditions',
@@ -26,7 +27,7 @@ function FooterSection() {
             title: t('links.contactUs'),
             href: '/help',
         },
-    ]
+    ], [t])
     return (
         <footer className="pt-16 pb-24 md:py-16 mx-auto container z-10 relative">
             <div className="mx-auto max-w-5xl">
@@ -114,6 +115,8 @@ function FooterSection() {
             </div>
         </footer>
     )
-}
+});
+
+FooterSection.displayName = "FooterSection";
 
 export { FooterSection }
