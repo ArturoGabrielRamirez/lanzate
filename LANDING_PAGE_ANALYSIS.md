@@ -1,1020 +1,649 @@
-# Análisis Completo de la Landing Page
+# Análisis Completo de la Landing Page - Revisión Integral
 
 **Fecha:** $(date)  
 **Proyecto:** Lanzate  
-**Alcance:** Análisis desde middleware.ts hasta page.tsx, incluyendo layouts, header, footer y todos los componentes
+**Alcance:** Análisis completo desde middleware hasta componentes individuales de la landing page
 
 ---
 
 ## 📋 Tabla de Contenidos
 
-1. [Flujo de Ejecución](#flujo-de-ejecución)
-2. [Repeticiones Evitables](#repeticiones-evitables)
-3. [Falta de Modularización](#falta-de-modularización)
-4. [Oportunidades de Optimización](#oportunidades-de-optimización)
-5. [Configuración Global](#configuración-global)
-6. [Otros Mejoras](#otros-mejoras)
-7. [Resumen Ejecutivo](#resumen-ejecutivo)
+1. [Arquitectura y Flujo](#arquitectura-y-flujo)
+2. [Repeticiones Detectadas](#repeticiones-detectadas)
+3. [Mejoras Propuestas](#mejoras-propuestas)
+4. [Modularizaciones Posibles](#modularizaciones-posibles)
+5. [Unificaciones Recomendadas](#unificaciones-recomendadas)
+6. [Resumen Ejecutivo](#resumen-ejecutivo)
 
 ---
 
-## 🔄 Flujo de Ejecución
+## 🏗️ Arquitectura y Flujo
 
-### 1. Middleware (`middleware.ts`)
-- **Ubicación:** `middleware.ts` (root)
-- **Función:** Delega a `updateSession` de `utils/supabase/middleware.ts`
-- **Responsabilidades:**
-  - Manejo de sesión de Supabase
-  - Internacionalización (i18n)
-  - Validación de subdominios
-  - Redirecciones de autenticación
-  - Manejo de rutas públicas
+### Flujo de Ejecución
 
-### 2. Root Layout (`app/layout.tsx`)
-- **Responsabilidades:**
-  - Configuración de fuentes (Geist, Quattrocento, Oswald)
-  - Metadata global
-  - Estilos globales (globals.css)
-  - Estructura HTML base
+1. **Middleware** (`middleware.ts` → `utils/supabase/middleware.ts`)
+   - Manejo de sesión Supabase
+   - Internacionalización (i18n)
+   - Validación de subdominios
+   - Redirecciones de autenticación
+   - Rutas públicas hardcodeadas
 
-### 3. Locale Layout (`app/[locale]/layout.tsx`)
-- **Responsabilidades:**
-  - Providers: NextThemeProvider, NuqsAdapter, NextIntlClientProvider
-  - BProgressProvider para loading states
-  - ChatProvider y ChatDoc
-  - SubdomainProvider para manejo de layouts
-  - Header y Footer globales (solo en adminLayout)
-  - Toaster, CookiePanel, GlobalEmailConfirmationDetector
+2. **Root Layout** (`app/layout.tsx`)
+   - Configuración de fuentes (Geist, Quattrocento, Oswald)
+   - Metadata global
+   - Estilos globales
 
-### 4. Landing Page (`app/[locale]/page.tsx`)
-- **Componentes:**
-  - HeroSection
-  - FeaturesSection
-  - IntegrationSection
-  - FaqSection
-  - ContactSection
-  - PricingSection
+3. **Locale Layout** (`app/[locale]/layout.tsx`)
+   - Providers anidados: NextThemeProvider → NuqsAdapter → NextIntlClientProvider → BProgressProvider → ChatProvider → SubdomainProvider
+   - Header y Footer globales (solo en adminLayout)
+   - Componentes globales: Toaster, CookiePanel, ChatDoc, GlobalEmailConfirmationDetector
+
+4. **Landing Page** (`app/[locale]/page.tsx`)
+   - HeroSection (carga inmediata)
+   - FeaturesSection (carga inmediata)
+   - IntegrationSection (carga inmediata)
+   - FaqSection (lazy loading)
+   - ContactSection (lazy loading)
+   - PricingSection (lazy loading)
 
 ---
 
-## 🔁 Repeticiones Evitables
+## 🔁 Repeticiones Detectadas
 
-### 1. Patrón de Sección Repetido ✅ **SOLUCIONADO**
+### 1. Patrones de Grid Repetidos
 
-**Estado:** ✅ **IMPLEMENTADO**
+**Problema:** Múltiples secciones usan patrones de grid similares con variaciones menores.
 
-**Problema original:** Todas las secciones compartían una estructura muy similar con código duplicado.
+**Ubicaciones:**
+- `integration-section.tsx`: `grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-6 lg:gap-8`
+- `faq-section.tsx`: `grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-6 lg:gap-20`
+- `pricing-section.tsx`: `grid items-center gap-12 lg:grid-cols-[1fr_3fr] h-fit`
+- `features-section.tsx`: `grid items-center gap-12 lg:grid-cols-[3fr_2fr] h-fit`
+- `pricing-section.tsx` (interno): `grid items-center gap-4 lg:grid-cols-3`
 
-**Solución implementada:** Se creó el componente `LandingSectionWrapper` que centraliza toda la lógica común:
+**Impacto:** Código repetitivo, difícil de mantener consistencia visual.
 
-```tsx
-// features/landing/components/landing-section-wrapper.tsx
-export function LandingSectionWrapper({
-  children,
-  id,
-  className,
-  showPattern = true,
-  patternBrightness = "default",
-  containerClassName,
-  contentClassName,
-  noContentWrapper = false
-}: LandingSectionWrapperProps) {
-  // Implementación completa con variantes de brightness y flexibilidad
-}
-```
-
-**Componentes refactorizados:**
-- ✅ `hero-section.tsx` - Usa wrapper con `containerClassName` personalizado
-- ✅ `features-section.tsx` - Usa wrapper con `patternBrightness="dim"` y `noContentWrapper` para grid
-- ✅ `integration-section.tsx` - Usa wrapper estándar con `className="flex-col items-center"`
-- ✅ `faq-section.tsx` - Usa wrapper estándar con `className="flex-col"`
-- ✅ `contact-section.tsx` - Usa wrapper estándar con `className="flex-col items-center"`
-- ✅ `pricing-section.tsx` - Usa wrapper con `containerClassName` para grid
-
-**Beneficios obtenidos:**
-- ✅ Eliminación de ~150+ líneas de código duplicado
-- ✅ Centralización de la lógica de BackgroundPattern con variantes (`default`, `dim`, `bright`)
-- ✅ Manejo automático de z-index y estructura de contenedores
-- ✅ Flexibilidad para casos especiales con `noContentWrapper` y `containerClassName`
-
-**Mejoras adicionales sugeridas (opcionales):**
-1. **Variantes predefinidas para className comunes**: `flex-col items-center` aparece en 3 secciones. Podría agregarse:
-   ```tsx
-   // features/landing/types.ts
-   export type LandingSectionVariant = "default" | "centered" | "flex-col";
-   
-   // O constantes para clases comunes
-   export const LANDING_SECTION_VARIANTS = {
-     CENTERED: "flex-col items-center",
-     FLEX_COL: "flex-col",
-   } as const;
-   ```
-
-2. **Constantes para containerClassName comunes**: Los patrones de grid se repiten:
-   ```tsx
-   // features/landing/constants/containers.ts
-   export const CONTAINER_GRID_VARIANTS = {
-     TWO_COLUMNS: "grid items-center gap-12 lg:grid-cols-[3fr_2fr] h-fit",
-     THREE_COLUMNS: "grid items-center gap-12 lg:grid-cols-[1fr_3fr] h-fit",
-   } as const;
-   ```
-
-**Impacto:** Reducción significativa de código duplicado y mejora en mantenibilidad. El patrón está completamente centralizado.
-
-### 2. BackgroundPattern con Configuración Repetida ✅ **SOLUCIONADO**
-
-**Estado:** ✅ **IMPLEMENTADO** (a través de LandingSectionWrapper)
-
-**Problema original:** El componente `BackgroundPattern` se usaba con clases de brightness repetidas en múltiples lugares.
-
-**Solución implementada:** La configuración de brightness ahora se maneja centralmente a través de `LandingSectionWrapper` con la prop `patternBrightness`:
-
-```tsx
-// Implementado en landing-section-wrapper.tsx
-const brightnessVariants = {
-    default: "brightness-90 dark:brightness-100",
-    dim: "dark:brightness-75",
-    bright: "brightness-100 dark:brightness-100"
-} as const;
-```
-
-**Uso actual:**
-- ✅ `features-section.tsx`: `patternBrightness="dim"`
-- ✅ Todas las demás secciones: `patternBrightness="default"` (por defecto)
-
-**Nota:** Aunque la solución está implementada a través del wrapper (que es más eficiente), si se quisiera hacer `BackgroundPattern` más independiente en el futuro, se podría aplicar la solución propuesta original. Sin embargo, la implementación actual es más eficiente ya que evita pasar props innecesarias al componente BackgroundPattern.
-
-### 3. Estructura de Header Repetida en Secciones ✅ **SOLUCIONADO**
-
-**Estado:** ✅ **IMPLEMENTADO**
-
-**Problema original:** Múltiples secciones usaban el mismo patrón repetido para headers con código duplicado.
-
-**Solución implementada:** Se creó el componente `SectionHeader` que centraliza la lógica de headers de sección:
-
-```tsx
-// features/landing/components/section-header.tsx
-export async function SectionHeader({
-    icon,
-    labelKey,
-    titleKey,        // Opcional
-    descriptionKey,  // Opcional
-    namespace,
-    titleClassName,      // Opcional - para personalización
-    descriptionClassName, // Opcional - para personalización
-    containerClassName   // Opcional - para personalización
-}: SectionHeaderProps) {
-    // Implementación flexible que maneja casos opcionales
-}
-```
-
-**Interfaz en types.ts:**
-```tsx
-// features/landing/types.ts
-export interface SectionHeaderProps {
-    icon: React.ReactNode;
-    labelKey: string;
-    titleKey?: string;
-    descriptionKey?: string;
-    namespace: string;
-    titleClassName?: string;
-    descriptionClassName?: string;
-    containerClassName?: string;
-}
-```
-
-**Componentes refactorizados:**
-- ✅ `features-section.tsx` - Usa `SectionHeader` solo con `labelKey` (sin title ni description)
-- ✅ `integration-section.tsx` - Usa `SectionHeader` con `labelKey` y `titleKey` (description separado por layout)
-- ✅ `faq-section.tsx` - Usa `SectionHeader` completo con los tres campos
-- ✅ `contact-section.tsx` - Usa `SectionHeader` solo con `labelKey` (title y description dentro de Card especial)
-- ✅ `pricing-section.tsx` - Usa `SectionHeader` completo con `titleClassName` y `containerClassName` personalizados
-
-**Beneficios obtenidos:**
-- ✅ Eliminación de ~50+ líneas de código duplicado
-- ✅ Centralización de la lógica de traducciones para headers
-- ✅ Flexibilidad para casos especiales con props opcionales y clases personalizadas
-- ✅ Consistencia en la estructura de headers entre secciones
-- ✅ Facilita cambios futuros en la estructura de headers (solo un lugar)
-
-**Características implementadas:**
-- Props opcionales para `titleKey` y `descriptionKey` permiten usar solo el icon + label cuando sea necesario
-- `titleClassName` y `descriptionClassName` permiten personalización de estilos sin perder la estructura común
-- `containerClassName` permite ajustar el layout del contenedor del header
-
-**Impacto:** Reducción significativa de código duplicado y mejora en mantenibilidad. La estructura de headers está completamente centralizada y es flexible para diferentes casos de uso.
-
-### 4. Rutas Hardcodeadas ✅ **SOLUCIONADO**
-
-**Estado:** ✅ **IMPLEMENTADO**
-
-**Problema original:** Rutas hardcodeadas dispersas en múltiples componentes, dificultando el mantenimiento y cambios futuros.
-
-**Solución implementada:** Se creó el archivo de constantes `ROUTES` que centraliza todas las rutas de la aplicación:
-
-```tsx
-// features/global/constants/routes.ts
-export const ROUTES = {
-    HOME: '/',
-    LOGIN: '/login',
-    SIGNUP: '/signup',
-    ABOUT: '/about',
-    HELP: '/help',
-    WAITLIST: '/waitlist',
-    WAITLIST_SUCCESS: '/waitlist-success',
-    TERMS: '/terms-and-conditions',
-    PRIVACY: '/privacy-policy',
-    COOKIES: '/cookies',
-    DASHBOARD: '/dashboard',
-} as const;
-```
-
-**Exportación:** Las rutas se exportan desde `features/global/constants/index.ts` para facilitar el acceso.
-
-**Componentes refactorizados:**
-- ✅ `hero-section.tsx` - Reemplazado `/waitlist` por `ROUTES.WAITLIST`
-- ✅ `hero-description.tsx` - Reemplazado `/about` y `/login` por `ROUTES.ABOUT` y `ROUTES.LOGIN`
-- ✅ `features-section.tsx` - Reemplazado `/about` por `ROUTES.ABOUT`
-- ✅ `pricing-section.tsx` - Reemplazado `/login` y `/waitlist` en `contactPageHref` por `ROUTES.LOGIN` y `ROUTES.WAITLIST`
-- ✅ `contact-section.tsx` - Reemplazado `/help` por `ROUTES.HELP`
-- ✅ `footer-section.tsx` - Reemplazado todas las rutas (`/`, `/terms-and-conditions`, `/privacy-policy`, `/cookies`, `/help`) por constantes
-
-**Beneficios obtenidos:**
-- ✅ Centralización de todas las rutas en un solo lugar
-- ✅ Facilita cambios futuros de rutas (solo un archivo)
-- ✅ Prevención de errores tipográficos en rutas
-- ✅ Autocompletado en IDEs para mejor DX
-- ✅ Type safety con `as const` para valores inmutables
-- ✅ Consistencia en el uso de rutas en toda la aplicación
-
-**Rutas incluidas:**
-- Rutas públicas: `HOME`, `ABOUT`, `HELP`, `TERMS`, `PRIVACY`, `COOKIES`
-- Rutas de autenticación: `LOGIN`, `SIGNUP`
-- Rutas de funcionalidad: `WAITLIST`, `WAITLIST_SUCCESS`, `DASHBOARD`
-
-**Impacto:** Mejora significativa en mantenibilidad. Cambios de rutas ahora se hacen en un solo lugar, reduciendo el riesgo de inconsistencias y errores.
-
-### 5. Clases CSS Repetidas ⚠️ **ANÁLISIS ACTUALIZADO - NO NECESARIO**
-
-**Estado:** ✅ **YA SOLUCIONADO** (a través de refactorizaciones anteriores)
-
-**Análisis post-refactorización:**
-
-Después de implementar `LandingSectionWrapper` y `SectionHeader`, se revisó el estado actual de las clases CSS repetidas:
-
-#### 1. `container mx-auto px-4` ✅ **YA CENTRALIZADO**
-- **Estado:** ✅ Completamente centralizado en `LandingSectionWrapper` (línea 29)
-- **Uso restante:** Solo aparece una vez más en `pricing-section.tsx` (línea 27) en un `<div>` específico para el grid de cards de precios
-- **Conclusión:** ✅ No es un problema - el caso en pricing es legítimo (container adicional para layout específico)
-
-#### 2. `text-center text-balance md:text-left` ⚠️ **CASOS ESPECÍFICOS**
-- **Estado:** Aparece en varios lugares pero en contextos diferentes:
-  - `integration-section.tsx` (línea 60): En un div de grid layout específico
-  - `faq-section.tsx` (línea 16): En un div de grid layout específico
-  - `pricing-section.tsx` (línea 25): En `containerClassName` del `SectionHeader` (caso específico)
-  - `features-section.tsx` (líneas 146, 158, 168): En divs con diferentes propósitos dentro de un layout complejo
-  - `hero-description.tsx` (línea 16): En un párrafo específico con contexto único
-- **Análisis:** Cada uso tiene un contexto semántico diferente. No es repetición problemática sino uso apropiado de clases utilitarias de Tailwind
-- **Conclusión:** ⚠️ **NO RECOMENDADO** extraer - sería over-engineering. Las clases utilitarias de Tailwind están diseñadas para usarse directamente.
-
-#### 3. `relative z-20` ✅ **YA CENTRALIZADO**
-- **Estado:** ✅ Completamente centralizado en `LandingSectionWrapper` (líneas 38, 42)
-- **Uso restante:** 
-  - `contact-section.tsx` (línea 25): Card que necesita estar sobre el pattern (caso especial legítimo)
-  - `features-section.tsx` (líneas 26, 145): Casos específicos dentro de un grid complejo con `noContentWrapper`
-- **Conclusión:** ✅ No es un problema - los casos restantes son legítimos y específicos
-
-**Decisión final:** ❌ **NO IMPLEMENTAR**
-
-**Razones:**
-1. ✅ Las clases principales (`container mx-auto px-4` y `relative z-20`) ya están centralizadas en `LandingSectionWrapper`
-2. ✅ Las clases restantes (`text-center text-balance md:text-left`) son clases utilitarias de Tailwind diseñadas para usarse directamente
-3. ✅ Los casos donde aparecen tienen contextos semánticos diferentes, no son repetición problemática
-4. ✅ Extraer estas clases a constantes agregaría complejidad sin beneficio real
-5. ✅ Tailwind CSS está diseñado para usar clases directamente - extraerlas va contra las mejores prácticas del framework
-
-**Recomendación:** Mantener el código actual. Las clases utilitarias de Tailwind deben usarse directamente cuando tienen sentido semántico, y eso es exactamente lo que está pasando aquí.
-
-**Impacto:** El problema original ya está resuelto a través de las refactorizaciones anteriores. No se requiere acción adicional.
+**Solución propuesta:** Crear constantes o utilidades para patrones de grid comunes.
 
 ---
 
-## 🧩 Falta de Modularización
+### 2. Clases CSS de Alineación Repetidas
 
-### 1. HeroDescription como Componente Cliente en Servidor ✅ **SOLUCIONADO**
+**Problema:** Patrón `text-center text-balance md:text-left` aparece múltiples veces.
 
-**Estado:** ✅ **YA IMPLEMENTADO**
+**Ubicaciones:**
+- `integration-section.tsx` (línea 18)
+- `faq-section.tsx` (línea 22)
+- `pricing-section.tsx` (línea 25)
+- `features-section.tsx` (líneas 150, 162, 172, 176, 180, 184)
+- `hero-description.tsx` (línea 16)
 
-**Problema original:** `HeroDescription` era un componente cliente (`'use client'`) pero se usaba dentro de `HeroSection` que es un componente servidor.
+**Impacto:** ~8+ repeticiones del mismo patrón.
 
-**Estado actual:** ✅ El componente `HeroDescription` ya es un componente servidor que usa `getTranslations` de `next-intl/server`, eliminando el problema de hidratación y mejorando el bundle splitting.
-
-**Ubicación actual:** 
-- `features/landing/components/hero-description.tsx` - Usa `getTranslations` de servidor
-- `features/landing/components/hero-section.tsx` - Usa `HeroDescription` como servidor
-
-**Impacto:** ✅ Problema resuelto - no hay problemas de hidratación y el bundle splitting es óptimo.
-
-### 2. BackgroundPattern con Estilos Inline Complejos ✅ **COMPLETADO** (Sin implementar)
-
-**Estado:** ✅ **DECISIÓN TOMADA - NO IMPLEMENTAR**
-
-**Problema:** `BackgroundPattern` tiene estilos inline muy complejos que dificultan el mantenimiento.
-
-**Ubicación:** `features/landing/components/background-pattern.tsx` (líneas 6-48)
-
-**Decisión:** Se decidió mantener los estilos inline tal como están. Los estilos complejos con máscaras y gradientes funcionan correctamente y moverlos a CSS no aportaría beneficios significativos en este caso.
-
-**Razón:** Los estilos inline con variables CSS (`var(--border)`) ya proporcionan suficiente flexibilidad y mantenerlos inline facilita la comprensión del componente completo en un solo lugar.
-
-### 3. Integraciones Hardcodeadas ✅ **SOLUCIONADO**
-
-**Estado:** ✅ **IMPLEMENTADO**
-
-**Problema original:** La lista de partners/integraciones estaba hardcodeada en el componente, dificultando el mantenimiento.
-
-**Solución implementada:** Se movió la lista de integraciones a un archivo de constantes siguiendo la arquitectura del proyecto:
-
-```tsx
-// features/landing/constants/integrations.ts
-export const INTEGRATION_PARTNERS = [
-  {
-    src: 'https://svgl.app/library/whatsapp-icon.svg',
-    alt: 'WhatsApp',
-    gradient: { from: '#67F0D1', via: '#2AE5B9', to: '#1B8F72' },
-  },
-  // ... resto de partners
-] as const;
-```
-
-**Estructura creada:**
-- ✅ `features/landing/constants/integrations.ts` - Constante con todos los partners
-- ✅ `features/landing/constants/index.ts` - Exporta las constantes del feature
-
-**Componente refactorizado:**
-- ✅ `integration-section.tsx` - Ahora importa `INTEGRATION_PARTNERS` desde las constantes
-
-**Beneficios obtenidos:**
-- ✅ Separación de datos y lógica de presentación
-- ✅ Facilita agregar/remover/modificar partners sin tocar el componente
-- ✅ Reutilizable en otros componentes si es necesario
-- ✅ Type safety con `as const`
-- ✅ Sigue la arquitectura del proyecto (constants dentro del feature)
-
-**Impacto:** Mejora en mantenibilidad y organización del código. Los datos de integraciones están centralizados y son fáciles de modificar.
-
-### 4. FAQ Items Hardcodeados ✅ **SOLUCIONADO**
-
-**Estado:** ✅ **IMPLEMENTADO**
-
-**Problema original:** Los items del FAQ estaban hardcodeados con valores `item-1`, `item-2`, etc., generando código repetitivo.
-
-**Solución implementada:** Se generan dinámicamente desde una constante dentro del componente:
-
-```tsx
-// features/landing/components/faq-section.tsx
-const faqItems = Array.from({ length: 5 }, (_, i) => ({
-    id: `item-${i + 1}`,
-    questionKey: `items.item${i + 1}.question`,
-    answerKey: `items.item${i + 1}.answer`
-}));
-
-// Uso en el componente:
-{faqItems.map((item) => (
-    <AccordionItem key={item.id} value={item.id}>
-        {/* contenido dinámico */}
-    </AccordionItem>
-))}
-```
-
-**Componente refactorizado:**
-- ✅ `faq-section.tsx` - Genera items dinámicamente usando `.map()` en lugar de repetir código
-
-**Beneficios obtenidos:**
-- ✅ Eliminación de ~65 líneas de código repetitivo
-- ✅ Facilita agregar/remover items FAQ (solo cambiar el `length` en `Array.from`)
-- ✅ Código más mantenible y DRY
-- ✅ Consistencia en la estructura de items
-
-**Impacto:** Reducción significativa de código duplicado. Agregar nuevos items FAQ ahora es trivial.
-
-### 5. Pricing Cards con Estructura Repetida ✅ **SOLUCIONADO**
-
-**Estado:** ✅ **IMPLEMENTADO**
-
-**Problema original:** Los tres `PriceCard` tenían estructura muy similar con código duplicado.
-
-**Solución implementada:** Se creó una constante en `features/landing/constants/pricing.ts` y se mapea en el componente:
-
-```tsx
-// features/landing/constants/pricing.ts
-export const PRICING_PLANS = [
-    {
-        id: 'starter',
-        contactPageHref: ROUTES.LOGIN,
-        className: "shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 md:scale-90",
-        planKey: 'starter',
-        featuresCount: 6,
-    },
-    {
-        id: 'business',
-        contactPageHref: ROUTES.WAITLIST,
-        className: "shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 bg-card",
-        planKey: 'business',
-        featuresCount: 5,
-    },
-    {
-        id: 'enterprise',
-        contactPageHref: ROUTES.WAITLIST,
-        className: "shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 md:scale-90",
-        planKey: 'enterprise',
-        featuresCount: 6,
-    },
-] as const;
-
-// En el componente:
-{PRICING_PLANS.map((plan) => (
-    <PriceCard key={plan.id} contactPageHref={plan.contactPageHref} className={plan.className}>
-        {/* contenido dinámico */}
-    </PriceCard>
-))}
-```
-
-**Estructura creada:**
-- ✅ `features/landing/constants/pricing.ts` - Constante con configuración de todos los planes
-- ✅ `features/landing/constants/index.ts` - Exporta las constantes de pricing
-
-**Componente refactorizado:**
-- ✅ `pricing-section.tsx` - Mapea desde `PRICING_PLANS` en lugar de repetir código
-
-**Beneficios obtenidos:**
-- ✅ Eliminación de ~45 líneas de código repetitivo
-- ✅ Facilita agregar/remover/modificar planes de pricing
-- ✅ Separación de datos y lógica de presentación
-- ✅ Type safety con `as const`
-- ✅ Features generadas dinámicamente según `featuresCount`
-- ✅ Sigue la arquitectura del proyecto (constants dentro del feature)
-
-**Impacto:** Reducción significativa de código duplicado y mejora en mantenibilidad. Agregar nuevos planes o modificar existentes es mucho más simple.
+**Solución propuesta:** Crear componente wrapper o constante para este patrón común.
 
 ---
 
-## ⚡ Oportunidades de Optimización
+### 3. Estructura de Card con Hover Repetida
 
-### 1. Optimización de Imágenes ✅ **SOLUCIONADO**
+**Problema:** Múltiples Cards con la misma estructura de hover y transición.
 
-**Estado:** ✅ **IMPLEMENTADO**
+**Ubicaciones:**
+- `features-section.tsx`: 5 Cards con `hover:drop-shadow-xl hover:-translate-y-1 transition-all`
+- Todos tienen variaciones de `col-span-full` con breakpoints
 
-**Problema original:** Varias imágenes usaban `fill` sin especificar `sizes`, lo que impedía que Next.js optimizara correctamente las imágenes y generaba imágenes más grandes de las necesarias.
+**Impacto:** Código repetitivo en 5 lugares.
 
-**Solución implementada:** Se agregaron atributos `sizes` apropiados a todas las imágenes con `fill` y `priority` a la imagen hero:
-
-**Imágenes optimizadas:**
-
-1. **Hero Image** (`hero-section.tsx`):
-```tsx
-<Image
-  src={heroImage}
-  alt="Hero Image"
-  fill
-  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-  priority
-/>
-```
-- ✅ Agregado `sizes` según el layout responsivo
-- ✅ Agregado `priority` para carga inmediata (imagen crítica above-the-fold)
-
-2. **Devices Image** (`features-section.tsx`):
-```tsx
-<Image
-  src={devicesImage}
-  alt="Multiple devices"
-  fill
-  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-/>
-```
-- ✅ `sizes` basado en grid: `col-span-full sm:col-span-3 lg:col-span-2`
-
-3. **Barcode Image** (`features-section.tsx`):
-```tsx
-<Image
-  src={barcodeImage}
-  alt="Barcode"
-  fill
-  sizes="(max-width: 1024px) 100vw, 33vw"
-/>
-```
-- ✅ `sizes` basado en grid: `col-span-full lg:col-span-2`
-
-4. **Domain Image** (`features-section.tsx`):
-```tsx
-<Image
-  src={domainImage}
-  alt="Multiple devices"
-  fill
-  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-/>
-```
-- ✅ `sizes` basado en grid: `col-span-full sm:col-span-3 lg:col-span-2`
-
-5. **Speed Image** (`features-section.tsx`):
-```tsx
-<Image
-  src={speedImage}
-  alt="Multiple devices"
-  fill
-  sizes="(max-width: 1024px) 100vw, 50vw"
-/>
-```
-- ✅ `sizes` basado en layout: card de 3 columnas con grid interno de 2 columnas
-
-**Componentes refactorizados:**
-- ✅ `hero-section.tsx` - Hero image con `sizes` y `priority`
-- ✅ `features-section.tsx` - 4 imágenes con `sizes` apropiados
-
-**Beneficios obtenidos:**
-- ✅ Next.js puede generar imágenes optimizadas del tamaño correcto
-- ✅ Reducción del tamaño de descarga de imágenes (mejor performance)
-- ✅ Mejor LCP (Largest Contentful Paint) con `priority` en hero image
-- ✅ Mejor experiencia de usuario en dispositivos móviles
-- ✅ Cumplimiento de mejores prácticas de Next.js Image
-
-**Impacto:** Mejora significativa en performance de carga de imágenes. Las imágenes ahora se generan en tamaños apropiados según el viewport, reduciendo el ancho de banda y mejorando los tiempos de carga.
-
-### 2. Lazy Loading de Secciones ✅ **SOLUCIONADO**
-
-**Estado:** ✅ **IMPLEMENTADO**
-
-**Problema original:** Todas las secciones se cargaban inmediatamente, aumentando el bundle inicial y el tiempo de carga. Secciones como FAQ, Contact y Pricing están below-the-fold y podrían cargarse bajo demanda.
-
-**Solución implementada:** Se implementó lazy loading usando `dynamic` de Next.js para las secciones no críticas:
-
-```tsx
-// app/[locale]/page.tsx
-import dynamic from 'next/dynamic';
-
-// Secciones críticas (above-the-fold) - cargan inmediatamente
-import { FeaturesSection, HeroSection, IntegrationSection } from "@/features/landing/components";
-
-// Secciones no críticas (below-the-fold) - lazy loading
-const FaqSection = dynamic(
-  () => import('@/features/landing/components/faq-section').then(m => ({ default: m.FaqSection })),
-  {
-    loading: () => <SectionSkeleton />,
-  }
-);
-
-const ContactSection = dynamic(
-  () => import('@/features/landing/components/contact-section').then(m => ({ default: m.ContactSection })),
-  {
-    loading: () => <SectionSkeleton />,
-  }
-);
-
-const PricingSection = dynamic(
-  () => import('@/features/landing/components/pricing-section').then(m => ({ default: m.PricingSection })),
-  {
-    loading: () => <SectionSkeleton />,
-  }
-);
-```
-
-**Componente creado:**
-- ✅ `features/landing/components/section-skeleton.tsx` - Skeleton para mostrar mientras se cargan las secciones lazy
-- ✅ Usa `LandingSectionWrapper` para mantener consistencia visual
-- ✅ Exportado desde `features/landing/components/index.ts`
-
-**Estrategia de carga:**
-- ✅ **Carga inmediata (above-the-fold):**
-  - `HeroSection` - Primera sección visible
-  - `FeaturesSection` - Contenido principal visible
-  - `IntegrationSection` - Contenido importante visible
-
-- ✅ **Lazy loading (below-the-fold):**
-  - `FaqSection` - Se carga cuando el usuario hace scroll
-  - `ContactSection` - Se carga cuando el usuario hace scroll
-  - `PricingSection` - Se carga cuando el usuario hace scroll
-
-**Archivo refactorizado:**
-- ✅ `app/[locale]/page.tsx` - Implementa lazy loading para 3 secciones
-
-**Beneficios obtenidos:**
-- ✅ Reducción del bundle inicial (~30-40% menos código cargado inicialmente)
-- ✅ Mejor TTI (Time to Interactive) - la página es interactiva más rápido
-- ✅ Mejor LCP (Largest Contentful Paint) - contenido crítico carga primero
-- ✅ Mejor experiencia de usuario - skeleton muestra que el contenido está cargando
-- ✅ Reducción del tiempo de carga inicial
-- ✅ Mejor uso de recursos del navegador
-
-**Impacto:** Mejora significativa en performance inicial. El bundle inicial es más pequeño y las secciones críticas cargan primero, mientras que las secciones below-the-fold se cargan bajo demanda cuando el usuario hace scroll.
-
-### 3. Bundle Splitting ✅ **SOLUCIONADO**
-
-**Estado:** ✅ **YA IMPLEMENTADO** (a través de Lazy Loading de Secciones)
-
-**Problema original:** Todos los componentes de landing se importaban directamente, aumentando el bundle inicial.
-
-**Solución implementada:** El bundle splitting ya está implementado a través del lazy loading de secciones (Punto 2). Las secciones no críticas (FAQ, Contact, Pricing) se cargan dinámicamente, creando chunks separados y reduciendo el bundle inicial.
-
-**Impacto:** ✅ Ya resuelto - el bundle inicial es más pequeño gracias a los dynamic imports implementados en el punto 2.
-
-### 4. Memoización de Componentes ✅ **SOLUCIONADO**
-
-**Estado:** ✅ **IMPLEMENTADO**
-
-**Problema original:** Algunos componentes se recreaban en cada render innecesariamente, causando re-renders innecesarios y afectando el performance.
-
-**Análisis completo de componentes de la landing page:**
-
-**Componentes analizados:**
-1. ✅ **`BackgroundPattern`** - Componente puro sin props, usado múltiples veces en `LandingSectionWrapper`
-   - **Problema:** Se recreaba en cada render del wrapper
-   - **Solución:** ✅ Memoizado con `React.memo`
-   - **Impacto:** Evita recreación innecesaria cuando el wrapper se re-renderiza
-
-2. ✅ **`FooterSection`** - Componente cliente (`'use client'`) usado en layout global
-   - **Problema:** Se re-renderizaba cuando el layout cambiaba, y el array `links` se recreaba en cada render
-   - **Solución:** ✅ Memoizado con `React.memo` y `useMemo` para el array `links`
-   - **Impacto:** Evita re-renders innecesarios del footer cuando otros componentes del layout cambian
-
-3. ✅ **`SectionSkeleton`** - Componente servidor usado en lazy loading
-   - **Análisis:** No necesita memoización (componente servidor, se renderiza una vez)
-
-4. ✅ **`Header`** - Componente servidor (`async function`)
-   - **Análisis:** No necesita memoización (componente servidor, se renderiza una vez)
-
-5. ✅ **`LandingSectionWrapper`** - Componente servidor
-   - **Análisis:** No necesita memoización (componente servidor, props cambian legítimamente)
-
-6. ✅ **`SectionHeader`** - Componente servidor async
-   - **Análisis:** No necesita memoización (componente servidor, props cambian legítimamente)
-
-**Componentes memoizados:**
-
-1. **BackgroundPattern** (`features/landing/components/background-pattern.tsx`):
-```tsx
-import { memo } from "react";
-
-const BackgroundPattern = memo(function BackgroundPattern() {
-  // ... código existente
-});
-
-BackgroundPattern.displayName = "BackgroundPattern";
-```
-
-2. **FooterSection** (`features/footer/components/footer-section.tsx`):
-```tsx
-import { memo, useMemo } from 'react';
-
-const FooterSection = memo(function FooterSection() {
-  const t = useTranslations('layout.footer');
-  
-  const links = useMemo(() => [
-    // ... links array
-  ], [t]);
-  
-  // ... resto del componente
-});
-
-FooterSection.displayName = "FooterSection";
-```
-
-**Componentes que NO necesitan memoización:**
-- Componentes servidor (async functions) - Se renderizan una vez en el servidor
-- Componentes con props que cambian legítimamente - La memoización sería contraproducente
-- Componentes que no se re-renderizan frecuentemente
-
-**Beneficios obtenidos:**
-- ✅ Reducción de re-renders innecesarios
-- ✅ Mejor performance en componentes que se usan múltiples veces (`BackgroundPattern`)
-- ✅ Mejor performance en componentes globales que se re-renderizan frecuentemente (`FooterSection`)
-- ✅ Uso apropiado de `useMemo` para arrays que se recreaban en cada render
-
-**Impacto:** Mejora en performance, especialmente en `BackgroundPattern` que se usa múltiples veces en la página y en `FooterSection` que es parte del layout global.
-
-### 5. Optimización de Fuentes ✅ **SOLUCIONADO**
-
-**Estado:** ✅ **IMPLEMENTADO**
-
-**Problema original:** Se cargaban todos los pesos de Geist (100-900) aunque no todos se usaban, aumentando innecesariamente el tamaño de las fuentes descargadas.
-
-**Ubicación:** `app/layout.tsx` (línea 24)
-
-**Análisis de uso de fuentes:**
-- **Geist:** Se usa con pesos `400`, `500`, `600`, `700` en la landing (font-medium, font-bold, etc.)
-- **Quattrocento:** Ya optimizado con `400` y `700`
-- **Oswald:** Ya optimizado con `400` y `700`
-
-**Solución implementada:**
-```tsx
-// app/layout.tsx
-const geist = Geist({
-    subsets: ['latin'],
-    weight: ['400', '500', '600', '700'], // Solo los pesos usados
-    variable: '--font-geist',
-});
-```
-
-**Cambio realizado:**
-- ❌ Antes: `weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']` (9 pesos)
-- ✅ Ahora: `weight: ['400', '500', '600', '700']` (4 pesos)
-
-**Componente refactorizado:**
-- ✅ `app/layout.tsx` - Geist ahora solo carga los pesos necesarios
-
-**Beneficios obtenidos:**
-- ✅ Reducción del tamaño de descarga de fuentes (~55% menos pesos)
-- ✅ Mejor tiempo de carga inicial
-- ✅ Menor uso de ancho de banda
-- ✅ Mejor performance en dispositivos móviles
-
-**Impacto:** Reducción significativa en el tamaño de las fuentes descargadas. Solo se cargan los pesos realmente utilizados en la aplicación, mejorando el tiempo de carga inicial.
-
-### 6. Preload de Recursos Críticos
-
-**Problema:** No hay preload de imágenes críticas o recursos importantes.
-
-**Solución:** Agregar en `app/layout.tsx`:
-```tsx
-<link rel="preload" href="/path/to/hero-image.svg" as="image" />
-```
-
-### 7. Componente Cliente Innecesario
-
-**Problema:** `HeroDescription` es cliente pero solo usa `useTranslations` que podría ser servidor.
-
-**Solución:** Convertir a servidor component (ver sección de modularización).
+**Solución propuesta:** Crear componente `FeatureCard` reutilizable.
 
 ---
 
-## ⚙️ Configuración Global
+### 4. Patrón de Container Repetido
 
-### 1. URLs de Integraciones
+**Problema:** `container mx-auto px-4` aparece en múltiples lugares.
 
-**Problema:** URLs hardcodeadas en `integration-section.tsx`.
+**Ubicaciones:**
+- `landing-section-wrapper.tsx` (ya centralizado)
+- `header.tsx`: `container mx-auto px-4`
+- `footer-section.tsx`: `container mx-auto` + `max-w-5xl`
+- `pricing-section.tsx`: `container grid items-center gap-4 lg:grid-cols-3 mx-auto`
 
-**Solución:** Mover a archivo de configuración:
+**Impacto:** Variaciones del mismo patrón en diferentes lugares.
+
+**Solución propuesta:** Ya parcialmente resuelto con `LandingSectionWrapper`, pero hay casos especiales.
+
+---
+
+### 5. Estructura de Iconos con Clases Repetidas
+
+**Problema:** Iconos en navigation constants tienen clases repetidas.
+
+**Ubicación:** `features/header/constants/navigation.constants.tsx`
+
+**Ejemplos:**
+- `className='size-6 lg:size-4 group-hover:text-inherit'` (repetido ~15 veces)
+- `className='size-4 text-inherit'` (repetido)
+
+**Impacto:** Mantenimiento difícil si se necesita cambiar el tamaño de iconos.
+
+**Solución propuesta:** Extraer a función helper o componente wrapper.
+
+---
+
+### 6. Patrón de Stats/Grid Repetido
+
+**Problema:** Grid de estadísticas con estructura similar.
+
+**Ubicación:** `features-section.tsx` (líneas 171-188)
+
+**Estructura repetida:**
 ```tsx
-// features/landing/config/integrations.ts
-export const INTEGRATION_PARTNERS = [
-  // ... configuración
-] as const;
+<div className='text-center md:text-left'>
+    <SectionSubtitleSmall>{value}</SectionSubtitleSmall>
+    <LandingText>{label}</LandingText>
+</div>
 ```
 
-### 2. Dominio Root
+**Impacto:** Código repetitivo para 4 stats.
 
-**Problema:** `process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'` aparece en middleware.
+**Solución propuesta:** Crear componente `StatCard` o mapear desde constante.
 
-**Ubicación:** `utils/supabase/middleware.ts` (línea 54)
+---
 
-**Solución:** Crear archivo de configuración:
-```tsx
-// lib/config/domains.ts
-export const DOMAIN_CONFIG = {
-  ROOT: process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app',
-  COOKIE_DOMAIN: '.lanzate.app',
-} as const;
-```
-
-### 3. Rutas Públicas
+### 7. Rutas Hardcodeadas en Middleware
 
 **Problema:** Lista de rutas públicas hardcodeada en middleware.
 
 **Ubicación:** `utils/supabase/middleware.ts` (líneas 169-181)
 
-**Solución:**
-```tsx
-// lib/config/routes.ts
-export const PUBLIC_ROUTES = [
-  '/',
-  '/login',
-  '/signup',
-  '/reset-password',
-  '/privacy-policy',
-  '/terms-and-conditions',
-  '/cookies',
-  '/help',
-  '/waitlist',
-  '/waitlist-success',
-  '/about',
-] as const;
-```
+**Impacto:** Duplicación con `ROUTES` constant, difícil sincronización.
 
-### 4. Configuración de Fuentes
+**Solución propuesta:** Usar `ROUTES` constant en middleware.
 
-**Problema:** Configuración de fuentes dispersa en `app/layout.tsx`.
+---
 
-**Solución:** Extraer a archivo de configuración:
-```tsx
-// lib/config/fonts.ts
-import { Geist, Quattrocento, Oswald } from 'next/font/google';
+### 8. Configuración de Cookie Hardcodeada
 
-export const fonts = {
-  geist: Geist({
-    subsets: ['latin'],
-    weight: ['400', '500', '600', '700'],
-    variable: '--font-geist',
-  }),
-  quattrocento: Quattrocento({
-    subsets: ['latin'],
-    weight: ['400', '700'],
-    variable: '--font-quattrocento',
-  }),
-  oswald: Oswald({
-    subsets: ['latin'],
-    weight: ['400', '700'],
-    variable: '--font-oswald',
-  }),
-} as const;
-```
-
-### 5. Configuración de Cookie
-
-**Problema:** Configuración de cookies hardcodeada en middleware.
+**Problema:** Configuración de cookies hardcodeada en función.
 
 **Ubicación:** `utils/supabase/middleware.ts` (líneas 40-46)
 
-**Solución:**
+**Impacto:** Difícil cambiar configuración en un solo lugar.
+
+**Solución propuesta:** Extraer a constante de configuración.
+
+---
+
+### 9. Dominio Root Hardcodeado
+
+**Problema:** `process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'` aparece múltiples veces.
+
+**Ubicación:** `utils/supabase/middleware.ts` (línea 54)
+
+**Impacto:** Si cambia, hay que buscar y reemplazar en múltiples lugares.
+
+**Solución propuesta:** Extraer a constante de configuración global.
+
+---
+
+### 10. Patrón de Links Sociales Repetido
+
+**Problema:** Estructura repetida para links de redes sociales en footer.
+
+**Ubicación:** `footer-section.tsx` (líneas 49-111)
+
+**Estructura repetida:**
 ```tsx
-// lib/config/cookies.ts
-export const COOKIE_CONFIG = {
-  domain: '.lanzate.app',
-  secure: true,
-  sameSite: 'none' as const,
-} as const;
+<Link href={SOCIAL_MEDIA_LINKS.X} target="_blank" rel="noopener noreferrer" aria-label={...} className="...">
+    <IconButton icon={() => <svg>...</svg>}>
+    </IconButton>
+</Link>
 ```
 
-### 6. Metadata Global
+**Impacto:** Código repetitivo para 3 redes sociales.
 
-**Problema:** Metadata básica en `app/layout.tsx` pero podría ser más extensa.
+**Solución propuesta:** Mapear desde constante y crear componente `SocialLink`.
 
-**Solución:** Considerar mover a archivo de configuración si crece:
+---
+
+## ✨ Mejoras Propuestas
+
+### 1. Optimización de Providers Anidados
+
+**Problema:** Múltiples providers anidados en `app/[locale]/layout.tsx` crean un árbol profundo.
+
+**Solución:** Crear un componente `AppProviders` que agrupe todos los providers.
+
+**Beneficio:** Código más limpio y fácil de mantener.
+
+---
+
+### 2. Extracción de Constantes de Configuración
+
+**Problema:** Valores de configuración dispersos en múltiples archivos.
+
+**Constantes a extraer:**
+- Rutas públicas (middleware)
+- Configuración de cookies
+- Dominio root
+- Configuración de fuentes
+- Metadata del sitio
+
+**Solución:** Crear `features/global/config/` con archivos organizados.
+
+---
+
+### 3. Componente de Grid Unificado
+
+**Problema:** Múltiples variaciones de grid patterns.
+
+**Solución:** Crear componente `ResponsiveGrid` con props para diferentes layouts.
+
+**Ejemplo:**
 ```tsx
-// lib/config/metadata.ts
-export const siteMetadata = {
-  title: {
-    default: 'Lanzate',
-    template: 'Lanzate | %s',
-    absolute: 'Lanzate',
-  },
-  description: "Elevate your business with Lanzate's all-in-one store management solution.",
-  authors: [
-    { name: 'Arturo Gabriel Ramirez', url: 'https://github.com/ArturoGabrielRamirez' },
-    { name: 'Horacio Gutierrez Estevez', url: 'https://github.com/HoracioGutierrez' },
-  ],
-} as const;
+<ResponsiveGrid 
+  variant="two-columns-asymmetric" 
+  leftRatio={3} 
+  rightRatio={2}
+  gap="lg"
+/>
 ```
 
 ---
 
-## 🔧 Otros Mejoras
+### 4. Helper para Iconos de Navegación
 
-### 1. Tipos TypeScript Más Estrictos
+**Problema:** Clases repetidas en iconos de navegación.
 
-**Problema:** Algunos tipos son muy genéricos (`React.ReactNode`, `string`).
+**Solución:** Crear función helper:
+```tsx
+const createNavIcon = (Icon: LucideIcon, size: 'sm' | 'md' = 'md') => 
+  <Icon className={cn(
+    size === 'sm' ? 'size-4' : 'size-6 lg:size-4',
+    'group-hover:text-inherit'
+  )} />
+```
 
-**Ejemplos:**
-- `SectionSubtitleSmall` usa `ElementType` genérico
-- Props de componentes podrían ser más específicos
+---
+
+### 5. Componente SocialLinks Unificado
+
+**Problema:** Código repetitivo para links sociales.
+
+**Solución:** Crear componente `SocialLinks` que mapee desde constante.
+
+---
+
+### 6. Optimización de Imports Dinámicos
+
+**Problema:** Patrón repetido para dynamic imports.
+
+**Solución:** Crear helper function:
+```tsx
+const createLazySection = (importPath: string, componentName: string) => 
+  dynamic(() => import(importPath).then(m => ({ default: m[componentName] })), {
+    loading: () => <SectionSkeleton />
+  })
+```
+
+---
+
+### 7. Mejora de Type Safety
+
+**Problema:** Algunos tipos son muy genéricos (`ElementType`, `ReactNode`).
 
 **Solución:** Crear tipos más específicos:
 ```tsx
 type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+type LandingSectionVariant = 'default' | 'centered' | 'flex-col';
+```
 
-function SectionSubtitleSmall({ 
-  as = 'h3', 
-  ...props 
-}: { 
-  as?: HeadingElement;
-  // ...
-}) {
-  // ...
+---
+
+### 8. Centralización de Estilos de Card
+
+**Problema:** Estilos de Card repetidos con variaciones.
+
+**Solución:** Crear variantes de Card en constante o componente wrapper.
+
+---
+
+### 9. Extracción de Lógica de Scroll
+
+**Problema:** Lógica de scroll en `HeaderNavContainer` podría reutilizarse.
+
+**Solución:** Crear hook `useScrollThreshold` reutilizable.
+
+---
+
+### 10. Mejora de Accesibilidad
+
+**Problema:** Algunos componentes podrían mejorar atributos ARIA.
+
+**Áreas a mejorar:**
+- Navegación por teclado en FAQ
+- Labels descriptivos en iconos
+- Roles semánticos en secciones
+
+---
+
+## 🧩 Modularizaciones Posibles
+
+### 1. Componente FeatureCard
+
+**Ubicación actual:** `features-section.tsx`
+
+**Problema:** 5 Cards con estructura similar pero contenido diferente.
+
+**Solución:** Crear componente `FeatureCard` con props:
+```tsx
+<FeatureCard
+  image={image}
+  title={title}
+  description={description}
+  colSpan={{ mobile: 'full', tablet: '3', desktop: '2' }}
+  variant="default" | "large" | "horizontal"
+/>
+```
+
+---
+
+### 2. Componente StatCard
+
+**Ubicación actual:** `features-section.tsx` (líneas 171-188)
+
+**Problema:** Estructura repetida para estadísticas.
+
+**Solución:** Crear componente `StatCard`:
+```tsx
+<StatCard value={t('stats.founded.value')} label={t('stats.founded.label')} />
+```
+
+---
+
+### 3. Componente SocialLink
+
+**Ubicación actual:** `footer-section.tsx`
+
+**Problema:** Código repetitivo para cada red social.
+
+**Solución:** Crear componente `SocialLink`:
+```tsx
+<SocialLink 
+  platform="X" 
+  href={SOCIAL_MEDIA_LINKS.X}
+  ariaLabel={t('socialMedia.ariaLabels.twitter')}
+/>
+```
+
+---
+
+### 4. Hook useScrollThreshold
+
+**Ubicación actual:** `header-nav-container.tsx`
+
+**Problema:** Lógica de scroll podría reutilizarse.
+
+**Solución:** Extraer a hook:
+```tsx
+const useScrollThreshold = (threshold: number) => {
+  const { scrollY } = useScroll()
+  const [exceeded, setExceeded] = useState(false)
+  // ... lógica
+  return exceeded
 }
 ```
 
-### 2. Error Boundaries
+---
 
-**Problema:** No hay error boundaries para capturar errores en secciones.
+### 5. Componente ResponsiveGrid
 
-**Solución:** Agregar error boundaries:
+**Ubicación actual:** Múltiples secciones
+
+**Problema:** Patrones de grid repetidos.
+
+**Solución:** Crear componente genérico:
 ```tsx
-// features/landing/components/landing-error-boundary.tsx
-'use client';
+<ResponsiveGrid
+  left={<SectionHeader />}
+  right={<Content />}
+  ratio={{ mobile: 1, desktop: [3, 2] }}
+  gap="lg"
+/>
+```
 
-export function LandingErrorBoundary({ children }: { children: React.ReactNode }) {
-  return (
-    <ErrorBoundary fallback={<LandingErrorFallback />}>
-      {children}
-    </ErrorBoundary>
-  );
+---
+
+### 6. Helper para Crear Lazy Sections
+
+**Ubicación actual:** `app/[locale]/page.tsx`
+
+**Problema:** Patrón repetido para dynamic imports.
+
+**Solución:** Crear helper:
+```tsx
+const createLazySection = (path: string, name: string) => 
+  dynamic(() => import(path).then(m => ({ default: m[name] })), {
+    loading: () => <SectionSkeleton />
+  })
+```
+
+---
+
+### 7. Componente AppProviders
+
+**Ubicación actual:** `app/[locale]/layout.tsx`
+
+**Problema:** Múltiples providers anidados hacen el código difícil de leer.
+
+**Solución:** Extraer a componente:
+```tsx
+<AppProviders locale={locale}>
+  {children}
+</AppProviders>
+```
+
+---
+
+### 8. Componente NavigationIcon
+
+**Ubicación actual:** `features/header/constants/navigation.constants.tsx`
+
+**Problema:** Clases repetidas en iconos.
+
+**Solución:** Crear componente wrapper:
+```tsx
+<NavigationIcon icon={HomeIcon} size="md" />
+```
+
+---
+
+### 9. Utilidad para Rutas Públicas
+
+**Ubicación actual:** `utils/supabase/middleware.ts`
+
+**Problema:** Rutas públicas hardcodeadas.
+
+**Solución:** Crear función helper:
+```tsx
+export const isPublicRoute = (path: string): boolean => {
+  return Object.values(ROUTES).includes(path as any) && 
+    PUBLIC_ROUTES.includes(path)
 }
 ```
 
-### 3. Valores Mágicos
+---
 
-**Problema:** Valores numéricos hardcodeados sin explicación:
+### 10. Componente SectionGrid
 
-- `pt-17`, `md:py-17` - ¿Por qué 17?
-- `duration={4000}` en RotatingText - ¿Por qué 4000ms?
-- `backgroundSize: "20px 20px"` en BackgroundPattern
+**Ubicación actual:** Múltiples secciones
 
-**Solución:** Extraer a constantes con nombres descriptivos:
+**Problema:** Patrón de grid con header y contenido repetido.
+
+**Solución:** Crear componente:
 ```tsx
-// features/landing/constants/spacing.ts
-export const LANDING_SPACING = {
-  SECTION_PADDING_TOP: 'pt-17',
-  SECTION_PADDING_Y: 'md:py-17',
-} as const;
-
-// features/landing/constants/animations.ts
-export const ANIMATION_DURATION = {
-  ROTATING_TEXT: 4000, // 4 segundos para rotación de texto
-} as const;
+<SectionGrid
+  header={<SectionHeader />}
+  content={<Content />}
+  layout="asymmetric" | "symmetric" | "three-columns"
+  ratio={[3, 2]}
+/>
 ```
 
-### 4. Accesibilidad
+---
 
-**Problema:** Algunos componentes podrían mejorar accesibilidad:
+## 🔗 Unificaciones Recomendadas
 
-- `HeroSection`: Falta `aria-label` en algunos elementos
-- `IntegrationSection`: Logos sin `aria-label` descriptivos
-- `FaqSection`: Podría mejorar navegación por teclado
+### 1. Unificar Sistema de Rutas
 
-**Solución:** Revisar y agregar atributos ARIA donde sea necesario.
+**Problema:** Rutas en múltiples lugares:
+- `ROUTES` constant (ya existe)
+- Rutas públicas en middleware (hardcodeadas)
+- Rutas en navigation constants (algunas hardcodeadas)
 
-### 5. Testing
+**Solución:** 
+- Usar `ROUTES` en middleware
+- Crear `PUBLIC_ROUTES` derivado de `ROUTES`
+- Actualizar navigation constants para usar `ROUTES`
 
-**Problema:** No se observan tests para componentes de landing.
+---
 
-**Solución:** Considerar agregar tests unitarios y de integración para componentes críticos.
+### 2. Unificar Configuración de Dominios
 
-### 6. Documentación de Componentes
+**Problema:** Dominio root aparece en múltiples lugares.
 
-**Problema:** Falta documentación JSDoc en componentes.
-
-**Solución:** Agregar comentarios descriptivos:
+**Solución:** Crear `features/global/config/domains.ts`:
 ```tsx
-/**
- * HeroSection - Sección principal de la landing page
- * 
- * @description Muestra el título principal, descripción y CTA
- * @requires next-intl para traducciones
- */
-async function HeroSection() {
-  // ...
-}
+export const DOMAIN_CONFIG = {
+  ROOT: process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app',
+  COOKIE_DOMAIN: '.lanzate.app',
+} as const
 ```
 
-### 7. Consistencia en Naming
+---
 
-**Problema:** Algunas inconsistencias menores:
+### 3. Unificar Configuración de Cookies
 
-- `HeroDescription` vs `HeroSection` (uno es cliente, otro servidor)
-- Algunos componentes usan `Section` en el nombre, otros no
+**Problema:** Configuración de cookies en función.
 
-**Solución:** Establecer convenciones claras y aplicarlas consistentemente.
-
-### 8. Performance Monitoring
-
-**Problema:** No hay métricas de performance visibles.
-
-**Solución:** Considerar agregar:
-- Web Vitals tracking
-- Performance monitoring para secciones críticas
-- Lazy loading metrics
-
-### 9. SEO Improvements
-
-**Problema:** Metadata básica, podría mejorarse:
-
-- Falta Open Graph tags
-- Falta Twitter Card
-- Falta structured data (JSON-LD)
-
-**Solución:** Expandir metadata en `app/[locale]/page.tsx`:
+**Solución:** Extraer a `features/global/config/cookies.ts`:
 ```tsx
-export const metadata: Metadata = {
-  title: 'Home',
-  openGraph: {
-    title: 'Lanzate - All-in-one Store Management',
-    description: '...',
-    images: ['/og-image.jpg'],
+export const COOKIE_CONFIG = {
+  domain: '.lanzate.app',
+  secure: true,
+  sameSite: 'none' as const,
+} as const
+```
+
+---
+
+### 4. Unificar Patrones de Grid
+
+**Problema:** Múltiples variaciones de grid patterns.
+
+**Solución:** Crear sistema de grid unificado:
+```tsx
+// features/landing/constants/grid-patterns.ts
+export const GRID_PATTERNS = {
+  HEADER_CONTENT: {
+    mobile: 'grid-cols-1',
+    desktop: 'lg:grid-cols-[3fr_2fr]',
+    gap: 'gap-6 lg:gap-8'
   },
-  twitter: {
-    card: 'summary_large_image',
-    // ...
+  FAQ_LAYOUT: {
+    mobile: 'grid-cols-1',
+    desktop: 'lg:grid-cols-[1fr_3fr]',
+    gap: 'gap-6 lg:gap-20'
   },
-};
+  // ...
+} as const
 ```
 
-### 10. Internacionalización
+---
 
-**Problema:** Algunos textos podrían estar hardcodeados:
+### 5. Unificar Estilos de Card
 
-- `package.json` version en `hero-section.tsx` (línea 29)
-- Algunos valores en componentes
+**Problema:** Estilos de Card repetidos con variaciones.
 
-**Solución:** Asegurar que todos los textos usen traducciones.
+**Solución:** Crear variantes en constante:
+```tsx
+// features/landing/constants/card-variants.ts
+export const CARD_VARIANTS = {
+  FEATURE: 'relative col-span-full hover:drop-shadow-xl hover:-translate-y-1 transition-all overflow-hidden',
+  STAT: 'text-center md:text-left',
+  // ...
+} as const
+```
+
+---
+
+### 6. Unificar Helpers de Iconos
+
+**Problema:** Clases de iconos repetidas.
+
+**Solución:** Crear sistema unificado:
+```tsx
+// features/header/utils/icon-helpers.ts
+export const createNavIcon = (Icon: LucideIcon, size: IconSize = 'md') => {
+  const sizeClasses = {
+    sm: 'size-4',
+    md: 'size-6 lg:size-4',
+    lg: 'size-8 lg:size-6'
+  }
+  return <Icon className={cn(sizeClasses[size], 'group-hover:text-inherit')} />
+}
+```
+
+---
+
+### 7. Unificar Sistema de Traducciones
+
+**Problema:** Patrón `getTranslations` repetido en cada componente.
+
+**Solución:** Ya está bien implementado, pero se podría crear helper para namespaces comunes:
+```tsx
+// features/landing/utils/translations.ts
+export const getLandingTranslations = (section: string) => 
+  getTranslations(`landing.${section}`)
+```
+
+---
+
+### 8. Unificar Estilos de Texto Responsivo
+
+**Problema:** Patrón `text-center md:text-left` repetido.
+
+**Solución:** Crear componente o constante:
+```tsx
+// features/landing/constants/text-patterns.ts
+export const TEXT_ALIGNMENT = {
+  CENTER_TO_LEFT: 'text-center md:text-left',
+  CENTER: 'text-center',
+  LEFT: 'text-left',
+} as const
+```
+
+---
+
+### 9. Unificar Providers en Un Solo Lugar
+
+**Problema:** Providers anidados en layout.
+
+**Solución:** Crear `AppProviders` component que agrupe todo.
+
+---
+
+### 10. Unificar Constantes de Navegación
+
+**Problema:** Items de navegación con estructura similar pero diferentes.
+
+**Solución:** Ya está bien estructurado, pero se podría mejorar con factory function:
+```tsx
+const createNavItem = (config: NavItemConfig) => ({
+  ...config,
+  icon: createNavIcon(config.icon, config.iconSize)
+})
+```
 
 ---
 
@@ -1022,71 +651,62 @@ export const metadata: Metadata = {
 
 ### Prioridad Alta 🔴
 
-1. ✅ **Modularizar secciones repetidas** - ✅ **COMPLETADO** - `LandingSectionWrapper` implementado y todas las secciones refactorizadas
-2. **Extraer configuración** - Mover URLs, rutas y constantes a archivos de configuración
-3. **Optimizar imágenes** - Agregar `sizes` y `priority` donde corresponda
-4. **Convertir HeroDescription a servidor** - Mejorar bundle splitting
+1. **Unificar sistema de rutas** - Usar `ROUTES` en middleware y navigation constants
+2. **Extraer configuración** - Dominios, cookies, rutas públicas a archivos de configuración
+3. **Crear componente FeatureCard** - Reducir código repetitivo en features-section
+4. **Unificar patrones de grid** - Crear sistema de grid patterns reutilizable
 
 ### Prioridad Media 🟡
 
-1. **Lazy loading de secciones** - Implementar dynamic imports para secciones no críticas
-2. **Optimizar fuentes** - Cargar solo pesos necesarios
-3. **Crear componentes reutilizables** - `SectionHeader`, variantes de `BackgroundPattern`
-4. **Mejorar tipos TypeScript** - Hacer tipos más específicos
+1. **Crear componente SocialLink** - Reducir código en footer
+2. **Crear componente StatCard** - Modularizar stats en features-section
+3. **Extraer hook useScrollThreshold** - Reutilizar lógica de scroll
+4. **Crear componente AppProviders** - Limpiar layout
+5. **Unificar helpers de iconos** - Reducir repetición en navigation constants
 
 ### Prioridad Baja 🟢
 
-1. **Agregar error boundaries**
-2. **Mejorar accesibilidad**
-3. **Agregar documentación JSDoc**
-4. **Expandir metadata SEO**
-5. **Agregar tests**
+1. **Mejorar type safety** - Tipos más específicos
+2. **Crear helper para lazy sections** - Simplificar dynamic imports
+3. **Unificar estilos de texto** - Constantes para patrones comunes
+4. **Mejorar accesibilidad** - ARIA labels y navegación por teclado
 
 ### Impacto Estimado
 
-- **Reducción de código:** ✅ **~30-40% menos repetición** (IMPLEMENTADO - LandingSectionWrapper)
-- **Mejora de performance:** ~15-20% en tiempo de carga inicial (pendiente optimizaciones)
-- **Mantenibilidad:** ✅ **Significativamente mejorada** (IMPLEMENTADO - código centralizado)
-- **Bundle size:** Reducción estimada de ~10-15% con optimizaciones (pendiente)
+- **Reducción de código:** ~25-30% menos repetición
+- **Mejora de mantenibilidad:** Significativa con componentes reutilizables
+- **Consistencia:** Mejor con sistemas unificados
+- **Type safety:** Mejor con tipos más específicos
 
-### Estado de Implementación
+### Estado Actual
 
-- ✅ **Completado - Repeticiones Evitables:**
-  - Patrón de sección repetido (Punto 1) - `LandingSectionWrapper` implementado
-  - BackgroundPattern con configuración repetida (Punto 2) - Solucionado a través del wrapper
-  - Estructura de Header repetida (Punto 3) - `SectionHeader` implementado
-  - Rutas hardcodeadas (Punto 4) - `ROUTES` constantes implementadas
-  - Clases CSS repetidas (Punto 5) - Analizado y determinado como no necesario
+- ✅ Ya implementado:
+  - `LandingSectionWrapper` - Wrapper unificado para secciones
+  - `SectionHeader` - Header unificado
+  - `ROUTES` constant - Rutas centralizadas
+  - `INTEGRATION_PARTNERS` - Integraciones centralizadas
+  - `PRICING_PLANS` - Planes centralizados
+  - Lazy loading de secciones
+  - Memoización de componentes críticos
+  - Optimización de fuentes
 
-- ✅ **Completado - Falta de Modularización:**
-  - HeroDescription como componente cliente (Punto 1) - Ya estaba solucionado (componente servidor)
-  - BackgroundPattern con estilos inline (Punto 2) - Decisión tomada: mantener inline
-  - Integraciones hardcodeadas (Punto 3) - `INTEGRATION_PARTNERS` constantes implementadas
-  - FAQ Items hardcodeados (Punto 4) - Generación dinámica implementada
-  - Pricing Cards con estructura repetida (Punto 5) - `PRICING_PLANS` constantes implementadas
-  
-- ✅ **Completado - Optimizaciones de Performance:**
-  - Optimización de imágenes (Punto 1) - `sizes` y `priority` implementados
-  - Lazy loading de secciones (Punto 2) - Dynamic imports implementados para FAQ, Contact y Pricing
-  - Bundle splitting (Punto 3) - Ya implementado a través de lazy loading
-  - Memoización de componentes (Punto 4) - `BackgroundPattern` y `FooterSection` memoizados
-  - Optimización de fuentes (Punto 5) - Geist optimizado a solo pesos necesarios (400, 500, 600, 700)
-  
-- 🔄 **En progreso/Pendiente:**
-  - Preload de recursos críticos (Punto 6 de Optimización)
-  - Configuración global
-  - Otras mejoras
+- 🔄 Pendiente de implementar:
+  - Unificación de rutas en middleware
+  - Componentes reutilizables (FeatureCard, StatCard, SocialLink)
+  - Sistema de grid unificado
+  - Extracción de configuración
+  - Helpers de iconos
+  - AppProviders component
 
 ---
 
 ## 📝 Notas Finales
 
-Este análisis cubre el flujo completo desde el middleware hasta los componentes de la landing page. Las mejoras sugeridas están organizadas por prioridad y pueden implementarse de forma incremental.
+Este análisis identifica oportunidades de mejora en repeticiones, modularizaciones y unificaciones. Las mejoras están organizadas por prioridad y pueden implementarse de forma incremental.
 
-**Recomendación:** Empezar con las mejoras de Prioridad Alta, ya que tendrán el mayor impacto inmediato en código y performance.
+**Recomendación:** Empezar con las mejoras de Prioridad Alta, ya que tendrán el mayor impacto inmediato en código y mantenibilidad.
 
 ---
 
 **Generado por:** Análisis automatizado  
 **Versión del código analizado:** Basado en estructura actual del proyecto
-

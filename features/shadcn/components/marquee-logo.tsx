@@ -18,7 +18,7 @@ interface Logo {
 interface MarqueeLogoScrollerProps extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
     description: string;
-    logos: Logo[];
+    logos: readonly Logo[];
     speed?: 'normal' | 'slow' | 'fast';
 }
 
