@@ -21,7 +21,7 @@ async function FaqSection() {
                     descriptionKey="header.description"
                     namespace="landing.faq"
                 />
-                    <Card className="md:mt-20">
+                    <Card>
                         <CardHeader>
                             <CardContent>
                                 <Accordion type="single" collapsible defaultValue="item-1">
