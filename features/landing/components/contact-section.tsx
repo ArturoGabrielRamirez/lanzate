@@ -16,6 +16,7 @@ async function ContactSection() {
         <LandingSectionWrapper
             id="contact"
             className="flex-col items-center"
+            showPattern
         >
             <SectionHeader
                 icon={<MessageCircle />}
