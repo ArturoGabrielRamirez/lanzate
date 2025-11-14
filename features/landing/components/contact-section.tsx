@@ -2,6 +2,7 @@ import { MessageCircle } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 import { LandingText } from "@/features/global/components";
+import { ROUTES } from "@/features/global/constants";
 import { LandingSectionWrapper, SectionHeader, SectionSubtitle } from "@/features/landing/components";
 import { AnimatedShinyButton } from "@/features/shadcn/components/animated-shiny-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
@@ -34,7 +35,7 @@ async function ContactSection() {
                         {t('header.description')}
                     </LandingText>
                         <AnimatedShinyButton asChild>
-                            <Link href="/help">
+                            <Link href={ROUTES.HELP}>
                                 {t("actions.button")}
                             </Link>
                         </AnimatedShinyButton>

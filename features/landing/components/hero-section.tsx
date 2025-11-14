@@ -2,6 +2,7 @@ import { ArrowUpRightIcon } from "lucide-react";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
+import { ROUTES } from "@/features/global/constants";
 import heroImage from "@/features/landing/assets/Startup life-pana 1.svg";
 import { HeroDescription, LandingSectionWrapper } from "@/features/landing/components";
 import { Announcement, AnnouncementTitle, AnnouncementTag } from "@/features/shadcn/components/shadcn-io/announcement";
@@ -23,7 +24,7 @@ async function HeroSection() {
         >
             <div className="flex flex-col items-center pt-4 md:items-start md:pt-0 z-10">
                 <Announcement className="border-primary mb-12" asChild>
-                    <Link href="/waitlist">
+                    <Link href={ROUTES.WAITLIST}>
                         <AnnouncementTag className="bg-primary/20">
                             {t('announcement.badge')}
                         </AnnouncementTag>

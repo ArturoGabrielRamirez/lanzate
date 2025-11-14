@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
 import { LandingText } from '@/features/global/components'
+import { ROUTES } from "@/features/global/constants";
 import barcodeImage from "@/features/landing/assets/Barcode-pana.svg"
 import devicesImage from "@/features/landing/assets/Devices-pana.svg"
 import domainImage from "@/features/landing/assets/Domain names-pana.svg"
@@ -183,7 +184,7 @@ async function FeaturesSection() {
                 </div>
 
                 <Link
-                    href="/about"
+                    href={ROUTES.ABOUT}
                     className="flex items-center text-primary hover:text-primary/80 justify-center md:justify-start"
                 >
                     {t('about.link')}

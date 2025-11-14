@@ -204,33 +204,55 @@ export interface SectionHeaderProps {
 
 **Impacto:** Reducción significativa de código duplicado y mejora en mantenibilidad. La estructura de headers está completamente centralizada y es flexible para diferentes casos de uso.
 
-### 4. Rutas Hardcodeadas
+### 4. Rutas Hardcodeadas ✅ **SOLUCIONADO**
 
-**Problema:** Rutas hardcodeadas en múltiples componentes:
+**Estado:** ✅ **IMPLEMENTADO**
 
-- `hero-section.tsx`: `/waitlist`, `/about`, `/login`
-- `pricing-section.tsx`: `/login`, `/waitlist`
-- `contact-section.tsx`: `/help`
-- `features-section.tsx`: `/about`
-- `footer-section.tsx`: `/terms-and-conditions`, `/privacy-policy`, `/cookies`, `/help`
+**Problema original:** Rutas hardcodeadas dispersas en múltiples componentes, dificultando el mantenimiento y cambios futuros.
 
-**Solución propuesta:** Crear archivo de constantes de rutas:
+**Solución implementada:** Se creó el archivo de constantes `ROUTES` que centraliza todas las rutas de la aplicación:
 
 ```tsx
 // features/global/constants/routes.ts
 export const ROUTES = {
-  HOME: '/',
-  LOGIN: '/login',
-  SIGNUP: '/signup',
-  ABOUT: '/about',
-  HELP: '/help',
-  WAITLIST: '/waitlist',
-  TERMS: '/terms-and-conditions',
-  PRIVACY: '/privacy-policy',
-  COOKIES: '/cookies',
-  DASHBOARD: '/dashboard',
+    HOME: '/',
+    LOGIN: '/login',
+    SIGNUP: '/signup',
+    ABOUT: '/about',
+    HELP: '/help',
+    WAITLIST: '/waitlist',
+    WAITLIST_SUCCESS: '/waitlist-success',
+    TERMS: '/terms-and-conditions',
+    PRIVACY: '/privacy-policy',
+    COOKIES: '/cookies',
+    DASHBOARD: '/dashboard',
 } as const;
 ```
+
+**Exportación:** Las rutas se exportan desde `features/global/constants/index.ts` para facilitar el acceso.
+
+**Componentes refactorizados:**
+- ✅ `hero-section.tsx` - Reemplazado `/waitlist` por `ROUTES.WAITLIST`
+- ✅ `hero-description.tsx` - Reemplazado `/about` y `/login` por `ROUTES.ABOUT` y `ROUTES.LOGIN`
+- ✅ `features-section.tsx` - Reemplazado `/about` por `ROUTES.ABOUT`
+- ✅ `pricing-section.tsx` - Reemplazado `/login` y `/waitlist` en `contactPageHref` por `ROUTES.LOGIN` y `ROUTES.WAITLIST`
+- ✅ `contact-section.tsx` - Reemplazado `/help` por `ROUTES.HELP`
+- ✅ `footer-section.tsx` - Reemplazado todas las rutas (`/`, `/terms-and-conditions`, `/privacy-policy`, `/cookies`, `/help`) por constantes
+
+**Beneficios obtenidos:**
+- ✅ Centralización de todas las rutas en un solo lugar
+- ✅ Facilita cambios futuros de rutas (solo un archivo)
+- ✅ Prevención de errores tipográficos en rutas
+- ✅ Autocompletado en IDEs para mejor DX
+- ✅ Type safety con `as const` para valores inmutables
+- ✅ Consistencia en el uso de rutas en toda la aplicación
+
+**Rutas incluidas:**
+- Rutas públicas: `HOME`, `ABOUT`, `HELP`, `TERMS`, `PRIVACY`, `COOKIES`
+- Rutas de autenticación: `LOGIN`, `SIGNUP`
+- Rutas de funcionalidad: `WAITLIST`, `WAITLIST_SUCCESS`, `DASHBOARD`
+
+**Impacto:** Mejora significativa en mantenibilidad. Cambios de rutas ahora se hacen en un solo lugar, reduciendo el riesgo de inconsistencias y errores.
 
 ### 5. Clases CSS Repetidas
 
@@ -755,9 +777,10 @@ export const metadata: Metadata = {
   - Patrón de sección repetido (Punto 1) - `LandingSectionWrapper` implementado
   - BackgroundPattern con configuración repetida (Punto 2) - Solucionado a través del wrapper
   - Estructura de Header repetida (Punto 3) - `SectionHeader` implementado
+  - Rutas hardcodeadas (Punto 4) - `ROUTES` constantes implementadas
   
 - 🔄 **En progreso/Pendiente:**
-  - Resto de mejoras de repeticiones evitables (Rutas hardcodeadas, Clases CSS repetidas)
+  - Resto de mejoras de repeticiones evitables (Clases CSS repetidas)
   - Optimizaciones de performance
   - Configuración global
   - Otras mejoras
