@@ -2,19 +2,19 @@ import { Home } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
-import { BackgroundPattern, SectionSubtitle } from "@/features/landing/components"
+import { LandingSectionWrapper, SectionSubtitle } from "@/features/landing/components"
 import { PriceCard, OfferingWrapper, Offering, ProductName, Price, Description } from "@/features/shadcn/components/lukacho/pricing-card"
 
 async function PricingSection() {
     const t = await getTranslations("landing.pricing");
 
     return (
-        <section className="relative pt-17 md:py-17 flex snap-start flex-col items-center font-geist" id="pricing">
-            <div className="container grid items-center gap-12 lg:grid-cols-[1fr_3fr] mx-auto px-4 relative h-fit">
-                <div className='brightness-90 dark:brightness-100 absolute inset-0'>
-                    <BackgroundPattern />
-                </div>
-                <div className="h-full text-center text-balance md:text-left">
+        <LandingSectionWrapper
+            id="pricing"
+            className="flex-col items-center font-geist"
+            containerClassName="grid items-center gap-12 lg:grid-cols-[1fr_3fr] h-fit"
+        >
+            <div className="h-full text-center text-balance md:text-left">
                     <LandingSectionIconTitle icon={<Home />}>
                         {t('header.label')}
                     </LandingSectionIconTitle>
@@ -71,8 +71,7 @@ async function PricingSection() {
                         </OfferingWrapper>
                     </PriceCard>
                 </div>
-            </div>
-        </section>
+        </LandingSectionWrapper>
     )
 }
 

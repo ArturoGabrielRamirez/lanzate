@@ -8,7 +8,7 @@ import barcodeImage from "@/features/landing/assets/Barcode-pana.svg"
 import devicesImage from "@/features/landing/assets/Devices-pana.svg"
 import domainImage from "@/features/landing/assets/Domain names-pana.svg"
 import speedImage from "@/features/landing/assets/Speed test-pana.svg"
-import { BackgroundPattern, SectionSubtitle, SectionSubtitleSmall, SmallMutedText } from "@/features/landing/components"
+import { LandingSectionWrapper, SectionSubtitle, SectionSubtitleSmall, SmallMutedText } from "@/features/landing/components"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { Link } from '@/i18n/naviation'
 
@@ -17,17 +17,17 @@ async function FeaturesSection() {
     const t = await getTranslations("landing.features")
 
     return (
-        <section className="relative pt-17 md:py-17 flex snap-start" id="how-it-works">
-            <div className="container grid items-center gap-12 lg:grid-cols-[3fr_2fr] mx-auto px-4 relative h-fit">
-                <div className='dark:brightness-75 absolute inset-0'>
-                    <BackgroundPattern />
-                </div>
-                <div className="relative h-fit">
-                    <div className="relative z-20">
-                        <LandingSectionIconTitle icon={<Rocket />}>
-                            {t('header.label')}
-                        </LandingSectionIconTitle>
-                        <div className="relative z-10 grid grid-cols-6 gap-6">
+        <LandingSectionWrapper
+            id="how-it-works"
+            containerClassName="grid items-center gap-12 lg:grid-cols-[3fr_2fr] h-fit"
+            patternBrightness="dim"
+            noContentWrapper
+        >
+            <div className="relative h-fit z-20">
+                <LandingSectionIconTitle icon={<Rocket />}>
+                    {t('header.label')}
+                </LandingSectionIconTitle>
+                <div className="relative z-10 grid grid-cols-6 gap-6">
                             <Card className="relative col-span-full hover:drop-shadow-xl hover:-translate-y-1 transition-all overflow-hidden sm:col-span-3 lg:col-span-2">
                                 <CardContent>
                                     <div className="relative mx-auto flex aspect-square w-full">
@@ -138,61 +138,58 @@ async function FeaturesSection() {
                                     </div>
                                 </CardContent>
                             </Card>
-                        </div>
-                    </div>
                 </div>
-                <div className="space-y-8 z-20">
-                    <div className='text-center max-md:text-balance md:text-left'>
-                        <p className="mb-2 text-sm font-medium text-primary">
-                            {t('about.label')}
-                        </p>
-                        <SectionSubtitle>
-                            {t('about.title')}
-                        </SectionSubtitle>
-                        <LandingText>
-                            {t('about.description.paragraph1')}
-                        </LandingText>
-                    </div>
-
-                    <div className="space-y-6 font-quattrocento text-center max-md:text-balance md:text-left">
-                        <LandingText>
-                            {t('about.description.paragraph2')}
-                        </LandingText>
-                        <LandingText>
-                            {t('about.description.paragraph3')}
-                        </LandingText>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 border-t pt-8 md:grid-cols-4">
-                        <div className='text-center md:text-left'>
-                            <SectionSubtitleSmall>{t('about.stats.founded.value')}</SectionSubtitleSmall>
-                            <LandingText>{t('about.stats.founded.label')}</LandingText>
-                        </div>
-                        <div className='text-center md:text-left'>
-                            <SectionSubtitleSmall>{t('about.stats.users.value')}</SectionSubtitleSmall>
-                            <LandingText>{t('about.stats.users.label')}</LandingText>
-                        </div>
-                        <div className='text-center md:text-left'>
-                            <SectionSubtitleSmall>{t('about.stats.countries.value')}</SectionSubtitleSmall>
-                            <LandingText>{t('about.stats.countries.label')}</LandingText>
-                        </div>
-                        <div className='text-center md:text-left'>
-                            <SectionSubtitleSmall>{t('about.stats.sales.value')}</SectionSubtitleSmall>
-                            <LandingText>{t('about.stats.sales.label')}</LandingText>
-                        </div>
-                    </div>
-
-                    <Link
-                        href="/about"
-                        className="flex items-center text-primary hover:text-primary/80 justify-center md:justify-start"
-                    >
-                        {t('about.link')}
-                        <ChevronRight className="size-4 ml-2" />
-                    </Link>
-                </div>
-
             </div>
-        </section>
+            <div className="space-y-8 z-20">
+                <div className='text-center max-md:text-balance md:text-left'>
+                    <p className="mb-2 text-sm font-medium text-primary">
+                        {t('about.label')}
+                    </p>
+                    <SectionSubtitle>
+                        {t('about.title')}
+                    </SectionSubtitle>
+                    <LandingText>
+                        {t('about.description.paragraph1')}
+                    </LandingText>
+                </div>
+
+                <div className="space-y-6 font-quattrocento text-center max-md:text-balance md:text-left">
+                    <LandingText>
+                        {t('about.description.paragraph2')}
+                    </LandingText>
+                    <LandingText>
+                        {t('about.description.paragraph3')}
+                    </LandingText>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 border-t pt-8 md:grid-cols-4">
+                    <div className='text-center md:text-left'>
+                        <SectionSubtitleSmall>{t('about.stats.founded.value')}</SectionSubtitleSmall>
+                        <LandingText>{t('about.stats.founded.label')}</LandingText>
+                    </div>
+                    <div className='text-center md:text-left'>
+                        <SectionSubtitleSmall>{t('about.stats.users.value')}</SectionSubtitleSmall>
+                        <LandingText>{t('about.stats.users.label')}</LandingText>
+                    </div>
+                    <div className='text-center md:text-left'>
+                        <SectionSubtitleSmall>{t('about.stats.countries.value')}</SectionSubtitleSmall>
+                        <LandingText>{t('about.stats.countries.label')}</LandingText>
+                    </div>
+                    <div className='text-center md:text-left'>
+                        <SectionSubtitleSmall>{t('about.stats.sales.value')}</SectionSubtitleSmall>
+                        <LandingText>{t('about.stats.sales.label')}</LandingText>
+                    </div>
+                </div>
+
+                <Link
+                    href="/about"
+                    className="flex items-center text-primary hover:text-primary/80 justify-center md:justify-start"
+                >
+                    {t('about.link')}
+                    <ChevronRight className="size-4 ml-2" />
+                </Link>
+            </div>
+        </LandingSectionWrapper>
     )
 }
 
