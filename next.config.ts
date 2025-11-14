@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '3mb',
     },
   },
+  transpilePackages: ['yup'],
   devIndicators: {
     position: "top-right"
   },

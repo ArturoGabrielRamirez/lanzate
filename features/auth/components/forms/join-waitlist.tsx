@@ -1,11 +1,11 @@
 "use client"
 
-import { yupResolver } from "@hookform/resolvers/yup"
+/* import { yupResolver } from "@hookform/resolvers/yup" */
 import { MailIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { joinWaitlistAction } from "@/features/auth/actions"
-import { joinWaitlistSchema } from "@/features/auth/schemas"
+/* import { joinWaitlistSchema } from "@/features/auth/schemas" */
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
 
@@ -15,7 +15,7 @@ function JoinWaitlist() {
 
     return (
         <Form
-            resolver={yupResolver(joinWaitlistSchema as never)}
+            /* resolver={yupResolver(joinWaitlistSchema as never)} */
             formAction={joinWaitlistAction}
             contentButton={t("actions.submit")}
             successRedirect="/waitlist-success"
