@@ -64,6 +64,8 @@ async function HeroSection() {
                     alt="Hero Image"
                     className="w-full antialiased object-contain object-bottom drop-shadow-xl drop-shadow-primary/30 dark:drop-shadow-primary/20"
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                    priority
                 />
             </div>
         </LandingSectionWrapper>

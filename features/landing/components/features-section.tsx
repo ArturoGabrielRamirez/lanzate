@@ -37,6 +37,7 @@ async function FeaturesSection() {
                                             src={devicesImage}
                                             alt="Multiple devices"
                                             fill
+                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                         />
                                     </div>
                                     <div className="relative z-10 space-y-2 text-center">
@@ -53,6 +54,7 @@ async function FeaturesSection() {
                                             alt="Barcode"
                                             className='scale-90'
                                             fill
+                                            sizes="(max-width: 1024px) 100vw, 33vw"
                                         />
                                     </div>
                                     <div className="relative z-10 space-y-2 text-center">
@@ -68,6 +70,7 @@ async function FeaturesSection() {
                                             src={domainImage}
                                             alt="Multiple devices"
                                             fill
+                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                         />
                                     </div>
                                     <div className="relative z-10 space-y-2 text-center mt-auto">
@@ -99,6 +102,7 @@ async function FeaturesSection() {
                                             src={speedImage}
                                             alt="Multiple devices"
                                             fill
+                                            sizes="(max-width: 1024px) 100vw, 50vw"
                                         />
                                     </div>
                                 </CardContent>

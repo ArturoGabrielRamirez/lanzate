@@ -461,23 +461,85 @@ export const PRICING_PLANS = [
 
 ## ⚡ Oportunidades de Optimización
 
-### 1. Optimización de Imágenes
+### 1. Optimización de Imágenes ✅ **SOLUCIONADO**
 
-**Problema:** Varias imágenes usan `fill` sin especificar `sizes`:
+**Estado:** ✅ **IMPLEMENTADO**
 
-- `hero-section.tsx` (línea 58-63): `fill` sin `sizes`
-- `features-section.tsx`: Múltiples imágenes con `fill` sin `sizes`
+**Problema original:** Varias imágenes usaban `fill` sin especificar `sizes`, lo que impedía que Next.js optimizara correctamente las imágenes y generaba imágenes más grandes de las necesarias.
 
-**Solución:**
+**Solución implementada:** Se agregaron atributos `sizes` apropiados a todas las imágenes con `fill` y `priority` a la imagen hero:
+
+**Imágenes optimizadas:**
+
+1. **Hero Image** (`hero-section.tsx`):
 ```tsx
 <Image
   src={heroImage}
   alt="Hero Image"
   fill
-  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-  priority // Para hero image
+  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+  priority
 />
 ```
+- ✅ Agregado `sizes` según el layout responsivo
+- ✅ Agregado `priority` para carga inmediata (imagen crítica above-the-fold)
+
+2. **Devices Image** (`features-section.tsx`):
+```tsx
+<Image
+  src={devicesImage}
+  alt="Multiple devices"
+  fill
+  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+/>
+```
+- ✅ `sizes` basado en grid: `col-span-full sm:col-span-3 lg:col-span-2`
+
+3. **Barcode Image** (`features-section.tsx`):
+```tsx
+<Image
+  src={barcodeImage}
+  alt="Barcode"
+  fill
+  sizes="(max-width: 1024px) 100vw, 33vw"
+/>
+```
+- ✅ `sizes` basado en grid: `col-span-full lg:col-span-2`
+
+4. **Domain Image** (`features-section.tsx`):
+```tsx
+<Image
+  src={domainImage}
+  alt="Multiple devices"
+  fill
+  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+/>
+```
+- ✅ `sizes` basado en grid: `col-span-full sm:col-span-3 lg:col-span-2`
+
+5. **Speed Image** (`features-section.tsx`):
+```tsx
+<Image
+  src={speedImage}
+  alt="Multiple devices"
+  fill
+  sizes="(max-width: 1024px) 100vw, 50vw"
+/>
+```
+- ✅ `sizes` basado en layout: card de 3 columnas con grid interno de 2 columnas
+
+**Componentes refactorizados:**
+- ✅ `hero-section.tsx` - Hero image con `sizes` y `priority`
+- ✅ `features-section.tsx` - 4 imágenes con `sizes` apropiados
+
+**Beneficios obtenidos:**
+- ✅ Next.js puede generar imágenes optimizadas del tamaño correcto
+- ✅ Reducción del tamaño de descarga de imágenes (mejor performance)
+- ✅ Mejor LCP (Largest Contentful Paint) con `priority` en hero image
+- ✅ Mejor experiencia de usuario en dispositivos móviles
+- ✅ Cumplimiento de mejores prácticas de Next.js Image
+
+**Impacto:** Mejora significativa en performance de carga de imágenes. Las imágenes ahora se generan en tamaños apropiados según el viewport, reduciendo el ancho de banda y mejorando los tiempos de carga.
 
 ### 2. Lazy Loading de Secciones
 
@@ -864,8 +926,15 @@ export const metadata: Metadata = {
   - FAQ Items hardcodeados (Punto 4) - Generación dinámica implementada
   - Pricing Cards con estructura repetida (Punto 5) - `PRICING_PLANS` constantes implementadas
   
+- ✅ **Completado - Optimizaciones de Performance:**
+  - Optimización de imágenes (Punto 1) - `sizes` y `priority` implementados
+  
 - 🔄 **En progreso/Pendiente:**
-  - Optimizaciones de performance
+  - Lazy loading de secciones (Punto 2 de Optimización)
+  - Bundle splitting (Punto 3 de Optimización)
+  - Memoización de componentes (Punto 4 de Optimización)
+  - Optimización de fuentes (Punto 5 de Optimización)
+  - Preload de recursos críticos (Punto 6 de Optimización)
   - Configuración global
   - Otras mejoras
 
