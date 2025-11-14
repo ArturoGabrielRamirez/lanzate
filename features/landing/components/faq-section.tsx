@@ -1,8 +1,7 @@
 import { CircleHelp } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
-import { LandingSectionWrapper, SectionSubtitle, SectionSubtitleSmall, SmallMutedText } from "@/features/landing/components";
+import { LandingSectionWrapper, SectionHeader, SectionSubtitleSmall, SmallMutedText } from "@/features/landing/components";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion";
 import { Card, CardContent, CardHeader } from "@/features/shadcn/components/ui/card";
 
@@ -15,17 +14,13 @@ async function FaqSection() {
             className="flex-col"
         >
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-6 lg:gap-20 text-center text-balance md:text-left">
-                    <div>
-                        <LandingSectionIconTitle icon={<CircleHelp />}>
-                            {t('header.label')}
-                        </LandingSectionIconTitle>
-                        <SectionSubtitle>
-                            {t('header.title')}
-                        </SectionSubtitle>
-                        <LandingText>
-                            {t('header.description')}
-                        </LandingText>
-                    </div>
+                <SectionHeader
+                    icon={<CircleHelp />}
+                    labelKey="header.label"
+                    titleKey="header.title"
+                    descriptionKey="header.description"
+                    namespace="landing.faq"
+                />
                     <Card className="md:mt-20">
                         <CardHeader>
                             <CardContent>

@@ -144,64 +144,65 @@ const brightnessVariants = {
 
 **Nota:** Aunque la solución está implementada a través del wrapper (que es más eficiente), si se quisiera hacer `BackgroundPattern` más independiente en el futuro, se podría aplicar la solución propuesta original. Sin embargo, la implementación actual es más eficiente ya que evita pasar props innecesarias al componente BackgroundPattern.
 
-### 3. Estructura de Header Repetida en Secciones
+### 3. Estructura de Header Repetida en Secciones ✅ **SOLUCIONADO**
 
-**Problema:** Múltiples secciones usan el mismo patrón para headers:
+**Estado:** ✅ **IMPLEMENTADO**
 
-```tsx
-<LandingSectionIconTitle icon={<Icon />}>
-  {t('header.label')}
-</LandingSectionIconTitle>
-<SectionSubtitle>
-  {t('header.title')}
-</SectionSubtitle>
-<LandingText>
-  {t('header.description')}
-</LandingText>
-```
+**Problema original:** Múltiples secciones usaban el mismo patrón repetido para headers con código duplicado.
 
-**Ubicaciones:**
-- `features-section.tsx` (líneas 27-29)
-- `integration-section.tsx` (líneas 63-72)
-- `faq-section.tsx` (líneas 20-28)
-- `contact-section.tsx` (líneas 20-34)
-- `pricing-section.tsx` (líneas 18-26)
+**Solución implementada:** Se creó el componente `SectionHeader` que centraliza la lógica de headers de sección:
 
-**Solución propuesta:**
 ```tsx
 // features/landing/components/section-header.tsx
-interface SectionHeaderProps {
-  icon: React.ReactNode;
-  labelKey: string;
-  titleKey: string;
-  descriptionKey: string;
-  namespace: string;
-}
-
 export async function SectionHeader({
-  icon,
-  labelKey,
-  titleKey,
-  descriptionKey,
-  namespace
+    icon,
+    labelKey,
+    titleKey,        // Opcional
+    descriptionKey,  // Opcional
+    namespace,
+    titleClassName,      // Opcional - para personalización
+    descriptionClassName, // Opcional - para personalización
+    containerClassName   // Opcional - para personalización
 }: SectionHeaderProps) {
-  const t = await getTranslations(namespace);
-  
-  return (
-    <>
-      <LandingSectionIconTitle icon={icon}>
-        {t(labelKey)}
-      </LandingSectionIconTitle>
-      <SectionSubtitle>
-        {t(titleKey)}
-      </SectionSubtitle>
-      <LandingText>
-        {t(descriptionKey)}
-      </LandingText>
-    </>
-  );
+    // Implementación flexible que maneja casos opcionales
 }
 ```
+
+**Interfaz en types.ts:**
+```tsx
+// features/landing/types.ts
+export interface SectionHeaderProps {
+    icon: React.ReactNode;
+    labelKey: string;
+    titleKey?: string;
+    descriptionKey?: string;
+    namespace: string;
+    titleClassName?: string;
+    descriptionClassName?: string;
+    containerClassName?: string;
+}
+```
+
+**Componentes refactorizados:**
+- ✅ `features-section.tsx` - Usa `SectionHeader` solo con `labelKey` (sin title ni description)
+- ✅ `integration-section.tsx` - Usa `SectionHeader` con `labelKey` y `titleKey` (description separado por layout)
+- ✅ `faq-section.tsx` - Usa `SectionHeader` completo con los tres campos
+- ✅ `contact-section.tsx` - Usa `SectionHeader` solo con `labelKey` (title y description dentro de Card especial)
+- ✅ `pricing-section.tsx` - Usa `SectionHeader` completo con `titleClassName` y `containerClassName` personalizados
+
+**Beneficios obtenidos:**
+- ✅ Eliminación de ~50+ líneas de código duplicado
+- ✅ Centralización de la lógica de traducciones para headers
+- ✅ Flexibilidad para casos especiales con props opcionales y clases personalizadas
+- ✅ Consistencia en la estructura de headers entre secciones
+- ✅ Facilita cambios futuros en la estructura de headers (solo un lugar)
+
+**Características implementadas:**
+- Props opcionales para `titleKey` y `descriptionKey` permiten usar solo el icon + label cuando sea necesario
+- `titleClassName` y `descriptionClassName` permiten personalización de estilos sin perder la estructura común
+- `containerClassName` permite ajustar el layout del contenedor del header
+
+**Impacto:** Reducción significativa de código duplicado y mejora en mantenibilidad. La estructura de headers está completamente centralizada y es flexible para diferentes casos de uso.
 
 ### 4. Rutas Hardcodeadas
 
@@ -753,9 +754,10 @@ export const metadata: Metadata = {
 - ✅ **Completado:**
   - Patrón de sección repetido (Punto 1) - `LandingSectionWrapper` implementado
   - BackgroundPattern con configuración repetida (Punto 2) - Solucionado a través del wrapper
+  - Estructura de Header repetida (Punto 3) - `SectionHeader` implementado
   
 - 🔄 **En progreso/Pendiente:**
-  - Resto de mejoras de repeticiones evitables
+  - Resto de mejoras de repeticiones evitables (Rutas hardcodeadas, Clases CSS repetidas)
   - Optimizaciones de performance
   - Configuración global
   - Otras mejoras

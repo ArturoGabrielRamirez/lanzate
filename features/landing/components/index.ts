@@ -10,3 +10,4 @@ export * from "@/features/landing/components/small-muted-text";
 export * from "@/features/landing/components/section-subtitle";
 export * from "@/features/landing/components/section-subtitle-small";
 export * from "@/features/landing/components/landing-section-wrapper";
+export * from "@/features/landing/components/section-header";

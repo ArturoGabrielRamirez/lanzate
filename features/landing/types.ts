@@ -9,3 +9,14 @@ export interface LandingSectionWrapperProps {
     noContentWrapper?: boolean;
 }
 
+export interface SectionHeaderProps {
+    icon: React.ReactNode;
+    labelKey: string;
+    titleKey?: string;
+    descriptionKey?: string;
+    namespace: string;
+    titleClassName?: string;
+    descriptionClassName?: string;
+    containerClassName?: string;
+}
+

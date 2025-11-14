@@ -2,13 +2,12 @@ import { ChevronRight, Heart, MessageCircleMore, Rocket, ShoppingCart, Users, Za
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
-import { LandingSectionIconTitle } from '@/features/global/components'
 import { LandingText } from '@/features/global/components'
 import barcodeImage from "@/features/landing/assets/Barcode-pana.svg"
 import devicesImage from "@/features/landing/assets/Devices-pana.svg"
 import domainImage from "@/features/landing/assets/Domain names-pana.svg"
 import speedImage from "@/features/landing/assets/Speed test-pana.svg"
-import { LandingSectionWrapper, SectionSubtitle, SectionSubtitleSmall, SmallMutedText } from "@/features/landing/components"
+import { LandingSectionWrapper, SectionHeader, SectionSubtitle, SectionSubtitleSmall, SmallMutedText } from "@/features/landing/components"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { Link } from '@/i18n/naviation'
 
@@ -24,9 +23,11 @@ async function FeaturesSection() {
             noContentWrapper
         >
             <div className="relative h-fit z-20">
-                <LandingSectionIconTitle icon={<Rocket />}>
-                    {t('header.label')}
-                </LandingSectionIconTitle>
+                <SectionHeader
+                    icon={<Rocket />}
+                    labelKey="header.label"
+                    namespace="landing.features"
+                />
                 <div className="relative z-10 grid grid-cols-6 gap-6">
                             <Card className="relative col-span-full hover:drop-shadow-xl hover:-translate-y-1 transition-all overflow-hidden sm:col-span-3 lg:col-span-2">
                                 <CardContent>

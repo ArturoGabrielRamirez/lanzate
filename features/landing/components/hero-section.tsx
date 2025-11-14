@@ -18,7 +18,7 @@ async function HeroSection() {
     return (
         <LandingSectionWrapper
             className="min-h-dvh"
-            containerClassName="flex flex-col md:grid md:grid-cols-[1fr_auto] md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:items-end relative md:pb-12 lg:pb-20"
+            contentClassName="flex flex-col md:grid md:grid-cols-[1fr_auto] md:gap-0 xl:gap-20 2xl:gap-22 justify-center items-center md:items-end relative md:pb-12 lg:pb-20"
         >
             <div className="flex flex-col items-center pt-4 md:items-start md:pt-0 z-10">
                 <Announcement className="border-primary mb-12" asChild>
