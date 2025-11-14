@@ -8,6 +8,12 @@ import { Card, CardContent, CardHeader } from "@/features/shadcn/components/ui/c
 async function FaqSection() {
     const t = await getTranslations("landing.faq");
 
+    const faqItems = Array.from({ length: 5 }, (_, i) => ({
+        id: `item-${i + 1}`,
+        questionKey: `items.item${i + 1}.question`,
+        answerKey: `items.item${i + 1}.answer`
+    }));
+
     return (
         <LandingSectionWrapper
             id="faq"
@@ -25,71 +31,21 @@ async function FaqSection() {
                         <CardHeader>
                             <CardContent>
                                 <Accordion type="single" collapsible defaultValue="item-1">
-                                    <AccordionItem value="item-1">
-                                        <AccordionTrigger>
-                                            <div className="flex items-center gap-2">
-                                                <CircleHelp className="size-5 text-primary" />
-                                                <SectionSubtitleSmall as="span">
-                                                    {t('items.item1.question')}
-                                                </SectionSubtitleSmall>
-                                            </div>
-                                        </AccordionTrigger>
-                                        <AccordionContent>
-                                            <SmallMutedText>{t('items.item1.answer')}</SmallMutedText>
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                    <AccordionItem value="item-2">
-                                        <AccordionTrigger>
-                                            <div className="flex items-center gap-2">
-                                                <CircleHelp className="size-5 text-primary" />
-                                                <SectionSubtitleSmall as="span">
-                                                    {t('items.item2.question')}
-                                                </SectionSubtitleSmall>
-                                            </div>
-                                        </AccordionTrigger>
-                                        <AccordionContent>
-                                            <SmallMutedText>{t('items.item2.answer')}</SmallMutedText>
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                    <AccordionItem value="item-3">
-                                        <AccordionTrigger>
-                                            <div className="flex items-center gap-2">
-                                                <CircleHelp className="size-6 text-primary" />
-                                                <SectionSubtitleSmall as="span">
-                                                    {t('items.item3.question')}
-                                                </SectionSubtitleSmall>
-                                            </div>
-                                        </AccordionTrigger>
-                                        <AccordionContent>
-                                            <SmallMutedText>{t('items.item3.answer')}</SmallMutedText>
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                    <AccordionItem value="item-4">
-                                        <AccordionTrigger>
-                                            <div className="flex items-center gap-2">
-                                                <CircleHelp className="size-6 text-primary" />
-                                                <SectionSubtitleSmall as="span">
-                                                    {t('items.item4.question')}
-                                                </SectionSubtitleSmall>
-                                            </div>
-                                        </AccordionTrigger>
-                                        <AccordionContent>
-                                            <SmallMutedText>{t('items.item4.answer')}</SmallMutedText>
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                    <AccordionItem value="item-5">
-                                        <AccordionTrigger>
-                                            <div className="flex items-center gap-2">
-                                                <CircleHelp className="size-6 text-primary" />
-                                                <SectionSubtitleSmall as="span">
-                                                    {t('items.item5.question')}
-                                                </SectionSubtitleSmall>
-                                            </div>
-                                        </AccordionTrigger>
-                                        <AccordionContent>
-                                            <SmallMutedText>{t('items.item5.answer')}</SmallMutedText>
-                                        </AccordionContent>
-                                    </AccordionItem>
+                                    {faqItems.map((item) => (
+                                        <AccordionItem key={item.id} value={item.id}>
+                                            <AccordionTrigger>
+                                                <div className="flex items-center gap-2">
+                                                    <CircleHelp className="size-5 text-primary" />
+                                                    <SectionSubtitleSmall as="span">
+                                                        {t(item.questionKey)}
+                                                    </SectionSubtitleSmall>
+                                                </div>
+                                            </AccordionTrigger>
+                                            <AccordionContent>
+                                                <SmallMutedText>{t(item.answerKey)}</SmallMutedText>
+                                            </AccordionContent>
+                                        </AccordionItem>
+                                    ))}
                                 </Accordion>
                             </CardContent>
                         </CardHeader>

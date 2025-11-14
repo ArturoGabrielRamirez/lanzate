@@ -1,8 +1,8 @@
 import { Home } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
-import { ROUTES } from "@/features/global/constants";
 import { LandingSectionWrapper, SectionHeader } from "@/features/landing/components"
+import { PRICING_PLANS } from "@/features/landing/constants"
 import { PriceCard, OfferingWrapper, Offering, ProductName, Price, Description } from "@/features/shadcn/components/lukacho/pricing-card"
 
 async function PricingSection() {
@@ -25,50 +25,27 @@ async function PricingSection() {
                 containerClassName="h-full text-center text-balance md:text-left"
             />
             <div className="container grid items-center gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist">
-                <PriceCard contactPageHref={ROUTES.LOGIN} className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 md:scale-90" actionText={t('actions.button')}>
-                    <ProductName>{t('plans.starter.name')}</ProductName>
-                    <Price>{t('plans.starter.price')}</Price>
-                    <Description>
-                        {t('plans.starter.description')}
-                    </Description>
-                    <OfferingWrapper>
-                        <Offering>{t('plans.starter.features.feature1')}</Offering>
-                        <Offering>{t('plans.starter.features.feature2')}</Offering>
-                        <Offering>{t('plans.starter.features.feature3')}</Offering>
-                        <Offering>{t('plans.starter.features.feature4')}</Offering>
-                        <Offering>{t('plans.starter.features.feature5')}</Offering>
-                        <Offering>{t('plans.starter.features.feature6')}</Offering>
-                    </OfferingWrapper>
-                </PriceCard>
-                <PriceCard contactPageHref={ROUTES.WAITLIST} className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 bg-card" actionText={t('actions.button')}>
-                    <ProductName>{t('plans.business.name')}</ProductName>
-                    <Price>{t('plans.business.price')}</Price>
-                    <Description>
-                        {t('plans.business.description')}
-                    </Description>
-                    <OfferingWrapper>
-                        <Offering>{t('plans.business.features.feature1')}</Offering>
-                        <Offering>{t('plans.business.features.feature2')}</Offering>
-                        <Offering>{t('plans.business.features.feature3')}</Offering>
-                        <Offering>{t('plans.business.features.feature4')}</Offering>
-                        <Offering>{t('plans.business.features.feature5')}</Offering>
-                    </OfferingWrapper>
-                </PriceCard>
-                <PriceCard contactPageHref={ROUTES.WAITLIST} className="shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 md:scale-90" actionText={t('actions.button')}>
-                    <ProductName>{t('plans.enterprise.name')}</ProductName>
-                    <Price>{t('plans.enterprise.price')}</Price>
-                    <Description>
-                        {t('plans.enterprise.description')}
-                    </Description>
-                    <OfferingWrapper>
-                        <Offering>{t('plans.enterprise.features.feature1')}</Offering>
-                        <Offering>{t('plans.enterprise.features.feature2')}</Offering>
-                        <Offering>{t('plans.enterprise.features.feature3')}</Offering>
-                        <Offering>{t('plans.enterprise.features.feature4')}</Offering>
-                        <Offering>{t('plans.enterprise.features.feature5')}</Offering>
-                        <Offering>{t('plans.enterprise.features.feature6')}</Offering>
-                    </OfferingWrapper>
-                </PriceCard>
+                {PRICING_PLANS.map((plan) => (
+                    <PriceCard 
+                        key={plan.id} 
+                        contactPageHref={plan.contactPageHref} 
+                        className={plan.className} 
+                        actionText={t('actions.button')}
+                    >
+                        <ProductName>{t(`plans.${plan.planKey}.name`)}</ProductName>
+                        <Price>{t(`plans.${plan.planKey}.price`)}</Price>
+                        <Description>
+                            {t(`plans.${plan.planKey}.description`)}
+                        </Description>
+                        <OfferingWrapper>
+                            {Array.from({ length: plan.featuresCount }, (_, i) => (
+                                <Offering key={i + 1}>
+                                    {t(`plans.${plan.planKey}.features.feature${i + 1}`)}
+                                </Offering>
+                            ))}
+                        </OfferingWrapper>
+                    </PriceCard>
+                ))}
             </div>
         </LandingSectionWrapper>
     )

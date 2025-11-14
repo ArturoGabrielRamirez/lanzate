@@ -363,49 +363,99 @@ export const INTEGRATION_PARTNERS = [
 
 **Impacto:** Mejora en mantenibilidad y organización del código. Los datos de integraciones están centralizados y son fáciles de modificar.
 
-### 4. FAQ Items Hardcodeados
+### 4. FAQ Items Hardcodeados ✅ **SOLUCIONADO**
 
-**Problema:** Los items del FAQ están hardcodeados con valores `item-1`, `item-2`, etc.
+**Estado:** ✅ **IMPLEMENTADO**
 
-**Ubicación:** `features/landing/components/faq-section.tsx` (líneas 33-98)
+**Problema original:** Los items del FAQ estaban hardcodeados con valores `item-1`, `item-2`, etc., generando código repetitivo.
 
-**Solución propuesta:** Generar dinámicamente desde traducciones o configuración:
+**Solución implementada:** Se generan dinámicamente desde una constante dentro del componente:
 
 ```tsx
-// Generar desde traducciones
+// features/landing/components/faq-section.tsx
 const faqItems = Array.from({ length: 5 }, (_, i) => ({
-  id: `item-${i + 1}`,
-  questionKey: `items.item${i + 1}.question`,
-  answerKey: `items.item${i + 1}.answer`
+    id: `item-${i + 1}`,
+    questionKey: `items.item${i + 1}.question`,
+    answerKey: `items.item${i + 1}.answer`
 }));
+
+// Uso en el componente:
+{faqItems.map((item) => (
+    <AccordionItem key={item.id} value={item.id}>
+        {/* contenido dinámico */}
+    </AccordionItem>
+))}
 ```
 
-### 5. Pricing Cards con Estructura Repetida
+**Componente refactorizado:**
+- ✅ `faq-section.tsx` - Genera items dinámicamente usando `.map()` en lugar de repetir código
 
-**Problema:** Los tres `PriceCard` tienen estructura muy similar.
+**Beneficios obtenidos:**
+- ✅ Eliminación de ~65 líneas de código repetitivo
+- ✅ Facilita agregar/remover items FAQ (solo cambiar el `length` en `Array.from`)
+- ✅ Código más mantenible y DRY
+- ✅ Consistencia en la estructura de items
 
-**Ubicación:** `features/landing/components/pricing-section.tsx` (líneas 29-72)
+**Impacto:** Reducción significativa de código duplicado. Agregar nuevos items FAQ ahora es trivial.
 
-**Solución propuesta:** Crear función helper o mapear desde configuración:
+### 5. Pricing Cards con Estructura Repetida ✅ **SOLUCIONADO**
+
+**Estado:** ✅ **IMPLEMENTADO**
+
+**Problema original:** Los tres `PriceCard` tenían estructura muy similar con código duplicado.
+
+**Solución implementada:** Se creó una constante en `features/landing/constants/pricing.ts` y se mapea en el componente:
 
 ```tsx
-// features/landing/config/pricing-plans.ts
+// features/landing/constants/pricing.ts
 export const PRICING_PLANS = [
-  {
-    id: 'starter',
-    contactHref: ROUTES.LOGIN,
-    className: "shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 md:scale-90"
-  },
-  // ... resto
+    {
+        id: 'starter',
+        contactPageHref: ROUTES.LOGIN,
+        className: "shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 md:scale-90",
+        planKey: 'starter',
+        featuresCount: 6,
+    },
+    {
+        id: 'business',
+        contactPageHref: ROUTES.WAITLIST,
+        className: "shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 bg-card",
+        planKey: 'business',
+        featuresCount: 5,
+    },
+    {
+        id: 'enterprise',
+        contactPageHref: ROUTES.WAITLIST,
+        className: "shadow-sm hover:drop-shadow-2xl transition-all hover:-translate-y-1 md:scale-90",
+        planKey: 'enterprise',
+        featuresCount: 6,
+    },
 ] as const;
 
 // En el componente:
 {PRICING_PLANS.map((plan) => (
-  <PriceCard key={plan.id} {...plan}>
-    {/* contenido */}
-  </PriceCard>
+    <PriceCard key={plan.id} contactPageHref={plan.contactPageHref} className={plan.className}>
+        {/* contenido dinámico */}
+    </PriceCard>
 ))}
 ```
+
+**Estructura creada:**
+- ✅ `features/landing/constants/pricing.ts` - Constante con configuración de todos los planes
+- ✅ `features/landing/constants/index.ts` - Exporta las constantes de pricing
+
+**Componente refactorizado:**
+- ✅ `pricing-section.tsx` - Mapea desde `PRICING_PLANS` en lugar de repetir código
+
+**Beneficios obtenidos:**
+- ✅ Eliminación de ~45 líneas de código repetitivo
+- ✅ Facilita agregar/remover/modificar planes de pricing
+- ✅ Separación de datos y lógica de presentación
+- ✅ Type safety con `as const`
+- ✅ Features generadas dinámicamente según `featuresCount`
+- ✅ Sigue la arquitectura del proyecto (constants dentro del feature)
+
+**Impacto:** Reducción significativa de código duplicado y mejora en mantenibilidad. Agregar nuevos planes o modificar existentes es mucho más simple.
 
 ---
 
@@ -811,10 +861,10 @@ export const metadata: Metadata = {
   - HeroDescription como componente cliente (Punto 1) - Ya estaba solucionado (componente servidor)
   - BackgroundPattern con estilos inline (Punto 2) - Decisión tomada: mantener inline
   - Integraciones hardcodeadas (Punto 3) - `INTEGRATION_PARTNERS` constantes implementadas
+  - FAQ Items hardcodeados (Punto 4) - Generación dinámica implementada
+  - Pricing Cards con estructura repetida (Punto 5) - `PRICING_PLANS` constantes implementadas
   
 - 🔄 **En progreso/Pendiente:**
-  - FAQ Items hardcodeados (Punto 4 de Modularización)
-  - Pricing Cards con estructura repetida (Punto 5 de Modularización)
   - Optimizaciones de performance
   - Configuración global
   - Otras mejoras
