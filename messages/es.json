@@ -2090,5 +2090,37 @@
                 "paragraph3": "Así que nos pusimos manos a la obra. Con Horacio y Gabriel codeando día y noche (y Felipe supervisando desde el teclado), desarrollamos Lanzate pensando en todas esas personas que tienen un sueño y necesitan las herramientas adecuadas para hacerlo realidad. Nuestra plataforma integra todo lo que necesitás para gestionar tu negocio: desde el control de stock hasta el seguimiento de clientes, pasando por las ventas y los reportes. Porque creemos que empezar un negocio no debería ser complicado, y que con las herramientas correctas, cualquiera puede lanzarse."
             }
         }
+    },
+    "cookie": {
+        "title": "Este sitio usa cookies",
+        "message": "Usamos cookies para mejorar tu experiencia.",
+        "acceptText": "Aceptar todo",
+        "customizeText": "Personalizar",
+        "cancel": "Cancelar",
+        "savePreferences": "Guardar preferencias",
+        "preferences": {
+            "necessary": {
+                "title": "Estrictamente necesarias",
+                "description": "Requeridas para el funcionamiento del sitio.",
+                "required": "(requerido)"
+            },
+            "functional": {
+                "title": "Funcionales",
+                "description": "Recuerdan tus preferencias."
+            },
+            "analytics": {
+                "title": "Analíticas",
+                "description": "Nos ayudan a mejorar el sitio."
+            },
+            "marketing": {
+                "title": "Marketing",
+                "description": "Anuncios personalizados."
+            }
+        },
+        "privacyPolicy": "Política de Privacidad",
+        "termsAndConditions": "Términos y Condiciones",
+        "seeOur": "Consulta nuestra",
+        "and": "y",
+        "close": "Cerrar banner de cookies"
     }
 }

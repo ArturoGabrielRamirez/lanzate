@@ -2095,5 +2095,37 @@
                 "paragraph3": "So we got to work. With Horacio and Gabriel coding day and night (and Felipe supervising from the keyboard), we developed Lanzate thinking about all those people who have a dream and need the right tools to make it a reality. Our platform integrates everything you need to manage your business: from inventory control to customer tracking, through sales and reports. Because we believe that starting a business shouldn't be complicated, and that with the right tools, anyone can launch."
             }
         }
+    },
+    "cookie": {
+        "title": "This site uses cookies",
+        "message": "We use cookies to enhance your experience.",
+        "acceptText": "Accept all",
+        "customizeText": "Customize",
+        "cancel": "Cancel",
+        "savePreferences": "Save preferences",
+        "preferences": {
+            "necessary": {
+                "title": "Strictly necessary",
+                "description": "Required for site functionality.",
+                "required": "(required)"
+            },
+            "functional": {
+                "title": "Functional",
+                "description": "Remembers your preferences."
+            },
+            "analytics": {
+                "title": "Analytics",
+                "description": "Helps us improve the site."
+            },
+            "marketing": {
+                "title": "Marketing",
+                "description": "Personalized ads."
+            }
+        },
+        "privacyPolicy": "Privacy Policy",
+        "termsAndConditions": "Terms & Conditions",
+        "seeOur": "See our",
+        "and": "and",
+        "close": "Close cookie banner"
     }
 }
