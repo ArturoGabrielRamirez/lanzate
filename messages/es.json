@@ -2071,5 +2071,24 @@
         "metadata": {
             "title": "Inicio"
         }
+    },
+    "about": {
+        "metadata": {
+            "title": "Acerca de",
+            "header": {
+                "title": "Acerca de"
+            }
+        },
+        "page": {
+            "header": {
+                "title": "Acerca de",
+                "description": "Conoce más sobre nosotros."
+            },
+            "description": {
+                "paragraph1": "Lanzate nació de una necesidad muy real que vivimos en carne propia. Somos Horacio Gutiérrez y Gabriel Ramírez, dos programadores que, junto con Felipe (nuestro gato y supervisor de calidad), nos dimos cuenta de que empezar un negocio informal no es fácil. A través de experiencias cercanas con familiares y amigos que querían arrancar su propio emprendimiento, vimos cómo se complicaban con herramientas dispersas, planillas de Excel que se perdían, y la falta de una solución simple que les permitiera gestionar todo desde un solo lugar.",
+                "paragraph2": "La idea de crear una plataforma all-in-one para la gestión de tiendas informales surgió después de ver a nuestros seres queridos luchando con múltiples apps, cuadernos y métodos caseros para llevar el control de sus ventas, inventario y clientes. Nos dimos cuenta de que había una brecha enorme entre las soluciones empresariales complejas y caras, y las necesidades reales de alguien que recién está arrancando. Entonces pensamos: ¿por qué no hacer algo que realmente funcione para ellos, que sea intuitivo, accesible y que los ayude a crecer sin complicarse la vida?",
+                "paragraph3": "Así que nos pusimos manos a la obra. Con Horacio y Gabriel codeando día y noche (y Felipe supervisando desde el teclado), desarrollamos Lanzate pensando en todas esas personas que tienen un sueño y necesitan las herramientas adecuadas para hacerlo realidad. Nuestra plataforma integra todo lo que necesitás para gestionar tu negocio: desde el control de stock hasta el seguimiento de clientes, pasando por las ventas y los reportes. Porque creemos que empezar un negocio no debería ser complicado, y que con las herramientas correctas, cualquiera puede lanzarse."
+            }
+        }
     }
 }

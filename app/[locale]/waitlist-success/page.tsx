@@ -12,7 +12,6 @@ export async function generateMetadata(): Promise<Metadata> {
     const t = await getTranslations("auth.waitlist.success.page")
     return {
         title: t('title'),
-        description: t('description'),
     }
 }
 
