@@ -21,7 +21,8 @@ export async function getUserBySupabaseIdData({ supabaseUserId, select }: GetUse
             last_name: true,
             supabase_user_id: true,
             created_at: true,
-            profile_is_public: true
+            profile_is_public: true,
+            Account: true,
         }
     })
 

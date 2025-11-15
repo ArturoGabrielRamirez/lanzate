@@ -127,7 +127,9 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
 
                     <TabsContent value="membership" className="h-full overflow-hidden">
                         <div className="h-full overflow-y-auto">
-                            <MembershipTab />
+                            <MembershipTab 
+                                user={user}
+                            />
                         </div>
                     </TabsContent>
 

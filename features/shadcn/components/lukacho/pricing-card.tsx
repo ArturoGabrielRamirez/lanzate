@@ -7,7 +7,7 @@ import { Button } from '@/features/shadcn/components/button';
 import { Link } from '@/i18n/naviation';
 import { cn } from '@/lib/utils'
 
-export function PriceCard({ className, contactPageHref, actionText= "Get Started", children }: { className?: string, contactPageHref: string, actionText?: string, children: React.ReactNode }) {
+export function PriceCard({ className, contactPageHref, actionText= "Get Started", children, disabled = false }: { className?: string, contactPageHref: string, actionText?: string, children: React.ReactNode, disabled?: boolean }) {
     return (
         <article
             className={cn(
@@ -16,7 +16,7 @@ export function PriceCard({ className, contactPageHref, actionText= "Get Started
             )}
         >
             <span>{children}</span>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" disabled={disabled}>
                 <Link href={contactPageHref} className={'w-full flex items-center justify-center mt-20 '}>
                     {actionText}
                 </Link>
