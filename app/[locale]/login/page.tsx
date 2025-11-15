@@ -10,9 +10,11 @@ import { LandingSectionIconTitle, LandingText } from '@/features/global/componen
 import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
 
-export const metadata: Metadata = {
-    title: "Login",
-    description: "Access your account to manage your store",
+export async function generateMetadata(): Promise<Metadata> {
+    const t = await getTranslations("auth.login.page")
+    return {
+        title: t('title'),
+    }
 }
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
