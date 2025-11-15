@@ -1,6 +1,7 @@
 "use client";
 
 import { Cookie, Shield, Info, X, ChevronDown, ChevronUp, Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/lib/utils";
@@ -25,11 +26,12 @@ interface CookiePanelProps {
 }
 
 function CookiePanel(props: CookiePanelProps) {
+  const t = useTranslations("cookie");
   const {
-    title = "This site uses cookies",
-    message = "We use cookies to enhance your experience.",
-    acceptText = "Accept all",
-    customizeText = "Customize",
+    title,
+    message,
+    acceptText,
+    customizeText,
     icon = "cookie",
     className,
     privacyHref = "/privacy",
@@ -129,7 +131,7 @@ function CookiePanel(props: CookiePanelProps) {
 
         <div className="flex-1">
           <div className="text-xs font-medium">
-            {title} {locked && <span className="text-[10px] text-muted-foreground">(required)</span>}
+            {title} {locked && <span className="text-[10px] text-muted-foreground">{t("preferences.necessary.required")}</span>}
           </div>
 
           <p className="text-[10px] text-muted-foreground mt-0.5">{desc}</p>
@@ -164,32 +166,32 @@ function CookiePanel(props: CookiePanelProps) {
             <IconEl className="size-5" aria-hidden="true" />
           </span>
 
-          <h2 className="text-sm font-semibold leading-5">{title}</h2>
+          <h2 className="text-sm font-semibold leading-5">{title || t("title")}</h2>
 
           <button
             type="button"
             onClick={() => closeWithExit()}
             className="ml-auto inline-flex size-8 items-center justify-center rounded-md hover:bg-foreground/5 cursor-pointer"
-            aria-label="Close cookie banner"
+            aria-label={t("close")}
           >
             <X className="size-4 text-muted-foreground" />
           </button>
         </div>
 
         <p className="text-xs leading-5 text-muted-foreground">
-          {message} See our{" "}
+          {message || t("message")} {t("seeOur")}{" "}
           <a
             href={privacyHref}
             className="underline underline-offset-4 hover:text-foreground cursor-pointer"
           >
-            Privacy Policy
+            {t("privacyPolicy")}
           </a>{" "}
-          and{" "}
+          {t("and")}{" "}
           <a
             href={termsHref}
             className="underline underline-offset-4 hover:text-foreground cursor-pointer"
           >
-            Terms & Conditions
+            {t("termsAndConditions")}
           </a>
           .
         </p>
@@ -207,7 +209,7 @@ function CookiePanel(props: CookiePanelProps) {
             aria-expanded={showPrefs}
             aria-controls="cookie-preferences-inline"
           >
-            {customizeText}
+            {customizeText || t("customizeText")}
             {showPrefs ? (
               <ChevronUp className="size-3" />
             ) : (
@@ -224,7 +226,7 @@ function CookiePanel(props: CookiePanelProps) {
               "hover:bg-primary/90 transition-colors"
             )}
           >
-            {acceptText}
+            {acceptText || t("acceptText")}
           </button>
         </div>
 
@@ -239,27 +241,27 @@ function CookiePanel(props: CookiePanelProps) {
           {showPrefs && (
             <div className="mt-2 flex flex-col gap-2 animate-in fade-in slide-in-from-bottom-2 duration-200">
               <PrefRow
-                title="Strictly necessary"
-                desc="Required for site functionality."
+                title={t("preferences.necessary.title")}
+                desc={t("preferences.necessary.description")}
                 field="necessary"
                 locked
               />
 
               <PrefRow
-                title="Functional"
-                desc="Remembers your preferences."
+                title={t("preferences.functional.title")}
+                desc={t("preferences.functional.description")}
                 field="functional"
               />
 
               <PrefRow
-                title="Analytics"
-                desc="Helps us improve the site."
+                title={t("preferences.analytics.title")}
+                desc={t("preferences.analytics.description")}
                 field="analytics"
               />
 
               <PrefRow
-                title="Marketing"
-                desc="Personalized ads."
+                title={t("preferences.marketing.title")}
+                desc={t("preferences.marketing.description")}
                 field="marketing"
               />
 
@@ -269,7 +271,7 @@ function CookiePanel(props: CookiePanelProps) {
                   onClick={() => setShowPrefs(false)}
                   className="px-2.5 py-1 rounded-md border border-border bg-muted text-muted-foreground text-xs hover:bg-muted/80 cursor-pointer"
                 >
-                  Cancel
+                  {t("cancel")}
                 </button>
 
                 <button
@@ -277,7 +279,7 @@ function CookiePanel(props: CookiePanelProps) {
                   onClick={savePreferences}
                   className="px-2.5 py-1 rounded-md bg-primary text-primary-foreground text-xs hover:bg-primary/90 cursor-pointer"
                 >
-                  Save preferences
+                  {t("savePreferences")}
                 </button>
               </div>
             </div>

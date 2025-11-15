@@ -2072,6 +2072,60 @@
                     }
                 }
             }
+        },
+        "metadata": {
+            "title": "Home"
         }
+    },
+    "about": {
+        "metadata": {
+            "title": "About us",
+            "header": {
+                "title": "About Us"
+            }
+        },
+        "page": {
+            "header": {
+                "title": "About us",
+                "description": "Get to know more about us."
+            },
+            "description": {
+                "paragraph1": "Lanzate was born out of a very real need that we experienced firsthand. We are Horacio Gutiérrez and Gabriel Ramírez, two programmers who, together with Felipe (our cat and quality supervisor), realized that starting an informal business is not easy. Through experiences with close family and friends who wanted to start their own business, we saw how they struggled with scattered tools, Excel spreadsheets that were lost, and the lack of a simple solution that would allow them to manage everything from a single place.",
+                "paragraph2": "The idea of creating an all-in-one platform for the management of informal stores arose after seeing our loved ones struggling with multiple apps, notebooks, and homemade methods for controlling their sales, inventory, and customers. We realized that there was a huge gap between complex and expensive business solutions and the real needs of someone just starting out. Then we thought: Why not make something that really works for them, is intuitive, accessible, and helps them grow without complicating their lives?",
+                "paragraph3": "So we got to work. With Horacio and Gabriel coding day and night (and Felipe supervising from the keyboard), we developed Lanzate thinking about all those people who have a dream and need the right tools to make it a reality. Our platform integrates everything you need to manage your business: from inventory control to customer tracking, through sales and reports. Because we believe that starting a business shouldn't be complicated, and that with the right tools, anyone can launch."
+            }
+        }
+    },
+    "cookie": {
+        "title": "This site uses cookies",
+        "message": "We use cookies to enhance your experience.",
+        "acceptText": "Accept all",
+        "customizeText": "Customize",
+        "cancel": "Cancel",
+        "savePreferences": "Save preferences",
+        "preferences": {
+            "necessary": {
+                "title": "Strictly necessary",
+                "description": "Required for site functionality.",
+                "required": "(required)"
+            },
+            "functional": {
+                "title": "Functional",
+                "description": "Remembers your preferences."
+            },
+            "analytics": {
+                "title": "Analytics",
+                "description": "Helps us improve the site."
+            },
+            "marketing": {
+                "title": "Marketing",
+                "description": "Personalized ads."
+            }
+        },
+        "privacyPolicy": "Privacy Policy",
+        "termsAndConditions": "Terms & Conditions",
+        "seeOur": "See our",
+        "and": "and",
+        "close": "Close cookie banner"
     }
 }
