@@ -1,9 +1,9 @@
 'use client'
 
-import { User, AlertTriangle, Settings } from "lucide-react"
+import { AlertTriangle, CreditCard, Settings } from "lucide-react"
 import { useState, useEffect, useCallback } from "react"
 
-import { AccountBannerHeader, AccountDetailsTab, DangerZoneTab, DeletionRequestedView } from "@/features/account/components"
+import { AccountBannerHeader, AccountDetailsTab, DangerZoneTab, DeletionRequestedView, MembershipTab } from "@/features/account/components"
 import { LoadingSkeleton } from "@/features/account/components/loading-skeleton"
 import useDeletionStatus from "@/features/account/hooks/use-deletion-status"
 import useUserData from "@/features/account/hooks/use-user-data"
@@ -59,21 +59,21 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
     return (
         <PageContainer>
             <div className="flex-shrink-0 mb-2 md:mb-4">
-               {/*  <Title
+                {/*  <Title
                     title={( */}
-                        <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                             <User />
                             {t.title}
-                        </div>
-                  {/*   )} */}
-              {/*       breadcrumbs={[ */}
-                    {/*     {
+                        </div> */}
+                {/*   )} */}
+                {/*       breadcrumbs={[ */}
+                {/*     {
                             label: t.title,
                             href: "/account"
                         } */}
-              {/*       ]} */}
-                    {/*  showDate */}
-            {/*     /> */}
+                {/*       ]} */}
+                {/*  showDate */}
+                {/*     /> */}
                 <EmailStatusBanner />
 
                 <AccountBannerHeader
@@ -98,6 +98,10 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
                                 <Settings className="size-4" />
                                 {t["description.account-details"]}
                             </TabsTrigger>
+                            <TabsTrigger value="membership" className="w-full h-fit cursor-pointer py-3">
+                                <CreditCard className="size-4" />
+                                Membresía
+                            </TabsTrigger>
                             <TabsTrigger
                                 value="danger-zone"
                                 className="w-full h-fit cursor-pointer py-3"
@@ -118,6 +122,12 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
                                 immediateData={immediateData}
                                 translations={t}
                             />
+                        </div>
+                    </TabsContent>
+
+                    <TabsContent value="membership" className="h-full overflow-hidden">
+                        <div className="h-full overflow-y-auto">
+                            <MembershipTab />
                         </div>
                     </TabsContent>
 

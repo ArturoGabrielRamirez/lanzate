@@ -9,7 +9,7 @@ export const passwordSchema = Yup.string()
 
 // 👇 Nuevo schema para el formulario de cambio de contraseña
 export const changePasswordSchema = Yup.object({
-  currentPassword: Yup.string().required("La contraseña actual es requerida"),
+  /* currentPassword: Yup.string().required("La contraseña actual es requerida"), */
   password: passwordSchema,
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'Las contraseñas no coinciden')
