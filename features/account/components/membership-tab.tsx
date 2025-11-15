@@ -20,16 +20,16 @@ function MembershipTab({ user }: { user: UserType }) {
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <p>Tipo de plan: {accountType}</p>
+                <p className="mb-4">Tipo de plan: {accountType}</p>
                 {accountType === 'FREE' && (
                     <div className="container grid items-center gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist">
                         {PRICING_PLANS.map((plan) => (
                             <PriceCard
                                 key={plan.id}
                                 contactPageHref={plan.contactPageHref}
-                                className={plan.className}
-                                actionText={"Upgrade"}
-                                disabled={accountType === 'FREE' && plan.id === 'starter'}
+                                className={`${plan.className} ${accountType === 'FREE' && plan.id === 'starter' ? "opacity-50" : ""} bg-accent hover:bg-accent/50`}
+                                actionText={accountType === 'FREE' && plan.id === 'starter' ? "Current Plan" : "Upgrade"}
+                                disabled={accountType === 'FREE' && plan.id === 'starter' ? true : false}
                             >
                                 <ProductName>{t(`plans.${plan.planKey}.name`)}</ProductName>
                                 <Price>{t(`plans.${plan.planKey}.price`)}</Price>
