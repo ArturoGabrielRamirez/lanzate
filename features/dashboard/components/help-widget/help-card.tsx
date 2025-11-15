@@ -25,7 +25,7 @@ function HelpCard() {
                     </p>
                 </CardContent>
                 <CardFooter>
-                    <HelpDialogButton />
+                    <HelpDialogButton asChild/>
                 </CardFooter>
             </Card>
         </SectionContainer>
