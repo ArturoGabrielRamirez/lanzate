@@ -345,6 +345,15 @@
                     "loading": "Actualizando contraseña...",
                     "completed": "¡Contraseña actualizada! Ahora podés iniciar sesión."
                 }
+            },
+            "page": {
+                "image": {
+                    "alt": "Imagen de actualizar contraseña"
+                },
+                "header": {
+                    "title": "Actualizar contraseña",
+                    "description": "Actualiza tu contraseña para asegurar que tu cuenta esté segura."
+                }
             }
         },
         "waitlist": {
