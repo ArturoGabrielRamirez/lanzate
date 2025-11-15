@@ -1,18 +1,27 @@
 "use server"
 
 import { JoinWaitlistFormPayload } from '@/features/auth/types'
-/* import { prisma } from '@/utils/prisma' */
+import { formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
+import { prisma } from '@/utils/prisma'
 
 
 export async function joinWaitlistData({ email }: JoinWaitlistFormPayload) {
 
-    await new Promise(resolve => setTimeout(resolve, 5000))
-
-    return {
-        hasError: false,
-        message: "Joined waitlist successfully",
-        payload: {
+    const existingWaitlist = await prisma.waitlist.findFirst({
+        where: {
             email: email
         }
+    })
+
+    if (existingWaitlist) {
+        return formatErrorResponse("You are already on the waitlist")
     }
+
+    const newWaitlist = await prisma.waitlist.create({
+        data: {
+            email: email
+        }
+    })
+
+    return formatSuccessResponse("Joined waitlist successfully", newWaitlist)
 }
