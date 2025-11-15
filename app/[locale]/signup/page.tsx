@@ -9,9 +9,11 @@ import { LandingSectionIconTitle, LandingText } from '@/features/global/componen
 import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
 
-export const metadata: Metadata = {
-  title: "Signup",
-  description: "Create your account to start using Lanzate",
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("auth.signup.page")
+  return {
+    title: t('title')
+  }
 }
 
 export default async function SignupPage() {

@@ -9,9 +9,11 @@ import { LandingSectionIconTitle, LandingText } from '@/features/global/componen
 import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
 
-export const metadata: Metadata = {
-  title: "Reset Password",
-  description: "Reset your password to regain access to your account",
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("auth.resetPassword.page")
+  return {
+    title: t('title'),
+  }
 }
 
 export default async function ResetPage() {
