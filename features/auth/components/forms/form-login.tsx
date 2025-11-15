@@ -15,7 +15,6 @@ function LoginForm() {
 
     return (
         <>
-            {/* <h2 className='text-2xl font-bold text-center'>{t("login")}</h2> */}
             <Form
                 resolver={yupResolver(loginFormSchema)}
                 formAction={handleLogInAction}
@@ -24,10 +23,9 @@ function LoginForm() {
                 successMessage={t("messages.success")}
                 loadingMessage={t("messages.loading")}
                 className="flex flex-col gap-3 sm:row-start-2 sm:col-start-1 sm:min-w-full sm:justify-center"
-                disabled
             >
-                <InputField name="email" label={t("fields.email.label")} placeholder={t("fields.email.placeholder")} startIcon={<MailIcon />} tooltip={t("fields.email.tooltip")} type="email" isRequired disabled/>
-                <InputField name="password" label={t("fields.password.label")} placeholder={t("fields.password.placeholder")} startIcon={<LockIcon />} tooltip={t("fields.password.tooltip")} type="password" isRequired disabled/>
+                <InputField name="email" label={t("fields.email.label")} placeholder={t("fields.email.placeholder")} startIcon={<MailIcon />} tooltip={t("fields.email.tooltip")} type="email" isRequired />
+                <InputField name="password" label={t("fields.password.label")} placeholder={t("fields.password.placeholder")} startIcon={<LockIcon />} tooltip={t("fields.password.tooltip")} type="password" isRequired />
             </Form>
         </>
     )

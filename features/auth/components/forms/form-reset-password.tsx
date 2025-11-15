@@ -36,7 +36,6 @@ function ResetPassword() {
 
   return (
     <>
-      {/* <h2 className='text-2xl font-bold text-center'>{t("reset-password.title")}</h2> */}
       <Form
         resolver={yupResolver(changeEmailSchema as never)}
         formAction={handleSubmit}

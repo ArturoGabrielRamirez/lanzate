@@ -37,7 +37,6 @@ function SignupForm() {
 
     return (
         <>
-            {/* <h2 className='text-2xl font-bold'>{t("signup")}</h2> */}
             <Form
                 resolver={yupResolver(signUpSchema as never)}
                 formAction={handleSubmit}
@@ -46,12 +45,11 @@ function SignupForm() {
                 loadingMessage={t("messages.loading")}
                 onSuccess={handleSuccess}
                 className="flex flex-col gap-4 w-full max-w-xl"
-                disabled
             >
-                <InputField name="email" label={t("fields.email.label")} placeholder={t("fields.email.placeholder")} startIcon={<MailIcon />} tooltip={t("fields.email.tooltip")} type="email" isRequired disabled/>
-                <InputField name="username" label={t("fields.username.label")} placeholder={t("fields.username.placeholder")} startIcon={<UserIcon />} tooltip={t("fields.username.tooltip")} isRequired disabled/>
-                <InputField name="password" label={t("fields.password.label")} placeholder={t("fields.password.placeholder")} startIcon={<LockIcon />} tooltip={t("fields.password.tooltip")} type="password" isRequired disabled/>
-                <InputField name="confirm-password" label={t("fields.confirmPassword.label")} placeholder={t("fields.confirmPassword.placeholder")} startIcon={<LockIcon />} tooltip={t("fields.confirmPassword.tooltip")} type="password" isRequired disabled/>
+                <InputField name="email" label={t("fields.email.label")} placeholder={t("fields.email.placeholder")} startIcon={<MailIcon />} tooltip={t("fields.email.tooltip")} type="email" isRequired />
+                <InputField name="username" label={t("fields.username.label")} placeholder={t("fields.username.placeholder")} startIcon={<UserIcon />} tooltip={t("fields.username.tooltip")} isRequired />
+                <InputField name="password" label={t("fields.password.label")} placeholder={t("fields.password.placeholder")} startIcon={<LockIcon />} tooltip={t("fields.password.tooltip")} type="password" isRequired />
+                <InputField name="confirm-password" label={t("fields.confirmPassword.label")} placeholder={t("fields.confirmPassword.placeholder")} startIcon={<LockIcon />} tooltip={t("fields.confirmPassword.tooltip")} type="password" isRequired />
             </Form>
         </>
     )
