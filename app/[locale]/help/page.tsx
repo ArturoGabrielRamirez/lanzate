@@ -11,9 +11,11 @@ import { BackgroundPattern } from '@/features/landing/components'
 import { Link } from '@/i18n/naviation'
 
 
-export const metadata: Metadata = {
-  title: "Help",
-  description: "Get help with your account or store. Contact our support team for assistance.",
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("auth.contact.page")
+  return {
+    title: t('title'),
+  }
 }
 
 export default async function HelpPage() {
