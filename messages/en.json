@@ -335,7 +335,8 @@
                 "fields": {
                     "newPassword": {
                         "label": "New Password",
-                        "placeholder": "New Password"
+                        "placeholder": "New Password",
+                        "tooltip": "Enter new password"
                     }
                 },
                 "actions": {

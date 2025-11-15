@@ -33,6 +33,7 @@ export default async function UpdatePasswordPage() {
                             {t('header.description')}
                         </LandingText>
                     </div>
+                    <UpdatePasswordForm />
                 </div>
                 <div className="relative aspect-square w-full hidden md:flex items-end max-w-md justify-self-start">
                     <Image
@@ -44,13 +45,5 @@ export default async function UpdatePasswordPage() {
                 </div>
             </div>
         </section>
-    )
-
-    return (
-        <div className='flex flex-col p-4 grow z-10'>
-            <section className='flex flex-col items-center justify-center w-full grow'>
-                <UpdatePasswordForm />
-            </section>
-        </div>
     )
 }

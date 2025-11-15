@@ -1,5 +1,6 @@
 'use client'
 
+import { LockIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
@@ -46,9 +47,9 @@ export default function UpdatePasswordForm() {
                     contentButton={t("actions.submit")}
                     successMessage={t("messages.success")}
                     loadingMessage={t("messages.loading")}
-                    className="flex flex-col w-full max-w-xl gap-4 p-8 sm:gap-6"
+                    className="flex flex-col gap-4 w-full max-w-xl"
                 >
-                    <InputField name='password' label={t("fields.newPassword.label")} type='password' placeholder={t("fields.newPassword.placeholder")} />
+                    <InputField name='password' label={t("fields.newPassword.label")} type='password' placeholder={t("fields.newPassword.placeholder")} startIcon={<LockIcon />} tooltip={t("fields.newPassword.tooltip")} isRequired />
                 </Form>
             )}
         </>)
