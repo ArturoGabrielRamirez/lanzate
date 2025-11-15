@@ -2072,6 +2072,9 @@
                     }
                 }
             }
+        },
+        "metadata": {
+            "title": "Home"
         }
     }
 }
