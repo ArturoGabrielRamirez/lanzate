@@ -59,21 +59,7 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
     return (
         <PageContainer>
             <div className="flex-shrink-0 mb-2 md:mb-4">
-                {/*  <Title
-                    title={( */}
-                {/* <div className="flex items-center gap-2">
-                            <User />
-                            {t.title}
-                        </div> */}
-                {/*   )} */}
-                {/*       breadcrumbs={[ */}
-                {/*     {
-                            label: t.title,
-                            href: "/account"
-                        } */}
-                {/*       ]} */}
-                {/*  showDate */}
-                {/*     /> */}
+
                 <EmailStatusBanner />
 
                 <AccountBannerHeader
@@ -81,7 +67,6 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
                     translations={t}
                     onAvatarUpdate={handleAvatarUpdate}
                     onProfileUpdate={handleProfileUpdate}
-                /*  onBannerUpdate={handleBannerUpdate} */
                 />
             </div>
 
@@ -127,7 +112,7 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
 
                     <TabsContent value="membership" className="h-full overflow-hidden">
                         <div className="h-full overflow-y-auto">
-                            <MembershipTab 
+                            <MembershipTab
                                 user={user}
                             />
                         </div>

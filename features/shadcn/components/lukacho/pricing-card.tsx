@@ -16,7 +16,7 @@ export function PriceCard({ className, contactPageHref, actionText = "Get Starte
             )}
         >
             <span>{children}</span>
-            <Button asChild={!disabled} variant="outline" disabled={disabled}>
+            <Button asChild={!disabled} variant="outline" disabled={disabled} type="submit">
                 {disabled ? (
                     <span className='w-full flex items-center justify-center'>
                         {actionText}
