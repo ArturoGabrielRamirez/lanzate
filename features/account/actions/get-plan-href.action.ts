@@ -1,7 +1,6 @@
 "use server"
 
 import { MercadoPagoConfig, PreApproval } from "mercadopago";
-import { redirect, RedirectType } from "next/navigation";
 
 import { actionWrapper } from "@/features/global/utils"
 
@@ -11,10 +10,6 @@ const mercadopago = new MercadoPagoConfig({
 
 export async function getPlanHrefAction(planId: string, email: string) {
 
-    console.log("🚀 ~ getPlanHrefAction ~ planId:", planId)
-    console.log("🚀 ~ getPlanHrefAction ~ process.env.MP_ACCESS_TOKEN:", process.env.MP_ACCESS_TOKEN)
-    console.log("🚀 ~ getPlanHrefAction ~ process.env.APP_URL:", process.env.APP_URL)
-
     return actionWrapper(async () => {
 
         const plans = {
@@ -22,8 +17,6 @@ export async function getPlanHrefAction(planId: string, email: string) {
             business: 10000,
             enterprise: 25000,
         }
-
-        console.log("🚀 ~ getPlanHrefAction ~ plans[planId as keyof typeof plans]:", plans[planId as keyof typeof plans])
 
         const suscription = await new PreApproval(mercadopago).create({
             body: {
@@ -39,10 +32,6 @@ export async function getPlanHrefAction(planId: string, email: string) {
                 status: "pending",
             },
         });
-
-        /* if (suscription.init_point) {
-            redirect(suscription.init_point, RedirectType.replace)
-        } */
 
         return {
             payload: suscription.init_point,

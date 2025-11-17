@@ -1,5 +1,8 @@
+"use client"
 /* import { useTranslations } from "next-intl" */
 /* import { redirect } from "next/navigation" */
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 import { getPlanHrefAction } from "@/features/account/actions"
 import { UserType } from "@/features/account/types"
@@ -9,23 +12,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/comp
 function MembershipTab({ user }: { user: UserType }) {
 
     /* const t = useTranslations("landing.pricing") */
+    const router = useRouter()
 
     const accountType = user.Account?.[0]?.type
 
     const handleBusinessPlan = () => {
         console.log("Business plan")
+        toast.loading("Cargando...")
         getPlanHrefAction("business", "test_user_3019206675162437910@testuser.com")
             .then((res) => {
                 console.log("🚀 ~ handleBusinessPlan ~ res:", res)
-                /* if (res.payload) {
-                    window.open(res.payload, "_blank")
-                } */
-               const a = document.createElement("a")
-               a.href = res.payload
-               a.target = "_blank"
-               a.click()
+                toast.dismiss()
+                toast.success("Plan obtenido exitosamente")
+                router.push(res.payload!)
             })
             .catch((err) => {
+                toast.dismiss()
+                toast.error("Error al obtener el plan")
                 console.log("🚀 ~ handleBusinessPlan ~ err:", err)
             })
     }
@@ -35,15 +38,13 @@ function MembershipTab({ user }: { user: UserType }) {
         getPlanHrefAction("enterprise", "test_user_3019206675162437910@testuser.com")
             .then((res) => {
                 console.log("🚀 ~ handleEnterprisePlan ~ res:", res)
-                /* if (res.payload) {
-                    window.open(res.payload, "_blank")
-                } */
-               const a = document.createElement("a")
-               a.href = res.payload
-               a.target = "_blank"
-               a.click()
+                toast.dismiss()
+                toast.success("Plan obtenido exitosamente")
+                router.push(res.payload!)
             })
             .catch((err) => {
+                toast.dismiss()
+                toast.error("Error al obtener el plan")
                 console.log("🚀 ~ handleEnterprisePlan ~ err:", err)
             })
     }
