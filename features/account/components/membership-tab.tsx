@@ -1,16 +1,52 @@
-import { useTranslations } from "next-intl"
+/* import { useTranslations } from "next-intl" */
+/* import { redirect } from "next/navigation" */
 
+import { getPlanHrefAction } from "@/features/account/actions"
 import { UserType } from "@/features/account/types"
-import { PRICING_PLANS } from "@/features/landing/constants"
-import { Offering } from "@/features/shadcn/components/lukacho/pricing-card"
-import { Description, OfferingWrapper, Price, PriceCard, ProductName } from "@/features/shadcn/components/lukacho/pricing-card"
+import { Button } from "@/features/shadcn/components/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 function MembershipTab({ user }: { user: UserType }) {
 
-    const t = useTranslations("landing.pricing")
+    /* const t = useTranslations("landing.pricing") */
 
     const accountType = user.Account?.[0]?.type
+
+    const handleBusinessPlan = () => {
+        console.log("Business plan")
+        getPlanHrefAction("business", "test_user_3019206675162437910@testuser.com")
+            .then((res) => {
+                console.log("🚀 ~ handleBusinessPlan ~ res:", res)
+                /* if (res.payload) {
+                    window.open(res.payload, "_blank")
+                } */
+               const a = document.createElement("a")
+               a.href = res.payload
+               a.target = "_blank"
+               a.click()
+            })
+            .catch((err) => {
+                console.log("🚀 ~ handleBusinessPlan ~ err:", err)
+            })
+    }
+
+    const handleEnterprisePlan = async () => {
+        console.log("Enterprise plan")
+        getPlanHrefAction("enterprise", "test_user_3019206675162437910@testuser.com")
+            .then((res) => {
+                console.log("🚀 ~ handleEnterprisePlan ~ res:", res)
+                /* if (res.payload) {
+                    window.open(res.payload, "_blank")
+                } */
+               const a = document.createElement("a")
+               a.href = res.payload
+               a.target = "_blank"
+               a.click()
+            })
+            .catch((err) => {
+                console.log("🚀 ~ handleEnterprisePlan ~ err:", err)
+            })
+    }
 
     return (
         <Card>
@@ -23,7 +59,10 @@ function MembershipTab({ user }: { user: UserType }) {
                 <p className="mb-4">Tipo de plan: {accountType}</p>
                 {accountType === 'FREE' && (
                     <div className="container grid items-center gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist">
-                        {PRICING_PLANS.map((plan) => (
+                        <Button>Starter</Button>
+                        <Button onClick={handleBusinessPlan}>Business</Button>
+                        <Button onClick={handleEnterprisePlan}>Enterprise</Button>
+                        {/* {PRICING_PLANS.map((plan) => (
                             <PriceCard
                                 key={plan.id}
                                 contactPageHref={plan.contactPageHref}
@@ -44,7 +83,7 @@ function MembershipTab({ user }: { user: UserType }) {
                                     ))}
                                 </OfferingWrapper>
                             </PriceCard>
-                        ))}
+                        ))} */}
                     </div>
                 )}
             </CardContent>
