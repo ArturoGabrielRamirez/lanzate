@@ -20,8 +20,9 @@ export async function getPlanHrefAction(planId: string, email: string) {
 
         const suscription = await new PreApproval(mercadopago).create({
             body: {
-                back_url: process.env.APP_URL!,
-                reason: "Suscripción a mensajes de muro",
+                //back_url: process.env.APP_URL!,
+                back_url: "https://lanzate.app",
+                reason: "Suscripción a Lanzate",
                 auto_recurring: {
                     frequency: 1,
                     frequency_type: "months",
