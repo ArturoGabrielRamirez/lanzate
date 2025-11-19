@@ -8,7 +8,7 @@ const mercadopago = new MercadoPagoConfig({
     accessToken: process.env.MP_ACCESS_TOKEN!,
 });
 
-export async function getPlanHrefAction(planId: string, email: string, userEmail: string) {
+export async function getPlanHrefAction(planId: string, _email: string, userEmail: string) {
 
     return actionWrapper(async () => {
 
@@ -20,8 +20,8 @@ export async function getPlanHrefAction(planId: string, email: string, userEmail
 
         const suscription = await new PreApproval(mercadopago).create({
             body: {
-                //back_url: process.env.APP_URL!,
-                back_url: "https://4633a45df0f4.ngrok-free.app/en/account",
+                back_url: process.env.APP_URL!,
+                //back_url: "https://4633a45df0f4.ngrok-free.app/en/account",
                 reason: "Lanzate",
                 auto_recurring: {
                     frequency: 1,
@@ -29,7 +29,7 @@ export async function getPlanHrefAction(planId: string, email: string, userEmail
                     transaction_amount: plans[planId as keyof typeof plans],
                     currency_id: "ARS",
                 },
-                payer_email: email,
+                payer_email: userEmail,
                 status: "pending",
                 external_reference: userEmail,
             },
