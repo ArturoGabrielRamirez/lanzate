@@ -2,7 +2,7 @@
 
 import { prisma } from "@/utils/prisma"
 
-export async function updateUserAccountData({ /* suscriptionId, */ email }: { suscriptionId: string, email: string }) {
+export async function updateUserAccountData({ suscriptionId, email }: { suscriptionId: string, email: string }) {
 
     const user = await prisma.user.findFirst({
         where: {
@@ -23,6 +23,7 @@ export async function updateUserAccountData({ /* suscriptionId, */ email }: { su
         },
         data: {
             type: "PRO",
+            suscription_id: suscriptionId
         }
     })
 

@@ -66,6 +66,8 @@ function MembershipTab({ user }: { user: UserType }) {
             </CardHeader>
             <CardContent>
                 <p className="mb-4">Tipo de plan: {accountType}</p>
+                <p className="mb-4">ID de suscripción: {user.Account?.[0]?.suscription_id}</p>
+                <p className="mb-4">Fecha de suscripción: {Intl.DateTimeFormat("es-AR", { dateStyle: "long", timeStyle: "short" }).format(new Date(user.Account?.[0]?.created_at as string))}</p>
                 <div className="container grid items-center gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist mb-4">
                     <Button disabled={accountType === 'FREE' || accountType === 'PRO' || accountType === 'ENTERPRISE'}>Starter</Button>
                     <Button disabled={accountType === 'PRO' || accountType === 'ENTERPRISE'} onClick={handleBusinessPlan}>Business</Button>
