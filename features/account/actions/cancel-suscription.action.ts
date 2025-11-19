@@ -13,8 +13,6 @@ const mercadopago = new MercadoPagoConfig({
 export async function cancelSuscriptionAction(suscriptionId: string) {
     return actionWrapper(async () => {
 
-        console.log("🚀 ~ cancelSuscriptionAction ~ suscriptionId:", suscriptionId)
-
         const suscription = await new PreApproval(mercadopago).update({
             id: suscriptionId,
             body: {
@@ -22,9 +20,7 @@ export async function cancelSuscriptionAction(suscriptionId: string) {
             }
         })
 
-        console.log("🚀 ~ cancelSuscriptionAction ~ suscription:", suscription)
-
-        await cancelUserAccountData(suscriptionId)
+        await cancelUserAccountData(suscription.id!)
 
         revalidatePath("/account")
 
