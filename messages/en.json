@@ -335,7 +335,8 @@
                 "fields": {
                     "newPassword": {
                         "label": "New Password",
-                        "placeholder": "New Password"
+                        "placeholder": "New Password",
+                        "tooltip": "Enter new password"
                     }
                 },
                 "actions": {
@@ -345,6 +346,15 @@
                     "success": "Password updated!",
                     "loading": "Updating password...",
                     "completed": "Password updated! You can now log in."
+                }
+            },
+            "page": {
+                "image": {
+                    "alt": "Update password image"
+                },
+                "header": {
+                    "title": "Update password",
+                    "description": " Update your password to ensure your account is secure."
                 }
             }
         },

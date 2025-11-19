@@ -7,6 +7,7 @@ export async function actionWrapper<T = unknown>(
     try {
         return await action();
     } catch (error) {
+        console.log("🚀 ~ actionWrapper ~ error:", error)
         if (error instanceof Error) {
             return formatErrorResponse(error.message);
         }

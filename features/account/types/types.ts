@@ -4,6 +4,7 @@ export interface Account {
     updated_at: string | Date
     user_id: number
     type: string
+    suscription_id: string | null
 }
 
 export interface Store {

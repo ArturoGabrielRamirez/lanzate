@@ -14,6 +14,7 @@
             "currently-not-available": "Actualmente no disponible"
         }
     },
+    "Auth" : {},
     "auth": {
         "_legacy_login": "Iniciar sesión",
         "_legacy_signup": "Registrarse",
@@ -334,7 +335,8 @@
                 "fields": {
                     "newPassword": {
                         "label": "Nueva contraseña",
-                        "placeholder": "Nueva contraseña"
+                        "placeholder": "Nueva contraseña",
+                        "tooltip": "Ingrese la nueva contraseña"
                     }
                 },
                 "actions": {
@@ -344,6 +346,15 @@
                     "success": "¡Contraseña actualizada!",
                     "loading": "Actualizando contraseña...",
                     "completed": "¡Contraseña actualizada! Ahora podés iniciar sesión."
+                }
+            },
+            "page": {
+                "image": {
+                    "alt": "Imagen de actualizar contraseña"
+                },
+                "header": {
+                    "title": "Actualizar contraseña",
+                    "description": "Actualiza tu contraseña para asegurar que tu cuenta esté segura."
                 }
             }
         },
