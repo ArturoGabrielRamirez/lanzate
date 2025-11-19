@@ -1,7 +1,7 @@
 "use server";
 
 import { actionWrapper } from "@/features/global/utils";
-import { getCurrentUserPermissionsData } from "../data/get-current-user-permissions.data";
+import { getCurrentUserPermissionsData } from "@/features/plans/data/get-current-user-permissions.data";
 
 export async function getCurrentUserPermissionsAction() {
     return actionWrapper(async () => {
