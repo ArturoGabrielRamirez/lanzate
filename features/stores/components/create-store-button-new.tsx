@@ -1174,10 +1174,10 @@ function CreateStoreButtonNew({ userId }: { userId: number }) {
 
     useEffect(() => {
         if (step === 7 && createdSlug) {
-            const t = setTimeout(() => {
+            /* const t = setTimeout(() => {
                 router.push(`/stores/${createdSlug}/account`)
             }, 1500)
-            return () => clearTimeout(t)
+            return () => clearTimeout(t) */
         }
     }, [step, createdSlug, router])
 
