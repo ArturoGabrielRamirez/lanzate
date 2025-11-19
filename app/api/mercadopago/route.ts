@@ -13,11 +13,9 @@ export async function POST(request: Request) {
 
     // Solo nos interesan las notificaciones de suscripciones
     if (body.type === "subscription_preapproval") {
+
         // Obtenemos la suscripción
         const preapproval = await new PreApproval(mercadopago).get({ id: body.data.id });
-        
-        console.log("🚀 ~ POST ~ body.data.id:", body.data.id)
-        console.log("🚀 ~ POST ~ preapproval:", preapproval)
         
         // Si se aprueba, actualizamos el usuario con el id de la suscripción
         if (preapproval.status === "authorized") {

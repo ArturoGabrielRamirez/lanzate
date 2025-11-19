@@ -54,7 +54,7 @@ function MembershipTab({ user }: { user: UserType }) {
                 toast.dismiss()
                 toast.error("Error al cancelar la suscripción")
             }) */
-        cancelSuscriptionAction("1234567890")
+        cancelSuscriptionAction(user.Account?.[0]?.suscription_id as string)
     }
 
     return (
