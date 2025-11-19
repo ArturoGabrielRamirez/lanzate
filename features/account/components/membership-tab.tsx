@@ -19,7 +19,7 @@ function MembershipTab({ user }: { user: UserType }) {
     const handleBusinessPlan = () => {
         console.log("Business plan")
         toast.loading("Cargando...")
-        getPlanHrefAction("business", "test_user_3019206675162437910@testuser.com")
+        getPlanHrefAction("business", "test_user_3019206675162437910@testuser.com", user.email)
             .then((res) => {
                 console.log("🚀 ~ handleBusinessPlan ~ res:", res)
                 toast.dismiss()
@@ -35,7 +35,7 @@ function MembershipTab({ user }: { user: UserType }) {
 
     const handleEnterprisePlan = async () => {
         console.log("Enterprise plan")
-        getPlanHrefAction("enterprise", "test_user_3019206675162437910@testuser.com")
+        getPlanHrefAction("enterprise", "test_user_3019206675162437910@testuser.com", user.email)
             .then((res) => {
                 console.log("🚀 ~ handleEnterprisePlan ~ res:", res)
                 toast.dismiss()
