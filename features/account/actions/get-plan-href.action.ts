@@ -10,7 +10,6 @@ const mercadopago = new MercadoPagoConfig({
 
 export async function getPlanHrefAction(planId: string, email: string, userEmail: string) {
 
-    console.log("🚀 ~ getPlanHrefAction ~ email:", email)
     return actionWrapper(async () => {
 
         const plans = {

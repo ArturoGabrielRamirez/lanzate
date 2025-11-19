@@ -20,7 +20,6 @@ export async function POST(request: Request) {
         if (preapproval.status === "authorized") {
             // Actualizamos el usuario con el id de la suscripción
             //await api.user.update({ suscription: preapproval.id });
-            console.log("🚀 ~ POST ~ preapproval:", preapproval)
             await updateUserAccountAction(preapproval.id!, preapproval.external_reference!);
         }
     }

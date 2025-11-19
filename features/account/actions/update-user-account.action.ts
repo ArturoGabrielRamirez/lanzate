@@ -6,8 +6,6 @@ import { actionWrapper, formatSuccessResponse } from "@/features/global/utils"
 export async function updateUserAccountAction(suscriptionId: string, email: string) {
     return actionWrapper(async () => {
 
-        console.log("🚀 ~ updateUserAccountAction ~ suscriptionId:", suscriptionId)
-
         await updateUserAccountData({
             suscriptionId: suscriptionId,
             email: email

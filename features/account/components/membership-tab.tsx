@@ -17,24 +17,20 @@ function MembershipTab({ user }: { user: UserType }) {
     const accountType = user.Account?.[0]?.type
 
     const handleBusinessPlan = () => {
-        console.log("Business plan")
         toast.loading("Cargando...")
         getPlanHrefAction("business", "test_user_3019206675162437910@testuser.com", user.email)
             .then((res) => {
-                console.log("🚀 ~ handleBusinessPlan ~ res:", res)
                 toast.dismiss()
                 toast.success("Plan obtenido exitosamente")
                 router.push(res.payload!)
             })
-            .catch((err) => {
+            .catch((_err) => {
                 toast.dismiss()
                 toast.error("Error al obtener el plan")
-                console.log("🚀 ~ handleBusinessPlan ~ err:", err)
             })
     }
 
     const handleEnterprisePlan = async () => {
-        console.log("Enterprise plan")
         getPlanHrefAction("enterprise", "test_user_3019206675162437910@testuser.com", user.email)
             .then((res) => {
                 console.log("🚀 ~ handleEnterprisePlan ~ res:", res)
@@ -42,10 +38,9 @@ function MembershipTab({ user }: { user: UserType }) {
                 toast.success("Plan obtenido exitosamente")
                 router.push(res.payload!)
             })
-            .catch((err) => {
+            .catch((_err) => {
                 toast.dismiss()
                 toast.error("Error al obtener el plan")
-                console.log("🚀 ~ handleEnterprisePlan ~ err:", err)
             })
     }
 
