@@ -35,7 +35,6 @@ async function EmptyFeedItem() {
                                 roles={["free", "pro", "enterprise"]}
                                 permissions={[ PERMISSIONS.CREATE_STORE ]}
                                 mode="disable"
-                                tooltip="You have reached the maximum number of stores for your plan"
                             >
                                 <CreateStoreButtonNew userId={user?.id || 0} />
                             </AccessGate>
