@@ -36,4 +36,5 @@ async function TabPage({ params }: TabPageProps) {
         </Suspense>
     )
 }
+
 export default TabPage
