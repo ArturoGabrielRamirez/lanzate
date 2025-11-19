@@ -4,7 +4,7 @@
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
-import { getPlanHrefAction } from "@/features/account/actions"
+import { cancelSuscriptionAction, getPlanHrefAction } from "@/features/account/actions"
 import { UserType } from "@/features/account/types"
 import { Button } from "@/features/shadcn/components/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
@@ -45,7 +45,16 @@ function MembershipTab({ user }: { user: UserType }) {
     }
 
     const handleCancelSubscription = () => {
-        console.log("Cancelar suscripción")
+        /* cancelSuscriptionAction(user.Account?.[0]?.suscriptionId!)
+            .then((res) => {
+                toast.dismiss()
+                toast.success("Suscripción cancelada exitosamente")
+            })
+            .catch((_err) => {
+                toast.dismiss()
+                toast.error("Error al cancelar la suscripción")
+            }) */
+        cancelSuscriptionAction("1234567890")
     }
 
     return (
