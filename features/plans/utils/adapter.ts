@@ -1,6 +1,6 @@
 import { UserType } from "@/features/account/types/types";
 import { PLAN_CONFIG, PERMISSIONS } from "@/features/plans/utils/constants";
-import { UserSession } from "@/features/shadcn/components/access-manager";
+import { UserSession } from "@/features/shadcn/components/access-gate";
 
 export function mapUserToSession(user: UserType): UserSession {
     const accountType = (user.Account?.[0]?.type || "FREE") as keyof typeof PLAN_CONFIG;

@@ -2,7 +2,7 @@
 
 import { UserType } from "@/features/account/types/types";
 import { mapUserToSession } from "@/features/plans/utils/adapter";
-import { AccessManagerProvider } from "@/features/shadcn/components/access-manager";
+import { AccessManagerProvider } from "@/features/shadcn/components/access-gate";
 
 interface PlanProviderProps {
     user: UserType | null;
