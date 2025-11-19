@@ -44,6 +44,10 @@ function MembershipTab({ user }: { user: UserType }) {
             })
     }
 
+    const handleCancelSubscription = () => {
+        console.log("Cancelar suscripción")
+    }
+
     return (
         <Card>
             <CardHeader>
@@ -53,34 +57,15 @@ function MembershipTab({ user }: { user: UserType }) {
             </CardHeader>
             <CardContent>
                 <p className="mb-4">Tipo de plan: {accountType}</p>
-                {accountType === 'FREE' && (
-                    <div className="container grid items-center gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist">
-                        <Button>Starter</Button>
-                        <Button onClick={handleBusinessPlan}>Business</Button>
-                        <Button onClick={handleEnterprisePlan}>Enterprise</Button>
-                        {/* {PRICING_PLANS.map((plan) => (
-                            <PriceCard
-                                key={plan.id}
-                                contactPageHref={plan.contactPageHref}
-                                className={`${plan.className} ${accountType === 'FREE' && plan.id === 'starter' ? "opacity-50" : ""} bg-accent hover:bg-accent/50`}
-                                actionText={accountType === 'FREE' && plan.id === 'starter' ? "Current Plan" : "Upgrade"}
-                                disabled={accountType === 'FREE' && plan.id === 'starter' ? true : false}
-                            >
-                                <ProductName>{t(`plans.${plan.planKey}.name`)}</ProductName>
-                                <Price>{t(`plans.${plan.planKey}.price`)}</Price>
-                                <Description>
-                                    {t(`plans.${plan.planKey}.description`)}
-                                </Description>
-                                <OfferingWrapper>
-                                    {Array.from({ length: plan.featuresCount }, (_, i) => (
-                                        <Offering key={i + 1}>
-                                            {t(`plans.${plan.planKey}.features.feature${i + 1}`)}
-                                        </Offering>
-                                    ))}
-                                </OfferingWrapper>
-                            </PriceCard>
-                        ))} */}
-                    </div>
+                <div className="container grid items-center gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist mb-4">
+                    <Button disabled={accountType === 'FREE' || accountType === 'PRO' || accountType === 'ENTERPRISE'}>Starter</Button>
+                    <Button disabled={accountType === 'PRO' || accountType === 'ENTERPRISE'} onClick={handleBusinessPlan}>Business</Button>
+                    <Button disabled={accountType === 'ENTERPRISE'} onClick={handleEnterprisePlan}>Enterprise</Button>
+                </div>
+                {accountType !== "FREE" && (
+                    <Button variant="destructive" onClick={handleCancelSubscription}>
+                        Cancelar suscripción
+                    </Button>
                 )}
             </CardContent>
         </Card>
