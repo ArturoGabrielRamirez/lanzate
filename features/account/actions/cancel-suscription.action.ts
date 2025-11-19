@@ -1,7 +1,9 @@
 "use server"
 
 import MercadoPagoConfig, { PreApproval } from "mercadopago"
+import { revalidatePath } from "next/cache";
 
+import { cancelUserAccountData } from "@/features/account/data";
 import { actionWrapper } from "@/features/global/utils"
 
 const mercadopago = new MercadoPagoConfig({
@@ -23,6 +25,8 @@ export async function cancelSuscriptionAction(suscriptionId: string) {
         console.log("🚀 ~ cancelSuscriptionAction ~ suscription:", suscription)
 
         await cancelUserAccountData(suscriptionId)
+
+        revalidatePath("/account")
 
         return {
             payload: null,
