@@ -7,4 +7,4 @@ function AnalyticsTab({ slug, userId }: OverviewTabProps) {
     )
 }
 
-export { AnalyticsTab }
+export default AnalyticsTab

@@ -63,4 +63,4 @@ async function AccountTab({ slug }: AccountTabProps) {
     )
 }
 
-export { AccountTab }
+export default AccountTab

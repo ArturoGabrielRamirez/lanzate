@@ -54,4 +54,4 @@ async function EmployeesTab({ slug }: EmployeesTabProps) {
     )
 }
 
-export { EmployeesTab }
+export default EmployeesTab
