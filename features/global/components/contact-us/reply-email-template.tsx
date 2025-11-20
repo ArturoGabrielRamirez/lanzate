@@ -1,10 +1,12 @@
-import * as React from "react"
+import { Html, Head, Preview, Body, Container, Section, Img, Heading, Text, Hr, Tailwind, Link } from '@react-email/components';
+import * as React from 'react';
 
-import { ReplyEmailTemplateProps } from "@/features/global/types"
+import { ReplyEmailTemplateProps } from '@/features/global/types';
+
+const logoUrl = "https://lanzate.app/logo.png";
 
 export function ReplyEmailTemplate({
     recipientName,
-    /*  recipientEmail,  */
     category,
     originalMessage,
     replyMessage,
@@ -31,172 +33,127 @@ export function ReplyEmailTemplate({
     };
 
     const categoryLabel = category ? (categoryLabels[category] || "Soporte") : null;
-    const categoryColor = category ? (categoryColors[category] || "#ea580c") : "#ea580c";
+    const categoryColor = category ? (categoryColors[category] || "#e56c43") : "#e56c43";
 
     return (
-        <div
-            style={{
-                fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-                lineHeight: "1.6",
-                backgroundColor: "#0a0a0a",
-                padding: "40px 20px",
-                color: "#e5e5e5",
-            }}
-        >
-            <div
-                style={{
-                    backgroundColor: "#1a1a1a",
-                    borderRadius: "16px",
-                    padding: "32px",
-                    maxWidth: "600px",
-                    margin: "0 auto",
-                    border: "1px solid #2a2a2a",
-                }}
-            >
-                {/* Header con logo */}
-                <div style={{ marginBottom: "32px", textAlign: "center" }}>
-                    <h1
-                        style={{
-                            color: "#ea580c",
-                            fontSize: "28px",
-                            fontWeight: "bold",
-                            margin: "0 0 8px 0",
-                        }}
-                    >
-                        Lanzate
-                    </h1>
-                    <p style={{ color: "#999", margin: 0, fontSize: "14px" }}>
-                        Respuesta a tu consulta
-                    </p>
-                </div>
+        <Html lang="es">
+            <Head />
+            <Preview>Respuesta a tu consulta - {categoryLabel || "Lanzate"}</Preview>
+            <Tailwind>
+                <Body className="bg-black text-gray-100 font-sans p-4">
+                    <Container className="bg-[#1a1a1a] p-8 rounded-xl max-w-lg border border-[#2a2a2a]">
+                        {/* Header con Logo y Título */}
+                        <Section className="text-center mb-8">
+                            <div className="flex items-center justify-center gap-3 mb-2">
+                                <Img
+                                    src={logoUrl}
+                                    width="32"
+                                    height="32"
+                                    alt="Lanzate"
+                                    className="inline-block"
+                                />
+                                <Heading className="text-[28px] text-[#e56c43] font-bold m-0 inline-block">
+                                    Lanzate
+                                </Heading>
+                            </div>
+                            <Text className="text-gray-400 text-sm m-0">
+                                Respuesta a tu consulta
+                            </Text>
+                        </Section>
 
-                {/* Saludo personalizado */}
-                <div style={{ marginBottom: "24px" }}>
-                    <p style={{ margin: 0, color: "#e5e5e5", fontSize: "16px" }}>
-                        Hola {recipientName || "👋"},
-                    </p>
-                </div>
+                        {/* Saludo */}
+                        <Section className="mb-6">
+                            <Text className="text-base text-gray-100 m-0">
+                                Hola {recipientName || "👋"},
+                            </Text>
+                        </Section>
 
-                {/* Categoría badge (solo si existe) */}
-                {categoryLabel && (
-                    <div style={{ marginBottom: "24px" }}>
-                        <span
-                            style={{
-                                display: "inline-block",
-                                backgroundColor: categoryColor + "20",
-                                color: categoryColor,
-                                padding: "8px 16px",
-                                borderRadius: "8px",
-                                fontSize: "13px",
-                                fontWeight: "600",
-                                border: `1px solid ${categoryColor}40`,
-                            }}
+                        {/* Categoría */}
+                        {categoryLabel && (
+                            <Section className="mb-6">
+                                <div 
+                                    className="inline-block px-4 py-2 rounded-lg text-sm font-semibold"
+                                    style={{ 
+                                        backgroundColor: categoryColor + "20", 
+                                        color: categoryColor,
+                                        border: `1px solid ${categoryColor}40`
+                                    }}
+                                >
+                                    📋 {categoryLabel}
+                                </div>
+                            </Section>
+                        )}
+
+                        {/* Respuesta */}
+                        <Section 
+                            className="bg-[#0f0f0f] p-6 rounded-lg border border-[#2a2a2a] mb-6"
+                            style={{ borderLeft: `4px solid ${categoryColor}` }}
                         >
-                            📋 {categoryLabel}
-                        </span>
-                    </div>
-                )}
+                            <Text className="text-[15px] text-gray-100 leading-relaxed m-0 whitespace-pre-wrap">
+                                {replyMessage}
+                            </Text>
+                        </Section>
 
-                {/* Respuesta principal */}
-                <div
-                    style={{
-                        backgroundColor: "#0f0f0f",
-                        borderRadius: "12px",
-                        padding: "24px",
-                        marginBottom: "24px",
-                        border: "1px solid #2a2a2a",
-                        borderLeft: `4px solid ${categoryColor}`,
-                    }}
-                >
-                    <p style={{
-                        margin: 0,
-                        color: "#e5e5e5",
-                        fontSize: "15px",
-                        whiteSpace: "pre-wrap",
-                        lineHeight: "1.7"
-                    }}>
-                        {replyMessage}
-                    </p>
-                </div>
+                        {/* Firma */}
+                        <Section className="mb-8">
+                            <Text className="text-[15px] text-gray-100 m-0 mb-1">
+                                Saludos,
+                            </Text>
+                            <Text className="text-[15px] text-[#e56c43] font-semibold m-0">
+                                {agentName}
+                            </Text>
+                        </Section>
 
-                {/* Firma */}
-                <div style={{ marginBottom: "32px" }}>
-                    <p style={{ margin: "0 0 4px 0", color: "#e5e5e5", fontSize: "15px" }}>
-                        Saludos,
-                    </p>
-                    <p style={{ margin: 0, color: "#ea580c", fontSize: "15px", fontWeight: "600" }}>
-                        {agentName}
-                    </p>
-                </div>
+                        {/* Mensaje original */}
+                        <Section className="bg-[#0a0a0a] p-5 rounded-lg border border-[#1a1a1a] mb-6">
+                            <Text className="text-xs text-gray-500 font-semibold uppercase tracking-wider m-0 mb-3">
+                                Tu mensaje original
+                            </Text>
+                            <Text className="text-sm text-gray-400 leading-relaxed m-0 whitespace-pre-wrap italic">
+                                {originalMessage}
+                            </Text>
+                        </Section>
 
-                {/* Mensaje original (colapsado) */}
-                <div
-                    style={{
-                        backgroundColor: "#0a0a0a",
-                        borderRadius: "12px",
-                        padding: "20px",
-                        marginBottom: "24px",
-                        border: "1px solid #1a1a1a",
-                    }}
-                >
-                    <p style={{
-                        margin: "0 0 12px 0",
-                        color: "#666",
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.5px"
-                    }}>
-                        Tu mensaje original
-                    </p>
-                    <p style={{
-                        margin: 0,
-                        color: "#999",
-                        fontSize: "14px",
-                        whiteSpace: "pre-wrap",
-                        fontStyle: "italic"
-                    }}>
-                        {originalMessage}
-                    </p>
-                </div>
+                        {/* CTA */}
+                        <Section className="text-center mb-6">
+                            <Text className="text-sm text-gray-400 m-0">
+                                ¿Necesitás más ayuda? Respondé directamente a este email.
+                            </Text>
+                        </Section>
 
-                {/* CTA - Responder */}
-                <div style={{ textAlign: "center", marginBottom: "24px" }}>
-                    <p style={{ margin: "0 0 16px 0", color: "#999", fontSize: "14px" }}>
-                        ¿Necesitas más ayuda? Responde directamente a este email.
-                    </p>
-                </div>
-
-                {/* Footer */}
-                <div
-                    style={{
-                        paddingTop: "24px",
-                        borderTop: "1px solid #2a2a2a",
-                        textAlign: "center",
-                    }}
-                >
-                    <p style={{ margin: 0, fontSize: "13px", color: "#666" }}>
-                        Este email fue enviado por{" "}
-                        <a
-                            href="https://lanzate.app"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: "#ea580c", textDecoration: "none", fontWeight: "500" }}
-                        >
-                            lanzate.app
-                        </a>
-                    </p>
-                    <p style={{ margin: "8px 0 0 0", fontSize: "12px", color: "#555" }}>
-                        {new Date().toLocaleDateString("es-ES", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                        })}
-                    </p>
-                </div>
-            </div>
-        </div>
+                        {/* Footer */}
+                        <Hr className="border-gray-700 my-6" />
+                        <Section className="text-center">
+                            <div className="flex items-center justify-center gap-2 mb-2">
+                                <Img 
+                                    src={logoUrl}
+                                    width="16"
+                                    height="16"
+                                    alt=""
+                                    className="inline-block"
+                                />
+                                <Text className="text-xs text-gray-500 m-0 inline-block">
+                                    Este email fue enviado por{' '}
+                                    <Link href="https://lanzate.app" className="text-[#e56c43] no-underline font-medium">
+                                        lanzate.app
+                                    </Link>
+                                </Text>
+                            </div>
+                            <Text className="text-xs text-gray-600 m-0">
+                                {new Date().toLocaleDateString("es-ES", { 
+                                    year: "numeric", 
+                                    month: "long", 
+                                    day: "numeric", 
+                                    hour: "2-digit", 
+                                    minute: "2-digit" 
+                                })}
+                            </Text>
+                        </Section>
+                    </Container>
+                </Body>
+            </Tailwind>
+        </Html>
     );
 }
+
+export default ReplyEmailTemplate;

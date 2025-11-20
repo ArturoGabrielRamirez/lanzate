@@ -103,3 +103,23 @@ export type LandingSectionTitleProps = {
     children: React.ReactNode
     className?: string
 }
+
+export interface EmailTemplateProps {
+    name?: string;
+    email: string;
+    category?: string;
+    message: string;
+}
+
+export interface ReplyEmailTemplateProps {
+    recipientName?: string;
+    recipientEmail: string;
+    category?: string;
+    originalMessage: string;
+    replyMessage: string;
+    agentName?: string;
+}
+
+export interface WaitlistWelcomeProps {
+    recipientEmail: string;
+}
