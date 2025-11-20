@@ -36,7 +36,6 @@ async function EmptyFeedItem() {
                                 permissions={[PERMISSIONS.CREATE_STORE]}
                                 mode="disable"
                             >
-                                {/* <CreateStoreButtonNew userId={user?.id || 0} /> */}
                                 <CreateStoreButton userId={user?.id || 0} />
                             </AccessGate>
                         </div>

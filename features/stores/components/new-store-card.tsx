@@ -4,7 +4,7 @@ import { Plus } from "lucide-react"
 
 import { Empty, EmptyHeader, EmptyTitle, EmptyMedia, EmptyDescription, EmptyContent } from "@/features/shadcn/components/empty"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
-import { CreateStoreButtonNew } from "@/features/stores/components/create-store-button-new"
+import { CreateStoreButton } from "@/features/stores/components/create-form/create-store-button"
 import { NewStoreCardProps } from "@/features/stores/types"
 
 function NewStoreCard({ userId, variant = "empty" }: NewStoreCardProps) {
@@ -29,7 +29,7 @@ function NewStoreCard({ userId, variant = "empty" }: NewStoreCardProps) {
                         </EmptyDescription>
                     </EmptyHeader>
                     <EmptyContent>
-                        <CreateStoreButtonNew userId={userId} />
+                        <CreateStoreButton userId={userId} />
                     </EmptyContent>
                 </Empty>
             </CardContent>
