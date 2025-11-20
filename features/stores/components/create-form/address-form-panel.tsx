@@ -6,6 +6,7 @@ import { InputField } from "@/features/global/components/form/input-field"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { CreateStoreFormValues } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
+import { ChoiceBox, ChoiceBoxItem } from "@/features/shadcn/components/ui/choice-box"
 
 export function AddressFormPanel() {
 
@@ -64,6 +65,10 @@ export function AddressFormPanel() {
                     </h3>
                     <p className="text-sm text-muted-foreground text-balance">This is a physical store.</p>
                 </div>
+                <ChoiceBox>
+                    <ChoiceBoxItem />
+
+                </ChoiceBox>
             </div>
             {isPhysicalStore && (
                 <div className="space-y-4">

@@ -29,7 +29,6 @@ export function BasicInfoFormPanel() {
         if (values.basic_info) {
             setValue('basic_info', values.basic_info as never, { shouldValidate: true })
         } else {
-            // Trigger validation for name on initial load if no values exist (fresh form)
             trigger("basic_info.name")
         }
     }, [values.basic_info, setValue, trigger])
