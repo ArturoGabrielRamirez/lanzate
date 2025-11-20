@@ -2,6 +2,7 @@
 
 import { ListIcon, MailIcon, UserIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
@@ -12,6 +13,7 @@ import { ContactFormProps } from "@/features/global/types"
 
 export function ContactForm({ onSuccess }: ContactFormProps) {
     const t = useTranslations("auth.contact.form");
+    const [formKey, setFormKey] = useState(0);
 
     const categories = [
         { value: "technical", label: t("categories.technical") },
@@ -41,6 +43,9 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             };
         }
 
+        // Forzar reset del formulario cambiando la key
+        setFormKey(prev => prev + 1);
+
         if (onSuccess) onSuccess();
 
         return {
@@ -53,6 +58,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
 
     return (
         <Form<ContactFormData>
+            key={formKey}
             resolver={contactResolver}
             formAction={handleSubmit}
             contentButton={t("actions.submit")}

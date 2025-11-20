@@ -31,7 +31,7 @@
         },
         "check-email": {
             "message-1": "Almost there, please check your email. You should receive a confirmation link.",
-            "message-2": "By clicking the link from your email, you can complete your registration and validate your account."
+            "message-2": "Click the link in your email to complete your registration and validate your account."
         },
         "description": {
             "or-login-with": "Or login with"
@@ -45,7 +45,7 @@
             "signing-up": "Signing up...",
             "reset-password": "Sending reset link...",
             "updating-password": "Updating password...",
-            "success-joined-waitlist": "You have succesfully joined the waitlist",
+            "success-joined-waitlist": "You have successfully joined the waitlist",
             "joining-waitlist": "Joining the waitlist"
         },
         "reset-password": {
@@ -487,7 +487,7 @@
             "checkout": "Checkout"
         },
         "resume": {
-            "title": "Cart Resume",
+            "title": "Cart Summary",
             "quantity": "Quantity",
             "sub-total": "Sub-total",
             "shipping": "Shipping",
@@ -699,13 +699,13 @@
             "following": {
                 "users": "Users won't stop buying!",
                 "rocket": "Lanzate makes it easy to sell",
-                "mobile": "Outage problems? Use it in your phone!",
+                "mobile": "Power outage? Use it on your phone!",
                 "tablet": "Available on any device!",
                 "barcode": "Benefit from our USB Barcode Scanner!"
             }
         },
         "description": {
-            "slogan": "Manage your business has never been easier. Focus on growth while we give you full control",
+            "slogan": "Managing your business has never been easier. Focus on growth while we give you full control",
             "slogan-items": {
                 "1": "manage your products",
                 "2": "process sales",
@@ -858,9 +858,9 @@
         "who-we-are": {
             "title": "Who we are",
             "description": "On a mission to help you launch your business",
-            "description-long": "We believe that every entrepreneur deserves the tools                              to make their ideas a reality. Our platform provides everything you                              need to create, manage and grow your digital business from day one,                              without technical complications.",
+            "description-long": "We believe that every entrepreneur deserves the tools to make their ideas a reality. Our platform provides everything you need to create, manage and grow your digital business from day one, without technical complications.",
             "description-long-2": "We know that starting a business can be overwhelming. That's why we've created an integrated solution that eliminates technical barriers and allows you to focus on what really matters: your vision. From your custom website to customer management, everything is designed to be simple, fast and effective.",
-            "description-long-3": "Our commitment goes beyond software. We're building a community of brave entrepreneurs who share the dream of creating something own. By choosing Lanzate, you not only get a powerful tool, you join a community designed to help you succeed and grow your business.",
+            "description-long-3": "Our commitment goes beyond software. We're building a community of brave entrepreneurs who share the dream of creating something of their own. By choosing Lanzate, you not only get a powerful tool, you join a community designed to help you succeed and grow your business.",
             "founded": "Founded",
             "users": "Users",
             "country": "Countries",
@@ -944,8 +944,8 @@
             "payment-amount-label": "Payment amount",
             "payment-amount-placeholder": "Enter the amount the customer paid",
             "preset-amounts-label": "Preset amounts",
-            "change-amount-label": "Change to return",
-            "insufficient-amount-label": "Amount needed to complete payment",
+            "change-amount-label": "Change due",
+            "insufficient-amount-label": "Remaining balance",
             "success-message": "Change calculated successfully",
             "error-message": "Error calculating change",
             "loading-message": "Calculating change..."
@@ -1115,7 +1115,7 @@
         "create-store": {
             "button": "New store",
             "title": "Create new store",
-            "description": "Create a new store to start selling your products! Choose a name for your store and click on the button below, you can continue to add more details of the store once it's created.",
+            "description": "Create a new store to start selling your products! Choose a name for your store and click the button below, you can continue to add more details of the store once it's created.",
             "name": "Name",
             "description-field": "Description",
             "subdomain": "Subdomain",
@@ -1408,7 +1408,7 @@
             "roles": {
                 "employee": "Employee",
                 "cashier": "Cashier",
-                "stockist": "Stockist",
+                "stockist": "Stock Clerk",
                 "sales": "Sales",
                 "supervisor": "Supervisor",
                 "manager": "Manager"
@@ -1577,7 +1577,7 @@
             "button": "Create Product",
             "title": "Create new product",
             "description": "Description",
-            "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
+            "popup-description": "Select a store and create a new product to start selling!",
             "drag-drop": "Drag & drop files here",
             "click-browse": "Or click to browse (max 1 files, up to 2MB each)",
             "browse-files": "Browse files",
@@ -1753,7 +1753,7 @@
                 "label": "Choose your delivery method",
                 "delivery": {
                     "title": "Delivery",
-                    "description": "Orders take 30 min to 2 hours"
+                    "description": "Delivery takes 30 min to 2 hours"
                 },
                 "pickup": {
                     "title": "Pickup",
@@ -1906,7 +1906,7 @@
         "hero": {
             "announcement": {
                 "badge": "New version",
-                "title": "Beta! We open soon..."
+                "title": "Beta! Opening soon..."
             },
             "slogan": {
                 "prefix": "You",
@@ -1919,7 +1919,7 @@
                 "suffix": "makes it happen"
             },
             "description": {
-                "text": "Manage your business has never been easier. Focus on growth while we give you full control"
+                "text": "Managing your business has never been easier. Focus on growth while we give you full control"
             },
             "actions": {
                 "learnMore": "Learn more",
@@ -1935,7 +1935,7 @@
                 "customizable": {
                     "percentage": "100%",
                     "title": "Barcode support",
-                    "description": "USB barcode reader gun support"
+                    "description": "USB barcode scanner support"
                 },
                 "allInOne": {
                     "title": "All-in-one",
@@ -1960,7 +1960,7 @@
                 "description": {
                     "paragraph1": "Lanzate is an all-in-one web application designed to let you manage your store from anywhere, on any device. From inventory and sales tracking to barcode scanner support, Lanzate gives you all the tools you need to run your business easily and efficiently.",
                     "paragraph2": "Forget about complicated setups — just open your browser to manage products, orders, customers, and billing in real time. Everything stays perfectly synced in the cloud.",
-                    "paragraph3": "Our commitment goes beyond software. We're building a community of brave entrepreneurs who share the dream of creating something own. By choosing Lanzate, you not only get a powerful tool, you join a community designed to help you succeed and grow your business."
+                    "paragraph3": "Our commitment goes beyond software. We're building a community of brave entrepreneurs who share the dream of creating something of their own. By choosing Lanzate, you not only get a powerful tool, you join a community designed to help you succeed and grow your business."
                 },
                 "stats": {
                     "founded": {
@@ -2058,7 +2058,7 @@
                 },
                 "business": {
                     "name": "Business",
-                    "price": "$10/mo",
+                    "price": "ARS $10.000/mo",
                     "description": "Ideal for growing businesses that want to expand their reach with advanced tools.",
                     "features": {
                         "feature1": "Everything in Starter plan",
@@ -2070,7 +2070,7 @@
                 },
                 "enterprise": {
                     "name": "Enterprise",
-                    "price": "$25/mo",
+                    "price": "ARS $25.000/mo",
                     "description": "For businesses looking to scale. Complete management with premium tools and dedicated support.",
                     "features": {
                         "feature1": "Everything in Business plan",
@@ -2100,9 +2100,9 @@
                 "description": "Get to know more about us."
             },
             "description": {
-                "paragraph1": "Lanzate was born out of a very real need that we experienced firsthand. We are Horacio Gutiérrez and Gabriel Ramírez, two programmers who, together with Felipe (our cat and quality supervisor), realized that starting an informal business is not easy. Through experiences with close family and friends who wanted to start their own business, we saw how they struggled with scattered tools, Excel spreadsheets that were lost, and the lack of a simple solution that would allow them to manage everything from a single place.",
+                "paragraph1": "Lanzate was born out of a very real need that we experienced firsthand. We are Horacio Gutiérrez and Arturo Ramírez, two programmers who, together with Felipe (our cat and quality supervisor), realized that starting an informal business is not easy. Through experiences with close family and friends who wanted to start their own business, we saw how they struggled with scattered tools, Excel spreadsheets that were lost, and the lack of a simple solution that would allow them to manage everything from a single place.",
                 "paragraph2": "The idea of creating an all-in-one platform for the management of informal stores arose after seeing our loved ones struggling with multiple apps, notebooks, and homemade methods for controlling their sales, inventory, and customers. We realized that there was a huge gap between complex and expensive business solutions and the real needs of someone just starting out. Then we thought: Why not make something that really works for them, is intuitive, accessible, and helps them grow without complicating their lives?",
-                "paragraph3": "So we got to work. With Horacio and Gabriel coding day and night (and Felipe supervising from the keyboard), we developed Lanzate thinking about all those people who have a dream and need the right tools to make it a reality. Our platform integrates everything you need to manage your business: from inventory control to customer tracking, through sales and reports. Because we believe that starting a business shouldn't be complicated, and that with the right tools, anyone can launch."
+                "paragraph3": "So we got to work. With Horacio and Arturo coding day and night (and Felipe supervising from the keyboard), we developed Lanzate thinking about all those people who have a dream and need the right tools to make it a reality. Our platform integrates everything you need to manage your business: from inventory control to customer tracking, through sales and reports. Because we believe that starting a business shouldn't be complicated, and that with the right tools, anyone can launch."
             }
         }
     },

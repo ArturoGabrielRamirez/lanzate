@@ -18,11 +18,11 @@ function PrivacyPolicy() {
                     <h2 className="text-2xl font-bold mb-4">INTRODUCCIÓN</h2>
                     <div className="mb-4">
                         <p className="text-sm leading-relaxed mb-4">
-                            Lanzáte (&quot;nosotros&quot;, &quot;nuestro&quot;, &quot;la Empresa&quot;) respeta tu privacidad y está comprometida con la protección de tus datos personales conforme a la Ley 25.326 de Protección de Datos Personales de la República Argentina y sus normas complementarias.
+                            Lanzate (&quot;nosotros&quot;, &quot;nuestro&quot;, &quot;la Empresa&quot;) respeta tu privacidad y está comprometida con la protección de tus datos personales conforme a la Ley 25.326 de Protección de Datos Personales de la República Argentina y sus normas complementarias.
                         </p>
 
                         <p className="text-sm leading-relaxed mb-4">
-                            Somos Lanzáte, con domicilio legal en Las Palmas 735, Atlántida, Santa Clara del Mar, Buenos Aires 7609, Argentina. Operamos el sitio web <a href="https://www.lanzate.app" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> y la aplicación móvil Lanzáte App.
+                            Somos Lanzate, con domicilio legal en Las Palmas 735, Atlántida, Santa Clara del Mar, Buenos Aires 7609, Argentina. Operamos el sitio web <a href="https://www.lanzate.app" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> y la aplicación móvil Lanzate App.
                         </p>
 
                         <p className="text-sm leading-relaxed mb-4">
@@ -63,12 +63,12 @@ function PrivacyPolicy() {
                             <div className="text-sm leading-relaxed space-y-4">
                                 <h3 className="text-lg font-bold mb-3">Responsable del Tratamiento</h3>
                                 <p>
-                                    Lanzáte es el responsable del tratamiento de tus datos personales conforme a la Ley 25.326 y las Disposiciones de la Dirección Nacional de Protección de Datos Personales (DNPDP).
+                                    Lanzate es el responsable del tratamiento de tus datos personales conforme a la Ley 25.326 y las Disposiciones de la Dirección Nacional de Protección de Datos Personales (DNPDP).
                                 </p>
 
                                 <h3 className="text-lg font-bold mb-3 mt-6">Datos de Contacto</h3>
                                 <div className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary">
-                                    <p><strong>Razón Social:</strong> Lanzáte</p>
+                                    <p><strong>Razón Social:</strong> Lanzate</p>
                                     <p><strong>Correo electrónico:</strong> info@lanzate.app</p>
                                     <p><strong>Domicilio Legal:</strong> Las Palmas 735, Atlántida, Santa Clara del Mar, Buenos Aires 7609, Argentina</p>
                                     <p><strong>Teléfono:</strong> +54 9 11 3506-9709</p>
@@ -86,7 +86,7 @@ function PrivacyPolicy() {
 
                                 <h3 className="text-lg font-bold mb-3 mt-6">Finalidad de esta Política</h3>
                                 <p>
-                                    Esta Política de Privacidad te explica cómo Lanzáte recolecta y procesa tu información personal cuando:
+                                    Esta Política de Privacidad te explica cómo Lanzate recolecta y procesa tu información personal cuando:
                                 </p>
                                 <ul className="list-disc ml-6 space-y-2 mt-2">
                                     <li>Te registrás en nuestra plataforma</li>
@@ -280,8 +280,8 @@ function PrivacyPolicy() {
 
                                 <h3 className="text-lg font-bold mb-3">Terceros Internos</h3>
                                 <ul className="list-disc ml-6 space-y-2">
-                                    <li>Otras empresas del Grupo Lanzáte (si las hubiera)</li>
-                                    <li>Personal autorizado de Lanzáte que necesite acceder a tus datos para prestar los servicios</li>
+                                    <li>Otras empresas del Grupo Lanzate (si las hubiera)</li>
+                                    <li>Personal autorizado de Lanzate que necesite acceder a tus datos para prestar los servicios</li>
                                 </ul>
 
                                 <h3 className="text-lg font-bold mb-3 mt-6">Terceros Externos - Proveedores de Servicios</h3>
@@ -339,7 +339,7 @@ function PrivacyPolicy() {
                                     <li>Mercado Pago recolecta y procesa tus datos financieros directamente</li>
                                     <li>No almacenamos datos completos de tarjetas de crédito/débito</li>
                                     <li>Mercado Pago tiene su propia Política de Privacidad que deberías revisar</li>
-                                    <li>Los datos de transacciones son compartidos entre Lanzáte y Mercado Pago para completar el servicio</li>
+                                    <li>Los datos de transacciones son compartidos entre Lanzate y Mercado Pago para completar el servicio</li>
                                 </ul>
 
                                 <h3 className="text-lg font-bold mb-3 mt-6">Login Social (Google, Facebook, Instagram, X)</h3>
@@ -350,7 +350,7 @@ function PrivacyPolicy() {
                                     <li>Solo accedemos a la información que vos autorizás compartir</li>
                                     <li>Podés revisar y modificar los permisos en cualquier momento desde tu cuenta de la red social</li>
                                     <li>Tu relación con estas plataformas se rige por sus propias políticas de privacidad</li>
-                                    <li>Podés desconectar tu cuenta de redes sociales en cualquier momento desde tu perfil de Lanzáte</li>
+                                    <li>Podés desconectar tu cuenta de redes sociales en cualquier momento desde tu perfil de Lanzate</li>
                                 </ul>
 
                                 <h3 className="text-lg font-bold mb-3 mt-6">Google Analytics y Servicios de Análisis</h3>
@@ -727,7 +727,7 @@ function PrivacyPolicy() {
                                 <p>Si tenés alguna pregunta sobre esta Política de Privacidad o querés ejercer tus derechos, por favor contactanos:</p>
 
                                 <div className="bg-accent text-accent-foreground p-6 rounded-lg border-2 border-primary">
-                                    <p className="font-bold text-lg mb-3">Lanzáte</p>
+                                    <p className="font-bold text-lg mb-3">Lanzate</p>
                                     <p><strong>Domicilio Legal:</strong></p>
                                     <p>Las Palmas 735</p>
                                     <p>Atlántida, Santa Clara del Mar</p>

@@ -23,11 +23,11 @@ export async function POST(req: Request) {
     }
 
     const subject = category 
-      ? `Re: [${getCategoryLabel(category)}] Tu consulta en Lanzáte`
-      : `Re: Tu consulta en Lanzáte`;
+      ? `Re: [${getCategoryLabel(category)}] Tu consulta en Lanzate`
+      : `Re: Tu consulta en Lanzate`;
 
     const { data, error } = await resend.emails.send({
-      from: "Lanzáte Soporte <soporte@mail.lanzate.app>",
+      from: "Lanzate Soporte <soporte@mail.lanzate.app>",
       to: [recipientEmail],
       replyTo: "jiamafox@gmail.com",
       subject,

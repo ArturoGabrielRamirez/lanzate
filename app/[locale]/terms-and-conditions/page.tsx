@@ -19,11 +19,11 @@ function TermsAndConditions() {
                     <h2 className="text-2xl font-bold mb-4">ACUERDO CON NUESTROS TÉRMINOS LEGALES</h2>
                     <div className="mb-4">
                         <p className="text-sm leading-relaxed mb-4">
-                            Somos Lanzáte (&quot;la Empresa&quot;, &quot;nosotros&quot;, &quot;nuestro&quot;), una empresa registrada en Argentina con domicilio en Las Palmas 735, Atlántida, Santa Clara del Mar, Buenos Aires 7609, República Argentina.
+                            Somos Lanzate (&quot;la Empresa&quot;, &quot;nosotros&quot;, &quot;nuestro&quot;), una empresa registrada en Argentina con domicilio en Las Palmas 735, Atlántida, Santa Clara del Mar, Buenos Aires 7609, República Argentina.
                         </p>
 
                         <p className="text-sm leading-relaxed mb-4">
-                            Operamos el sitio web <a href="https://www.lanzate.app" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> (el &quot;Sitio&quot;), la aplicación móvil Lanzáte App (la &quot;App&quot;), así como cualquier otro producto y servicio relacionado que haga referencia o se vincule a estos términos legales (los &quot;Términos Legales&quot;) (en conjunto, los &quot;Servicios&quot;).
+                            Operamos el sitio web <a href="https://www.lanzate.app" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> (el &quot;Sitio&quot;), la aplicación móvil Lanzate App (la &quot;App&quot;), así como cualquier otro producto y servicio relacionado que haga referencia o se vincule a estos términos legales (los &quot;Términos Legales&quot;) (en conjunto, los &quot;Servicios&quot;).
                         </p>
 
                         <p className="text-sm leading-relaxed mb-4">
@@ -31,7 +31,7 @@ function TermsAndConditions() {
                         </p>
 
                         <p className="text-sm leading-relaxed mb-4">
-                            Estos Términos Legales constituyen un acuerdo legalmente vinculante entre vos, ya sea personalmente o en nombre de una entidad (&quot;vos&quot;, &quot;tu&quot;), y Lanzáte, respecto a tu acceso y uso de los Servicios. Al acceder a los Servicios, reconocés que has leído, entendido y aceptado estar obligado por todos estos Términos Legales. <strong>SI NO ESTÁS DE ACUERDO CON TODOS ESTOS TÉRMINOS LEGALES, ENTONCES TENÉS EXPRESAMENTE PROHIBIDO USAR LOS SERVICIOS Y DEBÉS DISCONTINUAR SU USO INMEDIATAMENTE.</strong>
+                            Estos Términos Legales constituyen un acuerdo legalmente vinculante entre vos, ya sea personalmente o en nombre de una entidad (&quot;vos&quot;, &quot;tu&quot;), y Lanzate, respecto a tu acceso y uso de los Servicios. Al acceder a los Servicios, reconocés que has leído, entendido y aceptado estar obligado por todos estos Términos Legales. <strong>SI NO ESTÁS DE ACUERDO CON TODOS ESTOS TÉRMINOS LEGALES, ENTONCES TENÉS EXPRESAMENTE PROHIBIDO USAR LOS SERVICIOS Y DEBÉS DISCONTINUAR SU USO INMEDIATAMENTE.</strong>
                         </p>
 
                         <p className="text-sm leading-relaxed mb-4">
@@ -544,7 +544,7 @@ function TermsAndConditions() {
                             </p>
                             <div className="text-sm leading-relaxed space-y-4 bg-accent text-accent-foreground p-4 rounded-lg border border-primary">
                                 <p>
-                                    <strong>Lanzáte</strong><br />
+                                    <strong>Lanzate</strong><br />
                                     Las Palmas 735, Atlántida, Santa Clara del Mar, Buenos Aires 7609, Argentina<br />
                                     Teléfono: <a href="tel:+5491135069709" className="text-blue-600 hover:text-blue-800 underline">+54 9 11 3506-9709</a><br />
                                     Correo electrónico: <a href="mailto:info@lanzate.app" className="text-blue-600 hover:text-blue-800 underline">info@lanzate.app</a>

@@ -19,42 +19,42 @@
         "_legacy_login": "Iniciar sesión",
         "_legacy_signup": "Registrarse",
         "email": "Correo electrónico",
-        "email-placeholder": "mi.correo@ejemplo.com",
+        "email-placeholder": "micorreo@ejemplo.com",
         "password": "Contraseña",
         "username": "Nombre de usuario",
         "confirm-password": "Confirmar contraseña",
         "buttons": {
             "login": "Iniciar sesión",
             "sign-up": "Registrarse",
-            "send-reset-link": "Enviar enlace de recuperación",
+            "send-reset-link": "Enviar solicitud de restablecimiento",
             "update-password": "Actualizar contraseña"
         },
         "check-email": {
-            "message-1": "Ya casi estamos, revisá tu correo electrónico. Deberías recibir un enlace de confirmación.",
-            "message-2": "Con entrar al enlace desde tu correo, podrás completar tu registro y validar tu cuenta."
+            "message-1": "Ya casi estamos, revisá tu correo electrónico. Deberías recibir una solicitud de confirmación.",
+            "message-2": "Con entrar al link desde tu correo, podrás completar tu registro y validar tu cuenta."
         },
         "description": {
-            "or-login-with": "O iniciar sesión con"
+            "or-login-with": "O iniciá sesión con"
         },
         "toast-message": {
             "success-logged-in": "Has iniciado sesión con éxito",
             "success-registered": "Has sido registrado con éxito",
-            "success-reset-password": "¡Enlace de recuperación enviado!",
+            "success-reset-password": "¡Link de recuperación enviado!",
             "success-password-updated": "¡Contraseña actualizada!",
             "signing-in": "Iniciando sesión...",
             "signing-up": "Registrándose...",
-            "reset-password": "Enviando enlace de recuperación...",
+            "reset-password": "Enviando link de recuperación...",
             "updating-password": "Actualizando contraseña...",
             "success-joined-waitlist": "Te has unido exitosamente a la lista de espera",
-            "joining-waitlist": "Uniendose a la lista de espera"
+            "joining-waitlist": "Uniéndose a la lista de espera"
         },
         "reset-password": {
             "new-password": "Nueva contraseña",
             "title": "Restablecer contraseña",
             "description": {
                 "forgot-password": "¿Olvidaste tu contraseña?",
-                "reset-password": "Restablece tu contraseña",
-                "password-updated": "¡Contraseña actualizada! Ahora puedes iniciar sesión."
+                "reset-password": "Restablecé tu contraseña",
+                "password-updated": "¡Contraseña actualizada! Ahora podés iniciar sesión."
             }
         },
         "update-password": {
@@ -64,27 +64,27 @@
             "oauth": {
                 "cancelled": {
                     "title": "Inicio de sesión cancelado",
-                    "description": "Puedes intentar de nuevo con el mismo método o usar tu email y contraseña."
+                    "description": "Podés intentar de nuevo con el mismo método o usar tu email y contraseña."
                 },
                 "failed": {
                     "title": "Error de autenticación",
-                    "description": "Hubo un problema con la autenticación. Intenta de nuevo o usa otro método."
+                    "description": "Hubo un problema con la autenticación. Intentá de nuevo o usá otro método."
                 },
                 "temporary": {
                     "title": "Servicio no disponible",
-                    "description": "El servicio está temporalmente no disponible. Intenta de nuevo en unos minutos."
+                    "description": "El servicio está temporalmente no disponible. Intentá de nuevo en unos minutos."
                 },
                 "invalid": {
                     "title": "Solicitud inválida",
-                    "description": "La solicitud es inválida. Por favor intenta de nuevo."
+                    "description": "La solicitud es inválida. Por favor intentá de nuevo."
                 },
                 "unexpected": {
                     "title": "Error inesperado",
-                    "description": "Ocurrió un error inesperado. Por favor intenta de nuevo."
+                    "description": "Ocurrió un error inesperado. Por favor intentá de nuevo."
                 },
                 "generic": {
                     "title": "Error de autenticación",
-                    "description": "Intenta de nuevo o usa tu email y contraseña."
+                    "description": "Intentá de nuevo o usá tu email y contraseña."
                 }
             }
         },
@@ -101,13 +101,13 @@
                 "title": "Confirmar nuevo email",
                 "status": {
                     "waiting": "Esperando confirmación del email actual...",
-                    "pending": "⏳ Revisa este email y confirma",
+                    "pending": "⏳ Revisá este email y confirmá",
                     "confirmed": "✓ Confirmado - ¡Cambio completado!"
                 }
             },
             "instructions": {
-                "step1": "Paso 1: Revisa tu email actual ({email}) y confirma el cambio.",
-                "step2": "Paso 2: Ahora revisa tu nuevo email ({email}) y confirma para completar el cambio.",
+                "step1": "Paso 1: Revisá tu email actual ({email}) y confirmá el cambio.",
+                "step2": "Paso 2: Ahora revisá tu nuevo email ({email}) y confirmá para completar el cambio.",
                 "completed": "¡Completado! Tu email ha sido actualizado exitosamente."
             },
             "actions": {
@@ -123,28 +123,28 @@
             "error-changing-email": "Error al cambiar el email",
             "sending-verification": "Enviando emails de verificación...",
             "change-in-progress": "⚠️ Hay un cambio en progreso",
-            "complete-current-process": "Completa el proceso actual antes de iniciar uno nuevo.",
+            "complete-current-process": "Completá el proceso actual antes de iniciar uno nuevo.",
             "change-completed": "✅ Cambio completado",
-            "email-updated-successfully": "Tu email ha sido actualizado exitosamente. Puedes iniciar un nuevo cambio si es necesario.",
+            "email-updated-successfully": "Tu email ha sido actualizado exitosamente. Podés iniciar un nuevo cambio si es necesario.",
             "new-email-label": "Nuevo email",
             "new-email-placeholder": "nuevo-email@ejemplo.com",
             "current-password-label": "Contraseña actual",
             "current-password-placeholder": "Tu contraseña actual",
-            "security-description": "Por seguridad, confirma tu contraseña actual. Te enviaremos emails de verificación a ambas direcciones."
+            "security-description": "Por seguridad, confirmá tu contraseña actual. Te enviaremos emails de verificación a ambas direcciones."
         },
         "email-status": {
-            "updated-successfully": "¡Email actualizado exitosamente! Ya puedes usar {email}",
-            "last-step": "Último paso: Revisa tu nuevo email ({email}) y confirma para completar el cambio.",
-            "change-in-progress": "Cambio de email en progreso: Confirma desde tu email actual ({email}) para continuar."
+            "updated-successfully": "¡Email actualizado exitosamente! Ya podés usar {email}",
+            "last-step": "Último paso: Revisá tu nuevo email ({email}) y confirmá para completar el cambio.",
+            "change-in-progress": "Cambio de email en progreso: Confirmá desde tu email actual ({email}) para continuar."
         },
         "password-change": {
-            "security-description": "Por seguridad, confirma tu contraseña actual antes de cambiarla.",
+            "security-description": "Por seguridad, confirmá tu contraseña actual antes de cambiarla.",
             "current-password-label": "Contraseña actual",
             "current-password-placeholder": "Tu contraseña actual",
             "new-password-label": "Nueva contraseña",
             "new-password-placeholder": "Mínimo 6 caracteres",
             "confirm-password-label": "Confirmar nueva contraseña",
-            "confirm-password-placeholder": "Confirma tu nueva contraseña",
+            "confirm-password-placeholder": "Confirmá tu nueva contraseña",
             "password-updated": "Contraseña actualizada correctamente",
             "error-updating-password": "Error al actualizar la contraseña",
             "verifying-updating": "Verificando y actualizando contraseña..."
@@ -157,16 +157,16 @@
         "login": {
             "page": {
                 "title": "Iniciar sesión",
-                "description": "Inicia sesión en tu cuenta",
+                "description": "Iniciá sesión en tu cuenta",
                 "header": {
                     "title": "Iniciar sesión",
-                    "description": "Inicia sesión para ingresar a tu cuenta"
+                    "description": "Iniciá sesión para ingresar a tu cuenta"
                 },
                 "links": {
-                    "noAccount": "¿No tienes una cuenta?",
-                    "needHelp": "¿Necesitas ayuda?",
+                    "noAccount": "¿No tenés una cuenta?",
+                    "needHelp": "¿Necesitás ayuda?",
                     "signupLink": "Registrarse",
-                    "helpLink": "Contáctanos"
+                    "helpLink": "Contactanos"
                 },
                 "image": {
                     "alt": "Ilustración de inicio de sesión"
@@ -238,16 +238,16 @@
         "signup": {
             "page": {
                 "title": "Registrarse",
-                "description": "Crea tu cuenta",
+                "description": "Creá tu cuenta",
                 "header": {
                     "title": "Registrarse",
-                    "description": "Regístrate para crear tu cuenta"
+                    "description": "Registrate para crear tu cuenta"
                 },
                 "links": {
                     "hasAccount": "¿Ya tenés una cuenta?",
-                    "needHelp": "¿Necesitas ayuda?",
+                    "needHelp": "¿Necesitás ayuda?",
                     "loginLink": "Iniciar sesión",
-                    "helpLink": "Contáctanos"
+                    "helpLink": "Contactanos"
                 },
                 "image": {
                     "alt": "Ilustración de registro"
@@ -298,15 +298,15 @@
                 "description": "Restablecer tu contraseña",
                 "header": {
                     "title": "Recuperar contraseña",
-                    "description": "Recupera tu contraseña para ingresar a tu cuenta"
+                    "description": "Recuperá tu contraseña para ingresar a tu cuenta"
                 },
                 "links": {
                     "rememberedPassword": "¿Ya recordaste tu contraseña?",
                     "loginLink": "Iniciar sesión",
                     "noAccount": "¿No tenés una cuenta?",
                     "signupLink": "Registrate",
-                    "needHelp": "¿Necesitas ayuda?",
-                    "helpLink": "Contáctanos"
+                    "needHelp": "¿Necesitás ayuda?",
+                    "helpLink": "Contactanos"
                 },
                 "image": {
                     "alt": "Ilustración de recuperar contraseña"
@@ -318,15 +318,15 @@
                         "label": "Email",
                         "placeholder": "email@ejemplo.com",
                         "tooltip": "Ingresá la dirección de email asociada con tu cuenta.",
-                        "description": "Por favor ingresá la dirección de email asociada con tu cuenta. Te enviaremos un enlace de restablecimiento a tu email."
+                        "description": "Por favor ingresá la dirección de email asociada con tu cuenta. Te enviaremos un link de restablecimiento a tu email."
                     }
                 },
                 "actions": {
-                    "submit": "Enviar enlace de restablecimiento"
+                    "submit": "Enviar link de restablecimiento"
                 },
                 "messages": {
-                    "success": "¡Enlace de restablecimiento enviado!",
-                    "loading": "Enviando enlace de restablecimiento..."
+                    "success": "¡Link de restablecimiento enviado!",
+                    "loading": "Enviando link de restablecimiento..."
                 }
             }
         },
@@ -360,8 +360,8 @@
         },
         "waitlist": {
             "alert": {
-                "title": "Únete a la lista de espera",
-                "description1": "Lanzate está en desarrollo aún, pero ya puedes unirte a la lista de espera.",
+                "title": "Unite a la lista de espera",
+                "description1": "Lanzate está en desarrollo aún, pero ya podés unirte a la lista de espera.",
                 "description2": "Dejanos tu email y te notificaremos cuando el producto esté disponible.",
                 "button": "Unite"
             },
@@ -382,16 +382,16 @@
                 }
             },
             "page": {
-                "title": "Únete a la lista de espera",
-                "description": "Únete a la lista de espera para recibir notificaciones cuando el producto esté disponible",
+                "title": "Unite a la lista de espera",
+                "description": "Unite a la lista de espera para recibir notificaciones cuando el producto esté disponible",
                 "header": {
                     "title": "Lista de espera",
-                    "description": "Únete a la lista de espera para recibir notificaciones cuando el producto esté disponible"
+                    "description": "Unite a la lista de espera para recibir notificaciones cuando el producto esté disponible"
                 },
                 "links": {
-                    "needHelp": "¿Necesitas ayuda?",
-                    "helpLink": "Contáctanos",
-                    "hasAccount": "¿Ya tienes una cuenta?",
+                    "needHelp": "¿Necesitás ayuda?",
+                    "helpLink": "Contactanos",
+                    "hasAccount": "¿Ya tenés una cuenta?",
                     "loginLink": "Iniciar sesión",
                     "backToHomeLabel": "Volver a la página de inicio",
                     "backToHomeLink": "Volver a la página de inicio"
@@ -403,7 +403,7 @@
             "success": {
                 "page": {
                     "title": "¡Felicidades!",
-                    "description": "Te notificaremos cuando el producto esté disponible. Podes cerrar esta ventana y continuar con tu día.",
+                    "description": "Te notificaremos cuando el producto esté disponible. Podés cerrar esta ventana y continuar con tu día.",
                     "link": {
                         "text": "Volver al inicio"
                     },
@@ -419,10 +419,10 @@
                 "description": "Contactanos para obtener ayuda",
                 "header": {
                     "title": "Ayuda",
-                    "description": "Contacta con nosotros para obtener ayuda"
+                    "description": "Contactá con nosotros para obtener ayuda"
                 },
                 "links": {
-                    "hasAccount": "¿Ya tienes una cuenta?",
+                    "hasAccount": "¿Ya tenés una cuenta?",
                     "loginLink": "Iniciar sesión",
                     "solvedProblem": "¿Ya solucionaste tu problema?",
                     "backToHome": "Volver al inicio"
@@ -436,22 +436,22 @@
                     "name": {
                         "label": "Nombre",
                         "placeholder": "Nombre",
-                        "tooltip": "Ingrese su nombre completo"
+                        "tooltip": "Ingresá tu nombre completo"
                     },
                     "email": {
                         "label": "Email",
                         "placeholder": "Email",
-                        "tooltip": "Ingrese un email al que podamos contactarnos con usted"
+                        "tooltip": "Ingresá un email al que podamos contactarnos con vos"
                     },
                     "category": {
                         "label": "Categoría",
-                        "placeholder": "Seleccione el tipo de consulta",
-                        "tooltip": "Seleccione la categoría que mejor describa su consulta"
+                        "placeholder": "Seleccioná el tipo de consulta",
+                        "tooltip": "Seleccioná la categoría que mejor describa tu consulta"
                     },
                     "message": {
                         "label": "Mensaje",
                         "placeholder": "Mensaje",
-                        "tooltip": "¿En qué podemos ayudarlo?"
+                        "tooltip": "¿En qué podemos ayudarte?"
                     }
                 },
                 "categories": {
@@ -467,8 +467,8 @@
                     "submit": "Enviar mensaje"
                 },
                 "messages": {
-                    "success": "¡Mensaje enviado con éxito! Nuestro equipo se pondrá en contacto contigo pronto. Por lo general, respondemos en un plazo de 24-48 horas.",
-                    "successShort": "¡Mensaje enviado con éxito! Nuestro equipo se pondrá en contacto contigo pronto.",
+                    "success": "¡Mensaje enviado con éxito! Nuestro equipo se pondrá en contacto con vos pronto. Por lo general, respondemos en un plazo de 24-48 horas.",
+                    "successShort": "¡Mensaje enviado con éxito! Nuestro equipo se pondrá en contacto con vos pronto.",
                     "loading": "Enviando mensaje...",
                     "error": "Error al enviar mensaje"
                 }
@@ -527,11 +527,11 @@
             "open-store": "Abrir Tienda",
             "ready-to-share": "¡Listo para compartir!",
             "store-live": "Tu tienda \"{storeName}\" está activa y lista para los clientes.",
-            "share-instructions": "Compartí este enlace en redes sociales, enviálo a clientes, o agregálo a tus tarjetas de presentación.",
+            "share-instructions": "Compartí este link en redes sociales, envialo a clientes, o agregalo a tus tarjetas de presentación.",
             "toast": {
                 "select-store-first": "Por favor, seleccioná una tienda primero",
-                "url-copied": "¡URL de la tienda copiada al portapapeles!",
-                "copy-failed": "Error al copiar URL al portapapeles"
+                "url-copied": "¡Link de la tienda copiado al portapapeles!",
+                "copy-failed": "Error al copiar link al portapapeles"
             }
         },
         "create-product": {
@@ -609,7 +609,7 @@
             "title": "Paso 1",
             "complete": "Completado",
             "create-a-new-store": "Crear una nueva tienda",
-            "to-continue": "Para comenzar a vender como un profesional, necesitas crear una nueva tienda. Esto te dará tu escaparate, un lugar para listar tus productos y un lugar para gestionar tus pedidos.",
+            "to-continue": "Para comenzar a vender como un profesional, tenés que crear una nueva tienda. Esto te dará tu escaparate, un lugar para listar tus productos y un lugar para gestionar tus pedidos.",
             "stores-created": "Tenés {count} tienda{plural} creada{plural}",
             "store": "",
             "stores": "s"
@@ -645,13 +645,13 @@
             "new-store": "Nueva tienda"
         },
         "help": {
-            "title": "¿Necesitas ayuda?",
+            "title": "¿Necesitás ayuda?",
             "contact-us": "Contactanos",
             "description": "Nuestros expertos están aquí para ayudarte.",
             "send-message": "Enviar mensaje",
             "dialog": {
                 "title": "Contactanos",
-                "description": "Envíanos un mensaje y te responderemos lo antes posible.",
+                "description": "Envianos un mensaje y te responderemos lo antes posible.",
                 "email": "Email",
                 "name": "Nombre",
                 "message": "Mensaje",
@@ -679,7 +679,7 @@
             "3": "Lanzate lo hace",
             "4": "posible.",
             "word-1": "soñá",
-            "word-2": "emprende",
+            "word-2": "emprendé",
             "word-3": "crecé",
             "finish": "lo hace posible"
         },
@@ -696,7 +696,7 @@
             "following": {
                 "users": "¡Los usuarios no dejarán de comprar!",
                 "rocket": "Lanzate hace que sea fácil vender",
-                "mobile": "¿Se cortó la luz? Usalo en tu celular!",
+                "mobile": "¿Se cortó la luz? ¡Usalo en tu celular!",
                 "tablet": "¡Disponible en cualquier dispositivo!",
                 "barcode": "¡Benefíciate de nuestro escáner de código de barras USB!"
             }
@@ -714,7 +714,7 @@
             },
             "centralize": {
                 "title": "Comodidad",
-                "description": "Trabaja desde cualquier lugar, en cualquier momento, con cualquier dispositivo."
+                "description": "Trabajá desde cualquier lugar, en cualquier momento, con cualquier dispositivo."
             },
             "sell": {
                 "title": "Personalización",
@@ -723,7 +723,7 @@
             },
             "ship-easily": {
                 "title": "Accesibilidad",
-                "description": "Accede a tu tienda desde cualquier dispositivo, en cualquier momento, con cualquier conexión a internet."
+                "description": "Accedé a tu tienda desde cualquier dispositivo, en cualquier momento, con cualquier conexión a internet."
             },
             "analytics": {
                 "orders": "Pedidos",
@@ -733,7 +733,7 @@
             },
             "plan": {
                 "title": "Precios",
-                "description": "Elegí el plan que se adapte a tu negocio y empieza a simplificar tu gestión online con Lánzate. Escala como creces, con todas las herramientas que necesitas en un solo lugar.",
+                "description": "Elegí el plan que se adapte a tu negocio y empezá a simplificar tu gestión online con Lánzate. Escalá como crecés, con todas las herramientas que necesitás en un solo lugar.",
                 "personal": {
                     "title": "Personal",
                     "price": "GRATIS",
@@ -774,7 +774,7 @@
         },
         "customization": {
             "title": "Personalizá tu tienda",
-            "description": "Si queres personalizar tu tienda mas allá de lo que te ofrecemos no dudes en contactarnos!"
+            "description": "Si querés personalizar tu tienda mas allá de lo que te ofrecemos ¡no dudes en contactarnos!"
         },
         "buttons": {
             "login": "Iniciar sesión",
@@ -841,23 +841,23 @@
             "feature": {
                 "customizable": "Personalizable",
                 "all-in-one": {
-                    "description": "Gestiona tu tienda donde sea, disponible en todos tus dispositivos.",
+                    "description": "Gestioná tu tienda donde sea, disponible en todos tus dispositivos.",
                     "title": "Todo-en-uno"
                 },
                 "custom-domain": {
                     "title": "Dominio personalizado",
                     "description": {
-                        "own-brand": "¡Consigue tu dominio personalizado y publica tus productos bajo tu marca!"
+                        "own-brand": "¡Conseguí tu dominio personalizado y publicá tus productos bajo tu marca!"
                     }
                 }
             }
         },
         "who-we-are": {
             "title": "Quienes somos",
-            "description": "En una mision para ayudarte a lanzar tu negocio",
-            "description-long": "En Lanzate, creemos que cada emprendedor merece las herramientas                              adecuadas para hacer realidad sus ideas. Nuestra plataforma te                              proporciona todo lo necesario para crear, gestionar y hacer crecer                              tu negocio digital desde el primer día, sin complicaciones técnicas.",
-            "description-long-2": "Sabemos que iniciar un negocio puede ser abrumador. Por eso hemos                              creado una solución integral que elimina las barreras técnicas y                              te permite enfocarte en lo que realmente importa: tu visión. Desde                              tu sitio web personalizado hasta la gestión de clientes, todo está                              diseñado para ser simple, rápido y efectivo.",
-            "description-long-3": "Nuestro compromiso va más allá de una simple plataforma. Estamos                              construyendo una comunidad de emprendedores valientes que comparten                              el sueño de crear algo propio. Al elegir Lanzate, no solo obtienes                              una herramienta poderosa, te unes a un ecosistema diseñado para                              impulsar tu éxito y el de tu negocio.",
+            "description": "En una misión para ayudarte a lanzar tu negocio",
+            "description-long": "En Lanzate, creemos que cada emprendedor merece las herramientas adecuadas para hacer realidad sus ideas. Nuestra plataforma te proporciona todo lo necesario para crear, gestionar y hacer crecer tu negocio digital desde el primer día, sin complicaciones técnicas.",
+            "description-long-2": "Sabemos que iniciar un negocio puede ser abrumador. Por eso hemos creado una solución integral que elimina las barreras técnicas y te permite enfocarte en lo que realmente importa: tu visión. Desde tu sitio web personalizado hasta la gestión de clientes, todo está diseñado para ser simple, rápido y efectivo.",
+            "description-long-3": "Nuestro compromiso va más allá de una simple plataforma. Estamos construyendo una comunidad de emprendedores valientes que comparten el sueño de crear algo propio. Al elegir Lanzate, no solo obtenés una herramienta poderosa, te unís a un ecosistema diseñado para impulsar tu éxito y el de tu negocio.",
             "founded": "Fundado",
             "users": "Usuarios",
             "country": "Paises",
@@ -885,11 +885,11 @@
                 },
                 "sections": {
                     "hero": "Inicio",
-                    "heroDesc": "Comenza a usar Lanzate",
+                    "heroDesc": "Comenzá a usar Lanzate",
                     "howItWorks": "Caracteristicas",
                     "howItWorksDesc": "Enterate como funciona",
                     "integrations": "Integraciones",
-                    "integrationsDesc": "Integra con tus herramientas favoritas",
+                    "integrationsDesc": "Integrá con tus herramientas favoritas",
                     "faq": "FAQ",
                     "faqDesc": "Preguntas frecuentes",
                     "dashboard": "Dashboard",
@@ -900,14 +900,14 @@
                     "storesDesc": "Descripción de las tiendas",
                     "account": "Cuenta",
                     "accountDesc": "Descripción de la cuenta",
-                    "aboutDesc": "Conoce mas sobre nosotros",
+                    "aboutDesc": "Conocé más sobre nosotros",
                     "contactDesc": "Contactanos",
-                    "loginDesc": "Ingresa a tu cuenta",
-                    "signupDesc": "Crea tu cuenta",
-                    "forgotPasswordDesc": "Resetea tu contraseña manualmente",
-                    "googleAuthDesc": "Accede con tu cuenta de Google",
-                    "helpDesc": "Si necesitas ayuda, contáctanos",
-                    "pricingDesc": "Conoce nuestros planes"
+                    "loginDesc": "Ingresá a tu cuenta",
+                    "signupDesc": "Creá tu cuenta",
+                    "forgotPasswordDesc": "Reseteá tu contraseña manualmente",
+                    "googleAuthDesc": "Accedé con tu cuenta de Google",
+                    "helpDesc": "Si necesitás ayuda, contáctanos",
+                    "pricingDesc": "Conocé nuestros planes"
                 }
             },
             "mobileDrawer": {
@@ -1061,11 +1061,11 @@
             "instagram-url": "URL de Instagram",
             "x-url": "URL de X (Twitter)",
             "edit-social-media": "Editar Redes Sociales",
-            "edit-social-media-title": "Editar Enlaces de Redes Sociales",
-            "edit-social-media-description": "Actualizá los enlaces de redes sociales de tu tienda",
-            "social-media-updated-success": "Enlaces de redes sociales actualizados exitosamente",
-            "social-media-updated-error": "Error al actualizar enlaces de redes sociales",
-            "social-media-updating": "Actualizando enlaces de redes sociales...",
+            "edit-social-media-title": "Editar Links de Redes Sociales",
+            "edit-social-media-description": "Actualizá los links de redes sociales de tu tienda",
+            "social-media-updated-success": "Links de redes sociales actualizados exitosamente",
+            "social-media-updated-error": "Error al actualizar links de redes sociales",
+            "social-media-updating": "Actualizando links de redes sociales...",
             "facebook-url-placeholder": "Ingresá la URL de Facebook",
             "instagram-url-placeholder": "Ingresá la URL de Instagram",
             "x-url-placeholder": "Ingresá la URL de X (Twitter)",
@@ -1227,7 +1227,7 @@
         "create-employee": {
             "button": "Agregar empleado",
             "title": "Agregar empleado",
-            "description": "Busca un usuario registrado para agregarlo como empleado de esta tienda.",
+            "description": "Buscá un usuario registrado para agregarlo como empleado de esta tienda.",
             "search-user": "Buscar usuario",
             "search-button": "Buscar",
             "user-selected": "Usuario seleccionado:",
@@ -1236,7 +1236,7 @@
             "role-label": "Rol:",
             "hired-label": "Contratado:",
             "messages": {
-                "select-user-first": "Debes seleccionar un usuario primero",
+                "select-user-first": "Debés seleccionar un usuario primero",
                 "user-already-employee": "Este usuario ya es empleado de esta tienda",
                 "success": "¡Empleado agregado correctamente!",
                 "error": "Error al agregar empleado",
@@ -1573,7 +1573,7 @@
         "delete-variant": {
             "button": "Eliminar variante",
             "title": "Eliminar variante",
-            "description": "¿Estás seguro de que quieres eliminar esta variante? Esta acción no se puede deshacer.",
+            "description": "¿Estás seguro de que querés eliminar esta variante? Esta acción no se puede deshacer.",
             "messages": {
                 "success": "Variante eliminada exitosamente",
                 "error": "Error al eliminar la variante",
@@ -1585,15 +1585,15 @@
         "title": "Nueva Orden",
         "store-selector": {
             "title": "Seleccionar Tienda",
-            "description": "Elige una tienda para crear una nueva orden",
-            "placeholder": "Selecciona una tienda...",
+            "description": "Elegí una tienda para crear una nueva orden",
+            "placeholder": "Seleccioná una tienda...",
             "confirm": "Confirmar Tienda"
         },
         "breadcrumbs": {
             "sale": "Venta"
         },
         "search": {
-            "placeholder": "Buscar por nombre, descripción o SKU...",
+            "placeholder": "Buscá por nombre, descripción o SKU...",
             "searching": "Buscando productos...",
             "found": "Se encontraron {count} productos",
             "no-results": "No se encontraron productos",
@@ -1604,7 +1604,7 @@
             "items": "items",
             "item": "item",
             "empty-title": "El carrito está vacío",
-            "empty-description": "Escanea o busca productos para agregar",
+            "empty-description": "Escaneá o buscá productos para agregar",
             "total": "Total:",
             "add": "Agregar",
             "remove": "Eliminar"
@@ -1627,8 +1627,8 @@
             "units-remaining": "{count} {units} restantes",
             "unit": "unidad",
             "units": "unidades",
-            "try-again": "Intenta nuevamente con otros términos de búsqueda",
-            "search-instruction": "Busca productos por nombre o escanea un código de barras",
+            "try-again": "Intentá nuevamente con otros términos de búsqueda",
+            "search-instruction": "Buscá productos por nombre o escaneá un código de barras",
             "results-here": "Los resultados aparecerán aquí"
         },
         "actions": {
@@ -1655,7 +1655,7 @@
             "popup-title": "Calcular Vuelto",
             "popup-description": "Total a cobrar: {total}",
             "payment-amount-label": "Monto de pago",
-            "payment-amount-placeholder": "Ingresa el monto que pagó el cliente",
+            "payment-amount-placeholder": "Ingresá el monto que pagó el cliente",
             "preset-amounts-label": "Cantidades preestablecidas",
             "change-amount-label": "Vuelto a devolver",
             "insufficient-amount-label": "Falta para completar el pago",
@@ -1674,8 +1674,8 @@
             "cash": "Efectivo",
             "sale": "Venta",
             "completed": "Completada",
-            "confirmation-message": "¿Estás seguro de que quieres finalizar esta venta?",
-            "info-message": "Activa el switch de arriba para confirmar y finalizar la venta",
+            "confirmation-message": "¿Estás seguro de que querés finalizar esta venta?",
+            "info-message": "Activá el switch de arriba para confirmar y finalizar la venta",
             "item": "artículo",
             "items": "artículos",
             "success-message": "¡Venta finalizada exitosamente!",
@@ -1688,7 +1688,7 @@
         "error-loading-store": "Error al cargar información de la tienda",
         "quick-actions": {
             "title": "Acciones Rápidas",
-            "description": "Aquí puedes encontrar las acciones más importantes para tu tienda junto con algunos enlaces rápidos para empezar.",
+            "description": "Aquí podés encontrar las acciones más importantes para tu tienda junto con algunos links rápidos para empezar.",
             "advanced-analytics": "Análisis Avanzado",
             "marketing-tools": "Herramientas de Marketing",
             "coming-soon": "Próximamente"
@@ -1880,7 +1880,7 @@
                 "forgotPasswordDesc": "Descripción de la sección de olvidé mi contraseña",
                 "googleAuth": "Autenticación con Google",
                 "dashboard": "Dashboard",
-                "helpDesc": "Si necesitas ayuda, contáctanos"
+                "helpDesc": "Si necesitás ayuda, contáctanos"
             }
         }
     },
@@ -1891,8 +1891,8 @@
             "description": "Lanzate carga al instante; garantizando que tus clientes tengan una experiencia veloz y fluida en todo momento."
         },
         "stay-connected": {
-            "headline": "Mantente conectado",
-            "description": "Mantente conectado con tus clientes a través de nuestras características integradas de redes sociales."
+            "headline": "Mantenete conectado",
+            "description": "Mantenete conectado con tus clientes a través de nuestras características integradas de redes sociales."
         }
     },
     "landing": {
@@ -1908,7 +1908,7 @@
                 "prefix": "Vos",
                 "rotatingWords": {
                     "word1": "soñá",
-                    "word2": "emprende",
+                    "word2": "emprendé",
                     "word3": "crecé"
                 },
                 "brandName": "Lanzate",
@@ -1935,28 +1935,28 @@
                 },
                 "allInOne": {
                     "title": "Todo-en-uno",
-                    "description": "Gestiona tu tienda donde sea, disponible en todos tus dispositivos."
+                    "description": "Gestioná tu tienda donde sea, disponible en todos tus dispositivos."
                 },
                 "customDomain": {
                     "title": "Dominio personalizado",
-                    "description": "¡Consigue tu dominio personalizado y publica tus productos bajo tu marca!"
+                    "description": "¡Conseguí tu dominio personalizado y publicá tus productos bajo tu marca!"
                 },
                 "speed": {
                     "title": "¡Más rápido que la luz!",
                     "description": "Lanzate carga al instante; garantizando que tus clientes tengan una experiencia veloz y fluida en todo momento."
                 },
                 "stayConnected": {
-                    "title": "Mantente conectado",
-                    "description": "Mantente conectado con tus clientes a través de nuestras características integradas de redes sociales."
+                    "title": "Mantenete conectado",
+                    "description": "Mantenete conectado con tus clientes a través de nuestras características integradas de redes sociales."
                 }
             },
             "about": {
                 "label": "Quienes somos",
-                "title": "En una mision para ayudarte a lanzar tu negocio",
+                "title": "En una misión para ayudarte a lanzar tu negocio",
                 "description": {
                     "paragraph1": "Lanzate es una aplicación web todo en uno diseñada para que puedas administrar tu tienda desde cualquier lugar y dispositivo. Desde el control de stock y ventas hasta el uso de lectores de código de barras, Lanzate te da las herramientas necesarias para operar tu negocio de forma simple y rápida.",
                     "paragraph2": "Olvidate de las instalaciones complicadas: accedé desde tu navegador, gestioná tus productos, pedidos, clientes y facturación en tiempo real. Todo sincronizado en la nube.",
-                    "paragraph3": "You can also customize your store with your own domain, connect your social media, and enjoy a modern, fast, and flexible sales experience built around your workflow.  Lanzate is more than an app: it’s your launchpad to digitize your business and grow it with accessible, secure, and limitless technology."
+                    "paragraph3": "También podés personalizar tu tienda con tu propio dominio, conectar tus redes sociales y disfrutar de una experiencia de venta moderna, rápida y flexible, diseñada para tu flujo de trabajo. Lanzate es más que una app: es tu plataforma de despegue para digitalizar tu negocio y hacerlo crecer con tecnología accesible, segura y sin límites."
                 },
                 "stats": {
                     "founded": {
@@ -2033,7 +2033,7 @@
             "header": {
                 "label": "Precios",
                 "title": "Precios simples y transparentes para cada negocio",
-                "description": "Elegí el plan que se adapte a las necesidades de tu negocio. Comenzá gratis y escalá a medida que creces con nuestras opciones de precios flexibles diseñadas para negocios de todos los tamaños."
+                "description": "Elegí el plan que se adapte a las necesidades de tu negocio. Comenzá gratis y escalá a medida que crecés con nuestras opciones de precios flexibles diseñadas para negocios de todos los tamaños."
             },
             "actions": {
                 "button": "Comenzar"
@@ -2042,7 +2042,7 @@
                 "starter": {
                     "name": "Starter",
                     "price": "$0 / GRATIS",
-                    "description": "Perfecto para comenzar tu negocio online. Gestiona tus productos y ventas sin costo inicial.",
+                    "description": "Perfecto para comenzar tu negocio online. Gestioná tus productos y ventas sin costo inicial.",
                     "features": {
                         "feature1": "Gestión completa de productos e inventario todo-en-uno",
                         "feature2": "Integración con redes sociales",
@@ -2054,7 +2054,7 @@
                 },
                 "business": {
                     "name": "Business",
-                    "price": "$10/mes",
+                    "price": "ARS $10.000/mes",
                     "description": "Ideal para negocios en crecimiento que quieren ampliar su alcance con herramientas avanzadas.",
                     "features": {
                         "feature1": "Todo del plan Starter",
@@ -2066,7 +2066,7 @@
                 },
                 "enterprise": {
                     "name": "Enterprise",
-                    "price": "$25/mes",
+                    "price": "ARS $25.000/mes",
                     "description": "Para empresas que buscan escalar. Gestión completa con herramientas premium y soporte dedicado.",
                     "features": {
                         "feature1": "Todo del plan Business",
@@ -2093,12 +2093,12 @@
         "page": {
             "header": {
                 "title": "Acerca de",
-                "description": "Conoce más sobre nosotros."
+                "description": "Conocé más sobre nosotros."
             },
             "description": {
-                "paragraph1": "Lanzate nació de una necesidad muy real que vivimos en carne propia. Somos Horacio Gutiérrez y Gabriel Ramírez, dos programadores que, junto con Felipe (nuestro gato y supervisor de calidad), nos dimos cuenta de que empezar un negocio informal no es fácil. A través de experiencias cercanas con familiares y amigos que querían arrancar su propio emprendimiento, vimos cómo se complicaban con herramientas dispersas, planillas de Excel que se perdían, y la falta de una solución simple que les permitiera gestionar todo desde un solo lugar.",
+                "paragraph1": "Lanzate nació de una necesidad muy real que vivimos en carne propia. Somos Horacio Gutiérrez y Arturo Ramírez, dos programadores que, junto con Felipe (nuestro gato y supervisor de calidad), nos dimos cuenta de que empezar un negocio informal no es fácil. A través de experiencias cercanas con familiares y amigos que querían arrancar su propio emprendimiento, vimos cómo se complicaban con herramientas dispersas, planillas de Excel que se perdían, y la falta de una solución simple que les permitiera gestionar todo desde un solo lugar.",
                 "paragraph2": "La idea de crear una plataforma all-in-one para la gestión de tiendas informales surgió después de ver a nuestros seres queridos luchando con múltiples apps, cuadernos y métodos caseros para llevar el control de sus ventas, inventario y clientes. Nos dimos cuenta de que había una brecha enorme entre las soluciones empresariales complejas y caras, y las necesidades reales de alguien que recién está arrancando. Entonces pensamos: ¿por qué no hacer algo que realmente funcione para ellos, que sea intuitivo, accesible y que los ayude a crecer sin complicarse la vida?",
-                "paragraph3": "Así que nos pusimos manos a la obra. Con Horacio y Gabriel codeando día y noche (y Felipe supervisando desde el teclado), desarrollamos Lanzate pensando en todas esas personas que tienen un sueño y necesitan las herramientas adecuadas para hacerlo realidad. Nuestra plataforma integra todo lo que necesitás para gestionar tu negocio: desde el control de stock hasta el seguimiento de clientes, pasando por las ventas y los reportes. Porque creemos que empezar un negocio no debería ser complicado, y que con las herramientas correctas, cualquiera puede lanzarse."
+                "paragraph3": "Así que nos pusimos manos a la obra. Con Horacio y Arturo codeando día y noche (y Felipe supervisando desde el teclado), desarrollamos Lanzate pensando en todas esas personas que tienen un sueño y necesitan las herramientas adecuadas para hacerlo realidad. Nuestra plataforma integra todo lo que necesitás para gestionar tu negocio: desde el control de stock hasta el seguimiento de clientes, pasando por las ventas y los reportes. Porque creemos que empezar un negocio no debería ser complicado, y que con las herramientas correctas, cualquiera puede lanzarse."
             }
         }
     },
