@@ -84,18 +84,22 @@ function CreateStoreButton({ }: { userId: number }) {
 
                         </ScrollArea>
                         <DialogFooter className="!flex-col justify-end">
-                            <div className="flex items-center gap-2 justify-center">
+                            <div className="flex items-center gap-2 justify-center md:hidden">
                                 <StepIndicator step={1} isCurrent={currentStep === 1} />
                                 <StepIndicator step={2} isCurrent={currentStep === 2} />
                                 <StepIndicator step={3} isCurrent={currentStep === 3} />
                                 <StepIndicator step={4} isCurrent={currentStep === 4} />
                             </div>
-                            <div className="flex flex-col md:flex-row items-center gap-2 justify-end w-full md:w-auto">
-                                {currentStep > 1 && (
-                                    <Button onClick={goToPrevStep} variant="secondary" className="w-full md:w-auto">
-                                        Previous
-                                    </Button>
-                                )}
+                            <div className="flex flex-col md:flex-row items-center gap-2 justify-between w-full md:w-auto">
+                                <Button onClick={goToPrevStep} variant="secondary" className="w-full md:w-auto" disabled={currentStep === 1}>
+                                    Previous
+                                </Button>
+                                <div className="hidden md:flex items-center gap-2 justify-center">
+                                    <StepIndicator step={1} isCurrent={currentStep === 1} />
+                                    <StepIndicator step={2} isCurrent={currentStep === 2} />
+                                    <StepIndicator step={3} isCurrent={currentStep === 3} />
+                                    <StepIndicator step={4} isCurrent={currentStep === 4} />
+                                </div>
                                 {currentStep < 4 && (
                                     <NextStepButton goToNextStep={goToNextStep} className="w-full md:w-auto" />
                                 )}
