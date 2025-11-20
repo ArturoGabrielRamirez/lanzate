@@ -932,7 +932,7 @@ function BasicInfoFormPanel() {
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-10 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-10">
                 <div className="space-y-2">
                     <FileUpload value={logo} onValueChange={handleFileSelect}>
                         <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[150px] mx-auto w-full", isUploading && "animate-pulse")}>
@@ -1048,7 +1048,7 @@ function CreateStoreForm({ setStep, step, onSubmitAll }: CreateStoreFormProps) {
     return (
         <Stepper
             initialStep={1}
-            className="p-0 outer-container flex flex-col gap-2"
+            className="p-0 outer-container flex flex-col gap-4 md:gap-8"
             contentClassName="!p-0"
             stepContainerClassName="!p-0"
             stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"
@@ -1160,7 +1160,7 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
     return (
         <div
             className={cn(
-                "aspect-square rounded-full size-6 lg:size-8 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary",
+                "aspect-square rounded-full size-6 lg:size-8 flex items-center justify-center text-xs cursor-pointer text-muted-foreground hover:text-primary",
                 isInvalid ? "bg-destructive/20" : "bg-muted",
                 disabled ? "opacity-50 pointer-events-none" : ""
             )}
