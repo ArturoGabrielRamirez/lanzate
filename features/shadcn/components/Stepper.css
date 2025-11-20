@@ -37,6 +37,7 @@
   width: 100%;
   align-items: center;
   padding: 2rem;
+  justify-content: center;
 }
 
 .step-content-default {
@@ -138,10 +139,10 @@
 
 .step-connector {
   position: relative;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
   height: 0.125rem;
-  flex: 1;
+  min-width: 1rem;
   overflow: hidden;
   border-radius: 0.25rem;
   background-color: #52525b;

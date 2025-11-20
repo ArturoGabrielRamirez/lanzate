@@ -1160,7 +1160,7 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
     return (
         <div
             className={cn(
-                "aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary",
+                "aspect-square rounded-full size-6 lg:size-8 flex items-center justify-center text-xs lg:text-base cursor-pointer text-muted-foreground hover:text-primary",
                 isInvalid ? "bg-destructive/20" : "bg-muted",
                 disabled ? "opacity-50 pointer-events-none" : ""
             )}
