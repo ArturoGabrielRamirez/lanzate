@@ -1,6 +1,7 @@
 import { Globe, MapPin, Store } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
+import type { Selection } from "react-aria-components"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
@@ -13,7 +14,6 @@ export function AddressFormPanel() {
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const [isPhysicalStore, setIsPhysicalStore] = useState(getValues("address_info.is_physical_store") || false)
 
-    // keep local UI state in sync with form value (rehydration or external updates)
     const isPhysicalStoreValue = watch("address_info.is_physical_store") as boolean | undefined
     useEffect(() => {
         setIsPhysicalStore(!!isPhysicalStoreValue)
@@ -49,6 +49,16 @@ export function AddressFormPanel() {
         trigger("address_info")
     }
 
+    const handleSelectionChange = (selection: Selection) => {
+        if (selection === "all") return
+        const selected = Array.from(selection)[0]
+        if (selected === "physical") {
+            handlePhysicalStore()
+        } else if (selected === "online") {
+            handleOnlineStore()
+        }
+    }
+
     return (
         <>
             <div className="mb-8">
@@ -57,14 +67,7 @@ export function AddressFormPanel() {
                     gap={2}
                     selectionMode="single"
                     selectedKeys={[isPhysicalStore ? "physical" : "online"]}
-                    onSelectionChange={(selection) => {
-                        const selected = Array.from(selection)[0]
-                        if (selected === "physical") {
-                            handlePhysicalStore()
-                        } else if (selected === "online") {
-                            handleOnlineStore()
-                        }
-                    }}
+                    onSelectionChange={handleSelectionChange}
                 >
                     <ChoiceBoxItem id="online" textValue="Online Store">
                         <Globe />
