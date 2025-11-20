@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { handleEditPasswordAction } from "@/features/auth/actions";
 import { SetupPasswordPrompt } from "@/features/auth/components/change-visual/setup-password-prompt";
 import usePasswordGuard from "@/features/auth/hooks/use-password-guard";
-import { changePasswordSchema } from "@/features/auth/schemas/password-schema";
+import { changePasswordButtonSchema } from "@/features/auth/schemas/password-schema";
 import { ChangePasswordButtonProps } from "@/features/auth/types";
 import { ButtonWithPopup } from "@/features/global/components/button-with-popup";
 import InputField from "@/features/global/components/form/input";
@@ -58,7 +58,7 @@ function ChangePasswordButton({
         title={title}
         description={t("security-description")}
         action={changePasswordAction}
-        schema={changePasswordSchema}
+        schema={changePasswordButtonSchema}
         messages={{
           success: t("password-updated"),
           error: t("error-updating-password"),

@@ -15,3 +15,11 @@ export const changePasswordSchema = Yup.object({
     .oneOf([Yup.ref('password')], 'Las contraseñas no coinciden')
     .required('Debes confirmar la contraseña')
 })
+
+export const changePasswordButtonSchema = Yup.object().shape({
+  currentPassword: Yup.string().required("La contraseña actual es requerida"),
+  password: passwordSchema,
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password')], 'Las contraseñas no coinciden')
+    .required('Debes confirmar la contraseña')
+})
