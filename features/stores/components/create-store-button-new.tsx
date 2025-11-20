@@ -1069,27 +1069,27 @@ function CreateStoreForm({ setStep, step, onSubmitAll }: CreateStoreFormProps) {
                 disabled: !isValid,
             }}
         >
-            <Step className="!p-0 !pt-10 !pb-2">
+            <Step className="!p-0 !pb-2">
                 <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchemaNew as never)}>
                     <BasicInfoFormPanel />
                 </Form>
             </Step>
-            <Step className="!p-0 !pt-10 !pb-2">
+            <Step className="!p-0 !pb-2">
                 <Form<AddressInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(addressInfoSchema as never)}>
                     <AddressFormPanel />
                 </Form>
             </Step>
-            <Step className="!p-0 !pt-10 !pb-2">
+            <Step className="!p-0 !pb-2">
                 <Form<ContactInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(contactInfoSchema as never)}>
                     <ContactFormPanel />
                 </Form>
             </Step>
-            <Step className="!p-0 !pt-10 !pb-2">
+            <Step className="!p-0 !pb-2">
                 <Form<SettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(settingsSchema as never)}>
                     <SettingsFormPanel />
                 </Form>
             </Step>
-            <Step className="!p-0 !pt-10 !pb-2">
+            <Step className="!p-0 !pb-2">
                 <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
                     <ShippingFormPanel />
                 </Form>
