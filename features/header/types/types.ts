@@ -43,4 +43,5 @@ export interface UserAvatarProps extends WithClassName, BaseSizedElement {
 export interface NavLinkWithUnderlineProps extends BaseNavElement {
     isActive?: boolean;
     prefetch?: boolean;
+    disabled?: boolean;
 }
