@@ -9,7 +9,7 @@ import { Calendar, Check, Clock, Contact2, Facebook, Globe, Image as ImageIcon, 
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
 import Image from "next/image";
-import { useRouter } from "next/navigation"
+/* import { useRouter } from "next/navigation" */
 import { useEffect, useState, createContext, useContext, useCallback, useRef } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
@@ -17,10 +17,10 @@ import { toast } from "sonner"
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field";
 import { TextareaField } from "@/features/global/components/form/textarea-field";
+import { Button } from "@/features/shadcn/components/button"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
 import Stepper, { Step } from "@/features/shadcn/components/Stepper"
-import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogTitle, DialogHeader, DialogTrigger, DialogContent, DialogDescription } from "@/features/shadcn/components/ui/dialog"
 import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemPreview } from "@/features/shadcn/components/ui/file-upload"
 import { Progress } from "@/features/shadcn/components/ui/progress"
@@ -1028,8 +1028,9 @@ function BasicInfoFormPanel() {
     )
 }
 
-function CreateStoreForm({ setStep, step, onSubmitAll }: CreateStoreFormProps) {
+function CreateStoreForm({ /* setStep, step, */ onSubmitAll }: CreateStoreFormProps) {
 
+    const [step, { setStep }] = useStep(7)
     const { isStepValid, values } = useCreateStoreContext()
     const isValid = !!isStepValid[step]
 
@@ -1182,14 +1183,6 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
 function CreateStoreButtonNew({ userId }: { userId: number }) {
 
     const [step, { setStep }] = useStep(7)
-    const [createdSlug, setCreatedSlug] = useState<string | null>(null)
-    const router = useRouter()
-
-    useEffect(() => {
-        if (step === 7 && createdSlug) {
-            //TODO: Redirect to the store account or do something else like close the dialog
-        }
-    }, [step, createdSlug, router])
 
     const handleCreateStore = async (data: CreateStoreFormValues) => {
         const isPhysical = !!data.address_info?.is_physical_store
@@ -1203,11 +1196,11 @@ function CreateStoreButtonNew({ userId }: { userId: number }) {
         }
 
         setStep(6)
+
         const { hasError, message, payload } = await createStoreAction(processedData, userId)
 
         if (hasError) {
             toast.error(message)
-            // return the form to the last step for correction
             setStep(5)
             return {
                 success: false,
@@ -1217,8 +1210,6 @@ function CreateStoreButtonNew({ userId }: { userId: number }) {
             }
         }
 
-        // On success: move to success step and redirect shortly
-        setCreatedSlug(payload?.slug || null)
         setStep(7)
 
         return {
@@ -1266,7 +1257,7 @@ function CreateStoreButtonNew({ userId }: { userId: number }) {
                             <p>{descriptions[step as keyof typeof descriptions]}</p>
                         </DialogDescription>
                     </div>
-                    <CreateStoreForm setStep={setStep} step={step} onSubmitAll={handleCreateStore} />
+                    <CreateStoreForm /* setStep={setStep} step={step} */ onSubmitAll={handleCreateStore} />
                 </DialogContent>
             </Dialog>
         </CreateStoreProvider>

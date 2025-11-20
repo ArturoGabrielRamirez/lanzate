@@ -403,8 +403,8 @@ export type StepIndicatorProps = {
 }
 
 export type CreateStoreFormProps = {
-    setStep: (step: number) => void
-    step: number
+    /* setStep: (step: number) => void */
+    /* step: number */
     onSubmitAll: (data: CreateStoreFormValues) => Promise<ActionResult>
 }
 
