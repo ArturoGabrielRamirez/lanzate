@@ -1,13 +1,14 @@
 import { Globe, MapPin, Store } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
-import type { Selection } from "react-aria-components"
+
 
 import { InputField } from "@/features/global/components/form/input-field"
+import { ChoiceBox, ChoiceBoxItem, ChoiceBoxLabel, ChoiceBoxDescription } from "@/features/shadcn/components/ui/choice-box"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { CreateStoreFormValues } from "@/features/stores/types"
-import { ChoiceBox, ChoiceBoxItem, ChoiceBoxLabel, ChoiceBoxDescription } from "@/features/shadcn/components/ui/choice-box"
-import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/features/shadcn/components/empty"
+
+import type { Selection } from "react-aria-components"
 
 export function AddressFormPanel() {
 
