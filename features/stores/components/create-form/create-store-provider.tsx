@@ -1,10 +1,9 @@
-import { createContext, useContext, useState } from "react"
+"use client"
+
+import { createContext, useContext, useState, useCallback } from "react"
 
 import { useStep } from "@/features/shadcn/hooks/use-step"
-
-import { CreateStoreFormValues } from "@/features/stores/types"
-import { CreateStoreContextType } from "@/features/stores/types"
-
+import { CreateStoreFormValues, CreateStoreContextType } from "@/features/stores/types"
 
 const CreateStoreContext = createContext<CreateStoreContextType | null>(null)
 
