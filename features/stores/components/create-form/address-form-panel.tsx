@@ -7,6 +7,7 @@ import { InputField } from "@/features/global/components/form/input-field"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { CreateStoreFormValues } from "@/features/stores/types"
 import { ChoiceBox, ChoiceBoxItem, ChoiceBoxLabel, ChoiceBoxDescription } from "@/features/shadcn/components/ui/choice-box"
+import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/features/shadcn/components/empty"
 
 export function AddressFormPanel() {
 
@@ -61,26 +62,24 @@ export function AddressFormPanel() {
 
     return (
         <>
-            <div className="mb-8">
-                <ChoiceBox
-                    columns={2}
-                    gap={2}
-                    selectionMode="single"
-                    selectedKeys={[isPhysicalStore ? "physical" : "online"]}
-                    onSelectionChange={handleSelectionChange}
-                >
-                    <ChoiceBoxItem id="online" textValue="Online Store">
-                        <Globe />
-                        <ChoiceBoxLabel>Online Store</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>This is an online store.</ChoiceBoxDescription>
-                    </ChoiceBoxItem>
-                    <ChoiceBoxItem id="physical" textValue="Physical Store">
-                        <Store />
-                        <ChoiceBoxLabel>Physical Store</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>This is a physical store.</ChoiceBoxDescription>
-                    </ChoiceBoxItem>
-                </ChoiceBox>
-            </div>
+            <ChoiceBox
+                columns={2}
+                gap={2}
+                selectionMode="single"
+                selectedKeys={[isPhysicalStore ? "physical" : "online"]}
+                onSelectionChange={handleSelectionChange}
+            >
+                <ChoiceBoxItem id="online" textValue="Online Store">
+                    <Globe />
+                    <ChoiceBoxLabel>Online Store</ChoiceBoxLabel>
+                    <ChoiceBoxDescription>This is an online store.</ChoiceBoxDescription>
+                </ChoiceBoxItem>
+                <ChoiceBoxItem id="physical" textValue="Physical Store">
+                    <Store />
+                    <ChoiceBoxLabel>Physical Store</ChoiceBoxLabel>
+                    <ChoiceBoxDescription>This is a physical store.</ChoiceBoxDescription>
+                </ChoiceBoxItem>
+            </ChoiceBox>
             {isPhysicalStore && (
                 <div className="space-y-4">
                     <InputField

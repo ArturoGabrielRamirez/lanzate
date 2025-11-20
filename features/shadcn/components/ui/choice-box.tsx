@@ -102,7 +102,7 @@ const choiceBoxItemStyles = tv({
       false: "cursor-default",
     },
     isHovered: {
-      true: "not-data-readonly:not-data-focus-visible:not-selected:inset-ring-muted-fg/30",
+      true: "not-data-readonly:not-data-focus-visible:not-selected:inset-ring-muted-fg/30 cursor-pointer",
     },
     isFocused: {
       true: "inset-ring-(--choice-box-active-ring) ring-(--primary) ring-3 invalid:ring-danger-subtle-fg/20",
@@ -113,10 +113,10 @@ const choiceBoxItemStyles = tv({
     },
     isActive: {
       true: [
-        "bg-(--choice-box) text-(--choice-box-fg)",
-        "inset-ring-(--primary) z-20 hover:bg-(--choice-box-selected-hovered)",
-        "**:data-[slot=label]:text-(--choice-box-fg)",
-        "**:[[slot=description]]:text-(--choice-box-fg)",
+        "bg-(--primary) text-(--primary-foreground)",
+        "inset-ring-(--primary) z-20 hover:bg-(--primary)/70",
+        "**:data-[slot=label]:text-(--primary-foreground)",
+        "**:[[slot=description]]:text-(--primary-foreground)",
       ],
     },
     isDisabled: {
@@ -222,7 +222,7 @@ function ChoiceBoxDescription({ className, ref, ...props }: ChoiceBoxDescription
         "col-start-1 row-start-2",
         "group-has-data-[slot=icon]:col-start-2",
         "group-has-data-[slot=avatar]:col-start-2",
-        "text-base/6 text-muted-fg sm:text-sm/6",
+        "text-base/6 text-muted-foreground sm:text-sm/6",
         "group-disabled:opacity-50",
         className,
       )}

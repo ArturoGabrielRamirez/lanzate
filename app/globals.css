@@ -142,7 +142,7 @@
   --font-quattrocento: var(--font-quattrocento);
   --font-geist: var(--font-geist);
   --font-oswald: var(--font-oswald);
-  
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -390,13 +390,13 @@ body {
 }
 
 input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active {
-        /* Example: Override with a different background color */
-        -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0) inset !important; 
-        background-color: rgba(0, 0, 0, 0) !important;
-        -webkit-text-fill-color: black !important;
-        /* Or, to remove the background entirely (with a long transition for effect) */
-        transition: background-color 5000s ease-in-out 0s;
-    }
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  /* Example: Override with a different background color */
+  -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0) inset !important;
+  background-color: rgba(0, 0, 0, 0) !important;
+  -webkit-text-fill-color: var(--foreground) !important;
+  /* Or, to remove the background entirely (with a long transition for effect) */
+  transition: background-color 5000s ease-in-out 0s;
+}
