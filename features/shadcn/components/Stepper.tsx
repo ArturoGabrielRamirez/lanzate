@@ -1,9 +1,10 @@
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { motion, AnimatePresence, Variants } from 'motion/react';
 import React, { useState, Children, useRef, useLayoutEffect, HTMLAttributes, ReactNode } from 'react';
 
+import { Button } from '@/features/shadcn/components/button';
 import { ScrollArea } from '@/features/shadcn/components/scroll-area';
-import { IconButton } from '@/features/shadcn/components/shadcn-io/icon-button';
+/* import { IconButton } from '@/features/shadcn/components/shadcn-io/icon-button'; */
 import '@/features/shadcn/components/Stepper.css';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shadcn/components/ui/tooltip';
 import { cn } from '@/lib/utils';
@@ -87,40 +88,9 @@ export default function Stepper({
 
   return (
     <div className="outer-container" {...rest}>
-      <div className={`step-circle-container ${stepCircleContainerClassName}`} style={{ border: '1px solid #222' }}>
 
-        <div className={`step-indicator-row ${stepContainerClassName}`}>
-          {stepsArray.map((_, index) => {
-            const stepNumber = index + 1;
-            const isNotLastStep = index < totalSteps - 1;
-            return (
-              <React.Fragment key={stepNumber}>
-                {renderStepIndicator ? (
-                  renderStepIndicator({
-                    step: stepNumber,
-                    currentStep,
-                    onStepClick: clicked => {
-                      setDirection(clicked > currentStep ? 1 : -1);
-                      updateStep(clicked);
-                    }
-                  })
-                ) : (
-                  <StepIndicator
-                    step={stepNumber}
-                    disableStepIndicators={disableStepIndicators}
-                    currentStep={currentStep}
-                    onClickStep={clicked => {
-                      setDirection(clicked > currentStep ? 1 : -1);
-                      updateStep(clicked);
-                    }}
-                  />
-                )}
-                {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} />}
-              </React.Fragment>
-            );
-          })}
-        </div>
-      </div>
+
+
       <ScrollArea className="h-[calc(100dvh_-_15rem)] md:max-h-96 !overflow-x-visible w-full">
 
         <StepContentWrapper
@@ -133,27 +103,57 @@ export default function Stepper({
         </StepContentWrapper>
 
       </ScrollArea>
+
       {!isCompleted && (
         <div className={`footer-container ${footerClassName}`}>
-          <div className={`footer-nav ${currentStep !== 1 ? 'spread' : 'end'}`}>
-            {currentStep !== 1 && (
-              <button
-                onClick={handleBack}
-                className={`back-button ${currentStep === 1 ? 'inactive' : ''}`}
-                {...backButtonProps}
-              >
-                {backButtonText}
-              </button>
-            )}
+          <div className={`footer-nav justify-between gap-8`}>
+
+            <Button disabled={currentStep === 1} variant="outline" onClick={handleBack} {...backButtonProps}>
+              <ArrowLeft />
+              {backButtonText}
+            </Button>
+
+            <div className={`step-circle-container !hidden md:!block ${stepCircleContainerClassName}`} style={{ border: '1px solid #222' }}>
+
+              <div className={`step-indicator-row ${stepContainerClassName}`}>
+                {stepsArray.map((_, index) => {
+                  const stepNumber = index + 1;
+                  const isNotLastStep = index < totalSteps - 1;
+                  return (
+                    <React.Fragment key={stepNumber}>
+                      {renderStepIndicator ? (
+                        renderStepIndicator({
+                          step: stepNumber,
+                          currentStep,
+                          onStepClick: clicked => {
+                            setDirection(clicked > currentStep ? 1 : -1);
+                            updateStep(clicked);
+                          }
+                        })
+                      ) : (
+                        <StepIndicator
+                          step={stepNumber}
+                          disableStepIndicators={disableStepIndicators}
+                          currentStep={currentStep}
+                          onClickStep={clicked => {
+                            setDirection(clicked > currentStep ? 1 : -1);
+                            updateStep(clicked);
+                          }}
+                        />
+                      )}
+                      {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} />}
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+            </div>
+
             <Tooltip>
               <TooltipTrigger asChild>
-                <IconButton
-                  icon={isLastStep ? Check : ArrowRight}
-                  active={isLastStep}
-                  onClick={isLastStep ? handleComplete : handleNext}
-                  className={cn(isLastStep ? "text-primary" : "text-muted-foreground")}
-                  disabled={nextButtonProps.disabled}
-                />
+                <Button disabled={nextButtonProps.disabled} variant="default" onClick={isLastStep ? handleComplete : handleNext} {...nextButtonProps}>
+                  {isLastStep ? 'Complete' : nextButtonText}
+                  {isLastStep ? <Check /> : <ArrowRight />}
+                </Button>
               </TooltipTrigger>
               <TooltipContent>
                 {nextButtonProps.disabled ? "You must fill all required fields" : isLastStep ? 'Complete' : nextButtonText}
