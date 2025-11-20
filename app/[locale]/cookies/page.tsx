@@ -19,7 +19,7 @@ function CookiesPolicy() {
                     <h2 className="text-2xl font-bold mb-4">INTRODUCCIÓN</h2>
                     <div className="mb-4">
                         <p className="text-sm leading-relaxed mb-4">
-                            Esta Política de Cookies explica cómo Lanzáte (&quot;nosotros&quot;, &quot;nuestro&quot;, &quot;la Empresa&quot;) utiliza cookies y tecnologías similares cuando visitás nuestro sitio web <a href="https://www.lanzate.app" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> y usás nuestra aplicación móvil Lanzáte App (en conjunto, los &quot;Servicios&quot;).
+                            Esta Política de Cookies explica cómo Lanzate (&quot;nosotros&quot;, &quot;nuestro&quot;, &quot;la Empresa&quot;) utiliza cookies y tecnologías similares cuando visitás nuestro sitio web <a href="https://www.lanzate.app" className="text-blue-600 hover:text-blue-800 underline">https://www.lanzate.app</a> y usás nuestra aplicación móvil Lanzate App (en conjunto, los &quot;Servicios&quot;).
                         </p>
 
                         <p className="text-sm leading-relaxed mb-4">
@@ -65,7 +65,7 @@ function CookiesPolicy() {
                                 </p>
 
                                 <p>
-                                    Las cookies establecidas por el propietario del sitio web (en este caso, Lanzáte) se llaman &quot;cookies propias&quot; o &quot;cookies de primera parte&quot;. Las cookies establecidas por partes distintas al propietario del sitio web se llaman &quot;cookies de terceros&quot;. Las cookies de terceros permiten que se proporcionen características o funcionalidades de terceros en o a través del sitio web (por ejemplo, publicidad, contenido interactivo y análisis). Las partes que establecen estas cookies de terceros pueden reconocer tu computadora tanto cuando visita el sitio web en cuestión como cuando visita ciertos otros sitios web.
+                                    Las cookies establecidas por el propietario del sitio web (en este caso, Lanzate) se llaman &quot;cookies propias&quot; o &quot;cookies de primera parte&quot;. Las cookies establecidas por partes distintas al propietario del sitio web se llaman &quot;cookies de terceros&quot;. Las cookies de terceros permiten que se proporcionen características o funcionalidades de terceros en o a través del sitio web (por ejemplo, publicidad, contenido interactivo y análisis). Las partes que establecen estas cookies de terceros pueden reconocer tu computadora tanto cuando visita el sitio web en cuestión como cuando visita ciertos otros sitios web.
                                 </p>
 
                                 <h3 className="text-lg font-bold mb-3 mt-6">Tecnologías Similares</h3>
@@ -537,7 +537,7 @@ function CookiesPolicy() {
                                 <p>Si tenés alguna pregunta sobre nuestro uso de cookies o esta Política de Cookies, por favor contactanos:</p>
 
                                 <div className="bg-accent text-accent-foreground p-6 rounded-lg border-2 border-primary">
-                                    <p className="font-bold text-lg mb-3">Lanzáte</p>
+                                    <p className="font-bold text-lg mb-3">Lanzate</p>
                                     <p><strong>Domicilio Legal:</strong></p>
                                     <p>Las Palmas 735</p>
                                     <p>Atlántida, Santa Clara del Mar</p>

@@ -18,4 +18,4 @@ async function HistoryTab({ slug }: HistoryTabProps) {
     )
 }
 
-export { HistoryTab }
+export default HistoryTab

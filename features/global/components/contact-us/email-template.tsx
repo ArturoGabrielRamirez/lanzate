@@ -1,6 +1,9 @@
-import * as React from "react"
+import { Html, Head, Preview, Body, Container, Section, Img, Heading, Text, Hr, Tailwind, Link, Button } from '@react-email/components';
+import * as React from 'react';
 
-import { EmailTemplateProps } from "@/features/global/types"
+import { EmailTemplateProps } from '@/features/global/types';
+
+const logoUrl = "https://lanzate.app/logo.png";
 
 export function EmailTemplate({ name, email, category, message }: EmailTemplateProps) {
     const categoryLabels: Record<string, string> = {
@@ -24,182 +27,131 @@ export function EmailTemplate({ name, email, category, message }: EmailTemplateP
     };
 
     const categoryLabel = category ? (categoryLabels[category] || "Soporte") : null;
-    const categoryColor = category ? (categoryColors[category] || "#ea580c") : "#ea580c";
+    const categoryColor = category ? (categoryColors[category] || "#e56c43") : "#e56c43";
 
-    // Crear link para responder - codificamos en base64url
-    const replyData = {
-        email,
-        name: name || "",
-        category: category || "",
-        message
-    };
-
-    // Convertir a base64url (compatible con URLs)
-    const base64 = Buffer.from(JSON.stringify(replyData)).toString('base64');
-    const base64url = base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
-
+    const replyData = { email, name: name || "", category: category || "", message };
+    const base64Data = Buffer.from(JSON.stringify(replyData)).toString('base64');
+    const base64url = base64Data.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
     const replyLink = `https://lanzate.app/en/reply?data=${base64url}`;
 
     return (
-        <div
-            style={{
-                fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-                lineHeight: "1.6",
-                backgroundColor: "#0a0a0a",
-                padding: "40px 20px",
-                color: "#e5e5e5",
-            }}
-        >
-            <div
-                style={{
-                    backgroundColor: "#1a1a1a",
-                    borderRadius: "16px",
-                    padding: "32px",
-                    maxWidth: "600px",
-                    margin: "0 auto",
-                    border: "1px solid #2a2a2a",
-                }}
-            >
-                {/* Header con logo */}
-                <div style={{ marginBottom: "32px", textAlign: "center" }}>
-                    <h1
-                        style={{
-                            color: "#ea580c",
-                            fontSize: "28px",
-                            fontWeight: "bold",
-                            margin: "0 0 8px 0",
-                        }}
-                    >
-                        Lanzate
-                    </h1>
-                    <p style={{ color: "#999", margin: 0, fontSize: "14px" }}>
-                        Nuevo mensaje de soporte
-                    </p>
-                </div>
+        <Html lang="es">
+            <Head />
+            <Preview>Nuevo mensaje de soporte - {categoryLabel || "Consulta"}</Preview>
+            <Tailwind>
+                <Body className="bg-black text-gray-100 font-sans p-4">
+                    <Container className="bg-[#1a1a1a] p-8 rounded-xl max-w-lg border border-[#2a2a2a]">
+                        {/* Header con Logo y Título */}
+                        <Section className="text-center mb-8">
+                            <div className="flex items-center justify-center gap-3 mb-2">
+                                <Img
+                                    src={logoUrl}
+                                    width="32"
+                                    height="32"
+                                    alt="Lanzate"
+                                    className="inline-block"
+                                />
+                                <Heading className="text-[28px] text-[#e56c43] font-bold m-0 inline-block">
+                                    Lanzate
+                                </Heading>
+                            </div>
+                            <Text className="text-gray-400 text-sm m-0">
+                                Nuevo mensaje de soporte
+                            </Text>
+                        </Section>
 
-                {/* Categoría badge (solo si existe) */}
-                {categoryLabel && (
-                    <div style={{ marginBottom: "24px" }}>
-                        <span
-                            style={{
-                                display: "inline-block",
-                                backgroundColor: categoryColor + "20",
-                                color: categoryColor,
-                                padding: "8px 16px",
-                                borderRadius: "8px",
-                                fontSize: "13px",
-                                fontWeight: "600",
-                                border: `1px solid ${categoryColor}40`,
-                            }}
+                        {/* Categoría */}
+                        {categoryLabel && (
+                            <Section className="mb-6">
+                                <div
+                                    className="inline-block px-4 py-2 rounded-lg text-sm font-semibold"
+                                    style={{
+                                        backgroundColor: categoryColor + "20",
+                                        color: categoryColor,
+                                        border: `1px solid ${categoryColor}40`
+                                    }}
+                                >
+                                    📋 {categoryLabel}
+                                </div>
+                            </Section>
+                        )}
+
+                        {/* Info Usuario */}
+                        <Section className="bg-[#0f0f0f] p-5 rounded-lg border border-[#2a2a2a] mb-6">
+                            <div className="mb-3">
+                                <Text className="text-xs text-gray-400 m-0 mb-1">Nombre</Text>
+                                <Text className="text-base text-gray-100 font-medium m-0">
+                                    {name || "No especificado"}
+                                </Text>
+                            </div>
+                            <div>
+                                <Text className="text-xs text-gray-400 m-0 mb-1">Email</Text>
+                                <Text className="text-base text-[#e56c43] font-medium m-0">
+                                    {email}
+                                </Text>
+                            </div>
+                        </Section>
+
+                        {/* Mensaje */}
+                        <Section
+                            className="bg-[#0f0f0f] p-5 rounded-lg border border-[#2a2a2a] mb-6"
+                            style={{ borderLeft: `4px solid ${categoryColor}` }}
                         >
-                            📋 {categoryLabel}
-                        </span>
-                    </div>
-                )}
+                            <Text className="text-xs text-gray-400 font-semibold m-0 mb-2">
+                                MENSAJE
+                            </Text>
+                            <Text className="text-[15px] text-gray-100 leading-relaxed m-0 whitespace-pre-wrap">
+                                {message}
+                            </Text>
+                        </Section>
 
-                {/* Información del usuario */}
-                <div
-                    style={{
-                        backgroundColor: "#0f0f0f",
-                        borderRadius: "12px",
-                        padding: "20px",
-                        marginBottom: "24px",
-                        border: "1px solid #2a2a2a",
-                    }}
-                >
-                    <div style={{ marginBottom: "12px" }}>
-                        <p style={{ margin: "0 0 4px 0", color: "#999", fontSize: "13px" }}>
-                            Nombre
-                        </p>
-                        <p style={{ margin: 0, color: "#e5e5e5", fontSize: "16px", fontWeight: "500" }}>
-                            {name || "No especificado"}
-                        </p>
-                    </div>
-                    <div>
-                        <p style={{ margin: "0 0 4px 0", color: "#999", fontSize: "13px" }}>
-                            Email
-                        </p>
-                        <p style={{ margin: 0, color: "#ea580c", fontSize: "16px", fontWeight: "500" }}>
-                            {email}
-                        </p>
-                    </div>
-                </div>
+                        {/* Botón */}
+                        <Section className="text-center mb-6">
+                            <Button
+                                href={replyLink}
+                                className="bg-[#e56c43] text-white px-8 py-3.5 rounded-lg no-underline font-semibold text-[15px] inline-block"
+                                style={{ boxShadow: "0 4px 6px rgba(229, 108, 67, 0.3)" }}
+                            >
+                                ✉️ Responder con template
+                            </Button>
+                            <Text className="text-xs text-gray-500 m-0 mt-3">
+                                Click para responder con el diseño de Lanzate
+                            </Text>
+                        </Section>
 
-                {/* Mensaje */}
-                <div
-                    style={{
-                        backgroundColor: "#0f0f0f",
-                        borderRadius: "12px",
-                        padding: "20px",
-                        marginBottom: "24px",
-                        border: "1px solid #2a2a2a",
-                        borderLeft: `4px solid ${categoryColor}`,
-                    }}
-                >
-                    <p style={{ margin: "0 0 8px 0", color: "#999", fontSize: "13px", fontWeight: "600" }}>
-                        MENSAJE
-                    </p>
-                    <p style={{ margin: 0, color: "#e5e5e5", fontSize: "15px", whiteSpace: "pre-wrap" }}>
-                        {message}
-                    </p>
-                </div>
-
-                {/* Botón de respuesta rápida */}
-                <div style={{ textAlign: "center", marginBottom: "24px" }}>
-                    <a
-                        href={replyLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                            display: "inline-block",
-                            backgroundColor: "#ea580c",
-                            color: "#ffffff",
-                            padding: "14px 32px",
-                            borderRadius: "8px",
-                            textDecoration: "none",
-                            fontWeight: "600",
-                            fontSize: "15px",
-                            border: "none",
-                            boxShadow: "0 4px 6px rgba(234, 88, 12, 0.3)",
-                        }}
-                    >
-                        ✉️ Responder con template
-                    </a>
-                    <p style={{ margin: "12px 0 0 0", fontSize: "13px", color: "#666" }}>
-                        Click para responder con el diseño de Lanzate
-                    </p>
-                </div>
-
-                {/* Footer */}
-                <div
-                    style={{
-                        paddingTop: "24px",
-                        borderTop: "1px solid #2a2a2a",
-                        textAlign: "center",
-                    }}
-                >
-                    <p style={{ margin: 0, fontSize: "13px", color: "#666" }}>
-                        Enviado automáticamente desde{" "}
-                        <a
-                            href="https://lanzate.app"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: "#ea580c", textDecoration: "none", fontWeight: "500" }}
-                        >
-                            lanzate.app
-                        </a>
-                    </p>
-                    <p style={{ margin: "8px 0 0 0", fontSize: "12px", color: "#555" }}>
-                        {new Date().toLocaleDateString("es-ES", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                        })}
-                    </p>
-                </div>
-            </div>
-        </div>
+                        {/* Footer */}
+                        <Hr className="border-gray-700 my-6" />
+                        <Section className="text-center">
+                            <div className="flex items-center justify-center gap-2 mb-2">
+                                <Img
+                                    src={logoUrl}
+                                    width="16"
+                                    height="16"
+                                    alt=""
+                                    className="inline-block"
+                                />
+                                <Text className="text-xs text-gray-500 m-0 inline-block">
+                                    Enviado automáticamente desde{' '}
+                                    <Link href="https://lanzate.app" className="text-[#e56c43] no-underline font-medium">
+                                        lanzate.app
+                                    </Link>
+                                </Text>
+                            </div>
+                            <Text className="text-xs text-gray-600 m-0">
+                                {new Date().toLocaleDateString("es-ES", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit"
+                                })}
+                            </Text>
+                        </Section>
+                    </Container>
+                </Body>
+            </Tailwind>
+        </Html>
     );
 }
+
+export default EmailTemplate;

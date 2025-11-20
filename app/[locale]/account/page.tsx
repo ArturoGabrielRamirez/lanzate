@@ -5,7 +5,9 @@ import { getUserInfo } from "@/features/global/actions/get-user-info.action";
 
 
 export default async function AccountPage() {
+    
     const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
+    
     const t = await getTranslations("account");
 
     if (userError || !user) {

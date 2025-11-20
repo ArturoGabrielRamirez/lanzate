@@ -28,4 +28,4 @@ async function OrdersTab({ slug }: OrdersTabProps) {
     )
 }
 
-export { OrdersTab }
+export default OrdersTab

@@ -1,6 +1,8 @@
 import { MessageCircleDashed } from "lucide-react";
 
 import { getUserInfo } from "@/features/global/actions/get-user-info.action";
+import { PERMISSIONS } from "@/features/plans/utils/constants";
+import { AccessGate } from "@/features/shadcn/components/gate";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty";
 import { Button } from "@/features/shadcn/components/ui/button";
 import { Card, CardContent } from "@/features/shadcn/components/ui/card";
@@ -29,7 +31,13 @@ async function EmptyFeedItem() {
                             <Button variant="outline" asChild>
                                 <Link href="/stores">Manage stores</Link>
                             </Button>
-                            <CreateStoreButtonNew userId={user?.id || 0} />
+                            <AccessGate
+                                roles={["free", "pro", "enterprise"]}
+                                permissions={[ PERMISSIONS.CREATE_STORE ]}
+                                mode="disable"
+                            >
+                                <CreateStoreButtonNew userId={user?.id || 0} />
+                            </AccessGate>
                         </div>
                     </EmptyContent>
                 </Empty>

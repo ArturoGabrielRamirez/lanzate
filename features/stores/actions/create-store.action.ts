@@ -29,6 +29,7 @@ export async function createStoreAction(payload: ProcessedCreateStoreData, userI
         if (hasError) throw new Error(message)
 
         revalidatePath("/stores")
+        revalidatePath("/dashboard")
 
         // Create action log
         const { hasError: logError } = await insertLogEntry({
