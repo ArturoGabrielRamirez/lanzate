@@ -1,7 +1,7 @@
 "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Globe, Plus, Store } from "lucide-react"
+import { Globe, Plus, Store, StoreIcon, Truck } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 
@@ -10,10 +10,48 @@ import { InputField } from "@/features/global/components/form/input-field"
 import { TextareaField } from "@/features/global/components/form/textarea-field"
 import { ScrollArea } from "@/features/shadcn/components/scroll-area"
 import { Button } from "@/features/shadcn/components/ui/button"
+import { ChoiceBox, ChoiceBoxItem, ChoiceBoxLabel, ChoiceBoxDescription } from "@/features/shadcn/components/ui/choice-box"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/features/shadcn/components/ui/dialog"
 import { useStep } from "@/features/shadcn/hooks/use-step"
 import { basicInfoSchema } from "@/features/stores/schemas"
 import { cn } from "@/lib/utils"
+
+function BasicInfoStep() {
+    return (
+        <div className="space-y-4">
+            <InputField name="name" label="Name" placeholder="Ej: My Store" startIcon={<Store />} tooltip="The name of your store" isRequired />
+            <InputField name="subdomain" label="Subdomain" placeholder="Ej: my-store" startIcon={<Globe />} tooltip="The subdomain of your store" isRequired />
+            <TextareaField name="description" label="Description" placeholder="Ej: My Store Description" tooltip="The description of your store" />
+        </div>
+    )
+}
+
+function AddressStep() {
+    return (
+        <div className="space-y-4">
+            <ChoiceBox aria-label="Select items" gap={2} columns={2}>
+                <ChoiceBoxItem textValue="premium">
+                    <Truck className="place-self-center"/>
+                    <div className="flex flex-col gap-1">
+                        <ChoiceBoxLabel>Delivery</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>
+                            Enable delivery for your store.
+                        </ChoiceBoxDescription>
+                    </div>
+                </ChoiceBoxItem>
+                <ChoiceBoxItem textValue="deluxe">
+                    <StoreIcon className="place-self-center"/>
+                    <div className="flex flex-col gap-1">
+                        <ChoiceBoxLabel>Pickup</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>
+                            Enable pickup for your store.
+                        </ChoiceBoxDescription>
+                    </div>
+                </ChoiceBoxItem>
+            </ChoiceBox>
+        </div>
+    )
+}
 
 function StepIndicator({ step, isCurrent }: { step: number, isCurrent: boolean }) {
 
@@ -70,16 +108,10 @@ function CreateStoreButton({ }: { userId: number }) {
                         </DialogHeader>
                         <ScrollArea className="h-[calc(100dvh_-_12rem)] md:max-h-96 !overflow-x-visible">
                             {currentStep === 1 && (
-                                <div className="space-y-4">
-                                    <InputField name="name" label="Name" placeholder="Ej: My Store" startIcon={<Store />} tooltip="The name of your store" isRequired />
-                                    <InputField name="subdomain" label="Subdomain" placeholder="Ej: my-store" startIcon={<Globe />} tooltip="The subdomain of your store" isRequired />
-                                    <TextareaField name="description" label="Description" placeholder="Ej: My Store Description" tooltip="The description of your store" />
-                                </div>
+                                <BasicInfoStep />
                             )}
                             {currentStep === 2 && (
-                                <div className="space-y-4">
-
-                                </div>
+                                <AddressStep />
                             )}
 
                         </ScrollArea>
