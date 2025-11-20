@@ -1128,6 +1128,15 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
         6: Check,
     }
 
+    const tooltips = {
+        1: "Basic information",
+        2: "Address information",
+        3: "Contact information",
+        4: "Hours information",
+        5: "Delivery information",
+        6: "Success",
+    }
+
     const isComplete = !!isStepValid[step]
     const isInvalid = step <= 5 && !isComplete
     const isCurrentActive = step === currentStep
@@ -1163,20 +1172,27 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
     }
 
     return (
-        <div
-            className={cn(
-                "aspect-square rounded-full size-6 lg:size-8 flex items-center justify-center text-xs cursor-pointer text-muted-foreground hover:text-primary",
-                isInvalid ? "bg-destructive/20" : "bg-muted",
-                disabled ? "opacity-50 pointer-events-none" : ""
-            )}
-            onClick={handleStepClick}
-        >
-            {isComplete ? (
-                <Check className="size-4" />
-            ) : (
-                step
-            )}
-        </div>
+        <Tooltip>
+            <TooltipTrigger asChild>
+                <div
+                    className={cn(
+                        "aspect-square rounded-full size-6 lg:size-8 flex items-center justify-center text-xs cursor-pointer text-muted-foreground hover:text-primary",
+                        isInvalid ? "bg-destructive/20" : "bg-muted",
+                        disabled ? "opacity-50" : ""
+                    )}
+                    onClick={handleStepClick}
+                >
+                    {isComplete ? (
+                        <Check className="size-4" />
+                    ) : (
+                        step
+                    )}
+                </div>
+            </TooltipTrigger>
+            <TooltipContent>
+                {disabled ? "You must complete all required previous steps to unlock this step" : tooltips[step as keyof typeof tooltips]}
+            </TooltipContent>
+        </Tooltip>
     )
 }
 
