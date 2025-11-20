@@ -1,5 +1,4 @@
 export * from '@/features/stores/components/create-store-button-new'
-export * from '@/features/stores/components/create-store-button'
 export * from '@/features/stores/components/delete-store-button'
 export * from '@/features/stores/components/delivery-switch'
 export * from '@/features/stores/components/edit-operational-settings-button'
