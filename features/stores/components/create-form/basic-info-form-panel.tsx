@@ -10,18 +10,29 @@ import { slugify } from "@/features/stores/utils"
 
 export function BasicInfoFormPanel() {
 
-    const { setValue, watch, formState: { isValid } } = useFormContext()
+    const { setValue, watch, formState: { isValid }, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
-    const [isSubdomainTouched, setIsSubdomainTouched] = useState(false)
+    const [isSubdomainTouched, setIsSubdomainTouched] = useState(() => {
+        if (values.basic_info?.subdomain && values.basic_info?.name) {
+            return values.basic_info.subdomain !== slugify(values.basic_info.name)
+        }
+        return false
+    })
 
     const nameValue = watch('basic_info.name')
 
     const seededRefBasic = useRef(false)
+
     useEffect(() => {
         if (seededRefBasic.current) return
         seededRefBasic.current = true
-        if (values.basic_info) setValue('basic_info', values.basic_info as never, { shouldValidate: true })
-    }, [values.basic_info, setValue])
+        if (values.basic_info) {
+            setValue('basic_info', values.basic_info as never, { shouldValidate: true })
+        } else {
+            // Trigger validation for name on initial load if no values exist (fresh form)
+            trigger("basic_info.name")
+        }
+    }, [values.basic_info, setValue, trigger])
 
     useEffect(() => {
         const sub = watch((v) => setCtxValues({ basic_info: (v as CreateStoreFormValues).basic_info }))
@@ -39,7 +50,9 @@ export function BasicInfoFormPanel() {
     }, [subdomainChange])
 
     useEffect(() => {
-        subdomainChange(nameValue || '')
+        if (!isSubdomainTouched) {
+            subdomainChange(nameValue || '')
+        }
     }, [nameValue, isSubdomainTouched, subdomainChange])
 
     useEffect(() => {
@@ -50,7 +63,7 @@ export function BasicInfoFormPanel() {
         <>
             <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-10">
                 <div className="space-y-2">
-                   {/* Logo upload commented out in original code */}
+                    {/* Logo upload commented out in original code */}
                 </div>
                 <div className="space-y-4">
                     <InputField
@@ -68,6 +81,7 @@ export function BasicInfoFormPanel() {
                         type="url"
                         inputMode="url"
                         startIcon={<Globe />}
+                        tooltip="This is the URL of your store. People will use it to access your store."
                         endText={(
                             <span>
                                 .lanzate.com

@@ -69,7 +69,7 @@ export function CreateStoreContent({ userId }: { userId: number }) {
     }
 
     return (
-        <DialogContent className="w-full !max-w-full md:!max-w-2xl h-full rounded-none md:h-auto md:rounded-lg max-h-dvh !grid-rows-[auto_1fr]">
+        <DialogContent className="w-full !max-w-full md:!max-w-2xl h-full rounded-none md:h-auto md:!rounded-lg max-h-dvh !grid-rows-[auto_1fr]">
             <div className="space-y-4">
                 <DialogHeader>
                     <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
