@@ -15,7 +15,7 @@ import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
 import { Form } from "@/features/global/components/form/form"
-import { InputField } from "@/features/global/components/form/input-field"
+import { InputField } from "@/features/global/components/form/input-field";
 import { TextareaField } from "@/features/global/components/form/textarea-field";
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
@@ -672,6 +672,7 @@ function ContactFormPanel() {
                             placeholder="Ej: 1234567890"
                             startIcon={<Phone />}
                             isRequired
+                            tooltip="This is the phone number of your store. It will be used to contact your store."
                         />
                         <InputField
                             name="contact_info.contact_email"
@@ -680,6 +681,7 @@ function ContactFormPanel() {
                             startIcon={<Mail />}
                             type="email"
                             isRequired
+                            tooltip="This is the email of your store. It will be used to contact your store."
                         />
                     </div>
                 </div>
@@ -691,6 +693,7 @@ function ContactFormPanel() {
                             label="Facebook"
                             placeholder="Ej: https://www.facebook.com/your-page"
                             startIcon={<Facebook />}
+                            tooltip="This is the Facebook URL of your store. It will be used to display your store on Facebook."
                         />
                         <InputField
                             name="contact_info.instagram_url"
@@ -698,6 +701,7 @@ function ContactFormPanel() {
                             placeholder="Ej: https://www.instagram.com/your-page"
                             startIcon={<Instagram />}
                             type="email"
+                            tooltip="This is the Instagram URL of your store. It will be used to display your store on Instagram."
                         />
                         <InputField
                             name="contact_info.x_url"
@@ -705,6 +709,7 @@ function ContactFormPanel() {
                             placeholder="Ej: https://x.com/your-page"
                             startIcon={<Twitter />}
                             type="url"
+                            tooltip="This is the X (Twitter) URL of your store. It will be used to display your store on X (Twitter)."
                         />
                     </div>
                 </div>
@@ -779,6 +784,7 @@ function AddressFormPanel() {
                         placeholder="Ej: 123 Main St"
                         startIcon={<MapPin />}
                         isRequired
+                        tooltip="This is the address of your store. It will be used to display your store on the map."
                     />
                     <InputField
                         name="address_info.city"
@@ -786,6 +792,7 @@ function AddressFormPanel() {
                         placeholder="Ej: New York"
                         startIcon={<MapPin />}
                         isRequired
+                        tooltip="This is the city of your store. It will be used to display your store on the map."
                     />
                     <InputField
                         name="address_info.province"
@@ -793,6 +800,7 @@ function AddressFormPanel() {
                         placeholder="Ej: New York"
                         startIcon={<MapPin />}
                         isRequired
+                        tooltip="This is the province of your store. It will be used to display your store on the map."
                     />
                     <InputField
                         name="address_info.country"
@@ -800,6 +808,7 @@ function AddressFormPanel() {
                         placeholder="Ej: United States"
                         startIcon={<MapPin />}
                         isRequired
+                        tooltip="This is the country of your store. It will be used to display your store on the map."
                     />
                 </div>
             )}
@@ -987,6 +996,7 @@ function BasicInfoFormPanel() {
                         placeholder="Ej: My Store"
                         startIcon={<StoreIcon />}
                         isRequired
+                        tooltip="This is the name of your store. It will be used to identify your store in the system."
                     />
                     <InputField
                         name="basic_info.subdomain"
@@ -1031,6 +1041,10 @@ function CreateStoreForm({ setStep, step, onSubmitAll }: CreateStoreFormProps) {
         return Math.min(max, 5)
     })()
 
+    const handleFinalStepCompleted = async () => {
+        await onSubmitAll(values as CreateStoreFormValues)
+    }
+
     return (
         <Stepper
             initialStep={1}
@@ -1040,9 +1054,7 @@ function CreateStoreForm({ setStep, step, onSubmitAll }: CreateStoreFormProps) {
             stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"
             footerClassName="!p-0"
             onStepChange={setStep}
-            onFinalStepCompleted={async () => {
-                await onSubmitAll(values as CreateStoreFormValues)
-            }}
+            onFinalStepCompleted={handleFinalStepCompleted}
             renderStepIndicator={(props: { step: number; currentStep: number; onStepClick: (step: number) => void }) => {
                 return (
                     <StepIndicator

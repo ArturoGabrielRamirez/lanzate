@@ -10,13 +10,13 @@
 
 @media (min-width: 640px) {
   .outer-container {
-    aspect-ratio: 4 / 3;
+    /* aspect-ratio: 4 / 3; */
   }
 }
 
 @media (min-width: 768px) {
   .outer-container {
-    aspect-ratio: 2 / 1;
+    /* aspect-ratio: 2 / 1; */
   }
 }
 
