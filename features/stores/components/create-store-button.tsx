@@ -5,6 +5,7 @@ import { Globe, Plus, Store, StoreIcon, Truck } from "lucide-react"
 import { useState } from "react"
 import { Selection } from "react-aria-components"
 import { useFormContext } from "react-hook-form"
+import * as yup from "yup"
 
 import { Form } from "@/features/global/components/form/form"
 import { InputField } from "@/features/global/components/form/input-field"
@@ -15,6 +16,7 @@ import { ChoiceBox, ChoiceBoxItem, ChoiceBoxLabel, ChoiceBoxDescription } from "
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/features/shadcn/components/ui/dialog"
 import { useStep } from "@/features/shadcn/hooks/use-step"
 import { basicInfoSchema } from "@/features/stores/schemas"
+import { editAddressSchema } from "@/features/stores/schemas/address-schema"
 import { cn } from "@/lib/utils"
 
 function BasicInfoStep() {
@@ -101,9 +103,14 @@ function CreateStoreButton({ }: { userId: number }) {
     const [open, setOpen] = useState(false)
     const [currentStep, { goToNextStep, goToPrevStep }] = useStep(steps)
 
+    const fullSchema = yup.object({
+        ...basicInfoSchema.fields,
+        ...editAddressSchema.fields,
+    })
+
     return (
         <>
-            <Form contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchema as never)}>
+            <Form contentButton="" submitButton={false} resolver={yupResolver(fullSchema as never)}>
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                         <Button>

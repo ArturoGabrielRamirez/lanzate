@@ -52,10 +52,11 @@
   padding-left: 2rem;
   padding-right: 2rem;
   padding-bottom: 2rem;
+  width: 100%;
 }
 
 .footer-nav {
-  margin-top: 2.5rem;
+  /* margin-top: 2.5rem; */
   display: flex;
 }
 

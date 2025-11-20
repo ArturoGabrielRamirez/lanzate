@@ -2,10 +2,11 @@ import { ArrowRight, Check } from 'lucide-react';
 import { motion, AnimatePresence, Variants } from 'motion/react';
 import React, { useState, Children, useRef, useLayoutEffect, HTMLAttributes, ReactNode } from 'react';
 
+import { ScrollArea } from '@/features/shadcn/components/scroll-area';
+import { IconButton } from '@/features/shadcn/components/shadcn-io/icon-button';
 import '@/features/shadcn/components/Stepper.css';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shadcn/components/ui/tooltip';
 import { cn } from '@/lib/utils';
-import { IconButton } from '@/features/shadcn/components/shadcn-io/icon-button';
 
 interface StepperProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -87,6 +88,7 @@ export default function Stepper({
   return (
     <div className="outer-container" {...rest}>
       <div className={`step-circle-container ${stepCircleContainerClassName}`} style={{ border: '1px solid #222' }}>
+
         <div className={`step-indicator-row ${stepContainerClassName}`}>
           {stepsArray.map((_, index) => {
             const stepNumber = index + 1;
@@ -118,6 +120,8 @@ export default function Stepper({
             );
           })}
         </div>
+      </div>
+      <ScrollArea className="h-[calc(100dvh_-_15rem)] md:max-h-96 !overflow-x-visible w-full">
 
         <StepContentWrapper
           isCompleted={isCompleted}
@@ -128,36 +132,37 @@ export default function Stepper({
           {stepsArray[currentStep - 1]}
         </StepContentWrapper>
 
-        {!isCompleted && (
-          <div className={`footer-container ${footerClassName}`}>
-            <div className={`footer-nav ${currentStep !== 1 ? 'spread' : 'end'}`}>
-              {currentStep !== 1 && (
-                <button
-                  onClick={handleBack}
-                  className={`back-button ${currentStep === 1 ? 'inactive' : ''}`}
-                  {...backButtonProps}
-                >
-                  {backButtonText}
-                </button>
-              )}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <IconButton
-                    icon={isLastStep ? Check : ArrowRight}
-                    active={isLastStep}
-                    onClick={isLastStep ? handleComplete : handleNext}
-                    className={cn(isLastStep ? "text-primary" : "text-muted-foreground")}
-                    disabled={nextButtonProps.disabled}
-                  />
-                </TooltipTrigger>
-                <TooltipContent>
-                  {nextButtonProps.disabled ? "You must fill all required fields" : isLastStep ? 'Complete' : nextButtonText}
-                </TooltipContent>
-              </Tooltip>
-            </div>
+      </ScrollArea>
+      {!isCompleted && (
+        <div className={`footer-container ${footerClassName}`}>
+          <div className={`footer-nav ${currentStep !== 1 ? 'spread' : 'end'}`}>
+            {currentStep !== 1 && (
+              <button
+                onClick={handleBack}
+                className={`back-button ${currentStep === 1 ? 'inactive' : ''}`}
+                {...backButtonProps}
+              >
+                {backButtonText}
+              </button>
+            )}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <IconButton
+                  icon={isLastStep ? Check : ArrowRight}
+                  active={isLastStep}
+                  onClick={isLastStep ? handleComplete : handleNext}
+                  className={cn(isLastStep ? "text-primary" : "text-muted-foreground")}
+                  disabled={nextButtonProps.disabled}
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                {nextButtonProps.disabled ? "You must fill all required fields" : isLastStep ? 'Complete' : nextButtonText}
+              </TooltipContent>
+            </Tooltip>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
     </div>
   );
 }

@@ -31,6 +31,7 @@ import { basicInfoSchemaNew, addressInfoSchema, contactInfoSchema, settingsSchem
 import { AttentionDateType, AttentionDateFormPanelProps, ShippingMethodFormPanelProps, StepIndicatorProps, CreateStoreFormProps, CreateStoreFormValues, CreateStoreContextType, ShippingMethod } from "@/features/stores/types"
 import { processOpeningHours, processShippingMethods, processPaymentMethods, slugify } from "@/features/stores/utils"
 import { cn } from "@/lib/utils"
+/* import { ScrollArea } from "@/features/shadcn/components/scroll-area"; */
 
 
 const CreateStoreContext = createContext<CreateStoreContextType | null>(null)
@@ -1033,7 +1034,7 @@ function CreateStoreForm({ setStep, step, onSubmitAll }: CreateStoreFormProps) {
     return (
         <Stepper
             initialStep={1}
-            className="p-0"
+            className="p-0 outer-container flex flex-col gap-2"
             contentClassName="!p-0"
             stepContainerClassName="!p-0"
             stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"
@@ -1168,56 +1169,53 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
 
 function CreateStoreButtonNew({ userId }: { userId: number }) {
 
-    const [step, { /* goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, */ setStep }] = useStep(7)
+    const [step, { setStep }] = useStep(7)
     const [createdSlug, setCreatedSlug] = useState<string | null>(null)
     const router = useRouter()
 
     useEffect(() => {
         if (step === 7 && createdSlug) {
-            /* const t = setTimeout(() => {
-                router.push(`/stores/${createdSlug}/account`)
-            }, 1500)
-            return () => clearTimeout(t) */
+            //TODO: Redirect to the store account or do something else like close the dialog
         }
     }, [step, createdSlug, router])
 
-const handleCreateStore = async (data: CreateStoreFormValues) => {
-    const isPhysical = !!data.address_info?.is_physical_store
-    const processedData = {
-        ...data,
-        // If online store, clear address fields to avoid backend validations
-        address_info: isPhysical ? data.address_info : { is_physical_store: false },
-        processedOpeningHours: processOpeningHours(data.settings?.attention_dates as { days?: string[]; startTime?: string; endTime?: string }[] | undefined),
-        processedShippingMethods: processShippingMethods(data.shipping_info?.methods as { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice?: string }[] | undefined),
-        processedPaymentMethods: processPaymentMethods(data.payment_info?.payment_methods as string[] | undefined),
-    }
+    const handleCreateStore = async (data: CreateStoreFormValues) => {
+        const isPhysical = !!data.address_info?.is_physical_store
+        const processedData = {
+            ...data,
+            // If online store, clear address fields to avoid backend validations
+            address_info: isPhysical ? data.address_info : { is_physical_store: false },
+            processedOpeningHours: processOpeningHours(data.settings?.attention_dates as { days?: string[]; startTime?: string; endTime?: string }[] | undefined),
+            processedShippingMethods: processShippingMethods(data.shipping_info?.methods as { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice?: string }[] | undefined),
+            processedPaymentMethods: processPaymentMethods(data.payment_info?.payment_methods as string[] | undefined),
+        }
 
-    setStep(6)
-    const { hasError, message, payload } = await createStoreAction(processedData, userId)
+        setStep(6)
+        const { hasError, message, payload } = await createStoreAction(processedData, userId)
 
-    if (hasError) {
-        toast.error(message)
-        // return the form to the last step for correction
-        setStep(5)
-        return { 
-            success: false, 
-            error: true,
-            message: message,
-            data: null 
+        if (hasError) {
+            toast.error(message)
+            // return the form to the last step for correction
+            setStep(5)
+            return {
+                success: false,
+                error: true,
+                message: message,
+                data: null
+            }
+        }
+
+        // On success: move to success step and redirect shortly
+        setCreatedSlug(payload?.slug || null)
+        setStep(7)
+
+        return {
+            success: true,
+            error: false,
+            message: "Store created successfully",
+            data: payload
         }
     }
-
-    // On success: move to success step and redirect shortly
-    setCreatedSlug(payload?.slug || null)
-    setStep(7)
-
-    return {
-        success: true,
-        error: false,
-        message: "Store created successfully",
-        data: payload
-    }
-}
 
     const descriptions = {
         1: "Choose a name, logo and shipping methods to get started; you can edit your store details later.",
@@ -1247,13 +1245,15 @@ const handleCreateStore = async (data: CreateStoreFormValues) => {
                         <span>Create Store</span>
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="max-h-[80vh] overflow-y-auto">
-                    <DialogHeader>
-                        <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
-                    </DialogHeader>
-                    <DialogDescription asChild>
-                        <p>{descriptions[step as keyof typeof descriptions]}</p>
-                    </DialogDescription>
+                <DialogContent className="w-full !max-w-full md:!max-w-2xl h-full rounded-none md:h-auto md:rounded-lg max-h-dvh !grid-rows-[auto_1fr]">
+                    <div className="space-y-4">
+                        <DialogHeader>
+                            <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
+                        </DialogHeader>
+                        <DialogDescription asChild>
+                            <p>{descriptions[step as keyof typeof descriptions]}</p>
+                        </DialogDescription>
+                    </div>
                     <CreateStoreForm setStep={setStep} step={step} onSubmitAll={handleCreateStore} />
                 </DialogContent>
             </Dialog>
