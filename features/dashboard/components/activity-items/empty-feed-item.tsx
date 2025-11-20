@@ -2,7 +2,7 @@ import { MessageCircleDashed } from "lucide-react";
 
 import { getUserInfo } from "@/features/global/actions/get-user-info.action";
 import { PERMISSIONS } from "@/features/plans/utils/constants";
-import { AccessGate } from "@/features/shadcn/components/access-gate";
+import { AccessGate } from "@/features/shadcn/components/gate";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty";
 import { Button } from "@/features/shadcn/components/ui/button";
 import { Card, CardContent } from "@/features/shadcn/components/ui/card";

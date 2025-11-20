@@ -1,4 +1,4 @@
-import { useAccessManager } from "@/features/shadcn/components/access-gate";
+import { useAccessManager } from "@/features/shadcn/components/gate";
 import { PERMISSIONS } from "../utils/constants";
 
 export function usePermissions() {
