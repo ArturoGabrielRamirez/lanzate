@@ -91,18 +91,18 @@ export default function Stepper({
 
 
 
-      <ScrollArea className="h-[calc(100dvh_-_15rem)] md:max-h-96 !overflow-x-visible w-full">
 
-        <StepContentWrapper
-          isCompleted={isCompleted}
-          currentStep={currentStep}
-          direction={direction}
-          className={`step-content-default ${contentClassName}`}
-        >
+      <StepContentWrapper
+        isCompleted={isCompleted}
+        currentStep={currentStep}
+        direction={direction}
+        className={`step-content-default w-full ${contentClassName}`}
+      >
+        <ScrollArea className="h-[calc(100dvh_-_15rem)] md:max-h-96 !overflow-x-visible w-full">
           {stepsArray[currentStep - 1]}
-        </StepContentWrapper>
+        </ScrollArea>
+      </StepContentWrapper>
 
-      </ScrollArea>
 
       {!isCompleted && (
         <div className={`footer-container ${footerClassName}`}>
@@ -258,7 +258,7 @@ interface StepProps {
 }
 
 export function Step({ children, className }: StepProps) {
-  return <div className={cn("step-default", className)}>{children}</div>;
+  return <div className={cn("px-1", className)}>{children}</div>;
 }
 
 interface StepIndicatorProps {

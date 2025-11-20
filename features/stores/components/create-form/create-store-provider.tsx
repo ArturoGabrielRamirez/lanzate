@@ -1,0 +1,37 @@
+import { createContext, useContext, useState } from "react"
+
+import { useStep } from "@/features/shadcn/hooks/use-step"
+
+import { CreateStoreFormValues } from "@/features/stores/types"
+import { CreateStoreContextType } from "@/features/stores/types"
+
+
+const CreateStoreContext = createContext<CreateStoreContextType | null>(null)
+
+function useCreateStoreContext() {
+    const ctx = useContext(CreateStoreContext)
+    if (!ctx) throw new Error("CreateStoreContext not found")
+    return ctx
+}
+
+function CreateStoreProvider({ children }: { children: React.ReactNode }) {
+    const [values, setValuesState] = useState<Partial<CreateStoreFormValues>>({})
+    const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
+    const [step, { setStep }] = useStep(7)
+
+    const setValues = useCallback((partial: Partial<CreateStoreFormValues>) => {
+        setValuesState(prev => ({ ...prev, ...partial }))
+    }, [])
+
+    const setStepValid = useCallback((step: number, valid: boolean) => {
+        setIsStepValid(prev => ({ ...prev, [step]: valid }))
+    }, [])
+
+    return (
+        <CreateStoreContext.Provider value={{ values, setValues, isStepValid, setStepValid, step, setStep }}>
+            {children}
+        </CreateStoreContext.Provider>
+    )
+}
+
+export { CreateStoreProvider, useCreateStoreContext }

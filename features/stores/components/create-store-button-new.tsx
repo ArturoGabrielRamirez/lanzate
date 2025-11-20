@@ -821,15 +821,15 @@ function BasicInfoFormPanel() {
 
     const { setValue, watch, formState: { isValid } } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
-    const [logo, setLogo] = useState<File[]>([])
-    const [logoUrl, setLogoUrl] = useState<string | null>(null)
-    const [isUploading, setIsUploading] = useState(false)
-    const [uploadProgress, setUploadProgress] = useState(0)
+    /* const [logo, setLogo] = useState<File[]>([])
+    const [logoUrl, setLogoUrl] = useState<string | null>(null) */
+    /* const [isUploading, setIsUploading] = useState(false)
+    const [uploadProgress, setUploadProgress] = useState(0) */
     const [isSubdomainTouched, setIsSubdomainTouched] = useState(false)
 
 
-    const nameValue = watch('basic_info.name') as string | undefined
-    const logoValue = watch('basic_info.logo') as unknown
+    const nameValue = watch('basic_info.name')
+    /* const logoValue = watch('basic_info.logo') as unknown */
 
     const seededRefBasic = useRef(false)
     useEffect(() => {
@@ -843,18 +843,26 @@ function BasicInfoFormPanel() {
         return () => sub.unsubscribe()
     }, [watch, setCtxValues])
 
+
+
+    const subdomainChange = useCallback((value: string) => {
+        const sanitized = slugify(value)
+        setValue('basic_info.subdomain', sanitized, { shouldValidate: true, shouldDirty: true })
+    }, [setValue])
+
+    const handleSubdomainChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setIsSubdomainTouched(true)
+        subdomainChange(e.target.value)
+    }, [subdomainChange])
+
+    useEffect(() => {
+        subdomainChange(nameValue || '')
+    }, [nameValue, isSubdomainTouched, subdomainChange])
+
     useEffect(() => {
         setStepValid(1, isValid)
     }, [isValid, setStepValid])
-
-    useEffect(() => {
-        if (!isSubdomainTouched) {
-            const next = slugify(nameValue || '')
-            setValue('basic_info.subdomain', next, { shouldValidate: true, shouldDirty: true })
-        }
-    }, [nameValue, isSubdomainTouched, setValue])
-
-    useEffect(() => {
+    /* useEffect(() => {
         if (logoValue instanceof File) {
             setLogo([logoValue])
             setLogoUrl(null)
@@ -865,9 +873,9 @@ function BasicInfoFormPanel() {
             setLogo([])
             setLogoUrl(null)
         }
-    }, [logoValue])
+    }, [logoValue]) */
 
-    const handleUpload = async (file: File) => {
+    /* const handleUpload = async (file: File) => {
         try {
             toast.loading('Subiendo logo...')
             setIsUploading(true)
@@ -896,7 +904,7 @@ function BasicInfoFormPanel() {
             setIsUploading(false)
             setUploadProgress(0)
         }
-    }
+    } */
 
     /*     const camera = useCamera({
             uploadPath: 'store-logos',
@@ -917,25 +925,25 @@ function BasicInfoFormPanel() {
           camera.openCamera();
       } */
 
-    const handleFileSelect = (files: File[]) => {
+    /* const handleFileSelect = (files: File[]) => {
         if (files.length === 0) return
         const file = files[files.length - 1]
         setLogo([file])
         setValue("basic_info.logo", file)
         handleUpload(file)
-    }
+    } */
 
-    const handleDeleteLogo = () => {
+    /* const handleDeleteLogo = () => {
         setLogo([])
         setLogoUrl(null)
         setValue("basic_info.logo", "")
-    }
+    } */
 
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-10">
                 <div className="space-y-2">
-                    <FileUpload value={logo} onValueChange={handleFileSelect}>
+                    {/* <FileUpload value={logo} onValueChange={handleFileSelect}>
                         <FileUploadDropzone className={cn("rounded-full aspect-square group/dropzone relative max-xs:max-w-[150px] mx-auto w-full", isUploading && "animate-pulse")}>
                             {logo.length > 0 ? (
                                 <FileUploadItem value={logo[0]} className="absolute p-0 w-full h-full border-none">
@@ -959,14 +967,6 @@ function BasicInfoFormPanel() {
                                             Click para explorar archivos
                                         </TooltipContent>
                                     </Tooltip>
-                                    {/* <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <IconButton icon={Camera} onClick={handleCamera} />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            Click para tomar foto
-                                        </TooltipContent>
-                                    </Tooltip> */}
                                 </div>
                             </div>
                         </FileUploadDropzone>
@@ -984,12 +984,8 @@ function BasicInfoFormPanel() {
                                 </TooltipContent>
                             </Tooltip>
                         </div>
-                    )}
+                    )} */}
                 </div>
-                {/*       <CameraComponent
-                    {...camera.cameraProps}
-                    title="Tomar foto para logo"
-                /> */}
                 <div className="space-y-4">
                     <InputField
                         name="basic_info.name"
@@ -1012,11 +1008,7 @@ function BasicInfoFormPanel() {
                             </span>
                         )}
                         isRequired
-                        onChange={(e) => {
-                            setIsSubdomainTouched(true)
-                            const sanitized = slugify(e.target.value)
-                            setValue('basic_info.subdomain', sanitized, { shouldValidate: true, shouldDirty: true })
-                        }}
+                        onChange={handleSubdomainChange}
                     />
                 </div>
             </div>
@@ -1070,30 +1062,30 @@ function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                 disabled: !isValid,
             }}
         >
-            <Step className="!p-0 !pb-2">
+            <Step>
                 <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchemaNew as never)}>
                     <BasicInfoFormPanel />
                 </Form>
             </Step>
-            <Step className="!p-0 !pb-2">
-                <Form<AddressInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(addressInfoSchema as never)}>
+            <Step>
+                {/* <Form<AddressInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(addressInfoSchema as never)}>
                     <AddressFormPanel />
-                </Form>
+                </Form> */}
             </Step>
-            <Step className="!p-0 !pb-2">
-                <Form<ContactInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(contactInfoSchema as never)}>
+            <Step>
+                {/* <Form<ContactInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(contactInfoSchema as never)}>
                     <ContactFormPanel />
-                </Form>
+                </Form> */}
             </Step>
-            <Step className="!p-0 !pb-2">
-                <Form<SettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(settingsSchema as never)}>
+            <Step>
+                {/* <Form<SettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(settingsSchema as never)}>
                     <SettingsFormPanel />
-                </Form>
+                </Form> */}
             </Step>
-            <Step className="!p-0 !pb-2">
-                <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
+            <Step>
+                {/* <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
                     <ShippingFormPanel />
-                </Form>
+                </Form> */}
             </Step>
             {step === 6 && (
                 <Step className="!p-0 !pt-10 !pb-2">
