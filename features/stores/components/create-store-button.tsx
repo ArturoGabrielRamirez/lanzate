@@ -3,6 +3,7 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Globe, Plus, Store, StoreIcon, Truck } from "lucide-react"
 import { useState } from "react"
+import { Selection } from "react-aria-components"
 import { useFormContext } from "react-hook-form"
 
 import { Form } from "@/features/global/components/form/form"
@@ -18,7 +19,7 @@ import { cn } from "@/lib/utils"
 
 function BasicInfoStep() {
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 p-1">
             <InputField name="name" label="Name" placeholder="Ej: My Store" startIcon={<Store />} tooltip="The name of your store" isRequired />
             <InputField name="subdomain" label="Subdomain" placeholder="Ej: my-store" startIcon={<Globe />} tooltip="The subdomain of your store" isRequired />
             <TextareaField name="description" label="Description" placeholder="Ej: My Store Description" tooltip="The description of your store" />
@@ -27,24 +28,32 @@ function BasicInfoStep() {
 }
 
 function AddressStep() {
+
+    const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(["pickup"]))
+
+    const handleSelectionChange = (keys: Selection) => {
+        setSelectedKeys(keys)
+    }
+
+
     return (
-        <div className="space-y-4">
-            <ChoiceBox aria-label="Select items" gap={2} columns={2}>
-                <ChoiceBoxItem textValue="premium">
-                    <Truck className="place-self-center"/>
-                    <div className="flex flex-col gap-1">
-                        <ChoiceBoxLabel>Delivery</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>
-                            Enable delivery for your store.
-                        </ChoiceBoxDescription>
-                    </div>
-                </ChoiceBoxItem>
-                <ChoiceBoxItem textValue="deluxe">
-                    <StoreIcon className="place-self-center"/>
+        <div className="space-y-4 p-1">
+            <ChoiceBox aria-label="Select items" gap={4} columns={2} selectedKeys={selectedKeys} onSelectionChange={handleSelectionChange}>
+                <ChoiceBoxItem textValue="pickup" label="Pickup" id="pickup">
+                    <StoreIcon className="place-self-center size-8" />
                     <div className="flex flex-col gap-1">
                         <ChoiceBoxLabel>Pickup</ChoiceBoxLabel>
                         <ChoiceBoxDescription>
                             Enable pickup for your store.
+                        </ChoiceBoxDescription>
+                    </div>
+                </ChoiceBoxItem>
+                <ChoiceBoxItem textValue="delivery" label="Delivery" id="delivery">
+                    <Truck className="place-self-center size-8" />
+                    <div className="flex flex-col gap-1">
+                        <ChoiceBoxLabel>Delivery</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>
+                            Enable delivery for your store.
                         </ChoiceBoxDescription>
                     </div>
                 </ChoiceBoxItem>

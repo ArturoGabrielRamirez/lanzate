@@ -105,7 +105,7 @@ const choiceBoxItemStyles = tv({
       true: "not-data-readonly:not-data-focus-visible:not-selected:inset-ring-muted-fg/30",
     },
     isFocused: {
-      true: "inset-ring-(--choice-box-active-ring) ring-(--choice-box-ring) ring-3 invalid:ring-danger-subtle-fg/20",
+      true: "inset-ring-(--choice-box-active-ring) ring-(--primary) ring-3 invalid:ring-danger-subtle-fg/20",
     },
     isInvalid: { true: "ring-3 ring-danger-subtle-fg/20" },
     isOneColumn: {
@@ -114,7 +114,7 @@ const choiceBoxItemStyles = tv({
     isActive: {
       true: [
         "bg-(--choice-box) text-(--choice-box-fg)",
-        "inset-ring-(--choice-box-active-ring) z-20 hover:bg-(--choice-box-selected-hovered)",
+        "inset-ring-(--primary) z-20 hover:bg-(--choice-box-selected-hovered)",
         "**:data-[slot=label]:text-(--choice-box-fg)",
         "**:[[slot=description]]:text-(--choice-box-fg)",
       ],
