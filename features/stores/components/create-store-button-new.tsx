@@ -1130,29 +1130,33 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
 
     const isComplete = !!isStepValid[step]
     const isInvalid = step <= 5 && !isComplete
+    const isCurrentActive = step === currentStep
 
-    if (step === currentStep) {
+    const handleStepClick = () => {
+        if (!disabled) {
+            onStepClick(step)
+        }
+    }
+
+    if (isCurrentActive) {
         const Icon = icons[step as keyof typeof icons]
         return (
             <div
-                className={cn(
-                    "aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center cursor-pointer",
+                className={cn("aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center cursor-pointer",
                     isInvalid ? "bg-destructive/20" : "bg-muted"
                 )}
-                onClick={() => !disabled && onStepClick(step)}
+                onClick={handleStepClick}
             >
                 <IconButton
                     icon={Icon}
-                    active={step === currentStep}
-                    onClick={() => !disabled && onStepClick(step)}
-                    iconClassName={cn(
-                        disabled ? "opacity-50" : ""
-                    )}
-                    className={cn(
-                        step === currentStep ? "text-primary" : "text-muted-foreground",
-                        disabled ? "opacity-50" : ""
-                    )}
+                    active={isCurrentActive}
+                    onClick={handleStepClick}
+                    iconClassName={cn(disabled ? "opacity-50" : "")}
                     disabled={disabled}
+                    className={cn(
+                        isCurrentActive ? "text-primary" : "text-muted-foreground",
+                        disabled ? "opacity-50" : ""
+                    )}
                 />
             </div>
         )
@@ -1165,11 +1169,7 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
                 isInvalid ? "bg-destructive/20" : "bg-muted",
                 disabled ? "opacity-50 pointer-events-none" : ""
             )}
-            onClick={() => {
-                if (!disabled) {
-                    onStepClick(step)
-                }
-            }}
+            onClick={handleStepClick}
         >
             {isComplete ? (
                 <Check className="size-4" />
@@ -1181,6 +1181,7 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
 }
 
 function CreateStoreContent({ userId }: { userId: number }) {
+
     const { step, setStep } = useCreateStoreContext()
 
     const handleCreateStore = async (data: CreateStoreFormValues) => {
