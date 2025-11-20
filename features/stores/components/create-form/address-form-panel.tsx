@@ -5,8 +5,7 @@ import { useFormContext } from "react-hook-form"
 import { InputField } from "@/features/global/components/form/input-field"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { CreateStoreFormValues } from "@/features/stores/types"
-import { cn } from "@/lib/utils"
-import { ChoiceBox, ChoiceBoxItem } from "@/features/shadcn/components/ui/choice-box"
+import { ChoiceBox, ChoiceBoxItem, ChoiceBoxLabel, ChoiceBoxDescription } from "@/features/shadcn/components/ui/choice-box"
 
 export function AddressFormPanel() {
 
@@ -52,22 +51,31 @@ export function AddressFormPanel() {
 
     return (
         <>
-            <div className="grid grid-cols-2 items-center gap-6 text-center justify-center mb-8">
-                <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow", !isPhysicalStore ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleOnlineStore}>
-                    <h3 className="text-lg font-medium text-primary flex justify-center">
-                        <Globe className="size-8" />
-                    </h3>
-                    <p className="text-sm text-muted-foreground text-balance">This is an online store.</p>
-                </div>
-                <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow", isPhysicalStore ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handlePhysicalStore}>
-                    <h3 className="text-lg font-medium text-primary flex justify-center">
-                        <Store className="size-8" />
-                    </h3>
-                    <p className="text-sm text-muted-foreground text-balance">This is a physical store.</p>
-                </div>
-                <ChoiceBox>
-                    <ChoiceBoxItem />
-
+            <div className="mb-8">
+                <ChoiceBox
+                    columns={2}
+                    gap={2}
+                    selectionMode="single"
+                    selectedKeys={[isPhysicalStore ? "physical" : "online"]}
+                    onSelectionChange={(selection) => {
+                        const selected = Array.from(selection)[0]
+                        if (selected === "physical") {
+                            handlePhysicalStore()
+                        } else if (selected === "online") {
+                            handleOnlineStore()
+                        }
+                    }}
+                >
+                    <ChoiceBoxItem id="online" textValue="Online Store">
+                        <Globe />
+                        <ChoiceBoxLabel>Online Store</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>This is an online store.</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
+                    <ChoiceBoxItem id="physical" textValue="Physical Store">
+                        <Store />
+                        <ChoiceBoxLabel>Physical Store</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>This is a physical store.</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
                 </ChoiceBox>
             </div>
             {isPhysicalStore && (

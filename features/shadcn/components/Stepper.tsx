@@ -258,7 +258,7 @@ interface StepProps {
 }
 
 export function Step({ children, className }: StepProps) {
-  return <div className={cn("px-1", className)}>{children}</div>;
+  return <div className={cn("p-1", className)}>{children}</div>;
 }
 
 interface StepIndicatorProps {
