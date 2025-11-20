@@ -438,6 +438,8 @@ export type CreateStoreContextType = {
     setValues: (partial: Partial<CreateStoreFormValues>) => void
     isStepValid: Record<number, boolean>
     setStepValid: (step: number, valid: boolean) => void
+    step: number
+    setStep: (step: number) => void
 }
 
 export type DeliverySwitchProps = {

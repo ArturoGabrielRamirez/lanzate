@@ -45,6 +45,7 @@ function useCreateStoreContext() {
 function CreateStoreProvider({ children }: { children: React.ReactNode }) {
     const [values, setValuesState] = useState<Partial<CreateStoreFormValues>>({})
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
+    const [step, { setStep }] = useStep(7)
 
     const setValues = useCallback((partial: Partial<CreateStoreFormValues>) => {
         setValuesState(prev => ({ ...prev, ...partial }))
@@ -55,7 +56,7 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
     }, [])
 
     return (
-        <CreateStoreContext.Provider value={{ values, setValues, isStepValid, setStepValid }}>
+        <CreateStoreContext.Provider value={{ values, setValues, isStepValid, setStepValid, step, setStep }}>
             {children}
         </CreateStoreContext.Provider>
     )
@@ -1028,10 +1029,9 @@ function BasicInfoFormPanel() {
     )
 }
 
-function CreateStoreForm({ /* setStep, step, */ onSubmitAll }: CreateStoreFormProps) {
+function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
 
-    const [step, { setStep }] = useStep(7)
-    const { isStepValid, values } = useCreateStoreContext()
+    const { isStepValid, values, step, setStep } = useCreateStoreContext()
     const isValid = !!isStepValid[step]
 
     const allowedMaxStep = (() => {
@@ -1180,9 +1180,8 @@ function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicat
     )
 }
 
-function CreateStoreButtonNew({ userId }: { userId: number }) {
-
-    const [step, { setStep }] = useStep(7)
+function CreateStoreContent({ userId }: { userId: number }) {
+    const { step, setStep } = useCreateStoreContext()
 
     const handleCreateStore = async (data: CreateStoreFormValues) => {
         const isPhysical = !!data.address_info?.is_physical_store
@@ -1240,6 +1239,22 @@ function CreateStoreButtonNew({ userId }: { userId: number }) {
     }
 
     return (
+        <DialogContent className="w-full !max-w-full md:!max-w-2xl h-full rounded-none md:h-auto md:rounded-lg max-h-dvh !grid-rows-[auto_1fr]">
+            <div className="space-y-4">
+                <DialogHeader>
+                    <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
+                </DialogHeader>
+                <DialogDescription asChild>
+                    <p>{descriptions[step as keyof typeof descriptions]}</p>
+                </DialogDescription>
+            </div>
+            <CreateStoreForm onSubmitAll={handleCreateStore} />
+        </DialogContent>
+    )
+}
+
+function CreateStoreButtonNew({ userId }: { userId: number }) {
+    return (
         <CreateStoreProvider>
             <Dialog>
                 <DialogTrigger asChild>
@@ -1248,17 +1263,7 @@ function CreateStoreButtonNew({ userId }: { userId: number }) {
                         <span>Create Store</span>
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="w-full !max-w-full md:!max-w-2xl h-full rounded-none md:h-auto md:rounded-lg max-h-dvh !grid-rows-[auto_1fr]">
-                    <div className="space-y-4">
-                        <DialogHeader>
-                            <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
-                        </DialogHeader>
-                        <DialogDescription asChild>
-                            <p>{descriptions[step as keyof typeof descriptions]}</p>
-                        </DialogDescription>
-                    </div>
-                    <CreateStoreForm /* setStep={setStep} step={step} */ onSubmitAll={handleCreateStore} />
-                </DialogContent>
+                <CreateStoreContent userId={userId} />
             </Dialog>
         </CreateStoreProvider>
     )
