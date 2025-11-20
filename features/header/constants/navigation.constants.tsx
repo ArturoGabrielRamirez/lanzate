@@ -1,4 +1,4 @@
-import { CogIcon, HelpCircleIcon, HomeIcon, InfoIcon, KeyRoundIcon, LayoutDashboard, LogInIcon, PhoneIcon, PlayCircleIcon, PlusCircle, Store, UserIcon, UserPlusIcon, CircleQuestionMarkIcon, DollarSignIcon } from 'lucide-react';
+import { CogIcon, HelpCircleIcon, HomeIcon, InfoIcon, KeyRoundIcon, LayoutDashboard, LogInIcon, PhoneIcon, PlayCircleIcon, PlusCircle, Store, UserIcon, UserPlusIcon, /* CircleQuestionMarkIcon, */ DollarSignIcon } from 'lucide-react';
 
 import { NavMenuItem, NavSubItem } from '@/features/header/types';
 
@@ -109,12 +109,12 @@ const CONTACT_PAGE_ITEM = {
     icon: <PhoneIcon className='size-6 lg:size-4 group-hover:text-inherit' />
 }
 
-const HELP_ITEM = {
+/* const HELP_ITEM = {
     label: 'layout.header.navigation.help',
-    href: '/#help',
+    href: '/help',
     description: 'layout.header.navigation.sections.helpDesc',
     icon: <CircleQuestionMarkIcon className='size-6 lg:size-4 group-hover:text-inherit' />
-}
+} */
 
 
 const PRICING_ITEM = {
@@ -163,8 +163,8 @@ export const NAV_MENU_ITEMS_AUTH: NavSubItem[] = [
     DASHBOARD_ITEM,
     NEW_SALE_ITEM,
     STORES_ITEM,
-    ACCOUNT_ITEM,
-    HELP_ITEM
+    ACCOUNT_ITEM/* ,
+    HELP_ITEM */
 ]
 
 export const DRAWER_MENU_ITEMS_GUEST: NavSubItem[] = [
