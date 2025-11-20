@@ -7,19 +7,29 @@ import { useCreateStoreContext } from "@/features/stores/components/create-form/
 import { CreateStoreFormValues } from "@/features/stores/types"
 
 export function ContactFormPanel() {
-    const { formState: { isValid }, watch, setValue } = useFormContext()
+
+    const { formState: { isValid }, watch, setValue, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
+
     const seededRefContact = useRef(false)
+
     useEffect(() => {
         if (seededRefContact.current) return
         seededRefContact.current = true
-        if (values.contact_info) setValue("contact_info", values.contact_info, { shouldValidate: true })
-    }, [values.contact_info, setValue])
+        if (values.contact_info) {
+            setValue("contact_info", values.contact_info, { shouldValidate: true })
+        } else {
+            trigger(["contact_info.contact_phone", "contact_info.contact_email"])
+        }
+    }, [values.contact_info, setValue, trigger])
+
     useEffect(() => {
         const sub = watch((v) => setCtxValues({ contact_info: (v as CreateStoreFormValues).contact_info }))
         return () => sub.unsubscribe()
     }, [watch, setCtxValues])
+
     useEffect(() => { setStepValid(3, isValid) }, [isValid, setStepValid])
+
     return (
         <>
             <div className="space-y-8">
