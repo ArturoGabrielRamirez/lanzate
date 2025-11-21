@@ -85,7 +85,7 @@ export const shippingPaymentSchema = yup.object({
         })).when("offers_delivery", (offers, schema) => offers ? schema.min(1, "Agregue al menos un modo de envío") : schema.notRequired())
     }),
     payment_info: yup.object({
-        payment_methods: yup.array().of(yup.string()).min(1, "Seleccione al menos un método de pago").required(),
+        payment_methods: yup.array().of(yup.string()).min(1, "Seleccione al menos un método de pago").required("Seleccione al menos un método de pago"),
     })
 })
 

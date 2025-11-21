@@ -11,7 +11,7 @@ import type { Selection } from "react-aria-components"
 
 export function ShippingFormPanel() {
 
-    const { setValue, getValues, formState: { errors } } = useFormContext<CreateStoreFormValues>()
+    const { setValue, getValues, trigger, formState: { errors } } = useFormContext<CreateStoreFormValues>()
     const { values, setValues: setCtxValues } = useCreateStoreContext()
     const [offersDelivery, setOffersDelivery] = useState(false)
     const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([])
@@ -30,6 +30,10 @@ export function ShippingFormPanel() {
     }, [paymentMethodsValue]) */
 
     const seededRef = useRef(false)
+
+    useEffect(() => {
+        trigger("payment_info.payment_methods")
+    }, [trigger])
 
     useEffect(() => {
         if (seededRef.current) return
@@ -67,14 +71,14 @@ export function ShippingFormPanel() {
             const safe = {
                 offers_delivery: !!s.offers_delivery,
                 methods: Array.isArray(s.methods)
-                    ? (s.methods.filter(Boolean).map((m) => ({
-                        providers: m?.providers || [],
-                        minPurchase: m?.minPurchase,
-                        freeShippingMin: m?.freeShippingMin,
-                        estimatedTime: m?.estimatedTime,
-                        deliveryPrice: m?.deliveryPrice ?? "",
-                    })) as NonNullable<CreateStoreFormValues["shipping_info"]["methods"]>)
-                    : []
+                ? (s.methods.filter(Boolean).map((m) => ({
+                    providers: m?.providers || [],
+                    minPurchase: m?.minPurchase,
+                    freeShippingMin: m?.freeShippingMin,
+                    estimatedTime: m?.estimatedTime,
+                    deliveryPrice: m?.deliveryPrice ?? "",
+                })) as NonNullable<CreateStoreFormValues["shipping_info"]["methods"]>)
+                : []
             }
             setValue("shipping_info", safe, { shouldValidate: true })
         }
@@ -87,7 +91,7 @@ export function ShippingFormPanel() {
         if (Array.isArray(existingPayments)) {
             setValue("payment_info.payment_methods", existingPayments, { shouldValidate: true })
         } */
-    }, [getValues, setValue, values.shipping_info, values.payment_info])
+    }, [getValues, setValue, values.shipping_info, values.payment_info, setCtxValues])
 
     /* useEffect(() => {
         if (offersDelivery) {
