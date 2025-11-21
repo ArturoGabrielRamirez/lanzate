@@ -33,6 +33,25 @@ export function SettingsFormPanel() {
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
     const [isOpen24Hours, setIsOpen24Hours] = useState(() => !!(getValues("settings.is_open_24_hours") ?? true))
 
+    const isOpen24HoursValue = watch("settings.is_open_24_hours")
+    useEffect(() => {
+        if (isOpen24HoursValue !== undefined) {
+            setIsOpen24Hours(isOpen24HoursValue)
+        }
+    }, [isOpen24HoursValue])
+
+    const attentionDatesValue = watch("settings.attention_dates")
+    useEffect(() => {
+        if (attentionDatesValue) {
+            setAttentionDates(attentionDatesValue.map((d: { days: string[], startTime: string, endTime: string }) => ({
+                date: dayjs().format("YYYY-MM-DD"),
+                days: d.days || [],
+                startTime: dayjs(d.startTime, "HH:mm"),
+                endTime: dayjs(d.endTime, "HH:mm"),
+            })))
+        }
+    }, [attentionDatesValue])
+
     const seededRefSettings = useRef(false)
     useEffect(() => {
         if (seededRefSettings.current) return
