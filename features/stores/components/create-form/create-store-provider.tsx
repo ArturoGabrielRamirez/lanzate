@@ -15,6 +15,7 @@ function useCreateStoreContext() {
 
 function CreateStoreProvider({ children }: { children: React.ReactNode }) {
     const [values, setValuesState] = useState<Partial<CreateStoreFormValues>>({})
+    console.log("🚀 ~ CreateStoreProvider ~ values:", values)
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
     const [step, { setStep }] = useStep(7)
 

@@ -1,47 +1,62 @@
-import { Plus, Store, Trash, Truck } from "lucide-react"
-import { AnimatePresence, motion } from "motion/react"
+import { Store, Truck } from "lucide-react"
+/* 
+import { AnimatePresence, motion } from "motion/react" */
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
-import { Button } from "@/features/shadcn/components/button"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+/* import { Button } from "@/features/shadcn/components/button"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button" */
 import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+/* import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip" */
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { ShippingMethodFormPanel } from "@/features/stores/components/create-form/shipping-method-form-panel"
-import { CreateStoreFormValues, ShippingMethod } from "@/features/stores/types"
-import { cn } from "@/lib/utils"
+/* import { ShippingMethodFormPanel } from "@/features/stores/components/create-form/shipping-method-form-panel" */
+import { CreateStoreFormValues/* , ShippingMethod */ } from "@/features/stores/types"
+/* import { cn } from "@/lib/utils" */
 
 import type { Selection } from "react-aria-components"
 
 
 export function ShippingFormPanel() {
 
-    const { setValue, getValues, formState: { errors, isValid }, watch, trigger } = useFormContext<CreateStoreFormValues>()
-    const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
-    const setValueAny = setValue as unknown as (name: string, value: unknown, options?: { shouldValidate?: boolean; shouldDirty?: boolean }) => void
+    const { setValue, getValues, formState: { errors }/* , watch */ } = useFormContext<CreateStoreFormValues>()
+    const { values, setValues: setCtxValues } = useCreateStoreContext()
+    /* const setValueAny = setValue as unknown as (name: string, value: unknown, options?: { shouldValidate?: boolean; shouldDirty?: boolean }) => void */
     const [offersDelivery, setOffersDelivery] = useState(false)
-    const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([])
-    const [isAddingMethod, setIsAddingMethod] = useState(false)
-    const [editingIndex, setEditingIndex] = useState<number | null>(null)
+    /* const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([]) */
+    /* const [isAddingMethod, setIsAddingMethod] = useState(false) */
+    /* const [editingIndex, setEditingIndex] = useState<number | null>(null) */
     const [paymentMethods, setPaymentMethods] = useState<string[]>(() => (getValues("payment_info.payment_methods") as string[] | undefined) || [])
-    
+
     console.log("🚀 ~ ShippingFormPanel ~ paymentMethods:", paymentMethods)
     console.log("🚀 ~ ShippingFormPanel ~ values:", values)
 
     // Sync payment methods state with form value when it changes
-    const paymentMethodsValue = watch("payment_info.payment_methods") as string[] | undefined
+    /* const paymentMethodsValue = watch("payment_info.payment_methods") as string[] | undefined */
 
-    useEffect(() => {
+    /* useEffect(() => {
         setPaymentMethods(paymentMethodsValue || [])
-    }, [paymentMethodsValue])
+    }, [paymentMethodsValue]) */
 
     const seededRef = useRef(false)
+
     useEffect(() => {
         if (seededRef.current) return
+
         seededRef.current = true
-        if (values.shipping_info) {
+
+        if (values.payment_info) {
+            const p = values.payment_info
+
+            const safe = {
+                payment_methods: Array.isArray(p.payment_methods) ? (p.payment_methods.filter(Boolean) as string[]) : []
+            }
+
+            setValue("payment_info", safe, { shouldValidate: true })
+            setPaymentMethods(safe.payment_methods)
+            setCtxValues({ payment_info: safe })
+        }
+        /* if (values.shipping_info) {
             const s = values.shipping_info
             const safe = {
                 offers_delivery: !!s.offers_delivery,
@@ -57,37 +72,27 @@ export function ShippingFormPanel() {
             }
             setValue("shipping_info", safe, { shouldValidate: true })
         }
-        if (values.payment_info) {
-            const p = values.payment_info
-            const safe = {
-                payment_methods: Array.isArray(p.payment_methods) ? (p.payment_methods.filter(Boolean) as string[]) : []
-            }
-            setValue("payment_info", safe, { shouldValidate: true })
-            setCtxValues({
-                payment_info: safe,
-            })
-        }
+        
         const offers = getValues("shipping_info.offers_delivery") || false
         setOffersDelivery(!!offers)
         const existingMethods = getValues("shipping_info.methods") || []
         setShippingMethods(existingMethods as ShippingMethod[])
-        // ensure form is hydrated with persisted payment methods
         const existingPayments = getValues("payment_info.payment_methods") || []
         if (Array.isArray(existingPayments)) {
-            setValueAny("payment_info.payment_methods", existingPayments, { shouldValidate: true })
-        }
-    }, [getValues, setValue, values.shipping_info, values.payment_info, setValueAny])
+            setValue("payment_info.payment_methods", existingPayments, { shouldValidate: true })
+        } */
+    }, [getValues, setValue, values.shipping_info, values.payment_info])
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (offersDelivery) {
             setValue("shipping_info.methods", shippingMethods, { shouldValidate: true })
             trigger("shipping_info.methods")
         } else {
             setValue("shipping_info.methods", [], { shouldValidate: true })
         }
-    }, [shippingMethods, offersDelivery, setValue, trigger])
+    }, [shippingMethods, offersDelivery, setValue, trigger]) */
 
-    useEffect(() => {
+    /* useEffect(() => {
         const sub = watch((v) => {
             const vv = v as Partial<CreateStoreFormValues>
             setCtxValues({
@@ -96,25 +101,25 @@ export function ShippingFormPanel() {
             })
         })
         return () => sub.unsubscribe()
-    }, [watch, setCtxValues])
+    }, [watch, setCtxValues]) */
 
-    useEffect(() => { setStepValid(5, isValid) }, [isValid, setStepValid])
+    /* useEffect(() => { setStepValid(5, isValid) }, [isValid, setStepValid]) */
 
     const handleOffersDelivery = () => {
-        setOffersDelivery(true)
-        setValueAny("shipping_info.offers_delivery", true, { shouldValidate: true, shouldDirty: true })
+        /* setOffersDelivery(true)
+        setValueAny("shipping_info.offers_delivery", true, { shouldValidate: true, shouldDirty: true }) */
     }
 
     const handleNotOffersDelivery = () => {
-        setOffersDelivery(false)
+        /* setOffersDelivery(false)
         setIsAddingMethod(false)
         setEditingIndex(null)
         setShippingMethods([])
         setValueAny("shipping_info.offers_delivery", false, { shouldValidate: true, shouldDirty: true })
-        setValueAny("shipping_info.methods", [], { shouldValidate: true, shouldDirty: true })
+        setValueAny("shipping_info.methods", [], { shouldValidate: true, shouldDirty: true }) */
     }
 
-    const handleAddMethod = () => {
+    /* const handleAddMethod = () => {
         const newMethod: ShippingMethod = {
             providers: [],
             minPurchase: "",
@@ -128,38 +133,42 @@ export function ShippingFormPanel() {
         setValueAny("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         setIsAddingMethod(true)
         setEditingIndex(newIndex)
-    }
+    } */
 
-    const handleCancelMethod = (index: number) => {
+    /* const handleCancelMethod = (index: number) => {
         setIsAddingMethod(false)
         const next = shippingMethods.filter((_m, i) => i !== index)
         setShippingMethods(next)
         setValueAny("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         setEditingIndex(null)
-    }
+    } */
 
-    const handleSaveMethod = (index: number, method: ShippingMethod) => {
+    /* const handleSaveMethod = (index: number, method: ShippingMethod) => {
         const next = shippingMethods.map((m, i) => i === index ? method : m)
         setShippingMethods(next)
         setValueAny("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         setIsAddingMethod(false)
         setEditingIndex(null)
-    }
+    } */
 
-    const handleDeleteMethod = (index: number) => {
+    /* const handleDeleteMethod = (index: number) => {
         const next = shippingMethods.filter((_m, i) => i !== index)
         setShippingMethods(next)
         setValueAny("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         if (editingIndex !== null && index === editingIndex) setEditingIndex(null)
-    }
+    } */
 
     const handlePaymentTagsChange = (tags: string[]) => {
-        setValueAny("payment_info.payment_methods", tags, { shouldValidate: true, shouldDirty: true })
+        setValue("payment_info.payment_methods", tags, { shouldValidate: true, shouldDirty: true })
+        setPaymentMethods(tags)
+        setCtxValues({ payment_info: { payment_methods: tags } })
     }
 
     const handleSelectionChange = (selection: Selection) => {
         if (selection === "all") return
+
         const selected = Array.from(selection)[0]
+
         if (selected === "delivery") {
             handleOffersDelivery()
         } else if (selected === "pickup") {
@@ -199,6 +208,7 @@ export function ShippingFormPanel() {
                     <ChoiceBoxDescription>This store offers delivery as well as pickup.</ChoiceBoxDescription>
                 </ChoiceBoxItem>
             </ChoiceBox>
+            {/* 
 
             <AnimatePresence>
                 {offersDelivery && (
@@ -272,7 +282,7 @@ export function ShippingFormPanel() {
 
                     </motion.div>
                 )}
-            </AnimatePresence>
+            </AnimatePresence> */}
 
         </>
     )
