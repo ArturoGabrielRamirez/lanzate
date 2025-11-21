@@ -7,13 +7,13 @@ export async function getUserStoreActivitiesAction(userId: number, type: string,
     return actionWrapper(async () => {
 
         if (!userId) {
-            throw new Error("User ID is required")
+            throw new Error("El ID del usuario es requerido")
         }
 
         const { payload } = await selectUserStoreActivitiesData(userId, type, page)
 
         return {
-            message: "User store activities fetched successfully",
+            message: "Las actividades de la tienda del usuario se obtuvieron con éxito",
             payload: payload,
             hasError: false
         }

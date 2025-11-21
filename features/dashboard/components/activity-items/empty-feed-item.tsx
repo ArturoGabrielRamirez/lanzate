@@ -23,7 +23,7 @@ async function EmptyFeedItem() {
                         </EmptyMedia>
                         <EmptyTitle>No hay actividad</EmptyTitle>
                         <EmptyDescription>
-                            <p>Acá podrás ver todos los likes, comentarios y pedidos de tus tiendas.</p>
+                            <p>Acá vas a poder ver todos los likes, comentarios y pedidos de tus tiendas.</p>
                         </EmptyDescription>
                     </EmptyHeader>
                     <EmptyContent>
