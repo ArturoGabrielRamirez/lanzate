@@ -11,6 +11,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/compo
 import { AttentionDateFormPanel } from "@/features/stores/components/create-form/attention-date-form-panel"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { AttentionDateType, CreateStoreFormValues } from "@/features/stores/types"
+import { cn } from "@/lib/utils"
 
 import type { Selection } from "react-aria-components"
 
@@ -135,7 +136,6 @@ export function SettingsFormPanel() {
                 selectionMode="single"
                 selectedKeys={[isOpen24Hours ? "24hours" : "schedule"]}
                 onSelectionChange={handleSelectionChange}
-                className="mb-8"
             >
                 <ChoiceBoxItem id="24hours" textValue="24 Hours">
                     <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" className="size-9">
@@ -158,22 +158,31 @@ export function SettingsFormPanel() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -100, position: "absolute" }}
                     >
-                        {attentionDates.length === 0 && !isAddingDate && (
-                            <div className="text-sm text-muted-foreground border border-muted-foreground/50 p-6 rounded-md text-center border-dashed">
-                                <p>No hay dias de atencion configurados</p>
+                        {(errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>) || (attentionDates.length === 0 && !isAddingDate)) && (
+                            <div className={cn(
+                                "text-sm border p-6 rounded-md text-center border-dashed",
+                                errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>)
+                                    ? "text-red-500 border-red-500 bg-red-500/5"
+                                    : "text-muted-foreground border-muted-foreground/50"
+                            )}>
+                                <p>
+                                    {errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>)
+                                        ? (errors.settings as Record<string, { message?: string }>)["attention_dates"]?.message
+                                        : "No hay dias de atencion configurados"
+                                    }
+                                </p>
                             </div>
                         )}
-                        {errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>) && (
-                            <p className="text-sm text-red-500">{(errors.settings as Record<string, { message?: string }>)["attention_dates"]?.message || ""}</p>
-                        )}
                         {isAddingDate && editingIndex !== null && attentionDates[editingIndex] && (
-                            <AttentionDateFormPanel
-                                date={attentionDates[editingIndex]}
-                                key={`edit-${editingIndex}`}
-                                onCancel={handleCancelDate}
-                                onSave={handleSaveDate}
-                                index={editingIndex}
-                            />
+                            <div className="grid md:grid-cols-2 gap-4">
+                                <AttentionDateFormPanel
+                                    date={attentionDates[editingIndex]}
+                                    key={`edit-${editingIndex}`}
+                                    onCancel={handleCancelDate}
+                                    onSave={handleSaveDate}
+                                    index={editingIndex}
+                                />
+                            </div>
                         )}
                         {attentionDates.length > 0 && (
                             <div className="space-y-2">

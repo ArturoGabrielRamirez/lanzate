@@ -46,32 +46,34 @@ export function AttentionDateFormPanel({ date, onCancel, onSave, index }: Attent
                 selectedTags={selected}
                 onChange={setSelected}
             />
-            <div className="space-y-2">
-                <p className="text-sm font-medium">Horarios de apertura</p>
-                <TimePicker.RangePicker
-                    defaultValue={[startTime, endTime]}
-                    format={format}
-                    popupClassName="!z-50"
-                    rootClassName="!z-50 w-full"
-                    changeOnScroll
-                    hourStep={1}
-                    minuteStep={5}
-                    showNow
-                    variant="outlined"
-                    size="large"
-                    className="!bg-transparent !text-primary-foreground !border-muted-foreground/50"
-                    onChange={handleTimeChange}
-                />
-            </div>
-            <div className="flex gap-2">
-                <Button className="grow" type="button" onClick={handleCancel}>
-                    <Trash />
-                    Cancel
-                </Button>
-                <Button className="grow" type="button" onClick={handleSave}>
-                    <Check />
-                    Save
-                </Button>
+            <div className="flex flex-col gap-4 justify-between">
+                <div className="space-y-1">
+                    <p className="text-sm font-medium">Horarios de apertura</p>
+                    <TimePicker.RangePicker
+                        defaultValue={[startTime, endTime]}
+                        format={format}
+                        popupClassName="!z-50"
+                        rootClassName="!z-50 w-full"
+                        changeOnScroll
+                        hourStep={1}
+                        minuteStep={5}
+                        showNow
+                        variant="outlined"
+                        size="large"
+                        className="!bg-transparent !text-primary-foreground !border-muted-foreground/50"
+                        onChange={handleTimeChange}
+                    />
+                </div>
+                <div className="flex gap-2">
+                    <Button className="grow" type="button" onClick={handleCancel}>
+                        <Trash />
+                        Cancel
+                    </Button>
+                    <Button className="grow" type="button" onClick={handleSave}>
+                        <Check />
+                        Save
+                    </Button>
+                </div>
             </div>
         </>
     )
