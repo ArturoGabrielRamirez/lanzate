@@ -13,8 +13,9 @@ import { Button } from "@/features/shadcn/components/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
 import { useStep } from "@/features/shadcn/hooks/use-step"
 import { SectionContainer } from "@/features/stores/components"
+import { CreateStoreButton } from "@/features/stores/components/create-form/create-store-button"
 
-function WelcomeTutorial() {
+function WelcomeTutorial({ userId }: { userId: number }) {
 
     const t = useTranslations("dashboard.welcome-tutorial")
     const [open, setOpen] = useState(false)
@@ -74,10 +75,15 @@ function WelcomeTutorial() {
                             {currentTexts.title}
                         </p>
                         {currentTexts.descriptions.map((description, index) => (
-                            <p key={index} className="text-lg mb-2 text-balance text-muted-foreground">
+                            <p key={index} className="mb-2 text-balance text-muted-foreground">
                                 {description}
                             </p>
                         ))}
+                        {currentStep === 2 && (
+                            <div className="mt-6 flex justify-center md:justify-start">
+                                <CreateStoreButton userId={userId} />
+                            </div>
+                        )}
                     </div>
 
                     <DialogFooter className="!flex-col justify-end md:!flex-row">
