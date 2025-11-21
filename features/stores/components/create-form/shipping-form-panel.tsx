@@ -1,6 +1,6 @@
 import { TimePicker } from "antd"
 import dayjs, { Dayjs } from "dayjs"
-import { Check, Plus, Store, Trash, Truck } from "lucide-react"
+import { Check, DollarSign, Plus, Store, Trash, Truck } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
@@ -64,71 +64,86 @@ function ShippingMethodFormPanel({ method, index, onCancel, onSave }: ShippingMe
 
     return (
         <>
-            <AnimatedTags
-                initialTags={initialTags}
-                selectedTags={selectedProviders}
-                onChange={handleProvidersChange}
-            />
-            {errors.shipping_info?.methods?.[index]?.providers && (
-                <p className="text-sm text-red-500">Seleccioná al menos un proveedor</p>
-            )}
-            <div className="grid grid-cols-1 gap-3 mt-10">
-                <InputField
-                    label="Mínimo $ para delivery"
-                    name={`${formBase}.minPurchase`}
-                    inputMode="numeric"
-                    type="number"
-                    placeholder="Ej: 10000"
-                    defaultValue={minPurchase}
-                    onChange={(e) => setMinPurchase(e.target.value.replace(/[^0-9]/g, ""))}
-                />
-                <InputField
-                    label="Mínimo $ envío gratis"
-                    name={`${formBase}.freeShippingMin`}
-                    inputMode="numeric"
-                    type="number"
-                    placeholder="Ej: 20000"
-                    defaultValue={freeShippingMin}
-                    onChange={(e) => setFreeShippingMin(e.target.value.replace(/[^0-9]/g, ""))}
-                />
-                <InputField
-                    label="Precio $ del delivery"
-                    name={`${formBase}.deliveryPrice`}
-                    inputMode="numeric"
-                    type="number"
-                    placeholder="Ej: 1500"
-                    defaultValue={deliveryPrice}
-                    onChange={(e) => {
-                        const v = e.target.value.replace(/[^0-9]/g, "")
-                        setDeliveryPrice(v)
-                        setValueAny(`${formBase}.deliveryPrice`, v, { shouldValidate: true, shouldDirty: true })
-                    }}
-                />
+            <div className="grid grid-cols-1 grid-cols-2 gap-6 mt-10">
+
+                <div className="space-y-4">
+                    <InputField
+                        label="Precio envío"
+                        name={`${formBase}.deliveryPrice`}
+                        inputMode="numeric"
+                        type="number"
+                        placeholder="Ej: 1500"
+                        defaultValue={deliveryPrice}
+                        isRequired
+                        onChange={(e) => {
+                            const v = e.target.value.replace(/[^0-9]/g, "")
+                            setDeliveryPrice(v)
+                            setValueAny(`${formBase}.deliveryPrice`, v, { shouldValidate: true, shouldDirty: true })
+                        }}
+                    />
+                    <InputField
+                        label="Mín. $ envío"
+                        name={`${formBase}.minPurchase`}
+                        inputMode="numeric"
+                        type="number"
+                        placeholder="Ej: 10000"
+                        defaultValue={minPurchase}
+                        startIcon={<DollarSign />}
+                        tooltip="El precio mínimo de una orden para que el cliente pueda realizar un pedido con envío"
+                        onChange={(e) => setMinPurchase(e.target.value.replace(/[^0-9]/g, ""))}
+                    />
+
+                    <InputField
+                        label="Mín. $ envío gratis"
+                        name={`${formBase}.freeShippingMin`}
+                        inputMode="numeric"
+                        type="number"
+                        placeholder="Ej: 20000"
+                        defaultValue={freeShippingMin}
+                        onChange={(e) => setFreeShippingMin(e.target.value.replace(/[^0-9]/g, ""))}
+                    />
+
+                </div>
+
+                <div className="space-y-5">
+                    <div>
+                        <AnimatedTags
+                            title="Proveedores"
+                            initialTags={initialTags}
+                            selectedTags={selectedProviders}
+                            onChange={handleProvidersChange}
+                        />
+                        {errors.shipping_info?.methods?.[index]?.providers && (
+                            <p className="text-sm text-red-500">Seleccioná al menos un proveedor</p>
+                        )}
+                    </div>
+                    <div>
+                        <p className="text-sm font-medium">Tiempo de entrega aproximado</p>
+                        <TimePicker
+                            format="HH:mm"
+                            hourStep={1}
+                            minuteStep={15}
+                            variant="outlined"
+                            size="large"
+                            className="!bg-transparent !text-primary-foreground !border-muted-foreground/50 w-full"
+                            placeholder="Ej: 24-48 hs"
+                            value={estimatedTime ? dayjs(estimatedTime, "HH:mm") : null}
+                            onChange={handleETAChange}
+                        />
+                    </div>
+                    <div className="flex gap-2">
+                        <Button className="grow" type="button" onClick={handleCancel}>
+                            <Trash />
+                            Cancelar
+                        </Button>
+                        <Button className="grow" type="button" onClick={handleSave}>
+                            <Check />
+                            Guardar
+                        </Button>
+                    </div>
+                </div>
             </div>
-            <div className="mb-4">
-                <p className="text-sm font-medium">Tiempo de entrega aproximado</p>
-                <TimePicker
-                    format="HH:mm"
-                    hourStep={1}
-                    minuteStep={15}
-                    variant="outlined"
-                    size="large"
-                    className="!bg-transparent !text-primary-foreground !border-muted-foreground/50 w-full"
-                    placeholder="Ej: 24-48 hs"
-                    value={estimatedTime ? dayjs(estimatedTime, "HH:mm") : null}
-                    onChange={handleETAChange}
-                />
-            </div>
-            <div className="flex gap-2">
-                <Button className="grow" type="button" onClick={handleCancel}>
-                    <Trash />
-                    Cancelar
-                </Button>
-                <Button className="grow" type="button" onClick={handleSave}>
-                    <Check />
-                    Guardar
-                </Button>
-            </div>
+
         </>
     )
 }
@@ -136,7 +151,6 @@ function ShippingMethodFormPanel({ method, index, onCancel, onSave }: ShippingMe
 export function ShippingFormPanel() {
 
     const { setValue, getValues, formState: { errors, isValid }, watch, trigger } = useFormContext<CreateStoreFormValues>()
-    console.log("🚀 ~ ShippingFormPanel ~ errors:", errors)
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const setValueAny = setValue as unknown as (name: string, value: unknown, options?: { shouldValidate?: boolean; shouldDirty?: boolean }) => void
     const [offersDelivery, setOffersDelivery] = useState(false)
