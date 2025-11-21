@@ -242,15 +242,6 @@ model BranchOperationalSettings {
   is_open_24_hours            Boolean         @default(true)
   offers_delivery             Boolean         @default(false)
   payment_methods             PaymentMethod[] @default([CASH])
-  delivery_time_min           Int?            @default(30)
-  delivery_time_max           Int?            @default(60)
-  pickup_time_min             Int?            @default(15)
-  pickup_time_max             Int?            @default(30)
-  requires_phone_for_delivery Boolean         @default(true)
-  minimum_order_amount        Float?          @default(0)
-  preparation_time_buffer     Int?            @default(10)
-  is_temporarily_closed       Boolean         @default(false)
-  temporary_closure_reason    String?
   created_at                  DateTime        @default(now())
   updated_at                  DateTime        @updatedAt
   branch                      Branch          @relation(fields: [branch_id], references: [id], onDelete: Cascade)
@@ -277,10 +268,9 @@ model BranchShippingMethod {
   id                Int      @id @default(autoincrement())
   branch_id         Int
   provider          String
-  min_order_amount  Float?
-  free_shipping_min Float?
-  delivery_price    Float?
-  eta_minutes       Int?
+  min_order_amount  Float? @default(0)
+  free_shipping_min Float? @default(0)
+  delivery_price    Float? @default(0)
   active            Boolean  @default(true)
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
