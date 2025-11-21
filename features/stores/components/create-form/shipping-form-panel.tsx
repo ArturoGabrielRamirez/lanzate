@@ -63,88 +63,90 @@ function ShippingMethodFormPanel({ method, index, onCancel, onSave }: ShippingMe
     }
 
     return (
-        <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+        >
 
-                <div className="space-y-4">
-                    <InputField
-                        label="Precio envío"
-                        name={`${formBase}.deliveryPrice`}
-                        inputMode="numeric"
-                        type="number"
-                        placeholder="Ej: 1500"
-                        defaultValue={deliveryPrice}
-                        isRequired
-                        onChange={(e) => {
-                            const v = e.target.value.replace(/[^0-9]/g, "")
-                            setDeliveryPrice(v)
-                            setValueAny(`${formBase}.deliveryPrice`, v, { shouldValidate: true, shouldDirty: true })
-                        }}
-                    />
-                    <InputField
-                        label="Mín. $ envío"
-                        name={`${formBase}.minPurchase`}
-                        inputMode="numeric"
-                        type="number"
-                        placeholder="Ej: 10000"
-                        defaultValue={minPurchase}
-                        startIcon={<DollarSign />}
-                        tooltip="El precio mínimo de una orden para que el cliente pueda realizar un pedido con envío"
-                        onChange={(e) => setMinPurchase(e.target.value.replace(/[^0-9]/g, ""))}
-                    />
+            <div className="space-y-4">
+                <InputField
+                    label="Precio envío"
+                    name={`${formBase}.deliveryPrice`}
+                    inputMode="numeric"
+                    type="number"
+                    placeholder="Ej: 1500"
+                    defaultValue={deliveryPrice}
+                    isRequired
+                    onChange={(e) => {
+                        const v = e.target.value.replace(/[^0-9]/g, "")
+                        setDeliveryPrice(v)
+                        setValueAny(`${formBase}.deliveryPrice`, v, { shouldValidate: true, shouldDirty: true })
+                    }}
+                />
+                <InputField
+                    label="Mín. $ envío"
+                    name={`${formBase}.minPurchase`}
+                    inputMode="numeric"
+                    type="number"
+                    placeholder="Ej: 10000"
+                    defaultValue={minPurchase}
+                    startIcon={<DollarSign />}
+                    tooltip="El precio mínimo de una orden para que el cliente pueda realizar un pedido con envío"
+                    onChange={(e) => setMinPurchase(e.target.value.replace(/[^0-9]/g, ""))}
+                />
 
-                    <InputField
-                        label="Mín. $ envío gratis"
-                        name={`${formBase}.freeShippingMin`}
-                        inputMode="numeric"
-                        type="number"
-                        placeholder="Ej: 20000"
-                        defaultValue={freeShippingMin}
-                        onChange={(e) => setFreeShippingMin(e.target.value.replace(/[^0-9]/g, ""))}
-                    />
+                <InputField
+                    label="Mín. $ envío gratis"
+                    name={`${formBase}.freeShippingMin`}
+                    inputMode="numeric"
+                    type="number"
+                    placeholder="Ej: 20000"
+                    defaultValue={freeShippingMin}
+                    onChange={(e) => setFreeShippingMin(e.target.value.replace(/[^0-9]/g, ""))}
+                />
 
-                </div>
-
-                <div className="space-y-5">
-                    <div>
-                        <AnimatedTags
-                            title="Proveedores"
-                            initialTags={initialTags}
-                            selectedTags={selectedProviders}
-                            onChange={handleProvidersChange}
-                        />
-                        {errors.shipping_info?.methods?.[index]?.providers && (
-                            <p className="text-sm text-red-500">Seleccioná al menos un proveedor</p>
-                        )}
-                    </div>
-                    <div>
-                        <p className="text-sm font-medium">Tiempo de entrega aproximado</p>
-                        <TimePicker
-                            format="HH:mm"
-                            hourStep={1}
-                            minuteStep={15}
-                            variant="outlined"
-                            size="large"
-                            className="!bg-transparent !text-primary-foreground !border-muted-foreground/50 w-full"
-                            placeholder="Ej: 24-48 hs"
-                            value={estimatedTime ? dayjs(estimatedTime, "HH:mm") : null}
-                            onChange={handleETAChange}
-                        />
-                    </div>
-                    <div className="flex gap-2">
-                        <Button className="grow" type="button" onClick={handleCancel}>
-                            <Trash />
-                            Cancelar
-                        </Button>
-                        <Button className="grow" type="button" onClick={handleSave}>
-                            <Check />
-                            Guardar
-                        </Button>
-                    </div>
-                </div>
             </div>
 
-        </>
+            <div className="space-y-5">
+                <div>
+                    <AnimatedTags
+                        title="Proveedores"
+                        initialTags={initialTags}
+                        selectedTags={selectedProviders}
+                        onChange={handleProvidersChange}
+                    />
+                    {errors.shipping_info?.methods?.[index]?.providers && (
+                        <p className="text-sm text-red-500">Seleccioná al menos un proveedor</p>
+                    )}
+                </div>
+                <div>
+                    <p className="text-sm font-medium">Tiempo de entrega aproximado</p>
+                    <TimePicker
+                        format="HH:mm"
+                        hourStep={1}
+                        minuteStep={15}
+                        variant="outlined"
+                        size="large"
+                        className="!bg-transparent !text-primary-foreground !border-muted-foreground/50 w-full"
+                        placeholder="Ej: 24-48 hs"
+                        value={estimatedTime ? dayjs(estimatedTime, "HH:mm") : null}
+                        onChange={handleETAChange}
+                    />
+                </div>
+                <div className="flex gap-2">
+                    <Button className="grow" type="button" onClick={handleCancel}>
+                        <Trash />
+                        Cancelar
+                    </Button>
+                    <Button className="grow" type="button" onClick={handleSave}>
+                        <Check />
+                        Guardar
+                    </Button>
+                </div>
+            </div>
+        </motion.div>
     )
 }
 
@@ -332,9 +334,10 @@ export function ShippingFormPanel() {
             <AnimatePresence>
                 {offersDelivery && (
                     <motion.div
-                        initial={{ opacity: 0, x: 100 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -100, position: "absolute" }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.2 }}
                         className="space-y-4"
                     >
                         {!isAddingMethod && (errors?.shipping_info && "methods" in (errors.shipping_info as Record<string, unknown>) || (shippingMethods.length === 0)) && (
@@ -352,14 +355,16 @@ export function ShippingFormPanel() {
                                 </p>
                             </div>
                         )}
-                        {isAddingMethod && editingIndex !== null && shippingMethods[editingIndex] && (
-                            <ShippingMethodFormPanel
-                                method={shippingMethods[editingIndex]}
-                                index={editingIndex}
-                                onCancel={handleCancelMethod}
-                                onSave={handleSaveMethod}
-                            />
-                        )}
+                        <AnimatePresence key={"inset"}>
+                            {isAddingMethod && editingIndex !== null && shippingMethods[editingIndex] && (
+                                <ShippingMethodFormPanel
+                                    method={shippingMethods[editingIndex]}
+                                    index={editingIndex}
+                                    onCancel={handleCancelMethod}
+                                    onSave={handleSaveMethod}
+                                />
+                            )}
+                        </AnimatePresence>
                         {shippingMethods.length > 0 && (
                             <div className="space-y-2">
                                 {shippingMethods.map((m, i) => (

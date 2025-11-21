@@ -67,7 +67,7 @@ export function AddressFormPanel() {
         <>
             <ChoiceBox
                 columns={2}
-                gap={6}
+                gap={4}
                 selectionMode="single"
                 selectedKeys={[isPhysicalStore ? "physical" : "online"]}
                 onSelectionChange={handleSelectionChange}

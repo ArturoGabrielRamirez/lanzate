@@ -151,7 +151,7 @@ export function SettingsFormPanel() {
         <>
             <ChoiceBox
                 columns={2}
-                gap={2}
+                gap={4}
                 selectionMode="single"
                 selectedKeys={[isOpen24Hours ? "24hours" : "schedule"]}
                 onSelectionChange={handleSelectionChange}
@@ -173,9 +173,10 @@ export function SettingsFormPanel() {
                 {!isOpen24Hours && (
                     <motion.div
                         className="space-y-4"
-                        initial={{ opacity: 0, x: 100 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -100, position: "absolute" }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.2 }}
                     >
                         {(errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>) || (attentionDates.length === 0 && !isAddingDate)) && (
                             <div className={cn(
