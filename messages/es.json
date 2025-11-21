@@ -14,7 +14,7 @@
             "currently-not-available": "Actualmente no disponible"
         }
     },
-    "Auth" : {},
+    "Auth": {},
     "auth": {
         "_legacy_login": "Iniciar sesión",
         "_legacy_signup": "Registrarse",
@@ -1600,7 +1600,7 @@
             },
             "step-locked": "Debes completar todos los pasos anteriores requeridos para desbloquear este paso",
             "descriptions": {
-                "step1": "Elegí un nombre, logo y métodos de envío para comenzar; podés editar los detalles de tu tienda más tarde.",
+                "step1": "Elegí un nombre y URL para comenzar; podés editar los detalles de tu tienda más tarde.",
                 "step2": "Elegí si esta es una tienda física o una tienda online y agregá tu información de dirección.",
                 "step3": "Agregá tu información de contacto y enlaces de redes sociales para que los clientes puedan contactarte.",
                 "step4": "Elegí fechas y horarios de atención para que los clientes sepan cuándo estás abierto.",
