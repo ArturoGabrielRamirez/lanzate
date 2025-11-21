@@ -28,7 +28,7 @@ async function StoresPage() {
             ]} showDate /> */}
 
             <Suspense fallback={<StoreListSkeleton />}>
-                <StoreListContainer />
+                <StoreListContainer storeCount={10} mandatoryAddMore/>
             </Suspense>
         </PageContainer>
     )
