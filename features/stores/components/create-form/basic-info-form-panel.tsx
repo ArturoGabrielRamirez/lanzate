@@ -61,7 +61,7 @@ export function BasicInfoFormPanel() {
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-10">
+            <>
                 <div className="space-y-2">
                     {/* Logo upload commented out in original code */}
                     <Empty className="border border-dashed">
@@ -70,7 +70,7 @@ export function BasicInfoFormPanel() {
                         </EmptyMedia>
                     </Empty>
                 </div>
-                <div className="flex flex-col gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <InputField
                         name="basic_info.name"
                         label="Name"
@@ -96,7 +96,7 @@ export function BasicInfoFormPanel() {
                         onChange={handleSubdomainChange}
                     />
                 </div>
-            </div>
+            </>
             <TextareaField
                 name="basic_info.description"
                 label="Description"
