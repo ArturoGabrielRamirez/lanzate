@@ -94,7 +94,7 @@ function ContactDisplay({ store }: ContactDisplayProps) {
                         <div className="space-y-1">
                             <InputField
                                 name="contact_email"
-                                label="Email"
+                                label="Correo electrónico"
                                 type="email"
                                 defaultValue={mainBranch?.email || ""}
                                 disabled={!isEditing}

@@ -63,13 +63,13 @@ function ChangeEmailButton({
                 <ButtonWithPopup
                     text={buttonText}
                     title={title}
-                    description="Por seguridad, confirma tu contraseña actual. Te enviaremos emails de verificación a ambas direcciones."
+                    description="Por seguridad, confirma tu contraseña actual. Te enviaremos correos de verificación a ambas direcciones."
                     action={changeEmailAction}
                     schema={changeEmailButtonSchema}
                     messages={{
-                        success: "Emails de verificación enviados",
-                        error: "Error al cambiar el email",
-                        loading: "Enviando emails de verificación..."
+                        success: "Correos de verificación enviados",
+                        error: "Error al cambiar el correo electrónico",
+                        loading: "Enviando correos de verificación..."
                     }}
                     /*  className={className} */
                     variant="default"

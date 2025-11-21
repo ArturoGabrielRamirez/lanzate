@@ -116,26 +116,26 @@
                 "checking": "Verificando..."
             },
             "auto-refresh": "La página se actualiza automáticamente cada 3 segundos",
-            "current-email": "Email actual:",
-            "new-email": "Nuevo email:",
-            "email-must-be-different": "El nuevo email debe ser diferente al actual",
-            "verification-emails-sent": "Emails de verificación enviados",
-            "error-changing-email": "Error al cambiar el email",
-            "sending-verification": "Enviando emails de verificación...",
+            "current-email": "Correo electrónico actual:",
+            "new-email": "Nuevo correo electrónico:",
+            "email-must-be-different": "El nuevo correo electrónico debe ser diferente al actual",
+            "verification-emails-sent": "Correos de verificación enviados",
+            "error-changing-email": "Error al cambiar el correo electrónico",
+            "sending-verification": "Enviando correos de verificación...",
             "change-in-progress": "⚠️ Hay un cambio en progreso",
             "complete-current-process": "Completá el proceso actual antes de iniciar uno nuevo.",
             "change-completed": "✅ Cambio completado",
-            "email-updated-successfully": "Tu email ha sido actualizado exitosamente. Podés iniciar un nuevo cambio si es necesario.",
-            "new-email-label": "Nuevo email",
-            "new-email-placeholder": "nuevo-email@ejemplo.com",
+            "email-updated-successfully": "Tu correo electrónico ha sido actualizado exitosamente. Podés iniciar un nuevo cambio si es necesario.",
+            "new-email-label": "Nuevo correo electrónico",
+            "new-email-placeholder": "nuevo-correo@ejemplo.com",
             "current-password-label": "Contraseña actual",
             "current-password-placeholder": "Tu contraseña actual",
-            "security-description": "Por seguridad, confirmá tu contraseña actual. Te enviaremos emails de verificación a ambas direcciones."
+            "security-description": "Por seguridad, confirmá tu contraseña actual. Te enviaremos correos de verificación a ambas direcciones."
         },
         "email-status": {
-            "updated-successfully": "¡Email actualizado exitosamente! Ya podés usar {email}",
-            "last-step": "Último paso: Revisá tu nuevo email ({email}) y confirmá para completar el cambio.",
-            "change-in-progress": "Cambio de email en progreso: Confirmá desde tu email actual ({email}) para continuar."
+            "updated-successfully": "¡Correo electrónico actualizado exitosamente! Ya podés usar {email}",
+            "last-step": "Último paso: Revisá tu nuevo correo electrónico ({email}) y confirmá para completar el cambio.",
+            "change-in-progress": "Cambio de correo electrónico en progreso: Confirmá desde tu correo electrónico actual ({email}) para continuar."
         },
         "password-change": {
             "security-description": "Por seguridad, confirmá tu contraseña actual antes de cambiarla.",
@@ -175,9 +175,9 @@
             "form": {
                 "fields": {
                     "email": {
-                        "label": "Email",
-                        "placeholder": "email@ejemplo.com",
-                        "tooltip": "Ingresá la dirección de email asociada con tu cuenta."
+                        "label": "Correo electrónico",
+                        "placeholder": "correo@ejemplo.com",
+                        "tooltip": "Ingresá la dirección de correo electrónico asociada con tu cuenta."
                     },
                     "password": {
                         "label": "Contraseña",
@@ -256,9 +256,9 @@
             "form": {
                 "fields": {
                     "email": {
-                        "label": "Email",
-                        "placeholder": "email@ejemplo.com",
-                        "tooltip": "Ingresá la dirección de email asociada con tu cuenta."
+                        "label": "Correo electrónico",
+                        "placeholder": "correo@ejemplo.com",
+                        "tooltip": "Ingresá la dirección de correo electrónico asociada con tu cuenta."
                     },
                     "username": {
                         "label": "Nombre de usuario",
@@ -315,10 +315,10 @@
             "form": {
                 "fields": {
                     "email": {
-                        "label": "Email",
-                        "placeholder": "email@ejemplo.com",
-                        "tooltip": "Ingresá la dirección de email asociada con tu cuenta.",
-                        "description": "Por favor ingresá la dirección de email asociada con tu cuenta. Te enviaremos un link de restablecimiento a tu email."
+                        "label": "Correo electrónico",
+                        "placeholder": "correo@ejemplo.com",
+                        "tooltip": "Ingresá la dirección de correo electrónico asociada con tu cuenta.",
+                        "description": "Por favor ingresá la dirección de correo electrónico asociada con tu cuenta. Te enviaremos un link de restablecimiento a tu correo electrónico."
                     }
                 },
                 "actions": {
@@ -368,9 +368,9 @@
             "form": {
                 "fields": {
                     "email": {
-                        "label": "Email",
-                        "placeholder": "email@ejemplo.com",
-                        "tooltip": "Ingresá la dirección de email para unirte a la lista de espera"
+                        "label": "Correo electrónico",
+                        "placeholder": "correo@ejemplo.com",
+                        "tooltip": "Ingresá la dirección de correo electrónico para unirte a la lista de espera"
                     }
                 },
                 "actions": {
@@ -439,9 +439,9 @@
                         "tooltip": "Ingresá tu nombre completo"
                     },
                     "email": {
-                        "label": "Email",
-                        "placeholder": "Email",
-                        "tooltip": "Ingresá un email al que podamos contactarnos con vos"
+                        "label": "Correo electrónico",
+                        "placeholder": "Correo electrónico",
+                        "tooltip": "Ingresá un correo electrónico al que podamos contactarnos con vos"
                     },
                     "category": {
                         "label": "Categoría",
@@ -652,7 +652,7 @@
             "dialog": {
                 "title": "Contactanos",
                 "description": "Envianos un mensaje y te responderemos lo antes posible.",
-                "email": "Email",
+                "email": "Correo electrónico",
                 "name": "Nombre",
                 "message": "Mensaje",
                 "messages": {
@@ -1142,7 +1142,7 @@
                 "name": "Nombre",
                 "address": "Dirección",
                 "phone": "Teléfono",
-                "email": "Email",
+                "email": "Correo electrónico",
                 "actions": "Acciones"
             },
             "main-badge": "Principal",
@@ -1163,7 +1163,7 @@
             "name": "Nombre",
             "address": "Dirección",
             "phone": "Teléfono",
-            "email": "Email",
+            "email": "Correo electrónico",
             "basic-info": "Información básica",
             "contact-info": "Información de contacto",
             "messages": {
@@ -1181,7 +1181,7 @@
             "description-placeholder": "Descripción de la sucursal",
             "address": "Dirección",
             "phone": "Teléfono",
-            "email": "Email",
+            "email": "Correo electrónico",
             "set-as-main": "Establecer como sucursal principal",
             "main-branch-note": "Esta será la sucursal principal de la tienda. Todas las otras sucursales dejarán de ser principales.",
             "messages": {
@@ -1250,11 +1250,11 @@
         "edit-employee": {
             "button": "Editar Empleado",
             "title": "Editar empleado",
-            "description": "Editá el rol, permisos y otros detalles del empleado. Nota: El email y nombre no se pueden cambiar ya que pertenecen a la cuenta del usuario.",
+            "description": "Editá el rol, permisos y otros detalles del empleado. Nota: El correo electrónico y nombre no se pueden cambiar ya que pertenecen a la cuenta del usuario.",
             "user-info-title": "Información del Usuario Empleado",
-            "email": "Email:",
+            "email": "Correo electrónico:",
             "name": "Nombre:",
-            "email-name-note": "Nota: El email y nombre no se pueden editar aquí ya que son parte de la cuenta del usuario",
+            "email-name-note": "Nota: El correo electrónico y nombre no se pueden editar aquí ya que son parte de la cuenta del usuario",
             "role": "Rol",
             "role-placeholder": "Seleccionar un rol",
             "position": "Posición",
@@ -1740,7 +1740,7 @@
         },
         "personal-info": {
             "name": "Nombre",
-            "email": "Email",
+            "email": "Correo electrónico",
             "phone": "Teléfono"
         },
         "delivery": {

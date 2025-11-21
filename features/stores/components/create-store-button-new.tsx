@@ -674,7 +674,7 @@ function ContactFormPanel() {
                         />
                         <InputField
                             name="contact_info.contact_email"
-                            label="Email"
+                            label="Correo electrónico"
                             placeholder="Ej: test@example.com"
                             startIcon={<Mail />}
                             type="email"
