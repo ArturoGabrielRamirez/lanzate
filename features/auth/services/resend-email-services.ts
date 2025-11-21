@@ -64,7 +64,7 @@ class ResendEmailService {
         } else if (message.includes('not found') || message.includes('no encontrado')) {
             toast.error("Usuario no encontrado.");
         } else if (message.includes('not authenticated') || message.includes('no autenticado')) {
-            toast.error("Usuario no autenticado. Por favor, inicia sesión.");
+            toast.error("Usuario no autenticado. Por favor, iniciá sesión.");
         } else if (message.includes('already confirmed') || message.includes('ya está confirmado')) {
             toast.info("Correo electrónico ya confirmado.");
         } else if (message.includes('No hay confirmaciones pendientes')) {

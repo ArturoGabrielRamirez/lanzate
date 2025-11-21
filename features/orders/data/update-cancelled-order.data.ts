@@ -181,7 +181,7 @@ export async function updateCancelledOrderData({ orderId }: UpdateCancelledOrder
         // }
 
         return formatSuccessResponse(
-            "El pedido ha sido cancelado. Stock restaurado y pago reembolsado si corresponde.",
+            "El pedido fue cancelado. Stock restaurado y pago reembolsado si corresponde.",
             updatedOrder
         )
 } 

@@ -204,7 +204,7 @@ export const DELETION_CONSTANTS = {
     REASON_TOO_SHORT: 'El motivo debe tener al menos 10 caracteres',
     CONNECTION_ERROR: 'Error de conexión',
     ACCOUNT_DELETED: 'Cuenta eliminada - limpiando estado y redirigiendo...',
-    ACTION_WINDOW_EXPIRED: 'El período para realizar esta acción ha expirado',
+    ACTION_WINDOW_EXPIRED: 'El período para realizar esta acción expiró',
     ACTION_WINDOW_CLOSING: 'Últimos minutos para realizar esta acción',
     PENDING_REQUEST_EXISTS: 'Ya tenés una solicitud de eliminación pendiente',
   }

@@ -57,7 +57,7 @@ export const generateChallenges = (followersCount: number, followingCount: numbe
             challenges.push({
                 id: 'discover_products',
                 title: 'Explorar productos',
-                description: 'Dale me gusta a productos',
+                description: 'Indicá que te gustan productos',
                 progress: likesCount,
                 max: 10,
                 reward: '+10 pts',

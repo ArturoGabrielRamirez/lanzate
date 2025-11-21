@@ -61,31 +61,31 @@ export function buildErrorRedirectUrl(
   switch (errorType) {
     case 'missing_code':
       errorParams.set('error', 'missing_code')
-      errorParams.set('error_description', 'Authorization code not provided')
+      errorParams.set('error_description', 'Código de autorización no proporcionado')
       break
     case 'exchange_failed':
       errorParams.set('error', 'exchange_failed')
-      errorParams.set('error_description', errorMessage || 'Failed to exchange code for session')
+      errorParams.set('error_description', errorMessage || 'No se pudo intercambiar el código por una sesión de usuario')
       break
     case 'account_deleted':
       errorParams.set('error', 'account_deleted')
-      errorParams.set('error_description', 'This account has been permanently deleted and cannot be recovered. You can create a new account with the same email if needed.')
+      errorParams.set('error_description', 'Esta cuenta fue eliminada permanentemente y no puede ser recuperada. Podés crear una nueva cuenta con el mismo correo electrónico si es necesario.')
       break
     case 'email_in_use':
       errorParams.set('error', 'email_in_use')
-      errorParams.set('error_description', 'Email already in use by another active account')
+      errorParams.set('error_description', 'El correo electrónico ya está en uso por otra cuenta activa')
       break
     case 'user_creation_failed':
       errorParams.set('error', 'user_creation_failed')
-      errorParams.set('error_description', errorMessage || 'Failed to create user record')
+      errorParams.set('error_description', errorMessage || 'No se pudo crear el registro de usuario')
       break
     case 'validation_failed':
       errorParams.set('error', 'validation_failed')
-      errorParams.set('error_description', errorMessage || 'User validation failed')
+      errorParams.set('error_description', errorMessage || 'La validación del usuario falló')
       break
     case 'unexpected_error':
       errorParams.set('error', 'unexpected_error')
-      errorParams.set('error_description', 'An unexpected error occurred during authentication')
+      errorParams.set('error_description', 'Ocurrió un error inesperado durante la autenticación')
       break
     default:
       errorParams.set('error', originalError || errorType)

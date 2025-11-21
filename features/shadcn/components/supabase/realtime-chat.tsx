@@ -41,8 +41,8 @@ export function RealtimeChat({
   messages: initialMessages = [],
   messageType,
   disabled = false,
-  emptyStateText = "No messages yet. Start the conversation!",
-  completedOrderText = "This order has been completed and you can no longer send messages to the store.",
+  emptyStateText = "Ningún mensaje aún. ¡Comenzá la conversación!",
+  completedOrderText = "Este pedido fue completado y ya no podés enviar mensajes a la tienda por este medio. Podés contactarte directamente con la tienda si necesitás asistencia.",
 }: RealtimeChatProps) {
   const { containerRef, scrollToBottom } = useChatScroll()
 
@@ -151,7 +151,7 @@ export function RealtimeChat({
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          placeholder={disabled ? "Chat disabled - Order completed" : "Type a message..."}
+          placeholder={disabled ? "Chat deshabilitado - Pedido completado" : "Escribí un mensaje..."}
           disabled={!isConnected || disabled}
         />
         {isConnected && newMessage.trim() && !disabled && (

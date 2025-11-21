@@ -110,14 +110,14 @@ function ChatDoc() {
                                                     </div>
                                                 </div>
                                             ) : (
-                                                <RealtimeChat 
-                                                    roomName={roomId} 
-                                                    username={username} 
-                                                    onMessage={handleMessage} 
+                                                <RealtimeChat
+                                                    roomName={roomId}
+                                                    username={username}
+                                                    onMessage={handleMessage}
                                                     messageType={messageType}
                                                     messages={messages}
-                                                    emptyStateText="No hay mensajes aún. ¡Inicia la conversación con el cliente!"
-                                                    completedOrderText="Esta orden ha sido completada y ya no puedes enviar más mensajes al cliente."
+                                                    emptyStateText="No hay mensajes aún. ¡Iniciá la conversación con el cliente!"
+                                                    completedOrderText="Esta orden fue completada y ya no podés enviar más mensajes al cliente. Podés iniciar un reclamo directo con la tienda."
                                                     disabled={isOrderCompleted(roomId)}
                                                 />
                                             )}

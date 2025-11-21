@@ -71,7 +71,7 @@ function OrderSummarySteps({ order, employeePermissions }: OrderSummaryStepsProp
                     <DynamicStepperTrigger
                         config={{
                             title: "Pedido Completado",
-                            description: "Este pedido ha sido completado con éxito",
+                            description: "Este pedido fue completado con éxito",
                             completed: true
                         }}
                     />

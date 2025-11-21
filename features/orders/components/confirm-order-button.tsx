@@ -29,7 +29,7 @@ function ConfirmOrderButton({ order, canUpdateOrders, size = "default" }: Confir
                     throw new Error(message)
                 }
                 toast.dismiss()
-                toast.success("Orden confirmada con éxito! El cliente ha sido notificado.")
+                toast.success("Orden confirmada con éxito! El cliente ya fue notificado.")
             } catch (error) {
                 toast.dismiss()
                 toast.error(error instanceof Error ? error.message : "Error al confirmar la orden")

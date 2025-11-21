@@ -68,7 +68,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                     toast.error(result.message)
                 } else {
                     const actionText = isPickup ? "recogida" : "entregada"
-                    toast.success(`Orden finalizada con éxito! La orden ha sido marcada como ${actionText}.`)
+                    toast.success(`Orden finalizada con éxito! La orden fue marcada como ${actionText}.`)
                 }
             } catch (error) {
                 console.error("Error finalizing order:", error)

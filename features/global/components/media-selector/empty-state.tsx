@@ -54,7 +54,7 @@ export function EmptyState({
       <div className="text-center">
         <ImageIcon className="w-16 h-16 mx-auto text-muted-foreground/30 mb-4" />
         <p className="text-muted-foreground mb-4">
-          {message || `No has subido ningún ${mediaType} aún`}
+          {message || `No subiste ningún ${mediaType} aún`}
         </p>
         {onAction && (
           <Button size="sm" onClick={onAction} disabled={disabled}>

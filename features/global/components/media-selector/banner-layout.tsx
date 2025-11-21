@@ -39,7 +39,7 @@ export function BannerLayout({
                 <Alert variant="destructive">
                     <AlertCircle className="w-4 h-4 flex-shrink-0" />
                     <AlertDescription>
-                        Has alcanzado el límite de 4 banners. Elimina uno para subir otro.
+                        Alcanzaste el límite de 4 banners. Eliminá uno para subir otro o actualizá tu plan para aumentar el límite.
                     </AlertDescription>
                 </Alert>
             )}
@@ -122,7 +122,7 @@ export function BannerLayout({
                         <EmptyState
                             type="empty"
                             mediaType="banner"
-                            message="No has subido ningún banner aún"
+                            message="No subiste ningún banner aún"
                             onAction={() => onToolClick('upload')}
                             actionLabel="Subir Ahora"
                             disabled={uploadLimitReached}

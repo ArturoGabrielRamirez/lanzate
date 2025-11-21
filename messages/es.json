@@ -10,11 +10,11 @@
             "email": "Correo electrónico",
             "password": "Contraseña",
             "change-password": "Cambiar contraseña",
-            "change-email": "Cambiar email",
+            "change-email": "Cambiar correo electrónico",
             "currently-not-available": "Actualmente no disponible"
         }
     },
-    "Auth" : {},
+    "Auth": {},
     "auth": {
         "_legacy_login": "Iniciar sesión",
         "_legacy_signup": "Registrarse",
@@ -37,15 +37,15 @@
             "or-login-with": "O iniciá sesión con"
         },
         "toast-message": {
-            "success-logged-in": "Has iniciado sesión con éxito",
-            "success-registered": "Has sido registrado con éxito",
+            "success-logged-in": "Iniciaste sesión exitosamente",
+            "success-registered": "Te registraste exitosamente",
             "success-reset-password": "¡Link de recuperación enviado!",
             "success-password-updated": "¡Contraseña actualizada!",
             "signing-in": "Iniciando sesión...",
             "signing-up": "Registrándose...",
             "reset-password": "Enviando link de recuperación...",
             "updating-password": "Actualizando contraseña...",
-            "success-joined-waitlist": "Te has unido exitosamente a la lista de espera",
+            "success-joined-waitlist": "Te uniste exitosamente a la lista de espera",
             "joining-waitlist": "Uniéndose a la lista de espera"
         },
         "reset-password": {
@@ -64,7 +64,7 @@
             "oauth": {
                 "cancelled": {
                     "title": "Inicio de sesión cancelado",
-                    "description": "Podés intentar de nuevo con el mismo método o usar tu email y contraseña."
+                    "description": "Podés intentar de nuevo con el mismo método o usar tu correo electrónico y contraseña."
                 },
                 "failed": {
                     "title": "Error de autenticación",
@@ -84,31 +84,31 @@
                 },
                 "generic": {
                     "title": "Error de autenticación",
-                    "description": "Intentá de nuevo o usá tu email y contraseña."
+                    "description": "Intentá de nuevo o usá tu correo electrónico y contraseña."
                 }
             }
         },
         "email-change": {
-            "title": "Confirmación de Cambio de Email",
+            "title": "Confirmación de Cambio de Correo Electrónico",
             "step1": {
-                "title": "Confirmar email actual",
+                "title": "Confirmar correo electrónico actual",
                 "status": {
                     "pending": "Esperando confirmación...",
                     "confirmed": "✓ Confirmado"
                 }
             },
             "step2": {
-                "title": "Confirmar nuevo email",
+                "title": "Confirmar nuevo correo electrónico",
                 "status": {
-                    "waiting": "Esperando confirmación del email actual...",
-                    "pending": "⏳ Revisá este email y confirmá",
+                    "waiting": "Esperando confirmación del correo electrónico actual...",
+                    "pending": "⏳ Revisá este correo electrónico y confirmá",
                     "confirmed": "✓ Confirmado - ¡Cambio completado!"
                 }
             },
             "instructions": {
-                "step1": "Paso 1: Revisá tu email actual ({email}) y confirmá el cambio.",
-                "step2": "Paso 2: Ahora revisá tu nuevo email ({email}) y confirmá para completar el cambio.",
-                "completed": "¡Completado! Tu email ha sido actualizado exitosamente."
+                "step1": "Paso 1: Revisá tu correo electrónico actual ({email}) y confirmá el cambio.",
+                "step2": "Paso 2: Ahora revisá tu nuevo correo electrónico ({email}) y confirmá para completar el cambio.",
+                "completed": "¡Completado! Tu correo electrónico fue actualizado exitosamente."
             },
             "actions": {
                 "back-to-account": "Volver a mi cuenta",
@@ -125,7 +125,7 @@
             "change-in-progress": "⚠️ Hay un cambio en progreso",
             "complete-current-process": "Completá el proceso actual antes de iniciar uno nuevo.",
             "change-completed": "✅ Cambio completado",
-            "email-updated-successfully": "Tu correo electrónico ha sido actualizado exitosamente. Podés iniciar un nuevo cambio si es necesario.",
+            "email-updated-successfully": "Tu correo electrónico fue actualizado exitosamente. Podés iniciar un nuevo cambio si es necesario.",
             "new-email-label": "Nuevo correo electrónico",
             "new-email-placeholder": "nuevo-correo@ejemplo.com",
             "current-password-label": "Contraseña actual",
@@ -189,7 +189,7 @@
                     "submit": "Iniciar sesión"
                 },
                 "messages": {
-                    "success": "Has iniciado sesión exitosamente",
+                    "success": "Iniciaste sesión exitosamente",
                     "loading": "Iniciando sesión..."
                 }
             },
@@ -204,7 +204,7 @@
                 "oauth": {
                     "cancelled": {
                         "title": "Inicio de sesión cancelado",
-                        "description": "Podés intentar nuevamente con el mismo método o usar tu email y contraseña.",
+                        "description": "Podés intentar nuevamente con el mismo método o usar tu correo electrónico y contraseña.",
                         "action": "Intentar de nuevo"
                     },
                     "failed": {
@@ -225,7 +225,7 @@
                     },
                     "generic": {
                         "title": "Error de autenticación",
-                        "description": "Intentá de nuevo o usá tu email y contraseña."
+                        "description": "Intentá de nuevo o usá tu correo electrónico y contraseña."
                     }
                 },
                 "close": "Cerrar"
@@ -280,7 +280,7 @@
                     "submit": "Registrarse"
                 },
                 "messages": {
-                    "success": "Te has registrado exitosamente",
+                    "success": "Te registraste exitosamente",
                     "loading": "Registrándote..."
                 }
             },
@@ -361,8 +361,8 @@
         "waitlist": {
             "alert": {
                 "title": "Unite a la lista de espera",
-                "description1": "Lanzate está en desarrollo aún, pero ya podés unirte a la lista de espera.",
-                "description2": "Dejanos tu email y te notificaremos cuando el producto esté disponible.",
+                "description1": "Lanzate está en desarrollo aún, pero ya podés unirte a la lista de espera",
+                "description2": "Dejanos tu correo electrónico y te notificaremos cuando el producto esté disponible.",
                 "button": "Unite"
             },
             "form": {
@@ -377,7 +377,7 @@
                     "submit": "Unirse"
                 },
                 "messages": {
-                    "success": "Te has unido exitosamente a la lista de espera",
+                    "success": "Te uniste exitosamente a la lista de espera",
                     "loading": "Uniéndote a la lista de espera"
                 }
             },
@@ -539,13 +539,13 @@
             "title": "Crear nuevo producto",
             "description": "Descripción",
             "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
-            "drag-drop": "Arrastrá y soltá archivos aquí",
+            "drag-drop": "Arrastrá y soltá archivos acá",
             "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
             "browse-files": "Explorar archivos",
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
-            "file-rejected": "\"{filename}\" ha sido rechazado",
+            "file-rejected": "\"{filename}\" fue rechazado",
             "messages": {
                 "success": "¡Producto creado exitosamente!",
                 "error": "Error al crear producto",
@@ -647,7 +647,7 @@
         "help": {
             "title": "¿Necesitás ayuda?",
             "contact-us": "Contactanos",
-            "description": "Nuestros expertos están aquí para ayudarte.",
+            "description": "Nuestros expertos están acá para ayudarte.",
             "send-message": "Enviar mensaje",
             "dialog": {
                 "title": "Contactanos",
@@ -1048,7 +1048,7 @@
             "contact-section": "Información de Contacto",
             "contact-phone": "Teléfono",
             "contact-phone-placeholder": "Ingresá el número de teléfono",
-            "contact-email-placeholder": "Ingresá la dirección de email",
+            "contact-email-placeholder": "Ingresá la dirección de correo electrónico",
             "edit-contact": "Editar Contacto",
             "edit-contact-title": "Editar Información de Contacto",
             "edit-contact-description": "Actualizá la información de contacto de tu tienda",
@@ -1148,7 +1148,7 @@
             "main-badge": "Principal",
             "no-address": "Sin dirección",
             "no-phone": "Sin teléfono",
-            "no-email": "Sin email",
+            "no-email": "Sin correo electrónico",
             "dropdown": {
                 "actions": "Acciones",
                 "view-details": "Ver detalles",
@@ -1175,7 +1175,7 @@
         "edit-branch": {
             "button": "Editar Sucursal",
             "title": "Editar sucursal",
-            "description-popup": "Editá los detalles de la sucursal incluyendo nombre, dirección, teléfono y email. También podés designar esta sucursal como la principal.",
+            "description-popup": "Editá los detalles de la sucursal incluyendo nombre, dirección, teléfono y correo electrónico. También podés designar esta sucursal como la principal.",
             "name": "Nombre",
             "description": "Descripción",
             "description-placeholder": "Descripción de la sucursal",
@@ -1236,7 +1236,7 @@
             "role-label": "Rol:",
             "hired-label": "Contratado:",
             "messages": {
-                "select-user-first": "Debés seleccionar un usuario primero",
+                "select-user-first": "Tenés que seleccionar un usuario primero",
                 "user-already-employee": "Este usuario ya es empleado de esta tienda",
                 "success": "¡Empleado agregado correctamente!",
                 "error": "Error al agregar empleado",
@@ -1254,7 +1254,7 @@
             "user-info-title": "Información del Usuario Empleado",
             "email": "Correo electrónico:",
             "name": "Nombre:",
-            "email-name-note": "Nota: El correo electrónico y nombre no se pueden editar aquí ya que son parte de la cuenta del usuario",
+            "email-name-note": "Nota: El correo electrónico y nombre no se pueden editar acá ya que son parte de la cuenta del usuario",
             "role": "Rol",
             "role-placeholder": "Seleccionar un rol",
             "position": "Posición",
@@ -1350,8 +1350,8 @@
             "status-placeholder": "Seleccionar nuevo estado",
             "new-status-preview": "Vista Previa del Nuevo Estado",
             "payment-marked-paid": "El pago será marcado automáticamente como PAGADO",
-            "payment-explanation": "Cambiar de PENDIENTE a {status} indica que el pedido ha sido pagado. El estado del pago será actualizado en consecuencia.",
-            "confirm-payment": "Confirmo que este pedido ha sido pagado",
+            "payment-explanation": "Cambiar de PENDIENTE a {status} indica que el pedido fue pagado. El estado del pago será actualizado en consecuencia.",
+            "confirm-payment": "Confirmo que este pedido fue pagado",
             "stock-restore-warning": "Esto restaurará el stock de productos y revertirá el saldo de la tienda",
             "cancellation-consequences": "Cancelar este pedido:",
             "restore-stock": "Restaurará las cantidades de stock de productos",
@@ -1438,13 +1438,13 @@
             "title": "Crear nuevo producto",
             "description": "Descripción",
             "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
-            "drag-drop": "Arrastrá y soltá archivos aquí",
+            "drag-drop": "Arrastrá y soltá archivos acá",
             "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
             "browse-files": "Explorar archivos",
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
-            "file-rejected": "\"{filename}\" ha sido rechazado",
+            "file-rejected": "\"{filename}\" fue rechazado",
             "messages": {
                 "success": "¡Producto creado exitosamente!",
                 "error": "Error al crear producto",
@@ -1455,13 +1455,13 @@
             "button": "Editar Producto",
             "title": "Editar producto",
             "description": "Descripción",
-            "drag-drop": "Arrastrá y soltá archivos aquí",
+            "drag-drop": "Arrastrá y soltá archivos acá",
             "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
             "browse-files": "Explorar archivos",
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
-            "file-rejected": "\"{filename}\" ha sido rechazado",
+            "file-rejected": "\"{filename}\" fue rechazado",
             "validation": {
                 "name-required": "El nombre es requerido",
                 "price-required": "El precio es requerido",
@@ -1629,7 +1629,7 @@
             "units": "unidades",
             "try-again": "Intentá nuevamente con otros términos de búsqueda",
             "search-instruction": "Buscá productos por nombre o escaneá un código de barras",
-            "results-here": "Los resultados aparecerán aquí"
+            "results-here": "Los resultados aparecerán acá"
         },
         "actions": {
             "finalize-sale": "Finalizar Venta",

@@ -31,7 +31,7 @@ function FinalizeOrderButton({ order }: FinalizeOrderButtonProps) {
                     throw new Error(message)
                 }
                 toast.dismiss()
-                toast.success(`¡Orden finalizada con éxito! La orden ha sido marcada como ${isPickup ? "recogida" : "entregada"}.`)
+                toast.success(`¡Orden finalizada con éxito! La orden fue marcada como ${isPickup ? "recogida" : "entregada"}.`)
             } catch (error) {
                 console.error("Error finalizing order:", error)
                 toast.dismiss()

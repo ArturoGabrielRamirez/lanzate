@@ -89,7 +89,7 @@ export async function updateDeliveredOrderData({ orderId }: UpdateDeliveredOrder
         entity_id: parseInt(orderId),
         user_id: user.id,
         action_initiator: "Actualización del estado del pedido",
-        details: `El estado del pedido cambió a ENTREGADO. El pedido ha sido ${updatedOrder.shipping_method === 'PICKUP' ? 'recogido' : 'entregado'} al cliente.`
+        details: `El estado del pedido cambió a ENTREGADO. El pedido fue ${updatedOrder.shipping_method === 'PICKUP' ? 'recogido' : 'entregado'} al cliente.`
     })
 
     if (logError) {

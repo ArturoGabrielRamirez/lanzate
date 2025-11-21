@@ -31,7 +31,7 @@ function PrivateProfileView({ reason, currentUser, isUserLoading }: PrivateProfi
 
                     {!currentUser && !isUserLoading && (
                         <p className="text-sm text-gray-500">
-                            Inicia sesión para poder solicitar seguir este perfil
+                            Iniciá sesión para poder solicitar seguir este perfil
                         </p>
                     )}
                 </CardContent>

@@ -90,7 +90,7 @@ export async function updateCompletedOrderData({ orderId }: UpdateCompletedOrder
         entity_id: parseInt(orderId),
         user_id: user.id,
         action_initiator: "Actualización del estado del pedido",
-        details: `El estado del pedido cambió a COMPLETADO. El pedido ha sido finalizado con éxito.`
+        details: `El estado del pedido cambió a COMPLETADO. El pedido finalizó con éxito.`
     })
 
     if (logError) {
@@ -107,5 +107,5 @@ export async function updateCompletedOrderData({ orderId }: UpdateCompletedOrder
     //     await sendSatisfactionSurvey(updatedOrder)
     // }
 
-    return formatSuccessResponse("El pedido ha sido completado con éxito", updatedOrder)
+    return formatSuccessResponse("El pedido finalizó con éxito.")
 } 

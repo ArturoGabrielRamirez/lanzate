@@ -45,7 +45,7 @@ function EmailStatusBanner() {
                 if (response.status === 429) {
                     toast.error("Demasiadas solicitudes. Espera 5 minutos.")
                 } else if (response.status === 401) {
-                    toast.error("Usuario no autenticado. Por favor, inicia sesión.")
+                    toast.error("Usuario no autenticado. Por favor, iniciá sesión.")
                 } else {
                     toast.error(data.message || "Error al reenviar email")
                 }

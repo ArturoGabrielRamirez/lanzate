@@ -26,7 +26,7 @@ function OrderStatusStep({ order, employeePermissions }: OrderStatusStepProps) {
                 if (result.hasError) {
                     toast.error(result.message)
                 } else {
-                    toast.success("Pedido confirmado con éxito! El cliente ha sido notificado.")
+                    toast.success("Pedido confirmado con éxito! El cliente ya fue notificado.")
                     window.location.reload()
                 }
             } catch (error) {
