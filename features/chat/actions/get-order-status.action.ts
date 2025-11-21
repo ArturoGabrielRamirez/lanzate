@@ -10,7 +10,7 @@ export async function fetchOrderStatusAction({ orderId }: OrderIdProp) {
 
         return {
             hasError: false,
-            message: "Order status fetched successfully",
+            message: "Estado del pedido recuperado exitosamente",
             payload: order
         }
     })
