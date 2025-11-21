@@ -64,7 +64,7 @@ function ShippingMethodFormPanel({ method, index, onCancel, onSave }: ShippingMe
 
     return (
         <>
-            <div className="grid grid-cols-1 grid-cols-2 gap-6 mt-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
 
                 <div className="space-y-4">
                     <InputField
@@ -157,8 +157,14 @@ export function ShippingFormPanel() {
     const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([])
     const [isAddingMethod, setIsAddingMethod] = useState(false)
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
-    // derive payment methods directly from form state to persist across steps
-    const paymentMethods = (watch("payment_info.payment_methods") as string[] | undefined) || []
+    const [paymentMethods, setPaymentMethods] = useState<string[]>(() => (getValues("payment_info.payment_methods") as string[] | undefined) || [])
+
+    // Sync payment methods state with form value when it changes
+    const paymentMethodsValue = watch("payment_info.payment_methods") as string[] | undefined
+
+    useEffect(() => {
+        setPaymentMethods(paymentMethodsValue || [])
+    }, [paymentMethodsValue])
 
     const seededRef = useRef(false)
     useEffect(() => {
@@ -186,6 +192,9 @@ export function ShippingFormPanel() {
                 payment_methods: Array.isArray(p.payment_methods) ? (p.payment_methods.filter(Boolean) as string[]) : []
             }
             setValue("payment_info", safe, { shouldValidate: true })
+            setCtxValues({
+                payment_info: safe,
+            })
         }
         const offers = getValues("shipping_info.offers_delivery") || false
         setOffersDelivery(!!offers)
@@ -295,7 +304,6 @@ export function ShippingFormPanel() {
                     selectedTags={paymentMethods}
                     onChange={handlePaymentTagsChange}
                     title="Metodos de pago"
-                    key={paymentMethods.join('|')}
                 />
                 {errors.payment_info?.payment_methods?.message && (
                     <p className="text-sm text-red-500">{errors.payment_info.payment_methods.message as string}</p>
