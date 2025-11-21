@@ -378,7 +378,7 @@ export type CreateStoreShippingMethod = {
     minPurchase: string
     freeShippingMin: string
     estimatedTime: string
-    deliveryPrice?: string
+    deliveryPrice: string
 }
 
 export type AttentionDateFormPanelProps = {
@@ -646,5 +646,5 @@ export type ShippingMethod = {
     minPurchase: string        // Requerido
     freeShippingMin: string    // Requerido
     estimatedTime: string      // Requerido
-    deliveryPrice?: string     // Opcional
+    deliveryPrice: string      // Requerido
 }

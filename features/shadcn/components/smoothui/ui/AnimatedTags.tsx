@@ -19,7 +19,6 @@ export default function AnimatedTags({
   onChange,
   className = "",
   title = "Dias de atencion",
-  emptyMessage = "No hay dias de atencion seleccionados"
 }: AnimatedTagsProps) {
   const [internalSelected, setInternalSelected] = useState<string[]>([])
   /* const [internalTags, setInternalTags] = useState<string[]>(initialTags) */
@@ -44,37 +43,36 @@ export default function AnimatedTags({
     }
   }
   return (
-    <div className={`flex flex-col gap-4 ${className}`}>
+    <div className={`flex flex-col gap-1 ${className}`}>
       <div className="flex flex-col items-start justify-center gap-1">
         <p className="text-sm font-medium">{title}</p>
         <AnimatePresence>
-          <div className="bg-background flex min-h-10 w-full flex-wrap items-center gap-1 rounded-md border p-2">
-            {selectedTag?.map((tag) => (
-              <motion.div
-                key={tag}
-                layout
-                className="group bg-primary text-primary-foreground group-hover:bg-primary group-hover:text-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border px-2 py-1"
-                onClick={() => handleDeleteTag(tag)}
-                initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
-                animate={{
-                  y: 0,
-                  opacity: 1,
-                  filter: "blur(0px)",
-                }}
-                exit={{ y: 20, opacity: 0, filter: "blur(4px)" }}
-                transition={{ duration: 0.3, bounce: 0, type: "spring" }}
-              >
-                {tag}{" "}
-                <CircleX
-                  size={16}
-                  className="flex items-center justify-center rounded-full transition-all duration-300 ease-in-out"
-                />
-              </motion.div>
-            ))}
-            {selectedTag.length === 0 && (
-              <p className="text-sm text-muted-foreground">{emptyMessage}</p>
-            )}
-          </div>
+          {selectedTag.length > 0 && (
+            <div className="bg-background flex min-h-10 w-full flex-wrap items-center gap-1 rounded-md border p-2">
+              {selectedTag?.map((tag) => (
+                <motion.div
+                  key={tag}
+                  layout
+                  className="group bg-primary text-primary-foreground group-hover:bg-primary group-hover:text-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border px-2 py-1"
+                  onClick={() => handleDeleteTag(tag)}
+                  initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
+                  animate={{
+                    y: 0,
+                    opacity: 1,
+                    filter: "blur(0px)",
+                  }}
+                  exit={{ y: 20, opacity: 0, filter: "blur(4px)" }}
+                  transition={{ duration: 0.3, bounce: 0, type: "spring" }}
+                >
+                  {tag}{" "}
+                  <CircleX
+                    size={16}
+                    className="flex items-center justify-center rounded-full transition-all duration-300 ease-in-out"
+                  />
+                </motion.div>
+              ))}
+            </div>
+          )}
         </AnimatePresence>
       </div>
       <AnimatePresence>

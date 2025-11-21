@@ -9,10 +9,13 @@ import { InputField } from "@/features/global/components/form/input-field"
 import { Button } from "@/features/shadcn/components/button"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
+import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { CreateStoreFormValues, ShippingMethod, ShippingMethodFormPanelProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
+
+import type { Selection } from "react-aria-components"
 
 function ShippingMethodFormPanel({ method, index, onCancel, onSave }: ShippingMethodFormPanelProps) {
 
@@ -132,7 +135,8 @@ function ShippingMethodFormPanel({ method, index, onCancel, onSave }: ShippingMe
 
 export function ShippingFormPanel() {
 
-    const { setValue, getValues, formState: { errors, isValid }, watch } = useFormContext<CreateStoreFormValues>()
+    const { setValue, getValues, formState: { errors, isValid }, watch, trigger } = useFormContext<CreateStoreFormValues>()
+    console.log("🚀 ~ ShippingFormPanel ~ errors:", errors)
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const setValueAny = setValue as unknown as (name: string, value: unknown, options?: { shouldValidate?: boolean; shouldDirty?: boolean }) => void
     const [offersDelivery, setOffersDelivery] = useState(false)
@@ -181,6 +185,15 @@ export function ShippingFormPanel() {
     }, [getValues, setValue, values.shipping_info, values.payment_info, setValueAny])
 
     useEffect(() => {
+        if (offersDelivery) {
+            setValue("shipping_info.methods", shippingMethods, { shouldValidate: true })
+            trigger("shipping_info.methods")
+        } else {
+            setValue("shipping_info.methods", [], { shouldValidate: true })
+        }
+    }, [shippingMethods, offersDelivery, setValue, trigger])
+
+    useEffect(() => {
         const sub = watch((v) => {
             const vv = v as Partial<CreateStoreFormValues>
             setCtxValues({
@@ -212,7 +225,8 @@ export function ShippingFormPanel() {
             providers: [],
             minPurchase: "",
             freeShippingMin: "",
-            estimatedTime: ""
+            estimatedTime: "",
+            deliveryPrice: ""
         }
         const newIndex = shippingMethods.length
         const next = [...shippingMethods, newMethod]
@@ -249,6 +263,16 @@ export function ShippingFormPanel() {
         setValueAny("payment_info.payment_methods", tags, { shouldValidate: true, shouldDirty: true })
     }
 
+    const handleSelectionChange = (selection: Selection) => {
+        if (selection === "all") return
+        const selected = Array.from(selection)[0]
+        if (selected === "delivery") {
+            handleOffersDelivery()
+        } else if (selected === "pickup") {
+            handleNotOffersDelivery()
+        }
+    }
+
     return (
         <>
             <div className="space-y-3 mb-8">
@@ -257,7 +281,6 @@ export function ShippingFormPanel() {
                     selectedTags={paymentMethods}
                     onChange={handlePaymentTagsChange}
                     title="Metodos de pago"
-                    emptyMessage="No hay metodos de pago seleccionados"
                     key={paymentMethods.join('|')}
                 />
                 {errors.payment_info?.payment_methods?.message && (
@@ -265,20 +288,24 @@ export function ShippingFormPanel() {
                 )}
             </div>
             <p className="text-sm font-medium mb-2">Metodos de envio</p>
-            <div className="grid grid-cols-2 items-center gap-6 text-center justify-center mb-8">
-                <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow h-full", offersDelivery ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleOffersDelivery}>
-                    <h3 className="text-lg font-medium text-primary flex justify-center">
-                        <Truck className="size-9" />
-                    </h3>
-                    <p className="text-sm text-muted-foreground text-balance">This store offers delivery as well as pickup.</p>
-                </div>
-                <div className={cn("flex flex-col gap-2 opacity-50 border border-primary rounded-md px-4 py-8 grow h-full", !offersDelivery ? "cursor-pointer opacity-100" : "cursor-pointer")} onClick={handleNotOffersDelivery}>
-                    <h3 className="text-lg font-medium text-primary flex justify-center">
-                        <Store className="size-9" />
-                    </h3>
-                    <p className="text-sm text-muted-foreground text-balance">This store does not offer delivery service; only pickup.</p>
-                </div>
-            </div>
+            <ChoiceBox
+                columns={2}
+                gap={6}
+                selectionMode="single"
+                selectedKeys={[offersDelivery ? "delivery" : "pickup"]}
+                onSelectionChange={handleSelectionChange}
+            >
+                <ChoiceBoxItem id="pickup" textValue="Pickup Only">
+                    <Store />
+                    <ChoiceBoxLabel>Pickup Only</ChoiceBoxLabel>
+                    <ChoiceBoxDescription>This store does not offer delivery service; only pickup.</ChoiceBoxDescription>
+                </ChoiceBoxItem>
+                <ChoiceBoxItem id="delivery" textValue="Delivery & Pickup">
+                    <Truck />
+                    <ChoiceBoxLabel>Delivery & Pickup</ChoiceBoxLabel>
+                    <ChoiceBoxDescription>This store offers delivery as well as pickup.</ChoiceBoxDescription>
+                </ChoiceBoxItem>
+            </ChoiceBox>
 
             <AnimatePresence>
                 {offersDelivery && (
@@ -288,10 +315,19 @@ export function ShippingFormPanel() {
                         exit={{ opacity: 0, x: -100, position: "absolute" }}
                         className="space-y-4"
                     >
-                        <h3 className="text-muted-foreground text-base font-medium">Modos de envío</h3>
-                        {shippingMethods.length === 0 && !isAddingMethod && (
-                            <div className="text-sm text-muted-foreground border border-muted-foreground/50 p-6 rounded-md text-center border-dashed">
-                                <p>No configuraste ninguna forma de envío</p>
+                        {!isAddingMethod && (errors?.shipping_info && "methods" in (errors.shipping_info as Record<string, unknown>) || (shippingMethods.length === 0)) && (
+                            <div className={cn(
+                                "text-sm border p-6 rounded-md text-center border-dashed",
+                                errors?.shipping_info && "methods" in (errors.shipping_info as Record<string, unknown>)
+                                    ? "text-red-500 border-red-500 bg-red-500/5"
+                                    : "text-muted-foreground border-muted-foreground/50"
+                            )}>
+                                <p>
+                                    {errors?.shipping_info && "methods" in (errors.shipping_info as Record<string, unknown>)
+                                        ? (errors.shipping_info as Record<string, { message?: string }>)["methods"]?.message
+                                        : "No configuraste ninguna forma de envío"
+                                    }
+                                </p>
                             </div>
                         )}
                         {isAddingMethod && editingIndex !== null && shippingMethods[editingIndex] && (

@@ -192,17 +192,6 @@ export function SettingsFormPanel() {
                                 </p>
                             </div>
                         )}
-                        {isAddingDate && editingIndex !== null && attentionDates[editingIndex] && (
-                            <div className="grid md:grid-cols-2 gap-4">
-                                <AttentionDateFormPanel
-                                    date={attentionDates[editingIndex]}
-                                    key={`edit-${editingIndex}`}
-                                    onCancel={handleCancelDate}
-                                    onSave={handleSaveDate}
-                                    index={editingIndex}
-                                />
-                            </div>
-                        )}
                         {attentionDates.length > 0 && (
                             <div className="space-y-2">
                                 {attentionDates.map((d, i) => (
@@ -225,6 +214,17 @@ export function SettingsFormPanel() {
                                         </div>
                                     )
                                 ))}
+                            </div>
+                        )}
+                        {isAddingDate && editingIndex !== null && attentionDates[editingIndex] && (
+                            <div className="grid md:grid-cols-2 gap-4">
+                                <AttentionDateFormPanel
+                                    date={attentionDates[editingIndex]}
+                                    key={`edit-${editingIndex}`}
+                                    onCancel={handleCancelDate}
+                                    onSave={handleSaveDate}
+                                    index={editingIndex}
+                                />
                             </div>
                         )}
                         {!isAddingDate && (
